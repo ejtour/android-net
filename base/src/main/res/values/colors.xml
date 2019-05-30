@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="base_activity_bg">#F3F3F3</color>
+    <color name="base_red">#FF0000</color>
+
+    <color name="base_white">#ffffff</color>
+
+    <color name="base_action_bar">#F8F8F8</color>
+
+    <color name="base_gray">#cccccc</color>
+    <color name="base_gray_medium">#dadada</color>
+    <color name="base_gray_medium_e3">#e3e3e3</color>
+    <color name="base_gray_light">#f1f2f4</color>
+
+    <color name="base_orange">#F4833B</color>
+
+    <!--Text Color-->
+    <color name="base_text_gray_light">#909cab</color>
+    <color name="base_text_gray_medium">#737e8c</color>
+    <color name="base_text_gray">#737e8c</color>
+    <color name="base_text_black">#333333</color>
+    <color name="base_red_FFF66D6C">#FFF66D6C</color>
+    <color name="base_orange_FFF9A753">#FFF9A753</color>
+    <!--Text Color End-->
+
+    <!--pay color-->
+    <color name="base_swipe_refresh">#379ff1</color>
+
+    <!--排班-->
+
+    <!--new-->
+    <color name="base_colorPrimary">#5695D2</color>
+    <color name="base_colorPrimaryDark">#4283C3</color>
+    <color name="base_colorAccent">#5695D2</color>
+
+
+    <color name="base_color_bg_btn_normal">#03a9f4</color>
+    <color name="base_color_bg_btn_pressed">#0288d1</color>
+    <color name="base_color_bg_btn_enable_false">#bdbdbd</color>
+
+    <drawable name="base_color_tab_bg_select">#E0F2FF</drawable>
+
+    <color name="base_view_bg">#FAFAFA</color>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BaseCircleView">
+        <attr name="base_circle_view_paint_width" format="dimension"/>
+        <attr name="base_circle_view_paint_external_width" format="dimension"/>
+        <attr name="base_circle_view_text_plain" format="string"/>
+        <attr name="base_circle_view_text_size_center" format="dimension"/>
+        <attr name="base_circle_view_text_color_center" format="color"/>
+        <attr name="base_circle_view_text_size_bottom" format="dimension"/>
+        <attr name="base_circle_view_text_color_bottom" format="color"/>
+        <attr name="base_circle_view_internal_color" format="color"/>
+        <attr name="base_circle_view_external_color" format="color"/>
+    </declare-styleable>
+
+</resources>

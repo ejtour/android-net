@@ -1,0 +1,39 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/base_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/base_colorPrimaryDark</item>
+        <item name="colorAccent">@color/base_colorAccent</item>
+        <item name="android:windowAnimationStyle">@style/base_activityAnimation</item>
+    </style>
+
+    <style name="BasePersonTheme" parent="BaseAppTheme"/>
+
+    <style name="BaseDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowFrame">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="BaseLeftAnimation" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/base_left_push</item>
+        <item name="android:windowExitAnimation">@anim/base_left_pull</item>
+    </style>
+
+
+    <style name="BasePopupAnimation" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/base_pop_up</item>
+        <item name="android:windowExitAnimation">@anim/base_pop_down</item>
+    </style>
+
+    <!--Activity进入和退出动画-->
+    <style name="base_activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/base_slide_right_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/base_slide_right_out</item>
+        <item name="android:activityOpenExitAnimation">@anim/base_slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/base_slide_left_in</item>
+    </style>
+
+</resources>

@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.hll_sc_app"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        flavorDimensions "default"
+        packagingOptions {
+            exclude 'META-INF/services/javax.annotation.processing.Processor'
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/NOTICE'
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                annotationProcessorOptions { includeCompileClasspath = true }
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+        ndk {
+            abiFilters 'armeabi', 'x86'
+        }
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "boolean", "isDebug", "false"
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [ALIBABA_APP_KEY   : "24751874",
+                                    APPLICATION_ID    : defaultConfig.applicationId,
+                                    ALIBABA_APP_SECRET: "b75329820fdf637100fcadd368ef064f"]
+        }
+
+        debug {
+            applicationIdSuffix ".beta"
+            buildConfigField "boolean", "isDebug", "true"
+            manifestPlaceholders = [ALIBABA_APP_KEY   : "24764562",
+                                    APPLICATION_ID    : defaultConfig.applicationId + ".beta",
+                                    ALIBABA_APP_SECRET: "62b53846e3bffb7e4cdbd1385421b0d9"]
+        }
+    }
+
+    productFlavors {
+//        官方版
+        official {
+            manifestPlaceholders = [
+                    BUGLY_APP_CHANNEL: "official",
+                    BUGLY_APP_VERSION: defaultConfig.versionName]
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+    }
+
+    configurations {
+        all {
+            exclude group: 'xpp3', module: 'xpp3'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':base')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+}

@@ -1,0 +1,15 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="base_text_small">34px</dimen>
+
+    <dimen name="base_text_medium">40px</dimen>
+
+    <dimen name="base_text_title">48px</dimen>
+    <dimen name="base_text_medium_small">38px</dimen>
+
+    <!-- new -->
+    <dimen name="base_title_center_size">18sp</dimen>
+    <dimen name="base_title_height">44dp</dimen>
+
+</resources>
