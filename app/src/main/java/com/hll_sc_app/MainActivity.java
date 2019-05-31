@@ -43,6 +43,7 @@ public class MainActivity extends BaseLoadActivity {
 
     @OnClick(R.id.txt_confirm)
     public void onViewClicked() {
+        showToast("txt_confirm");
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("loginPhone", "13111112222")
             .put("loginPWD", "111111")

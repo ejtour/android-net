@@ -1,6 +1,7 @@
 package com.hll_sc_app.base.http;
 
 import android.net.ParseException;
+import android.text.TextUtils;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializer;
@@ -36,13 +37,13 @@ public abstract class BaseCallback<T> extends DisposableObserver<T> {
     @Override
     public void onError(Throwable e) {
         // 接口性错误
-//        if (e instanceof UseCaseException) {
-//            if (TextUtils.equals(((UseCaseException) e).getCode(), "00120110118")) {
+        if (e instanceof UseCaseException) {
+            if (TextUtils.equals(((UseCaseException) e).getCode(), "00120110118")) {
 //                RouterUtil.goToActivity(RouterConfig.USER_LOGIN);
-//            }
-//            onFailure((UseCaseException) e);
-//            return;
-//        }
+            }
+            onFailure((UseCaseException) e);
+            return;
+        }
         // 网络性错误
         UseCaseException ex;
         if (!SystemUtils.isNetConnected()) {
