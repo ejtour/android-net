@@ -44,6 +44,7 @@
 -keepattributes InnerClasses,EnclosingMethod
 -dontoptimize
 
+# EventBus
 -keepattributes *Annotation*
 -keepclassmembers class ** {
     @org.greenrobot.eventbus.Subscribe <methods>;
@@ -129,14 +130,12 @@
 # MPAndroidChart
 -dontwarn com.github.mikephil.charting.**
 -keep class com.github.mikephil.charting.** { *; }
-
--keep class com.hualala.supplychain.base.**{*;}
 -dontwarn android.media.MediaMetadataRetriever
--dontwarn com.hualala.shopmallcrm.app.SplashActivity
 
 # 二十二城
--dontwarn com.hualala.citymall.bean.**
--keep class com.hualala.citymall.bean.**{*;}
+-dontwarn com.hll_sc_app.bean.**
+-keep class com.hll_sc_app.bean.**{*;}
+-keep class com.hll_sc_app.base.bean.**{*;}
 
 # Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule

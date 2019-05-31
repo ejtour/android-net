@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion COMPILESDKVERSION as int
     defaultConfig {
         applicationId "com.hll_sc_app"
-        minSdkVersion 16
-        targetSdkVersion 26
+        minSdkVersion MINSDKVERSION as int
+        targetSdkVersion TARGETSDKVERSION as int
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -27,6 +27,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file('22citysupply.keystore')
+            storePassword STOREPASSWORD
+            keyAlias KEYALIAS
+            keyPassword KEYPASSWORD
+        }
+    }
+
     buildTypes {
         release {
             buildConfigField "boolean", "isDebug", "false"
@@ -37,6 +46,7 @@ android {
             manifestPlaceholders = [ALIBABA_APP_KEY   : "24751874",
                                     APPLICATION_ID    : defaultConfig.applicationId,
                                     ALIBABA_APP_SECRET: "b75329820fdf637100fcadd368ef064f"]
+            signingConfig signingConfigs.release
         }
 
         debug {
@@ -49,11 +59,8 @@ android {
     }
 
     productFlavors {
-//        官方版
         official {
-            manifestPlaceholders = [
-                    BUGLY_APP_CHANNEL: "official",
-                    BUGLY_APP_VERSION: defaultConfig.versionName]
+
         }
     }
 
@@ -71,15 +78,24 @@ android {
             exclude group: 'xpp3', module: 'xpp3'
         }
     }
+
+    configurations.all {
+        resolutionStrategy {
+            force 'com.android.support:support-v4:27.1.0'
+        }
+    }
 }
 
 dependencies {
     implementation project(':base')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    // noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
+    // ButterKnife
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    implementation 'com.jakewharton:butterknife:8.4.0'
 }

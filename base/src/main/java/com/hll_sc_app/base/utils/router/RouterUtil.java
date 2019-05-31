@@ -100,12 +100,12 @@ public class RouterUtil {
      * @param postCard 登录跳转前的目标页面
      */
     static void goToLogin(String postCard, Bundle bundle) {
-        ARouter
-            .getInstance()
-            .build(RouterConfig.USER_LOGIN)
-            .with(bundle)
-            .withString(DESTINATION, postCard)
-            .navigation();
+//        ARouter
+//            .getInstance()
+//            .build(RouterConfig.USER_LOGIN)
+//            .with(bundle)
+//            .withString(DESTINATION, postCard)
+//            .navigation();
     }
 
     /**
@@ -114,11 +114,11 @@ public class RouterUtil {
      * @param postCard 登录跳转前的目标页面
      */
     public static void goToLogin(String postCard) {
-        ARouter
-            .getInstance()
-            .build(RouterConfig.USER_LOGIN)
-            .withString(DESTINATION, postCard)
-            .navigation();
+//        ARouter
+//            .getInstance()
+//            .build(RouterConfig.USER_LOGIN)
+//            .withString(DESTINATION, postCard)
+//            .navigation();
     }
 
     /**

@@ -17,8 +17,9 @@ import com.hll_sc_app.base.R;
 /**
  *  Dialog基类  
  *  
- *  @author 胡永城
- *  @date 2017/8/22  
+ *
+ * @author  zhuyingsong
+ * @date 2019-5-31
  */
 public abstract class BaseDialog extends Dialog {
     public View mRootView;
@@ -47,12 +48,9 @@ public abstract class BaseDialog extends Dialog {
         super.show();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ValueAnimator animator = ValueAnimator.ofFloat(1f, 0.7f).setDuration(250);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                    float cVal = (Float) valueAnimator.getAnimatedValue();
-                    setWindowAlpha(cVal);
-                }
+            animator.addUpdateListener(valueAnimator -> {
+                float cVal = (Float) valueAnimator.getAnimatedValue();
+                setWindowAlpha(cVal);
             });
             animator.start();
         }
@@ -75,12 +73,9 @@ public abstract class BaseDialog extends Dialog {
         super.dismiss();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ValueAnimator animator = ValueAnimator.ofFloat(0.7f, 1.0f).setDuration(250);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                    float cVal = (Float) valueAnimator.getAnimatedValue();
-                    setWindowAlpha(cVal);
-                }
+            animator.addUpdateListener(valueAnimator -> {
+                float cVal = (Float) valueAnimator.getAnimatedValue();
+                setWindowAlpha(cVal);
             });
             animator.start();
         }
@@ -91,5 +86,4 @@ public abstract class BaseDialog extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(mRootView);
     }
-
 }

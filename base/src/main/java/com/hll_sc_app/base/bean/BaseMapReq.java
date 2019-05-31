@@ -31,7 +31,7 @@ public class BaseMapReq {
     public static class Builder {
         private BaseMapReq mReq;
 
-        public Builder() {
+        Builder() {
             mReq = new BaseMapReq();
         }
 

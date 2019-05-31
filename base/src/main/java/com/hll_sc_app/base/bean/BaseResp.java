@@ -1,13 +1,19 @@
 package com.hll_sc_app.base.bean;
 
 
+/**
+ * 构造请求参数
+ *
+ * @author zhuyingsong
+ * @date 2019/4/23
+ */
 public class BaseResp<T> {
-    String code;
-    T data;
-    String message;
-    String pv;
-    boolean success;
-    String traceID;
+    private String code;
+    private T data;
+    private String message;
+    private String pv;
+    private boolean success;
+    private String traceID;
     /**
      * 小流量地址
      */
@@ -68,5 +74,4 @@ public class BaseResp<T> {
     public void setTraceID(String traceID) {
         this.traceID = traceID;
     }
-
 }

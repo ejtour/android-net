@@ -32,23 +32,6 @@ public class LoginInterceptor implements IInterceptor {
     }
 
     /**
-     * 正常跳转前判断权限
-     *
-     * @param postcard postcard
-     * @param callback callback
-     */
-    private void checkRight(Postcard postcard, InterceptorCallback callback) {
-//        if (RightConfig.checkRight(RightConfig.getRightCode(mContext, postcard.getPath()))) {
-//            callback.onContinue(postcard);
-//        } else {
-//            callback.onContinue(null);
-//            Looper.prepare();
-//            ToastUtils.showShort(mContext, mContext.getString(R.string.right_tips));
-//            Looper.loop();
-//        }
-    }
-
-    /**
      * 未登录跳转到登录页面,传递目标的跳转地址
      *
      * @param postcard postcard

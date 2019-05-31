@@ -1,6 +1,12 @@
 package com.hll_sc_app.base.bean;
 
 
+/**
+ * 构造请求参数
+ *
+ * @author zhuyingsong
+ * @date 2019/4/23
+ */
 public class BaseReq<T> {
     private T data;
 
