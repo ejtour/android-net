@@ -41,7 +41,7 @@ public class HttpFactory {
     private static final int TIMEOUT = 10;
     private static final String CS = "android";
     private static final String SIGN_KEY = "813eae6fe94441fbb39d24f641440541";
-    private static final String SOURCE = "shopmall-purchaser";
+    private static final String SOURCE = "shopmall-supplier";
     private static GsonConverterFactory factory = GsonConverterFactory.create();
 
     private static OkHttpClient create() {

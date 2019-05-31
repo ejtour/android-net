@@ -5,6 +5,9 @@ import android.content.Context;
 import android.os.Build;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.sdk.android.push.CloudPushService;
+import com.alibaba.sdk.android.push.CommonCallback;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.greendao.DaoSessionManager;
 import com.hll_sc_app.citymall.util.LogUtil;
@@ -53,7 +56,7 @@ public class MyApplication extends Application {
         // SharePreference初始化
         GlobalPreference.init(this);
         LogUtil.isLog = BuildConfig.isDebug;
-//        initCloudChannel(this);
+        initCloudChannel(this);
         DaoSessionManager.init(this);
     }
 
@@ -94,21 +97,21 @@ public class MyApplication extends Application {
      *
      * @param context context
      */
-//    private void initCloudChannel(Context context) {
-//        PushServiceFactory.init(context);
-//        CloudPushService pushService = PushServiceFactory.getCloudPushService();
-//        pushService.register(context, new CommonCallback() {
-//            @Override
-//            public void onSuccess(String response) {
-//                LogUtil.d("PUSH", "init cloudchannel success");
-//            }
-//
-//            @Override
-//            public void onFailed(String errorCode, String errorMessage) {
-//                LogUtil.d("PUSH", "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
-//            }
-//        });
-//    }
+    private void initCloudChannel(Context context) {
+        PushServiceFactory.init(context);
+        CloudPushService pushService = PushServiceFactory.getCloudPushService();
+        pushService.register(context, new CommonCallback() {
+            @Override
+            public void onSuccess(String response) {
+                LogUtil.d("PUSH", "init cloudchannel success");
+            }
+
+            @Override
+            public void onFailed(String errorCode, String errorMessage) {
+                LogUtil.d("PUSH", "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
+            }
+        });
+    }
 
     private static class ActivityFrontListener implements ActivityLifecycleHandler.Listener {
         @Override
