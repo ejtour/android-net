@@ -13,4 +13,12 @@
         <attr name="base_circle_view_external_color" format="color"/>
     </declare-styleable>
 
+    <declare-styleable name="BaseGlideImageView">
+        <attr name="base_placeholder" format="reference"/>
+        <attr name="base_error" format="reference"/>
+        <attr name="base_RoundingRadius" format="integer"/>
+        <attr name="base_circle" format="boolean"/>
+        <attr name="base_preview" format="boolean"/>
+    </declare-styleable>
+
 </resources>
