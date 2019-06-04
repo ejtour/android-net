@@ -50,7 +50,6 @@ public class MainActivity extends BaseLoadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         StatusBarCompat.setTranslucent(getWindow(), true);
-        StatusBarCompat.setLightStatusBar(getWindow(), true);
         ButterKnife.bind(this);
         mGroupType.setOnCheckedChangeListener(new TypeOnCheckedChangeListener());
         setCurrentTab(PageType.HOME);
