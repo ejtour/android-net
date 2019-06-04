@@ -12,4 +12,6 @@
     <dimen name="base_title_center_size">18sp</dimen>
     <dimen name="base_title_height">44dp</dimen>
 
+    <dimen name="base_text_10">10sp</dimen>
+
 </resources>
