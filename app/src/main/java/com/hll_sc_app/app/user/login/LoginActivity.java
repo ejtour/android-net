@@ -93,13 +93,15 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
             return;
         }
         List<String> list = Arrays.asList(authType.split(","));
-        if (list.size() == 1 && list.contains("2")) {
-            toManageActivity();
-            return;
-        }
-        if (list.size() > 1 && list.contains("1")) {
+        if (list.size() == 1) {
+            toBusinessActivity();
+        } else {
             showChoiceDialog();
         }
+    }
+
+    private void toBusinessActivity() {
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME, this);
     }
 
     @Override
@@ -115,7 +117,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
 
             @Override
             public void toBusiness() {
-                // TODO:销售CRM
+                toBusinessActivity();
             }
 
             @Override

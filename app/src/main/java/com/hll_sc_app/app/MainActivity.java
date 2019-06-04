@@ -2,6 +2,7 @@ package com.hll_sc_app.app;
 
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
@@ -16,6 +17,9 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +56,7 @@ public class MainActivity extends BaseLoadActivity {
      *
      * @param tag 标识位
      */
-    public void setCurrentTab(int tag) {
+    public void setCurrentTab(@PageType int tag) {
         if (tag == mOldFragmentTag) {
             return;
         }
@@ -67,11 +71,11 @@ public class MainActivity extends BaseLoadActivity {
                     mMainFragment = (MainHomeFragment) RouterUtil.getFragment(RouterConfig.ROOT_HOME_MAIN);
                     currentFragment = mMainFragment;
                     break;
-                case PageType.CATEGORY:
+                case PageType.ORDER:
                     mOrderFragment = (OrderHomeFragment) RouterUtil.getFragment(RouterConfig.ROOT_HOME_ORDER);
                     currentFragment = mOrderFragment;
                     break;
-                case PageType.CART:
+                case PageType.GOODS:
                     mGoodsFragment = (GoodsHomeFragment) RouterUtil.getFragment(RouterConfig.ROOT_HOME_GOODS);
                     currentFragment = mGoodsFragment;
                     break;
@@ -96,27 +100,25 @@ public class MainActivity extends BaseLoadActivity {
     /**
      * Fragment 页面类型
      */
-    public final class PageType {
+    @IntDef({PageType.HOME, PageType.ORDER, PageType.GOODS, PageType.MINE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface PageType {
         /**
          * 首页
          */
-        static final int HOME = 1;
+        int HOME = 1;
         /**
-         * 分类
+         * 订单
          */
-        static final int CATEGORY = 2;
+        int ORDER = 2;
         /**
-         * 进货单
+         * 商品
          */
-        static final int CART = 3;
+        int GOODS = 3;
         /**
          * 我的
          */
-        static final int MINE = 4;
-
-        private PageType() {
-            throw new IllegalStateException("Utility class");
-        }
+        int MINE = 4;
     }
 
     private class TypeOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
@@ -127,13 +129,13 @@ public class MainActivity extends BaseLoadActivity {
                     // 首页
                     setCurrentTab(PageType.HOME);
                     break;
-                case R.id.rbtn_category:
+                case R.id.rbtn_order:
                     // 分类
-                    setCurrentTab(PageType.CATEGORY);
+                    setCurrentTab(PageType.ORDER);
                     break;
-                case R.id.rbtn_cart:
+                case R.id.rbtn_product:
                     // 购物车
-                    setCurrentTab(PageType.CART);
+                    setCurrentTab(PageType.GOODS);
                     break;
                 case R.id.rbtn_mine:
                     // 我的

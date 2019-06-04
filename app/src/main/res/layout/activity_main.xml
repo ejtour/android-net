@@ -42,12 +42,12 @@
                 android:textSize="@dimen/base_text_10"/>
 
             <com.hll_sc_app.base.widget.TipRadioButton
-                android:id="@+id/rbtn_category"
+                android:id="@+id/rbtn_order"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/bg_main_button_category"
+                android:drawableTop="@drawable/bg_main_button_order"
                 android:drawablePadding="3dp"
                 android:gravity="center"
                 android:paddingTop="8dp"
@@ -57,12 +57,12 @@
                 android:textSize="@dimen/base_text_10"/>
 
             <com.hll_sc_app.base.widget.TipRadioButton
-                android:id="@+id/rbtn_cart"
+                android:id="@+id/rbtn_product"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:button="@null"
-                android:drawableTop="@drawable/bg_main_button_cart"
+                android:drawableTop="@drawable/bg_main_button_product"
                 android:drawablePadding="3dp"
                 android:gravity="center"
                 android:paddingTop="8dp"
