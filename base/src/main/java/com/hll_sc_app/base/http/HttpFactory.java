@@ -2,6 +2,7 @@ package com.hll_sc_app.base.http;
 
 import android.support.annotation.NonNull;
 
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.Md5Utils;
@@ -139,13 +140,13 @@ public class HttpFactory {
             }
             // 拼接签名前字符串
             Request.Builder builder = chain.request().newBuilder()
-//                .addHeader("accessToken", UserConfig.accessToken())
+                .addHeader("accessToken", UserConfig.accessToken())
                 .addHeader("traceID", TraceIDUtils.getTraceID())
                 .addHeader("cs", CS)
                 .addHeader("source", SOURCE)
                 .addHeader("cv", SystemUtils.getVersionName(App.INSTANCE))
-                .addHeader("sign", Md5Utils.getMD5(SIGN_KEY + "_" + pv + "_" + body));
-//                .addHeader("groupID", UserConfig.getGroupID());
+                .addHeader("sign", Md5Utils.getMD5(SIGN_KEY + "_" + pv + "_" + body))
+                .addHeader("groupID", UserConfig.getGroupID());
             return chain.proceed(builder.build());
         }
     }

@@ -12,4 +12,13 @@
         <item name="android:fitsSystemWindows">false</item>
     </style>
 
+    <style name="BtnLogin">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">260dp</item>
+        <item name="android:textColor">@color/base_white</item>
+        <item name="android:textSize">@dimen/base_text_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_login_button</item>
+    </style>
+
 </resources>

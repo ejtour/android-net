@@ -100,12 +100,7 @@ public class RouterUtil {
      * @param postCard 登录跳转前的目标页面
      */
     static void goToLogin(String postCard, Bundle bundle) {
-//        ARouter
-//            .getInstance()
-//            .build(RouterConfig.USER_LOGIN)
-//            .with(bundle)
-//            .withString(DESTINATION, postCard)
-//            .navigation();
+        ARouter.getInstance().build(RouterConfig.USER_LOGIN).with(bundle).withString(DESTINATION, postCard).navigation();
     }
 
     /**
@@ -129,16 +124,12 @@ public class RouterUtil {
      * @param context Activity and so on.
      */
     public static void goToActivity(String url, Activity context) {
-        ARouter
-            .getInstance()
-            .build(url)
-            .setProvider(new LoginInterceptor())
-            .navigation(context, new NavCallback() {
-                @Override
-                public void onArrival(Postcard postcard) {
-                    context.finish();
-                }
-            });
+        ARouter.getInstance().build(url).setProvider(new LoginInterceptor()).navigation(context, new NavCallback() {
+            @Override
+            public void onArrival(Postcard postcard) {
+                context.finish();
+            }
+        });
     }
 
     /**
@@ -230,7 +221,8 @@ public class RouterUtil {
      * @param activity    activity
      * @param requestCode requestCode
      */
-    public static void goToActivity(String url, Activity activity, int requestCode, ArrayList<? extends Parcelable> value) {
+    public static void goToActivity(String url, Activity activity, int requestCode,
+                                    ArrayList<? extends Parcelable> value) {
         ARouter.getInstance().build(url)
             .withParcelableArrayList("parcelable", value)
             .setProvider(new LoginInterceptor())

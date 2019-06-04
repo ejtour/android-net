@@ -7,7 +7,7 @@ android {
         minSdkVersion MINSDKVERSION as int
         targetSdkVersion TARGETSDKVERSION as int
         versionCode 1
-        versionName "1.0"
+        versionName "2.11.0"
         multiDexEnabled true
         flavorDimensions "default"
         packagingOptions {
@@ -98,4 +98,6 @@ dependencies {
     // ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     implementation 'com.jakewharton:butterknife:8.4.0'
+    // arouter
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
 }
