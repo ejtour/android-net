@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Interceptor;
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback;
 import com.alibaba.android.arouter.facade.template.IInterceptor;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 
 /**
  * 登录的拦截器
@@ -16,34 +17,20 @@ import com.hll_sc_app.base.utils.Constant;
  */
 @Interceptor(priority = 8, name = Constant.LOGIN_INTERCEPTOR)
 public class LoginInterceptor implements IInterceptor {
-    private Context mContext;
 
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
-//        if (postcard.getExtra() == Constant.LOGIN_EXTRA) {
-//            if (UserConfig.isLogin()) {
-//                checkRight(postcard, callback);
-//            } else {
-//                noLogin(postcard, callback);
-//            }
-//        } else {
-//            checkRight(postcard, callback);
-//        }
-    }
-
-    /**
-     * 未登录跳转到登录页面,传递目标的跳转地址
-     *
-     * @param postcard postcard
-     * @param callback callback
-     */
-    private void noLogin(Postcard postcard, InterceptorCallback callback) {
-        callback.onInterrupt(null);
-        RouterUtil.goToLogin(postcard.getPath(), postcard.getExtras());
+        if (postcard.getExtra() == Constant.LOGIN_EXTRA) {
+            if (!UserConfig.isLogin()) {
+                callback.onInterrupt(null);
+                RouterUtil.goToLogin(postcard.getPath(), postcard.getExtras());
+            }
+        } else {
+            callback.onContinue(postcard);
+        }
     }
 
     @Override
     public void init(Context context) {
-        this.mContext = context;
     }
 }

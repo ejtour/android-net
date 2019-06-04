@@ -100,10 +100,10 @@
                     android:id="@+id/txt_confirm"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:background="@drawable/base_bg_selector_dialog_confim"
+                    android:background="@drawable/base_bg_selector_dialog_confirm"
                     android:gravity="center"
                     android:textColor="@color/base_white"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/base_text_12"
                     tools:text="立即完善"/>
 
             </LinearLayout>

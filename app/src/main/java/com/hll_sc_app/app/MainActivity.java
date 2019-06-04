@@ -7,27 +7,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.hll_sc_app.R;
-import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.app.goods.GoodsHomeFragment;
 import com.hll_sc_app.app.main.MainHomeFragment;
 import com.hll_sc_app.app.mine.MineHomeFragment;
 import com.hll_sc_app.app.order.OrderHomeFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.BaseCallback;
-import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * 首页
@@ -35,7 +26,7 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/5/31
  */
-@Route(path = RouterConfig.ROOT_HOME)
+@Route(path = RouterConfig.ROOT_HOME, extras = Constant.LOGIN_EXTRA)
 public class MainActivity extends BaseLoadActivity {
     @BindView(R.id.group_type)
     RadioGroup mGroupType;
@@ -100,32 +91,6 @@ public class MainActivity extends BaseLoadActivity {
         mOldFragmentTag = tag;
         mOldFragment = currentFragment;
         transaction.commitAllowingStateLoss();
-    }
-
-    public void onViewClicked() {
-        showToast("txt_confirm");
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("loginPhone", "13111112222")
-            .put("loginPWD", "111111")
-            .put("checkCode", "")
-            .put("deviceId", PushServiceFactory.getCloudPushService().getDeviceId())
-            .create();
-        UserService.INSTANCE.login(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> showLoading())
-            .doFinally(this::hideLoading)
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
-            .subscribe(new BaseCallback<Object>() {
-                @Override
-                public void onSuccess(Object o) {
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    showError(e);
-                }
-            });
     }
 
     /**

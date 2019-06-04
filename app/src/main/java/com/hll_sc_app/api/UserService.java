@@ -2,6 +2,7 @@ package com.hll_sc_app.api;
 
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseResp;
+import com.hll_sc_app.base.bean.LoginResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 
@@ -27,5 +28,5 @@ public interface UserService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:101002")
-    Observable<BaseResp<Object>> login(@Body BaseMapReq req);
+    Observable<BaseResp<LoginResp>> login(@Body BaseMapReq req);
 }

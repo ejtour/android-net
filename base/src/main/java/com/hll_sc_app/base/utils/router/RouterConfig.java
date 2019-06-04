@@ -8,6 +8,10 @@ package com.hll_sc_app.base.utils.router;
  */
 public class RouterConfig {
     /**
+     * 登录
+     */
+    public static final String USER_LOGIN = "/activity/user/login";
+    /**
      * 首页
      */
     public static final String ROOT_HOME = "/activity/home/main";
