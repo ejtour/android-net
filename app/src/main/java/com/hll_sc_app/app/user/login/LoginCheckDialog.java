@@ -145,6 +145,5 @@ public class LoginCheckDialog extends BaseDialog {
          * @param code 验证码
          */
         void login(String code);
-
     }
 }
