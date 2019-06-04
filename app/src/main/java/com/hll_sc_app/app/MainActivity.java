@@ -5,9 +5,12 @@ import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.GoodsHomeFragment;
 import com.hll_sc_app.app.main.MainHomeFragment;
@@ -46,6 +49,8 @@ public class MainActivity extends BaseLoadActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StatusBarCompat.setTranslucent(getWindow(), true);
+        StatusBarCompat.setLightStatusBar(getWindow(), true);
         ButterKnife.bind(this);
         mGroupType.setOnCheckedChangeListener(new TypeOnCheckedChangeListener());
         setCurrentTab(PageType.HOME);
