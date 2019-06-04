@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <color android:color="#03000000"/>
-    </item>
-    <item android:top="0.2dp">
-        <color android:color="#05000000"/>
-    </item>
-    <item android:top="0.4dp">
-        <color android:color="#08000000"/>
-    </item>
-    <item android:top="0.6dp">
-        <color android:color="#0A000000"/>
-    </item>
-    <item android:top="0.8dp">
-        <color android:color="#0D000000"/>
+    <item android:gravity="top">
+        <shape>
+            <size android:height="1dp" />
+            <gradient
+                android:angle="90"
+                android:endColor="@android:color/transparent"
+                android:startColor="#0D000000" />
+        </shape>
     </item>
     <item android:top="1dp">
-        <color android:color="@color/base_white"/>
+        <color android:color="@color/base_white" />
     </item>
 </layer-list>
