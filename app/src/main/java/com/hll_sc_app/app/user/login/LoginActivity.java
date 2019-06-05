@@ -1,11 +1,19 @@
 package com.hll_sc_app.app.user.login;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.Postcard;
@@ -18,14 +26,13 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ClearEditText;
-
-import java.util.Arrays;
-import java.util.List;
+import com.hll_sc_app.citymall.util.ViewUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +56,12 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
     TextView mTxtLogin;
     @Autowired(name = RouterUtil.DESTINATION)
     String mDestination;
+    @BindView(R.id.ll_content)
+    RelativeLayout mLlContent;
+    @BindView(R.id.ll_login)
+    LinearLayout mLlLogin;
+    @BindView(R.id.ll_toLogin)
+    LinearLayout mLlToLogin;
     private LoginPresenter mPresenter;
 
     @Override
@@ -66,6 +79,8 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
     }
 
     private void initView() {
+        mLlContent.post(() -> ObjectAnimator.ofFloat(mLlContent, "translationY", mLlContent.getHeight(),
+            UIUtils.dip2px(127)).setDuration(800).start());
         InputTextWatcher textWatcher = new InputTextWatcher();
         mEdtPhone.setText(GlobalPreference.getParam(LoginPresenter.LOGIN_PHONE, ""));
         mEdtPhone.addTextChangedListener(textWatcher);
@@ -92,8 +107,8 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
             toManageActivity();
             return;
         }
-        List<String> list = Arrays.asList(authType.split(","));
-        if (list.size() == 1) {
+        String[] strings = authType.split(",");
+        if (strings.length == 1) {
             toBusinessActivity();
         } else {
             showChoiceDialog();
@@ -177,7 +192,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         showChoiceDialog();
     }
 
-    @OnClick({R.id.txt_login, R.id.txt_findPWD, R.id.txt_register})
+    @OnClick({R.id.txt_login, R.id.txt_findPWD, R.id.txt_register, R.id.txt_toLogin, R.id.txt_toRegister})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_login:
@@ -187,11 +202,41 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
 //                RouterUtil.goToActivity(RouterConfig.USER_FIND_PWD, this);
                 break;
             case R.id.txt_register:
+            case R.id.txt_toRegister:
                 toRegister();
+                break;
+            case R.id.txt_toLogin:
+                toLogin();
                 break;
             default:
                 break;
         }
+    }
+
+    private void toLogin() {
+        float screenHeight = UIUtils.getScreenHeight(this);
+        float translationY = screenHeight - UIUtils.dip2px(130) - mLlContent.getHeight();
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(mLlContent, "translationY", -translationY);
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(mLlToLogin, "alpha", 1, 0);
+        ObjectAnimator animator3 = ObjectAnimator.ofFloat(mLlLogin, "alpha", 0, 1);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(animator1).with(animator2).with(animator3);
+        animatorSet.setDuration(800);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mLlToLogin.setVisibility(View.INVISIBLE);
+                ViewUtils.getEditFocus(mEdtPhone);
+                InputMethodManager imm =
+                    (InputMethodManager) LoginActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+        });
+        animatorSet.start();
+        mLlLogin.setVisibility(View.VISIBLE);
     }
 
     private class InputTextWatcher implements TextWatcher {
