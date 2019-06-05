@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_activity_bg"
@@ -228,6 +229,61 @@
                     android:paddingRight="15dp"/>
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_licencePhotoUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_white_radius_5_solid"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="营业执照"
+                    android:textColor="@color/base_text666"
+                    android:textSize="@dimen/base_text_10"/>
+
+                <com.hll_sc_app.base.widget.ImgUploadBlock
+                    android:id="@+id/img_licencePhotoUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    app:base_subTitle=" "
+                    app:base_title="请上传公司营业执照"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edt_operationGroupID"
+                style="@style/EdtRegister"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_white_radius_3_solid"
+                android:drawableLeft="@drawable/ic_register_operationgroupid"
+                android:drawablePadding="15dp"
+                android:hint="请输入推荐码（选填）"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"/>
+
+            <TextView
+                android:id="@+id/txt_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="提交注册即表明您同意《二十二城服务条款》"
+                android:textColor="@color/base_text999"
+                android:textSize="@dimen/base_text_10"/>
         </LinearLayout>
 
     </ScrollView>

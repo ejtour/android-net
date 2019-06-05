@@ -1,13 +1,22 @@
 package com.hll_sc_app.app.user.register;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -16,7 +25,10 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.GetIdentifyCodeReq;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
+import com.hll_sc_app.base.widget.ImgUploadBlock;
+import com.hll_sc_app.bean.user.PageParams;
 
 import java.util.Locale;
 
@@ -30,7 +42,7 @@ import butterknife.OnClick;
  * @author zhuyingsong
  * @date 2019/6/5
  */
-@Route(path = RouterConfig.USER_FIND)
+@Route(path = RouterConfig.USER_REGISTER)
 public class RegisterActivity extends BaseLoadActivity implements RegisterContract.IFindView {
     @BindView(R.id.edt_phone)
     EditText mEdtPhone;
@@ -44,6 +56,28 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     EditText mEdtCheckLoginPWD;
     @BindView(R.id.txt_confirm)
     TextView mTxtConfirm;
+    @BindView(R.id.edt_groupName)
+    EditText mEdtGroupName;
+    @BindView(R.id.edt_liknman)
+    EditText mEdtLiknman;
+    @BindView(R.id.txt_groupDistrict)
+    TextView mTxtGroupDistrict;
+    @BindView(R.id.rl_groupDistrict)
+    RelativeLayout mRlGroupDistrict;
+    @BindView(R.id.edt_groupAddress)
+    EditText mEdtGroupAddress;
+    @BindView(R.id.img_licencePhotoUrl)
+    ImgUploadBlock mImgLicencePhotoUrl;
+    @BindView(R.id.ll_licencePhotoUrl)
+    LinearLayout mLlLicencePhotoUrl;
+    @BindView(R.id.edt_operationGroupID)
+    EditText mEdtOperationGroupID;
+    @BindView(R.id.txt_agreement)
+    TextView mTxtAgreement;
+    @BindView(R.id.scrollView)
+    ScrollView mScrollView;
+    @BindView(R.id.fl_bottom)
+    FrameLayout mFlBottom;
     private RegisterPresenter mPresenter;
 
     @Override
@@ -59,6 +93,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     }
 
     private void initView() {
+        setAgreement();
         InputTextWatcher textWatcher = new InputTextWatcher();
         mEdtPhone.addTextChangedListener(textWatcher);
         mEdtCode.addTextChangedListener(textWatcher);
@@ -92,6 +127,22 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         });
     }
 
+    private void setAgreement() {
+        String content = mTxtAgreement.getText().toString();
+        SpannableString spannableString = new SpannableString(content);
+        spannableString.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                PageParams pageParams = new PageParams();
+                pageParams.setTitle("服务条款");
+                pageParams.setProtocolUrl("file:////android_asset/registerLegal.html");
+                RouterUtil.goToActivity(RouterConfig.WEB_VIEW_PROTOCOL, pageParams);
+            }
+        }, content.length() - 10, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTxtAgreement.setText(spannableString);
+        mTxtAgreement.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -119,6 +170,10 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     public void findSuccess() {
         showToast("密码修改成功");
         finish();
+    }
+
+    @OnClick(R.id.rl_groupDistrict)
+    public void onViewClicked() {
     }
 
     private class InputTextWatcher implements TextWatcher {

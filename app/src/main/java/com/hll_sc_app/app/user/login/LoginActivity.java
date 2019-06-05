@@ -189,8 +189,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
     }
 
     private void toRegister() {
-//        RouterUtil.goToActivity(RouterConfig.ACTIVITY_USER_REGISTER);
-        showChoiceDialog();
+        RouterUtil.goToActivity(RouterConfig.USER_REGISTER);
     }
 
     @OnClick({R.id.txt_login, R.id.txt_findPWD, R.id.txt_register, R.id.txt_toLogin, R.id.txt_toRegister})

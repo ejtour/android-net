@@ -21,4 +21,10 @@
         <attr name="base_preview" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="BaseUploadImgBlock">
+        <attr name="base_title" format="string"/>
+        <attr name="base_subTitle" format="string"/>
+        <attr name="base_imgIcon" format="reference"/>
+    </declare-styleable>
+
 </resources>

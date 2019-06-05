@@ -1,5 +1,5 @@
-apply plugin: 'com.android.library'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
@@ -76,9 +76,6 @@ dependencies {
     api 'com.zhihu.android:matisse:0.5.2-beta4'
     // 状态栏颜色处理
     api 'com.githang:status-bar-compat:0.7'
-    // ButterKnife
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    implementation 'com.jakewharton:butterknife:8.4.0'
     // Glide
     api 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
