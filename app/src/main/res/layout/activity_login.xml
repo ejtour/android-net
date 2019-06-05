@@ -5,15 +5,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_login_bg">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/ll_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
         <TextView
+            android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="二十二城供应商"
@@ -22,90 +24,128 @@
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/txt_title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_title"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="30dp"
             android:text="你的贴心掌上好管家"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_16"/>
 
-        <com.hll_sc_app.base.widget.ClearEditText
-            android:id="@+id/edt_phone"
+        <LinearLayout
+            android:id="@+id/ll_login"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/bg_login_edit"
-            android:drawableLeft="@drawable/ic_login_phone_white"
-            android:drawablePadding="15dp"
-            android:hint="请输入手机号"
-            android:inputType="number"
-            android:maxLength="11"
-            android:nextFocusDown="@+id/edt_password"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:textColor="@color/base_white"
-            android:textColorHighlight="@color/base_colorPrimary"
-            android:textColorHint="@color/base_white"
-            android:textSize="@dimen/base_text_13"/>
+            android:layout_height="220dp"
+            android:layout_below="@+id/txt_title2"
+            android:orientation="vertical"
+            android:visibility="invisible">
 
-        <com.hll_sc_app.base.widget.ClearEditText
-            android:id="@+id/edt_password"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/bg_login_edit"
-            android:drawableLeft="@drawable/ic_login_pwd_white"
-            android:drawablePadding="15dp"
-            android:hint="请输入密码"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:maxLength="20"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:textColor="@color/base_white"
-            android:textColorHighlight="@color/base_colorPrimary"
-            android:textColorHint="@color/base_white"
-            android:textSize="@dimen/base_text_13"/>
+            <com.hll_sc_app.base.widget.ClearEditText
+                android:id="@+id/edt_phone"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/bg_login_edit"
+                android:drawableLeft="@drawable/ic_login_phone_white"
+                android:drawablePadding="15dp"
+                android:hint="请输入手机号"
+                android:inputType="number"
+                android:maxLength="11"
+                android:nextFocusDown="@+id/edt_password"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/base_white"
+                android:textColorHighlight="@color/base_colorPrimary"
+                android:textColorHint="@color/base_white"
+                android:textSize="@dimen/base_text_13"/>
 
-        <TextView
-            android:id="@+id/txt_login"
-            style="@style/BtnLogin"
-            android:layout_gravity="center"
-            android:layout_marginTop="35dp"
-            android:layout_marginBottom="20dp"
-            android:enabled="false"
-            android:text="登录"/>
+            <com.hll_sc_app.base.widget.ClearEditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_login_edit"
+                android:drawableLeft="@drawable/ic_login_pwd_white"
+                android:drawablePadding="15dp"
+                android:hint="请输入密码"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@color/base_white"
+                android:textColorHighlight="@color/base_colorPrimary"
+                android:textColorHint="@color/base_white"
+                android:textSize="@dimen/base_text_13"/>
+
+            <TextView
+                android:id="@+id/txt_login"
+                style="@style/BtnLogin"
+                android:layout_gravity="center"
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="20dp"
+                android:enabled="false"
+                android:text="登录"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_findPWD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="忘记密码"
+                    android:textColor="@color/base_white"
+                    android:textSize="@dimen/base_text_13"/>
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="13dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/base_white"/>
+
+                <TextView
+                    android:id="@+id/txt_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="注册账号"
+                    android:textColor="@color/base_white"
+                    android:textSize="@dimen/base_text_13"/>
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_toLogin"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:gravity="center"
+            android:layout_height="93dp"
+            android:layout_below="@+id/txt_title2"
+            android:gravity="top"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txt_findPWD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="忘记密码"
-                android:textColor="@color/base_white"
-                android:textSize="@dimen/base_text_13"/>
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="13dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@color/base_white"/>
+                android:id="@+id/txt_toLogin"
+                style="@style/BtnLogin"
+                android:layout_width="0dp"
+                android:layout_marginRight="7.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_login_button2"
+                android:text="登录"/>
 
             <TextView
-                android:id="@+id/txt_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="注册账号"
-                android:textColor="@color/base_white"
-                android:textSize="@dimen/base_text_13"/>
+                android:id="@+id/txt_toRegister"
+                style="@style/BtnLogin"
+                android:layout_width="0dp"
+                android:layout_marginLeft="7.5dp"
+                android:layout_weight="1"
+                android:text="新用户"/>
+
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
