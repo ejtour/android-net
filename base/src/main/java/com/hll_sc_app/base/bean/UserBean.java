@@ -68,10 +68,15 @@ public class UserBean {
      */
     private String selfOperated;
 
-    @Generated(hash = 1779642731)
+    /**
+     * 角色 ID
+     */
+    private String roleID;
+
+    @Generated(hash = 392085566)
     public UserBean(String authType, String accessToken, String email, String employeeID,
-                    String employeeName, String groupID, String groupLogoUrl, String groupName,
-                    List<String> roleCode, String roleNames, String roles, String selfOperated) {
+            String employeeName, String groupID, String groupLogoUrl, String groupName,
+            List<String> roleCode, String roleNames, String roles, String selfOperated, String roleID) {
         this.authType = authType;
         this.accessToken = accessToken;
         this.email = email;
@@ -84,6 +89,7 @@ public class UserBean {
         this.roleNames = roleNames;
         this.roles = roles;
         this.selfOperated = selfOperated;
+        this.roleID = roleID;
     }
 
     @Generated(hash = 1203313951)
@@ -184,5 +190,13 @@ public class UserBean {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public String getRoleID() {
+        return this.roleID;
+    }
+
+    public void setRoleID(String roleID) {
+        this.roleID = roleID;
     }
 }

@@ -20,12 +20,6 @@ public class ApiScheduler {
             .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static <R, T extends BaseResp<R>> ObservableTransformer<T, R> getDefaultObservableScheduler() {
-        return upstream -> upstream.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map(new Precondition<>());
-    }
-
     public static <R, T extends BaseResp<R>> ObservableTransformer<T, R> getDefaultObservableWithLoadingScheduler(SimpleObserver<R> observer) {
         return upstream -> upstream.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

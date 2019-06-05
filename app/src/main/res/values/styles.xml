@@ -4,6 +4,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/color_222222</item>
+        <item name="android:textColorHint">@color/color_999999</item>
         <item name="android:windowBackground">@color/base_activity_bg</item>
     </style>
 
@@ -19,7 +21,7 @@
         <item name="android:textColor">@color/base_white</item>
         <item name="android:textSize">@dimen/base_text_16</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/bg_login_button</item>
+        <item name="android:background">@drawable/bg_primary_button</item>
     </style>
 
     <style name="EdtRegister">

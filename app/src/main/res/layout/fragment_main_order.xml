@@ -43,7 +43,7 @@
         android:paddingLeft="38dp"
         android:paddingRight="30dp"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Small.Inverse"
+        android:textAppearance="@style/TextAppearance.City22.Small.White"
         android:textColorHint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@id/fmo_options"
         app:layout_constraintEnd_toStartOf="@id/fmo_options"
@@ -70,37 +70,6 @@
         app:layout_constraintEnd_toEndOf="@id/fmo_search"
         app:layout_constraintTop_toTopOf="@id/fmo_search" />
 
-    <View
-        android:id="@+id/fmo_bottom_bar_bg"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/bottom_bar_height"
-        android:background="@drawable/base_bg_shadow_bottom_bar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/fmo_select_all"
-        android:layout_width="35dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:scaleType="centerInside"
-        android:src="@drawable/bg_selector_check_box"
-        app:layout_constraintBottom_toBottomOf="@id/fmo_bottom_bar_bg"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintStart_toStartOf="@id/fmo_bottom_bar_bg"
-        app:layout_constraintTop_toTopOf="@id/fmo_bottom_bar_bg" />
-
-    <TextView
-        android:id="@+id/fmo_select_all_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="全选"
-        android:textAppearance="@style/TextAppearance.City22.Little.Inverse"
-        app:layout_constraintBottom_toBottomOf="@id/fmo_select_all"
-        app:layout_constraintStart_toEndOf="@id/fmo_select_all"
-        app:layout_constraintTop_toTopOf="@id/fmo_select_all" />
-
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/fmo_tab_layout"
         android:layout_width="0dp"
@@ -121,7 +90,7 @@
         android:id="@+id/fmo_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/fmo_bottom_bar_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fmo_tab_layout" />

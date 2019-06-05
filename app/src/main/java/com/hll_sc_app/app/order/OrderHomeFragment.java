@@ -18,7 +18,12 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.citymall.util.ViewUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,18 +37,36 @@ import butterknife.Unbinder;
  * @since 2019/6/4
  */
 @Route(path = RouterConfig.ROOT_HOME_ORDER)
-public class OrderHomeFragment extends BaseLoadFragment implements OrderHomeFragmentContract.IHomeView {
+public class OrderHomeFragment extends BaseLoadFragment {
     Unbinder unbinder;
     @BindView(R.id.fmo_options)
     ImageView mOptions;
     @BindView(R.id.fmo_clear_search)
     ImageView mClearSearch;
-    @BindView(R.id.fmo_select_all)
-    ImageView mSelectAll;
     @BindView(R.id.fmo_tab_layout)
     SlidingTabLayout mTabLayout;
     @BindView(R.id.fmo_pager)
     ViewPager mPager;
+    private final OrderParam mOrderParam = new OrderParam();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(priority = 1)
+    public void handleOrderEvent(OrderEvent event) {
+        if (event.getMessage().equals(OrderEvent.SEARCH_WORDS)) {
+            mOrderParam.setSearchWords((String) event.getData());
+        }
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -56,8 +79,8 @@ public class OrderHomeFragment extends BaseLoadFragment implements OrderHomeFrag
     }
 
     private void initView() {
-        String[] titles = {"待接单", "待发货", "已发货", "待结算", "已签收", "已取消"};
-        mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager(), titles));
+        String[] titles = {"待转单", "待接单", "待发货", "已发货", "待结算", "已签收", "已取消"};
+        mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager()));
         mPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mPager, titles);
     }
@@ -74,7 +97,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements OrderHomeFrag
         unbinder.unbind();
     }
 
-    @OnClick({R.id.fmo_search, R.id.fmo_clear_search, R.id.fmo_select_all})
+    @OnClick({R.id.fmo_search, R.id.fmo_clear_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fmo_search:
@@ -83,31 +106,23 @@ public class OrderHomeFragment extends BaseLoadFragment implements OrderHomeFrag
             case R.id.fmo_clear_search:
                 showToast("清除");
                 break;
-            case R.id.fmo_select_all:
-                view.setSelected(!view.isSelected());
-                break;
         }
     }
 
     class OrderListFragmentPager extends FragmentPagerAdapter {
 
-        private final String[] mTitles;
-
-        OrderListFragmentPager(FragmentManager fm, String[] titles) {
+        OrderListFragmentPager(FragmentManager fm) {
             super(fm);
-            mTitles = titles;
         }
 
         @Override
         public Fragment getItem(int position) {
-            OrderListFragment fragment = new OrderListFragment();
-            fragment.setTitle(mTitles[position]);
-            return fragment;
+            return OrderManageFragment.newInstance(position, mOrderParam);
         }
 
         @Override
         public int getCount() {
-            return mTitles.length;
+            return 7;
         }
     }
 }

@@ -8,7 +8,7 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.citymall.util.CommonUitls;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -35,40 +35,40 @@ public class FindPasswordPresenter implements FindPasswordContract.IFindPresente
 
     @Override
     public void register(FindPasswordContract.IFindView view) {
-        this.mView = CommonUitls.checkNotNull(view);
+        this.mView = CommonUtils.checkNotNull(view);
     }
 
     @Override
     public void toFind(String loginPhone, String checkCode, String loginPWD, String checkLoginPWD) {
         if (!checkPhoneNumber(loginPhone)
-            || !checkPassword(loginPWD)
-            || !checkAgainPassword(checkLoginPWD)
-            || !samePWD(loginPWD, checkLoginPWD)) {
+                || !checkPassword(loginPWD)
+                || !checkAgainPassword(checkLoginPWD)
+                || !samePWD(loginPWD, checkLoginPWD)) {
             return;
         }
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("loginPhone", loginPhone)
-            .put("loginPWD", loginPWD)
-            .put("checkCode", checkCode)
-            .put("checkLoginPWD", checkLoginPWD)
-            .create();
+                .put("loginPhone", loginPhone)
+                .put("loginPWD", loginPWD)
+                .put("checkCode", checkCode)
+                .put("checkLoginPWD", checkLoginPWD)
+                .create();
         UserService.INSTANCE.find(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<Object>() {
-                @Override
-                public void onSuccess(Object resp) {
-                    mView.findSuccess();
-                }
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object resp) {
+                        mView.findSuccess();
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 
     /**
@@ -77,7 +77,7 @@ public class FindPasswordPresenter implements FindPasswordContract.IFindPresente
      * @return false-不符合
      */
     private boolean checkPhoneNumber(String loginPhone) {
-        if (!CommonUitls.isPhone(loginPhone)) {
+        if (!CommonUtils.isPhone(loginPhone)) {
             mView.showToast("输入手机号格式不正确");
             return false;
         }

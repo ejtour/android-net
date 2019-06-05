@@ -1,6 +1,8 @@
 package com.hll_sc_app.base.bean;
 
 
+import android.text.TextUtils;
+
 import java.util.LinkedHashMap;
 
 /**
@@ -21,7 +23,7 @@ public class BaseMapReq {
     }
 
     private void put(String key, String value) {
-        data.put(key, value);
+        if (!TextUtils.isEmpty(value)) data.put(key, value);
     }
 
     private String get(String key) {

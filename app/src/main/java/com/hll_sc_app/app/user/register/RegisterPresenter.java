@@ -8,7 +8,7 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.citymall.util.CommonUitls;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -35,7 +35,7 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
 
     @Override
     public void register(RegisterContract.IFindView view) {
-        this.mView = CommonUitls.checkNotNull(view);
+        this.mView = CommonUtils.checkNotNull(view);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
      * @return false-不符合
      */
     private boolean checkPhoneNumber(String loginPhone) {
-        if (!CommonUitls.isPhone(loginPhone)) {
+        if (!CommonUtils.isPhone(loginPhone)) {
             mView.showToast("输入手机号格式不正确");
             return false;
         }
