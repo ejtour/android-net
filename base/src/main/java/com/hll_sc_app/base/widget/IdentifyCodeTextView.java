@@ -2,6 +2,7 @@ package com.hll_sc_app.base.widget;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.hll_sc_app.base.UseCaseException;
@@ -41,6 +42,10 @@ public class IdentifyCodeTextView extends AppCompatTextView {
         Observable<Long> mObservable = Observable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS);
         this.setOnClickListener(v -> {
             if (mIdentifyCodeOption == null) {
+                return;
+            }
+            if (TextUtils.isEmpty(mIdentifyCodeOption.getParams().getLoginPhone())) {
+                mIdentifyCodeOption.getError("手机号不能为空");
                 return;
             }
             if (!CommonUitls.isPhone(mIdentifyCodeOption.getParams().getLoginPhone())) {

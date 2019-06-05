@@ -61,6 +61,6 @@
         android:background="@drawable/base_bg_selector_dialog_cancel"
         android:gravity="center"
         android:text="取消登录"
-        android:textColor="@drawable/base_text_selector_dialog_cancel"
+        android:textColor="@color/base_colorPrimary"
         android:textSize="@dimen/base_text_12"/>
 </LinearLayout>
