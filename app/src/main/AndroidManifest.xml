@@ -55,6 +55,10 @@
             android:name=".app.user.find.FindPasswordActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".app.user.register.RegisterActivity"
+            android:screenOrientation="portrait"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

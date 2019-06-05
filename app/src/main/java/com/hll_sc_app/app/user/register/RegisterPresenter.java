@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.user.find;
+package com.hll_sc_app.app.user.register;
 
 import android.text.TextUtils;
 
@@ -14,18 +14,18 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
- * 找回密码页面
+ * 注册页面
  *
  * @author zhuyingsong
  * @date 2019/6/5
  */
-public class FindPasswordPresenter implements FindPasswordContract.IFindPresenter {
+public class RegisterPresenter implements RegisterContract.IFindPresenter {
     private static final int PWD_MIN = 6;
     private static final int PWD_MAX = 20;
-    private FindPasswordContract.IFindView mView;
+    private RegisterContract.IFindView mView;
 
-    static FindPasswordPresenter newInstance() {
-        return new FindPasswordPresenter();
+    static RegisterPresenter newInstance() {
+        return new RegisterPresenter();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class FindPasswordPresenter implements FindPasswordContract.IFindPresente
     }
 
     @Override
-    public void register(FindPasswordContract.IFindView view) {
+    public void register(RegisterContract.IFindView view) {
         this.mView = CommonUitls.checkNotNull(view);
     }
 

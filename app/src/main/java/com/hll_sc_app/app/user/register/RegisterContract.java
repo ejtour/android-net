@@ -1,15 +1,15 @@
-package com.hll_sc_app.app.user.find;
+package com.hll_sc_app.app.user.register;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 
 /**
- * 找回密码页面
+ * 注册页面
  *
  * @author zhuyingsong
  * @date 2019/6/5
  */
-public interface FindPasswordContract {
+public interface RegisterContract {
 
     interface IFindView extends ILoadView {
         /**
