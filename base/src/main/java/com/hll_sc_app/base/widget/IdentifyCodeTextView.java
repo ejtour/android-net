@@ -12,7 +12,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.service.AccountService;
-import com.hll_sc_app.citymall.util.CommonUitls;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -48,7 +48,7 @@ public class IdentifyCodeTextView extends AppCompatTextView {
                 mIdentifyCodeOption.getError("手机号不能为空");
                 return;
             }
-            if (!CommonUitls.isPhone(mIdentifyCodeOption.getParams().getLoginPhone())) {
+            if (!CommonUtils.isPhone(mIdentifyCodeOption.getParams().getLoginPhone())) {
                 mIdentifyCodeOption.getError("输入手机号格式不正确");
                 return;
             }

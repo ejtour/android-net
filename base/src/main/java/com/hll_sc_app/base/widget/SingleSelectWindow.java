@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.base.R;
-import com.hll_sc_app.citymall.util.CommonUitls;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.PinyinUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 
@@ -65,7 +65,7 @@ public class SingleSelectWindow<T> extends BasePopupWindow {
         TextView tv = (TextView) View.inflate(mActivity, R.layout.base_item_single_select, null).findViewById(R.id.txt_select_name);
         int maxWidth = 0;
         int temp;
-        if (!CommonUitls.isEmpty(mData)) {
+        if (!CommonUtils.isEmpty(mData)) {
             for (T t : mData) {
                 if (maxWidth < (temp = (int) tv.getPaint().measureText(mWrapper.getName(t)))) {
                     maxWidth = temp;
@@ -185,7 +185,7 @@ public class SingleSelectWindow<T> extends BasePopupWindow {
         @Override
         protected List<E> doInBackground(String... strings) {
             List<E> temp = new ArrayList<>();
-            if (CommonUitls.isEmpty(mWeakList.get())) {
+            if (CommonUtils.isEmpty(mWeakList.get())) {
                 return temp;
             }
             for (E e : mWeakList.get()) {
