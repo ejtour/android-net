@@ -200,7 +200,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
                 mPresenter.toLogin(getLoginPhone(), getLoginPWD(), null);
                 break;
             case R.id.txt_findPWD:
-//                RouterUtil.goToActivity(RouterConfig.USER_FIND_PWD, this);
+                RouterUtil.goToActivity(RouterConfig.USER_FIND);
                 break;
             case R.id.txt_register:
             case R.id.txt_toRegister:
@@ -222,7 +222,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         ObjectAnimator animator3 = ObjectAnimator.ofFloat(mLlLogin, "alpha", 0, 1);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.play(animator1).with(animator2).with(animator3);
-        animatorSet.setDuration(800);
+        animatorSet.setDuration(500);
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {

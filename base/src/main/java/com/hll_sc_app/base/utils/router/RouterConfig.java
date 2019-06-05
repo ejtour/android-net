@@ -12,6 +12,10 @@ public class RouterConfig {
      */
     public static final String USER_LOGIN = "/activity/user/login";
     /**
+     * 找回密码
+     */
+    public static final String USER_FIND = "/activity/user/findPassword";
+    /**
      * 首页
      */
     public static final String ROOT_HOME = "/activity/home/main";

@@ -29,4 +29,14 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101002")
     Observable<BaseResp<LoginResp>> login(@Body BaseMapReq req);
+
+    /**
+     * 供应商登录找回密码
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101012")
+    Observable<BaseResp<Object>> find(@Body BaseMapReq req);
 }
