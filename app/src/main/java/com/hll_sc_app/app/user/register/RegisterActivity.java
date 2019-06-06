@@ -15,7 +15,6 @@ import android.text.style.ClickableSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -25,14 +24,19 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.AreaDtoBean;
 import com.hll_sc_app.base.bean.GetIdentifyCodeReq;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.AreaSelectWindow;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.user.PageParams;
+import com.hll_sc_app.bean.user.RegisterReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
 import com.zhihu.matisse.Matisse;
 
 import java.io.File;
@@ -51,6 +55,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.USER_REGISTER)
 public class RegisterActivity extends BaseLoadActivity implements RegisterContract.IFindView {
+    public static final String CODE_FROM_MALL = "00120113061";
     @BindView(R.id.edt_phone)
     EditText mEdtPhone;
     @BindView(R.id.edt_code)
@@ -83,8 +88,6 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     TextView mTxtAgreement;
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
-    @BindView(R.id.fl_bottom)
-    FrameLayout mFlBottom;
     private RegisterPresenter mPresenter;
 
     private AreaSelectWindow mAreaWindow;
@@ -118,12 +121,16 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         mEdtCode.addTextChangedListener(textWatcher);
         mEdtLoginPWD.addTextChangedListener(textWatcher);
         mEdtCheckLoginPWD.addTextChangedListener(textWatcher);
+        mEdtGroupName.addTextChangedListener(textWatcher);
+        mEdtLinkMan.addTextChangedListener(textWatcher);
+        mTxtGroupDistrict.addTextChangedListener(textWatcher);
+        mEdtGroupAddress.addTextChangedListener(textWatcher);
         // 验证码
         mGetIdentifyCode.bind(new IdentifyCodeTextView.IdentifyCodeOption() {
             @Override
             public GetIdentifyCodeReq getParams() {
                 GetIdentifyCodeReq req = new GetIdentifyCodeReq();
-                req.setFlag(GetIdentifyCodeReq.FLAG.INT_LOGIN);
+                req.setFlag(GetIdentifyCodeReq.FLAG.INT_REGISTER);
                 req.setLoginPhone(mEdtPhone.getText().toString().trim());
                 return req;
             }
@@ -170,16 +177,13 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
 
     @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_groupDistrict})
     public void onViewClicked(View view) {
+        ViewUtils.clearEditFocus(view);
         switch (view.getId()) {
             case R.id.img_close:
-                uploadSuccess("group3/M03/81/60/wKgVe1z4kSTO3vJTAAF41OLoqb0759.jpg");
-//                finish();
+                finish();
                 break;
             case R.id.txt_confirm:
-                mPresenter.toFind(mEdtPhone.getText().toString().trim(),
-                    mEdtCode.getText().toString().trim(),
-                    mEdtLoginPWD.getText().toString().trim(),
-                    mEdtCheckLoginPWD.getText().toString().trim());
+                toRegister();
                 break;
             case R.id.rl_groupDistrict:
                 showAreaWindow();
@@ -187,6 +191,29 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
             default:
                 break;
         }
+    }
+
+    private void toRegister() {
+        RegisterReq req = new RegisterReq();
+        req.setLoginPhone(mEdtPhone.getText().toString().trim());
+        req.setCheckCode(mEdtCode.getText().toString().trim());
+        req.setLoginPWD(mEdtLoginPWD.getText().toString().trim());
+        req.setCheckLoginPWD(mEdtCheckLoginPWD.getText().toString().trim());
+        req.setGroupName(mEdtGroupName.getText().toString().trim());
+        req.setLinkman(mEdtLinkMan.getText().toString().trim());
+        AreaDtoBean bean = (AreaDtoBean) mTxtGroupDistrict.getTag();
+        if (bean != null) {
+            req.setGroupProvince(bean.getShopProvince());
+            req.setGroupProvinceCode(bean.getShopProvinceCode());
+            req.setGroupCity(bean.getShopCity());
+            req.setGroupCityCode(bean.getShopCityCode());
+            req.setGroupDistrict(bean.getShopDistrict());
+            req.setGroupDistrictCode(bean.getShopDistrictCode());
+        }
+        req.setGroupAddress(mEdtGroupAddress.getText().toString().trim());
+        req.setLicencePhotoUrl(mImgLicencePhotoUrl.getImgUrl());
+        req.setOperationGroupID(mEdtOperationGroupID.getText().toString().trim());
+        mPresenter.toRegister(req);
     }
 
     /**
@@ -205,14 +232,54 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     }
 
     @Override
+    public void showError(UseCaseException e) {
+        if (TextUtils.equals(e.getCode(), CODE_FROM_MALL)) {
+            SuccessDialog.newBuilder(this)
+                .setCancelable(false)
+                .setImageTitle(R.drawable.ic_dialog_success)
+                .setImageState(R.drawable.ic_dialog_state_success)
+                .setMessageTitle("提交注册成功")
+                .setMessage("您已是二十二城商城用户补充部分资料即可成为供应商用户")
+                .setButton((dialog, item) -> {
+                    // TODO:跳转页面选择分类
+                }, "补充资料")
+                .create().show();
+        } else {
+            super.showError(e);
+        }
+    }
+
+    @Override
     public void registerSuccess() {
-        showToast("密码修改成功");
-        finish();
+        SuccessDialog.newBuilder(this)
+            .setCancelable(false)
+            .setImageTitle(R.drawable.ic_dialog_success)
+            .setImageState(R.drawable.ic_dialog_state_success)
+            .setMessageTitle("注册完成")
+            .setMessage("提交成功，审核结果会以短信形式发送到您的手机，请耐心等待~")
+            .setButton((dialog, item) -> finish(), "去登录")
+            .create().show();
     }
 
     @Override
     public void uploadSuccess(String url) {
-        mImgLicencePhotoUrl.showImage(url);
+        mImgLicencePhotoUrl.showImage(url, v -> {
+            mImgLicencePhotoUrl.deleteImage();
+            checkEnable();
+        });
+        checkEnable();
+    }
+
+    private void checkEnable() {
+        mTxtConfirm.setEnabled(!TextUtils.isEmpty(mEdtPhone.getText().toString().trim())
+            && !TextUtils.isEmpty(mEdtCode.getText().toString().trim())
+            && !TextUtils.isEmpty(mEdtLoginPWD.getText().toString().trim())
+            && !TextUtils.isEmpty(mEdtCheckLoginPWD.getText().toString().trim())
+            && !TextUtils.isEmpty(mEdtGroupName.getText().toString().trim())
+            && !TextUtils.isEmpty(mEdtLinkMan.getText().toString().trim())
+            && !TextUtils.isEmpty(mTxtGroupDistrict.getText())
+            && !TextUtils.isEmpty(mEdtGroupAddress.getText().toString().trim())
+            && !TextUtils.isEmpty(mImgLicencePhotoUrl.getImgUrl()));
     }
 
     private class InputTextWatcher implements TextWatcher {
@@ -228,15 +295,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
 
         @Override
         public void afterTextChanged(Editable s) {
-            mTxtConfirm.setEnabled(!TextUtils.isEmpty(mEdtPhone.getText().toString().trim())
-                && !TextUtils.isEmpty(mEdtCode.getText().toString().trim())
-                && !TextUtils.isEmpty(mEdtLoginPWD.getText().toString().trim())
-                && !TextUtils.isEmpty(mEdtCheckLoginPWD.getText().toString().trim())
-                && !TextUtils.isEmpty(mEdtGroupName.getText().toString().trim())
-                && !TextUtils.isEmpty(mEdtLinkMan.getText().toString().trim())
-                && !TextUtils.isEmpty(mTxtGroupDistrict.getText().toString().trim())
-                && !TextUtils.isEmpty(mEdtGroupAddress.getText().toString().trim())
-            );
+            checkEnable();
         }
     }
 }

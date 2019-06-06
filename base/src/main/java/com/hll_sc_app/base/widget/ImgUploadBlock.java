@@ -61,6 +61,7 @@ public class ImgUploadBlock extends RelativeLayout {
         mTitle = findViewById(R.id.txt_title);
         mSubTitle = findViewById(R.id.txt_sub_title);
         mImgShow = findViewById(R.id.img_show);
+        mImgShow.setVisibility(GONE);
         setOnClickListener(v -> new RequestPermissionUtils(getContext(), PERMISSIONS, this::selectPhoto).requestPermission());
     }
 
@@ -112,10 +113,23 @@ public class ImgUploadBlock extends RelativeLayout {
         }
     }
 
-    public void showImage(String url) {
+    public void showImage(String url, OnClickListener listener) {
         mImgShow.setImgUrl(url);
+        mImgShow.setDeleteListener(listener);
+        mImgShow.setVisibility(VISIBLE);
         mSubTitle.setVisibility(GONE);
         mTitle.setVisibility(GONE);
+    }
+
+    public void deleteImage() {
+        mImgShow.setImgUrl(null);
+        mImgShow.setVisibility(GONE);
+        mSubTitle.setVisibility(TextUtils.isEmpty(mSubTitle.getText()) ? GONE : VISIBLE);
+        mTitle.setVisibility(VISIBLE);
+    }
+
+    public String getImgUrl() {
+        return mImgShow != null ? mImgShow.getImageUrl() : null;
     }
 
     public void setMaxSize(int maxSize) {

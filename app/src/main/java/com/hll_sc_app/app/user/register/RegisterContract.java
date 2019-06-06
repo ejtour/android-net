@@ -2,6 +2,7 @@ package com.hll_sc_app.app.user.register;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.user.RegisterReq;
 
 import java.io.File;
 
@@ -29,14 +30,11 @@ public interface RegisterContract {
 
     interface IFindPresenter extends IPresenter<IFindView> {
         /**
-         * 找回密码
+         * 去注册
          *
-         * @param loginPhone    手机号
-         * @param loginPWD      密码
-         * @param checkCode     验证码
-         * @param checkLoginPWD 确认密码
+         * @param req 请求参数
          */
-        void toFind(String loginPhone, String checkCode, String loginPWD, String checkLoginPWD);
+        void toRegister(RegisterReq req);
 
         /**
          * 上传图片

@@ -1,10 +1,12 @@
 package com.hll_sc_app.api;
 
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.LoginResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.user.RegisterReq;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -42,6 +44,16 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101012")
     Observable<BaseResp<Object>> find(@Body BaseMapReq req);
+
+    /**
+     * 供应商集团注册(简化版)
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101008")
+    Observable<BaseResp<Object>> register(@Body BaseReq<RegisterReq> req);
 
     /**
      * 图片上传

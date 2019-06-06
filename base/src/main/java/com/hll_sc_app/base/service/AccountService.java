@@ -27,6 +27,6 @@ public interface AccountService {
      * @return Observable
      */
     @POST(HttpConfig.URL)
-    @Headers("pv:101004")
+    @Headers("pv:101003")
     Observable<BaseResp<Object>> getIdentifyCode(@Body BaseReq<GetIdentifyCodeReq> body);
 }

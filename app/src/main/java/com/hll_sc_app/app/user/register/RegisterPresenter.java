@@ -4,15 +4,17 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.bean.user.RegisterReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
+import java.util.regex.Pattern;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -31,6 +33,8 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 public class RegisterPresenter implements RegisterContract.IFindPresenter {
     private static final int PWD_MIN = 6;
     private static final int PWD_MAX = 20;
+    private static Pattern patternGroupName = Pattern.compile("^\\s$");
+    private static Pattern patternOperationGroupID = Pattern.compile("^[a-zA-Z0-9]{1,30}$");
     private RegisterContract.IFindView mView;
 
     static RegisterPresenter newInstance() {
@@ -48,20 +52,19 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
     }
 
     @Override
-    public void toFind(String loginPhone, String checkCode, String loginPWD, String checkLoginPWD) {
-        if (!checkPhoneNumber(loginPhone)
-            || !checkPassword(loginPWD)
-            || !checkAgainPassword(checkLoginPWD)
-            || !samePWD(loginPWD, checkLoginPWD)) {
+    public void toRegister(RegisterReq req) {
+        if (!checkPhoneNumber(req.getLoginPhone())
+            || !checkPassword(req.getLoginPWD())
+            || !checkAgainPassword(req.getCheckLoginPWD())
+            || !samePWD(req.getLoginPWD(), req.getCheckLoginPWD())
+            || !checkGroupName(req.getGroupName())
+            || !checkGroupAddress(req.getGroupAddress())
+            || !checkOperationGroupID(req.getOperationGroupID())) {
             return;
         }
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("loginPhone", loginPhone)
-            .put("loginPWD", loginPWD)
-            .put("checkCode", checkCode)
-            .put("checkLoginPWD", checkLoginPWD)
-            .create();
-        UserService.INSTANCE.find(req)
+        BaseReq<RegisterReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        UserService.INSTANCE.register(baseReq)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -165,6 +168,48 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
         if (!TextUtils.equals(loginPWD, checkLoginPWD)) {
             mView.showToast("两次输入的密码不一致");
             return false;
+        }
+        return true;
+    }
+
+    /**
+     * 公司名称格式验证
+     *
+     * @return false-不符合
+     */
+    private boolean checkGroupName(String groupName) {
+        if (!TextUtils.isEmpty(groupName)) {
+            if (groupName.length() < 3 || patternGroupName.matcher(groupName).matches()) {
+                mView.showToast("公司名称仅支持3-100个不含特殊符号的字符");
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 详细地址验证
+     *
+     * @return false-不符合
+     */
+    private boolean checkGroupAddress(String address) {
+        if (!TextUtils.isEmpty(address)) {
+            if (address.length() < 5) {
+                mView.showToast("地址最少输入5个字符");
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 推荐码格式验证
+     *
+     * @return false-不符合
+     */
+    private boolean checkOperationGroupID(String operationGroupID) {
+        if (!TextUtils.isEmpty(operationGroupID)) {
+            if (!patternOperationGroupID.matcher(operationGroupID).matches()) {
+                mView.showToast("请输入正确的推荐码");
+            }
         }
         return true;
     }
