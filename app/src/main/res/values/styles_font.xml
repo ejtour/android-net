@@ -15,6 +15,14 @@
         <item name="android:textSize">@dimen/text_middle_size</item>
     </style>
 
+    <style name="TextAppearance.City22.Middle.Color666">
+        <item name="android:textColor">@color/color_666666</item>
+    </style>
+
+    <style name="TextAppearance.City22.Middle.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="TextAppearance.City22.Small">
         <item name="android:textSize">@dimen/text_small_size</item>
     </style>
@@ -29,6 +37,10 @@
 
     <style name="TextAppearance.City22.Small.Color999">
         <item name="android:textColor">@color/color_999999</item>
+    </style>
+
+    <style name="TextAppearance.City22.Small.ColorAE">
+        <item name="android:textColor">@color/color_aeaeae</item>
     </style>
 
     <style name="TextAppearance.City22.Little">

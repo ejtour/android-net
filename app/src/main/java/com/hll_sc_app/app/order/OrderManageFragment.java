@@ -14,16 +14,20 @@ import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.base.BaseLazyFragment;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.EmptyView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -44,38 +48,79 @@ import butterknife.Unbinder;
  */
 
 public class OrderManageFragment extends BaseLazyFragment implements IOrderManageContract.IOrderManageView {
-    private static final String STATUS_KEY = "status";
+    private static final String ORDER_TYPE_KEY = "order_type";
+    /**
+     * 过滤头前导文本
+     */
     @BindView(R.id.otf_label)
     TextView mLabel;
+    /**
+     * 过滤时间间隔
+     */
     @BindView(R.id.otf_interval)
     TextView mInterval;
+    /**
+     * 过滤头
+     */
     @BindView(R.id.otf_hint)
     ConstraintLayout mFilterHeader;
     @BindView(R.id.fol_list)
     RecyclerView mListView;
     @BindView(R.id.fol_refresh)
     SmartRefreshLayout mRefreshLayout;
-    Unbinder unbinder;
-    @BindView(R.id.obb_bottom_bar)
-    ViewGroup mBottomBar;
-    @BindView(R.id.obb_sum)
-    TextView mTotalAmountText;
-    @BindView(R.id.obb_confirm)
-    TextView mConfirm;
-    @BindView(R.id.obb_select_all)
-    ImageView mSelectAll;
+    @BindView(R.id.fol_bottom_bar_stub)
+    ViewStub mBottomBarStub;
+    /**
+     * 底部操作栏
+     */
+    private View mBottomBar;
+    /**
+     * 总金额
+     */
+    private TextView mTotalAmountText;
+    /**
+     * 确认按钮
+     */
+    private TextView mConfirm;
+    /**
+     * 全选按钮
+     */
+    private ImageView mSelectAll;
+    /**
+     * 空布局
+     */
+    private EmptyView mEmptyView;
     private OrderManageAdapter mAdapter;
+    /**
+     * 当前操作的订单
+     */
     private OrderResp mCurResp;
-    private int mBillStatus;
+    /**
+     * 当前页面的订单状态
+     */
+    private OrderType mOrderType;
+    /**
+     * 分发类型
+     */
     private String mDeliverType;
+    /**
+     * 订单参数
+     */
     private OrderParam mOrderParam;
     private IOrderManageContract.IOrderManagePresenter mPresenter;
+    /**
+     * 已选总金额
+     */
     private double mTotalAmount;
+    /**
+     * 已选数量
+     */
     private int mSelectNum;
+    Unbinder unbinder;
 
-    public static OrderManageFragment newInstance(int billStatus, @NonNull OrderParam param) {
+    public static OrderManageFragment newInstance(OrderType orderType, @NonNull OrderParam param) {
         Bundle args = new Bundle();
-        args.putInt(STATUS_KEY, billStatus);
+        args.putSerializable(ORDER_TYPE_KEY, orderType);
         OrderManageFragment fragment = new OrderManageFragment();
         fragment.setArguments(args);
         fragment.mOrderParam = param;
@@ -87,7 +132,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            mBillStatus = arguments.getInt(STATUS_KEY);
+            mOrderType = (OrderType) arguments.getSerializable(ORDER_TYPE_KEY);
         }
         mPresenter = OrderManagePresenter.newInstance();
         mPresenter.register(this);
@@ -125,6 +170,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             if (item == null) {
                 return;
             }
+            // 计算总价格与选中数
             if (item.isSelected()) {
                 mTotalAmount = CommonUtils.subDouble(mTotalAmount, item.getTotalAmount()).doubleValue();
                 mSelectNum--;
@@ -132,16 +178,19 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 mTotalAmount = CommonUtils.addDouble(mTotalAmount, item.getTotalAmount(), 0).doubleValue();
                 mSelectNum++;
             }
-            updateTotalAmount();
             item.setSelected(!item.isSelected());
             mAdapter.notifyItemChanged(position);
+            updateBottomBarData();
         });
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mCurResp = mAdapter.getItem(position);
         });
     }
 
-    private void updateTotalAmount() {
+    /**
+     * 更新底部工具栏数据
+     */
+    private void updateBottomBarData() {
         mConfirm.setEnabled(mSelectNum > 0);
         mTotalAmountText.setText(handleTotalAmount());
         mSelectAll.setSelected(mSelectNum == mAdapter.getSelectableNum());
@@ -151,6 +200,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mConfirm.setText(stringBuilder.toString());
     }
 
+    /**
+     * 处理总金额
+     */
     private CharSequence handleTotalAmount() {
         String source = "合计：¥" + CommonUtils.formatMoney(mTotalAmount);
         SpannableString spannableString = new SpannableString(source);
@@ -182,8 +234,17 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     @Override
     public void onDestroyView() {
         EventBus.getDefault().unregister(this);
-        mAdapter = null;
+        dispose();
         super.onDestroyView();
+    }
+
+    private void dispose() {
+        mAdapter = null;
+        mBottomBar = null;
+        mConfirm = null;
+        mSelectAll = null;
+        mTotalAmountText = null;
+        mEmptyView = null;
         unbinder.unbind();
     }
 
@@ -194,7 +255,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     @Override
     public int getOrderStatus() {
-        return mBillStatus;
+        return mOrderType.getType();
     }
 
     @Override
@@ -206,30 +267,33 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     public void refreshListData(List<OrderResp> resps) {
         mAdapter.setNewData(resps);
         if (CommonUtils.isEmpty(resps)) {
-            mBottomBar.setVisibility(View.GONE);
-            if (mAdapter.getEmptyView() != null) {
-                // TODO: 2019/6/5 添加空布局
-            }
-        } else if (mBottomBar.getVisibility() == View.GONE) {
-            StringBuilder buttonText = new StringBuilder();
-            switch (mBillStatus) {
-                case 0:
-                    buttonText.append("商城下单");
-                    break;
-                case 1:
-                    buttonText.append("立即接单");
-                    break;
-                case 2:
-                    buttonText.append("确认发货");
-                    break;
-            }
-            if (!buttonText.toString().isEmpty()) {
-                buttonText.append("(0)");
-                mBottomBar.setVisibility(View.VISIBLE);
-                mConfirm.setText(buttonText.toString());
-                mAdapter.setCanCheck(true);
-                updateTotalAmount();
-            }
+            // 配置空视图
+            initEmptyView();
+            mEmptyView.reset();
+            mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
+            mEmptyView.setTipsButton("登录");
+            if (mBottomBar != null) // 隐藏底部操作栏
+                mBottomBar.setVisibility(View.GONE);
+        } else if (!TextUtils.isEmpty(mOrderType.getButtonText())) { // 如果有按钮文本
+            initBottomBar();
+            mAdapter.setCanCheck();
+            mConfirm.setText(String.format("%s(0)", mOrderType.getButtonText()));
+            mBottomBar.setVisibility(View.VISIBLE);
+            updateBottomBarData();
+        }
+    }
+
+    /**
+     * 初始化底部工具栏
+     */
+    private void initBottomBar() {
+        if (mBottomBar == null) {
+            mBottomBar = mBottomBarStub.inflate();
+            mTotalAmountText = mBottomBar.findViewById(R.id.obb_sum);
+            mSelectAll = mBottomBar.findViewById(R.id.obb_select_all);
+            mConfirm = mBottomBar.findViewById(R.id.obb_confirm);
+            mSelectAll.setOnClickListener(this::selectAll);
+            mConfirm.setOnClickListener(this::confirm);
         }
     }
 
@@ -244,8 +308,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
     }
 
-    @OnClick(R.id.obb_select_all)
-    public void selectAll(View view) {
+    /**
+     * 全选
+     */
+    private void selectAll(View view) {
         double total = 0;
         int num = 0;
         for (OrderResp resp : mAdapter.getData()) {
@@ -261,19 +327,21 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mAdapter.notifyDataSetChanged();
         mTotalAmount = total;
         mSelectNum = num;
-        updateTotalAmount();
+        updateBottomBarData();
     }
 
-    @OnClick(R.id.obb_confirm)
-    public void confirm(View view) {
+    private void confirm(View view) {
         // TODO: 2019/6/5 confirm
     }
 
     @Subscribe
     public void handleOrderEvent(OrderEvent event) {
         switch (event.getMessage()) {
-            case OrderEvent.REFRESH_LIST:
             case OrderEvent.SEARCH_WORDS:
+                if (isFragmentVisible()) {
+                    mOrderParam.setSearchWords((String) event.getData());
+                }
+            case OrderEvent.REFRESH_LIST:
                 setForceLoad(true);
                 lazyLoad();
                 break;
@@ -294,10 +362,32 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void replaceItem(OrderResp resp) {
-        if (resp.getSubBillStatus() == mBillStatus) {
+        if (mOrderType.contain(resp.getSubBillStatus())) {
             mAdapter.replaceData(mCurResp, resp);
         } else {
             mAdapter.removeData(resp);
+        }
+    }
+
+    @Override
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        if (e.getLevel() == UseCaseException.Level.NET) {
+            initEmptyView();
+            mEmptyView.setNetError();
+        }
+    }
+
+    /**
+     * 初始化空布局
+     */
+    private void initEmptyView() {
+        if (mEmptyView == null) {
+            mEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
+                setForceLoad(true);
+                lazyLoad();
+            }).create();
+            mAdapter.setEmptyView(mEmptyView);
         }
     }
 }

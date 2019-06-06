@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
@@ -38,8 +39,8 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
         mGroupID = GreenDaoUtils.getUser().getGroupID();
     }
 
-    void setCanCheck(boolean canCheck) {
-        mCanCheck = canCheck;
+    void setCanCheck() {
+        mCanCheck = true;
         notifyDataSetChanged();
     }
 
@@ -61,56 +62,8 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
                 .setText(R.id.iom_money, "¥" + CommonUtils.formatMoney(item.getTotalAmount()))
                 .setText(R.id.iom_purchase_name, "采购商：" + item.getPurchaserName())
                 .setText(R.id.iom_order_no, "订单号：" + item.getSubBillNo())
-                .setText(R.id.iom_extra_info, handleExtraInfo(item))
+                .setText(R.id.iom_extra_info, OrderHelper.handleExtraInfo(item))
                 .setGone(R.id.iom_divider, helper.getAdapterPosition() != getItemCount() - 1);
-    }
-
-    private CharSequence handleExtraInfo(OrderResp resp) {
-        String source = null;
-        switch (resp.getSubBillStatus()) {
-            case 0:
-            case 1:
-            case 2:
-                String formatTime = CalendarUtils.getDateFormatString(resp.getSubBillExecuteDate(),
-                        Constants.FORMAT_YYYY_MM_DD_HH_MM,
-                        Constants.FORMAT_YYYY_MM_DD_HH_MM_DASH);
-                source = "要求：" + formatTime + "送达";
-                SpannableString spannableString = new SpannableString(source);
-                spannableString.setSpan(new ForegroundColorSpan(
-                                Color.parseColor(ColorStr.COLOR_222222)),
-                        source.indexOf("：") + 1,
-                        source.length() - 2,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                return spannableString;
-            case 3:
-            case 4:
-                source = getFormatTime(resp.getDeliveryTime()) + "发货";
-                break;
-            case 5:
-                source = getFormatTime(resp.getSignTime()) + "签收";
-                break;
-            case 6:
-                source = getCancelRole(resp.getCanceler()) + "取消";
-                break;
-        }
-        return source;
-    }
-
-    private String getCancelRole(int canceler) {
-        switch (canceler) {
-            case 1:
-                return "采购商";
-            case 2:
-                return "供应商";
-            case 3:
-                return "客服";
-            default:
-                return "";
-        }
-    }
-
-    private String getFormatTime(String date) {
-        return CalendarUtils.format(CalendarUtils.parse(date), "yyyy-MM-dd HH:mm:ss");
     }
 
     private int getItemPosition(OrderResp item) {
