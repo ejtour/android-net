@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.OrderEvent;
@@ -50,25 +51,6 @@ public class OrderHomeFragment extends BaseLoadFragment {
     private final OrderParam mOrderParam = new OrderParam();
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
-
-    @Subscribe(priority = 1)
-    public void handleOrderEvent(OrderEvent event) {
-        if (event.getMessage().equals(OrderEvent.SEARCH_WORDS)) {
-            mOrderParam.setSearchWords((String) event.getData());
-        }
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_order, container, false);
@@ -79,10 +61,9 @@ public class OrderHomeFragment extends BaseLoadFragment {
     }
 
     private void initView() {
-        String[] titles = {"待转单", "待接单", "待发货", "已发货", "待结算", "已签收", "已取消"};
-        mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager()));
+        mPager.setAdapter(new OrderListFragmentPager(getChildFragmentManager(), OrderType.values()));
         mPager.setOffscreenPageLimit(2);
-        mTabLayout.setViewPager(mPager, titles);
+        mTabLayout.setViewPager(mPager, OrderType.getTitles());
     }
 
     private void showStatusBar() {
@@ -111,13 +92,16 @@ public class OrderHomeFragment extends BaseLoadFragment {
 
     class OrderListFragmentPager extends FragmentPagerAdapter {
 
-        OrderListFragmentPager(FragmentManager fm) {
+        private final OrderType[] mTypes;
+
+        OrderListFragmentPager(FragmentManager fm, OrderType[] types) {
             super(fm);
+            mTypes = types;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return OrderManageFragment.newInstance(position, mOrderParam);
+            return OrderManageFragment.newInstance(mTypes[position], mOrderParam);
         }
 
         @Override

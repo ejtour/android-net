@@ -46,14 +46,14 @@ public class OrderResp {
     private int paymentSettleDay;
     private double orderDiscountAmount;
     private String supplyShopName;
-    private int amountPaid;
+    private double amountPaid;
     private double orderTotalAmount;
     private int wareHourseID;
     private String deliveryBy;
     private String purchaseBillNo;
     private String cancelReason;
     private int productNo;
-    private int refundAmount;
+    private double refundAmount;
     private String actionBy;
     private int billStatementID;
     private String masterBillNo;
@@ -68,7 +68,7 @@ public class OrderResp {
     private String createTime;
     private int isSupplement;
     private double orderDiscountSubAmount;
-    private int refundedDepositTotalAmount;
+    private double refundedDepositTotalAmount;
     private double couponSubAmount;
     private int checkMinDiff;
     private int orderDiscountRuleType;
@@ -432,11 +432,11 @@ public class OrderResp {
         this.supplyShopName = supplyShopName;
     }
 
-    public int getAmountPaid() {
+    public double getAmountPaid() {
         return amountPaid;
     }
 
-    public void setAmountPaid(int amountPaid) {
+    public void setAmountPaid(double amountPaid) {
         this.amountPaid = amountPaid;
     }
 
@@ -488,11 +488,11 @@ public class OrderResp {
         this.productNo = productNo;
     }
 
-    public int getRefundAmount() {
+    public double getRefundAmount() {
         return refundAmount;
     }
 
-    public void setRefundAmount(int refundAmount) {
+    public void setRefundAmount(double refundAmount) {
         this.refundAmount = refundAmount;
     }
 
@@ -608,11 +608,11 @@ public class OrderResp {
         this.orderDiscountSubAmount = orderDiscountSubAmount;
     }
 
-    public int getRefundedDepositTotalAmount() {
+    public double getRefundedDepositTotalAmount() {
         return refundedDepositTotalAmount;
     }
 
-    public void setRefundedDepositTotalAmount(int refundedDepositTotalAmount) {
+    public void setRefundedDepositTotalAmount(double refundedDepositTotalAmount) {
         this.refundedDepositTotalAmount = refundedDepositTotalAmount;
     }
 

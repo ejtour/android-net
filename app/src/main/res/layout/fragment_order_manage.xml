@@ -23,5 +23,9 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <include layout="@layout/view_order_bottom_bar" />
+    <ViewStub
+        android:id="@+id/fol_bottom_bar_stub"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:layout="@layout/view_order_bottom_bar" />
 </LinearLayout>

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/obb_bottom_bar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/bottom_bar_height"
-    android:background="@drawable/base_bg_shadow_bottom_bar"
-    android:visibility="gone">
+    android:background="@drawable/base_bg_shadow_bottom_bar">
 
     <ImageView
         android:id="@+id/obb_select_all"
