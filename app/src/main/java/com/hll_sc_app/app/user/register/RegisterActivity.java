@@ -102,6 +102,24 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         }
     }
 
+    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_groupDistrict})
+    public void onViewClicked(View view) {
+        ViewUtils.clearEditFocus(view);
+        switch (view.getId()) {
+            case R.id.img_close:
+                onBackPressed();
+                break;
+            case R.id.txt_confirm:
+                toRegister();
+                break;
+            case R.id.rl_groupDistrict:
+                showAreaWindow();
+                break;
+            default:
+                break;
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,22 +193,22 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         mGetIdentifyCode.stopCountdown();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_groupDistrict})
-    public void onViewClicked(View view) {
-        ViewUtils.clearEditFocus(view);
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.txt_confirm:
-                toRegister();
-                break;
-            case R.id.rl_groupDistrict:
-                showAreaWindow();
-                break;
-            default:
-                break;
-        }
+    @Override
+    public void onBackPressed() {
+        RouterUtil.goToActivity(RouterConfig.USER_REGISTER_COMPLEMENT);
+//        SuccessDialog.newBuilder(this)
+//            .setCancelable(false)
+//            .setImageTitle(R.drawable.ic_dialog_success)
+//            .setImageState(R.drawable.ic_dialog_state_success)
+//            .setMessageTitle("确定要离开嘛")
+//            .setMessage("您已经填写了部分数据，离开会丢失当前已填写的数据")
+//            .setButton((dialog, item) -> {
+//                if (item == 0) {
+//                    finish();
+//                }
+//                dialog.dismiss();
+//            }, "去意已决", "暂不离开")
+//            .create().show();
     }
 
     private void toRegister() {
@@ -241,7 +259,8 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 .setMessageTitle("提交注册成功")
                 .setMessage("您已是二十二城商城用户补充部分资料即可成为供应商用户")
                 .setButton((dialog, item) -> {
-                    // TODO:跳转页面选择分类
+                    dialog.dismiss();
+                    RouterUtil.goToActivity(RouterConfig.USER_REGISTER_COMPLEMENT);
                 }, "补充资料")
                 .create().show();
         } else {
@@ -257,7 +276,10 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
             .setImageState(R.drawable.ic_dialog_state_success)
             .setMessageTitle("注册完成")
             .setMessage("提交成功，审核结果会以短信形式发送到您的手机，请耐心等待~")
-            .setButton((dialog, item) -> finish(), "去登录")
+            .setButton((dialog, item) -> {
+                dialog.dismiss();
+                finish();
+            }, "去登录")
             .create().show();
     }
 

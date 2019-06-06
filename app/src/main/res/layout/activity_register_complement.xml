@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="补充资料"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"/>
+
+        <TextView
+            android:id="@+id/txt_confirm"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/base_bg_selector_close"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_13"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_category"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_white_radius_3_solid">
+
+        <TextView
+            android:id="@+id/txt_category_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:text="经营品类"
+            android:textColor="@color/base_text666"
+            android:textSize="@dimen/base_text_13"/>
+
+        <TextView
+            android:id="@+id/txt_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/txt_category_title"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:drawablePadding="5dp"
+            android:gravity="right"
+            android:hint="经营品类"
+            android:paddingRight="15dp"
+            android:singleLine="true"
+            android:textColor="@color/base_text666"
+            android:textColorHint="@color/base_text999"
+            android:textSize="@dimen/base_text_13"/>
+    </RelativeLayout>
+
+</LinearLayout>

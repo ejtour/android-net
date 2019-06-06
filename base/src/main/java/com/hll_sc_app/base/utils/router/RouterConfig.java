@@ -24,6 +24,10 @@ public class RouterConfig {
      */
     public static final String USER_REGISTER = "/activity/user/register";
     /**
+     * 注册-完善资料
+     */
+    public static final String USER_REGISTER_COMPLEMENT = "/activity/user/register/complement";
+    /**
      * 首页
      */
     public static final String ROOT_HOME = "/activity/home/main";
