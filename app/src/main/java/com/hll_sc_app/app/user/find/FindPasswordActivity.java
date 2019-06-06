@@ -15,6 +15,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.GetIdentifyCodeReq;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
 
@@ -117,8 +118,14 @@ public class FindPasswordActivity extends BaseLoadActivity implements FindPasswo
 
     @Override
     public void findSuccess() {
-        showToast("密码修改成功");
-        finish();
+        SuccessDialog.newBuilder(this)
+            .setCancelable(false)
+            .setImageTitle(R.drawable.ic_dialog_success)
+            .setImageState(R.drawable.ic_dialog_state_success)
+            .setMessageTitle("密码修改成功")
+            .setMessage("可以使用新密码登录啦")
+            .setButton((dialog, item) -> finish(), "去登录")
+            .create().show();
     }
 
     private class InputTextWatcher implements TextWatcher {

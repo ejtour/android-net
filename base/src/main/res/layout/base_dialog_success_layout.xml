@@ -92,7 +92,7 @@
                     android:layout_marginRight="25dp"
                     android:background="@drawable/base_bg_selector_dialog_cancel"
                     android:gravity="center"
-                    android:textColor="@drawable/base_text_selector_dialog_cancel"
+                    android:textColor="@color/base_colorPrimary"
                     android:textSize="12sp"
                     tools:text="先去逛逛"/>
 
@@ -123,8 +123,8 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/base_bg_selector_dialog_cancel"
                     android:gravity="center"
-                    android:textColor="@drawable/base_text_selector_dialog_cancel"
-                    android:textSize="12sp"
+                    android:textColor="@color/base_colorPrimary"
+                    android:textSize="@dimen/base_text_12"
                     tools:text="先去逛逛"/>
 
             </LinearLayout>

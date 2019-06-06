@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -99,6 +100,7 @@ public class ImgUploadBlock extends LinearLayout {
 
     public void setSubTitle(String subTitle) {
         mSubTitle.setText(subTitle);
+        mSubTitle.setVisibility(TextUtils.isEmpty(subTitle) ? GONE : VISIBLE);
     }
 
     public void setIconResId(int resId) {

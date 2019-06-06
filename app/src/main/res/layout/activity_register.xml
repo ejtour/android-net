@@ -256,7 +256,6 @@
                     android:id="@+id/img_licencePhotoUrl"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    app:base_subTitle=" "
                     app:base_title="请上传公司营业执照"/>
             </LinearLayout>
 

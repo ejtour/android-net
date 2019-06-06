@@ -59,7 +59,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     @BindView(R.id.edt_groupName)
     EditText mEdtGroupName;
     @BindView(R.id.edt_liknman)
-    EditText mEdtLiknman;
+    EditText mEdtLinkMan;
     @BindView(R.id.txt_groupDistrict)
     TextView mTxtGroupDistrict;
     @BindView(R.id.rl_groupDistrict)
