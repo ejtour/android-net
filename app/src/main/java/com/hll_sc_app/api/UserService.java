@@ -7,9 +7,12 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 /**
  * 用户中心
@@ -39,4 +42,16 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101012")
     Observable<BaseResp<Object>> find(@Body BaseMapReq req);
+
+    /**
+     * 图片上传
+     *
+     * @param file req
+     * @return resp
+     */
+    @Headers("Origin: */*")
+    @Multipart
+    @POST("/upload!mobileClient.action")
+    Observable<String> imageUpload(@Part() MultipartBody.Part file);
+
 }

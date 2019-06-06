@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.user.register;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,7 +32,11 @@ import com.hll_sc_app.base.widget.AreaSelectWindow;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.user.PageParams;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.zhihu.matisse.Matisse;
 
+import java.io.File;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -83,6 +88,16 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     private RegisterPresenter mPresenter;
 
     private AreaSelectWindow mAreaWindow;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && data != null && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+            List<String> list = Matisse.obtainPathResult(data);
+            if (!CommonUtils.isEmpty(list)) {
+                mPresenter.uploadImg(new File(list.get(0)));
+            }
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -157,7 +172,8 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
-                finish();
+                uploadSuccess("group3/M03/81/60/wKgVe1z4kSTO3vJTAAF41OLoqb0759.jpg");
+//                finish();
                 break;
             case R.id.txt_confirm:
                 mPresenter.toFind(mEdtPhone.getText().toString().trim(),
@@ -189,13 +205,14 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     }
 
     @Override
-    public void findSuccess() {
+    public void registerSuccess() {
         showToast("密码修改成功");
         finish();
     }
 
-    @OnClick(R.id.rl_groupDistrict)
-    public void onViewClicked() {
+    @Override
+    public void uploadSuccess(String url) {
+        mImgLicencePhotoUrl.showImage(url);
     }
 
     private class InputTextWatcher implements TextWatcher {
@@ -214,7 +231,12 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
             mTxtConfirm.setEnabled(!TextUtils.isEmpty(mEdtPhone.getText().toString().trim())
                 && !TextUtils.isEmpty(mEdtCode.getText().toString().trim())
                 && !TextUtils.isEmpty(mEdtLoginPWD.getText().toString().trim())
-                && !TextUtils.isEmpty(mEdtCheckLoginPWD.getText().toString().trim()));
+                && !TextUtils.isEmpty(mEdtCheckLoginPWD.getText().toString().trim())
+                && !TextUtils.isEmpty(mEdtGroupName.getText().toString().trim())
+                && !TextUtils.isEmpty(mEdtLinkMan.getText().toString().trim())
+                && !TextUtils.isEmpty(mTxtGroupDistrict.getText().toString().trim())
+                && !TextUtils.isEmpty(mEdtGroupAddress.getText().toString().trim())
+            );
         }
     }
 }

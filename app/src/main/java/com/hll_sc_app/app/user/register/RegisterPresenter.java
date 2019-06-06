@@ -7,9 +7,18 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
+import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.io.File;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -61,12 +70,45 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
-                    mView.findSuccess();
+                    mView.registerSuccess();
                 }
 
                 @Override
                 public void onFailure(UseCaseException e) {
                     mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void uploadImg(File file) {
+        RequestBody body = RequestBody.create(MediaType.parse("image/JPEG"), file);
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("upload", file.getName(), body);
+        HttpFactory.createImgUpload(UserService.class)
+            .imageUpload(photo)
+            .compose(ApiScheduler.getObservableScheduler())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new Observer<String>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+                    // no-op
+                }
+
+                @Override
+                public void onNext(String s) {
+                    mView.uploadSuccess(s);
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    mView.showToast(e.getMessage());
+                }
+
+                @Override
+                public void onComplete() {
+                    // no-op
                 }
             });
     }

@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -153,6 +154,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        LogUtil.d("ZYS", "onSizeChanged");
         if (mWidth != w || mHeight != h) {
             mNeedLoad = true;
             mWidth = w;

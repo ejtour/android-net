@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.base.R;
@@ -37,12 +37,13 @@ import java.util.Set;
  * @author zc
  * @date 20190605
  */
-public class ImgUploadBlock extends LinearLayout {
+public class ImgUploadBlock extends RelativeLayout {
     public static final int REQUEST_CODE_CHOOSE = 104;
     private static final String[] PERMISSIONS = {Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE,
         Permission.WRITE_EXTERNAL_STORAGE};
     private TextView mTitle;
     private TextView mSubTitle;
+    private ImgShowDelBlock mImgShow;
     /**
      * 字节单位 上传图片的最大大小
      */
@@ -55,11 +56,11 @@ public class ImgUploadBlock extends LinearLayout {
 
     private void initView(Context context) {
         setGravity(Gravity.CENTER);
-        setOrientation(VERTICAL);
         setBackgroundResource(R.drawable.base_bg_border_radius_3);
         View.inflate(context, R.layout.base_view_upload_img, this);
         mTitle = findViewById(R.id.txt_title);
         mSubTitle = findViewById(R.id.txt_sub_title);
+        mImgShow = findViewById(R.id.img_show);
         setOnClickListener(v -> new RequestPermissionUtils(getContext(), PERMISSIONS, this::selectPhoto).requestPermission());
     }
 
@@ -109,6 +110,12 @@ public class ImgUploadBlock extends LinearLayout {
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             mTitle.setCompoundDrawables(null, drawable, null, null);
         }
+    }
+
+    public void showImage(String url) {
+        mImgShow.setImgUrl(url);
+        mSubTitle.setVisibility(GONE);
+        mTitle.setVisibility(GONE);
     }
 
     public void setMaxSize(int maxSize) {
