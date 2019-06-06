@@ -198,7 +198,8 @@
                 <RelativeLayout
                     android:id="@+id/rl_groupDistrict"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp">
+                    android:layout_height="45dp"
+                    android:background="@drawable/base_bg_item_white">
 
                     <TextView
                         android:id="@+id/txt_groupDistrict"

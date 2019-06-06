@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -26,6 +27,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.GetIdentifyCodeReq;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.base.widget.AreaSelectWindow;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.user.PageParams;
@@ -79,6 +81,8 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     @BindView(R.id.fl_bottom)
     FrameLayout mFlBottom;
     private RegisterPresenter mPresenter;
+
+    private AreaSelectWindow mAreaWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -149,7 +153,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         mGetIdentifyCode.stopCountdown();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_confirm})
+    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_groupDistrict})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -161,9 +165,27 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                     mEdtLoginPWD.getText().toString().trim(),
                     mEdtCheckLoginPWD.getText().toString().trim());
                 break;
+            case R.id.rl_groupDistrict:
+                showAreaWindow();
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 地区选择
+     */
+    private void showAreaWindow() {
+        if (mAreaWindow == null) {
+            mAreaWindow = new AreaSelectWindow(this);
+            mAreaWindow.setResultSelectListener(bean -> {
+                mTxtGroupDistrict.setText(String.format("%s-%s-%s",
+                    bean.getShopProvince(), bean.getShopCity(), bean.getShopDistrict()));
+                mTxtGroupDistrict.setTag(bean);
+            });
+        }
+        mAreaWindow.showAtLocation(getWindow().getDecorView(), Gravity.END, 0, 0);
     }
 
     @Override
