@@ -73,4 +73,30 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     public void loadMore() {
         getOrderList(false);
     }
+
+    @Override
+    public void receiveOrder(String subBillIds) {
+        Order.modifyOrderStatus(1, subBillIds, 0,
+                null, null, null,
+                new SimpleObserver<Object>(mView) {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.showToast("成功接单");
+                        mView.statusChanged();
+                    }
+                });
+    }
+
+    @Override
+    public void deliver(String subBillIds, String expressName, String expressNo) {
+        Order.modifyOrderStatus(2, subBillIds, 0,
+                null, expressName, expressNo,
+                new SimpleObserver<Object>(mView) {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.showToast("成功发货");
+                        mView.statusChanged();
+                    }
+                });
+    }
 }

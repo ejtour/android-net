@@ -35,6 +35,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -271,7 +272,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             initEmptyView();
             mEmptyView.reset();
             mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
-            mEmptyView.setTipsButton("登录");
             if (mBottomBar != null) // 隐藏底部操作栏
                 mBottomBar.setVisibility(View.GONE);
         } else if (!TextUtils.isEmpty(mOrderType.getButtonText())) { // 如果有按钮文本
@@ -300,6 +300,21 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     @Override
     public void appendListData(List<OrderResp> resps) {
         mAdapter.addData(resps);
+    }
+
+    @Override
+    public void statusChanged() {
+        EventBus.getDefault().post(new OrderEvent(OrderEvent.REMOVE_SELECTED));
+    }
+
+    private void removeSelectedItems() {
+        ArrayList<OrderResp> data = new ArrayList<>();
+        for (OrderResp resp : mAdapter.getData()) {
+            if (!resp.isSelected()) {
+                data.add(resp);
+            }
+        }
+        refreshListData(data);
     }
 
     @OnClick(R.id.otf_cancel)
@@ -331,26 +346,45 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void confirm(View view) {
-        // TODO: 2019/6/5 confirm
+        String subBillIds = getSubBillIds();
+        switch (mOrderType) {
+            case PENDING_RECEIVE:
+                mPresenter.receiveOrder(subBillIds);
+                break;
+            case PENDING_DELIVER:
+                mPresenter.deliver(subBillIds, null, null);
+                break;
+        }
+    }
+
+    private String getSubBillIds() {
+        StringBuilder sb = new StringBuilder();
+        List<OrderResp> data = mAdapter.getData();
+        for (OrderResp resp : data) {
+            sb.append(resp.getSubBillID()).append(",");
+        }
+        if (sb.length() > 0)
+            sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
     }
 
     @Subscribe
     public void handleOrderEvent(OrderEvent event) {
         switch (event.getMessage()) {
             case OrderEvent.SEARCH_WORDS:
-                if (isFragmentVisible()) {
+                if (isFragmentVisible())
                     mOrderParam.setSearchWords((String) event.getData());
-                }
             case OrderEvent.REFRESH_LIST:
                 setForceLoad(true);
                 lazyLoad();
                 break;
             case OrderEvent.UPDATE_ITEM:
-                if (!isFragmentVisible()) {
-                    setForceLoad(true);
-                } else {
-                    replaceItem((OrderResp) event.getData());
-                }
+                setForceLoad(!isFragmentVisible());
+                replaceItem((OrderResp) event.getData());
+                break;
+            case OrderEvent.REMOVE_SELECTED:
+                setForceLoad(!isFragmentVisible());
+                removeSelectedItems();
                 break;
         }
     }

@@ -1,11 +1,7 @@
 package com.hll_sc_app.app.order;
 
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,10 +12,7 @@ import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.ColorStr;
-import com.hll_sc_app.utils.Constants;
 
 import java.util.Collection;
 import java.util.List;
@@ -58,7 +51,7 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
         View view = helper.getView(R.id.iom_check_box);
         view.setEnabled(item.isCanSelect());
         view.setSelected(item.isSelected());
-        helper.setText(R.id.iom_name, item.getPurchaserName())
+        helper.setText(R.id.iom_name, item.getShopName())
                 .setText(R.id.iom_money, "¥" + CommonUtils.formatMoney(item.getTotalAmount()))
                 .setText(R.id.iom_purchase_name, "采购商：" + item.getPurchaserName())
                 .setText(R.id.iom_order_no, "订单号：" + item.getSubBillNo())
@@ -71,6 +64,9 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
     }
 
     void replaceData(OrderResp oldData, OrderResp newData) {
+        if (oldData == null || newData == null) {
+            return;
+        }
         newData.setSelected(oldData.isSelected());
         newData.setCanSelect(oldData.isCanSelect());
         setData(getItemPosition(oldData), newData);

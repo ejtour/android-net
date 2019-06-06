@@ -28,4 +28,8 @@ public interface OrderService {
     @Headers("pv:103002")
     @POST(HttpConfig.URL)
     Observable<BaseResp<OrderResp>> getOrderDetails(@Body BaseMapReq req);
+
+    @Headers("pv:103004")
+    @POST(HttpConfig.URL)
+    Observable<BaseResp<Object>> modifyOrderStatus(@Body BaseMapReq req);
 }

@@ -12,6 +12,7 @@ public class OrderEvent extends BaseEvent {
     private static final String TAG = "OrderEvent";
     public static final String REFRESH_LIST = "refresh_list";
     public static final String UPDATE_ITEM = "update_item";
+    public static final String REMOVE_SELECTED = "remove_selected";
     public static final String SEARCH_WORDS = "search_words";
 
     public OrderEvent(String msg) {
@@ -21,6 +22,7 @@ public class OrderEvent extends BaseEvent {
     public OrderEvent(String msg, Object b) {
         super(msg, b);
         switch (msg) {
+            case REMOVE_SELECTED:
             case REFRESH_LIST:
                 break;
             case SEARCH_WORDS:

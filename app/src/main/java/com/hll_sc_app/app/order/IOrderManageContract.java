@@ -39,11 +39,20 @@ interface IOrderManageContract {
          * 追加列表数据
          */
         void appendListData(List<OrderResp> resps);
+
+        /**
+         * 状态改变
+         */
+        void statusChanged();
     }
 
     interface IOrderManagePresenter extends IPresenter<IOrderManageView> {
         void refresh();
 
         void loadMore();
+
+        void receiveOrder(String subBillIds);
+
+        void deliver(String subBillIds, String expressName, String expressNo);
     }
 }
