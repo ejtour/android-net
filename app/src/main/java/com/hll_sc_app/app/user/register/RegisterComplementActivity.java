@@ -3,6 +3,7 @@ package com.hll_sc_app.app.user.register;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
     @BindView(R.id.txt_category)
     TextView mTxtCategory;
     private RegisterComplementPresenter mPresenter;
+    private RegisterCategoryWindow mCategoryWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +89,10 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
     }
 
     private void showCategoryWindow() {
-
+        if (mCategoryWindow == null) {
+            mCategoryWindow = new RegisterCategoryWindow(this);
+        }
+        mCategoryWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     @Override

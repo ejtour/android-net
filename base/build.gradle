@@ -89,4 +89,8 @@ dependencies {
     api 'com.uber.autodispose:autodispose-android-archcomponents:0.7.0'
     // 数据库
     api 'org.greenrobot:greendao:3.2.0'
+    // 流式布局
+    api('com.zhy:flowlayout-lib:1.0.3', {
+        exclude group: 'com.android.support'
+    })
 }
