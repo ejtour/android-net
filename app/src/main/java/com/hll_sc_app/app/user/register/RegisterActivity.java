@@ -109,7 +109,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
             .setImageTitle(R.drawable.ic_dialog_success)
             .setImageState(R.drawable.ic_dialog_state_success)
             .setMessageTitle("确定要离开嘛")
-            .setMessage("您已经填写了部分数据，离开会丢失当前已填写的数据")
+            .setMessage("您已经填写了部分数据，离开会\n丢失当前已填写的数据")
             .setButton((dialog, item) -> {
                 if (item == 0) {
                     finish();
@@ -257,7 +257,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 .setImageTitle(R.drawable.ic_dialog_success)
                 .setImageState(R.drawable.ic_dialog_state_success)
                 .setMessageTitle("提交注册成功")
-                .setMessage("您已是二十二城商城用户补充部分资料即可成为供应商用户")
+                .setMessage("您已是二十二城商城用户\n补充部分资料即可成为供应商用户")
                 .setButton((dialog, item) -> {
                     dialog.dismiss();
                     RouterUtil.goToActivity(RouterConfig.USER_REGISTER_COMPLEMENT, this, req);

@@ -78,7 +78,7 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
             .setImageTitle(R.drawable.ic_dialog_success)
             .setImageState(R.drawable.ic_dialog_state_success)
             .setMessageTitle("要放弃注册么")
-            .setMessage("您必须补充资料才能完成注册返回将放弃注册成为供应商")
+            .setMessage("您必须补充资料才能完成注册\n返回将放弃注册成为供应商")
             .setButton((dialog, item) -> {
                 if (item == 0) {
                     finish();
@@ -111,7 +111,7 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
             .setImageTitle(R.drawable.ic_dialog_success)
             .setImageState(R.drawable.ic_dialog_state_success)
             .setMessageTitle("注册完成")
-            .setMessage("请等待审核")
+            .setMessage("提交成功，审核结果会以短信形式发送到您的手机，请耐心等待~")
             .setButton((dialog, item) -> {
                 dialog.dismiss();
                 finish();
