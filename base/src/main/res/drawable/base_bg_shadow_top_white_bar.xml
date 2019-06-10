@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:gravity="bottom">
+        <shape>
+            <size android:height="2dp"/>
+            <gradient
+                android:angle="-90"
+                android:endColor="@color/base_color_divider"
+                android:startColor="@color/base_white"/>
+
+        </shape>
+    </item>
+    <item android:bottom="2dp">
+        <color android:color="@color/base_white"/>
+    </item>
+</layer-list>

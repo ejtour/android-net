@@ -6,6 +6,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.LoginResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.RegisterReq;
 
 import io.reactivex.Observable;
@@ -54,6 +55,16 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101008")
     Observable<BaseResp<Object>> register(@Body BaseReq<RegisterReq> req);
+
+    /**
+     * 获取分类列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100010")
+    Observable<BaseResp<CategoryResp>> queryCategory(@Body BaseMapReq req);
 
     /**
      * 图片上传

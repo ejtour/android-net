@@ -13,7 +13,10 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.citymall.util.ViewUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +62,7 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
                 toRegisterComplement();
                 break;
             case R.id.rl_category:
-                showCategoryWindow();
+                mPresenter.queryCategory(true);
                 break;
             default:
                 break;
@@ -88,13 +91,6 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
 
     }
 
-    private void showCategoryWindow() {
-        if (mCategoryWindow == null) {
-            mCategoryWindow = new RegisterCategoryWindow(this);
-        }
-        mCategoryWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
-    }
-
     @Override
     public void registerComplementSuccess() {
         SuccessDialog.newBuilder(this)
@@ -108,5 +104,30 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
                 finish();
             }, "去登录")
             .create().show();
+    }
+
+    /**
+     * 显示列表
+     *
+     * @param list list 集合数据
+     */
+    @Override
+    public void showCategoryWindow(List<CategoryItem> list) {
+        if (mCategoryWindow == null) {
+            mCategoryWindow = new RegisterCategoryWindow(this);
+            mCategoryWindow.setListener(() -> {
+                List<CategoryItem> listSelect = mCategoryWindow.getSelectList();
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < listSelect.size(); i++) {
+                    builder.append(listSelect.get(i).getCategoryName());
+                    if (i != listSelect.size() - 1) {
+                        builder.append(",");
+                    }
+                }
+                mTxtCategory.setText(builder.toString());
+            });
+        }
+        mCategoryWindow.setList(list);
+        mCategoryWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 }

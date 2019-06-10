@@ -4,45 +4,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_content"
     android:layout_width="match_parent"
-    android:layout_height="280dp"
+    android:layout_height="420dp"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_white">
+        android:layout_height="50dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/base_ic_window_close"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="经营品类"
-            android:textColor="@color/base_text666"
-            android:textSize="@dimen/base_text_16"/>
+            android:textColor="@color/base_text222"
+            android:textSize="@dimen/base_text_13"/>
 
         <TextView
-            android:layout_width="@dimen/title_bar_height"
+            android:id="@+id/txt_confirm"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/base_bg_selector_close"
             android:gravity="center"
-            android:text="确认"
+            android:text="确定"
             android:textColor="@color/base_text666"
             android:textSize="@dimen/base_text_13"/>
 
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_eeeeee"/>
 
     <com.zhy.view.flowlayout.TagFlowLayout
         android:id="@+id/flowLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/base_white"
-        android:padding="10dp"
+        android:paddingLeft="10dp"
         app:max_select="-1"/>
 
 </LinearLayout>
