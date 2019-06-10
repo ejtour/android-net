@@ -39,8 +39,10 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
                     param.getSearchWords(),
                     param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
                     param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
-                    param.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD),
-                    param.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD),
+                    param.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH),
+                    param.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH),
+                    param.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH),
+                    param.getFormatSignEnd(Constants.FORMAT_YYYY_MM_DD_HH),
                     mView.getDeliverType(),
                     new SimpleObserver<List<OrderResp>>(mView, showLoading) {
                         @Override

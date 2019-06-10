@@ -11,11 +11,13 @@ import java.util.Date;
 
 public class OrderParam {
     private int flag;
-    private String searchWords;
+    private String searchWords = "";
     private long createStart;
     private long createEnd;
     private long executeStart;
     private long executeEnd;
+    private long signStart;
+    private long signEnd;
 
     public int getFlag() {
         return flag;
@@ -65,6 +67,22 @@ public class OrderParam {
         this.executeEnd = executeEnd;
     }
 
+    public long getSignStart() {
+        return signStart;
+    }
+
+    public void setSignStart(long signStart) {
+        this.signStart = signStart;
+    }
+
+    public long getSignEnd() {
+        return signEnd;
+    }
+
+    public void setSignEnd(long signEnd) {
+        this.signEnd = signEnd;
+    }
+
     public String getFormatCreateStart(String format) {
         return createStart == 0 ? "" : CalendarUtils.format(new Date(createStart), format);
     }
@@ -75,14 +93,21 @@ public class OrderParam {
 
     public String getFormatExecuteStart(String format) {
         return executeStart == 0 ? "" : CalendarUtils.format(new Date(executeStart), format);
-
     }
 
     public String getFormatExecuteEnd(String format) {
         return executeEnd == 0 ? "" : CalendarUtils.format(new Date(executeEnd), format);
     }
 
+    public String getFormatSignStart(String format) {
+        return signStart == 0 ? "" : CalendarUtils.format(new Date(signStart), format);
+    }
+
+    public String getFormatSignEnd(String format) {
+        return signEnd == 0 ? "" : CalendarUtils.format(new Date(signEnd), format);
+    }
+
     public void cancelTimeInterval() {
-        createStart = createEnd = executeStart = executeEnd = 0;
+        createStart = createEnd = executeStart = executeEnd = signStart = signEnd = 0;
     }
 }

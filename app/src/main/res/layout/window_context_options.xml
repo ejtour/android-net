@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    android:orientation="vertical"
+    android:paddingRight="5dp">
+
+    <com.hll_sc_app.widget.TriangleView
+        android:layout_width="6dp"
+        app:trv_color="@color/color0_7_000000"
+        android:layout_height="3dp"
+        android:layout_marginRight="14dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/wco_list"
+        android:background="@drawable/bg_context_options_list"
+        android:layout_width="135dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:layout_height="wrap_content" />
+</LinearLayout>

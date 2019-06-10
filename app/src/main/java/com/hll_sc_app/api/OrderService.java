@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.search.OrderSearchResp;
 
 import java.util.List;
 
@@ -32,4 +33,8 @@ public interface OrderService {
     @Headers("pv:103004")
     @POST(HttpConfig.URL)
     Observable<BaseResp<Object>> modifyOrderStatus(@Body BaseMapReq req);
+
+    @Headers("pv:103083")
+    @POST(HttpConfig.URL)
+    Observable<BaseResp<OrderSearchResp>> requestSearch(@Body BaseMapReq req);
 }

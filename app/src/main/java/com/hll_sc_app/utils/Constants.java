@@ -7,7 +7,8 @@ package com.hll_sc_app.utils;
 
 public interface Constants {
     String FORMAT_YYYY_MM_DD = "yyyyMMdd";
-    String FORMAT_YYYY_MM_DD_HH_MM = "yyyyMMddHHMM";
+    String FORMAT_YYYY_MM_DD_HH = "yyyyMMddHH";
+    String FORMAT_YYYY_MM_DD_HH_MM = "yyyyMMddHHmm";
     String FORMAT_YYYY_MM_DD_DASH = "yyyy-MM-dd";
     String FORMAT_YYYY_MM_DD_HH_DASH = "yyyy-MM-dd HH";
     String FORMAT_YYYY_MM_DD_HH_MM_DASH = "yyyy-MM-dd HH:mm";

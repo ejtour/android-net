@@ -219,13 +219,18 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         if (!TextUtils.isEmpty(mOrderParam.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD_DASH))) {
             mFilterHeader.setVisibility(View.VISIBLE);
             mLabel.setText("当前按下单时间筛选");
-            mInterval.setText(mOrderParam.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD_DASH) +
-                    " ~ " + mOrderParam.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD_DASH));
-        } else if (!TextUtils.isEmpty(mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_DASH))) {
+            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD_DASH),
+                    mOrderParam.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD_DASH)));
+        } else if (!TextUtils.isEmpty(mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH))) {
             mFilterHeader.setVisibility(View.VISIBLE);
             mLabel.setText("当前按到货时间筛选");
-            mInterval.setText(mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH) +
-                    " ~ " + mOrderParam.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH_DASH));
+            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH),
+                    mOrderParam.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH_DASH)));
+        } else if (!TextUtils.isEmpty(mOrderParam.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH))) {
+            mFilterHeader.setVisibility(View.VISIBLE);
+            mLabel.setText("当前按签收时间筛选");
+            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH),
+                    mOrderParam.getFormatSignEnd(Constants.FORMAT_YYYY_MM_DD_HH_DASH)));
         } else {
             mFilterHeader.setVisibility(View.GONE);
         }
