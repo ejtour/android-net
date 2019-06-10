@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 注册-不同资料-选择经营品类弹窗
+ * 注册-完善资料-选择经营品类弹窗
  *
  * @author 朱英松
  * @date 2019/6/6
