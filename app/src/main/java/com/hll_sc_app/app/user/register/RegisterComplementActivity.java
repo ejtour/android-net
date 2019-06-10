@@ -7,13 +7,17 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.user.CategoryItem;
+import com.hll_sc_app.bean.user.RegisterReq;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 
 import java.util.List;
@@ -32,6 +36,8 @@ import butterknife.OnClick;
 public class RegisterComplementActivity extends BaseLoadActivity implements RegisterComplementContract.IRegisterComplementView {
     @BindView(R.id.txt_category)
     TextView mTxtCategory;
+    @Autowired(name = "parcelable", required = true)
+    RegisterReq mReq;
     private RegisterComplementPresenter mPresenter;
     private RegisterCategoryWindow mCategoryWindow;
 
@@ -40,15 +46,11 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_complement);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
+        ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        initView();
         mPresenter = RegisterComplementPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-    }
-
-    private void initView() {
-
     }
 
     @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_category})
@@ -79,7 +81,6 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
             .setMessage("您必须补充资料才能完成注册返回将放弃注册成为供应商")
             .setButton((dialog, item) -> {
                 if (item == 0) {
-                    // TODO:返回登录页面
                     finish();
                 }
                 dialog.dismiss();
@@ -88,7 +89,19 @@ public class RegisterComplementActivity extends BaseLoadActivity implements Regi
     }
 
     private void toRegisterComplement() {
-
+        if (mCategoryWindow == null) {
+            showToast("请选择经营品类");
+            return;
+        }
+        List<CategoryItem> list = mCategoryWindow.getSelectList();
+        if (CommonUtils.isEmpty(list)) {
+            showToast("请选择经营品类");
+            return;
+        }
+        // 补充资料界面
+        mReq.setSource(1);
+        mReq.setCategory(list);
+        mPresenter.toRegisterComplement(mReq);
     }
 
     @Override

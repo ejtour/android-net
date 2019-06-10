@@ -102,6 +102,23 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        SuccessDialog.newBuilder(this)
+            .setCancelable(false)
+            .setImageTitle(R.drawable.ic_dialog_success)
+            .setImageState(R.drawable.ic_dialog_state_success)
+            .setMessageTitle("确定要离开嘛")
+            .setMessage("您已经填写了部分数据，离开会丢失当前已填写的数据")
+            .setButton((dialog, item) -> {
+                if (item == 0) {
+                    finish();
+                }
+                dialog.dismiss();
+            }, "去意已决", "暂不离开")
+            .create().show();
+    }
+
     @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_groupDistrict})
     public void onViewClicked(View view) {
         ViewUtils.clearEditFocus(view);
@@ -118,6 +135,44 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
             default:
                 break;
         }
+    }
+
+    private void toRegister() {
+        RegisterReq req = new RegisterReq();
+        req.setLoginPhone(mEdtPhone.getText().toString().trim());
+        req.setCheckCode(mEdtCode.getText().toString().trim());
+        req.setLoginPWD(mEdtLoginPWD.getText().toString().trim());
+        req.setCheckLoginPWD(mEdtCheckLoginPWD.getText().toString().trim());
+        req.setGroupName(mEdtGroupName.getText().toString().trim());
+        req.setLinkman(mEdtLinkMan.getText().toString().trim());
+        AreaDtoBean bean = (AreaDtoBean) mTxtGroupDistrict.getTag();
+        if (bean != null) {
+            req.setGroupProvince(bean.getShopProvince());
+            req.setGroupProvinceCode(bean.getShopProvinceCode());
+            req.setGroupCity(bean.getShopCity());
+            req.setGroupCityCode(bean.getShopCityCode());
+            req.setGroupDistrict(bean.getShopDistrict());
+            req.setGroupDistrictCode(bean.getShopDistrictCode());
+        }
+        req.setGroupAddress(mEdtGroupAddress.getText().toString().trim());
+        req.setLicencePhotoUrl(mImgLicencePhotoUrl.getImgUrl());
+        req.setOperationGroupID(mEdtOperationGroupID.getText().toString().trim());
+        mPresenter.toRegister(req);
+    }
+
+    /**
+     * 地区选择
+     */
+    private void showAreaWindow() {
+        if (mAreaWindow == null) {
+            mAreaWindow = new AreaSelectWindow(this);
+            mAreaWindow.setResultSelectListener(bean -> {
+                mTxtGroupDistrict.setText(String.format("%s-%s-%s",
+                    bean.getShopProvince(), bean.getShopCity(), bean.getShopDistrict()));
+                mTxtGroupDistrict.setTag(bean);
+            });
+        }
+        mAreaWindow.showAtLocation(getWindow().getDecorView(), Gravity.END, 0, 0);
     }
 
     @Override
@@ -194,64 +249,9 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     }
 
     @Override
-    public void onBackPressed() {
-        RouterUtil.goToActivity(RouterConfig.USER_REGISTER_COMPLEMENT);
-//        SuccessDialog.newBuilder(this)
-//            .setCancelable(false)
-//            .setImageTitle(R.drawable.ic_dialog_success)
-//            .setImageState(R.drawable.ic_dialog_state_success)
-//            .setMessageTitle("确定要离开嘛")
-//            .setMessage("您已经填写了部分数据，离开会丢失当前已填写的数据")
-//            .setButton((dialog, item) -> {
-//                if (item == 0) {
-//                    finish();
-//                }
-//                dialog.dismiss();
-//            }, "去意已决", "暂不离开")
-//            .create().show();
-    }
-
-    private void toRegister() {
-        RegisterReq req = new RegisterReq();
-        req.setLoginPhone(mEdtPhone.getText().toString().trim());
-        req.setCheckCode(mEdtCode.getText().toString().trim());
-        req.setLoginPWD(mEdtLoginPWD.getText().toString().trim());
-        req.setCheckLoginPWD(mEdtCheckLoginPWD.getText().toString().trim());
-        req.setGroupName(mEdtGroupName.getText().toString().trim());
-        req.setLinkman(mEdtLinkMan.getText().toString().trim());
-        AreaDtoBean bean = (AreaDtoBean) mTxtGroupDistrict.getTag();
-        if (bean != null) {
-            req.setGroupProvince(bean.getShopProvince());
-            req.setGroupProvinceCode(bean.getShopProvinceCode());
-            req.setGroupCity(bean.getShopCity());
-            req.setGroupCityCode(bean.getShopCityCode());
-            req.setGroupDistrict(bean.getShopDistrict());
-            req.setGroupDistrictCode(bean.getShopDistrictCode());
-        }
-        req.setGroupAddress(mEdtGroupAddress.getText().toString().trim());
-        req.setLicencePhotoUrl(mImgLicencePhotoUrl.getImgUrl());
-        req.setOperationGroupID(mEdtOperationGroupID.getText().toString().trim());
-        mPresenter.toRegister(req);
-    }
-
-    /**
-     * 地区选择
-     */
-    private void showAreaWindow() {
-        if (mAreaWindow == null) {
-            mAreaWindow = new AreaSelectWindow(this);
-            mAreaWindow.setResultSelectListener(bean -> {
-                mTxtGroupDistrict.setText(String.format("%s-%s-%s",
-                    bean.getShopProvince(), bean.getShopCity(), bean.getShopDistrict()));
-                mTxtGroupDistrict.setTag(bean);
-            });
-        }
-        mAreaWindow.showAtLocation(getWindow().getDecorView(), Gravity.END, 0, 0);
-    }
-
-    @Override
     public void showError(UseCaseException e) {
-        if (TextUtils.equals(e.getCode(), CODE_FROM_MALL)) {
+        if (TextUtils.equals(e.getCode(), CODE_FROM_MALL) && e.getTag() != null) {
+            RegisterReq req = (RegisterReq) e.getTag();
             SuccessDialog.newBuilder(this)
                 .setCancelable(false)
                 .setImageTitle(R.drawable.ic_dialog_success)
@@ -260,7 +260,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 .setMessage("您已是二十二城商城用户补充部分资料即可成为供应商用户")
                 .setButton((dialog, item) -> {
                     dialog.dismiss();
-                    RouterUtil.goToActivity(RouterConfig.USER_REGISTER_COMPLEMENT);
+                    RouterUtil.goToActivity(RouterConfig.USER_REGISTER_COMPLEMENT, this, req);
                 }, "补充资料")
                 .create().show();
         } else {

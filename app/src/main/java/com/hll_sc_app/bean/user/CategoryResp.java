@@ -13,6 +13,10 @@ import java.util.List;
 public class CategoryResp {
     @SerializedName("1")
     private List<CategoryItem> list;
+    @SerializedName("2")
+    private List<CategoryItem> list2;
+    @SerializedName("3")
+    private List<CategoryItem> list3;
 
     public List<CategoryItem> getList() {
         return list;
@@ -20,5 +24,21 @@ public class CategoryResp {
 
     public void setList(List<CategoryItem> list) {
         this.list = list;
+    }
+
+    public List<CategoryItem> getList2() {
+        return list2;
+    }
+
+    public void setList2(List<CategoryItem> list2) {
+        this.list2 = list2;
+    }
+
+    public List<CategoryItem> getList3() {
+        return list3;
+    }
+
+    public void setList3(List<CategoryItem> list3) {
+        this.list3 = list3;
     }
 }

@@ -78,6 +78,7 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
 
                 @Override
                 public void onFailure(UseCaseException e) {
+                    e.setTag(req);
                     mView.showError(e);
                 }
             });

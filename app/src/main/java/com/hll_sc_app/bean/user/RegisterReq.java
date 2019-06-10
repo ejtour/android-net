@@ -1,12 +1,17 @@
 package com.hll_sc_app.bean.user;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.List;
+
 /**
  * 注册请求参数
  *
  * @author zhuyingsong on 2019-06-06
  * @date 2019-06-06
  */
-public class RegisterReq {
+public class RegisterReq implements Parcelable {
     /**
      * 0-注册页面,1-补全信息页面
      */
@@ -27,6 +32,21 @@ public class RegisterReq {
     private String groupDistrict;
     private String selectArea;
     private String groupAddress;
+    public static final Parcelable.Creator<RegisterReq> CREATOR = new Parcelable.Creator<RegisterReq>() {
+        @Override
+        public RegisterReq createFromParcel(Parcel source) {
+            return new RegisterReq(source);
+        }
+
+        @Override
+        public RegisterReq[] newArray(int size) {
+            return new RegisterReq[size];
+        }
+    };
+    private List<CategoryItem> category;
+
+    public RegisterReq() {
+    }
 
     public int getSource() {
         return source;
@@ -162,5 +182,61 @@ public class RegisterReq {
 
     public void setGroupAddress(String groupAddress) {
         this.groupAddress = groupAddress;
+    }
+
+    protected RegisterReq(Parcel in) {
+        this.source = in.readInt();
+        this.loginPWD = in.readString();
+        this.checkCode = in.readString();
+        this.loginPhone = in.readString();
+        this.checkLoginPWD = in.readString();
+        this.groupName = in.readString();
+        this.operationGroupID = in.readString();
+        this.licencePhotoUrl = in.readString();
+        this.linkman = in.readString();
+        this.groupProvinceCode = in.readString();
+        this.groupProvince = in.readString();
+        this.groupCityCode = in.readString();
+        this.groupCity = in.readString();
+        this.groupDistrictCode = in.readString();
+        this.groupDistrict = in.readString();
+        this.selectArea = in.readString();
+        this.groupAddress = in.readString();
+        this.category = in.createTypedArrayList(CategoryItem.CREATOR);
+    }
+
+    public List<CategoryItem> getCategory() {
+        return category;
+    }
+
+    public void setCategory(List<CategoryItem> category) {
+        this.category = category;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.source);
+        dest.writeString(this.loginPWD);
+        dest.writeString(this.checkCode);
+        dest.writeString(this.loginPhone);
+        dest.writeString(this.checkLoginPWD);
+        dest.writeString(this.groupName);
+        dest.writeString(this.operationGroupID);
+        dest.writeString(this.licencePhotoUrl);
+        dest.writeString(this.linkman);
+        dest.writeString(this.groupProvinceCode);
+        dest.writeString(this.groupProvince);
+        dest.writeString(this.groupCityCode);
+        dest.writeString(this.groupCity);
+        dest.writeString(this.groupDistrictCode);
+        dest.writeString(this.groupDistrict);
+        dest.writeString(this.selectArea);
+        dest.writeString(this.groupAddress);
+        dest.writeTypedList(this.category);
     }
 }

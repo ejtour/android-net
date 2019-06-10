@@ -38,7 +38,7 @@ public interface RegisterComplementContract {
         void queryCategory(boolean show);
 
         /**
-         * 去注册
+         * 去完善
          *
          * @param req 请求参数
          */
