@@ -23,9 +23,9 @@
         android:layout_height="wrap_content"
         android:text="全选"
         android:textAppearance="@style/TextAppearance.City22.Little.Color666"
-        app:layout_constraintBottom_toBottomOf="@id/obb_select_all"
-        app:layout_constraintStart_toEndOf="@id/obb_select_all"
-        app:layout_constraintTop_toTopOf="@id/obb_select_all" />
+        app:layout_constraintBottom_toBottomOf="@+id/obb_select_all"
+        app:layout_constraintStart_toEndOf="@+id/obb_select_all"
+        app:layout_constraintTop_toTopOf="@+id/obb_select_all" />
 
     <TextView
         android:id="@+id/obb_sum"
@@ -34,8 +34,8 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:text="合计：¥0.00"
         android:textAppearance="@style/TextAppearance.City22.Little.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/obb_select_all_label"
-        app:layout_constraintStart_toEndOf="@id/obb_select_all_label" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/obb_select_all_label"
+        app:layout_constraintStart_toEndOf="@+id/obb_select_all_label" />
 
     <TextView
         android:id="@+id/obb_confirm"

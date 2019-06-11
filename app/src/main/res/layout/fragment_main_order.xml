@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/base_bg_shadow_top_bar"
-        app:layout_constraintBottom_toBottomOf="@id/fmo_options"
+        app:layout_constraintBottom_toBottomOf="@+id/fmo_options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +28,7 @@
         android:id="@+id/fmo_status_bar"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/fmo_options"
+        app:layout_constraintBottom_toTopOf="@+id/fmo_options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,10 +45,10 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Small.White"
         android:textColorHint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@id/fmo_options"
-        app:layout_constraintEnd_toStartOf="@id/fmo_options"
+        app:layout_constraintBottom_toBottomOf="@+id/fmo_options"
+        app:layout_constraintEnd_toStartOf="@+id/fmo_options"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/fmo_options" />
+        app:layout_constraintTop_toTopOf="@+id/fmo_options" />
 
     <ImageView
         android:id="@+id/fmo_search_icon"
@@ -56,9 +56,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@id/fmo_search"
-        app:layout_constraintStart_toStartOf="@id/fmo_search"
-        app:layout_constraintTop_toTopOf="@id/fmo_search" />
+        app:layout_constraintBottom_toBottomOf="@+id/fmo_search"
+        app:layout_constraintStart_toStartOf="@+id/fmo_search"
+        app:layout_constraintTop_toTopOf="@+id/fmo_search" />
 
     <ImageView
         android:id="@+id/fmo_clear_search"
@@ -67,9 +67,9 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_clear_search"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/fmo_search"
-        app:layout_constraintEnd_toEndOf="@id/fmo_search"
-        app:layout_constraintTop_toTopOf="@id/fmo_search" />
+        app:layout_constraintBottom_toBottomOf="@+id/fmo_search"
+        app:layout_constraintEnd_toEndOf="@+id/fmo_search"
+        app:layout_constraintTop_toTopOf="@+id/fmo_search" />
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/fmo_tab_layout"
@@ -78,7 +78,7 @@
         android:background="@drawable/bg_divider_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fmo_options"
+        app:layout_constraintTop_toBottomOf="@+id/fmo_options"
         app:tl_indicator_color="@color/colorPrimary"
         app:tl_indicator_corner_radius="1dp"
         app:tl_indicator_height="2dp"
@@ -94,5 +94,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fmo_tab_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/fmo_tab_layout" />
 </android.support.constraint.ConstraintLayout>

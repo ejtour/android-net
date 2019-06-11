@@ -14,9 +14,9 @@
         android:layout_width="3dp"
         android:layout_height="6dp"
         android:layout_marginLeft="@dimen/dp_10"
-        app:layout_constraintBottom_toBottomOf="@id/otf_label"
+        app:layout_constraintBottom_toBottomOf="@+id/otf_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/otf_label"
+        app:layout_constraintTop_toTopOf="@+id/otf_label"
         app:trv_color="@color/colorPrimary"
         app:trv_direction="right" />
 
@@ -27,7 +27,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center_vertical"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintStart_toEndOf="@id/otf_arrow"
+        app:layout_constraintStart_toEndOf="@+id/otf_arrow"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="当前按下单时间筛选" />
 
