@@ -20,6 +20,7 @@
         android:background="@color/base_colorPrimary">
 
         <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/title_bar_height"
             android:layout_centerInParent="true"
@@ -37,8 +38,8 @@
                 android:gravity="center"
                 android:paddingBottom="5dp"
                 android:text="上架商品"
-                android:textColor="@drawable/bg_goods_title_text"
-                android:textSize="@dimen/base_text_16"/>
+                android:textAppearance="@style/TextAppearance.City22.Large.White"
+                android:textColor="@drawable/bg_goods_title_text"/>
 
             <RadioButton
                 android:id="@+id/rb_productStatus5"
@@ -50,8 +51,8 @@
                 android:gravity="center"
                 android:paddingBottom="5dp"
                 android:text="下架商品"
-                android:textColor="@drawable/bg_goods_title_text"
-                android:textSize="@dimen/base_text_16"/>
+                android:textAppearance="@style/TextAppearance.City22.Large.White"
+                android:textColor="@drawable/bg_goods_title_text"/>
         </RadioGroup>
 
         <ImageView
