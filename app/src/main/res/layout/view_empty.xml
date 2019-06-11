@@ -13,7 +13,7 @@
         android:layout_marginBottom="30dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_view_empty"
-        app:layout_constraintBottom_toTopOf="@id/ve_label"
+        app:layout_constraintBottom_toTopOf="@+id/ve_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,10 +25,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintBottom_toTopOf="@id/ve_tip"
+        app:layout_constraintBottom_toTopOf="@+id/ve_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ve_img"
+        app:layout_constraintTop_toBottomOf="@+id/ve_img"
         tools:text="网络请求错误" />
 
     <TextView
@@ -40,10 +40,10 @@
         android:lineSpacingExtra="5dp"
         android:maxWidth="300dp"
         android:textAppearance="@style/TextAppearance.City22.Small.ColorAE"
-        app:layout_constraintBottom_toTopOf="@id/ve_action"
+        app:layout_constraintBottom_toTopOf="@+id/ve_action"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ve_label"
+        app:layout_constraintTop_toBottomOf="@+id/ve_label"
         tools:text="请检查您的网络设置" />
 
     <Button
@@ -58,5 +58,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ve_tip" />
+        app:layout_constraintTop_toBottomOf="@+id/ve_tip" />
 </merge>

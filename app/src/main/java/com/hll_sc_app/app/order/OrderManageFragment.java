@@ -1,10 +1,13 @@
 package com.hll_sc_app.app.order;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -20,14 +23,18 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.app.order.deliver.OrderDeliverTypeAdapter;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -71,10 +78,12 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.fol_bottom_bar_stub)
     ViewStub mBottomBarStub;
+    @BindView(R.id.fol_deliver_type_stub)
+    ViewStub mDeliverTypeStub;
     /**
      * 底部操作栏
      */
-    private View mBottomBar;
+    private View mBottomBarRoot;
     /**
      * 总金额
      */
@@ -91,6 +100,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 空布局
      */
     private EmptyView mEmptyView;
+    /**
+     * 发货类型根布局
+     */
+    private View mDeliverTypeRoot;
+    private OrderDeliverTypeAdapter mDeliverTypeAdapter;
     private OrderManageAdapter mAdapter;
     /**
      * 当前操作的订单
@@ -109,14 +123,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      */
     private OrderParam mOrderParam;
     private IOrderManageContract.IOrderManagePresenter mPresenter;
-    /**
-     * 已选总金额
-     */
-    private double mTotalAmount;
-    /**
-     * 已选数量
-     */
-    private int mSelectNum;
     Unbinder unbinder;
 
     public static OrderManageFragment newInstance(OrderType orderType, @NonNull OrderParam param) {
@@ -171,20 +177,13 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             if (item == null) {
                 return;
             }
-            // 计算总价格与选中数
-            if (item.isSelected()) {
-                mTotalAmount = CommonUtils.subDouble(mTotalAmount, item.getTotalAmount()).doubleValue();
-                mSelectNum--;
-            } else {
-                mTotalAmount = CommonUtils.addDouble(mTotalAmount, item.getTotalAmount(), 0).doubleValue();
-                mSelectNum++;
-            }
             item.setSelected(!item.isSelected());
             mAdapter.notifyItemChanged(position);
             updateBottomBarData();
         });
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mCurResp = mAdapter.getItem(position);
+            showToast("跳转详情待添加");
         });
     }
 
@@ -192,20 +191,28 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 更新底部工具栏数据
      */
     private void updateBottomBarData() {
-        mConfirm.setEnabled(mSelectNum > 0);
-        mTotalAmountText.setText(handleTotalAmount());
-        mSelectAll.setSelected(mSelectNum == mAdapter.getSelectableNum());
+        double totalAmount = 0;
+        int num = 0;
+        for (OrderResp resp : mAdapter.getData()) {
+            if (resp.isSelected()) {
+                totalAmount = CommonUtils.addDouble(totalAmount, resp.getTotalAmount(), 0).doubleValue();
+                num++;
+            }
+        }
+        mConfirm.setEnabled(num > 0);
+        mTotalAmountText.setText(handleTotalAmount(totalAmount));
+        mSelectAll.setSelected(num == mAdapter.getSelectableNum());
         String text = mConfirm.getText().toString();
         StringBuilder stringBuilder = new StringBuilder(text);
-        stringBuilder.replace(text.indexOf("(") + 1, text.indexOf(")"), String.valueOf(mSelectNum));
+        stringBuilder.replace(text.indexOf("(") + 1, text.indexOf(")"), String.valueOf(num));
         mConfirm.setText(stringBuilder.toString());
     }
 
     /**
      * 处理总金额
      */
-    private CharSequence handleTotalAmount() {
-        String source = "合计：¥" + CommonUtils.formatMoney(mTotalAmount);
+    private CharSequence handleTotalAmount(double totalAmount) {
+        String source = "合计：¥" + CommonUtils.formatMoney(totalAmount);
         SpannableString spannableString = new SpannableString(source);
         spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_ed5655)),
                 source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -219,13 +226,18 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         if (!TextUtils.isEmpty(mOrderParam.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD_DASH))) {
             mFilterHeader.setVisibility(View.VISIBLE);
             mLabel.setText("当前按下单时间筛选");
-            mInterval.setText(mOrderParam.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD_DASH) +
-                    " ~ " + mOrderParam.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD_DASH));
-        } else if (!TextUtils.isEmpty(mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_DASH))) {
+            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD_DASH),
+                    mOrderParam.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD_DASH)));
+        } else if (!TextUtils.isEmpty(mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH))) {
             mFilterHeader.setVisibility(View.VISIBLE);
             mLabel.setText("当前按到货时间筛选");
-            mInterval.setText(mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH) +
-                    " ~ " + mOrderParam.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH_DASH));
+            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH),
+                    mOrderParam.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH_DASH)));
+        } else if (!TextUtils.isEmpty(mOrderParam.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH))) {
+            mFilterHeader.setVisibility(View.VISIBLE);
+            mLabel.setText("当前按签收时间筛选");
+            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH),
+                    mOrderParam.getFormatSignEnd(Constants.FORMAT_YYYY_MM_DD_HH_DASH)));
         } else {
             mFilterHeader.setVisibility(View.GONE);
         }
@@ -241,11 +253,14 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     private void dispose() {
         mAdapter = null;
-        mBottomBar = null;
+        mDeliverTypeAdapter = null;
+        mDeliverType = null;
+        mBottomBarRoot = null;
         mConfirm = null;
         mSelectAll = null;
         mTotalAmountText = null;
         mEmptyView = null;
+        mDeliverTypeRoot = null;
         unbinder.unbind();
     }
 
@@ -255,13 +270,19 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Override
-    public int getOrderStatus() {
-        return mOrderType.getType();
+    public OrderType getOrderStatus() {
+        return mOrderType;
     }
 
     @Override
     public String getDeliverType() {
         return mDeliverType;
+    }
+
+    @Override
+    public void setDeliverType(String type) {
+        if (mDeliverType != null && mDeliverType.equals(type)) return;
+        mDeliverType = type;
     }
 
     @Override
@@ -272,13 +293,17 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             initEmptyView();
             mEmptyView.reset();
             mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
-            if (mBottomBar != null) // 隐藏底部操作栏
-                mBottomBar.setVisibility(View.GONE);
+            if (mBottomBarRoot != null) // 隐藏底部操作栏
+                mBottomBarRoot.setVisibility(View.GONE);
+            if (mDeliverTypeRoot != null) { // 隐藏发货类型
+                mDeliverType = null;
+                mDeliverTypeRoot.setVisibility(View.GONE);
+            }
         } else if (!TextUtils.isEmpty(mOrderType.getButtonText())) { // 如果有按钮文本
             initBottomBar();
             mAdapter.setCanCheck();
             mConfirm.setText(String.format("%s(0)", mOrderType.getButtonText()));
-            mBottomBar.setVisibility(View.VISIBLE);
+            mBottomBarRoot.setVisibility(View.VISIBLE);
             updateBottomBarData();
         }
     }
@@ -287,11 +312,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 初始化底部工具栏
      */
     private void initBottomBar() {
-        if (mBottomBar == null) {
-            mBottomBar = mBottomBarStub.inflate();
-            mTotalAmountText = mBottomBar.findViewById(R.id.obb_sum);
-            mSelectAll = mBottomBar.findViewById(R.id.obb_select_all);
-            mConfirm = mBottomBar.findViewById(R.id.obb_confirm);
+        if (mBottomBarRoot == null) {
+            mBottomBarRoot = mBottomBarStub.inflate();
+            mTotalAmountText = mBottomBarRoot.findViewById(R.id.obb_sum);
+            mSelectAll = mBottomBarRoot.findViewById(R.id.obb_select_all);
+            mConfirm = mBottomBarRoot.findViewById(R.id.obb_confirm);
             mSelectAll.setOnClickListener(this::selectAll);
             mConfirm.setOnClickListener(this::confirm);
         }
@@ -305,6 +330,50 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     @Override
     public void statusChanged() {
         EventBus.getDefault().post(new OrderEvent(OrderEvent.REMOVE_SELECTED));
+    }
+
+    @Override
+    public void updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes) {
+        String type = null;
+        if (!CommonUtils.isEmpty(deliverTypes)) {
+            initDeliverType();
+            mDeliverTypeRoot.setVisibility(View.VISIBLE);
+            type = deliverTypes.get(0).getKey();
+            mDeliverTypeAdapter.setNewData(deliverTypes);
+        } else {
+            if (mDeliverTypeRoot != null) {
+                mDeliverTypeRoot.setVisibility(View.GONE);
+            }
+        }
+        setDeliverType(type);
+    }
+
+    /**
+     * 初始化发货类型
+     */
+    private void initDeliverType() {
+        if (mDeliverTypeRoot == null) {
+            mDeliverTypeRoot = mDeliverTypeStub.inflate();
+            RecyclerView listView = mDeliverTypeRoot.findViewById(R.id.dth_listView);
+            listView.setLayoutManager(new LinearLayoutManager(requireContext(), OrientationHelper.HORIZONTAL, false));
+            listView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
+            mDeliverTypeAdapter = new OrderDeliverTypeAdapter();
+            listView.setAdapter(mDeliverTypeAdapter);
+            mDeliverTypeAdapter.setOnItemClickListener((adapter, view, position) -> {
+                mDeliverTypeAdapter.setSelectPos(position);
+                DeliverNumResp.DeliverType item = mDeliverTypeAdapter.getItem(position);
+                if (item == null) {
+                    return;
+                }
+                setDeliverType(item.getKey());
+                mPresenter.refreshList();
+            });
+            View view = mDeliverTypeRoot.findViewById(R.id.dth_look_info);
+            view.setOnClickListener(v -> {
+                String s = ((TextView) v).getText().toString();
+                showToast(s + "待添加");
+            });
+        }
     }
 
     private void removeSelectedItems() {
@@ -327,21 +396,13 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 全选
      */
     private void selectAll(View view) {
-        double total = 0;
-        int num = 0;
         for (OrderResp resp : mAdapter.getData()) {
             if (resp.isCanSelect()) {
                 resp.setSelected(!view.isSelected());
-                if (!view.isSelected()) {
-                    num++;
-                    total = CommonUtils.addDouble(total, resp.getTotalAmount(), 0).doubleValue();
-                }
             }
         }
         view.setSelected(!view.isSelected());
         mAdapter.notifyDataSetChanged();
-        mTotalAmount = total;
-        mSelectNum = num;
         updateBottomBarData();
     }
 

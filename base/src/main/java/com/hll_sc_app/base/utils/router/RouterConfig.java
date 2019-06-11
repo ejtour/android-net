@@ -51,4 +51,9 @@ public class RouterConfig {
      * 我的
      */
     public static final String ROOT_HOME_MINE = "/fragment/home/mine";
+
+    /**
+     * 订单管理-搜索
+     */
+    public static final String ROOT_HOME_ORDER_SEARCH = "/activity/home/order/search";
 }
