@@ -83,7 +83,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     /**
      * 底部操作栏
      */
-    private View mBottomBar;
+    private View mBottomBarRoot;
     /**
      * 总金额
      */
@@ -123,14 +123,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      */
     private OrderParam mOrderParam;
     private IOrderManageContract.IOrderManagePresenter mPresenter;
-    /**
-     * 已选总金额
-     */
-    private double mTotalAmount;
-    /**
-     * 已选数量
-     */
-    private int mSelectNum;
     Unbinder unbinder;
 
     public static OrderManageFragment newInstance(OrderType orderType, @NonNull OrderParam param) {
@@ -185,20 +177,13 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             if (item == null) {
                 return;
             }
-            // 计算总价格与选中数
-            if (item.isSelected()) {
-                mTotalAmount = CommonUtils.subDouble(mTotalAmount, item.getTotalAmount()).doubleValue();
-                mSelectNum--;
-            } else {
-                mTotalAmount = CommonUtils.addDouble(mTotalAmount, item.getTotalAmount(), 0).doubleValue();
-                mSelectNum++;
-            }
             item.setSelected(!item.isSelected());
             mAdapter.notifyItemChanged(position);
             updateBottomBarData();
         });
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mCurResp = mAdapter.getItem(position);
+            showToast("跳转详情待添加");
         });
     }
 
@@ -206,20 +191,28 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 更新底部工具栏数据
      */
     private void updateBottomBarData() {
-        mConfirm.setEnabled(mSelectNum > 0);
-        mTotalAmountText.setText(handleTotalAmount());
-        mSelectAll.setSelected(mSelectNum == mAdapter.getSelectableNum());
+        double totalAmount = 0;
+        int num = 0;
+        for (OrderResp resp : mAdapter.getData()) {
+            if (resp.isSelected()) {
+                totalAmount = CommonUtils.addDouble(totalAmount, resp.getTotalAmount(), 0).doubleValue();
+                num++;
+            }
+        }
+        mConfirm.setEnabled(num > 0);
+        mTotalAmountText.setText(handleTotalAmount(totalAmount));
+        mSelectAll.setSelected(num == mAdapter.getSelectableNum());
         String text = mConfirm.getText().toString();
         StringBuilder stringBuilder = new StringBuilder(text);
-        stringBuilder.replace(text.indexOf("(") + 1, text.indexOf(")"), String.valueOf(mSelectNum));
+        stringBuilder.replace(text.indexOf("(") + 1, text.indexOf(")"), String.valueOf(num));
         mConfirm.setText(stringBuilder.toString());
     }
 
     /**
      * 处理总金额
      */
-    private CharSequence handleTotalAmount() {
-        String source = "合计：¥" + CommonUtils.formatMoney(mTotalAmount);
+    private CharSequence handleTotalAmount(double totalAmount) {
+        String source = "合计：¥" + CommonUtils.formatMoney(totalAmount);
         SpannableString spannableString = new SpannableString(source);
         spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_ed5655)),
                 source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -262,7 +255,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mAdapter = null;
         mDeliverTypeAdapter = null;
         mDeliverType = null;
-        mBottomBar = null;
+        mBottomBarRoot = null;
         mConfirm = null;
         mSelectAll = null;
         mTotalAmountText = null;
@@ -300,9 +293,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             initEmptyView();
             mEmptyView.reset();
             mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
-            if (mBottomBar != null)  // 隐藏底部操作栏
-                mBottomBar.setVisibility(View.GONE);
-            if (mDeliverTypeRoot != null) {// 隐藏发货类型
+            if (mBottomBarRoot != null) // 隐藏底部操作栏
+                mBottomBarRoot.setVisibility(View.GONE);
+            if (mDeliverTypeRoot != null) { // 隐藏发货类型
                 mDeliverType = null;
                 mDeliverTypeRoot.setVisibility(View.GONE);
             }
@@ -310,7 +303,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             initBottomBar();
             mAdapter.setCanCheck();
             mConfirm.setText(String.format("%s(0)", mOrderType.getButtonText()));
-            mBottomBar.setVisibility(View.VISIBLE);
+            mBottomBarRoot.setVisibility(View.VISIBLE);
             updateBottomBarData();
         }
     }
@@ -319,11 +312,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 初始化底部工具栏
      */
     private void initBottomBar() {
-        if (mBottomBar == null) {
-            mBottomBar = mBottomBarStub.inflate();
-            mTotalAmountText = mBottomBar.findViewById(R.id.obb_sum);
-            mSelectAll = mBottomBar.findViewById(R.id.obb_select_all);
-            mConfirm = mBottomBar.findViewById(R.id.obb_confirm);
+        if (mBottomBarRoot == null) {
+            mBottomBarRoot = mBottomBarStub.inflate();
+            mTotalAmountText = mBottomBarRoot.findViewById(R.id.obb_sum);
+            mSelectAll = mBottomBarRoot.findViewById(R.id.obb_select_all);
+            mConfirm = mBottomBarRoot.findViewById(R.id.obb_confirm);
             mSelectAll.setOnClickListener(this::selectAll);
             mConfirm.setOnClickListener(this::confirm);
         }
@@ -384,7 +377,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void removeSelectedItems() {
-        mSelectNum = 0;
         ArrayList<OrderResp> data = new ArrayList<>();
         for (OrderResp resp : mAdapter.getData()) {
             if (!resp.isSelected()) {
@@ -404,21 +396,13 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 全选
      */
     private void selectAll(View view) {
-        double total = 0;
-        int num = 0;
         for (OrderResp resp : mAdapter.getData()) {
             if (resp.isCanSelect()) {
                 resp.setSelected(!view.isSelected());
-                if (!view.isSelected()) {
-                    num++;
-                    total = CommonUtils.addDouble(total, resp.getTotalAmount(), 0).doubleValue();
-                }
             }
         }
         view.setSelected(!view.isSelected());
         mAdapter.notifyDataSetChanged();
-        mTotalAmount = total;
-        mSelectNum = num;
         updateBottomBarData();
     }
 
