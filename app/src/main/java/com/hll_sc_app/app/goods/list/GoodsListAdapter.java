@@ -29,7 +29,9 @@ public class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder
         helper.setText(R.id.txt_productName, item.getProductName())
             .setText(R.id.txt_productCode, getMiddleContent(item))
             .setText(R.id.txt_specsSize, getBottomContent(item))
-            .setGone(R.id.txt_nextDayDelivery, TextUtils.equals("1", item.getNextDayDelivery()));
+            .setGone(R.id.txt_nextDayDelivery, TextUtils.equals("1", item.getNextDayDelivery()))
+            .addOnClickListener(R.id.txt_specStatus)
+            .setText(R.id.txt_specStatus, TextUtils.equals(item.getProductStatus(), "4") ? "下架\n商品" : "上架\n商品");
     }
 
     private String getMiddleContent(GoodsBean item) {

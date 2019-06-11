@@ -15,6 +15,7 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.widget.EmptyView;
@@ -107,13 +108,24 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mRecyclerView.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
         mAdapter = new GoodsListAdapter(null);
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            GoodsBean bean = (GoodsBean) adapter.getItem(position);
+            if (bean != null) {
+                showSpecWindow(bean);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(requireContext()));
         mEmptyView = EmptyView.newBuilder(requireActivity()).setTips(mEmptyTips).create();
         mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
             setForceLoad(true);
             lazyLoad();
         }).create();
         mNetEmptyView.setNetError();
+    }
+
+    private void showSpecWindow(GoodsBean bean) {
+
     }
 
     @Override
