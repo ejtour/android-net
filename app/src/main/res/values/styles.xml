@@ -44,4 +44,12 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@android:color/white</item>
     </style>
+
+    <style name="BtnClose">
+        <item name="android:layout_width">@dimen/title_bar_height</item>
+        <item name="android:layout_height">@dimen/title_bar_height</item>
+        <item name="android:src">@drawable/ic_close</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@drawable/bg_selector_close</item>
+    </style>
 </resources>
