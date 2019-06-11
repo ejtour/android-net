@@ -75,7 +75,7 @@
         android:id="@+id/fmo_tab_layout"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:background="@android:color/white"
+        android:background="@drawable/bg_divider_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fmo_options"

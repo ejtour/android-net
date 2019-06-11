@@ -1,10 +1,13 @@
 package com.hll_sc_app.app.order;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -20,14 +23,18 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.app.order.deliver.OrderDeliverTypeAdapter;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -71,6 +78,8 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.fol_bottom_bar_stub)
     ViewStub mBottomBarStub;
+    @BindView(R.id.fol_deliver_type_stub)
+    ViewStub mDeliverTypeStub;
     /**
      * 底部操作栏
      */
@@ -91,6 +100,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 空布局
      */
     private EmptyView mEmptyView;
+    /**
+     * 发货类型根布局
+     */
+    private View mDeliverTypeRoot;
+    private OrderDeliverTypeAdapter mDeliverTypeAdapter;
     private OrderManageAdapter mAdapter;
     /**
      * 当前操作的订单
@@ -246,11 +260,14 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     private void dispose() {
         mAdapter = null;
+        mDeliverTypeAdapter = null;
+        mDeliverType = null;
         mBottomBar = null;
         mConfirm = null;
         mSelectAll = null;
         mTotalAmountText = null;
         mEmptyView = null;
+        mDeliverTypeRoot = null;
         unbinder.unbind();
     }
 
@@ -260,13 +277,19 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Override
-    public int getOrderStatus() {
-        return mOrderType.getType();
+    public OrderType getOrderStatus() {
+        return mOrderType;
     }
 
     @Override
     public String getDeliverType() {
         return mDeliverType;
+    }
+
+    @Override
+    public void setDeliverType(String type) {
+        if (mDeliverType != null && mDeliverType.equals(type)) return;
+        mDeliverType = type;
     }
 
     @Override
@@ -277,8 +300,12 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             initEmptyView();
             mEmptyView.reset();
             mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
-            if (mBottomBar != null) // 隐藏底部操作栏
+            if (mBottomBar != null)  // 隐藏底部操作栏
                 mBottomBar.setVisibility(View.GONE);
+            if (mDeliverTypeRoot != null) {// 隐藏发货类型
+                mDeliverType = null;
+                mDeliverTypeRoot.setVisibility(View.GONE);
+            }
         } else if (!TextUtils.isEmpty(mOrderType.getButtonText())) { // 如果有按钮文本
             initBottomBar();
             mAdapter.setCanCheck();
@@ -312,7 +339,52 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         EventBus.getDefault().post(new OrderEvent(OrderEvent.REMOVE_SELECTED));
     }
 
+    @Override
+    public void updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes) {
+        String type = null;
+        if (!CommonUtils.isEmpty(deliverTypes)) {
+            initDeliverType();
+            mDeliverTypeRoot.setVisibility(View.VISIBLE);
+            type = deliverTypes.get(0).getKey();
+            mDeliverTypeAdapter.setNewData(deliverTypes);
+        } else {
+            if (mDeliverTypeRoot != null) {
+                mDeliverTypeRoot.setVisibility(View.GONE);
+            }
+        }
+        setDeliverType(type);
+    }
+
+    /**
+     * 初始化发货类型
+     */
+    private void initDeliverType() {
+        if (mDeliverTypeRoot == null) {
+            mDeliverTypeRoot = mDeliverTypeStub.inflate();
+            RecyclerView listView = mDeliverTypeRoot.findViewById(R.id.dth_listView);
+            listView.setLayoutManager(new LinearLayoutManager(requireContext(), OrientationHelper.HORIZONTAL, false));
+            listView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
+            mDeliverTypeAdapter = new OrderDeliverTypeAdapter();
+            listView.setAdapter(mDeliverTypeAdapter);
+            mDeliverTypeAdapter.setOnItemClickListener((adapter, view, position) -> {
+                mDeliverTypeAdapter.setSelectPos(position);
+                DeliverNumResp.DeliverType item = mDeliverTypeAdapter.getItem(position);
+                if (item == null) {
+                    return;
+                }
+                setDeliverType(item.getKey());
+                mPresenter.refreshList();
+            });
+            View view = mDeliverTypeRoot.findViewById(R.id.dth_look_info);
+            view.setOnClickListener(v -> {
+                String s = ((TextView) v).getText().toString();
+                showToast(s + "待添加");
+            });
+        }
+    }
+
     private void removeSelectedItems() {
+        mSelectNum = 0;
         ArrayList<OrderResp> data = new ArrayList<>();
         for (OrderResp resp : mAdapter.getData()) {
             if (!resp.isSelected()) {

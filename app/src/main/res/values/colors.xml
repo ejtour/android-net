@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#4283C3</color>
     <color name="colorAccent">#5695D2</color>
 
+    <color name="color0_5_primary">#805695D2</color>
+    <color name="color0_5_dddddd">#80dddddd</color>
+    <color name="color0_4_000000">#66000000</color>
+    <color name="color0_7_000000">#b3000000</color>
+
     <color name="color_ed5655">#ED5655</color>
     <color name="color_307ac1">#307AC1</color>
     <color name="color_222222">#222222</color>
@@ -14,9 +19,6 @@
     <color name="color_eeeeee">#eeeeee</color>
     <color name="color_aeaeae">#aeaeae</color>
     <color name="color_030303">#030303</color>
-
-    <color name="color0_5_primary">#805695D2</color>
-    <color name="color0_5_dddddd">#80dddddd</color>
-    <color name="color0_4_000000">#66000000</color>
-    <color name="color0_7_000000">#b3000000</color>
+    <color name="color_f7fbff">#f7fbff</color>
+    <color name="color_f5f5f5">#f5f5f5</color>
 </resources>

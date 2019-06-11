@@ -78,9 +78,23 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
 
     @Override
     public void setNewData(@Nullable List<OrderResp> data) {
+        preProcess(data);
         super.setNewData(data);
         mSelectableNum = 0;
         updateNum(data);
+    }
+
+    private void preProcess(@Nullable List<OrderResp> data) {
+        if (!CommonUtils.isEmpty(mData) && !CommonUtils.isEmpty(data)) {
+            for (OrderResp resp : data) {
+                for (OrderResp orderResp : mData) {
+                    if (resp.getSubBillNo().equals(orderResp.getSubBillNo())){
+                        resp.setSelected(orderResp.isSelected());
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.hll_sc_app.app.order;
 
+import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 
 import java.util.List;
 
@@ -23,12 +25,17 @@ interface IOrderManageContract {
         /**
          * @return 订单状态
          */
-        int getOrderStatus();
+        OrderType getOrderStatus();
 
         /**
          * @return 发货类型
          */
         String getDeliverType();
+
+        /**
+         * 更新发货类型
+         */
+        void setDeliverType(String type);
 
         /**
          * 刷新列表数据
@@ -44,9 +51,16 @@ interface IOrderManageContract {
          * 状态改变
          */
         void statusChanged();
+
+        /**
+         * 更新待发货头部信息
+         */
+        void updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes);
     }
 
     interface IOrderManagePresenter extends IPresenter<IOrderManageView> {
+        void refreshList();
+
         void refresh();
 
         void loadMore();

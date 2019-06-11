@@ -7,6 +7,12 @@
 
     <include layout="@layout/view_order_time_filter_hint" />
 
+    <ViewStub
+        android:id="@+id/fol_deliver_type_stub"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout="@layout/view_order_deliver_type_header" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/fol_refresh"
         android:layout_width="match_parent"
@@ -17,8 +23,6 @@
             android:id="@+id/fol_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="5dp"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
