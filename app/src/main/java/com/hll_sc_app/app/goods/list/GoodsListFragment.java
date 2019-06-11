@@ -18,7 +18,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.widget.EmptyView;
-import com.hll_sc_app.widget.SimpleHorizontalDecoration;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -105,7 +105,7 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mRecyclerView.addItemDecoration(new SimpleHorizontalDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
+        mRecyclerView.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
         mAdapter = new GoodsListAdapter(null);
         mRecyclerView.setAdapter(mAdapter);
         mEmptyView = EmptyView.newBuilder(requireActivity()).setTips(mEmptyTips).create();

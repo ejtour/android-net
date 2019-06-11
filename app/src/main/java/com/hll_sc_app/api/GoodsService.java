@@ -6,6 +6,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.bean.goods.SpecsStatusReq;
 
 import java.util.List;
 
@@ -32,4 +33,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100006")
     Observable<BaseResp<List<GoodsBean>>> queryGoodsList(@Body BaseReq<GoodsListReq> req);
+
+    /**
+     * 商品规格状态修改（上下架）
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100083")
+    Observable<BaseResp<Object>> updateSpecStatus(@Body BaseReq<SpecsStatusReq> req);
 }
