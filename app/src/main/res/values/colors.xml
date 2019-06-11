@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#4283C3</color>
     <color name="colorAccent">#5695D2</color>
 
+    <!--返回按钮底色-->
+    <color name="bg_close">#0A000000</color>
+
     <color name="color0_5_primary">#805695D2</color>
     <color name="color0_5_dddddd">#80dddddd</color>
     <color name="color0_4_000000">#66000000</color>
