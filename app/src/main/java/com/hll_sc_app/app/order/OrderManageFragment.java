@@ -280,9 +280,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Override
-    public void setDeliverType(String type) {
-        if (mDeliverType != null && mDeliverType.equals(type)) return;
+    public boolean setDeliverType(String type) {
+        if (mDeliverType != null && mDeliverType.equals(type)) return false;
         mDeliverType = type;
+        return true;
     }
 
     @Override
@@ -365,8 +366,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 if (item == null) {
                     return;
                 }
-                setDeliverType(item.getKey());
-                mPresenter.refreshList();
+                if (setDeliverType(item.getKey())) {
+                    mPresenter.refreshList();
+                }
             });
             View view = mDeliverTypeRoot.findViewById(R.id.dth_look_info);
             view.setOnClickListener(v -> {
