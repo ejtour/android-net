@@ -81,7 +81,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
     }
 
     private void initView() {
-        mFragmentAdapter = new GoodsListFragmentPager(getChildFragmentManager(), STR_ACTION_TYPE);
+        mFragmentAdapter = new GoodsListFragmentPager(getChildFragmentManager(), STR_ACTION_TYPE, STR_TITLE);
         mViewPager.setAdapter(mFragmentAdapter);
         mViewPager.setOffscreenPageLimit(2);
         mTab.setViewPager(mViewPager, STR_TITLE);
@@ -109,11 +109,11 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
     class GoodsListFragmentPager extends FragmentPagerAdapter {
         private List<GoodsListFragment> mListFragment;
 
-        GoodsListFragmentPager(FragmentManager fm, String[] types) {
+        GoodsListFragmentPager(FragmentManager fm, String[] types, String[] titles) {
             super(fm);
             mListFragment = new ArrayList<>(getCount());
-            for (String actionType : types) {
-                mListFragment.add(GoodsListFragment.newInstance(actionType));
+            for (int i = 0; i < types.length; i++) {
+                mListFragment.add(GoodsListFragment.newInstance(types[i], titles[i]));
             }
         }
 

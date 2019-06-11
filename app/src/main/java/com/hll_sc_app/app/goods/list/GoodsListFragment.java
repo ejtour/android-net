@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLazyFragment;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleHorizontalDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,6 +38,7 @@ import butterknife.Unbinder;
 @Route(path = RouterConfig.ROOT_HOME_GOODS_LIST)
 public class GoodsListFragment extends BaseLazyFragment implements GoodsListFragmentContract.IGoodsListView {
     public static final String ACTION_TYPE = "actionType";
+    public static final String ACTION_TITLE = "actionTitle";
     Unbinder unbinder;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -45,10 +48,14 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
     private GoodsListFragmentPresenter mPresenter;
     private String mActionType;
     private String mProductStatus;
+    private EmptyView mEmptyView;
+    private EmptyView mNetEmptyView;
+    private String mEmptyTips;
 
-    public static GoodsListFragment newInstance(String actionType) {
+    public static GoodsListFragment newInstance(String actionType, String actionTitle) {
         Bundle args = new Bundle();
         args.putString(ACTION_TYPE, actionType);
+        args.putString(ACTION_TITLE, actionTitle);
         GoodsListFragment fragment = new GoodsListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -62,6 +69,7 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
         Bundle args = getArguments();
         if (args != null) {
             mActionType = args.getString(ACTION_TYPE);
+            mEmptyTips = "您还没有" + args.getString(ACTION_TITLE) + "噢";
         }
     }
 
@@ -97,17 +105,29 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        SimpleHorizontalDecoration decoration = new SimpleHorizontalDecoration(0xFFEEEEEE, UIUtils.dip2px(1));
-        decoration.setLineMargin(UIUtils.dip2px(80), 0, 0, 0);
-        mRecyclerView.addItemDecoration(decoration);
+        mRecyclerView.addItemDecoration(new SimpleHorizontalDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
         mAdapter = new GoodsListAdapter(null);
         mRecyclerView.setAdapter(mAdapter);
+        mEmptyView = EmptyView.newBuilder(requireActivity()).setTips(mEmptyTips).create();
+        mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
+            setForceLoad(true);
+            lazyLoad();
+        }).create();
+        mNetEmptyView.setNetError();
     }
 
     @Override
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
+    }
+
+    @Override
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        if (e.getLevel() == UseCaseException.Level.NET) {
+            mAdapter.setEmptyView(mNetEmptyView);
+        }
     }
 
     @Override
@@ -132,6 +152,7 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
         } else {
             mAdapter.setNewData(list);
         }
+        mAdapter.setEmptyView(mEmptyView);
         mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
     }
 
