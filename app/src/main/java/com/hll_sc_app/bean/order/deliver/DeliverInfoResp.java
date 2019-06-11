@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.order.deliver;
 
+import java.util.List;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/11
@@ -13,6 +15,8 @@ public class DeliverInfoResp {
     private String productSpec;
     private String productSpecID;
     private String saleUnitName;
+    private boolean isExpanded;
+    private List<DeliverShopResp> list;
 
     public String getImgUrl() {
         return imgUrl;
@@ -68,5 +72,21 @@ public class DeliverInfoResp {
 
     public void setSaleUnitName(String saleUnitName) {
         this.saleUnitName = saleUnitName;
+    }
+
+    public boolean isExpanded() {
+        return isExpanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        isExpanded = expanded;
+    }
+
+    public List<DeliverShopResp> getList() {
+        return list;
+    }
+
+    public void setList(List<DeliverShopResp> list) {
+        this.list = list;
     }
 }

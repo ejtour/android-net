@@ -9,6 +9,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
+import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -173,6 +174,24 @@ public class Order {
         }
         OrderService.INSTANCE
                 .getOrderDeliverNum(BaseMapReq.newBuilder().put("groupID", user.getGroupID()).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取待发货商品门店信息
+     *
+     * @param productSpecID 商品规格 ID
+     */
+    public static void getDeliverShop(String productSpecID, SimpleObserver<List<DeliverShopResp>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null) {
+            return;
+        }
+        OrderService.INSTANCE
+                .getOrderDeliverShop(BaseMapReq.newBuilder().put("groupID", user.getGroupID())
+                        .put("productSpecID", productSpecID).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
