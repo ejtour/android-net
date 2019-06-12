@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -19,6 +20,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.widget.EmptyView;
@@ -109,11 +111,17 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         String hint = "请输入采购商公司名称";
         int resID = R.drawable.ic_empty_shop_view;
         if (isFromGoods()) {
-            tips = "请输入商品名称或着别名进行查询";
+            tips = "请输入商品名称或者别名进行查询";
             hint = tips;
             resID = R.drawable.ic_search_goods;
         }
         mSearchEdit.setHint(hint);
+        mSearchEdit.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                search();
+            }
+            return true;
+        });
         OrderSearchAdapter adapter = new OrderSearchAdapter();
         adapter.setEmptyView(EmptyView.newBuilder(this)
             .setTips(tips)
@@ -145,7 +153,11 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     @OnClick(R.id.aos_search_button)
     public void search() {
         String trim = mSearchEdit.getText().toString().trim();
-        EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, trim));
+        if (isFromGoods()) {
+            EventBus.getDefault().post(new GoodsSearchEvent(trim));
+        } else {
+            EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, trim));
+        }
         close();
     }
 

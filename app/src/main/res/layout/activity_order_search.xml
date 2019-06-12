@@ -44,6 +44,7 @@
         android:paddingLeft="35dp"
         android:paddingRight="30dp"
         android:singleLine="true"
+        android:imeOptions="actionSearch"
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintBottom_toBottomOf="@+id/aos_header_bg"
         app:layout_constraintEnd_toStartOf="@+id/aos_search_button"

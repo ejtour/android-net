@@ -7,9 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -22,8 +25,12 @@ import com.hll_sc_app.app.goods.list.GoodsListFragment;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +63,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
     RadioGroup mRadioGroup;
     @BindView(R.id.txt_searchContent)
     TextView mTxtSearchContent;
+    @BindView(R.id.img_searchClear)
+    ImageView mImgSearchClear;
     private GoodsListFragmentPager mFragmentAdapter;
 
     @Override
@@ -67,6 +76,31 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(GoodsSearchEvent event) {
+        String name = event.getName();
+        if (!TextUtils.isEmpty(name)) {
+            showSearchContent(true, name);
+        }
+    }
+
+    private void showSearchContent(boolean show, String content) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
+        if (show) {
+            mImgSearchClear.setVisibility(View.VISIBLE);
+            mTxtSearchContent.setText(content);
+            params.weight = 1;
+        } else {
+            mImgSearchClear.setVisibility(View.GONE);
+            mTxtSearchContent.setText(content);
+            params.weight = 0;
+        }
+        // TODO:触发网络请求
     }
 
     @Override
@@ -76,6 +110,9 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
         unbinder = ButterKnife.bind(this, rootView);
         showStatusBar();
         initView();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         return rootView;
     }
 
@@ -122,6 +159,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
                 OrderSearchActivity.start(getSearchWords(), OrderSearchActivity.FROM_GOODS);
                 break;
             case R.id.img_searchClear:
+                showSearchContent(false, null);
                 break;
             default:
                 break;
