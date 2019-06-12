@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/iod_name_spec"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        tools:text="名字（规格）" />
+
+    <TextView
+        android:id="@+id/iod_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textAppearance="@style/TextAppearance.City22.Little.Red"
+        tools:text="¥1.23" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" x "
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999" />
+
+    <TextView
+        android:id="@+id/iod_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/iod_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        tools:text="箱" />
+</LinearLayout>

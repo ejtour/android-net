@@ -1,5 +1,9 @@
 package com.hll_sc_app.bean.order;
 
+import com.hll_sc_app.bean.order.detail.OrderDetailBean;
+import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.utils.Constants;
+
 import java.util.List;
 
 /**
@@ -79,13 +83,14 @@ public class OrderResp {
     private String originalBillNo;
     private String signTime;
     private int supplyShopID;
-    private int subBillID;
+    private String subBillID;
     private String groupID;
     private int exchangeBillID;
     private String purchaserName;
     private String subBillRemark;
     private int serialNo;
     private String receiverAddress;
+    private String houseAddress;
     private double totalAmount;
     private String extGroupID;
     private double inspectionTotalAmount;
@@ -126,7 +131,26 @@ public class OrderResp {
     private int invoiceStatus;
     private boolean mIsSelected;
     private boolean mCanSelect;
+    private String driverId;
+    private String driverName;
+    private String mobilePhone;
+    private String plateNumber;
     private List<Integer> buttonList;
+    private int receiptRemaining;
+    private List<OrderDetailBean> billDetailList;
+
+    public String getTargetAddress() {
+        return deliverType == 2 ? houseAddress : receiverAddress;
+    }
+
+    public String getTargetExecuteDate() {
+        String HhMm = "2400";
+        String formatDateStr = CalendarUtils.getDateFormatString(subBillExecuteDate, Constants.FORMAT_YYYY_MM_DD_HH_MM,
+                Constants.FORMAT_YYYY_MM_DD_HH_MM_DASH);
+        if (subBillExecuteEndDate.endsWith(HhMm)) return formatDateStr + "-" + "24:00";
+        return formatDateStr + "-" + CalendarUtils.getDateFormatString(subBillExecuteEndDate,
+                Constants.FORMAT_YYYY_MM_DD_HH_MM, "HH:mm");
+    }
 
     public String getCouponDiscountRuleName() {
         return couponDiscountRuleName;
@@ -696,11 +720,11 @@ public class OrderResp {
         this.supplyShopID = supplyShopID;
     }
 
-    public int getSubBillID() {
+    public String getSubBillID() {
         return subBillID;
     }
 
-    public void setSubBillID(int subBillID) {
+    public void setSubBillID(String subBillID) {
         this.subBillID = subBillID;
     }
 
@@ -750,6 +774,14 @@ public class OrderResp {
 
     public void setReceiverAddress(String receiverAddress) {
         this.receiverAddress = receiverAddress;
+    }
+
+    public String getHouseAddress() {
+        return houseAddress;
+    }
+
+    public void setHouseAddress(String houseAddress) {
+        this.houseAddress = houseAddress;
     }
 
     public double getTotalAmount() {
@@ -1078,5 +1110,53 @@ public class OrderResp {
 
     public void setCanSelect(boolean canSelect) {
         mCanSelect = canSelect;
+    }
+
+    public String getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
+
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+    }
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
+
+    public int getReceiptRemaining() {
+        return receiptRemaining;
+    }
+
+    public void setReceiptRemaining(int receiptRemaining) {
+        this.receiptRemaining = receiptRemaining;
+    }
+
+    public List<OrderDetailBean> getBillDetailList() {
+        return billDetailList;
+    }
+
+    public void setBillDetailList(List<OrderDetailBean> billDetailList) {
+        this.billDetailList = billDetailList;
     }
 }

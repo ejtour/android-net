@@ -83,7 +83,7 @@ public class Order {
      *
      * @param subBillID 订单 id
      */
-    public static void getOrderDetails(int subBillID, SimpleObserver<OrderResp> observer) {
+    public static void getOrderDetails(String subBillID, SimpleObserver<OrderResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
         if (user == null) {
             return;
@@ -91,7 +91,7 @@ public class Order {
         OrderService.INSTANCE
                 .getOrderDetails(BaseMapReq
                         .newBuilder()
-                        .put("subBillID", String.valueOf(subBillID))
+                        .put("subBillID", subBillID)
                         .put("curRole", user.getRoleID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))

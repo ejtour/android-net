@@ -26,6 +26,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.deliver.DeliverInfoActivity;
 import com.hll_sc_app.app.order.deliver.OrderDeliverTypeAdapter;
+import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -34,6 +35,7 @@ import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -187,7 +189,8 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         });
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mCurResp = mAdapter.getItem(position);
-            showToast("跳转详情待添加");
+            if (mCurResp == null) return;
+            OrderDetailActivity.start(mCurResp.getSubBillID());
         });
     }
 

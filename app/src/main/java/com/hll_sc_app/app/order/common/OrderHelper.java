@@ -16,6 +16,31 @@ import com.hll_sc_app.utils.Constants;
  */
 
 public class OrderHelper {
+
+    private static final String[] PAY_TYPES = {"货到付款", "账期支付", "在线支付"};
+    private static final String[] PAYMENT_WAYS = {"微信支付", "支付宝支付", "银联支付", "现金支付", "支票支付", "快捷支付", "余额支付", "微信扫码", "支付宝扫码"};
+
+    /**
+     * 获取订单支付类型
+     */
+    public static String getPayType(int payType) {
+        if (payType - 1 < 0 || payType - 1 >= PAY_TYPES.length) {
+            return "";
+        }
+        return PAY_TYPES[payType - 1];
+    }
+
+    /**
+     * 获取支付方式
+     */
+    public static String getPaymentWay(int way) {
+        if (way - 1 < 0 || way - 1 >= PAYMENT_WAYS.length) {
+            return "";
+        }
+        return PAYMENT_WAYS[way - 1];
+    }
+
+
     public static CharSequence handleExtraInfo(OrderResp resp) {
         String source = null;
         switch (resp.getSubBillStatus()) {
@@ -49,6 +74,8 @@ public class OrderHelper {
 
     public static String getCancelRole(int canceler) {
         switch (canceler) {
+            case 0:
+                return "系统自动";
             case 1:
                 return "采购商";
             case 2:

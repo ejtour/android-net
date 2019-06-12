@@ -61,4 +61,9 @@ public class RouterConfig {
      * 订单管理-待发货商品总量
      */
     public static final String ROOT_HOME_ORDER_DELIVER = "/activity/home/order/deliver";
+
+    /**
+     * 订单详情
+     */
+    public static final String ROOT_ORDER_DETAIL = "/activity/order/detail";
 }
