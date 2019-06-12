@@ -82,6 +82,16 @@
             app:layout_constraintStart_toEndOf="@+id/img_imgUrl"
             tools:text="规格：2种"/>
 
+        <TextView
+            android:id="@+id/txt_disableTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="注：该商品已被平台禁用，如有疑问请联系客服"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
+            app:layout_constraintRight_toRightOf="parent"/>
+
     </android.support.constraint.ConstraintLayout>
 
     <FrameLayout

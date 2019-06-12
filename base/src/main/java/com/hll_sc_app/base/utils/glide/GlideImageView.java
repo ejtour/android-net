@@ -16,7 +16,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,7 +91,8 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         if (mPreview) {
             this.setOnClickListener(v -> {
                 ActivityOptionsCompat options =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, GlideImageView.this, "image");
+                    ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, GlideImageView.this,
+                        "image");
                 Intent intent = new Intent(mContext, ImageViewActivity.class);
                 intent.putExtra("url", mUrl);
                 intent.putStringArrayListExtra("urls", (ArrayList<String>) mUrls);
@@ -140,11 +140,11 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     }
 
     /**
-     * 显示商品售罄的标识
+     * 显示商品禁用的标识
      *
      * @param url 商品URL
      */
-    public void setSellOutImageUrl(String url) {
+    public void setDisableImageUrl(String url) {
         mUrl = TextUtils.isEmpty(url) ? url : url.trim();
         setOptions(GlideApp.with(this)
             .load("http://res.hualala.com/" + mUrl))
@@ -154,7 +154,6 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        LogUtil.d("ZYS", "onSizeChanged");
         if (mWidth != w || mHeight != h) {
             mNeedLoad = true;
             mWidth = w;
@@ -243,7 +242,8 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         if (d != null && isScaleByWidth) {
             int width = MeasureSpec.getSize(widthMeasureSpec);
             // 高度根据使得图片的宽度充满屏幕计算而得
-            int height = (int) Math.ceil((float) width * (float) d.getIntrinsicHeight() / (float) d.getIntrinsicWidth());
+            int height =
+                (int) Math.ceil((float) width * (float) d.getIntrinsicHeight() / (float) d.getIntrinsicWidth());
             setMeasuredDimension(width, height);
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);

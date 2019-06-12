@@ -14,17 +14,14 @@ import com.bumptech.glide.request.transition.Transition;
  */
 class ActivityCustomViewTarget extends CustomViewTarget<GlideImageView, BitmapDrawable> {
     private String activityName;
-    private GlideImageView mView;
 
     ActivityCustomViewTarget(GlideImageView view, String activityName) {
         super(view);
-        this.mView = view;
         this.activityName = activityName;
     }
 
     ActivityCustomViewTarget(GlideImageView view) {
         super(view);
-        this.mView = view;
     }
 
     @Override
@@ -40,9 +37,9 @@ class ActivityCustomViewTarget extends CustomViewTarget<GlideImageView, BitmapDr
     @Override
     public void onResourceReady(@NonNull BitmapDrawable resource, @Nullable Transition transition) {
         if (TextUtils.isEmpty(activityName)) {
-            view.setImageDrawable(new SellOutDrawable(resource.getBitmap()));
+            view.setImageDrawable(new DisableDrawable(view.getContext(), resource.getBitmap()));
         } else {
-            view.setImageDrawable(new ActivityMarkDrawable(mView.getContext(), resource.getBitmap(), activityName));
+            view.setImageDrawable(new ActivityMarkDrawable(view.getContext(), resource.getBitmap(), activityName));
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.goods.list;
 
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,7 +27,21 @@ public class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, GoodsBean item) {
-        ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
+        if (TextUtils.equals(item.getProductStatus(), GoodsBean.PRODUCT_STATUS_DISABLE)) {
+            ((GlideImageView) helper
+                .setGone(R.id.txt_disableTips, true)
+                .setTextColor(R.id.txt_productName, ContextCompat.getColor(mContext, R.color.color_aeaeae))
+                .setTextColor(R.id.txt_productCode, ContextCompat.getColor(mContext, R.color.color_aeaeae))
+                .setTextColor(R.id.txt_specsSize, ContextCompat.getColor(mContext, R.color.color_aeaeae))
+                .getView(R.id.img_imgUrl)).setDisableImageUrl(item.getImgUrl());
+        } else {
+            ((GlideImageView) helper
+                .setGone(R.id.txt_disableTips, false)
+                .setTextColor(R.id.txt_productName, ContextCompat.getColor(mContext, R.color.color_222222))
+                .setTextColor(R.id.txt_productCode, ContextCompat.getColor(mContext, R.color.color_999999))
+                .setTextColor(R.id.txt_specsSize, ContextCompat.getColor(mContext, R.color.color_999999))
+                .getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
+        }
         helper.setText(R.id.txt_productName, item.getProductName())
             .setText(R.id.txt_productCode, getMiddleContent(item))
             .setText(R.id.txt_specsSize, getBottomContent(item))
