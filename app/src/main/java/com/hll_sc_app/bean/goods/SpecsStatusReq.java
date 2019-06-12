@@ -1,7 +1,5 @@
 package com.hll_sc_app.bean.goods;
 
-import android.widget.GridLayout;
-
 import java.util.List;
 
 /**
@@ -11,13 +9,13 @@ import java.util.List;
  * @date 2019-06-11
  */
 public class SpecsStatusReq {
-    private List<GridLayout.Spec> records;
+    private List<SpecsStatusItem> records;
 
-    public List<GridLayout.Spec> getRecords() {
+    public List<SpecsStatusItem> getRecords() {
         return records;
     }
 
-    public void setRecords(List<GridLayout.Spec> records) {
+    public void setRecords(List<SpecsStatusItem> records) {
         this.records = records;
     }
 

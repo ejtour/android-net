@@ -25,6 +25,10 @@ public class GoodsBean {
      * 未上架
      */
     public static final String PRODUCT_STATUS_DOWN = "5";
+    /**
+     * 禁用
+     */
+    public static final String PRODUCT_STATUS_DISABLE = "7";
     private String productID;
     private String placeProvince;
     private String productName;

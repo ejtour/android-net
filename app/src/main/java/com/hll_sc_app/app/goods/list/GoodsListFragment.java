@@ -19,7 +19,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
-import com.hll_sc_app.bean.goods.SpecsBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -128,10 +128,10 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
 
     private void showSpecWindow(GoodsBean bean) {
         SpecStatusWindow window = new SpecStatusWindow(requireActivity(), bean);
-        window.setListener(new SpecStatusWindow.ItemSelectListener() {
-            @Override
-            public void confirm(List<SpecsBean> list) {
-                // 上下架
+        window.setListener(list -> {
+            // 上下架
+            if (!CommonUtils.isEmpty(list)) {
+                mPresenter.updateSpecStatus(list);
             }
         });
         window.showAtLocation(requireActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);

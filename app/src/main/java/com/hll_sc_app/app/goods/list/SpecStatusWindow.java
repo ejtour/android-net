@@ -74,7 +74,7 @@ class SpecStatusWindow extends BaseShadowPopupWindow {
             }
         });
         mRecyclerView.setAdapter(mAdapter);
-        if (TextUtils.equals(goodsBean.getProductStatus(), GoodsBean.PRODUCT_STATUS_UP)) {
+        if (GoodsListAdapter.isUp(goodsBean)) {
             mTxtConfirm.setText("全部下架");
             mTxtTitle.setText("选择规格下架");
         } else {

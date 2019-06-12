@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class SpecsBean {
     public static final String SPEC_STATUS_UP = "4";
+    public static final String SPEC_STATUS_DOWN = "5";
     private String specID;
     private String productSale;
     private String saleUnitName;

@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
@@ -31,8 +32,7 @@ public class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder
             .setText(R.id.txt_specsSize, getBottomContent(item))
             .setGone(R.id.txt_nextDayDelivery, TextUtils.equals("1", item.getNextDayDelivery()))
             .addOnClickListener(R.id.txt_specStatus)
-            .setText(R.id.txt_specStatus, TextUtils.equals(item.getProductStatus(), GoodsBean.PRODUCT_STATUS_UP) ?
-                "下架\n商品" : "上架\n商品");
+            .setText(R.id.txt_specStatus, isUp(item) ? "下架\n商品" : "上架\n商品");
     }
 
     private String getMiddleContent(GoodsBean item) {
@@ -52,5 +52,12 @@ public class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder
         } else {
             return "规格：" + (CommonUtils.isEmpty(item.getSpecs()) ? "0" : item.getSpecs().size()) + "种";
         }
+    }
+
+    public static boolean isUp(GoodsBean item) {
+        if (!CommonUtils.isEmpty(item.getSpecs())) {
+            return TextUtils.equals(item.getSpecs().get(0).getSpecStatus(), SpecsBean.SPEC_STATUS_UP);
+        }
+        return false;
     }
 }

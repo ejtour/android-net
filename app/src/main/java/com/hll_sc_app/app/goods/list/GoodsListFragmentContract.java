@@ -3,6 +3,7 @@ package com.hll_sc_app.app.goods.list;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.SpecsBean;
 
 import java.util.List;
 
@@ -60,5 +61,12 @@ interface GoodsListFragmentContract {
          * 加载更多商品列表
          */
         void queryMoreGoodsList();
+
+        /**
+         * 商品规格状态修改
+         *
+         * @param list 规格
+         */
+        void updateSpecStatus(List<SpecsBean> list);
     }
 }
