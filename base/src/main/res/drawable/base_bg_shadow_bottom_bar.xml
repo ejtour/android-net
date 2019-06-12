@@ -5,8 +5,8 @@
             <size android:height="1dp" />
             <gradient
                 android:angle="90"
-                android:endColor="@android:color/transparent"
-                android:startColor="#0D000000" />
+                android:endColor="#0D000000"
+                android:startColor="@color/base_white" />
         </shape>
     </item>
     <item android:top="1dp">
