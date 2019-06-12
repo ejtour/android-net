@@ -20,6 +20,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.list.GoodsListFragment;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
 
 import java.util.ArrayList;
@@ -86,7 +87,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
         mViewPager.setOffscreenPageLimit(2);
         mTab.setViewPager(mViewPager, STR_TITLE);
         mRadioGroup.setOnCheckedChangeListener((group, checkedId)
-            -> updateFragment(checkedId == R.id.rb_productStatus4 ? "4" : "5"));
+            -> updateFragment(checkedId == R.id.rb_productStatus4 ? GoodsBean.PRODUCT_STATUS_UP :
+            GoodsBean.PRODUCT_STATUS_DOWN));
     }
 
     private void updateFragment(String productStatus) {
@@ -103,7 +105,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
      * @return 上-4 下-5
      */
     private String getProductStatus() {
-        return mRbProductStatus4.isChecked() ? "4" : "5";
+        return mRbProductStatus4.isChecked() ? GoodsBean.PRODUCT_STATUS_UP : GoodsBean.PRODUCT_STATUS_DOWN;
     }
 
     class GoodsListFragmentPager extends FragmentPagerAdapter {

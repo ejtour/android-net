@@ -9,6 +9,7 @@ import java.util.List;
  * @date 2019-06-11
  */
 public class SpecsBean {
+    public static final String SPEC_STATUS_UP = "4";
     private String specID;
     private String productSale;
     private String saleUnitName;
@@ -16,6 +17,9 @@ public class SpecsBean {
     private String actionTime;
     private String preferentialPriceType;
     private String productID;
+    /**
+     * 规格状态：4-已上架，5-未上架
+     */
     private String specStatus;
     private String saleUnitID;
     private boolean isLowStock;
@@ -36,9 +40,18 @@ public class SpecsBean {
     private String onShelfTime;
     private String buyMinNum;
     private String productPrice;
+    private String productStock;
     private String skuCode;
     private List<?> depositProducts;
     private List<?> labelIDs;
+
+    public String getProductStock() {
+        return productStock;
+    }
+
+    public void setProductStock(String productStock) {
+        this.productStock = productStock;
+    }
 
     public String getSpecID() {
         return specID;

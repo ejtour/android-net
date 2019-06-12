@@ -17,6 +17,14 @@ public class GoodsBean {
      * 是代仓商品
      */
     public static final String WAREHOUSE_TYPE = "1";
+    /**
+     * 已上架
+     */
+    public static final String PRODUCT_STATUS_UP = "4";
+    /**
+     * 未上架
+     */
+    public static final String PRODUCT_STATUS_DOWN = "5";
     private String productID;
     private String placeProvince;
     private String productName;
