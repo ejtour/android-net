@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.list.GoodsListFragment;
+import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.GoodsBean;
@@ -28,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -51,6 +54,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
     RadioButton mRbProductStatus4;
     @BindView(R.id.radioGroup)
     RadioGroup mRadioGroup;
+    @BindView(R.id.txt_searchContent)
+    TextView mTxtSearchContent;
     private GoodsListFragmentPager mFragmentAdapter;
 
     @Override
@@ -106,6 +111,25 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
      */
     private String getProductStatus() {
         return mRbProductStatus4.isChecked() ? GoodsBean.PRODUCT_STATUS_UP : GoodsBean.PRODUCT_STATUS_DOWN;
+    }
+
+    @OnClick({R.id.img_add, R.id.rl_search, R.id.img_searchClear})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_add:
+                break;
+            case R.id.rl_search:
+                OrderSearchActivity.start(getSearchWords(), OrderSearchActivity.FROM_GOODS);
+                break;
+            case R.id.img_searchClear:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private String getSearchWords() {
+        return mTxtSearchContent.getText().toString();
     }
 
     class GoodsListFragmentPager extends FragmentPagerAdapter {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,22 +43,24 @@ import io.reactivex.disposables.Disposable;
  */
 @Route(path = RouterConfig.ROOT_HOME_ORDER_SEARCH)
 public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearchContract.IOrderSearchView {
-
-    public static void start(String searchWords) {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_ORDER_SEARCH, searchWords);
-    }
-
+    public static final String FROM_GOODS = "FROM_GOODS";
     @BindView(R.id.aos_search_edit)
     EditText mSearchEdit;
     @BindView(R.id.aos_search_clear)
     ImageView mSearchClear;
     @BindView(R.id.aos_list)
     RecyclerView mListView;
-    @Autowired(name = "object")
+    @Autowired(name = "object0")
     String mSearchWords;
+    @Autowired(name = "object1")
+    String mFrom;
     private Disposable mDisposable;
     private IOrderSearchContract.IOrderSearchPresenter mPresenter;
     private ObservableEmitter<String> mEmitter;
+
+    public static void start(String... strings) {
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_ORDER_SEARCH, strings);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,18 +69,56 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        mDisposable = getTextObservable().subscribe(this::gotoSearch);
+        mDisposable = getTextObservable().subscribe(s -> {
+            if (!isFromGoods()) {
+                // 商品无提示词搜索
+                gotoSearch(s);
+            }
+        });
         mPresenter = OrderSearchPresenter.newInstance();
         mPresenter.register(this);
         initView();
     }
 
+    @Override
+    protected void onDestroy() {
+        mDisposable.dispose();
+        super.onDestroy();
+    }
+
+    private Observable<String> getTextObservable() {
+        Observable<String> observable = Observable.create(emitter -> mEmitter = emitter);
+        return observable.filter(s -> s.length() > 0).debounce(500, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * 来自商品搜索
+     *
+     * @return true
+     */
+    private boolean isFromGoods() {
+        return TextUtils.equals(mFrom, FROM_GOODS);
+    }
+
+    private void gotoSearch(String keywords) {
+        mPresenter.requestSearch(keywords);
+    }
+
     private void initView() {
+        String tips = "您可以输入客户名称查找采购商门店";
+        String hint = "请输入采购商公司名称";
+        int resID = R.drawable.ic_empty_shop_view;
+        if (isFromGoods()) {
+            tips = "请输入商品名称或着别名进行查询";
+            hint = tips;
+            resID = R.drawable.ic_search_goods;
+        }
+        mSearchEdit.setHint(hint);
         OrderSearchAdapter adapter = new OrderSearchAdapter();
         adapter.setEmptyView(EmptyView.newBuilder(this)
-                .setTips("您可以输入客户名称查找采购商门店")
-                .setImage(R.drawable.ic_empty_shop_view)
-                .create());
+            .setTips(tips)
+            .setImage(resID)
+            .create());
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             OrderSearchBean item = (OrderSearchBean) adapter1.getItem(position);
             if (item == null) {
@@ -87,7 +128,8 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             search();
         });
         mListView.setAdapter(adapter);
-        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
+        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee),
+            UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0, Color.WHITE);
         mListView.addItemDecoration(decor);
         updateSearchEdit(mSearchWords);
@@ -100,21 +142,6 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        mDisposable.dispose();
-        super.onDestroy();
-    }
-
-    private void gotoSearch(String keywords) {
-        mPresenter.requestSearch(keywords);
-    }
-
-    private Observable<String> getTextObservable() {
-        Observable<String> observable = Observable.create(emitter -> mEmitter = emitter);
-        return observable.filter(s -> s.length() > 0).debounce(500, TimeUnit.MILLISECONDS);
-    }
-
     @OnClick(R.id.aos_search_button)
     public void search() {
         String trim = mSearchEdit.getText().toString().trim();
@@ -122,14 +149,14 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         close();
     }
 
-    @OnClick(R.id.aos_search_clear)
-    public void clear() {
-        mSearchEdit.setText("");
-    }
-
     @OnClick(R.id.aos_close)
     public void close() {
         finish();
+    }
+
+    @OnClick(R.id.aos_search_clear)
+    public void clear() {
+        mSearchEdit.setText("");
     }
 
     @Override

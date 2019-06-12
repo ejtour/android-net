@@ -50,48 +50,36 @@ public class RouterUtil {
 
     /***
      * 页面基本类型传参适配
+     * @param objects object
      */
-    public static void goToActivity(String url, Object object) {
-        getPostcard(url, object).navigation();
+    public static void goToActivity(String url, Object... objects) {
+        Postcard postcard = ARouter.getInstance().build(url);
+        for (int i = 0; i < objects.length; i++) {
+            getPostcard(postcard, "object" + i, objects[i]);
+        }
+        postcard.setProvider(new LoginInterceptor()).navigation();
     }
 
     /**
      * 获取基本类型传参的postcard
      *
-     * @param url
-     * @param object
-     * @return
+     * @param postcard postcard
+     * @param value    object
+     * @param key      key
      */
-    private static Postcard getPostcard(String url, Object object) {
-        Postcard postcard = ARouter.getInstance().build(url);
-        if (object == null) {
-            return null;
-        }
-        String type = object.getClass().getSimpleName();
+    private static void getPostcard(Postcard postcard, String key, Object value) {
+        String type = value.getClass().getSimpleName();
         if ("String".equals(type)) {
-            postcard = postcard.withString("object", (String) object);
+            postcard.withString(key, (String) value);
         } else if ("Integer".equals(type)) {
-            postcard = postcard.withInt("object", (Integer) object);
+            postcard.withInt(key, (Integer) value);
         } else if ("Boolean".equals(type)) {
-            postcard = postcard.withBoolean("object", (Boolean) object);
+            postcard.withBoolean(key, (Boolean) value);
         } else if ("Float".equals(type)) {
-            postcard = postcard.withFloat("object", (Float) object);
+            postcard.withFloat(key, (Float) value);
         } else if ("Long".equals(type)) {
-            postcard = postcard.withLong("object", (Long) object);
+            postcard.withLong(key, (Long) value);
         }
-        return postcard.setProvider(new LoginInterceptor());
-    }
-
-    /**
-     * 通过url跳转 startActivityForResult 传基本类型参数
-     *
-     * @param url
-     * @param activity
-     * @param requestCode
-     * @param object
-     */
-    public static void goToActivity(String url, Activity activity, int requestCode, Object object) {
-        getPostcard(url, object).navigation(activity, requestCode);
     }
 
     /**
