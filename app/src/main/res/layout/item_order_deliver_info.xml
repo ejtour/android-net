@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/odi_image"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        app:base_RoundingRadius="3"
+        app:layout_constraintBottom_toTopOf="@+id/odi_list_view"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginBottom="5dp"
+        tools:src="@drawable/ic_placeholder" />
+
+    <TextView
+        android:id="@+id/odi_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintStart_toEndOf="@+id/odi_image"
+        app:layout_constraintTop_toTopOf="@+id/odi_image"
+        tools:text="新鲜柠檬特别酸" />
+
+    <TextView
+        android:id="@+id/odi_spec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/odi_image"
+        app:layout_constraintStart_toStartOf="@+id/odi_name"
+        tools:text="规格：42斤／箱" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/odi_arrow"
+        android:layout_width="6dp"
+        android:layout_height="3dp"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="@+id/odi_spec"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/odi_spec"
+        app:trv_color="@color/colorPrimary"
+        app:trv_direction="bottom" />
+
+    <TextView
+        android:id="@+id/odi_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odi_spec"
+        app:layout_constraintEnd_toStartOf="@+id/odi_arrow"
+        tools:text="x 50 箱" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/odi_list_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color_fafafa"
+        android:overScrollMode="never"
+        android:visibility="gone"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/odi_image" />
+</android.support.constraint.ConstraintLayout>

@@ -10,4 +10,12 @@
             <enum name="left" value="3" />
         </attr>
     </declare-styleable>
+
+    <!--头部HeaderBar类的属性-->
+    <declare-styleable name="TitleBar">
+        <attr name="tb_title" format="string" />
+        <attr name="tb_rightVisibility" format="boolean" />
+        <attr name="tb_rightText" format="string" />
+        <attr name="tb_rightImage" format="reference" />
+    </declare-styleable>
 </resources>

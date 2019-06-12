@@ -35,7 +35,7 @@ interface IOrderManageContract {
         /**
          * 更新发货类型
          */
-        void setDeliverType(String type);
+        boolean setDeliverType(String type);
 
         /**
          * 刷新列表数据

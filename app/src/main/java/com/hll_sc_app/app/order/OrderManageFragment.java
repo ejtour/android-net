@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.app.order.deliver.DeliverInfoActivity;
 import com.hll_sc_app.app.order.deliver.OrderDeliverTypeAdapter;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
@@ -158,6 +160,8 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private void initView() {
         mAdapter = new OrderManageAdapter();
         mListView.setAdapter(mAdapter);
+        // 避免 notifyItemChanged 闪烁
+        ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     private void setListener() {
@@ -280,9 +284,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Override
-    public void setDeliverType(String type) {
-        if (mDeliverType != null && mDeliverType.equals(type)) return;
+    public boolean setDeliverType(String type) {
+        if (mDeliverType != null && mDeliverType.equals(type)) return false;
         mDeliverType = type;
+        return true;
     }
 
     @Override
@@ -365,14 +370,12 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 if (item == null) {
                     return;
                 }
-                setDeliverType(item.getKey());
-                mPresenter.refreshList();
+                if (setDeliverType(item.getKey())) {
+                    mPresenter.refreshList();
+                }
             });
             View view = mDeliverTypeRoot.findViewById(R.id.dth_look_info);
-            view.setOnClickListener(v -> {
-                String s = ((TextView) v).getText().toString();
-                showToast(s + "待添加");
-            });
+            view.setOnClickListener(v -> DeliverInfoActivity.start());
         }
     }
 
