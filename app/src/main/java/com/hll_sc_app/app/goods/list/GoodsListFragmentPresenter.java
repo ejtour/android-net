@@ -18,6 +18,8 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
@@ -67,22 +69,7 @@ public class GoodsListFragmentPresenter implements GoodsListFragmentContract.IGo
         if (CommonUtils.isEmpty(list)) {
             return;
         }
-        BaseReq<SpecsStatusReq> baseReq = new BaseReq<>();
-        SpecsStatusReq req = new SpecsStatusReq();
-        List<SpecsStatusReq.SpecsStatusItem> records = new ArrayList<>();
-        for (SpecsBean specsBean : list) {
-            SpecsStatusReq.SpecsStatusItem item = new SpecsStatusReq.SpecsStatusItem();
-            item.setProductID(specsBean.getProductID());
-            item.setSpecID(specsBean.getSpecID());
-            item.setSpecStatus(TextUtils.equals(specsBean.getSpecStatus(), SpecsBean.SPEC_STATUS_UP) ?
-                SpecsBean.SPEC_STATUS_DOWN : SpecsBean.SPEC_STATUS_UP);
-            records.add(item);
-        }
-        req.setRecords(records);
-        baseReq.setData(req);
-        GoodsService.INSTANCE.updateSpecStatus(baseReq)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
+        getUpdateSpecStatusObservable(list)
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
@@ -97,6 +84,31 @@ public class GoodsListFragmentPresenter implements GoodsListFragmentContract.IGo
                     mView.showError(e);
                 }
             });
+    }
+
+    /**
+     * 上下架状态修改
+     *
+     * @param list 规格列表
+     * @return Observable
+     */
+    public static Observable<Object> getUpdateSpecStatusObservable(List<SpecsBean> list) {
+        BaseReq<SpecsStatusReq> baseReq = new BaseReq<>();
+        SpecsStatusReq req = new SpecsStatusReq();
+        List<SpecsStatusReq.SpecsStatusItem> records = new ArrayList<>();
+        for (SpecsBean specsBean : list) {
+            SpecsStatusReq.SpecsStatusItem item = new SpecsStatusReq.SpecsStatusItem();
+            item.setProductID(specsBean.getProductID());
+            item.setSpecID(specsBean.getSpecID());
+            item.setSpecStatus(TextUtils.equals(specsBean.getSpecStatus(), SpecsBean.SPEC_STATUS_UP) ?
+                SpecsBean.SPEC_STATUS_DOWN : SpecsBean.SPEC_STATUS_UP);
+            records.add(item);
+        }
+        req.setRecords(records);
+        baseReq.setData(req);
+        return GoodsService.INSTANCE.updateSpecStatus(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>());
     }
 
     private void toQueryGoodsList(boolean showLoading) {

@@ -3,6 +3,9 @@ package com.hll_sc_app.app.goods.detail;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.SpecsBean;
+
+import java.util.List;
 
 /**
  * 商品详情
@@ -19,14 +22,26 @@ public interface GoodsDetailContract {
          * @param bean GoodsBean
          */
         void showDetail(GoodsBean bean);
+
+        /**
+         * 获取商品 ID
+         *
+         * @return 商品 ID
+         */
+        String getProductID();
     }
 
     interface IGoodsDetailPresenter extends IPresenter<IGoodsDetailView> {
         /**
          * 查询商品详情
-         *
-         * @param productID 商品 ID
          */
-        void queryGoodsDetail(String productID);
+        void queryGoodsDetail();
+
+        /**
+         * 商品规格状态修改
+         *
+         * @param list 规格
+         */
+        void updateSpecStatus(List<SpecsBean> list);
     }
 }

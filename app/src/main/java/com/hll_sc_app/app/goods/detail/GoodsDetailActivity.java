@@ -24,6 +24,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.NicknamesBean;
+import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.youth.banner.Banner;
@@ -35,6 +36,7 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,7 +83,6 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mPresenter = GoodsDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        mPresenter.queryGoodsDetail(mProductID);
     }
 
     private void initView() {
@@ -91,6 +92,13 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mRecyclerViewSpec.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
         mAdapterSpec = new SpecStatusWindow.SpecAdapter(null);
         mRecyclerViewSpec.setAdapter(mAdapterSpec);
+        mAdapterSpec.setOnItemChildClickListener((adapter, view, position) -> {
+            SpecsBean bean = (SpecsBean) adapter.getItem(position);
+            if (bean != null) {
+                bean.setProductID(mProductID);
+                mPresenter.updateSpecStatus(Collections.singletonList(bean));
+            }
+        });
     }
 
     @Override
@@ -121,6 +129,11 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         showBanner(bean);
         showProductName(bean);
         showSpecList(bean);
+    }
+
+    @Override
+    public String getProductID() {
+        return mProductID;
     }
 
     private void showBanner(GoodsBean bean) {
