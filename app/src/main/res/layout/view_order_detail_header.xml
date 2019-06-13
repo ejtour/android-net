@@ -110,30 +110,20 @@
         app:layout_constraintTop_toBottomOf="@+id/odh_shop_logo"
         tools:text="订货人：店老大" />
 
-    <View
+    <TextView
         android:id="@+id/odh_orderer_dial"
         android:layout_width="160dp"
         android:layout_height="31dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_order_detail_phone"
+        android:drawableLeft="@drawable/ic_phone_wrapper"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
         app:layout_constraintEnd_toStartOf="@+id/odh_ver_line"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@+id/odh_orderer"
-        app:layout_constraintTop_toBottomOf="@+id/odh_orderer" />
-
-    <TextView
-        android:id="@+id/odh_orderer_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_phone"
-        android:drawablePadding="5dp"
-        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBottom_toBottomOf="@+id/odh_orderer_dial"
-        app:layout_constraintEnd_toEndOf="@+id/odh_orderer_dial"
-        app:layout_constraintStart_toStartOf="@+id/odh_orderer_dial"
-        app:layout_constraintTop_toTopOf="@+id/odh_orderer_dial"
+        app:layout_constraintTop_toBottomOf="@+id/odh_orderer"
         tools:text="010-3234567" />
-
 
     <TextView
         android:id="@+id/odh_consignee"
@@ -145,36 +135,28 @@
         app:layout_constraintTop_toBottomOf="@+id/odh_shop_logo"
         tools:text="收货人：店小二" />
 
-    <View
+    <TextView
         android:id="@+id/odh_consignee_dial"
         android:layout_width="160dp"
         android:layout_height="31dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/bg_order_detail_phone"
+        android:drawableLeft="@drawable/ic_phone_wrapper"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/odh_consignee" />
-
-
-    <TextView
-        android:id="@+id/odh_consignee_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_phone"
-        android:drawablePadding="5dp"
-        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBottom_toBottomOf="@+id/odh_consignee_dial"
-        app:layout_constraintEnd_toEndOf="@+id/odh_consignee_dial"
-        app:layout_constraintStart_toStartOf="@+id/odh_consignee_dial"
-        app:layout_constraintTop_toTopOf="@+id/odh_consignee_dial"
+        app:layout_constraintTop_toBottomOf="@+id/odh_consignee"
         tools:text="010-3234567" />
 
     <TextView
         android:id="@+id/odh_time_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="15dp"
-        android:background="@color/color_fafafa"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_order_detail_phone"
         android:padding="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintEnd_toEndOf="parent"
@@ -186,6 +168,7 @@
         android:id="@+id/odh_divider"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/base_activity_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

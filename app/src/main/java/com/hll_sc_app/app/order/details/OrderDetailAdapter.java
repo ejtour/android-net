@@ -41,6 +41,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, OrderDetailBean item) {
+        helper.itemView.setBackgroundResource(mData.indexOf(item) % 2 == 0 ? android.R.color.white : R.color.color_f7f8fa);
         ((GlideImageView) helper.getView(R.id.iod_image)).setImageURL(item.getImgUrl());
         // 押金商品
         List<OrderDepositBean> depositList = item.getDepositList();
@@ -50,20 +51,20 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         if (item.getSubBillStatus() == 2) builder.insert(0, "预");
         if (item.getSubBillStatus() >= 2 && item.getSubBillStatus() != 7)
             builder.append(CommonUtils.formatNum(item.getAdjustmentNum())).append(item.getAdjustmentUnit());
-        else builder.append("-");
+        else builder.append("- -");
         String deliveryText = builder.toString();
 
         builder.delete(0, deliveryText.length()).append("签收：");
         if (item.getSubBillStatus() == 4 || item.getSubBillStatus() == 6 || item.getSubBillStatus() == 8)
             builder.append(CommonUtils.formatNum(item.getInspectionNum())).append(item.getInspectionUnit());
-        else builder.append("-");
+        else builder.append("- -");
         String confirmText = builder.toString();
 
         helper.setText(R.id.iod_product_name, item.getProductName())
                 .setText(R.id.iod_product_spec, item.getProductSpec()) // 规格
                 .setText(R.id.iod_order_num, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName()) // 订货数量
-                .setText(R.id.iod_delivery_num, !deliveryText.endsWith("-") && item.getAdjustmentNum() != item.getProductNum() ? deliveryText : processNum(deliveryText)) // 预发货/发货数量
-                .setText(R.id.iod_confirm_num, !confirmText.endsWith("-") && item.getInspectionNum() != item.getProductNum() ? confirmText : processNum(confirmText)) // 签收数量
+                .setText(R.id.iod_delivery_num, processNum(deliveryText, item.getAdjustmentNum() != item.getProductNum())) // 预发货/发货数量
+                .setText(R.id.iod_confirm_num, processNum(confirmText, item.getInspectionNum() != item.getProductNum())) // 签收数量
                 .setText(R.id.iod_sale_unit_spec, "¥" + CommonUtils.formatMoney(item.getProductPrice()) + "/" + item.getSaleUnitName()) // 单价
                 .setText(R.id.iod_amount, "小计：¥" + CommonUtils.formatMoney(item.getInspectionAmount())); // 小计
     }
@@ -71,9 +72,10 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
     /**
      * 签收数与实际数量不一致时改变文本颜色
      */
-    private SpannableString processNum(String source) {
+    private SpannableString processNum(String source, boolean numDiff) {
         SpannableString delivery = new SpannableString(source);
-        delivery.setSpan(new ForegroundColorSpan(Color.parseColor(ColorStr.COLOR_ED5655)),
+        delivery.setSpan(new ForegroundColorSpan(Color.parseColor(!source.endsWith("-") && numDiff
+                        ? ColorStr.COLOR_5695D2 : ColorStr.COLOR_666666)),
                 source.indexOf("：") + 1, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return delivery;
     }

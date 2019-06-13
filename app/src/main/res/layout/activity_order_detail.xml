@@ -16,16 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/aod_title_bar"
-        android:layout_marginBottom="@dimen/bottom_bar_height"
         android:background="@android:color/white"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-    <TextView
+    <com.hll_sc_app.widget.order.OrderActionBar
         android:id="@+id/aod_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_bar_height"
         android:layout_alignParentBottom="true"
-        android:background="@android:color/white"
-        android:gravity="center"
-        android:text="待添加" />
+        android:visibility="gone" />
 </RelativeLayout>

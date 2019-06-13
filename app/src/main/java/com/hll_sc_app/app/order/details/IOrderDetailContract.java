@@ -12,8 +12,15 @@ import com.hll_sc_app.bean.order.OrderResp;
 public interface IOrderDetailContract {
     interface IOrderDetailView extends ILoadView {
         void updateOrderData(OrderResp resp);
+
+        void handleStatusChanged();
     }
 
     interface IOrderDetailPresenter extends IPresenter<IOrderDetailView> {
+        void orderCancel(String cancelReason);
+
+        void orderReceive();
+
+        void orderDeliver();
     }
 }

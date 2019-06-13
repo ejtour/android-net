@@ -35,7 +35,6 @@ import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -301,18 +300,22 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             initEmptyView();
             mEmptyView.reset();
             mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
-            if (mBottomBarRoot != null) // 隐藏底部操作栏
-                mBottomBarRoot.setVisibility(View.GONE);
-            if (mDeliverTypeRoot != null) { // 隐藏发货类型
-                mDeliverType = null;
-                mDeliverTypeRoot.setVisibility(View.GONE);
-            }
+            handleEmptyData();
         } else if (!TextUtils.isEmpty(mOrderType.getButtonText())) { // 如果有按钮文本
             initBottomBar();
             mAdapter.setCanCheck();
             mConfirm.setText(String.format("%s(0)", mOrderType.getButtonText()));
             mBottomBarRoot.setVisibility(View.VISIBLE);
             updateBottomBarData();
+        }
+    }
+
+    private void handleEmptyData() {
+        if (mBottomBarRoot != null) // 隐藏底部操作栏
+            mBottomBarRoot.setVisibility(View.GONE);
+        if (mDeliverTypeRoot != null) { // 隐藏发货类型
+            mDeliverType = null;
+            mDeliverTypeRoot.setVisibility(View.GONE);
         }
     }
 
@@ -382,20 +385,16 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         }
     }
 
-    private void removeSelectedItems() {
-        ArrayList<OrderResp> data = new ArrayList<>();
-        for (OrderResp resp : mAdapter.getData()) {
-            if (!resp.isSelected()) {
-                data.add(resp);
-            }
-        }
-        refreshListData(data);
-    }
-
     @OnClick(R.id.otf_cancel)
     public void cancelFilter() {
         mOrderParam.cancelTimeInterval();
         EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
+    }
+
+    @Override
+    public void hideLoading() {
+        mRefreshLayout.closeHeaderOrFooter();
+        super.hideLoading();
     }
 
     /**
@@ -456,17 +455,27 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         }
     }
 
-    @Override
-    public void hideLoading() {
-        mRefreshLayout.closeHeaderOrFooter();
-        super.hideLoading();
+    private void removeSelectedItems() {
+        if (!isFragmentVisible()) {
+            return;
+        }
+        ArrayList<OrderResp> data = new ArrayList<>();
+        for (OrderResp resp : mAdapter.getData()) {
+            if (!resp.isSelected()) {
+                data.add(resp);
+            }
+        }
+        refreshListData(data);
     }
 
     private void replaceItem(OrderResp resp) {
-        if (mOrderType.contain(resp.getSubBillStatus())) {
-            mAdapter.replaceData(mCurResp, resp);
-        } else {
-            mAdapter.removeData(resp);
+        if (!isFragmentVisible()) {
+            return;
+        }
+        if (mOrderType.contain(resp.getSubBillStatus())) mAdapter.replaceData(mCurResp, resp);
+        else {
+            mAdapter.removeData(mCurResp);
+            if (CommonUtils.isEmpty(mAdapter.getData())) refreshListData(null);
         }
     }
 

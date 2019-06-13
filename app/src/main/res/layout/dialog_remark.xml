@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@drawable/bg_white_radius_5_solid">
+
+    <EditText
+        android:id="@+id/dr_edit"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_edit_stroke_gray"
+        android:gravity="top"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        android:textColorHint="@color/color_aeaeae"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:hint="可输入驳回理由，选填" />
+
+    <TextView
+        android:id="@+id/dr_remain_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="@id/dr_edit"
+        app:layout_constraintEnd_toEndOf="@id/dr_edit"
+        tools:text="50" />
+
+    <TextView
+        android:id="@+id/dr_cancel"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintEnd_toStartOf="@id/dr_ver_line"
+        app:layout_constraintStart_toStartOf="@id/dr_edit"
+        app:layout_constraintTop_toBottomOf="@id/dr_edit"
+        tools:text="容我再想想" />
+
+    <View
+        android:id="@+id/dr_ver_line"
+        android:layout_width="1dp"
+        android:layout_height="12dp"
+        android:background="@color/color_d8d8d8"
+        app:layout_constraintBottom_toBottomOf="@id/dr_cancel"
+        app:layout_constraintEnd_toStartOf="@id/dr_ok"
+        app:layout_constraintStart_toEndOf="@id/dr_cancel"
+        app:layout_constraintTop_toTopOf="@id/dr_cancel" />
+
+    <TextView
+        android:id="@+id/dr_ok"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
+        app:layout_constraintEnd_toEndOf="@id/dr_edit"
+        app:layout_constraintStart_toEndOf="@id/dr_ver_line"
+        app:layout_constraintTop_toTopOf="@id/dr_cancel"
+        tools:text="确认拒绝" />
+</android.support.constraint.ConstraintLayout>
