@@ -40,6 +40,9 @@ public class GoodsBean {
     private String isWareHourse;
     private String shopProductCategorySubID;
     private String action;
+    /**
+     * 是否押金商品(0-不是，1-是)
+     */
     private String depositProductType;
     private String purchaserIsVisible;
     private String orgName;
@@ -49,6 +52,9 @@ public class GoodsBean {
     private String groupID;
     private boolean isCooperation;
     private boolean isDeliveryRange;
+    /**
+     * 是否隔日达商品（0-不是，1-是）
+     */
     private String nextDayDelivery;
     private String stockCheckType;
     private String brandId;
