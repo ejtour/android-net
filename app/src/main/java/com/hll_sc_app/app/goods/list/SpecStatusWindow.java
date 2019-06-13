@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * @author 朱英松
  * @date 2019/6/11
  */
-class SpecStatusWindow extends BaseShadowPopupWindow {
+public class SpecStatusWindow extends BaseShadowPopupWindow {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.txt_title)
@@ -104,9 +104,9 @@ class SpecStatusWindow extends BaseShadowPopupWindow {
         void confirm(List<SpecsBean> beans);
     }
 
-    private static class SpecAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
+    public static class SpecAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
 
-        SpecAdapter(@Nullable List<SpecsBean> data) {
+        public SpecAdapter(@Nullable List<SpecsBean> data) {
             super(R.layout.item_window_spec_list, data);
         }
 

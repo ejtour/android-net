@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +16,16 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.list.SpecStatusWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.BannerImageLoader;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.NicknamesBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -56,7 +61,10 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     TextView mTxtDepositProduct;
     @BindView(R.id.flowLayout)
     TagFlowLayout mFlowLayout;
+    @BindView(R.id.recyclerView_spec)
+    RecyclerView mRecyclerViewSpec;
     private GoodsDetailPresenter mPresenter;
+    private SpecStatusWindow.SpecAdapter mAdapterSpec;
 
     public static void start(String productID) {
         RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_DETAIL, productID);
@@ -79,6 +87,10 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     private void initView() {
         mBanner.setIndicatorGravity(BannerConfig.RIGHT);
         mBanner.setBannerAnimation(Transformer.Default);
+        mRecyclerViewSpec.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewSpec.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
+        mAdapterSpec = new SpecStatusWindow.SpecAdapter(null);
+        mRecyclerViewSpec.setAdapter(mAdapterSpec);
     }
 
     @Override
@@ -108,6 +120,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     public void showDetail(GoodsBean bean) {
         showBanner(bean);
         showProductName(bean);
+        showSpecList(bean);
     }
 
     private void showBanner(GoodsBean bean) {
@@ -137,6 +150,10 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         } else {
             mFlowLayout.setVisibility(View.GONE);
         }
+    }
+
+    private void showSpecList(GoodsBean bean) {
+        mAdapterSpec.setNewData(bean.getSpecs());
     }
 
     private static class FlowAdapter extends TagAdapter<NicknamesBean> {
