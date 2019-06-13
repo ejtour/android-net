@@ -2,12 +2,16 @@ package com.hll_sc_app.widget.order;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.View;
@@ -19,6 +23,7 @@ import com.hll_sc_app.app.order.common.OrderStatus;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.utils.ColorStr;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,16 +49,12 @@ public class OrderDetailHeader extends ConstraintLayout {
     TextView mGroupName;
     @BindView(R.id.odh_orderer)
     TextView mOrderer;
-    @BindView(R.id.odh_orderer_phone)
-    TextView mOrdererPhone;
     @BindView(R.id.odh_orderer_dial)
-    View mOrdererDial;
+    TextView mOrdererDial;
     @BindView(R.id.odh_consignee)
     TextView mConsignee;
-    @BindView(R.id.odh_consignee_phone)
-    TextView mConsigneePhone;
     @BindView(R.id.odh_consignee_dial)
-    View mConsigneeDial;
+    TextView mConsigneeDial;
     @BindView(R.id.odh_time_address)
     TextView mTimeAddress;
     @BindView(R.id.odh_label)
@@ -82,10 +83,10 @@ public class OrderDetailHeader extends ConstraintLayout {
         mGroupName.setText(data.getGroupName());
         mOrderer.setText(String.format("订货人：%s", data.getShipperName()));
         mOrdererDial.setTag(data.getOrdererMobile());
-        mOrdererPhone.setText(PhoneUtil.formatPhoneNum(data.getOrdererMobile()));
+        mOrdererDial.setText(handlePhoneNum(data.getOrdererMobile()));
         mConsignee.setText(String.format("收货人：%s", data.getReceiverName()));
         mConsigneeDial.setTag(data.getReceiverMobile());
-        mConsigneePhone.setText(PhoneUtil.formatPhoneNum(data.getReceiverMobile()));
+        mConsigneeDial.setText(handlePhoneNum(data.getReceiverMobile()));
         if (data.getDeliverType() == 2) {
             mSelfLiftTag.setVisibility(VISIBLE);
         }
@@ -93,6 +94,24 @@ public class OrderDetailHeader extends ConstraintLayout {
                 data.getTargetExecuteDate(),
                 data.getTargetAddress());
         handleLabel(data.getSubBillStatus(), data.getWareHourseName());
+    }
+
+    private CharSequence handlePhoneNum(String number) {
+        String source = PhoneUtil.formatPhoneNum(number);
+        SpannableString ss = new SpannableString(source);
+        ss.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                // no-op
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setColor(Color.parseColor(ColorStr.COLOR_5695D2)); // 下划线
+            }
+        }, 0, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return ss;
     }
 
     private void handleLabel(int subBillStatus, String wareHouseName) {

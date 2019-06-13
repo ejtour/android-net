@@ -4,67 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:background="@color/color_f7f7f7"
-    android:paddingLeft="5dp"
-    android:paddingTop="@dimen/dp_10"
-    android:paddingRight="5dp"
-    android:paddingBottom="@dimen/dp_10">
+    android:padding="@dimen/dp_10">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/iod_image"
         android:layout_width="60dp"
         android:layout_height="0dp"
         app:base_RoundingRadius="3"
-        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintDimensionRatio="6:7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_placeholder" />
 
     <TextView
-        android:id="@+id/iod_order_num"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="6dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintEnd_toStartOf="@+id/iod_delivery_num"
-        app:layout_constraintStart_toEndOf="@+id/iod_image"
-        app:layout_constraintTop_toTopOf="@+id/iod_image"
-        tools:text="订货：20箱" />
-
-    <TextView
-        android:id="@+id/iod_delivery_num"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="6dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBaseline_toBaselineOf="@+id/iod_order_num"
-        app:layout_constraintEnd_toStartOf="@+id/iod_confirm_num"
-        app:layout_constraintStart_toEndOf="@+id/iod_order_num"
-        tools:text="发货：20箱" />
-
-    <TextView
-        android:id="@+id/iod_confirm_num"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBaseline_toBaselineOf="@+id/iod_order_num"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iod_delivery_num"
-        tools:text="签收：0箱" />
-
-    <TextView
         android:id="@+id/iod_product_spec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toTopOf="@+id/iod_order_num"
+        app:layout_constraintBottom_toBottomOf="@id/iod_product_name"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iod_product_name"
         tools:text="240ml*12瓶／箱" />
 
     <TextView
@@ -75,9 +35,11 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintBaseline_toBaselineOf="@+id/iod_product_spec"
+        app:layout_constraintBottom_toTopOf="@id/iod_order_num"
         app:layout_constraintEnd_toStartOf="@+id/iod_product_spec"
         app:layout_constraintStart_toEndOf="@+id/iod_ware_house"
+        app:layout_constraintTop_toTopOf="@id/iod_image"
+        app:layout_constraintVertical_chainStyle="spread_inside"
         tools:text="商品名称商品名称商品名称" />
 
     <TextView
@@ -96,22 +58,59 @@
         app:layout_constraintTop_toTopOf="@+id/iod_product_name" />
 
     <TextView
-        android:id="@+id/iod_sale_unit_spec"
-        android:layout_width="wrap_content"
+        android:id="@+id/iod_order_num"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="3dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toTopOf="@id/iod_sale_unit_spec"
+        app:layout_constraintEnd_toStartOf="@+id/iod_delivery_num"
+        app:layout_constraintStart_toEndOf="@+id/iod_image"
+        app:layout_constraintTop_toBottomOf="@id/iod_product_name"
+        tools:text="订货：20箱" />
+
+    <TextView
+        android:id="@+id/iod_delivery_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="3dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@+id/iod_order_num"
+        app:layout_constraintEnd_toStartOf="@+id/iod_confirm_num"
+        app:layout_constraintStart_toEndOf="@+id/iod_order_num"
+        tools:text="发货：20箱" />
+
+    <TextView
+        android:id="@+id/iod_confirm_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@+id/iod_order_num"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iod_delivery_num"
+        tools:text="签收：0箱" />
+
+    <TextView
+        android:id="@+id/iod_sale_unit_spec"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
         android:textAppearance="@style/TextAppearance.City22.Small.Red"
+        app:layout_constraintBottom_toBottomOf="@id/iod_image"
+        app:layout_constraintEnd_toStartOf="@id/iod_amount"
         app:layout_constraintStart_toStartOf="@+id/iod_order_num"
         app:layout_constraintTop_toBottomOf="@+id/iod_order_num"
-        tools:text="¥126.00／箱(¥10.50/瓶)" />
+        tools:text="单价：¥23.50/袋" />
 
     <TextView
         android:id="@+id/iod_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.City22.Little.Red"
+        android:textAppearance="@style/TextAppearance.City22.Small.Red"
         app:layout_constraintBottom_toBottomOf="@+id/iod_sale_unit_spec"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iod_sale_unit_spec"
         app:layout_constraintTop_toTopOf="@+id/iod_sale_unit_spec"
         tools:text="小计：¥2520.00" />
 
@@ -141,10 +140,10 @@
         android:layout_height="14dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bg_tip_red"
+        android:background="@drawable/bg_tip_blue"
         android:gravity="center"
         android:text="含押金商品"
-        android:textColor="@color/color_ed5655"
+        android:textColor="@color/colorPrimary"
         android:textSize="8.5sp"
         app:layout_constraintStart_toStartOf="@+id/iod_image"
         app:layout_constraintTop_toBottomOf="@+id/iod_arrow" />
@@ -165,6 +164,6 @@
         android:id="@+id/iod_deposit_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:constraint_referenced_ids="iod_arrow,iod_deposit_bg,iod_deposit_label,iod_deposit_list" />
 </android.support.constraint.ConstraintLayout>

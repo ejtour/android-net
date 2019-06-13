@@ -4,9 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
     tools:background="@android:color/white"
     tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <View
+        android:id="@+id/odf_div_0"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/odf_remark_label"
@@ -17,7 +25,7 @@
         android:text="备注信息"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/odf_div_0" />
 
     <TextView
         android:id="@+id/odf_remark"
@@ -32,7 +40,7 @@
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/odf_remark_label"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/odf_div_0" />
 
     <View
         android:id="@+id/odf_div_1"
