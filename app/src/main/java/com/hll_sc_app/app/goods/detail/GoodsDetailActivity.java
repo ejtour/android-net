@@ -78,7 +78,6 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     private void initView() {
         mBanner.setIndicatorGravity(BannerConfig.RIGHT);
-        mBanner.setImageLoader(new BannerImageLoader());
         mBanner.setBannerAnimation(Transformer.Default);
     }
 
@@ -107,15 +106,17 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     @Override
     public void showDetail(GoodsBean bean) {
-        showBanner(bean.getImgUrlSub());
+        showBanner(bean);
         showProductName(bean);
     }
 
-    private void showBanner(String imgUrlSub) {
-        if (TextUtils.isEmpty(imgUrlSub)) {
-            return;
+    private void showBanner(GoodsBean bean) {
+        List<String> list = new ArrayList<>();
+        list.add(bean.getImgUrl());
+        if (!TextUtils.isEmpty(bean.getImgUrlSub())) {
+            list.addAll(Arrays.asList(bean.getImgUrlSub().split(",")));
         }
-        mBanner.update(Arrays.asList(imgUrlSub.split(",")));
+        mBanner.setImages(list).setImageLoader(new BannerImageLoader(list)).start();
     }
 
     private void showProductName(GoodsBean bean) {

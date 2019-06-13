@@ -46,7 +46,7 @@
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="315dp"
-                app:banner_default_image="@drawable/ic_banner_placeholder"
+                app:banner_default_image="@drawable/base_ic_banner_placeholder"
                 app:image_scale_type="center_crop"/>
 
             <android.support.constraint.ConstraintLayout
