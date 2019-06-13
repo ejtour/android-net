@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.list.GoodsListFragment;
@@ -27,7 +29,10 @@ import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,13 +46,13 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * 首页Fragment
+ * 商品管理Fragment
  *
  * @author 朱英松
  * @date 2018/12/19
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS)
-public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFragmentContract.IHomeView {
+public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener {
     static final String[] STR_TITLE = {"普通商品", "组合商品", "押金商品", "代仓商品"};
     static final String[] STR_ACTION_TYPE = {"normalProduct", "bundlingGoods", "depositProduct", "warehouse"};
     @BindView(R.id.space)
@@ -55,6 +60,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
     Unbinder unbinder;
     @BindView(R.id.tab)
     SlidingTabLayout mTab;
+    @BindView(R.id.img_add)
+    ImageView mImgAdd;
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
     @BindView(R.id.rb_productStatus4)
@@ -66,6 +73,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
     @BindView(R.id.img_searchClear)
     ImageView mImgSearchClear;
     private GoodsListFragmentPager mFragmentAdapter;
+    private ContextOptionsWindow mOptionsWindow;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -150,6 +158,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_add:
+                showOptionsWindow(mImgAdd);
                 break;
             case R.id.rl_search:
                 OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_GOODS);
@@ -160,6 +169,20 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
             default:
                 break;
         }
+    }
+
+    private void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_goods_option_add, OptionType.OPTION_GOODS_ADD));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_import, OptionType.OPTION_GOODS_IMPORT));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_GOODS_EXPORT));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_top, OptionType.OPTION_GOODS_TOP));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_relation, OptionType.OPTION_GOODS_RELATION));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_warn, OptionType.OPTION_GOODS_WARN));
+            mOptionsWindow = new ContextOptionsWindow(requireActivity()).setListener(this).refreshList(list);
+        }
+        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
     }
 
     private void showSearchContent(boolean show, String content) {
@@ -174,6 +197,11 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
             params.weight = 0;
         }
         updateFragment();
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        // 选项监听
     }
 
     class GoodsListFragmentPager extends FragmentPagerAdapter {
