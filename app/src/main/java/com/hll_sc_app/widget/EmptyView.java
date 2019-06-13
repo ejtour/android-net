@@ -132,7 +132,7 @@ public class EmptyView extends ConstraintLayout {
         } else {
             mAction.getLayoutParams().width = UIUtils.dip2px(230);
             mAction.setVisibility(VISIBLE);
-            mAction.setBackgroundResource(R.drawable.bg_primary_button);
+            mAction.setBackgroundResource(R.drawable.bg_button_large_solid_primary);
             mAction.setTextAppearance(getContext(), R.style.TextAppearance_City22_Middle_White);
             mAction.setText(button);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
