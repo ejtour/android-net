@@ -52,6 +52,7 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
     private GoodsListFragmentPresenter mPresenter;
     private String mActionType;
     private String mProductStatus;
+    private String mName;
     private EmptyView mEmptyView;
     private EmptyView mNetEmptyView;
     private String mEmptyTips;
@@ -159,7 +160,7 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
 
     @Override
     public String getName() {
-        return null;
+        return mName;
     }
 
     @Override
@@ -183,7 +184,8 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
         mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
     }
 
-    public void refreshFragment(String productStatus) {
+    public void refreshFragment(String productStatus, String name) {
+        this.mName = name;
         this.mProductStatus = productStatus;
         setForceLoad(true);
         if (isFragmentVisible()) {

@@ -89,18 +89,41 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
         }
     }
 
-    private void showSearchContent(boolean show, String content) {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
-        if (show) {
-            mImgSearchClear.setVisibility(View.VISIBLE);
-            mTxtSearchContent.setText(content);
-            params.weight = 1;
-        } else {
-            mImgSearchClear.setVisibility(View.GONE);
-            mTxtSearchContent.setText(content);
-            params.weight = 0;
+    private void initView() {
+        mFragmentAdapter = new GoodsListFragmentPager(getChildFragmentManager(), STR_ACTION_TYPE, STR_TITLE);
+        mViewPager.setAdapter(mFragmentAdapter);
+        mViewPager.setOffscreenPageLimit(2);
+        mTab.setViewPager(mViewPager, STR_TITLE);
+        mRadioGroup.setOnCheckedChangeListener((group, checkedId) -> updateFragment());
+    }
+
+    private void updateFragment() {
+        if (mFragmentAdapter != null) {
+            for (int i = 0; i < mFragmentAdapter.getCount(); i++) {
+                mFragmentAdapter.getItem(i).refreshFragment(getProductStatus(), getSearchContent());
+            }
         }
-        // TODO:触发网络请求
+    }
+
+    /**
+     * 上下架
+     *
+     * @return 上-4 下-5
+     */
+    private String getProductStatus() {
+        return mRbProductStatus4.isChecked() ? GoodsBean.PRODUCT_STATUS_UP : GoodsBean.PRODUCT_STATUS_DOWN;
+    }
+
+    /**
+     * 获取搜索词
+     *
+     * @return 搜索词
+     */
+    private String getSearchContent() {
+        if (mImgSearchClear.getVisibility() == View.VISIBLE) {
+            return mTxtSearchContent.getText().toString();
+        }
+        return "";
     }
 
     @Override
@@ -123,40 +146,13 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
         }
     }
 
-    private void initView() {
-        mFragmentAdapter = new GoodsListFragmentPager(getChildFragmentManager(), STR_ACTION_TYPE, STR_TITLE);
-        mViewPager.setAdapter(mFragmentAdapter);
-        mViewPager.setOffscreenPageLimit(2);
-        mTab.setViewPager(mViewPager, STR_TITLE);
-        mRadioGroup.setOnCheckedChangeListener((group, checkedId)
-            -> updateFragment(checkedId == R.id.rb_productStatus4 ? GoodsBean.PRODUCT_STATUS_UP :
-            GoodsBean.PRODUCT_STATUS_DOWN));
-    }
-
-    private void updateFragment(String productStatus) {
-        if (mFragmentAdapter != null) {
-            for (int i = 0; i < mFragmentAdapter.getCount(); i++) {
-                mFragmentAdapter.getItem(i).refreshFragment(productStatus);
-            }
-        }
-    }
-
-    /**
-     * 上下架
-     *
-     * @return 上-4 下-5
-     */
-    private String getProductStatus() {
-        return mRbProductStatus4.isChecked() ? GoodsBean.PRODUCT_STATUS_UP : GoodsBean.PRODUCT_STATUS_DOWN;
-    }
-
     @OnClick({R.id.img_add, R.id.rl_search, R.id.img_searchClear})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_add:
                 break;
             case R.id.rl_search:
-                OrderSearchActivity.start(getSearchWords(), OrderSearchActivity.FROM_GOODS);
+                OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_GOODS);
                 break;
             case R.id.img_searchClear:
                 showSearchContent(false, null);
@@ -166,8 +162,18 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
         }
     }
 
-    private String getSearchWords() {
-        return mTxtSearchContent.getText().toString();
+    private void showSearchContent(boolean show, String content) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
+        if (show) {
+            mImgSearchClear.setVisibility(View.VISIBLE);
+            mTxtSearchContent.setText(content);
+            params.weight = 1;
+        } else {
+            mImgSearchClear.setVisibility(View.GONE);
+            mTxtSearchContent.setText(content);
+            params.weight = 0;
+        }
+        updateFragment();
     }
 
     class GoodsListFragmentPager extends FragmentPagerAdapter {
@@ -189,7 +195,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements GoodsHomeFrag
         @Override
         public GoodsListFragment getItem(int position) {
             GoodsListFragment goodsListFragment = mListFragment.get(position);
-            goodsListFragment.refreshFragment(getProductStatus());
+            goodsListFragment.refreshFragment(getProductStatus(), getSearchContent());
             return goodsListFragment;
         }
 
