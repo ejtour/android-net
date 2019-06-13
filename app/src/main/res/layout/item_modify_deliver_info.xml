@@ -86,7 +86,7 @@
     <com.hll_sc_app.widget.TriangleView
         android:id="@+id/mdi_arrow"
         android:layout_width="8dp"
-        android:layout_height="3dp"
+        android:layout_height="5dp"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="@id/mdi_image"
         app:layout_constraintStart_toStartOf="@id/mdi_image"
