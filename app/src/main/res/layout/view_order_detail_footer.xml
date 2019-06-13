@@ -134,10 +134,11 @@
         android:id="@+id/odf_deliver_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="-"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        android:textColorHint="@color/color_666666"
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_deliver_amount_label"
-        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
-        tools:text="¥378.00" />
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark" />
 
     <TextView
         android:id="@+id/odf_sign_amount"

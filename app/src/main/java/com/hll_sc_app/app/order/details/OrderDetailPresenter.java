@@ -53,7 +53,6 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
                 @Override
                 public void onSuccess(Object o) {
                     mView.handleStatusChanged();
-                    start();
                 }
             };
         }

@@ -122,6 +122,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     @Override
     public void handleStatusChanged() {
         mHasChanged = true;
+        mPresenter.start();
     }
 
     @OnClick({R.id.oab_cancel, R.id.oab_modify, R.id.oab_receive, R.id.oab_deliver, R.id.oab_settle})
@@ -161,8 +162,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && requestCode == ModifyDeliverInfoActivity.REQ_KEY) {
             showToast("成功修改发货信息");
-            mOrderResp.setBillDetailList(data.getParcelableArrayListExtra(ModifyDeliverInfoActivity.RESP_LIST_KEY));
-            ((OrderDetailAdapter) mListView.getAdapter()).setNewData(mOrderResp.getBillDetailList());
+            handleStatusChanged();
         }
     }
 }

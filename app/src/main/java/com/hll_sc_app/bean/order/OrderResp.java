@@ -39,7 +39,7 @@ public class OrderResp {
     private int nextDayDelivery;
     private String groupName;
     private String checkTime;
-    private int inspectionDepositTotalAmount;
+    private double inspectionDepositTotalAmount;
     private int signMinDiff;
     private int isExchange;
     private String ordererMobile;
@@ -96,7 +96,7 @@ public class OrderResp {
     private double inspectionTotalAmount;
     private int orderDepositTotalAmount;
     private int orderDiscountRuleID;
-    private int adjustmentDepositTotalAmount;
+    private double adjustmentDepositTotalAmount;
     private int shopID;
     private String signBy;
     private String linkPhone;
@@ -368,11 +368,11 @@ public class OrderResp {
         this.checkTime = checkTime;
     }
 
-    public int getInspectionDepositTotalAmount() {
+    public double getInspectionDepositTotalAmount() {
         return inspectionDepositTotalAmount;
     }
 
-    public void setInspectionDepositTotalAmount(int inspectionDepositTotalAmount) {
+    public void setInspectionDepositTotalAmount(double inspectionDepositTotalAmount) {
         this.inspectionDepositTotalAmount = inspectionDepositTotalAmount;
     }
 
@@ -824,11 +824,11 @@ public class OrderResp {
         this.orderDiscountRuleID = orderDiscountRuleID;
     }
 
-    public int getAdjustmentDepositTotalAmount() {
+    public double getAdjustmentDepositTotalAmount() {
         return adjustmentDepositTotalAmount;
     }
 
-    public void setAdjustmentDepositTotalAmount(int adjustmentDepositTotalAmount) {
+    public void setAdjustmentDepositTotalAmount(double adjustmentDepositTotalAmount) {
         this.adjustmentDepositTotalAmount = adjustmentDepositTotalAmount;
     }
 

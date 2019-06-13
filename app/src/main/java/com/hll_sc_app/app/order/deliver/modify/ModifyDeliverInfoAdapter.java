@@ -53,9 +53,11 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                         s.delete(s.length() - 1, s.length());
                     }
                     item.setAdjustmentNum(TextUtils.isEmpty(s.toString()) ? 0 : Double.parseDouble(s.toString()));
+                    item.setAdjustmentAmount(CommonUtils.mulDouble(item.getProductPrice(), item.getAdjustmentNum()).doubleValue());
                     if (!CommonUtils.isEmpty(item.getDepositList())) {
                         for (OrderDepositBean bean : item.getDepositList()) {
                             bean.setProductNum(CommonUtils.mulDouble(bean.getDepositNum(), item.getAdjustmentNum()).doubleValue());
+                            bean.setSubtotalAmount(CommonUtils.mulDouble(bean.getProductPrice(), bean.getProductNum()).doubleValue());
                         }
                         ((OrderDepositList) holder.getView(R.id.mdi_deposit_list)).setData(item.getDepositList());
                     }
