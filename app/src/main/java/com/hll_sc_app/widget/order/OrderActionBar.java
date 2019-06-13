@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
