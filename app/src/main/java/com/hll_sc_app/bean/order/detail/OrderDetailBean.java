@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.order.detail;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -7,7 +10,7 @@ import java.util.List;
  * @since 2019/6/12
  */
 
-public class OrderDetailBean {
+public class OrderDetailBean implements Parcelable {
 
     private int discountRuleType;
     private double discountAmount;
@@ -63,7 +66,7 @@ public class OrderDetailBean {
     private double orderInspectionDiscountAmount;
     private String productSpec;
     private int productType;
-    private int detailID;
+    private String detailID;
     private double standardPrice;
     private int isShopMall;
     private double productNum;
@@ -514,11 +517,11 @@ public class OrderDetailBean {
         this.productType = productType;
     }
 
-    public int getDetailID() {
+    public String getDetailID() {
         return detailID;
     }
 
-    public void setDetailID(int detailID) {
+    public void setDetailID(String detailID) {
         this.detailID = detailID;
     }
 
@@ -657,4 +660,175 @@ public class OrderDetailBean {
     public void setDepositList(List<OrderDepositBean> depositList) {
         this.depositList = depositList;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.discountRuleType);
+        dest.writeDouble(this.discountAmount);
+        dest.writeDouble(this.couponDiscountAmount);
+        dest.writeString(this.productName);
+        dest.writeString(this.auxiliaryUnit);
+        dest.writeInt(this.bundlingGoodsType);
+        dest.writeDouble(this.standardNum);
+        dest.writeString(this.standardSpec);
+        dest.writeInt(this.productSpecID);
+        dest.writeDouble(this.ruleDiscountValue);
+        dest.writeString(this.billDetailID);
+        dest.writeInt(this.discountID);
+        dest.writeDouble(this.inspectionNum);
+        dest.writeDouble(this.refundedNum);
+        dest.writeDouble(this.auxiliaryNum);
+        dest.writeInt(this.supplyShopID);
+        dest.writeInt(this.subBillID);
+        dest.writeInt(this.groupID);
+        dest.writeString(this.detailRemark);
+        dest.writeString(this.extGroupID);
+        dest.writeInt(this.productCategoryID);
+        dest.writeDouble(this.inspectionPrice);
+        dest.writeInt(this.belongedToProductSpecID);
+        dest.writeInt(this.isRefundAllNum);
+        dest.writeInt(this.shopID);
+        dest.writeInt(this.ruleID);
+        dest.writeDouble(this.adjustmentAmount);
+        dest.writeDouble(this.productPrice);
+        dest.writeDouble(this.refundedAmount);
+        dest.writeString(this.inspectionUnit);
+        dest.writeDouble(this.orderAdjustmentDiscountAmount);
+        dest.writeString(this.saleUnitName);
+        dest.writeString(this.bundlingGoodsDetail);
+        dest.writeString(this.standardSpecCode);
+        dest.writeDouble(this.replenishmentNum);
+        dest.writeString(this.shopName);
+        dest.writeDouble(this.orderDiscountAmount);
+        dest.writeString(this.adjustmentUnit);
+        dest.writeInt(this.isDepositPoduct);
+        dest.writeDouble(this.convertRate);
+        dest.writeString(this.supplyShopName);
+        dest.writeString(this.discountName);
+        dest.writeInt(this.isGiveProduct);
+        dest.writeInt(this.shopProductCategoryID);
+        dest.writeInt(this.subBillStatus);
+        dest.writeInt(this.standardSpecID);
+        dest.writeDouble(this.standardTaxRate);
+        dest.writeDouble(this.auxiliaryPrice);
+        dest.writeInt(this.isAuxiliaryUnit);
+        dest.writeString(this.ruleName);
+        dest.writeInt(this.discountType);
+        dest.writeDouble(this.orderInspectionDiscountAmount);
+        dest.writeString(this.productSpec);
+        dest.writeInt(this.productType);
+        dest.writeString(this.detailID);
+        dest.writeDouble(this.standardPrice);
+        dest.writeInt(this.isShopMall);
+        dest.writeDouble(this.productNum);
+        dest.writeString(this.standardUnit);
+        dest.writeInt(this.subBillDate);
+        dest.writeString(this.subBillNo);
+        dest.writeDouble(this.adjustmentPrice);
+        dest.writeDouble(this.adjustmentNum);
+        dest.writeDouble(this.subtotalAmount);
+        dest.writeString(this.imgUrl);
+        dest.writeDouble(this.inspectionAmount);
+        dest.writeString(this.productCode);
+        dest.writeString(this.productID);
+        dest.writeDouble(this.oldProductPrice);
+        dest.writeDouble(this.couponInspectionDiscountAmount);
+        dest.writeDouble(this.couponAdjustmentDiscountAmount);
+        dest.writeTypedList(this.depositList);
+    }
+
+    public OrderDetailBean() {
+    }
+
+    protected OrderDetailBean(Parcel in) {
+        this.discountRuleType = in.readInt();
+        this.discountAmount = in.readDouble();
+        this.couponDiscountAmount = in.readDouble();
+        this.productName = in.readString();
+        this.auxiliaryUnit = in.readString();
+        this.bundlingGoodsType = in.readInt();
+        this.standardNum = in.readDouble();
+        this.standardSpec = in.readString();
+        this.productSpecID = in.readInt();
+        this.ruleDiscountValue = in.readDouble();
+        this.billDetailID = in.readString();
+        this.discountID = in.readInt();
+        this.inspectionNum = in.readDouble();
+        this.refundedNum = in.readDouble();
+        this.auxiliaryNum = in.readDouble();
+        this.supplyShopID = in.readInt();
+        this.subBillID = in.readInt();
+        this.groupID = in.readInt();
+        this.detailRemark = in.readString();
+        this.extGroupID = in.readString();
+        this.productCategoryID = in.readInt();
+        this.inspectionPrice = in.readDouble();
+        this.belongedToProductSpecID = in.readInt();
+        this.isRefundAllNum = in.readInt();
+        this.shopID = in.readInt();
+        this.ruleID = in.readInt();
+        this.adjustmentAmount = in.readDouble();
+        this.productPrice = in.readDouble();
+        this.refundedAmount = in.readDouble();
+        this.inspectionUnit = in.readString();
+        this.orderAdjustmentDiscountAmount = in.readDouble();
+        this.saleUnitName = in.readString();
+        this.bundlingGoodsDetail = in.readString();
+        this.standardSpecCode = in.readString();
+        this.replenishmentNum = in.readDouble();
+        this.shopName = in.readString();
+        this.orderDiscountAmount = in.readDouble();
+        this.adjustmentUnit = in.readString();
+        this.isDepositPoduct = in.readInt();
+        this.convertRate = in.readDouble();
+        this.supplyShopName = in.readString();
+        this.discountName = in.readString();
+        this.isGiveProduct = in.readInt();
+        this.shopProductCategoryID = in.readInt();
+        this.subBillStatus = in.readInt();
+        this.standardSpecID = in.readInt();
+        this.standardTaxRate = in.readDouble();
+        this.auxiliaryPrice = in.readDouble();
+        this.isAuxiliaryUnit = in.readInt();
+        this.ruleName = in.readString();
+        this.discountType = in.readInt();
+        this.orderInspectionDiscountAmount = in.readDouble();
+        this.productSpec = in.readString();
+        this.productType = in.readInt();
+        this.detailID = in.readString();
+        this.standardPrice = in.readDouble();
+        this.isShopMall = in.readInt();
+        this.productNum = in.readDouble();
+        this.standardUnit = in.readString();
+        this.subBillDate = in.readInt();
+        this.subBillNo = in.readString();
+        this.adjustmentPrice = in.readDouble();
+        this.adjustmentNum = in.readDouble();
+        this.subtotalAmount = in.readDouble();
+        this.imgUrl = in.readString();
+        this.inspectionAmount = in.readDouble();
+        this.productCode = in.readString();
+        this.productID = in.readString();
+        this.oldProductPrice = in.readDouble();
+        this.couponInspectionDiscountAmount = in.readDouble();
+        this.couponAdjustmentDiscountAmount = in.readDouble();
+        this.depositList = in.createTypedArrayList(OrderDepositBean.CREATOR);
+    }
+
+    public static final Parcelable.Creator<OrderDetailBean> CREATOR = new Parcelable.Creator<OrderDetailBean>() {
+        @Override
+        public OrderDetailBean createFromParcel(Parcel source) {
+            return new OrderDetailBean(source);
+        }
+
+        @Override
+        public OrderDetailBean[] newArray(int size) {
+            return new OrderDetailBean[size];
+        }
+    };
 }

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingTop="5dp"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingBottom="5dp"
+    tools:background="@android:color/white">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/mdi_image"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        app:base_RoundingRadius="3"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder" />
+
+    <EditText
+        android:id="@+id/mdi_edit"
+        android:layout_width="80dp"
+        android:layout_height="24dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_number_input"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintBottom_toBottomOf="@id/mdi_image"
+        app:layout_constraintEnd_toStartOf="@id/mdi_unit"
+        tools:text="100" />
+
+    <TextView
+        android:id="@+id/mdi_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/mdi_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/mdi_edit"
+        tools:text="箱" />
+
+    <TextView
+        android:id="@+id/mdi_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发货："
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/mdi_unit"
+        app:layout_constraintEnd_toStartOf="@id/mdi_edit" />
+
+    <TextView
+        android:id="@+id/mdi_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="3dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintStart_toEndOf="@id/mdi_image"
+        app:layout_constraintTop_toTopOf="@id/mdi_image"
+        tools:text="新鲜柠檬特别酸" />
+
+    <TextView
+        android:id="@+id/mdi_order_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/mdi_unit"
+        app:layout_constraintStart_toStartOf="@id/mdi_name"
+        tools:text="订货：100箱" />
+
+    <TextView
+        android:id="@+id/mdi_spec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toTopOf="@id/mdi_order_num"
+        app:layout_constraintStart_toStartOf="@id/mdi_name"
+        tools:text="规格：42斤／箱" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/mdi_arrow"
+        android:layout_width="8dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@id/mdi_image"
+        app:layout_constraintStart_toStartOf="@id/mdi_image"
+        app:layout_constraintTop_toBottomOf="@id/mdi_image"
+        app:trv_color="@color/base_activity_bg" />
+
+    <View
+        android:id="@+id/mdi_deposit_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_deposit_list"
+        app:layout_constraintBottom_toBottomOf="@id/mdi_deposit_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mdi_arrow" />
+
+    <TextView
+        android:id="@+id/mdi_deposit_label"
+        android:layout_width="52dp"
+        android:layout_height="14dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_tip_blue"
+        android:gravity="center"
+        android:text="含押金商品"
+        android:textColor="@color/colorPrimary"
+        android:textSize="8.5sp"
+        app:layout_constraintStart_toStartOf="@id/mdi_image"
+        app:layout_constraintTop_toBottomOf="@id/mdi_arrow" />
+
+    <com.hll_sc_app.widget.order.OrderDepositList
+        android:id="@+id/mdi_deposit_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/mdi_deposit_label"
+        app:layout_constraintTop_toBottomOf="@id/mdi_arrow" />
+
+    <android.support.constraint.Group
+        android:id="@+id/mdi_deposit_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="mdi_arrow,mdi_deposit_bg,mdi_deposit_label,mdi_deposit_list" />
+</android.support.constraint.ConstraintLayout>

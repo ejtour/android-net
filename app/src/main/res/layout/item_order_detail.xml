@@ -164,6 +164,6 @@
         android:id="@+id/iod_deposit_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="iod_arrow,iod_deposit_bg,iod_deposit_label,iod_deposit_list" />
 </android.support.constraint.ConstraintLayout>

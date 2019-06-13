@@ -70,4 +70,9 @@ public class RouterConfig {
      * 订单详情
      */
     public static final String ROOT_ORDER_DETAIL = "/activity/order/detail";
+
+    /**
+     * 订单详情-修改发货信息
+     */
+    public static final String ROOT_ORDER_MODIFY_DELIVER = "/activity/order/modify/deliver";
 }

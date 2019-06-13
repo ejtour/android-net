@@ -2,6 +2,7 @@ package com.hll_sc_app.rest;
 
 import com.hll_sc_app.api.OrderService;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -10,9 +11,12 @@ import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
+import com.hll_sc_app.bean.order.deliver.ModifyDeliverInfoReq;
+import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -192,6 +196,32 @@ public class Order {
         OrderService.INSTANCE
                 .getOrderDeliverShop(BaseMapReq.newBuilder().put("groupID", user.getGroupID())
                         .put("productSpecID", productSpecID).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 修改发货信息
+     *
+     * @param subBillID 订单 id
+     * @param beans     商品明细列表
+     */
+    public static void modifyDeliverInfo(String subBillID, List<OrderDetailBean> beans, SimpleObserver<Object> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null) {
+            return;
+        }
+        List<ModifyDeliverInfoReq.ProductBean> list = new ArrayList<>();
+        for (OrderDetailBean bean : beans) {
+            list.add(ModifyDeliverInfoReq.ProductBean.convertFromOrderDetails(bean));
+        }
+        ModifyDeliverInfoReq req = new ModifyDeliverInfoReq();
+        req.setGroupID(user.getGroupID());
+        req.setBillDeliveryList(list);
+        req.setSubBillID(subBillID);
+        OrderService.INSTANCE
+                .modifyDeliverInfo(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

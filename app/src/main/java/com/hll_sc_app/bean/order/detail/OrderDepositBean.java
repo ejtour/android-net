@@ -1,11 +1,14 @@
 package com.hll_sc_app.bean.order.detail;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/12
  */
 
-public class OrderDepositBean {
+public class OrderDepositBean implements Parcelable {
     private double depositNum;
     private int detailID;
     private int productID;
@@ -105,4 +108,53 @@ public class OrderDepositBean {
     public void setSubtotalAmount(double subtotalAmount) {
         this.subtotalAmount = subtotalAmount;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(this.depositNum);
+        dest.writeInt(this.detailID);
+        dest.writeInt(this.productID);
+        dest.writeString(this.productName);
+        dest.writeDouble(this.productNum);
+        dest.writeDouble(this.productPrice);
+        dest.writeString(this.productSpec);
+        dest.writeInt(this.productSpecID);
+        dest.writeDouble(this.replenishmentNum);
+        dest.writeString(this.saleUnitName);
+        dest.writeDouble(this.subtotalAmount);
+    }
+
+    public OrderDepositBean() {
+    }
+
+    protected OrderDepositBean(Parcel in) {
+        this.depositNum = in.readDouble();
+        this.detailID = in.readInt();
+        this.productID = in.readInt();
+        this.productName = in.readString();
+        this.productNum = in.readDouble();
+        this.productPrice = in.readDouble();
+        this.productSpec = in.readString();
+        this.productSpecID = in.readInt();
+        this.replenishmentNum = in.readDouble();
+        this.saleUnitName = in.readString();
+        this.subtotalAmount = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<OrderDepositBean> CREATOR = new Parcelable.Creator<OrderDepositBean>() {
+        @Override
+        public OrderDepositBean createFromParcel(Parcel source) {
+            return new OrderDepositBean(source);
+        }
+
+        @Override
+        public OrderDepositBean[] newArray(int size) {
+            return new OrderDepositBean[size];
+        }
+    };
 }

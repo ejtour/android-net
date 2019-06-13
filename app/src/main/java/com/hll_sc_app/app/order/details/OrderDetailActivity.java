@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.order.details;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -21,7 +23,6 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
@@ -31,6 +32,9 @@ import com.hll_sc_app.widget.order.OrderDetailHeader;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,6 +60,8 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     OrderActionBar mActionBar;
     @Autowired(name = "object0", required = true)
     String mBillID;
+    @BindDimen(R.dimen.bottom_bar_height)
+    int mBottomBarHeight;
     private IOrderDetailContract.IOrderDetailPresenter mPresenter;
     private OrderDetailHeader mDetailHeader;
     private OrderDetailFooter mDetailFooter;
@@ -98,7 +104,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
             ((ViewGroup.MarginLayoutParams) mListView.getLayoutParams()).bottomMargin = 0;
         } else {
             mActionBar.setVisibility(View.VISIBLE);
-            ((ViewGroup.MarginLayoutParams) mListView.getLayoutParams()).bottomMargin = mActionBar.getHeight();
+            ((ViewGroup.MarginLayoutParams) mListView.getLayoutParams()).bottomMargin = mBottomBarHeight;
             mActionBar.setData(resp.getButtonList());
         }
         ((OrderDetailAdapter) mListView.getAdapter()).setNewData(resp.getBillDetailList(),
@@ -131,6 +137,8 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 mPresenter.orderDeliver();
                 break;
             case R.id.oab_modify:
+                ModifyDeliverInfoActivity.start(this, new ArrayList<>(mOrderResp.getBillDetailList()), mBillID);
+                break;
             case R.id.oab_settle:
                 showToast(((TextView) view).getText() + "待添加");
                 break;
@@ -140,11 +148,21 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     private void showCancelDialog() {
         RemarkDialog.newBuilder(this)
                 .setHint("可简要输入放弃原因...(非必填)")
-                .setMaxLength(10)
+                .setMaxLength(200)
                 .setButtons("容我再想想", "确认放弃", (dialog, positive, content) -> {
                     dialog.dismiss();
                     if (positive) mPresenter.orderCancel(content);
                 })
                 .create().show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null && requestCode == ModifyDeliverInfoActivity.REQ_KEY) {
+            showToast("成功修改发货信息");
+            mOrderResp.setBillDetailList(data.getParcelableArrayListExtra(ModifyDeliverInfoActivity.RESP_LIST_KEY));
+            ((OrderDetailAdapter) mListView.getAdapter()).setNewData(mOrderResp.getBillDetailList());
+        }
     }
 }

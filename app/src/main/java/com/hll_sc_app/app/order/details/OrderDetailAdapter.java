@@ -45,7 +45,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         ((GlideImageView) helper.getView(R.id.iod_image)).setImageURL(item.getImgUrl());
         // 押金商品
         List<OrderDepositBean> depositList = item.getDepositList();
-        helper.setGone(R.id.iod_deposit_group, depositList != null && depositList.size() > 0);
+        helper.setGone(R.id.iod_deposit_group, !CommonUtils.isEmpty(depositList));
         ((OrderDepositList) helper.getView(R.id.iod_deposit_list)).setData(depositList);
         StringBuilder builder = new StringBuilder("发货：");
         if (item.getSubBillStatus() == 2) builder.insert(0, "预");
