@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -18,11 +20,13 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.order.OrderActionBar;
 import com.hll_sc_app.widget.order.OrderDetailFooter;
 import com.hll_sc_app.widget.order.OrderDetailHeader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -39,6 +43,8 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     TitleBar mTitleBar;
     @BindView(R.id.aod_list_view)
     RecyclerView mListView;
+    @BindView(R.id.aod_bottom_bar)
+    OrderActionBar mActionBar;
     @Autowired(name = "object0", required = true)
     String mBillID;
     private IOrderDetailContract.IOrderDetailPresenter mPresenter;
@@ -76,7 +82,25 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     public void updateOrderData(OrderResp resp) {
         mDetailHeader.setData(resp);
         mDetailFooter.setData(resp);
+        mActionBar.setData(resp.getButtonList());
         ((OrderDetailAdapter) mListView.getAdapter()).setNewData(resp.getBillDetailList(),
                 resp.getSubbillCategory() == 2);
+    }
+
+    @OnClick({R.id.oab_cancel, R.id.oab_modify, R.id.oab_receive, R.id.oab_deliver, R.id.oab_settle})
+    public void onActionClick(View view) {
+        showToast(((TextView) view).getText() + "待添加");
+        switch (view.getId()) {
+            case R.id.oab_cancel:
+                break;
+            case R.id.oab_modify:
+                break;
+            case R.id.oab_receive:
+                break;
+            case R.id.oab_deliver:
+                break;
+            case R.id.oab_settle:
+                break;
+        }
     }
 }

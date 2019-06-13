@@ -1,6 +1,8 @@
 package com.hll_sc_app.widget.order;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -129,10 +131,14 @@ public class OrderDetailHeader extends ConstraintLayout {
 
     @OnClick({R.id.odh_orderer_dial, R.id.odh_consignee_dial})
     public void onViewClicked(View view) {
+        if (view.getTag() == null) return;
         switch (view.getId()) {
             case R.id.odh_orderer_dial:
-                break;
             case R.id.odh_consignee_dial:
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri info = Uri.parse("tel:" + view.getTag());
+                intent.setData(info);
+                getContext().startActivity(intent);
                 break;
         }
     }
