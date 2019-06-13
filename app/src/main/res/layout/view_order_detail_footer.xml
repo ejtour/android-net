@@ -31,7 +31,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/odf_remark_label"
+        app:layout_constraintStart_toEndOf="@+id/odf_remark_label"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -39,9 +39,9 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/color_eeeeee"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_remark" />
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_remark" />
 
     <TextView
         android:id="@+id/odf_order_amount_label"
@@ -50,8 +50,8 @@
         android:layout_marginTop="15dp"
         android:text="订货总价"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_div_1" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_1" />
 
     <TextView
         android:id="@+id/odf_deliver_amount_label"
@@ -60,8 +60,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="发货总价"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_order_amount_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_order_amount_label" />
 
     <TextView
         android:id="@+id/odf_sign_amount_label"
@@ -70,8 +70,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="签收总价"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_deliver_amount_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_deliver_amount_label" />
 
     <TextView
         android:id="@+id/odf_deposit_amount_label"
@@ -80,8 +80,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="押金商品总价"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_sign_amount_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_sign_amount_label" />
 
     <TextView
         android:id="@+id/odf_shop_discount_label"
@@ -90,8 +90,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="店铺优惠"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_deposit_amount_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_deposit_amount_label" />
 
     <TextView
         android:id="@+id/odf_coupon_label"
@@ -100,8 +100,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="优惠券"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_shop_discount_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_shop_discount_label" />
 
     <TextView
         android:id="@+id/odf_freight_label"
@@ -110,16 +110,16 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="运费"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_coupon_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_coupon_label" />
 
     <TextView
         android:id="@+id/odf_order_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_order_amount_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_order_amount_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
     <TextView
@@ -127,8 +127,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_deliver_amount_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_deliver_amount_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
     <TextView
@@ -138,16 +138,16 @@
         android:hint="-"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_666666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_sign_amount_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_sign_amount_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark" />
 
     <TextView
         android:id="@+id/odf_deposit_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_deposit_amount_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_deposit_amount_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
     <TextView
@@ -155,8 +155,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_shop_discount_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_shop_discount_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
     <TextView
@@ -164,8 +164,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_coupon_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_coupon_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
     <TextView
@@ -174,8 +174,8 @@
         android:layout_height="wrap_content"
         android:text="¥0.00"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_freight_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_freight_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark" />
 
     <View
         android:id="@+id/odf_div_2"
@@ -183,9 +183,9 @@
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:background="@color/color_eeeeee"
-        app:layout_constraintEnd_toEndOf="@id/odf_div_1"
-        app:layout_constraintStart_toStartOf="@id/odf_div_1"
-        app:layout_constraintTop_toBottomOf="@id/odf_freight_label" />
+        app:layout_constraintEnd_toEndOf="@+id/odf_div_1"
+        app:layout_constraintStart_toStartOf="@+id/odf_div_1"
+        app:layout_constraintTop_toBottomOf="@+id/odf_freight_label" />
 
     <TextView
         android:id="@+id/odf_amount_label"
@@ -194,16 +194,16 @@
         android:layout_marginTop="13dp"
         android:text="订单总额"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_div_2" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_2" />
 
     <TextView
         android:id="@+id/odf_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Large.Red"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_amount_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_amount_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
         tools:text="¥378.00" />
 
     <View
@@ -214,7 +214,7 @@
         android:background="@color/base_activity_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/odf_amount_label" />
+        app:layout_constraintTop_toBottomOf="@+id/odf_amount_label" />
 
     <TextView
         android:id="@+id/odf_order_no_label"
@@ -223,8 +223,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="订单编号"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_div_3" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_3" />
 
     <TextView
         android:id="@+id/odf_supply_chain_no_label"
@@ -233,8 +233,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="供应链编号"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_order_no_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_order_no_label" />
 
     <TextView
         android:id="@+id/odf_order_source_label"
@@ -243,8 +243,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="订单来源"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_supply_chain_no_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_supply_chain_no_label" />
 
     <TextView
         android:id="@+id/odf_order_time_label"
@@ -253,8 +253,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="下单时间"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_order_source_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_order_source_label" />
 
     <TextView
         android:id="@+id/odf_order_type_label"
@@ -263,8 +263,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="订单类型"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_order_time_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_order_time_label" />
 
     <TextView
         android:id="@+id/odf_pay_method_label"
@@ -273,8 +273,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="支付方式"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_order_type_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_order_type_label" />
 
     <TextView
         android:id="@+id/odf_order_no"
@@ -282,8 +282,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="22dp"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_order_no_label"
-        app:layout_constraintStart_toEndOf="@id/odf_order_no_label"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_order_no_label"
+        app:layout_constraintStart_toEndOf="@+id/odf_order_no_label"
         tools:text="2018041900231" />
 
     <TextView
@@ -293,16 +293,16 @@
         android:hint="------"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_aeaeae"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_supply_chain_no_label"
-        app:layout_constraintStart_toStartOf="@id/odf_order_no" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_supply_chain_no_label"
+        app:layout_constraintStart_toStartOf="@+id/odf_order_no" />
 
     <TextView
         android:id="@+id/odf_order_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_order_source_label"
-        app:layout_constraintStart_toStartOf="@id/odf_order_no"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_order_source_label"
+        app:layout_constraintStart_toStartOf="@+id/odf_order_no"
         tools:text="供应链" />
 
     <TextView
@@ -310,8 +310,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_order_time_label"
-        app:layout_constraintStart_toStartOf="@id/odf_order_no"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_order_time_label"
+        app:layout_constraintStart_toStartOf="@+id/odf_order_no"
         tools:text="2018-04-19 14:48:21" />
 
     <TextView
@@ -319,8 +319,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_order_type_label"
-        app:layout_constraintStart_toStartOf="@id/odf_order_no"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_order_type_label"
+        app:layout_constraintStart_toStartOf="@+id/odf_order_no"
         tools:text="代仓订单" />
 
     <TextView
@@ -330,8 +330,8 @@
         android:hint="------"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_aeaeae"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_pay_method_label"
-        app:layout_constraintStart_toStartOf="@id/odf_order_no" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_pay_method_label"
+        app:layout_constraintStart_toStartOf="@+id/odf_order_no" />
 
     <TextView
         android:id="@+id/odf_copy_order_no"
@@ -341,9 +341,9 @@
         android:gravity="center"
         android:text="复制"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/odf_order_no_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
-        app:layout_constraintTop_toTopOf="@id/odf_order_no_label" />
+        app:layout_constraintBottom_toBottomOf="@+id/odf_order_no_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
+        app:layout_constraintTop_toTopOf="@+id/odf_order_no_label" />
 
     <TextView
         android:id="@+id/odf_copy_supply_chain_no"
@@ -354,9 +354,9 @@
         android:text="复制"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/odf_supply_chain_no_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
-        app:layout_constraintTop_toTopOf="@id/odf_supply_chain_no_label" />
+        app:layout_constraintBottom_toBottomOf="@+id/odf_supply_chain_no_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
+        app:layout_constraintTop_toTopOf="@+id/odf_supply_chain_no_label" />
 
     <View
         android:id="@+id/odf_div_4"
@@ -366,7 +366,7 @@
         android:background="@color/base_activity_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/odf_pay_method_label" />
+        app:layout_constraintTop_toBottomOf="@+id/odf_pay_method_label" />
 
     <TextView
         android:id="@+id/odf_shipping_info_label"
@@ -375,8 +375,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="配送信息"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_div_4" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_4" />
 
     <TextView
         android:id="@+id/odf_driver_name_label"
@@ -385,8 +385,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="司机姓名"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_shipping_info_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_shipping_info_label" />
 
     <TextView
         android:id="@+id/odf_plate_no_label"
@@ -395,8 +395,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="车牌号"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_driver_name_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_driver_name_label" />
 
     <TextView
         android:id="@+id/odf_driver_contact_label"
@@ -405,8 +405,8 @@
         android:layout_marginTop="@dimen/dp_10"
         android:text="联系方式"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_plate_no_label" />
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_plate_no_label" />
 
     <TextView
         android:id="@+id/odf_driver_name"
@@ -414,8 +414,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="22dp"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_driver_name_label"
-        app:layout_constraintStart_toEndOf="@id/odf_driver_name_label"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_driver_name_label"
+        app:layout_constraintStart_toEndOf="@+id/odf_driver_name_label"
         tools:text="李大锤" />
 
     <TextView
@@ -423,8 +423,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_plate_no_label"
-        app:layout_constraintStart_toStartOf="@id/odf_driver_name"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_plate_no_label"
+        app:layout_constraintStart_toStartOf="@+id/odf_driver_name"
         tools:text="京A09876" />
 
     <TextView
@@ -432,8 +432,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/odf_driver_contact_label"
-        app:layout_constraintStart_toStartOf="@id/odf_driver_name"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_driver_contact_label"
+        app:layout_constraintStart_toStartOf="@+id/odf_driver_name"
         tools:text="186 7352 0319" />
 
     <TextView
@@ -444,9 +444,9 @@
         android:gravity="center"
         android:text="拨打"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/odf_driver_contact_label"
-        app:layout_constraintEnd_toEndOf="@id/odf_remark"
-        app:layout_constraintTop_toTopOf="@id/odf_driver_contact_label" />
+        app:layout_constraintBottom_toBottomOf="@+id/odf_driver_contact_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
+        app:layout_constraintTop_toTopOf="@+id/odf_driver_contact_label" />
 
     <View
         android:id="@+id/odf_div_5"
@@ -456,7 +456,7 @@
         android:background="@color/base_activity_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/odf_driver_contact_label" />
+        app:layout_constraintTop_toBottomOf="@+id/odf_driver_contact_label" />
 
     <android.support.constraint.Group
         android:id="@+id/odf_deposit_amount_group"

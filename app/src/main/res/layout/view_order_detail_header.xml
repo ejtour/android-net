@@ -23,8 +23,8 @@
         android:layout_marginLeft="53dp"
         android:layout_marginTop="13dp"
         android:textAppearance="@style/TextAppearance.City22.Middle.White"
-        app:layout_constraintStart_toStartOf="@id/odh_status_bg"
-        app:layout_constraintTop_toTopOf="@id/odh_status_bg"
+        app:layout_constraintStart_toStartOf="@+id/odh_status_bg"
+        app:layout_constraintTop_toTopOf="@+id/odh_status_bg"
         tools:text="待接单" />
 
     <TextView
@@ -34,8 +34,8 @@
         android:layout_marginTop="3dp"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.White"
-        app:layout_constraintStart_toStartOf="@id/odh_status_label"
-        app:layout_constraintTop_toBottomOf="@id/odh_status_label"
+        app:layout_constraintStart_toStartOf="@+id/odh_status_label"
+        app:layout_constraintTop_toBottomOf="@+id/odh_status_label"
         tools:text="您有新的订单，请注意查收" />
 
     <ImageView
@@ -43,10 +43,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_filter_option"
-        app:layout_constraintBottom_toBottomOf="@id/odh_status_label"
-        app:layout_constraintEnd_toStartOf="@id/odh_status_label"
-        app:layout_constraintStart_toStartOf="@id/odh_status_bg"
-        app:layout_constraintTop_toTopOf="@id/odh_status_label" />
+        app:layout_constraintBottom_toBottomOf="@+id/odh_status_label"
+        app:layout_constraintEnd_toStartOf="@+id/odh_status_label"
+        app:layout_constraintStart_toStartOf="@+id/odh_status_bg"
+        app:layout_constraintTop_toTopOf="@+id/odh_status_label" />
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/odh_shop_logo"
@@ -56,7 +56,7 @@
         android:layout_marginTop="15dp"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/odh_status_bg"
+        app:layout_constraintTop_toBottomOf="@+id/odh_status_bg"
         tools:src="@drawable/ic_placeholder" />
 
     <TextView
@@ -65,8 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintStart_toEndOf="@id/odh_shop_logo"
-        app:layout_constraintTop_toTopOf="@id/odh_shop_logo"
+        app:layout_constraintStart_toEndOf="@+id/odh_shop_logo"
+        app:layout_constraintTop_toTopOf="@+id/odh_shop_logo"
         tools:text="二十二城西直门店铺" />
 
     <TextView
@@ -74,8 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/odh_shop_logo"
-        app:layout_constraintStart_toStartOf="@id/odh_shop_name"
+        app:layout_constraintBottom_toBottomOf="@+id/odh_shop_logo"
+        app:layout_constraintStart_toStartOf="@+id/odh_shop_name"
         tools:text="北京市多来点信息技术有限公司" />
 
     <TextView
@@ -88,17 +88,17 @@
         android:textAppearance="@style/TextAppearance.City22.Middle.White"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/odh_shop_logo" />
+        app:layout_constraintTop_toTopOf="@+id/odh_shop_logo" />
 
     <View
         android:id="@+id/odh_ver_line"
         android:layout_width="1dp"
         android:layout_height="40dp"
         android:background="@color/color_eeeeee"
-        app:layout_constraintBottom_toBottomOf="@id/odh_orderer_dial"
+        app:layout_constraintBottom_toBottomOf="@+id/odh_orderer_dial"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/odh_orderer" />
+        app:layout_constraintTop_toTopOf="@+id/odh_orderer" />
 
     <TextView
         android:id="@+id/odh_orderer"
@@ -106,8 +106,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintStart_toStartOf="@id/odh_shop_logo"
-        app:layout_constraintTop_toBottomOf="@id/odh_shop_logo"
+        app:layout_constraintStart_toStartOf="@+id/odh_shop_logo"
+        app:layout_constraintTop_toBottomOf="@+id/odh_shop_logo"
         tools:text="订货人：店老大" />
 
     <View
@@ -116,10 +116,10 @@
         android:layout_height="31dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_order_detail_phone"
-        app:layout_constraintEnd_toStartOf="@id/odh_ver_line"
+        app:layout_constraintEnd_toStartOf="@+id/odh_ver_line"
         app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="@id/odh_orderer"
-        app:layout_constraintTop_toBottomOf="@id/odh_orderer" />
+        app:layout_constraintStart_toStartOf="@+id/odh_orderer"
+        app:layout_constraintTop_toBottomOf="@+id/odh_orderer" />
 
     <TextView
         android:id="@+id/odh_orderer_phone"
@@ -128,10 +128,10 @@
         android:drawableLeft="@drawable/ic_phone"
         android:drawablePadding="5dp"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBottom_toBottomOf="@id/odh_orderer_dial"
-        app:layout_constraintEnd_toEndOf="@id/odh_orderer_dial"
-        app:layout_constraintStart_toStartOf="@id/odh_orderer_dial"
-        app:layout_constraintTop_toTopOf="@id/odh_orderer_dial"
+        app:layout_constraintBottom_toBottomOf="@+id/odh_orderer_dial"
+        app:layout_constraintEnd_toEndOf="@+id/odh_orderer_dial"
+        app:layout_constraintStart_toStartOf="@+id/odh_orderer_dial"
+        app:layout_constraintTop_toTopOf="@+id/odh_orderer_dial"
         tools:text="010-3234567" />
 
 
@@ -141,8 +141,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintStart_toStartOf="@id/odh_consignee_dial"
-        app:layout_constraintTop_toBottomOf="@id/odh_shop_logo"
+        app:layout_constraintStart_toStartOf="@+id/odh_consignee_dial"
+        app:layout_constraintTop_toBottomOf="@+id/odh_shop_logo"
         tools:text="收货人：店小二" />
 
     <View
@@ -153,7 +153,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/bg_order_detail_phone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/odh_consignee" />
+        app:layout_constraintTop_toBottomOf="@+id/odh_consignee" />
 
 
     <TextView
@@ -163,10 +163,10 @@
         android:drawableLeft="@drawable/ic_phone"
         android:drawablePadding="5dp"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBottom_toBottomOf="@id/odh_consignee_dial"
-        app:layout_constraintEnd_toEndOf="@id/odh_consignee_dial"
-        app:layout_constraintStart_toStartOf="@id/odh_consignee_dial"
-        app:layout_constraintTop_toTopOf="@id/odh_consignee_dial"
+        app:layout_constraintBottom_toBottomOf="@+id/odh_consignee_dial"
+        app:layout_constraintEnd_toEndOf="@+id/odh_consignee_dial"
+        app:layout_constraintStart_toStartOf="@+id/odh_consignee_dial"
+        app:layout_constraintTop_toTopOf="@+id/odh_consignee_dial"
         tools:text="010-3234567" />
 
     <TextView
@@ -179,7 +179,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/odh_orderer_dial"
+        app:layout_constraintTop_toBottomOf="@+id/odh_orderer_dial"
         tools:text="请于 2017-07-08 送达 北京市西城区西直门西环广场T1-1" />
 
     <View
@@ -189,7 +189,7 @@
         android:background="@color/base_activity_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/odh_time_address" />
+        app:layout_constraintTop_toBottomOf="@+id/odh_time_address" />
 
     <TextView
         android:id="@+id/odh_label"
@@ -200,6 +200,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/odh_divider"
+        app:layout_constraintTop_toBottomOf="@+id/odh_divider"
         tools:text="商品清单" />
 </merge>
