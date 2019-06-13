@@ -23,6 +23,10 @@
         <item name="android:textColor">@color/color_666666</item>
     </style>
 
+    <style name="TextAppearance.City22.Middle.Color222">
+        <item name="android:textColor">@color/color_222222</item>
+    </style>
+
     <style name="TextAppearance.City22.Middle.Color999">
         <item name="android:textColor">@color/color_999999</item>
     </style>

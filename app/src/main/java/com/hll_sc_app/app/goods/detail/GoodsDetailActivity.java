@@ -65,6 +65,12 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     TagFlowLayout mFlowLayout;
     @BindView(R.id.recyclerView_spec)
     RecyclerView mRecyclerViewSpec;
+    @BindView(R.id.txt_productCode)
+    TextView mTxtProductCode;
+    @BindView(R.id.txt_categoryName)
+    TextView mTxtCategoryName;
+    @BindView(R.id.txt_shopProductCategoryName)
+    TextView mTxtShopProductCategoryName;
     private GoodsDetailPresenter mPresenter;
     private SpecStatusWindow.SpecAdapter mAdapterSpec;
 
@@ -167,6 +173,11 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     private void showSpecList(GoodsBean bean) {
         mAdapterSpec.setNewData(bean.getSpecs());
+    }
+
+    private void showProductCategory(GoodsBean bean) {
+        mTxtProductCode.setText(bean.getProductCode());
+//        mTxtCategoryName.setText(bean.getCategoryN);
     }
 
     private static class FlowAdapter extends TagAdapter<NicknamesBean> {
