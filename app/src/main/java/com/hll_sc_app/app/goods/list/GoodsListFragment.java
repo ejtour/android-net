@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.detail.GoodsDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -115,7 +116,11 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
             if (bean != null) {
-                showSpecWindow(bean);
+                if (view.getId() == R.id.content) {
+                    GoodsDetailActivity.start(bean.getProductID());
+                } else {
+                    showSpecWindow(bean);
+                }
             }
         });
         mRecyclerView.setAdapter(mAdapter);

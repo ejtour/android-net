@@ -71,7 +71,7 @@ dependencies {
     // 一个Android TabLayout库
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     // Banner
-    implementation 'com.youth.banner:banner:1.4.10'
+    api 'com.youth.banner:banner:1.4.10'
     // 图片选择
     api 'com.zhihu.android:matisse:0.5.2-beta4'
     // 状态栏颜色处理

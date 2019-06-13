@@ -48,6 +48,10 @@ public class RouterConfig {
      */
     public static final String ROOT_HOME_GOODS_LIST = "/fragment/home/goods/list";
     /**
+     * 商品详情
+     */
+    public static final String ROOT_HOME_GOODS_DETAIL = "/activity/home/goods/detail";
+    /**
      * 我的
      */
     public static final String ROOT_HOME_MINE = "/fragment/home/mine";

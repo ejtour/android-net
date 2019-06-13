@@ -1,5 +1,6 @@
 package com.hll_sc_app.api;
 
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
@@ -23,6 +24,16 @@ import retrofit2.http.POST;
  */
 public interface GoodsService {
     GoodsService INSTANCE = HttpFactory.create(GoodsService.class);
+
+    /**
+     * 获取商品详情
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100005")
+    Observable<BaseResp<GoodsBean>> queryGoodsDetail(@Body BaseMapReq req);
 
     /**
      * 商品搜索

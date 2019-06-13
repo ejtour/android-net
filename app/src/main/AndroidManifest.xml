@@ -60,6 +60,10 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name=".app.goods.detail.GoodsDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.user.register.RegisterComplementActivity"
             android:screenOrientation="portrait" />
 

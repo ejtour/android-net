@@ -72,6 +72,7 @@ public class GoodsBean {
     private String productStatus;
     private String isSupplierWarehouse;
     private String imgUrl;
+    private String imgUrlSub;
     private String productCode;
     private String categorySubID;
     private String placeCityCode;
@@ -84,6 +85,14 @@ public class GoodsBean {
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
     private List<?> labelList;
+
+    public String getImgUrlSub() {
+        return imgUrlSub;
+    }
+
+    public void setImgUrlSub(String imgUrlSub) {
+        this.imgUrlSub = imgUrlSub;
+    }
 
     public List<BundlingGoodsBean> getBundlingGoodsDetails() {
         return bundlingGoodsDetails;
