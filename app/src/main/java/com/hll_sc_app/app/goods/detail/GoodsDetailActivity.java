@@ -135,6 +135,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         showBanner(bean);
         showProductName(bean);
         showSpecList(bean);
+        showProductCategory(bean);
     }
 
     @Override
@@ -177,7 +178,10 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     private void showProductCategory(GoodsBean bean) {
         mTxtProductCode.setText(bean.getProductCode());
-//        mTxtCategoryName.setText(bean.getCategoryN);
+        mTxtCategoryName.setText(String.format("%s-%s-%s", bean.getCategoryName(), bean.getCategorySubName(),
+            bean.getCategoryThreeName()));
+        mTxtShopProductCategoryName.setText(String.format("%s-%s", bean.getShopProductCategorySubName(),
+            bean.getShopProductCategoryThreeName()));
     }
 
     private static class FlowAdapter extends TagAdapter<NicknamesBean> {

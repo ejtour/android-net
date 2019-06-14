@@ -72,6 +72,9 @@ public class GoodsBean {
     private String placeCity;
     private String shopProductCategoryThreeID;
     private String categoryID;
+    private String categoryName;
+    private String categorySubName;
+    private String categoryThreeName;
     private String productType;
     private String supplierName;
     private String actionBy;
@@ -86,11 +89,53 @@ public class GoodsBean {
     private String guaranteePeriod;
     private String resourceType;
     private String placeProvinceCode;
+    private String shopProductCategoryThreeName;
+    private String shopProductCategorySubName;
     private List<SpecsBean> specs;
     private List<?> productAttrs;
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
     private List<?> labelList;
+
+    public String getShopProductCategoryThreeName() {
+        return shopProductCategoryThreeName;
+    }
+
+    public void setShopProductCategoryThreeName(String shopProductCategoryThreeName) {
+        this.shopProductCategoryThreeName = shopProductCategoryThreeName;
+    }
+
+    public String getShopProductCategorySubName() {
+        return shopProductCategorySubName;
+    }
+
+    public void setShopProductCategorySubName(String shopProductCategorySubName) {
+        this.shopProductCategorySubName = shopProductCategorySubName;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getCategorySubName() {
+        return categorySubName;
+    }
+
+    public void setCategorySubName(String categorySubName) {
+        this.categorySubName = categorySubName;
+    }
+
+    public String getCategoryThreeName() {
+        return categoryThreeName;
+    }
+
+    public void setCategoryThreeName(String categoryThreeName) {
+        this.categoryThreeName = categoryThreeName;
+    }
 
     public String getImgUrlSub() {
         return imgUrlSub;
