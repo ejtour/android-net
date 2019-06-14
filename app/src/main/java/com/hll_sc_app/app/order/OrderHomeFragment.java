@@ -24,6 +24,7 @@ import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.window.OptionType;
@@ -184,7 +185,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                     }
                     break;
                 default:
-                    showToast(label + "待添加");
+                    EventBus.getDefault().post(new ExportEvent(label));
                     break;
             }
         }

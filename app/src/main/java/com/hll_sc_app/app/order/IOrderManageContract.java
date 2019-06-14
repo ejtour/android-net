@@ -56,6 +56,26 @@ interface IOrderManageContract {
          * 更新待发货头部信息
          */
         void updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes);
+
+
+        /**
+         * 绑定邮箱
+         */
+        void bindEmail();
+
+        /**
+         * 导出成功
+         *
+         * @param email 邮箱
+         */
+        void exportSuccess(String email);
+
+        /**
+         * 导出失败
+         *
+         * @param msg 失败消息
+         */
+        void exportFailure(String msg);
     }
 
     interface IOrderManagePresenter extends IPresenter<IOrderManageView> {
@@ -68,5 +88,13 @@ interface IOrderManageContract {
         void receiveOrder(String subBillIds);
 
         void deliver(String subBillIds, String expressName, String expressNo);
+
+        void exportAssemblyOrder(List<String> subBillIds, String email);
+
+        void exportDeliveryOrder(List<String>  subBillIds, String email);
+
+        void exportSpecialOrder(int type, String email);
+
+        void exportNormalOrder(int type, String email);
     }
 }

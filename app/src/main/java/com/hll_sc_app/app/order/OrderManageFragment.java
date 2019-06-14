@@ -30,12 +30,15 @@ import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
+import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -127,6 +130,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private OrderParam mOrderParam;
     private IOrderManageContract.IOrderManagePresenter mPresenter;
     Unbinder unbinder;
+    private String mEventMessage;
 
     public static OrderManageFragment newInstance(OrderType orderType, @NonNull OrderParam param) {
         Bundle args = new Bundle();
@@ -359,6 +363,26 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         setDeliverType(type);
     }
 
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(requireActivity(), email -> {
+            if (mEventMessage != null) {
+                EventBus.getDefault().post(new ExportEvent(mEventMessage, email));
+                mEventMessage = null;
+            }
+        });
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(requireActivity(), email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(requireActivity(), msg);
+    }
+
     /**
      * 初始化发货类型
      */
@@ -412,7 +436,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void confirm(View view) {
-        String subBillIds = getSubBillIds();
+        String subBillIds = TextUtils.join(",", getSubBillIds());
         switch (mOrderType) {
             case PENDING_RECEIVE:
                 mPresenter.receiveOrder(subBillIds);
@@ -423,15 +447,12 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         }
     }
 
-    private String getSubBillIds() {
-        StringBuilder sb = new StringBuilder();
-        List<OrderResp> data = mAdapter.getData();
-        for (OrderResp resp : data) {
-            sb.append(resp.getSubBillID()).append(",");
+    private List<String> getSubBillIds() {
+        List<String> billIds = new ArrayList<>();
+        for (OrderResp resp : mAdapter.getData()) {
+            billIds.add(resp.getSubBillID());
         }
-        if (sb.length() > 0)
-            sb.deleteCharAt(sb.length() - 1);
-        return sb.toString();
+        return billIds;
     }
 
     @Subscribe
@@ -451,6 +472,39 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             case OrderEvent.REMOVE_SELECTED:
                 setForceLoad(!isFragmentVisible());
                 removeSelectedItems();
+                break;
+        }
+    }
+
+    @Subscribe
+    public void handleExportEvent(ExportEvent event) {
+        if (!isFragmentVisible()) {
+            return;
+        }
+        mEventMessage = event.getMessage(); // 保存当前消息，用于绑定邮箱后重新请求
+        switch (mEventMessage) {
+            case OptionType.OPTION_EXPORT_ASSEMBLY:
+                mPresenter.exportAssemblyOrder(getSubBillIds(),
+                        event.getData().toString());
+                break;
+            case OptionType.OPTION_EXPORT_CHECK_CATEGORY:
+                mPresenter.exportSpecialOrder(2, event.getData().toString());
+                break;
+            case OptionType.OPTION_EXPORT_CHECK_DETAILS:
+                mPresenter.exportSpecialOrder(0, event.getData().toString());
+                break;
+            case OptionType.OPTION_EXPORT_ORDER:
+                mPresenter.exportNormalOrder(0, event.getData().toString());
+                break;
+            case OptionType.OPTION_EXPORT_ORDER_DETAILS:
+                mPresenter.exportNormalOrder(1, event.getData().toString());
+                break;
+            case OptionType.OPTION_EXPORT_OUT_CATEGORY:
+                mPresenter.exportSpecialOrder(1, event.getData().toString());
+                break;
+            case OptionType.OPTION_EXPORT_OUT_DETAILS:
+                mPresenter.exportDeliveryOrder(getSubBillIds(),
+                        event.getData().toString());
                 break;
         }
     }

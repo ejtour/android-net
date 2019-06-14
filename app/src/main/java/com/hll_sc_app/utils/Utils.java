@@ -52,7 +52,7 @@ public class Utils {
         export(context, "导出失败", R.drawable.ic_dialog_state_failure, tip, "稍后再试", null);
     }
 
-    public static void exportEmail(Activity context, ExportDialog.OnClickListener listener) {
+    public static void bindEmail(Activity context, ExportDialog.OnClickListener listener) {
         export(context, "您还没绑定邮箱", R.drawable.ic_dialog_state_failure, null, "绑定并导出", listener);
     }
 }
