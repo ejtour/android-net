@@ -6,7 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import com.hll_sc_app.app.goods.list.SpecStatusWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.BannerImageLoader;
+import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.GoodsBean;
@@ -60,6 +64,8 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     String mProductID;
     @BindView(R.id.txt_productName)
     TextView mTxtProductName;
+    @BindView(R.id.txt_productBrief)
+    TextView mTxtProductBrief;
     @BindView(R.id.txt_nextDayDelivery)
     TextView mTxtNextDayDelivery;
     @BindView(R.id.txt_depositProduct)
@@ -76,6 +82,9 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     TextView mTxtShopProductCategoryName;
     @BindView(R.id.recyclerView_productAttr)
     RecyclerView mRecyclerViewProductAttr;
+    @BindView(R.id.recyclerView_img)
+    RecyclerView mRecyclerViewProductImg;
+    private ProductImgAdapter mAdapterImg;
     private ProductAttrAdapter mAdapterAttr;
     private GoodsDetailPresenter mPresenter;
     private SpecStatusWindow.SpecAdapter mAdapterSpec;
@@ -102,6 +111,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mBanner.setBannerAnimation(Transformer.Default);
         mRecyclerViewSpec.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewSpec.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
+        mRecyclerViewSpec.setNestedScrollingEnabled(false);
         mAdapterSpec = new SpecStatusWindow.SpecAdapter(null);
         mRecyclerViewSpec.setAdapter(mAdapterSpec);
         mAdapterSpec.setOnItemChildClickListener((adapter, view, position) -> {
@@ -114,8 +124,14 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
         mRecyclerViewProductAttr.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProductAttr.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
+        mRecyclerViewProductAttr.setNestedScrollingEnabled(false);
         mAdapterAttr = new ProductAttrAdapter(null);
         mRecyclerViewProductAttr.setAdapter(mAdapterAttr);
+
+        mRecyclerViewProductImg.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewProductImg.setNestedScrollingEnabled(false);
+        mAdapterImg = new ProductImgAdapter(null);
+        mRecyclerViewProductImg.setAdapter(mAdapterImg);
     }
 
     @Override
@@ -148,6 +164,8 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         showSpecList(bean);
         showProductCategory(bean);
         showProductAttr(bean);
+        showProductBrief(bean);
+
     }
 
     @Override
@@ -201,6 +219,32 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mRecyclerViewProductAttr.setVisibility(CommonUtils.isEmpty(bean.getProductAttrs()) ? View.GONE : View.VISIBLE);
     }
 
+    private void showProductBrief(GoodsBean bean) {
+        // 商品详情图片
+        List<String> listImg = new ArrayList<>();
+        if (!TextUtils.isEmpty(bean.getImgUrlDetail())) {
+            listImg.addAll(Arrays.asList(bean.getImgUrlDetail().split(",")));
+        } else {
+            if (!TextUtils.isEmpty(bean.getImgUrl())) {
+                listImg.add(bean.getImgUrl());
+            } else if (!TextUtils.isEmpty(bean.getImgUrlSub())) {
+                listImg.addAll(Arrays.asList(bean.getImgUrlSub().split(",")));
+            }
+        }
+        mAdapterImg.setNewData(listImg);
+        // 商品简介
+        if (TextUtils.isEmpty(bean.getProductBrief())) {
+            mTxtProductBrief.setVisibility(View.GONE);
+            return;
+        }
+        mTxtProductBrief.setVisibility(View.VISIBLE);
+        String title = "商品简介：";
+        SpannableString spannableString = new SpannableString(title + bean.getProductBrief());
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_666666)), 0,
+            title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTxtProductBrief.setText(spannableString);
+    }
+
     private static class FlowAdapter extends TagAdapter<NicknamesBean> {
         private LayoutInflater mInflater;
 
@@ -219,7 +263,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     private static class ProductAttrAdapter extends BaseQuickAdapter<ProductAttrBean, BaseViewHolder> {
 
-        public ProductAttrAdapter(@Nullable List<ProductAttrBean> data) {
+        ProductAttrAdapter(@Nullable List<ProductAttrBean> data) {
             super(R.layout.item_product_detail_attr, data);
         }
 
@@ -227,6 +271,19 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         protected void convert(BaseViewHolder helper, ProductAttrBean item) {
             helper.setText(R.id.txt_keyNote, item.getKeyNote())
                 .setText(R.id.txt_attrValue, item.getAttrValue());
+        }
+    }
+
+    private static class ProductImgAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+
+        ProductImgAdapter(@Nullable List<String> data) {
+            super(R.layout.item_product_detail_img, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, String item) {
+            ((GlideImageView) helper.getView(R.id.glideImageView))
+                .setScaleByWidth(true).setImageURL(item);
         }
     }
 }

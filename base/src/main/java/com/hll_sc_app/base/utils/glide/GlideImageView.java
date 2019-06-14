@@ -210,8 +210,9 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         mPlaceholder = placeholder;
     }
 
-    public void setScaleByWidth(boolean scaleByWidth) {
+    public GlideImageView setScaleByWidth(boolean scaleByWidth) {
         isScaleByWidth = scaleByWidth;
+        return this;
     }
 
     public void isPreview(boolean isPreview) {

@@ -96,6 +96,15 @@ public class GoodsBean {
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
     private List<?> labelList;
+    private String imgUrlDetail;
+
+    public String getImgUrlDetail() {
+        return imgUrlDetail;
+    }
+
+    public void setImgUrlDetail(String imgUrlDetail) {
+        this.imgUrlDetail = imgUrlDetail;
+    }
 
     public String getShopProductCategoryThreeName() {
         return shopProductCategoryThreeName;

@@ -47,7 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="315dp"
                 app:banner_default_image="@drawable/base_ic_banner_placeholder"
-                app:image_scale_type="center_crop"/>
+                app:image_scale_type="center_crop"
+                tools:visibility="gone"/>
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -207,6 +208,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/base_white"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="商品详情"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+            <TextView
+                android:id="@+id/txt_productBrief"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/base_white"
+                android:lineSpacingExtra="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="15dp"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color222"
+                tools:text="商品简介：来自新西兰大草原的天然喂养肥牛，不添加任何防腐剂，米其林三星厨师亲自手切，薄而不断，特别好吃。"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
