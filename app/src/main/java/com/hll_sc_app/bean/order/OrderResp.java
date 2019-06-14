@@ -97,7 +97,7 @@ public class OrderResp {
     private int orderDepositTotalAmount;
     private int orderDiscountRuleID;
     private double adjustmentDepositTotalAmount;
-    private int shopID;
+    private String shopID;
     private String signBy;
     private String linkPhone;
     private String expressNo;
@@ -832,11 +832,11 @@ public class OrderResp {
         this.adjustmentDepositTotalAmount = adjustmentDepositTotalAmount;
     }
 
-    public int getShopID() {
+    public String getShopID() {
         return shopID;
     }
 
-    public void setShopID(int shopID) {
+    public void setShopID(String shopID) {
         this.shopID = shopID;
     }
 

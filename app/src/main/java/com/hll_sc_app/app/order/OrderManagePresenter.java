@@ -9,6 +9,7 @@ import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
+import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 import com.hll_sc_app.utils.Constants;
@@ -150,6 +151,16 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     @Override
     public void exportNormalOrder(int type, String email) {
         Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getType(), type, email, getExportObserver());
+    }
+
+    @Override
+    public void getExpressCompanyList(String groupID, String shopID) {
+        Order.getExpressCompanyList(groupID, shopID, new SimpleObserver<ExpressResp>(mView) {
+            @Override
+            public void onSuccess(ExpressResp expressResp) {
+                mView.showExpressCompanyList(expressResp.getDeliveryCompanyList(), null);
+            }
+        });
     }
 
     private SimpleObserver<ExportResp> getExportObserver() {

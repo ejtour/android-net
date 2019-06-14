@@ -6,6 +6,7 @@ import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
+import com.hll_sc_app.bean.order.deliver.ExpressResp;
 
 import java.util.List;
 
@@ -76,6 +77,8 @@ interface IOrderManageContract {
          * @param msg 失败消息
          */
         void exportFailure(String msg);
+
+        void showExpressCompanyList(List<ExpressResp.ExpressBean> beans, ExpressResp.ExpressBean company);
     }
 
     interface IOrderManagePresenter extends IPresenter<IOrderManageView> {
@@ -91,10 +94,12 @@ interface IOrderManageContract {
 
         void exportAssemblyOrder(List<String> subBillIds, String email);
 
-        void exportDeliveryOrder(List<String>  subBillIds, String email);
+        void exportDeliveryOrder(List<String> subBillIds, String email);
 
         void exportSpecialOrder(int type, String email);
 
         void exportNormalOrder(int type, String email);
+
+        void getExpressCompanyList(String groupID, String shopID);
     }
 }
