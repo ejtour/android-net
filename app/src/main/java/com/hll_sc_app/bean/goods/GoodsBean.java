@@ -92,7 +92,7 @@ public class GoodsBean {
     private String shopProductCategoryThreeName;
     private String shopProductCategorySubName;
     private List<SpecsBean> specs;
-    private List<?> productAttrs;
+    private List<ProductAttrBean> productAttrs;
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
     private List<?> labelList;
@@ -553,11 +553,11 @@ public class GoodsBean {
         this.specs = specs;
     }
 
-    public List<?> getProductAttrs() {
+    public List<ProductAttrBean> getProductAttrs() {
         return productAttrs;
     }
 
-    public void setProductAttrs(List<?> productAttrs) {
+    public void setProductAttrs(List<ProductAttrBean> productAttrs) {
         this.productAttrs = productAttrs;
     }
 

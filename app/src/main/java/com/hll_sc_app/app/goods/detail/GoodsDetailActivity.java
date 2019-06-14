@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.list.SpecStatusWindow;
@@ -24,6 +26,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.NicknamesBean;
+import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -71,6 +74,9 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     TextView mTxtCategoryName;
     @BindView(R.id.txt_shopProductCategoryName)
     TextView mTxtShopProductCategoryName;
+    @BindView(R.id.recyclerView_productAttr)
+    RecyclerView mRecyclerViewProductAttr;
+    private ProductAttrAdapter mAdapterAttr;
     private GoodsDetailPresenter mPresenter;
     private SpecStatusWindow.SpecAdapter mAdapterSpec;
 
@@ -105,6 +111,11 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
                 mPresenter.updateSpecStatus(Collections.singletonList(bean));
             }
         });
+
+        mRecyclerViewProductAttr.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewProductAttr.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
+        mAdapterAttr = new ProductAttrAdapter(null);
+        mRecyclerViewProductAttr.setAdapter(mAdapterAttr);
     }
 
     @Override
@@ -136,6 +147,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         showProductName(bean);
         showSpecList(bean);
         showProductCategory(bean);
+        showProductAttr(bean);
     }
 
     @Override
@@ -184,6 +196,11 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
             bean.getShopProductCategoryThreeName()));
     }
 
+    private void showProductAttr(GoodsBean bean) {
+        mAdapterAttr.setNewData(bean.getProductAttrs());
+        mRecyclerViewProductAttr.setVisibility(CommonUtils.isEmpty(bean.getProductAttrs()) ? View.GONE : View.VISIBLE);
+    }
+
     private static class FlowAdapter extends TagAdapter<NicknamesBean> {
         private LayoutInflater mInflater;
 
@@ -197,6 +214,19 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
             TextView tv = (TextView) mInflater.inflate(R.layout.view_item_goods_detail_name, flowLayout, false);
             tv.setText(s.getNickname());
             return tv;
+        }
+    }
+
+    private static class ProductAttrAdapter extends BaseQuickAdapter<ProductAttrBean, BaseViewHolder> {
+
+        public ProductAttrAdapter(@Nullable List<ProductAttrBean> data) {
+            super(R.layout.item_product_detail_attr, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, ProductAttrBean item) {
+            helper.setText(R.id.txt_keyNote, item.getKeyNote())
+                .setText(R.id.txt_attrValue, item.getAttrValue());
         }
     }
 }

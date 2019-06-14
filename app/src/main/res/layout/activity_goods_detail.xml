@@ -186,7 +186,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="商城分类"
+                    android:text="自定义分类"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
                 <TextView
@@ -201,6 +201,12 @@
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color222"
                     tools:text="肉禽蛋类-其他肉类-牛肉"/>
             </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_productAttr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"/>
 
         </LinearLayout>
 
