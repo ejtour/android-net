@@ -6,6 +6,9 @@ import android.text.TextUtils;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializer;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.SystemUtils;
 
 import org.json.JSONException;
@@ -39,7 +42,8 @@ public abstract class BaseCallback<T> extends DisposableObserver<T> {
         // 接口性错误
         if (e instanceof UseCaseException) {
             if (TextUtils.equals(((UseCaseException) e).getCode(), "00120110118")) {
-//                RouterUtil.goToActivity(RouterConfig.USER_LOGIN);
+                UserConfig.clearToken();
+                RouterUtil.goToActivity(RouterConfig.USER_LOGIN);
             }
             onFailure((UseCaseException) e);
             return;
