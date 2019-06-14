@@ -81,7 +81,7 @@ public class OrderDetailHeader extends ConstraintLayout {
         mShopLogo.setImageURL(data.getImgUrl());
         mShopName.setText(data.getShopName());
         mGroupName.setText(data.getGroupName());
-        mOrderer.setText(String.format("订货人：%s", data.getShipperName()));
+        mOrderer.setText(String.format("订货人：%s", data.getSubBillCreateBy()));
         mOrdererDial.setTag(data.getOrdererMobile());
         mOrdererDial.setText(handlePhoneNum(data.getOrdererMobile()));
         mConsignee.setText(String.format("收货人：%s", data.getReceiverName()));
@@ -122,7 +122,7 @@ public class OrderDetailHeader extends ConstraintLayout {
                 mLabel.setText("商品清单");
             else {
                 mLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.color_666666));
-                mLabel.setText("商品仓库：北京市房山区仓库");
+                mLabel.setText(String.format("商品仓库：%s", wareHouseName));
             }
         }
     }
