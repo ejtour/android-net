@@ -139,6 +139,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mRecyclerViewProductImg.setAdapter(mAdapterImg);
 
         mRecyclerViewBundlingGoods.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mRecyclerViewBundlingGoods.addItemDecoration(new BundlingGoodsDecoration(this));
         mRecyclerViewBundlingGoods.setNestedScrollingEnabled(false);
         mAdapterBundlingGoods = new BundlingGoodsAdapter(null);
         mAdapterBundlingGoods.setOnItemClickListener((adapter, view, position) -> {
