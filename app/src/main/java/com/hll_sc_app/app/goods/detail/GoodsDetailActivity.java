@@ -24,6 +24,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.list.SpecStatusWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.BannerImageLoader;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -194,7 +195,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
                 toUpdateSpec();
                 break;
             case R.id.txt_edit:
-                finish();
+                toEdit();
                 break;
             default:
                 break;
@@ -217,12 +218,41 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
             }
         }
         if (CommonUtils.isEmpty(listDown)) {
-            // 如果没有未上架的规格则未全部上架规格，此按钮的操作未全部下架
+            // 如果没有未上架的规格则为全部上架规格，此按钮的操作未全部下架
             mPresenter.updateSpecStatus(mAdapterSpec.getData());
         } else {
-            // 如果有未上架的规格则，此按钮的操作未全部上架
+            // 如果有未上架的规格则此按钮的操作为全部上架
             mPresenter.updateSpecStatus(listDown);
         }
+    }
+
+    private void toEdit() {
+        if (CommonUtils.isEmpty(mAdapterSpec.getData())) {
+            return;
+        }
+        boolean isEdit = true;
+        boolean isDeposit = mTxtDepositProduct.getVisibility() == View.VISIBLE;
+        if (!isDeposit) {
+            // 押金商品可以直接编辑
+            for (SpecsBean bean : mAdapterSpec.getData()) {
+                bean.setProductID(mProductID);
+                if (TextUtils.equals(bean.getSpecStatus(), SpecsBean.SPEC_STATUS_UP)) {
+                    isEdit = false;
+                }
+            }
+        }
+        if (!isEdit) {
+            SuccessDialog.newBuilder(this)
+                .setCancelable(false)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setMessageTitle("当前不能编辑商品")
+                .setMessage("当商品含有未下架的商品时\n不可以进行商品资料编辑噢")
+                .setButton((dialog, item) -> dialog.dismiss(), "我知道了")
+                .create().show();
+            return;
+        }
+        // TODO:去编辑
     }
 
     @Override
