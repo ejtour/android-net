@@ -62,6 +62,8 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     Banner mBanner;
     @Autowired(name = "object0")
     String mProductID;
+    @Autowired(name = "object1")
+    boolean mIsBundlingDetail;
     @BindView(R.id.txt_productName)
     TextView mTxtProductName;
     @BindView(R.id.txt_productBrief)
@@ -93,10 +95,6 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     private ProductAttrAdapter mAdapterAttr;
     private GoodsDetailPresenter mPresenter;
     private SpecStatusWindow.SpecAdapter mAdapterSpec;
-
-    public static void start(String productID) {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_DETAIL, productID);
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,10 +143,20 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mAdapterBundlingGoods.setOnItemClickListener((adapter, view, position) -> {
             GoodsBean goodsBean = (GoodsBean) adapter.getItem(position);
             if (goodsBean != null) {
-                GoodsDetailActivity.start(goodsBean.getProductID());
+                GoodsDetailActivity.start(goodsBean.getProductID(), true);
             }
         });
         mRecyclerViewBundlingGoods.setAdapter(mAdapterBundlingGoods);
+    }
+
+    /**
+     * start activity
+     *
+     * @param productID        productID
+     * @param isBundlingDetail 组合商品下的商品明细的商品详情
+     */
+    public static void start(String productID, boolean isBundlingDetail) {
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_DETAIL, productID, isBundlingDetail);
     }
 
     @Override
@@ -221,7 +229,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     }
 
     private void showSpecList(GoodsBean bean) {
-        mAdapterSpec.setNewData(bean);
+        mAdapterSpec.setNewData(bean, mIsBundlingDetail);
     }
 
     private void showBundlingGoodsList(GoodsBean bean) {

@@ -117,7 +117,7 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
             if (bean != null) {
                 if (view.getId() == R.id.content) {
-                    GoodsDetailActivity.start(bean.getProductID());
+                    GoodsDetailActivity.start(bean.getProductID(), false);
                 } else {
                     showSpecWindow(bean);
                 }

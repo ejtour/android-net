@@ -105,6 +105,7 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
 
     public static class SpecAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
         private boolean mIsDepositProduct;
+        private boolean mIsBundlingDetail;
 
         public SpecAdapter(GoodsBean goodsBean) {
             super(R.layout.item_window_spec_list, goodsBean != null ? goodsBean.getSpecs() : null);
@@ -113,9 +114,10 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
             }
         }
 
-        public void setNewData(GoodsBean goodsBean) {
+        public void setNewData(GoodsBean goodsBean, boolean isBundlingDetail) {
             if (goodsBean != null) {
                 super.setNewData(goodsBean.getSpecs());
+                mIsBundlingDetail = isBundlingDetail;
                 mIsDepositProduct = TextUtils.equals(goodsBean.getDepositProductType(), GoodsBean.DEPOSIT_GOODS_TYPE);
             }
         }
@@ -131,7 +133,8 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
                 .setText(R.id.txt_update, TextUtils.equals(SpecsBean.SPEC_STATUS_UP, item.getSpecStatus()) ? "下架" :
                     "上架")
                 // 押金商品不能操作上下架
-                .setGone(R.id.txt_update, !mIsDepositProduct)
+                // 组合商品下的商品明细在商品详情 不能操作上下架
+                .setGone(R.id.txt_update, !mIsDepositProduct && !mIsBundlingDetail)
                 .addOnClickListener(R.id.txt_update);
         }
 
