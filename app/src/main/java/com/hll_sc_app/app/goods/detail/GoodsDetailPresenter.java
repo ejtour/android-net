@@ -76,6 +76,7 @@ public class GoodsDetailPresenter implements GoodsDetailContract.IGoodsDetailPre
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
+                    mView.showToast("修改成功");
                     queryGoodsDetail();
                 }
 

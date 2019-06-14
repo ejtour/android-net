@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -90,6 +91,18 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     RecyclerView mRecyclerViewBundlingGoods;
     @BindView(R.id.txt_bundlingGoods)
     TextView mTxtBundlingGoods;
+    @BindView(R.id.txt_productCode_title)
+    TextView mTxtProductCodeTitle;
+    @BindView(R.id.txt_categoryName_title)
+    TextView mTxtCategoryNameTitle;
+    @BindView(R.id.txt_shopProductCategoryName_title)
+    TextView mTxtShopProductCategoryNameTitle;
+    @BindView(R.id.txt_update_spec)
+    TextView mTxtUpdateSpec;
+    @BindView(R.id.txt_edit)
+    TextView mTxtEdit;
+    @BindView(R.id.rl_bottom)
+    RelativeLayout mRlBottom;
     private ProductImgAdapter mAdapterImg;
     private BundlingGoodsAdapter mAdapterBundlingGoods;
     private ProductAttrAdapter mAdapterAttr;
@@ -171,10 +184,16 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mBanner.startAutoPlay();
     }
 
-    @OnClick({R.id.img_close})
+    @OnClick({R.id.img_close, R.id.txt_update_spec, R.id.txt_edit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
+                finish();
+                break;
+            case R.id.txt_update_spec:
+                toUpdateSpec();
+                break;
+            case R.id.txt_edit:
                 finish();
                 break;
             default:
@@ -182,8 +201,33 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         }
     }
 
+    /**
+     * 上下架操作逻辑
+     */
+    private void toUpdateSpec() {
+        if (CommonUtils.isEmpty(mAdapterSpec.getData())) {
+            return;
+        }
+        // 找出未上架的规格
+        List<SpecsBean> listDown = new ArrayList<>();
+        for (SpecsBean bean : mAdapterSpec.getData()) {
+            bean.setProductID(mProductID);
+            if (TextUtils.equals(bean.getSpecStatus(), SpecsBean.SPEC_STATUS_DOWN)) {
+                listDown.add(bean);
+            }
+        }
+        if (CommonUtils.isEmpty(listDown)) {
+            // 如果没有未上架的规格则未全部上架规格，此按钮的操作未全部下架
+            mPresenter.updateSpecStatus(mAdapterSpec.getData());
+        } else {
+            // 如果有未上架的规格则，此按钮的操作未全部上架
+            mPresenter.updateSpecStatus(listDown);
+        }
+    }
+
     @Override
     public void showDetail(GoodsBean bean) {
+        showBottomButton(bean);
         showBanner(bean);
         showProductName(bean);
         showSpecList(bean);
@@ -194,9 +238,21 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     }
 
-    @Override
-    public String getProductID() {
-        return mProductID;
+    private void showBottomButton(GoodsBean bean) {
+        // 组合商品明细不显示底部按钮
+        mRlBottom.setVisibility(!mIsBundlingDetail ? View.VISIBLE : View.GONE);
+        mTxtUpdateSpec.setVisibility(TextUtils.equals(bean.getDepositProductType(), GoodsBean.DEPOSIT_GOODS_TYPE) ?
+            View.GONE : View.VISIBLE);
+        boolean isDown = false;
+        if (!CommonUtils.isEmpty(bean.getSpecs())) {
+            for (SpecsBean specsBean : bean.getSpecs()) {
+                if (TextUtils.equals(SpecsBean.SPEC_STATUS_DOWN, specsBean.getSpecStatus())) {
+                    isDown = true;
+                    break;
+                }
+            }
+        }
+        mTxtUpdateSpec.setText(isDown ? "全部上架" : "全部下架");
     }
 
     private void showBanner(GoodsBean bean) {
@@ -280,6 +336,11 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_666666)), 0,
             title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTxtProductBrief.setText(spannableString);
+    }
+
+    @Override
+    public String getProductID() {
+        return mProductID;
     }
 
     private static class FlowAdapter extends TagAdapter<NicknamesBean> {
