@@ -2,7 +2,6 @@ package com.hll_sc_app.app.goods.list;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -63,7 +62,7 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
     private void initView(Activity context, GoodsBean goodsBean) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
-        mAdapter = new SpecAdapter(goodsBean.getSpecs());
+        mAdapter = new SpecAdapter(goodsBean);
         mAdapter.setOnItemChildClickListener((adapter, view1, position) -> {
             SpecsBean bean = (SpecsBean) adapter.getItem(position);
             if (bean != null) {
@@ -105,9 +104,20 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
     }
 
     public static class SpecAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
+        private boolean mIsDepositProduct;
 
-        public SpecAdapter(@Nullable List<SpecsBean> data) {
-            super(R.layout.item_window_spec_list, data);
+        public SpecAdapter(GoodsBean goodsBean) {
+            super(R.layout.item_window_spec_list, goodsBean != null ? goodsBean.getSpecs() : null);
+            if (goodsBean != null) {
+                mIsDepositProduct = TextUtils.equals(goodsBean.getDepositProductType(), GoodsBean.DEPOSIT_GOODS_TYPE);
+            }
+        }
+
+        public void setNewData(GoodsBean goodsBean) {
+            if (goodsBean != null) {
+                super.setNewData(goodsBean.getSpecs());
+                mIsDepositProduct = TextUtils.equals(goodsBean.getDepositProductType(), GoodsBean.DEPOSIT_GOODS_TYPE);
+            }
         }
 
         @Override
@@ -120,6 +130,8 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
                 // 规格状态：4-已上架，5-未上架
                 .setText(R.id.txt_update, TextUtils.equals(SpecsBean.SPEC_STATUS_UP, item.getSpecStatus()) ? "下架" :
                     "上架")
+                // 押金商品不能操作上下架
+                .setGone(R.id.txt_update, !mIsDepositProduct)
                 .addOnClickListener(R.id.txt_update);
         }
 
@@ -138,6 +150,7 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
             if (!TextUtils.isEmpty(item.getSpecContent())) {
                 stringBuilder.append("规格：").append(item.getSpecContent()).append(" | ");
             }
+            // 押金商品不展示库存
             if (!TextUtils.isEmpty(item.getProductStock())) {
                 stringBuilder.append("库存：").append(item.getProductStock()).append(" | ");
             }

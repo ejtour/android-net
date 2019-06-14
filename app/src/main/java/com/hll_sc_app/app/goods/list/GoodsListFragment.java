@@ -139,6 +139,12 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
             SwipeItemLayout.closeAllItems(mRecyclerView);
             return;
         }
+
+        if (TextUtils.equals(bean.getDepositProductType(), GoodsBean.DEPOSIT_GOODS_TYPE)) {
+            showToast("押金商品不能操作上下架");
+            SwipeItemLayout.closeAllItems(mRecyclerView);
+            return;
+        }
         SpecStatusWindow window = new SpecStatusWindow(requireActivity(), bean);
         window.setListener(list -> {
             // 上下架

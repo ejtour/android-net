@@ -14,6 +14,10 @@ public class GoodsBean {
      */
     public static final String BUNDLING_GOODS_TYPE = "1";
     /**
+     * 是押金商品
+     */
+    public static final String DEPOSIT_GOODS_TYPE = "1";
+    /**
      * 是代仓商品
      */
     public static final String WAREHOUSE_TYPE = "1";

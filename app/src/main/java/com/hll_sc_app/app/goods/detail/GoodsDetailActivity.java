@@ -185,7 +185,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     private void showProductName(GoodsBean bean) {
         mTxtProductName.setText(bean.getProductName());
         mTxtNextDayDelivery.setVisibility(TextUtils.equals(bean.getNextDayDelivery(), "1") ? View.VISIBLE : View.GONE);
-        mTxtDepositProduct.setVisibility(TextUtils.equals(bean.getDepositProductType(), "1") ? View.VISIBLE :
+        mTxtDepositProduct.setVisibility(TextUtils.equals(bean.getDepositProductType(), GoodsBean.DEPOSIT_GOODS_TYPE) ? View.VISIBLE :
             View.GONE);
         List<NicknamesBean> nicknamesBeanList = bean.getNicknames();
         if (!CommonUtils.isEmpty(nicknamesBeanList)) {
@@ -203,7 +203,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     }
 
     private void showSpecList(GoodsBean bean) {
-        mAdapterSpec.setNewData(bean.getSpecs());
+        mAdapterSpec.setNewData(bean);
     }
 
     private void showProductCategory(GoodsBean bean) {
