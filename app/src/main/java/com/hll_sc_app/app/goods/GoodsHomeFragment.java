@@ -171,20 +171,6 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         }
     }
 
-    private void showOptionsWindow(View view) {
-        if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_goods_option_add, OptionType.OPTION_GOODS_ADD));
-            list.add(new OptionsBean(R.drawable.ic_goods_option_import, OptionType.OPTION_GOODS_IMPORT));
-            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_GOODS_EXPORT));
-            list.add(new OptionsBean(R.drawable.ic_goods_option_top, OptionType.OPTION_GOODS_TOP));
-            list.add(new OptionsBean(R.drawable.ic_goods_option_relation, OptionType.OPTION_GOODS_RELATION));
-            list.add(new OptionsBean(R.drawable.ic_goods_option_warn, OptionType.OPTION_GOODS_WARN));
-            mOptionsWindow = new ContextOptionsWindow(requireActivity()).setListener(this).refreshList(list);
-        }
-        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
-    }
-
     private void showSearchContent(boolean show, String content) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
         if (show) {
@@ -197,6 +183,20 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             params.weight = 0;
         }
         updateFragment();
+    }
+
+    private void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_goods_option_add, OptionType.OPTION_GOODS_ADD));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_import, OptionType.OPTION_GOODS_IMPORT));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_GOODS_EXPORT));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_top, OptionType.OPTION_GOODS_TOP));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_relation, OptionType.OPTION_GOODS_RELATION));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_warn, OptionType.OPTION_GOODS_WARN));
+            mOptionsWindow = new ContextOptionsWindow(requireActivity()).setListener(this).refreshList(list);
+        }
+        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
     }
 
     @Override

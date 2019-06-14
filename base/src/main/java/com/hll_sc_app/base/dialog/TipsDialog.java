@@ -2,15 +2,19 @@ package com.hll_sc_app.base.dialog;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.hll_sc_app.base.R;
+import com.hll_sc_app.base.utils.UIUtils;
 
 public class TipsDialog extends BaseDialog {
 
@@ -18,11 +22,12 @@ public class TipsDialog extends BaseDialog {
         super(context);
     }
 
-    protected TipsDialog(@NonNull Activity context, @StyleRes int themeResId) {
+    private TipsDialog(@NonNull Activity context, @StyleRes int themeResId) {
         super(context, themeResId);
     }
 
-    protected TipsDialog(@NonNull Activity context, boolean cancelable, @Nullable DialogInterface.OnCancelListener cancelListener) {
+    protected TipsDialog(@NonNull Activity context, boolean cancelable,
+                         @Nullable DialogInterface.OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
 
@@ -33,6 +38,16 @@ public class TipsDialog extends BaseDialog {
     @Override
     public View onCreateView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.base_dialog_base, null);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Window window = getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.width = UIUtils.dip2px(275);
+        }
     }
 
     public void setTitle(String title) {
@@ -55,23 +70,17 @@ public class TipsDialog extends BaseDialog {
             mRootView.findViewById(R.id.dialog_verify_v1).setVisibility(View.GONE);
             TextView cancelBtn = mRootView.findViewById(R.id.dialog_cancel);
             cancelBtn.setText(items[0]);
-            cancelBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onItem(TipsDialog.this, 0);
-                    }
+            cancelBtn.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItem(TipsDialog.this, 0);
                 }
             });
 
             TextView verifyBtn = mRootView.findViewById(R.id.dialog_verify);
             verifyBtn.setText(items[1]);
-            verifyBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onItem(TipsDialog.this, 1);
-                    }
+            verifyBtn.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItem(TipsDialog.this, 1);
                 }
             });
         } else {
@@ -79,12 +88,9 @@ public class TipsDialog extends BaseDialog {
             mRootView.findViewById(R.id.dialog_verify_v1).setVisibility(View.VISIBLE);
             TextView verifyBtn = mRootView.findViewById(R.id.dialog_verify_v1);
             verifyBtn.setText(items[0]);
-            verifyBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onItem(TipsDialog.this, 0);
-                    }
+            verifyBtn.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onItem(TipsDialog.this, 0);
                 }
             });
         }
@@ -96,55 +102,55 @@ public class TipsDialog extends BaseDialog {
 
     public static class Builder {
 
-        private final Params P;
+        private final Params p;
 
         private Builder(Activity context) {
-            P = new Params();
-            P.mContext = context;
-            P.mCancelable = true;
+            p = new Params();
+            p.mContext = context;
+            p.mCancelable = true;
         }
 
         public Builder setButton(OnClickListener listener, String cancel, String verify) {
-            P.mOnClickListener = listener;
-            P.items = new String[]{cancel, verify};
+            p.mOnClickListener = listener;
+            p.items = new String[]{cancel, verify};
             return this;
         }
 
         public Builder setButton(OnClickListener listener, String verify) {
-            P.mOnClickListener = listener;
-            P.items = new String[]{verify};
+            p.mOnClickListener = listener;
+            p.items = new String[]{verify};
             return this;
         }
 
         public Builder setTitle(String title) {
-            P.mTitle = title;
+            p.mTitle = title;
             return this;
         }
 
         public Builder setMessage(String msg) {
-            P.mMessage = msg;
+            p.mMessage = msg;
             return this;
         }
 
         public Builder setMessageListener(View.OnClickListener listener) {
-            P.mListener = listener;
+            p.mListener = listener;
             return this;
         }
 
         public Builder setCancelable(boolean cancelable) {
-            P.mCancelable = cancelable;
+            p.mCancelable = cancelable;
             return this;
         }
 
         public TipsDialog create() {
-            final TipsDialog dialog = new TipsDialog(P.mContext, R.style.BaseDialog);
-            P.apply(dialog);
-            dialog.setCancelable(P.mCancelable);
-            if (P.mCancelable) {
+            final TipsDialog dialog = new TipsDialog(p.mContext, R.style.BaseDialog);
+            p.apply(dialog);
+            dialog.setCancelable(p.mCancelable);
+            if (p.mCancelable) {
                 dialog.setCanceledOnTouchOutside(true);
             }
-            dialog.setOnCancelListener(P.mOnCancelListener);
-            dialog.setOnDismissListener(P.mOnDismissListener);
+            dialog.setOnCancelListener(p.mOnCancelListener);
+            dialog.setOnDismissListener(p.mOnDismissListener);
             return dialog;
         }
 

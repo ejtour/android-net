@@ -1,6 +1,7 @@
 package com.hll_sc_app.base.dialog;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
@@ -44,6 +45,16 @@ public class SuccessDialog extends BaseDialog {
     @Override
     public View onCreateView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.base_dialog_success_layout, null);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Window window = getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.width = UIUtils.dip2px(275);
+        }
     }
 
     private void setImageTitle(int resId) {
