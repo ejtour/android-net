@@ -15,7 +15,6 @@ import com.hll_sc_app.rest.Order;
 public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPresenter {
     private String mSubBillID;
     private IOrderDetailContract.IOrderDetailView mView;
-    private SimpleObserver<Object> mObserver;
 
     private OrderDetailPresenter(String subBillID) {
         mSubBillID = subBillID;
@@ -42,33 +41,28 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
 
     @Override
     public void orderCancel(String cancelReason) {
-        initObserver();
         Order.modifyOrderStatus(3, mSubBillID, 2, cancelReason,
-                null, null, mObserver);
+                null, null, getObserver());
     }
 
-    private void initObserver() {
-        if (mObserver == null) {
-            mObserver = new SimpleObserver<Object>(mView) {
-                @Override
-                public void onSuccess(Object o) {
-                    mView.handleStatusChanged();
-                }
-            };
-        }
+    private SimpleObserver<Object> getObserver() {
+        return new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                mView.handleStatusChanged();
+            }
+        };
     }
 
     @Override
     public void orderReceive() {
-        initObserver();
         Order.modifyOrderStatus(1, mSubBillID,
-                0, null, null, null, mObserver);
+                0, null, null, null, getObserver());
     }
 
     @Override
     public void orderDeliver() {
-        initObserver();
         Order.modifyOrderStatus(2, mSubBillID,
-                0, null, null, null, mObserver);
+                0, null, null, null, getObserver());
     }
 }

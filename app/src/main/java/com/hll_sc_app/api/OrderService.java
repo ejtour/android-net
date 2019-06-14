@@ -5,6 +5,8 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
@@ -58,4 +60,20 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103005")
     Observable<BaseResp<Object>> modifyDeliverInfo(@Body BaseReq<ModifyDeliverInfoReq> req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103017")
+    Observable<BaseResp<ExportResp>> exportDelivery(@Body BaseReq<OrderExportReq> req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103070")
+    Observable<BaseResp<ExportResp>> exportAssembly(@Body BaseReq<OrderExportReq> req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103074")
+    Observable<BaseResp<ExportResp>> exportNormal(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103124")
+    Observable<BaseResp<ExportResp>> exportSpecial(@Body BaseMapReq req);
 }

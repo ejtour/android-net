@@ -1,5 +1,7 @@
 package com.hll_sc_app.rest;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.OrderService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -7,6 +9,9 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.export.OrderExportReq;
+import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
@@ -14,6 +19,7 @@ import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
 import com.hll_sc_app.bean.order.deliver.ModifyDeliverInfoReq;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
+import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
@@ -225,5 +231,101 @@ public class Order {
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
+    }
+
+    /**
+     * 导出明细出库单
+     *
+     * @param subBillIds 订单列表
+     * @param email      邮件地址
+     */
+    public static void exportDelivery(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null) {
+            throw new IllegalStateException("未登录");
+        }
+        OrderExportReq req = new OrderExportReq(subBillIds, user.getGroupID(), email);
+        OrderService.INSTANCE
+                .exportDelivery(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 导出配货单
+     *
+     * @param subBillIds 订单列表
+     * @param email      邮件地址
+     */
+    public static void exportAssembly(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null) {
+            throw new IllegalStateException("未登录");
+        }
+        OrderExportReq req = new OrderExportReq(subBillIds, user.getGroupID(), email);
+        OrderService.INSTANCE
+                .exportAssembly(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 导出验货单、分类出库单
+     *
+     * @param param         订单参数
+     * @param subBillStatus 订单状态
+     * @param type          0-导出明细验货单 1-导出分类出库单 2-导出分类验货单
+     * @param email         邮件地址
+     */
+    public static void exportSpecial(OrderParam param, int subBillStatus, int type, String email, SimpleObserver<ExportResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null) {
+            throw new IllegalStateException("未登录");
+        }
+        OrderService.INSTANCE
+                .exportSpecial(buildSpecialExportReq(param, subBillStatus, type, email)
+                        .put("groupID", user.getGroupID()).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 导出订单、订单详情
+     *
+     * @param param         订单参数
+     * @param subBillStatus 订单状态
+     * @param type          0-订单导出 1-订单明细导出 必传
+     * @param email         邮件地址
+     */
+    public static void exportNormal(OrderParam param, int subBillStatus, int type, String email, SimpleObserver<ExportResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null) {
+            throw new IllegalStateException("未登录");
+        }
+        OrderService.INSTANCE
+                .exportNormal(buildSpecialExportReq(param, subBillStatus, type, email)
+                        .put("flag", "0")
+                        .put("groupIDs", user.getGroupID()).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    private static BaseMapReq.Builder buildSpecialExportReq(OrderParam param, int subBillStatus, int type, String email) {
+        return BaseMapReq.newBuilder()
+                .put("email", email)
+                .put("isBindEmail", TextUtils.isEmpty(email) ? "" : "1")
+                .put("searchWords", param.getSearchWords())
+                .put("subBillCreateTimeEnd", param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD))
+                .put("subBillCreateTimeStart", param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD))
+                .put("subBillExecuteDateEnd", param.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH))
+                .put("subBillExecuteDateStart", param.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH))
+                .put("subBillSignTimeEnd", param.getFormatSignEnd(Constants.FORMAT_YYYY_MM_DD_HH))
+                .put("subBillSignTimeStart", param.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH))
+                .put("subBillStatus", String.valueOf(subBillStatus))
+                .put("type", String.valueOf(type));
     }
 }

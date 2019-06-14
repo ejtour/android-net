@@ -1,7 +1,11 @@
 package com.hll_sc_app.app.order;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
@@ -126,5 +130,43 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
                         mView.statusChanged();
                     }
                 });
+    }
+
+    @Override
+    public void exportAssemblyOrder(List<String> subBillIds, String email) {
+        Order.exportAssembly(subBillIds, email, getExportObserver());
+    }
+
+    @Override
+    public void exportDeliveryOrder(List<String> subBillIds, String email) {
+        Order.exportDelivery(subBillIds, email, getExportObserver());
+    }
+
+    @Override
+    public void exportSpecialOrder(int type, String email) {
+        Order.exportSpecial(mView.getOrderParam(), mView.getOrderStatus().getType(), type, email, getExportObserver());
+    }
+
+    @Override
+    public void exportNormalOrder(int type, String email) {
+        Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getType(), type, email, getExportObserver());
+    }
+
+    private SimpleObserver<ExportResp> getExportObserver() {
+        return new SimpleObserver<ExportResp>(mView) {
+            @Override
+            public void onSuccess(ExportResp exportResp) {
+                if (!TextUtils.isEmpty(exportResp.getEmail()))
+                    mView.exportSuccess(exportResp.getEmail());
+                else mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+            }
+
+            @Override
+            public void onFailure(UseCaseException e) {
+                if ("00120112037".equals(e.getCode())) mView.bindEmail();
+                else if ("00120112038".equals(e.getCode())) mView.exportFailure("当前没有可导出的数据");
+                else mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+            }
+        };
     }
 }
