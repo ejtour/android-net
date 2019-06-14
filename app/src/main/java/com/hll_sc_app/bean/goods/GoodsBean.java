@@ -39,7 +39,7 @@ public class GoodsBean {
     private String productAttr;
     private String appointSellType;
     private String bundlingGoodsType;
-    private List<BundlingGoodsBean> bundlingGoodsDetails;
+    private List<GoodsBean> bundlingGoodsDetails;
     private String productBrief;
     private String isWareHourse;
     private String shopProductCategorySubID;
@@ -158,11 +158,11 @@ public class GoodsBean {
         this.imgUrlSub = imgUrlSub;
     }
 
-    public List<BundlingGoodsBean> getBundlingGoodsDetails() {
+    public List<GoodsBean> getBundlingGoodsDetails() {
         return bundlingGoodsDetails;
     }
 
-    public void setBundlingGoodsDetails(List<BundlingGoodsBean> bundlingGoodsDetails) {
+    public void setBundlingGoodsDetails(List<GoodsBean> bundlingGoodsDetails) {
         this.bundlingGoodsDetails = bundlingGoodsDetails;
     }
 

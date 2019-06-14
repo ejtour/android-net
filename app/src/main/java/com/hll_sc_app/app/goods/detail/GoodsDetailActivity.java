@@ -84,7 +84,12 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     RecyclerView mRecyclerViewProductAttr;
     @BindView(R.id.recyclerView_img)
     RecyclerView mRecyclerViewProductImg;
+    @BindView(R.id.recyclerView_bundlingGoods)
+    RecyclerView mRecyclerViewBundlingGoods;
+    @BindView(R.id.txt_bundlingGoods)
+    TextView mTxtBundlingGoods;
     private ProductImgAdapter mAdapterImg;
+    private BundlingGoodsAdapter mAdapterBundlingGoods;
     private ProductAttrAdapter mAdapterAttr;
     private GoodsDetailPresenter mPresenter;
     private SpecStatusWindow.SpecAdapter mAdapterSpec;
@@ -132,6 +137,17 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mRecyclerViewProductImg.setNestedScrollingEnabled(false);
         mAdapterImg = new ProductImgAdapter(null);
         mRecyclerViewProductImg.setAdapter(mAdapterImg);
+
+        mRecyclerViewBundlingGoods.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        mRecyclerViewBundlingGoods.setNestedScrollingEnabled(false);
+        mAdapterBundlingGoods = new BundlingGoodsAdapter(null);
+        mAdapterBundlingGoods.setOnItemClickListener((adapter, view, position) -> {
+            GoodsBean goodsBean = (GoodsBean) adapter.getItem(position);
+            if (goodsBean != null) {
+                GoodsDetailActivity.start(goodsBean.getProductID());
+            }
+        });
+        mRecyclerViewBundlingGoods.setAdapter(mAdapterBundlingGoods);
     }
 
     @Override
@@ -162,6 +178,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         showBanner(bean);
         showProductName(bean);
         showSpecList(bean);
+        showBundlingGoodsList(bean);
         showProductCategory(bean);
         showProductAttr(bean);
         showProductBrief(bean);
@@ -204,6 +221,17 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     private void showSpecList(GoodsBean bean) {
         mAdapterSpec.setNewData(bean);
+    }
+
+    private void showBundlingGoodsList(GoodsBean bean) {
+        if (!CommonUtils.isEmpty(bean.getBundlingGoodsDetails())) {
+            mAdapterBundlingGoods.setNewData(bean.getBundlingGoodsDetails());
+            mRecyclerViewBundlingGoods.setVisibility(View.VISIBLE);
+            mTxtBundlingGoods.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerViewBundlingGoods.setVisibility(View.GONE);
+            mTxtBundlingGoods.setVisibility(View.GONE);
+        }
     }
 
     private void showProductCategory(GoodsBean bean) {
@@ -269,8 +297,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
         @Override
         protected void convert(BaseViewHolder helper, ProductAttrBean item) {
-            helper.setText(R.id.txt_keyNote, item.getKeyNote())
-                .setText(R.id.txt_attrValue, item.getAttrValue());
+            helper.setText(R.id.txt_keyNote, item.getKeyNote()).setText(R.id.txt_attrValue, item.getAttrValue());
         }
     }
 
@@ -282,8 +309,20 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
         @Override
         protected void convert(BaseViewHolder helper, String item) {
-            ((GlideImageView) helper.getView(R.id.glideImageView))
-                .setScaleByWidth(true).setImageURL(item);
+            ((GlideImageView) helper.getView(R.id.glideImageView)).setScaleByWidth(true).setImageURL(item);
+        }
+    }
+
+    private static class BundlingGoodsAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
+
+        BundlingGoodsAdapter(@Nullable List<GoodsBean> data) {
+            super(R.layout.item_product_detail_bundling, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, GoodsBean item) {
+            ((GlideImageView) helper.setText(R.id.txt_productName, item.getProductName())
+                .getView(R.id.glideImageView)).setImageURL(item.getImgUrl());
         }
     }
 }
