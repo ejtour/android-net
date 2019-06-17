@@ -35,7 +35,7 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
     }
 
     @Override
-    public void uploadImg(File file) {
+    public void uploadImg(File file, int requestCode) {
         RegisterPresenter.getUploadImgObservable(file)
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
@@ -48,7 +48,7 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
 
                 @Override
                 public void onNext(String s) {
-                    mView.uploadSuccess(s);
+                    mView.uploadSuccess(s, requestCode);
                 }
 
                 @Override

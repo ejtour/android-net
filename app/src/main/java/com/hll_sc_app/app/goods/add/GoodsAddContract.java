@@ -18,16 +18,18 @@ public interface GoodsAddContract {
          * 上传图片成功
          *
          * @param url 图片地址
+         * @param requestCode 主图、辅图
          */
-        void uploadSuccess(String url);
+        void uploadSuccess(String url, int requestCode);
     }
 
     interface IGoodsAddPresenter extends IPresenter<IGoodsAddView> {
         /**
          * 上传图片
          *
-         * @param file 图片文件
+         * @param file        图片文件
+         * @param requestCode 主图、辅图
          */
-        void uploadImg(File file);
+        void uploadImg(File file, int requestCode);
     }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/base_bg_border_radius_3"
     android:gravity="center"
+    android:background="@drawable/base_bg_border_radius_3"
     tools:parentTag="RelativeLayout">
 
     <com.hll_sc_app.base.widget.ImgShowDelBlock
@@ -32,4 +32,4 @@
         android:textColor="@color/base_text_hint"
         android:textSize="@dimen/base_text_10"
         tools:text="1/5"/>
-</RelativeLayout>
+</merge>

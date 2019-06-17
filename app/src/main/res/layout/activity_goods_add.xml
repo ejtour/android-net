@@ -70,7 +70,7 @@
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="85dp"
                     android:layout_marginTop="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_productImg_title">
@@ -83,8 +83,8 @@
 
                         <com.hll_sc_app.base.widget.ImgUploadBlock
                             android:id="@+id/img_imgUrl"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="85dp"
+                            android:layout_height="85dp"
                             app:base_title="添加主图"/>
 
                         <ImageView
@@ -102,8 +102,9 @@
                             android:orientation="horizontal">
 
                             <com.hll_sc_app.base.widget.ImgUploadBlock
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
+                                android:id="@+id/img_imgUrlSub"
+                                android:layout_width="85dp"
+                                android:layout_height="85dp"
                                 app:base_title="添加辅图"/>
                         </LinearLayout>
 

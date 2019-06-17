@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,6 +38,8 @@ import java.util.Set;
  */
 public class ImgUploadBlock extends RelativeLayout {
     public static final int REQUEST_CODE_CHOOSE = 104;
+    public static final int REQUEST_CODE_IMG_URL = 105;
+    public static final int REQUEST_CODE_IMG_URL_SUB = 106;
     private static final String[] PERMISSIONS = {Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE,
         Permission.WRITE_EXTERNAL_STORAGE};
     private TextView mTitle;
@@ -48,6 +49,7 @@ public class ImgUploadBlock extends RelativeLayout {
      * 字节单位 上传图片的最大大小
      */
     private int maxSize;
+    private int mRequestCode = REQUEST_CODE_CHOOSE;
 
     public ImgUploadBlock(Context context) {
         super(context);
@@ -55,7 +57,6 @@ public class ImgUploadBlock extends RelativeLayout {
     }
 
     private void initView(Context context) {
-        setGravity(Gravity.CENTER);
         setBackgroundResource(R.drawable.base_bg_border_radius_3);
         View.inflate(context, R.layout.base_view_upload_img, this);
         mTitle = findViewById(R.id.txt_title);
@@ -79,7 +80,7 @@ public class ImgUploadBlock extends RelativeLayout {
             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
             .thumbnailScale(0.85f)
             .imageEngine(new Glide4Engine())
-            .forResult(REQUEST_CODE_CHOOSE);
+            .forResult(mRequestCode);
     }
 
     public ImgUploadBlock(Context context, @Nullable AttributeSet attrs) {
@@ -111,6 +112,10 @@ public class ImgUploadBlock extends RelativeLayout {
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             mTitle.setCompoundDrawables(null, drawable, null, null);
         }
+    }
+
+    public void setRequestCode(int requestCode) {
+        mRequestCode = requestCode;
     }
 
     public void showImage(String url, OnClickListener listener) {

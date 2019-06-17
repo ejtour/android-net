@@ -36,6 +36,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     ImgUploadBlock mImgImgUrl;
     @BindView(R.id.ll_imgUrlSub)
     LinearLayout mLlImgUrlSub;
+    @BindView(R.id.img_imgUrlSub)
+    ImgUploadBlock mImgImgUrlSub;
     private GoodsAddPresenter mPresenter;
 
     @Override
@@ -51,15 +53,20 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     private void initView() {
+        // 主图
+        mImgImgUrl.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL);
+        // 辅图
+        mImgImgUrlSub.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && data != null && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
-            List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) {
-                mPresenter.uploadImg(new File(list.get(0)));
-            }
+        if (resultCode != RESULT_OK || data == null) {
+            return;
+        }
+        List<String> list = Matisse.obtainPathResult(data);
+        if (!CommonUtils.isEmpty(list)) {
+            mPresenter.uploadImg(new File(list.get(0)), requestCode);
         }
     }
 
@@ -75,7 +82,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     @Override
-    public void uploadSuccess(String url) {
+    public void uploadSuccess(String url, int requestCode) {
+        if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
+            mImgImgUrl.showImage(url, v -> mImgImgUrl.deleteImage());
+        } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB) {
 
+        }
     }
 }
