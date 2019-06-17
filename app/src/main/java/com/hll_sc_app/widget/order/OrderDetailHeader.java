@@ -98,6 +98,9 @@ public class OrderDetailHeader extends ConstraintLayout {
 
     private CharSequence handlePhoneNum(String number) {
         String source = PhoneUtil.formatPhoneNum(number);
+        if (TextUtils.isEmpty(source)) {
+            return "暂未提供";
+        }
         SpannableString ss = new SpannableString(source);
         ss.setSpan(new ClickableSpan() {
             @Override
