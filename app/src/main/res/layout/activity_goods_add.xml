@@ -214,6 +214,7 @@
                 android:id="@+id/txt_categoryName_copy"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/color_fafafa"
                 android:gravity="right|center_vertical"
                 android:paddingLeft="10dp"
@@ -225,6 +226,7 @@
                 android:id="@+id/rl_shopProductCategorySubName"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:layout_marginTop="1dp"
                 android:background="@drawable/base_bg_item_white"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">

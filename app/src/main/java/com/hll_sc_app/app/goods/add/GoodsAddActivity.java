@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
+import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.zhihu.matisse.Matisse;
 
@@ -53,6 +55,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     @BindView(R.id.txt_shopProductCategorySubName)
     TextView mTxtShopProductCategorySubName;
     private GoodsAddPresenter mPresenter;
+    private CategorySelectWindow mCategorySelectWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,7 +94,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 finish();
                 break;
             case R.id.rl_categoryName:
-                finish();
+                mPresenter.queryCategory();
                 break;
             case R.id.rl_shopProductCategorySubName:
                 finish();
@@ -120,6 +123,17 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             params.rightMargin = UIUtils.dip2px(10);
             mLlImgUrlSub.addView(block, mLlImgUrlSub.getChildCount() - 1, params);
         }
+    }
+
+    @Override
+    public void showCategorySelectWindow(CategoryResp resp) {
+        if (mCategorySelectWindow == null) {
+            mCategorySelectWindow = new CategorySelectWindow(this, resp);
+            mCategorySelectWindow.setSelectListener((categoryItem1, categoryItem2, categoryItem3)
+                -> mTxtCategoryName.setText(String.format("%s-%s-%s", categoryItem1.getCategoryName(),
+                categoryItem2.getCategoryName(), categoryItem3.getCategoryName())));
+        }
+        mCategorySelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     @OnClick(R.id.txt_categoryName_copy)

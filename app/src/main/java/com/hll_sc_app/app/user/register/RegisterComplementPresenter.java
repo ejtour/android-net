@@ -15,6 +15,8 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
@@ -47,10 +49,8 @@ public class RegisterComplementPresenter implements RegisterComplementContract.I
             mView.showCategoryWindow(mList);
             return;
         }
-        UserService.INSTANCE.queryCategory(BaseMapReq.newBuilder().create())
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
+
+        getCategoryObservable().doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
             .subscribe(new BaseCallback<CategoryResp>() {
@@ -67,6 +67,12 @@ public class RegisterComplementPresenter implements RegisterComplementContract.I
                     mView.showError(e);
                 }
             });
+    }
+
+    public static Observable<CategoryResp> getCategoryObservable() {
+        return UserService.INSTANCE.queryCategory(BaseMapReq.newBuilder().create())
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>());
     }
 
     @Override
