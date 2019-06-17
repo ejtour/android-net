@@ -70,8 +70,9 @@
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="85dp"
+                    android:layout_height="80dp"
                     android:layout_marginTop="15dp"
+                    android:scrollbars="none"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_productImg_title">
 
@@ -83,8 +84,8 @@
 
                         <com.hll_sc_app.base.widget.ImgUploadBlock
                             android:id="@+id/img_imgUrl"
-                            android:layout_width="85dp"
-                            android:layout_height="85dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             app:base_title="添加主图"/>
 
                         <ImageView
@@ -103,8 +104,8 @@
 
                             <com.hll_sc_app.base.widget.ImgUploadBlock
                                 android:id="@+id/img_imgUrlSub"
-                                android:layout_width="85dp"
-                                android:layout_height="85dp"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
                                 app:base_title="添加辅图"/>
                         </LinearLayout>
 
@@ -112,6 +113,146 @@
 
                 </HorizontalScrollView>
             </android.support.constraint.ConstraintLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/base_white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <com.hll_sc_app.base.widget.StartTextView
+                    android:id="@+id/txt_productCode_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="商品编码"
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+                <EditText
+                    android:id="@+id/et_productCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/txt_productCode_title"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="商品唯一标识码，最多20位"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"
+                    android:textColorHint="@color/color_aeaeae"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/base_white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <com.hll_sc_app.base.widget.StartTextView
+                    android:id="@+id/txt_productName_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="商品名称"
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+                <EditText
+                    android:id="@+id/et_productName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/txt_productName_title"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="最多可输入20字"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"
+                    android:textColorHint="@color/color_aeaeae"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_categoryName"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/base_bg_item_white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <com.hll_sc_app.base.widget.StartTextView
+                    android:id="@+id/txt_categoryName_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="商城分类"
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+                <TextView
+                    android:id="@+id/txt_categoryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/txt_categoryName_title"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择商城分类"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"
+                    android:textColorHint="@color/color_aeaeae"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_categoryName_copy"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/color_fafafa"
+                android:gravity="right|center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="复制商城分类为自定义分类"
+                android:textAppearance="@style/TextAppearance.City22.Small.Blue"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_shopProductCategorySubName"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/base_bg_item_white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <com.hll_sc_app.base.widget.StartTextView
+                    android:id="@+id/txt_shopProductCategorySubName_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="自定义分类"
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+                <TextView
+                    android:id="@+id/txt_shopProductCategorySubName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/txt_shopProductCategorySubName_title"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical|right"
+                    android:hint="请选择自定义分类"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"
+                    android:textColorHint="@color/color_aeaeae"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
