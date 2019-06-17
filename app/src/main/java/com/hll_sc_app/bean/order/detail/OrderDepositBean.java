@@ -114,6 +114,13 @@ public class OrderDepositBean implements Parcelable {
         return 0;
     }
 
+    public OrderDepositBean deepCopy() {
+        Parcel parcel = Parcel.obtain();
+        writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+        return CREATOR.createFromParcel(parcel);
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeDouble(this.depositNum);

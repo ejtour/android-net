@@ -85,9 +85,7 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
 
     @Override
     public void modifySuccess() {
-        Intent intent = new Intent();
-        intent.putExtra(RESP_LIST_KEY, mList);
-        setResult(RESULT_OK, intent);
+        setResult(RESULT_OK);
         finish();
     }
 }

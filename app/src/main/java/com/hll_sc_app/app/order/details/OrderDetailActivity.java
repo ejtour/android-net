@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
+import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
 import com.hll_sc_app.app.order.reject.OrderRejectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -150,6 +151,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 OrderRejectActivity.start(mOrderResp);
                 break;
             case R.id.oab_inspection:
+                OrderInspectionActivity.start(this, mOrderResp);
                 break;
         }
     }
@@ -168,8 +170,11 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null && requestCode == ModifyDeliverInfoActivity.REQ_KEY) {
-            showToast("成功修改发货信息");
+        if (resultCode == RESULT_OK && (requestCode == ModifyDeliverInfoActivity.REQ_KEY
+                || requestCode == OrderInspectionActivity.REQ_CODE)) {
+            if (requestCode == ModifyDeliverInfoActivity.REQ_KEY) {
+                showToast("成功修改发货信息");
+            }
             handleStatusChanged();
         }
     }

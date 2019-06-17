@@ -100,6 +100,10 @@
             android:name=".app.submit.SubmitSuccessActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.order.inspection.OrderInspectionActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

@@ -86,6 +86,11 @@ public class RouterConfig {
     public static final String ORDER_REJECT = "/activity/order/reject";
 
     /**
+     * 订单验货
+     */
+    public static final String ORDER_INSPECTION = "/activity/order/inspection";
+
+    /**
      * 提交成功
      */
     public static final String SUBMIT_SUCCESS = "/activity/submit/success";
