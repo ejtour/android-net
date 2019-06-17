@@ -27,6 +27,7 @@ import com.hll_sc_app.app.goods.list.GoodsListFragment;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.window.OptionType;
@@ -97,12 +98,18 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         }
     }
 
-    private void initView() {
-        mFragmentAdapter = new GoodsListFragmentPager(getChildFragmentManager(), STR_ACTION_TYPE, STR_TITLE);
-        mViewPager.setAdapter(mFragmentAdapter);
-        mViewPager.setOffscreenPageLimit(2);
-        mTab.setViewPager(mViewPager, STR_TITLE);
-        mRadioGroup.setOnCheckedChangeListener((group, checkedId) -> updateFragment());
+    private void showSearchContent(boolean show, String content) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
+        if (show) {
+            mImgSearchClear.setVisibility(View.VISIBLE);
+            mTxtSearchContent.setText(content);
+            params.weight = 1;
+        } else {
+            mImgSearchClear.setVisibility(View.GONE);
+            mTxtSearchContent.setText(content);
+            params.weight = 0;
+        }
+        updateFragment();
     }
 
     private void updateFragment() {
@@ -154,6 +161,14 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         }
     }
 
+    private void initView() {
+        mFragmentAdapter = new GoodsListFragmentPager(getChildFragmentManager(), STR_ACTION_TYPE, STR_TITLE);
+        mViewPager.setAdapter(mFragmentAdapter);
+        mViewPager.setOffscreenPageLimit(2);
+        mTab.setViewPager(mViewPager, STR_TITLE);
+        mRadioGroup.setOnCheckedChangeListener((group, checkedId) -> updateFragment());
+    }
+
     @OnClick({R.id.img_add, R.id.rl_search, R.id.img_searchClear})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -169,20 +184,6 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             default:
                 break;
         }
-    }
-
-    private void showSearchContent(boolean show, String content) {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
-        if (show) {
-            mImgSearchClear.setVisibility(View.VISIBLE);
-            mTxtSearchContent.setText(content);
-            params.weight = 1;
-        } else {
-            mImgSearchClear.setVisibility(View.GONE);
-            mTxtSearchContent.setText(content);
-            params.weight = 0;
-        }
-        updateFragment();
     }
 
     private void showOptionsWindow(View view) {
@@ -202,6 +203,13 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         // 选项监听
+        OptionsBean optionsBean = (OptionsBean) adapter.getItem(position);
+        if (optionsBean == null) {
+            return;
+        }
+        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_ADD)) {
+            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD);
+        }
     }
 
     class GoodsListFragmentPager extends FragmentPagerAdapter {

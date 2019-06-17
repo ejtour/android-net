@@ -49,6 +49,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     private Context mContext;
     private String mUrl;
     private boolean mNeedLoad;
+    private boolean mDisable;
     private int mWidth, mHeight;
     /**
      * 开启预览模式
@@ -101,19 +102,6 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
-    /**
-     * 显示活动的标识
-     *
-     * @param url          商品URL
-     * @param activityName 活动名称-直降等
-     */
-    public void setActivityImageUrl(String url, String activityName) {
-        mUrl = TextUtils.isEmpty(url) ? url : url.trim();
-        setOptions(GlideApp.with(this)
-            .load("http://res.hualala.com/" + mUrl))
-            .into(new ActivityCustomViewTarget(GlideImageView.this, activityName));
-    }
-
     private GlideRequest setOptions(GlideRequest request) {
         request = request.error(mError).placeholder(mPlaceholder);
         if (mRoundingRadius != 0) {
@@ -146,9 +134,24 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      */
     public void setDisableImageUrl(String url) {
         mUrl = TextUtils.isEmpty(url) ? url : url.trim();
-        setOptions(GlideApp.with(this)
-            .load("http://res.hualala.com/" + mUrl))
-            .into(new ActivityCustomViewTarget(GlideImageView.this));
+        mDisable = true;
+        loadUrl();
+    }
+
+    private void loadUrl() {
+        if (mNeedLoad && mUrl != null) {
+            StringBuilder sb = new StringBuilder(mUrl);
+            if (mUrl.contains(".") && mWidth > 0 && mHeight > 0) {
+                sb.insert(mUrl.lastIndexOf("."), "=" + mWidth + "x" + mHeight);
+            }
+            String myUrl = "http://res.hualala.com/" + sb.toString();
+            if (mDisable) {
+                mDisable = false;
+                setOptions(GlideApp.with(this).load(myUrl)).into(new ActivityCustomViewTarget(this));
+            } else {
+                setOptions(GlideApp.with(this).load(myUrl)).into(this);
+            }
+        }
     }
 
     @Override
@@ -159,17 +162,6 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
             mWidth = w;
             mHeight = h;
             loadUrl();
-        }
-    }
-
-    private void loadUrl() {
-        if (mNeedLoad && mUrl != null) {
-            StringBuilder sb = new StringBuilder(mUrl);
-            if (mUrl.contains(".") && mWidth > 0 && mHeight > 0) {
-                sb.insert(mUrl.lastIndexOf("."), "=" + mWidth + "x" + mHeight);
-            }
-            String myUrl = "http://res.hualala.com/" + sb.toString();
-            setOptions(GlideApp.with(this).load(myUrl)).into(this);
         }
     }
 

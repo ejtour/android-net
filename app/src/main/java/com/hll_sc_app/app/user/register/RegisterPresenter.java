@@ -16,6 +16,7 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import java.io.File;
 import java.util.regex.Pattern;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.MediaType;
@@ -86,11 +87,7 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
 
     @Override
     public void uploadImg(File file) {
-        RequestBody body = RequestBody.create(MediaType.parse("image/JPEG"), file);
-        MultipartBody.Part photo = MultipartBody.Part.createFormData("upload", file.getName(), body);
-        HttpFactory.createImgUpload(UserService.class)
-            .imageUpload(photo)
-            .compose(ApiScheduler.getObservableScheduler())
+        getUploadImgObservable(file)
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
@@ -115,6 +112,14 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
                     // no-op
                 }
             });
+    }
+
+    public static Observable<String> getUploadImgObservable(File file) {
+        RequestBody body = RequestBody.create(MediaType.parse("image/JPEG"), file);
+        MultipartBody.Part photo = MultipartBody.Part.createFormData("upload", file.getName(), body);
+        return HttpFactory.createImgUpload(UserService.class)
+            .imageUpload(photo)
+            .compose(ApiScheduler.getObservableScheduler());
     }
 
     /**
