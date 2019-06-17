@@ -64,6 +64,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.goods.add.GoodsAddActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.user.register.RegisterComplementActivity"
             android:screenOrientation="portrait" />
 

@@ -25,6 +25,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.list.SpecStatusWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.BannerImageLoader;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -58,7 +59,7 @@ import butterknife.OnClick;
  * @author zhuyingsong
  * @date 2019/6/13
  */
-@Route(path = RouterConfig.ROOT_HOME_GOODS_DETAIL)
+@Route(path = RouterConfig.ROOT_HOME_GOODS_DETAIL, extras = Constant.LOGIN_EXTRA)
 public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetailContract.IGoodsDetailView {
     @BindView(R.id.banner)
     Banner mBanner;
