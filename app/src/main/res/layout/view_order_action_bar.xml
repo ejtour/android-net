@@ -14,6 +14,18 @@
         android:text="取消订单" />
 
     <TextView
+        android:id="@+id/oab_reject"
+        style="@style/BtnOrderAction.PrimaryStroke"
+        android:text="拒收"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/oab_inspection"
+        style="@style/BtnOrderAction.PrimarySolid"
+        android:text="验货"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/oab_modify"
         style="@style/BtnOrderAction.PrimaryStroke"
         android:text="修改发货数量"

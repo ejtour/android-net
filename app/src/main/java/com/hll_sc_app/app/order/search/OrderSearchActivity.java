@@ -43,7 +43,7 @@ import io.reactivex.disposables.Disposable;
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/10
  */
-@Route(path = RouterConfig.ROOT_HOME_ORDER_SEARCH)
+@Route(path = RouterConfig.ORDER_SEARCH)
 public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearchContract.IOrderSearchView {
     public static final String FROM_GOODS = "FROM_GOODS";
     @BindView(R.id.aos_search_edit)
@@ -61,7 +61,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     private ObservableEmitter<String> mEmitter;
 
     public static void start(String... strings) {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_ORDER_SEARCH, strings);
+        RouterUtil.goToActivity(RouterConfig.ORDER_SEARCH, strings);
     }
 
     @Override

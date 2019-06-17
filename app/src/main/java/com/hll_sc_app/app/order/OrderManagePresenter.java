@@ -5,13 +5,17 @@ import android.text.TextUtils;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
+import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 import com.hll_sc_app.utils.Constants;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -107,6 +111,16 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     }
 
     @Override
+    public void getOrderDetails(String subBillId) {
+        Order.getOrderDetails(subBillId, new SimpleObserver<OrderResp>(mView) {
+            @Override
+            public void onSuccess(OrderResp resp) {
+                EventBus.getDefault().post(new OrderEvent(OrderEvent.UPDATE_ITEM, resp));
+            }
+        });
+    }
+
+    @Override
     public void receiveOrder(String subBillIds) {
         Order.modifyOrderStatus(1, subBillIds, 0,
                 null, null, null,
@@ -150,6 +164,16 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     @Override
     public void exportNormalOrder(int type, String email) {
         Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getType(), type, email, getExportObserver());
+    }
+
+    @Override
+    public void getExpressCompanyList(String groupID, String shopID) {
+        Order.getExpressCompanyList(groupID, shopID, new SimpleObserver<ExpressResp>(mView) {
+            @Override
+            public void onSuccess(ExpressResp expressResp) {
+                mView.showExpressCompanyList(expressResp.getDeliveryCompanyList(), null);
+            }
+        });
     }
 
     private SimpleObserver<ExportResp> getExportObserver() {

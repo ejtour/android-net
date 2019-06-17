@@ -35,12 +35,15 @@ import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
+import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.SingleSelectionDialog;
+import com.hll_sc_app.widget.order.ExpressInfoDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -131,6 +134,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private IOrderManageContract.IOrderManagePresenter mPresenter;
     Unbinder unbinder;
     private String mEventMessage;
+    private ExpressInfoDialog mExpressInfoDialog;
 
     public static OrderManageFragment newInstance(OrderType orderType, @NonNull OrderParam param) {
         Bundle args = new Bundle();
@@ -184,6 +188,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             OrderResp item = mAdapter.getItem(position);
             if (item == null) {
+                return;
+            }
+            if ("3".equals(mDeliverType) && mConfirm.isEnabled() && !item.isSelected()) {
+                showToast("由于三方物流配送订单需输入物流单号 所以该类型订单不可批量操作");
                 return;
             }
             item.setSelected(!item.isSelected());
@@ -383,6 +391,17 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         Utils.exportFailure(requireActivity(), msg);
     }
 
+    @Override
+    public void showExpressCompanyList(List<ExpressResp.ExpressBean> beans, ExpressResp.ExpressBean company) {
+        SingleSelectionDialog.newBuilder(requireActivity(), ExpressResp.ExpressBean::getDeliveryCompanyName)
+                .setTitleText("物流公司")
+                .refreshList(beans)
+                .select(company)
+                .setOnSelectListener(bean -> mExpressInfoDialog.setCompany(bean, beans))
+                .create()
+                .show();
+    }
+
     /**
      * 初始化发货类型
      */
@@ -425,6 +444,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 全选
      */
     private void selectAll(View view) {
+        if ("3".equals(mDeliverType)) {
+            showToast("由于三方物流配送订单需输入物流单号 所以该类型订单不可批量操作");
+            return;
+        }
         for (OrderResp resp : mAdapter.getData()) {
             if (resp.isCanSelect()) {
                 resp.setSelected(!view.isSelected());
@@ -436,21 +459,53 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void confirm(View view) {
-        String subBillIds = TextUtils.join(",", getSubBillIds());
+        if ("3".equals(mDeliverType)) {
+            showExpressInfoDialog();
+            return;
+        }
         switch (mOrderType) {
             case PENDING_RECEIVE:
-                mPresenter.receiveOrder(subBillIds);
+                mPresenter.receiveOrder(TextUtils.join(",", getSubBillIds()));
                 break;
             case PENDING_DELIVER:
-                mPresenter.deliver(subBillIds, null, null);
+                mPresenter.deliver(TextUtils.join(",", getSubBillIds()), null, null);
                 break;
         }
+    }
+
+    /**
+     * 显示物流信息弹窗
+     */
+    private void showExpressInfoDialog() {
+        mExpressInfoDialog = new ExpressInfoDialog(requireActivity(), new ExpressInfoDialog.ExpressCallback() {
+            @Override
+            public void onGetExpressInfo(String name, String orderNo) {
+                mPresenter.deliver(TextUtils.join(",", getSubBillIds()), name, orderNo);
+            }
+
+            @Override
+            public void onSelectCompany(ExpressResp.ExpressBean company, List<ExpressResp.ExpressBean> beans) {
+                if (!CommonUtils.isEmpty(beans)) {
+                    showExpressCompanyList(beans, company);
+                    return;
+                }
+                OrderResp resp = null;
+                for (OrderResp data : mAdapter.getData()) {
+                    if (data.isSelected()) resp = data;
+                }
+                if (resp == null) {
+                    return;
+                }
+                mPresenter.getExpressCompanyList(resp.getGroupID(), resp.getShopID());
+            }
+        });
+        mExpressInfoDialog.show();
     }
 
     private List<String> getSubBillIds() {
         List<String> billIds = new ArrayList<>();
         for (OrderResp resp : mAdapter.getData()) {
-            billIds.add(resp.getSubBillID());
+            if (resp.isSelected()) billIds.add(resp.getSubBillID());
         }
         return billIds;
     }
@@ -472,6 +527,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             case OrderEvent.REMOVE_SELECTED:
                 setForceLoad(!isFragmentVisible());
                 removeSelectedItems();
+                break;
+            case OrderEvent.RELOAD_ITEM:
+                if (isFragmentVisible() && mCurResp != null)
+                    mPresenter.getOrderDetails(mCurResp.getSubBillID());
                 break;
         }
     }

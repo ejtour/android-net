@@ -1,9 +1,11 @@
 package com.hll_sc_app.app.order.details;
 
 import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,9 +28,15 @@ import java.util.List;
 public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseViewHolder> {
 
     private boolean mWareHouse;
+    private String mLabel;
 
     OrderDetailAdapter() {
-        super(R.layout.item_order_detail);
+        this(null, "小计");
+    }
+
+    public OrderDetailAdapter(List<OrderDetailBean> data, String label) {
+        super(R.layout.item_order_detail, data);
+        mLabel = label;
     }
 
     @Override
@@ -36,6 +44,9 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
         // 代仓是否显示
         holder.setGone(R.id.iod_ware_house, mWareHouse);
+        View view = holder.getView(R.id.iod_image);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+        layoutParams.dimensionRatio = mLabel.equals("小计") ? "6:7" : "1";
         return holder;
     }
 
@@ -66,7 +77,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
                 .setText(R.id.iod_delivery_num, processNum(deliveryText, item.getAdjustmentNum() != item.getProductNum())) // 预发货/发货数量
                 .setText(R.id.iod_confirm_num, processNum(confirmText, item.getInspectionNum() != item.getProductNum())) // 签收数量
                 .setText(R.id.iod_sale_unit_spec, "¥" + CommonUtils.formatMoney(item.getProductPrice()) + "/" + item.getSaleUnitName()) // 单价
-                .setText(R.id.iod_amount, "小计：¥" + CommonUtils.formatMoney(item.getInspectionAmount())); // 小计
+                .setText(R.id.iod_amount, mLabel + "：¥" + CommonUtils.formatMoney(item.getInspectionAmount())); // 小计
     }
 
     /**

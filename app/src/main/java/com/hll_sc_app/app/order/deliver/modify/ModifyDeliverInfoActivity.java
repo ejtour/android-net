@@ -2,11 +2,11 @@ package com.hll_sc_app.app.order.deliver.modify;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
  * @since 2019/6/13
  */
 
-@Route(path = RouterConfig.ROOT_ORDER_MODIFY_DELIVER)
+@Route(path = RouterConfig.ORDER_MODIFY_DELIVER)
 public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModifyDeliverInfoContract.IModifyDeliverInfoView {
     public static final int REQ_KEY = 0x366;
     public static final String RESP_LIST_KEY = "resp_list_key";
@@ -42,7 +42,7 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
      */
     public static void start(Activity context, ArrayList<OrderDetailBean> list, String subBillID) {
         ARouter.getInstance()
-                .build(RouterConfig.ROOT_ORDER_MODIFY_DELIVER)
+                .build(RouterConfig.ORDER_MODIFY_DELIVER)
                 .withParcelableArrayList("parcelable", list)
                 .withString("object", subBillID)
                 .setProvider(new LoginInterceptor())
@@ -77,7 +77,7 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
 
     private void initView() {
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
-        decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0);
+        decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
         mListView.addItemDecoration(decor);
         mListView.setAdapter(new ModifyDeliverInfoAdapter(mList));
         mTitleBar.setRightBtnClick(v -> mPresenter.modifyDeliverInfo());

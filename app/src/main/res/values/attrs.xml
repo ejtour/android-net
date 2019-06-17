@@ -18,4 +18,9 @@
         <attr name="tb_rightText" format="string" />
         <attr name="tb_rightImage" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="ImageUploadGroup">
+        <attr name="iug_padding" format="dimension" />
+        <attr name="iug_margin" format="dimension" />
+    </declare-styleable>
 </resources>

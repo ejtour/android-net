@@ -16,8 +16,11 @@ import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
+import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.bean.order.deliver.ModifyDeliverInfoReq;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
+import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
+import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -102,6 +105,7 @@ public class Order {
                 .getOrderDetails(BaseMapReq
                         .newBuilder()
                         .put("subBillID", subBillID)
+                        .put("groupID", user.getGroupID())
                         .put("curRole", user.getRoleID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -327,5 +331,33 @@ public class Order {
                 .put("subBillSignTimeStart", param.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH))
                 .put("subBillStatus", String.valueOf(subBillStatus))
                 .put("type", String.valueOf(type));
+    }
+
+    /**
+     * 获取物流公司列表
+     *
+     * @param groupID 供应商集团ID
+     * @param shopID  门店ID
+     */
+    public static void getExpressCompanyList(String groupID, String shopID, SimpleObserver<ExpressResp> observer) {
+        OrderService.INSTANCE
+                .getExpressCompanyList(BaseMapReq.newBuilder()
+                        .put("groupID", groupID)
+                        .put("shopID", shopID)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 验货或拒收订单
+     */
+    public static void inspectionOrder(OrderInspectionReq req, SimpleObserver<OrderInspectionResp> observer) {
+        OrderService.INSTANCE
+                .inspectionOrder(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
     }
 }

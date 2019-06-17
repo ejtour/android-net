@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
+import com.hll_sc_app.app.order.reject.OrderRejectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -43,13 +44,13 @@ import butterknife.OnClick;
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/11
  */
-@Route(path = RouterConfig.ROOT_ORDER_DETAIL)
+@Route(path = RouterConfig.ORDER_DETAIL)
 public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetailContract.IOrderDetailView {
 
     private OrderResp mOrderResp;
 
     public static void start(String billID) {
-        RouterUtil.goToActivity(RouterConfig.ROOT_ORDER_DETAIL, billID);
+        RouterUtil.goToActivity(RouterConfig.ORDER_DETAIL, billID);
     }
 
     @BindView(R.id.aod_title_bar)
@@ -125,7 +126,9 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         mPresenter.start();
     }
 
-    @OnClick({R.id.oab_cancel, R.id.oab_modify, R.id.oab_receive, R.id.oab_deliver, R.id.oab_settle})
+    @OnClick({R.id.oab_cancel, R.id.oab_modify,
+            R.id.oab_receive, R.id.oab_deliver,
+            R.id.oab_settle, R.id.oab_reject, R.id.oab_inspection})
     public void onActionClick(View view) {
         switch (view.getId()) {
             case R.id.oab_cancel:
@@ -142,6 +145,11 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 break;
             case R.id.oab_settle:
                 showToast(((TextView) view).getText() + "待添加");
+                break;
+            case R.id.oab_reject:
+                OrderRejectActivity.start(mOrderResp);
+                break;
+            case R.id.oab_inspection:
                 break;
         }
     }

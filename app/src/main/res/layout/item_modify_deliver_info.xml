@@ -8,7 +8,7 @@
     android:paddingTop="5dp"
     android:paddingRight="@dimen/dp_10"
     android:paddingBottom="5dp"
-    tools:background="@android:color/white">
+    android:background="@android:color/white">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/mdi_image"

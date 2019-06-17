@@ -35,7 +35,7 @@ public enum OrderStatus {
             return builder.toString();
         }
     },
-    REJECT(R.drawable.ic_order_ban, 8, "已拒收", "采购商已拒收，订单完成");
+    REJECT(R.drawable.ic_order_ban, 8, "已拒收", "已拒收，订单完成");
     private int icon;
     private String label;
     private String desc;

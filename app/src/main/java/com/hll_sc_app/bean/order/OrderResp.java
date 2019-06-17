@@ -1,9 +1,13 @@
 package com.hll_sc_app.bean.order;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.utils.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +15,7 @@ import java.util.List;
  * @since 2019/6/5
  */
 
-public class OrderResp {
+public class OrderResp implements Parcelable {
     private String couponDiscountRuleName;
     private String couponDiscountName;
     private int userID;
@@ -97,7 +101,7 @@ public class OrderResp {
     private int orderDepositTotalAmount;
     private int orderDiscountRuleID;
     private double adjustmentDepositTotalAmount;
-    private int shopID;
+    private String shopID;
     private String signBy;
     private String linkPhone;
     private String expressNo;
@@ -832,11 +836,11 @@ public class OrderResp {
         this.adjustmentDepositTotalAmount = adjustmentDepositTotalAmount;
     }
 
-    public int getShopID() {
+    public String getShopID() {
         return shopID;
     }
 
-    public void setShopID(int shopID) {
+    public void setShopID(String shopID) {
         this.shopID = shopID;
     }
 
@@ -1159,4 +1163,284 @@ public class OrderResp {
     public void setBillDetailList(List<OrderDetailBean> billDetailList) {
         this.billDetailList = billDetailList;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.couponDiscountRuleName);
+        dest.writeString(this.couponDiscountName);
+        dest.writeInt(this.userID);
+        dest.writeInt(this.canceler);
+        dest.writeString(this.subBillCreateTime);
+        dest.writeInt(this.payee);
+        dest.writeDouble(this.couponAmount);
+        dest.writeInt(this.payType);
+        dest.writeInt(this.rejectReason);
+        dest.writeDouble(this.adjustmentCouponSubAmount);
+        dest.writeInt(this.action);
+        dest.writeString(this.subBillCreateBy);
+        dest.writeString(this.subBillExecuteDate);
+        dest.writeInt(this.salesManID);
+        dest.writeInt(this.subBillType);
+        dest.writeInt(this.shipperID);
+        dest.writeString(this.payOrderNo);
+        dest.writeInt(this.masterBillID);
+        dest.writeDouble(this.adjustmentDiscountSubAmount);
+        dest.writeString(this.supplyBillNo);
+        dest.writeString(this.acceptTime);
+        dest.writeString(this.shipperName);
+        dest.writeInt(this.paymentWay);
+        dest.writeInt(this.couponID);
+        dest.writeInt(this.nextDayDelivery);
+        dest.writeString(this.groupName);
+        dest.writeString(this.checkTime);
+        dest.writeDouble(this.inspectionDepositTotalAmount);
+        dest.writeInt(this.signMinDiff);
+        dest.writeInt(this.isExchange);
+        dest.writeString(this.ordererMobile);
+        dest.writeString(this.actionTime);
+        dest.writeInt(this.flag);
+        dest.writeString(this.deliveryTime);
+        dest.writeInt(this.billSource);
+        dest.writeInt(this.paymentSettleDay);
+        dest.writeDouble(this.orderDiscountAmount);
+        dest.writeString(this.supplyShopName);
+        dest.writeDouble(this.amountPaid);
+        dest.writeDouble(this.orderTotalAmount);
+        dest.writeInt(this.wareHourseID);
+        dest.writeString(this.deliveryBy);
+        dest.writeString(this.purchaseBillNo);
+        dest.writeString(this.cancelReason);
+        dest.writeInt(this.productNo);
+        dest.writeDouble(this.refundAmount);
+        dest.writeString(this.actionBy);
+        dest.writeInt(this.billStatementID);
+        dest.writeString(this.masterBillNo);
+        dest.writeString(this.receiverMobile);
+        dest.writeString(this.agencyID);
+        dest.writeInt(this.isGenBillSatement);
+        dest.writeInt(this.originSubBillID);
+        dest.writeString(this.orderDiscountName);
+        dest.writeString(this.acceptBy);
+        dest.writeString(this.expressName);
+        dest.writeInt(this.isCheck);
+        dest.writeString(this.createTime);
+        dest.writeInt(this.isSupplement);
+        dest.writeDouble(this.orderDiscountSubAmount);
+        dest.writeDouble(this.refundedDepositTotalAmount);
+        dest.writeDouble(this.couponSubAmount);
+        dest.writeInt(this.checkMinDiff);
+        dest.writeInt(this.orderDiscountRuleType);
+        dest.writeInt(this.deliverType);
+        dest.writeString(this.rejectExplain);
+        dest.writeInt(this.shipperType);
+        dest.writeDouble(this.ruleDiscountValue);
+        dest.writeString(this.originalBillNo);
+        dest.writeString(this.signTime);
+        dest.writeInt(this.supplyShopID);
+        dest.writeString(this.subBillID);
+        dest.writeString(this.groupID);
+        dest.writeInt(this.exchangeBillID);
+        dest.writeString(this.purchaserName);
+        dest.writeString(this.subBillRemark);
+        dest.writeInt(this.serialNo);
+        dest.writeString(this.receiverAddress);
+        dest.writeString(this.houseAddress);
+        dest.writeDouble(this.totalAmount);
+        dest.writeString(this.extGroupID);
+        dest.writeDouble(this.inspectionTotalAmount);
+        dest.writeInt(this.orderDepositTotalAmount);
+        dest.writeInt(this.orderDiscountRuleID);
+        dest.writeDouble(this.adjustmentDepositTotalAmount);
+        dest.writeString(this.shopID);
+        dest.writeString(this.signBy);
+        dest.writeString(this.linkPhone);
+        dest.writeString(this.expressNo);
+        dest.writeDouble(this.inspectionCouponSubAmount);
+        dest.writeString(this.salesManName);
+        dest.writeString(this.shopName);
+        dest.writeString(this.orderDiscountRuleName);
+        dest.writeInt(this.refundBillID);
+        dest.writeString(this.createby);
+        dest.writeInt(this.total);
+        dest.writeInt(this.purchaserID);
+        dest.writeInt(this.settlementStatus);
+        dest.writeInt(this.subBillStatus);
+        dest.writeDouble(this.inspectionDiscountSubAmount);
+        dest.writeString(this.billUpdateTime);
+        dest.writeInt(this.orderDiscountID);
+        dest.writeInt(this.isPay);
+        dest.writeString(this.receiverName);
+        dest.writeString(this.refundBillNo);
+        dest.writeString(this.subBillExecuteEndDate);
+        dest.writeInt(this.subBillDate);
+        dest.writeString(this.subBillNo);
+        dest.writeString(this.agencyName);
+        dest.writeString(this.imgUrl);
+        dest.writeDouble(this.adjustmentTotalAmount);
+        dest.writeString(this.curRefundStatus);
+        dest.writeString(this.rejectVoucher);
+        dest.writeString(this.settlementTime);
+        dest.writeString(this.wareHourseName);
+        dest.writeInt(this.subbillCategory);
+        dest.writeInt(this.invoiceStatus);
+        dest.writeByte(this.mIsSelected ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.mCanSelect ? (byte) 1 : (byte) 0);
+        dest.writeString(this.driverId);
+        dest.writeString(this.driverName);
+        dest.writeString(this.mobilePhone);
+        dest.writeString(this.plateNumber);
+        dest.writeList(this.buttonList);
+        dest.writeInt(this.receiptRemaining);
+        dest.writeTypedList(this.billDetailList);
+    }
+
+    public OrderResp() {
+    }
+
+    protected OrderResp(Parcel in) {
+        this.couponDiscountRuleName = in.readString();
+        this.couponDiscountName = in.readString();
+        this.userID = in.readInt();
+        this.canceler = in.readInt();
+        this.subBillCreateTime = in.readString();
+        this.payee = in.readInt();
+        this.couponAmount = in.readDouble();
+        this.payType = in.readInt();
+        this.rejectReason = in.readInt();
+        this.adjustmentCouponSubAmount = in.readDouble();
+        this.action = in.readInt();
+        this.subBillCreateBy = in.readString();
+        this.subBillExecuteDate = in.readString();
+        this.salesManID = in.readInt();
+        this.subBillType = in.readInt();
+        this.shipperID = in.readInt();
+        this.payOrderNo = in.readString();
+        this.masterBillID = in.readInt();
+        this.adjustmentDiscountSubAmount = in.readDouble();
+        this.supplyBillNo = in.readString();
+        this.acceptTime = in.readString();
+        this.shipperName = in.readString();
+        this.paymentWay = in.readInt();
+        this.couponID = in.readInt();
+        this.nextDayDelivery = in.readInt();
+        this.groupName = in.readString();
+        this.checkTime = in.readString();
+        this.inspectionDepositTotalAmount = in.readDouble();
+        this.signMinDiff = in.readInt();
+        this.isExchange = in.readInt();
+        this.ordererMobile = in.readString();
+        this.actionTime = in.readString();
+        this.flag = in.readInt();
+        this.deliveryTime = in.readString();
+        this.billSource = in.readInt();
+        this.paymentSettleDay = in.readInt();
+        this.orderDiscountAmount = in.readDouble();
+        this.supplyShopName = in.readString();
+        this.amountPaid = in.readDouble();
+        this.orderTotalAmount = in.readDouble();
+        this.wareHourseID = in.readInt();
+        this.deliveryBy = in.readString();
+        this.purchaseBillNo = in.readString();
+        this.cancelReason = in.readString();
+        this.productNo = in.readInt();
+        this.refundAmount = in.readDouble();
+        this.actionBy = in.readString();
+        this.billStatementID = in.readInt();
+        this.masterBillNo = in.readString();
+        this.receiverMobile = in.readString();
+        this.agencyID = in.readString();
+        this.isGenBillSatement = in.readInt();
+        this.originSubBillID = in.readInt();
+        this.orderDiscountName = in.readString();
+        this.acceptBy = in.readString();
+        this.expressName = in.readString();
+        this.isCheck = in.readInt();
+        this.createTime = in.readString();
+        this.isSupplement = in.readInt();
+        this.orderDiscountSubAmount = in.readDouble();
+        this.refundedDepositTotalAmount = in.readDouble();
+        this.couponSubAmount = in.readDouble();
+        this.checkMinDiff = in.readInt();
+        this.orderDiscountRuleType = in.readInt();
+        this.deliverType = in.readInt();
+        this.rejectExplain = in.readString();
+        this.shipperType = in.readInt();
+        this.ruleDiscountValue = in.readDouble();
+        this.originalBillNo = in.readString();
+        this.signTime = in.readString();
+        this.supplyShopID = in.readInt();
+        this.subBillID = in.readString();
+        this.groupID = in.readString();
+        this.exchangeBillID = in.readInt();
+        this.purchaserName = in.readString();
+        this.subBillRemark = in.readString();
+        this.serialNo = in.readInt();
+        this.receiverAddress = in.readString();
+        this.houseAddress = in.readString();
+        this.totalAmount = in.readDouble();
+        this.extGroupID = in.readString();
+        this.inspectionTotalAmount = in.readDouble();
+        this.orderDepositTotalAmount = in.readInt();
+        this.orderDiscountRuleID = in.readInt();
+        this.adjustmentDepositTotalAmount = in.readDouble();
+        this.shopID = in.readString();
+        this.signBy = in.readString();
+        this.linkPhone = in.readString();
+        this.expressNo = in.readString();
+        this.inspectionCouponSubAmount = in.readDouble();
+        this.salesManName = in.readString();
+        this.shopName = in.readString();
+        this.orderDiscountRuleName = in.readString();
+        this.refundBillID = in.readInt();
+        this.createby = in.readString();
+        this.total = in.readInt();
+        this.purchaserID = in.readInt();
+        this.settlementStatus = in.readInt();
+        this.subBillStatus = in.readInt();
+        this.inspectionDiscountSubAmount = in.readDouble();
+        this.billUpdateTime = in.readString();
+        this.orderDiscountID = in.readInt();
+        this.isPay = in.readInt();
+        this.receiverName = in.readString();
+        this.refundBillNo = in.readString();
+        this.subBillExecuteEndDate = in.readString();
+        this.subBillDate = in.readInt();
+        this.subBillNo = in.readString();
+        this.agencyName = in.readString();
+        this.imgUrl = in.readString();
+        this.adjustmentTotalAmount = in.readDouble();
+        this.curRefundStatus = in.readString();
+        this.rejectVoucher = in.readString();
+        this.settlementTime = in.readString();
+        this.wareHourseName = in.readString();
+        this.subbillCategory = in.readInt();
+        this.invoiceStatus = in.readInt();
+        this.mIsSelected = in.readByte() != 0;
+        this.mCanSelect = in.readByte() != 0;
+        this.driverId = in.readString();
+        this.driverName = in.readString();
+        this.mobilePhone = in.readString();
+        this.plateNumber = in.readString();
+        this.buttonList = new ArrayList<Integer>();
+        in.readList(this.buttonList, Integer.class.getClassLoader());
+        this.receiptRemaining = in.readInt();
+        this.billDetailList = in.createTypedArrayList(OrderDetailBean.CREATOR);
+    }
+
+    public static final Parcelable.Creator<OrderResp> CREATOR = new Parcelable.Creator<OrderResp>() {
+        @Override
+        public OrderResp createFromParcel(Parcel source) {
+            return new OrderResp(source);
+        }
+
+        @Override
+        public OrderResp[] newArray(int size) {
+            return new OrderResp[size];
+        }
+    };
 }
