@@ -11,8 +11,10 @@ import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
-import com.hll_sc_app.bean.order.deliver.ModifyDeliverInfoReq;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
+import com.hll_sc_app.bean.order.deliver.ModifyDeliverInfoReq;
+import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
+import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 
 import java.util.List;
@@ -81,4 +83,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:101107")
     Observable<BaseResp<ExpressResp>> getExpressCompanyList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103021")
+    Observable<BaseResp<OrderInspectionResp>> inspectionOrder(@Body BaseReq<OrderInspectionReq> body);
 }

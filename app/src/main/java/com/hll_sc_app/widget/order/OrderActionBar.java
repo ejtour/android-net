@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
 
@@ -23,6 +22,14 @@ import butterknife.ButterKnife;
  */
 
 public class OrderActionBar extends LinearLayout {
+    private static final int ACTION_RECEIVE = 1;
+    private static final int ACTION_CANCEL = 2;
+    private static final int ACTION_DELIVER = 3;
+    private static final int ACTION_INSPECTION = 4;
+    private static final int ACTION_CONFIRM = 5;
+    private static final int ACTION_SETTLE = 6;
+    private static final int ACTION_REJECT = 7;
+    private static final int ACTION_MODIFY = 10;
     @BindView(R.id.oab_cancel)
     TextView mCancel;
     @BindView(R.id.oab_modify)
@@ -33,7 +40,11 @@ public class OrderActionBar extends LinearLayout {
     TextView mDeliver;
     @BindView(R.id.oab_settle)
     TextView mSettle;
-    @BindViews({R.id.oab_cancel, R.id.oab_modify, R.id.oab_receive, R.id.oab_deliver, R.id.oab_settle})
+    @BindView(R.id.oab_reject)
+    TextView mReject;
+    @BindView(R.id.oab_inspection)
+    TextView mInspection;
+    @BindViews({R.id.oab_cancel, R.id.oab_modify, R.id.oab_receive, R.id.oab_deliver, R.id.oab_settle, R.id.oab_reject, R.id.oab_inspection})
     List<View> mActionViews;
 
     public OrderActionBar(Context context) {
@@ -57,19 +68,25 @@ public class OrderActionBar extends LinearLayout {
         ButterKnife.apply(mActionViews, (view, index) -> view.setVisibility(GONE));
         for (int i : buttonList) {
             switch (i) {
-                case 1:
+                case ACTION_RECEIVE:
                     mReceive.setVisibility(VISIBLE);
                     break;
-                case 2:
+                case ACTION_CANCEL:
                     mCancel.setVisibility(VISIBLE);
                     break;
-                case 3:
+                case ACTION_DELIVER:
                     mDeliver.setVisibility(VISIBLE);
                     break;
-                case 6:
+                case ACTION_INSPECTION:
+                    mInspection.setVisibility(VISIBLE);
+                    break;
+                case ACTION_SETTLE:
                     mSettle.setVisibility(VISIBLE);
                     break;
-                case 10:
+                case ACTION_REJECT:
+                    mReject.setVisibility(VISIBLE);
+                    break;
+                case ACTION_MODIFY:
                     mModify.setVisibility(VISIBLE);
                     break;
             }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/orf_bar_bg"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@color/base_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/orf_money_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:gravity="center"
+        android:text="退款金额"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toBottomOf="@+id/orf_bar_bg"
+        app:layout_constraintStart_toStartOf="@+id/orf_bar_bg"
+        app:layout_constraintTop_toTopOf="@+id/orf_bar_bg" />
+
+    <TextView
+        android:id="@+id/orf_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Red"
+        app:layout_constraintBottom_toBottomOf="@+id/orf_money_label"
+        app:layout_constraintEnd_toEndOf="@+id/orf_bar_bg"
+        app:layout_constraintTop_toTopOf="@+id/orf_money_label"
+        tools:text="¥2550.00" />
+
+    <android.support.constraint.Group
+        android:id="@+id/orf_money_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="orf_bar_bg,orf_money_label,orf_money" />
+
+    <TextView
+        android:id="@+id/orf_tips_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:lineSpacingMultiplier="1.7"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="温馨提示： \n• 如果您付款时选择的是现金、刷卡等线下支付方式时，退货款项请联系供应商线下处理！ \n• 如果您付款时选择账期支付时，退货款项会在结算时自动扣除！ \n• 供货商完成退款后，相关款项会根据订单的支付方式原路返还！"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orf_bar_bg" />
+
+</android.support.constraint.ConstraintLayout>

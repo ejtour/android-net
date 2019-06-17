@@ -88,6 +88,8 @@ interface IOrderManageContract {
 
         void loadMore();
 
+        void getOrderDetails(String subBillId);
+
         void receiveOrder(String subBillIds);
 
         void deliver(String subBillIds, String expressName, String expressNo);

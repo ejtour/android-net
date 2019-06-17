@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
@@ -13,6 +14,8 @@ import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 import com.hll_sc_app.utils.Constants;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -105,6 +108,16 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     @Override
     public void loadMore() {
         getOrderList(false);
+    }
+
+    @Override
+    public void getOrderDetails(String subBillId) {
+        Order.getOrderDetails(subBillId, new SimpleObserver<OrderResp>(mView) {
+            @Override
+            public void onSuccess(OrderResp resp) {
+                EventBus.getDefault().post(new OrderEvent(OrderEvent.UPDATE_ITEM, resp));
+            }
+        });
     }
 
     @Override

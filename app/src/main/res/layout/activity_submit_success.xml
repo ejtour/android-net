@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/ass_header"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="提交结果" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="337dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ass_header" />
+
+    <ImageView
+        android:id="@+id/ass_img"
+        android:layout_width="240dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="@dimen/dp_40"
+        android:src="@drawable/ic_dialog_good"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ass_header" />
+
+    <TextView
+        android:id="@+id/ass_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_large_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ass_img"
+        tools:text="提交成功标题" />
+
+    <TextView
+        android:id="@+id/ass_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingMultiplier="1.4"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ass_label"
+        tools:text="提交成功描述" />
+
+    <TextView
+        android:id="@+id/ass_goto_list"
+        android:layout_width="156dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_button_mid_stroke_primary"
+        android:gravity="center"
+        android:text="返回订单列表"
+        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
+        app:layout_constraintEnd_toStartOf="@+id/ass_view_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ass_desc" />
+
+    <TextView
+        android:id="@+id/ass_view_detail"
+        android:layout_width="156dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_button_mid_stroke_primary"
+        android:gravity="center"
+        android:text="查看详情"
+        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
+        app:layout_constraintBottom_toBottomOf="@+id/ass_goto_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ass_goto_list"
+        app:layout_constraintTop_toTopOf="@+id/ass_goto_list" />
+</android.support.constraint.ConstraintLayout>

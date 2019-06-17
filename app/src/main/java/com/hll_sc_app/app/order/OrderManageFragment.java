@@ -528,6 +528,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 setForceLoad(!isFragmentVisible());
                 removeSelectedItems();
                 break;
+            case OrderEvent.RELOAD_ITEM:
+                if (isFragmentVisible() && mCurResp != null)
+                    mPresenter.getOrderDetails(mCurResp.getSubBillID());
+                break;
         }
     }
 

@@ -14,6 +14,7 @@ public class OrderEvent extends BaseEvent {
     public static final String UPDATE_ITEM = "update_item";
     public static final String REMOVE_SELECTED = "remove_selected";
     public static final String SEARCH_WORDS = "search_words";
+    public static final String RELOAD_ITEM = "reload_item";
 
     public OrderEvent(String msg) {
         this(msg, null);
@@ -24,6 +25,7 @@ public class OrderEvent extends BaseEvent {
         switch (msg) {
             case REMOVE_SELECTED:
             case REFRESH_LIST:
+            case RELOAD_ITEM:
                 break;
             case SEARCH_WORDS:
                 if (b instanceof String) break;

@@ -1,15 +1,14 @@
 package com.hll_sc_app.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.GoodsHomeFragment;
@@ -20,6 +19,9 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.OrderEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -148,6 +150,16 @@ public class MainActivity extends BaseLoadActivity {
                 default:
                     break;
             }
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getBooleanExtra("reload", false)) {
+            if (intent.getBooleanExtra("item", false))
+                EventBus.getDefault().post(new OrderEvent(OrderEvent.RELOAD_ITEM));
+            else EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
         }
     }
 }

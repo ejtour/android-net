@@ -28,11 +28,11 @@ import butterknife.ButterKnife;
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/11
  */
-@Route(path = RouterConfig.ROOT_HOME_ORDER_DELIVER)
+@Route(path = RouterConfig.ORDER_DELIVER)
 public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInfoContract.IDeliverInfoView {
 
     public static void start() {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_ORDER_DELIVER);
+        RouterUtil.goToActivity(RouterConfig.ORDER_DELIVER);
     }
 
     @BindView(R.id.odi_list_view)

@@ -61,7 +61,7 @@
 
         <activity
             android:name=".app.goods.detail.GoodsDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.user.register.RegisterComplementActivity"
@@ -86,6 +86,14 @@
 
         <activity
             android:name=".app.order.deliver.modify.ModifyDeliverInfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.order.reject.OrderRejectActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.submit.SubmitSuccessActivity"
             android:screenOrientation="portrait" />
 
         <provider

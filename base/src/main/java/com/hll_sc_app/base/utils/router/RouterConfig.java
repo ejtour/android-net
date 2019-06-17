@@ -59,20 +59,30 @@ public class RouterConfig {
     /**
      * 订单管理-搜索
      */
-    public static final String ROOT_HOME_ORDER_SEARCH = "/activity/home/order/search";
+    public static final String ORDER_SEARCH = "/activity/order/search";
 
     /**
      * 订单管理-待发货商品总量
      */
-    public static final String ROOT_HOME_ORDER_DELIVER = "/activity/home/order/deliver";
+    public static final String ORDER_DELIVER = "/activity/order/deliver";
 
     /**
      * 订单详情
      */
-    public static final String ROOT_ORDER_DETAIL = "/activity/order/detail";
+    public static final String ORDER_DETAIL = "/activity/order/detail";
 
     /**
      * 订单详情-修改发货信息
      */
-    public static final String ROOT_ORDER_MODIFY_DELIVER = "/activity/order/modify/deliver";
+    public static final String ORDER_MODIFY_DELIVER = "/activity/order/modify/deliver";
+
+    /**
+     * 订单拒收
+     */
+    public static final String ORDER_REJECT = "/activity/order/reject";
+
+    /**
+     * 提交成功
+     */
+    public static final String SUBMIT_SUCCESS = "/activity/submit/success";
 }

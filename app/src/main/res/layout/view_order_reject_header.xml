@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <View
+        android:id="@+id/orh_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="45dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/orh_reason_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拒收原因"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toTopOf="@+id/orh_divider"
+        app:layout_constraintStart_toStartOf="@+id/orh_divider"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/orh_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@drawable/ic_arrow_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/orh_reason_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/orh_reason_label" />
+
+    <TextView
+        android:id="@+id/orh_reject_option"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginRight="5dp"
+        android:gravity="right|center_vertical"
+        android:text="请选择拒收原因"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toTopOf="@+id/orh_divider"
+        app:layout_constraintEnd_toStartOf="@+id/orh_arrow"
+        app:layout_constraintStart_toEndOf="@+id/orh_reason_label"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/orh_reject_desc_label"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:gravity="center_vertical"
+        android:text="拒收说明"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintStart_toStartOf="@+id/orh_divider"
+        app:layout_constraintTop_toBottomOf="@+id/orh_divider" />
+
+    <EditText
+        android:id="@+id/orh_edit_reject_desc"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_order_reject_edit"
+        android:gravity="top"
+        android:hint="写拒收说明"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        android:textColorHint="@color/color_666666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/orh_divider"
+        app:layout_constraintTop_toBottomOf="@+id/orh_reject_desc_label" />
+
+    <com.hll_sc_app.widget.ImageUploadGroup
+        android:id="@+id/orh_upload_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        app:iug_margin="@dimen/dp_10"
+        app:iug_padding="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="@+id/orh_edit_reject_desc"
+        app:layout_constraintStart_toStartOf="@+id/orh_edit_reject_desc"
+        app:layout_constraintTop_toBottomOf="@id/orh_edit_reject_desc" />
+
+    <View
+        android:id="@+id/orh_divider2"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/orh_upload_group" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:gravity="center_vertical"
+        android:text="退货明细"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintStart_toStartOf="@+id/orh_divider"
+        app:layout_constraintTop_toBottomOf="@+id/orh_divider2" />
+
+</android.support.constraint.ConstraintLayout>
