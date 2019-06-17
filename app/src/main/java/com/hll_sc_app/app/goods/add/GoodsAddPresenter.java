@@ -1,9 +1,16 @@
 package com.hll_sc_app.app.goods.add;
 
+import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.app.user.register.RegisterPresenter;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
+import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.goods.CustomCategoryBean;
+import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -83,6 +90,37 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
                 public void onSuccess(CategoryResp resp) {
                     mCategoryResp = resp;
                     mView.showCategorySelectWindow(mCategoryResp);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void copyToCustomCategory(CategoryItem categoryItem1, CategoryItem categoryItem2,
+                                     CategoryItem categoryItem3) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("categoryID", categoryItem1.getCategoryID())
+            .put("categoryName", categoryItem1.getCategoryName())
+            .put("categorySubID", categoryItem2.getCategoryID())
+            .put("categorySubName", categoryItem2.getCategoryName())
+            .put("categoryThreeID", categoryItem3.getCategoryID())
+            .put("categoryThreeName", categoryItem3.getCategoryName())
+            .put("groupID", UserConfig.getGroupID())
+            .create();
+        GoodsService.INSTANCE.copyToCustomCategory(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<CustomCategoryBean>() {
+                @Override
+                public void onSuccess(CustomCategoryBean resp) {
+                    mView.showCustomCategory(resp);
                 }
 
                 @Override

@@ -19,6 +19,8 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
+import com.hll_sc_app.bean.goods.CustomCategoryBean;
+import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.zhihu.matisse.Matisse;
@@ -100,11 +102,30 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 finish();
                 break;
             case R.id.txt_categoryName_copy:
-                finish();
+                toCopy();
                 break;
             default:
                 break;
         }
+    }
+
+    private void toCopy() {
+        CategoryItem categoryItem1 = null;
+        if (mTxtCategoryName.getTag(R.id.base_tag_1) != null) {
+            categoryItem1 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_1);
+        }
+        CategoryItem categoryItem2 = null;
+        if (mTxtCategoryName.getTag(R.id.base_tag_2) != null) {
+            categoryItem2 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_2);
+        }
+        CategoryItem categoryItem3 = null;
+        if (mTxtCategoryName.getTag(R.id.base_tag_3) != null) {
+            categoryItem3 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_3);
+        }
+        if (categoryItem1 == null || categoryItem2 == null || categoryItem3 == null) {
+            return;
+        }
+        mPresenter.copyToCustomCategory(categoryItem1, categoryItem2, categoryItem3);
     }
 
     @Override
@@ -130,10 +151,21 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (mCategorySelectWindow == null) {
             mCategorySelectWindow = new CategorySelectWindow(this, resp);
             mCategorySelectWindow.setSelectListener((categoryItem1, categoryItem2, categoryItem3)
-                -> mTxtCategoryName.setText(String.format("%s-%s-%s", categoryItem1.getCategoryName(),
-                categoryItem2.getCategoryName(), categoryItem3.getCategoryName())));
+                -> {
+                mTxtCategoryName.setTag(R.id.base_tag_1, categoryItem1);
+                mTxtCategoryName.setTag(R.id.base_tag_2, categoryItem2);
+                mTxtCategoryName.setTag(R.id.base_tag_3, categoryItem3);
+                mTxtCategoryName.setText(String.format("%s - %s - %s", categoryItem1.getCategoryName(),
+                    categoryItem2.getCategoryName(), categoryItem3.getCategoryName()));
+            });
         }
         mCategorySelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
+    @Override
+    public void showCustomCategory(CustomCategoryBean bean) {
+        mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
+            bean.getShopProductCategoryThreeName()));
     }
 
     @OnClick(R.id.txt_categoryName_copy)
