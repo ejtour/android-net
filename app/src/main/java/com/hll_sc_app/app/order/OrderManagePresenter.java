@@ -62,7 +62,7 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
 
     private void getOrderList(boolean showLoading) {
         OrderParam param = mView.getOrderParam();
-        if (mView.getOrderStatus() != OrderType.PENDING_TRANSFER) { // 如果不是待转单
+        if (mView.getOrderStatus() != OrderType.PENDING_TRANSFER)  // 如果不是待转单
             Order.getOrderList(mPageNum,
                     param.getFlag(),
                     mView.getOrderStatus().getType(),
@@ -76,18 +76,25 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
                     mView.getDeliverType(),
                     new SimpleObserver<List<OrderResp>>(mView, showLoading) {
                         @Override
-                        public void onSuccess(List<OrderResp> orderResps) {
-                            if (mPageNum == 1) {
-                                mView.refreshListData(orderResps);
-                            } else {
-                                mView.appendListData(orderResps);
-                            }
-                            if (!CommonUtils.isEmpty(orderResps)) {
-                                mPageNum++;
-                            }
+                        public void onSuccess(List<OrderResp> resps) {
+                            if (mPageNum == 1) mView.refreshListData(resps);
+                            else mView.appendListData(resps);
+                            if (!CommonUtils.isEmpty(resps)) mPageNum++;
                         }
                     });
-        }
+        else
+            Order.getPendingTransferList(mPageNum,
+                    param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
+                    param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
+                    param.getSearchWords(),
+                    new SimpleObserver<List<OrderResp>>(mView) {
+                        @Override
+                        public void onSuccess(List<OrderResp> resps) {
+                            if (mPageNum == 1) mView.refreshListData(resps);
+                            else mView.appendListData(resps);
+                            if (!CommonUtils.isEmpty(resps)) mPageNum++;
+                        }
+                    });
     }
 
     @Override

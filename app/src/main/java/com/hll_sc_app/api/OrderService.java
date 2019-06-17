@@ -36,6 +36,10 @@ public interface OrderService {
     @Headers("pv:103001")
     Observable<BaseResp<List<OrderResp>>> getOrderList(@Body BaseMapReq req);
 
+    @POST(HttpConfig.URL)
+    @Headers("pv:103706")
+    Observable<BaseResp<List<OrderResp>>> getPendingTransferList(@Body BaseMapReq req);
+
     @Headers("pv:103002")
     @POST(HttpConfig.URL)
     Observable<BaseResp<OrderResp>> getOrderDetails(@Body BaseMapReq req);

@@ -8,19 +8,25 @@
     <include layout="@layout/view_order_time_filter_hint" />
 
     <ViewStub
-        android:id="@+id/fol_deliver_type_stub"
+        android:id="@+id/fom_deliver_type_stub"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout="@layout/view_order_deliver_type_header" />
 
+    <ViewStub
+        android:id="@+id/fom_transfer_stub"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout="@layout/view_order_transfer_header" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/fol_refresh"
+        android:id="@+id/fom_refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/fol_list"
+            android:id="@+id/fom_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
@@ -28,7 +34,7 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <ViewStub
-        android:id="@+id/fol_bottom_bar_stub"
+        android:id="@+id/fom_bottom_bar_stub"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_bar_height"
         android:layout="@layout/view_order_bottom_bar" />

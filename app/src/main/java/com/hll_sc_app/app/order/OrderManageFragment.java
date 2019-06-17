@@ -81,14 +81,16 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      */
     @BindView(R.id.otf_hint)
     ConstraintLayout mFilterHeader;
-    @BindView(R.id.fol_list)
+    @BindView(R.id.fom_list)
     RecyclerView mListView;
-    @BindView(R.id.fol_refresh)
+    @BindView(R.id.fom_refresh)
     SmartRefreshLayout mRefreshLayout;
-    @BindView(R.id.fol_bottom_bar_stub)
+    @BindView(R.id.fom_bottom_bar_stub)
     ViewStub mBottomBarStub;
-    @BindView(R.id.fol_deliver_type_stub)
+    @BindView(R.id.fom_deliver_type_stub)
     ViewStub mDeliverTypeStub;
+    @BindView(R.id.fom_transfer_stub)
+    ViewStub mTransferStub;
     /**
      * 底部操作栏
      */
@@ -105,6 +107,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 全选按钮
      */
     private ImageView mSelectAll;
+    /**
+     * 转单文本
+     */
+    private TextView mTransferText;
     /**
      * 空布局
      */
@@ -169,6 +175,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private void initView() {
         mAdapter = new OrderManageAdapter();
         mListView.setAdapter(mAdapter);
+        updatePendingTransferNum();
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
@@ -209,21 +216,29 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 更新底部工具栏数据
      */
     private void updateBottomBarData() {
-        double totalAmount = 0;
-        int num = 0;
-        for (OrderResp resp : mAdapter.getData()) {
-            if (resp.isSelected()) {
-                totalAmount = CommonUtils.addDouble(totalAmount, resp.getTotalAmount(), 0).doubleValue();
-                num++;
-            }
+        if (TextUtils.isEmpty(mOrderType.getButtonText())) { // 如果没有按钮文本
+            return;
         }
-        mConfirm.setEnabled(num > 0);
-        mTotalAmountText.setText(handleTotalAmount(totalAmount));
-        mSelectAll.setSelected(num == mAdapter.getSelectableNum());
-        String text = mConfirm.getText().toString();
-        StringBuilder stringBuilder = new StringBuilder(text);
-        stringBuilder.replace(text.indexOf("(") + 1, text.indexOf(")"), String.valueOf(num));
-        mConfirm.setText(stringBuilder.toString());
+        initBottomBar();
+        List<OrderResp> data = mAdapter.getData();
+        if (data.size() > 0) {
+            mBottomBarRoot.setVisibility(View.VISIBLE);
+            double totalAmount = 0;
+            int num = 0;
+            for (OrderResp resp : data) {
+                if (resp.isSelected()) {
+                    totalAmount = CommonUtils.addDouble(totalAmount, resp.getTotalAmount(), 0).doubleValue();
+                    num++;
+                }
+            }
+            mConfirm.setEnabled(num > 0);
+            mTotalAmountText.setText(handleTotalAmount(totalAmount));
+            mSelectAll.setSelected(num == mAdapter.getSelectableNum());
+            String text = mConfirm.getText().toString();
+            StringBuilder stringBuilder = new StringBuilder(text);
+            stringBuilder.replace(text.indexOf("(") + 1, text.indexOf(")"), String.valueOf(num));
+            mConfirm.setText(stringBuilder.toString());
+        } else mBottomBarRoot.setVisibility(View.GONE);
     }
 
     /**
@@ -279,6 +294,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mTotalAmountText = null;
         mEmptyView = null;
         mDeliverTypeRoot = null;
+        mTransferText = null;
         unbinder.unbind();
     }
 
@@ -307,24 +323,31 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     @Override
     public void refreshListData(List<OrderResp> resps) {
         mAdapter.setNewData(resps);
-        if (CommonUtils.isEmpty(resps)) {
-            // 配置空视图
-            initEmptyView();
-            mEmptyView.reset();
-            mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
+        if (CommonUtils.isEmpty(resps))
             handleEmptyData();
-        } else if (!TextUtils.isEmpty(mOrderType.getButtonText())) { // 如果有按钮文本
-            initBottomBar();
-            mAdapter.setCanCheck();
-            mConfirm.setText(String.format("%s(0)", mOrderType.getButtonText()));
-            mBottomBarRoot.setVisibility(View.VISIBLE);
-            updateBottomBarData();
-        }
+        updatePendingTransferNum();
+        updateBottomBarData();
+    }
+
+    /**
+     * 更新待转单数目
+     */
+    private void updatePendingTransferNum() {
+        if (mOrderType != OrderType.PENDING_TRANSFER) return;
+        initTransformView();
+        String size = String.valueOf(mAdapter.getData().size());
+        String source = "当前有 " + size + " 笔待下单的订单";
+        SpannableString ss = new SpannableString(source);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorPrimary)),
+                source.indexOf(size), source.indexOf(size) + size.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTransferText.setText(ss);
     }
 
     private void handleEmptyData() {
-        if (mBottomBarRoot != null) // 隐藏底部操作栏
-            mBottomBarRoot.setVisibility(View.GONE);
+        // 配置空视图
+        initEmptyView();
+        mEmptyView.reset();
+        mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
         if (mDeliverTypeRoot != null) { // 隐藏发货类型
             mDeliverType = null;
             mDeliverTypeRoot.setVisibility(View.GONE);
@@ -342,12 +365,15 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             mConfirm = mBottomBarRoot.findViewById(R.id.obb_confirm);
             mSelectAll.setOnClickListener(this::selectAll);
             mConfirm.setOnClickListener(this::confirm);
+            mAdapter.setCanCheck();
+            mConfirm.setText(String.format("%s(0)", mOrderType.getButtonText()));
         }
     }
 
     @Override
     public void appendListData(List<OrderResp> resps) {
         mAdapter.addData(resps);
+        updatePendingTransferNum();
     }
 
     @Override
@@ -400,6 +426,11 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 .setOnSelectListener(bean -> mExpressInfoDialog.setCompany(bean, beans))
                 .create()
                 .show();
+    }
+
+    private void initTransformView() {
+        if (mTransferText == null)
+            mTransferText = (TextView) mTransferStub.inflate();
     }
 
     /**
