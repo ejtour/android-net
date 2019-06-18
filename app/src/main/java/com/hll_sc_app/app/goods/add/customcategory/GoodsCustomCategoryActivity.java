@@ -9,7 +9,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -20,9 +22,12 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +48,8 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
     RecyclerView mRecyclerViewLevel1;
     @BindView(R.id.recyclerView_level2)
     RecyclerView mRecyclerViewLevel2;
+    @Autowired(name = "object0")
+    String shopProductCategorySubID;
     private GoodsCustomCategoryPresenter mPresenter;
     private CustomCategoryAdapter mCustomCategoryAdapter1;
     private CustomCategoryAdapter mCustomCategoryAdapter2;
@@ -53,6 +60,7 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_custom_category);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
+        ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
         mPresenter = GoodsCustomCategoryPresenter.newInstance();
@@ -88,6 +96,20 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         ItemTouchHelper itemTouchHelper2 = new ItemTouchHelper(new ItemDragAndSwipeCallback(mCustomCategoryAdapter2));
         mCustomCategoryAdapter2.enableDragItem(itemTouchHelper2, R.id.img_sort, true);
         itemTouchHelper2.attachToRecyclerView(mRecyclerViewLevel2);
+        mCustomCategoryAdapter2.setOnItemClickListener((adapter, view, position) -> {
+            // 选中二级分类返回上级页面
+            CustomCategoryBean bean = (CustomCategoryBean) adapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+            CopyCategoryBean copyCategoryBean = new CopyCategoryBean();
+            copyCategoryBean.setShopProductCategorySubID(bean.getShopCategoryPID());
+            copyCategoryBean.setShopProductCategorySubName(getShopProductCategorySubName(bean.getShopCategoryPID()));
+            copyCategoryBean.setShopProductCategoryThreeID(bean.getId());
+            copyCategoryBean.setShopProductCategoryThreeName(bean.getCategoryName());
+            EventBus.getDefault().post(copyCategoryBean);
+            finish();
+        });
         mCustomCategoryAdapter2.setOnItemChildClickListener(this::editCustomCategory);
         mRecyclerViewLevel2.setAdapter(mCustomCategoryAdapter2);
     }
@@ -121,6 +143,28 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         }
     }
 
+    /**
+     * 获取选中的一级分类的分类名称
+     *
+     * @param id 一级分类的 ID
+     * @return 分类名称
+     */
+    private String getShopProductCategorySubName(String id) {
+        if (!CommonUtils.isEmpty(mCustomCategoryAdapter1.getData())) {
+            for (CustomCategoryBean bean : mCustomCategoryAdapter1.getData()) {
+                if (TextUtils.equals(id, bean.getId())) {
+                    return bean.getCategoryName();
+                }
+            }
+        }
+        return "";
+    }
+
+    /**
+     * 删除之前提示框
+     *
+     * @param bean 要删除的数据
+     */
     private void showDelNoticeDialog(CustomCategoryBean bean) {
         SuccessDialog.newBuilder(this)
             .setCancelable(false)
@@ -161,7 +205,20 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         mResp = resp;
         mCustomCategoryAdapter1.setNewData(resp.getList2());
         if (!CommonUtils.isEmpty(resp.getList2())) {
-            CustomCategoryBean item = resp.getList2().get(0);
+            CustomCategoryBean item = null;
+            if (TextUtils.isEmpty(shopProductCategorySubID)) {
+                item = resp.getList2().get(0);
+            } else {
+                for (CustomCategoryBean bean : resp.getList2()) {
+                    if (TextUtils.equals(bean.getId(), shopProductCategorySubID)) {
+                        item = bean;
+                        break;
+                    }
+                }
+            }
+            if (item == null) {
+                item = resp.getList2().get(0);
+            }
             item.setChecked(true);
             mCustomCategoryAdapter2.setNewData(getCustomCategoryList(item.getId(), resp));
         } else {

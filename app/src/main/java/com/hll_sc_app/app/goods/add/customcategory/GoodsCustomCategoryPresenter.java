@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.goods.add.customcategory;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -63,7 +65,7 @@ public class GoodsCustomCategoryPresenter implements GoodsCustomCategoryContract
     public void delCustomCategory(CustomCategoryBean bean) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("actionType", "delete")
-            .put("categoryLevel", bean.getCategoryLevel())
+            .put("categoryLevel", TextUtils.equals(bean.getCategoryLevel(), "3") ? "2" : "1")
             .put("categoryName", bean.getCategoryName())
             .put("groupID", UserConfig.getGroupID())
             .put("id", bean.getId())

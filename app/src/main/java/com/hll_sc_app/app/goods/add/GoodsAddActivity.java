@@ -26,6 +26,9 @@ import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.zhihu.matisse.Matisse;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.File;
 import java.util.List;
 
@@ -67,9 +70,16 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
+        EventBus.getDefault().register(this);
         mPresenter = GoodsAddPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -77,6 +87,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mImgImgUrl.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL);
         // 辅图
         mImgImgUrlSub.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB);
+    }
+
+    @Subscribe
+    public void onEvent(CopyCategoryBean bean) {
+        showCustomCategory(bean);
     }
 
     @Override
@@ -90,24 +105,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
     }
 
-    @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.rl_categoryName:
-                mPresenter.queryCategory();
-                break;
-            case R.id.rl_shopProductCategorySubName:
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY);
-                break;
-            case R.id.txt_categoryName_copy:
-                toCopy();
-                break;
-            default:
-                break;
-        }
+    @Override
+    public void showCustomCategory(CopyCategoryBean bean) {
+        mTxtShopProductCategorySubName.setTag(bean.getShopProductCategorySubID());
+        mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
+            bean.getShopProductCategoryThreeName()));
     }
 
     private void toCopy() {
@@ -163,9 +165,26 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mCategorySelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
-    @Override
-    public void showCustomCategory(CopyCategoryBean bean) {
-        mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
-            bean.getShopProductCategoryThreeName()));
+    @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_close:
+                finish();
+                break;
+            case R.id.rl_categoryName:
+                mPresenter.queryCategory();
+                break;
+            case R.id.rl_shopProductCategorySubName:
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY,
+                    mTxtShopProductCategorySubName.getTag() != null ?
+                        (String) mTxtShopProductCategorySubName.getTag() : "");
+
+                break;
+            case R.id.txt_categoryName_copy:
+                toCopy();
+                break;
+            default:
+                break;
+        }
     }
 }

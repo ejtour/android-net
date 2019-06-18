@@ -1,12 +1,15 @@
 package com.hll_sc_app.bean.goods;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 商品的 自定义分类
  *
  * @author zhuyingsong
  * @date 2019-06-17
  */
-public class CopyCategoryBean {
+public class CopyCategoryBean implements Parcelable {
     /**
      * 自定义一级分类ID（店铺商品二级分类ID）
      */
@@ -54,5 +57,40 @@ public class CopyCategoryBean {
 
     public void setShopProductCategoryThreeName(String shopProductCategoryThreeName) {
         this.shopProductCategoryThreeName = shopProductCategoryThreeName;
+    }
+
+    public static final Parcelable.Creator<CopyCategoryBean> CREATOR = new Parcelable.Creator<CopyCategoryBean>() {
+        @Override
+        public CopyCategoryBean createFromParcel(Parcel source) {
+            return new CopyCategoryBean(source);
+        }
+
+        @Override
+        public CopyCategoryBean[] newArray(int size) {
+            return new CopyCategoryBean[size];
+        }
+    };
+
+    public CopyCategoryBean() {
+    }
+
+    protected CopyCategoryBean(Parcel in) {
+        this.shopProductCategorySubID = in.readString();
+        this.shopProductCategorySubName = in.readString();
+        this.shopProductCategoryThreeID = in.readString();
+        this.shopProductCategoryThreeName = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.shopProductCategorySubID);
+        dest.writeString(this.shopProductCategorySubName);
+        dest.writeString(this.shopProductCategoryThreeID);
+        dest.writeString(this.shopProductCategoryThreeName);
     }
 }
