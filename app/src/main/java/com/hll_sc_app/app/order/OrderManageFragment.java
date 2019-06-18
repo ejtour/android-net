@@ -175,7 +175,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private void initView() {
         mAdapter = new OrderManageAdapter();
         mListView.setAdapter(mAdapter);
-        updatePendingTransferNum();
+        updatePendingTransferNum(0);
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
@@ -206,6 +206,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             updateBottomBarData();
         });
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (mOrderType == OrderType.PENDING_TRANSFER) {
+                showToast("待转单详情待添加");
+                return;
+            }
             mCurResp = mAdapter.getItem(position);
             if (mCurResp == null) return;
             OrderDetailActivity.start(mCurResp.getSubBillID());
@@ -325,18 +329,17 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mAdapter.setNewData(resps);
         if (CommonUtils.isEmpty(resps))
             handleEmptyData();
-        updatePendingTransferNum();
         updateBottomBarData();
     }
 
     /**
      * 更新待转单数目
      */
-    private void updatePendingTransferNum() {
+    public void updatePendingTransferNum(int pendingTransferNum) {
         if (mOrderType != OrderType.PENDING_TRANSFER) return;
         initTransformView();
-        String size = String.valueOf(mAdapter.getData().size());
-        String source = "当前有 " + size + " 笔待下单的订单";
+        String size = String.valueOf(pendingTransferNum);
+        String source = "当前有 " + pendingTransferNum + " 笔待下单的订单";
         SpannableString ss = new SpannableString(source);
         ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorPrimary)),
                 source.indexOf(size), source.indexOf(size) + size.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -373,7 +376,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     @Override
     public void appendListData(List<OrderResp> resps) {
         mAdapter.addData(resps);
-        updatePendingTransferNum();
     }
 
     @Override
@@ -490,6 +492,10 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void confirm(View view) {
+        if (mOrderType == OrderType.PENDING_TRANSFER) {
+            showToast("商城下单待添加");
+            return;
+        }
         if ("3".equals(mDeliverType)) {
             showExpressInfoDialog();
             return;

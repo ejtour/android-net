@@ -9,6 +9,7 @@ import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.TransferResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -87,12 +88,13 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
                     param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
                     param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
                     param.getSearchWords(),
-                    new SimpleObserver<List<OrderResp>>(mView) {
+                    new SimpleObserver<TransferResp>(mView) {
                         @Override
-                        public void onSuccess(List<OrderResp> resps) {
-                            if (mPageNum == 1) mView.refreshListData(resps);
-                            else mView.appendListData(resps);
-                            if (!CommonUtils.isEmpty(resps)) mPageNum++;
+                        public void onSuccess(TransferResp resp) {
+                            mView.updatePendingTransferNum(resp.getUnReceiveTotal());
+                            if (mPageNum == 1) mView.refreshListData(resp.getTransferRecords());
+                            else mView.appendListData(resp.getTransferRecords());
+                            if (!CommonUtils.isEmpty(resp.getRecords())) mPageNum++;
                         }
                     });
     }

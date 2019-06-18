@@ -79,6 +79,8 @@ interface IOrderManageContract {
         void exportFailure(String msg);
 
         void showExpressCompanyList(List<ExpressResp.ExpressBean> beans, ExpressResp.ExpressBean company);
+
+        void updatePendingTransferNum(int pendingTransferNum);
     }
 
     interface IOrderManagePresenter extends IPresenter<IOrderManageView> {
