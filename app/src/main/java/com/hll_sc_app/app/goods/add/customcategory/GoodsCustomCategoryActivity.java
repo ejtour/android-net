@@ -5,15 +5,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
@@ -59,6 +63,9 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
     private void initView() {
         mRecyclerViewLevel1.setLayoutManager(new LinearLayoutManager(this));
         mCustomCategoryAdapter1 = new CustomCategoryAdapter(null);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragAndSwipeCallback(mCustomCategoryAdapter1));
+        mCustomCategoryAdapter1.enableDragItem(itemTouchHelper, R.id.img_sort, true);
+        itemTouchHelper.attachToRecyclerView(mRecyclerViewLevel1);
         mCustomCategoryAdapter1.setOnItemClickListener((adapter, view, position) -> {
             CustomCategoryBean bean = (CustomCategoryBean) adapter.getItem(position);
             if (bean == null || bean.isChecked()) {
@@ -73,10 +80,15 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
             mCustomCategoryAdapter2.setNewData(getCustomCategoryList(bean.getId(), mResp));
             mCustomCategoryAdapter1.notifyDataSetChanged();
         });
+        mCustomCategoryAdapter1.setOnItemChildClickListener(this::editCustomCategory);
         mRecyclerViewLevel1.setAdapter(mCustomCategoryAdapter1);
 
         mRecyclerViewLevel2.setLayoutManager(new LinearLayoutManager(this));
         mCustomCategoryAdapter2 = new CustomCategoryAdapter(null);
+        ItemTouchHelper itemTouchHelper2 = new ItemTouchHelper(new ItemDragAndSwipeCallback(mCustomCategoryAdapter2));
+        mCustomCategoryAdapter2.enableDragItem(itemTouchHelper2, R.id.img_sort, true);
+        itemTouchHelper2.attachToRecyclerView(mRecyclerViewLevel2);
+        mCustomCategoryAdapter2.setOnItemChildClickListener(this::editCustomCategory);
         mRecyclerViewLevel2.setAdapter(mCustomCategoryAdapter2);
     }
 
@@ -99,6 +111,30 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         return list;
     }
 
+    private void editCustomCategory(BaseQuickAdapter adapter, View view, int position) {
+        CustomCategoryBean bean = (CustomCategoryBean) adapter.getItem(position);
+        if (bean == null) {
+            return;
+        }
+        if (view.getId() == R.id.img_del) {
+            showDelNoticeDialog(bean);
+        }
+    }
+
+    private void showDelNoticeDialog(CustomCategoryBean bean) {
+        SuccessDialog.newBuilder(this)
+            .setCancelable(false)
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("确定要删除吗？")
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    mPresenter.delCustomCategory(bean);
+                }
+                dialog.dismiss();
+            }, "手滑了~", "确定删除")
+            .create().show();
+    }
 
     @OnClick({R.id.img_close, R.id.txt_edit, R.id.txt_create_level1, R.id.txt_create_level2})
     public void onViewClicked(View view) {
@@ -133,7 +169,7 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         }
     }
 
-    class CustomCategoryAdapter extends BaseQuickAdapter<CustomCategoryBean, BaseViewHolder> {
+    class CustomCategoryAdapter extends BaseItemDraggableAdapter<CustomCategoryBean, BaseViewHolder> {
 
         CustomCategoryAdapter(@Nullable List<CustomCategoryBean> data) {
             super(R.layout.item_goods_custom_category, data);
@@ -142,6 +178,7 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         @Override
         protected void convert(BaseViewHolder helper, CustomCategoryBean item) {
             helper.setText(R.id.txt_categoryName, item.getCategoryName())
+                .addOnClickListener(R.id.img_del)
                 .setBackgroundColor(R.id.content, getColor(item));
         }
 

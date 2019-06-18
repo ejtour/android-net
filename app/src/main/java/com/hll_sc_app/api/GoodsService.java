@@ -58,6 +58,16 @@ public interface GoodsService {
     Observable<BaseResp<CustomCategoryResp>> queryCustomCategory(@Body BaseMapReq req);
 
     /**
+     * 自定义分类新增/修改/删除
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100048")
+    Observable<BaseResp<Object>> editCustomCategory(@Body BaseMapReq req);
+
+    /**
      * 商品搜索
      *
      * @param req req

@@ -2,6 +2,7 @@ package com.hll_sc_app.app.goods.add.customcategory;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 
 /**
@@ -26,5 +27,12 @@ public interface GoodsCustomCategoryContract {
          * 查询自定义分类
          */
         void queryCustomCategory();
+
+        /**
+         * 删除自定义分类
+         *
+         * @param bean CustomCategoryBean
+         */
+        void delCustomCategory(CustomCategoryBean bean);
     }
 }

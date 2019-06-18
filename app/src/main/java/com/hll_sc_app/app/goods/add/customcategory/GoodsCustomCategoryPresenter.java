@@ -7,9 +7,14 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -38,11 +43,7 @@ public class GoodsCustomCategoryPresenter implements GoodsCustomCategoryContract
 
     @Override
     public void queryCustomCategory() {
-        BaseMapReq req = BaseMapReq.newBuilder().put("groupID", UserConfig.getGroupID()).create();
-        GoodsService.INSTANCE.queryCustomCategory(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
+        getQueryCustomCategoryObservable().doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
             .subscribe(new BaseCallback<CustomCategoryResp>() {
@@ -56,5 +57,43 @@ public class GoodsCustomCategoryPresenter implements GoodsCustomCategoryContract
                     mView.showError(e);
                 }
             });
+    }
+
+    @Override
+    public void delCustomCategory(CustomCategoryBean bean) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("actionType", "delete")
+            .put("categoryLevel", bean.getCategoryLevel())
+            .put("categoryName", bean.getCategoryName())
+            .put("groupID", UserConfig.getGroupID())
+            .put("id", bean.getId())
+            .put("shopCategoryPID", bean.getShopCategoryPID())
+            .put("sort", bean.getSort())
+            .create();
+        GoodsService.INSTANCE.editCustomCategory(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .flatMap((Function<Object, ObservableSource<CustomCategoryResp>>) o -> getQueryCustomCategoryObservable())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<CustomCategoryResp>() {
+                @Override
+                public void onSuccess(CustomCategoryResp resp) {
+                    mView.showCustomCategoryList(resp);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    private Observable<CustomCategoryResp> getQueryCustomCategoryObservable() {
+        BaseMapReq req = BaseMapReq.newBuilder().put("groupID", UserConfig.getGroupID()).create();
+        return GoodsService.INSTANCE.queryCustomCategory(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>());
     }
 }
