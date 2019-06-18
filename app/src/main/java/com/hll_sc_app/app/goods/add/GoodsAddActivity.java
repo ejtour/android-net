@@ -167,8 +167,4 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
             bean.getShopProductCategoryThreeName()));
     }
-
-    @OnClick(R.id.txt_categoryName_copy)
-    public void onViewClicked() {
-    }
 }

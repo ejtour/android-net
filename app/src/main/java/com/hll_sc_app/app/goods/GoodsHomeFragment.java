@@ -210,6 +210,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_ADD)) {
             RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD);
         }
+        mOptionsWindow.dismiss();
     }
 
     class GoodsListFragmentPager extends FragmentPagerAdapter {
