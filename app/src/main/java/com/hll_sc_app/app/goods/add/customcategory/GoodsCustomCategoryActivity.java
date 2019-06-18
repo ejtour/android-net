@@ -89,7 +89,8 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
                 }
             }
             bean.setChecked(true);
-            mCustomCategoryAdapter2.setNewData(getCustomCategoryList(bean.getId(), mResp));
+            shopProductCategorySubID = bean.getId();
+            mCustomCategoryAdapter2.setNewData(getCustomCategoryList(shopProductCategorySubID, mResp));
             mCustomCategoryAdapter1.notifyDataSetChanged();
         });
         mCustomCategoryAdapter1.setOnItemChildClickListener(this::editCustomCategory);
@@ -199,30 +200,6 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
             .create().show();
     }
 
-    private void showInputDialog(CustomCategoryBean bean) {
-        InputDialog.newBuilder(this)
-            .setCancelable(false)
-            .setTextTitle("输入分类名称")
-            .setHint("最多5个字")
-            .setMaxLength(5)
-            .setText(bean != null ? bean.getCategoryName() : "")
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    // 输入的名称
-                    if (TextUtils.isEmpty(dialog.getInputString())) {
-                        showToast("分类名称不能为空");
-                        return;
-                    }
-                    if (bean != null) {
-                        bean.setCategoryName(dialog.getInputString());
-                        mPresenter.editCustomCategory(bean, "update");
-                    }
-                }
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create().show();
-    }
-
     @OnClick({R.id.img_close, R.id.txt_edit, R.id.txt_create_level1, R.id.txt_create_level2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -249,13 +226,51 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
                 break;
             case R.id.txt_create_level1:
                 // 新建一级分类
+                CustomCategoryBean bean1 = new CustomCategoryBean();
+                bean1.setCategoryLevel("1");
+                bean1.setSort(String.valueOf(mCustomCategoryAdapter1.getItemCount() + 1));
+                showInputDialog(bean1);
                 break;
             case R.id.txt_create_level2:
                 // 新建二级分类
+                CustomCategoryBean bean2 = new CustomCategoryBean();
+                bean2.setCategoryLevel("3");
+                bean2.setShopCategoryPID(shopProductCategorySubID);
+                bean2.setSort(String.valueOf(mCustomCategoryAdapter2.getItemCount() + 1));
+                showInputDialog(bean2);
                 break;
             default:
                 break;
         }
+    }
+
+    private void showInputDialog(CustomCategoryBean bean) {
+        InputDialog.newBuilder(this)
+            .setCancelable(false)
+            .setTextTitle("输入分类名称")
+            .setHint("最多5个字")
+            .setMaxLength(5)
+            .setText(bean != null ? bean.getCategoryName() : "")
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    // 输入的名称
+                    if (TextUtils.isEmpty(dialog.getInputString())) {
+                        showToast("分类名称不能为空");
+                        return;
+                    }
+                    if (bean != null) {
+                        if (!TextUtils.isEmpty(bean.getId())) {
+                            bean.setCategoryName(dialog.getInputString());
+                            mPresenter.editCustomCategory(bean, "update");
+                        } else {
+                            bean.setCategoryName(dialog.getInputString());
+                            mPresenter.editCustomCategory(bean, "add");
+                        }
+                    }
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
     }
 
     @Override
@@ -278,7 +293,8 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
                 item = resp.getList2().get(0);
             }
             item.setChecked(true);
-            mCustomCategoryAdapter2.setNewData(getCustomCategoryList(item.getId(), resp));
+            shopProductCategorySubID = item.getId();
+            mCustomCategoryAdapter2.setNewData(getCustomCategoryList(shopProductCategorySubID, resp));
         } else {
             mCustomCategoryAdapter2.setNewData(null);
         }
