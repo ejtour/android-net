@@ -9,6 +9,12 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
+    <android.support.constraint.Group
+        android:id="@+id/group_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="img_sort,img_edit,img_del"/>
+
     <ImageView
         android:id="@+id/img_sort"
         android:layout_width="25dp"
@@ -39,7 +45,6 @@
         android:layout_height="0dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_custom_category_edit"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/txt_categoryName"
         app:layout_constraintRight_toLeftOf="@+id/img_del"

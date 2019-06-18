@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -50,6 +51,8 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
     RecyclerView mRecyclerViewLevel2;
     @Autowired(name = "object0")
     String shopProductCategorySubID;
+    @BindView(R.id.txt_edit)
+    TextView mTxtEdit;
     private GoodsCustomCategoryPresenter mPresenter;
     private CustomCategoryAdapter mCustomCategoryAdapter1;
     private CustomCategoryAdapter mCustomCategoryAdapter2;
@@ -98,6 +101,9 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         itemTouchHelper2.attachToRecyclerView(mRecyclerViewLevel2);
         mCustomCategoryAdapter2.setOnItemClickListener((adapter, view, position) -> {
             // 选中二级分类返回上级页面
+            if (isEdit()) {
+                return;
+            }
             CustomCategoryBean bean = (CustomCategoryBean) adapter.getItem(position);
             if (bean == null) {
                 return;
@@ -141,6 +147,15 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         if (view.getId() == R.id.img_del) {
             showDelNoticeDialog(bean);
         }
+    }
+
+    /**
+     * 处于编辑状态
+     *
+     * @return true-处于编辑状态
+     */
+    private boolean isEdit() {
+        return TextUtils.equals(mTxtEdit.getText(), "完成");
     }
 
     /**
@@ -188,6 +203,21 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
                 break;
             case R.id.txt_edit:
                 // 编辑
+                if (isEdit()) {
+                    // 关闭编辑模式
+                    mTxtEdit.setText("编辑");
+                    mCustomCategoryAdapter1.setEdit(false);
+                    mCustomCategoryAdapter1.notifyDataSetChanged();
+                    mCustomCategoryAdapter2.setEdit(false);
+                    mCustomCategoryAdapter2.notifyDataSetChanged();
+                } else {
+                    // 进入编辑模式
+                    mTxtEdit.setText("完成");
+                    mCustomCategoryAdapter1.setEdit(true);
+                    mCustomCategoryAdapter1.notifyDataSetChanged();
+                    mCustomCategoryAdapter2.setEdit(true);
+                    mCustomCategoryAdapter2.notifyDataSetChanged();
+                }
                 break;
             case R.id.txt_create_level1:
                 // 新建一级分类
@@ -227,15 +257,21 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
     }
 
     class CustomCategoryAdapter extends BaseItemDraggableAdapter<CustomCategoryBean, BaseViewHolder> {
+        private boolean mEdit;
 
         CustomCategoryAdapter(@Nullable List<CustomCategoryBean> data) {
             super(R.layout.item_goods_custom_category, data);
+        }
+
+        public void setEdit(boolean edit) {
+            this.mEdit = edit;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, CustomCategoryBean item) {
             helper.setText(R.id.txt_categoryName, item.getCategoryName())
                 .addOnClickListener(R.id.img_del)
+                .setGone(R.id.group_edit, mEdit)
                 .setBackgroundColor(R.id.content, getColor(item));
         }
 
