@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -146,6 +147,8 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         }
         if (view.getId() == R.id.img_del) {
             showDelNoticeDialog(bean);
+        } else if (view.getId() == R.id.img_edit) {
+            showInputDialog(bean);
         }
     }
 
@@ -186,12 +189,37 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
             .setImageTitle(R.drawable.ic_dialog_failure)
             .setImageState(R.drawable.ic_dialog_state_failure)
             .setMessageTitle("确定要删除吗？")
+            .setMessage("【" + bean.getCategoryName() + "】将要被删除")
             .setButton((dialog, item) -> {
                 if (item == 1) {
-                    mPresenter.delCustomCategory(bean);
+                    mPresenter.editCustomCategory(bean, "delete");
                 }
                 dialog.dismiss();
             }, "手滑了~", "确定删除")
+            .create().show();
+    }
+
+    private void showInputDialog(CustomCategoryBean bean) {
+        InputDialog.newBuilder(this)
+            .setCancelable(false)
+            .setTextTitle("输入分类名称")
+            .setHint("最多5个字")
+            .setMaxLength(5)
+            .setText(bean != null ? bean.getCategoryName() : "")
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    // 输入的名称
+                    if (TextUtils.isEmpty(dialog.getInputString())) {
+                        showToast("分类名称不能为空");
+                        return;
+                    }
+                    if (bean != null) {
+                        bean.setCategoryName(dialog.getInputString());
+                        mPresenter.editCustomCategory(bean, "update");
+                    }
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
             .create().show();
     }
 
@@ -271,6 +299,7 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         protected void convert(BaseViewHolder helper, CustomCategoryBean item) {
             helper.setText(R.id.txt_categoryName, item.getCategoryName())
                 .addOnClickListener(R.id.img_del)
+                .addOnClickListener(R.id.img_edit)
                 .setGone(R.id.group_edit, mEdit)
                 .setBackgroundColor(R.id.content, getColor(item));
         }

@@ -31,8 +31,9 @@ public interface GoodsCustomCategoryContract {
         /**
          * 删除自定义分类
          *
-         * @param bean CustomCategoryBean
+         * @param bean       CustomCategoryBean
+         * @param actionType actionType
          */
-        void delCustomCategory(CustomCategoryBean bean);
+        void editCustomCategory(CustomCategoryBean bean, String actionType);
     }
 }

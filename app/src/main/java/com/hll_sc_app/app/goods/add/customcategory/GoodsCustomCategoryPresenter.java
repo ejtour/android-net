@@ -62,9 +62,9 @@ public class GoodsCustomCategoryPresenter implements GoodsCustomCategoryContract
     }
 
     @Override
-    public void delCustomCategory(CustomCategoryBean bean) {
+    public void editCustomCategory(CustomCategoryBean bean, String actionType) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("actionType", "delete")
+            .put("actionType", actionType)
             .put("categoryLevel", TextUtils.equals(bean.getCategoryLevel(), "3") ? "2" : "1")
             .put("categoryName", bean.getCategoryName())
             .put("groupID", UserConfig.getGroupID())
