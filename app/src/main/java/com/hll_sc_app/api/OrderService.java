@@ -8,6 +8,7 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.TransferResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
@@ -38,7 +39,7 @@ public interface OrderService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103706")
-    Observable<BaseResp<List<OrderResp>>> getPendingTransferList(@Body BaseMapReq req);
+    Observable<BaseResp<TransferResp>> getPendingTransferList(@Body BaseMapReq req);
 
     @Headers("pv:103002")
     @POST(HttpConfig.URL)

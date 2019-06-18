@@ -1,0 +1,47 @@
+package com.hll_sc_app.bean.order;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author <a href="mailto:xzx8023@vip.qq.com">Vixb</a>
+ * @since 2019/6/18
+ */
+
+public class TransferResp {
+    private int unReceiveTotal;
+    private int total;
+    private List<TransferBean> records;
+
+    public int getUnReceiveTotal() {
+        return unReceiveTotal;
+    }
+
+    public void setUnReceiveTotal(int unReceiveTotal) {
+        this.unReceiveTotal = unReceiveTotal;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public List<TransferBean> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<TransferBean> records) {
+        this.records = records;
+    }
+
+    public List<OrderResp> getTransferRecords() {
+        List<OrderResp> list = new ArrayList<>();
+        for (TransferBean record : records) {
+            list.add(record.convertToOrderResp());
+        }
+        return list;
+    }
+}

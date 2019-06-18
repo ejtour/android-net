@@ -14,6 +14,7 @@ import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.TransferResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
@@ -103,12 +104,13 @@ public class Order {
                                               String createTimeStart,
                                               String createTimeEnd,
                                               String searchWords,
-                                              SimpleObserver<List<OrderResp>> observer) {
+                                              SimpleObserver<TransferResp> observer) {
         OrderService.INSTANCE
                 .getPendingTransferList(BaseMapReq.newBuilder()
                         .put("plateSupplierID", UserConfig.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
+                        .put("mutiStatus", "1,3")
                         .put("searchWords", searchWords)
                         .put("beginExcuteDate", createTimeStart)
                         .put("endExecuteDate", createTimeEnd).create())
