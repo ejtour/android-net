@@ -5,7 +5,8 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.goods.CustomCategoryBean;
+import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
@@ -44,7 +45,17 @@ public interface GoodsService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:100059")
-    Observable<BaseResp<CustomCategoryBean>> copyToCustomCategory(@Body BaseMapReq req);
+    Observable<BaseResp<CopyCategoryBean>> copyToCustomCategory(@Body BaseMapReq req);
+
+    /**
+     * 查询自定义分类
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100050")
+    Observable<BaseResp<CustomCategoryResp>> queryCustomCategory(@Body BaseMapReq req);
 
     /**
      * 商品搜索

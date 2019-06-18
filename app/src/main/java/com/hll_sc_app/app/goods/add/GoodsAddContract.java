@@ -2,7 +2,7 @@ package com.hll_sc_app.app.goods.add;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.CustomCategoryBean;
+import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 
@@ -37,7 +37,7 @@ public interface GoodsAddContract {
          *
          * @param bean bean
          */
-        void showCustomCategory(CustomCategoryBean bean);
+        void showCustomCategory(CopyCategoryBean bean);
     }
 
     interface IGoodsAddPresenter extends IPresenter<IGoodsAddView> {

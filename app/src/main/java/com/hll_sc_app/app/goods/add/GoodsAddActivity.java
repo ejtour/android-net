@@ -17,9 +17,10 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
-import com.hll_sc_app.bean.goods.CustomCategoryBean;
+import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -99,7 +100,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 mPresenter.queryCategory();
                 break;
             case R.id.rl_shopProductCategorySubName:
-                finish();
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY);
                 break;
             case R.id.txt_categoryName_copy:
                 toCopy();
@@ -163,7 +164,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     @Override
-    public void showCustomCategory(CustomCategoryBean bean) {
+    public void showCustomCategory(CopyCategoryBean bean) {
         mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
             bean.getShopProductCategoryThreeName()));
     }

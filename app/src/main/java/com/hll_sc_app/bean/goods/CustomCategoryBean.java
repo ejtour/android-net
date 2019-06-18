@@ -1,58 +1,124 @@
 package com.hll_sc_app.bean.goods;
 
 /**
- * 商品的 自定义分类
+ * 查询自定义分类列表item
  *
  * @author zhuyingsong
- * @date 2019-06-17
+ * @date 2019-06-18
  */
 public class CustomCategoryBean {
     /**
-     * 自定义一级分类ID（店铺商品二级分类ID）
+     * 税率
      */
-    private String shopProductCategorySubID;
+    private String taxRate;
     /**
-     * 一级分类名称
+     * 分类父级ID
      */
-    private String shopProductCategorySubName;
+    private String shopCategoryPID;
     /**
-     * 自定义二级分类ID（店铺商品三级分类ID
+     * 分类级别
      */
-    private String shopProductCategoryThreeID;
+    private String categoryLevel;
+    private String groupID;
     /**
-     * 二级分类名称
+     * 关联分类ID
      */
-    private String shopProductCategoryThreeName;
+    private String extCategoryID;
+    /**
+     * 排序字段
+     */
+    private String sort;
+    /**
+     * 分类ID
+     */
+    private String id;
+    /**
+     * 类型
+     */
+    private String type;
+    /**
+     * 分类名称
+     */
+    private String categoryName;
+    private boolean checked;
 
-    public String getShopProductCategorySubID() {
-        return shopProductCategorySubID;
+    public boolean isChecked() {
+        return checked;
     }
 
-    public void setShopProductCategorySubID(String shopProductCategorySubID) {
-        this.shopProductCategorySubID = shopProductCategorySubID;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
-    public String getShopProductCategorySubName() {
-        return shopProductCategorySubName;
+    public String getTaxRate() {
+        return taxRate;
     }
 
-    public void setShopProductCategorySubName(String shopProductCategorySubName) {
-        this.shopProductCategorySubName = shopProductCategorySubName;
+    public void setTaxRate(String taxRate) {
+        this.taxRate = taxRate;
     }
 
-    public String getShopProductCategoryThreeID() {
-        return shopProductCategoryThreeID;
+    public String getShopCategoryPID() {
+        return shopCategoryPID;
     }
 
-    public void setShopProductCategoryThreeID(String shopProductCategoryThreeID) {
-        this.shopProductCategoryThreeID = shopProductCategoryThreeID;
+    public void setShopCategoryPID(String shopCategoryPID) {
+        this.shopCategoryPID = shopCategoryPID;
     }
 
-    public String getShopProductCategoryThreeName() {
-        return shopProductCategoryThreeName;
+    public String getCategoryLevel() {
+        return categoryLevel;
     }
 
-    public void setShopProductCategoryThreeName(String shopProductCategoryThreeName) {
-        this.shopProductCategoryThreeName = shopProductCategoryThreeName;
+    public void setCategoryLevel(String categoryLevel) {
+        this.categoryLevel = categoryLevel;
+    }
+
+    public String getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
+    }
+
+    public String getExtCategoryID() {
+        return extCategoryID;
+    }
+
+    public void setExtCategoryID(String extCategoryID) {
+        this.extCategoryID = extCategoryID;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

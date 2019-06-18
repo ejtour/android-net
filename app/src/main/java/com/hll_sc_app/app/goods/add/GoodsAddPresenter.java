@@ -9,7 +9,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.goods.CustomCategoryBean;
+import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -117,9 +117,9 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<CustomCategoryBean>() {
+            .subscribe(new BaseCallback<CopyCategoryBean>() {
                 @Override
-                public void onSuccess(CustomCategoryBean resp) {
+                public void onSuccess(CopyCategoryBean resp) {
                     mView.showCustomCategory(resp);
                 }
 
