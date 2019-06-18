@@ -14,7 +14,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/de_state"
+        app:layout_constraintStart_toEndOf="@+id/de_state"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="导出成功" />
 
@@ -24,11 +24,11 @@
         android:layout_height="20dp"
         android:layout_marginRight="5dp"
         tools:src="@drawable/ic_dialog_state_failure"
-        app:layout_constraintBottom_toBottomOf="@id/de_title"
-        app:layout_constraintEnd_toStartOf="@id/de_title"
+        app:layout_constraintBottom_toBottomOf="@+id/de_title"
+        app:layout_constraintEnd_toStartOf="@+id/de_title"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/de_title" />
+        app:layout_constraintTop_toTopOf="@+id/de_title"/>
 
     <TextView
         android:id="@+id/de_tip"
@@ -41,7 +41,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/de_title"
+        app:layout_constraintTop_toBottomOf="@+id/de_title"
         tools:text="噢，服务器暂时开了小差 攻城狮正在全力抢修" />
 
     <EditText
@@ -57,7 +57,7 @@
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/de_title" />
+        app:layout_constraintTop_toBottomOf="@+id/de_title"/>
 
     <android.support.constraint.Barrier
         android:id="@+id/de_barrier"
@@ -74,7 +74,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/de_barrier"
+        app:layout_constraintTop_toBottomOf="@+id/de_barrier"
         tools:text="我知道了" />
 
     <View
@@ -84,7 +84,7 @@
         android:background="@color/color_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/de_action" />
+        app:layout_constraintTop_toTopOf="@+id/de_action"/>
 
     <ImageView
         android:id="@+id/de_close"

@@ -22,10 +22,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintBottom_toBottomOf="@id/dss_close"
+        app:layout_constraintBottom_toBottomOf="@+id/dss_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/dss_close"
+        app:layout_constraintTop_toTopOf="@+id/dss_close"
         tools:text="标题" />
 
     <View
@@ -35,7 +35,7 @@
         android:background="@color/color_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dss_close" />
+        app:layout_constraintTop_toBottomOf="@+id/dss_close"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/dss_list_view"
@@ -46,5 +46,5 @@
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dss_divider" />
+        app:layout_constraintTop_toBottomOf="@+id/dss_divider"/>
 </android.support.constraint.ConstraintLayout>

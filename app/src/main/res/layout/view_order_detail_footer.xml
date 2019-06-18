@@ -25,7 +25,7 @@
         android:text="备注信息"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/odf_div_0" />
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_0"/>
 
     <TextView
         android:id="@+id/odf_remark"
@@ -40,7 +40,7 @@
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@id/odf_div_0" />
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_0"/>
 
     <View
         android:id="@+id/odf_div_1"

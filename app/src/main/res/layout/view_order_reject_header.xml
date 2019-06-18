@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:background="@android:color/white">
 
     <View
         android:id="@+id/orh_divider"
@@ -84,7 +83,7 @@
         app:iug_padding="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="@+id/orh_edit_reject_desc"
         app:layout_constraintStart_toStartOf="@+id/orh_edit_reject_desc"
-        app:layout_constraintTop_toBottomOf="@id/orh_edit_reject_desc" />
+        app:layout_constraintTop_toBottomOf="@+id/orh_edit_reject_desc"/>
 
     <View
         android:id="@+id/orh_divider2"
@@ -94,7 +93,7 @@
         android:background="@color/base_activity_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/orh_upload_group" />
+        app:layout_constraintTop_toBottomOf="@+id/orh_upload_group"/>
 
     <TextView
         android:layout_width="wrap_content"

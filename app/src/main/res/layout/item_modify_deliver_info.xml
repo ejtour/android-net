@@ -29,8 +29,8 @@
         android:gravity="center"
         android:inputType="numberDecimal"
         android:textAppearance="@style/TextAppearance.City22.Small"
-        app:layout_constraintBottom_toBottomOf="@id/mdi_image"
-        app:layout_constraintEnd_toStartOf="@id/mdi_unit"
+        app:layout_constraintBottom_toBottomOf="@+id/mdi_image"
+        app:layout_constraintEnd_toStartOf="@+id/mdi_unit"
         tools:text="100" />
 
     <TextView
@@ -39,9 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Little.Color666"
-        app:layout_constraintBottom_toBottomOf="@id/mdi_edit"
+        app:layout_constraintBottom_toBottomOf="@+id/mdi_edit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/mdi_edit"
+        app:layout_constraintTop_toTopOf="@+id/mdi_edit"
         tools:text="箱" />
 
     <TextView
@@ -50,8 +50,8 @@
         android:layout_height="wrap_content"
         android:text="发货："
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBaseline_toBaselineOf="@id/mdi_unit"
-        app:layout_constraintEnd_toStartOf="@id/mdi_edit" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/mdi_unit"
+        app:layout_constraintEnd_toStartOf="@+id/mdi_edit"/>
 
     <TextView
         android:id="@+id/mdi_name"
@@ -60,8 +60,8 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="3dp"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintStart_toEndOf="@id/mdi_image"
-        app:layout_constraintTop_toTopOf="@id/mdi_image"
+        app:layout_constraintStart_toEndOf="@+id/mdi_image"
+        app:layout_constraintTop_toTopOf="@+id/mdi_image"
         tools:text="新鲜柠檬特别酸" />
 
     <TextView
@@ -69,8 +69,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBaseline_toBaselineOf="@id/mdi_unit"
-        app:layout_constraintStart_toStartOf="@id/mdi_name"
+        app:layout_constraintBaseline_toBaselineOf="@+id/mdi_unit"
+        app:layout_constraintStart_toStartOf="@+id/mdi_name"
         tools:text="订货：100箱" />
 
     <TextView
@@ -79,8 +79,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toTopOf="@id/mdi_order_num"
-        app:layout_constraintStart_toStartOf="@id/mdi_name"
+        app:layout_constraintBottom_toTopOf="@+id/mdi_order_num"
+        app:layout_constraintStart_toStartOf="@+id/mdi_name"
         tools:text="规格：42斤／箱" />
 
     <com.hll_sc_app.widget.TriangleView
@@ -88,9 +88,9 @@
         android:layout_width="8dp"
         android:layout_height="5dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@id/mdi_image"
-        app:layout_constraintStart_toStartOf="@id/mdi_image"
-        app:layout_constraintTop_toBottomOf="@id/mdi_image"
+        app:layout_constraintEnd_toEndOf="@+id/mdi_image"
+        app:layout_constraintStart_toStartOf="@+id/mdi_image"
+        app:layout_constraintTop_toBottomOf="@+id/mdi_image"
         app:trv_color="@color/base_activity_bg" />
 
     <View
@@ -98,10 +98,10 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/bg_deposit_list"
-        app:layout_constraintBottom_toBottomOf="@id/mdi_deposit_list"
+        app:layout_constraintBottom_toBottomOf="@+id/mdi_deposit_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mdi_arrow" />
+        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow"/>
 
     <TextView
         android:id="@+id/mdi_deposit_label"
@@ -114,8 +114,8 @@
         android:text="含押金商品"
         android:textColor="@color/colorPrimary"
         android:textSize="8.5sp"
-        app:layout_constraintStart_toStartOf="@id/mdi_image"
-        app:layout_constraintTop_toBottomOf="@id/mdi_arrow" />
+        app:layout_constraintStart_toStartOf="@+id/mdi_image"
+        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow"/>
 
     <com.hll_sc_app.widget.order.OrderDepositList
         android:id="@+id/mdi_deposit_list"
@@ -126,8 +126,8 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/mdi_deposit_label"
-        app:layout_constraintTop_toBottomOf="@id/mdi_arrow" />
+        app:layout_constraintStart_toEndOf="@+id/mdi_deposit_label"
+        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow"/>
 
     <android.support.constraint.Group
         android:id="@+id/mdi_deposit_group"

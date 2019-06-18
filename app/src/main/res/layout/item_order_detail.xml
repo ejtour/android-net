@@ -22,9 +22,9 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/iod_product_name"
+        app:layout_constraintBottom_toBottomOf="@+id/iod_product_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iod_product_name"
+        app:layout_constraintTop_toTopOf="@+id/iod_product_name"
         tools:text="240ml*12瓶／箱" />
 
     <TextView
@@ -35,10 +35,10 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintBottom_toTopOf="@id/iod_order_num"
+        app:layout_constraintBottom_toTopOf="@+id/iod_order_num"
         app:layout_constraintEnd_toStartOf="@+id/iod_product_spec"
         app:layout_constraintStart_toEndOf="@+id/iod_ware_house"
-        app:layout_constraintTop_toTopOf="@id/iod_image"
+        app:layout_constraintTop_toTopOf="@+id/iod_image"
         app:layout_constraintVertical_chainStyle="spread_inside"
         tools:text="商品名称商品名称商品名称" />
 
@@ -64,10 +64,10 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="3dp"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toTopOf="@id/iod_sale_unit_spec"
+        app:layout_constraintBottom_toTopOf="@+id/iod_sale_unit_spec"
         app:layout_constraintEnd_toStartOf="@+id/iod_delivery_num"
         app:layout_constraintStart_toEndOf="@+id/iod_image"
-        app:layout_constraintTop_toBottomOf="@id/iod_product_name"
+        app:layout_constraintTop_toBottomOf="@+id/iod_product_name"
         tools:text="订货：20箱" />
 
     <TextView
@@ -97,8 +97,8 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:textAppearance="@style/TextAppearance.City22.Small.Red"
-        app:layout_constraintBottom_toBottomOf="@id/iod_image"
-        app:layout_constraintEnd_toStartOf="@id/iod_amount"
+        app:layout_constraintBottom_toBottomOf="@+id/iod_image"
+        app:layout_constraintEnd_toStartOf="@+id/iod_amount"
         app:layout_constraintStart_toStartOf="@+id/iod_order_num"
         app:layout_constraintTop_toBottomOf="@+id/iod_order_num"
         tools:text="单价：¥23.50/袋" />
@@ -110,7 +110,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Red"
         app:layout_constraintBottom_toBottomOf="@+id/iod_sale_unit_spec"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iod_sale_unit_spec"
+        app:layout_constraintStart_toEndOf="@+id/iod_sale_unit_spec"
         app:layout_constraintTop_toTopOf="@+id/iod_sale_unit_spec"
         tools:text="小计：¥2520.00" />
 
