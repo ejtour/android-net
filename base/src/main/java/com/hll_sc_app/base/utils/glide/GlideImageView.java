@@ -102,11 +102,15 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         }
     }
 
+    public void setLocalImage(Drawable drawable) {
+        setOptions(GlideApp.with(this).load(drawable)).into(this);
+    }
+
     private GlideRequest setOptions(GlideRequest request) {
         request = request.error(mError).placeholder(mPlaceholder);
         if (mRoundingRadius != 0) {
-            request = request.transform(new MultiTransformation<>(new CenterCrop()
-                , new RoundedCorners(UIUtils.dip2px(mRoundingRadius))));
+            request = request.transform(new MultiTransformation<>(new CenterCrop(),
+                new RoundedCorners(UIUtils.dip2px(mRoundingRadius))));
         } else {
             request = request.centerCrop();
         }
@@ -121,10 +125,6 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
             request = request.fitCenter();
         }
         return request;
-    }
-
-    public void setLocalImage(Drawable drawable) {
-        setOptions(GlideApp.with(this).load(drawable)).into(this);
     }
 
     /**
