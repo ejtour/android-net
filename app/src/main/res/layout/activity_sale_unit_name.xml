@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择售卖单位"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

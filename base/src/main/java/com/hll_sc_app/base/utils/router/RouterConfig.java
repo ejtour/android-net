@@ -60,6 +60,10 @@ public class RouterConfig {
      */
     public static final String ROOT_HOME_GOODS_SPECS = "/activity/home/goods/specs";
     /**
+     * 新增商品规格-选择售卖单位
+     */
+    public static final String ROOT_HOME_GOODS_SPECS_SALE_UNIT_NAME = "/activity/home/goods/specs/saleUnitName";
+    /**
      * 新增商品-自定义分类
      */
     public static final String ROOT_HOME_GOODS_CUSTOM_CATEGORY = "/activity/home/goods/customCategory";

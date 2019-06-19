@@ -10,6 +10,7 @@ import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.CustomCategorySortReq;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.bean.goods.SaleUnitNameBean;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
 
 import java.util.List;
@@ -97,4 +98,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100083")
     Observable<BaseResp<Object>> updateSpecStatus(@Body BaseReq<SpecsStatusReq> req);
+
+    /**
+     * 查询商品单位列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100008")
+    Observable<BaseResp<List<SaleUnitNameBean>>> querySaleUnitName(@Body BaseMapReq req);
 }

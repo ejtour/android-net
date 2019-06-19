@@ -11,6 +11,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -54,6 +55,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                 break;
             case R.id.rl_saleUnitName:
                 // 选择售卖单位
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_SALE_UNIT_NAME);
                 break;
             default:
                 break;
