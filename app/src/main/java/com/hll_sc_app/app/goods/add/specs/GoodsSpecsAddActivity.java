@@ -43,12 +43,17 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     }
 
 
-    @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
-        R.id.txt_specs_add})
+    @OnClick({R.id.img_close, R.id.txt_save, R.id.rl_saleUnitName})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
                 finish();
+                break;
+            case R.id.txt_save:
+                // 保存
+                break;
+            case R.id.rl_saleUnitName:
+                // 选择售卖单位
                 break;
             default:
                 break;

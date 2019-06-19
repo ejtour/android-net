@@ -31,6 +31,9 @@ public class SpecsBean {
     private String productSpecID;
     private String action;
     private String isDecimalBuy;
+    /**
+     * 规格内容
+     */
     private String specContent;
     private String actionBy;
     private String standardUnitName;
