@@ -106,32 +106,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     @Override
-    public void showCustomCategory(CopyCategoryBean bean) {
-        mTxtShopProductCategorySubName.setTag(bean.getShopProductCategorySubID());
-        mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
-            bean.getShopProductCategoryThreeName()));
-    }
-
-    private void toCopy() {
-        CategoryItem categoryItem1 = null;
-        if (mTxtCategoryName.getTag(R.id.base_tag_1) != null) {
-            categoryItem1 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_1);
-        }
-        CategoryItem categoryItem2 = null;
-        if (mTxtCategoryName.getTag(R.id.base_tag_2) != null) {
-            categoryItem2 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_2);
-        }
-        CategoryItem categoryItem3 = null;
-        if (mTxtCategoryName.getTag(R.id.base_tag_3) != null) {
-            categoryItem3 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_3);
-        }
-        if (categoryItem1 == null || categoryItem2 == null || categoryItem3 == null) {
-            return;
-        }
-        mPresenter.copyToCustomCategory(categoryItem1, categoryItem2, categoryItem3);
-    }
-
-    @Override
     public void uploadSuccess(String url, int requestCode) {
         if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
             mImgImgUrl.showImage(url, v -> mImgImgUrl.deleteImage());
@@ -165,7 +139,15 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mCategorySelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
-    @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy})
+    @Override
+    public void showCustomCategory(CopyCategoryBean bean) {
+        mTxtShopProductCategorySubName.setTag(bean.getShopProductCategorySubID());
+        mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
+            bean.getShopProductCategoryThreeName()));
+    }
+
+    @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
+        R.id.txt_specs_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -183,8 +165,30 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             case R.id.txt_categoryName_copy:
                 toCopy();
                 break;
+            case R.id.txt_specs_add:
+                // 新增规格
+                break;
             default:
                 break;
         }
+    }
+
+    private void toCopy() {
+        CategoryItem categoryItem1 = null;
+        if (mTxtCategoryName.getTag(R.id.base_tag_1) != null) {
+            categoryItem1 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_1);
+        }
+        CategoryItem categoryItem2 = null;
+        if (mTxtCategoryName.getTag(R.id.base_tag_2) != null) {
+            categoryItem2 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_2);
+        }
+        CategoryItem categoryItem3 = null;
+        if (mTxtCategoryName.getTag(R.id.base_tag_3) != null) {
+            categoryItem3 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_3);
+        }
+        if (categoryItem1 == null || categoryItem2 == null || categoryItem3 == null) {
+            return;
+        }
+        mPresenter.copyToCustomCategory(categoryItem1, categoryItem2, categoryItem3);
     }
 }
