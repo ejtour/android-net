@@ -90,7 +90,7 @@ public class SaleUnitNameActivity extends BaseLoadActivity implements SaleUnitNa
 
         @Override
         protected void convert(BaseViewHolder helper, SaleUnitNameWrapper item) {
-            helper.setText(R.id.txt_content, item.t.getSaleUnitName());
+            helper.setText(R.id.txt_saleUnitName, item.t.getSaleUnitName());
         }
     }
 }
