@@ -167,6 +167,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 break;
             case R.id.txt_specs_add:
                 // 新增规格
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS);
                 break;
             default:
                 break;
