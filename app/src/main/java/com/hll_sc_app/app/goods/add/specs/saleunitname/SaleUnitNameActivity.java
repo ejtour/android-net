@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,15 +18,18 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.SaleUnitNameWrapper;
 import com.hll_sc_app.widget.StickyItemDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import qdx.indexbarlayout.IndexLayout;
 
 /**
  * 选择售卖单位
@@ -38,6 +42,8 @@ public class SaleUnitNameActivity extends BaseLoadActivity implements SaleUnitNa
     public static final String INTENT_TAG = "intent_tag";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.index_layout)
+    IndexLayout mIndexLayout;
     private SaleUnitNameAdapter mAdapter;
     private StickyItemDecoration mStickyItemDecoration;
 
@@ -52,7 +58,6 @@ public class SaleUnitNameActivity extends BaseLoadActivity implements SaleUnitNa
         presenter.register(this);
         presenter.start();
     }
-
 
     private void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -69,8 +74,27 @@ public class SaleUnitNameActivity extends BaseLoadActivity implements SaleUnitNa
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+        mIndexLayout.setCircleDuration(1000);
+        mIndexLayout.setCircleColor(0x70000000);
+        mIndexLayout.setIndexBarHeightRatio(0.9f);
+        List<String> indexList = new ArrayList<>();
+        for (int i = 1; i <= 26; i++) {
+            indexList.add(String.valueOf((char) (64 + i)));
+        }
+        mIndexLayout.getIndexBar().setIndexTextSize(UIUtils.dip2px(12));
+        mIndexLayout.getIndexBar().setIndexsList(indexList);
+        mIndexLayout.getIndexBar().setIndexChangeListener(s -> {
+            if (mAdapter != null) {
+                for (int i = 0; i < mAdapter.getData().size(); i++) {
+                    SaleUnitNameWrapper wrapper = mAdapter.getItem(i);
+                    if (wrapper != null && wrapper.isHeader && TextUtils.equals(s, wrapper.header)) {
+                        ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(i, 0);
+                        break;
+                    }
+                }
+            }
+        });
     }
-
 
     @OnClick({R.id.img_close})
     public void onViewClicked(View view) {
@@ -80,17 +104,14 @@ public class SaleUnitNameActivity extends BaseLoadActivity implements SaleUnitNa
     }
 
     @Override
-    public void showSaleUnitNameList(List<SaleUnitNameWrapper> list) {
+    public void showSaleUnitNameList(List<SaleUnitNameWrapper> list, List<String> indexList) {
         mStickyItemDecoration.notifyChanged();
         mAdapter.setNewData(list);
+
     }
 
     class SaleUnitNameAdapter extends BaseSectionQuickAdapter<SaleUnitNameWrapper, BaseViewHolder> {
 
-        /**
-         * Same as QuickAdapter#QuickAdapter(Context,int) but with
-         * some initialization data.
-         */
         SaleUnitNameAdapter() {
             super(R.layout.item_sale_unit_name, R.layout.item_sale_unit_name_title, null);
         }

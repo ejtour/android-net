@@ -18,9 +18,10 @@ public interface SaleUnitNameContract {
         /**
          * 展示商品单位列表
          *
-         * @param list list
+         * @param list      list
+         * @param indexList indexList
          */
-        void showSaleUnitNameList(List<SaleUnitNameWrapper> list);
+        void showSaleUnitNameList(List<SaleUnitNameWrapper> list, List<String> indexList);
     }
 
     interface ISaleUnitNameAddPresenter extends IPresenter<ISaleUnitNameAddView> {
