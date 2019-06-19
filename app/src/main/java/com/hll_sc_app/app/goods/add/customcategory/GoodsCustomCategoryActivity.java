@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
+import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -27,12 +28,14 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
+import com.hll_sc_app.bean.goods.CustomCategorySortBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +54,7 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
     @BindView(R.id.recyclerView_level2)
     RecyclerView mRecyclerViewLevel2;
     @Autowired(name = "object0")
-    String shopProductCategorySubID;
+    String shopProductCategorySubId;
     @BindView(R.id.txt_edit)
     TextView mTxtEdit;
     private GoodsCustomCategoryPresenter mPresenter;
@@ -77,6 +80,28 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         mCustomCategoryAdapter1 = new CustomCategoryAdapter(null);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragAndSwipeCallback(mCustomCategoryAdapter1));
         mCustomCategoryAdapter1.enableDragItem(itemTouchHelper, R.id.img_sort, true);
+        mCustomCategoryAdapter1.setOnItemDragListener(new OnItemDragListener() {
+            @Override
+            public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
+                // no-op
+            }
+
+            @Override
+            public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder target,
+                                         int to) {
+                // no-op
+            }
+
+            @Override
+            public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
+                // sort 从1开始
+                if (mCustomCategoryAdapter1 != null && !CommonUtils.isEmpty(mCustomCategoryAdapter1.getData())) {
+                    for (int i = 0; i < mCustomCategoryAdapter1.getItemCount(); i++) {
+                        Objects.requireNonNull(mCustomCategoryAdapter1.getItem(i)).setSort(String.valueOf(i + 1));
+                    }
+                }
+            }
+        });
         itemTouchHelper.attachToRecyclerView(mRecyclerViewLevel1);
         mCustomCategoryAdapter1.setOnItemClickListener((adapter, view, position) -> {
             CustomCategoryBean bean = (CustomCategoryBean) adapter.getItem(position);
@@ -89,8 +114,8 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
                 }
             }
             bean.setChecked(true);
-            shopProductCategorySubID = bean.getId();
-            mCustomCategoryAdapter2.setNewData(getCustomCategoryList(shopProductCategorySubID, mResp));
+            shopProductCategorySubId = bean.getId();
+            mCustomCategoryAdapter2.setNewData(getCustomCategoryList(shopProductCategorySubId, mResp));
             mCustomCategoryAdapter1.notifyDataSetChanged();
         });
         mCustomCategoryAdapter1.setOnItemChildClickListener(this::editCustomCategory);
@@ -100,6 +125,28 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         mCustomCategoryAdapter2 = new CustomCategoryAdapter(null);
         ItemTouchHelper itemTouchHelper2 = new ItemTouchHelper(new ItemDragAndSwipeCallback(mCustomCategoryAdapter2));
         mCustomCategoryAdapter2.enableDragItem(itemTouchHelper2, R.id.img_sort, true);
+        mCustomCategoryAdapter2.setOnItemDragListener(new OnItemDragListener() {
+            @Override
+            public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
+                // no-op
+            }
+
+            @Override
+            public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder target,
+                                         int to) {
+                // no-op
+            }
+
+            @Override
+            public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
+                // sort 从1开始
+                if (mCustomCategoryAdapter2 != null && !CommonUtils.isEmpty(mCustomCategoryAdapter2.getData())) {
+                    for (int i = 0; i < mCustomCategoryAdapter2.getItemCount(); i++) {
+                        Objects.requireNonNull(mCustomCategoryAdapter2.getItem(i)).setSort(String.valueOf(i + 1));
+                    }
+                }
+            }
+        });
         itemTouchHelper2.attachToRecyclerView(mRecyclerViewLevel2);
         mCustomCategoryAdapter2.setOnItemClickListener((adapter, view, position) -> {
             // 选中二级分类返回上级页面
@@ -215,6 +262,7 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
                     mCustomCategoryAdapter1.notifyDataSetChanged();
                     mCustomCategoryAdapter2.setEdit(false);
                     mCustomCategoryAdapter2.notifyDataSetChanged();
+                    mPresenter.sortCustomCategory(getSortList());
                 } else {
                     // 进入编辑模式
                     mTxtEdit.setText("完成");
@@ -235,13 +283,32 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
                 // 新建二级分类
                 CustomCategoryBean bean2 = new CustomCategoryBean();
                 bean2.setCategoryLevel("3");
-                bean2.setShopCategoryPID(shopProductCategorySubID);
+                bean2.setShopCategoryPID(shopProductCategorySubId);
                 bean2.setSort(String.valueOf(mCustomCategoryAdapter2.getItemCount() + 1));
                 showInputDialog(bean2);
                 break;
             default:
                 break;
         }
+    }
+
+    private List<CustomCategorySortBean> getSortList() {
+        List<CustomCategorySortBean> list = new ArrayList<>();
+        if (mResp != null) {
+            if (!CommonUtils.isEmpty(mResp.getList2())) {
+                // 一级分类排序
+                for (CustomCategoryBean customCategoryBean : mResp.getList2()) {
+                    list.add(new CustomCategorySortBean(customCategoryBean.getId(), customCategoryBean.getSort()));
+                }
+            }
+            if (!CommonUtils.isEmpty(mResp.getList3())) {
+                // 二级分类排序
+                for (CustomCategoryBean customCategoryBean : mResp.getList3()) {
+                    list.add(new CustomCategorySortBean(customCategoryBean.getId(), customCategoryBean.getSort()));
+                }
+            }
+        }
+        return list;
     }
 
     private void showInputDialog(CustomCategoryBean bean) {
@@ -279,11 +346,11 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         mCustomCategoryAdapter1.setNewData(resp.getList2());
         if (!CommonUtils.isEmpty(resp.getList2())) {
             CustomCategoryBean item = null;
-            if (TextUtils.isEmpty(shopProductCategorySubID)) {
+            if (TextUtils.isEmpty(shopProductCategorySubId)) {
                 item = resp.getList2().get(0);
             } else {
                 for (CustomCategoryBean bean : resp.getList2()) {
-                    if (TextUtils.equals(bean.getId(), shopProductCategorySubID)) {
+                    if (TextUtils.equals(bean.getId(), shopProductCategorySubId)) {
                         item = bean;
                         break;
                     }
@@ -293,8 +360,8 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
                 item = resp.getList2().get(0);
             }
             item.setChecked(true);
-            shopProductCategorySubID = item.getId();
-            mCustomCategoryAdapter2.setNewData(getCustomCategoryList(shopProductCategorySubID, resp));
+            shopProductCategorySubId = item.getId();
+            mCustomCategoryAdapter2.setNewData(getCustomCategoryList(shopProductCategorySubId, resp));
         } else {
             mCustomCategoryAdapter2.setNewData(null);
         }

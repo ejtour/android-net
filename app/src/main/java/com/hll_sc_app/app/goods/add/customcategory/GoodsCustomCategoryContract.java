@@ -4,6 +4,9 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
+import com.hll_sc_app.bean.goods.CustomCategorySortBean;
+
+import java.util.List;
 
 /**
  * 自定义分类
@@ -35,5 +38,12 @@ public interface GoodsCustomCategoryContract {
          * @param actionType actionType
          */
         void editCustomCategory(CustomCategoryBean bean, String actionType);
+
+        /**
+         * 自定义分类排序
+         *
+         * @param list 分类
+         */
+        void sortCustomCategory(List<CustomCategorySortBean> list);
     }
 }
