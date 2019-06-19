@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/txt_edit"
-            android:layout_width="45dp"
+            android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/bg_selector_close"

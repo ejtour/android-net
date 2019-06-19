@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/txt_save"
-            android:layout_width="45dp"
+            android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:background="@drawable/bg_selector_close"
@@ -68,7 +68,7 @@
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
                 <EditText
-                    android:id="@+id/et_specContent"
+                    android:id="@+id/edt_specContent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/txt_specContent_title"
@@ -132,7 +132,7 @@
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
                 <EditText
-                    android:id="@+id/et_productPrice"
+                    android:id="@+id/edt_productPrice"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/txt_productPrice_title"
@@ -163,16 +163,16 @@
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
                 <EditText
-                    android:id="@+id/et_skuCode"
+                    android:id="@+id/edt_skuCode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/txt_skuCode_title"
                     android:background="@null"
                     android:gravity="center_vertical|right"
                     android:hint="请输入SKU条码，20位数字"
-                    android:singleLine="true"
                     android:inputType="number"
                     android:maxLength="20"
+                    android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
                     android:textColorHint="@color/color_aeaeae"/>
 
@@ -194,51 +194,15 @@
                     android:text="转换率"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-                <TextView
-                    android:id="@+id/txt_ration"
+                <EditText
+                    android:id="@+id/edt_ration"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/txt_ration_title"
                     android:background="@null"
-                    android:drawableRight="@drawable/ic_arrow_gray"
-                    android:drawablePadding="5dp"
                     android:gravity="center_vertical|right"
                     android:hint="请输入转换率，默认为1"
-                    android:inputType="number"
-                    android:maxLength="20"
-                    android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColorHint="@color/color_aeaeae"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="1dp"
-                android:background="@drawable/base_bg_item_white"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <com.hll_sc_app.base.widget.StartTextView
-                    android:id="@+id/txt_productStock_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="库存数量"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
-
-                <TextView
-                    android:id="@+id/txt_productStock"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/txt_productStock_title"
-                    android:background="@null"
-                    android:drawableRight="@drawable/ic_arrow_gray"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical|right"
-                    android:hint="请输入该规格的库存数量"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
@@ -262,14 +226,12 @@
                     android:text="最低起购量"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-                <TextView
-                    android:id="@+id/txt_buyMinNum"
+                <EditText
+                    android:id="@+id/edt_buyMinNum"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/txt_buyMinNum_title"
                     android:background="@null"
-                    android:drawableRight="@drawable/ic_arrow_gray"
-                    android:drawablePadding="5dp"
                     android:gravity="center_vertical|right"
                     android:hint="用户单笔订单至少需要购买的数量"
                     android:inputType="number"
@@ -296,17 +258,15 @@
                     android:text="订货倍数"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
-                <TextView
-                    android:id="@+id/txt_minOrder"
+                <EditText
+                    android:id="@+id/edt_minOrder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@+id/txt_minOrder_title"
                     android:background="@null"
-                    android:drawableRight="@drawable/ic_arrow_gray"
-                    android:drawablePadding="5dp"
                     android:gravity="center_vertical|right"
                     android:hint="默认为1，支持设置n.5"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
