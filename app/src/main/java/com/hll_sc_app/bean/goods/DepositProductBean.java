@@ -1,5 +1,9 @@
 package com.hll_sc_app.bean.goods;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +12,7 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-06-20
  */
-public class DepositProductBean {
+public class DepositProductBean implements Parcelable {
     private String specID;
     private String productID;
     private String placeProvince;
@@ -72,6 +76,7 @@ public class DepositProductBean {
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
     private boolean selected;
+
 
     public boolean isSelected() {
         return selected;
@@ -575,5 +580,160 @@ public class DepositProductBean {
 
     public void setNicknames(List<NicknamesBean> nicknames) {
         this.nicknames = nicknames;
+    }
+
+    public static final Parcelable.Creator<DepositProductBean> CREATOR = new Parcelable.Creator<DepositProductBean>() {
+        @Override
+        public DepositProductBean createFromParcel(Parcel source) {
+            return new DepositProductBean(source);
+        }
+
+        @Override
+        public DepositProductBean[] newArray(int size) {
+            return new DepositProductBean[size];
+        }
+    };
+
+    public DepositProductBean() {
+    }
+
+    protected DepositProductBean(Parcel in) {
+        this.specID = in.readString();
+        this.productID = in.readString();
+        this.placeProvince = in.readString();
+        this.specStatus = in.readString();
+        this.productName = in.readString();
+        this.productAttr = in.readString();
+        this.assistUnitStatus = in.readString();
+        this.offShelfTime = in.readString();
+        this.appointSellType = in.readString();
+        this.productNameSuggest = in.readString();
+        this.bundlingGoodsType = in.readString();
+        this.productBrief = in.readString();
+        this.isWareHourse = in.readString();
+        this.shopProductCategorySubID = in.readString();
+        this.action = in.readString();
+        this.isDecimalBuy = in.readString();
+        this.depositProductType = in.readString();
+        this.purchaserIsVisible = in.readString();
+        this.orgName = in.readString();
+        this.cargoOwnerID = in.readString();
+        this.standardUnitName = in.readString();
+        this.groupID = in.readString();
+        this.nextDayDelivery = in.readString();
+        this.onShelfTime = in.readString();
+        this.stockCheckType = in.readString();
+        this.buyMinNum = in.readString();
+        this.brandId = in.readString();
+        this.producer = in.readString();
+        this.productPrice = in.readString();
+        this.skuCode = in.readString();
+        this.saleUnitName = in.readString();
+        this.priceIsVisible = in.readByte() != 0;
+        this.standardUnitStatus = in.readString();
+        this.actionTime = in.readString();
+        this.saleUnitID = in.readString();
+        this.categoryThreeID = in.readString();
+        this.shopProductCategoryID = in.readString();
+        this.ration = in.readString();
+        this.placeCity = in.readString();
+        this.cargoOwnerName = in.readString();
+        this.shopProductCategoryThreeID = in.readString();
+        this.categoryID = in.readString();
+        this.productType = in.readString();
+        this.specContent = in.readString();
+        this.supplierName = in.readString();
+        this.actionBy = in.readString();
+        this.costPrice = in.readString();
+        this.productStatus = in.readString();
+        this.convertRatio = in.readString();
+        this.costPriceModifyFlag = in.readString();
+        this.isSupplierWarehouse = in.readString();
+        this.imgUrl = in.readString();
+        this.productNameKeyword = in.readString();
+        this.productCode = in.readString();
+        this.categorySubID = in.readString();
+        this.placeCityCode = in.readString();
+        this.createTime = in.readString();
+        this.guaranteePeriod = in.readString();
+        this.placeProvinceCode = in.readString();
+        this.resourceType = in.readString();
+        this.supplierShops = new ArrayList<SupplierShopsBean>();
+        in.readList(this.supplierShops, SupplierShopsBean.class.getClassLoader());
+        this.nicknames = new ArrayList<NicknamesBean>();
+        in.readList(this.nicknames, NicknamesBean.class.getClassLoader());
+        this.selected = in.readByte() != 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.specID);
+        dest.writeString(this.productID);
+        dest.writeString(this.placeProvince);
+        dest.writeString(this.specStatus);
+        dest.writeString(this.productName);
+        dest.writeString(this.productAttr);
+        dest.writeString(this.assistUnitStatus);
+        dest.writeString(this.offShelfTime);
+        dest.writeString(this.appointSellType);
+        dest.writeString(this.productNameSuggest);
+        dest.writeString(this.bundlingGoodsType);
+        dest.writeString(this.productBrief);
+        dest.writeString(this.isWareHourse);
+        dest.writeString(this.shopProductCategorySubID);
+        dest.writeString(this.action);
+        dest.writeString(this.isDecimalBuy);
+        dest.writeString(this.depositProductType);
+        dest.writeString(this.purchaserIsVisible);
+        dest.writeString(this.orgName);
+        dest.writeString(this.cargoOwnerID);
+        dest.writeString(this.standardUnitName);
+        dest.writeString(this.groupID);
+        dest.writeString(this.nextDayDelivery);
+        dest.writeString(this.onShelfTime);
+        dest.writeString(this.stockCheckType);
+        dest.writeString(this.buyMinNum);
+        dest.writeString(this.brandId);
+        dest.writeString(this.producer);
+        dest.writeString(this.productPrice);
+        dest.writeString(this.skuCode);
+        dest.writeString(this.saleUnitName);
+        dest.writeByte(this.priceIsVisible ? (byte) 1 : (byte) 0);
+        dest.writeString(this.standardUnitStatus);
+        dest.writeString(this.actionTime);
+        dest.writeString(this.saleUnitID);
+        dest.writeString(this.categoryThreeID);
+        dest.writeString(this.shopProductCategoryID);
+        dest.writeString(this.ration);
+        dest.writeString(this.placeCity);
+        dest.writeString(this.cargoOwnerName);
+        dest.writeString(this.shopProductCategoryThreeID);
+        dest.writeString(this.categoryID);
+        dest.writeString(this.productType);
+        dest.writeString(this.specContent);
+        dest.writeString(this.supplierName);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.costPrice);
+        dest.writeString(this.productStatus);
+        dest.writeString(this.convertRatio);
+        dest.writeString(this.costPriceModifyFlag);
+        dest.writeString(this.isSupplierWarehouse);
+        dest.writeString(this.imgUrl);
+        dest.writeString(this.productNameKeyword);
+        dest.writeString(this.productCode);
+        dest.writeString(this.categorySubID);
+        dest.writeString(this.placeCityCode);
+        dest.writeString(this.createTime);
+        dest.writeString(this.guaranteePeriod);
+        dest.writeString(this.placeProvinceCode);
+        dest.writeString(this.resourceType);
+        dest.writeList(this.supplierShops);
+        dest.writeList(this.nicknames);
+        dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
     }
 }

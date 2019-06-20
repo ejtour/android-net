@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goods.add.specs.depositproducts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,12 +20,14 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.DepositProductBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,7 +42,8 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS_SPECS_DEPOSIT_PRODUCT, extras = Constant.LOGIN_EXTRA)
 public class DepositProductsActivity extends BaseLoadActivity implements DepositProductsContract.ISaleUnitNameAddView {
-    public static final String INTENT_TAG = "intent_tag";
+    public static final String INTENT_TAG = "intent_tag_deposit_products";
+    public static final int INT_MAX_COUNT = 3;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
@@ -80,6 +84,13 @@ public class DepositProductsActivity extends BaseLoadActivity implements Deposit
             DepositProductBean depositProductBean = (DepositProductBean) adapter.getItem(position);
             if (depositProductBean != null) {
                 depositProductBean.setSelected(!depositProductBean.isSelected());
+                if (getSelectDepositProductList().size() > INT_MAX_COUNT) {
+                    // 恢复
+                    depositProductBean.setSelected(!depositProductBean.isSelected());
+                    // 提示
+                    showToast("最多选择" + INT_MAX_COUNT + "个押金商品");
+                    return;
+                }
                 mAdapter.notifyItemChanged(position);
             }
         });
@@ -87,12 +98,32 @@ public class DepositProductsActivity extends BaseLoadActivity implements Deposit
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    /**
+     * 获取选中的押金商品
+     *
+     * @return 押金商品列表
+     */
+    private ArrayList<DepositProductBean> getSelectDepositProductList() {
+        ArrayList<DepositProductBean> list = new ArrayList<>();
+        if (mAdapter != null && !CommonUtils.isEmpty(mAdapter.getData())) {
+            for (DepositProductBean bean : mAdapter.getData()) {
+                if (bean.isSelected()) {
+                    list.add(bean);
+                }
+            }
+        }
+        return list;
+    }
+
     @OnClick({R.id.img_close, R.id.txt_save})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
         } else if (view.getId() == R.id.txt_save) {
-
+            Intent intent = new Intent();
+            intent.putParcelableArrayListExtra(INTENT_TAG, getSelectDepositProductList());
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
 

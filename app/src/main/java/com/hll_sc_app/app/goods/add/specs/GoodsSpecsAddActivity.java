@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.add.specs.depositproducts.DepositProductsActivity;
 import com.hll_sc_app.app.goods.add.specs.saleunitname.SaleUnitNameActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -21,8 +22,11 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
+import com.hll_sc_app.bean.goods.DepositProductBean;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
+import com.hll_sc_app.citymall.util.LogUtil;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -130,11 +134,19 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && data != null && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
-            SaleUnitNameBean bean = data.getParcelableExtra(SaleUnitNameActivity.INTENT_TAG);
-            if (bean != null) {
-                mTxtSaleUnitName.setText(bean.getSaleUnitName());
-                mTxtSaleUnitName.setTag(bean.getSaleUnitId());
+        if (resultCode == RESULT_OK && data != null) {
+            if (requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                // 售卖单位
+                SaleUnitNameBean bean = data.getParcelableExtra(SaleUnitNameActivity.INTENT_TAG);
+                if (bean != null) {
+                    mTxtSaleUnitName.setText(bean.getSaleUnitName());
+                    mTxtSaleUnitName.setTag(bean.getSaleUnitId());
+                }
+            } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
+                // 押金商品
+                ArrayList<DepositProductBean> arrayList =
+                    data.getParcelableArrayListExtra(DepositProductsActivity.INTENT_TAG);
+                LogUtil.d("ZYS", arrayList.size() + "");
             }
         }
     }
