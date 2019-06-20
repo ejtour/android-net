@@ -46,7 +46,7 @@ public class SpecsBean {
     private String productPrice;
     private String productStock;
     private String skuCode;
-    private List<?> depositProducts;
+    private List<DepositProductBean> depositProducts;
     private List<?> labelIDs;
 
     public String getProductStock() {
@@ -281,11 +281,11 @@ public class SpecsBean {
         this.skuCode = skuCode;
     }
 
-    public List<?> getDepositProducts() {
+    public List<DepositProductBean> getDepositProducts() {
         return depositProducts;
     }
 
-    public void setDepositProducts(List<?> depositProducts) {
+    public void setDepositProducts(List<DepositProductBean> depositProducts) {
         this.depositProducts = depositProducts;
     }
 

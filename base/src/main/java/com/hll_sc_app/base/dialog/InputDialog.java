@@ -64,6 +64,11 @@ public class InputDialog extends BaseDialog {
         editText.setHint(hint);
     }
 
+    public void setInputType(int type) {
+        EditText editText = mRootView.findViewById(R.id.edt_content);
+        editText.setInputType(type);
+    }
+
     public void setText(String text) {
         EditText editText = mRootView.findViewById(R.id.edt_content);
         editText.setText(text);
@@ -137,6 +142,11 @@ public class InputDialog extends BaseDialog {
             return this;
         }
 
+        public Builder setInputType(int type) {
+            p.mType = type;
+            return this;
+        }
+
         public Builder setMaxLength(int maxLength) {
             p.mMaxLength = maxLength;
             return this;
@@ -158,6 +168,7 @@ public class InputDialog extends BaseDialog {
             dialog.setCancelable(p.mCancelable);
             dialog.setCanceledOnTouchOutside(p.mCancelable);
             dialog.setHint(p.mHint);
+            dialog.setInputType(p.mType);
             dialog.setText(p.mText);
             dialog.setMaxLength(p.mMaxLength);
             dialog.setTextTitle(p.mTextTitle);
@@ -174,5 +185,6 @@ public class InputDialog extends BaseDialog {
         String mText;
         String mTextTitle;
         int mMaxLength;
+        int mType;
     }
 }

@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -12,19 +16,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.depositproducts.DepositProductsActivity;
 import com.hll_sc_app.app.goods.add.specs.saleunitname.SaleUnitNameActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.goods.DepositProductBean;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
-import com.hll_sc_app.citymall.util.LogUtil;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.SimpleDecoration;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -81,7 +90,12 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     EditText mEdtMinOrder;
     @BindView(R.id.txt_isDecimalBuy_title)
     TextView mTxtIsDecimalBuyTitle;
+    @BindView(R.id.txt_depositProducts_add)
+    TextView mTxtDepositProductsAdd;
+    @BindView(R.id.recyclerView_depositProduct)
+    RecyclerView mRecyclerViewDepositProduct;
     private GoodsSpecsAddPresenter mPresenter;
+    private DepositProductAdapter mDepositProductAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,6 +110,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     }
 
     private void initView() {
+        // 输入限制
         mEdtProductPrice.addTextChangedListener((CheckTextWatcher) s -> {
             if (s.toString().startsWith(".")) {
                 s.insert(0, "0");
@@ -130,6 +145,54 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             }
         });
 
+        // 押金商品展示
+        mRecyclerViewDepositProduct.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewDepositProduct.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
+            R.color.base_color_divider), UIUtils.dip2px(1)));
+        mDepositProductAdapter = new DepositProductAdapter();
+        mDepositProductAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            DepositProductBean bean = (DepositProductBean) adapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+            if (view.getId() == R.id.img_del) {
+                // 移除
+                mDepositProductAdapter.remove(position);
+            } else if (view.getId() == R.id.txt_depositNum) {
+                // 输入数量
+                showInputDialog(bean, position);
+            }
+        });
+        mRecyclerViewDepositProduct.setAdapter(mDepositProductAdapter);
+    }
+
+    /**
+     * 押金商品数量输入
+     *
+     * @param bean     押金商品
+     * @param position 位置
+     */
+    private void showInputDialog(DepositProductBean bean, int position) {
+        InputDialog.newBuilder(this)
+            .setCancelable(false)
+            .setTextTitle("输入" + bean.getProductName() + "数量")
+            .setHint("请输入数量")
+            .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
+            .setMaxLength(7)
+            .setText(bean.getDepositNum())
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    // 输入的数量
+                    if (TextUtils.isEmpty(dialog.getInputString())) {
+                        showToast("数量不能为空");
+                        return;
+                    }
+                    bean.setDepositNum(CommonUtils.formatRound(dialog.getInputString()));
+                    mDepositProductAdapter.notifyItemChanged(position);
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
     }
 
     @Override
@@ -146,7 +209,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                 // 押金商品
                 ArrayList<DepositProductBean> arrayList =
                     data.getParcelableArrayListExtra(DepositProductsActivity.INTENT_TAG);
-                LogUtil.d("ZYS", arrayList.size() + "");
+                mDepositProductAdapter.setNewData(arrayList);
             }
         }
     }
@@ -159,6 +222,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                 break;
             case R.id.txt_save:
                 // 保存
+                toSave();
                 break;
             case R.id.rl_saleUnitName:
                 // 选择售卖单位
@@ -175,6 +239,10 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         }
     }
 
+    private void toSave() {
+
+    }
+
     public interface CheckTextWatcher extends TextWatcher {
 
         @Override
@@ -185,6 +253,21 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         @Override
         default void onTextChanged(CharSequence s, int start, int before, int count) {
 
+        }
+    }
+
+    class DepositProductAdapter extends BaseQuickAdapter<DepositProductBean, BaseViewHolder> {
+
+        DepositProductAdapter() {
+            super(R.layout.item_spec_deposit_product);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, DepositProductBean item) {
+            helper.setText(R.id.txt_productName, item.getProductName())
+                .setText(R.id.txt_depositNum, item.getDepositNum())
+                .addOnClickListener(R.id.img_del)
+                .addOnClickListener(R.id.txt_depositNum);
         }
     }
 }

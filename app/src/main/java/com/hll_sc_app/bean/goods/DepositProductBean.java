@@ -67,6 +67,7 @@ public class DepositProductBean implements Parcelable {
     private String imgUrl;
     private String productNameKeyword;
     private String productCode;
+    private String depositNum;
     private String categorySubID;
     private String placeCityCode;
     private String createTime;
@@ -77,6 +78,13 @@ public class DepositProductBean implements Parcelable {
     private List<NicknamesBean> nicknames;
     private boolean selected;
 
+    public String getDepositNum() {
+        return depositNum;
+    }
+
+    public void setDepositNum(String depositNum) {
+        this.depositNum = depositNum;
+    }
 
     public boolean isSelected() {
         return selected;
