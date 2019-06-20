@@ -64,7 +64,6 @@ public class SaleUnitNamePresenter implements SaleUnitNameContract.ISaleUnitName
 
                 @Override
                 public void onFailure(UseCaseException e) {
-                    e.setTag(req);
                     mView.showError(e);
                 }
             });

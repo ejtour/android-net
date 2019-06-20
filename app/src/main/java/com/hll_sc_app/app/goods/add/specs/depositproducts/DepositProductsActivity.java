@@ -164,7 +164,7 @@ public class DepositProductsActivity extends BaseLoadActivity implements Deposit
             }
             if (!TextUtils.isEmpty(bean.getSaleUnitName())) {
                 if (builder.length() != 0) {
-                    builder.append(",");
+                    builder.append("，");
                 }
                 builder.append(bean.getSaleUnitName());
             }

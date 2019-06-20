@@ -231,8 +231,8 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                 break;
             case R.id.txt_depositProducts_add:
                 // 选择押金商品
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_DEPOSIT_PRODUCT, this,
-                    ImgUploadBlock.REQUEST_CODE_IMG_URL);
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_DEPOSIT_PRODUCT,
+                    GoodsSpecsAddActivity.this, ImgUploadBlock.REQUEST_CODE_IMG_URL);
                 break;
             default:
                 break;
@@ -271,7 +271,14 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         }
         if (!depositProductPass) {
             showToast("请填写押金商品数量");
+            return;
         }
+        mPresenter.checkSkuCode(mEdtSkuCode.getText().toString().trim());
+    }
+
+    @Override
+    public void checkSuccess() {
+        // 返回上级页面
     }
 
     public interface CheckTextWatcher extends TextWatcher {

@@ -12,6 +12,7 @@ import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
+import com.hll_sc_app.bean.goods.SkuCheckResp;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
 
 import java.util.List;
@@ -119,4 +120,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100019")
     Observable<BaseResp<DepositProductsResp>> queryDepositProducts(@Body BaseMapReq req);
+
+    /**
+     * 商品sku条码校验
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100087")
+    Observable<BaseResp<SkuCheckResp>> checkSkuCode(@Body BaseMapReq req);
 }
