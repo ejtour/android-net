@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -31,9 +32,13 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.goods.DepositProductBean;
+import com.hll_sc_app.bean.goods.DepositProductReq;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
+import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -94,6 +99,8 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     TextView mTxtDepositProductsAdd;
     @BindView(R.id.recyclerView_depositProduct)
     RecyclerView mRecyclerViewDepositProduct;
+    @BindView(R.id.switch_isDecimalBuy)
+    Switch mSwitchIsDecimalBuy;
     private GoodsSpecsAddPresenter mPresenter;
     private DepositProductAdapter mDepositProductAdapter;
 
@@ -279,6 +286,28 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     @Override
     public void checkSuccess() {
         // 返回上级页面
+        SpecsBean specsBean = new SpecsBean();
+        // 规格内容
+        specsBean.setSpecContent(mEdtSpecContent.getText().toString().trim());
+        // 售卖单位
+        specsBean.setSaleUnitName(mTxtSaleUnitName.getText().toString());
+        specsBean.setSaleUnitID(mTxtSaleUnitName.getTag() == null ? null : (String) mTxtSaleUnitName.getTag());
+        // 单价
+        specsBean.setProductPrice(mEdtProductPrice.getText().toString().trim());
+        // 押金商品
+        specsBean.setDepositProducts(DepositProductReq.createDepositProductReq(mDepositProductAdapter.getData()));
+        // sku 条码
+        specsBean.setSkuCode(mEdtSkuCode.getText().toString().trim());
+        // 转换率
+        specsBean.setRation(mEdtRation.getText().toString().trim());
+        // 最低起购量
+        specsBean.setBuyMinNum(mEdtBuyMinNum.getText().toString().trim());
+        // 订货倍数
+        specsBean.setMinOrder(mEdtMinOrder.getText().toString().trim());
+        // 是否允许小数购买
+        specsBean.setIsDecimalBuy(mSwitchIsDecimalBuy.isChecked() ? "1" : "0");
+        EventBus.getDefault().post(specsBean);
+        finish();
     }
 
     public interface CheckTextWatcher extends TextWatcher {

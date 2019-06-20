@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.goods;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -8,9 +11,20 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-06-11
  */
-public class SpecsBean {
+public class SpecsBean implements Parcelable {
     public static final String SPEC_STATUS_UP = "4";
     public static final String SPEC_STATUS_DOWN = "5";
+    public static final Creator<SpecsBean> CREATOR = new Creator<SpecsBean>() {
+        @Override
+        public SpecsBean createFromParcel(Parcel source) {
+            return new SpecsBean(source);
+        }
+
+        @Override
+        public SpecsBean[] newArray(int size) {
+            return new SpecsBean[size];
+        }
+    };
     private String specID;
     private String productSale;
     private String saleUnitName;
@@ -46,8 +60,53 @@ public class SpecsBean {
     private String productPrice;
     private String productStock;
     private String skuCode;
-    private List<DepositProductBean> depositProducts;
-    private List<?> labelIDs;
+    private String minOrder;
+    private List<DepositProductReq> depositProducts;
+
+    public SpecsBean() {
+    }
+
+    protected SpecsBean(Parcel in) {
+        this.specID = in.readString();
+        this.productSale = in.readString();
+        this.saleUnitName = in.readString();
+        this.standardUnitStatus = in.readString();
+        this.actionTime = in.readString();
+        this.preferentialPriceType = in.readString();
+        this.productID = in.readString();
+        this.specStatus = in.readString();
+        this.saleUnitID = in.readString();
+        this.isLowStock = in.readByte() != 0;
+        this.assistUnitStatus = in.readString();
+        this.offShelfTime = in.readString();
+        this.displayPrice = in.readString();
+        this.ration = in.readString();
+        this.productSpecID = in.readString();
+        this.action = in.readString();
+        this.isDecimalBuy = in.readString();
+        this.specContent = in.readString();
+        this.actionBy = in.readString();
+        this.standardUnitName = in.readString();
+        this.costPrice = in.readString();
+        this.convertRatio = in.readString();
+        this.premiumType = in.readString();
+        this.nextDayDelivery = in.readString();
+        this.onShelfTime = in.readString();
+        this.buyMinNum = in.readString();
+        this.productPrice = in.readString();
+        this.productStock = in.readString();
+        this.skuCode = in.readString();
+        this.minOrder = in.readString();
+        this.depositProducts = in.createTypedArrayList(DepositProductReq.CREATOR);
+    }
+
+    public String getMinOrder() {
+        return minOrder;
+    }
+
+    public void setMinOrder(String minOrder) {
+        this.minOrder = minOrder;
+    }
 
     public String getProductStock() {
         return productStock;
@@ -281,19 +340,51 @@ public class SpecsBean {
         this.skuCode = skuCode;
     }
 
-    public List<DepositProductBean> getDepositProducts() {
+    public List<DepositProductReq> getDepositProducts() {
         return depositProducts;
     }
 
-    public void setDepositProducts(List<DepositProductBean> depositProducts) {
+    public void setDepositProducts(List<DepositProductReq> depositProducts) {
         this.depositProducts = depositProducts;
     }
 
-    public List<?> getLabelIDs() {
-        return labelIDs;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public void setLabelIDs(List<?> labelIDs) {
-        this.labelIDs = labelIDs;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.specID);
+        dest.writeString(this.productSale);
+        dest.writeString(this.saleUnitName);
+        dest.writeString(this.standardUnitStatus);
+        dest.writeString(this.actionTime);
+        dest.writeString(this.preferentialPriceType);
+        dest.writeString(this.productID);
+        dest.writeString(this.specStatus);
+        dest.writeString(this.saleUnitID);
+        dest.writeByte(this.isLowStock ? (byte) 1 : (byte) 0);
+        dest.writeString(this.assistUnitStatus);
+        dest.writeString(this.offShelfTime);
+        dest.writeString(this.displayPrice);
+        dest.writeString(this.ration);
+        dest.writeString(this.productSpecID);
+        dest.writeString(this.action);
+        dest.writeString(this.isDecimalBuy);
+        dest.writeString(this.specContent);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.standardUnitName);
+        dest.writeString(this.costPrice);
+        dest.writeString(this.convertRatio);
+        dest.writeString(this.premiumType);
+        dest.writeString(this.nextDayDelivery);
+        dest.writeString(this.onShelfTime);
+        dest.writeString(this.buyMinNum);
+        dest.writeString(this.productPrice);
+        dest.writeString(this.productStock);
+        dest.writeString(this.skuCode);
+        dest.writeString(this.minOrder);
+        dest.writeTypedList(this.depositProducts);
     }
 }

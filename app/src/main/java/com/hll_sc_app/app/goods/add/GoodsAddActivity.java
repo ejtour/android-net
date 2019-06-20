@@ -21,6 +21,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -91,7 +92,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     @Subscribe
     public void onEvent(CopyCategoryBean bean) {
+        // 自定义分类新增
         showCustomCategory(bean);
+    }
+
+    @Subscribe
+    public void onEvent(SpecsBean bean) {
+        // 商品规格新增
     }
 
     @Override
@@ -174,6 +181,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
     }
 
+    /**
+     * 复制商城分类为自定义分类
+     */
     private void toCopy() {
         CategoryItem categoryItem1 = null;
         if (mTxtCategoryName.getTag(R.id.base_tag_1) != null) {
