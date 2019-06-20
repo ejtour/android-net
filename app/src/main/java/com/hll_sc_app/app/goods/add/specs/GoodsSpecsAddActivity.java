@@ -139,7 +139,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         }
     }
 
-    @OnClick({R.id.img_close, R.id.txt_save, R.id.rl_saleUnitName})
+    @OnClick({R.id.img_close, R.id.txt_save, R.id.rl_saleUnitName, R.id.txt_depositProducts_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -152,6 +152,11 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                 // 选择售卖单位
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_SALE_UNIT_NAME, this,
                     ImgUploadBlock.REQUEST_CODE_CHOOSE);
+                break;
+            case R.id.txt_depositProducts_add:
+                // 选择押金商品
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_DEPOSIT_PRODUCT, this,
+                    ImgUploadBlock.REQUEST_CODE_IMG_URL);
                 break;
             default:
                 break;

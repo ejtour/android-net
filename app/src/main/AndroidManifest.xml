@@ -76,6 +76,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.goods.add.specs.depositproducts.DepositProductsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.goods.add.customcategory.GoodsCustomCategoryActivity"
             android:screenOrientation="portrait"/>
 

@@ -8,6 +8,7 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.CustomCategorySortReq;
+import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
@@ -108,4 +109,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100008")
     Observable<BaseResp<List<SaleUnitNameBean>>> querySaleUnitName(@Body BaseMapReq req);
+
+    /**
+     * 查询押金商品列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100019")
+    Observable<BaseResp<DepositProductsResp>> queryDepositProducts(@Body BaseMapReq req);
 }
