@@ -1,26 +1,26 @@
 package com.hll_sc_app.app.goods.add.specs.depositproducts;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.chad.library.adapter.base.BaseSectionQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.DepositProductBean;
-import com.hll_sc_app.bean.goods.SaleUnitNameWrapper;
-import com.hll_sc_app.widget.StickyItemDecoration;
+import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -44,9 +44,9 @@ public class DepositProductsActivity extends BaseLoadActivity implements Deposit
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    private SaleUnitNameAdapter mAdapter;
-    private StickyItemDecoration mStickyItemDecoration;
+    private DepositProductAdapter mAdapter;
     private DepositProductsPresenter mPresenter;
+    private EmptyView mEmptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,64 +73,71 @@ public class DepositProductsActivity extends BaseLoadActivity implements Deposit
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mStickyItemDecoration = new StickyItemDecoration();
-        mRecyclerView.addItemDecoration(mStickyItemDecoration);
-        mAdapter = new SaleUnitNameAdapter();
+        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
+            , UIUtils.dip2px(1)));
+        mAdapter = new DepositProductAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            SaleUnitNameWrapper wrapper = (SaleUnitNameWrapper) adapter.getItem(position);
-            if (wrapper != null && !wrapper.isHeader) {
-                Intent intent = new Intent();
-                intent.putExtra(INTENT_TAG, wrapper.t);
-                setResult(RESULT_OK, intent);
-                finish();
+            DepositProductBean depositProductBean = (DepositProductBean) adapter.getItem(position);
+            if (depositProductBean != null) {
+                depositProductBean.setSelected(!depositProductBean.isSelected());
+                mAdapter.notifyItemChanged(position);
             }
         });
+        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有押金商品").create();
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.img_close})
+    @OnClick({R.id.img_close, R.id.txt_save})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
+        } else if (view.getId() == R.id.txt_save) {
+
         }
     }
 
     @Override
-    public void showDepositProductsList(List<DepositProductBean> list, int total) {
-
+    public void showDepositProductsList(List<DepositProductBean> list, boolean append, int total) {
+        if (append) {
+            mAdapter.addData(list);
+        } else {
+            mAdapter.setNewData(list);
+        }
+        mAdapter.setEmptyView(mEmptyView);
+        mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
     }
 
-    class SaleUnitNameAdapter extends BaseSectionQuickAdapter<SaleUnitNameWrapper, BaseViewHolder> {
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
+    }
 
-        SaleUnitNameAdapter() {
-            super(R.layout.item_sale_unit_name, R.layout.item_sale_unit_name_title, null);
+    class DepositProductAdapter extends BaseQuickAdapter<DepositProductBean, BaseViewHolder> {
+
+        DepositProductAdapter() {
+            super(R.layout.item_deposit_product);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, SaleUnitNameWrapper item) {
-            helper.setText(R.id.txt_saleUnitName, item.t.getSaleUnitName());
+        protected void convert(BaseViewHolder helper, DepositProductBean bean) {
+            helper.setText(R.id.txt_productName, bean.getProductName())
+                .setText(R.id.txt_specContent, getContent(bean))
+                .getView(R.id.img_select).setSelected(bean.isSelected());
         }
 
-        @Override
-        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
-            BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.itemView.setTag(viewType == SECTION_HEADER_VIEW);
-            return viewHolder;
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
-            if (getDefItemViewType(position) == SECTION_HEADER_VIEW) {
-                setFullSpan(holder);
-                convertHead(holder, getItem(position - getHeaderLayoutCount()));
-            } else {
-                super.onBindViewHolder(holder, position);
+        private String getContent(DepositProductBean bean) {
+            StringBuilder builder = new StringBuilder();
+            if (!TextUtils.isEmpty(bean.getSpecContent())) {
+                builder.append(bean.getSpecContent());
             }
-        }
-
-        @Override
-        protected void convertHead(BaseViewHolder helper, SaleUnitNameWrapper item) {
-            helper.setText(R.id.txt_title, item.header);
+            if (!TextUtils.isEmpty(bean.getSaleUnitName())) {
+                if (builder.length() != 0) {
+                    builder.append(",");
+                }
+                builder.append(bean.getSaleUnitName());
+            }
+            return builder.toString();
         }
     }
 }

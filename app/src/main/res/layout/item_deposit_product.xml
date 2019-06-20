@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/base_white"
+    android:paddingLeft="10dp">
+
+    <TextView
+        android:id="@+id/txt_productName"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        tools:text="杯"/>
+
+    <TextView
+        android:id="@+id/txt_specContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/txt_productName"
+        android:background="@drawable/bg_deposit_product_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        tools:text="200ml*1，杯"/>
+
+    <ImageView
+        android:id="@+id/img_select"
+        android:layout_width="35dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/bg_selector_check_box"/>
+
+</RelativeLayout>
+

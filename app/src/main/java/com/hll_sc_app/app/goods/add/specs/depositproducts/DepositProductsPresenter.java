@@ -71,7 +71,7 @@ public class DepositProductsPresenter implements DepositProductsContract.ISaleUn
                 @Override
                 public void onSuccess(DepositProductsResp resp) {
                     mPageNum = mTempPageNum;
-                    mView.showDepositProductsList(resp.getRecords(), resp.getTotal());
+                    mView.showDepositProductsList(resp.getRecords(), mPageNum != 1, resp.getTotal());
                 }
 
                 @Override

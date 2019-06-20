@@ -18,10 +18,11 @@ public interface DepositProductsContract {
         /**
          * 展示押金商品列表
          *
-         * @param list  list
-         * @param total indexList
+         * @param list   list
+         * @param append true-追加
+         * @param total  indexList
          */
-        void showDepositProductsList(List<DepositProductBean> list, int total);
+        void showDepositProductsList(List<DepositProductBean> list, boolean append, int total);
     }
 
     interface ISaleUnitNameAddPresenter extends IPresenter<ISaleUnitNameAddView> {

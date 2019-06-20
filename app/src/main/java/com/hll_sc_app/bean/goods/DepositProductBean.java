@@ -71,6 +71,15 @@ public class DepositProductBean {
     private String resourceType;
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
+    private boolean selected;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     public String getSpecID() {
         return specID;
