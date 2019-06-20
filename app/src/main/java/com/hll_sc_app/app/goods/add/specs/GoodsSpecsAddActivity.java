@@ -240,7 +240,38 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     }
 
     private void toSave() {
-
+        if (TextUtils.isEmpty(mEdtSpecContent.getText().toString().trim())) {
+            showToast("规格内容不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(mTxtSaleUnitName.getText().toString().trim())) {
+            showToast("售卖单位不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(mEdtProductPrice.getText().toString().trim())) {
+            showToast("单价不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(mEdtSkuCode.getText().toString().trim())) {
+            showToast("SKU条码不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(mEdtRation.getText().toString().trim())) {
+            showToast("转换率不能为空");
+            return;
+        }
+        boolean depositProductPass = true;
+        if (mDepositProductAdapter != null && !CommonUtils.isEmpty(mDepositProductAdapter.getData())) {
+            for (DepositProductBean bean : mDepositProductAdapter.getData()) {
+                if (TextUtils.isEmpty(bean.getDepositNum())) {
+                    depositProductPass = false;
+                    break;
+                }
+            }
+        }
+        if (!depositProductPass) {
+            showToast("请填写押金商品数量");
+        }
     }
 
     public interface CheckTextWatcher extends TextWatcher {
