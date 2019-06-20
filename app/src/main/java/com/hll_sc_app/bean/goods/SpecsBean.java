@@ -14,6 +14,7 @@ import java.util.List;
 public class SpecsBean implements Parcelable {
     public static final String SPEC_STATUS_UP = "4";
     public static final String SPEC_STATUS_DOWN = "5";
+    public static final String STANDARD_UNIT = "1";
     public static final Creator<SpecsBean> CREATOR = new Creator<SpecsBean>() {
         @Override
         public SpecsBean createFromParcel(Parcel source) {

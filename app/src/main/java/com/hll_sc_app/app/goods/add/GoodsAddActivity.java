@@ -4,13 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -20,11 +27,13 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
+import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.zhihu.matisse.Matisse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,8 +70,29 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     TextView mTxtCategoryNameCopy;
     @BindView(R.id.txt_shopProductCategorySubName)
     TextView mTxtShopProductCategorySubName;
+    @BindView(R.id.img_close)
+    ImageView mImgClose;
+    @BindView(R.id.txt_productImg_title)
+    StartTextView mTxtProductImgTitle;
+    @BindView(R.id.txt_productCode_title)
+    StartTextView mTxtProductCodeTitle;
+    @BindView(R.id.txt_productName_title)
+    StartTextView mTxtProductNameTitle;
+    @BindView(R.id.txt_categoryName_title)
+    StartTextView mTxtCategoryNameTitle;
+    @BindView(R.id.rl_categoryName)
+    RelativeLayout mRlCategoryName;
+    @BindView(R.id.txt_shopProductCategorySubName_title)
+    StartTextView mTxtShopProductCategorySubNameTitle;
+    @BindView(R.id.rl_shopProductCategorySubName)
+    RelativeLayout mRlShopProductCategorySubName;
+    @BindView(R.id.txt_specs_add)
+    TextView mTxtSpecsAdd;
+    @BindView(R.id.recyclerView_specs)
+    RecyclerView mRecyclerViewSpecs;
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
+    private SpecsAdapter mSpecsAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +118,33 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mImgImgUrl.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL);
         // 辅图
         mImgImgUrlSub.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB);
+
+        // 商品规格
+        mRecyclerViewSpecs.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewSpecs.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
+            R.color.base_color_divider), UIUtils.dip2px(1)));
+        mSpecsAdapter = new SpecsAdapter();
+        mSpecsAdapter.setOnItemClickListener((adapter, view, position) -> {
+            // 去规格详情中去修改
+            SpecsBean specsBean = (SpecsBean) adapter.getItem(position);
+            if (specsBean != null) {
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, specsBean);
+            }
+
+        });
+        mSpecsAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.img_del) {
+                SpecsBean specsBean = (SpecsBean) adapter.getItem(position);
+                if (specsBean != null) {
+                    if (TextUtils.equals(SpecsBean.STANDARD_UNIT, specsBean.getStandardUnitStatus())) {
+                        showToast("标准规格不能删除");
+                        return;
+                    }
+                    mSpecsAdapter.remove(position);
+                }
+            }
+        });
+        mRecyclerViewSpecs.setAdapter(mSpecsAdapter);
     }
 
     @Subscribe
@@ -99,6 +156,15 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     @Subscribe
     public void onEvent(SpecsBean bean) {
         // 商品规格新增
+        if (mSpecsAdapter == null) {
+            return;
+        }
+        if (CommonUtils.isEmpty(mSpecsAdapter.getData())) {
+            // 第一个默认为标注规格
+            bean.setStandardUnitStatus("1");
+        }
+        mSpecsAdapter.addData(bean);
+        mSpecsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -201,5 +267,24 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             return;
         }
         mPresenter.copyToCustomCategory(categoryItem1, categoryItem2, categoryItem3);
+    }
+
+    class SpecsAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
+
+        SpecsAdapter() {
+            super(R.layout.item_goods_specs);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, SpecsBean item) {
+            helper.setText(R.id.txt_specContent, item.getSpecContent())
+                .setVisible(R.id.txt_standardUnitStatus, TextUtils.equals(item.getStandardUnitStatus(),
+                    SpecsBean.STANDARD_UNIT))
+                .setVisible(R.id.txt_assistUnitStatus, TextUtils.equals(item.getAssistUnitStatus(), "1"))
+                .addOnClickListener(R.id.img_del)
+                .setImageResource(R.id.img_del, TextUtils.equals(item.getStandardUnitStatus(),
+                    SpecsBean.STANDARD_UNIT) ? R.drawable.ic_spec_delete_disable : R.drawable.ic_spec_delete)
+                .setText(R.id.txt_productPrice, "¥" + item.getProductPrice());
+        }
     }
 }

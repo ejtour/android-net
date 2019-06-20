@@ -59,6 +59,22 @@ public class DepositProductReq implements Parcelable {
         return listReq;
     }
 
+    public static List<DepositProductBean> createDepositProductBean(List<DepositProductReq> list) {
+        List<DepositProductBean> listReq = new ArrayList<>();
+        if (!CommonUtils.isEmpty(list)) {
+            for (DepositProductReq depositProductReq : list) {
+                DepositProductBean bean = new DepositProductBean();
+                bean.setProductID(depositProductReq.getDepositProductID());
+                bean.setSpecID(depositProductReq.getDepositSpecID());
+                bean.setProductName(depositProductReq.getDepositProductName());
+                bean.setSpecContent(depositProductReq.getDepositSpecName());
+                bean.setDepositNum(depositProductReq.getDepositNum());
+                listReq.add(bean);
+            }
+        }
+        return listReq;
+    }
+
     public String getDepositProductID() {
         return depositProductID;
     }

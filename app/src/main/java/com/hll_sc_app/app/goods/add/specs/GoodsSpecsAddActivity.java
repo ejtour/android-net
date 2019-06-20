@@ -16,7 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
@@ -101,6 +103,8 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     RecyclerView mRecyclerViewDepositProduct;
     @BindView(R.id.switch_isDecimalBuy)
     Switch mSwitchIsDecimalBuy;
+    @Autowired(name = "parcelable")
+    SpecsBean mSpecsBean;
     private GoodsSpecsAddPresenter mPresenter;
     private DepositProductAdapter mDepositProductAdapter;
 
@@ -108,12 +112,14 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_specs);
+        ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
         mPresenter = GoodsSpecsAddPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        showView();
     }
 
     private void initView() {
@@ -171,6 +177,34 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             }
         });
         mRecyclerViewDepositProduct.setAdapter(mDepositProductAdapter);
+    }
+
+    /**
+     * 编辑
+     */
+    private void showView() {
+        if (mSpecsBean == null) {
+            return;
+        }
+        // 规格内容
+        mEdtSpecContent.setText(mSpecsBean.getSpecContent());
+        // 售卖单位
+        mTxtSaleUnitName.setText(mSpecsBean.getSaleUnitName());
+        mTxtSaleUnitName.setTag(mSpecsBean.getSaleUnitID());
+        // 单价
+        mEdtProductPrice.setText(mSpecsBean.getProductPrice());
+        // 押金商品
+        mDepositProductAdapter.setNewData(DepositProductReq.createDepositProductBean(mSpecsBean.getDepositProducts()));
+        // sku 条码
+        mEdtSkuCode.setText(mSpecsBean.getSkuCode());
+        // 转换率
+        mEdtRation.setText(mSpecsBean.getRation());
+        // 最低起购量
+        mEdtBuyMinNum.setText(mSpecsBean.getBuyMinNum());
+        // 订货倍数
+        mEdtMinOrder.setText(mSpecsBean.getMinOrder());
+        // 是否允许小数购买
+        mSwitchIsDecimalBuy.setChecked(TextUtils.equals(mSpecsBean.getIsDecimalBuy(), "1"));
     }
 
     /**

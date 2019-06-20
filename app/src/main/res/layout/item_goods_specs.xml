@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/base_bg_item_white"
+    android:paddingRight="10dp">
+
+    <ImageView
+        android:id="@+id/img_del"
+        android:layout_width="45dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_spec_delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/txt_specContent"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color222"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/img_del"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="杯"/>
+
+    <TextView
+        android:id="@+id/txt_standardUnitStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="标准"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_specContent"
+        app:layout_constraintLeft_toRightOf="@+id/txt_specContent"
+        app:layout_constraintTop_toTopOf="@+id/txt_specContent"/>
+
+    <TextView
+        android:id="@+id/txt_assistUnitStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/bg_tag_assist_solid"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="辅助"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_specContent"
+        app:layout_constraintLeft_toRightOf="@+id/txt_specContent"
+        app:layout_constraintTop_toTopOf="@+id/txt_specContent"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/txt_productPrice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="5dp"
+        android:gravity="right"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color222"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/txt_assistUnitStatus"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="¥58.00"/>
+
+</android.support.constraint.ConstraintLayout>
+
