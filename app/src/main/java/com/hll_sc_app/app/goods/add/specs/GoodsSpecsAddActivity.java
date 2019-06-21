@@ -66,7 +66,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     @BindView(R.id.txt_save)
     TextView mTxtSave;
     @BindView(R.id.txt_specContent_title)
-    StartTextView mTxtSpecContentTitle;
+    TextView mTxtSpecContentTitle;
     @BindView(R.id.edt_specContent)
     EditText mEdtSpecContent;
     @BindView(R.id.txt_saleUnitName_title)
@@ -105,6 +105,8 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     Switch mSwitchIsDecimalBuy;
     @Autowired(name = "parcelable")
     SpecsBean mSpecsBean;
+    @Autowired(name = "object0")
+    boolean mIsDepositProduct;
     private GoodsSpecsAddPresenter mPresenter;
     private DepositProductAdapter mDepositProductAdapter;
 
@@ -273,8 +275,13 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                 break;
             case R.id.txt_depositProducts_add:
                 // 选择押金商品
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_DEPOSIT_PRODUCT,
-                    GoodsSpecsAddActivity.this, ImgUploadBlock.REQUEST_CODE_IMG_URL);
+                // 先判断下该商品是否为押金商品
+                if (mIsDepositProduct || (mSpecsBean != null && mSpecsBean.isDepositProduct())) {
+                    showToast("已是押金商品不能关联");
+                } else {
+                    RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS_DEPOSIT_PRODUCT,
+                        GoodsSpecsAddActivity.this, ImgUploadBlock.REQUEST_CODE_IMG_URL);
+                }
                 break;
             default:
                 break;

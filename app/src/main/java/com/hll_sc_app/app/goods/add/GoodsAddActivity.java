@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -23,6 +24,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -118,6 +120,14 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     TextView mTxtLabelAdd;
     @BindView(R.id.flowLayout)
     TagFlowLayout mFlowLayout;
+    @BindView(R.id.txt_depositProductType_title)
+    TextView mTxtDepositProductTypeTitle;
+    @BindView(R.id.switch_depositProductType)
+    Switch mSwitchDepositProductType;
+    @BindView(R.id.txt_stockCheckType_title)
+    TextView mTxtStockCheckTypeTitle;
+    @BindView(R.id.switch_stockCheckType)
+    Switch mSwitchStockCheckType;
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
     private AssistUnitSelectWindow mAssistUnitSelectWindow;
@@ -160,6 +170,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             SpecsBean specsBean = (SpecsBean) adapter.getItem(position);
             if (specsBean != null) {
                 specsBean.setEdit(true);
+                specsBean.setDepositProduct(mSwitchDepositProductType.isChecked());
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, specsBean);
             }
 
@@ -178,12 +189,73 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             }
         });
         mRecyclerViewSpecs.setAdapter(mSpecsAdapter);
+
+        mSwitchDepositProductType.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                return;
+            }
+            if (mSwitchStockCheckType.isChecked()) {
+                mSwitchDepositProductType.setChecked(false);
+                showToast("押金商品不需要库存校验");
+                return;
+            }
+            if (isRelevanceDepositProduct()) {
+                mSwitchDepositProductType.setChecked(false);
+                showToast("关联押金商品后不能设置");
+                return;
+            }
+            showDepositProductType();
+        });
+
+        mSwitchStockCheckType.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                return;
+            }
+            if (mSwitchDepositProductType.isChecked()) {
+                mSwitchStockCheckType.setChecked(false);
+                showToast("押金商品不需要库存校验");
+                return;
+            }
+            showStockCheckType();
+        });
     }
 
     private void showSpecsAddAssistUnit() {
         // 选择辅助规格
         mTxtSpecsAddAssistUnit.setVisibility((mSpecsAdapter != null && mSpecsAdapter.getItemCount() >= 2) ?
             View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * 规格里面是否关联了押金商品
+     *
+     * @return true-关联了押金商品
+     */
+    private boolean isRelevanceDepositProduct() {
+        if (mSpecsAdapter != null && !CommonUtils.isEmpty(mSpecsAdapter.getData())) {
+            for (SpecsBean bean : mSpecsAdapter.getData()) {
+                if (!CommonUtils.isEmpty(bean.getDepositProducts())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void showDepositProductType() {
+        TipsDialog.newBuilder(this)
+            .setTitle("设置为押金商品")
+            .setMessage("启用后，该商品不能单独售卖，不能在商城端被搜索到，不能单独加入进货单，且不能下架。")
+            .setButton((dialog, item) -> dialog.dismiss(), "我知道了")
+            .create().show();
+    }
+
+    private void showStockCheckType() {
+        TipsDialog.newBuilder(this)
+            .setTitle("开启库存校验")
+            .setMessage("开启库存校验后，当商品某规格库存不足时不允许采购商下单采购")
+            .setButton((dialog, item) -> dialog.dismiss(), "我知道了")
+            .create().show();
     }
 
     @Subscribe
@@ -322,7 +394,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 break;
             case R.id.txt_specs_add:
                 // 新增规格
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS);
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, mSwitchDepositProductType.isChecked());
                 break;
             case R.id.txt_specs_add_assistUnit:
                 // 选择辅助规格
