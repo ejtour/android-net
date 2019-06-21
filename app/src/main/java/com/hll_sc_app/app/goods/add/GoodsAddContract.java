@@ -3,10 +3,12 @@ package com.hll_sc_app.app.goods.add;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * 新增商品
@@ -38,6 +40,13 @@ public interface GoodsAddContract {
          * @param bean bean
          */
         void showCustomCategory(CopyCategoryBean bean);
+
+        /**
+         * 显示商品标签选择页面
+         *
+         * @param list 商品标签数据
+         */
+        void showLabelSelectWindow(List<LabelBean> list);
     }
 
     interface IGoodsAddPresenter extends IPresenter<IGoodsAddView> {
@@ -62,5 +71,10 @@ public interface GoodsAddContract {
          * @param categoryItem3 categoryItem
          */
         void copyToCustomCategory(CategoryItem categoryItem1, CategoryItem categoryItem2, CategoryItem categoryItem3);
+
+        /**
+         * 行业标签查询接口
+         */
+        void queryLabelList();
     }
 }

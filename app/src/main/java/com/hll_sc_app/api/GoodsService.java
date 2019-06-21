@@ -11,6 +11,7 @@ import com.hll_sc_app.bean.goods.CustomCategorySortReq;
 import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
 import com.hll_sc_app.bean.goods.SkuCheckResp;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
@@ -130,4 +131,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100087")
     Observable<BaseResp<SkuCheckResp>> checkSkuCode(@Body BaseMapReq req);
+
+    /**
+     * 行业标签查询接口
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100056")
+    Observable<BaseResp<List<LabelBean>>> queryLabelList(@Body BaseMapReq req);
 }

@@ -29,10 +29,12 @@ import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.zhihu.matisse.Matisse;
 
@@ -112,6 +114,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private CategorySelectWindow mCategorySelectWindow;
     private AssistUnitSelectWindow mAssistUnitSelectWindow;
     private SpecsAdapter mSpecsAdapter;
+    private LabelSelectWindow mLabelSelectWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -276,8 +279,21 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             bean.getShopProductCategoryThreeName()));
     }
 
+    @Override
+    public void showLabelSelectWindow(List<LabelBean> list) {
+        if (mLabelSelectWindow == null) {
+            mLabelSelectWindow = new LabelSelectWindow(this);
+            mLabelSelectWindow.setListener(() -> {
+                List<LabelBean> selectList = mLabelSelectWindow.getSelectList();
+                LogUtil.d("ZYS", selectList.toString());
+            });
+        }
+        mLabelSelectWindow.setList(list);
+        mLabelSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
-        R.id.txt_specs_add, R.id.txt_specs_add_assistUnit})
+        R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -302,6 +318,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             case R.id.txt_specs_add_assistUnit:
                 // 选择辅助规格
                 showAssistUnitSelectWindow();
+                break;
+            case R.id.txt_label_add:
+                // 选择商品标签
+                mPresenter.queryLabelList();
                 break;
             default:
                 break;

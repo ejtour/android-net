@@ -10,12 +10,14 @@ import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -31,6 +33,7 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
     private GoodsAddContract.IGoodsAddView mView;
     private CategoryResp mCategoryResp;
+    private List<LabelBean> mLabelList;
 
     static GoodsAddPresenter newInstance() {
         return new GoodsAddPresenter();
@@ -121,6 +124,33 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
                 @Override
                 public void onSuccess(CopyCategoryBean resp) {
                     mView.showCustomCategory(resp);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void queryLabelList() {
+        if (!CommonUtils.isEmpty(mLabelList)) {
+            mView.showLabelSelectWindow(mLabelList);
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder().create();
+        GoodsService.INSTANCE.queryLabelList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<List<LabelBean>>() {
+                @Override
+                public void onSuccess(List<LabelBean> list) {
+                    mLabelList = list;
+                    mView.showLabelSelectWindow(mLabelList);
                 }
 
                 @Override
