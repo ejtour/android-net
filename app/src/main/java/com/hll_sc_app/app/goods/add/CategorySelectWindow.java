@@ -21,10 +21,10 @@ import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 
 /**
- * 日期选择只选择年份
+ * 商城分类选择
  *
  * @author 朱英松
- * @date 2017/11/3
+ * @date 2019/6/21
  */
 public class CategorySelectWindow extends BaseShadowPopupWindow implements View.OnClickListener {
     private CategoryItem mSelectCategory1;
