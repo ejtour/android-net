@@ -15,17 +15,6 @@ public class SpecsBean implements Parcelable {
     public static final String SPEC_STATUS_UP = "4";
     public static final String SPEC_STATUS_DOWN = "5";
     public static final String STANDARD_UNIT = "1";
-    public static final Creator<SpecsBean> CREATOR = new Creator<SpecsBean>() {
-        @Override
-        public SpecsBean createFromParcel(Parcel source) {
-            return new SpecsBean(source);
-        }
-
-        @Override
-        public SpecsBean[] newArray(int size) {
-            return new SpecsBean[size];
-        }
-    };
     private String specID;
     private String productSale;
     private String saleUnitName;
@@ -64,9 +53,18 @@ public class SpecsBean implements Parcelable {
     private String minOrder;
     private List<DepositProductReq> depositProducts;
     private boolean edit;
+    public static final Creator<SpecsBean> CREATOR = new Creator<SpecsBean>() {
+        @Override
+        public SpecsBean createFromParcel(Parcel source) {
+            return new SpecsBean(source);
+        }
 
-    public SpecsBean() {
-    }
+        @Override
+        public SpecsBean[] newArray(int size) {
+            return new SpecsBean[size];
+        }
+    };
+    private boolean select;
 
     protected SpecsBean(Parcel in) {
         this.specID = in.readString();
@@ -101,6 +99,10 @@ public class SpecsBean implements Parcelable {
         this.minOrder = in.readString();
         this.depositProducts = in.createTypedArrayList(DepositProductReq.CREATOR);
         this.edit = in.readByte() != 0;
+        this.select = in.readByte() != 0;
+    }
+
+    public SpecsBean() {
     }
 
     public boolean isEdit() {
@@ -364,6 +366,14 @@ public class SpecsBean implements Parcelable {
         return 0;
     }
 
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.specID);
@@ -398,5 +408,6 @@ public class SpecsBean implements Parcelable {
         dest.writeString(this.minOrder);
         dest.writeTypedList(this.depositProducts);
         dest.writeByte(this.edit ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
     }
 }

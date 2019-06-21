@@ -90,8 +90,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     TextView mTxtSpecsAdd;
     @BindView(R.id.recyclerView_specs)
     RecyclerView mRecyclerViewSpecs;
+    @BindView(R.id.txt_specs_add_assistUnit)
+    TextView mTxtSpecsAddAssistUnit;
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
+    private AssistUnitSelectWindow mAssistUnitSelectWindow;
     private SpecsAdapter mSpecsAdapter;
 
     @Override
@@ -143,9 +146,16 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                     }
                     mSpecsAdapter.remove(position);
                 }
+                showSpecsAddAssistUnit();
             }
         });
         mRecyclerViewSpecs.setAdapter(mSpecsAdapter);
+    }
+
+    private void showSpecsAddAssistUnit() {
+        // 选择辅助规格
+        mTxtSpecsAddAssistUnit.setVisibility((mSpecsAdapter != null && mSpecsAdapter.getItemCount() >= 2) ?
+            View.VISIBLE : View.GONE);
     }
 
     @Subscribe
@@ -195,6 +205,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             mSpecsAdapter.addData(bean);
             mSpecsAdapter.notifyDataSetChanged();
         }
+        showSpecsAddAssistUnit();
     }
 
     @Override
@@ -250,7 +261,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
-        R.id.txt_specs_add})
+        R.id.txt_specs_add, R.id.txt_specs_add_assistUnit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -271,6 +282,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             case R.id.txt_specs_add:
                 // 新增规格
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS);
+                break;
+            case R.id.txt_specs_add_assistUnit:
+                // 选择辅助规格
+                showAssistUnitSelectWindow();
                 break;
             default:
                 break;
@@ -297,6 +312,27 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             return;
         }
         mPresenter.copyToCustomCategory(categoryItem1, categoryItem2, categoryItem3);
+    }
+
+    private void showAssistUnitSelectWindow() {
+        if (mAssistUnitSelectWindow == null) {
+            mAssistUnitSelectWindow = new AssistUnitSelectWindow(this);
+            mAssistUnitSelectWindow.setListener(beans -> {
+                if (CommonUtils.isEmpty(beans)) {
+                    List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
+                    for (SpecsBean specsBean : specsBeanList) {
+                        specsBean.setAssistUnitStatus("0");
+                    }
+                } else {
+                    for (SpecsBean bean : beans) {
+                        bean.setAssistUnitStatus("1");
+                    }
+                }
+                mSpecsAdapter.notifyDataSetChanged();
+            });
+        }
+        mAssistUnitSelectWindow.refreshList(mSpecsAdapter.getData());
+        mAssistUnitSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     class SpecsAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
