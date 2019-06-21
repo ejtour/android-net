@@ -184,6 +184,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
      */
     private void showView() {
         if (mSpecsBean == null) {
+            mSpecsBean = new SpecsBean();
             return;
         }
         // 规格内容
@@ -319,28 +320,26 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
 
     @Override
     public void checkSuccess() {
-        // 返回上级页面
-        SpecsBean specsBean = new SpecsBean();
         // 规格内容
-        specsBean.setSpecContent(mEdtSpecContent.getText().toString().trim());
+        mSpecsBean.setSpecContent(mEdtSpecContent.getText().toString().trim());
         // 售卖单位
-        specsBean.setSaleUnitName(mTxtSaleUnitName.getText().toString());
-        specsBean.setSaleUnitID(mTxtSaleUnitName.getTag() == null ? null : (String) mTxtSaleUnitName.getTag());
+        mSpecsBean.setSaleUnitName(mTxtSaleUnitName.getText().toString());
+        mSpecsBean.setSaleUnitID(mTxtSaleUnitName.getTag() == null ? null : (String) mTxtSaleUnitName.getTag());
         // 单价
-        specsBean.setProductPrice(mEdtProductPrice.getText().toString().trim());
+        mSpecsBean.setProductPrice(mEdtProductPrice.getText().toString().trim());
         // 押金商品
-        specsBean.setDepositProducts(DepositProductReq.createDepositProductReq(mDepositProductAdapter.getData()));
+        mSpecsBean.setDepositProducts(DepositProductReq.createDepositProductReq(mDepositProductAdapter.getData()));
         // sku 条码
-        specsBean.setSkuCode(mEdtSkuCode.getText().toString().trim());
+        mSpecsBean.setSkuCode(mEdtSkuCode.getText().toString().trim());
         // 转换率
-        specsBean.setRation(mEdtRation.getText().toString().trim());
+        mSpecsBean.setRation(mEdtRation.getText().toString().trim());
         // 最低起购量
-        specsBean.setBuyMinNum(mEdtBuyMinNum.getText().toString().trim());
+        mSpecsBean.setBuyMinNum(mEdtBuyMinNum.getText().toString().trim());
         // 订货倍数
-        specsBean.setMinOrder(mEdtMinOrder.getText().toString().trim());
+        mSpecsBean.setMinOrder(mEdtMinOrder.getText().toString().trim());
         // 是否允许小数购买
-        specsBean.setIsDecimalBuy(mSwitchIsDecimalBuy.isChecked() ? "1" : "0");
-        EventBus.getDefault().post(specsBean);
+        mSpecsBean.setIsDecimalBuy(mSwitchIsDecimalBuy.isChecked() ? "1" : "0");
+        EventBus.getDefault().post(mSpecsBean);
         finish();
     }
 

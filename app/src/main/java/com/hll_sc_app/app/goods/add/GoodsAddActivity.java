@@ -128,6 +128,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             // 去规格详情中去修改
             SpecsBean specsBean = (SpecsBean) adapter.getItem(position);
             if (specsBean != null) {
+                specsBean.setEdit(true);
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, specsBean);
             }
 
@@ -163,8 +164,37 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             // 第一个默认为标注规格
             bean.setStandardUnitStatus("1");
         }
-        mSpecsAdapter.addData(bean);
-        mSpecsAdapter.notifyDataSetChanged();
+        if (bean.isEdit()) {
+            int position = -1;
+            if (!CommonUtils.isEmpty(mSpecsAdapter.getData())) {
+                List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
+                int size = specsBeanList.size();
+                for (int i = 0; i < size; i++) {
+                    SpecsBean specsBean = specsBeanList.get(i);
+                    if (specsBean.isEdit()) {
+                        specsBean.setEdit(false);
+                        specsBean.setSpecContent(bean.getSpecContent());
+                        specsBean.setSaleUnitName(bean.getSaleUnitName());
+                        specsBean.setSaleUnitID(bean.getSaleUnitID());
+                        specsBean.setProductPrice(bean.getProductPrice());
+                        specsBean.setDepositProducts(bean.getDepositProducts());
+                        specsBean.setSkuCode(bean.getSkuCode());
+                        specsBean.setRation(bean.getRation());
+                        specsBean.setBuyMinNum(bean.getBuyMinNum());
+                        specsBean.setMinOrder(bean.getMinOrder());
+                        specsBean.setIsDecimalBuy(bean.getIsDecimalBuy());
+                        position = i;
+                        break;
+                    }
+                }
+            }
+            if (position != -1) {
+                mSpecsAdapter.notifyItemChanged(position);
+            }
+        } else {
+            mSpecsAdapter.addData(bean);
+            mSpecsAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

@@ -63,6 +63,7 @@ public class SpecsBean implements Parcelable {
     private String skuCode;
     private String minOrder;
     private List<DepositProductReq> depositProducts;
+    private boolean edit;
 
     public SpecsBean() {
     }
@@ -99,6 +100,15 @@ public class SpecsBean implements Parcelable {
         this.skuCode = in.readString();
         this.minOrder = in.readString();
         this.depositProducts = in.createTypedArrayList(DepositProductReq.CREATOR);
+        this.edit = in.readByte() != 0;
+    }
+
+    public boolean isEdit() {
+        return edit;
+    }
+
+    public void setEdit(boolean edit) {
+        this.edit = edit;
     }
 
     public String getMinOrder() {
@@ -387,5 +397,6 @@ public class SpecsBean implements Parcelable {
         dest.writeString(this.skuCode);
         dest.writeString(this.minOrder);
         dest.writeTypedList(this.depositProducts);
+        dest.writeByte(this.edit ? (byte) 1 : (byte) 0);
     }
 }
