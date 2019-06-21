@@ -76,9 +76,14 @@ public class CategorySelectWindow extends BaseShadowPopupWindow implements View.
             @Override
             public void onScrollingFinished(WheelView wheel) {
                 mSelectCategory1 = mCategoryAdapter1.getItem(wheel.getCurrentItem());
+                // 联动二级
                 mCategoryAdapter2.setList(getListItem(mSelectCategory1.getCategoryID(), mResp.getList2()));
                 mPicker2.setCurrentItem(0, true);
                 mSelectCategory2 = mCategoryAdapter2.getItem(0);
+                // 二级变动联动三级
+                mCategoryAdapter3.setList(getListItem(mSelectCategory2.getCategoryID(), mResp.getList3()));
+                mPicker3.setCurrentItem(0, true);
+                mSelectCategory3 = mCategoryAdapter3.getItem(0);
             }
         });
         picker1.setCurrentItem(0);
@@ -96,6 +101,7 @@ public class CategorySelectWindow extends BaseShadowPopupWindow implements View.
             @Override
             public void onScrollingFinished(WheelView wheel) {
                 mSelectCategory2 = mCategoryAdapter2.getItem(wheel.getCurrentItem());
+                // 联动三级
                 mCategoryAdapter3.setList(getListItem(mSelectCategory2.getCategoryID(), mResp.getList3()));
                 mPicker3.setCurrentItem(0, true);
                 mSelectCategory3 = mCategoryAdapter3.getItem(0);
