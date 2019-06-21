@@ -282,10 +282,6 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     }
 
     private void toSave() {
-        if (TextUtils.isEmpty(mEdtSpecContent.getText().toString().trim())) {
-            showToast("规格内容不能为空");
-            return;
-        }
         if (TextUtils.isEmpty(mTxtSaleUnitName.getText().toString().trim())) {
             showToast("售卖单位不能为空");
             return;
