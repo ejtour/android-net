@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goods.add;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,9 +36,11 @@ import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.zhihu.matisse.Matisse;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -110,11 +114,16 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     TextView mTxtNickNames3Title;
     @BindView(R.id.et_nickNames3)
     EditText mEtNickNames3;
+    @BindView(R.id.txt_label_add)
+    TextView mTxtLabelAdd;
+    @BindView(R.id.flowLayout)
+    TagFlowLayout mFlowLayout;
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
     private AssistUnitSelectWindow mAssistUnitSelectWindow;
     private SpecsAdapter mSpecsAdapter;
     private LabelSelectWindow mLabelSelectWindow;
+    private FlowAdapter mFlowAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -284,8 +293,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (mLabelSelectWindow == null) {
             mLabelSelectWindow = new LabelSelectWindow(this);
             mLabelSelectWindow.setListener(() -> {
-                List<LabelBean> selectList = mLabelSelectWindow.getSelectList();
-                LogUtil.d("ZYS", selectList.toString());
+                mFlowAdapter = new FlowAdapter(GoodsAddActivity.this, mLabelSelectWindow.getSelectList());
+                mFlowLayout.setAdapter(mFlowAdapter);
             });
         }
         mLabelSelectWindow.setList(list);
@@ -369,6 +378,30 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
         mAssistUnitSelectWindow.refreshList(mSpecsAdapter.getData());
         mAssistUnitSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
+    private static class FlowAdapter extends TagAdapter<LabelBean> {
+        private LayoutInflater mInflater;
+        private List<LabelBean> mList;
+
+        FlowAdapter(Context context, List<LabelBean> list) {
+            super(list);
+            mList = list;
+            mInflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public View getView(FlowLayout flowLayout, int position, LabelBean s) {
+            View view = mInflater.inflate(R.layout.view_item_goods_label, flowLayout, false);
+            TextView textView = view.findViewById(R.id.txt_labelName);
+            textView.setText(s.getLabelName());
+            ImageView imageDel = view.findViewById(R.id.img_del);
+            imageDel.setOnClickListener(v -> {
+                mList.remove(position);
+                notifyDataChanged();
+            });
+            return view;
+        }
     }
 
     class SpecsAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
