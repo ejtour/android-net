@@ -11,6 +11,7 @@ import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.LabelBean;
+import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -34,6 +35,7 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
     private GoodsAddContract.IGoodsAddView mView;
     private CategoryResp mCategoryResp;
     private List<LabelBean> mLabelList;
+    private List<ProductAttrBean> mProductAttrsList;
 
     static GoodsAddPresenter newInstance() {
         return new GoodsAddPresenter();
@@ -151,6 +153,33 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
                 public void onSuccess(List<LabelBean> list) {
                     mLabelList = list;
                     mView.showLabelSelectWindow(mLabelList);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void queryProductAttrsList() {
+        if (!CommonUtils.isEmpty(mProductAttrsList)) {
+            mView.showProductAttrsActivity(mProductAttrsList);
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder().create();
+        GoodsService.INSTANCE.queryProductAttrsList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<List<ProductAttrBean>>() {
+                @Override
+                public void onSuccess(List<ProductAttrBean> list) {
+                    mProductAttrsList = list;
+                    mView.showProductAttrsActivity(mProductAttrsList);
                 }
 
                 @Override

@@ -12,6 +12,7 @@ import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.LabelBean;
+import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
 import com.hll_sc_app.bean.goods.SkuCheckResp;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
@@ -141,4 +142,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100056")
     Observable<BaseResp<List<LabelBean>>> queryLabelList(@Body BaseMapReq req);
+
+    /**
+     * 商品属性公共列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100063")
+    Observable<BaseResp<List<ProductAttrBean>>> queryProductAttrsList(@Body BaseMapReq req);
 }
