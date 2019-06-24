@@ -13,6 +13,7 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
+import com.hll_sc_app.bean.goods.ProductBrandResp;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
 import com.hll_sc_app.bean.goods.SkuCheckResp;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
@@ -163,4 +164,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100136")
     Observable<BaseResp<List<String>>> queryProductBrandList(@Body BaseMapReq req);
+
+    /**
+     * 查询品牌列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100009")
+    Observable<BaseResp<ProductBrandResp>> queryAllProductBrandList(@Body BaseMapReq req);
 }

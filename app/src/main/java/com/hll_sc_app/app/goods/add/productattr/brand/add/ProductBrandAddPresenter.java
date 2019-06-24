@@ -6,7 +6,8 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.bean.goods.DepositProductsResp;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.goods.ProductBrandResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -29,7 +30,7 @@ public class ProductBrandAddPresenter implements ProductBrandAddContract.ISaleUn
 
     @Override
     public void start() {
-        queryDepositProducts(true);
+        queryProductBrandList(true);
     }
 
     @Override
@@ -38,26 +39,27 @@ public class ProductBrandAddPresenter implements ProductBrandAddContract.ISaleUn
     }
 
     @Override
-    public void queryDepositProducts(boolean showLoading) {
+    public void queryProductBrandList(boolean showLoading) {
         mPageNum = 1;
         mTempPageNum = mPageNum;
-        toQueryDepositProducts(showLoading);
+        toQueryProductBrandList(showLoading);
     }
 
     @Override
-    public void queryMoreDepositProducts() {
+    public void queryMoreProductBrandList() {
         mTempPageNum = mPageNum;
         mTempPageNum++;
-        toQueryDepositProducts(false);
+        toQueryProductBrandList(false);
     }
 
-    private void toQueryDepositProducts(boolean showLoading) {
+    private void toQueryProductBrandList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("actionType", "depositProduct")
+            .put("groupID", UserConfig.getGroupID())
+            .put("status", "0")
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
             .create();
-        GoodsService.INSTANCE.queryDepositProducts(req)
+        GoodsService.INSTANCE.queryAllProductBrandList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> {
@@ -67,11 +69,11 @@ public class ProductBrandAddPresenter implements ProductBrandAddContract.ISaleUn
             })
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<DepositProductsResp>() {
+            .subscribe(new BaseCallback<ProductBrandResp>() {
                 @Override
-                public void onSuccess(DepositProductsResp resp) {
+                public void onSuccess(ProductBrandResp resp) {
                     mPageNum = mTempPageNum;
-                    mView.showDepositProductsList(resp.getRecords(), mPageNum != 1, resp.getTotal());
+                    mView.showProductBrandList(resp.getRecords(), mPageNum != 1, resp.getTotalSize());
                 }
 
                 @Override

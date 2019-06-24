@@ -24,15 +24,13 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.goods.DepositProductBean;
-import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.bean.goods.ProductBrandBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,7 +61,7 @@ public class ProductBrandAddActivity extends BaseLoadActivity implements Product
     TextView mTxtCommit;
     @BindView(R.id.fl_bottom)
     FrameLayout mFlBottom;
-    private DepositProductAdapter mAdapter;
+    private ProductBrandAdapter mAdapter;
     private ProductBrandAddPresenter mPresenter;
     private EmptyView mEmptyView;
 
@@ -80,48 +78,36 @@ public class ProductBrandAddActivity extends BaseLoadActivity implements Product
     }
 
     private void initView() {
-        mEdtBrandName.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s -> mTxtCommit.setEnabled(!TextUtils.isEmpty(s)));
+        mEdtBrandName.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s
+            -> mTxtCommit.setEnabled(!TextUtils.isEmpty(s)));
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreDepositProducts();
+                mPresenter.queryMoreProductBrandList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryDepositProducts(false);
+                mPresenter.queryProductBrandList(false);
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
-        mAdapter = new DepositProductAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            DepositProductBean depositProductBean = (DepositProductBean) adapter.getItem(position);
-            if (depositProductBean != null) {
-                depositProductBean.setSelected(!depositProductBean.isSelected());
-                mAdapter.notifyItemChanged(position);
+        mAdapter = new ProductBrandAdapter();
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.img_del) {
+                    ProductBrandBean brandBean = (ProductBrandBean) adapter.getItem(position);
+                    if (brandBean != null) {
+                        // 删除
+                    }
+                }
             }
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有商品品牌").create();
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    /**
-     * 获取选中的押金商品
-     *
-     * @return 押金商品列表
-     */
-    private ArrayList<DepositProductBean> getSelectDepositProductList() {
-        ArrayList<DepositProductBean> list = new ArrayList<>();
-        if (mAdapter != null && !CommonUtils.isEmpty(mAdapter.getData())) {
-            for (DepositProductBean bean : mAdapter.getData()) {
-                if (bean.isSelected()) {
-                    list.add(bean);
-                }
-            }
-        }
-        return list;
     }
 
     @OnClick({R.id.img_close})
@@ -132,7 +118,7 @@ public class ProductBrandAddActivity extends BaseLoadActivity implements Product
     }
 
     @Override
-    public void showDepositProductsList(List<DepositProductBean> list, boolean append, int total) {
+    public void showProductBrandList(List<ProductBrandBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -148,31 +134,47 @@ public class ProductBrandAddActivity extends BaseLoadActivity implements Product
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    class DepositProductAdapter extends BaseQuickAdapter<DepositProductBean, BaseViewHolder> {
+    class ProductBrandAdapter extends BaseQuickAdapter<ProductBrandBean, BaseViewHolder> {
 
-        DepositProductAdapter() {
-            super(R.layout.item_deposit_product);
+        ProductBrandAdapter() {
+            super(R.layout.item_product_brand);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, DepositProductBean bean) {
-            helper.setText(R.id.txt_productName, bean.getProductName())
-                .setText(R.id.txt_specContent, getContent(bean))
-                .getView(R.id.img_select).setSelected(bean.isSelected());
+        protected void convert(BaseViewHolder helper, ProductBrandBean bean) {
+            helper.setText(R.id.txt_brandName, bean.getBrandName())
+                .setText(R.id.txt_state, getStatusString(bean.getStatus()))
+                .setTextColor(R.id.txt_state, getStatusColor(bean.getStatus()))
+                .setGone(R.id.img_del, TextUtils.equals(bean.getStatus(), "3"))
+                .setGone(R.id.txt_failureReason, TextUtils.equals(bean.getStatus(), "3"))
+                .setText(R.id.txt_failureReason, bean.getFailureReason())
+                .addOnClickListener(R.id.img_del);
         }
 
-        private String getContent(DepositProductBean bean) {
-            StringBuilder builder = new StringBuilder();
-            if (!TextUtils.isEmpty(bean.getSpecContent())) {
-                builder.append(bean.getSpecContent());
+        private String getStatusString(String status) {
+            switch (status) {
+                case "1":
+                    return "待审核";
+                case "2":
+                    return "审核通过";
+                case "3":
+                    return "审核失败";
+                default:
+                    return "";
             }
-            if (!TextUtils.isEmpty(bean.getSaleUnitName())) {
-                if (builder.length() != 0) {
-                    builder.append("，");
-                }
-                builder.append(bean.getSaleUnitName());
+        }
+
+        private int getStatusColor(String status) {
+            switch (status) {
+                case "1":
+                    return 0xFF5695D2;
+                case "2":
+                    return 0xFF7ED321;
+                case "3":
+                    return 0xFFED5655;
+                default:
+                    return 0;
             }
-            return builder.toString();
         }
     }
 }
