@@ -184,4 +184,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100137")
     Observable<BaseResp<Object>> delProductBrandReq(@Body BaseMapReq req);
+
+    /**
+     * 提交品牌申请
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100091")
+    Observable<BaseResp<Object>> addProductBrand(@Body BaseMapReq req);
 }

@@ -110,10 +110,17 @@ public class ProductBrandAddActivity extends BaseLoadActivity implements Product
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.img_close})
+    @OnClick({R.id.img_close, R.id.text_commit})
     public void onViewClicked(View view) {
-        if (view.getId() == R.id.img_close) {
-            finish();
+        switch (view.getId()) {
+            case R.id.text_commit:
+                mPresenter.addProductBrand(mEdtBrandName.getText().toString().trim());
+                break;
+            case R.id.img_close:
+                finish();
+                break;
+            default:
+                break;
         }
     }
 
@@ -126,6 +133,11 @@ public class ProductBrandAddActivity extends BaseLoadActivity implements Product
         }
         mAdapter.setEmptyView(mEmptyView);
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+    }
+
+    @Override
+    public void clearEditText() {
+        mEdtBrandName.setText("");
     }
 
     @Override

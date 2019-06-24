@@ -23,6 +23,11 @@ public interface ProductBrandAddContract {
          * @param total  indexList
          */
         void showProductBrandList(List<ProductBrandBean> list, boolean append, int total);
+
+        /**
+         * 清空输入框
+         */
+        void clearEditText();
     }
 
     interface ISaleUnitNameAddPresenter extends IPresenter<ISaleUnitNameAddView> {
@@ -44,6 +49,13 @@ public interface ProductBrandAddContract {
          * @param id 主键id
          */
         void delProductBrandReq(String id);
+
+        /**
+         * 提交品牌申请
+         *
+         * @param brandName 品牌名称
+         */
+        void addProductBrand(String brandName);
 
     }
 }

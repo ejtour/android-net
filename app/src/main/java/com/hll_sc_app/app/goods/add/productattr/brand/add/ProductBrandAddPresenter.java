@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.goods.add.productattr.brand.add;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -67,6 +69,36 @@ public class ProductBrandAddPresenter implements ProductBrandAddContract.ISaleUn
                 @Override
                 public void onSuccess(Object resp) {
                     mView.showToast("删除品牌申请成功");
+                    queryProductBrandList(true);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void addProductBrand(String brandName) {
+        if (TextUtils.isEmpty(brandName)) {
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("groupID", UserConfig.getGroupID())
+            .put("brandName", brandName)
+            .create();
+        GoodsService.INSTANCE.addProductBrand(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.showToast("提交品牌申请成功");
+                    mView.clearEditText();
                     queryProductBrandList(true);
                 }
 
