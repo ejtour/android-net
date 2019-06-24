@@ -153,4 +153,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100063")
     Observable<BaseResp<ArrayList<ProductAttrBean>>> queryProductAttrsList(@Body BaseMapReq req);
+
+    /**
+     * 查询审核通过品牌
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100136")
+    Observable<BaseResp<List<String>>> queryProductBrandList(@Body BaseMapReq req);
 }

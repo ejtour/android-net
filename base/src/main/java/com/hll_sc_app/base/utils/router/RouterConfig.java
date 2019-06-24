@@ -72,6 +72,11 @@ public class RouterConfig {
      */
     public static final String ROOT_HOME_GOODS_PRODUCT_ATTR = "/activity/home/goods/productAttr";
     /**
+     * /**
+     * 新增商品-选择商品属性-商品品牌
+     */
+    public static final String ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND = "/activity/home/goods/productAttr/brand";
+    /**
      * 新增商品-自定义分类
      */
     public static final String ROOT_HOME_GOODS_CUSTOM_CATEGORY = "/activity/home/goods/customCategory";

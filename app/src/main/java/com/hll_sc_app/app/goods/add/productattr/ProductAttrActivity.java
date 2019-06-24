@@ -40,7 +40,6 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR, extras = Constant.LOGIN_EXTRA)
 public class ProductAttrActivity extends BaseLoadActivity implements ProductAttrContract.IProductAttr {
-    public static final String INTENT_TAG = "intent_tag_product_attr";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Autowired(name = "parcelable")

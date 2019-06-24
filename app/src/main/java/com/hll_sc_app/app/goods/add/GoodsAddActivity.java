@@ -428,7 +428,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     @Override
     public void toProductAttrsActivity() {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR, mProductAttrs);
+        // TODO:TEST BRAND
+//        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR, mProductAttrs);
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND);
     }
 
     /**
