@@ -23,7 +23,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -51,6 +53,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -203,7 +206,16 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mProductAttrAdapter.setOnItemClickListener((adapter, view, position) -> {
             ProductAttrBean attrBean = (ProductAttrBean) adapter.getItem(position);
             if (attrBean != null) {
-                // TODO:商品属性选择
+                switch (attrBean.getWidget()) {
+                    case ProductAttrBean.WIDGET_BRAND:
+                        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND);
+                        break;
+                    case ProductAttrBean.WIDGET_INPUT:
+                        showInputDialog(attrBean);
+                        break;
+                    default:
+                        break;
+                }
             }
 
         });
@@ -243,6 +255,37 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         // 选择辅助规格
         mTxtSpecsAddAssistUnit.setVisibility((mSpecsAdapter != null && mSpecsAdapter.getItemCount() >= 2) ?
             View.VISIBLE : View.GONE);
+    }
+
+    private void showInputDialog(ProductAttrBean attrBean) {
+        List<ProductAttrBean.RegexBean> regexBeans = attrBean.getRegexs();
+        InputDialog.newBuilder(this)
+            .setCancelable(false)
+            .setTextTitle(attrBean.getKeyNote())
+            .setHint(attrBean.getTip())
+            .setText(attrBean.getCurrAttrValue())
+            .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
+                if (!CommonUtils.isEmpty(regexBeans)) {
+                    ProductAttrBean.RegexBean regexBean = regexBeans.get(0);
+                    Pattern pattern = Pattern.compile(regexBean.getRegex());
+                    if (!pattern.matcher(s.toString()).find() && s.length() > 1) {
+                        s.delete(s.length() - 1, s.length());
+                        showToast(regexBean.getTip());
+                    }
+                }
+            })
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    // 输入的名称
+                    if (TextUtils.isEmpty(dialog.getInputString())) {
+                        showToast("输入内容不能为空");
+                        return;
+                    }
+                    // TODO:输入内容处理
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
     }
 
     /**

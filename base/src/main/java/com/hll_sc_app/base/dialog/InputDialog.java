@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.text.InputFilter;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -53,8 +54,9 @@ public class InputDialog extends BaseDialog {
         Window window = getWindow();
         if (window != null) {
             window.setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
             WindowManager.LayoutParams params = window.getAttributes();
+            params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE;
             params.width = UIUtils.dip2px(275);
         }
     }
@@ -69,6 +71,14 @@ public class InputDialog extends BaseDialog {
         editText.setInputType(type);
     }
 
+    public void setTextWatcher(TextWatcher textWatcher) {
+        if (textWatcher == null) {
+            return;
+        }
+        EditText editText = mRootView.findViewById(R.id.edt_content);
+        editText.addTextChangedListener(textWatcher);
+    }
+
     public void setText(String text) {
         EditText editText = mRootView.findViewById(R.id.edt_content);
         editText.setText(text);
@@ -81,6 +91,9 @@ public class InputDialog extends BaseDialog {
     }
 
     public void setMaxLength(int maxLength) {
+        if (maxLength == 0) {
+            return;
+        }
         EditText editText = mRootView.findViewById(R.id.edt_content);
         InputFilter[] filters = {new InputFilter.LengthFilter(maxLength)};
         editText.setFilters(filters);
@@ -162,6 +175,11 @@ public class InputDialog extends BaseDialog {
             return this;
         }
 
+        public Builder setTextWatcher(TextWatcher textWatcher) {
+            p.textWatcher = textWatcher;
+            return this;
+        }
+
         public InputDialog create() {
             final InputDialog dialog = new InputDialog(p.mContext, R.style.BaseDialog);
             dialog.setButton(p.mOnClickListener, p.items);
@@ -172,6 +190,7 @@ public class InputDialog extends BaseDialog {
             dialog.setText(p.mText);
             dialog.setMaxLength(p.mMaxLength);
             dialog.setTextTitle(p.mTextTitle);
+            dialog.setTextWatcher(p.textWatcher);
             return dialog;
         }
     }
@@ -186,5 +205,6 @@ public class InputDialog extends BaseDialog {
         String mTextTitle;
         int mMaxLength;
         int mType;
+        TextWatcher textWatcher;
     }
 }
