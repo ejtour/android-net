@@ -9,7 +9,6 @@ import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -218,11 +217,11 @@ public class RouterUtil {
     }
 
     /**
-     * startActivityForResult
+     * 页面间传递集合数据-Parcelable
      *
      * @param url URL
      */
-    public static void goToActivity(String url, ArrayList<? extends Serializable> value) {
+    public static void goToActivity(String url, ArrayList<? extends Parcelable> value) {
         ARouter.getInstance().build(url)
             .withSerializable("parcelable", value)
             .setProvider(new LoginInterceptor())

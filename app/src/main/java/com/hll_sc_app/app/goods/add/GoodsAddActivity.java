@@ -39,7 +39,6 @@ import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.zhihu.matisse.Matisse;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -50,6 +49,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -136,6 +136,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private SpecsAdapter mSpecsAdapter;
     private LabelSelectWindow mLabelSelectWindow;
     private FlowAdapter mFlowAdapter;
+    /**
+     * 选择的商品属性
+     */
+    private ArrayList<ProductAttrBean> mProductAttrs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -310,6 +314,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         showSpecsAddAssistUnit();
     }
 
+    @Subscribe
+    public void onEvent(ArrayList<ProductAttrBean> productAttrs) {
+        // 商品规格新增
+        this.mProductAttrs = productAttrs;
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK || data == null) {
@@ -375,12 +386,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mLabelSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
-    @Override
-    public void showProductAttrsActivity(List<ProductAttrBean> list) {
-        // TODO:选择商品属性
-        LogUtil.d("ZYS", String.valueOf(list.size()));
-    }
-
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
         R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add})
     public void onViewClicked(View view) {
@@ -414,11 +419,16 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 break;
             case R.id.txt_productAttrs_add:
                 // 选择商品属性
-                mPresenter.queryProductAttrsList();
+                toProductAttrsActivity();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void toProductAttrsActivity() {
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR, mProductAttrs);
     }
 
     /**

@@ -17,6 +17,7 @@ import com.hll_sc_app.bean.goods.SaleUnitNameBean;
 import com.hll_sc_app.bean.goods.SkuCheckResp;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -151,5 +152,5 @@ public interface GoodsService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:100063")
-    Observable<BaseResp<List<ProductAttrBean>>> queryProductAttrsList(@Body BaseMapReq req);
+    Observable<BaseResp<ArrayList<ProductAttrBean>>> queryProductAttrsList(@Body BaseMapReq req);
 }

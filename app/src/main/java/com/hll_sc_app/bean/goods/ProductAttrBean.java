@@ -12,6 +12,17 @@ import java.util.List;
  * @date 2019-06-14
  */
 public class ProductAttrBean implements Parcelable {
+    public static final Creator<ProductAttrBean> CREATOR = new Creator<ProductAttrBean>() {
+        @Override
+        public ProductAttrBean createFromParcel(Parcel source) {
+            return new ProductAttrBean(source);
+        }
+
+        @Override
+        public ProductAttrBean[] newArray(int size) {
+            return new ProductAttrBean[size];
+        }
+    };
     private String keyNote;
     private String widget;
     private String attrKey;
@@ -20,6 +31,30 @@ public class ProductAttrBean implements Parcelable {
     private String id;
     private String pubAttrValue;
     private List<RegexBean> regexs;
+    private boolean select;
+
+    public ProductAttrBean() {
+    }
+
+    protected ProductAttrBean(Parcel in) {
+        this.keyNote = in.readString();
+        this.widget = in.readString();
+        this.attrKey = in.readString();
+        this.tip = in.readString();
+        this.attrValue = in.readString();
+        this.id = in.readString();
+        this.pubAttrValue = in.readString();
+        this.regexs = in.createTypedArrayList(RegexBean.CREATOR);
+        this.select = in.readByte() != 0;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
 
     public String getKeyNote() {
         return keyNote;
@@ -85,32 +120,6 @@ public class ProductAttrBean implements Parcelable {
         this.regexs = regexs;
     }
 
-    public static final Parcelable.Creator<ProductAttrBean> CREATOR = new Parcelable.Creator<ProductAttrBean>() {
-        @Override
-        public ProductAttrBean createFromParcel(Parcel source) {
-            return new ProductAttrBean(source);
-        }
-
-        @Override
-        public ProductAttrBean[] newArray(int size) {
-            return new ProductAttrBean[size];
-        }
-    };
-
-    public ProductAttrBean() {
-    }
-
-    protected ProductAttrBean(Parcel in) {
-        this.keyNote = in.readString();
-        this.widget = in.readString();
-        this.attrKey = in.readString();
-        this.tip = in.readString();
-        this.attrValue = in.readString();
-        this.id = in.readString();
-        this.pubAttrValue = in.readString();
-        this.regexs = in.createTypedArrayList(RegexBean.CREATOR);
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -126,11 +135,31 @@ public class ProductAttrBean implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.pubAttrValue);
         dest.writeTypedList(this.regexs);
+        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
     }
 
     public static class RegexBean implements Parcelable {
+        public static final Parcelable.Creator<RegexBean> CREATOR = new Parcelable.Creator<RegexBean>() {
+            @Override
+            public RegexBean createFromParcel(Parcel source) {
+                return new RegexBean(source);
+            }
+
+            @Override
+            public RegexBean[] newArray(int size) {
+                return new RegexBean[size];
+            }
+        };
         private String regex;
         private String tip;
+
+        public RegexBean() {
+        }
+
+        protected RegexBean(Parcel in) {
+            this.regex = in.readString();
+            this.tip = in.readString();
+        }
 
         public String getRegex() {
             return regex;
@@ -146,26 +175,6 @@ public class ProductAttrBean implements Parcelable {
 
         public void setTip(String tip) {
             this.tip = tip;
-        }
-
-        public static final Parcelable.Creator<RegexBean> CREATOR = new Parcelable.Creator<RegexBean>() {
-            @Override
-            public RegexBean createFromParcel(Parcel source) {
-                return new RegexBean(source);
-            }
-
-            @Override
-            public RegexBean[] newArray(int size) {
-                return new RegexBean[size];
-            }
-        };
-
-        public RegexBean() {
-        }
-
-        protected RegexBean(Parcel in) {
-            this.regex = in.readString();
-            this.tip = in.readString();
         }
 
         @Override
