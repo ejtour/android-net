@@ -20,6 +20,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.BrandSearchEvent;
 import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
@@ -46,6 +47,7 @@ import io.reactivex.disposables.Disposable;
 @Route(path = RouterConfig.ORDER_SEARCH)
 public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearchContract.IOrderSearchView {
     public static final String FROM_GOODS = "FROM_GOODS";
+    public static final String FROM_BRAND = "FROM_BRAND";
     @BindView(R.id.aos_search_edit)
     EditText mSearchEdit;
     @BindView(R.id.aos_search_clear)
@@ -109,11 +111,14 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     private void initView() {
         String tips = "您可以输入客户名称查找采购商门店";
         String hint = "请输入采购商公司名称";
-        int resID = R.drawable.ic_empty_shop_view;
+        int resId = R.drawable.ic_empty_shop_view;
         if (isFromGoods()) {
             tips = "请输入商品名称或者别名进行查询";
             hint = tips;
-            resID = R.drawable.ic_search_goods;
+            resId = R.drawable.ic_search_goods;
+        } else if (isFromBrand()) {
+            tips = "请输入品牌名称进行查询";
+            hint = tips;
         }
         mSearchEdit.setHint(hint);
         mSearchEdit.setOnEditorActionListener((v, actionId, event) -> {
@@ -125,7 +130,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         OrderSearchAdapter adapter = new OrderSearchAdapter();
         adapter.setEmptyView(EmptyView.newBuilder(this)
             .setTips(tips)
-            .setImage(resID)
+            .setImage(resId)
             .create());
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             OrderSearchBean item = (OrderSearchBean) adapter1.getItem(position);
@@ -143,11 +148,13 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         updateSearchEdit(mSearchWords);
     }
 
-    private void updateSearchEdit(String content) {
-        mSearchEdit.setText(content);
-        if (content != null) {
-            mSearchEdit.setSelection(content.length());
-        }
+    /**
+     * 来自商品 品牌搜索
+     *
+     * @return true
+     */
+    private boolean isFromBrand() {
+        return TextUtils.equals(mFrom, FROM_BRAND);
     }
 
     @OnClick(R.id.aos_search_button)
@@ -155,10 +162,19 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         String trim = mSearchEdit.getText().toString().trim();
         if (isFromGoods()) {
             EventBus.getDefault().post(new GoodsSearchEvent(trim));
+        } else if (isFromBrand()) {
+            EventBus.getDefault().post(new BrandSearchEvent(trim));
         } else {
             EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, trim));
         }
         close();
+    }
+
+    private void updateSearchEdit(String content) {
+        mSearchEdit.setText(content);
+        if (content != null) {
+            mSearchEdit.setSelection(content.length());
+        }
     }
 
     @OnClick(R.id.aos_close)

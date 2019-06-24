@@ -7,18 +7,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.BrandSearchEvent;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -36,8 +44,13 @@ import butterknife.OnClick;
 public class ProductBrandActivity extends BaseLoadActivity implements ProductBrandContract.IProductAttrBrand {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.txt_searchContent)
+    TextView mTxtSearchContent;
+    @BindView(R.id.img_searchClear)
+    ImageView mImgSearchClear;
     private EmptyView mEmptyView;
     private ProductAttrAdapter mAdapter;
+    private ProductBrandPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,9 +59,20 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        ProductBrandPresenter presenter = ProductBrandPresenter.newInstance();
-        presenter.register(this);
-        presenter.start();
+        mPresenter = ProductBrandPresenter.newInstance();
+        mPresenter.register(this);
+        mPresenter.start();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     private void initView() {
@@ -67,11 +91,50 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @OnClick({R.id.img_close, R.id.txt_add})
+    @Subscribe
+    public void onEvent(BrandSearchEvent event) {
+        String name = event.getName();
+        if (!TextUtils.isEmpty(name)) {
+            showSearchContent(true, name);
+        }
+    }
+
+    private void showSearchContent(boolean show, String content) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
+        if (show) {
+            mImgSearchClear.setVisibility(View.VISIBLE);
+            mTxtSearchContent.setText(content);
+            params.weight = 1;
+        } else {
+            mImgSearchClear.setVisibility(View.GONE);
+            mTxtSearchContent.setText(content);
+            params.weight = 0;
+        }
+        mPresenter.queryProductBrandList(getSearchContent());
+    }
+
+    /**
+     * 获取搜索词
+     *
+     * @return 搜索词
+     */
+    private String getSearchContent() {
+        if (mImgSearchClear.getVisibility() == View.VISIBLE) {
+            return mTxtSearchContent.getText().toString();
+        }
+        return "";
+    }
+
+    @OnClick({R.id.img_close, R.id.txt_add, R.id.rl_search, R.id.img_searchClear})
     public void onViewClicked(View view) {
-        if (view.getId() == R.id.img_close) {
+        int id = view.getId();
+        if (id == R.id.img_close) {
             finish();
-        } else if (view.getId() == R.id.txt_add) {
+        } else if (id == R.id.txt_add) {
+        } else if (id == R.id.rl_search) {
+            OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_BRAND);
+        } else if (id == R.id.img_searchClear) {
+            showSearchContent(false, null);
         }
     }
 
