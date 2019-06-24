@@ -130,16 +130,17 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     TextView mTxtStockCheckTypeTitle;
     @BindView(R.id.switch_stockCheckType)
     Switch mSwitchStockCheckType;
+    @BindView(R.id.txt_productAttrs_add)
+    TextView mTxtProductAttrsAdd;
+    @BindView(R.id.recyclerView_productAttrs)
+    RecyclerView mRecyclerViewProductAttrs;
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
     private AssistUnitSelectWindow mAssistUnitSelectWindow;
     private SpecsAdapter mSpecsAdapter;
     private LabelSelectWindow mLabelSelectWindow;
     private FlowAdapter mFlowAdapter;
-    /**
-     * 选择的商品属性
-     */
-    private ArrayList<ProductAttrBean> mProductAttrs;
+    private ProductAttrAdapter mProductAttrAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -165,7 +166,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mImgImgUrl.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL);
         // 辅图
         mImgImgUrlSub.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB);
-
         // 商品规格
         mRecyclerViewSpecs.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewSpecs.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
@@ -195,7 +195,20 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             }
         });
         mRecyclerViewSpecs.setAdapter(mSpecsAdapter);
+        // 商品属性
+        mRecyclerViewProductAttrs.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewProductAttrs.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
+            R.color.base_color_divider), UIUtils.dip2px(1)));
+        mProductAttrAdapter = new ProductAttrAdapter();
+        mProductAttrAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ProductAttrBean attrBean = (ProductAttrBean) adapter.getItem(position);
+            if (attrBean != null) {
+                // TODO:商品属性选择
+            }
 
+        });
+        mRecyclerViewProductAttrs.setAdapter(mProductAttrAdapter);
+        // 设置为押金商品
         mSwitchDepositProductType.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
                 return;
@@ -212,7 +225,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             }
             showDepositProductType();
         });
-
+        // 开启库存校验
         mSwitchStockCheckType.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
                 return;
@@ -316,9 +329,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     @Subscribe
     public void onEvent(ArrayList<ProductAttrBean> productAttrs) {
-        // TODO:商品规格新增
-        this.mProductAttrs = productAttrs;
-
+        mProductAttrAdapter.setNewData(productAttrs);
     }
 
     @Override
@@ -386,6 +397,16 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mLabelSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
+    @Override
+    public void toProductAttrsActivity() {
+        if (!CommonUtils.isEmpty(mProductAttrAdapter.getData())) {
+            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR,
+                new ArrayList<>(mProductAttrAdapter.getData()));
+        } else {
+            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR);
+        }
+    }
+
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
         R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add})
     public void onViewClicked(View view) {
@@ -424,13 +445,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             default:
                 break;
         }
-    }
-
-    @Override
-    public void toProductAttrsActivity() {
-        // TODO:TEST BRAND
-//        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR, mProductAttrs);
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND);
     }
 
     /**
@@ -516,6 +530,22 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 .setImageResource(R.id.img_del, TextUtils.equals(item.getStandardUnitStatus(),
                     SpecsBean.STANDARD_UNIT) ? R.drawable.ic_spec_delete_disable : R.drawable.ic_spec_delete)
                 .setText(R.id.txt_productPrice, "¥" + item.getProductPrice());
+        }
+    }
+
+    class ProductAttrAdapter extends BaseQuickAdapter<ProductAttrBean, BaseViewHolder> {
+
+        ProductAttrAdapter() {
+            super(R.layout.item_goods_attrs);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, ProductAttrBean item) {
+            helper.setText(R.id.txt_keyNote, item.getKeyNote())
+                .setGone(R.id.img_arrow, !TextUtils.equals(item.getWidget(), ProductAttrBean.WIDGET_INPUT));
+            TextView txtArrValue = helper.getView(R.id.txt_attrValue);
+            txtArrValue.setText(item.getCurrAttrValue());
+            txtArrValue.setHint(item.getTip());
         }
     }
 }

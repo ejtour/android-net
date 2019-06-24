@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/base_bg_item_white"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/txt_keyNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="地区控件"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/txt_attrValue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:gravity="right|center_vertical"
+        android:hint="请选择商城分类"
+        android:maxLength="20"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        android:textColorHint="@color/color_aeaeae"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/txt_keyNote"
+        app:layout_constraintRight_toLeftOf="@+id/img_arrow"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/img_arrow"
+        android:layout_width="5dp"
+        android:layout_height="10dp"
+        android:layout_marginLeft="5dp"
+        android:src="@drawable/ic_arrow_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/txt_attrValue"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
+

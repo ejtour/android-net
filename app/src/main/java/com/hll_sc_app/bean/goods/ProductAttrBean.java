@@ -12,6 +12,11 @@ import java.util.List;
  * @date 2019-06-14
  */
 public class ProductAttrBean implements Parcelable {
+    public static final String WIDGET_AREA = "area";
+    public static final String WIDGET_COMBOBOX = "combobox";
+    public static final String WIDGET_DATE = "date";
+    public static final String WIDGET_BRAND = "brand";
+    public static final String WIDGET_INPUT = "input";
     public static final Creator<ProductAttrBean> CREATOR = new Creator<ProductAttrBean>() {
         @Override
         public ProductAttrBean createFromParcel(Parcel source) {
@@ -30,6 +35,7 @@ public class ProductAttrBean implements Parcelable {
     private String attrValue;
     private String id;
     private String pubAttrValue;
+    private String currAttrValue;
     private List<RegexBean> regexs;
     private boolean select;
 
@@ -44,8 +50,17 @@ public class ProductAttrBean implements Parcelable {
         this.attrValue = in.readString();
         this.id = in.readString();
         this.pubAttrValue = in.readString();
+        this.currAttrValue = in.readString();
         this.regexs = in.createTypedArrayList(RegexBean.CREATOR);
         this.select = in.readByte() != 0;
+    }
+
+    public String getCurrAttrValue() {
+        return currAttrValue;
+    }
+
+    public void setCurrAttrValue(String currAttrValue) {
+        this.currAttrValue = currAttrValue;
     }
 
     public boolean isSelect() {
@@ -134,6 +149,7 @@ public class ProductAttrBean implements Parcelable {
         dest.writeString(this.attrValue);
         dest.writeString(this.id);
         dest.writeString(this.pubAttrValue);
+        dest.writeString(this.currAttrValue);
         dest.writeTypedList(this.regexs);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
     }
