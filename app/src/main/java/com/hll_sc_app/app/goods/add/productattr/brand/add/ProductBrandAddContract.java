@@ -37,5 +37,13 @@ public interface ProductBrandAddContract {
          * 查询更多品牌列表
          */
         void queryMoreProductBrandList();
+
+        /**
+         * 删除品牌申请
+         *
+         * @param id 主键id
+         */
+        void delProductBrandReq(String id);
+
     }
 }

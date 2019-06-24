@@ -52,6 +52,31 @@ public class ProductBrandAddPresenter implements ProductBrandAddContract.ISaleUn
         toQueryProductBrandList(false);
     }
 
+    @Override
+    public void delProductBrandReq(String id) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("id", id)
+            .create();
+        GoodsService.INSTANCE.delProductBrandReq(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.showToast("删除品牌申请成功");
+                    queryProductBrandList(true);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
     private void toQueryProductBrandList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("groupID", UserConfig.getGroupID())

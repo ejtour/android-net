@@ -101,7 +101,7 @@ public class ProductBrandAddActivity extends BaseLoadActivity implements Product
                 if (view.getId() == R.id.img_del) {
                     ProductBrandBean brandBean = (ProductBrandBean) adapter.getItem(position);
                     if (brandBean != null) {
-                        // 删除
+                        mPresenter.delProductBrandReq(brandBean.getBrandID());
                     }
                 }
             }
