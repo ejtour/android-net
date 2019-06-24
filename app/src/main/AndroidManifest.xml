@@ -76,6 +76,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.goods.add.productattr.brand.add.ProductBrandAddActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.goods.add.specs.GoodsSpecsAddActivity"
             android:screenOrientation="portrait"/>
 

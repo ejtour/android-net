@@ -21,6 +21,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.BrandSearchEvent;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -131,6 +132,7 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
         if (id == R.id.img_close) {
             finish();
         } else if (id == R.id.txt_add) {
+            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND_ADD);
         } else if (id == R.id.rl_search) {
             OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_BRAND);
         } else if (id == R.id.img_searchClear) {
