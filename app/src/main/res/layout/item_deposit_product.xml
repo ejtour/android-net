@@ -37,7 +37,7 @@
         android:layout_alignParentRight="true"
         android:paddingRight="10dp"
         android:scaleType="centerInside"
-        android:src="@drawable/bg_selector_check_box"/>
+        android:src="@drawable/bg_selector_check_box_circular"/>
 
 </RelativeLayout>
 

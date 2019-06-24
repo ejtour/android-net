@@ -316,7 +316,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     @Subscribe
     public void onEvent(ArrayList<ProductAttrBean> productAttrs) {
-        // 商品规格新增
+        // TODO:商品规格新增
         this.mProductAttrs = productAttrs;
 
     }
