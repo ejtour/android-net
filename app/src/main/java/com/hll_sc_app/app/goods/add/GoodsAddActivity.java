@@ -273,6 +273,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         });
     }
 
+    /**
+     * 当商品规格数量大于2时显示选择辅助规格按钮
+     */
     private void showSpecsAddAssistUnit() {
         // 选择辅助规格
         mTxtSpecsAddAssistUnit.setVisibility((mSpecsAdapter != null && mSpecsAdapter.getItemCount() >= 2) ?
@@ -318,6 +321,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             .create().show();
     }
 
+    /**
+     * 商品属性的日期输入框
+     *
+     * @param attrBean 属性
+     * @param adapter  adapter
+     * @param position position
+     */
     private void showDateDialog(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -330,6 +340,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         dialog.show();
     }
 
+    /**
+     * 商品属性的下拉选择框
+     *
+     * @param attrBean 属性
+     * @param adapter  adapter
+     * @param position position
+     */
     private void showComboBoxWindow(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
         if (mComboBoxWindow == null) {
             mComboBoxWindow = new ComboBoxWindow(this, attrBean);
@@ -341,6 +358,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mComboBoxWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
+    /**
+     * 商品属性的地区选择控件-弹窗
+     *
+     * @param attrBean 属性
+     * @param adapter  adapter
+     * @param position position
+     */
     private void showAreaWindow(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
         if (mAreaProductSelectWindow == null) {
             mAreaProductSelectWindow = new AreaProductSelectWindow(this);
@@ -369,6 +393,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         return false;
     }
 
+    /**
+     * 设置为押金商品提示
+     */
     private void showDepositProductType() {
         TipsDialog.newBuilder(this)
             .setTitle("设置为押金商品")
@@ -377,6 +404,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             .create().show();
     }
 
+    /**
+     * 开启库存校验提示
+     */
     private void showStockCheckType() {
         TipsDialog.newBuilder(this)
             .setTitle("开启库存校验")
@@ -437,11 +467,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     @Subscribe
     public void onEvent(ArrayList<ProductAttrBean> productAttrs) {
+        // 商品属性列表展示
         mProductAttrAdapter.setNewData(productAttrs);
     }
 
     @Subscribe
     public void onEvent(BrandBackEvent event) {
+        // 商品品牌
         String id = event.getId();
         List<ProductAttrBean> list = mProductAttrAdapter.getData();
         if (TextUtils.isEmpty(id) || CommonUtils.isEmpty(list)) {
@@ -470,8 +502,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     @Override
     public void uploadSuccess(String url, int requestCode) {
         if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
+            // 主图
             mImgImgUrl.showImage(url, v -> mImgImgUrl.deleteImage());
         } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB) {
+            // 辅图
             mImgImgUrlSub.setVisibility(mLlImgUrlSub.getChildCount() == 4 ? View.GONE : View.VISIBLE);
             ImgShowDelBlock block = new ImgShowDelBlock(this);
             block.setImgUrl(url);
@@ -483,6 +517,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             params.rightMargin = UIUtils.dip2px(10);
             mLlImgUrlSub.addView(block, mLlImgUrlSub.getChildCount() - 1, params);
         } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_DETAIL) {
+            // 商品详情图
             mImgImgUrlDetail.setVisibility(mLlImgUrlDetail.getChildCount() == 5 ? View.GONE : View.VISIBLE);
             ImgShowDelBlock block = new ImgShowDelBlock(this);
             block.setImgUrl(url);
@@ -544,7 +579,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
-        R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add})
+        R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
+        R.id.txt_save, R.id.txt_saveAndUp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -578,6 +614,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 // 选择商品属性
                 toProductAttrsActivity();
                 break;
+            case R.id.txt_save:
+                // 仅保存
+                break;
+            case R.id.txt_saveAndUp:
+                // 立即上架
+                toProductAttrsActivity();
+                break;
             default:
                 break;
         }
@@ -605,6 +648,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mPresenter.copyToCustomCategory(categoryItem1, categoryItem2, categoryItem3);
     }
 
+    /**
+     * 商品规格-选择辅助规格
+     */
     private void showAssistUnitSelectWindow() {
         if (mAssistUnitSelectWindow == null) {
             mAssistUnitSelectWindow = new AssistUnitSelectWindow(this);

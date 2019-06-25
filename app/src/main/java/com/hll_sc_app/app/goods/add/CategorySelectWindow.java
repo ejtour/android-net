@@ -56,11 +56,11 @@ public class CategorySelectWindow extends BaseShadowPopupWindow implements View.
     }
 
     private void initPicker(View rootView) {
-        WheelView picker1 = rootView.findViewById(R.id.picker_categoty1);
+        WheelView picker1 = rootView.findViewById(R.id.picker_category1);
         picker1.setVisibleItems(5);
-        mPicker2 = rootView.findViewById(R.id.picker_categoty2);
+        mPicker2 = rootView.findViewById(R.id.picker_category2);
         mPicker2.setVisibleItems(5);
-        mPicker3 = rootView.findViewById(R.id.picker_categoty3);
+        mPicker3 = rootView.findViewById(R.id.picker_category3);
         mPicker3.setVisibleItems(5);
         rootView.findViewById(R.id.txt_cancel).setOnClickListener(this);
         rootView.findViewById(R.id.txt_confirm).setOnClickListener(this);
@@ -188,16 +188,6 @@ public class CategorySelectWindow extends BaseShadowPopupWindow implements View.
         @Override
         public int getItemsCount() {
             return mList == null ? 0 : mList.size();
-        }
-
-        /**
-         * 获取选中的位置
-         *
-         * @param select 选中的 分类
-         * @return 位置信息
-         */
-        int getIndex(CategoryItem select) {
-            return mList.indexOf(select);
         }
 
         public void setList(List<CategoryItem> list) {

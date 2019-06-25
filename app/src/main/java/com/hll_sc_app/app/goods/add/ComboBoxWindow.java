@@ -36,9 +36,8 @@ public class ComboBoxWindow extends BaseShadowPopupWindow {
     RecyclerView mRecyclerView;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
-    private ProductAttrAdapter mAdapter;
-    private ItemConfirmListener mListener;
     private String mSelectString;
+    private ItemConfirmListener mListener;
 
     ComboBoxWindow(Activity context, ProductAttrBean bean) {
         super(context);
@@ -59,16 +58,16 @@ public class ComboBoxWindow extends BaseShadowPopupWindow {
         mTxtTitle.setText(bean.getKeyNote());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
-        mAdapter = new ProductAttrAdapter(TextUtils.isEmpty(bean.getAttrValue()) ? null :
+        ProductAttrAdapter attrAdapter = new ProductAttrAdapter(TextUtils.isEmpty(bean.getAttrValue()) ? null :
             Arrays.asList(bean.getAttrValue().split(",")));
-        mAdapter.setOnItemClickListener((adapter, view1, position) -> {
+        attrAdapter.setOnItemClickListener((adapter, view1, position) -> {
             String selectString = (String) adapter.getItem(position);
             if (!TextUtils.isEmpty(selectString)) {
                 mListener.confirm(selectString);
                 dismiss();
             }
         });
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(attrAdapter);
     }
 
     void setListener(ItemConfirmListener listener) {
@@ -79,7 +78,6 @@ public class ComboBoxWindow extends BaseShadowPopupWindow {
     public void onViewClicked() {
         dismiss();
     }
-
 
     interface ItemConfirmListener {
         /**

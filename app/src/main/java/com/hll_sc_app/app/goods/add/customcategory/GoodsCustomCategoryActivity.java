@@ -80,28 +80,7 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         mCustomCategoryAdapter1 = new CustomCategoryAdapter(null);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemDragAndSwipeCallback(mCustomCategoryAdapter1));
         mCustomCategoryAdapter1.enableDragItem(itemTouchHelper, R.id.img_sort, true);
-        mCustomCategoryAdapter1.setOnItemDragListener(new OnItemDragListener() {
-            @Override
-            public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
-                // no-op
-            }
-
-            @Override
-            public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder target,
-                                         int to) {
-                // no-op
-            }
-
-            @Override
-            public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
-                // sort 从1开始
-                if (mCustomCategoryAdapter1 != null && !CommonUtils.isEmpty(mCustomCategoryAdapter1.getData())) {
-                    for (int i = 0; i < mCustomCategoryAdapter1.getItemCount(); i++) {
-                        Objects.requireNonNull(mCustomCategoryAdapter1.getItem(i)).setSort(String.valueOf(i + 1));
-                    }
-                }
-            }
-        });
+        mCustomCategoryAdapter1.setOnItemDragListener(new CategoryOnItemDragListener(mCustomCategoryAdapter1));
         itemTouchHelper.attachToRecyclerView(mRecyclerViewLevel1);
         mCustomCategoryAdapter1.setOnItemClickListener((adapter, view, position) -> {
             CustomCategoryBean bean = (CustomCategoryBean) adapter.getItem(position);
@@ -125,28 +104,7 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         mCustomCategoryAdapter2 = new CustomCategoryAdapter(null);
         ItemTouchHelper itemTouchHelper2 = new ItemTouchHelper(new ItemDragAndSwipeCallback(mCustomCategoryAdapter2));
         mCustomCategoryAdapter2.enableDragItem(itemTouchHelper2, R.id.img_sort, true);
-        mCustomCategoryAdapter2.setOnItemDragListener(new OnItemDragListener() {
-            @Override
-            public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
-                // no-op
-            }
-
-            @Override
-            public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder target,
-                                         int to) {
-                // no-op
-            }
-
-            @Override
-            public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
-                // sort 从1开始
-                if (mCustomCategoryAdapter2 != null && !CommonUtils.isEmpty(mCustomCategoryAdapter2.getData())) {
-                    for (int i = 0; i < mCustomCategoryAdapter2.getItemCount(); i++) {
-                        Objects.requireNonNull(mCustomCategoryAdapter2.getItem(i)).setSort(String.valueOf(i + 1));
-                    }
-                }
-            }
-        });
+        mCustomCategoryAdapter2.setOnItemDragListener(new CategoryOnItemDragListener(mCustomCategoryAdapter2));
         itemTouchHelper2.attachToRecyclerView(mRecyclerViewLevel2);
         mCustomCategoryAdapter2.setOnItemClickListener((adapter, view, position) -> {
             // 选中二级分类返回上级页面
@@ -247,6 +205,35 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
             .create().show();
     }
 
+    private void showInputDialog(CustomCategoryBean bean) {
+        InputDialog.newBuilder(this)
+            .setCancelable(false)
+            .setTextTitle("输入分类名称")
+            .setHint("最多5个字")
+            .setMaxLength(5)
+            .setText(bean != null ? bean.getCategoryName() : "")
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    // 输入的名称
+                    if (TextUtils.isEmpty(dialog.getInputString())) {
+                        showToast("分类名称不能为空");
+                        return;
+                    }
+                    if (bean != null) {
+                        if (!TextUtils.isEmpty(bean.getId())) {
+                            bean.setCategoryName(dialog.getInputString());
+                            mPresenter.editCustomCategory(bean, "update");
+                        } else {
+                            bean.setCategoryName(dialog.getInputString());
+                            mPresenter.editCustomCategory(bean, "add");
+                        }
+                    }
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
+    }
+
     @OnClick({R.id.img_close, R.id.txt_edit, R.id.txt_create_level1, R.id.txt_create_level2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -311,35 +298,6 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         return list;
     }
 
-    private void showInputDialog(CustomCategoryBean bean) {
-        InputDialog.newBuilder(this)
-            .setCancelable(false)
-            .setTextTitle("输入分类名称")
-            .setHint("最多5个字")
-            .setMaxLength(5)
-            .setText(bean != null ? bean.getCategoryName() : "")
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    // 输入的名称
-                    if (TextUtils.isEmpty(dialog.getInputString())) {
-                        showToast("分类名称不能为空");
-                        return;
-                    }
-                    if (bean != null) {
-                        if (!TextUtils.isEmpty(bean.getId())) {
-                            bean.setCategoryName(dialog.getInputString());
-                            mPresenter.editCustomCategory(bean, "update");
-                        } else {
-                            bean.setCategoryName(dialog.getInputString());
-                            mPresenter.editCustomCategory(bean, "add");
-                        }
-                    }
-                }
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create().show();
-    }
-
     @Override
     public void showCustomCategoryList(CustomCategoryResp resp) {
         mResp = resp;
@@ -392,6 +350,35 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
                 return ContextCompat.getColor(mContext, R.color.color_fafafa);
             }
             return ContextCompat.getColor(mContext, R.color.base_white);
+        }
+    }
+
+    private class CategoryOnItemDragListener implements OnItemDragListener {
+        private CustomCategoryAdapter mAdapter;
+
+        CategoryOnItemDragListener(CustomCategoryAdapter adapter) {
+            this.mAdapter = adapter;
+        }
+
+        @Override
+        public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
+            // no-op
+        }
+
+        @Override
+        public void onItemDragMoving(RecyclerView.ViewHolder source, int from, RecyclerView.ViewHolder target,
+                                     int to) {
+            // no-op
+        }
+
+        @Override
+        public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
+            // sort 从1开始
+            if (mAdapter != null && !CommonUtils.isEmpty(mAdapter.getData())) {
+                for (int i = 0; i < mAdapter.getItemCount(); i++) {
+                    Objects.requireNonNull(mAdapter.getItem(i)).setSort(String.valueOf(i + 1));
+                }
+            }
         }
     }
 }
