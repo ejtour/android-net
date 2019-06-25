@@ -172,7 +172,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 mTxtGroupDistrict.setTag(bean);
             });
         }
-        mAreaWindow.showAtLocation(getWindow().getDecorView(), Gravity.END, 0, 0);
+        mAreaWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     @Override
