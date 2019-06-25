@@ -219,6 +219,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                     case ProductAttrBean.WIDGET_DATE:
                         showDateDialog(attrBean, adapter, position);
                         break;
+                    case ProductAttrBean.WIDGET_COMBOBOX:
+                        showComboBoxWindow(attrBean, adapter, position);
+                        break;
                     default:
                         break;
                 }
@@ -312,6 +315,15 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             adapter.notifyItemChanged(position);
         }, year, monthOfYear, dayOfMonth);
         dialog.show();
+    }
+
+    private void showComboBoxWindow(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
+        ComboBoxWindow window = new ComboBoxWindow(this, attrBean);
+        window.setListener(selectString -> {
+            attrBean.setCurrAttrValue(selectString);
+            adapter.notifyItemChanged(position);
+        });
+        window.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     /**
