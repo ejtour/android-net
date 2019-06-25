@@ -13,8 +13,11 @@
     <style name="BasePersonTheme" parent="BaseAppTheme"/>
 
     <style name="BaseDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowFrame">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="colorPrimary">@color/base_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/base_colorPrimaryDark</item>
+        <item name="colorAccent">@color/base_colorAccent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@null</item>
     </style>
 
     <style name="BaseLeftAnimation" mce_bogus="1" parent="android:Animation">

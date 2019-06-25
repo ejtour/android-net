@@ -7,9 +7,11 @@
     </style>
 
     <style name="BaseDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/base_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/base_colorPrimaryDark</item>
+        <item name="colorAccent">@color/base_colorAccent</item>
         <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:windowFrame">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
     </style>
 
 </resources>

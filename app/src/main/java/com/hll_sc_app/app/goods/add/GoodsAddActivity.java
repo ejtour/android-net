@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goods.add;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
+import com.hll_sc_app.bean.event.BrandBackEvent;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
@@ -52,6 +54,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -208,10 +211,13 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             if (attrBean != null) {
                 switch (attrBean.getWidget()) {
                     case ProductAttrBean.WIDGET_BRAND:
-                        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND);
+                        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND, attrBean.getId());
                         break;
                     case ProductAttrBean.WIDGET_INPUT:
-                        showInputDialog(attrBean);
+                        showInputDialog(attrBean, adapter, position);
+                        break;
+                    case ProductAttrBean.WIDGET_DATE:
+                        showDateDialog(attrBean, adapter, position);
                         break;
                     default:
                         break;
@@ -257,7 +263,14 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             View.VISIBLE : View.GONE);
     }
 
-    private void showInputDialog(ProductAttrBean attrBean) {
+    /**
+     * 商品属性的文本输入框
+     *
+     * @param attrBean 属性
+     * @param adapter  adapter
+     * @param position position
+     */
+    private void showInputDialog(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
         List<ProductAttrBean.RegexBean> regexBeans = attrBean.getRegexs();
         InputDialog.newBuilder(this)
             .setCancelable(false)
@@ -281,11 +294,24 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                         showToast("输入内容不能为空");
                         return;
                     }
-                    // TODO:输入内容处理
+                    attrBean.setCurrAttrValue(dialog.getInputString());
+                    adapter.notifyItemChanged(position);
                 }
                 dialog.dismiss();
             }, "取消", "确定")
             .create().show();
+    }
+
+    private void showDateDialog(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int monthOfYear = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog dialog = new DatePickerDialog(this, R.style.BaseDialog, (view, year1, month1, dayOfMonth1) -> {
+            attrBean.setCurrAttrValue(year1 + "-" + (month1 + 1) + "-" + dayOfMonth1);
+            adapter.notifyItemChanged(position);
+        }, year, monthOfYear, dayOfMonth);
+        dialog.show();
     }
 
     /**
@@ -373,6 +399,22 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     @Subscribe
     public void onEvent(ArrayList<ProductAttrBean> productAttrs) {
         mProductAttrAdapter.setNewData(productAttrs);
+    }
+
+    @Subscribe
+    public void onEvent(BrandBackEvent event) {
+        String id = event.getId();
+        List<ProductAttrBean> list = mProductAttrAdapter.getData();
+        if (TextUtils.isEmpty(id) || CommonUtils.isEmpty(list)) {
+            return;
+        }
+        for (int position = 0; position < list.size(); position++) {
+            if (TextUtils.equals(list.get(position).getId(), id)) {
+                list.get(position).setCurrAttrValue(event.getName());
+                mProductAttrAdapter.notifyItemChanged(position);
+                break;
+            }
+        }
     }
 
     @Override

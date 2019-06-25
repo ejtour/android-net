@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
@@ -22,6 +24,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.BrandBackEvent;
 import com.hll_sc_app.bean.event.BrandSearchEvent;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -49,6 +52,8 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
     TextView mTxtSearchContent;
     @BindView(R.id.img_searchClear)
     ImageView mImgSearchClear;
+    @Autowired(name = "object0")
+    String mId;
     private EmptyView mEmptyView;
     private ProductAttrAdapter mAdapter;
     private ProductBrandPresenter mPresenter;
@@ -58,6 +63,7 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_attr_brand);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
+        ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
         mPresenter = ProductBrandPresenter.newInstance();
@@ -84,7 +90,7 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             String item = (String) adapter.getItem(position);
             if (!TextUtils.isEmpty(item)) {
-                showToast("item = " + item);
+                EventBus.getDefault().post(new BrandBackEvent(item, mId));
                 finish();
             }
         });
