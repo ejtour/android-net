@@ -26,7 +26,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 public class SaleUnitNamePresenter implements SaleUnitNameContract.ISaleUnitNameAddPresenter {
     private SaleUnitNameContract.ISaleUnitNameAddView mView;
-    private List<String> mListIndex;
 
     static SaleUnitNamePresenter newInstance() {
         return new SaleUnitNamePresenter();
@@ -54,12 +53,7 @@ public class SaleUnitNamePresenter implements SaleUnitNameContract.ISaleUnitName
             .subscribe(new BaseCallback<List<SaleUnitNameBean>>() {
                 @Override
                 public void onSuccess(List<SaleUnitNameBean> resp) {
-                    if (mListIndex != null) {
-                        mListIndex.clear();
-                    } else {
-                        mListIndex = new ArrayList<>();
-                    }
-                    mView.showSaleUnitNameList(processData(resp), mListIndex);
+                    mView.showSaleUnitNameList(processData(resp));
                 }
 
                 @Override
@@ -75,7 +69,6 @@ public class SaleUnitNamePresenter implements SaleUnitNameContract.ISaleUnitName
         for (SaleUnitNameBean saleUnitNameBean : list) {
             if (!TextUtils.equals(title, saleUnitNameBean.getNameFirstLetter())) {
                 title = saleUnitNameBean.getNameFirstLetter();
-                mListIndex.add(title);
                 wrapperList.add(new SaleUnitNameWrapper(true, saleUnitNameBean.getNameFirstLetter()));
             }
             wrapperList.add(new SaleUnitNameWrapper(saleUnitNameBean));

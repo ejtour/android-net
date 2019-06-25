@@ -60,6 +60,15 @@ public class AreaBean {
         private String code;
         private String name;
         private List<ChildBean> child;
+        private String Initial;
+
+        public String getInitial() {
+            return Initial;
+        }
+
+        public void setInitial(String initial) {
+            Initial = initial;
+        }
 
         public int getAreaNumQueryByCity() {
             return areaNumQueryByCity;

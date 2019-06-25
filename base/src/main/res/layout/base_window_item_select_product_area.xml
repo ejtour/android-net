@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="465dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择地区"
+            android:textColor="#FF333333"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/img_cancel"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/base_ic_select_type_cancel"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_top_content"
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:layout_below="@+id/rl_title"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="1dp">
+
+        <TextView
+            android:id="@+id/txt_area_province"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/base_bg_shadow_top_primary_bar"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:text="请选择"
+            android:textColor="@drawable/base_color_area_tab_text"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/txt_area_city"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:background="@drawable/base_bg_shadow_top_primary_bar"
+            android:gravity="center"
+            android:minWidth="40dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:text="请选择"
+            android:textColor="@drawable/base_color_area_tab_text"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_top_content"
+        android:background="@color/base_white"/>
+
+    <qdx.indexbarlayout.IndexLayout
+        android:id="@+id/index_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_top_content"/>
+
+</RelativeLayout>

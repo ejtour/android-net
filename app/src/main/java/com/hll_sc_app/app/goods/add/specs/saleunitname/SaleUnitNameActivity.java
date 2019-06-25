@@ -104,7 +104,7 @@ public class SaleUnitNameActivity extends BaseLoadActivity implements SaleUnitNa
     }
 
     @Override
-    public void showSaleUnitNameList(List<SaleUnitNameWrapper> list, List<String> indexList) {
+    public void showSaleUnitNameList(List<SaleUnitNameWrapper> list) {
         mStickyItemDecoration.notifyChanged();
         mAdapter.setNewData(list);
 

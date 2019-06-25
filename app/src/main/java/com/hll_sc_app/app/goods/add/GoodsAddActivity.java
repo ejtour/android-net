@@ -32,6 +32,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.base.widget.AreaProductSelectWindow;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
@@ -147,6 +148,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private LabelSelectWindow mLabelSelectWindow;
     private FlowAdapter mFlowAdapter;
     private ProductAttrAdapter mProductAttrAdapter;
+    private AreaProductSelectWindow mAreaProductSelectWindow;
+    private ComboBoxWindow mComboBoxWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -221,6 +224,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                         break;
                     case ProductAttrBean.WIDGET_COMBOBOX:
                         showComboBoxWindow(attrBean, adapter, position);
+                        break;
+                    case ProductAttrBean.WIDGET_AREA:
+                        showAreaWindow(attrBean, adapter, position);
                         break;
                     default:
                         break;
@@ -318,12 +324,26 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     private void showComboBoxWindow(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
-        ComboBoxWindow window = new ComboBoxWindow(this, attrBean);
-        window.setListener(selectString -> {
+        if (mComboBoxWindow == null) {
+            mComboBoxWindow = new ComboBoxWindow(this, attrBean);
+        }
+        mComboBoxWindow.setListener(selectString -> {
             attrBean.setCurrAttrValue(selectString);
             adapter.notifyItemChanged(position);
         });
-        window.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+        mComboBoxWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
+    private void showAreaWindow(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
+        if (mAreaProductSelectWindow == null) {
+            mAreaProductSelectWindow = new AreaProductSelectWindow(this);
+        }
+        mAreaProductSelectWindow.setResultSelectListener(t -> {
+            attrBean.setCurrAttrValue(t.getShopProvince() + "," + t.getShopProvinceCode() + "," + t.getShopCity() +
+                "," + t.getShopCityCode());
+            adapter.notifyItemChanged(position);
+        });
+        mAreaProductSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     /**
@@ -643,6 +663,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             TextView txtArrValue = helper.getView(R.id.txt_attrValue);
             txtArrValue.setText(item.getCurrAttrValue());
             txtArrValue.setHint(item.getTip());
+            if (TextUtils.equals(item.getAttrKey(), "produceArea") && !TextUtils.isEmpty(item.getCurrAttrValue())) {
+                String[] strings = item.getCurrAttrValue().split(",");
+                txtArrValue.setText(String.format("%s-%s", strings[0], strings[2]));
+            }
         }
     }
 }
