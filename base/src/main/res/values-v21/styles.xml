@@ -12,6 +12,7 @@
         <item name="colorAccent">@color/base_colorAccent</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@null</item>
     </style>
 
 </resources>
