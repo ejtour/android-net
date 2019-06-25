@@ -560,6 +560,56 @@
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/base_white"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/base_white"
+                    android:text="商品详情图"
+                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/base_white"
+                    android:text="最多可添加5张详情图~"
+                    android:textAppearance="@style/TextAppearance.City22.Small.ColorAE"/>
+            </LinearLayout>
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/ll_imgUrlDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/base_white"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <com.hll_sc_app.base.widget.ImgUploadBlock
+                        android:id="@+id/img_imgUrlDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="10dp"
+                        app:base_title="点击添加详情图"/>
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

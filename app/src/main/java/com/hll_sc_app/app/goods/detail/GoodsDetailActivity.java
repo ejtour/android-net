@@ -167,11 +167,11 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     /**
      * start activity
      *
-     * @param productID        productID
+     * @param productId        productId
      * @param isBundlingDetail 组合商品下的商品明细的商品详情
      */
-    public static void start(String productID, boolean isBundlingDetail) {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_DETAIL, productID, isBundlingDetail);
+    public static void start(String productId, boolean isBundlingDetail) {
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_DETAIL, productId, isBundlingDetail);
     }
 
     @Override

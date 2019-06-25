@@ -40,6 +40,7 @@ public class ImgUploadBlock extends RelativeLayout {
     public static final int REQUEST_CODE_CHOOSE = 104;
     public static final int REQUEST_CODE_IMG_URL = 105;
     public static final int REQUEST_CODE_IMG_URL_SUB = 106;
+    public static final int REQUEST_CODE_IMG_URL_DETAIL = 107;
     private static final String[] PERMISSIONS = {Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE,
         Permission.WRITE_EXTERNAL_STORAGE};
     private TextView mTitle;

@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -141,6 +142,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     TextView mTxtProductAttrsAdd;
     @BindView(R.id.recyclerView_productAttrs)
     RecyclerView mRecyclerViewProductAttrs;
+    @BindView(R.id.img_imgUrlDetail)
+    ImgUploadBlock mImgImgUrlDetail;
+    @BindView(R.id.ll_imgUrlDetail)
+    LinearLayout mLlImgUrlDetail;
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
     private AssistUnitSelectWindow mAssistUnitSelectWindow;
@@ -175,6 +180,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mImgImgUrl.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL);
         // 辅图
         mImgImgUrlSub.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB);
+        // 商品详情图
+        mImgImgUrlDetail.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL_DETAIL);
         // 商品规格
         mRecyclerViewSpecs.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewSpecs.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
@@ -469,12 +476,24 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             ImgShowDelBlock block = new ImgShowDelBlock(this);
             block.setImgUrl(url);
             block.setDeleteListener(v -> {
-                mImgImgUrlSub.setVisibility(mLlImgUrlSub.getChildCount() == 4 ? View.GONE : View.VISIBLE);
                 mLlImgUrlSub.removeView(block);
+                mImgImgUrlSub.setVisibility(mLlImgUrlSub.getChildCount() == 4 ? View.GONE : View.VISIBLE);
             });
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(UIUtils.dip2px(80), UIUtils.dip2px(80));
             params.rightMargin = UIUtils.dip2px(10);
             mLlImgUrlSub.addView(block, mLlImgUrlSub.getChildCount() - 1, params);
+        } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_DETAIL) {
+            mImgImgUrlDetail.setVisibility(mLlImgUrlDetail.getChildCount() == 5 ? View.GONE : View.VISIBLE);
+            ImgShowDelBlock block = new ImgShowDelBlock(this);
+            block.setImgUrl(url);
+            block.setDeleteListener(v -> {
+                mLlImgUrlDetail.removeView(block);
+                mImgImgUrlDetail.setVisibility(mLlImgUrlDetail.getChildCount() == 5 ? View.GONE : View.VISIBLE);
+            });
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                UIUtils.dip2px(80));
+            params.bottomMargin = UIUtils.dip2px(10);
+            mLlImgUrlDetail.addView(block, mLlImgUrlDetail.getChildCount() - 1, params);
         }
     }
 
