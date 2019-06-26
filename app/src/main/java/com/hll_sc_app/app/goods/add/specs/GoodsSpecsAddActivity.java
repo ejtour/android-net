@@ -197,17 +197,17 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         mTxtSaleUnitName.setText(mSpecsBean.getSaleUnitName());
         mTxtSaleUnitName.setTag(mSpecsBean.getSaleUnitID());
         // 单价
-        mEdtProductPrice.setText(mSpecsBean.getProductPrice());
+        mEdtProductPrice.setText(CommonUtils.formatNumber(mSpecsBean.getProductPrice()));
         // 押金商品
         mDepositProductAdapter.setNewData(DepositProductReq.createDepositProductBean(mSpecsBean.getDepositProducts()));
         // sku 条码
         mEdtSkuCode.setText(mSpecsBean.getSkuCode());
         // 转换率
-        mEdtRation.setText(mSpecsBean.getRation());
+        mEdtRation.setText(CommonUtils.formatNumber(mSpecsBean.getRation()));
         // 最低起购量
-        mEdtBuyMinNum.setText(mSpecsBean.getBuyMinNum());
+        mEdtBuyMinNum.setText(CommonUtils.formatNumber(mSpecsBean.getBuyMinNum()));
         // 订货倍数
-        mEdtMinOrder.setText(mSpecsBean.getMinOrder());
+        mEdtMinOrder.setText(CommonUtils.formatNumber(mSpecsBean.getMinOrder()));
         // 是否允许小数购买
         mSwitchIsDecimalBuy.setChecked(TextUtils.equals(mSpecsBean.getIsDecimalBuy(), "1"));
     }

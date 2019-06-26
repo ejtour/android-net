@@ -3,6 +3,7 @@ package com.hll_sc_app.app.goods.add;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +15,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,7 +23,9 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
@@ -50,6 +54,7 @@ import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.zhihu.matisse.Matisse;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -151,6 +156,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     ImgUploadBlock mImgImgUrlDetail;
     @BindView(R.id.ll_imgUrlDetail)
     LinearLayout mLlImgUrlDetail;
+    @Autowired(name = "parcelable")
+    GoodsBean mGoodsBean;
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
     private AssistUnitSelectWindow mAssistUnitSelectWindow;
@@ -160,15 +167,16 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private ProductAttrAdapter mProductAttrAdapter;
     private AreaProductSelectWindow mAreaProductSelectWindow;
     private ComboBoxWindow mComboBoxWindow;
-    private GoodsBean mGoodsBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_add);
+        ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
+        showView();
         EventBus.getDefault().register(this);
         mPresenter = GoodsAddPresenter.newInstance();
         mPresenter.register(this);
@@ -190,6 +198,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mImgImgUrlDetail.setRequestCode(ImgUploadBlock.REQUEST_CODE_IMG_URL_DETAIL);
         // 商品规格
         mRecyclerViewSpecs.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewSpecs.setNestedScrollingEnabled(false);
         mRecyclerViewSpecs.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
             R.color.base_color_divider), UIUtils.dip2px(1)));
         mSpecsAdapter = new SpecsAdapter();
@@ -219,10 +228,12 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mRecyclerViewSpecs.setAdapter(mSpecsAdapter);
         // 商品属性
         mRecyclerViewProductAttrs.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewProductAttrs.setNestedScrollingEnabled(false);
         mRecyclerViewProductAttrs.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
             R.color.base_color_divider), UIUtils.dip2px(1)));
         mProductAttrAdapter = new ProductAttrAdapter();
         mProductAttrAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ViewUtils.clearEditFocus(view);
             ProductAttrBean attrBean = (ProductAttrBean) adapter.getItem(position);
             if (attrBean != null) {
                 switch (attrBean.getWidget()) {
@@ -250,7 +261,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mRecyclerViewProductAttrs.setAdapter(mProductAttrAdapter);
         // 设置为押金商品
         mSwitchDepositProductType.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (!isChecked) {
+            if (!isChecked || !buttonView.isPressed()) {
                 return;
             }
             if (mSwitchStockCheckType.isChecked()) {
@@ -267,7 +278,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         });
         // 开启库存校验
         mSwitchStockCheckType.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (!isChecked) {
+            if (!isChecked || !buttonView.isPressed()) {
                 return;
             }
             if (mSwitchDepositProductType.isChecked()) {
@@ -281,6 +292,89 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mEtNickNames1.addTextChangedListener(new NameCheckTextWatcher());
         mEtNickNames2.addTextChangedListener(new NameCheckTextWatcher());
         mEtNickNames3.addTextChangedListener(new NameCheckTextWatcher());
+    }
+
+    private void showView() {
+        if (mGoodsBean == null) {
+            return;
+        }
+        // 主图
+        mImgImgUrl.showImage(mGoodsBean.getImgUrl(), v -> mImgImgUrl.deleteImage());
+        // 辅图
+        if (!TextUtils.isEmpty(mGoodsBean.getImgUrlSub())) {
+            String[] strings = mGoodsBean.getImgUrlSub().split(",");
+            for (String s : strings) {
+                addImgUrlSub(s);
+            }
+        }
+        // 商品详情图
+        if (!TextUtils.isEmpty(mGoodsBean.getImgUrlDetail())) {
+            String[] strings = mGoodsBean.getImgUrlDetail().split(",");
+            for (String s : strings) {
+                addImgUrlDetail(s);
+            }
+        }
+        // 商品编码
+        mEtProductCode.setText(mGoodsBean.getProductCode());
+        // 商品名称
+        mEtProductName.setText(mGoodsBean.getProductName());
+        // 商城分类
+        CategoryItem categoryItem1 = new CategoryItem();
+        categoryItem1.setCategoryName(mGoodsBean.getCategoryName());
+        categoryItem1.setCategoryID(mGoodsBean.getCategoryID());
+        CategoryItem categoryItem2 = new CategoryItem();
+        categoryItem2.setCategoryName(mGoodsBean.getCategorySubName());
+        categoryItem2.setCategoryID(mGoodsBean.getCategorySubID());
+        CategoryItem categoryItem3 = new CategoryItem();
+        categoryItem3.setCategoryName(mGoodsBean.getCategoryThreeName());
+        categoryItem3.setCategoryID(mGoodsBean.getCategoryThreeID());
+        mTxtCategoryName.setTag(R.id.base_tag_1, categoryItem1);
+        mTxtCategoryName.setTag(R.id.base_tag_2, categoryItem2);
+        mTxtCategoryName.setTag(R.id.base_tag_3, categoryItem3);
+        mTxtCategoryName.setText(String.format("%s - %s - %s", categoryItem1.getCategoryName(),
+            categoryItem2.getCategoryName(), categoryItem3.getCategoryName()));
+        // 自定义分类
+        CopyCategoryBean copyCategoryBean = new CopyCategoryBean();
+        copyCategoryBean.setShopProductCategorySubID(mGoodsBean.getShopProductCategorySubID());
+        copyCategoryBean.setShopProductCategorySubName(mGoodsBean.getShopProductCategorySubName());
+        copyCategoryBean.setShopProductCategoryThreeID(mGoodsBean.getShopProductCategoryThreeID());
+        copyCategoryBean.setShopProductCategoryThreeName(mGoodsBean.getShopProductCategoryThreeName());
+        showCustomCategory(copyCategoryBean);
+        // 商品规格
+        mSpecsAdapter.setNewData(mGoodsBean.getSpecs());
+        // 商品简介
+        mEtProductBrief.setText(mGoodsBean.getProductBrief());
+        // 别称
+        List<NicknamesBean> nicknamesBeanList = mGoodsBean.getNicknames();
+        if (!CommonUtils.isEmpty(nicknamesBeanList)) {
+            for (NicknamesBean bean : nicknamesBeanList) {
+                if (TextUtils.equals(bean.getNicknameType(), "2")) {
+                    if (TextUtils.isEmpty(mEtNickNames1.getText().toString().trim())) {
+                        mEtNickNames1.setText(bean.getNickname());
+                    } else if (TextUtils.isEmpty(mEtNickNames2.getText().toString().trim())) {
+                        mEtNickNames2.setText(bean.getNickname());
+                    } else if (TextUtils.isEmpty(mEtNickNames3.getText().toString().trim())) {
+                        mEtNickNames3.setText(bean.getNickname());
+                    }
+                }
+            }
+        }
+        // 商品属性
+        List<ProductAttrBean> productAttrBeanList = mGoodsBean.getProductAttrs();
+        if (!CommonUtils.isEmpty(productAttrBeanList)) {
+            for (ProductAttrBean bean : productAttrBeanList) {
+                bean.setCurrAttrValue(bean.getAttrValue());
+            }
+        }
+        mProductAttrAdapter.setNewData(productAttrBeanList);
+        // 商品标签
+        mFlowAdapter = new FlowAdapter(GoodsAddActivity.this, mGoodsBean.getLabelList());
+        mFlowLayout.setAdapter(mFlowAdapter);
+        // 设置为押金商品
+        mSwitchDepositProductType.setChecked(TextUtils.equals(GoodsBean.DEPOSIT_GOODS_TYPE,
+            mGoodsBean.getDepositProductType()));
+        // 开启库存校验
+        mSwitchStockCheckType.setChecked(TextUtils.equals(mGoodsBean.getStockCheckType(), "1"));
     }
 
     /**
@@ -347,6 +441,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             attrBean.setCurrAttrValue(year1 + "-" + (month1 + 1) + "-" + dayOfMonth1);
             adapter.notifyItemChanged(position);
         }, year, monthOfYear, dayOfMonth);
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.base_white)));
+        }
         dialog.show();
     }
 
@@ -423,6 +521,33 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             .setMessage("开启库存校验后，当商品某规格库存不足时不允许采购商下单采购")
             .setButton((dialog, item) -> dialog.dismiss(), "我知道了")
             .create().show();
+    }
+
+    private void addImgUrlSub(String url) {
+        mImgImgUrlSub.setVisibility(mLlImgUrlSub.getChildCount() == 4 ? View.GONE : View.VISIBLE);
+        ImgShowDelBlock block = new ImgShowDelBlock(this);
+        block.setImgUrl(url);
+        block.setDeleteListener(v -> {
+            mLlImgUrlSub.removeView(block);
+            mImgImgUrlSub.setVisibility(mLlImgUrlSub.getChildCount() == 4 ? View.GONE : View.VISIBLE);
+        });
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(UIUtils.dip2px(80), UIUtils.dip2px(80));
+        params.rightMargin = UIUtils.dip2px(10);
+        mLlImgUrlSub.addView(block, mLlImgUrlSub.getChildCount() - 1, params);
+    }
+
+    private void addImgUrlDetail(String url) {
+        mImgImgUrlDetail.setVisibility(mLlImgUrlDetail.getChildCount() == 5 ? View.GONE : View.VISIBLE);
+        ImgShowDelBlock block = new ImgShowDelBlock(this);
+        block.setImgUrl(url);
+        block.setDeleteListener(v -> {
+            mLlImgUrlDetail.removeView(block);
+            mImgImgUrlDetail.setVisibility(mLlImgUrlDetail.getChildCount() == 5 ? View.GONE : View.VISIBLE);
+        });
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+            UIUtils.dip2px(80));
+        params.bottomMargin = UIUtils.dip2px(10);
+        mLlImgUrlDetail.addView(block, mLlImgUrlDetail.getChildCount() - 1, params);
     }
 
     @Subscribe
@@ -516,29 +641,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             mImgImgUrl.showImage(url, v -> mImgImgUrl.deleteImage());
         } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB) {
             // 辅图
-            mImgImgUrlSub.setVisibility(mLlImgUrlSub.getChildCount() == 4 ? View.GONE : View.VISIBLE);
-            ImgShowDelBlock block = new ImgShowDelBlock(this);
-            block.setImgUrl(url);
-            block.setDeleteListener(v -> {
-                mLlImgUrlSub.removeView(block);
-                mImgImgUrlSub.setVisibility(mLlImgUrlSub.getChildCount() == 4 ? View.GONE : View.VISIBLE);
-            });
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(UIUtils.dip2px(80), UIUtils.dip2px(80));
-            params.rightMargin = UIUtils.dip2px(10);
-            mLlImgUrlSub.addView(block, mLlImgUrlSub.getChildCount() - 1, params);
+            addImgUrlSub(url);
         } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_DETAIL) {
             // 商品详情图
-            mImgImgUrlDetail.setVisibility(mLlImgUrlDetail.getChildCount() == 5 ? View.GONE : View.VISIBLE);
-            ImgShowDelBlock block = new ImgShowDelBlock(this);
-            block.setImgUrl(url);
-            block.setDeleteListener(v -> {
-                mLlImgUrlDetail.removeView(block);
-                mImgImgUrlDetail.setVisibility(mLlImgUrlDetail.getChildCount() == 5 ? View.GONE : View.VISIBLE);
-            });
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                UIUtils.dip2px(80));
-            params.bottomMargin = UIUtils.dip2px(10);
-            mLlImgUrlDetail.addView(block, mLlImgUrlDetail.getChildCount() - 1, params);
+            addImgUrlDetail(url);
         }
     }
 
@@ -895,7 +1001,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 .addOnClickListener(R.id.img_del)
                 .setImageResource(R.id.img_del, TextUtils.equals(item.getStandardUnitStatus(),
                     SpecsBean.STANDARD_UNIT) ? R.drawable.ic_spec_delete_disable : R.drawable.ic_spec_delete)
-                .setText(R.id.txt_productPrice, "¥" + item.getProductPrice());
+                .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
         }
     }
 

@@ -111,6 +111,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     private ProductAttrAdapter mAdapterAttr;
     private GoodsDetailPresenter mPresenter;
     private SpecStatusWindow.SpecAdapter mAdapterSpec;
+    private GoodsBean mGoodsBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -254,11 +255,14 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
                 .create().show();
             return;
         }
-        // TODO:去编辑
+        if (mGoodsBean != null) {
+            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD, mGoodsBean);
+        }
     }
 
     @Override
     public void showDetail(GoodsBean bean) {
+        mGoodsBean = bean;
         showBottomButton(bean);
         showBanner(bean);
         showProductName(bean);

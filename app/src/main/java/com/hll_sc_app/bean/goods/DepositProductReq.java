@@ -28,9 +28,9 @@ public class DepositProductReq implements Parcelable {
     };
     private String depositProductID;
     private String depositSpecID;
-    private String depositProductName;
-    private String depositSpecName;
+    private String productName;
     private String depositNum;
+
 
     public DepositProductReq() {
     }
@@ -38,8 +38,7 @@ public class DepositProductReq implements Parcelable {
     protected DepositProductReq(Parcel in) {
         this.depositProductID = in.readString();
         this.depositSpecID = in.readString();
-        this.depositProductName = in.readString();
-        this.depositSpecName = in.readString();
+        this.productName = in.readString();
         this.depositNum = in.readString();
     }
 
@@ -50,8 +49,7 @@ public class DepositProductReq implements Parcelable {
                 DepositProductReq depositProductReq = new DepositProductReq();
                 depositProductReq.setDepositProductID(bean.getProductID());
                 depositProductReq.setDepositSpecID(bean.getSpecID());
-                depositProductReq.setDepositProductName(bean.getProductName());
-                depositProductReq.setDepositSpecName(bean.getSpecContent());
+                depositProductReq.setProductName(bean.getProductName());
                 depositProductReq.setDepositNum(bean.getDepositNum());
                 listReq.add(depositProductReq);
             }
@@ -66,8 +64,7 @@ public class DepositProductReq implements Parcelable {
                 DepositProductBean bean = new DepositProductBean();
                 bean.setProductID(depositProductReq.getDepositProductID());
                 bean.setSpecID(depositProductReq.getDepositSpecID());
-                bean.setProductName(depositProductReq.getDepositProductName());
-                bean.setSpecContent(depositProductReq.getDepositSpecName());
+                bean.setProductName(depositProductReq.getProductName());
                 bean.setDepositNum(depositProductReq.getDepositNum());
                 listReq.add(bean);
             }
@@ -91,20 +88,12 @@ public class DepositProductReq implements Parcelable {
         this.depositSpecID = depositSpecID;
     }
 
-    public String getDepositProductName() {
-        return depositProductName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setDepositProductName(String depositProductName) {
-        this.depositProductName = depositProductName;
-    }
-
-    public String getDepositSpecName() {
-        return depositSpecName;
-    }
-
-    public void setDepositSpecName(String depositSpecName) {
-        this.depositSpecName = depositSpecName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getDepositNum() {
@@ -124,8 +113,7 @@ public class DepositProductReq implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.depositProductID);
         dest.writeString(this.depositSpecID);
-        dest.writeString(this.depositProductName);
-        dest.writeString(this.depositSpecName);
+        dest.writeString(this.productName);
         dest.writeString(this.depositNum);
     }
 }

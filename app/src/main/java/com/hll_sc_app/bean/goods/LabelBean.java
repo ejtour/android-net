@@ -1,12 +1,26 @@
 package com.hll_sc_app.bean.goods;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 行业标签 Bean
  *
  * @author zhuyingsong
  * @date 2019-06-21
  */
-public class LabelBean {
+public class LabelBean implements Parcelable {
+    public static final Parcelable.Creator<LabelBean> CREATOR = new Parcelable.Creator<LabelBean>() {
+        @Override
+        public LabelBean createFromParcel(Parcel source) {
+            return new LabelBean(source);
+        }
+
+        @Override
+        public LabelBean[] newArray(int size) {
+            return new LabelBean[size];
+        }
+    };
     private String actionTime;
     private String createby;
     /**
@@ -25,6 +39,24 @@ public class LabelBean {
      */
     private String labelName;
     private String labelGroupId;
+
+    public LabelBean() {
+    }
+
+    protected LabelBean(Parcel in) {
+        this.actionTime = in.readString();
+        this.createby = in.readString();
+        this.labelID = in.readString();
+        this.productUseCount = in.readString();
+        this.actionBy = in.readString();
+        this.createTime = in.readString();
+        this.templateUseCount = in.readString();
+        this.action = in.readString();
+        this.labelStatus = in.readString();
+        this.id = in.readString();
+        this.labelName = in.readString();
+        this.labelGroupId = in.readString();
+    }
 
     public String getActionTime() {
         return actionTime;
@@ -120,5 +152,26 @@ public class LabelBean {
 
     public void setLabelGroupId(String labelGroupId) {
         this.labelGroupId = labelGroupId;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.actionTime);
+        dest.writeString(this.createby);
+        dest.writeString(this.labelID);
+        dest.writeString(this.productUseCount);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.createTime);
+        dest.writeString(this.templateUseCount);
+        dest.writeString(this.action);
+        dest.writeString(this.labelStatus);
+        dest.writeString(this.id);
+        dest.writeString(this.labelName);
+        dest.writeString(this.labelGroupId);
     }
 }
