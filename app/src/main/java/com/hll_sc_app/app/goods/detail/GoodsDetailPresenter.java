@@ -42,7 +42,7 @@ public class GoodsDetailPresenter implements GoodsDetailContract.IGoodsDetailPre
     @Override
     public void queryGoodsDetail() {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("productID", mView.getProductID())
+            .put("productID", mView.getProductId())
             .put("forward", "1")
             .create();
         GoodsService.INSTANCE.queryGoodsDetail(req)

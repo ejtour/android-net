@@ -28,7 +28,7 @@ public interface GoodsDetailContract {
          *
          * @return 商品 ID
          */
-        String getProductID();
+        String getProductId();
     }
 
     interface IGoodsDetailPresenter extends IPresenter<IGoodsDetailView> {

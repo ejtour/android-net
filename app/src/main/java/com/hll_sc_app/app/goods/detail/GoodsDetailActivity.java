@@ -61,10 +61,11 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS_DETAIL, extras = Constant.LOGIN_EXTRA)
 public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetailContract.IGoodsDetailView {
+    public static final String PRODUCE_AREA = "produceArea";
     @BindView(R.id.banner)
     Banner mBanner;
     @Autowired(name = "object0")
-    String mProductID;
+    String mProductId;
     @Autowired(name = "object1")
     boolean mIsBundlingDetail;
     @BindView(R.id.txt_productName)
@@ -135,7 +136,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mAdapterSpec.setOnItemChildClickListener((adapter, view, position) -> {
             SpecsBean bean = (SpecsBean) adapter.getItem(position);
             if (bean != null) {
-                bean.setProductID(mProductID);
+                bean.setProductID(mProductId);
                 mPresenter.updateSpecStatus(Collections.singletonList(bean));
             }
         });
@@ -143,18 +144,18 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mRecyclerViewProductAttr.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProductAttr.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
         mRecyclerViewProductAttr.setNestedScrollingEnabled(false);
-        mAdapterAttr = new ProductAttrAdapter(null);
+        mAdapterAttr = new ProductAttrAdapter();
         mRecyclerViewProductAttr.setAdapter(mAdapterAttr);
 
         mRecyclerViewProductImg.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProductImg.setNestedScrollingEnabled(false);
-        mAdapterImg = new ProductImgAdapter(null);
+        mAdapterImg = new ProductImgAdapter();
         mRecyclerViewProductImg.setAdapter(mAdapterImg);
 
         mRecyclerViewBundlingGoods.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         mRecyclerViewBundlingGoods.addItemDecoration(new BundlingGoodsDecoration(this));
         mRecyclerViewBundlingGoods.setNestedScrollingEnabled(false);
-        mAdapterBundlingGoods = new BundlingGoodsAdapter(null);
+        mAdapterBundlingGoods = new BundlingGoodsAdapter();
         mAdapterBundlingGoods.setOnItemClickListener((adapter, view, position) -> {
             GoodsBean goodsBean = (GoodsBean) adapter.getItem(position);
             if (goodsBean != null) {
@@ -213,7 +214,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         // 找出未上架的规格
         List<SpecsBean> listDown = new ArrayList<>();
         for (SpecsBean bean : mAdapterSpec.getData()) {
-            bean.setProductID(mProductID);
+            bean.setProductID(mProductId);
             if (TextUtils.equals(bean.getSpecStatus(), SpecsBean.SPEC_STATUS_DOWN)) {
                 listDown.add(bean);
             }
@@ -236,7 +237,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         if (!isDeposit) {
             // 押金商品可以直接编辑
             for (SpecsBean bean : mAdapterSpec.getData()) {
-                bean.setProductID(mProductID);
+                bean.setProductID(mProductId);
                 if (TextUtils.equals(bean.getSpecStatus(), SpecsBean.SPEC_STATUS_UP)) {
                     isEdit = false;
                 }
@@ -370,12 +371,12 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     }
 
     @Override
-    public String getProductID() {
-        return mProductID;
+    public String getProductId() {
+        return mProductId;
     }
 
     private static class FlowAdapter extends TagAdapter<NicknamesBean> {
-        private LayoutInflater mInflater;
+        private final LayoutInflater mInflater;
 
         FlowAdapter(Context context, List<NicknamesBean> list) {
             super(list);
@@ -392,20 +393,24 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     private static class ProductAttrAdapter extends BaseQuickAdapter<ProductAttrBean, BaseViewHolder> {
 
-        ProductAttrAdapter(@Nullable List<ProductAttrBean> data) {
-            super(R.layout.item_product_detail_attr, data);
+        ProductAttrAdapter() {
+            super(R.layout.item_product_detail_attr);
         }
 
         @Override
         protected void convert(BaseViewHolder helper, ProductAttrBean item) {
             helper.setText(R.id.txt_keyNote, item.getKeyNote()).setText(R.id.txt_attrValue, item.getAttrValue());
+            if (TextUtils.equals(item.getAttrKey(), PRODUCE_AREA) && !TextUtils.isEmpty(item.getAttrValue())) {
+                String[] strings = item.getAttrValue().split(",");
+                helper.setText(R.id.txt_attrValue, String.format("%s-%s", strings[0], strings[2]));
+            }
         }
     }
 
     private static class ProductImgAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
-        ProductImgAdapter(@Nullable List<String> data) {
-            super(R.layout.item_product_detail_img, data);
+        ProductImgAdapter() {
+            super(R.layout.item_product_detail_img);
         }
 
         @Override
@@ -416,8 +421,8 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     private static class BundlingGoodsAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
 
-        BundlingGoodsAdapter(@Nullable List<GoodsBean> data) {
-            super(R.layout.item_product_detail_bundling, data);
+        BundlingGoodsAdapter() {
+            super(R.layout.item_product_detail_bundling);
         }
 
         @Override

@@ -18,30 +18,29 @@ import com.hll_sc_app.base.utils.UIUtils;
  * @author zhuyingsong
  * @date 2019-6-14
  */
-public class BundlingGoodsDecoration extends RecyclerView.ItemDecoration {
-    private int mLineWidth;
-    private Bitmap mBitmap;
-    private int mWidth;
-
+class BundlingGoodsDecoration extends RecyclerView.ItemDecoration {
+    private final int mWidth;
+    private final int mLineWidth;
+    private final Bitmap mBitmap;
 
     BundlingGoodsDecoration(Context context) {
-        mLineWidth = UIUtils.dip2px(30);
         mWidth = UIUtils.dip2px(10);
+        mLineWidth = UIUtils.dip2px(30);
         mBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.base_ic_img_add);
     }
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        int width = mLineWidth / 2 - mWidth / 2;
         int top = parent.getHeight() / 2 - mWidth / 2;
         int bottom = top + mWidth;
-        int left = mLineWidth / 2 - mWidth / 2;
         int childCount = parent.getChildCount();
         for (int i = 0; i < childCount - 1; i++) {
             View child = parent.getChildAt(i);
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
-            int startX = child.getRight() + params.rightMargin + left;
-            int endX = startX + mWidth;
-            c.drawBitmap(mBitmap, null, new Rect(startX, top, endX, bottom), null);
+            int left = child.getRight() + params.rightMargin + width;
+            int right = left + mWidth;
+            c.drawBitmap(mBitmap, null, new Rect(left, top, right, bottom), null);
         }
     }
 

@@ -27,6 +27,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
+import com.hll_sc_app.app.goods.detail.GoodsDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.dialog.TipsDialog;
@@ -911,7 +912,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             TextView txtArrValue = helper.getView(R.id.txt_attrValue);
             txtArrValue.setText(item.getCurrAttrValue());
             txtArrValue.setHint(item.getTip());
-            if (TextUtils.equals(item.getAttrKey(), "produceArea") && !TextUtils.isEmpty(item.getCurrAttrValue())) {
+            if (TextUtils.equals(item.getAttrKey(), GoodsDetailActivity.PRODUCE_AREA) && !TextUtils.isEmpty(item.getCurrAttrValue())) {
                 String[] strings = item.getCurrAttrValue().split(",");
                 txtArrValue.setText(String.format("%s-%s", strings[0], strings[2]));
             }
