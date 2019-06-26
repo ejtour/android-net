@@ -1,5 +1,9 @@
 package com.hll_sc_app.bean.goods;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +12,7 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-06-11
  */
-public class GoodsBean {
+public class GoodsBean implements Parcelable {
     /**
      * 是组合商品
      */
@@ -99,8 +103,106 @@ public class GoodsBean {
     private List<ProductAttrBean> productAttrs;
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
-    private List<?> labelList;
+    public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {
+        @Override
+        public GoodsBean createFromParcel(Parcel source) {
+            return new GoodsBean(source);
+        }
+
+        @Override
+        public GoodsBean[] newArray(int size) {
+            return new GoodsBean[size];
+        }
+    };
     private String imgUrlDetail;
+    private List<LabelBean> labelList;
+    /**
+     * 添加来源（1-普通添加，2-快速添加）
+     */
+    private String addResource;
+    /**
+     * 按钮类型（1-仅保存，2-申请上架）
+     */
+    private String buttonType;
+
+    public GoodsBean() {
+    }
+
+    protected GoodsBean(Parcel in) {
+        this.productID = in.readString();
+        this.placeProvince = in.readString();
+        this.productName = in.readString();
+        this.productAttr = in.readString();
+        this.appointSellType = in.readString();
+        this.bundlingGoodsType = in.readString();
+        this.bundlingGoodsDetails = in.createTypedArrayList(GoodsBean.CREATOR);
+        this.productBrief = in.readString();
+        this.isWareHourse = in.readString();
+        this.shopProductCategorySubID = in.readString();
+        this.action = in.readString();
+        this.depositProductType = in.readString();
+        this.purchaserIsVisible = in.readString();
+        this.orgName = in.readString();
+        this.cargoOwnerID = in.readString();
+        this.cargoOwnerName = in.readString();
+        this.standardUnitName = in.readString();
+        this.groupID = in.readString();
+        this.isCooperation = in.readByte() != 0;
+        this.isDeliveryRange = in.readByte() != 0;
+        this.nextDayDelivery = in.readString();
+        this.stockCheckType = in.readString();
+        this.brandId = in.readString();
+        this.producer = in.readString();
+        this.productSale = in.readString();
+        this.note = in.readString();
+        this.priceIsVisible = in.readByte() != 0;
+        this.actionTime = in.readString();
+        this.saleSpecNum = in.readString();
+        this.isCollection = in.readByte() != 0;
+        this.categoryThreeID = in.readString();
+        this.top = in.readString();
+        this.shopProductCategoryID = in.readString();
+        this.standardSpecID = in.readString();
+        this.placeCity = in.readString();
+        this.shopProductCategoryThreeID = in.readString();
+        this.categoryID = in.readString();
+        this.categoryName = in.readString();
+        this.categorySubName = in.readString();
+        this.categoryThreeName = in.readString();
+        this.productType = in.readString();
+        this.supplierName = in.readString();
+        this.actionBy = in.readString();
+        this.productStatus = in.readString();
+        this.isSupplierWarehouse = in.readString();
+        this.imgUrl = in.readString();
+        this.imgUrlSub = in.readString();
+        this.productCode = in.readString();
+        this.categorySubID = in.readString();
+        this.placeCityCode = in.readString();
+        this.createTime = in.readString();
+        this.guaranteePeriod = in.readString();
+        this.resourceType = in.readString();
+        this.placeProvinceCode = in.readString();
+        this.shopProductCategoryThreeName = in.readString();
+        this.shopProductCategorySubName = in.readString();
+        this.specs = in.createTypedArrayList(SpecsBean.CREATOR);
+        this.productAttrs = in.createTypedArrayList(ProductAttrBean.CREATOR);
+        this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
+        this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
+        this.labelList = new ArrayList<LabelBean>();
+        in.readList(this.labelList, LabelBean.class.getClassLoader());
+        this.imgUrlDetail = in.readString();
+        this.addResource = in.readString();
+        this.buttonType = in.readString();
+    }
+
+    public String getButtonType() {
+        return buttonType;
+    }
+
+    public void setButtonType(String buttonType) {
+        this.buttonType = buttonType;
+    }
 
     public String getImgUrlDetail() {
         return imgUrlDetail;
@@ -590,11 +692,92 @@ public class GoodsBean {
         this.nicknames = nicknames;
     }
 
-    public List<?> getLabelList() {
+    public String getAddResource() {
+        return addResource;
+    }
+
+    public void setAddResource(String addResource) {
+        this.addResource = addResource;
+    }
+
+    public List<LabelBean> getLabelList() {
         return labelList;
     }
 
-    public void setLabelList(List<?> labelList) {
+    public void setLabelList(List<LabelBean> labelList) {
         this.labelList = labelList;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.productID);
+        dest.writeString(this.placeProvince);
+        dest.writeString(this.productName);
+        dest.writeString(this.productAttr);
+        dest.writeString(this.appointSellType);
+        dest.writeString(this.bundlingGoodsType);
+        dest.writeTypedList(this.bundlingGoodsDetails);
+        dest.writeString(this.productBrief);
+        dest.writeString(this.isWareHourse);
+        dest.writeString(this.shopProductCategorySubID);
+        dest.writeString(this.action);
+        dest.writeString(this.depositProductType);
+        dest.writeString(this.purchaserIsVisible);
+        dest.writeString(this.orgName);
+        dest.writeString(this.cargoOwnerID);
+        dest.writeString(this.cargoOwnerName);
+        dest.writeString(this.standardUnitName);
+        dest.writeString(this.groupID);
+        dest.writeByte(this.isCooperation ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isDeliveryRange ? (byte) 1 : (byte) 0);
+        dest.writeString(this.nextDayDelivery);
+        dest.writeString(this.stockCheckType);
+        dest.writeString(this.brandId);
+        dest.writeString(this.producer);
+        dest.writeString(this.productSale);
+        dest.writeString(this.note);
+        dest.writeByte(this.priceIsVisible ? (byte) 1 : (byte) 0);
+        dest.writeString(this.actionTime);
+        dest.writeString(this.saleSpecNum);
+        dest.writeByte(this.isCollection ? (byte) 1 : (byte) 0);
+        dest.writeString(this.categoryThreeID);
+        dest.writeString(this.top);
+        dest.writeString(this.shopProductCategoryID);
+        dest.writeString(this.standardSpecID);
+        dest.writeString(this.placeCity);
+        dest.writeString(this.shopProductCategoryThreeID);
+        dest.writeString(this.categoryID);
+        dest.writeString(this.categoryName);
+        dest.writeString(this.categorySubName);
+        dest.writeString(this.categoryThreeName);
+        dest.writeString(this.productType);
+        dest.writeString(this.supplierName);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.productStatus);
+        dest.writeString(this.isSupplierWarehouse);
+        dest.writeString(this.imgUrl);
+        dest.writeString(this.imgUrlSub);
+        dest.writeString(this.productCode);
+        dest.writeString(this.categorySubID);
+        dest.writeString(this.placeCityCode);
+        dest.writeString(this.createTime);
+        dest.writeString(this.guaranteePeriod);
+        dest.writeString(this.resourceType);
+        dest.writeString(this.placeProvinceCode);
+        dest.writeString(this.shopProductCategoryThreeName);
+        dest.writeString(this.shopProductCategorySubName);
+        dest.writeTypedList(this.specs);
+        dest.writeTypedList(this.productAttrs);
+        dest.writeTypedList(this.supplierShops);
+        dest.writeTypedList(this.nicknames);
+        dest.writeList(this.labelList);
+        dest.writeString(this.imgUrlDetail);
+        dest.writeString(this.addResource);
+        dest.writeString(this.buttonType);
     }
 }

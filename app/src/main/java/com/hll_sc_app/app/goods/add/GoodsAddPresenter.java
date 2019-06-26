@@ -5,11 +5,13 @@ import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.app.user.register.RegisterPresenter;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.user.CategoryItem;
@@ -154,6 +156,32 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
                 public void onSuccess(List<LabelBean> list) {
                     mLabelList = list;
                     mView.showLabelSelectWindow(mLabelList);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void addProduct(GoodsBean bean) {
+        if (bean == null) {
+            return;
+        }
+        BaseReq<GoodsBean> baseReq = new BaseReq<>();
+        baseReq.setData(bean);
+        GoodsService.INSTANCE.addProduct(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.addSuccess();
                 }
 
                 @Override

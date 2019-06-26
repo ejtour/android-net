@@ -194,4 +194,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100091")
     Observable<BaseResp<Object>> addProductBrand(@Body BaseMapReq req);
+
+    /**
+     * 商品添加
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100003")
+    Observable<BaseResp<Object>> addProduct(@Body BaseReq<GoodsBean> req);
 }

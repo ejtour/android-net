@@ -3,6 +3,7 @@ package com.hll_sc_app.app.goods.add;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -52,6 +53,11 @@ public interface GoodsAddContract {
          * 选择商品属性
          */
         void toProductAttrsActivity();
+
+        /**
+         * 添加成功
+         */
+        void addSuccess();
     }
 
     interface IGoodsAddPresenter extends IPresenter<IGoodsAddView> {
@@ -81,5 +87,12 @@ public interface GoodsAddContract {
          * 行业标签查询接口
          */
         void queryLabelList();
+
+        /**
+         * 商品添加
+         *
+         * @param bean 商品
+         */
+        void addProduct(GoodsBean bean);
     }
 }

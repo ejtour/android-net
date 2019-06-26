@@ -61,8 +61,10 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
     public static final Pattern RATION = Pattern.compile("^[0-9]{1,8}([.]{1}[0-9]{0,2})?$");
     public static final Pattern BUY_MIN_NUM = Pattern.compile("^[0-9]{1,4}$");
     public static final Pattern MIN_ORDER = Pattern.compile("^[0-9]{1,7}([.]{1}[5]{0,1})?$");
+    public static final Pattern NICK_NAME = Pattern.compile("^\\S*$");
     @BindView(R.id.img_close)
     ImageView mImgClose;
+
     @BindView(R.id.txt_save)
     TextView mTxtSave;
     @BindView(R.id.txt_specContent_title)

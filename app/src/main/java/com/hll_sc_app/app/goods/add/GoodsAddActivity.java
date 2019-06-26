@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.AreaProductSelectWindow;
@@ -39,7 +41,9 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.event.BrandBackEvent;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
+import com.hll_sc_app.bean.goods.NicknamesBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
@@ -155,6 +159,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private ProductAttrAdapter mProductAttrAdapter;
     private AreaProductSelectWindow mAreaProductSelectWindow;
     private ComboBoxWindow mComboBoxWindow;
+    private GoodsBean mGoodsBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -271,6 +276,10 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             }
             showStockCheckType();
         });
+        mEtProductName.addTextChangedListener(new NameCheckTextWatcher());
+        mEtNickNames1.addTextChangedListener(new NameCheckTextWatcher());
+        mEtNickNames2.addTextChangedListener(new NameCheckTextWatcher());
+        mEtNickNames3.addTextChangedListener(new NameCheckTextWatcher());
     }
 
     /**
@@ -550,7 +559,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
 
     @Override
     public void showCustomCategory(CopyCategoryBean bean) {
-        mTxtShopProductCategorySubName.setTag(bean.getShopProductCategorySubID());
+        mTxtShopProductCategorySubName.setTag(bean);
         mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
             bean.getShopProductCategoryThreeName()));
     }
@@ -578,6 +587,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
     }
 
+    @Override
+    public void addSuccess() {
+        finish();
+    }
+
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
         R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
         R.id.txt_save, R.id.txt_saveAndUp})
@@ -592,7 +606,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             case R.id.rl_shopProductCategorySubName:
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY,
                     mTxtShopProductCategorySubName.getTag() != null ?
-                        (String) mTxtShopProductCategorySubName.getTag() : "");
+                        ((CopyCategoryBean) mTxtShopProductCategorySubName.getTag()).getShopProductCategorySubID() :
+                        "");
 
                 break;
             case R.id.txt_categoryName_copy:
@@ -616,10 +631,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 break;
             case R.id.txt_save:
                 // 仅保存
+                toSave("1");
                 break;
             case R.id.txt_saveAndUp:
                 // 立即上架
-                toProductAttrsActivity();
+                toSave("2");
                 break;
             default:
                 break;
@@ -672,6 +688,160 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mAssistUnitSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
+    /**
+     * 保存
+     *
+     * @param buttonType 按钮类型 1-仅保存，2-申请上架
+     */
+    private void toSave(String buttonType) {
+        if (mGoodsBean == null) {
+            mGoodsBean = new GoodsBean();
+        }
+        mGoodsBean.setAddResource("1");
+        mGoodsBean.setButtonType(buttonType);
+        // 是否组合商品(0-不是，1-是)
+        mGoodsBean.setBundlingGoodsType("0");
+        // 一级类目ID
+        if (mTxtCategoryName.getTag(R.id.base_tag_1) != null) {
+            CategoryItem categoryItem1 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_1);
+            mGoodsBean.setCategoryID(categoryItem1.getCategoryID());
+        } else {
+            showToast("一级类目ID不能为空");
+            return;
+        }
+        // 二级类目ID
+        if (mTxtCategoryName.getTag(R.id.base_tag_2) != null) {
+            CategoryItem categoryItem2 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_2);
+            mGoodsBean.setCategorySubID(categoryItem2.getCategoryID());
+        } else {
+            showToast("二级类目ID不能为空");
+            return;
+        }
+        // 三级类目ID
+        if (mTxtCategoryName.getTag(R.id.base_tag_3) != null) {
+            CategoryItem categoryItem3 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_3);
+            mGoodsBean.setCategoryThreeID(categoryItem3.getCategoryID());
+        } else {
+            showToast("三级类目ID不能为空");
+            return;
+        }
+        // 是否押金商品(0-不是，1-是)
+        mGoodsBean.setDepositProductType(mSwitchDepositProductType.isChecked() ? "1" : "0");
+        // 集团编号
+        mGoodsBean.setGroupID(UserConfig.getGroupID());
+        // 商品主图URL地址
+        if (!TextUtils.isEmpty(mImgImgUrl.getImgUrl())) {
+            mGoodsBean.setImgUrl(mImgImgUrl.getImgUrl());
+        } else {
+            showToast("商品主图不能为空");
+            return;
+        }
+        // 商品详情图
+        if (mLlImgUrlDetail != null) {
+            List<String> list = new ArrayList<>();
+            for (int index = 0; index < mLlImgUrlDetail.getChildCount(); index++) {
+                View view = mLlImgUrlDetail.getChildAt(index);
+                if (view instanceof ImgShowDelBlock) {
+                    list.add(((ImgShowDelBlock) view).getImageUrl());
+                }
+            }
+            mGoodsBean.setImgUrlDetail(TextUtils.join(",", list));
+        }
+        // 商品辅图URL地址，多个图片地址以逗号“,”分割
+        if (mLlImgUrlSub != null) {
+            List<String> list = new ArrayList<>();
+            for (int index = 0; index < mLlImgUrlSub.getChildCount(); index++) {
+                View view = mLlImgUrlSub.getChildAt(index);
+                if (view instanceof ImgShowDelBlock) {
+                    list.add(((ImgShowDelBlock) view).getImageUrl());
+                }
+            }
+            mGoodsBean.setImgUrlSub(TextUtils.join(",", list));
+        }
+        // 是否代仓（0-自营，1-代仓）-商城添加默认自营
+        mGoodsBean.setIsWareHourse("0");
+        // 行业标签
+        if (mFlowAdapter != null && !CommonUtils.isEmpty(mFlowAdapter.mList)) {
+            List<LabelBean> labelList = new ArrayList<>();
+            for (LabelBean labelBean : mFlowAdapter.mList) {
+                LabelBean bean = new LabelBean();
+                bean.setLabelID(labelBean.getLabelID());
+                labelList.add(bean);
+            }
+            mGoodsBean.setLabelList(labelList);
+        }
+        // 商品别称列表(避免商家输入特殊字符)
+        List<NicknamesBean> listNickName = new ArrayList<>();
+        if (!TextUtils.isEmpty(mEtNickNames1.getText().toString())) {
+            NicknamesBean nicknamesBean = new NicknamesBean();
+            nicknamesBean.setNickname(mEtNickNames1.getText().toString());
+            nicknamesBean.setNicknameType("2");
+            listNickName.add(nicknamesBean);
+        }
+        if (!TextUtils.isEmpty(mEtNickNames2.getText().toString())) {
+            NicknamesBean nicknamesBean = new NicknamesBean();
+            nicknamesBean.setNickname(mEtNickNames2.getText().toString());
+            nicknamesBean.setNicknameType("2");
+            listNickName.add(nicknamesBean);
+        }
+        if (!TextUtils.isEmpty(mEtNickNames3.getText().toString())) {
+            NicknamesBean nicknamesBean = new NicknamesBean();
+            nicknamesBean.setNickname(mEtNickNames3.getText().toString());
+            nicknamesBean.setNicknameType("2");
+            listNickName.add(nicknamesBean);
+        }
+        mGoodsBean.setNicknames(listNickName);
+        // 商品属性
+        if (!CommonUtils.isEmpty(mProductAttrAdapter.getData())) {
+            List<ProductAttrBean> productAttrs = new ArrayList<>();
+            for (ProductAttrBean bean : mProductAttrAdapter.getData()) {
+                ProductAttrBean productAttrBean = new ProductAttrBean();
+                productAttrBean.setAttrKey(bean.getAttrKey());
+                productAttrBean.setAttrValue(bean.getCurrAttrValue());
+                productAttrBean.setKeyNote(bean.getKeyNote());
+                productAttrs.add(productAttrBean);
+            }
+            mGoodsBean.setProductAttrs(productAttrs);
+        }
+        // 商品简介
+        mGoodsBean.setProductBrief(mEtProductBrief.getText().toString().trim());
+        // 商品编码
+        if (!TextUtils.isEmpty(mEtProductCode.getText().toString().trim())) {
+            mGoodsBean.setProductCode(mEtProductCode.getText().toString().trim());
+        } else {
+            showToast("商品编码不能为空");
+            return;
+        }
+        // 商品名称
+        if (!TextUtils.isEmpty(mEtProductName.getText().toString().trim())) {
+            mGoodsBean.setProductName(mEtProductName.getText().toString().trim());
+        } else {
+            showToast("商品名称不能为空");
+            return;
+        }
+        // 数据来源类型（商城-shopmall，供应链-supplyChain）
+        mGoodsBean.setResourceType("shopmall");
+        // 自定义一级分类ID
+        if (mTxtShopProductCategorySubName.getTag() != null) {
+            CopyCategoryBean categoryBean = (CopyCategoryBean) mTxtShopProductCategorySubName.getTag();
+            mGoodsBean.setShopProductCategorySubID(categoryBean.getShopProductCategorySubID());
+            mGoodsBean.setShopProductCategoryThreeID(categoryBean.getShopProductCategoryThreeID());
+        } else {
+            showToast("自定义分类ID不能为空");
+            return;
+        }
+        // 规格列表
+        if (!CommonUtils.isEmpty(mSpecsAdapter.getData())) {
+            mGoodsBean.setSpecs(mSpecsAdapter.getData());
+        } else {
+            showToast("规格列表不能为空");
+            return;
+        }
+        // 是否开启库存校验(0-不是，1-是)
+        mGoodsBean.setStockCheckType(mSwitchStockCheckType.isChecked() ? "1" : "0");
+        mPresenter.addProduct(mGoodsBean);
+    }
+
     private static class FlowAdapter extends TagAdapter<LabelBean> {
         private LayoutInflater mInflater;
         private List<LabelBean> mList;
@@ -693,6 +863,19 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 notifyDataChanged();
             });
             return view;
+        }
+    }
+
+    private class NameCheckTextWatcher implements GoodsSpecsAddActivity.CheckTextWatcher {
+        @Override
+        public void afterTextChanged(Editable s) {
+            if (s.toString().startsWith(".")) {
+                s.insert(0, "0");
+            }
+            if (!GoodsSpecsAddActivity.NICK_NAME.matcher(s.toString()).find() && s.length() > 1) {
+                s.delete(s.length() - 1, s.length());
+                showToast("请勿包含空格");
+            }
         }
     }
 
