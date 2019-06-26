@@ -801,10 +801,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
      * @param buttonType 按钮类型 1-仅保存，2-申请上架
      */
     private void toSave(String buttonType) {
+        boolean edit = true;
         if (mGoodsBean == null) {
+            edit = false;
             mGoodsBean = new GoodsBean();
         }
-        mGoodsBean.setAddResource("1");
         mGoodsBean.setButtonType(buttonType);
         // 是否组合商品(0-不是，1-是)
         mGoodsBean.setBundlingGoodsType("0");
@@ -946,7 +947,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
         // 是否开启库存校验(0-不是，1-是)
         mGoodsBean.setStockCheckType(mSwitchStockCheckType.isChecked() ? "1" : "0");
-        mPresenter.addProduct(mGoodsBean);
+        if (edit) {
+            mPresenter.editProduct(mGoodsBean);
+        } else {
+            mPresenter.addProduct(mGoodsBean);
+        }
     }
 
     private static class FlowAdapter extends TagAdapter<LabelBean> {

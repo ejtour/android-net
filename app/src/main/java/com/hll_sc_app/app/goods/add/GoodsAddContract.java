@@ -94,5 +94,12 @@ public interface GoodsAddContract {
          * @param bean 商品
          */
         void addProduct(GoodsBean bean);
+
+        /**
+         * 商品修改
+         *
+         * @param bean 商品
+         */
+        void editProduct(GoodsBean bean);
     }
 }

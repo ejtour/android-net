@@ -320,7 +320,11 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             showToast("请填写押金商品数量");
             return;
         }
-        mPresenter.checkSkuCode(mEdtSkuCode.getText().toString().trim());
+        if (TextUtils.isEmpty(mSpecsBean.getSpecID())) {
+            mPresenter.checkSkuCode(mEdtSkuCode.getText().toString().trim());
+        } else {
+            checkSuccess();
+        }
     }
 
     @Override

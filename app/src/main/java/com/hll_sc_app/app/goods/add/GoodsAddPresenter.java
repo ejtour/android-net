@@ -170,9 +170,37 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
         if (bean == null) {
             return;
         }
+        bean.setAddResource("1");
         BaseReq<GoodsBean> baseReq = new BaseReq<>();
         baseReq.setData(bean);
         GoodsService.INSTANCE.addProduct(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.addSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void editProduct(GoodsBean bean) {
+        if (bean == null) {
+            return;
+        }
+        bean.setUpdateResource("1");
+        BaseReq<GoodsBean> baseReq = new BaseReq<>();
+        baseReq.setData(bean);
+        GoodsService.INSTANCE.editProduct(baseReq)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())

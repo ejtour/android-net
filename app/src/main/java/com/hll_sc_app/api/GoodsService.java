@@ -204,4 +204,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100003")
     Observable<BaseResp<Object>> addProduct(@Body BaseReq<GoodsBean> req);
+
+    /**
+     * 商品修改
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100004")
+    Observable<BaseResp<Object>> editProduct(@Body BaseReq<GoodsBean> req);
 }

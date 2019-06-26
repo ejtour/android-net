@@ -256,7 +256,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
             return;
         }
         if (mGoodsBean != null) {
-            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD, mGoodsBean);
+            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD, this, mGoodsBean);
         }
     }
 

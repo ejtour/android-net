@@ -3,7 +3,6 @@ package com.hll_sc_app.bean.goods;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -103,6 +102,16 @@ public class GoodsBean implements Parcelable {
     private List<ProductAttrBean> productAttrs;
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
+    private String imgUrlDetail;
+    private List<LabelBean> labelList;
+    /**
+     * 添加来源（1-普通添加，2-快速添加）
+     */
+    private String addResource;
+    /**
+     * 按钮类型（1-仅保存，2-申请上架）
+     */
+    private String buttonType;
     public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {
         @Override
         public GoodsBean createFromParcel(Parcel source) {
@@ -114,19 +123,10 @@ public class GoodsBean implements Parcelable {
             return new GoodsBean[size];
         }
     };
-    private String imgUrlDetail;
-    private List<LabelBean> labelList;
     /**
-     * 添加来源（1-普通添加，2-快速添加）
+     * 修改来源（1-普通商品修改，2-其他商品修改）
      */
-    private String addResource;
-    /**
-     * 按钮类型（1-仅保存，2-申请上架）
-     */
-    private String buttonType;
-
-    public GoodsBean() {
-    }
+    private String updateResource;
 
     protected GoodsBean(Parcel in) {
         this.productID = in.readString();
@@ -189,11 +189,14 @@ public class GoodsBean implements Parcelable {
         this.productAttrs = in.createTypedArrayList(ProductAttrBean.CREATOR);
         this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
         this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
-        this.labelList = new ArrayList<LabelBean>();
-        in.readList(this.labelList, LabelBean.class.getClassLoader());
         this.imgUrlDetail = in.readString();
+        this.labelList = in.createTypedArrayList(LabelBean.CREATOR);
         this.addResource = in.readString();
         this.buttonType = in.readString();
+        this.updateResource = in.readString();
+    }
+
+    public GoodsBean() {
     }
 
     public String getButtonType() {
@@ -713,6 +716,14 @@ public class GoodsBean implements Parcelable {
         return 0;
     }
 
+    public String getUpdateResource() {
+        return updateResource;
+    }
+
+    public void setUpdateResource(String updateResource) {
+        this.updateResource = updateResource;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.productID);
@@ -775,9 +786,10 @@ public class GoodsBean implements Parcelable {
         dest.writeTypedList(this.productAttrs);
         dest.writeTypedList(this.supplierShops);
         dest.writeTypedList(this.nicknames);
-        dest.writeList(this.labelList);
         dest.writeString(this.imgUrlDetail);
+        dest.writeTypedList(this.labelList);
         dest.writeString(this.addResource);
         dest.writeString(this.buttonType);
+        dest.writeString(this.updateResource);
     }
 }
