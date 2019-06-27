@@ -36,6 +36,17 @@ public class GoodsBean implements Parcelable {
      * 禁用
      */
     public static final String PRODUCT_STATUS_DISABLE = "7";
+    public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {
+        @Override
+        public GoodsBean createFromParcel(Parcel source) {
+            return new GoodsBean(source);
+        }
+
+        @Override
+        public GoodsBean[] newArray(int size) {
+            return new GoodsBean[size];
+        }
+    };
     private String productID;
     private String placeProvince;
     private String productName;
@@ -112,21 +123,14 @@ public class GoodsBean implements Parcelable {
      * 按钮类型（1-仅保存，2-申请上架）
      */
     private String buttonType;
-    public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {
-        @Override
-        public GoodsBean createFromParcel(Parcel source) {
-            return new GoodsBean(source);
-        }
-
-        @Override
-        public GoodsBean[] newArray(int size) {
-            return new GoodsBean[size];
-        }
-    };
+    private boolean isCheck;
     /**
      * 修改来源（1-普通商品修改，2-其他商品修改）
      */
     private String updateResource;
+
+    public GoodsBean() {
+    }
 
     protected GoodsBean(Parcel in) {
         this.productID = in.readString();
@@ -193,10 +197,16 @@ public class GoodsBean implements Parcelable {
         this.labelList = in.createTypedArrayList(LabelBean.CREATOR);
         this.addResource = in.readString();
         this.buttonType = in.readString();
+        this.isCheck = in.readByte() != 0;
         this.updateResource = in.readString();
     }
 
-    public GoodsBean() {
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
     }
 
     public String getButtonType() {
@@ -711,17 +721,17 @@ public class GoodsBean implements Parcelable {
         this.labelList = labelList;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public String getUpdateResource() {
         return updateResource;
     }
 
     public void setUpdateResource(String updateResource) {
         this.updateResource = updateResource;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -790,6 +800,7 @@ public class GoodsBean implements Parcelable {
         dest.writeTypedList(this.labelList);
         dest.writeString(this.addResource);
         dest.writeString(this.buttonType);
+        dest.writeByte(this.isCheck ? (byte) 1 : (byte) 0);
         dest.writeString(this.updateResource);
     }
 }

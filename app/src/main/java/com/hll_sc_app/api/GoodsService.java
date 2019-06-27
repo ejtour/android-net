@@ -11,6 +11,7 @@ import com.hll_sc_app.bean.goods.CustomCategorySortReq;
 import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.bean.goods.GoodsTemplateResp;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.goods.ProductBrandResp;
@@ -174,6 +175,16 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100009")
     Observable<BaseResp<ProductBrandResp>> queryAllProductBrandList(@Body BaseMapReq req);
+
+    /**
+     * 商品模板查询接口
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100053")
+    Observable<BaseResp<GoodsTemplateResp>> queryGoodsTemplateList(@Body BaseMapReq req);
 
     /**
      * 删除品牌申请

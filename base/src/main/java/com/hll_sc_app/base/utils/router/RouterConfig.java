@@ -48,6 +48,10 @@ public class RouterConfig {
      */
     public static final String ROOT_HOME_GOODS_LIST = "/fragment/home/goods/list";
     /**
+     * 从商品库导入
+     */
+    public static final String GOODS_TEMPLATE_LIST = "/activity/goods/template/list";
+    /**
      * 商品详情
      */
     public static final String ROOT_HOME_GOODS_DETAIL = "/activity/home/goods/detail";
