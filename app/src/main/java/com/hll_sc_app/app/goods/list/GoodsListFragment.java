@@ -112,7 +112,7 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mRecyclerView.addItemDecoration(new SimpleDecoration(0xFFEEEEEE, UIUtils.dip2px(1)));
-        mAdapter = new GoodsListAdapter(null);
+        mAdapter = new GoodsListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
             if (bean != null) {

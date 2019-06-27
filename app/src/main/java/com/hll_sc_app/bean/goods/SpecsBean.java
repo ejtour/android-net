@@ -49,7 +49,7 @@ public class SpecsBean implements Parcelable {
     /**
      * 规格内容
      */
-    private String specContent;
+    private String specContent = "";
     private String actionBy;
     private String standardUnitName;
     private String costPrice;

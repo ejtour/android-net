@@ -174,14 +174,16 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
      * @return 分类名称
      */
     private String getShopProductCategorySubName(String id) {
+        String categoryName = "";
         if (!CommonUtils.isEmpty(mCustomCategoryAdapter1.getData())) {
             for (CustomCategoryBean bean : mCustomCategoryAdapter1.getData()) {
                 if (TextUtils.equals(id, bean.getId())) {
-                    return bean.getCategoryName();
+                    categoryName = bean.getCategoryName();
+                    break;
                 }
             }
         }
-        return "";
+        return categoryName;
     }
 
     /**
@@ -346,10 +348,11 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         }
 
         private int getColor(CustomCategoryBean item) {
+            int color = ContextCompat.getColor(mContext, R.color.base_white);
             if (TextUtils.equals(item.getCategoryLevel(), "2") && !item.isChecked()) {
-                return ContextCompat.getColor(mContext, R.color.color_fafafa);
+                color = ContextCompat.getColor(mContext, R.color.color_fafafa);
             }
-            return ContextCompat.getColor(mContext, R.color.base_white);
+            return color;
         }
     }
 

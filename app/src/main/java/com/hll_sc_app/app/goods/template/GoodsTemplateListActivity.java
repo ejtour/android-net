@@ -223,10 +223,11 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
      */
     @Override
     public String getSearchContent() {
+        String searchContent = "";
         if (mImgSearchClear.getVisibility() == View.VISIBLE) {
-            return mTxtSearchContent.getText().toString();
+            searchContent = mTxtSearchContent.getText().toString();
         }
-        return "";
+        return searchContent;
     }
 
     @Override

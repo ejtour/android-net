@@ -135,10 +135,11 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
      * @return 搜索词
      */
     private String getSearchContent() {
+        String searchContent = "";
         if (mImgSearchClear.getVisibility() == View.VISIBLE) {
-            return mTxtSearchContent.getText().toString();
+            searchContent = mTxtSearchContent.getText().toString();
         }
-        return "";
+        return searchContent;
     }
 
     @Override

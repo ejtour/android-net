@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.goods.list;
 
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
@@ -12,8 +11,6 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
-import java.util.List;
-
 /**
  * 商品列表适配器
  *
@@ -21,8 +18,8 @@ import java.util.List;
  * @date 2019-06-11
  */
 public class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
-    GoodsListAdapter(@Nullable List<GoodsBean> data) {
-        super(R.layout.item_goods_list, data);
+    GoodsListAdapter() {
+        super(R.layout.item_goods_list);
     }
 
     @Override
@@ -51,29 +48,34 @@ public class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder
             .setText(R.id.txt_specStatus, isUp(item) ? "下架\n商品" : "上架\n商品");
     }
 
+    public static boolean isUp(GoodsBean item) {
+        boolean isUp = false;
+        if (!CommonUtils.isEmpty(item.getSpecs())) {
+            isUp = TextUtils.equals(item.getSpecs().get(0).getSpecStatus(), SpecsBean.SPEC_STATUS_UP);
+        }
+        return isUp;
+    }
+
     private String getMiddleContent(GoodsBean item) {
+        String middleContent;
         if (TextUtils.equals(GoodsBean.WAREHOUSE_TYPE, item.getIsWareHourse())) {
             // 代仓商品
-            return "货主：" + item.getCargoOwnerName();
+            middleContent = "货主：" + item.getCargoOwnerName();
         } else {
-            return "编码：" + item.getProductCode();
+            middleContent = "编码：" + item.getProductCode();
         }
+        return middleContent;
     }
 
     private String getBottomContent(GoodsBean item) {
+        String bottomContent;
         if (TextUtils.equals(GoodsBean.BUNDLING_GOODS_TYPE, item.getBundlingGoodsType())) {
             // 组合商品
-            return "包含：" + (CommonUtils.isEmpty(item.getBundlingGoodsDetails()) ? "0" :
+            bottomContent = "包含：" + (CommonUtils.isEmpty(item.getBundlingGoodsDetails()) ? "0" :
                 item.getBundlingGoodsDetails().size()) + "种明细商品";
         } else {
-            return "规格：" + (CommonUtils.isEmpty(item.getSpecs()) ? "0" : item.getSpecs().size()) + "种";
+            bottomContent = "规格：" + (CommonUtils.isEmpty(item.getSpecs()) ? "0" : item.getSpecs().size()) + "种";
         }
-    }
-
-    public static boolean isUp(GoodsBean item) {
-        if (!CommonUtils.isEmpty(item.getSpecs())) {
-            return TextUtils.equals(item.getSpecs().get(0).getSpecStatus(), SpecsBean.SPEC_STATUS_UP);
-        }
-        return false;
+        return bottomContent;
     }
 }

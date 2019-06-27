@@ -704,6 +704,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
         R.id.txt_save, R.id.txt_saveAndUp})
     public void onViewClicked(View view) {
+        ViewUtils.clearEditFocus(view);
         switch (view.getId()) {
             case R.id.img_close:
                 finish();
@@ -716,7 +717,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                     mTxtShopProductCategorySubName.getTag() != null ?
                         ((CopyCategoryBean) mTxtShopProductCategorySubName.getTag()).getShopProductCategorySubID() :
                         "");
-
                 break;
             case R.id.txt_categoryName_copy:
                 toCopy();

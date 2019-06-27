@@ -123,9 +123,9 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/base_white"
-                android:paddingLeft="10dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
                 <com.hll_sc_app.base.widget.StartTextView
@@ -156,9 +156,9 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="1dp"
                 android:background="@color/base_white"
-                android:paddingLeft="10dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
                 <com.hll_sc_app.base.widget.StartTextView
@@ -322,10 +322,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/base_white"
-                android:minHeight="45dp"
-                android:paddingLeft="10dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:minHeight="45dp"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
                 <TextView
@@ -359,9 +359,9 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="1dp"
                 android:background="@color/base_white"
-                android:paddingLeft="10dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
                 <TextView
@@ -390,9 +390,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="1dp"
+                android:background="@color/base_white"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:background="@color/base_white"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
@@ -423,9 +423,9 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="1dp"
                 android:background="@color/base_white"
-                android:paddingLeft="10dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
+                android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
                 <TextView
@@ -638,25 +638,19 @@
 
         <TextView
             android:id="@+id/txt_save"
-            android:layout_width="100dp"
+            style="@style/BtnOrderAction.PrimaryStroke"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/txt_saveAndUp"
-            android:background="@drawable/base_bg_selector_dialog_cancel"
-            android:gravity="center"
-            android:text="仅保存"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Blue"/>
+            android:text="仅保存"/>
 
         <TextView
             android:id="@+id/txt_saveAndUp"
-            android:layout_width="100dp"
+            style="@style/BtnOrderAction.PrimarySolid"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/base_bg_selector_dialog_confirm"
-            android:gravity="center"
-            android:text="立即上架"
-            android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
+            android:text="立即上架"/>
 
     </RelativeLayout>
 
