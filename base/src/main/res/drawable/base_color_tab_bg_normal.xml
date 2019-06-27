@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/base_color_tab_bg_select" android:state_selected="true"/>>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraText">
+    <item android:drawable="@drawable/base_color_tab_bg_select" android:state_selected="true"/>
 </selector>

@@ -191,6 +191,18 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             mSpecsBean = new SpecsBean();
             return;
         }
+        if (!TextUtils.isEmpty(mSpecsBean.getSpecID())) {
+            // 修改状态下部分属性不能修改
+            mEdtSpecContent.setEnabled(false);
+            mTxtSpecContentTitle.setEnabled(false);
+            mTxtSaleUnitName.setEnabled(false);
+            mTxtSaleUnitNameTitle.setEnabled(false);
+            mRlSaleUnitName.setOnClickListener(null);
+            mRlSaleUnitName.setBackgroundResource(R.color.base_white);
+            mEdtSkuCode.setEnabled(false);
+            mTxtSkuCodeTitle.setEnabled(false);
+        }
+
         // 规格内容
         mEdtSpecContent.setText(mSpecsBean.getSpecContent());
         // 售卖单位

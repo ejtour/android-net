@@ -182,7 +182,7 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
-                    mView.addSuccess();
+                    mView.addSuccess(false);
                 }
 
                 @Override
@@ -209,7 +209,7 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
-                    mView.addSuccess();
+                    mView.addSuccess(true);
                 }
 
                 @Override

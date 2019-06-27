@@ -56,8 +56,10 @@ public interface GoodsAddContract {
 
         /**
          * 添加成功
+         *
+         * @param edit true-编辑
          */
-        void addSuccess();
+        void addSuccess(boolean edit);
     }
 
     interface IGoodsAddPresenter extends IPresenter<IGoodsAddView> {

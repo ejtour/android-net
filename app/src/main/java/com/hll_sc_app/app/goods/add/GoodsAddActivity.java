@@ -695,7 +695,8 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     }
 
     @Override
-    public void addSuccess() {
+    public void addSuccess(boolean edit) {
+        showToast(edit ? "修改成功" : "保存成功");
         finish();
     }
 
