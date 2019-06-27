@@ -23,6 +23,13 @@ public interface GoodsTemplateListContract {
          * @param total  indexList
          */
         void showGoodsTemplateList(List<GoodsBean> list, boolean append, int total);
+
+        /**
+         * 获取搜索词
+         *
+         * @return 搜索词
+         */
+        String getSearchContent();
     }
 
     interface IGoodsTemplateListPresenter extends IPresenter<IGoodsTemplateListView> {

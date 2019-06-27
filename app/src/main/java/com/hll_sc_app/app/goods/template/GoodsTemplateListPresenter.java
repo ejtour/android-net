@@ -56,6 +56,7 @@ public class GoodsTemplateListPresenter implements GoodsTemplateListContract.IGo
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
             .put("selectSource", "shopmall")
+            .put("productName", mView.getSearchContent())
             .create();
         GoodsService.INSTANCE.queryGoodsTemplateList(req)
             .compose(ApiScheduler.getObservableScheduler())

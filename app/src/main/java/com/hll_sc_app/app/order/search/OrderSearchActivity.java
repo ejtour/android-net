@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.BrandSearchEvent;
 import com.hll_sc_app.bean.event.GoodsSearchEvent;
+import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.widget.EmptyView;
@@ -46,6 +47,7 @@ import io.reactivex.disposables.Disposable;
  */
 @Route(path = RouterConfig.ORDER_SEARCH)
 public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearchContract.IOrderSearchView {
+    public static final String FROM_GOODS_TEMPLATE = "FROM_GOODS_TEMPLATE";
     public static final String FROM_GOODS = "FROM_GOODS";
     public static final String FROM_BRAND = "FROM_BRAND";
     @BindView(R.id.aos_search_edit)
@@ -112,7 +114,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         String tips = "您可以输入客户名称查找采购商门店";
         String hint = "请输入采购商公司名称";
         int resId = R.drawable.ic_empty_shop_view;
-        if (isFromGoods()) {
+        if (isFromGoods() || isFromGoodsTemplate()) {
             tips = "请输入商品名称或者别名进行查询";
             hint = tips;
             resId = R.drawable.ic_search_goods;
@@ -149,6 +151,15 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     }
 
     /**
+     * 来自 从商品库导入
+     *
+     * @return true
+     */
+    private boolean isFromGoodsTemplate() {
+        return TextUtils.equals(mFrom, FROM_GOODS_TEMPLATE);
+    }
+
+    /**
      * 来自商品 品牌搜索
      *
      * @return true
@@ -164,6 +175,8 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             EventBus.getDefault().post(new GoodsSearchEvent(trim));
         } else if (isFromBrand()) {
             EventBus.getDefault().post(new BrandSearchEvent(trim));
+        } else if (isFromGoodsTemplate()) {
+            EventBus.getDefault().post(new GoodsTemplateSearchEvent(trim));
         } else {
             EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, trim));
         }

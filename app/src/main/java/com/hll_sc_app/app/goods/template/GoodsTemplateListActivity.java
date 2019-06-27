@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,11 +19,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -30,6 +33,9 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 import java.util.Locale;
@@ -82,6 +88,9 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mPresenter = GoodsTemplateListPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     private void initView() {
@@ -125,7 +134,16 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mTextCommit.setText(String.format(Locale.getDefault(), "确定选择（%d）", i));
     }
 
-    @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck})
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck, R.id.rl_search,
+        R.id.img_searchClear})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.text_commit:
@@ -137,6 +155,12 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
             case R.id.txt_allCheck:
                 mImgAllCheck.setSelected(!mImgAllCheck.isSelected());
                 checkAll(mImgAllCheck.isSelected());
+                break;
+            case R.id.rl_search:
+                OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_GOODS_TEMPLATE);
+                break;
+            case R.id.img_searchClear:
+                showSearchContent(false, null);
                 break;
             default:
                 break;
@@ -153,6 +177,20 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         showBottomCount();
     }
 
+    private void showSearchContent(boolean show, String content) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
+        if (show) {
+            mImgSearchClear.setVisibility(View.VISIBLE);
+            mTxtSearchContent.setText(content);
+            params.weight = 1;
+        } else {
+            mImgSearchClear.setVisibility(View.GONE);
+            mTxtSearchContent.setText(content);
+            params.weight = 0;
+        }
+        mPresenter.queryGoodsTemplateList(true);
+    }
+
     @Override
     public void showGoodsTemplateList(List<GoodsBean> list, boolean append, int total) {
         if (append) {
@@ -160,14 +198,49 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         } else {
             mAdapter.setNewData(list);
         }
+        if (isSearchStatus()) {
+            mEmptyView.setTips("搜索不到相关商品");
+        } else {
+            mEmptyView.setTips("您还没有商品模板数据");
+        }
         mAdapter.setEmptyView(mEmptyView);
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+    }
+
+    /**
+     * 是否处于搜索状态下
+     *
+     * @return true-搜索状态下
+     */
+    private boolean isSearchStatus() {
+        return mImgSearchClear.getVisibility() == View.VISIBLE;
+    }
+
+    /**
+     * 获取搜索词
+     *
+     * @return 搜索词
+     */
+    @Override
+    public String getSearchContent() {
+        if (mImgSearchClear.getVisibility() == View.VISIBLE) {
+            return mTxtSearchContent.getText().toString();
+        }
+        return "";
     }
 
     @Override
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
+    }
+
+    @Subscribe
+    public void onEvent(GoodsTemplateSearchEvent event) {
+        String name = event.getName();
+        if (!TextUtils.isEmpty(name)) {
+            showSearchContent(true, name);
+        }
     }
 
     class GoodsTemplateAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
