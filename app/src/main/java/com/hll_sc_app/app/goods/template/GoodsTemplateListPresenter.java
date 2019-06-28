@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.goods.template;
 
 import com.hll_sc_app.api.GoodsService;
+import com.hll_sc_app.app.goods.add.GoodsAddPresenter;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -8,9 +9,12 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.goods.GoodsTemplateResp;
+import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -25,6 +29,7 @@ public class GoodsTemplateListPresenter implements GoodsTemplateListContract.IGo
     private int mPageNum;
     private int mTempPageNum;
     private CategoryResp mCategoryResp;
+    private List<LabelBean> mLabelList;
 
     static GoodsTemplateListPresenter newInstance() {
         return new GoodsTemplateListPresenter();
@@ -57,7 +62,7 @@ public class GoodsTemplateListPresenter implements GoodsTemplateListContract.IGo
     @Override
     public void queryCategory() {
         if (mCategoryResp != null) {
-            mView.showCategoryWindow(mCategoryResp);
+            mView.showCategoryFilterWindow(mCategoryResp);
             return;
         }
         RegisterComplementPresenter.getCategoryObservable()
@@ -68,7 +73,31 @@ public class GoodsTemplateListPresenter implements GoodsTemplateListContract.IGo
                 @Override
                 public void onSuccess(CategoryResp resp) {
                     mCategoryResp = resp;
-                    mView.showCategoryWindow(mCategoryResp);
+                    mView.showCategoryFilterWindow(mCategoryResp);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void queryLabelList() {
+        if (!CommonUtils.isEmpty(mLabelList)) {
+            mView.showLabelFilterWindow(mLabelList);
+            return;
+        }
+        GoodsAddPresenter.getQueryLabelListObservable()
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<List<LabelBean>>() {
+                @Override
+                public void onSuccess(List<LabelBean> list) {
+                    mLabelList = list;
+                    mView.showLabelFilterWindow(mLabelList);
                 }
 
                 @Override

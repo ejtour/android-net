@@ -26,6 +26,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -102,6 +103,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
      */
     private Set<GoodsBean> mSelectList;
     private CategoryFilterWindow mCategoryWindow;
+    private LabelFilterWindow mLabelFilterWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -218,7 +220,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     }
 
     @Override
-    public void showCategoryWindow(CategoryResp resp) {
+    public void showCategoryFilterWindow(CategoryResp resp) {
         mImgCategory.setRotation(-180F);
         mTxtCategory.setSelected(true);
         mImgCategory.setSelected(true);
@@ -231,6 +233,23 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
             });
         }
         mCategoryWindow.showAsDropDownFix(mLlFilter);
+    }
+
+    @Override
+    public void showLabelFilterWindow(List<LabelBean> list) {
+        mImgLabel.setRotation(-180F);
+        mTxtLabel.setSelected(true);
+        mImgLabel.setSelected(true);
+        if (mLabelFilterWindow == null) {
+            mLabelFilterWindow = new LabelFilterWindow(this);
+            mLabelFilterWindow.setList(list);
+            mLabelFilterWindow.setOnDismissListener(() -> {
+                mImgLabel.setSelected(false);
+                mTxtLabel.setSelected(false);
+                mImgLabel.setRotation(0F);
+            });
+        }
+        mLabelFilterWindow.showAsDropDownFix(mLlFilter);
     }
 
     /**
@@ -260,7 +279,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
                 mPresenter.queryCategory();
                 break;
             case R.id.rl_label:
-                showLabelWindow();
+                mPresenter.queryLabelList();
                 break;
             case R.id.rl_filter:
                 showFilterWindow();
@@ -282,11 +301,6 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
             mAdapter.notifyDataSetChanged();
         }
         showBottomCount();
-    }
-
-    private void showLabelWindow() {
-        mTxtLabel.setSelected(true);
-        mImgLabel.setSelected(true);
     }
 
     private void showFilterWindow() {

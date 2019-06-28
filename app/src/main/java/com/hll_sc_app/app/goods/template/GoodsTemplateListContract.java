@@ -3,6 +3,7 @@ package com.hll_sc_app.app.goods.template;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 
 import java.util.List;
@@ -37,7 +38,14 @@ public interface GoodsTemplateListContract {
          *
          * @param resp resp
          */
-        void showCategoryWindow(CategoryResp resp);
+        void showCategoryFilterWindow(CategoryResp resp);
+
+        /**
+         * 显示行业标签
+         *
+         * @param list list
+         */
+        void showLabelFilterWindow(List<LabelBean> list);
     }
 
     interface IGoodsTemplateListPresenter extends IPresenter<IGoodsTemplateListView> {
@@ -57,5 +65,10 @@ public interface GoodsTemplateListContract {
          * 获取分类列表
          */
         void queryCategory();
+
+        /**
+         * 行业标签查询接口
+         */
+        void queryLabelList();
     }
 }

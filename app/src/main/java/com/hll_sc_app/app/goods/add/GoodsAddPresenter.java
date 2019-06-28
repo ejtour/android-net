@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -144,10 +145,7 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
             mView.showLabelSelectWindow(mLabelList);
             return;
         }
-        BaseMapReq req = BaseMapReq.newBuilder().create();
-        GoodsService.INSTANCE.queryLabelList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
+        GoodsAddPresenter.getQueryLabelListObservable()
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
@@ -163,6 +161,13 @@ public class GoodsAddPresenter implements GoodsAddContract.IGoodsAddPresenter {
                     mView.showError(e);
                 }
             });
+    }
+
+    public static Observable<List<LabelBean>> getQueryLabelListObservable() {
+        BaseMapReq req = BaseMapReq.newBuilder().create();
+        return GoodsService.INSTANCE.queryLabelList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>());
     }
 
     @Override
