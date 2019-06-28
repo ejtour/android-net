@@ -3,6 +3,7 @@ package com.hll_sc_app.app.goods.template;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.user.CategoryResp;
 
 import java.util.List;
 
@@ -30,6 +31,13 @@ public interface GoodsTemplateListContract {
          * @return 搜索词
          */
         String getSearchContent();
+
+        /**
+         * 显示分类筛选框
+         *
+         * @param resp resp
+         */
+        void showCategoryWindow(CategoryResp resp);
     }
 
     interface IGoodsTemplateListPresenter extends IPresenter<IGoodsTemplateListView> {
@@ -44,5 +52,10 @@ public interface GoodsTemplateListContract {
          * 查询更多品牌列表
          */
         void queryMoreGoodsTemplateList();
+
+        /**
+         * 获取分类列表
+         */
+        void queryCategory();
     }
 }

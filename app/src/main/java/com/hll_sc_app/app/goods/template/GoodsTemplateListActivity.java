@@ -26,6 +26,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -100,6 +101,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
      * 选中的商品数据
      */
     private Set<GoodsBean> mSelectList;
+    private CategoryFilterWindow mCategoryWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -215,6 +217,22 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         return mSearchView.getSearchContent();
     }
 
+    @Override
+    public void showCategoryWindow(CategoryResp resp) {
+        mImgCategory.setRotation(-180F);
+        mTxtCategory.setSelected(true);
+        mImgCategory.setSelected(true);
+        if (mCategoryWindow == null) {
+            mCategoryWindow = new CategoryFilterWindow(this, resp);
+            mCategoryWindow.setOnDismissListener(() -> {
+                mTxtCategory.setSelected(false);
+                mImgCategory.setSelected(false);
+                mImgCategory.setRotation(0F);
+            });
+        }
+        mCategoryWindow.showAsDropDownFix(mLlFilter);
+    }
+
     /**
      * 是否处于搜索状态下
      *
@@ -239,7 +257,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
                 checkAll(mImgAllCheck.isSelected());
                 break;
             case R.id.rl_category:
-                showCategoryWindow();
+                mPresenter.queryCategory();
                 break;
             case R.id.rl_label:
                 showLabelWindow();
@@ -264,11 +282,6 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
             mAdapter.notifyDataSetChanged();
         }
         showBottomCount();
-    }
-
-    private void showCategoryWindow() {
-        mTxtCategory.setSelected(true);
-        mImgCategory.setSelected(true);
     }
 
     private void showLabelWindow() {

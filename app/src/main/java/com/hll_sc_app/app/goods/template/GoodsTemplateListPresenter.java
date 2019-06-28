@@ -1,12 +1,14 @@
 package com.hll_sc_app.app.goods.template;
 
 import com.hll_sc_app.api.GoodsService;
+import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.goods.GoodsTemplateResp;
+import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -22,6 +24,7 @@ public class GoodsTemplateListPresenter implements GoodsTemplateListContract.IGo
     private GoodsTemplateListContract.IGoodsTemplateListView mView;
     private int mPageNum;
     private int mTempPageNum;
+    private CategoryResp mCategoryResp;
 
     static GoodsTemplateListPresenter newInstance() {
         return new GoodsTemplateListPresenter();
@@ -49,6 +52,30 @@ public class GoodsTemplateListPresenter implements GoodsTemplateListContract.IGo
         mTempPageNum = mPageNum;
         mTempPageNum++;
         toQueryGoodsTemplateList(false);
+    }
+
+    @Override
+    public void queryCategory() {
+        if (mCategoryResp != null) {
+            mView.showCategoryWindow(mCategoryResp);
+            return;
+        }
+        RegisterComplementPresenter.getCategoryObservable()
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<CategoryResp>() {
+                @Override
+                public void onSuccess(CategoryResp resp) {
+                    mCategoryResp = resp;
+                    mView.showCategoryWindow(mCategoryResp);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
     }
 
     private void toQueryGoodsTemplateList(boolean showLoading) {

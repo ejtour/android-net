@@ -15,7 +15,27 @@ public class CategoryItem implements Parcelable {
     private String categoryLevel;
     private String categoryName;
     private String categoryID;
+    public static final Creator<CategoryItem> CREATOR = new Creator<CategoryItem>() {
+        @Override
+        public CategoryItem createFromParcel(Parcel source) {
+            return new CategoryItem(source);
+        }
 
+        @Override
+        public CategoryItem[] newArray(int size) {
+            return new CategoryItem[size];
+        }
+    };
+    private boolean selected;
+
+    protected CategoryItem(Parcel in) {
+        this.imgUrl = in.readString();
+        this.categoryPID = in.readString();
+        this.categoryLevel = in.readString();
+        this.categoryName = in.readString();
+        this.categoryID = in.readString();
+        this.selected = in.readByte() != 0;
+    }
 
     public String getImgUrl() {
         return imgUrl;
@@ -57,32 +77,20 @@ public class CategoryItem implements Parcelable {
         this.categoryID = categoryID;
     }
 
-    public static final Parcelable.Creator<CategoryItem> CREATOR = new Parcelable.Creator<CategoryItem>() {
-        @Override
-        public CategoryItem createFromParcel(Parcel source) {
-            return new CategoryItem(source);
-        }
-
-        @Override
-        public CategoryItem[] newArray(int size) {
-            return new CategoryItem[size];
-        }
-    };
-
     public CategoryItem() {
-    }
-
-    protected CategoryItem(Parcel in) {
-        this.imgUrl = in.readString();
-        this.categoryPID = in.readString();
-        this.categoryLevel = in.readString();
-        this.categoryName = in.readString();
-        this.categoryID = in.readString();
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override
@@ -92,5 +100,6 @@ public class CategoryItem implements Parcelable {
         dest.writeString(this.categoryLevel);
         dest.writeString(this.categoryName);
         dest.writeString(this.categoryID);
+        dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
     }
 }
