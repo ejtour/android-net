@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,6 +28,7 @@ import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -56,12 +56,6 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     ImageView mImgClose;
     @BindView(R.id.rl_toolbar)
     RelativeLayout mRlToolbar;
-    @BindView(R.id.txt_searchContent)
-    TextView mTxtSearchContent;
-    @BindView(R.id.img_searchClear)
-    ImageView mImgSearchClear;
-    @BindView(R.id.rl_search)
-    FrameLayout mRlSearch;
     @BindView(R.id.ll_filter)
     LinearLayout mLlFilter;
     @BindView(R.id.recyclerView)
@@ -74,6 +68,10 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     TextView mTextCommit;
     @BindView(R.id.fl_bottom)
     RelativeLayout mFlBottom;
+    @BindView(R.id.searchView)
+    SearchView mSearchView;
+    @BindView(R.id.txt_allCheck)
+    TextView mTxtAllCheck;
     private GoodsTemplateAdapter mAdapter;
     private GoodsTemplateListPresenter mPresenter;
     private EmptyView mEmptyView;
@@ -119,6 +117,17 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有商品模板数据").create();
         mRecyclerView.setAdapter(mAdapter);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_GOODS_TEMPLATE);
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                mPresenter.queryGoodsTemplateList(true);
+            }
+        });
     }
 
     private void showBottomCount() {
@@ -142,29 +151,9 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         }
     }
 
-    @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck, R.id.rl_search,
-        R.id.img_searchClear})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.text_commit:
-                break;
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.img_allCheck:
-            case R.id.txt_allCheck:
-                mImgAllCheck.setSelected(!mImgAllCheck.isSelected());
-                checkAll(mImgAllCheck.isSelected());
-                break;
-            case R.id.rl_search:
-                OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_GOODS_TEMPLATE);
-                break;
-            case R.id.img_searchClear:
-                showSearchContent(false, null);
-                break;
-            default:
-                break;
-        }
+    @Override
+    public String getSearchContent() {
+        return mSearchView.getSearchContent();
     }
 
     private void checkAll(boolean check) {
@@ -175,20 +164,6 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
             mAdapter.notifyDataSetChanged();
         }
         showBottomCount();
-    }
-
-    private void showSearchContent(boolean show, String content) {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
-        if (show) {
-            mImgSearchClear.setVisibility(View.VISIBLE);
-            mTxtSearchContent.setText(content);
-            params.weight = 1;
-        } else {
-            mImgSearchClear.setVisibility(View.GONE);
-            mTxtSearchContent.setText(content);
-            params.weight = 0;
-        }
-        mPresenter.queryGoodsTemplateList(true);
     }
 
     @Override
@@ -207,28 +182,33 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
     }
 
+    @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.text_commit:
+                break;
+            case R.id.img_close:
+                finish();
+                break;
+            case R.id.img_allCheck:
+            case R.id.txt_allCheck:
+                mImgAllCheck.setSelected(!mImgAllCheck.isSelected());
+                checkAll(mImgAllCheck.isSelected());
+                break;
+            default:
+                break;
+        }
+    }
+
     /**
      * 是否处于搜索状态下
      *
      * @return true-搜索状态下
      */
     private boolean isSearchStatus() {
-        return mImgSearchClear.getVisibility() == View.VISIBLE;
+        return mSearchView.isSearchStatus();
     }
 
-    /**
-     * 获取搜索词
-     *
-     * @return 搜索词
-     */
-    @Override
-    public String getSearchContent() {
-        String searchContent = "";
-        if (mImgSearchClear.getVisibility() == View.VISIBLE) {
-            searchContent = mTxtSearchContent.getText().toString();
-        }
-        return searchContent;
-    }
 
     @Override
     public void hideLoading() {
@@ -240,7 +220,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     public void onEvent(GoodsTemplateSearchEvent event) {
         String name = event.getName();
         if (!TextUtils.isEmpty(name)) {
-            showSearchContent(true, name);
+            mSearchView.showSearchContent(true, name);
         }
     }
 

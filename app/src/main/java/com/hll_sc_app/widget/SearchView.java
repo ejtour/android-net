@@ -49,7 +49,7 @@ public class SearchView extends FrameLayout {
      *
      * @return 搜索词
      */
-    private String getSearchContent() {
+    public String getSearchContent() {
         String searchContent = "";
         if (mImgSearchClear.getVisibility() == View.VISIBLE) {
             searchContent = mTxtSearchContent.getText().toString();
@@ -80,6 +80,10 @@ public class SearchView extends FrameLayout {
 
     public void setContentClickListener(ContentClickListener mListener) {
         this.mListener = mListener;
+    }
+
+    public boolean isSearchStatus() {
+        return mImgSearchClear.getVisibility() == View.VISIBLE;
     }
 
     public interface ContentClickListener {
