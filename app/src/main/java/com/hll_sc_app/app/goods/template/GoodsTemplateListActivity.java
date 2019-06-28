@@ -74,6 +74,24 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     SearchView mSearchView;
     @BindView(R.id.txt_allCheck)
     TextView mTxtAllCheck;
+    @BindView(R.id.txt_category)
+    TextView mTxtCategory;
+    @BindView(R.id.img_category)
+    ImageView mImgCategory;
+    @BindView(R.id.rl_category)
+    RelativeLayout mRlCategory;
+    @BindView(R.id.txt_label)
+    TextView mTxtLabel;
+    @BindView(R.id.img_label)
+    ImageView mImgLabel;
+    @BindView(R.id.rl_label)
+    RelativeLayout mRlLabel;
+    @BindView(R.id.txt_filter)
+    TextView mTxtFilter;
+    @BindView(R.id.img_filter)
+    ImageView mImgFilter;
+    @BindView(R.id.rl_filter)
+    RelativeLayout mRlFilter;
     private GoodsTemplateAdapter mAdapter;
     private GoodsTemplateListPresenter mPresenter;
     private EmptyView mEmptyView;
@@ -130,6 +148,8 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有商品模板数据").create();
         mRecyclerView.setAdapter(mAdapter);
+        int padding = UIUtils.dip2px(10);
+        mSearchView.setPadding(0, padding, 0, 0);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -204,7 +224,8 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         return mSearchView.isSearchStatus();
     }
 
-    @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck})
+    @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck, R.id.rl_category, R.id.rl_label
+        , R.id.rl_filter})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.text_commit:
@@ -216,6 +237,15 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
             case R.id.txt_allCheck:
                 mImgAllCheck.setSelected(!mImgAllCheck.isSelected());
                 checkAll(mImgAllCheck.isSelected());
+                break;
+            case R.id.rl_category:
+                showCategoryWindow();
+                break;
+            case R.id.rl_label:
+                showLabelWindow();
+                break;
+            case R.id.rl_filter:
+                showFilterWindow();
                 break;
             default:
                 break;
@@ -234,6 +264,21 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
             mAdapter.notifyDataSetChanged();
         }
         showBottomCount();
+    }
+
+    private void showCategoryWindow() {
+        mTxtCategory.setSelected(true);
+        mImgCategory.setSelected(true);
+    }
+
+    private void showLabelWindow() {
+        mTxtLabel.setSelected(true);
+        mImgLabel.setSelected(true);
+    }
+
+    private void showFilterWindow() {
+        mTxtFilter.setSelected(true);
+        mImgFilter.setSelected(true);
     }
 
     @Override
