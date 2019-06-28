@@ -7,9 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -27,6 +24,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.BrandBackEvent;
 import com.hll_sc_app.bean.event.BrandSearchEvent;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,12 +46,10 @@ import butterknife.OnClick;
 public class ProductBrandActivity extends BaseLoadActivity implements ProductBrandContract.IProductAttrBrand {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.txt_searchContent)
-    TextView mTxtSearchContent;
-    @BindView(R.id.img_searchClear)
-    ImageView mImgSearchClear;
     @Autowired(name = "object0")
     String mId;
+    @BindView(R.id.searchView)
+    SearchView mSearchView;
     private EmptyView mEmptyView;
     private ProductAttrAdapter mAdapter;
     private ProductBrandPresenter mPresenter;
@@ -96,53 +92,34 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有可选择的商品品牌").create();
         mRecyclerView.setAdapter(mAdapter);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_BRAND);
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                mPresenter.queryProductBrandList(searchContent);
+            }
+        });
     }
 
     @Subscribe
     public void onEvent(BrandSearchEvent event) {
         String name = event.getName();
         if (!TextUtils.isEmpty(name)) {
-            showSearchContent(true, name);
+            mSearchView.showSearchContent(true, name);
         }
     }
 
-    private void showSearchContent(boolean show, String content) {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
-        if (show) {
-            mImgSearchClear.setVisibility(View.VISIBLE);
-            mTxtSearchContent.setText(content);
-            params.weight = 1;
-        } else {
-            mImgSearchClear.setVisibility(View.GONE);
-            mTxtSearchContent.setText(content);
-            params.weight = 0;
-        }
-        mPresenter.queryProductBrandList(getSearchContent());
-    }
-
-    /**
-     * 获取搜索词
-     *
-     * @return 搜索词
-     */
-    private String getSearchContent() {
-        if (mImgSearchClear.getVisibility() == View.VISIBLE) {
-            return mTxtSearchContent.getText().toString();
-        }
-        return "";
-    }
-
-    @OnClick({R.id.img_close, R.id.txt_add, R.id.rl_search, R.id.img_searchClear})
+    @OnClick({R.id.img_close, R.id.txt_add})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.img_close) {
             finish();
         } else if (id == R.id.txt_add) {
             RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND_ADD);
-        } else if (id == R.id.rl_search) {
-            OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_BRAND);
-        } else if (id == R.id.img_searchClear) {
-            showSearchContent(false, null);
         }
     }
 

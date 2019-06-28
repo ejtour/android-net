@@ -23,4 +23,5 @@
         <attr name="iug_padding" format="dimension" />
         <attr name="iug_margin" format="dimension" />
     </declare-styleable>
+
 </resources>
