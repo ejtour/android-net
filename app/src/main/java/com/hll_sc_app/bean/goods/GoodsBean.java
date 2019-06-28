@@ -3,6 +3,9 @@ package com.hll_sc_app.bean.goods;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.base.utils.UIUtils;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -802,5 +805,29 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.buttonType);
         dest.writeByte(this.isCheck ? (byte) 1 : (byte) 0);
         dest.writeString(this.updateResource);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[]{productID, placeProvince, productName, productAttr, appointSellType,
+            bundlingGoodsType,
+            bundlingGoodsDetails, productBrief, isWareHourse, shopProductCategorySubID, action, depositProductType,
+            purchaserIsVisible, orgName, cargoOwnerID, cargoOwnerName, standardUnitName, groupID, isCooperation,
+            isDeliveryRange, nextDayDelivery, stockCheckType, brandId, producer, productSale, note, priceIsVisible,
+            actionTime, saleSpecNum, isCollection, categoryThreeID, top, shopProductCategoryID, standardSpecID,
+            placeCity, shopProductCategoryThreeID, categoryID, categoryName, categorySubName, categoryThreeName,
+            productType, supplierName, actionBy, productStatus, isSupplierWarehouse});
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final GoodsBean other = (GoodsBean) obj;
+        return UIUtils.equals(this.productID, other.productID);
     }
 }

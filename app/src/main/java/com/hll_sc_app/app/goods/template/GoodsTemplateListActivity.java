@@ -37,8 +37,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +78,11 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     private GoodsTemplateListPresenter mPresenter;
     private EmptyView mEmptyView;
 
+    /**
+     * 选中的商品数据
+     */
+    private Set<GoodsBean> mSelectList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +96,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+        mSelectList = new HashSet<>();
     }
 
     private void initView() {
@@ -110,7 +118,12 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             GoodsBean goodsBean = (GoodsBean) adapter.getItem(position);
             if (goodsBean != null) {
-                goodsBean.setCheck(!goodsBean.isCheck());
+                if (goodsBean.isCheck()) {
+                    // 之前状态为选中，再次点击状态改为未选中
+                    remove(goodsBean);
+                } else {
+                    add(goodsBean);
+                }
                 adapter.notifyItemChanged(position);
             }
             showBottomCount();
@@ -130,15 +143,18 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         });
     }
 
+    private void remove(GoodsBean goodsBean) {
+        goodsBean.setCheck(false);
+        mSelectList.remove(goodsBean);
+    }
+
+    private void add(GoodsBean goodsBean) {
+        goodsBean.setCheck(true);
+        mSelectList.add(goodsBean);
+    }
+
     private void showBottomCount() {
-        int i = 0;
-        if (mAdapter != null && !CommonUtils.isEmpty(mAdapter.getData())) {
-            for (GoodsBean bean : mAdapter.getData()) {
-                if (bean.isCheck()) {
-                    i++;
-                }
-            }
-        }
+        int i = mSelectList.size();
         mTextCommit.setEnabled(i > 0);
         mTextCommit.setText(String.format(Locale.getDefault(), "确定选择（%d）", i));
     }
@@ -152,22 +168,14 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     }
 
     @Override
-    public String getSearchContent() {
-        return mSearchView.getSearchContent();
-    }
-
-    private void checkAll(boolean check) {
-        if (mAdapter != null && !CommonUtils.isEmpty(mAdapter.getData())) {
-            for (GoodsBean bean : mAdapter.getData()) {
-                bean.setCheck(check);
-            }
-            mAdapter.notifyDataSetChanged();
-        }
-        showBottomCount();
-    }
-
-    @Override
     public void showGoodsTemplateList(List<GoodsBean> list, boolean append, int total) {
+        if (!CommonUtils.isEmpty(list)) {
+            for (GoodsBean goodsBean : list) {
+                if (mSelectList.contains(goodsBean)) {
+                    goodsBean.setCheck(true);
+                }
+            }
+        }
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -180,6 +188,20 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         }
         mAdapter.setEmptyView(mEmptyView);
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+    }
+
+    @Override
+    public String getSearchContent() {
+        return mSearchView.getSearchContent();
+    }
+
+    /**
+     * 是否处于搜索状态下
+     *
+     * @return true-搜索状态下
+     */
+    private boolean isSearchStatus() {
+        return mSearchView.isSearchStatus();
     }
 
     @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck})
@@ -200,15 +222,19 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         }
     }
 
-    /**
-     * 是否处于搜索状态下
-     *
-     * @return true-搜索状态下
-     */
-    private boolean isSearchStatus() {
-        return mSearchView.isSearchStatus();
+    private void checkAll(boolean check) {
+        if (mAdapter != null && !CommonUtils.isEmpty(mAdapter.getData())) {
+            for (GoodsBean bean : mAdapter.getData()) {
+                if (check) {
+                    add(bean);
+                } else {
+                    remove(bean);
+                }
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+        showBottomCount();
     }
-
 
     @Override
     public void hideLoading() {
