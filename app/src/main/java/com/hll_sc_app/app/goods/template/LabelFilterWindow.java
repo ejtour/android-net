@@ -26,10 +26,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 行业标签选择接口
+ * 从商品库导入-行业标签过滤
  *
  * @author 朱英松
- * @date 2019/6/21
+ * @date 2019/6/28
  */
 class LabelFilterWindow extends BasePopupWindow {
     @BindView(R.id.flowLayout)

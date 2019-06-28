@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 从商品库导入-分类弹窗
+ * 从商品库导入-分类过滤弹窗
  *
  * @author 朱英松
  * @date 2019/6/28

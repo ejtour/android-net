@@ -7,9 +7,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +31,7 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -104,6 +107,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     private Set<GoodsBean> mSelectList;
     private CategoryFilterWindow mCategoryWindow;
     private LabelFilterWindow mLabelFilterWindow;
+    private TemplateFilterWindow mTemplateFilterWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -306,6 +310,25 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     private void showFilterWindow() {
         mTxtFilter.setSelected(true);
         mImgFilter.setSelected(true);
+        mImgFilter.setRotation(-180F);
+        if (mTemplateFilterWindow == null) {
+            mTemplateFilterWindow = new TemplateFilterWindow(this);
+            mTemplateFilterWindow.setConfirmListener(new TemplateFilterWindow.ConfirmListener() {
+                @Override
+                public void confirm(String brandName, String productPlace) {
+                    LogUtil.d("ZYS", "brandName = " + brandName + ",productPlace = " + productPlace);
+                }
+            });
+            mTemplateFilterWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    mTxtFilter.setSelected(false);
+                    mImgFilter.setSelected(false);
+                    mImgFilter.setRotation(0F);
+                }
+            });
+        }
+        mTemplateFilterWindow.showAtLocation(getWindow().getDecorView(), Gravity.END, 0, 0);
     }
 
     @Override
