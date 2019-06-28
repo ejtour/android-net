@@ -13,11 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -34,6 +32,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.SearchView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -69,10 +68,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     RadioButton mRbProductStatus4;
     @BindView(R.id.radioGroup)
     RadioGroup mRadioGroup;
-    @BindView(R.id.txt_searchContent)
-    TextView mTxtSearchContent;
-    @BindView(R.id.img_searchClear)
-    ImageView mImgSearchClear;
+    @BindView(R.id.searchView)
+    SearchView mSearchView;
     private GoodsListFragmentPager mFragmentAdapter;
     private ContextOptionsWindow mOptionsWindow;
 
@@ -94,52 +91,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     public void onEvent(GoodsSearchEvent event) {
         String name = event.getName();
         if (!TextUtils.isEmpty(name)) {
-            showSearchContent(true, name);
+            mSearchView.showSearchContent(true, name);
         }
-    }
-
-    private void showSearchContent(boolean show, String content) {
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
-        if (show) {
-            mImgSearchClear.setVisibility(View.VISIBLE);
-            mTxtSearchContent.setText(content);
-            params.weight = 1;
-        } else {
-            mImgSearchClear.setVisibility(View.GONE);
-            mTxtSearchContent.setText(content);
-            params.weight = 0;
-        }
-        updateFragment();
-    }
-
-    private void updateFragment() {
-        if (mFragmentAdapter != null) {
-            for (int i = 0; i < mFragmentAdapter.getCount(); i++) {
-                mFragmentAdapter.getItem(i).refreshFragment(getProductStatus(), getSearchContent());
-            }
-        }
-    }
-
-    /**
-     * 上下架
-     *
-     * @return 上-4 下-5
-     */
-    private String getProductStatus() {
-        return mRbProductStatus4.isChecked() ? GoodsBean.PRODUCT_STATUS_UP : GoodsBean.PRODUCT_STATUS_DOWN;
-    }
-
-    /**
-     * 获取搜索词
-     *
-     * @return 搜索词
-     */
-    private String getSearchContent() {
-        String searchContent = "";
-        if (mImgSearchClear.getVisibility() == View.VISIBLE) {
-            searchContent = mTxtSearchContent.getText().toString();
-        }
-        return searchContent;
     }
 
     @Override
@@ -168,22 +121,49 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         mViewPager.setOffscreenPageLimit(2);
         mTab.setViewPager(mViewPager, STR_TITLE);
         mRadioGroup.setOnCheckedChangeListener((group, checkedId) -> updateFragment());
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS);
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                updateFragment();
+            }
+        });
     }
 
-    @OnClick({R.id.img_add, R.id.rl_search, R.id.img_searchClear})
+    private void updateFragment() {
+        if (mFragmentAdapter != null) {
+            for (int i = 0; i < mFragmentAdapter.getCount(); i++) {
+                mFragmentAdapter.getItem(i).refreshFragment(getProductStatus(), getSearchContent());
+            }
+        }
+    }
+
+    /**
+     * 上下架
+     *
+     * @return 上-4 下-5
+     */
+    private String getProductStatus() {
+        return mRbProductStatus4.isChecked() ? GoodsBean.PRODUCT_STATUS_UP : GoodsBean.PRODUCT_STATUS_DOWN;
+    }
+
+    /**
+     * 获取搜索词
+     *
+     * @return 搜索词
+     */
+    private String getSearchContent() {
+        return mSearchView.getSearchContent();
+    }
+
+    @OnClick({R.id.img_add})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_add:
-                showOptionsWindow(mImgAdd);
-                break;
-            case R.id.rl_search:
-                OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_GOODS);
-                break;
-            case R.id.img_searchClear:
-                showSearchContent(false, null);
-                break;
-            default:
-                break;
+        if (view.getId() == R.id.img_add) {
+            showOptionsWindow(mImgAdd);
         }
     }
 

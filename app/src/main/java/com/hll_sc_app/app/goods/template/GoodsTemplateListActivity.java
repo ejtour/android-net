@@ -120,7 +120,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(getSearchContent(), OrderSearchActivity.FROM_GOODS_TEMPLATE);
+                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_TEMPLATE);
             }
 
             @Override
