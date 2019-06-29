@@ -16,19 +16,28 @@
 
         <ImageView
             android:id="@+id/img_close"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:background="@drawable/base_bg_selector_close"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_close"/>
+            style="@style/BtnClose"
+            android:layout_height="match_parent"/>
 
         <TextView
+            android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="新增商品"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"/>
+
+        <TextView
+            android:id="@+id/txt_title_save"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_selector_close"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_13"/>
 
     </RelativeLayout>
 

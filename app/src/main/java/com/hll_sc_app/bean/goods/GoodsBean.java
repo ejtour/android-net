@@ -39,6 +39,10 @@ public class GoodsBean implements Parcelable {
      * 禁用
      */
     public static final String PRODUCT_STATUS_DISABLE = "7";
+    /**
+     * 从商品库导入-商品编辑
+     */
+    public static final String EDIT_FROM_TEMPLATE = "10";
     public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {
         @Override
         public GoodsBean createFromParcel(Parcel source) {
@@ -59,7 +63,7 @@ public class GoodsBean implements Parcelable {
     private List<GoodsBean> bundlingGoodsDetails;
     private String productBrief;
     private String isWareHourse;
-    private String shopProductCategorySubID;
+    private String editFrom;
     private String action;
     /**
      * 是否押金商品(0-不是，1-是)
@@ -91,7 +95,7 @@ public class GoodsBean implements Parcelable {
     private String shopProductCategoryID;
     private String standardSpecID;
     private String placeCity;
-    private String shopProductCategoryThreeID;
+    private String shopProductCategorySubID = "";
     private String categoryID;
     private String categoryName;
     private String categorySubName;
@@ -110,8 +114,8 @@ public class GoodsBean implements Parcelable {
     private String guaranteePeriod;
     private String resourceType;
     private String placeProvinceCode;
-    private String shopProductCategoryThreeName;
-    private String shopProductCategorySubName;
+    private String shopProductCategoryThreeID = "";
+    private String shopProductCategoryThreeName = "";
     private List<SpecsBean> specs;
     private List<ProductAttrBean> productAttrs;
     private List<SupplierShopsBean> supplierShops;
@@ -133,75 +137,6 @@ public class GoodsBean implements Parcelable {
     private String updateResource;
 
     public GoodsBean() {
-    }
-
-    protected GoodsBean(Parcel in) {
-        this.productID = in.readString();
-        this.placeProvince = in.readString();
-        this.productName = in.readString();
-        this.productAttr = in.readString();
-        this.appointSellType = in.readString();
-        this.bundlingGoodsType = in.readString();
-        this.bundlingGoodsDetails = in.createTypedArrayList(GoodsBean.CREATOR);
-        this.productBrief = in.readString();
-        this.isWareHourse = in.readString();
-        this.shopProductCategorySubID = in.readString();
-        this.action = in.readString();
-        this.depositProductType = in.readString();
-        this.purchaserIsVisible = in.readString();
-        this.orgName = in.readString();
-        this.cargoOwnerID = in.readString();
-        this.cargoOwnerName = in.readString();
-        this.standardUnitName = in.readString();
-        this.groupID = in.readString();
-        this.isCooperation = in.readByte() != 0;
-        this.isDeliveryRange = in.readByte() != 0;
-        this.nextDayDelivery = in.readString();
-        this.stockCheckType = in.readString();
-        this.brandId = in.readString();
-        this.producer = in.readString();
-        this.productSale = in.readString();
-        this.note = in.readString();
-        this.priceIsVisible = in.readByte() != 0;
-        this.actionTime = in.readString();
-        this.saleSpecNum = in.readString();
-        this.isCollection = in.readByte() != 0;
-        this.categoryThreeID = in.readString();
-        this.top = in.readString();
-        this.shopProductCategoryID = in.readString();
-        this.standardSpecID = in.readString();
-        this.placeCity = in.readString();
-        this.shopProductCategoryThreeID = in.readString();
-        this.categoryID = in.readString();
-        this.categoryName = in.readString();
-        this.categorySubName = in.readString();
-        this.categoryThreeName = in.readString();
-        this.productType = in.readString();
-        this.supplierName = in.readString();
-        this.actionBy = in.readString();
-        this.productStatus = in.readString();
-        this.isSupplierWarehouse = in.readString();
-        this.imgUrl = in.readString();
-        this.imgUrlSub = in.readString();
-        this.productCode = in.readString();
-        this.categorySubID = in.readString();
-        this.placeCityCode = in.readString();
-        this.createTime = in.readString();
-        this.guaranteePeriod = in.readString();
-        this.resourceType = in.readString();
-        this.placeProvinceCode = in.readString();
-        this.shopProductCategoryThreeName = in.readString();
-        this.shopProductCategorySubName = in.readString();
-        this.specs = in.createTypedArrayList(SpecsBean.CREATOR);
-        this.productAttrs = in.createTypedArrayList(ProductAttrBean.CREATOR);
-        this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
-        this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
-        this.imgUrlDetail = in.readString();
-        this.labelList = in.createTypedArrayList(LabelBean.CREATOR);
-        this.addResource = in.readString();
-        this.buttonType = in.readString();
-        this.isCheck = in.readByte() != 0;
-        this.updateResource = in.readString();
     }
 
     public boolean isCheck() {
@@ -732,13 +667,118 @@ public class GoodsBean implements Parcelable {
         this.updateResource = updateResource;
     }
 
+    private String shopProductCategorySubName = "";
+
+    protected GoodsBean(Parcel in) {
+        this.editFrom = in.readString();
+        this.productID = in.readString();
+        this.placeProvince = in.readString();
+        this.productName = in.readString();
+        this.productAttr = in.readString();
+        this.appointSellType = in.readString();
+        this.bundlingGoodsType = in.readString();
+        this.bundlingGoodsDetails = in.createTypedArrayList(GoodsBean.CREATOR);
+        this.productBrief = in.readString();
+        this.isWareHourse = in.readString();
+        this.shopProductCategorySubID = in.readString();
+        this.action = in.readString();
+        this.depositProductType = in.readString();
+        this.purchaserIsVisible = in.readString();
+        this.orgName = in.readString();
+        this.cargoOwnerID = in.readString();
+        this.cargoOwnerName = in.readString();
+        this.standardUnitName = in.readString();
+        this.groupID = in.readString();
+        this.isCooperation = in.readByte() != 0;
+        this.isDeliveryRange = in.readByte() != 0;
+        this.nextDayDelivery = in.readString();
+        this.stockCheckType = in.readString();
+        this.brandId = in.readString();
+        this.producer = in.readString();
+        this.productSale = in.readString();
+        this.note = in.readString();
+        this.priceIsVisible = in.readByte() != 0;
+        this.actionTime = in.readString();
+        this.saleSpecNum = in.readString();
+        this.isCollection = in.readByte() != 0;
+        this.categoryThreeID = in.readString();
+        this.top = in.readString();
+        this.shopProductCategoryID = in.readString();
+        this.standardSpecID = in.readString();
+        this.placeCity = in.readString();
+        this.shopProductCategoryThreeID = in.readString();
+        this.categoryID = in.readString();
+        this.categoryName = in.readString();
+        this.categorySubName = in.readString();
+        this.categoryThreeName = in.readString();
+        this.productType = in.readString();
+        this.supplierName = in.readString();
+        this.actionBy = in.readString();
+        this.productStatus = in.readString();
+        this.isSupplierWarehouse = in.readString();
+        this.imgUrl = in.readString();
+        this.imgUrlSub = in.readString();
+        this.productCode = in.readString();
+        this.categorySubID = in.readString();
+        this.placeCityCode = in.readString();
+        this.createTime = in.readString();
+        this.guaranteePeriod = in.readString();
+        this.resourceType = in.readString();
+        this.placeProvinceCode = in.readString();
+        this.shopProductCategoryThreeName = in.readString();
+        this.shopProductCategorySubName = in.readString();
+        this.specs = in.createTypedArrayList(SpecsBean.CREATOR);
+        this.productAttrs = in.createTypedArrayList(ProductAttrBean.CREATOR);
+        this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
+        this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
+        this.imgUrlDetail = in.readString();
+        this.labelList = in.createTypedArrayList(LabelBean.CREATOR);
+        this.addResource = in.readString();
+        this.buttonType = in.readString();
+        this.isCheck = in.readByte() != 0;
+        this.updateResource = in.readString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[]{productID, placeProvince, productName, productAttr, appointSellType,
+            bundlingGoodsType,
+            bundlingGoodsDetails, productBrief, isWareHourse, shopProductCategorySubID, action, depositProductType,
+            purchaserIsVisible, orgName, cargoOwnerID, cargoOwnerName, standardUnitName, groupID, isCooperation,
+            isDeliveryRange, nextDayDelivery, stockCheckType, brandId, producer, productSale, note, priceIsVisible,
+            actionTime, saleSpecNum, isCollection, categoryThreeID, top, shopProductCategoryID, standardSpecID,
+            placeCity, shopProductCategoryThreeID, categoryID, categoryName, categorySubName, categoryThreeName,
+            productType, supplierName, actionBy, productStatus, isSupplierWarehouse});
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final GoodsBean other = (GoodsBean) obj;
+        return UIUtils.equals(this.productID, other.productID);
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
+    public String getEditFrom() {
+        return editFrom;
+    }
+
+    public void setEditFrom(String editFrom) {
+        this.editFrom = editFrom;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.editFrom);
         dest.writeString(this.productID);
         dest.writeString(this.placeProvince);
         dest.writeString(this.productName);
@@ -805,29 +845,5 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.buttonType);
         dest.writeByte(this.isCheck ? (byte) 1 : (byte) 0);
         dest.writeString(this.updateResource);
-    }
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(new Object[]{productID, placeProvince, productName, productAttr, appointSellType,
-            bundlingGoodsType,
-            bundlingGoodsDetails, productBrief, isWareHourse, shopProductCategorySubID, action, depositProductType,
-            purchaserIsVisible, orgName, cargoOwnerID, cargoOwnerName, standardUnitName, groupID, isCooperation,
-            isDeliveryRange, nextDayDelivery, stockCheckType, brandId, producer, productSale, note, priceIsVisible,
-            actionTime, saleSpecNum, isCollection, categoryThreeID, top, shopProductCategoryID, standardSpecID,
-            placeCity, shopProductCategoryThreeID, categoryID, categoryName, categorySubName, categoryThreeName,
-            productType, supplierName, actionBy, productStatus, isSupplierWarehouse});
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final GoodsBean other = (GoodsBean) obj;
-        return UIUtils.equals(this.productID, other.productID);
     }
 }

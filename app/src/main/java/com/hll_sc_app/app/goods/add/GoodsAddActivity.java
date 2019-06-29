@@ -31,6 +31,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
+import com.hll_sc_app.app.goods.add.specs.depositproducts.DepositProductsActivity;
 import com.hll_sc_app.app.goods.detail.GoodsDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
@@ -158,6 +159,16 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     LinearLayout mLlImgUrlDetail;
     @Autowired(name = "parcelable")
     GoodsBean mGoodsBean;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
+    @BindView(R.id.txt_save)
+    TextView mTxtSave;
+    @BindView(R.id.txt_saveAndUp)
+    TextView mTxtSaveAndUp;
+    @BindView(R.id.fl_bottom)
+    RelativeLayout mFlBottom;
+    @BindView(R.id.txt_title_save)
+    TextView mTxtTitleSave;
     private GoodsAddPresenter mPresenter;
     private CategorySelectWindow mCategorySelectWindow;
     private AssistUnitSelectWindow mAssistUnitSelectWindow;
@@ -298,6 +309,14 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (mGoodsBean == null) {
             return;
         }
+        if (TextUtils.equals(mGoodsBean.getEditFrom(), GoodsBean.EDIT_FROM_TEMPLATE)) {
+            mFlBottom.setVisibility(View.GONE);
+            mTxtTitleSave.setVisibility(View.VISIBLE);
+        } else {
+            mFlBottom.setVisibility(View.VISIBLE);
+            mTxtTitleSave.setVisibility(View.GONE);
+        }
+        mTxtTitle.setText("编辑商品");
         // 主图
         mImgImgUrl.showImage(mGoodsBean.getImgUrl(), v -> mImgImgUrl.deleteImage());
         // 辅图
@@ -334,12 +353,14 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         mTxtCategoryName.setText(String.format("%s - %s - %s", categoryItem1.getCategoryName(),
             categoryItem2.getCategoryName(), categoryItem3.getCategoryName()));
         // 自定义分类
-        CopyCategoryBean copyCategoryBean = new CopyCategoryBean();
-        copyCategoryBean.setShopProductCategorySubID(mGoodsBean.getShopProductCategorySubID());
-        copyCategoryBean.setShopProductCategorySubName(mGoodsBean.getShopProductCategorySubName());
-        copyCategoryBean.setShopProductCategoryThreeID(mGoodsBean.getShopProductCategoryThreeID());
-        copyCategoryBean.setShopProductCategoryThreeName(mGoodsBean.getShopProductCategoryThreeName());
-        showCustomCategory(copyCategoryBean);
+        if (!TextUtils.isEmpty(mGoodsBean.getShopProductCategorySubID()) && !TextUtils.isEmpty(mGoodsBean.getShopProductCategoryThreeID())) {
+            CopyCategoryBean copyCategoryBean = new CopyCategoryBean();
+            copyCategoryBean.setShopProductCategorySubID(mGoodsBean.getShopProductCategorySubID());
+            copyCategoryBean.setShopProductCategorySubName(mGoodsBean.getShopProductCategorySubName());
+            copyCategoryBean.setShopProductCategoryThreeID(mGoodsBean.getShopProductCategoryThreeID());
+            copyCategoryBean.setShopProductCategoryThreeName(mGoodsBean.getShopProductCategoryThreeName());
+            showCustomCategory(copyCategoryBean);
+        }
         // 商品规格
         mSpecsAdapter.setNewData(mGoodsBean.getSpecs());
         // 商品简介
@@ -634,6 +655,59 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
     }
 
+    @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
+        R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
+        R.id.txt_save, R.id.txt_saveAndUp, R.id.txt_title_save})
+    public void onViewClicked(View view) {
+        ViewUtils.clearEditFocus(view);
+        switch (view.getId()) {
+            case R.id.img_close:
+                onBackPressed();
+                break;
+            case R.id.rl_categoryName:
+                mPresenter.queryCategory();
+                break;
+            case R.id.rl_shopProductCategorySubName:
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY,
+                    mTxtShopProductCategorySubName.getTag() != null ?
+                        ((CopyCategoryBean) mTxtShopProductCategorySubName.getTag()).getShopProductCategorySubID() :
+                        "");
+                break;
+            case R.id.txt_categoryName_copy:
+                toCopy();
+                break;
+            case R.id.txt_specs_add:
+                // 新增规格
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, mSwitchDepositProductType.isChecked());
+                break;
+            case R.id.txt_specs_add_assistUnit:
+                // 选择辅助规格
+                showAssistUnitSelectWindow();
+                break;
+            case R.id.txt_label_add:
+                // 选择商品标签
+                mPresenter.queryLabelList();
+                break;
+            case R.id.txt_productAttrs_add:
+                // 选择商品属性
+                toProductAttrsActivity();
+                break;
+            case R.id.txt_save:
+                // 仅保存
+                toSave("1");
+                break;
+            case R.id.txt_saveAndUp:
+                // 立即上架
+                toSave("2");
+                break;
+            case R.id.txt_title_save:
+                toSave(null);
+                break;
+            default:
+                break;
+        }
+    }
+
     @Override
     public void uploadSuccess(String url, int requestCode) {
         if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
@@ -700,54 +774,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         finish();
     }
 
-    @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
-        R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
-        R.id.txt_save, R.id.txt_saveAndUp})
-    public void onViewClicked(View view) {
-        ViewUtils.clearEditFocus(view);
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.rl_categoryName:
-                mPresenter.queryCategory();
-                break;
-            case R.id.rl_shopProductCategorySubName:
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY,
-                    mTxtShopProductCategorySubName.getTag() != null ?
-                        ((CopyCategoryBean) mTxtShopProductCategorySubName.getTag()).getShopProductCategorySubID() :
-                        "");
-                break;
-            case R.id.txt_categoryName_copy:
-                toCopy();
-                break;
-            case R.id.txt_specs_add:
-                // 新增规格
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, mSwitchDepositProductType.isChecked());
-                break;
-            case R.id.txt_specs_add_assistUnit:
-                // 选择辅助规格
-                showAssistUnitSelectWindow();
-                break;
-            case R.id.txt_label_add:
-                // 选择商品标签
-                mPresenter.queryLabelList();
-                break;
-            case R.id.txt_productAttrs_add:
-                // 选择商品属性
-                toProductAttrsActivity();
-                break;
-            case R.id.txt_save:
-                // 仅保存
-                toSave("1");
-                break;
-            case R.id.txt_saveAndUp:
-                // 立即上架
-                toSave("2");
-                break;
-            default:
-                break;
-        }
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     /**
@@ -807,7 +836,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             edit = false;
             mGoodsBean = new GoodsBean();
         }
-        mGoodsBean.setButtonType(buttonType);
         // 是否组合商品(0-不是，1-是)
         mGoodsBean.setBundlingGoodsType("0");
         // 一级类目ID
@@ -934,7 +962,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (mTxtShopProductCategorySubName.getTag() != null) {
             CopyCategoryBean categoryBean = (CopyCategoryBean) mTxtShopProductCategorySubName.getTag();
             mGoodsBean.setShopProductCategorySubID(categoryBean.getShopProductCategorySubID());
+            mGoodsBean.setShopProductCategorySubName(categoryBean.getShopProductCategorySubName());
             mGoodsBean.setShopProductCategoryThreeID(categoryBean.getShopProductCategoryThreeID());
+            mGoodsBean.setShopProductCategoryThreeName(categoryBean.getShopProductCategoryThreeName());
         } else {
             showToast("自定义分类ID不能为空");
             return;
@@ -949,8 +979,17 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         // 是否开启库存校验(0-不是，1-是)
         mGoodsBean.setStockCheckType(mSwitchStockCheckType.isChecked() ? "1" : "0");
         if (edit) {
-            mPresenter.editProduct(mGoodsBean);
+            if (TextUtils.equals(GoodsBean.EDIT_FROM_TEMPLATE, mGoodsBean.getEditFrom())) {
+                Intent intent = new Intent();
+                intent.putExtra(DepositProductsActivity.INTENT_TAG, mGoodsBean);
+                setResult(RESULT_OK, intent);
+                onBackPressed();
+            } else {
+                mGoodsBean.setButtonType(buttonType);
+                mPresenter.editProduct(mGoodsBean);
+            }
         } else {
+            mGoodsBean.setButtonType(buttonType);
             mPresenter.addProduct(mGoodsBean);
         }
     }
