@@ -54,6 +54,7 @@ public class GoodsBean implements Parcelable {
             return new GoodsBean[size];
         }
     };
+    private String productTemplateID;
     private String productID;
     private String placeProvince;
     private String productName;
@@ -135,8 +136,90 @@ public class GoodsBean implements Parcelable {
      * 修改来源（1-普通商品修改，2-其他商品修改）
      */
     private String updateResource;
+    private String errorMsg;
+    private String shopProductCategorySubName = "";
 
     public GoodsBean() {
+    }
+
+    protected GoodsBean(Parcel in) {
+        this.productTemplateID = in.readString();
+        this.productID = in.readString();
+        this.placeProvince = in.readString();
+        this.productName = in.readString();
+        this.productAttr = in.readString();
+        this.appointSellType = in.readString();
+        this.bundlingGoodsType = in.readString();
+        this.bundlingGoodsDetails = in.createTypedArrayList(GoodsBean.CREATOR);
+        this.productBrief = in.readString();
+        this.isWareHourse = in.readString();
+        this.editFrom = in.readString();
+        this.action = in.readString();
+        this.depositProductType = in.readString();
+        this.purchaserIsVisible = in.readString();
+        this.orgName = in.readString();
+        this.cargoOwnerID = in.readString();
+        this.cargoOwnerName = in.readString();
+        this.standardUnitName = in.readString();
+        this.groupID = in.readString();
+        this.isCooperation = in.readByte() != 0;
+        this.isDeliveryRange = in.readByte() != 0;
+        this.nextDayDelivery = in.readString();
+        this.stockCheckType = in.readString();
+        this.brandId = in.readString();
+        this.producer = in.readString();
+        this.productSale = in.readString();
+        this.note = in.readString();
+        this.priceIsVisible = in.readByte() != 0;
+        this.actionTime = in.readString();
+        this.saleSpecNum = in.readString();
+        this.isCollection = in.readByte() != 0;
+        this.categoryThreeID = in.readString();
+        this.top = in.readString();
+        this.shopProductCategoryID = in.readString();
+        this.standardSpecID = in.readString();
+        this.placeCity = in.readString();
+        this.shopProductCategorySubID = in.readString();
+        this.categoryID = in.readString();
+        this.categoryName = in.readString();
+        this.categorySubName = in.readString();
+        this.categoryThreeName = in.readString();
+        this.productType = in.readString();
+        this.supplierName = in.readString();
+        this.actionBy = in.readString();
+        this.productStatus = in.readString();
+        this.isSupplierWarehouse = in.readString();
+        this.imgUrl = in.readString();
+        this.imgUrlSub = in.readString();
+        this.productCode = in.readString();
+        this.categorySubID = in.readString();
+        this.placeCityCode = in.readString();
+        this.createTime = in.readString();
+        this.guaranteePeriod = in.readString();
+        this.resourceType = in.readString();
+        this.placeProvinceCode = in.readString();
+        this.shopProductCategoryThreeID = in.readString();
+        this.shopProductCategoryThreeName = in.readString();
+        this.specs = in.createTypedArrayList(SpecsBean.CREATOR);
+        this.productAttrs = in.createTypedArrayList(ProductAttrBean.CREATOR);
+        this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
+        this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
+        this.imgUrlDetail = in.readString();
+        this.labelList = in.createTypedArrayList(LabelBean.CREATOR);
+        this.addResource = in.readString();
+        this.buttonType = in.readString();
+        this.isCheck = in.readByte() != 0;
+        this.updateResource = in.readString();
+        this.errorMsg = in.readString();
+        this.shopProductCategorySubName = in.readString();
+    }
+
+    public String getProductTemplateID() {
+        return productTemplateID;
+    }
+
+    public void setProductTemplateID(String productTemplateID) {
+        this.productTemplateID = productTemplateID;
     }
 
     public boolean isCheck() {
@@ -667,76 +750,12 @@ public class GoodsBean implements Parcelable {
         this.updateResource = updateResource;
     }
 
-    private String shopProductCategorySubName = "";
+    public String getErrorMsg() {
+        return errorMsg;
+    }
 
-    protected GoodsBean(Parcel in) {
-        this.editFrom = in.readString();
-        this.productID = in.readString();
-        this.placeProvince = in.readString();
-        this.productName = in.readString();
-        this.productAttr = in.readString();
-        this.appointSellType = in.readString();
-        this.bundlingGoodsType = in.readString();
-        this.bundlingGoodsDetails = in.createTypedArrayList(GoodsBean.CREATOR);
-        this.productBrief = in.readString();
-        this.isWareHourse = in.readString();
-        this.shopProductCategorySubID = in.readString();
-        this.action = in.readString();
-        this.depositProductType = in.readString();
-        this.purchaserIsVisible = in.readString();
-        this.orgName = in.readString();
-        this.cargoOwnerID = in.readString();
-        this.cargoOwnerName = in.readString();
-        this.standardUnitName = in.readString();
-        this.groupID = in.readString();
-        this.isCooperation = in.readByte() != 0;
-        this.isDeliveryRange = in.readByte() != 0;
-        this.nextDayDelivery = in.readString();
-        this.stockCheckType = in.readString();
-        this.brandId = in.readString();
-        this.producer = in.readString();
-        this.productSale = in.readString();
-        this.note = in.readString();
-        this.priceIsVisible = in.readByte() != 0;
-        this.actionTime = in.readString();
-        this.saleSpecNum = in.readString();
-        this.isCollection = in.readByte() != 0;
-        this.categoryThreeID = in.readString();
-        this.top = in.readString();
-        this.shopProductCategoryID = in.readString();
-        this.standardSpecID = in.readString();
-        this.placeCity = in.readString();
-        this.shopProductCategoryThreeID = in.readString();
-        this.categoryID = in.readString();
-        this.categoryName = in.readString();
-        this.categorySubName = in.readString();
-        this.categoryThreeName = in.readString();
-        this.productType = in.readString();
-        this.supplierName = in.readString();
-        this.actionBy = in.readString();
-        this.productStatus = in.readString();
-        this.isSupplierWarehouse = in.readString();
-        this.imgUrl = in.readString();
-        this.imgUrlSub = in.readString();
-        this.productCode = in.readString();
-        this.categorySubID = in.readString();
-        this.placeCityCode = in.readString();
-        this.createTime = in.readString();
-        this.guaranteePeriod = in.readString();
-        this.resourceType = in.readString();
-        this.placeProvinceCode = in.readString();
-        this.shopProductCategoryThreeName = in.readString();
-        this.shopProductCategorySubName = in.readString();
-        this.specs = in.createTypedArrayList(SpecsBean.CREATOR);
-        this.productAttrs = in.createTypedArrayList(ProductAttrBean.CREATOR);
-        this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
-        this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
-        this.imgUrlDetail = in.readString();
-        this.labelList = in.createTypedArrayList(LabelBean.CREATOR);
-        this.addResource = in.readString();
-        this.buttonType = in.readString();
-        this.isCheck = in.readByte() != 0;
-        this.updateResource = in.readString();
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     @Override
@@ -763,11 +782,6 @@ public class GoodsBean implements Parcelable {
         return UIUtils.equals(this.productID, other.productID);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public String getEditFrom() {
         return editFrom;
     }
@@ -777,8 +791,13 @@ public class GoodsBean implements Parcelable {
     }
 
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.editFrom);
+        dest.writeString(this.productTemplateID);
         dest.writeString(this.productID);
         dest.writeString(this.placeProvince);
         dest.writeString(this.productName);
@@ -788,7 +807,7 @@ public class GoodsBean implements Parcelable {
         dest.writeTypedList(this.bundlingGoodsDetails);
         dest.writeString(this.productBrief);
         dest.writeString(this.isWareHourse);
-        dest.writeString(this.shopProductCategorySubID);
+        dest.writeString(this.editFrom);
         dest.writeString(this.action);
         dest.writeString(this.depositProductType);
         dest.writeString(this.purchaserIsVisible);
@@ -814,7 +833,7 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.shopProductCategoryID);
         dest.writeString(this.standardSpecID);
         dest.writeString(this.placeCity);
-        dest.writeString(this.shopProductCategoryThreeID);
+        dest.writeString(this.shopProductCategorySubID);
         dest.writeString(this.categoryID);
         dest.writeString(this.categoryName);
         dest.writeString(this.categorySubName);
@@ -833,8 +852,8 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.guaranteePeriod);
         dest.writeString(this.resourceType);
         dest.writeString(this.placeProvinceCode);
+        dest.writeString(this.shopProductCategoryThreeID);
         dest.writeString(this.shopProductCategoryThreeName);
-        dest.writeString(this.shopProductCategorySubName);
         dest.writeTypedList(this.specs);
         dest.writeTypedList(this.productAttrs);
         dest.writeTypedList(this.supplierShops);
@@ -845,5 +864,7 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.buttonType);
         dest.writeByte(this.isCheck ? (byte) 1 : (byte) 0);
         dest.writeString(this.updateResource);
+        dest.writeString(this.errorMsg);
+        dest.writeString(this.shopProductCategorySubName);
     }
 }

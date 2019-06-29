@@ -9,6 +9,8 @@ import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.CustomCategorySortReq;
 import com.hll_sc_app.bean.goods.DepositProductsResp;
+import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
+import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.GoodsTemplateResp;
@@ -225,4 +227,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100004")
     Observable<BaseResp<Object>> editProduct(@Body BaseReq<GoodsBean> req);
+
+    /**
+     * 商品库批量新增商品
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100051")
+    Observable<BaseResp<GoodsAddBatchResp>> addProductBatch(@Body BaseReq<GoodsAddBatchReq> req);
 }

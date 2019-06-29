@@ -23,12 +23,16 @@ import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.app.goods.add.specs.depositproducts.DepositProductsActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
+import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
+import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
+import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -54,6 +58,7 @@ public class GoodsTemplateEditActivity extends BaseLoadActivity implements Goods
     @Autowired(name = "parcelable", required = true)
     ArrayList<GoodsBean> mList;
     private GoodsListAdapter mAdapter;
+    private GoodsTemplateEditPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,9 +68,9 @@ public class GoodsTemplateEditActivity extends BaseLoadActivity implements Goods
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        GoodsTemplateEditPresenter presenter = GoodsTemplateEditPresenter.newInstance();
-        presenter.register(this);
-        presenter.start();
+        mPresenter = GoodsTemplateEditPresenter.newInstance();
+        mPresenter.register(this);
+        mPresenter.start();
     }
 
     private void initView() {
@@ -102,15 +107,47 @@ public class GoodsTemplateEditActivity extends BaseLoadActivity implements Goods
         if (id == R.id.txt_finish) {
             finish();
         } else if (id == R.id.txt_save) {
-
+            toSave("1");
         } else if (id == R.id.txt_saveAndUp) {
-
+            toSave("2");
         }
     }
 
+    /**
+     * 保存
+     *
+     * @param buttonType 1-仅保存 2-立即上架
+     */
+    private void toSave(String buttonType) {
+        GoodsAddBatchReq req = new GoodsAddBatchReq();
+        req.setButtonType(buttonType);
+        req.setGroupID(UserConfig.getGroupID());
+        req.setResourceType("shopmall");
+        req.setProductTemplates(mList);
+        mPresenter.batchAddGoods(req);
+    }
+
     @Override
-    public void showGoodsTemplateList(List<GoodsBean> list) {
-        mAdapter.setNewData(list);
+    public void addSuccess(GoodsAddBatchResp resp) {
+        showToast("成功添加商品" + resp.getSuccessTotal() + "条");
+        List<GoodsBean> failRecords = resp.getFailRecords();
+        StringBuilder builder = new StringBuilder();
+        if (!CommonUtils.isEmpty(failRecords)) {
+            for (GoodsBean bean : failRecords) {
+                builder.append(bean.getProductName()).append("失败原因：").append(bean.getErrorMsg()).append("\n");
+            }
+        }
+        if (!TextUtils.isEmpty(builder.toString())) {
+            TipsDialog.newBuilder(this)
+                .setTitle("导入失败异常信息")
+                .setMessage(builder.toString())
+                .setCancelable(false)
+                .setButton((dialog, item) -> dialog.dismiss(), "知道了")
+                .create().show();
+            mAdapter.setNewData(failRecords);
+        } else {
+            finish();
+        }
     }
 
     class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
@@ -145,7 +182,6 @@ public class GoodsTemplateEditActivity extends BaseLoadActivity implements Goods
                 .getView(R.id.img_imgUrl))).setImageURL(item.getImgUrl());
             ((ProductSpecAdapter) ((RecyclerView) helper.getView(R.id.recyclerView_spec)).getAdapter()).setNewData(item.getSpecs());
         }
-
 
         private void showInputDialog(SpecsBean specsBean, BaseQuickAdapter adapter, int position) {
             if (mContext instanceof Activity) {

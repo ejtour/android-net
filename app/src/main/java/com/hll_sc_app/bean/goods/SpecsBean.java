@@ -26,6 +26,7 @@ public class SpecsBean implements Parcelable {
             return new SpecsBean[size];
         }
     };
+    private String specTemplateID;
     private String specID;
     private String productSale;
     private String saleUnitName;
@@ -74,6 +75,7 @@ public class SpecsBean implements Parcelable {
     }
 
     protected SpecsBean(Parcel in) {
+        this.specTemplateID = in.readString();
         this.specID = in.readString();
         this.productSale = in.readString();
         this.saleUnitName = in.readString();
@@ -108,6 +110,14 @@ public class SpecsBean implements Parcelable {
         this.edit = in.readByte() != 0;
         this.isDepositProduct = in.readByte() != 0;
         this.select = in.readByte() != 0;
+    }
+
+    public String getSpecTemplateID() {
+        return specTemplateID;
+    }
+
+    public void setSpecTemplateID(String specTemplateID) {
+        this.specTemplateID = specTemplateID;
     }
 
     public boolean isDepositProduct() {
@@ -389,6 +399,7 @@ public class SpecsBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.specTemplateID);
         dest.writeString(this.specID);
         dest.writeString(this.productSale);
         dest.writeString(this.saleUnitName);

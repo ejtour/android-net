@@ -29,6 +29,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
+import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -199,6 +200,13 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     public void showGoodsTemplateList(List<GoodsBean> list, boolean append, int total) {
         if (!CommonUtils.isEmpty(list)) {
             for (GoodsBean goodsBean : list) {
+                goodsBean.setProductTemplateID(goodsBean.getProductID());
+                List<SpecsBean> specsBeanList = goodsBean.getSpecs();
+                if (!CommonUtils.isEmpty(specsBeanList)) {
+                    for (SpecsBean bean : specsBeanList) {
+                        bean.setSpecTemplateID(bean.getSpecID());
+                    }
+                }
                 if (mSelectList.contains(goodsBean)) {
                     goodsBean.setCheck(true);
                 }
