@@ -52,6 +52,10 @@ public class RouterConfig {
      */
     public static final String GOODS_TEMPLATE_LIST = "/activity/goods/template/list";
     /**
+     * 从商品库导入-商品编辑
+     */
+    public static final String GOODS_TEMPLATE_EDIT = "/activity/goods/template/edit";
+    /**
      * 商品详情
      */
     public static final String ROOT_HOME_GOODS_DETAIL = "/activity/home/goods/detail";

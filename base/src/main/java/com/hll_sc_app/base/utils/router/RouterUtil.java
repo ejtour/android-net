@@ -223,9 +223,28 @@ public class RouterUtil {
      */
     public static void goToActivity(String url, ArrayList<? extends Parcelable> value) {
         ARouter.getInstance().build(url)
-            .withSerializable("parcelable", value)
+            .withParcelableArrayList("parcelable", value)
             .setProvider(new LoginInterceptor())
             .navigation();
+    }
+
+    /**
+     * 通过url跳转页面并且关闭当前页面
+     * ARouter跳转后立即finish会使转场动画失效
+     *
+     * @param url     URL
+     * @param context Activity and so on.
+     */
+    public static void goToActivity(String url, Activity context, ArrayList<? extends Parcelable> value) {
+        ARouter.getInstance().build(url)
+            .withParcelableArrayList("parcelable", value)
+            .setProvider(new LoginInterceptor())
+            .navigation(context, new NavCallback() {
+                @Override
+                public void onArrival(Postcard postcard) {
+                    context.finish();
+                }
+            });
     }
 
     /**

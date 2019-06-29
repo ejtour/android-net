@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
@@ -40,6 +41,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -290,6 +292,8 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.text_commit:
+                // 确定选择
+                RouterUtil.goToActivity(RouterConfig.GOODS_TEMPLATE_EDIT, this, new ArrayList<>(mSelectList));
                 break;
             case R.id.img_close:
                 finish();
