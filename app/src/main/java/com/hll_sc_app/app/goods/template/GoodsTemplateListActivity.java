@@ -237,12 +237,18 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     }
 
     @Override
+    public String getCategoryThreeIds() {
+        return mCategoryWindow != null ? mCategoryWindow.getCategoryThreeIds() : null;
+    }
+
+    @Override
     public void showCategoryFilterWindow(CategoryResp resp) {
         mImgCategory.setRotation(-180F);
         mTxtCategory.setSelected(true);
         mImgCategory.setSelected(true);
         if (mCategoryWindow == null) {
             mCategoryWindow = new CategoryFilterWindow(this, resp);
+            mCategoryWindow.setListener(beans -> mPresenter.queryGoodsTemplateList(true));
             mCategoryWindow.setOnDismissListener(() -> {
                 mTxtCategory.setSelected(false);
                 mImgCategory.setSelected(false);

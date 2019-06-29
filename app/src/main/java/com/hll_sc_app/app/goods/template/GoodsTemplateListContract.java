@@ -55,6 +55,13 @@ public interface GoodsTemplateListContract {
         String getLabelIds();
 
         /**
+         * 获取选中分类
+         *
+         * @return 选中分类
+         */
+        String getCategoryThreeIds();
+
+        /**
          * 显示分类筛选框
          *
          * @param resp resp

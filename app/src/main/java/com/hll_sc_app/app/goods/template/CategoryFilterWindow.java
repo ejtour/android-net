@@ -21,7 +21,9 @@ import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +57,8 @@ public class CategoryFilterWindow extends BasePopupWindow {
     private CategoryItem mCategoryItem2;
     private CategoryResp mResp;
 
+    private Set<CategoryItem> mSelectList;
+
     CategoryFilterWindow(Activity context, CategoryResp resp) {
         super(context);
         View view = View.inflate(context, R.layout.window_template_category_filter, null);
@@ -67,6 +71,7 @@ public class CategoryFilterWindow extends BasePopupWindow {
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.setBackgroundDrawable(new ColorDrawable(0xbb000000));
+        mSelectList = new HashSet<>();
         initView(context);
     }
 
@@ -168,13 +173,28 @@ public class CategoryFilterWindow extends BasePopupWindow {
                 return;
             }
             bean3.setSelected(!bean3.isSelected());
+            if (bean3.isSelected()) {
+                // 添加到选中列表中
+                add(bean3);
+            } else {
+                // 从选中列表移除
+                remove(bean3);
+            }
+
             if (TextUtils.equals(STRING_SELECT_ALL, bean3.getCategoryName())) {
+                // 点击了第一个的全选框，根据全选框选中状态判断全选还是全不选
                 List<CategoryItem> itemList = mAdapter3.getData();
                 for (CategoryItem item : itemList) {
                     item.setSelected(bean3.isSelected());
+                    if (item.isSelected()) {
+                        add(item);
+                    } else {
+                        remove(item);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             } else {
+                // 没选中或者取消选中一个，都要判断整个数据的状态，用于第一个全选状态的更新
                 adapter.notifyItemChanged(position);
                 CategoryItem categoryItem = mAdapter3.getItem(0);
                 if (categoryItem == null) {
@@ -226,9 +246,22 @@ public class CategoryFilterWindow extends BasePopupWindow {
         return categoryItemList;
     }
 
+    private void add(CategoryItem categoryItem) {
+        if (!TextUtils.equals(categoryItem.getCategoryName(), STRING_SELECT_ALL)) {
+            mSelectList.add(categoryItem);
+        }
+    }
+
+    private void remove(CategoryItem categoryItem) {
+        mSelectList.remove(categoryItem);
+    }
+
     private boolean isSelectAll() {
+        return isSelectAll(mAdapter3.getData());
+    }
+
+    private boolean isSelectAll(List<CategoryItem> categoryItemList) {
         boolean selectAll = true;
-        List<CategoryItem> categoryItemList = mAdapter3.getData();
         if (!CommonUtils.isEmpty(categoryItemList)) {
             for (CategoryItem item : categoryItemList) {
                 if (TextUtils.equals(item.getCategoryName(), STRING_SELECT_ALL)) {
@@ -251,11 +284,31 @@ public class CategoryFilterWindow extends BasePopupWindow {
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.txt_reset) {
+            // 三级全部清空选中
             resetItem(mResp.getList3());
+            // 当前的清除
+            if (mAdapter3 != null && !CommonUtils.isEmpty(mAdapter3.getData())) {
+                CategoryItem item = mAdapter3.getItem(0);
+                if (item != null) {
+                    item.setSelected(false);
+                }
+            }
+            mSelectList.clear();
             mAdapter3.notifyDataSetChanged();
         } else if (id == R.id.txt_confirm && mListener != null) {
+            mListener.confirm(TextUtils.join(",", mSelectList));
             dismiss();
         }
+    }
+
+    String getCategoryThreeIds() {
+        List<String> list = new ArrayList<>();
+        if (!CommonUtils.isEmpty(mSelectList)) {
+            for (CategoryItem item : mSelectList) {
+                list.add(item.getCategoryID());
+            }
+        }
+        return TextUtils.join(",", list);
     }
 
     interface ConfirmListener {
@@ -264,10 +317,10 @@ public class CategoryFilterWindow extends BasePopupWindow {
          *
          * @param beans 规格
          */
-        void confirm(List<CategoryItem> beans);
+        void confirm(String beans);
     }
 
-    public static class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {
+    public class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {
         private boolean mThree;
 
         CategoryAdapter(boolean isThree, List<CategoryItem> list) {
@@ -285,6 +338,13 @@ public class CategoryFilterWindow extends BasePopupWindow {
                 CategoryItem item = new CategoryItem();
                 item.setCategoryName(STRING_SELECT_ALL);
                 data.add(0, item);
+                for (CategoryItem categoryItem : data) {
+                    if (mSelectList.contains(categoryItem)) {
+                        categoryItem.setSelected(true);
+                    }
+                }
+                // 判断首位的选中状态
+                item.setSelected(isSelectAll(data));
             }
             super.setNewData(data);
         }
