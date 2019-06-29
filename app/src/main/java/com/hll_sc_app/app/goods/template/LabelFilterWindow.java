@@ -63,12 +63,12 @@ class LabelFilterWindow extends BasePopupWindow {
         }
     }
 
-    List<LabelBean> getSelectList() {
-        List<LabelBean> list = new ArrayList<>();
+    List<String> getSelectList() {
+        List<String> list = new ArrayList<>();
         if (mFlowLayout != null && mAdapter != null) {
             Set<Integer> set = mFlowLayout.getSelectedList();
             for (Integer integer : set) {
-                list.add(mAdapter.getItem(integer));
+                list.add(mAdapter.getItem(integer).getLabelID());
             }
         }
         return list;

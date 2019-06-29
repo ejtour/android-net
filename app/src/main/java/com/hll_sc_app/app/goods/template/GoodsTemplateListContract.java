@@ -48,6 +48,13 @@ public interface GoodsTemplateListContract {
         String getProductPlace();
 
         /**
+         * 获取行业标签
+         *
+         * @return 行业标签
+         */
+        String getLabelIds();
+
+        /**
          * 显示分类筛选框
          *
          * @param resp resp

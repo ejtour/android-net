@@ -232,6 +232,11 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     }
 
     @Override
+    public String getLabelIds() {
+        return mLabelFilterWindow != null ? TextUtils.join(",", mLabelFilterWindow.getSelectList()) : null;
+    }
+
+    @Override
     public void showCategoryFilterWindow(CategoryResp resp) {
         mImgCategory.setRotation(-180F);
         mTxtCategory.setSelected(true);
@@ -255,6 +260,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         if (mLabelFilterWindow == null) {
             mLabelFilterWindow = new LabelFilterWindow(this);
             mLabelFilterWindow.setList(list);
+            mLabelFilterWindow.setListener(() -> mPresenter.queryGoodsTemplateList(true));
             mLabelFilterWindow.setOnDismissListener(() -> {
                 mImgLabel.setSelected(false);
                 mTxtLabel.setSelected(false);

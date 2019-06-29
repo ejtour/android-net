@@ -115,7 +115,7 @@ public class GoodsTemplateListPresenter implements GoodsTemplateListContract.IGo
             .put("productName", mView.getSearchContent())
             .put("brandName", mView.getBrandName())
             .put("productPlace", mView.getProductPlace())
-            .put("labelIds", "")
+            .put("labelIds", mView.getLabelIds())
             .put("categoryThreeIds", "")
             .create();
         GoodsService.INSTANCE.queryGoodsTemplateList(req)
