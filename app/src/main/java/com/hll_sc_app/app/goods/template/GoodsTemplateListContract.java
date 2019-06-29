@@ -34,6 +34,20 @@ public interface GoodsTemplateListContract {
         String getSearchContent();
 
         /**
+         * 获取品牌名
+         *
+         * @return 品牌名
+         */
+        String getBrandName();
+
+        /**
+         * 获取产地
+         *
+         * @return 产地
+         */
+        String getProductPlace();
+
+        /**
          * 显示分类筛选框
          *
          * @param resp resp

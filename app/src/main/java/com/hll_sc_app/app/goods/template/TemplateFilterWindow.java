@@ -65,8 +65,7 @@ public class TemplateFilterWindow extends BaseShadowPopupWindow {
                 mEdtProductPlace.setText(null);
                 break;
             case R.id.txt_confirm:
-                mListener.confirm(mEdtBrandName.getText().toString().trim(),
-                    mEdtProductPlace.getText().toString().trim());
+                mListener.confirm();
                 dismiss();
                 break;
             default:
@@ -75,13 +74,18 @@ public class TemplateFilterWindow extends BaseShadowPopupWindow {
         }
     }
 
+    public String getBrandName() {
+        return mEdtBrandName.getText().toString().trim();
+    }
+
+    public String getProductPlace() {
+        return mEdtProductPlace.getText().toString().trim();
+    }
+
     public interface ConfirmListener {
         /**
          * 确定
-         *
-         * @param brandName    品牌名称
-         * @param productPlace 产地名称
          */
-        void confirm(String brandName, String productPlace);
+        void confirm();
     }
 }

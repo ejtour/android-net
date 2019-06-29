@@ -11,7 +11,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,7 +30,6 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -209,7 +207,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         } else {
             mAdapter.setNewData(list);
         }
-        if (isSearchStatus()) {
+        if (isSearchStatus() || !TextUtils.isEmpty(getBrandName()) || !TextUtils.isEmpty(getProductPlace())) {
             mEmptyView.setTips("搜索不到相关商品");
         } else {
             mEmptyView.setTips("您还没有商品模板数据");
@@ -221,6 +219,16 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     @Override
     public String getSearchContent() {
         return mSearchView.getSearchContent();
+    }
+
+    @Override
+    public String getBrandName() {
+        return mTemplateFilterWindow != null ? mTemplateFilterWindow.getBrandName() : null;
+    }
+
+    @Override
+    public String getProductPlace() {
+        return mTemplateFilterWindow != null ? mTemplateFilterWindow.getProductPlace() : null;
     }
 
     @Override
@@ -313,19 +321,11 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mImgFilter.setRotation(-180F);
         if (mTemplateFilterWindow == null) {
             mTemplateFilterWindow = new TemplateFilterWindow(this);
-            mTemplateFilterWindow.setConfirmListener(new TemplateFilterWindow.ConfirmListener() {
-                @Override
-                public void confirm(String brandName, String productPlace) {
-                    LogUtil.d("ZYS", "brandName = " + brandName + ",productPlace = " + productPlace);
-                }
-            });
-            mTemplateFilterWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    mTxtFilter.setSelected(false);
-                    mImgFilter.setSelected(false);
-                    mImgFilter.setRotation(0F);
-                }
+            mTemplateFilterWindow.setConfirmListener(() -> mPresenter.queryGoodsTemplateList(true));
+            mTemplateFilterWindow.setOnDismissListener(() -> {
+                mTxtFilter.setSelected(false);
+                mImgFilter.setSelected(false);
+                mImgFilter.setRotation(0F);
             });
         }
         mTemplateFilterWindow.showAtLocation(getWindow().getDecorView(), Gravity.END, 0, 0);
