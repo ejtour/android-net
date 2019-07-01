@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,9 +17,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
@@ -29,6 +32,9 @@ import com.hll_sc_app.widget.SearchView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -74,16 +80,23 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
+        EventBus.getDefault().register(this);
         mPresenter = GoodsStickPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                // TODO:跳转搜索页面
+                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_TOP);
             }
 
             @Override
@@ -125,6 +138,20 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
                 mPresenter.queryGoodsList(false);
             }
         });
+    }
+
+    @Subscribe
+    public void onEvent(GoodsStickSearchEvent event) {
+        String name = event.getName();
+        if (!TextUtils.isEmpty(name)) {
+            mSearchView.showSearchContent(true, name);
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
     }
 
     @Override

@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.BrandSearchEvent;
 import com.hll_sc_app.bean.event.GoodsSearchEvent;
+import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
 import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
@@ -48,6 +49,7 @@ import io.reactivex.disposables.Disposable;
 @Route(path = RouterConfig.ORDER_SEARCH)
 public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearchContract.IOrderSearchView {
     public static final String FROM_GOODS_TEMPLATE = "FROM_GOODS_TEMPLATE";
+    public static final String FROM_GOODS_TOP = "FROM_GOODS_TOP";
     public static final String FROM_GOODS = "FROM_GOODS";
     public static final String FROM_BRAND = "FROM_BRAND";
     @BindView(R.id.aos_search_edit)
@@ -76,7 +78,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         mDisposable = getTextObservable().subscribe(s -> {
-            if (!isFromGoods()) {
+            if (!isFromGoods() && !isFromGoodsTop() && !isFromGoodsTemplate()) {
                 // 商品无提示词搜索
                 gotoSearch(s);
             }
@@ -106,6 +108,24 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         return TextUtils.equals(mFrom, FROM_GOODS);
     }
 
+    /**
+     * 来自商品置顶管理
+     *
+     * @return true
+     */
+    private boolean isFromGoodsTop() {
+        return TextUtils.equals(mFrom, FROM_GOODS_TOP);
+    }
+
+    /**
+     * 来自 从商品库导入
+     *
+     * @return true
+     */
+    private boolean isFromGoodsTemplate() {
+        return TextUtils.equals(mFrom, FROM_GOODS_TEMPLATE);
+    }
+
     private void gotoSearch(String keywords) {
         mPresenter.requestSearch(keywords);
     }
@@ -114,7 +134,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         String tips = "您可以输入客户名称查找采购商门店";
         String hint = "请输入采购商公司名称";
         int resId = R.drawable.ic_empty_shop_view;
-        if (isFromGoods() || isFromGoodsTemplate()) {
+        if (isFromGoods() || isFromGoodsTemplate() || isFromGoodsTop()) {
             tips = "请输入商品名称或者别名进行查询";
             hint = tips;
             resId = R.drawable.ic_search_goods;
@@ -151,15 +171,6 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     }
 
     /**
-     * 来自 从商品库导入
-     *
-     * @return true
-     */
-    private boolean isFromGoodsTemplate() {
-        return TextUtils.equals(mFrom, FROM_GOODS_TEMPLATE);
-    }
-
-    /**
      * 来自商品 品牌搜索
      *
      * @return true
@@ -177,6 +188,8 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             EventBus.getDefault().post(new BrandSearchEvent(trim));
         } else if (isFromGoodsTemplate()) {
             EventBus.getDefault().post(new GoodsTemplateSearchEvent(trim));
+        } else if (isFromGoodsTop()) {
+            EventBus.getDefault().post(new GoodsStickSearchEvent(trim));
         } else {
             EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, trim));
         }
