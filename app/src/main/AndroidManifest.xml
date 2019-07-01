@@ -71,6 +71,10 @@
             android:name=".app.goods.template.GoodsTemplateListActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".app.goods.stick.GoodsStickActivity"
+            android:screenOrientation="portrait"/>
+
 
         <activity
             android:name=".app.goods.template.edit.GoodsTemplateEditActivity"

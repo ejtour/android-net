@@ -237,4 +237,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100051")
     Observable<BaseResp<GoodsAddBatchResp>> addProductBatch(@Body BaseReq<GoodsAddBatchReq> req);
+
+    /**
+     * 查询自定义商品分类列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100010")
+    Observable<BaseResp<CustomCategoryResp>> queryCustomCategory2Top(@Body BaseMapReq req);
 }

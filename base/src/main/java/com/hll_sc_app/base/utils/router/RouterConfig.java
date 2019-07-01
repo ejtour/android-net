@@ -52,6 +52,10 @@ public class RouterConfig {
      */
     public static final String GOODS_TEMPLATE_LIST = "/activity/goods/template/list";
     /**
+     * 商品置顶管理
+     */
+    public static final String GOODS_STICK_MANAGE = "/activity/goods/stickManage";
+    /**
      * 从商品库导入-商品编辑
      */
     public static final String GOODS_TEMPLATE_EDIT = "/activity/goods/template/edit";
