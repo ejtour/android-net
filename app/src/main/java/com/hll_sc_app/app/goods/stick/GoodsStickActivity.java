@@ -20,6 +20,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
@@ -29,6 +30,7 @@ import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -125,7 +127,16 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
             mPresenter.queryGoodsList(true);
         });
         mRecyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewProduct.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
+            R.color.base_color_divider), UIUtils.dip2px(1)));
         mAdapter = new GoodsTopListAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            GoodsBean bean = (GoodsBean) adapter.getItem(position);
+            if (bean != null) {
+                bean.setCheck(!bean.isCheck());
+                adapter.notifyItemChanged(position);
+            }
+        });
         mRecyclerViewProduct.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
