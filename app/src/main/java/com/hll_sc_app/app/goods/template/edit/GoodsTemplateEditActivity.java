@@ -141,7 +141,6 @@ public class GoodsTemplateEditActivity extends BaseLoadActivity implements Goods
             TipsDialog.newBuilder(this)
                 .setTitle("导入失败异常信息")
                 .setMessage(builder.toString())
-                .setCancelable(false)
                 .setButton((dialog, item) -> dialog.dismiss(), "知道了")
                 .create().show();
             mList = new ArrayList<>(failRecords);

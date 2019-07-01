@@ -19,38 +19,45 @@
         android:text="操作提示标题"
         android:textColor="@color/base_colorPrimary"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/txt_content"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/txt_content"
-        android:layout_width="0dp"
+    <com.hll_sc_app.base.widget.MaxHeightNestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:lineSpacingExtra="4dp"
-        android:minHeight="45dp"
-        android:text="客官~~\n你确定一定以及肯定要退出吗"
-        android:textColor="#999"
-        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/barrier"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/txt_title">
+
+        <TextView
+            android:id="@+id/txt_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="4dp"
+            android:minHeight="45dp"
+            android:text="客官~~\n你确定一定以及肯定要退出吗"
+            android:textColor="#999"
+            android:textSize="12sp"/>
+
+    </com.hll_sc_app.base.widget.MaxHeightNestedScrollView>
 
     <android.support.constraint.Barrier
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="txt_content"/>
+        app:constraint_referenced_ids="scrollView"/>
 
     <android.support.constraint.Group
         android:id="@+id/dialog_verify_v2"
         android:layout_width="wrap_content"
-        android:visibility="gone"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:constraint_referenced_ids="dialog_cancel,dialog_verify"/>
 
     <TextView
