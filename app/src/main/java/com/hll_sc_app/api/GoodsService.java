@@ -245,6 +245,6 @@ public interface GoodsService {
      * @return resp
      */
     @POST(HttpConfig.URL)
-    @Headers("pv:100010")
+    @Headers("pv:100018")
     Observable<BaseResp<CustomCategoryResp>> queryCustomCategory2Top(@Body BaseMapReq req);
 }

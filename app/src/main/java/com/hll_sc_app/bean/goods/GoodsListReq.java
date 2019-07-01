@@ -16,6 +16,15 @@ public class GoodsListReq {
     private String productStatus;
     private String name;
     private String actionType;
+    private String shopProductCategorySubID;
+
+    public String getShopProductCategorySubID() {
+        return shopProductCategorySubID;
+    }
+
+    public void setShopProductCategorySubID(String shopProductCategorySubID) {
+        this.shopProductCategorySubID = shopProductCategorySubID;
+    }
 
     public String getGroupID() {
         return groupID;
