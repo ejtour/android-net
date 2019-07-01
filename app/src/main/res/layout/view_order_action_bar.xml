@@ -9,6 +9,15 @@
     tools:parentTag="LinearLayout">
 
     <TextView
+        android:id="@+id/oab_diff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        tools:text="采购商仍需补差价¥0.01"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/oab_cancel"
         style="@style/BtnOrderAction.GrayStroke"
         android:text="取消订单" />

@@ -107,7 +107,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         } else {
             mActionBar.setVisibility(View.VISIBLE);
             ((ViewGroup.MarginLayoutParams) mListView.getLayoutParams()).bottomMargin = mBottomBarHeight;
-            mActionBar.setData(resp.getButtonList());
+            mActionBar.setData(resp.getButtonList(), mOrderResp.getDiffPrice());
         }
         ((OrderDetailAdapter) mListView.getAdapter()).setNewData(resp.getBillDetailList(),
                 resp.getSubbillCategory() == 2);

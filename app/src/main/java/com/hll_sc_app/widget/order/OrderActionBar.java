@@ -1,6 +1,10 @@
 package com.hll_sc_app.widget.order;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -44,7 +48,9 @@ public class OrderActionBar extends LinearLayout {
     TextView mReject;
     @BindView(R.id.oab_inspection)
     TextView mInspection;
-    @BindViews({R.id.oab_cancel, R.id.oab_modify, R.id.oab_receive, R.id.oab_deliver, R.id.oab_settle, R.id.oab_reject, R.id.oab_inspection})
+    @BindView(R.id.oab_diff)
+    TextView mDiffPrice;
+    @BindViews({R.id.oab_cancel, R.id.oab_modify, R.id.oab_receive, R.id.oab_deliver, R.id.oab_settle, R.id.oab_reject, R.id.oab_inspection, R.id.oab_diff})
     List<View> mActionViews;
 
     public OrderActionBar(Context context) {
@@ -64,8 +70,12 @@ public class OrderActionBar extends LinearLayout {
         ButterKnife.bind(this, view);
     }
 
-    public void setData(List<Integer> buttonList) {
+    public void setData(List<Integer> buttonList, double diffPrice) {
         ButterKnife.apply(mActionViews, (view, index) -> view.setVisibility(GONE));
+        if (diffPrice > 0) {
+            mDiffPrice.setVisibility(VISIBLE);
+            mDiffPrice.setText(handleDiffPrice("采购商仍需补差价¥" + diffPrice));
+        }
         for (int i : buttonList) {
             switch (i) {
                 case ACTION_RECEIVE:
@@ -91,5 +101,11 @@ public class OrderActionBar extends LinearLayout {
                     break;
             }
         }
+    }
+
+    private SpannableString handleDiffPrice(String source) {
+        SpannableString ss = SpannableString.valueOf(source);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.color_ed5655)), source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return ss;
     }
 }

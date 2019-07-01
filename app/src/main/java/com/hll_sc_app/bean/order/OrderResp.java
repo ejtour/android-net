@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class OrderResp implements Parcelable {
     private double totalAmount;
     private String extGroupID;
     private double inspectionTotalAmount;
-    private int orderDepositTotalAmount;
+    private double orderDepositTotalAmount;
     private int orderDiscountRuleID;
     private double adjustmentDepositTotalAmount;
     private String shopID;
@@ -142,6 +143,14 @@ public class OrderResp implements Parcelable {
     private List<Integer> buttonList;
     private int receiptRemaining;
     private List<OrderDetailBean> billDetailList;
+
+    public double getDiffPrice() {
+        return subBillStatus == 4 && payType == 3 ? getFee() : 0;
+    }
+
+    public double getFee() {
+        return CommonUtils.addDouble(CommonUtils.subDouble(totalAmount, amountPaid), inspectionCouponSubAmount).doubleValue();
+    }
 
     public String getTargetAddress() {
         return deliverType == 2 ? houseAddress : receiverAddress;
@@ -812,11 +821,11 @@ public class OrderResp implements Parcelable {
         this.inspectionTotalAmount = inspectionTotalAmount;
     }
 
-    public int getOrderDepositTotalAmount() {
+    public double getOrderDepositTotalAmount() {
         return orderDepositTotalAmount;
     }
 
-    public void setOrderDepositTotalAmount(int orderDepositTotalAmount) {
+    public void setOrderDepositTotalAmount(double orderDepositTotalAmount) {
         this.orderDepositTotalAmount = orderDepositTotalAmount;
     }
 
@@ -1253,7 +1262,7 @@ public class OrderResp implements Parcelable {
         dest.writeDouble(this.totalAmount);
         dest.writeString(this.extGroupID);
         dest.writeDouble(this.inspectionTotalAmount);
-        dest.writeInt(this.orderDepositTotalAmount);
+        dest.writeDouble(this.orderDepositTotalAmount);
         dest.writeInt(this.orderDiscountRuleID);
         dest.writeDouble(this.adjustmentDepositTotalAmount);
         dest.writeString(this.shopID);
@@ -1385,7 +1394,7 @@ public class OrderResp implements Parcelable {
         this.totalAmount = in.readDouble();
         this.extGroupID = in.readString();
         this.inspectionTotalAmount = in.readDouble();
-        this.orderDepositTotalAmount = in.readInt();
+        this.orderDepositTotalAmount = in.readDouble();
         this.orderDiscountRuleID = in.readInt();
         this.adjustmentDepositTotalAmount = in.readDouble();
         this.shopID = in.readString();
