@@ -38,7 +38,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -74,6 +77,11 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
     private CustomCategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
     private GoodsTopListAdapter mAdapter;
+    /**
+     * 选中的商品数据
+     */
+    private Set<GoodsBean> mSelectList;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,6 +94,7 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         mPresenter = GoodsStickPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        mSelectList = new HashSet<>();
     }
 
     @Override
@@ -133,9 +142,15 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
             if (bean != null) {
-                bean.setCheck(!bean.isCheck());
+                if (bean.isCheck()) {
+                    // 之前状态为选中，再次点击状态改为未选中
+                    remove(bean);
+                } else {
+                    add(bean);
+                }
                 adapter.notifyItemChanged(position);
             }
+            showBottomCount();
         });
         mRecyclerViewProduct.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -149,6 +164,21 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
                 mPresenter.queryGoodsList(false);
             }
         });
+    }
+
+    private void remove(GoodsBean goodsBean) {
+        goodsBean.setCheck(false);
+        mSelectList.remove(goodsBean);
+    }
+
+    private void add(GoodsBean goodsBean) {
+        goodsBean.setCheck(true);
+        mSelectList.add(goodsBean);
+    }
+
+    private void showBottomCount() {
+        int i = mSelectList.size();
+        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已置顶：%d", i));
     }
 
     @Subscribe
@@ -185,6 +215,13 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
 
     @Override
     public void showList(List<GoodsBean> list, boolean append) {
+        if (!CommonUtils.isEmpty(list)) {
+            for (GoodsBean goodsBean : list) {
+                if (mSelectList.contains(goodsBean)) {
+                    goodsBean.setCheck(true);
+                }
+            }
+        }
         if (append) {
             mAdapter.addData(list);
         } else {
