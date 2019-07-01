@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -18,6 +17,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
 import com.hll_sc_app.app.order.reject.OrderRejectActivity;
+import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -145,7 +145,10 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 ModifyDeliverInfoActivity.start(this, new ArrayList<>(mOrderResp.getBillDetailList()), mBillID);
                 break;
             case R.id.oab_settle:
-                showToast(((TextView) view).getText() + "待添加");
+                OrderSettlementActivity.start(this,
+                        mOrderResp.getFee(),
+                        mOrderResp.getSubBillID(),
+                        mOrderResp.getPayType() == 1 ? 2 : 1);
                 break;
             case R.id.oab_reject:
                 OrderRejectActivity.start(mOrderResp);
@@ -171,7 +174,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && (requestCode == ModifyDeliverInfoActivity.REQ_KEY
-                || requestCode == OrderInspectionActivity.REQ_CODE)) {
+                || requestCode == OrderInspectionActivity.REQ_CODE || requestCode == OrderSettlementActivity.REQ_CODE)) {
             if (requestCode == ModifyDeliverInfoActivity.REQ_KEY) {
                 showToast("成功修改发货信息");
             }

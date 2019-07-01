@@ -65,11 +65,11 @@
 
         <activity
             android:name=".app.goods.add.GoodsAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.template.GoodsTemplateListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.stick.GoodsStickActivity"
@@ -78,35 +78,35 @@
 
         <activity
             android:name=".app.goods.template.edit.GoodsTemplateEditActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.productattr.ProductAttrActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.productattr.brand.ProductBrandActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.productattr.brand.add.ProductBrandAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.specs.GoodsSpecsAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.specs.saleunitname.SaleUnitNameActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.specs.depositproducts.DepositProductsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.customcategory.GoodsCustomCategoryActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.user.register.RegisterComplementActivity"
@@ -144,6 +144,11 @@
         <activity
             android:name=".app.order.inspection.OrderInspectionActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.order.settle.OrderSettlementActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentTheme"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

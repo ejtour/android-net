@@ -133,6 +133,11 @@ public class RouterConfig {
     public static final String ORDER_INSPECTION = "/activity/order/inspection";
 
     /**
+     * 订单结算
+     */
+    public static final String ORDER_SETTLEMENT = "/activity/order/settlement";
+
+    /**
      * 提交成功
      */
     public static final String SUBMIT_SUCCESS = "/activity/submit/success";

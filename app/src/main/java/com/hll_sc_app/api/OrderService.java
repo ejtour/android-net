@@ -17,6 +17,8 @@ import com.hll_sc_app.bean.order.deliver.ModifyDeliverInfoReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
+import com.hll_sc_app.bean.order.settle.CashierResp;
+import com.hll_sc_app.bean.order.settle.PayWaysResp;
 
 import java.util.List;
 
@@ -91,5 +93,17 @@ public interface OrderService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103021")
-    Observable<BaseResp<OrderInspectionResp>> inspectionOrder(@Body BaseReq<OrderInspectionReq> body);
+    Observable<BaseResp<OrderInspectionResp>> inspectionOrder(@Body BaseReq<OrderInspectionReq> req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101089")
+    Observable<BaseResp<PayWaysResp>> getPayWays(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103049")
+    Observable<BaseResp<Object>> inspectionPay(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103044")
+    Observable<BaseResp<CashierResp>> getCashier(@Body BaseMapReq req);
 }

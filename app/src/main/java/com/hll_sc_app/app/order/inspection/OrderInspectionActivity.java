@@ -150,8 +150,8 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /*if (resultCode == RESULT_OK && requestCode == PayActivity.REQUEST_PAY_CODE) {
-            boolean success = data.getBooleanExtra(PayActivity.INTENT_NAME, false);
+        /*if (resultCode == RESULT_OK && requestCode == OrderSettlementActivity.REQUEST_PAY_CODE) {
+            boolean success = data.getBooleanExtra(OrderSettlementActivity.INTENT_NAME, false);
             if (success) {
                 onBackPressed();
             }
@@ -215,7 +215,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
         if (bean != null) {
             RouterUtil.goToActivity(RouterConfig.ORDER_PAY,
                     this,
-                    PayActivity.REQUEST_PAY_CODE,
+                    OrderSettlementActivity.REQUEST_PAY_CODE,
                     bean);
         }*/
     }

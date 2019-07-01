@@ -9,6 +9,7 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
@@ -24,6 +25,8 @@ import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
+import com.hll_sc_app.bean.order.settle.CashierResp;
+import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -364,6 +367,60 @@ public class Order {
     public static void inspectionOrder(OrderInspectionReq req, SimpleObserver<OrderInspectionResp> observer) {
         OrderService.INSTANCE
                 .inspectionOrder(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取支付方式列表
+     *
+     * @param payType 支付类型
+     */
+    public static void getPayWays(int payType, SimpleObserver<PayWaysResp> observer) {
+        OrderService.INSTANCE
+                .getPayWays(BaseMapReq.newBuilder()
+                        .put("payType", String.valueOf(payType))
+                        .put("source", "2")
+                        .put("supplyID", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取收银台
+     *
+     * @param payType   支付方式 1-银行卡 2-余额 3-微信扫码 4-支付宝扫码 5-微信公众号支付 6-微信app支付
+     * @param subBillID 订单编号
+     */
+    public static void getCashier(String payType, String subBillID, SimpleObserver<CashierResp> observer) {
+        OrderService.INSTANCE
+                .getCashier(BaseMapReq.newBuilder()
+                        .put("flag", "2") // 支付标识 1-合并支付 2-单笔支付
+                        .put("payType", payType)
+                        .put("source", "CODPay")
+                        .put("subBillIDs", subBillID)
+                        .put("terminalIp", UIUtils.getIpAddressString()) // 终端IP 必传
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 验货支付
+     *
+     * @param paymentWay 付款方式：1-微信付款、2-支付宝付款、3-银联支付、4-现金、5-支票 6-快捷支付、7-余额支付
+     * @param subBillID  订单编号
+     */
+    public static void inspectionPay(String paymentWay, String subBillID, SimpleObserver<Object> observer) {
+        OrderService.INSTANCE
+                .inspectionPay(BaseMapReq.newBuilder()
+                        .put("paymentWay", paymentWay)
+                        .put("subBillIDs", subBillID)
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
