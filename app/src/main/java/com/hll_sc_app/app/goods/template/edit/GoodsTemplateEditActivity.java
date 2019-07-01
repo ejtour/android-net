@@ -144,7 +144,8 @@ public class GoodsTemplateEditActivity extends BaseLoadActivity implements Goods
                 .setCancelable(false)
                 .setButton((dialog, item) -> dialog.dismiss(), "知道了")
                 .create().show();
-            mAdapter.setNewData(failRecords);
+            mList = new ArrayList<>(failRecords);
+            mAdapter.setNewData(mList);
         } else {
             finish();
         }
@@ -225,7 +226,6 @@ public class GoodsTemplateEditActivity extends BaseLoadActivity implements Goods
                 .setText(R.id.txt_specContent, item.getSpecContent())
                 .addOnClickListener(R.id.txt_productPrice)
                 .setText(R.id.txt_productPrice, CommonUtils.formatNumber(item.getProductPrice()));
-            ;
         }
     }
 }
