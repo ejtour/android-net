@@ -54,6 +54,10 @@ public class GoodsBean implements Parcelable {
             return new GoodsBean[size];
         }
     };
+    /**
+     * 是否置顶 0-非置顶,大于1-置顶
+     */
+    private int top;
     private String productTemplateID;
     private String productID;
     private String placeProvince;
@@ -92,7 +96,6 @@ public class GoodsBean implements Parcelable {
     private String saleSpecNum;
     private boolean isCollection;
     private String categoryThreeID;
-    private String top;
     private String shopProductCategoryID;
     private String standardSpecID;
     private String placeCity;
@@ -175,7 +178,7 @@ public class GoodsBean implements Parcelable {
         this.saleSpecNum = in.readString();
         this.isCollection = in.readByte() != 0;
         this.categoryThreeID = in.readString();
-        this.top = in.readString();
+        this.top = in.readInt();
         this.shopProductCategoryID = in.readString();
         this.standardSpecID = in.readString();
         this.placeCity = in.readString();
@@ -542,11 +545,11 @@ public class GoodsBean implements Parcelable {
         this.categoryThreeID = categoryThreeID;
     }
 
-    public String getTop() {
+    public int getTop() {
         return top;
     }
 
-    public void setTop(String top) {
+    public void setTop(int top) {
         this.top = top;
     }
 
@@ -829,7 +832,7 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.saleSpecNum);
         dest.writeByte(this.isCollection ? (byte) 1 : (byte) 0);
         dest.writeString(this.categoryThreeID);
-        dest.writeString(this.top);
+        dest.writeInt(this.top);
         dest.writeString(this.shopProductCategoryID);
         dest.writeString(this.standardSpecID);
         dest.writeString(this.placeCity);

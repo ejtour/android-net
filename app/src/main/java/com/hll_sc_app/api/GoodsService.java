@@ -13,6 +13,7 @@ import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.bean.goods.GoodsStickReq;
 import com.hll_sc_app.bean.goods.GoodsTemplateResp;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
@@ -247,4 +248,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100018")
     Observable<BaseResp<CustomCategoryResp>> queryCustomCategory2Top(@Body BaseMapReq req);
+
+    /**
+     * 商品置顶
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100106")
+    Observable<BaseResp<Object>> goods2Top(@Body BaseReq<GoodsStickReq> req);
 }
