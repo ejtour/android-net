@@ -494,7 +494,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     private void confirm(View view) {
         if (mOrderType == OrderType.PENDING_TRANSFER) {
-            showToast("商城下单待添加");
+            mPresenter.mallOrder(getSubBillIds());
             return;
         }
         if ("3".equals(mDeliverType)) {

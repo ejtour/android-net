@@ -25,7 +25,7 @@ public class TransferBean {
     private String billRemark;
     private String cancelBy;
     private String failReason;
-    private int id;
+    private String id;
     private String cancelReason;
     private String billNo;
     private String billCreateBy;
@@ -66,6 +66,7 @@ public class TransferBean {
         resp.setSubBillExecuteDate(String.valueOf(billExecuteTime));
         resp.setSubBillNo(purchaseBillNo);
         resp.setPurchaserName(groupName);
+        resp.setSubBillID(id);
         return resp;
     }
 
@@ -221,11 +222,11 @@ public class TransferBean {
         this.failReason = failReason;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

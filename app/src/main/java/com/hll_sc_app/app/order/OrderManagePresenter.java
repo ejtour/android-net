@@ -187,6 +187,17 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
         });
     }
 
+    @Override
+    public void mallOrder(List<String> ids) {
+        Order.mallOrder(ids, new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                if (ids.size() > 1) mView.showToast("商城批量下单中，请稍后刷新查看");
+                else EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
+            }
+        });
+    }
+
     private SimpleObserver<ExportResp> getExportObserver() {
         return new SimpleObserver<ExportResp>(mView) {
             @Override

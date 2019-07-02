@@ -105,5 +105,7 @@ interface IOrderManageContract {
         void exportNormalOrder(int type, String email);
 
         void getExpressCompanyList(String groupID, String shopID);
+
+        void mallOrder(List<String> ids);
     }
 }
