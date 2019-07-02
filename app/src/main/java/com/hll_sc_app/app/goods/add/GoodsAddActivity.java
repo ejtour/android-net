@@ -299,7 +299,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             }
             showStockCheckType();
         });
-        mEtProductName.addTextChangedListener(new NameCheckTextWatcher());
         mEtNickNames1.addTextChangedListener(new NameCheckTextWatcher());
         mEtNickNames2.addTextChangedListener(new NameCheckTextWatcher());
         mEtNickNames3.addTextChangedListener(new NameCheckTextWatcher());
