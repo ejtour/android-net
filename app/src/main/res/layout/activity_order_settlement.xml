@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/color0_4_000000"
-        app:layout_constraintBottom_toTopOf="@id/aos_method_bg"
+        app:layout_constraintBottom_toTopOf="@+id/aos_method_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,8 +33,8 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_cancel"
         app:layout_constraintDimensionRatio="1"
-        app:layout_constraintStart_toStartOf="@id/aos_method_bg"
-        app:layout_constraintTop_toTopOf="@id/aos_method_bg" />
+        app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
+        app:layout_constraintTop_toTopOf="@+id/aos_method_bg" />
 
     <TextView
         android:id="@+id/aos_title"
@@ -42,19 +42,19 @@
         android:layout_height="wrap_content"
         android:text="选择收款方式"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintBottom_toBottomOf="@id/aos_close"
-        app:layout_constraintEnd_toEndOf="@id/aos_method_bg"
-        app:layout_constraintStart_toStartOf="@id/aos_method_bg"
-        app:layout_constraintTop_toTopOf="@id/aos_close" />
+        app:layout_constraintBottom_toBottomOf="@+id/aos_close"
+        app:layout_constraintEnd_toEndOf="@+id/aos_method_bg"
+        app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
+        app:layout_constraintTop_toTopOf="@+id/aos_close" />
 
     <View
         android:id="@+id/aos_div_1"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/color_eeeeee"
-        app:layout_constraintEnd_toEndOf="@id/aos_method_bg"
-        app:layout_constraintStart_toStartOf="@id/aos_method_bg"
-        app:layout_constraintTop_toBottomOf="@id/aos_close" />
+        app:layout_constraintEnd_toEndOf="@+id/aos_method_bg"
+        app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
+        app:layout_constraintTop_toBottomOf="@+id/aos_close" />
 
     <TextView
         android:id="@+id/aos_amount"
@@ -63,9 +63,9 @@
         android:layout_marginTop="@dimen/dp_10"
         android:textColor="@color/color_ed5655"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="@id/aos_method_bg"
-        app:layout_constraintStart_toStartOf="@id/aos_method_bg"
-        app:layout_constraintTop_toBottomOf="@id/aos_div_1"
+        app:layout_constraintEnd_toEndOf="@+id/aos_method_bg"
+        app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
+        app:layout_constraintTop_toBottomOf="@+id/aos_div_1"
         tools:text="¥ 5600.00" />
 
     <TextView
@@ -74,9 +74,9 @@
         android:layout_height="wrap_content"
         android:text="订单总价"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintEnd_toEndOf="@id/aos_method_bg"
-        app:layout_constraintStart_toStartOf="@id/aos_method_bg"
-        app:layout_constraintTop_toBottomOf="@id/aos_amount" />
+        app:layout_constraintEnd_toEndOf="@+id/aos_method_bg"
+        app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
+        app:layout_constraintTop_toBottomOf="@+id/aos_amount" />
 
     <View
         android:id="@+id/aos_div_2"
@@ -86,16 +86,16 @@
         android:layout_marginTop="17dp"
         android:layout_marginEnd="@dimen/dp_10"
         android:background="@color/color_eeeeee"
-        app:layout_constraintEnd_toEndOf="@id/aos_method_bg"
-        app:layout_constraintStart_toStartOf="@id/aos_method_bg"
-        app:layout_constraintTop_toBottomOf="@id/aos_amount_label" />
+        app:layout_constraintEnd_toEndOf="@+id/aos_method_bg"
+        app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
+        app:layout_constraintTop_toBottomOf="@+id/aos_amount_label" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/aos_list_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="@id/aos_method_bg"
-        app:layout_constraintStart_toStartOf="@id/aos_method_bg"
-        app:layout_constraintTop_toBottomOf="@id/aos_div_2" />
+        app:layout_constraintEnd_toEndOf="@+id/aos_method_bg"
+        app:layout_constraintStart_toStartOf="@+id/aos_method_bg"
+        app:layout_constraintTop_toBottomOf="@+id/aos_div_2" />
 </android.support.constraint.ConstraintLayout>
