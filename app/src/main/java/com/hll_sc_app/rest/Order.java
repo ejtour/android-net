@@ -27,6 +27,7 @@ import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
+import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -421,6 +422,20 @@ public class Order {
                         .put("paymentWay", paymentWay)
                         .put("subBillIDs", subBillID)
                         .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取支付结果
+     *
+     * @param payOrderNo 支付订单号
+     */
+    public static void getSettlementStatus(String payOrderNo, SimpleObserver<SettlementResp> observer) {
+        OrderService.INSTANCE
+                .getSettlementStatus(BaseMapReq.newBuilder()
+                        .put("PayOrderNo", payOrderNo).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

@@ -30,8 +30,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_toLeftOf="@id/ios_arrow"
         android:layout_toRightOf="@id/ios_pay_icon"
-        android:textColor="@drawable/base_color_tab_text"
-        android:textSize="@dimen/text_middle_size"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
         tools:text="支付宝扫码" />
 
     <View
