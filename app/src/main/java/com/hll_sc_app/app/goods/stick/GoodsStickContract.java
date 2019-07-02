@@ -6,6 +6,7 @@ import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品置顶管理
@@ -44,6 +45,11 @@ public interface GoodsStickContract {
          * @return 搜索词
          */
         String getName();
+
+        /**
+         * 保存成功
+         */
+        void saveSuccess();
     }
 
     interface IGoodsStickPresenter extends IPresenter<IGoodsStickView> {
@@ -63,5 +69,12 @@ public interface GoodsStickContract {
          * 加载更多商品列表
          */
         void queryMoreGoodsList();
+
+        /**
+         * 商品置顶
+         *
+         * @param map 置顶数据
+         */
+        void goods2Top(Map<String, List<GoodsBean>> map);
     }
 }

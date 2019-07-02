@@ -12,8 +12,12 @@ import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.GoodsInvWarnReq;
+import com.hll_sc_app.bean.goods.GoodsInvWarnResp;
 import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.bean.goods.GoodsStickReq;
 import com.hll_sc_app.bean.goods.GoodsTemplateResp;
+import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.goods.ProductBrandResp;
@@ -247,4 +251,44 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100018")
     Observable<BaseResp<CustomCategoryResp>> queryCustomCategory2Top(@Body BaseMapReq req);
+
+    /**
+     * 商品置顶
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100106")
+    Observable<BaseResp<Object>> goods2Top(@Body BaseReq<GoodsStickReq> req);
+
+    /**
+     * 获取仓库下拉列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100121")
+    Observable<BaseResp<List<HouseBean>>> queryHouseList(@Body BaseMapReq req);
+
+    /**
+     * 获取商品库存列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100126")
+    Observable<BaseResp<GoodsInvWarnResp>> queryGoodsInvList(@Body BaseMapReq req);
+
+    /**
+     * 库存预警值设置
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100142")
+    Observable<BaseResp<Object>> setGoodsInvWarnValue(@Body BaseReq<GoodsInvWarnReq> req);
 }

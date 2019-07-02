@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@drawable/base_bg_item_white"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/img_imgUrl"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        app:base_placeholder="@drawable/ic_placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder"/>
+
+    <TextView
+        android:id="@+id/txt_productName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toTopOf="@+id/txt_specsSize"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
+        app:layout_constraintWidth_default="wrap"
+        tools:text="可好吃可好吃的红彤彤的大苹果"/>
+
+    <TextView
+        android:id="@+id/txt_specsSize"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toTopOf="@+id/txt_usableStock"
+        app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
+        app:layout_constraintRight_toLeftOf="@+id/txt_standardUnit"
+        app:layout_constraintTop_toBottomOf="@+id/txt_productName"
+        tools:text="规格：2"/>
+
+    <TextView
+        android:id="@+id/txt_standardUnit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toTopOf="@+id/txt_usableStock"
+        app:layout_constraintLeft_toRightOf="@+id/txt_specsSize"
+        app:layout_constraintRight_toLeftOf="@+id/txt_cargoOwnerName"
+        app:layout_constraintTop_toBottomOf="@+id/txt_productName"
+        tools:text="标准单位：袋"/>
+
+    <TextView
+        android:id="@+id/txt_cargoOwnerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toTopOf="@+id/txt_usableStock"
+        app:layout_constraintLeft_toRightOf="@+id/txt_standardUnit"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_productName"
+        tools:text="货主：货主名称"/>
+
+    <TextView
+        android:id="@+id/txt_usableStock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"
+        app:layout_constraintWidth_default="wrap"
+        tools:text="可用库存：2"/>
+
+    <TextView
+        android:id="@+id/txt_stockWarnNum_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="预警值："
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
+        app:layout_constraintRight_toLeftOf="@+id/txt_stockWarnNum"
+        app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"/>
+
+    <TextView
+        android:id="@+id/txt_stockWarnNum"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_edit_stroke_gray"
+        android:gravity="center"
+        android:minWidth="75dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little"
+        app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
+        app:layout_constraintRight_toLeftOf="@+id/txt_stockWarnNum_unit"
+        app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"
+        tools:text="120"/>
+
+    <TextView
+        android:id="@+id/txt_stockWarnNum_unit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_specsSize"
+        tools:text="袋"/>
+
+</android.support.constraint.ConstraintLayout>
+

@@ -60,6 +60,10 @@ public class RouterConfig {
      */
     public static final String GOODS_TEMPLATE_EDIT = "/activity/goods/template/edit";
     /**
+     * 代仓商品库存预警
+     */
+    public static final String GOODS_INVENTORY_WARNING = "/activity/goods/inventoryWarning";
+    /**
      * 商品详情
      */
     public static final String ROOT_HOME_GOODS_DETAIL = "/activity/home/goods/detail";

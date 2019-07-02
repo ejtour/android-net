@@ -197,6 +197,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             RouterUtil.goToActivity(RouterConfig.GOODS_TEMPLATE_LIST);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_TOP)) {
             RouterUtil.goToActivity(RouterConfig.GOODS_STICK_MANAGE);
+        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_WARN)) {
+            RouterUtil.goToActivity(RouterConfig.GOODS_INVENTORY_WARNING);
         }
         mOptionsWindow.dismiss();
     }
