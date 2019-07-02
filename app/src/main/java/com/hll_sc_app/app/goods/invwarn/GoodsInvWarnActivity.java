@@ -110,12 +110,13 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     }
 
     private void showInputDialog(GoodsBean bean, BaseQuickAdapter adapter, int position) {
+        String stockWarnNum = CommonUtils.formatNumber(bean.getStockWarnNum());
         InputDialog.newBuilder(this)
             .setCancelable(false)
             .setTextTitle("输入" + bean.getProductName() + "预警值")
             .setHint("输入预警值")
             .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
-            .setText(CommonUtils.formatNumber(bean.getStockWarnNum()))
+            .setText(TextUtils.equals(stockWarnNum, "0") ? "" : stockWarnNum)
             .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
                 if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
                     s.delete(s.length() - 1, s.length());
