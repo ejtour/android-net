@@ -21,13 +21,16 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
+import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.GoodsInvWarnSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -36,6 +39,9 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -81,18 +87,48 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         mPresenter = GoodsInvWarnPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_INV_WARN);
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                if (TextUtils.isEmpty(searchContent)) {
+                    mPresenter.queryGoodsInvList(true);
+                } else {
+                    mPresenter.searchGoodsInvList(true);
+                }
+            }
+        });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreGoodsInvList();
+                if (mSearchView.isSearchStatus()) {
+                    mPresenter.searchMoreGoodsInvList();
+                } else {
+                    mPresenter.queryMoreGoodsInvList();
+                }
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryGoodsInvList(false);
+                if (mSearchView.isSearchStatus()) {
+                    mPresenter.searchGoodsInvList(false);
+                } else {
+                    mPresenter.queryGoodsInvList(false);
+                }
             }
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("还没有商品库存数据").create();
@@ -137,6 +173,14 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
             .create().show();
     }
 
+    @Subscribe
+    public void onEvent(GoodsInvWarnSearchEvent event) {
+        String name = event.getName();
+        if (!TextUtils.isEmpty(name)) {
+            mSearchView.showSearchContent(true, name);
+        }
+    }
+
     @Override
     public void hideLoading() {
         super.hideLoading();
@@ -179,6 +223,11 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     }
 
     @Override
+    public String getName() {
+        return mSearchView.getSearchContent();
+    }
+
+    @Override
     public void showGoodsInvList(List<GoodsBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
@@ -191,7 +240,11 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
             mEmptyView.setTips("还没有商品库存数据");
         }
         mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+        if (total != 0) {
+            mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+        } else {
+            mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
+        }
     }
 
     @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_house})

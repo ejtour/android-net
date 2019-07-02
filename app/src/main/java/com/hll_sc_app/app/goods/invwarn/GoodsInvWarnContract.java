@@ -18,8 +18,6 @@ public interface GoodsInvWarnContract {
     interface IGoodsInvWarnView extends ILoadView {
         /**
          * 保存成功
-         *
-         * @param resp resp
          */
         void saveSuccess();
 
@@ -45,6 +43,13 @@ public interface GoodsInvWarnContract {
         String getHouseId();
 
         /**
+         * 获取搜索词
+         *
+         * @return 搜索词
+         */
+        String getName();
+
+        /**
          * 展示商品库存列表
          *
          * @param list   list
@@ -67,13 +72,24 @@ public interface GoodsInvWarnContract {
          *
          * @param showLoading true-显示 loading
          */
-
         void queryGoodsInvList(boolean showLoading);
 
         /**
          * 查询下一页代仓商品库存预警列表
          */
         void queryMoreGoodsInvList();
+
+        /**
+         * 搜索-查询代仓商品库存预警列表
+         *
+         * @param showLoading true-显示 loading
+         */
+        void searchGoodsInvList(boolean showLoading);
+
+        /**
+         * 搜索-查询下一页代仓商品库存预警列表
+         */
+        void searchMoreGoodsInvList();
 
         /**
          * 库存预警值设置

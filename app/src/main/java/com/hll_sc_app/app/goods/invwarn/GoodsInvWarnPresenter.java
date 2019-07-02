@@ -11,6 +11,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsInvWarnReq;
 import com.hll_sc_app.bean.goods.GoodsInvWarnResp;
+import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -97,6 +98,20 @@ public class GoodsInvWarnPresenter implements GoodsInvWarnContract.IGoodsInvWarn
     }
 
     @Override
+    public void searchGoodsInvList(boolean showLoading) {
+        mPageNum = 1;
+        mTempPageNum = mPageNum;
+        toSearchGoodsInvList(showLoading);
+    }
+
+    @Override
+    public void searchMoreGoodsInvList() {
+        mTempPageNum = mPageNum;
+        mTempPageNum++;
+        toSearchGoodsInvList(false);
+    }
+
+    @Override
     public void setGoodsInvWarnValue(List<GoodsBean> list) {
         if (CommonUtils.isEmpty(list)) {
             return;
@@ -124,6 +139,38 @@ public class GoodsInvWarnPresenter implements GoodsInvWarnContract.IGoodsInvWarn
                 @Override
                 public void onSuccess(Object o) {
                     mView.saveSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    private void toSearchGoodsInvList(boolean showLoading) {
+        GoodsListReq req = new GoodsListReq();
+        req.setPageNum(mTempPageNum);
+        req.setActionType("warehoue_stockwarnnum");
+        req.setHouseID(mView.getHouseId());
+        req.setName(mView.getName());
+        BaseReq<GoodsListReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        GoodsService.INSTANCE.queryGoodsList(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> {
+                if (showLoading) {
+                    mView.showLoading();
+                }
+            })
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<List<GoodsBean>>() {
+                @Override
+                public void onSuccess(List<GoodsBean> list) {
+                    mPageNum = mTempPageNum;
+                    mView.showGoodsInvList(list, mPageNum != 1, 0);
                 }
 
                 @Override

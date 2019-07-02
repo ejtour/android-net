@@ -15,8 +15,17 @@ public class GoodsListReq {
     private int pageSize = PAGE_SIZE;
     private String productStatus;
     private String name;
+    private String houseID;
     private String actionType;
     private String shopProductCategorySubID;
+
+    public String getHouseID() {
+        return houseID;
+    }
+
+    public void setHouseID(String houseID) {
+        this.houseID = houseID;
+    }
 
     public String getShopProductCategorySubID() {
         return shopProductCategorySubID;
