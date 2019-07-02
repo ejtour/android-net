@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.goods.invwarn;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,12 +27,8 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.base.widget.ImgUploadBlock;
-import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.HouseBean;
-import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -97,7 +92,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryGoodsInvList(true);
+                mPresenter.queryGoodsInvList(false);
             }
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("还没有商品库存数据").create();
@@ -108,12 +103,37 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
             if (bean != null) {
-                bean.setEditFrom(GoodsBean.EDIT_FROM_TEMPLATE);
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD, GoodsInvWarnActivity.this,
-                    ImgUploadBlock.REQUEST_CODE_CHOOSE, bean);
+                showInputDialog(bean, adapter, position);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void showInputDialog(GoodsBean bean, BaseQuickAdapter adapter, int position) {
+        InputDialog.newBuilder(this)
+            .setCancelable(false)
+            .setTextTitle("输入" + bean.getProductName() + "预警值")
+            .setHint("输入预警值")
+            .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
+            .setText(CommonUtils.formatNumber(bean.getStockWarnNum()))
+            .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
+                if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
+                    s.delete(s.length() - 1, s.length());
+                    showToast("预警值支持7位整数或小数点后两位");
+                }
+            })
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    if (TextUtils.isEmpty(dialog.getInputString())) {
+                        showToast("输入预警值不能为空");
+                        return;
+                    }
+                    bean.setStockWarnNum(CommonUtils.getDouble(dialog.getInputString()));
+                    adapter.notifyItemChanged(position);
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
     }
 
     @Override
@@ -123,7 +143,8 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     }
 
     @Override
-    public void addSuccess(GoodsAddBatchResp resp) {
+    public void saveSuccess() {
+        showToast("保存成功");
         finish();
     }
 
@@ -179,6 +200,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
                 finish();
                 break;
             case R.id.txt_save:
+                mPresenter.setGoodsInvWarnValue(mAdapter.getData());
                 break;
             case R.id.ll_house:
                 mPresenter.queryHouseList(true);
@@ -202,41 +224,13 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
                 .setText(R.id.txt_cargoOwnerName, "货主：" + getString(item.getCargoOwnerName()))
                 .setText(R.id.txt_usableStock, "可用库存：" + CommonUtils.formatNumber(item.getUsableStock()))
                 .setText(R.id.txt_stockWarnNum_unit, getString(item.getStandardUnitName()))
-                .setText(R.id.txt_stockWarnNum, CommonUtils.formatNum(item.getStockWarnNum()))
+                .setText(R.id.txt_stockWarnNum, CommonUtils.formatNumber(item.getStockWarnNum()))
+                .addOnClickListener(R.id.txt_stockWarnNum)
                 .getView(R.id.img_imgUrl))).setImageURL(item.getImgUrl());
         }
 
         private String getString(String str) {
             return TextUtils.isEmpty(str) ? "无" : str;
-        }
-
-        private void showInputDialog(SpecsBean specsBean, BaseQuickAdapter adapter, int position) {
-            if (mContext instanceof Activity) {
-                InputDialog.newBuilder((Activity) mContext)
-                    .setCancelable(false)
-                    .setTextTitle("输入" + specsBean.getSpecContent() + "平台价格")
-                    .setHint("输入平台价格")
-                    .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
-                    .setText(CommonUtils.formatNumber(specsBean.getProductPrice()))
-                    .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
-                        if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
-                            s.delete(s.length() - 1, s.length());
-                            showToast("平台价格支持7位整数或小数点后两位");
-                        }
-                    })
-                    .setButton((dialog, item) -> {
-                        if (item == 1) {
-                            if (TextUtils.isEmpty(dialog.getInputString())) {
-                                showToast("输入平台价格不能为空");
-                                return;
-                            }
-                            specsBean.setProductPrice(dialog.getInputString());
-                            adapter.notifyItemChanged(position);
-                        }
-                        dialog.dismiss();
-                    }, "取消", "确定")
-                    .create().show();
-            }
         }
     }
 }

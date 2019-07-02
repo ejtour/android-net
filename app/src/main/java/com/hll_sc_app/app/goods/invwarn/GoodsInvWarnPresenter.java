@@ -3,15 +3,19 @@ package com.hll_sc_app.app.goods.invwarn;
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.goods.GoodsInvResp;
+import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.GoodsInvWarnReq;
+import com.hll_sc_app.bean.goods.GoodsInvWarnResp;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -92,6 +96,43 @@ public class GoodsInvWarnPresenter implements GoodsInvWarnContract.IGoodsInvWarn
         toQueryGoodsInvList(false);
     }
 
+    @Override
+    public void setGoodsInvWarnValue(List<GoodsBean> list) {
+        if (CommonUtils.isEmpty(list)) {
+            return;
+        }
+        GoodsInvWarnReq req = new GoodsInvWarnReq();
+        req.setGroupID(UserConfig.getGroupID());
+        req.setHouseID(mView.getHouseId());
+        List<GoodsInvWarnReq.ListBean> listBeans = new ArrayList<>();
+        for (GoodsBean goodsBean : list) {
+            GoodsInvWarnReq.ListBean bean = new GoodsInvWarnReq.ListBean();
+            bean.setProductID(goodsBean.getProductID());
+            bean.setStockWarnNum(goodsBean.getStockWarnNum());
+            listBeans.add(bean);
+        }
+        req.setList(listBeans);
+        BaseReq<GoodsInvWarnReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        GoodsService.INSTANCE.setGoodsInvWarnValue(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object o) {
+                    mView.saveSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
     private void toQueryGoodsInvList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("actionType", "warehoue_stockwarnnum")
@@ -109,9 +150,9 @@ public class GoodsInvWarnPresenter implements GoodsInvWarnContract.IGoodsInvWarn
             })
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<GoodsInvResp>() {
+            .subscribe(new BaseCallback<GoodsInvWarnResp>() {
                 @Override
-                public void onSuccess(GoodsInvResp goodsInvResp) {
+                public void onSuccess(GoodsInvWarnResp goodsInvResp) {
                     mPageNum = mTempPageNum;
                     mView.showGoodsInvList(goodsInvResp.getList(), mPageNum != 1, goodsInvResp.getTotalSize());
                 }

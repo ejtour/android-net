@@ -2,7 +2,6 @@ package com.hll_sc_app.app.goods.invwarn;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.HouseBean;
 
@@ -22,7 +21,7 @@ public interface GoodsInvWarnContract {
          *
          * @param resp resp
          */
-        void addSuccess(GoodsAddBatchResp resp);
+        void saveSuccess();
 
         /**
          * 显示仓库选择 window
@@ -75,5 +74,12 @@ public interface GoodsInvWarnContract {
          * 查询下一页代仓商品库存预警列表
          */
         void queryMoreGoodsInvList();
+
+        /**
+         * 库存预警值设置
+         *
+         * @param list list
+         */
+        void setGoodsInvWarnValue(List<GoodsBean> list);
     }
 }

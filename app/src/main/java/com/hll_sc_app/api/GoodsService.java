@@ -12,7 +12,8 @@ import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
-import com.hll_sc_app.bean.goods.GoodsInvResp;
+import com.hll_sc_app.bean.goods.GoodsInvWarnReq;
+import com.hll_sc_app.bean.goods.GoodsInvWarnResp;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.GoodsStickReq;
 import com.hll_sc_app.bean.goods.GoodsTemplateResp;
@@ -279,5 +280,15 @@ public interface GoodsService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:100126")
-    Observable<BaseResp<GoodsInvResp>> queryGoodsInvList(@Body BaseMapReq req);
+    Observable<BaseResp<GoodsInvWarnResp>> queryGoodsInvList(@Body BaseMapReq req);
+
+    /**
+     * 库存预警值设置
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100142")
+    Observable<BaseResp<Object>> setGoodsInvWarnValue(@Body BaseReq<GoodsInvWarnReq> req);
 }

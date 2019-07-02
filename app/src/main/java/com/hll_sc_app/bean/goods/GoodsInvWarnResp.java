@@ -8,7 +8,7 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-07-02
  */
-public class GoodsInvResp {
+public class GoodsInvWarnResp {
     private int totalSize;
     private List<GoodsBean> list;
 
