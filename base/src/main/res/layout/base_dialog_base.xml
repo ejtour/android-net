@@ -16,7 +16,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:text="操作提示标题"
+        tools:text="操作提示标题"
         android:textColor="@color/base_colorPrimary"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="4dp"
             android:minHeight="45dp"
-            android:text="客官~~\n你确定一定以及肯定要退出吗"
+            tools:text="客官~~\n你确定一定以及肯定要退出吗"
             android:textColor="#999"
             android:textSize="12sp"/>
 
