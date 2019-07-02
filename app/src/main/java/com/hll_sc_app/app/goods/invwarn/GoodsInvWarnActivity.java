@@ -2,13 +2,18 @@ package com.hll_sc_app.app.goods.invwarn;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.view.ViewGroup;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -27,12 +32,20 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 代仓商品库存预警
@@ -44,8 +57,21 @@ import butterknife.ButterKnife;
 public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWarnContract.IGoodsInvWarnView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.img_close)
+    ImageView mImgClose;
+    @BindView(R.id.txt_houseName)
+    TextView mTxtHouseName;
+    @BindView(R.id.txt_save)
+    TextView mTxtSave;
+    @BindView(R.id.rl_toolbar)
+    RelativeLayout mRlToolbar;
+    @BindView(R.id.searchView)
+    SearchView mSearchView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
     private GoodsListAdapter mAdapter;
     private GoodsInvWarnPresenter mPresenter;
+    private HouseSelectWindow mHouseSelectWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,9 +87,20 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     }
 
     private void initView() {
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryMoreGoodsInvList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryGoodsInvList(true);
+            }
+        });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(5)));
+            , UIUtils.dip2px(1)));
         mAdapter = new GoodsListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
@@ -77,8 +114,59 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     }
 
     @Override
-    public void addSuccess(GoodsAddBatchResp resp) {
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
+    }
 
+    @Override
+    public void addSuccess(GoodsAddBatchResp resp) {
+        finish();
+    }
+
+    @Override
+    public void showHouseWindow(List<HouseBean> list) {
+        if (CommonUtils.isEmpty(list)) {
+            showToast("没有仓库数据");
+            return;
+        }
+        if (mHouseSelectWindow == null) {
+            mHouseSelectWindow = new HouseSelectWindow(this, list);
+            mHouseSelectWindow.setListener(this::showSelectHouse);
+        }
+        mHouseSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
+    }
+
+    @Override
+    public void showSelectHouse(HouseBean houseBean) {
+        mTxtHouseName.setText(houseBean.getHouseName());
+        mTxtHouseName.setTag(houseBean.getId());
+        mPresenter.queryGoodsInvList(true);
+    }
+
+    @Override
+    public String getHouseId() {
+        String houseId = null;
+        if (mTxtHouseName.getTag() != null) {
+            houseId = (String) mTxtHouseName.getTag();
+        }
+        return houseId;
+    }
+
+    @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_house})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_close:
+                finish();
+                break;
+            case R.id.txt_save:
+                break;
+            case R.id.ll_house:
+                mPresenter.queryHouseList(true);
+                break;
+            default:
+                break;
+        }
     }
 
     class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
@@ -88,30 +176,12 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         }
 
         @Override
-        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
-            BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
-            RecyclerView recyclerView = holder.getView(R.id.recyclerView_spec);
-            recyclerView.setNestedScrollingEnabled(false);
-            recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-            ProductSpecAdapter adapter = new ProductSpecAdapter();
-            adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-                SpecsBean specsBean = (SpecsBean) adapter1.getItem(position);
-                if (specsBean != null) {
-                    showInputDialog(specsBean, adapter1, position);
-                }
-            });
-            recyclerView.setAdapter(adapter);
-            return holder;
-        }
-
-        @Override
         protected void convert(BaseViewHolder helper, GoodsBean item) {
             ((GlideImageView) (helper.setText(R.id.txt_productName, item.getProductName())
                 .addOnClickListener(R.id.content)
                 .setText(R.id.txt_category, String.format("%s - %s - %s", item.getCategoryName(),
                     item.getCategorySubName(), item.getCategoryThreeName()))
                 .getView(R.id.img_imgUrl))).setImageURL(item.getImgUrl());
-            ((ProductSpecAdapter) ((RecyclerView) helper.getView(R.id.recyclerView_spec)).getAdapter()).setNewData(item.getSpecs());
         }
 
         private void showInputDialog(SpecsBean specsBean, BaseQuickAdapter adapter, int position) {
@@ -141,21 +211,6 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
                     }, "取消", "确定")
                     .create().show();
             }
-        }
-    }
-
-    class ProductSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
-
-        ProductSpecAdapter() {
-            super(R.layout.item_goods_template_list_edit_spec);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, SpecsBean item) {
-            helper.setVisible(R.id.txt_specContentTitle, helper.getAdapterPosition() == 0)
-                .setText(R.id.txt_specContent, item.getSpecContent())
-                .addOnClickListener(R.id.txt_productPrice)
-                .setText(R.id.txt_productPrice, CommonUtils.formatNumber(item.getProductPrice()));
         }
     }
 }
