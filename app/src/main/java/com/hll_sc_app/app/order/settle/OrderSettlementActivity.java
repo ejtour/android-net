@@ -26,6 +26,7 @@ import com.hll_sc_app.bean.order.settle.PayWayBean;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementParam;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.order.QRCodeDialog;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -108,7 +109,7 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
     }
 
     private void initView() {
-        mTotalAmount.setText(String.format("¥ %s", mTotalPrice));
+        mTotalAmount.setText(String.format("¥ %s", CommonUtils.formatMoney(mTotalPrice)));
         mAdapter = new ListItemAdapter(null);
         mAdapter.setOnItemClickListener(new PayWayItemClickListener());
         mListView.setAdapter(mAdapter);
