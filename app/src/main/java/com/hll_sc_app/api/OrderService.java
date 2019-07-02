@@ -19,6 +19,7 @@ import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
+import com.hll_sc_app.bean.order.settle.SettlementResp;
 
 import java.util.List;
 
@@ -106,4 +107,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103044")
     Observable<BaseResp<CashierResp>> getCashier(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103045")
+    Observable<BaseResp<SettlementResp>> getSettlementStatus(@Body BaseMapReq req);
 }

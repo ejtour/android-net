@@ -36,6 +36,7 @@ import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
+import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
@@ -542,7 +543,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private List<String> getSubBillIds() {
         List<String> billIds = new ArrayList<>();
         for (OrderResp resp : mAdapter.getData()) {
-            if (resp.isSelected()) billIds.add(resp.getSubBillID());
+            if (resp.isSelected() || mBottomBarRoot == null) billIds.add(resp.getSubBillID());
         }
         return billIds;
     }
@@ -552,7 +553,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         switch (event.getMessage()) {
             case OrderEvent.SEARCH_WORDS:
                 if (isFragmentVisible())
-                    mOrderParam.setSearchWords((String) event.getData());
+                    mOrderParam.setSearchBean((OrderSearchBean) event.getData());
             case OrderEvent.REFRESH_LIST:
                 setForceLoad(true);
                 lazyLoad();
@@ -580,7 +581,12 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mEventMessage = event.getMessage(); // 保存当前消息，用于绑定邮箱后重新请求
         switch (mEventMessage) {
             case OptionType.OPTION_EXPORT_ASSEMBLY:
-                mPresenter.exportAssemblyOrder(getSubBillIds(),
+                List<String> subBillIds = getSubBillIds();
+                if (CommonUtils.isEmpty(subBillIds)) {
+                    showToast("请选择需要导出的订单");
+                    break;
+                }
+                mPresenter.exportAssemblyOrder(subBillIds,
                         event.getData().toString());
                 break;
             case OptionType.OPTION_EXPORT_CHECK_CATEGORY:

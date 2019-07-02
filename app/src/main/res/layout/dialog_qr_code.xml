@@ -22,10 +22,10 @@
         android:layout_height="wrap_content"
         android:text="扫码收款"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/dqr_close"
+        app:layout_constraintBottom_toBottomOf="@+id/dqr_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/dqr_close" />
+        app:layout_constraintTop_toTopOf="@+id/dqr_close" />
 
     <View
         android:id="@+id/dqr_div"
@@ -36,7 +36,7 @@
         android:background="@color/color_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dqr_close" />
+        app:layout_constraintTop_toBottomOf="@+id/dqr_close" />
 
     <TextView
         android:id="@+id/dqr_amount"
@@ -47,7 +47,7 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dqr_div"
+        app:layout_constraintTop_toBottomOf="@+id/dqr_div"
         tools:text="¥ 5600.00" />
 
     <TextView
@@ -58,7 +58,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dqr_amount" />
+        app:layout_constraintTop_toBottomOf="@+id/dqr_amount" />
 
     <ImageView
         android:id="@+id/dqr_qr_code"
@@ -68,7 +68,7 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dqr_amount_label" />
+        app:layout_constraintTop_toBottomOf="@+id/dqr_amount_label" />
 
     <TextView
         android:id="@+id/dqr_tip"
@@ -80,6 +80,54 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dqr_qr_code"
+        app:layout_constraintTop_toBottomOf="@+id/dqr_qr_code"
         tools:text="请使用微信扫码并支付" />
+
+    <ImageView
+        android:id="@+id/dqr_success_anim"
+        android:layout_width="90dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dqr_amount_label" />
+
+    <TextView
+        android:id="@+id/dqr_success_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="对方已支付，收款成功"
+        android:textAppearance="@style/TextAppearance.City22.Large.Blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dqr_success_anim" />
+
+    <TextView
+        android:id="@+id/dqr_finish"
+        android:layout_width="230dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_button_mid_solid_primary"
+        android:gravity="center"
+        android:text="完成"
+        android:textAppearance="@style/TextAppearance.City22.Small.White"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dqr_success_label" />
+
+    <android.support.constraint.Group
+        android:id="@+id/dqr_success_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="dqr_success_anim,dqr_success_label,dqr_finish" />
+
+    <android.support.constraint.Group
+        android:id="@+id/dqr_qr_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="dqr_qr_code,dqr_tip" />
 </android.support.constraint.ConstraintLayout>

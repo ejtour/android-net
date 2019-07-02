@@ -4,6 +4,7 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWayBean;
+import com.hll_sc_app.bean.order.settle.SettlementResp;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface IOrderSettlementContract {
         void showPayWays(List<PayWayBean> list);
 
         /**
-         * 收钱成功
+         * 结算成功
          */
         void settleSuccess();
 
@@ -35,6 +36,11 @@ public interface IOrderSettlementContract {
          * 显示收款二维码
          */
         void showQRCode(CashierResp resp);
+
+        /**
+         * 处理支付状态
+         */
+        void handlePayStatus(SettlementResp resp);
     }
 
     interface IOrderSettlementPresenter extends IPresenter<IOrderSettlementView> {
@@ -52,6 +58,11 @@ public interface IOrderSettlementContract {
          * @param paymentWay 付款方式
          */
         void inspectionPay(String paymentWay);
+
+        /**
+         * 查询支付结果
+         */
+        void queryPayResult(String payOrderNo);
 
         /**
          * 获取收银台

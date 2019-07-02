@@ -65,6 +65,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     private Disposable mDisposable;
     private IOrderSearchContract.IOrderSearchPresenter mPresenter;
     private ObservableEmitter<String> mEmitter;
+    private OrderSearchBean mCurBean;
 
     public static void start(String... strings) {
         RouterUtil.goToActivity(RouterConfig.ORDER_SEARCH, strings);
@@ -155,11 +156,11 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             .setImage(resId)
             .create());
         adapter.setOnItemClickListener((adapter1, view, position) -> {
-            OrderSearchBean item = (OrderSearchBean) adapter1.getItem(position);
-            if (item == null) {
+            mCurBean = (OrderSearchBean) adapter1.getItem(position);
+            if (mCurBean == null) {
                 return;
             }
-            updateSearchEdit(item.getName());
+            updateSearchEdit(mCurBean.getName());
             search();
         });
         mListView.setAdapter(adapter);
@@ -191,7 +192,11 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         } else if (isFromGoodsTop()) {
             EventBus.getDefault().post(new GoodsStickSearchEvent(trim));
         } else {
-            EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, trim));
+            if (mCurBean == null) {
+                mCurBean = new OrderSearchBean();
+                mCurBean.setName(trim);
+            }
+            EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, mCurBean));
         }
         close();
     }

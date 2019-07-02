@@ -126,6 +126,8 @@ public class OrderDetailFooter extends ConstraintLayout {
             mCouponGroup.setVisibility(VISIBLE);
             mCoupon.setText(handleItemAmount(data.getInspectionCouponSubAmount()));
         }
+
+        mFreight.setText(handleItemAmount(0));
         mAmount.setText(handleAmount(data.getIsExchange() == 1 ? 0 : data.getTotalAmount(), 10f / 16));
 
         mOrderNo.setText(data.getSubBillNo());

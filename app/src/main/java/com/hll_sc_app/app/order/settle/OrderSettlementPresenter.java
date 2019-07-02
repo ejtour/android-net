@@ -3,6 +3,7 @@ package com.hll_sc_app.app.order.settle;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
+import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 
@@ -55,6 +56,16 @@ public class OrderSettlementPresenter implements IOrderSettlementContract.IOrder
             @Override
             public void onSuccess(Object o) {
                 mView.settleSuccess();
+            }
+        });
+    }
+
+    @Override
+    public void queryPayResult(String payOrderNo) {
+        Order.getSettlementStatus(payOrderNo, new SimpleObserver<SettlementResp>(mView, false) {
+            @Override
+            public void onSuccess(SettlementResp settlementResp) {
+                mView.handlePayStatus(settlementResp);
             }
         });
     }

@@ -27,6 +27,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
+import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -96,9 +97,9 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     @Subscribe(priority = 1, threadMode = ThreadMode.MAIN)
     public void handleOrderEvent(OrderEvent event) {
         if (event.getMessage().equals(OrderEvent.SEARCH_WORDS)) {
-            String data = (String) event.getData();
-            mClearSearch.setVisibility(!TextUtils.isEmpty(data) ? View.VISIBLE : View.GONE);
-            mSearch.setText(data);
+            OrderSearchBean data = (OrderSearchBean) event.getData();
+            mClearSearch.setVisibility(!TextUtils.isEmpty(data.getName()) ? View.VISIBLE : View.GONE);
+            mSearch.setText(data.getName());
         }
     }
 
@@ -116,7 +117,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 OrderSearchActivity.start(mOrderParam.getSearchWords());
                 break;
             case R.id.fmo_clear_search:
-                EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, ""));
+                EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, new OrderSearchBean()));
                 break;
             case R.id.fmo_options:
                 showOptionsWindow(view);

@@ -27,6 +27,7 @@ import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
+import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -48,6 +49,7 @@ public class Order {
      * @param pageNum          页码
      * @param flag             排序，0下单排序，1到货排序
      * @param subBillStatus    订单状态
+     * @param shopID           搜索门店ID
      * @param searchWords      搜索词
      * @param createTimeStart  下单开始时间 yyyyMMdd
      * @param createTimeEnd    下单结束时间 yyyyMMdd
@@ -61,6 +63,7 @@ public class Order {
                                     int flag,
                                     int subBillStatus,
                                     String searchWords,
+                                    String shopID,
                                     String createTimeStart,
                                     String createTimeEnd,
                                     String executeDateStart,
@@ -90,6 +93,7 @@ public class Order {
                         .put("subBillSignTimeEnd", signTimeEnd)
                         .put("deliverType", deliverType)
                         .put("searchWords", searchWords)
+                        .put("shopID", shopID)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -102,11 +106,14 @@ public class Order {
      * @param pageNum         页数
      * @param createTimeStart 开始时间
      * @param createTimeEnd   结束时间
+     * @param searchWords     搜索词
+     * @param shopID          搜索门店ID
      */
     public static void getPendingTransferList(int pageNum,
                                               String createTimeStart,
                                               String createTimeEnd,
                                               String searchWords,
+                                              String shopID,
                                               SimpleObserver<TransferResp> observer) {
         OrderService.INSTANCE
                 .getPendingTransferList(BaseMapReq.newBuilder()
@@ -115,8 +122,9 @@ public class Order {
                         .put("pageSize", "20")
                         .put("mutiStatus", "1,3")
                         .put("searchWords", searchWords)
-                        .put("beginExcuteDate", createTimeStart)
-                        .put("endExecuteDate", createTimeEnd).create())
+                        .put("shopID", shopID)
+                        .put("beginDate", createTimeStart)
+                        .put("endDate", createTimeEnd).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -421,6 +429,20 @@ public class Order {
                         .put("paymentWay", paymentWay)
                         .put("subBillIDs", subBillID)
                         .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取支付结果
+     *
+     * @param payOrderNo 支付订单号
+     */
+    public static void getSettlementStatus(String payOrderNo, SimpleObserver<SettlementResp> observer) {
+        OrderService.INSTANCE
+                .getSettlementStatus(BaseMapReq.newBuilder()
+                        .put("PayOrderNo", payOrderNo).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

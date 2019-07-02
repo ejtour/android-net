@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.order.settle;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +17,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -25,13 +25,21 @@ import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWayBean;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementParam;
+import com.hll_sc_app.bean.order.settle.SettlementResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.order.QRCodeDialog;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -77,17 +85,11 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
      */
     private double mTotalPrice;
     /**
-     * 1.在线支付2.货到付款
-     */
-    private int mPayType;
-    /**
-     * 要支付的订单号
-     */
-    private String mSubBillID;
-    /**
      * 是否成功
      */
     private boolean mIsSuccess;
+
+    private QRCodeDialog mQRCodeDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,16 +100,16 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
         StatusBarCompat.setTranslucent(getWindow(), true);
         ButterKnife.bind(this);
         mTotalPrice = mSettlementParam.getTotalPrice();
-        mPayType = mSettlementParam.getPayType();
-        mSubBillID = mSettlementParam.getSubBillID();
-        mPresenter = OrderSettlementPresenter.newInstance(mSubBillID);
+        int payType = mSettlementParam.getPayType();
+        String subBillID = mSettlementParam.getSubBillID();
+        mPresenter = OrderSettlementPresenter.newInstance(subBillID);
         mPresenter.register(this);
-        mPresenter.getPayWays(mPayType);
+        mPresenter.getPayWays(payType);
         initView();
     }
 
     private void initView() {
-        mTotalAmount.setText(String.format("¥ %s", mTotalPrice));
+        mTotalAmount.setText(String.format("¥ %s", CommonUtils.formatMoney(mTotalPrice)));
         mAdapter = new ListItemAdapter(null);
         mAdapter.setOnItemClickListener(new PayWayItemClickListener());
         mListView.setAdapter(mAdapter);
@@ -147,13 +149,33 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
     @Override
     public void showQRCode(CashierResp resp) {
         mPayOrderNo = resp.getPayOrderNo();
-        QRCodeDialog qrCodeDialog = QRCodeDialog.create(this,
+        mQRCodeDialog = QRCodeDialog.create(this,
                 resp.getTotalAmount(),
                 resp.getCashierUrl(),
                 TextUtils.equals(PayWaysResp.PAY_TYPE_WECHAT_OFFLINE, mSelect.getId()) ||
                         TextUtils.equals(PayWaysResp.PAY_TYPE_WECHAT_ONLINE, mSelect.getId()) ? "微信" : "支付宝");
-        qrCodeDialog.setOnDismissListener(dialog -> dealResult(mIsSuccess));
-        qrCodeDialog.show();
+        mQRCodeDialog.setOnDismissListener(dialog -> dealResult(mIsSuccess));
+        mQRCodeDialog.show();
+        mPresenter.queryPayResult(mPayOrderNo);
+    }
+
+    @Override
+    public void handlePayStatus(SettlementResp resp) {
+        if (mQRCodeDialog == null || !mQRCodeDialog.isShowing()) return;
+        switch (resp.getStatus()) {
+            case SettlementResp.STATUS_ING:
+                Observable.timer(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                        .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
+                        .subscribe(aLong -> mPresenter.queryPayResult(mPayOrderNo));
+                break;
+            case SettlementResp.STATUS_SUCCESS:
+                mIsSuccess = true;
+                mQRCodeDialog.showPaySuccess();
+                break;
+            case SettlementResp.STATUS_FAILURE:
+                showToast("支付失败");
+                break;
+        }
     }
 
     @Override
@@ -186,7 +208,6 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
                 showToast("暂时不支持此种支付方式");
             }
             mSelect = item;
-            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -195,11 +216,16 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
      */
     private void inspectionPay(String paymentWay) {
         mRootView.setVisibility(View.GONE);
-        new AlertDialog.Builder(this)
-                .setPositiveButton("确定", (dialog, which) -> mPresenter.inspectionPay(paymentWay))
-                .setNegativeButton("取消", (dialog, which) -> mRootView.setVisibility(View.VISIBLE))
-                .setTitle("确认使用这种收款方式")
-                .show();
+        TipsDialog.newBuilder(this)
+                .setTitle("确认使用这种收款方式？")
+                .setButton((dialog, item) -> {
+                    if (item == 0) {
+                        mRootView.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
+                    } else mPresenter.inspectionPay(paymentWay);
+                }, "取消", "确定")
+                .create().show();
+        getWindow().setDimAmount(0.4f); // 修复黑屏
     }
 
     /**
@@ -223,8 +249,7 @@ public class OrderSettlementActivity extends BaseLoadActivity implements IOrderS
                     .getView(R.id.ios_pay_icon))
                     .setImageURL(item.getImgPath());
             helper
-                    .setText(R.id.ios_pay_method, item.getPayMethodName())
-                    .getView(R.id.ios_pay_method).setSelected(item == mSelect);
+                    .setText(R.id.ios_pay_method, item.getPayMethodName());
         }
     }
 }

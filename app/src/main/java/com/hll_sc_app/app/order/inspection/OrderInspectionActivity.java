@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -150,12 +151,9 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /*if (resultCode == RESULT_OK && requestCode == OrderSettlementActivity.REQUEST_PAY_CODE) {
-            boolean success = data.getBooleanExtra(OrderSettlementActivity.INTENT_NAME, false);
-            if (success) {
-                onBackPressed();
-            }
-        }*/
+        if (resultCode == RESULT_OK && requestCode == OrderSettlementActivity.REQ_CODE) {
+            onBackPressed();
+        }
     }
 
     /**
@@ -211,34 +209,8 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
      * 跳转支付
      */
     private void goToPayment(OrderResp data) {
-        /*PayBean bean = getPayBean(data);
-        if (bean != null) {
-            RouterUtil.goToActivity(RouterConfig.ORDER_PAY,
-                    this,
-                    OrderSettlementActivity.REQUEST_PAY_CODE,
-                    bean);
-        }*/
+        OrderSettlementActivity.start(this,
+                mInspectionResp.getTotalAmount(),
+                data.getSubBillID(), data.getPayType() == 1 ? 2 : 1);
     }
-
-    /**
-     * 生成支付参数
-     */
-    /*private PayBean getPayBean(OrderResp data) {
-        if (data == null || mInspectionResp == null) {
-            return null;
-        }
-        if (mInspectionResp.getTotalAmount() == 0) {
-            onBackPressed();
-            return null;
-        }
-        PayBean bean = new PayBean();
-        String supplyID = TextUtils.equals("1", data.getPayee()) ?
-                UserConfig.getGroupID() : data.getGroupID();
-        bean.setTotalPrice(CommonUitls.formatMoney(mInspectionResp.getTotalAmount()));
-        bean.setPayee(data.getPayee());
-        bean.setSupplyID(new ArrayList<>(Collections.singletonList(supplyID)));
-        bean.setmSubBillIDs(new ArrayList<>(Collections.singletonList(data.getSubBillID())));
-        bean.setPayType(data.getPayType() == 1 ? "2" : "1");
-        return bean;
-    }*/
 }

@@ -3,16 +3,25 @@ package com.hll_sc_app.widget.order;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.constraint.Group;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.resource.gif.GifDrawable;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.zxing.BarcodeFormat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.glide.GlideApp;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
@@ -34,6 +43,12 @@ public class QRCodeDialog extends Dialog {
     ImageView mQrCode;
     @BindView(R.id.dqr_tip)
     TextView mTip;
+    @BindView(R.id.dqr_success_anim)
+    ImageView mSuccessAnim;
+    @BindView(R.id.dqr_success_group)
+    Group mSuccessGroup;
+    @BindView(R.id.dqr_qr_group)
+    Group mQrGroup;
 
     public static QRCodeDialog create(Activity context, double amount, String qrContent, String payPlatform) {
         QRCodeDialog dialog = new QRCodeDialog(context);
@@ -61,7 +76,7 @@ public class QRCodeDialog extends Dialog {
             return;
         }
         getWindow().setBackgroundDrawableResource(R.drawable.bg_white_radius_5_solid);
-        getWindow().getAttributes().width = UIUtils.getScreenWidth(getContext()) - UIUtils.dip2px(80);
+        getWindow().getAttributes().width = UIUtils.dip2px(300);
         setCancelable(false);
     }
 
@@ -74,8 +89,29 @@ public class QRCodeDialog extends Dialog {
             LogUtil.e(TAG, content + "转二维码失败");
         }
     }
-    @OnClick(R.id.dqr_close)
-    public void close(){
+
+    @OnClick({R.id.dqr_close, R.id.dqr_finish})
+    public void close() {
         dismiss();
+    }
+
+    public void showPaySuccess() {
+        mSuccessGroup.setVisibility(View.VISIBLE);
+        mQrGroup.setVisibility(View.GONE);
+        GlideApp.with(getContext())
+                .load(R.drawable.settle_success_anim)
+                .apply(new RequestOptions()
+                        .override(UIUtils.dip2px(90), UIUtils.dip2px(90))
+                        .priority(Priority.HIGH)
+                        .fitCenter())
+                .into(new DrawableImageViewTarget(mSuccessAnim) {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        if (resource instanceof GifDrawable) {
+                            ((GifDrawable) resource).setLoopCount(1);
+                        }
+                        super.onResourceReady(resource, transition);
+                    }
+                });
     }
 }
