@@ -1,5 +1,6 @@
 package com.hll_sc_app.bean.order;
 
+import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.Date;
 
 public class OrderParam {
     private int flag;
-    private String searchWords = "";
+    private OrderSearchBean searchBean;
     private long createStart;
     private long createEnd;
     private long executeStart;
@@ -27,12 +28,16 @@ public class OrderParam {
         this.flag = flag;
     }
 
-    public String getSearchWords() {
-        return searchWords;
+    public void setSearchBean(OrderSearchBean searchBean) {
+        this.searchBean = searchBean;
     }
 
-    public void setSearchWords(String searchWords) {
-        this.searchWords = searchWords;
+    public String getSearchWords() {
+        return searchBean == null ? "" : searchBean.getName();
+    }
+
+    public String getSearchShopID() {
+        return searchBean == null ? "" : searchBean.getShopMallId();
     }
 
     public long getCreateStart() {

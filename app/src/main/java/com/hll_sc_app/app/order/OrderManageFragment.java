@@ -36,6 +36,7 @@ import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
+import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
@@ -552,7 +553,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         switch (event.getMessage()) {
             case OrderEvent.SEARCH_WORDS:
                 if (isFragmentVisible())
-                    mOrderParam.setSearchWords((String) event.getData());
+                    mOrderParam.setSearchBean((OrderSearchBean) event.getData());
             case OrderEvent.REFRESH_LIST:
                 setForceLoad(true);
                 lazyLoad();

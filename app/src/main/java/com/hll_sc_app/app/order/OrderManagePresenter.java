@@ -67,7 +67,8 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
             Order.getOrderList(mPageNum,
                     param.getFlag(),
                     mView.getOrderStatus().getType(),
-                    param.getSearchWords(),
+                    TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
+                    param.getSearchShopID(),
                     param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
                     param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
                     param.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH),
@@ -87,7 +88,8 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
             Order.getPendingTransferList(mPageNum,
                     param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
                     param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
-                    param.getSearchWords(),
+                    TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
+                    param.getSearchShopID(),
                     new SimpleObserver<TransferResp>(mView) {
                         @Override
                         public void onSuccess(TransferResp resp) {

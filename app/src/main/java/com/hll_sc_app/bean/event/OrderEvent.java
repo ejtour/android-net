@@ -1,6 +1,7 @@
 package com.hll_sc_app.bean.event;
 
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.citymall.util.LogUtil;
 
 /**
@@ -28,7 +29,7 @@ public class OrderEvent extends BaseEvent {
             case RELOAD_ITEM:
                 break;
             case SEARCH_WORDS:
-                if (b instanceof String) break;
+                if (b instanceof OrderSearchBean) break;
                 LogUtil.e(TAG, "Wrong type");
                 break;
             case UPDATE_ITEM:
