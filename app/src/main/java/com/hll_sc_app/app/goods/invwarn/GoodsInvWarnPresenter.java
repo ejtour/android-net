@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.goods.GoodsInvResp;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -24,6 +25,8 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 public class GoodsInvWarnPresenter implements GoodsInvWarnContract.IGoodsInvWarnPresenter {
     private GoodsInvWarnContract.IGoodsInvWarnView mView;
     private List<HouseBean> mListHouseBean;
+    private int mPageNum;
+    private int mTempPageNum;
 
     static GoodsInvWarnPresenter newInstance() {
         return new GoodsInvWarnPresenter();
@@ -77,11 +80,46 @@ public class GoodsInvWarnPresenter implements GoodsInvWarnContract.IGoodsInvWarn
 
     @Override
     public void queryGoodsInvList(boolean showLoading) {
-
+        mPageNum = 1;
+        mTempPageNum = mPageNum;
+        toQueryGoodsInvList(showLoading);
     }
 
     @Override
     public void queryMoreGoodsInvList() {
+        mTempPageNum = mPageNum;
+        mTempPageNum++;
+        toQueryGoodsInvList(false);
+    }
 
+    private void toQueryGoodsInvList(boolean showLoading) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("actionType", "warehoue_stockwarnnum")
+            .put("houseID", mView.getHouseId())
+            .put("pageNum", String.valueOf(mTempPageNum))
+            .put("pageSize", "20")
+            .create();
+        GoodsService.INSTANCE.queryGoodsInvList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> {
+                if (showLoading) {
+                    mView.showLoading();
+                }
+            })
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<GoodsInvResp>() {
+                @Override
+                public void onSuccess(GoodsInvResp goodsInvResp) {
+                    mPageNum = mTempPageNum;
+                    mView.showGoodsInvList(goodsInvResp.getList(), mPageNum != 1, goodsInvResp.getTotalSize());
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
     }
 }

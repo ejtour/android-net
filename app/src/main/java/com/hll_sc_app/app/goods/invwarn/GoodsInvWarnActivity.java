@@ -35,6 +35,7 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -72,6 +73,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     private GoodsListAdapter mAdapter;
     private GoodsInvWarnPresenter mPresenter;
     private HouseSelectWindow mHouseSelectWindow;
+    private EmptyView mEmptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
                 mPresenter.queryGoodsInvList(true);
             }
         });
+        mEmptyView = EmptyView.newBuilder(this).setTips("还没有商品库存数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
@@ -153,6 +156,22 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         return houseId;
     }
 
+    @Override
+    public void showGoodsInvList(List<GoodsBean> list, boolean append, int total) {
+        if (append) {
+            mAdapter.addData(list);
+        } else {
+            mAdapter.setNewData(list);
+        }
+        if (mSearchView.isSearchStatus()) {
+            mEmptyView.setTips("搜索不到相关商品库存数据");
+        } else {
+            mEmptyView.setTips("还没有商品库存数据");
+        }
+        mAdapter.setEmptyView(mEmptyView);
+        mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+    }
+
     @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_house})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -172,16 +191,23 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
 
         GoodsListAdapter() {
-            super(R.layout.item_goods_template_list_edit);
+            super(R.layout.item_goods_inv_warn);
         }
 
         @Override
         protected void convert(BaseViewHolder helper, GoodsBean item) {
             ((GlideImageView) (helper.setText(R.id.txt_productName, item.getProductName())
-                .addOnClickListener(R.id.content)
-                .setText(R.id.txt_category, String.format("%s - %s - %s", item.getCategoryName(),
-                    item.getCategorySubName(), item.getCategoryThreeName()))
+                .setText(R.id.txt_specsSize, "规格：" + getString(item.getSaleSpecNum()))
+                .setText(R.id.txt_standardUnit, "标准单位：" + getString(item.getStandardUnitName()))
+                .setText(R.id.txt_cargoOwnerName, "货主：" + getString(item.getCargoOwnerName()))
+                .setText(R.id.txt_usableStock, "可用库存：" + CommonUtils.formatNumber(item.getUsableStock()))
+                .setText(R.id.txt_stockWarnNum_unit, getString(item.getStandardUnitName()))
+                .setText(R.id.txt_stockWarnNum, CommonUtils.formatNum(item.getStockWarnNum()))
                 .getView(R.id.img_imgUrl))).setImageURL(item.getImgUrl());
+        }
+
+        private String getString(String str) {
+            return TextUtils.isEmpty(str) ? "无" : str;
         }
 
         private void showInputDialog(SpecsBean specsBean, BaseQuickAdapter adapter, int position) {

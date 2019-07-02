@@ -12,6 +12,7 @@ import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.GoodsInvResp;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.GoodsStickReq;
 import com.hll_sc_app.bean.goods.GoodsTemplateResp;
@@ -269,4 +270,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100121")
     Observable<BaseResp<List<HouseBean>>> queryHouseList(@Body BaseMapReq req);
+
+    /**
+     * 获取商品库存列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100126")
+    Observable<BaseResp<GoodsInvResp>> queryGoodsInvList(@Body BaseMapReq req);
 }

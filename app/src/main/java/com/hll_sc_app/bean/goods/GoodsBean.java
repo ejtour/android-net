@@ -43,6 +43,10 @@ public class GoodsBean implements Parcelable {
      * 从商品库导入-商品编辑
      */
     public static final String EDIT_FROM_TEMPLATE = "10";
+    /**
+     * 是否置顶 0-非置顶,大于1-置顶
+     */
+    private int top;
     public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {
         @Override
         public GoodsBean createFromParcel(Parcel source) {
@@ -54,10 +58,6 @@ public class GoodsBean implements Parcelable {
             return new GoodsBean[size];
         }
     };
-    /**
-     * 是否置顶 0-非置顶,大于1-置顶
-     */
-    private int top;
     private String productTemplateID;
     private String productID;
     private String placeProvince;
@@ -141,11 +141,12 @@ public class GoodsBean implements Parcelable {
     private String updateResource;
     private String errorMsg;
     private String shopProductCategorySubName = "";
-
-    public GoodsBean() {
-    }
+    private String usableStock;
+    private double stockWarnNum;
 
     protected GoodsBean(Parcel in) {
+        this.top = in.readInt();
+        this.usableStock = in.readString();
         this.productTemplateID = in.readString();
         this.productID = in.readString();
         this.placeProvince = in.readString();
@@ -178,7 +179,6 @@ public class GoodsBean implements Parcelable {
         this.saleSpecNum = in.readString();
         this.isCollection = in.readByte() != 0;
         this.categoryThreeID = in.readString();
-        this.top = in.readInt();
         this.shopProductCategoryID = in.readString();
         this.standardSpecID = in.readString();
         this.placeCity = in.readString();
@@ -215,6 +215,18 @@ public class GoodsBean implements Parcelable {
         this.updateResource = in.readString();
         this.errorMsg = in.readString();
         this.shopProductCategorySubName = in.readString();
+        this.stockWarnNum = in.readDouble();
+    }
+
+    public double getStockWarnNum() {
+        return stockWarnNum;
+    }
+
+    public void setStockWarnNum(double stockWarnNum) {
+        this.stockWarnNum = stockWarnNum;
+    }
+
+    public GoodsBean() {
     }
 
     public String getProductTemplateID() {
@@ -798,8 +810,18 @@ public class GoodsBean implements Parcelable {
         return 0;
     }
 
+    public String getUsableStock() {
+        return usableStock;
+    }
+
+    public void setUsableStock(String usableStock) {
+        this.usableStock = usableStock;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.top);
+        dest.writeString(this.usableStock);
         dest.writeString(this.productTemplateID);
         dest.writeString(this.productID);
         dest.writeString(this.placeProvince);
@@ -832,7 +854,6 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.saleSpecNum);
         dest.writeByte(this.isCollection ? (byte) 1 : (byte) 0);
         dest.writeString(this.categoryThreeID);
-        dest.writeInt(this.top);
         dest.writeString(this.shopProductCategoryID);
         dest.writeString(this.standardSpecID);
         dest.writeString(this.placeCity);
@@ -869,5 +890,6 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.updateResource);
         dest.writeString(this.errorMsg);
         dest.writeString(this.shopProductCategorySubName);
+        dest.writeDouble(this.stockWarnNum);
     }
 }

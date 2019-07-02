@@ -3,6 +3,7 @@ package com.hll_sc_app.app.goods.invwarn;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.HouseBean;
 
 import java.util.List;
@@ -43,6 +44,15 @@ public interface GoodsInvWarnContract {
          * @return 选中仓库的ID
          */
         String getHouseId();
+
+        /**
+         * 展示商品库存列表
+         *
+         * @param list   list
+         * @param append true-追加
+         * @param total  indexList
+         */
+        void showGoodsInvList(List<GoodsBean> list, boolean append, int total);
     }
 
     interface IGoodsInvWarnPresenter extends IPresenter<IGoodsInvWarnView> {
