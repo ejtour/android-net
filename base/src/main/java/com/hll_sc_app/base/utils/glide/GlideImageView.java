@@ -133,7 +133,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      * @param url 商品URL
      */
     public void setDisableImageUrl(String url) {
-        mUrl = TextUtils.isEmpty(url) ? url : url.trim();
+        mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
         mDisable = true;
         loadUrl();
     }
@@ -175,7 +175,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
         if (isSmallSize) {
             setImageURL(url);
         } else {
-            url = TextUtils.isEmpty(url) ? url : url.trim();
+            url = TextUtils.isEmpty(url) ? "" : url.trim();
             setOptions(GlideApp.with(this).load("http://res.hualala.com/" + url)).into(this);
         }
     }
@@ -186,7 +186,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      * @param url url
      */
     public void setImageURL(String url) {
-        mUrl = TextUtils.isEmpty(url) ? url : url.trim();
+        mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
         loadUrl();
     }
 
