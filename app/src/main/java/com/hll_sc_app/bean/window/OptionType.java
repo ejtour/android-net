@@ -16,7 +16,7 @@ import java.lang.annotation.RetentionPolicy;
     OptionType.OPTION_SORT_DELIVER, OptionType.OPTION_FILTER_CREATE,
     OptionType.OPTION_FILTER_EXECUTE, OptionType.OPTION_FILTER_SIGN, OptionType.OPTION_GOODS_ADD,
     OptionType.OPTION_GOODS_IMPORT, OptionType.OPTION_GOODS_TOP, OptionType.OPTION_GOODS_RELATION,
-    OptionType.OPTION_GOODS_WARN, OptionType.OPTION_GOODS_EXPORT})
+    OptionType.OPTION_GOODS_WARN, OptionType.OPTION_GOODS_EXPORT, OptionType.OPTION_EXPORT_RECORD})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -38,4 +38,5 @@ public @interface OptionType {
     String OPTION_GOODS_TOP = "商品置顶管理";
     String OPTION_GOODS_RELATION = "第三方商品关联";
     String OPTION_GOODS_WARN = "代仓商品库存预警";
+    String OPTION_EXPORT_RECORD = "上下架记录导出";
 }

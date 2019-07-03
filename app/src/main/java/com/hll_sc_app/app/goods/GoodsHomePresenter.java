@@ -6,12 +6,14 @@ import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -113,5 +115,42 @@ public class GoodsHomePresenter implements GoodsHomeContract.IGoodsHomePresenter
                     mView.showError(e);
                 }
             });
+    }
+
+    @Override
+    public void exportRecord(String email) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        ExportReq req = new ExportReq();
+        req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
+        req.setTypeCode("skuShelfFlow");
+        req.setUserID(userBean.getEmployeeID());
+        ExportReq.ParamsBean paramsBean = new ExportReq.ParamsBean();
+        ExportReq.ParamsBean.SkuShelfFlowBean skuShelfFlowBean = new ExportReq.ParamsBean.SkuShelfFlowBean();
+        skuShelfFlowBean.setGroupID(userBean.getGroupID());
+        paramsBean.setSkuShelfFlow(skuShelfFlowBean);
+        req.setParams(paramsBean);
+        BaseReq<ExportReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        GoodsService.INSTANCE.exportRecord(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<ExportResp>() {
+                @Override
+                public void onSuccess(ExportResp resp) {
+                    exportSuccess(resp.getEmail());
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    exportFailure(e.getCode(), GoodsHomeContract.ExportType.EXPORT_RECORDS);
+                }
+            });
+
     }
 }

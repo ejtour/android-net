@@ -74,5 +74,12 @@ interface GoodsHomeContract {
          * @param type  导出类型
          */
         void toBindEmail(String email, @GoodsHomeContract.ExportType String type);
+
+        /**
+         * 上下架记录导出
+         *
+         * @param email 邮箱地址
+         */
+        void exportRecord(String email);
     }
 }

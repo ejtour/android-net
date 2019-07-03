@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
@@ -302,4 +303,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100062")
     Observable<BaseResp<ExportResp>> exportGoodsList(@Body BaseMapReq req);
+
+    /**
+     * 统一导出文件
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:110027")
+    Observable<BaseResp<ExportResp>> exportRecord(@Body BaseReq<ExportReq> req);
 }

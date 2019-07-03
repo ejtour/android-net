@@ -184,6 +184,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             list.add(new OptionsBean(R.drawable.ic_goods_option_top, OptionType.OPTION_GOODS_TOP));
             list.add(new OptionsBean(R.drawable.ic_goods_option_relation, OptionType.OPTION_GOODS_RELATION));
             list.add(new OptionsBean(R.drawable.ic_goods_option_warn, OptionType.OPTION_GOODS_WARN));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_RECORD));
             mOptionsWindow = new ContextOptionsWindow(requireActivity()).setListener(this).refreshList(list);
         }
         mOptionsWindow.showAsDropDownFix(view, Gravity.END);
@@ -206,6 +207,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             RouterUtil.goToActivity(RouterConfig.GOODS_INVENTORY_WARNING);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_EXPORT)) {
             toExportGoodsList();
+        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_EXPORT_RECORD)) {
+            toExportRecord(null);
         }
         mOptionsWindow.dismiss();
     }
@@ -223,6 +226,15 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         }
     }
 
+    /**
+     * 上下架记录导出
+     *
+     * @param email 邮箱地址
+     */
+    private void toExportRecord(String email) {
+        mPresenter.exportRecord(email);
+    }
+
     @Override
     public void exportSuccess(String email) {
         Utils.exportSuccess(requireActivity(), email);
@@ -235,15 +247,19 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
     @Override
     public void bindEmail(@GoodsHomeContract.ExportType String type) {
-        Utils.bindEmail(requireActivity(), email -> mPresenter.toBindEmail(email, type));
+        Utils.bindEmail(requireActivity(), email -> {
+            if (TextUtils.equals(type, GoodsHomeContract.ExportType.EXPORT_GOODS)) {
+                mPresenter.toBindEmail(email, type);
+            } else {
+                toExportRecord(email);
+            }
+        });
     }
 
     @Override
     public void bindSuccess(@GoodsHomeContract.ExportType String type) {
         if (TextUtils.equals(type, GoodsHomeContract.ExportType.EXPORT_GOODS)) {
             toExportGoodsList();
-        } else {
-
         }
     }
 
