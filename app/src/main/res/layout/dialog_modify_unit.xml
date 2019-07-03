@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/dmu_close"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dmu_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toBottomOf="@+id/dmu_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dmu_close"
+        android:text="修改发货单位" />
+
+    <View
+        android:id="@+id/dmu_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dmu_close" />
+
+    <RadioGroup
+        android:id="@+id/dmu_radio_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dmu_divider">
+
+        <RadioButton
+            android:id="@+id/dmu_auxiliary_unit"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:button="@null"
+            android:gravity="center"
+            android:checked="true"
+            tools:text="箱"
+            android:textColor="@drawable/base_color_tab_text"
+            android:textSize="@dimen/text_middle_size" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_eeeeee" />
+
+        <RadioButton
+            android:id="@+id/dmu_adjustment_unit"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:button="@null"
+            android:gravity="center"
+            tools:text="斤"
+            android:textColor="@drawable/base_color_tab_text"
+            android:textSize="@dimen/text_middle_size" />
+    </RadioGroup>
+</android.support.constraint.ConstraintLayout>
