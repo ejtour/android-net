@@ -36,12 +36,4 @@ public class TransferResp {
     public void setRecords(List<TransferBean> records) {
         this.records = records;
     }
-
-    public List<OrderResp> getTransferRecords() {
-        List<OrderResp> list = new ArrayList<>();
-        for (TransferBean record : records) {
-            list.add(record.convertToOrderResp());
-        }
-        return list;
-    }
 }

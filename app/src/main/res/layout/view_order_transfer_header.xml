@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:gravity="center_vertical"
-    android:padding="@dimen/dp_10"
-    android:text="当前有 13 笔待下单的订单"
-    android:textAppearance="@style/TextAppearance.City22.Small.Color999" />

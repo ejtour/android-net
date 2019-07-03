@@ -134,6 +134,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.order.transfer.details.TransferDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.order.deliver.modify.ModifyDeliverInfoActivity"
             android:screenOrientation="portrait" />
 

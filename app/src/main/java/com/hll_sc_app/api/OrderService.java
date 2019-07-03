@@ -8,6 +8,7 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.TransferBean;
 import com.hll_sc_app.bean.order.TransferResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
@@ -119,4 +120,12 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103719")
     Observable<BaseResp<Object>> batchMallOrder(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103705")
+    Observable<BaseResp<TransferBean>> getTransferDetail(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103717")
+    Observable<BaseResp<Object>> cancelTransfer(@Body BaseMapReq req);
 }

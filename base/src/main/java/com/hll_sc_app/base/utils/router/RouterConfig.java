@@ -122,6 +122,11 @@ public class RouterConfig {
     public static final String ORDER_DETAIL = "/activity/order/detail";
 
     /**
+     * 订单转单详情
+     */
+    public static final String ORDER_TRANSFER_DETAIL = "/activity/order/transfer/detail";
+
+    /**
      * 订单详情-修改发货信息
      */
     public static final String ORDER_MODIFY_DELIVER = "/activity/order/modify/deliver";

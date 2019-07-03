@@ -16,6 +16,7 @@ import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.TransferBean;
 import com.hll_sc_app.bean.order.TransferResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
@@ -468,6 +469,40 @@ public class Order {
                 .batchMallOrder(req) : OrderService.INSTANCE
                 .mallOrder(req);
         observable
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取转单明细
+     *
+     * @param id 订单id
+     */
+    public static void getTransferDetail(String id, SimpleObserver<TransferBean> observer) {
+        OrderService.INSTANCE.getTransferDetail(
+                BaseMapReq.newBuilder()
+                        .put("id", id).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 取消转单
+     * @param actionBy 操作人
+     * @param ids 订单 id
+     * @param billSource 订单来源：1-哗啦啦供应链 2-天财供应链
+     * @param cancelReason 取消原因
+     */
+    public static void cancelTransfer(String actionBy, String ids, int billSource, String cancelReason, SimpleObserver<Object> observer) {
+        OrderService.INSTANCE.cancelTransfer(BaseMapReq.newBuilder()
+                .put("actionBy", actionBy)
+                .put("ids", ids)
+                .put("billSource", String.valueOf(billSource))
+                .put("cancelReason", cancelReason)
+                .put("flag", "2")
+                .put("plateSupplierID", UserConfig.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

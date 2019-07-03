@@ -16,6 +16,7 @@ public class OrderEvent extends BaseEvent {
     public static final String REMOVE_SELECTED = "remove_selected";
     public static final String SEARCH_WORDS = "search_words";
     public static final String RELOAD_ITEM = "reload_item";
+    public static final String REMOVE_ITEM = "remove_item";
 
     public OrderEvent(String msg) {
         this(msg, null);
@@ -27,6 +28,7 @@ public class OrderEvent extends BaseEvent {
             case REMOVE_SELECTED:
             case REFRESH_LIST:
             case RELOAD_ITEM:
+            case REMOVE_ITEM:
                 break;
             case SEARCH_WORDS:
                 if (b instanceof OrderSearchBean) break;
