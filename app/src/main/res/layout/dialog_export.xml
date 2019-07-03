@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,22 +14,23 @@
         android:layout_marginTop="30dp"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/de_state"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="导出成功" />
+        tools:text="导出成功"/>
 
     <ImageView
         android:id="@+id/de_state"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginRight="5dp"
-        tools:src="@drawable/ic_dialog_state_failure"
         app:layout_constraintBottom_toBottomOf="@+id/de_title"
         app:layout_constraintEnd_toStartOf="@+id/de_title"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/de_title"/>
+        app:layout_constraintTop_toTopOf="@+id/de_title"
+        tools:src="@drawable/ic_dialog_state_failure"/>
 
     <TextView
         android:id="@+id/de_tip"
@@ -42,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/de_title"
-        tools:text="噢，服务器暂时开了小差 攻城狮正在全力抢修" />
+        tools:text="噢，服务器暂时开了小差 攻城狮正在全力抢修"/>
 
     <EditText
         android:id="@+id/de_edit"
@@ -64,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="de_edit,de_tip" />
+        app:constraint_referenced_ids="de_edit,de_tip"/>
 
     <TextView
         android:id="@+id/de_action"
@@ -75,7 +77,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/de_barrier"
-        tools:text="我知道了" />
+        tools:text="我知道了"/>
 
     <View
         android:id="@+id/de_hor_line"
@@ -93,19 +95,19 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <android.support.constraint.Group
         android:id="@+id/de_edit_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="de_edit,de_close" />
+        app:constraint_referenced_ids="de_edit,de_close"/>
 
     <android.support.constraint.Group
         android:id="@+id/de_tip_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="de_tip,de_hor_line" />
+        app:constraint_referenced_ids="de_tip,de_hor_line"/>
 </android.support.constraint.ConstraintLayout>
