@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.OrderService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -33,6 +34,8 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -443,6 +446,28 @@ public class Order {
         OrderService.INSTANCE
                 .getSettlementStatus(BaseMapReq.newBuilder()
                         .put("PayOrderNo", payOrderNo).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 商城下单
+     *
+     * @param ids 选中的订单id列表
+     */
+    public static void mallOrder(List<String> ids, SimpleObserver<Object> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("actionBy", user.getEmployeeName())
+                .put("plateSupplierID", user.getGroupID())
+                .put("id", ids.size() == 1 ? ids.get(0) : null)
+                .put("ids", ids.size() > 1 ? TextUtils.join(",", ids) : null)
+                .create();
+        Observable<BaseResp<Object>> observable = ids.size() > 1 ? OrderService.INSTANCE
+                .batchMallOrder(req) : OrderService.INSTANCE
+                .mallOrder(req);
+        observable
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

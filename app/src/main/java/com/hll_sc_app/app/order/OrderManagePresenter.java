@@ -9,7 +9,6 @@ import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
-import com.hll_sc_app.bean.order.TransferResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -63,42 +62,26 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
 
     private void getOrderList(boolean showLoading) {
         OrderParam param = mView.getOrderParam();
-        if (mView.getOrderStatus() != OrderType.PENDING_TRANSFER)  // 如果不是待转单
-            Order.getOrderList(mPageNum,
-                    param.getFlag(),
-                    mView.getOrderStatus().getType(),
-                    TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
-                    param.getSearchShopID(),
-                    param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
-                    param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
-                    param.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH),
-                    param.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH),
-                    param.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH),
-                    param.getFormatSignEnd(Constants.FORMAT_YYYY_MM_DD_HH),
-                    mView.getDeliverType(),
-                    new SimpleObserver<List<OrderResp>>(mView, showLoading) {
-                        @Override
-                        public void onSuccess(List<OrderResp> resps) {
-                            if (mPageNum == 1) mView.refreshListData(resps);
-                            else mView.appendListData(resps);
-                            if (!CommonUtils.isEmpty(resps)) mPageNum++;
-                        }
-                    });
-        else
-            Order.getPendingTransferList(mPageNum,
-                    param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
-                    param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
-                    TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
-                    param.getSearchShopID(),
-                    new SimpleObserver<TransferResp>(mView) {
-                        @Override
-                        public void onSuccess(TransferResp resp) {
-                            mView.updatePendingTransferNum(resp.getUnReceiveTotal());
-                            if (mPageNum == 1) mView.refreshListData(resp.getTransferRecords());
-                            else mView.appendListData(resp.getTransferRecords());
-                            if (!CommonUtils.isEmpty(resp.getRecords())) mPageNum++;
-                        }
-                    });
+        Order.getOrderList(mPageNum,
+                param.getFlag(),
+                mView.getOrderStatus().getType(),
+                TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
+                param.getSearchShopID(),
+                param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
+                param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
+                param.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH),
+                param.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH),
+                param.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH),
+                param.getFormatSignEnd(Constants.FORMAT_YYYY_MM_DD_HH),
+                mView.getDeliverType(),
+                new SimpleObserver<List<OrderResp>>(mView, showLoading) {
+                    @Override
+                    public void onSuccess(List<OrderResp> resps) {
+                        if (mPageNum == 1) mView.refreshListData(resps);
+                        else mView.appendListData(resps);
+                        if (!CommonUtils.isEmpty(resps)) mPageNum++;
+                    }
+                });
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.order.deliver.modify;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +19,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.order.ModifyUnitDialog;
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 @Route(path = RouterConfig.ORDER_MODIFY_DELIVER)
 public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModifyDeliverInfoContract.IModifyDeliverInfoView {
     public static final int REQ_KEY = 0x366;
-    public static final String RESP_LIST_KEY = "resp_list_key";
+    private OrderDetailBean mCurBean;
 
     /**
      * @param list      商品明细列表
@@ -79,7 +79,19 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
         mListView.addItemDecoration(decor);
-        mListView.setAdapter(new ModifyDeliverInfoAdapter(mList));
+        ModifyDeliverInfoAdapter adapter = new ModifyDeliverInfoAdapter(mList);
+        adapter.setOnItemChildClickListener((adapter1, view, position) -> {
+            mCurBean = ((OrderDetailBean) adapter1.getItem(position));
+            if (mCurBean == null) {
+                return;
+            }
+            ModifyUnitDialog.create(this,
+                    mCurBean.getAuxiliaryUnit(),
+                    mCurBean.getAdjustmentUnit(),
+                    mCurBean.getDeliverUnit(),
+                    unit -> mCurBean.setDeliverUnit(unit)).show();
+        });
+        mListView.setAdapter(adapter);
         mTitleBar.setRightBtnClick(v -> mPresenter.modifyDeliverInfo());
     }
 

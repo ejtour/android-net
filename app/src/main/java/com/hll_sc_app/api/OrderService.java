@@ -111,4 +111,12 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103045")
     Observable<BaseResp<SettlementResp>> getSettlementStatus(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103714")
+    Observable<BaseResp<Object>> mallOrder(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103719")
+    Observable<BaseResp<Object>> batchMallOrder(@Body BaseMapReq req);
 }

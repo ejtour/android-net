@@ -55,7 +55,7 @@ public class ModifyDeliverInfoReq {
             productBean.setDetailID(bean.getDetailID());
             productBean.setProductNum(bean.getAdjustmentNum());
             productBean.setProductPrice(bean.getProductPrice());
-            productBean.setUnit(bean.getStandardUnit());
+            productBean.setUnit(bean.getDeliverUnit());
             return productBean;
         }
 

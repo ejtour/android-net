@@ -26,6 +26,10 @@ import java.util.List;
 public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, BaseViewHolder> {
     ModifyDeliverInfoAdapter(@Nullable List<OrderDetailBean> data) {
         super(R.layout.item_modify_deliver_info, data);
+        if (!CommonUtils.isEmpty(data))
+            for (OrderDetailBean bean : data) {
+                bean.setDeliverUnit(bean.getAuxiliaryUnit());
+            }
     }
 
     @Override
@@ -64,6 +68,8 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                 }
             }
         });
+        holder.addOnClickListener(R.id.mdi_modify_unit)
+                .addOnClickListener(R.id.mdi_unit);
         return holder;
     }
 
@@ -74,7 +80,9 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                 .setText(R.id.mdi_spec, item.getProductSpec())
                 .setText(R.id.mdi_order_num, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName())
                 .setText(R.id.mdi_edit, CommonUtils.formatNum(item.getAdjustmentNum()))
-                .setText(R.id.mdi_unit, item.getAdjustmentUnit());
+                .setGone(R.id.mdi_modify_unit, !TextUtils.isEmpty(item.getAuxiliaryUnit()))
+                .setText(R.id.mdi_unit, item.getDeliverUnit())
+                .getView(R.id.mdi_unit).setClickable(!TextUtils.isEmpty(item.getAuxiliaryUnit()));
         List<OrderDepositBean> depositList = item.getDepositList();
         helper.setGone(R.id.mdi_deposit_group, !CommonUtils.isEmpty(depositList));
         ((OrderDepositList) helper.getView(R.id.mdi_deposit_list)).setData(depositList);

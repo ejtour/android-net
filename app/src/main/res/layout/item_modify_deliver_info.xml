@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:paddingLeft="@dimen/dp_10"
     android:paddingTop="5dp"
     android:paddingRight="@dimen/dp_10"
-    android:paddingBottom="5dp"
-    android:background="@android:color/white">
+    android:paddingBottom="5dp">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/mdi_image"
@@ -44,6 +44,17 @@
         app:layout_constraintTop_toTopOf="@+id/mdi_edit"
         tools:text="箱" />
 
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/mdi_modify_unit"
+        android:layout_width="6dp"
+        android:layout_height="3dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/mdi_unit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mdi_unit"
+        app:trv_color="@color/colorPrimary"
+        app:trv_direction="bottom" />
+
     <TextView
         android:id="@+id/mdi_label"
         android:layout_width="wrap_content"
@@ -51,7 +62,7 @@
         android:text="发货："
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBaseline_toBaselineOf="@+id/mdi_unit"
-        app:layout_constraintEnd_toStartOf="@+id/mdi_edit"/>
+        app:layout_constraintEnd_toStartOf="@+id/mdi_edit" />
 
     <TextView
         android:id="@+id/mdi_name"
@@ -101,7 +112,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/mdi_deposit_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow"/>
+        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow" />
 
     <TextView
         android:id="@+id/mdi_deposit_label"
@@ -115,7 +126,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="8.5sp"
         app:layout_constraintStart_toStartOf="@+id/mdi_image"
-        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow"/>
+        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow" />
 
     <com.hll_sc_app.widget.order.OrderDepositList
         android:id="@+id/mdi_deposit_list"
@@ -127,7 +138,7 @@
         android:paddingBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/mdi_deposit_label"
-        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow"/>
+        app:layout_constraintTop_toBottomOf="@+id/mdi_arrow" />
 
     <android.support.constraint.Group
         android:id="@+id/mdi_deposit_group"

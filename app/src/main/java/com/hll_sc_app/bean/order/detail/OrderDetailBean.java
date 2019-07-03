@@ -2,6 +2,7 @@ package com.hll_sc_app.bean.order.detail;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.util.List;
 
@@ -83,7 +84,16 @@ public class OrderDetailBean implements Parcelable {
     private double oldProductPrice;
     private double couponInspectionDiscountAmount;
     private double couponAdjustmentDiscountAmount;
+    private transient String deliverUnit;
     private List<OrderDepositBean> depositList;
+
+    public String getDeliverUnit() {
+        return TextUtils.isEmpty(deliverUnit) ? adjustmentUnit : deliverUnit;
+    }
+
+    public void setDeliverUnit(String deliverUnit) {
+        this.deliverUnit = deliverUnit;
+    }
 
     public int getDiscountRuleType() {
         return discountRuleType;

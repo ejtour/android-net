@@ -76,8 +76,15 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
                 .setText(R.id.iod_order_num, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName()) // 订货数量
                 .setText(R.id.iod_delivery_num, processNum(deliveryText, item.getAdjustmentNum() != item.getProductNum())) // 预发货/发货数量
                 .setText(R.id.iod_confirm_num, processNum(confirmText, item.getInspectionNum() != item.getProductNum())) // 签收数量
-                .setText(R.id.iod_sale_unit_spec, "¥" + CommonUtils.formatMoney(item.getProductPrice()) + "/" + item.getSaleUnitName()) // 单价
-                .setText(R.id.iod_amount, mLabel + "：¥" + CommonUtils.formatMoney(item.getInspectionAmount())); // 小计
+                .setText(R.id.iod_sale_unit_spec, processPrice("单价：¥" + CommonUtils.formatMoney(item.getProductPrice()) + "/" + item.getSaleUnitName())) // 单价
+                .setText(R.id.iod_amount, processPrice(mLabel + "：¥" + CommonUtils.formatMoney(item.getInspectionAmount()))); // 小计
+    }
+
+    private SpannableString processPrice(String source) {
+        SpannableString price = new SpannableString(source);
+        price.setSpan(new ForegroundColorSpan(Color.parseColor(ColorStr.COLOR_999999)),
+                0, source.indexOf("¥"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return price;
     }
 
     /**
