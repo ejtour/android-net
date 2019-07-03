@@ -49,7 +49,7 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
     protected void convert(BaseViewHolder helper, OrderResp item) {
         ((GlideImageView) helper.getView(R.id.iom_image)).setImageURL(item.getImgUrl());
         View view = helper.getView(R.id.iom_check_box);
-        view.setEnabled(item.isCanSelect());
+        view.setEnabled(item.isCanSelect(mGroupID));
         view.setSelected(item.isSelected());
         helper.setText(R.id.iom_name, item.getShopName())
                 .setText(R.id.iom_money, "¥" + CommonUtils.formatMoney(item.getTotalAmount()))
@@ -68,7 +68,6 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
             return;
         }
         newData.setSelected(oldData.isSelected());
-        newData.setCanSelect(oldData.isCanSelect());
         setData(getItemPosition(oldData), newData);
     }
 
@@ -88,7 +87,7 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
         if (!CommonUtils.isEmpty(mData) && !CommonUtils.isEmpty(data)) {
             for (OrderResp resp : data) {
                 for (OrderResp orderResp : mData) {
-                    if (resp.getSubBillNo().equals(orderResp.getSubBillNo())){
+                    if (resp.getSubBillNo().equals(orderResp.getSubBillNo())) {
                         resp.setSelected(orderResp.isSelected());
                         break;
                     }
@@ -106,13 +105,8 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
     private void updateNum(Collection<? extends OrderResp> newData) {
         if (!CommonUtils.isEmpty(newData)) {
             for (OrderResp resp : newData) {
-                if (resp.getIsCheck() == 2 && mGroupID.equals(resp.getGroupID()) ||
-                        resp.getIsCheck() == 1 && mGroupID.equals(resp.getAgencyID())) {
-                    resp.setCanSelect(false);
-                    continue;
-                }
-                resp.setCanSelect(true);
-                mSelectableNum++;
+                if (resp.isCanSelect(mGroupID))
+                    mSelectableNum++;
             }
         }
     }

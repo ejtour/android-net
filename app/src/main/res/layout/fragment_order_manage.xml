@@ -13,12 +13,6 @@
         android:layout_height="55dp"
         android:layout="@layout/view_order_deliver_type_header" />
 
-    <ViewStub
-        android:id="@+id/fom_transfer_stub"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
-        android:layout="@layout/view_order_transfer_header" />
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/fom_refresh"
         android:layout_width="match_parent"

@@ -78,9 +78,10 @@ interface IOrderManageContract {
          */
         void exportFailure(String msg);
 
+        /**
+         * 展示物流公司列表
+         */
         void showExpressCompanyList(List<ExpressResp.ExpressBean> beans, ExpressResp.ExpressBean company);
-
-        void updatePendingTransferNum(int pendingTransferNum);
     }
 
     interface IOrderManagePresenter extends IPresenter<IOrderManageView> {
@@ -105,7 +106,5 @@ interface IOrderManageContract {
         void exportNormalOrder(int type, String email);
 
         void getExpressCompanyList(String groupID, String shopID);
-
-        void mallOrder(List<String> ids);
     }
 }

@@ -30,6 +30,7 @@ import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
@@ -90,8 +91,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     ViewStub mBottomBarStub;
     @BindView(R.id.fom_deliver_type_stub)
     ViewStub mDeliverTypeStub;
-    @BindView(R.id.fom_transfer_stub)
-    ViewStub mTransferStub;
     /**
      * 底部操作栏
      */
@@ -108,10 +107,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
      * 全选按钮
      */
     private ImageView mSelectAll;
-    /**
-     * 转单文本
-     */
-    private TextView mTransferText;
     /**
      * 空布局
      */
@@ -176,7 +171,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     private void initView() {
         mAdapter = new OrderManageAdapter();
         mListView.setAdapter(mAdapter);
-        updatePendingTransferNum(0);
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
     }
@@ -207,10 +201,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             updateBottomBarData();
         });
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (mOrderType == OrderType.PENDING_TRANSFER) {
-                showToast("待转单详情待添加");
-                return;
-            }
             mCurResp = mAdapter.getItem(position);
             if (mCurResp == null) return;
             OrderDetailActivity.start(mCurResp.getSubBillID());
@@ -299,7 +289,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         mTotalAmountText = null;
         mEmptyView = null;
         mDeliverTypeRoot = null;
-        mTransferText = null;
         unbinder.unbind();
     }
 
@@ -331,20 +320,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         if (CommonUtils.isEmpty(resps))
             handleEmptyData();
         updateBottomBarData();
-    }
-
-    /**
-     * 更新待转单数目
-     */
-    public void updatePendingTransferNum(int pendingTransferNum) {
-        if (mOrderType != OrderType.PENDING_TRANSFER) return;
-        initTransformView();
-        String size = String.valueOf(pendingTransferNum);
-        String source = "当前有 " + pendingTransferNum + " 笔待下单的订单";
-        SpannableString ss = new SpannableString(source);
-        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.colorPrimary)),
-                source.indexOf(size), source.indexOf(size) + size.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTransferText.setText(ss);
     }
 
     private void handleEmptyData() {
@@ -431,11 +406,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 .show();
     }
 
-    private void initTransformView() {
-        if (mTransferText == null)
-            mTransferText = (TextView) mTransferStub.inflate();
-    }
-
     /**
      * 初始化发货类型
      */
@@ -482,10 +452,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             showToast("由于三方物流配送订单需输入物流单号 所以该类型订单不可批量操作");
             return;
         }
+        String groupID = UserConfig.getGroupID();
         for (OrderResp resp : mAdapter.getData()) {
-            if (resp.isCanSelect()) {
-                resp.setSelected(!view.isSelected());
-            }
+            if (resp.isCanSelect(groupID)) resp.setSelected(!view.isSelected());
         }
         view.setSelected(!view.isSelected());
         mAdapter.notifyDataSetChanged();
@@ -493,10 +462,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     private void confirm(View view) {
-        if (mOrderType == OrderType.PENDING_TRANSFER) {
-            mPresenter.mallOrder(getSubBillIds());
-            return;
-        }
         if ("3".equals(mDeliverType)) {
             showExpressInfoDialog();
             return;

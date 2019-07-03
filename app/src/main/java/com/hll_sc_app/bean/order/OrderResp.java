@@ -135,7 +135,6 @@ public class OrderResp implements Parcelable {
     private int subbillCategory;
     private int invoiceStatus;
     private boolean mIsSelected;
-    private boolean mCanSelect;
     private String driverId;
     private String driverName;
     private String mobilePhone;
@@ -143,6 +142,11 @@ public class OrderResp implements Parcelable {
     private List<Integer> buttonList;
     private int receiptRemaining;
     private List<OrderDetailBean> billDetailList;
+
+    public boolean isCanSelect(String groupID) {
+        return !(isCheck == 2 && groupID.equals(this.groupID)
+                || isCheck == 1 && groupID.equals(this.agencyID));
+    }
 
     public double getDiffPrice() {
         return subBillStatus == 4 && payType == 3 ? getFee() : 0;
@@ -1117,14 +1121,6 @@ public class OrderResp implements Parcelable {
         this.buttonList = buttonList;
     }
 
-    public boolean isCanSelect() {
-        return mCanSelect;
-    }
-
-    public void setCanSelect(boolean canSelect) {
-        mCanSelect = canSelect;
-    }
-
     public String getDriverId() {
         return driverId;
     }
@@ -1298,7 +1294,6 @@ public class OrderResp implements Parcelable {
         dest.writeInt(this.subbillCategory);
         dest.writeInt(this.invoiceStatus);
         dest.writeByte(this.mIsSelected ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.mCanSelect ? (byte) 1 : (byte) 0);
         dest.writeString(this.driverId);
         dest.writeString(this.driverName);
         dest.writeString(this.mobilePhone);
@@ -1430,7 +1425,6 @@ public class OrderResp implements Parcelable {
         this.subbillCategory = in.readInt();
         this.invoiceStatus = in.readInt();
         this.mIsSelected = in.readByte() != 0;
-        this.mCanSelect = in.readByte() != 0;
         this.driverId = in.readString();
         this.driverName = in.readString();
         this.mobilePhone = in.readString();
