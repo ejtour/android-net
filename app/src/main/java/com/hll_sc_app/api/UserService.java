@@ -37,6 +37,16 @@ public interface UserService {
     Observable<BaseResp<LoginResp>> login(@Body BaseMapReq req);
 
     /**
+     * 修改供应商员工邮箱
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101095")
+    Observable<BaseResp<Object>> bindEmail(@Body BaseMapReq req);
+
+    /**
      * 供应商登录找回密码
      *
      * @param req req

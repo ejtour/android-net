@@ -32,6 +32,7 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
 
@@ -53,7 +54,8 @@ import butterknife.Unbinder;
  * @date 2018/12/19
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS)
-public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener {
+public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener,
+    GoodsHomeContract.IGoodsHomeView {
     static final String[] STR_TITLE = {"普通商品", "组合商品", "押金商品", "代仓商品"};
     static final String[] STR_ACTION_TYPE = {"normalProduct", "bundlingGoods", "depositProduct", "warehouse"};
     @BindView(R.id.space)
@@ -73,10 +75,13 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     SearchView mSearchView;
     private GoodsListFragmentPager mFragmentAdapter;
     private ContextOptionsWindow mOptionsWindow;
+    private GoodsHomePresenter mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter = GoodsHomePresenter.newInstance();
+        mPresenter.register(this);
     }
 
     @Override
@@ -199,8 +204,47 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             RouterUtil.goToActivity(RouterConfig.GOODS_STICK_MANAGE);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_WARN)) {
             RouterUtil.goToActivity(RouterConfig.GOODS_INVENTORY_WARNING);
+        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_EXPORT)) {
+            toExportGoodsList();
         }
         mOptionsWindow.dismiss();
+    }
+
+    /**
+     * 导出商品列表
+     */
+    private void toExportGoodsList() {
+        int currentItem = mViewPager.getCurrentItem();
+        String actionType = STR_ACTION_TYPE[currentItem];
+        if (TextUtils.equals(actionType, "warehouse") || TextUtils.equals(actionType, "normalProduct")) {
+            mPresenter.exportGoodsList(actionType, getProductStatus());
+        } else {
+            showToast("不支持该类商品列表导出");
+        }
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(requireActivity(), email);
+    }
+
+    @Override
+    public void exportFailure(String tip) {
+        Utils.exportFailure(requireActivity(), tip);
+    }
+
+    @Override
+    public void bindEmail(@GoodsHomeContract.ExportType String type) {
+        Utils.bindEmail(requireActivity(), email -> mPresenter.toBindEmail(email, type));
+    }
+
+    @Override
+    public void bindSuccess(@GoodsHomeContract.ExportType String type) {
+        if (TextUtils.equals(type, GoodsHomeContract.ExportType.EXPORT_GOODS)) {
+            toExportGoodsList();
+        } else {
+
+        }
     }
 
     class GoodsListFragmentPager extends FragmentPagerAdapter {

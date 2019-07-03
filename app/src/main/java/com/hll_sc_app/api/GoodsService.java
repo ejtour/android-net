@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.CustomCategorySortReq;
@@ -291,4 +292,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100142")
     Observable<BaseResp<Object>> setGoodsInvWarnValue(@Body BaseReq<GoodsInvWarnReq> req);
+
+    /**
+     * 商品列表导出
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100062")
+    Observable<BaseResp<ExportResp>> exportGoodsList(@Body BaseMapReq req);
 }
