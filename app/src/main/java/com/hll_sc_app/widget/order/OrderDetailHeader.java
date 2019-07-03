@@ -153,7 +153,7 @@ public class OrderDetailHeader extends ConstraintLayout {
 
     @OnClick({R.id.odh_orderer_dial, R.id.odh_consignee_dial})
     public void onViewClicked(View view) {
-        if (view.getTag() == null) return;
+        if (view.getTag() == null || view.getTag().toString().length() == 0) return;
         switch (view.getId()) {
             case R.id.odh_orderer_dial:
             case R.id.odh_consignee_dial:
