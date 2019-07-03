@@ -177,7 +177,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private FlowAdapter mFlowAdapter;
     private ProductAttrAdapter mProductAttrAdapter;
     private AreaProductSelectWindow mAreaProductSelectWindow;
-    private ComboBoxWindow mComboBoxWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -476,14 +475,12 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
      * @param position position
      */
     private void showComboBoxWindow(ProductAttrBean attrBean, BaseQuickAdapter adapter, int position) {
-        if (mComboBoxWindow == null) {
-            mComboBoxWindow = new ComboBoxWindow(this, attrBean);
-        }
-        mComboBoxWindow.setListener(selectString -> {
+        ComboBoxWindow comboBoxWindow = new ComboBoxWindow(this, attrBean);
+        comboBoxWindow.setListener(selectString -> {
             attrBean.setCurrAttrValue(selectString);
             adapter.notifyItemChanged(position);
         });
-        mComboBoxWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+        comboBoxWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     /**
@@ -654,6 +651,11 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     @OnClick({R.id.img_close, R.id.rl_categoryName, R.id.rl_shopProductCategorySubName, R.id.txt_categoryName_copy,
         R.id.txt_specs_add, R.id.txt_specs_add_assistUnit, R.id.txt_label_add, R.id.txt_productAttrs_add,
         R.id.txt_save, R.id.txt_saveAndUp, R.id.txt_title_save})
@@ -705,77 +707,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             default:
                 break;
         }
-    }
-
-    @Override
-    public void uploadSuccess(String url, int requestCode) {
-        if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
-            // 主图
-            mImgImgUrl.showImage(url, v -> mImgImgUrl.deleteImage());
-        } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB) {
-            // 辅图
-            addImgUrlSub(url);
-        } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_DETAIL) {
-            // 商品详情图
-            addImgUrlDetail(url);
-        }
-    }
-
-    @Override
-    public void showCategorySelectWindow(CategoryResp resp) {
-        if (mCategorySelectWindow == null) {
-            mCategorySelectWindow = new CategorySelectWindow(this, resp);
-            mCategorySelectWindow.setSelectListener((categoryItem1, categoryItem2, categoryItem3)
-                -> {
-                mTxtCategoryName.setTag(R.id.base_tag_1, categoryItem1);
-                mTxtCategoryName.setTag(R.id.base_tag_2, categoryItem2);
-                mTxtCategoryName.setTag(R.id.base_tag_3, categoryItem3);
-                mTxtCategoryName.setText(String.format("%s - %s - %s", categoryItem1.getCategoryName(),
-                    categoryItem2.getCategoryName(), categoryItem3.getCategoryName()));
-            });
-        }
-        mCategorySelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
-    }
-
-    @Override
-    public void showCustomCategory(CopyCategoryBean bean) {
-        mTxtShopProductCategorySubName.setTag(bean);
-        mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
-            bean.getShopProductCategoryThreeName()));
-    }
-
-    @Override
-    public void showLabelSelectWindow(List<LabelBean> list) {
-        if (mLabelSelectWindow == null) {
-            mLabelSelectWindow = new LabelSelectWindow(this);
-            mLabelSelectWindow.setListener(() -> {
-                mFlowAdapter = new FlowAdapter(GoodsAddActivity.this, mLabelSelectWindow.getSelectList());
-                mFlowLayout.setAdapter(mFlowAdapter);
-            });
-        }
-        mLabelSelectWindow.setList(list);
-        mLabelSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
-    }
-
-    @Override
-    public void toProductAttrsActivity() {
-        if (!CommonUtils.isEmpty(mProductAttrAdapter.getData())) {
-            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR,
-                new ArrayList<>(mProductAttrAdapter.getData()));
-        } else {
-            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR);
-        }
-    }
-
-    @Override
-    public void addSuccess(boolean edit) {
-        showToast(edit ? "修改成功" : "保存成功");
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
     }
 
     /**
@@ -991,6 +922,72 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             mGoodsBean.setButtonType(buttonType);
             mPresenter.addProduct(mGoodsBean);
         }
+    }
+
+    @Override
+    public void uploadSuccess(String url, int requestCode) {
+        if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
+            // 主图
+            mImgImgUrl.showImage(url, v -> mImgImgUrl.deleteImage());
+        } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB) {
+            // 辅图
+            addImgUrlSub(url);
+        } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_DETAIL) {
+            // 商品详情图
+            addImgUrlDetail(url);
+        }
+    }
+
+    @Override
+    public void showCategorySelectWindow(CategoryResp resp) {
+        if (mCategorySelectWindow == null) {
+            mCategorySelectWindow = new CategorySelectWindow(this, resp);
+            mCategorySelectWindow.setSelectListener((categoryItem1, categoryItem2, categoryItem3)
+                -> {
+                mTxtCategoryName.setTag(R.id.base_tag_1, categoryItem1);
+                mTxtCategoryName.setTag(R.id.base_tag_2, categoryItem2);
+                mTxtCategoryName.setTag(R.id.base_tag_3, categoryItem3);
+                mTxtCategoryName.setText(String.format("%s - %s - %s", categoryItem1.getCategoryName(),
+                    categoryItem2.getCategoryName(), categoryItem3.getCategoryName()));
+            });
+        }
+        mCategorySelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
+    @Override
+    public void showCustomCategory(CopyCategoryBean bean) {
+        mTxtShopProductCategorySubName.setTag(bean);
+        mTxtShopProductCategorySubName.setText(String.format("%s - %s", bean.getShopProductCategorySubName(),
+            bean.getShopProductCategoryThreeName()));
+    }
+
+    @Override
+    public void showLabelSelectWindow(List<LabelBean> list) {
+        if (mLabelSelectWindow == null) {
+            mLabelSelectWindow = new LabelSelectWindow(this);
+            mLabelSelectWindow.setListener(() -> {
+                mFlowAdapter = new FlowAdapter(GoodsAddActivity.this, mLabelSelectWindow.getSelectList());
+                mFlowLayout.setAdapter(mFlowAdapter);
+            });
+        }
+        mLabelSelectWindow.setList(list);
+        mLabelSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
+    @Override
+    public void toProductAttrsActivity() {
+        if (!CommonUtils.isEmpty(mProductAttrAdapter.getData())) {
+            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR,
+                new ArrayList<>(mProductAttrAdapter.getData()));
+        } else {
+            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_PRODUCT_ATTR);
+        }
+    }
+
+    @Override
+    public void addSuccess(boolean edit) {
+        showToast(edit ? "修改成功" : "保存成功");
+        finish();
     }
 
     private static class FlowAdapter extends TagAdapter<LabelBean> {

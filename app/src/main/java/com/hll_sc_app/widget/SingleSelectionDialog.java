@@ -47,6 +47,7 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         return new Builder<T>(context, wrapperName);
     }
 
+    @Override
     public View onCreateView(LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.dialog_single_selection, null);
         ButterKnife.bind(this, view);

@@ -61,9 +61,10 @@ public class ComboBoxWindow extends BaseShadowPopupWindow {
         ProductAttrAdapter attrAdapter = new ProductAttrAdapter(TextUtils.isEmpty(bean.getAttrValue()) ? null :
             Arrays.asList(bean.getAttrValue().split(",")));
         attrAdapter.setOnItemClickListener((adapter, view1, position) -> {
-            String selectString = (String) adapter.getItem(position);
-            if (!TextUtils.isEmpty(selectString)) {
-                mListener.confirm(selectString);
+            mSelectString = (String) adapter.getItem(position);
+            adapter.notifyDataSetChanged();
+            if (!TextUtils.isEmpty(mSelectString)) {
+                mListener.confirm(mSelectString);
                 dismiss();
             }
         });

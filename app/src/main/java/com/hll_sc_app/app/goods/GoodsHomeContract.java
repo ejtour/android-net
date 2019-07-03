@@ -47,6 +47,8 @@ interface GoodsHomeContract {
 
         /**
          * 绑定邮箱
+         *
+         * @param type 类型
          */
         void bindEmail(@GoodsHomeContract.ExportType String type);
 
