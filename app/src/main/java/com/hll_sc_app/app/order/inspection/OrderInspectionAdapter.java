@@ -26,33 +26,18 @@ import java.util.List;
  */
 
 public class OrderInspectionAdapter extends BaseQuickAdapter<OrderDetailBean, BaseViewHolder> {
-    private List<OrderInspectionReq.OrderInspectionItem> mReqList;
 
     OrderInspectionAdapter(@Nullable List<OrderDetailBean> data) {
         super(R.layout.item_order_inspection, data);
-        // 构造请求列表
-        mReqList = new ArrayList<>();
-        for (OrderDetailBean bean : getData()) {
-            mReqList.add(OrderInspectionReq.OrderInspectionItem.copyFromDetailList(bean));
-        }
     }
 
-    /**
-     * 获取请求列表
-     */
     List<OrderInspectionReq.OrderInspectionItem> getReqList() {
-        return mReqList;
-    }
-
-    /**
-     * 更改请求列表中的操作数
-     *
-     * @param position 位置
-     * @param value    操作数的值
-     */
-    private void changeNum(int position, double value) {
-        if (position < 0 || position >= mReqList.size()) return;
-        mReqList.get(position).setInspectionNum(value);
+        // 构造请求列表
+        List<OrderInspectionReq.OrderInspectionItem> reqList = new ArrayList<>();
+        for (OrderDetailBean bean : getData()) {
+            reqList.add(OrderInspectionReq.OrderInspectionItem.copyFromDetailList(bean));
+        }
+        return reqList;
     }
 
     @Override
@@ -71,12 +56,14 @@ public class OrderInspectionAdapter extends BaseQuickAdapter<OrderDetailBean, Ba
 
             @Override
             public void afterTextChanged(Editable s) {
+                OrderDetailBean bean = getItem(holder.getAdapterPosition());
+                if (bean == null) return;
                 if (s.toString().startsWith("."))
                     s.insert(0, "0");
                 if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1) {
                     s.delete(s.length() - 1, s.length());
                 }
-                changeNum(holder.getAdapterPosition(), Double.parseDouble(TextUtils.isEmpty(s.toString()) ? "0" : s.toString()));
+                bean.setInspectionNum(Double.parseDouble(TextUtils.isEmpty(s.toString()) ? "0" : s.toString()));
             }
         });
         return holder;
