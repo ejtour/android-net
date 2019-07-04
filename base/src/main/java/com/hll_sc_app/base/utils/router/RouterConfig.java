@@ -130,6 +130,11 @@ public class RouterConfig {
     public static final String ORDER_DETAIL = "/activity/order/detail";
 
     /**
+     * 订单转单详情
+     */
+    public static final String ORDER_TRANSFER_DETAIL = "/activity/order/transfer/detail";
+
+    /**
      * 订单详情-修改发货信息
      */
     public static final String ORDER_MODIFY_DELIVER = "/activity/order/modify/deliver";
@@ -148,6 +153,11 @@ public class RouterConfig {
      * 订单结算
      */
     public static final String ORDER_SETTLEMENT = "/activity/order/settlement";
+
+    /**
+     * 订单库存检查
+     */
+    public static final String ORDER_INVENTORY_CHECK = "/activity/order/inventory/check";
 
     /**
      * 提交成功

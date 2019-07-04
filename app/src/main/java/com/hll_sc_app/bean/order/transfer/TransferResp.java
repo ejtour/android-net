@@ -1,6 +1,5 @@
-package com.hll_sc_app.bean.order;
+package com.hll_sc_app.bean.order.transfer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,13 +34,5 @@ public class TransferResp {
 
     public void setRecords(List<TransferBean> records) {
         this.records = records;
-    }
-
-    public List<OrderResp> getTransferRecords() {
-        List<OrderResp> list = new ArrayList<>();
-        for (TransferBean record : records) {
-            list.add(record.convertToOrderResp());
-        }
-        return list;
     }
 }

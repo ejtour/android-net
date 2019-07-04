@@ -23,6 +23,7 @@ import com.hll_sc_app.app.order.common.OrderStatus;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.utils.ColorStr;
 
 import butterknife.BindView;
@@ -93,7 +94,30 @@ public class OrderDetailHeader extends ConstraintLayout {
         handleTimeAddress(data.getDeliverType() == 2,
                 data.getTargetExecuteDate(),
                 data.getTargetAddress());
-        handleLabel(data.getSubBillStatus(), data.getWareHourseName());
+        handleLabel(data.getWareHourseName());
+    }
+
+    public void setData(TransferBean data) {
+        mStatusIcon.setImageResource(OrderStatus.PENDING_TRANSFER.getIcon());
+        mStatusLabel.setText(data.getStatus() == 1 ? OrderStatus.PENDING_TRANSFER.getLabel() : "下单失败");
+        mStatusDesc.setText(data.getStatus() == 1
+                ? data.getHomologous() == 1
+                ? OrderStatus.PENDING_TRANSFER.getDesc(1, null, null)
+                : "该订单含有未关联的第三方品项，请先关联后再进行商城下单操作"
+                : "订单存在商品问题或门店合作问题导致下单失败");
+        mShopLogo.setImageURL("");
+        mShopName.setText(data.getAllotName());
+        mGroupName.setText(data.getGroupName());
+        mOrderer.setText(String.format("订货人：%s", data.getBillCreateBy()));
+        mOrdererDial.setTag(data.getOrdererMobile());
+        mOrdererDial.setText(handlePhoneNum(data.getOrdererMobile()));
+        mConsignee.setText(String.format("收货人：%s", data.getReceiverName()));
+        mConsigneeDial.setTag(data.getReceiverMobile());
+        mConsigneeDial.setText(handlePhoneNum(data.getReceiverMobile()));
+        handleTimeAddress(false,
+                data.getTargetExecuteDate(),
+                data.getReceiverAddress());
+        mLabel.setText("商品清单（请以商品实际价格为准）");
     }
 
     private CharSequence handlePhoneNum(String number) {
@@ -117,16 +141,12 @@ public class OrderDetailHeader extends ConstraintLayout {
         return ss;
     }
 
-    private void handleLabel(int subBillStatus, String wareHouseName) {
-        if (subBillStatus == 0) {
-            mLabel.setText("商品清单（请以商品实际价格为准）");
-        } else {
-            if (TextUtils.isEmpty(wareHouseName))
-                mLabel.setText("商品清单");
-            else {
-                mLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.color_666666));
-                mLabel.setText(String.format("商品仓库：%s", wareHouseName));
-            }
+    private void handleLabel(String wareHouseName) {
+        if (TextUtils.isEmpty(wareHouseName))
+            mLabel.setText("商品清单");
+        else {
+            mLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.color_666666));
+            mLabel.setText(String.format("商品仓库：%s", wareHouseName));
         }
     }
 

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@android:color/white"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <View
+        android:id="@+id/tdf_div_0"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_10"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tdf_remark_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="备注信息"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_div_0" />
+
+    <TextView
+        android:id="@+id/tdf_remark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:hint="未填写"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        android:textColorHint="@color/color_aeaeae"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tdf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_div_0" />
+
+    <View
+        android:id="@+id/tdf_div_1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="@+id/tdf_remark"
+        app:layout_constraintStart_toStartOf="@+id/tdf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_remark" />
+
+    <TextView
+        android:id="@+id/tdf_order_amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="订货总价"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/tdf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_div_1" />
+
+    <TextView
+        android:id="@+id/tdf_order_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tdf_order_amount_label"
+        app:layout_constraintEnd_toEndOf="@+id/tdf_remark"
+        tools:text="¥378.00" />
+
+    <View
+        android:id="@+id/tdf_div_2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="@+id/tdf_div_1"
+        app:layout_constraintStart_toStartOf="@+id/tdf_div_1"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_order_amount_label" />
+
+    <TextView
+        android:id="@+id/tdf_amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:text="订单总额"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="@+id/tdf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_div_2" />
+
+    <TextView
+        android:id="@+id/tdf_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Large.Red"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tdf_amount_label"
+        app:layout_constraintEnd_toEndOf="@+id/tdf_remark"
+        tools:text="¥378.00" />
+
+    <View
+        android:id="@+id/tdf_div_3"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_10"
+        android:layout_marginTop="13dp"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_amount_label" />
+
+    <TextView
+        android:id="@+id/tdf_order_no_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="三方订单"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/tdf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_div_3" />
+
+    <TextView
+        android:id="@+id/tdf_order_source_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="订单来源"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/tdf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_order_no_label" />
+
+    <TextView
+        android:id="@+id/tdf_order_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="下单时间"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/tdf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_order_source_label" />
+
+    <TextView
+        android:id="@+id/tdf_pay_method_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="支付方式"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/tdf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_order_time_label" />
+
+    <TextView
+        android:id="@+id/tdf_order_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tdf_order_no_label"
+        app:layout_constraintStart_toEndOf="@+id/tdf_order_no_label"
+        tools:text="2018041900231" />
+
+    <TextView
+        android:id="@+id/tdf_order_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tdf_order_source_label"
+        app:layout_constraintStart_toStartOf="@+id/tdf_order_no"
+        tools:text="供应链" />
+
+    <TextView
+        android:id="@+id/tdf_order_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tdf_order_time_label"
+        app:layout_constraintStart_toStartOf="@+id/tdf_order_no"
+        tools:text="2018-04-19 14:48:21" />
+
+    <TextView
+        android:id="@+id/tdf_pay_method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="——————"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        android:textColorHint="@color/color_aeaeae"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tdf_pay_method_label"
+        app:layout_constraintStart_toStartOf="@+id/tdf_order_no" />
+
+    <TextView
+        android:id="@+id/tdf_copy_order_no"
+        android:layout_width="50dp"
+        android:layout_height="18dp"
+        android:background="@drawable/bg_action_button_little"
+        android:gravity="center"
+        android:text="复制"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/tdf_order_no_label"
+        app:layout_constraintEnd_toEndOf="@+id/tdf_remark"
+        app:layout_constraintTop_toTopOf="@+id/tdf_order_no_label" />
+
+    <View
+        android:id="@+id/tdf_div_4"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tdf_pay_method_label" />
+</merge>

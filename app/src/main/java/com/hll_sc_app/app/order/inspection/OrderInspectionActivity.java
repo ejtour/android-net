@@ -109,7 +109,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
                             if (item == 1) {
                                 goToPayment(mResp);
                             }
-                        }, "我再看看", "支付差价").create().show();
+                        }, "我再看看", "收取差价").create().show();
                 return;
             }
             showToast("验货完成");

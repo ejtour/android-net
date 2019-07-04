@@ -134,7 +134,7 @@
         android:id="@+id/odf_deliver_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="-"
+        android:hint="—"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_666666"
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_deliver_amount_label"
@@ -144,7 +144,7 @@
         android:id="@+id/odf_sign_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="-"
+        android:hint="—"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_666666"
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_sign_amount_label"
@@ -299,7 +299,7 @@
         android:id="@+id/odf_supply_chain_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="------"
+        android:hint="——————"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_supply_chain_no_label"
@@ -336,7 +336,7 @@
         android:id="@+id/odf_pay_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="------"
+        android:hint="——————"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_pay_method_label"
@@ -487,13 +487,6 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="odf_coupon_label,odf_coupon" />
-
-    <android.support.constraint.Group
-        android:id="@+id/odf_supply_chain_no_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="odf_supply_chain_no,odf_supply_chain_no_label" />
 
     <android.support.constraint.Group
         android:id="@+id/odf_order_source_group"

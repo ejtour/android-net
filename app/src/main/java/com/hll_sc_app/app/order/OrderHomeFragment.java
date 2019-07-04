@@ -22,6 +22,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.ExportEvent;
@@ -254,7 +255,8 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
         @Override
         public Fragment getItem(int position) {
-            return OrderManageFragment.newInstance(mTypes[position], mOrderParam);
+            return position == 0 ? OrderTransferFragment.newInstance(mOrderParam)
+                    : OrderManageFragment.newInstance(mTypes[position], mOrderParam);
         }
 
         @Override

@@ -83,8 +83,6 @@ public class OrderDetailFooter extends ConstraintLayout {
     Group mShopDiscountGroup;
     @BindView(R.id.odf_coupon_group)
     Group mCouponGroup;
-    @BindView(R.id.odf_supply_chain_no_group)
-    Group mSupplyChainNoGroup;
     @BindView(R.id.odf_order_source_group)
     Group mOrderSourceGroup;
     @BindView(R.id.odf_order_type_group)
@@ -132,7 +130,6 @@ public class OrderDetailFooter extends ConstraintLayout {
 
         mOrderNo.setText(data.getSubBillNo());
         mCopyOrderNo.setTag(data.getSubBillNo());
-        mSupplyChainNoGroup.setVisibility(VISIBLE);
         mSupplyChainNo.setText(data.getPurchaseBillNo());
         mOrderTime.setText(CalendarUtils.getFormatYyyyMmDdHhMm(data.getSubBillCreateTime()));
         String payType = OrderHelper.getPayType(data.getPayType()), paymentWay = OrderHelper.getPaymentWay(data.getPaymentWay());

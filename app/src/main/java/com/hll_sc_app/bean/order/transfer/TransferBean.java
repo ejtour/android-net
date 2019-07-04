@@ -1,4 +1,11 @@
-package com.hll_sc_app.bean.order;
+package com.hll_sc_app.bean.order.transfer;
+
+import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
+import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.utils.Constants;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:xzx8023@vip.qq.com">Vixb</a>
@@ -17,7 +24,7 @@ public class TransferBean {
     private int payType;
     private int purchaserID;
     private double amountPaid;
-    private long billExecuteEndTime;
+    private String billExecuteEndTime;
     private String orgCode;
     private int plateSupplierID;
     private String purchaseBillNo;
@@ -38,17 +45,19 @@ public class TransferBean {
     private int billDate;
     private int isShopMall;
     private int paymentWay;
-    private long billExecuteTime;
+    private String billExecuteTime;
     private String receiverAddress;
     private String acceptBy;
     private String groupName;
     private int operateModel;
-    private long createTime;
+    private String createTime;
     private int shopID;
     private String plateSupplierName;
     private String ordererMobile;
     private int homologous;
     private int status;
+    private boolean mIsSelected;
+    private List<TransferDetailBean> detailList;
 
     OrderResp convertToOrderResp() {
         OrderResp resp = new OrderResp();
@@ -68,6 +77,19 @@ public class TransferBean {
         resp.setPurchaserName(groupName);
         resp.setSubBillID(id);
         return resp;
+    }
+
+    public boolean isCanSelect() {
+        return homologous != 0;
+    }
+
+    public String getTargetExecuteDate() {
+        String HhMm = "2400";
+        String formatDateStr = CalendarUtils.getDateFormatString(billExecuteTime, Constants.FORMAT_YYYY_MM_DD_HH_MM,
+                Constants.FORMAT_YYYY_MM_DD_HH_MM_DASH);
+        if (billExecuteEndTime.endsWith(HhMm)) return formatDateStr + "-" + "24:00";
+        return formatDateStr + "-" + CalendarUtils.getDateFormatString(billExecuteEndTime,
+                Constants.FORMAT_YYYY_MM_DD_HH_MM, "HH:mm");
     }
 
     public long getActionTime() {
@@ -158,11 +180,11 @@ public class TransferBean {
         this.amountPaid = amountPaid;
     }
 
-    public long getBillExecuteEndTime() {
+    public String getBillExecuteEndTime() {
         return billExecuteEndTime;
     }
 
-    public void setBillExecuteEndTime(long billExecuteEndTime) {
+    public void setBillExecuteEndTime(String billExecuteEndTime) {
         this.billExecuteEndTime = billExecuteEndTime;
     }
 
@@ -326,11 +348,11 @@ public class TransferBean {
         this.paymentWay = paymentWay;
     }
 
-    public long getBillExecuteTime() {
+    public String getBillExecuteTime() {
         return billExecuteTime;
     }
 
-    public void setBillExecuteTime(long billExecuteTime) {
+    public void setBillExecuteTime(String billExecuteTime) {
         this.billExecuteTime = billExecuteTime;
     }
 
@@ -366,11 +388,11 @@ public class TransferBean {
         this.operateModel = operateModel;
     }
 
-    public long getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(long createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -412,5 +434,21 @@ public class TransferBean {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public boolean isSelected() {
+        return mIsSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        mIsSelected = selected;
+    }
+
+    public List<TransferDetailBean> getDetailList() {
+        return detailList;
+    }
+
+    public void setDetailList(List<TransferDetailBean> detailList) {
+        this.detailList = detailList;
     }
 }

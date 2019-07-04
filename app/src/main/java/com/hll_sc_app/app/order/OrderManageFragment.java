@@ -327,9 +327,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         initEmptyView();
         mEmptyView.reset();
         mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
-        if (mDeliverTypeRoot != null) { // 隐藏发货类型
-            mDeliverType = null;
-            mDeliverTypeRoot.setVisibility(View.GONE);
+        if (mDeliverType != null) { // 如果有发货类型
+            setDeliverType(null); // 发货类型置空
+            mPresenter.refresh(); // 重新请求
         }
     }
 
@@ -367,11 +367,9 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             mDeliverTypeRoot.setVisibility(View.VISIBLE);
             type = deliverTypes.get(0).getKey();
             mDeliverTypeAdapter.setNewData(deliverTypes);
-        } else {
-            if (mDeliverTypeRoot != null) {
-                mDeliverTypeRoot.setVisibility(View.GONE);
-            }
-        }
+            mDeliverTypeAdapter.setSelectPos(0);
+        } else if (mDeliverTypeRoot != null)
+            mDeliverTypeRoot.setVisibility(View.GONE);
         setDeliverType(type);
     }
 
