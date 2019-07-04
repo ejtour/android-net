@@ -22,6 +22,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.invwarn.HouseSelectWindow;
+import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -130,6 +131,12 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
         mAdapter = new PurchaserListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
+            if (bean != null) {
+                GoodsRelevanceListActivity.start(bean.getGroupID(), bean.getResourceType(), bean.getOperateModel());
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 

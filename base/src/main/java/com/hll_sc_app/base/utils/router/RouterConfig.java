@@ -64,9 +64,13 @@ public class RouterConfig {
      */
     public static final String GOODS_INVENTORY_WARNING = "/activity/goods/inventoryWarning";
     /**
-     *  第三方商品关联-采购商列表
+     * 第三方商品关联-采购商列表
      */
     public static final String GOODS_RELEVANCE_PURCHASER_LIST = "/activity/goods/relevance/purchaserList";
+    /**
+     * 第三方商品关联-采购商-关联、未关联商品列表
+     */
+    public static final String GOODS_RELEVANCE_LIST = "/activity/goods/relevance/goodsList";
     /**
      * 商品详情
      */

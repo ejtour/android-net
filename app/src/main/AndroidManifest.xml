@@ -80,6 +80,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.goods.relevance.goods.GoodsRelevanceListActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.goods.stick.GoodsStickActivity"
             android:screenOrientation="portrait"/>
 

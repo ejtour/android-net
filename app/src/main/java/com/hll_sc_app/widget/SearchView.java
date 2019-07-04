@@ -3,6 +3,7 @@ package com.hll_sc_app.widget;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -20,8 +21,10 @@ import com.hll_sc_app.base.utils.UIUtils;
  * @date 2019-06-27
  */
 public class SearchView extends FrameLayout {
+    private LinearLayout mLlContent;
     private TextView mTxtSearchContent;
     private ImageView mImgSearchClear;
+    private ImageView mImgSearchTitle;
     private ContentClickListener mListener;
 
     public SearchView(@NonNull Context context) {
@@ -36,6 +39,8 @@ public class SearchView extends FrameLayout {
         View.inflate(context, R.layout.view_search, this);
         mTxtSearchContent = findViewById(R.id.txt_searchContent);
         mImgSearchClear = findViewById(R.id.img_searchClear);
+        mImgSearchTitle = findViewById(R.id.img_search_title);
+        mLlContent = findViewById(R.id.ll_content);
         this.setOnClickListener(v -> {
             if (mListener != null) {
                 mListener.click(getSearchContent());
@@ -76,6 +81,18 @@ public class SearchView extends FrameLayout {
     public SearchView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
+    }
+
+    public LinearLayout getContentView() {
+        return mLlContent;
+    }
+
+    public void setTextColorWhite() {
+        int color = ContextCompat.getColor(getContext(), R.color.base_white);
+        mTxtSearchContent.setTextColor(color);
+        mTxtSearchContent.setHintTextColor(color);
+        mImgSearchClear.setImageResource(R.drawable.ic_clear_search);
+        mImgSearchTitle.setImageResource(R.drawable.ic_search);
     }
 
     public void setContentClickListener(ContentClickListener mListener) {

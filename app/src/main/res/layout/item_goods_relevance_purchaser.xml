@@ -23,32 +23,32 @@
 
     <TextView
         android:id="@+id/txt_purchaserName"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toTopOf="@+id/txt_linkMan"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
-        app:layout_constraintWidth_default="wrap"
         tools:text="可好吃可好吃的红彤彤的大苹果"/>
 
     <TextView
         android:id="@+id/txt_linkMan"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toTopOf="@+id/txt_relationProductNum"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_purchaserName"
-        app:layout_constraintWidth_default="wrap"
         tools:text="联系人：王铁锤 ／ 137 0987 6543"/>
 
     <TextView
