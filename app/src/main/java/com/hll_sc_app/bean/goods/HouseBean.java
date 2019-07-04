@@ -12,6 +12,14 @@ public class HouseBean {
     private String id;
     private boolean select;
 
+    public HouseBean() {
+    }
+
+    public HouseBean(String houseName, String id) {
+        this.houseName = houseName;
+        this.id = id;
+    }
+
     public boolean isSelect() {
         return select;
     }

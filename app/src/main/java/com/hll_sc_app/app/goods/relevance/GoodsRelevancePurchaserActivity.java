@@ -21,6 +21,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.invwarn.HouseSelectWindow;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -42,6 +43,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -61,7 +63,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     @BindView(R.id.img_close)
     ImageView mImgClose;
     @BindView(R.id.txt_houseName)
-    TextView mTxtHouseName;
+    TextView mTxtResourceType;
     @BindView(R.id.rl_toolbar)
     RelativeLayout mRlToolbar;
     @BindView(R.id.searchView)
@@ -70,8 +72,9 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     SmartRefreshLayout mRefreshLayout;
     private PurchaserListAdapter mAdapter;
     private GoodsRelevancePurchaserPresenter mPresenter;
-    private HouseSelectWindow mHouseSelectWindow;
+    private HouseSelectWindow mResourceTypeSelectWindow;
     private EmptyView mEmptyView;
+    private List<HouseBean> mListResource;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +87,13 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         mPresenter.register(this);
         mPresenter.start();
         EventBus.getDefault().register(this);
+        // 来源选择
+        mListResource = new ArrayList<>();
+        mListResource.add(new HouseBean("全部", null));
+        mListResource.add(new HouseBean("哗啦啦供应链", "1"));
+        mListResource.add(new HouseBean("天财商龙", "2"));
+        mListResource.get(0).setSelect(true);
+        showSelectResourceType(mListResource.get(0));
     }
 
     @Override
@@ -123,6 +133,12 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    public void showSelectResourceType(HouseBean resource) {
+        mTxtResourceType.setText(resource.getHouseName());
+        mTxtResourceType.setTag(resource.getId());
+        mPresenter.queryPurchaserList(true);
+    }
+
     @Subscribe
     public void onEvent(GoodsInvWarnSearchEvent event) {
         String name = event.getName();
@@ -144,29 +160,20 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
 
     @Override
     public String getResourceType() {
-        return null;
+        String resourceType = null;
+        if (mTxtResourceType.getTag() != null) {
+            resourceType = (String) mTxtResourceType.getTag();
+        }
+        return resourceType;
     }
 
     @Override
-    public void showHouseWindow(List<HouseBean> list) {
-        if (CommonUtils.isEmpty(list)) {
-            showToast("没有仓库数据");
-            return;
+    public void showResourceTypeWindow() {
+        if (mResourceTypeSelectWindow == null) {
+            mResourceTypeSelectWindow = new HouseSelectWindow(this, mListResource);
+            mResourceTypeSelectWindow.setListener(this::showSelectResourceType);
         }
-        if (mHouseSelectWindow == null) {
-            mHouseSelectWindow = new HouseSelectWindow(this, list);
-//            mHouseSelectWindow.setListener(this::showSelectHouse);
-        }
-        mHouseSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
-    }
-
-    @Override
-    public String getHouseId() {
-        String houseId = null;
-        if (mTxtHouseName.getTag() != null) {
-            houseId = (String) mTxtHouseName.getTag();
-        }
-        return houseId;
+        mResourceTypeSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
     }
 
     @Override
@@ -201,7 +208,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
                 finish();
                 break;
             case R.id.ll_house:
-                mPresenter.queryPurchaserList(true);
+                showResourceTypeWindow();
                 break;
             default:
                 break;

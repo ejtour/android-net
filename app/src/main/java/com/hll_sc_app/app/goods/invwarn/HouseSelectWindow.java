@@ -26,17 +26,18 @@ import butterknife.ButterKnife;
 
 /**
  * 代仓商品库存预警-仓库选择
+ * 第三方商品关联-来源选择
  *
  * @author 朱英松
  * @date 2019/7/2
  */
-class HouseSelectWindow extends BasePopupWindow {
+public class HouseSelectWindow extends BasePopupWindow {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     private SelectConfirmListener mListener;
     private List<HouseBean> mList;
 
-    HouseSelectWindow(Activity context, List<HouseBean> list) {
+    public HouseSelectWindow(Activity context, List<HouseBean> list) {
         super(context);
         this.mList = list;
         View view = View.inflate(context, R.layout.window_house_select, null);
@@ -80,11 +81,11 @@ class HouseSelectWindow extends BasePopupWindow {
         }
     }
 
-    void setListener(SelectConfirmListener listener) {
+    public void setListener(SelectConfirmListener listener) {
         this.mListener = listener;
     }
 
-    interface SelectConfirmListener {
+    public interface SelectConfirmListener {
         /**
          * 确定
          *

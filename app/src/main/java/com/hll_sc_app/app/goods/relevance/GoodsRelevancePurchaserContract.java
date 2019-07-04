@@ -2,7 +2,6 @@ package com.hll_sc_app.app.goods.relevance;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 
 import java.util.List;
@@ -31,18 +30,9 @@ public interface GoodsRelevancePurchaserContract {
         String getResourceType();
 
         /**
-         * 显示仓库选择 window
-         *
-         * @param list list
+         * 显示来源选择
          */
-        void showHouseWindow(List<HouseBean> list);
-
-        /**
-         * 获取选中仓库的ID
-         *
-         * @return 选中仓库的ID
-         */
-        String getHouseId();
+        void showResourceTypeWindow();
 
         /**
          * 获取搜索词

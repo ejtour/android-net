@@ -34,7 +34,7 @@ public class GoodsRelevancePurchaserPresenter implements GoodsRelevancePurchaser
 
     @Override
     public void start() {
-        queryPurchaserList(true);
+        // no-op
     }
 
     @Override
