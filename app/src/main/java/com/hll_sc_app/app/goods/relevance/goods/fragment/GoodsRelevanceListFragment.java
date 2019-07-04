@@ -54,6 +54,7 @@ public class GoodsRelevanceListFragment extends BaseLazyFragment implements Good
     private GoodsRelevanceListFragmentPresenter mPresenter;
     private GoodsRelevanceListAdapter mAdapter;
     private EmptyView mEmptyView;
+    private String mGoodsName;
 
     public static GoodsRelevanceListFragment newInstance(String groupId, String resourceType, String operateModel) {
         Bundle args = new Bundle();
@@ -137,6 +138,11 @@ public class GoodsRelevanceListFragment extends BaseLazyFragment implements Good
     }
 
     @Override
+    public String getGoodsName() {
+        return mGoodsName;
+    }
+
+    @Override
     public void showGoodsList(List<GoodsRelevanceBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
@@ -168,6 +174,19 @@ public class GoodsRelevanceListFragment extends BaseLazyFragment implements Good
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
+    }
+
+    /**
+     * 刷新当前 Fragment
+     *
+     * @param name 搜索词
+     */
+    public void refreshFragment(String name) {
+        this.mGoodsName = name;
+        setForceLoad(true);
+        if (isFragmentVisible()) {
+            lazyLoad();
+        }
     }
 
     class GoodsRelevanceListAdapter extends BaseQuickAdapter<GoodsRelevanceBean, BaseViewHolder> {

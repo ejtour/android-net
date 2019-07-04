@@ -20,11 +20,12 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.relevance.goods.fragment.GoodsRelevanceListFragment;
+import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
+import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.widget.SearchView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -101,13 +102,24 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
             llContent.setGravity(Gravity.CENTER_VERTICAL);
             mSearchView.setTextColorWhite();
         }
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_RELEVANCE_LIST);
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                //TODO 刷新未关联、已关联列表
+            }
+        });
         mFragmentAdapter = new FragmentListAdapter(getSupportFragmentManager(), STR_TITLE);
         mViewPager.setAdapter(mFragmentAdapter);
         mTab.setViewPager(mViewPager, STR_TITLE);
     }
 
     @Subscribe
-    public void onEvent(GoodsRelevanceSearchEvent event) {
+    public void onEvent(GoodsRelevanceListSearchEvent event) {
         String name = event.getName();
         if (!TextUtils.isEmpty(name)) {
             mSearchView.showSearchContent(true, name);

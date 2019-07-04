@@ -53,6 +53,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     public static final String FROM_GOODS_TEMPLATE = "FROM_GOODS_TEMPLATE";
     public static final String FROM_GOODS_TOP = "FROM_GOODS_TOP";
     public static final String FROM_GOODS_RELEVANCE = "FROM_GOODS_RELEVANCE";
+    public static final String FROM_GOODS_RELEVANCE_LIST = "FROM_GOODS_RELEVANCE_LIST";
     public static final String FROM_GOODS_INV_WARN = "FROM_GOODS_INV_WARN";
     public static final String FROM_GOODS = "FROM_GOODS";
     public static final String FROM_BRAND = "FROM_BRAND";
@@ -83,7 +84,11 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         mDisposable = getTextObservable().subscribe(s -> {
-            if (!isFromGoods() && !isFromGoodsTop() && !isFromGoodsTemplate() && !isFromGoodsInvWarn()) {
+            if (!isFromGoods()
+                && !isFromGoodsTop()
+                && !isFromGoodsTemplate()
+                && !isFromGoodsInvWarn()
+                && !isFromGoodsRelevanceList()) {
                 // 商品无提示词搜索
                 gotoSearch(s);
             }
@@ -131,6 +136,28 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         return TextUtils.equals(mFrom, FROM_GOODS_TEMPLATE);
     }
 
+    /**
+     * 来自代仓商品库存预警
+     *
+     * @return true
+     */
+    private boolean isFromGoodsInvWarn() {
+        return TextUtils.equals(mFrom, FROM_GOODS_INV_WARN);
+    }
+
+    /**
+     * 来自第三方商品关联-列表
+     *
+     * @return true
+     */
+    private boolean isFromGoodsRelevanceList() {
+        return TextUtils.equals(mFrom, FROM_GOODS_RELEVANCE_LIST);
+    }
+
+    private void gotoSearch(String keywords) {
+        mPresenter.requestSearch(keywords);
+    }
+
     private void initView() {
         String tips = "您可以输入客户名称查找采购商门店";
         String hint = "请输入采购商公司名称";
@@ -141,6 +168,9 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             resId = R.drawable.ic_search_goods;
         } else if (isFromBrand()) {
             tips = "请输入品牌名称进行查询";
+            hint = tips;
+        } else if (isFromGoodsRelevanceList()) {
+            tips = "请输入商品名称进行查询";
             hint = tips;
         } else if (isFromGoodsRelevance()) {
             tips = "请输入采购商集团名称进行查询";
@@ -172,19 +202,6 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0, Color.WHITE);
         mListView.addItemDecoration(decor);
         updateSearchEdit(mSearchWords);
-    }
-
-    private void gotoSearch(String keywords) {
-        mPresenter.requestSearch(keywords);
-    }
-
-    /**
-     * 来自代仓商品库存预警
-     *
-     * @return true
-     */
-    private boolean isFromGoodsInvWarn() {
-        return TextUtils.equals(mFrom, FROM_GOODS_INV_WARN);
     }
 
     /**
@@ -219,6 +236,8 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         } else if (isFromGoodsInvWarn()) {
             EventBus.getDefault().post(new GoodsInvWarnSearchEvent(trim));
         } else if (isFromGoodsRelevance()) {
+            EventBus.getDefault().post(new GoodsRelevanceSearchEvent(trim));
+        } else if (isFromGoodsRelevanceList()) {
             EventBus.getDefault().post(new GoodsRelevanceSearchEvent(trim));
         } else {
             if (mCurBean == null) {

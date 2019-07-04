@@ -61,6 +61,7 @@ public class GoodsRelevanceListFragmentPresenter implements GoodsRelevanceListFr
             .put("operateModel", mView.getOperateModel())
             .put("resourceType", mView.getResourceType())
             .put("plateSupplierID", UserConfig.getGroupID())
+            .put("goodsName", mView.getGoodsName())
             .create();
         GoodsService.INSTANCE.queryGoodsUnRelevanceList(req)
             .compose(ApiScheduler.getObservableScheduler())

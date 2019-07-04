@@ -38,6 +38,13 @@ public interface GoodsRelevanceListFragmentContract {
         String getOperateModel();
 
         /**
+         * 获取商品名称搜索词
+         *
+         * @return 搜索词
+         */
+        String getGoodsName();
+
+        /**
          * 展示未关联商品列表
          *
          * @param list   list
