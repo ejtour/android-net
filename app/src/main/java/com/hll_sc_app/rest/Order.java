@@ -30,6 +30,7 @@ import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
+import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.bean.order.transfer.TransferResp;
@@ -517,6 +518,19 @@ public class Order {
                 .put("cancelReason", cancelReason)
                 .put("flag", "2")
                 .put("plateSupplierID", UserConfig.getGroupID()).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 提交库存检查
+     *
+     * @param beans 库存提交列表
+     */
+    public static void commitInventoryCheck(List<InventoryCheckReq.InventoryCheckBean> beans, SimpleObserver<Object> observer) {
+        OrderService.INSTANCE
+                .commitInventoryCheck(new BaseReq<>(new InventoryCheckReq(beans)))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

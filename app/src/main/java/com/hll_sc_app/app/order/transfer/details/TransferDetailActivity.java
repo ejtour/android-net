@@ -133,7 +133,8 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) mPresenter.start();
+        if (resultCode == RESULT_OK && requestCode == InventoryCheckActivity.REQ_KEY)
+            mPresenter.start();
     }
 
     @OnClick({R.id.atd_action, R.id.atd_cancel})

@@ -17,6 +17,24 @@ public class InventoryBean implements Parcelable {
     private String saleUnitName;
     private String skuCode;
     private double stockNum;
+    private transient int flag;
+    private transient double goodsNum;
+
+    public double getGoodsNum() {
+        return goodsNum;
+    }
+
+    public void setGoodsNum(double goodsNum) {
+        this.goodsNum = goodsNum;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
 
     public String getId() {
         return id;

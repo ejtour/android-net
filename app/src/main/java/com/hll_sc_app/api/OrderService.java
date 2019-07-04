@@ -8,9 +8,6 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.order.OrderResp;
-import com.hll_sc_app.bean.order.transfer.OrderResultResp;
-import com.hll_sc_app.bean.order.transfer.TransferBean;
-import com.hll_sc_app.bean.order.transfer.TransferResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
@@ -22,6 +19,10 @@ import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
+import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
+import com.hll_sc_app.bean.order.transfer.OrderResultResp;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
+import com.hll_sc_app.bean.order.transfer.TransferResp;
 
 import java.util.List;
 
@@ -129,4 +130,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103717")
     Observable<BaseResp<Object>> cancelTransfer(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103726")
+    Observable<BaseResp<Object>> commitInventoryCheck(@Body BaseReq<InventoryCheckReq> req);
 }
