@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -90,9 +91,12 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
     }
 
     private void initView() {
+        mSearchView.setPadding(0, 0, 0, 0);
         mSearchView.setBackgroundResource(R.color.base_colorPrimary);
         LinearLayout llContent = mSearchView.getContentView();
         if (llContent != null) {
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) llContent.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
             llContent.setBackgroundResource(R.drawable.bg_search_text);
             llContent.setGravity(Gravity.CENTER_VERTICAL);
             mSearchView.setTextColorWhite();
@@ -122,7 +126,7 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
             super(fm);
             mListFragment = new ArrayList<>(titles.length);
             for (int i = 0; i < titles.length; i++) {
-                mListFragment.add(GoodsRelevanceListFragment.newInstance());
+                mListFragment.add(GoodsRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel));
             }
         }
 

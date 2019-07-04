@@ -17,6 +17,7 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsInvWarnReq;
 import com.hll_sc_app.bean.goods.GoodsInvWarnResp;
 import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.bean.goods.GoodsRelevanceResp;
 import com.hll_sc_app.bean.goods.GoodsStickReq;
 import com.hll_sc_app.bean.goods.GoodsTemplateResp;
 import com.hll_sc_app.bean.goods.HouseBean;
@@ -314,6 +315,16 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:103709")
     Observable<BaseResp<RelevancePurchaserResp>> queryGoodsRelevancePurchaserList(@Body BaseMapReq req);
+
+    /**
+     * 查询商品关联的集团列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103710")
+    Observable<BaseResp<GoodsRelevanceResp>> queryGoodsUnRelevanceList(@Body BaseMapReq req);
 
     /**
      * 统一导出文件

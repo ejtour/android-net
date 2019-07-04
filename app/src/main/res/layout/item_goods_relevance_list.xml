@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="73dp"
+    android:background="@drawable/base_bg_item_white"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/txt_goodsName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/txt_goodsCode"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/txt_relevance"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="新鲜大荔枝"/>
+
+    <TextView
+        android:id="@+id/txt_goodsCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/txt_saleUnitName"
+        app:layout_constraintTop_toBottomOf="@+id/txt_goodsName"
+        tools:text="规格：5斤/包"/>
+
+    <TextView
+        android:id="@+id/txt_saleUnitName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_goodsCode"
+        app:layout_constraintLeft_toRightOf="@+id/txt_goodsCode"
+        app:layout_constraintRight_toLeftOf="@+id/txt_relevance"
+        app:layout_constraintTop_toTopOf="@+id/txt_goodsCode"
+        tools:text="单位：包"/>
+
+    <TextView
+        android:id="@+id/txt_relevance"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:background="@drawable/bg_button_large_stroke_primary"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="关联商品"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
+
