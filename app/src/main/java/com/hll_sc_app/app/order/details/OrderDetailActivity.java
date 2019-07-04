@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
@@ -24,7 +26,11 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
@@ -35,6 +41,7 @@ import com.hll_sc_app.widget.order.OrderDetailHeader;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -46,9 +53,10 @@ import butterknife.OnClick;
  * @since 2019/6/11
  */
 @Route(path = RouterConfig.ORDER_DETAIL)
-public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetailContract.IOrderDetailView {
+public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetailContract.IOrderDetailView, BaseQuickAdapter.OnItemClickListener {
 
     private OrderResp mOrderResp;
+    private String mLabel;
 
     public static void start(String billID) {
         RouterUtil.goToActivity(RouterConfig.ORDER_DETAIL, billID);
@@ -68,6 +76,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     private OrderDetailHeader mDetailHeader;
     private OrderDetailFooter mDetailFooter;
     private boolean mHasChanged;
+    private ContextOptionsWindow mOptionsWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +96,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     }
 
     private void initView() {
+        mTitleBar.setLeftBtnClick(v -> onBackPressed());
         OrderDetailAdapter adapter = new OrderDetailAdapter();
         mDetailHeader = new OrderDetailHeader(this);
         adapter.addHeaderView(mDetailHeader);
@@ -101,6 +111,13 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         mOrderResp = resp;
         mDetailHeader.setData(resp);
         mDetailFooter.setData(resp);
+        if (resp.getSubBillStatus() == 2 || resp.getSubBillStatus() == 3) {
+            mTitleBar.setRightBtnVisible(true);
+            mTitleBar.setRightBtnClick(this::showOptionsWindow);
+        } else {
+            mTitleBar.setRightBtnVisible(false);
+            mTitleBar.setRightBtnClick(null);
+        }
         if (CommonUtils.isEmpty(resp.getButtonList())) {
             mActionBar.setVisibility(View.GONE);
             ((ViewGroup.MarginLayoutParams) mListView.getLayoutParams()).bottomMargin = 0;
@@ -111,6 +128,19 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         }
         ((OrderDetailAdapter) mListView.getAdapter()).setNewData(resp.getBillDetailList(),
                 resp.getSubbillCategory() == 2);
+    }
+
+    private void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            mOptionsWindow = new ContextOptionsWindow(this)
+                    .setListener(this);
+        }
+        List<OptionsBean> list = new ArrayList<>();
+        if (mOrderResp.getSubBillStatus() == 2)
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ASSEMBLY));
+        list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT));
+        mOptionsWindow.refreshList(list)
+                .showAsDropDownFix(view, Gravity.END);
     }
 
     @Override
@@ -125,6 +155,23 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     public void handleStatusChanged() {
         mHasChanged = true;
         mPresenter.start();
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, email -> {
+            export(mLabel, email);
+        });
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 
     @OnClick({R.id.oab_cancel, R.id.oab_modify,
@@ -179,6 +226,26 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 showToast("成功修改发货信息");
             }
             handleStatusChanged();
+        }
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        mOptionsWindow.dismiss();
+        OptionsBean item = (OptionsBean) adapter.getItem(position);
+        if (item == null) return;
+        mLabel = item.getLabel();
+        export(mLabel, null);
+    }
+
+    private void export(String label, String email) {
+        switch (label) {
+            case OptionType.OPTION_EXPORT_ASSEMBLY:
+                mPresenter.exportAssemblyOrder(mOrderResp.getSubBillID(), email);
+                break;
+            case OptionType.OPTION_EXPORT_OUT:
+                mPresenter.exportDeliveryOrder(mOrderResp.getSubBillID(), email);
+                break;
         }
     }
 }
