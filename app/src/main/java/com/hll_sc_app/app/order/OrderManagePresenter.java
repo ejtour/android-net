@@ -54,8 +54,10 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
             @Override
             public void onSuccess(DeliverNumResp resp) {
                 mView.updateDeliverHeader(resp.getDeliverTypes());
-                mPageNum = 1;
-                getOrderList(showLoading);
+                if (!CommonUtils.isEmpty(resp.getDeliverTypes())) {
+                    mPageNum = 1;
+                    getOrderList(showLoading);
+                } else mView.refreshListData(null);
             }
         });
     }
