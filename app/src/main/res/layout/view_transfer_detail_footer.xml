@@ -181,7 +181,7 @@
         android:id="@+id/tdf_pay_method"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="------"
+        android:hint="——————"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintBaseline_toBaselineOf="@+id/tdf_pay_method_label"

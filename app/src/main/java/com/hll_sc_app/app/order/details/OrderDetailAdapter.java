@@ -62,13 +62,13 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         if (item.getSubBillStatus() == 2) builder.insert(0, "预");
         if (item.getSubBillStatus() >= 2 && item.getSubBillStatus() != 7)
             builder.append(CommonUtils.formatNum(item.getAdjustmentNum())).append(item.getAdjustmentUnit());
-        else builder.append("- -");
+        else builder.append("— —");
         String deliveryText = builder.toString();
 
         builder.delete(0, deliveryText.length()).append("签收：");
         if (item.getSubBillStatus() == 4 || item.getSubBillStatus() == 6 || item.getSubBillStatus() == 8)
             builder.append(CommonUtils.formatNum(item.getInspectionNum())).append(item.getInspectionUnit());
-        else builder.append("- -");
+        else builder.append("— —");
         String confirmText = builder.toString();
 
         helper.setText(R.id.iod_product_name, item.getProductName())
