@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.goods.invwarn;
+package com.hll_sc_app.app.goods.relevance;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -19,10 +18,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -49,21 +46,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 代仓商品库存预警
+ * 第三方商品关联-采购商列表
  *
  * @author zhuyingsong
- * @date 2019/7/2
+ * @date 2019/7/4
  */
-@Route(path = RouterConfig.GOODS_INVENTORY_WARNING, extras = Constant.LOGIN_EXTRA)
-public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWarnContract.IGoodsInvWarnView {
+@Route(path = RouterConfig.GOODS_RELEVANCE_PURCHASER_LIST, extras = Constant.LOGIN_EXTRA)
+public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements GoodsRelevancePurchaserContract.IGoodsInvWarnView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.img_close)
     ImageView mImgClose;
     @BindView(R.id.txt_houseName)
     TextView mTxtHouseName;
-    @BindView(R.id.txt_save)
-    TextView mTxtSave;
     @BindView(R.id.rl_toolbar)
     RelativeLayout mRlToolbar;
     @BindView(R.id.searchView)
@@ -71,18 +66,18 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     private GoodsListAdapter mAdapter;
-    private GoodsInvWarnPresenter mPresenter;
+    private GoodsRelevancePurchaserPresenter mPresenter;
     private HouseSelectWindow mHouseSelectWindow;
     private EmptyView mEmptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods_inv_warn);
+        setContentView(R.layout.activity_goods_relevance_purchaser);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        mPresenter = GoodsInvWarnPresenter.newInstance();
+        mPresenter = GoodsRelevancePurchaserPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
         EventBus.getDefault().register(this);
@@ -129,46 +124,12 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
                 }
             }
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("还没有商品库存数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("还没有采购商数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
         mAdapter = new GoodsListAdapter();
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            GoodsBean bean = (GoodsBean) adapter.getItem(position);
-            if (bean != null) {
-                showInputDialog(bean, adapter, position);
-            }
-        });
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private void showInputDialog(GoodsBean bean, BaseQuickAdapter adapter, int position) {
-        String stockWarnNum = CommonUtils.formatNumber(bean.getStockWarnNum());
-        InputDialog.newBuilder(this)
-            .setCancelable(false)
-            .setTextTitle("输入" + bean.getProductName() + "预警值")
-            .setHint("输入预警值")
-            .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
-            .setText(TextUtils.equals(stockWarnNum, "0") ? "" : stockWarnNum)
-            .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
-                if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
-                    s.delete(s.length() - 1, s.length());
-                    showToast("预警值支持7位整数或小数点后两位");
-                }
-            })
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    if (TextUtils.isEmpty(dialog.getInputString())) {
-                        showToast("输入预警值不能为空");
-                        return;
-                    }
-                    bean.setStockWarnNum(CommonUtils.getDouble(dialog.getInputString()));
-                    adapter.notifyItemChanged(position);
-                }
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create().show();
     }
 
     @Subscribe
@@ -183,12 +144,6 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
-    }
-
-    @Override
-    public void saveSuccess() {
-        showToast("保存成功");
-        finish();
     }
 
     @Override
@@ -233,9 +188,9 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
             mAdapter.setNewData(list);
         }
         if (mSearchView.isSearchStatus()) {
-            mEmptyView.setTips("搜索不到相关商品库存数据");
+            mEmptyView.setTips("搜索不到相关采购商数据");
         } else {
-            mEmptyView.setTips("还没有商品库存数据");
+            mEmptyView.setTips("还没有采购商数据");
         }
         mAdapter.setEmptyView(mEmptyView);
         if (total != 0) {
@@ -245,14 +200,11 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         }
     }
 
-    @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_house})
+    @OnClick({R.id.img_close, R.id.ll_house})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
                 finish();
-                break;
-            case R.id.txt_save:
-                mPresenter.setGoodsInvWarnValue(mAdapter.getData());
                 break;
             case R.id.ll_house:
                 mPresenter.queryHouseList(true);

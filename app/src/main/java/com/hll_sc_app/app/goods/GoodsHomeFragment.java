@@ -209,6 +209,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             toExportGoodsList();
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_EXPORT_RECORD)) {
             toExportRecord(null);
+        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_RELATION)) {
+            RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_PURCHASER_LIST);
         }
         mOptionsWindow.dismiss();
     }
