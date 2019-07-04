@@ -46,7 +46,7 @@ public class TransferDetailAdapter extends BaseQuickAdapter<TransferDetailBean, 
                 .setText(R.id.itd_order_num, "订货： " + CommonUtils.formatNum(item.getGoodsNum()) + item.getSaleUnitName()) // 订货数量
                 .setText(R.id.itd_sale_unit_spec, processPrice("单价： ¥" + CommonUtils.formatMoney(item.getGoodsPrice()) + "/" + item.getSaleUnitName())) // 单价
                 .setText(R.id.itd_amount, processPrice("小计： ¥" + CommonUtils.formatMoney(item.getTotalAmount()))) // 小计
-                .setGone(R.id.itd_tag, item.getIsRelated() == 1 && item.getHomologous() == 0)
+                .setGone(R.id.itd_tag, item.getIsRelated() == 1 && (item.getHomologous() == 0 || !TextUtils.isEmpty(item.getFailReason())))
                 .setText(R.id.itd_tag, !TextUtils.isEmpty(item.getFailReason()) ? item.getFailReason() : "未关联");
     }
 
