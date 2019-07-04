@@ -6,7 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,13 +24,13 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsInvWarnSearchEvent;
-import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.HouseBean;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -52,7 +55,7 @@ import butterknife.OnClick;
  * @date 2019/7/4
  */
 @Route(path = RouterConfig.GOODS_RELEVANCE_PURCHASER_LIST, extras = Constant.LOGIN_EXTRA)
-public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements GoodsRelevancePurchaserContract.IGoodsInvWarnView {
+public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements GoodsRelevancePurchaserContract.IGoodsRelevancePurchaserView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.img_close)
@@ -65,7 +68,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     SearchView mSearchView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    private GoodsListAdapter mAdapter;
+    private PurchaserListAdapter mAdapter;
     private GoodsRelevancePurchaserPresenter mPresenter;
     private HouseSelectWindow mHouseSelectWindow;
     private EmptyView mEmptyView;
@@ -98,37 +101,25 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
 
             @Override
             public void toSearch(String searchContent) {
-                if (TextUtils.isEmpty(searchContent)) {
-                    mPresenter.queryGoodsInvList(true);
-                } else {
-                    mPresenter.searchGoodsInvList(true);
-                }
+                mPresenter.queryPurchaserList(true);
             }
         });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (mSearchView.isSearchStatus()) {
-                    mPresenter.searchMoreGoodsInvList();
-                } else {
-                    mPresenter.queryMoreGoodsInvList();
-                }
+                mPresenter.queryMorePurchaserList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (mSearchView.isSearchStatus()) {
-                    mPresenter.searchGoodsInvList(false);
-                } else {
-                    mPresenter.queryGoodsInvList(false);
-                }
+                mPresenter.queryPurchaserList(false);
             }
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("还没有采购商数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
-        mAdapter = new GoodsListAdapter();
+        mAdapter = new PurchaserListAdapter();
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -147,6 +138,16 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     }
 
     @Override
+    public String getGroupName() {
+        return mSearchView.getSearchContent();
+    }
+
+    @Override
+    public String getResourceType() {
+        return null;
+    }
+
+    @Override
     public void showHouseWindow(List<HouseBean> list) {
         if (CommonUtils.isEmpty(list)) {
             showToast("没有仓库数据");
@@ -154,16 +155,9 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         }
         if (mHouseSelectWindow == null) {
             mHouseSelectWindow = new HouseSelectWindow(this, list);
-            mHouseSelectWindow.setListener(this::showSelectHouse);
+//            mHouseSelectWindow.setListener(this::showSelectHouse);
         }
         mHouseSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
-    }
-
-    @Override
-    public void showSelectHouse(HouseBean houseBean) {
-        mTxtHouseName.setText(houseBean.getHouseName());
-        mTxtHouseName.setTag(houseBean.getId());
-        mPresenter.queryGoodsInvList(true);
     }
 
     @Override
@@ -181,7 +175,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     }
 
     @Override
-    public void showGoodsInvList(List<GoodsBean> list, boolean append, int total) {
+    public void showPurchaserList(List<PurchaserBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -207,34 +201,41 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
                 finish();
                 break;
             case R.id.ll_house:
-                mPresenter.queryHouseList(true);
+                mPresenter.queryPurchaserList(true);
                 break;
             default:
                 break;
         }
     }
 
-    class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
+    class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
 
-        GoodsListAdapter() {
-            super(R.layout.item_goods_inv_warn);
+        PurchaserListAdapter() {
+            super(R.layout.item_goods_relevance_purchaser);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, GoodsBean item) {
-            ((GlideImageView) (helper.setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_specsSize, "规格：" + getString(item.getSaleSpecNum()))
-                .setText(R.id.txt_standardUnit, "标准单位：" + getString(item.getStandardUnitName()))
-                .setText(R.id.txt_cargoOwnerName, "货主：" + getString(item.getCargoOwnerName()))
-                .setText(R.id.txt_usableStock, "可用库存：" + CommonUtils.formatNumber(item.getUsableStock()))
-                .setText(R.id.txt_stockWarnNum_unit, getString(item.getStandardUnitName()))
-                .setText(R.id.txt_stockWarnNum, CommonUtils.formatNumber(item.getStockWarnNum()))
-                .addOnClickListener(R.id.txt_stockWarnNum)
-                .getView(R.id.img_imgUrl))).setImageURL(item.getImgUrl());
+        protected void convert(BaseViewHolder helper, PurchaserBean item) {
+            helper.setText(R.id.txt_purchaserName, item.getPurchaserName())
+                .setText(R.id.txt_linkMan,
+                    "联系人：" + getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getGroupPhone())))
+                .setText(R.id.txt_relationProductNum,
+                    getSpannableString("关联品项：" + CommonUtils.formatNumber(item.getRelationProductNum())))
+                .setText(R.id.txt_unRelationProductNum,
+                    getSpannableString("未关联品项：" + CommonUtils.formatNumber(item.getUnRelationProductNum())));
         }
 
         private String getString(String str) {
             return TextUtils.isEmpty(str) ? "无" : str;
+        }
+
+        private SpannableString getSpannableString(String str) {
+            SpannableString spannableString = new SpannableString(str);
+            if (str.contains("：")) {
+                spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext,
+                    R.color.base_colorPrimary)), str.indexOf("："), str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+            return spannableString;
         }
     }
 }

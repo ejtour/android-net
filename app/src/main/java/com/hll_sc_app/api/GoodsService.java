@@ -23,6 +23,7 @@ import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.goods.ProductBrandResp;
+import com.hll_sc_app.bean.goods.RelevancePurchaserResp;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
 import com.hll_sc_app.bean.goods.SkuCheckResp;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
@@ -303,6 +304,16 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100062")
     Observable<BaseResp<ExportResp>> exportGoodsList(@Body BaseMapReq req);
+
+    /**
+     * 查询商品关联的集团列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103709")
+    Observable<BaseResp<RelevancePurchaserResp>> queryGoodsRelevancePurchaserList(@Body BaseMapReq req);
 
     /**
      * 统一导出文件
