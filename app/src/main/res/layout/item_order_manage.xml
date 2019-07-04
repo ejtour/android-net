@@ -32,6 +32,19 @@
         tools:src="@drawable/ic_placeholder_shop" />
 
     <TextView
+        android:id="@+id/iom_image_tag"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:background="@drawable/bg_transfer_item_tag"
+        android:gravity="center"
+        android:text="含未关联商品"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/iom_image"
+        app:layout_constraintEnd_toEndOf="@+id/iom_image"
+        app:layout_constraintStart_toStartOf="@+id/iom_image" />
+
+    <TextView
         android:id="@+id/iom_warehouse_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,8 +72,24 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Primary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/iom_name"
-        app:layout_constraintEnd_toStartOf="@+id/iom_name"
+        app:layout_constraintEnd_toStartOf="@+id/iom_makeup_tag"
         app:layout_constraintStart_toEndOf="@+id/iom_warehouse_tag"
+        app:layout_constraintTop_toTopOf="@+id/iom_name" />
+
+    <TextView
+        android:id="@+id/iom_makeup_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="补单"
+        android:visibility="gone"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintBottom_toBottomOf="@+id/iom_name"
+        app:layout_constraintEnd_toStartOf="@+id/iom_name"
+        app:layout_constraintStart_toEndOf="@+id/iom_self_lift_tag"
         app:layout_constraintTop_toTopOf="@+id/iom_name" />
 
     <TextView
@@ -71,7 +100,7 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iom_self_lift_tag"
+        app:layout_constraintStart_toEndOf="@+id/iom_makeup_tag"
         app:layout_constraintTop_toTopOf="@+id/iom_image"
         tools:text="二十二城西直门旗舰店" />
 

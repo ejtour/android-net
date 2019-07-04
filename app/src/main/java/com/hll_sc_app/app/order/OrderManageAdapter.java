@@ -41,7 +41,8 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
         holder.addOnClickListener(R.id.iom_check_box)
-                .setGone(R.id.iom_check_box, mCanCheck);
+                .setGone(R.id.iom_check_box, mCanCheck)
+                .setGone(R.id.iom_image_tag, false);
         return holder;
     }
 
@@ -56,7 +57,10 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
                 .setText(R.id.iom_purchase_name, "采购商：" + item.getPurchaserName())
                 .setText(R.id.iom_order_no, "订单号：" + item.getSubBillNo())
                 .setText(R.id.iom_extra_info, OrderHelper.handleExtraInfo(item))
-                .setGone(R.id.iom_divider, helper.getAdapterPosition() != getItemCount() - 1);
+                .setGone(R.id.iom_divider, helper.getAdapterPosition() != getItemCount() - 1)
+                .setGone(R.id.iom_self_lift_tag, item.getDeliverType() == 2)
+                .setGone(R.id.iom_warehouse_tag, item.getSubbillCategory() == 2)
+                .setGone(R.id.iom_makeup_tag, item.getIsSupplement() == 1);
     }
 
     private int getItemPosition(OrderResp item) {
