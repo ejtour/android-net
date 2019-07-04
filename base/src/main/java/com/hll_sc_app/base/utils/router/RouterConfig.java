@@ -147,6 +147,11 @@ public class RouterConfig {
     public static final String ORDER_SETTLEMENT = "/activity/order/settlement";
 
     /**
+     * 订单库存检查
+     */
+    public static final String ORDER_INVENTORY_CHECK = "/activity/order/inventory/check";
+
+    /**
      * 提交成功
      */
     public static final String SUBMIT_SUCCESS = "/activity/submit/success";

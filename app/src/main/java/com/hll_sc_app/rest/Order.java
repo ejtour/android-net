@@ -2,7 +2,9 @@ package com.hll_sc_app.rest;
 
 import android.text.TextUtils;
 
+import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.api.OrderService;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
@@ -16,8 +18,6 @@ import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
-import com.hll_sc_app.bean.order.TransferBean;
-import com.hll_sc_app.bean.order.TransferResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
@@ -30,6 +30,10 @@ import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
+import com.hll_sc_app.bean.order.transfer.OrderResultResp;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
+import com.hll_sc_app.bean.order.transfer.TransferResp;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Constants;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -457,7 +461,7 @@ public class Order {
      *
      * @param ids 选中的订单id列表
      */
-    public static void mallOrder(List<String> ids, SimpleObserver<Object> observer) {
+    public static void mallOrder(List<String> ids, SimpleObserver<OrderResultResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("actionBy", user.getEmployeeName())
@@ -465,11 +469,20 @@ public class Order {
                 .put("id", ids.size() == 1 ? ids.get(0) : null)
                 .put("ids", ids.size() > 1 ? TextUtils.join(",", ids) : null)
                 .create();
-        Observable<BaseResp<Object>> observable = ids.size() > 1 ? OrderService.INSTANCE
+        Observable<BaseResp<OrderResultResp>> observable = ids.size() > 1 ? OrderService.INSTANCE
                 .batchMallOrder(req) : OrderService.INSTANCE
                 .mallOrder(req);
         observable
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(orderResultRespBaseResp -> {
+                    if (!orderResultRespBaseResp.isSuccess()) {
+                        throw new UseCaseException(orderResultRespBaseResp.getCode(), orderResultRespBaseResp.getMessage());
+                    }
+                    if (!TextUtils.isEmpty(orderResultRespBaseResp.getMessage())) {
+                        ToastUtils.showShort(MyApplication.getInstance(), orderResultRespBaseResp.getMessage());
+                    }
+                    return orderResultRespBaseResp.getData();
+                })
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
@@ -490,9 +503,10 @@ public class Order {
 
     /**
      * 取消转单
-     * @param actionBy 操作人
-     * @param ids 订单 id
-     * @param billSource 订单来源：1-哗啦啦供应链 2-天财供应链
+     *
+     * @param actionBy     操作人
+     * @param ids          订单 id
+     * @param billSource   订单来源：1-哗啦啦供应链 2-天财供应链
      * @param cancelReason 取消原因
      */
     public static void cancelTransfer(String actionBy, String ids, int billSource, String cancelReason, SimpleObserver<Object> observer) {

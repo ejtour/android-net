@@ -157,6 +157,7 @@
             android:name=".app.order.settle.OrderSettlementActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme"/>
+        <activity android:name=".app.order.transfer.inventory.InventoryCheckActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

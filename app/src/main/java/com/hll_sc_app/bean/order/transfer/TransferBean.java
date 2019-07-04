@@ -1,5 +1,6 @@
-package com.hll_sc_app.bean.order;
+package com.hll_sc_app.bean.order.transfer;
 
+import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.utils.Constants;

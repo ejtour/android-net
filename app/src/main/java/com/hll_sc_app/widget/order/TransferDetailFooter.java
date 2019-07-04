@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
-import com.hll_sc_app.bean.order.TransferBean;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;

@@ -23,7 +23,7 @@ import com.hll_sc_app.app.order.common.OrderStatus;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
-import com.hll_sc_app.bean.order.TransferBean;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.utils.ColorStr;
 
 import butterknife.BindView;

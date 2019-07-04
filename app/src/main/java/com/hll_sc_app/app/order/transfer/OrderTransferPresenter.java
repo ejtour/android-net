@@ -2,9 +2,12 @@ package com.hll_sc_app.app.order.transfer;
 
 import android.text.TextUtils;
 
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.order.OrderParam;
-import com.hll_sc_app.bean.order.TransferResp;
+import com.hll_sc_app.bean.order.transfer.OrderResultResp;
+import com.hll_sc_app.bean.order.transfer.TransferResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 import com.hll_sc_app.utils.Constants;
@@ -70,9 +73,9 @@ public class OrderTransferPresenter implements IOrderTransferContract.IOrderTran
 
     @Override
     public void mallOrder(List<String> ids) {
-        Order.mallOrder(ids, new SimpleObserver<Object>(mView) {
+        Order.mallOrder(ids, new SimpleObserver<OrderResultResp>(mView) {
             @Override
-            public void onSuccess(Object o) {
+            public void onSuccess(OrderResultResp resp) {
                 mView.mallOrderSuccess();
             }
         });

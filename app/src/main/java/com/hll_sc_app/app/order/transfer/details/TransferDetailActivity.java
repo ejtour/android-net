@@ -15,12 +15,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.transfer.inventory.InventoryCheckActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
-import com.hll_sc_app.bean.order.TransferBean;
+import com.hll_sc_app.bean.order.transfer.InventoryBean;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
@@ -28,6 +30,8 @@ import com.hll_sc_app.widget.order.OrderDetailHeader;
 import com.hll_sc_app.widget.order.TransferDetailFooter;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,6 +105,11 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
         mAction.setText(bean.getHomologous() == 0 ? "关联商品" : "商城下单");
         ((TransferDetailAdapter) mListView.getAdapter()).setNewData(bean.getDetailList(),
                 bean.getShipperType() == 1);
+    }
+
+    @Override
+    public void inventoryShortage(ArrayList<InventoryBean> list) {
+        InventoryCheckActivity.start(this, list);
     }
 
     @Override

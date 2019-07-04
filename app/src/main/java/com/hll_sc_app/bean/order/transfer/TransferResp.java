@@ -1,6 +1,5 @@
-package com.hll_sc_app.bean.order;
+package com.hll_sc_app.bean.order.transfer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

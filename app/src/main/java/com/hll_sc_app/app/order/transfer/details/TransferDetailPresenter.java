@@ -5,10 +5,12 @@ import android.support.annotation.NonNull;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.order.TransferBean;
+import com.hll_sc_app.bean.order.transfer.OrderResultResp;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -22,7 +24,16 @@ public class TransferDetailPresenter implements ITransferDetailContract.ITransfe
 
     @Override
     public void mallOrder() {
-        Order.mallOrder(Collections.singletonList(mID), getObserver("商城下单成功"));
+        Order.mallOrder(Collections.singletonList(mID), new SimpleObserver<OrderResultResp>(mView) {
+            @Override
+            public void onSuccess(OrderResultResp resp) {
+                if (CommonUtils.isEmpty(resp.getRecords())) {
+                    mView.handleStatusChanged();
+                } else {
+                    mView.inventoryShortage(new ArrayList<>(resp.getRecords()));
+                }
+            }
+        });
     }
 
     private TransferDetailPresenter(String id) {
@@ -51,16 +62,12 @@ public class TransferDetailPresenter implements ITransferDetailContract.ITransfe
     @Override
     public void orderCancel(String cancelReason, int billSource) {
         UserBean user = GreenDaoUtils.getUser();
-        Order.cancelTransfer(user.getEmployeeName(), mID, billSource, cancelReason, getObserver("取消下单成功"));
-    }
-
-    private SimpleObserver<Object> getObserver(String toast) {
-        return new SimpleObserver<Object>(mView) {
+        Order.cancelTransfer(user.getEmployeeName(), mID, billSource, cancelReason, new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
-                mView.showToast(toast);
+                mView.showToast("取消下单成功");
                 mView.handleStatusChanged();
             }
-        };
+        });
     }
 }

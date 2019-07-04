@@ -4,7 +4,7 @@ import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.OrderParam;
-import com.hll_sc_app.bean.order.TransferBean;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 
 import java.util.List;
 

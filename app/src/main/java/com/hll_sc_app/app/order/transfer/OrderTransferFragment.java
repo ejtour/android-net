@@ -26,7 +26,7 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
-import com.hll_sc_app.bean.order.TransferBean;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
@@ -313,7 +313,6 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
             EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
         } else {
             cancelSelect();
-            showToast("商城批量下单中，请稍后刷新查看");
         }
     }
 

@@ -13,8 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
-import com.hll_sc_app.bean.order.OrderResp;
-import com.hll_sc_app.bean.order.TransferBean;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.ColorStr;
@@ -32,31 +31,31 @@ public class OrderTransferAdapter extends BaseQuickAdapter<TransferBean, BaseVie
     private int mSelectableNum;
 
     OrderTransferAdapter() {
-        super(R.layout.item_order_transfer);
+        super(R.layout.item_order_manage);
     }
 
     @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
-        holder.addOnClickListener(R.id.iot_check_box);
+        holder.addOnClickListener(R.id.iom_check_box);
         return holder;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, TransferBean item) {
-        ((GlideImageView) helper.getView(R.id.iot_image)).setImageURL("");
-        View view = helper.getView(R.id.iot_check_box);
+        ((GlideImageView) helper.getView(R.id.iom_image)).setImageURL("");
+        View view = helper.getView(R.id.iom_check_box);
         view.setEnabled(item.isCanSelect());
         view.setSelected(item.isSelected());
         boolean showTag = item.getHomologous() == 0 && (item.getStatus() == 1 || item.getStatus() == 3);
-        helper.setText(R.id.iot_name, item.getAllotName())
-                .setText(R.id.iot_money, "¥" + CommonUtils.formatMoney(item.getTotalPrice()))
-                .setText(R.id.iot_purchase_name, "采购商：" + item.getGroupName())
-                .setText(R.id.iot_order_no, "订单号：" + item.getPurchaseBillNo())
-                .setText(R.id.iot_extra_info, processExtraInfo(item.getBillExecuteTime()))
-                .setGone(R.id.iot_divider, helper.getAdapterPosition() != getItemCount() - 1)
-                .setGone(R.id.iot_tag, showTag)
-                .setText(R.id.iot_tag, showTag && item.getStatus() == 1 ? "含未关联商品" : item.getFailReason());
+        helper.setText(R.id.iom_name, item.getAllotName())
+                .setText(R.id.iom_money, "¥" + CommonUtils.formatMoney(item.getTotalPrice()))
+                .setText(R.id.iom_purchase_name, "采购商：" + item.getGroupName())
+                .setText(R.id.iom_order_no, "订单号：" + item.getPurchaseBillNo())
+                .setText(R.id.iom_extra_info, processExtraInfo(item.getBillExecuteTime()))
+                .setGone(R.id.iom_divider, helper.getAdapterPosition() != getItemCount() - 1)
+                .setGone(R.id.iom_image_tag, showTag)
+                .setText(R.id.iom_image_tag, showTag && item.getStatus() == 1 ? "含未关联商品" : item.getFailReason());
     }
 
     private SpannableString processExtraInfo(String extra) {
@@ -72,6 +71,7 @@ public class OrderTransferAdapter extends BaseQuickAdapter<TransferBean, BaseVie
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
+
     private int getItemPosition(TransferBean item) {
         return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
     }
