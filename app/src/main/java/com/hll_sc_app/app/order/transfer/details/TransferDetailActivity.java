@@ -114,7 +114,7 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
 
     @Override
     public void handleStatusChanged() {
-        EventBus.getDefault().post(new OrderEvent(OrderEvent.REMOVE_ITEM));
+        EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
         finish();
     }
 

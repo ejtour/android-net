@@ -370,11 +370,6 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
                 setForceLoad(true);
                 lazyLoad();
                 break;
-            case OrderEvent.REMOVE_ITEM:
-                if (mAdapter.getData().size() == 1)
-                    setListData(null, false);
-                else mAdapter.removeData(mCurResp);
-                break;
         }
     }
 
