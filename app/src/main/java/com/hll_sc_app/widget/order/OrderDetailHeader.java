@@ -99,8 +99,12 @@ public class OrderDetailHeader extends ConstraintLayout {
 
     public void setData(TransferBean data) {
         mStatusIcon.setImageResource(OrderStatus.PENDING_TRANSFER.getIcon());
-        mStatusLabel.setText(OrderStatus.PENDING_TRANSFER.getLabel());
-        mStatusDesc.setText(OrderStatus.PENDING_TRANSFER.getDesc(0, null, null));
+        mStatusLabel.setText(data.getStatus() == 1 ? OrderStatus.PENDING_TRANSFER.getLabel() : "下单失败");
+        mStatusDesc.setText(data.getStatus() == 1
+                ? data.getHomologous() == 1
+                ? OrderStatus.PENDING_TRANSFER.getDesc(1, null, null)
+                : "该订单含有未关联的第三方品项，请先关联后再进行商城下单操作"
+                : "订单存在商品问题或门店合作问题导致下单失败");
         mShopLogo.setImageURL("");
         mShopName.setText(data.getAllotName());
         mGroupName.setText(data.getGroupName());
