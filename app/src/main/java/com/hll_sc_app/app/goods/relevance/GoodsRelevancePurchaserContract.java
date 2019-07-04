@@ -35,13 +35,6 @@ public interface GoodsRelevancePurchaserContract {
         void showResourceTypeWindow();
 
         /**
-         * 获取搜索词
-         *
-         * @return 搜索词
-         */
-        String getName();
-
-        /**
          * 展示采购商集团列表
          *
          * @param list   list

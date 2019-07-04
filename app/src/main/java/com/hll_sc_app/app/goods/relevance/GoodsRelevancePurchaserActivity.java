@@ -28,7 +28,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.GoodsInvWarnSearchEvent;
+import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
@@ -106,7 +106,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_INV_WARN);
+                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_RELEVANCE);
             }
 
             @Override
@@ -140,7 +140,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     }
 
     @Subscribe
-    public void onEvent(GoodsInvWarnSearchEvent event) {
+    public void onEvent(GoodsRelevanceSearchEvent event) {
         String name = event.getName();
         if (!TextUtils.isEmpty(name)) {
             mSearchView.showSearchContent(true, name);
@@ -174,11 +174,6 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
             mResourceTypeSelectWindow.setListener(this::showSelectResourceType);
         }
         mResourceTypeSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
-    }
-
-    @Override
-    public String getName() {
-        return mSearchView.getSearchContent();
     }
 
     @Override
