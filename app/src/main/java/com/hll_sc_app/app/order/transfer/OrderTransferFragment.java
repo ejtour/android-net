@@ -189,7 +189,7 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
             }
             mConfirm.setEnabled(num > 0);
             mTotalAmountText.setText(handleTotalAmount(totalAmount));
-            mSelectAll.setSelected(num == mAdapter.getSelectableNum());
+            mSelectAll.setSelected(num == mAdapter.getSelectableNum() && num > 0);
             String text = mConfirm.getText().toString();
             StringBuilder stringBuilder = new StringBuilder(text);
             stringBuilder.replace(text.indexOf("(") + 1, text.indexOf(")"), String.valueOf(num));
