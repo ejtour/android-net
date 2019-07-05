@@ -134,7 +134,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                GoodsRelevanceListActivity.start(bean.getGroupID(), bean.getResourceType(), bean.getOperateModel());
+                GoodsRelevanceListActivity.start(bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

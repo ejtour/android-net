@@ -85,13 +85,14 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
         }
         // http://rap.hualala.com/workspace/myWorkspace.do?projectId=1147#13869
         BaseMapReq req = BaseMapReq.newBuilder()
+            // 三方商品
             .put("goodsCode", relevanceBean.getGoodsCode())
             .put("thirdGroupID", relevanceBean.getThirdGroupID())
             .put("operateModel", relevanceBean.getOperateModel())
             .put("resourceType", relevanceBean.getResourceType())
-            // 订单货主类型,1:采购商代仓 0:无货主
-            .put("shipperType", "0")
-            .put("erpShopID", "")
+            .put("shipperType", relevanceBean.getShipperType())
+            .put("erpShopID", relevanceBean.getErpShopID())
+            // 平台商品
             .put("cargoOwnerID", bean.getCargoOwnerID())
             .put("cargoOwnerName", bean.getCargoOwnerName())
             .put("imgUrl", bean.getImgUrl())
