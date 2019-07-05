@@ -72,6 +72,10 @@ public class RouterConfig {
      */
     public static final String GOODS_RELEVANCE_LIST = "/activity/goods/relevance/goodsList";
     /**
+     * 第三方商品关联-采购商-关联、未关联商品列表-选择关联商品
+     */
+    public static final String GOODS_RELEVANCE_LIST_SELECT = "/activity/goods/relevance/goodsList/select";
+    /**
      * 商品详情
      */
     public static final String ROOT_HOME_GOODS_DETAIL = "/activity/home/goods/detail";

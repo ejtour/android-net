@@ -18,6 +18,8 @@ import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
 import com.hll_sc_app.app.goods.relevance.goods.fragment.BaseGoodsRelevanceFragment;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -119,7 +121,8 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
             if (id == R.id.txt_relevance_remove) {
                 showTipsDialog(bean);
             } else if (id == R.id.txt_relevance_again) {
-
+                RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST_SELECT, bean.getGoodsName(),
+                    bean.getGoodsCode());
             }
         });
         mRecyclerView.setAdapter(mAdapter);
