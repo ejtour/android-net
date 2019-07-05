@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.BrandSearchEvent;
 import com.hll_sc_app.bean.event.GoodsInvWarnSearchEvent;
+import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
@@ -238,7 +239,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         } else if (isFromGoodsRelevance()) {
             EventBus.getDefault().post(new GoodsRelevanceSearchEvent(trim));
         } else if (isFromGoodsRelevanceList()) {
-            EventBus.getDefault().post(new GoodsRelevanceSearchEvent(trim));
+            EventBus.getDefault().post(new GoodsRelevanceListSearchEvent(trim));
         } else {
             if (mCurBean == null) {
                 mCurBean = new OrderSearchBean();

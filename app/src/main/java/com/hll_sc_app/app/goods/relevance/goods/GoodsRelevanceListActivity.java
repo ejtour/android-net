@@ -28,6 +28,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SearchView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -64,8 +65,8 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
     private FragmentListAdapter mFragmentAdapter;
-    private GoodsUnRelevanceListFragment mUnRelevanceListFragment;
-    private GoodsRelevanceListFragment mRelevanceListFragment;
+    private GoodsRelevanceListFragment mUnRelevanceListFragment;
+    private GoodsUnRelevanceListFragment mRelevanceListFragment;
     private List<BaseGoodsRelevanceFragment> mListFragment;
 
     /**
@@ -115,13 +116,17 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
 
             @Override
             public void toSearch(String searchContent) {
-                //TODO 刷新未关联、已关联列表
+                if (!CommonUtils.isEmpty(mListFragment)) {
+                    for (BaseGoodsRelevanceFragment fragment : mListFragment) {
+                        fragment.refreshFragment(searchContent);
+                    }
+                }
             }
         });
         mListFragment = new ArrayList<>();
-        mRelevanceListFragment = GoodsRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel);
+        mRelevanceListFragment = GoodsUnRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel);
         mListFragment.add(mRelevanceListFragment);
-        mUnRelevanceListFragment = GoodsUnRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel);
+        mUnRelevanceListFragment = GoodsRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel);
         mListFragment.add(mUnRelevanceListFragment);
         mFragmentAdapter = new FragmentListAdapter(getSupportFragmentManager(), mListFragment);
         mViewPager.setAdapter(mFragmentAdapter);

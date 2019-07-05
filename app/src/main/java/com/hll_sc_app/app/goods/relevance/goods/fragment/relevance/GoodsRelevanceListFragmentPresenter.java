@@ -15,10 +15,10 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 
 /**
- * 第三方商品关联-采购商列表-关联商品列表-未关联、已关联
+ * 第三方商品关联-采购商列表-关联商品列表-已关联
  *
  * @author zhuyingsong
- * @date 2019/7/4
+ * @date 2019/7/5
  */
 public class GoodsRelevanceListFragmentPresenter implements GoodsRelevanceListFragmentContract.IGoodsRelevanceListPresenter {
     private GoodsRelevanceListFragmentContract.IGoodsRelevanceListView mView;
@@ -31,7 +31,7 @@ public class GoodsRelevanceListFragmentPresenter implements GoodsRelevanceListFr
 
     @Override
     public void start() {
-        queryGoodsUnRelevanceList(true);
+        queryGoodsRelevanceList(true);
     }
 
     @Override
@@ -40,14 +40,14 @@ public class GoodsRelevanceListFragmentPresenter implements GoodsRelevanceListFr
     }
 
     @Override
-    public void queryGoodsUnRelevanceList(boolean showLoading) {
+    public void queryGoodsRelevanceList(boolean showLoading) {
         mPageNum = 1;
         mTempPageNum = mPageNum;
         toQueryGoodsUnRelevanceList(showLoading);
     }
 
     @Override
-    public void queryMoreGoodsUnRelevanceList() {
+    public void queryMoreGoodsRelevanceList() {
         mTempPageNum = mPageNum;
         mTempPageNum++;
         toQueryGoodsUnRelevanceList(false);
@@ -63,7 +63,7 @@ public class GoodsRelevanceListFragmentPresenter implements GoodsRelevanceListFr
             .put("plateSupplierID", UserConfig.getGroupID())
             .put("goodsName", mView.getGoodsName())
             .create();
-        GoodsService.INSTANCE.queryGoodsUnRelevanceList(req)
+        GoodsService.INSTANCE.queryGoodsRelevanceList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> {

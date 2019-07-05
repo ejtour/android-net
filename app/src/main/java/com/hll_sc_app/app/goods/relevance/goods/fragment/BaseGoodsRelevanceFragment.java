@@ -9,4 +9,10 @@ import com.hll_sc_app.base.BaseLazyFragment;
  * @date 2019-07-05
  */
 public abstract class BaseGoodsRelevanceFragment extends BaseLazyFragment {
+    /**
+     * 刷新界面
+     *
+     * @param name 搜索词
+     */
+    public abstract void refreshFragment(String name);
 }
