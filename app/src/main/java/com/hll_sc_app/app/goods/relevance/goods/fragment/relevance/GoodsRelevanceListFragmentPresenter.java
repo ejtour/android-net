@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.goods.GoodsRelevanceResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -51,6 +52,34 @@ public class GoodsRelevanceListFragmentPresenter implements GoodsRelevanceListFr
         mTempPageNum = mPageNum;
         mTempPageNum++;
         toQueryGoodsUnRelevanceList(false);
+    }
+
+    @Override
+    public void removeGoodsRelevance(GoodsRelevanceBean bean) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("goodsCode", bean.getGoodsCode())
+            .put("id", bean.getId())
+            .put("plateSupplierID", bean.getPlateSupplierID())
+            .put("resourceType", bean.getResourceType())
+            .put("thirdGroupID", bean.getThirdGroupID())
+            .create();
+        GoodsService.INSTANCE.removeGoodsRelevance(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object goodsInvResp) {
+                    mView.removeRelevanceSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
     }
 
     private void toQueryGoodsUnRelevanceList(boolean showLoading) {

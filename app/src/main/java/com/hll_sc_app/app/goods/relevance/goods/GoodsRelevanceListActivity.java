@@ -116,11 +116,7 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
 
             @Override
             public void toSearch(String searchContent) {
-                if (!CommonUtils.isEmpty(mListFragment)) {
-                    for (BaseGoodsRelevanceFragment fragment : mListFragment) {
-                        fragment.refreshFragment(searchContent);
-                    }
-                }
+                refreshFragment();
             }
         });
         mListFragment = new ArrayList<>();
@@ -131,6 +127,14 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
         mFragmentAdapter = new FragmentListAdapter(getSupportFragmentManager(), mListFragment);
         mViewPager.setAdapter(mFragmentAdapter);
         mTab.setViewPager(mViewPager, STR_TITLE);
+    }
+
+    public void refreshFragment() {
+        if (!CommonUtils.isEmpty(mListFragment)) {
+            for (BaseGoodsRelevanceFragment fragment : mListFragment) {
+                fragment.refreshFragment(mSearchView.getSearchContent());
+            }
+        }
     }
 
     @Subscribe

@@ -9,11 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
 import com.hll_sc_app.app.goods.relevance.goods.fragment.BaseGoodsRelevanceFragment;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
@@ -45,6 +48,8 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
     String mGroupId;
     String mResourceType;
     String mOperateModel;
+    @BindView(R.id.ll_title)
+    LinearLayout mLlTitle;
     private GoodsRelevanceListFragmentPresenter mPresenter;
     private GoodsRelevanceListAdapter mAdapter;
     private EmptyView mEmptyView;
@@ -105,7 +110,34 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
             R.color.base_color_divider)
             , UIUtils.dip2px(5)));
         mAdapter = new GoodsRelevanceListAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            GoodsRelevanceBean bean = (GoodsRelevanceBean) adapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+            int id = view.getId();
+            if (id == R.id.txt_relevance_remove) {
+                showTipsDialog(bean);
+            } else if (id == R.id.txt_relevance_again) {
+
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void showTipsDialog(GoodsRelevanceBean bean) {
+        SuccessDialog.newBuilder(requireActivity())
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("确认解除商品关联么")
+            .setMessage("解除后未关联的商品将无法下单\n请谨慎操作")
+            .setCancelable(false)
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    mPresenter.removeGoodsRelevance(bean);
+                }
+                dialog.dismiss();
+            }, "我再看看", "确认解除").create().show();
     }
 
     @Override
@@ -145,6 +177,14 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
             mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
         } else {
             mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
+        }
+        mLlTitle.setVisibility(total == 0 ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void removeRelevanceSuccess() {
+        if (getActivity() instanceof GoodsRelevanceListActivity) {
+            ((GoodsRelevanceListActivity) getActivity()).refreshFragment();
         }
     }
 

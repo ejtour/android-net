@@ -52,6 +52,11 @@ public interface GoodsRelevanceListFragmentContract {
          * @param total  indexList
          */
         void showGoodsList(List<GoodsRelevanceBean> list, boolean append, int total);
+
+        /**
+         * 解除关联关系成功
+         */
+        void removeRelevanceSuccess();
     }
 
     interface IGoodsRelevanceListPresenter extends IPresenter<IGoodsRelevanceListView> {
@@ -66,5 +71,12 @@ public interface GoodsRelevanceListFragmentContract {
          * 查询下一页未关联商品列表
          */
         void queryMoreGoodsRelevanceList();
+
+        /**
+         * 解除关联
+         *
+         * @param bean 商品
+         */
+        void removeGoodsRelevance(GoodsRelevanceBean bean);
     }
 }
