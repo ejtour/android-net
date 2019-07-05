@@ -89,10 +89,11 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
             .put("thirdGroupID", relevanceBean.getThirdGroupID())
             .put("operateModel", relevanceBean.getOperateModel())
             .put("resourceType", relevanceBean.getResourceType())
+            // 订单货主类型,1:采购商代仓 0:无货主
             .put("shipperType", "0")
-            .put("cargoOwnerID", "0")
-            .put("cargoOwnerName", "")
             .put("erpShopID", "")
+            .put("cargoOwnerID", bean.getCargoOwnerID())
+            .put("cargoOwnerName", bean.getCargoOwnerName())
             .put("imgUrl", bean.getImgUrl())
             .put("isWareHourse", bean.getIsWareHourse())
             .put("plateSupplierID", bean.getGroupID())

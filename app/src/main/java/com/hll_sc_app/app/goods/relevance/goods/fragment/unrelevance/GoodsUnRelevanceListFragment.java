@@ -20,6 +20,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.relevance.goods.fragment.BaseGoodsRelevanceFragment;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.widget.EmptyView;
@@ -111,8 +113,11 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
             R.color.base_color_divider)
             , UIUtils.dip2px(1)));
         mAdapter = new GoodsRelevanceListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            // TODO:未关联商品列表
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            GoodsRelevanceBean bean = (GoodsRelevanceBean) adapter.getItem(position);
+            if (bean != null) {
+                RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST_SELECT, bean);
+            }
         });
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -192,7 +197,7 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
 
     class GoodsRelevanceListAdapter extends BaseQuickAdapter<GoodsRelevanceBean, BaseViewHolder> {
         GoodsRelevanceListAdapter() {
-            super(R.layout.item_goods_relevance_list);
+            super(R.layout.item_goods_un_relevance_list);
         }
 
         @Override

@@ -24,6 +24,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
 import com.hll_sc_app.bean.goods.DepositProductBean;
 import com.hll_sc_app.bean.goods.GoodsBean;
@@ -252,6 +253,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
 
     @Override
     public void addSuccess() {
+        EventBus.getDefault().post(new GoodsRelevanceRefreshEvent());
         finish();
     }
 

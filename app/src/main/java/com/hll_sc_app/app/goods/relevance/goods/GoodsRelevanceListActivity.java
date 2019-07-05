@@ -28,6 +28,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
+import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SearchView;
 
@@ -143,6 +144,11 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
         if (!TextUtils.isEmpty(name)) {
             mSearchView.showSearchContent(true, name);
         }
+    }
+
+    @Subscribe
+    public void onEvent(GoodsRelevanceRefreshEvent event) {
+        refreshFragment();
     }
 
     @OnClick(R.id.img_close)

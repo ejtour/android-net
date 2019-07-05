@@ -212,7 +212,7 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
 
     class GoodsRelevanceListAdapter extends BaseQuickAdapter<GoodsRelevanceBean, BaseViewHolder> {
         GoodsRelevanceListAdapter() {
-            super(R.layout.item_goods_un_relevance_list);
+            super(R.layout.item_goods_relevance_list);
         }
 
         @Override
