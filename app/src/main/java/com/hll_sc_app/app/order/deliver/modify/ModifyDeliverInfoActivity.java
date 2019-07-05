@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -79,6 +80,8 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
         mListView.addItemDecoration(decor);
+        // 避免 notifyItemChanged 闪烁
+        ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
         ModifyDeliverInfoAdapter adapter = new ModifyDeliverInfoAdapter(mList);
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             mCurBean = ((OrderDetailBean) adapter1.getItem(position));
@@ -87,9 +90,14 @@ public class ModifyDeliverInfoActivity extends BaseLoadActivity implements IModi
             }
             ModifyUnitDialog.create(this,
                     mCurBean.getAuxiliaryUnit(),
-                    mCurBean.getAdjustmentUnit(),
+                    mCurBean.getSaleUnitName(),
                     mCurBean.getDeliverUnit(),
-                    unit -> mCurBean.setDeliverUnit(unit)).show();
+                    unit -> {
+                        mCurBean.setDeliverUnit(unit);
+                        ModifyDeliverInfoAdapter adapter2 = (ModifyDeliverInfoAdapter) mListView.getAdapter();
+                        int pos = adapter2.getData().indexOf(mCurBean);
+                        adapter2.notifyItemChanged(pos);
+                    }).show();
         });
         mListView.setAdapter(adapter);
         mTitleBar.setRightBtnClick(v -> mPresenter.modifyDeliverInfo());

@@ -59,26 +59,6 @@ public class TransferBean {
     private boolean mIsSelected;
     private List<TransferDetailBean> detailList;
 
-    OrderResp convertToOrderResp() {
-        OrderResp resp = new OrderResp();
-        resp.setActionTime(String.valueOf(actionTime));
-        resp.setTotalAmount(totalPrice);
-        resp.setBillSource(billSource);
-        resp.setShopID(allotID);
-        resp.setShopName(allotName);
-        resp.setSubBillCreateTime(String.valueOf(billCreateTime));
-        resp.setShipperType(shipperType);
-        resp.setPayType(payType);
-        resp.setPurchaserID(purchaserID);
-        resp.setAmountPaid(amountPaid);
-        resp.setSubBillExecuteEndDate(String.valueOf(billExecuteEndTime));
-        resp.setSubBillExecuteDate(String.valueOf(billExecuteTime));
-        resp.setSubBillNo(purchaseBillNo);
-        resp.setPurchaserName(groupName);
-        resp.setSubBillID(id);
-        return resp;
-    }
-
     public boolean isCanSelect() {
         return homologous != 0;
     }

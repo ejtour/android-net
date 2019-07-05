@@ -65,7 +65,7 @@
             android:background="@color/color_eeeeee" />
 
         <RadioButton
-            android:id="@+id/dmu_adjustment_unit"
+            android:id="@+id/dmu_sale_unit"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:button="@null"

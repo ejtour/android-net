@@ -98,7 +98,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
             goToPayment(mResp);
         } else {
             if (result.getPayType() == 3 && result.getTotalAmount() > 0) {
-                String source = "由于您已支付的金额小于最终验货金额\n需补差价¥" + result.getTotalAmount();
+                String source = "采购商已支付的金额小于最终验货金额\n需补差价¥" + result.getTotalAmount();
                 SuccessDialog.newBuilder(this)
                         .setImageTitle(R.drawable.ic_dialog_failure)
                         .setImageState(R.drawable.ic_dialog_state_failure)
@@ -151,9 +151,8 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == OrderSettlementActivity.REQ_CODE) {
+        if (resultCode == RESULT_OK && requestCode == OrderSettlementActivity.REQ_CODE)
             onBackPressed();
-        }
     }
 
     /**
@@ -176,9 +175,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
             List<OrderInspectionReq.OrderInspectionItem> confirmItemList = mAdapter.getReqList();
             OrderInspectionReq.OrderInspectionItem confirmItem = confirmItemList.get(i);
             // 如果验货数量与实际数量不符
-            if (detailBean.getInspectionNum() != confirmItem.getInspectionNum()) {
-                isModify = true;
-            }
+            if (detailBean.getAdjustmentNum() != confirmItem.getInspectionNum()) isModify = true;
             List<OrderDepositBean> depositList = detailBean.getDepositList(); // 获取实际押金列表
             if (depositList != null) {
                 List<OrderDepositBean> confirmItemDepositList = new ArrayList<>(); // 生成验货押金列表

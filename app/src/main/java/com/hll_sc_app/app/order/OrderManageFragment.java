@@ -352,6 +352,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     @Override
     public void appendListData(List<OrderResp> resps) {
         mAdapter.addData(resps);
+        updateBottomBarData();
     }
 
     @Override

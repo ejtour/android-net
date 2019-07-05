@@ -26,19 +26,19 @@ import butterknife.OnClick;
 public class ModifyUnitDialog extends BaseDialog {
     @BindView(R.id.dmu_auxiliary_unit)
     RadioButton mAuxiliaryUnit;
-    @BindView(R.id.dmu_adjustment_unit)
-    RadioButton mAdjustmentUnit;
+    @BindView(R.id.dmu_sale_unit)
+    RadioButton mSaleUnit;
     @BindView(R.id.dmu_radio_group)
     RadioGroup mRadioGroup;
     private OnModifyUnitListener mListener;
 
-    public static ModifyUnitDialog create(Activity context, String auxiliaryUnit, String adjustmentUnit, String selectUnit, OnModifyUnitListener listener) {
+    public static ModifyUnitDialog create(Activity context, String auxiliaryUnit, String saleUnit, String selectUnit, OnModifyUnitListener listener) {
         ModifyUnitDialog dialog = new ModifyUnitDialog(context);
         dialog.mAuxiliaryUnit.setText(auxiliaryUnit);
-        dialog.mAdjustmentUnit.setText(adjustmentUnit);
+        dialog.mSaleUnit.setText(saleUnit);
         dialog.mListener = listener;
         if (auxiliaryUnit.equals(selectUnit)) dialog.mAuxiliaryUnit.setChecked(true);
-        else dialog.mAdjustmentUnit.setChecked(true);
+        else dialog.mSaleUnit.setChecked(true);
         return dialog;
     }
 
@@ -82,17 +82,17 @@ public class ModifyUnitDialog extends BaseDialog {
     }
 
     private void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (mListener == null) {
+        if (mListener == null || !isShowing()) {
             return;
         }
+        dismiss();
         switch (checkedId) {
             case R.id.dmu_auxiliary_unit:
                 mListener.onUnitChanged(mAuxiliaryUnit.getText().toString());
                 break;
-            case R.id.dmu_adjustment_unit:
-                mListener.onUnitChanged(mAdjustmentUnit.getText().toString());
+            case R.id.dmu_sale_unit:
+                mListener.onUnitChanged(mSaleUnit.getText().toString());
                 break;
         }
-        if (isShowing()) dismiss();
     }
 }

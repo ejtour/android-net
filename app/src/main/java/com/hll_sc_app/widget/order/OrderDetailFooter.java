@@ -130,7 +130,14 @@ public class OrderDetailFooter extends ConstraintLayout {
 
         mOrderNo.setText(data.getSubBillNo());
         mCopyOrderNo.setTag(data.getSubBillNo());
-        mSupplyChainNo.setText(data.getPurchaseBillNo());
+        String purchaseBillNo = data.getPurchaseBillNo();
+        if (TextUtils.isEmpty(purchaseBillNo)) {
+            mCopySupplyChainNo.setVisibility(GONE);
+        } else {
+            mCopySupplyChainNo.setVisibility(VISIBLE);
+            mCopySupplyChainNo.setTag(purchaseBillNo);
+        }
+        mSupplyChainNo.setText(purchaseBillNo);
         mOrderTime.setText(CalendarUtils.getFormatYyyyMmDdHhMm(data.getSubBillCreateTime()));
         String payType = OrderHelper.getPayType(data.getPayType()), paymentWay = OrderHelper.getPaymentWay(data.getPaymentWay());
         if (payType.length() != 0)
