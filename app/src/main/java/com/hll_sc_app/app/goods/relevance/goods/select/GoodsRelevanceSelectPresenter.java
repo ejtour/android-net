@@ -10,7 +10,9 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.goods.DepositProductBean;
 import com.hll_sc_app.bean.goods.DepositProductsResp;
+import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -75,6 +77,55 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
         toQueryGoodsList(false);
     }
 
+    @Override
+    public void addGoodsRelevance(DepositProductBean bean) {
+        GoodsRelevanceBean relevanceBean = mView.getGoodsBean();
+        if (relevanceBean == null) {
+            return;
+        }
+        // http://rap.hualala.com/workspace/myWorkspace.do?projectId=1147#13869
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("goodsCode", relevanceBean.getGoodsCode())
+            .put("thirdGroupID", relevanceBean.getThirdGroupID())
+            .put("operateModel", relevanceBean.getOperateModel())
+            .put("resourceType", relevanceBean.getResourceType())
+            .put("shipperType", "0")
+            .put("cargoOwnerID", "0")
+            .put("cargoOwnerName", "")
+            .put("erpShopID", "")
+            .put("imgUrl", bean.getImgUrl())
+            .put("isWareHourse", bean.getIsWareHourse())
+            .put("plateSupplierID", bean.getGroupID())
+            .put("productCategoryID", bean.getCategoryThreeID())
+            .put("productCode", bean.getProductCode())
+            .put("productID", bean.getProductID())
+            .put("productName", bean.getProductName())
+            .put("productPrice", bean.getProductPrice())
+            .put("productSpec", bean.getSpecContent())
+            .put("productSpecID", bean.getSpecID())
+            .put("ration", bean.getRation())
+            .put("saleUnitName", bean.getSaleUnitName())
+            .put("skuCode", bean.getSkuCode())
+            .create();
+        GoodsService.INSTANCE.addGoodsRelevance(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.addSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
     private void toQueryGoodsList(boolean showLoading) {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder()
             .put("groupID", UserConfig.getGroupID())
@@ -82,9 +133,12 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
             .put("pageSize", "20");
         if (TextUtils.isEmpty(mView.getCategorySubId())) {
             // 推荐
-            builder.put("name", mView.getProductName())
-                .put("productCode", mView.getProductCode())
-                .put("actionType", "relateRecommend");
+            GoodsRelevanceBean relevanceBean = mView.getGoodsBean();
+            if (relevanceBean != null) {
+                builder.put("name", relevanceBean.getGoodsName())
+                    .put("productCode", relevanceBean.getGoodsCode())
+                    .put("actionType", "relateRecommend");
+            }
         } else {
             builder.put("name", mView.getName())
                 .put("categorySubID", mView.getCategorySubId());

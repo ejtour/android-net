@@ -121,8 +121,7 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
             if (id == R.id.txt_relevance_remove) {
                 showTipsDialog(bean);
             } else if (id == R.id.txt_relevance_again) {
-                RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST_SELECT, bean.getGoodsName(),
-                    bean.getGoodsCode());
+                RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST_SELECT, bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

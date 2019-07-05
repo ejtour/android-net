@@ -27,6 +27,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
 import com.hll_sc_app.bean.goods.DepositProductBean;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -68,10 +69,8 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     Map<String, List<GoodsBean>> mSelectMap;
-    @Autowired(name = "object0")
-    String mGoodsName;
-    @Autowired(name = "object1")
-    String mGoodsCode;
+    @Autowired(name = "parcelable")
+    GoodsRelevanceBean mBean;
     private GoodsRelevanceSelectPresenter mPresenter;
     private CategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
@@ -186,13 +185,8 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     }
 
     @Override
-    public String getProductName() {
-        return mGoodsName;
-    }
-
-    @Override
-    public String getProductCode() {
-        return mGoodsCode;
+    public GoodsRelevanceBean getGoodsBean() {
+        return mBean;
     }
 
     @Override
@@ -256,6 +250,11 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         return mSearchView.getSearchContent();
     }
 
+    @Override
+    public void addSuccess() {
+        finish();
+    }
+
     @OnClick({R.id.img_close, R.id.txt_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -263,15 +262,36 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
                 finish();
                 break;
             case R.id.txt_save:
-                toSave();
+                toAdd();
                 break;
             default:
                 break;
         }
     }
 
-    private void toSave() {
+    private void toAdd() {
+        DepositProductBean bean = getSelectProductBean();
+        if (bean == null) {
+            showToast("您还没有选择要关联的商品");
+            return;
+        }
+        mPresenter.addGoodsRelevance(bean);
+    }
 
+    private DepositProductBean getSelectProductBean() {
+        DepositProductBean bean = null;
+        if (mAdapter != null) {
+            List<DepositProductBean> list = mAdapter.getData();
+            if (!CommonUtils.isEmpty(list)) {
+                for (DepositProductBean productBean : list) {
+                    if (productBean.isSelected()) {
+                        bean = productBean;
+                        break;
+                    }
+                }
+            }
+        }
+        return bean;
     }
 
     class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {

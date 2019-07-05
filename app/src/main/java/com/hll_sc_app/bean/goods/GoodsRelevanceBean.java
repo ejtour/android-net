@@ -1,12 +1,15 @@
 package com.hll_sc_app.bean.goods;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 关联商品 Bean
  *
  * @author zhuyingsong
  * @date 2019-07-04
  */
-public class GoodsRelevanceBean {
+public class GoodsRelevanceBean implements Parcelable {
     private String actionTime;
     private String shipperID;
     private String productID;
@@ -222,5 +225,80 @@ public class GoodsRelevanceBean {
 
     public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
+    }
+
+    public static final Parcelable.Creator<GoodsRelevanceBean> CREATOR = new Parcelable.Creator<GoodsRelevanceBean>() {
+        @Override
+        public GoodsRelevanceBean createFromParcel(Parcel source) {
+            return new GoodsRelevanceBean(source);
+        }
+
+        @Override
+        public GoodsRelevanceBean[] newArray(int size) {
+            return new GoodsRelevanceBean[size];
+        }
+    };
+
+    public GoodsRelevanceBean() {
+    }
+
+    protected GoodsRelevanceBean(Parcel in) {
+        this.actionTime = in.readString();
+        this.shipperID = in.readString();
+        this.productID = in.readString();
+        this.relationStatus = in.readString();
+        this.actionBy = in.readString();
+        this.erpShopName = in.readString();
+        this.goodsID = in.readString();
+        this.shipperName = in.readString();
+        this.thirdGroupName = in.readString();
+        this.operateModel = in.readString();
+        this.shipperType = in.readString();
+        this.productSpecID = in.readString();
+        this.plateSupplierID = in.readString();
+        this.thirdGroupID = in.readString();
+        this.erpShopID = in.readString();
+        this.goodsCode = in.readString();
+        this.id = in.readString();
+        this.shopID = in.readString();
+        this.plateSupplierName = in.readString();
+        this.goodsName = in.readString();
+        this.resourceType = in.readString();
+        this.saleUnitName = in.readString();
+        this.productName = in.readString();
+        this.productSpec = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.actionTime);
+        dest.writeString(this.shipperID);
+        dest.writeString(this.productID);
+        dest.writeString(this.relationStatus);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.erpShopName);
+        dest.writeString(this.goodsID);
+        dest.writeString(this.shipperName);
+        dest.writeString(this.thirdGroupName);
+        dest.writeString(this.operateModel);
+        dest.writeString(this.shipperType);
+        dest.writeString(this.productSpecID);
+        dest.writeString(this.plateSupplierID);
+        dest.writeString(this.thirdGroupID);
+        dest.writeString(this.erpShopID);
+        dest.writeString(this.goodsCode);
+        dest.writeString(this.id);
+        dest.writeString(this.shopID);
+        dest.writeString(this.plateSupplierName);
+        dest.writeString(this.goodsName);
+        dest.writeString(this.resourceType);
+        dest.writeString(this.saleUnitName);
+        dest.writeString(this.productName);
+        dest.writeString(this.productSpec);
     }
 }

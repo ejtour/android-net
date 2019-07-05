@@ -3,6 +3,7 @@ package com.hll_sc_app.app.goods.relevance.goods.select;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.DepositProductBean;
+import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 
 import java.util.List;
@@ -17,19 +18,11 @@ public interface GoodsRelevanceSelectContract {
 
     interface IGoodsStickView extends ILoadView {
         /**
-         * 获取商品名称
+         * 获取第三方商品数据
          *
-         * @return goodsName
+         * @return 商品数据
          */
-        String getProductName();
-
-        /**
-         * 获取商品编码
-         *
-         * @return 商品编码
-         */
-        String getProductCode();
-
+        GoodsRelevanceBean getGoodsBean();
 
         /**
          * 显示商城二级分类
@@ -60,6 +53,11 @@ public interface GoodsRelevanceSelectContract {
          * @return 搜索词
          */
         String getName();
+
+        /**
+         * 新增成功
+         */
+        void addSuccess();
     }
 
     interface IGoodsStickPresenter extends IPresenter<IGoodsStickView> {
@@ -79,5 +77,12 @@ public interface GoodsRelevanceSelectContract {
          * 加载更多商品列表
          */
         void queryMoreGoodsList();
+
+        /**
+         * 关联 和 重新关联
+         *
+         * @param bean 平台商品
+         */
+        void addGoodsRelevance(DepositProductBean bean);
     }
 }

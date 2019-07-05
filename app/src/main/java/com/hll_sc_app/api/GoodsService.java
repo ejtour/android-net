@@ -347,6 +347,16 @@ public interface GoodsService {
     Observable<BaseResp<Object>> removeGoodsRelevance(@Body BaseMapReq req);
 
     /**
+     * 关联 和 重新关联
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103712")
+    Observable<BaseResp<Object>> addGoodsRelevance(@Body BaseMapReq req);
+
+    /**
      * 统一导出文件
      *
      * @param req req
