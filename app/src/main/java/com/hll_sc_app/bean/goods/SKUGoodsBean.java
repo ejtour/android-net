@@ -7,21 +7,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 押金商品
+ * SKU 纬度的商品 一个规格就是一个SKU
  *
  * @author zhuyingsong
  * @date 2019-06-20
  */
-public class DepositProductBean implements Parcelable {
-    public static final Parcelable.Creator<DepositProductBean> CREATOR = new Parcelable.Creator<DepositProductBean>() {
+public class SKUGoodsBean implements Parcelable {
+    public static final Parcelable.Creator<SKUGoodsBean> CREATOR = new Parcelable.Creator<SKUGoodsBean>() {
         @Override
-        public DepositProductBean createFromParcel(Parcel source) {
-            return new DepositProductBean(source);
+        public SKUGoodsBean createFromParcel(Parcel source) {
+            return new SKUGoodsBean(source);
         }
 
         @Override
-        public DepositProductBean[] newArray(int size) {
-            return new DepositProductBean[size];
+        public SKUGoodsBean[] newArray(int size) {
+            return new SKUGoodsBean[size];
         }
     };
     private String specID;
@@ -89,10 +89,10 @@ public class DepositProductBean implements Parcelable {
     private List<NicknamesBean> nicknames;
     private boolean selected;
 
-    public DepositProductBean() {
+    public SKUGoodsBean() {
     }
 
-    protected DepositProductBean(Parcel in) {
+    protected SKUGoodsBean(Parcel in) {
         this.specID = in.readString();
         this.productID = in.readString();
         this.placeProvince = in.readString();

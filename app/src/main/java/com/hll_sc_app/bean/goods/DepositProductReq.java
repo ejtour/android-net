@@ -42,10 +42,10 @@ public class DepositProductReq implements Parcelable {
         this.depositNum = in.readString();
     }
 
-    public static List<DepositProductReq> createDepositProductReq(List<DepositProductBean> list) {
+    public static List<DepositProductReq> createDepositProductReq(List<SKUGoodsBean> list) {
         List<DepositProductReq> listReq = new ArrayList<>();
         if (!CommonUtils.isEmpty(list)) {
-            for (DepositProductBean bean : list) {
+            for (SKUGoodsBean bean : list) {
                 DepositProductReq depositProductReq = new DepositProductReq();
                 depositProductReq.setDepositProductID(bean.getProductID());
                 depositProductReq.setDepositSpecID(bean.getSpecID());
@@ -57,11 +57,11 @@ public class DepositProductReq implements Parcelable {
         return listReq;
     }
 
-    public static List<DepositProductBean> createDepositProductBean(List<DepositProductReq> list) {
-        List<DepositProductBean> listReq = new ArrayList<>();
+    public static List<SKUGoodsBean> createDepositProductBean(List<DepositProductReq> list) {
+        List<SKUGoodsBean> listReq = new ArrayList<>();
         if (!CommonUtils.isEmpty(list)) {
             for (DepositProductReq depositProductReq : list) {
-                DepositProductBean bean = new DepositProductBean();
+                SKUGoodsBean bean = new SKUGoodsBean();
                 bean.setProductID(depositProductReq.getDepositProductID());
                 bean.setSpecID(depositProductReq.getDepositSpecID());
                 bean.setProductName(depositProductReq.getProductName());

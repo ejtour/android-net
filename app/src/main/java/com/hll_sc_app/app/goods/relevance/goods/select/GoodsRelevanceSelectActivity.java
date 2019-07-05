@@ -26,9 +26,9 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
-import com.hll_sc_app.bean.goods.DepositProductBean;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
+import com.hll_sc_app.bean.goods.SKUGoodsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -135,7 +135,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
             R.color.base_color_divider), UIUtils.dip2px(1)));
         mAdapter = new GoodsRelevanceSelectListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            DepositProductBean bean = (DepositProductBean) adapter.getItem(position);
+            SKUGoodsBean bean = (SKUGoodsBean) adapter.getItem(position);
             if (bean != null) {
                 setUnSelect();
                 bean.setSelected(!bean.isSelected());
@@ -161,11 +161,11 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
      */
     private void setUnSelect() {
         if (mAdapter != null) {
-            List<DepositProductBean> beans = mAdapter.getData();
+            List<SKUGoodsBean> beans = mAdapter.getData();
             if (CommonUtils.isEmpty(beans)) {
                 return;
             }
-            for (DepositProductBean bean : beans) {
+            for (SKUGoodsBean bean : beans) {
                 bean.setSelected(false);
             }
         }
@@ -216,7 +216,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     }
 
     @Override
-    public void showList(List<DepositProductBean> list, boolean append, int total) {
+    public void showList(List<SKUGoodsBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -272,7 +272,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     }
 
     private void toAdd() {
-        DepositProductBean bean = getSelectProductBean();
+        SKUGoodsBean bean = getSelectProductBean();
         if (bean == null) {
             showToast("您还没有选择要关联的商品");
             return;
@@ -280,12 +280,12 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         mPresenter.addGoodsRelevance(bean);
     }
 
-    private DepositProductBean getSelectProductBean() {
-        DepositProductBean bean = null;
+    private SKUGoodsBean getSelectProductBean() {
+        SKUGoodsBean bean = null;
         if (mAdapter != null) {
-            List<DepositProductBean> list = mAdapter.getData();
+            List<SKUGoodsBean> list = mAdapter.getData();
             if (!CommonUtils.isEmpty(list)) {
-                for (DepositProductBean productBean : list) {
+                for (SKUGoodsBean productBean : list) {
                     if (productBean.isSelected()) {
                         bean = productBean;
                         break;
@@ -310,13 +310,13 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         }
     }
 
-    class GoodsRelevanceSelectListAdapter extends BaseQuickAdapter<DepositProductBean, BaseViewHolder> {
+    class GoodsRelevanceSelectListAdapter extends BaseQuickAdapter<SKUGoodsBean, BaseViewHolder> {
         GoodsRelevanceSelectListAdapter() {
             super(R.layout.item_goods_relevance_select_list);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, DepositProductBean item) {
+        protected void convert(BaseViewHolder helper, SKUGoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
                 .setText(R.id.txt_specContent, item.getSpecContent())
                 .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));

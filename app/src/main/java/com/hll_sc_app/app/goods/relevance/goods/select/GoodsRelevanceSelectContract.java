@@ -2,8 +2,8 @@ package com.hll_sc_app.app.goods.relevance.goods.select;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.DepositProductBean;
 import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
+import com.hll_sc_app.bean.goods.SKUGoodsBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public interface GoodsRelevanceSelectContract {
          * @param append 追加
          * @param total  总量
          */
-        void showList(List<DepositProductBean> list, boolean append, int total);
+        void showList(List<SKUGoodsBean> list, boolean append, int total);
 
         /**
          * 获取分类 ID
@@ -83,6 +83,6 @@ public interface GoodsRelevanceSelectContract {
          *
          * @param bean 平台商品
          */
-        void addGoodsRelevance(DepositProductBean bean);
+        void addGoodsRelevance(SKUGoodsBean bean);
     }
 }

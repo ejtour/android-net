@@ -10,9 +10,9 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.goods.DepositProductBean;
 import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
+import com.hll_sc_app.bean.goods.SKUGoodsBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -78,7 +78,7 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
     }
 
     @Override
-    public void addGoodsRelevance(DepositProductBean bean) {
+    public void addGoodsRelevance(SKUGoodsBean bean) {
         GoodsRelevanceBean relevanceBean = mView.getGoodsBean();
         if (relevanceBean == null) {
             return;

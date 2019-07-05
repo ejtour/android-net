@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class DepositProductsResp {
     private int total;
-    private List<DepositProductBean> records;
+    private List<SKUGoodsBean> records;
 
     public int getTotal() {
         return total;
@@ -20,11 +20,11 @@ public class DepositProductsResp {
         this.total = total;
     }
 
-    public List<DepositProductBean> getRecords() {
+    public List<SKUGoodsBean> getRecords() {
         return records;
     }
 
-    public void setRecords(List<DepositProductBean> records) {
+    public void setRecords(List<SKUGoodsBean> records) {
         this.records = records;
     }
 }

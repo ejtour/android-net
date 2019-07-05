@@ -2,7 +2,7 @@ package com.hll_sc_app.app.goods.add.specs.depositproducts;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.DepositProductBean;
+import com.hll_sc_app.bean.goods.SKUGoodsBean;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface DepositProductsContract {
          * @param append true-追加
          * @param total  indexList
          */
-        void showDepositProductsList(List<DepositProductBean> list, boolean append, int total);
+        void showDepositProductsList(List<SKUGoodsBean> list, boolean append, int total);
     }
 
     interface ISaleUnitNameAddPresenter extends IPresenter<ISaleUnitNameAddView> {
