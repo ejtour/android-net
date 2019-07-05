@@ -19,7 +19,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.goods.relevance.goods.fragment.GoodsRelevanceListFragment;
+import com.hll_sc_app.app.goods.relevance.goods.fragment.BaseGoodsRelevanceFragment;
+import com.hll_sc_app.app.goods.relevance.goods.fragment.relevance.GoodsRelevanceListFragment;
+import com.hll_sc_app.app.goods.relevance.goods.fragment.unrelevance.GoodsUnRelevanceListFragment;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -62,6 +64,9 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
     private FragmentListAdapter mFragmentAdapter;
+    private GoodsUnRelevanceListFragment mUnRelevanceListFragment;
+    private GoodsRelevanceListFragment mRelevanceListFragment;
+    private List<BaseGoodsRelevanceFragment> mListFragment;
 
     /**
      * start
@@ -113,7 +118,12 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
                 //TODO 刷新未关联、已关联列表
             }
         });
-        mFragmentAdapter = new FragmentListAdapter(getSupportFragmentManager(), STR_TITLE);
+        mListFragment = new ArrayList<>();
+        mRelevanceListFragment = GoodsRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel);
+        mListFragment.add(mRelevanceListFragment);
+        mUnRelevanceListFragment = GoodsUnRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel);
+        mListFragment.add(mUnRelevanceListFragment);
+        mFragmentAdapter = new FragmentListAdapter(getSupportFragmentManager(), mListFragment);
         mViewPager.setAdapter(mFragmentAdapter);
         mTab.setViewPager(mViewPager, STR_TITLE);
     }
@@ -132,14 +142,11 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
     }
 
     class FragmentListAdapter extends FragmentPagerAdapter {
-        private List<GoodsRelevanceListFragment> mListFragment;
+        private List<BaseGoodsRelevanceFragment> mListFragment;
 
-        FragmentListAdapter(FragmentManager fm, String[] titles) {
+        FragmentListAdapter(FragmentManager fm, List<BaseGoodsRelevanceFragment> list) {
             super(fm);
-            mListFragment = new ArrayList<>(titles.length);
-            for (int i = 0; i < titles.length; i++) {
-                mListFragment.add(GoodsRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel));
-            }
+            this.mListFragment = list;
         }
 
         @Override
@@ -148,7 +155,7 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
         }
 
         @Override
-        public GoodsRelevanceListFragment getItem(int position) {
+        public BaseGoodsRelevanceFragment getItem(int position) {
             return mListFragment.get(position);
         }
 

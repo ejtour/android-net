@@ -29,6 +29,24 @@ public class GoodsRelevanceBean {
     private String goodsName;
     private String resourceType;
     private String saleUnitName;
+    private String productName;
+    private String productSpec;
+
+    public String getProductSpec() {
+        return productSpec;
+    }
+
+    public void setProductSpec(String productSpec) {
+        this.productSpec = productSpec;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
     public String getSaleUnitName() {
         return saleUnitName;

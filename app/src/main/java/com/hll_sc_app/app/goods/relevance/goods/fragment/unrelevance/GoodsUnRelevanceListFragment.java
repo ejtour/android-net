@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.goods.relevance.goods.fragment;
+package com.hll_sc_app.app.goods.relevance.goods.fragment.unrelevance;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,22 +6,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.BaseLazyFragment;
+import com.hll_sc_app.app.goods.relevance.goods.fragment.BaseGoodsRelevanceFragment;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -35,14 +31,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * 第三方商品关联-采购商列表-关联商品列表-未关联、已关联
+ * 第三方商品关联-采购商列表-关联商品列表-未关联
  *
  * @author zhuyingsong
- * @date 2019/7/4
+ * @date 2019/7/5
  */
-public class GoodsRelevanceListFragment extends BaseLazyFragment implements GoodsRelevanceListFragmentContract.IGoodsRelevanceListView {
-    @BindView(R.id.txt_tips)
-    TextView mTxtTips;
+public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment implements GoodsUnRelevanceListFragmentContract.IGoodsRelevanceListView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
@@ -51,17 +45,17 @@ public class GoodsRelevanceListFragment extends BaseLazyFragment implements Good
     String mGroupId;
     String mResourceType;
     String mOperateModel;
-    private GoodsRelevanceListFragmentPresenter mPresenter;
+    private GoodsUnRelevanceListFragmentPresenter mPresenter;
     private GoodsRelevanceListAdapter mAdapter;
     private EmptyView mEmptyView;
     private String mGoodsName;
 
-    public static GoodsRelevanceListFragment newInstance(String groupId, String resourceType, String operateModel) {
+    public static GoodsUnRelevanceListFragment newInstance(String groupId, String resourceType, String operateModel) {
         Bundle args = new Bundle();
         args.putString("object0", groupId);
         args.putString("object1", resourceType);
         args.putString("object2", operateModel);
-        GoodsRelevanceListFragment fragment = new GoodsRelevanceListFragment();
+        GoodsUnRelevanceListFragment fragment = new GoodsUnRelevanceListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,7 +63,7 @@ public class GoodsRelevanceListFragment extends BaseLazyFragment implements Good
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = GoodsRelevanceListFragmentPresenter.newInstance();
+        mPresenter = GoodsUnRelevanceListFragmentPresenter.newInstance();
         mPresenter.register(this);
         Bundle args = getArguments();
         if (args != null) {
@@ -87,7 +81,7 @@ public class GoodsRelevanceListFragment extends BaseLazyFragment implements Good
 
     @Override
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_goods_relevance_list, container, false);
+        rootView = inflater.inflate(R.layout.fragment_goods_un_relevance_list, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         intView();
         return rootView;
@@ -97,23 +91,20 @@ public class GoodsRelevanceListFragment extends BaseLazyFragment implements Good
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreGoodsUnRelevanceList();
+                mPresenter.queryMoreGoodsRelevanceList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryGoodsUnRelevanceList(false);
+                mPresenter.queryGoodsRelevanceList(false);
             }
         });
-        mEmptyView = EmptyView.newBuilder(requireActivity()).setTips("还没有未关联的商品数据").create();
+        mEmptyView = EmptyView.newBuilder(requireActivity()).setTips("还没有已关联的商品数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireActivity(),
             R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+            , UIUtils.dip2px(5)));
         mAdapter = new GoodsRelevanceListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            // TODO:未关联商品列表
-        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -155,19 +146,6 @@ public class GoodsRelevanceListFragment extends BaseLazyFragment implements Good
         } else {
             mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
         }
-        if (total == 0) {
-            mTxtTips.setVisibility(View.GONE);
-        } else {
-            mTxtTips.setVisibility(View.VISIBLE);
-            mTxtTips.setText(getTipString(String.valueOf(total)));
-        }
-    }
-
-    public SpannableString getTipString(String total) {
-        SpannableString spannableString = new SpannableString("有" + total + "个第三方品项未关联商城商品，请及时关联，否则未关联的品项将无法下单。");
-        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.base_red)),
-            1, total.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spannableString;
     }
 
     @Override
@@ -191,19 +169,18 @@ public class GoodsRelevanceListFragment extends BaseLazyFragment implements Good
 
     class GoodsRelevanceListAdapter extends BaseQuickAdapter<GoodsRelevanceBean, BaseViewHolder> {
         GoodsRelevanceListAdapter() {
-            super(R.layout.item_goods_relevance_list);
+            super(R.layout.item_goods_un_relevance_list);
         }
 
         @Override
         protected void convert(BaseViewHolder helper, GoodsRelevanceBean item) {
             helper.setText(R.id.txt_goodsName, item.getGoodsName())
-                .setText(R.id.txt_goodsCode, "商品编码：" + getString(item.getGoodsCode()))
-                .setText(R.id.txt_saleUnitName, "单位：" + getString(item.getSaleUnitName()))
-                .addOnClickListener(R.id.txt_relevance);
-        }
-
-        private String getString(String str) {
-            return TextUtils.isEmpty(str) ? "无" : str;
+                .setText(R.id.txt_productName, item.getProductName())
+                .setText(R.id.txt_productSpec, item.getProductSpec())
+                .setText(R.id.txt_actionTime, CalendarUtils.format(CalendarUtils.parse(item.getActionTime(),
+                    "yyyyMMddHHmmss"), "yyyy/MM/dd"))
+                .addOnClickListener(R.id.txt_relevance_again)
+                .addOnClickListener(R.id.txt_relevance_remove);
         }
     }
 }

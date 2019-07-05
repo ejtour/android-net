@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.goods.relevance.goods.fragment;
+package com.hll_sc_app.app.goods.relevance.goods.fragment.relevance;
 
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.base.UseCaseException;

@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.goods.relevance.goods.fragment;
+package com.hll_sc_app.app.goods.relevance.goods.fragment.unrelevance;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
@@ -8,12 +8,12 @@ import java.util.List;
 
 
 /**
- * 第三方商品关联-采购商列表-关联商品列表-未关联、已关联
+ * 第三方商品关联-采购商列表-关联商品列表-未关联
  *
  * @author zhuyingsong
- * @date 2019/7/4
+ * @date 2019/7/5
  */
-public interface GoodsRelevanceListFragmentContract {
+public interface GoodsUnRelevanceListFragmentContract {
 
     interface IGoodsRelevanceListView extends ILoadView {
         /**
@@ -60,11 +60,11 @@ public interface GoodsRelevanceListFragmentContract {
          *
          * @param showLoading true-是否显示加载框
          */
-        void queryGoodsUnRelevanceList(boolean showLoading);
+        void queryGoodsRelevanceList(boolean showLoading);
 
         /**
          * 查询下一页未关联商品列表
          */
-        void queryMoreGoodsUnRelevanceList();
+        void queryMoreGoodsRelevanceList();
     }
 }

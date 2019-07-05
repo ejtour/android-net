@@ -317,7 +317,7 @@ public interface GoodsService {
     Observable<BaseResp<RelevancePurchaserResp>> queryGoodsRelevancePurchaserList(@Body BaseMapReq req);
 
     /**
-     * 查询商品关联的集团列表
+     * 查询未关联商品列表
      *
      * @param req req
      * @return resp
@@ -325,6 +325,16 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:103710")
     Observable<BaseResp<GoodsRelevanceResp>> queryGoodsUnRelevanceList(@Body BaseMapReq req);
+
+    /**
+     * 查询关联商品的列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103711")
+    Observable<BaseResp<GoodsRelevanceResp>> queryGoodsRelevanceList(@Body BaseMapReq req);
 
     /**
      * 统一导出文件
