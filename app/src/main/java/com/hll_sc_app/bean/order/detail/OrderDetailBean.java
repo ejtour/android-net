@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
+
 import java.util.List;
 
 /**
@@ -92,7 +95,29 @@ public class OrderDetailBean implements Parcelable {
     }
 
     public void setDeliverUnit(String deliverUnit) {
+        beforeModifyUnit(deliverUnit);
         this.deliverUnit = deliverUnit;
+    }
+
+    private void beforeModifyUnit(String deliverUnit) {
+        if (deliverUnit == null) return; // 入参不为空时进行后续操作
+        /* 1. 首次设置单位
+         * 2. 发货单位不是辅助单位
+         */
+        if (this.deliverUnit == null && !deliverUnit.equals(adjustmentUnit))
+            adjustmentNum = CommonUtils.divDouble(adjustmentNum, convertRate).doubleValue();
+        /* 1. 非首次设置单位
+         * 2. 入参与之前单位不同
+         */
+        if (this.deliverUnit != null && !deliverUnit.equals(this.deliverUnit))
+            if (auxiliaryUnit.equals(deliverUnit))  // 如果设置的是辅助单位
+                adjustmentNum = CommonUtils.divDouble(adjustmentNum, convertRate).doubleValue();
+            else adjustmentNum = CommonUtils.mulDouble(adjustmentNum, convertRate).doubleValue();
+        // 入参与之前单位不同
+        if (!deliverUnit.equals(this.deliverUnit))
+            if (auxiliaryUnit.equals(deliverUnit)) // 如果设置的是辅助单位
+                productPrice = CommonUtils.mulDouble(productPrice, convertRate).doubleValue();
+            else productPrice = CommonUtils.divDouble(productPrice, convertRate).doubleValue();
     }
 
     public int getDiscountRuleType() {
