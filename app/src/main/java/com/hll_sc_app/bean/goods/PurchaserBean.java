@@ -1,12 +1,26 @@
 package com.hll_sc_app.bean.goods;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 采购商Bean
  *
  * @author zhuyingsong
  * @date 2019-07-04
  */
-public class PurchaserBean {
+public class PurchaserBean implements Parcelable {
+    public static final Parcelable.Creator<PurchaserBean> CREATOR = new Parcelable.Creator<PurchaserBean>() {
+        @Override
+        public PurchaserBean createFromParcel(Parcel source) {
+            return new PurchaserBean(source);
+        }
+
+        @Override
+        public PurchaserBean[] newArray(int size) {
+            return new PurchaserBean[size];
+        }
+    };
     private String readStatus;
     private String uniformSocialCreditCode;
     private String unRelationProductNum;
@@ -44,6 +58,49 @@ public class PurchaserBean {
     private String otherLicense;
     private String resourceType;
     private String status;
+
+    public PurchaserBean() {
+    }
+
+    protected PurchaserBean(Parcel in) {
+        this.readStatus = in.readString();
+        this.uniformSocialCreditCode = in.readString();
+        this.unRelationProductNum = in.readString();
+        this.auditBy = in.readString();
+        this.mail = in.readString();
+        this.erpShopName = in.readString();
+        this.relationProductNum = in.readString();
+        this.licenceGroupName = in.readString();
+        this.licencePhotoUrl = in.readString();
+        this.purchaserID = in.readString();
+        this.legalPerson = in.readString();
+        this.plateSupplierID = in.readString();
+        this.action = in.readString();
+        this.groupCity = in.readString();
+        this.erpShopID = in.readString();
+        this.id = in.readString();
+        this.cancelReason = in.readString();
+        this.fax = in.readString();
+        this.auditDate = in.readString();
+        this.groupID = in.readString();
+        this.identityCard = in.readString();
+        this.message = in.readString();
+        this.linkman = in.readString();
+        this.purchaserName = in.readString();
+        this.groupName = in.readString();
+        this.operateModel = in.readString();
+        this.groupProvince = in.readString();
+        this.createTime = in.readString();
+        this.frontImg = in.readString();
+        this.groupAddress = in.readString();
+        this.groupPhone = in.readString();
+        this.shopID = in.readString();
+        this.applyDate = in.readString();
+        this.groupDistrict = in.readString();
+        this.otherLicense = in.readString();
+        this.resourceType = in.readString();
+        this.status = in.readString();
+    }
 
     public String getReadStatus() {
         return readStatus;
@@ -339,5 +396,51 @@ public class PurchaserBean {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.readStatus);
+        dest.writeString(this.uniformSocialCreditCode);
+        dest.writeString(this.unRelationProductNum);
+        dest.writeString(this.auditBy);
+        dest.writeString(this.mail);
+        dest.writeString(this.erpShopName);
+        dest.writeString(this.relationProductNum);
+        dest.writeString(this.licenceGroupName);
+        dest.writeString(this.licencePhotoUrl);
+        dest.writeString(this.purchaserID);
+        dest.writeString(this.legalPerson);
+        dest.writeString(this.plateSupplierID);
+        dest.writeString(this.action);
+        dest.writeString(this.groupCity);
+        dest.writeString(this.erpShopID);
+        dest.writeString(this.id);
+        dest.writeString(this.cancelReason);
+        dest.writeString(this.fax);
+        dest.writeString(this.auditDate);
+        dest.writeString(this.groupID);
+        dest.writeString(this.identityCard);
+        dest.writeString(this.message);
+        dest.writeString(this.linkman);
+        dest.writeString(this.purchaserName);
+        dest.writeString(this.groupName);
+        dest.writeString(this.operateModel);
+        dest.writeString(this.groupProvince);
+        dest.writeString(this.createTime);
+        dest.writeString(this.frontImg);
+        dest.writeString(this.groupAddress);
+        dest.writeString(this.groupPhone);
+        dest.writeString(this.shopID);
+        dest.writeString(this.applyDate);
+        dest.writeString(this.groupDistrict);
+        dest.writeString(this.otherLicense);
+        dest.writeString(this.resourceType);
+        dest.writeString(this.status);
     }
 }

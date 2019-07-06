@@ -29,6 +29,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SearchView;
 
@@ -51,12 +52,6 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.GOODS_RELEVANCE_LIST, extras = Constant.LOGIN_EXTRA)
 public class GoodsRelevanceListActivity extends BaseLoadActivity {
     static final String[] STR_TITLE = {"未关联", "已关联"};
-    @Autowired(name = "object0")
-    String mGroupId;
-    @Autowired(name = "object1")
-    String mResourceType;
-    @Autowired(name = "object2")
-    String mOperateModel;
     @BindView(R.id.searchView)
     SearchView mSearchView;
     @BindView(R.id.rl_toolbar)
@@ -65,20 +60,17 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
     SlidingTabLayout mTab;
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
-    private FragmentListAdapter mFragmentAdapter;
-    private GoodsRelevanceListFragment mUnRelevanceListFragment;
-    private GoodsUnRelevanceListFragment mRelevanceListFragment;
+    @Autowired(name = "parcelable", required = true)
+    PurchaserBean purchaserBean;
     private List<BaseGoodsRelevanceFragment> mListFragment;
 
     /**
      * start
      *
-     * @param groupId      采购商集团 ID
-     * @param resourceType 采购商来源(对接时获取) 1-哗啦啦供应链 2-天财供应链
-     * @param operateModel 经营模式：0：集团模式 1：单店模式
+     * @param bean 采购商集团
      */
-    public static void start(String groupId, String resourceType, String operateModel) {
-        RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST, groupId, resourceType, operateModel);
+    public static void start(PurchaserBean bean) {
+        RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST, bean);
     }
 
     @Override
@@ -121,12 +113,12 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
             }
         });
         mListFragment = new ArrayList<>();
-        mRelevanceListFragment = GoodsUnRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel);
-        mListFragment.add(mRelevanceListFragment);
-        mUnRelevanceListFragment = GoodsRelevanceListFragment.newInstance(mGroupId, mResourceType, mOperateModel);
-        mListFragment.add(mUnRelevanceListFragment);
-        mFragmentAdapter = new FragmentListAdapter(getSupportFragmentManager(), mListFragment);
-        mViewPager.setAdapter(mFragmentAdapter);
+        GoodsUnRelevanceListFragment relevanceListFragment = GoodsUnRelevanceListFragment.newInstance(purchaserBean);
+        mListFragment.add(relevanceListFragment);
+        GoodsRelevanceListFragment unRelevanceListFragment = GoodsRelevanceListFragment.newInstance(purchaserBean);
+        mListFragment.add(unRelevanceListFragment);
+        FragmentListAdapter adapter = new FragmentListAdapter(getSupportFragmentManager(), mListFragment);
+        mViewPager.setAdapter(adapter);
         mTab.setViewPager(mViewPager, STR_TITLE);
     }
 

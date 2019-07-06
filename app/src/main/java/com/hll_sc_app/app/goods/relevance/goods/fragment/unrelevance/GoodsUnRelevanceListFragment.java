@@ -22,8 +22,8 @@ import com.hll_sc_app.app.goods.relevance.goods.fragment.BaseGoodsRelevanceFragm
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -50,19 +50,15 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     Unbinder unbinder;
-    String mGroupId;
-    String mResourceType;
-    String mOperateModel;
     private GoodsUnRelevanceListFragmentPresenter mPresenter;
     private GoodsRelevanceListAdapter mAdapter;
     private EmptyView mEmptyView;
+    private PurchaserBean mBean;
     private String mGoodsName;
 
-    public static GoodsUnRelevanceListFragment newInstance(String groupId, String resourceType, String operateModel) {
+    public static GoodsUnRelevanceListFragment newInstance(PurchaserBean bean) {
         Bundle args = new Bundle();
-        args.putString("object0", groupId);
-        args.putString("object1", resourceType);
-        args.putString("object2", operateModel);
+        args.putParcelable("parcelable", bean);
         GoodsUnRelevanceListFragment fragment = new GoodsUnRelevanceListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -75,9 +71,7 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
         mPresenter.register(this);
         Bundle args = getArguments();
         if (args != null) {
-            mGroupId = args.getString("object0");
-            mResourceType = args.getString("object1");
-            mOperateModel = args.getString("object2");
+            mBean = args.getParcelable("parcelable");
         }
     }
 
@@ -129,17 +123,17 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
 
     @Override
     public String getGroupId() {
-        return mGroupId;
+        return mBean.getGroupID();
     }
 
     @Override
     public String getResourceType() {
-        return mResourceType;
+        return mBean.getResourceType();
     }
 
     @Override
     public String getOperateModel() {
-        return mOperateModel;
+        return mBean.getOperateModel();
     }
 
     @Override
@@ -155,11 +149,7 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
             mAdapter.setNewData(list);
         }
         mAdapter.setEmptyView(mEmptyView);
-        if (total != 0) {
-            mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
-        } else {
-            mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
-        }
+        mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
         if (total == 0) {
             mTxtTips.setVisibility(View.GONE);
         } else {
