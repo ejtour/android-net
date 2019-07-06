@@ -84,6 +84,7 @@
         android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        app:layout_goneMarginRight="0dp"
         android:text="重新关联"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/base_text_10"

@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.goods.relevance.goods;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -25,11 +28,13 @@ import com.hll_sc_app.app.goods.relevance.goods.fragment.unrelevance.GoodsUnRele
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SearchView;
 
@@ -50,7 +55,10 @@ import butterknife.OnClick;
  * @date 2019/7/4
  */
 @Route(path = RouterConfig.GOODS_RELEVANCE_LIST, extras = Constant.LOGIN_EXTRA)
-public class GoodsRelevanceListActivity extends BaseLoadActivity {
+public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoodsRelevanceListContract.IGoodsRelevanceListView {
+    public static final int REQ_KEY = 0x654;
+    public static final String TRANSFER_KEY = "transfer";
+    public static final String PURCHASER_KEY = "purchaser";
     static final String[] STR_TITLE = {"未关联", "已关联"};
     @BindView(R.id.searchView)
     SearchView mSearchView;
@@ -60,18 +68,37 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
     SlidingTabLayout mTab;
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
-    @Autowired(name = "parcelable", required = true)
+    @Autowired(name = PURCHASER_KEY)
     PurchaserBean purchaserBean;
+    @Autowired(name = TRANSFER_KEY)
+    TransferBean transferBean;
     private List<BaseGoodsRelevanceFragment> mListFragment;
+    private GoodsRelevanceListPresenter mPresenter;
 
     /**
      * start
      *
-     * @param bean 采购商集团
+     * @param purchaser 采购商集团
+     * @param transfer  转单详情
      */
-    public static void start(PurchaserBean bean) {
-        RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST, bean);
+    public static void start(Activity context, PurchaserBean purchaser, TransferBean transfer) {
+        Postcard postcard = ARouter.getInstance()
+                .build(RouterConfig.GOODS_RELEVANCE_LIST)
+                .withParcelable(PURCHASER_KEY, purchaser)
+                .withParcelable(TRANSFER_KEY, transfer)
+                .setProvider(new LoginInterceptor());
+        if (context != null) postcard.navigation(context, REQ_KEY);
+        else postcard.navigation();
     }
+
+    public static void start(Activity context, TransferBean transfer) {
+        start(context, null, transfer);
+    }
+
+    public static void start(PurchaserBean purchaser) {
+        start(null, purchaser, null);
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +109,10 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
         ButterKnife.bind(this);
         initView();
         EventBus.getDefault().register(this);
+        if (transferBean != null) {
+            mPresenter = GoodsRelevanceListPresenter.newInstance(transferBean.getId());
+            mPresenter.register(this);
+        }
     }
 
     @Override
@@ -124,10 +155,18 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
 
     public void refreshFragment() {
         if (!CommonUtils.isEmpty(mListFragment)) {
+            if (transferBean != null) {
+                showTransferDetail(transferBean);
+                return;
+            }
             for (BaseGoodsRelevanceFragment fragment : mListFragment) {
                 fragment.refreshFragment(mSearchView.getSearchContent());
             }
         }
+    }
+
+    public void reqTransferDetail() {
+        if (mPresenter != null) mPresenter.reqTransferDetail();
     }
 
     @Subscribe
@@ -143,9 +182,36 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity {
         refreshFragment();
     }
 
+    @Override
     @OnClick(R.id.img_close)
-    public void onViewClicked() {
-        finish();
+    public void onBackPressed() {
+        if (transferBean != null) {
+            Intent intent = new Intent();
+            intent.putExtra(TRANSFER_KEY, transferBean);
+            setResult(RESULT_OK, intent);
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public void showTransferDetail(TransferBean transferBean) {
+        this.transferBean = transferBean;
+        List<TransferDetailBean> detailBeans = new ArrayList<>();
+        if (!CommonUtils.isEmpty(transferBean.getDetailList()))
+            for (TransferDetailBean bean : transferBean.getDetailList()) {
+                if (bean.getHomologous() == 0 && (TextUtils.isEmpty(mSearchView.getSearchContent())
+                        || bean.getGoodsName().contains(mSearchView.getSearchContent())))
+                    detailBeans.add(bean);
+            }
+        mListFragment.get(0).refreshList(detailBeans);
+        detailBeans = new ArrayList<>();
+        if (!CommonUtils.isEmpty(transferBean.getDetailList()))
+            for (TransferDetailBean bean : transferBean.getDetailList()) {
+                if (bean.getHomologous() == 1 && (TextUtils.isEmpty(mSearchView.getSearchContent())
+                        || bean.getProductName().contains(mSearchView.getSearchContent())))
+                    detailBeans.add(bean);
+            }
+        mListFragment.get(1).refreshList(detailBeans);
     }
 
     class FragmentListAdapter extends FragmentPagerAdapter {

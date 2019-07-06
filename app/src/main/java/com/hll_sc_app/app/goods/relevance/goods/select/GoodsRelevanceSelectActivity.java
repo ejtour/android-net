@@ -27,8 +27,8 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
-import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.goods.SKUGoodsBean;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -71,7 +71,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     SmartRefreshLayout mRefreshLayout;
     Map<String, List<GoodsBean>> mSelectMap;
     @Autowired(name = "parcelable")
-    GoodsRelevanceBean mBean;
+    TransferDetailBean mBean;
     private GoodsRelevanceSelectPresenter mPresenter;
     private CategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
@@ -186,7 +186,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     }
 
     @Override
-    public GoodsRelevanceBean getGoodsBean() {
+    public TransferDetailBean getGoodsBean() {
         return mBean;
     }
 

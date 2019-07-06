@@ -7,8 +7,8 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.goods.GoodsRelevanceResp;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -55,7 +55,7 @@ public class GoodsRelevanceListFragmentPresenter implements GoodsRelevanceListFr
     }
 
     @Override
-    public void removeGoodsRelevance(GoodsRelevanceBean bean) {
+    public void removeGoodsRelevance(TransferDetailBean bean) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("goodsCode", bean.getGoodsCode())
             .put("id", bean.getId())

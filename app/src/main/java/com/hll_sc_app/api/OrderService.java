@@ -134,4 +134,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103726")
     Observable<BaseResp<Object>> commitInventoryCheck(@Body BaseReq<InventoryCheckReq> req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103724")
+    Observable<BaseResp<Object>> tagDoNotRelevance(@Body BaseMapReq req);
 }

@@ -2,8 +2,8 @@ package com.hll_sc_app.app.goods.relevance.goods.select;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.goods.SKUGoodsBean;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public interface GoodsRelevanceSelectContract {
          *
          * @return 商品数据
          */
-        GoodsRelevanceBean getGoodsBean();
+        TransferDetailBean getGoodsBean();
 
         /**
          * 显示商城二级分类

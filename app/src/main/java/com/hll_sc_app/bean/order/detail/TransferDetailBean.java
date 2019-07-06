@@ -10,22 +10,22 @@ import android.os.Parcelable;
 
 public class TransferDetailBean implements Parcelable {
     private String saleUnitName;
-    private long actionTime;
-    private int productID;
+    private String actionTime;
+    private String productID;
     private int billSource;
     private String allotID;
     private String allotName;
     private String productName;
-    private int isRelated;
-    private int shipperType;
+    private Integer isRelated;
+    private String shipperType;
     private String unRelatedReason;
     private String auxiliaryUnit;
-    private int productSpecID;
-    private int plateSupplierID;
+    private String productSpecID;
+    private String plateSupplierID;
     private int action;
     private String failReason;
     private String billDetailID;
-    private int id;
+    private String id;
     private String orderUnit;
     private String billNo;
     private String goodsName;
@@ -40,20 +40,31 @@ public class TransferDetailBean implements Parcelable {
     private String imgUrl;
     private String detailRemark;
     private double totalAmount;
-    private int operateModel;
+    private String operateModel;
     private String goodsCategoryID;
-    private int productCategoryID;
+    private String productCategoryID;
     private String productCode;
     private long createTime;
     private String goodsCategoryName;
     private double goodsPrice;
     private String odmId;
     private String goodsCode;
-    private int shopID;
-    private int erpBillID;
+    private String shopID;
+    private String erpBillID;
     private String skuCode;
     private int homologous;
     private int status;
+
+    private String shipperID;
+    private String relationStatus;
+    private String actionBy;
+    private String erpShopName;
+    private String shipperName;
+    private String thirdGroupName;
+    private String thirdGroupID;
+    private String erpShopID;
+    private String plateSupplierName;
+    private String resourceType;
 
     public String getSaleUnitName() {
         return saleUnitName;
@@ -63,19 +74,19 @@ public class TransferDetailBean implements Parcelable {
         this.saleUnitName = saleUnitName;
     }
 
-    public long getActionTime() {
+    public String getActionTime() {
         return actionTime;
     }
 
-    public void setActionTime(long actionTime) {
+    public void setActionTime(String actionTime) {
         this.actionTime = actionTime;
     }
 
-    public int getProductID() {
+    public String getProductID() {
         return productID;
     }
 
-    public void setProductID(int productID) {
+    public void setProductID(String productID) {
         this.productID = productID;
     }
 
@@ -111,19 +122,19 @@ public class TransferDetailBean implements Parcelable {
         this.productName = productName;
     }
 
-    public int getIsRelated() {
+    public Integer getIsRelated() {
         return isRelated;
     }
 
-    public void setIsRelated(int isRelated) {
+    public void setIsRelated(Integer isRelated) {
         this.isRelated = isRelated;
     }
 
-    public int getShipperType() {
+    public String getShipperType() {
         return shipperType;
     }
 
-    public void setShipperType(int shipperType) {
+    public void setShipperType(String shipperType) {
         this.shipperType = shipperType;
     }
 
@@ -143,19 +154,19 @@ public class TransferDetailBean implements Parcelable {
         this.auxiliaryUnit = auxiliaryUnit;
     }
 
-    public int getProductSpecID() {
+    public String getProductSpecID() {
         return productSpecID;
     }
 
-    public void setProductSpecID(int productSpecID) {
+    public void setProductSpecID(String productSpecID) {
         this.productSpecID = productSpecID;
     }
 
-    public int getPlateSupplierID() {
+    public String getPlateSupplierID() {
         return plateSupplierID;
     }
 
-    public void setPlateSupplierID(int plateSupplierID) {
+    public void setPlateSupplierID(String plateSupplierID) {
         this.plateSupplierID = plateSupplierID;
     }
 
@@ -183,11 +194,11 @@ public class TransferDetailBean implements Parcelable {
         this.billDetailID = billDetailID;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -303,11 +314,11 @@ public class TransferDetailBean implements Parcelable {
         this.totalAmount = totalAmount;
     }
 
-    public int getOperateModel() {
+    public String getOperateModel() {
         return operateModel;
     }
 
-    public void setOperateModel(int operateModel) {
+    public void setOperateModel(String operateModel) {
         this.operateModel = operateModel;
     }
 
@@ -319,11 +330,11 @@ public class TransferDetailBean implements Parcelable {
         this.goodsCategoryID = goodsCategoryID;
     }
 
-    public int getProductCategoryID() {
+    public String getProductCategoryID() {
         return productCategoryID;
     }
 
-    public void setProductCategoryID(int productCategoryID) {
+    public void setProductCategoryID(String productCategoryID) {
         this.productCategoryID = productCategoryID;
     }
 
@@ -375,19 +386,19 @@ public class TransferDetailBean implements Parcelable {
         this.goodsCode = goodsCode;
     }
 
-    public int getShopID() {
+    public String getShopID() {
         return shopID;
     }
 
-    public void setShopID(int shopID) {
+    public void setShopID(String shopID) {
         this.shopID = shopID;
     }
 
-    public int getErpBillID() {
+    public String getErpBillID() {
         return erpBillID;
     }
 
-    public void setErpBillID(int erpBillID) {
+    public void setErpBillID(String erpBillID) {
         this.erpBillID = erpBillID;
     }
 
@@ -415,6 +426,86 @@ public class TransferDetailBean implements Parcelable {
         this.status = status;
     }
 
+    public String getShipperID() {
+        return shipperID;
+    }
+
+    public void setShipperID(String shipperID) {
+        this.shipperID = shipperID;
+    }
+
+    public String getRelationStatus() {
+        return relationStatus;
+    }
+
+    public void setRelationStatus(String relationStatus) {
+        this.relationStatus = relationStatus;
+    }
+
+    public String getActionBy() {
+        return actionBy;
+    }
+
+    public void setActionBy(String actionBy) {
+        this.actionBy = actionBy;
+    }
+
+    public String getErpShopName() {
+        return erpShopName;
+    }
+
+    public void setErpShopName(String erpShopName) {
+        this.erpShopName = erpShopName;
+    }
+
+    public String getShipperName() {
+        return shipperName;
+    }
+
+    public void setShipperName(String shipperName) {
+        this.shipperName = shipperName;
+    }
+
+    public String getThirdGroupName() {
+        return thirdGroupName;
+    }
+
+    public void setThirdGroupName(String thirdGroupName) {
+        this.thirdGroupName = thirdGroupName;
+    }
+
+    public String getThirdGroupID() {
+        return thirdGroupID;
+    }
+
+    public void setThirdGroupID(String thirdGroupID) {
+        this.thirdGroupID = thirdGroupID;
+    }
+
+    public String getErpShopID() {
+        return erpShopID;
+    }
+
+    public void setErpShopID(String erpShopID) {
+        this.erpShopID = erpShopID;
+    }
+
+    public String getPlateSupplierName() {
+        return plateSupplierName;
+    }
+
+    public void setPlateSupplierName(String plateSupplierName) {
+        this.plateSupplierName = plateSupplierName;
+    }
+
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -423,22 +514,22 @@ public class TransferDetailBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.saleUnitName);
-        dest.writeLong(this.actionTime);
-        dest.writeInt(this.productID);
+        dest.writeString(this.actionTime);
+        dest.writeString(this.productID);
         dest.writeInt(this.billSource);
         dest.writeString(this.allotID);
         dest.writeString(this.allotName);
         dest.writeString(this.productName);
         dest.writeInt(this.isRelated);
-        dest.writeInt(this.shipperType);
+        dest.writeString(this.shipperType);
         dest.writeString(this.unRelatedReason);
         dest.writeString(this.auxiliaryUnit);
-        dest.writeInt(this.productSpecID);
-        dest.writeInt(this.plateSupplierID);
+        dest.writeString(this.productSpecID);
+        dest.writeString(this.plateSupplierID);
         dest.writeInt(this.action);
         dest.writeString(this.failReason);
         dest.writeString(this.billDetailID);
-        dest.writeInt(this.id);
+        dest.writeString(this.id);
         dest.writeString(this.orderUnit);
         dest.writeString(this.billNo);
         dest.writeString(this.goodsName);
@@ -453,20 +544,30 @@ public class TransferDetailBean implements Parcelable {
         dest.writeString(this.imgUrl);
         dest.writeString(this.detailRemark);
         dest.writeDouble(this.totalAmount);
-        dest.writeInt(this.operateModel);
+        dest.writeString(this.operateModel);
         dest.writeString(this.goodsCategoryID);
-        dest.writeInt(this.productCategoryID);
+        dest.writeString(this.productCategoryID);
         dest.writeString(this.productCode);
         dest.writeLong(this.createTime);
         dest.writeString(this.goodsCategoryName);
         dest.writeDouble(this.goodsPrice);
         dest.writeString(this.odmId);
         dest.writeString(this.goodsCode);
-        dest.writeInt(this.shopID);
-        dest.writeInt(this.erpBillID);
+        dest.writeString(this.shopID);
+        dest.writeString(this.erpBillID);
         dest.writeString(this.skuCode);
         dest.writeInt(this.homologous);
         dest.writeInt(this.status);
+        dest.writeString(this.shipperID);
+        dest.writeString(this.relationStatus);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.erpShopName);
+        dest.writeString(this.shipperName);
+        dest.writeString(this.thirdGroupName);
+        dest.writeString(this.thirdGroupID);
+        dest.writeString(this.erpShopID);
+        dest.writeString(this.plateSupplierName);
+        dest.writeString(this.resourceType);
     }
 
     public TransferDetailBean() {
@@ -474,22 +575,22 @@ public class TransferDetailBean implements Parcelable {
 
     protected TransferDetailBean(Parcel in) {
         this.saleUnitName = in.readString();
-        this.actionTime = in.readLong();
-        this.productID = in.readInt();
+        this.actionTime = in.readString();
+        this.productID = in.readString();
         this.billSource = in.readInt();
         this.allotID = in.readString();
         this.allotName = in.readString();
         this.productName = in.readString();
         this.isRelated = in.readInt();
-        this.shipperType = in.readInt();
+        this.shipperType = in.readString();
         this.unRelatedReason = in.readString();
         this.auxiliaryUnit = in.readString();
-        this.productSpecID = in.readInt();
-        this.plateSupplierID = in.readInt();
+        this.productSpecID = in.readString();
+        this.plateSupplierID = in.readString();
         this.action = in.readInt();
         this.failReason = in.readString();
         this.billDetailID = in.readString();
-        this.id = in.readInt();
+        this.id = in.readString();
         this.orderUnit = in.readString();
         this.billNo = in.readString();
         this.goodsName = in.readString();
@@ -504,20 +605,30 @@ public class TransferDetailBean implements Parcelable {
         this.imgUrl = in.readString();
         this.detailRemark = in.readString();
         this.totalAmount = in.readDouble();
-        this.operateModel = in.readInt();
+        this.operateModel = in.readString();
         this.goodsCategoryID = in.readString();
-        this.productCategoryID = in.readInt();
+        this.productCategoryID = in.readString();
         this.productCode = in.readString();
         this.createTime = in.readLong();
         this.goodsCategoryName = in.readString();
         this.goodsPrice = in.readDouble();
         this.odmId = in.readString();
         this.goodsCode = in.readString();
-        this.shopID = in.readInt();
-        this.erpBillID = in.readInt();
+        this.shopID = in.readString();
+        this.erpBillID = in.readString();
         this.skuCode = in.readString();
         this.homologous = in.readInt();
         this.status = in.readInt();
+        this.shipperID = in.readString();
+        this.relationStatus = in.readString();
+        this.actionBy = in.readString();
+        this.erpShopName = in.readString();
+        this.shipperName = in.readString();
+        this.thirdGroupName = in.readString();
+        this.thirdGroupID = in.readString();
+        this.erpShopID = in.readString();
+        this.plateSupplierName = in.readString();
+        this.resourceType = in.readString();
     }
 
     public static final Parcelable.Creator<TransferDetailBean> CREATOR = new Parcelable.Creator<TransferDetailBean>() {

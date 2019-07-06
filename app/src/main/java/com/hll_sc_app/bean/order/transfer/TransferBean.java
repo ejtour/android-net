@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.order.transfer;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -12,7 +15,7 @@ import java.util.List;
  * @since 2019/6/18
  */
 
-public class TransferBean {
+public class TransferBean implements Parcelable {
     private long actionTime;
     private double totalPrice;
     private int billSource;
@@ -431,4 +434,121 @@ public class TransferBean {
     public void setDetailList(List<TransferDetailBean> detailList) {
         this.detailList = detailList;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.actionTime);
+        dest.writeDouble(this.totalPrice);
+        dest.writeInt(this.billSource);
+        dest.writeString(this.allotID);
+        dest.writeString(this.shopmallBillNo);
+        dest.writeString(this.allotName);
+        dest.writeLong(this.billCreateTime);
+        dest.writeInt(this.shipperType);
+        dest.writeInt(this.payType);
+        dest.writeInt(this.purchaserID);
+        dest.writeDouble(this.amountPaid);
+        dest.writeString(this.billExecuteEndTime);
+        dest.writeString(this.orgCode);
+        dest.writeInt(this.plateSupplierID);
+        dest.writeString(this.purchaseBillNo);
+        dest.writeInt(this.action);
+        dest.writeString(this.billRemark);
+        dest.writeString(this.cancelBy);
+        dest.writeString(this.failReason);
+        dest.writeString(this.id);
+        dest.writeString(this.cancelReason);
+        dest.writeString(this.billNo);
+        dest.writeString(this.billCreateBy);
+        dest.writeInt(this.isPay);
+        dest.writeString(this.payOrderNo);
+        dest.writeString(this.receiverName);
+        dest.writeString(this.groupID);
+        dest.writeLong(this.acceptTime);
+        dest.writeString(this.receiverMobile);
+        dest.writeInt(this.billDate);
+        dest.writeInt(this.isShopMall);
+        dest.writeInt(this.paymentWay);
+        dest.writeString(this.billExecuteTime);
+        dest.writeString(this.receiverAddress);
+        dest.writeString(this.acceptBy);
+        dest.writeString(this.groupName);
+        dest.writeInt(this.operateModel);
+        dest.writeString(this.createTime);
+        dest.writeInt(this.shopID);
+        dest.writeString(this.plateSupplierName);
+        dest.writeString(this.ordererMobile);
+        dest.writeInt(this.homologous);
+        dest.writeInt(this.status);
+        dest.writeByte(this.mIsSelected ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.detailList);
+    }
+
+    public TransferBean() {
+    }
+
+    protected TransferBean(Parcel in) {
+        this.actionTime = in.readLong();
+        this.totalPrice = in.readDouble();
+        this.billSource = in.readInt();
+        this.allotID = in.readString();
+        this.shopmallBillNo = in.readString();
+        this.allotName = in.readString();
+        this.billCreateTime = in.readLong();
+        this.shipperType = in.readInt();
+        this.payType = in.readInt();
+        this.purchaserID = in.readInt();
+        this.amountPaid = in.readDouble();
+        this.billExecuteEndTime = in.readString();
+        this.orgCode = in.readString();
+        this.plateSupplierID = in.readInt();
+        this.purchaseBillNo = in.readString();
+        this.action = in.readInt();
+        this.billRemark = in.readString();
+        this.cancelBy = in.readString();
+        this.failReason = in.readString();
+        this.id = in.readString();
+        this.cancelReason = in.readString();
+        this.billNo = in.readString();
+        this.billCreateBy = in.readString();
+        this.isPay = in.readInt();
+        this.payOrderNo = in.readString();
+        this.receiverName = in.readString();
+        this.groupID = in.readString();
+        this.acceptTime = in.readLong();
+        this.receiverMobile = in.readString();
+        this.billDate = in.readInt();
+        this.isShopMall = in.readInt();
+        this.paymentWay = in.readInt();
+        this.billExecuteTime = in.readString();
+        this.receiverAddress = in.readString();
+        this.acceptBy = in.readString();
+        this.groupName = in.readString();
+        this.operateModel = in.readInt();
+        this.createTime = in.readString();
+        this.shopID = in.readInt();
+        this.plateSupplierName = in.readString();
+        this.ordererMobile = in.readString();
+        this.homologous = in.readInt();
+        this.status = in.readInt();
+        this.mIsSelected = in.readByte() != 0;
+        this.detailList = in.createTypedArrayList(TransferDetailBean.CREATOR);
+    }
+
+    public static final Parcelable.Creator<TransferBean> CREATOR = new Parcelable.Creator<TransferBean>() {
+        @Override
+        public TransferBean createFromParcel(Parcel source) {
+            return new TransferBean(source);
+        }
+
+        @Override
+        public TransferBean[] newArray(int size) {
+            return new TransferBean[size];
+        }
+    };
 }

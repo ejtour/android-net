@@ -2,7 +2,7 @@ package com.hll_sc_app.app.goods.relevance.goods.fragment.unrelevance;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 
 import java.util.List;
 
@@ -51,7 +51,9 @@ public interface GoodsUnRelevanceListFragmentContract {
          * @param append true-追加
          * @param total  indexList
          */
-        void showGoodsList(List<GoodsRelevanceBean> list, boolean append, int total);
+        void showGoodsList(List<TransferDetailBean> list, boolean append, int total);
+
+        void reloadTransferDetail();
     }
 
     interface IGoodsRelevanceListPresenter extends IPresenter<IGoodsRelevanceListView> {
@@ -66,5 +68,7 @@ public interface GoodsUnRelevanceListFragmentContract {
          * 查询下一页未关联商品列表
          */
         void queryMoreGoodsUnRelevanceList();
+
+        void reqDoNotRelevance(String detailID);
     }
 }

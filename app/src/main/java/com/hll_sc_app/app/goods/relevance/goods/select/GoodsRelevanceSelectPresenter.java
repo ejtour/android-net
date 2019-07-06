@@ -11,8 +11,8 @@ import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.goods.DepositProductsResp;
-import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.goods.SKUGoodsBean;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -79,7 +79,7 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
 
     @Override
     public void addGoodsRelevance(SKUGoodsBean bean) {
-        GoodsRelevanceBean relevanceBean = mView.getGoodsBean();
+        TransferDetailBean relevanceBean = mView.getGoodsBean();
         if (relevanceBean == null) {
             return;
         }
@@ -135,7 +135,7 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
             .put("pageSize", "20");
         if (TextUtils.isEmpty(mView.getCategorySubId())) {
             // 推荐
-            GoodsRelevanceBean relevanceBean = mView.getGoodsBean();
+            TransferDetailBean relevanceBean = mView.getGoodsBean();
             if (relevanceBean != null) {
                 builder.put("name", relevanceBean.getGoodsName())
                     .put("productCode", relevanceBean.getGoodsCode())

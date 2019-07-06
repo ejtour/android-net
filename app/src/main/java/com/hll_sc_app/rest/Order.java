@@ -535,4 +535,18 @@ public class Order {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+    /**
+     * 标记指定转单明细不关联
+     *
+     * @param id 明细id
+     */
+    public static void tagDoNotRelevance(String id, SimpleObserver<Object> observer) {
+        OrderService.INSTANCE
+                .tagDoNotRelevance(BaseMapReq.newBuilder()
+                        .put("id", id).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }

@@ -18,12 +18,13 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
 import com.hll_sc_app.app.goods.relevance.goods.fragment.BaseGoodsRelevanceFragment;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -70,9 +71,7 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
         mPresenter = GoodsUnRelevanceListFragmentPresenter.newInstance();
         mPresenter.register(this);
         Bundle args = getArguments();
-        if (args != null) {
-            mBean = args.getParcelable("parcelable");
-        }
+        if (args != null) mBean = args.getParcelable("parcelable");
     }
 
     @Override
@@ -85,40 +84,57 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_goods_relevance_list, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        intView();
+        initView();
         return rootView;
     }
 
-    private void intView() {
+    private void initView() {
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreGoodsUnRelevanceList();
+                load(false);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryGoodsUnRelevanceList(false);
+                load(true);
             }
         });
         mEmptyView = EmptyView.newBuilder(requireActivity()).setTips("还没有未关联的商品数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireActivity(),
-            R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                R.color.base_color_divider)
+                , UIUtils.dip2px(1)));
         mAdapter = new GoodsRelevanceListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            GoodsRelevanceBean bean = (GoodsRelevanceBean) adapter.getItem(position);
-            if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST_SELECT, bean);
+            TransferDetailBean bean = (TransferDetailBean) adapter.getItem(position);
+            if (bean == null) return;
+            switch (view.getId()) {
+                case R.id.txt_relevance:
+                    RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST_SELECT, bean);
+                    break;
+                case R.id.txt_not_relevance:
+                    mPresenter.reqDoNotRelevance(bean.getId());
+                    break;
             }
         });
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    private void load(boolean refresh) {
+        if (mBean == null) {
+            reloadTransferDetail();
+            return;
+        }
+        if (refresh) mPresenter.queryGoodsUnRelevanceList(false);
+        else mPresenter.queryMoreGoodsUnRelevanceList();
+    }
+
     @Override
     protected void initData() {
-        mPresenter.start();
+        if (mBean != null) mPresenter.start();
+        else if (getActivity() instanceof GoodsRelevanceListActivity)
+            ((GoodsRelevanceListActivity) getActivity()).refreshFragment();
     }
 
     @Override
@@ -142,7 +158,7 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
     }
 
     @Override
-    public void showGoodsList(List<GoodsRelevanceBean> list, boolean append, int total) {
+    public void showGoodsList(List<TransferDetailBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -158,10 +174,16 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
         }
     }
 
+    @Override
+    public void reloadTransferDetail() {
+        if (getActivity() instanceof GoodsRelevanceListActivity)
+            ((GoodsRelevanceListActivity) getActivity()).reqTransferDetail();
+    }
+
     public SpannableString getTipString(String total) {
         SpannableString spannableString = new SpannableString("有" + total + "个第三方品项未关联商城商品，请及时关联，否则未关联的品项将无法下单。");
         spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.base_red)),
-            1, total.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                1, total.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
 
@@ -185,17 +207,33 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
         }
     }
 
-    class GoodsRelevanceListAdapter extends BaseQuickAdapter<GoodsRelevanceBean, BaseViewHolder> {
+    @Override
+    public void refreshList(List<TransferDetailBean> beans) {
+        if (!isPrepared()) return;
+        hideLoading();
+        showGoodsList(beans, false, beans.size());
+    }
+
+    class GoodsRelevanceListAdapter extends BaseQuickAdapter<TransferDetailBean, BaseViewHolder> {
         GoodsRelevanceListAdapter() {
             super(R.layout.item_goods_un_relevance_list);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, GoodsRelevanceBean item) {
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            helper.addOnClickListener(R.id.txt_relevance).addOnClickListener(R.id.txt_not_relevance);
+            return helper;
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, TransferDetailBean item) {
             helper.setText(R.id.txt_goodsName, item.getGoodsName())
-                .setText(R.id.txt_goodsCode, "商品编码：" + getString(item.getGoodsCode()))
-                .setText(R.id.txt_saleUnitName, "单位：" + getString(item.getSaleUnitName()))
-                .addOnClickListener(R.id.txt_relevance);
+                    .setText(R.id.txt_goodsCode, "商品编码：" + getString(item.getGoodsCode()))
+                    .setText(R.id.txt_saleUnitName, "单位：" + getString(item.getSaleUnitName()))
+                    .setGone(R.id.txt_not_relevance, item.getIsRelated() != null && item.getIsRelated() == 1)
+                    .setGone(R.id.txt_relevance, item.getIsRelated() == null || item.getIsRelated() == 1)
+                    .setGone(R.id.txt_no_relevance, item.getIsRelated() != null && item.getIsRelated() == 0);
         }
 
         private String getString(String str) {

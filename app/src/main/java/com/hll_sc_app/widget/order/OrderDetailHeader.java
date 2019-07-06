@@ -13,6 +13,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -126,12 +127,7 @@ public class OrderDetailHeader extends ConstraintLayout {
             return "暂未提供";
         }
         SpannableString ss = new SpannableString(source);
-        ss.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                // no-op
-            }
-
+        ss.setSpan(new UnderlineSpan() {
             @Override
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);

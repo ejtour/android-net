@@ -15,6 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
 import com.hll_sc_app.app.order.transfer.inventory.InventoryCheckActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -43,7 +44,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ORDER_TRANSFER_DETAIL)
 public class TransferDetailActivity extends BaseLoadActivity implements ITransferDetailContract.ITransferDetailView {
-
+    public static final int REQ_KEY = 0x752;
     private TransferBean mBean;
 
     public static void start(String id) {
@@ -131,10 +132,20 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
     }
 
     @Override
+    public void onBackPressed() {
+        if (mBean != null)
+            EventBus.getDefault().post(new OrderEvent(OrderEvent.UPDATE_TRANSFER_ITEM, mBean));
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == InventoryCheckActivity.REQ_KEY)
-            mPresenter.start();
+        if (resultCode == RESULT_OK)
+            if (requestCode == InventoryCheckActivity.REQ_KEY)
+                mPresenter.start();
+            else if (requestCode == GoodsRelevanceListActivity.REQ_KEY && data != null)
+                updateOrderData(data.getParcelableExtra(GoodsRelevanceListActivity.TRANSFER_KEY));
     }
 
     @OnClick({R.id.atd_action, R.id.atd_cancel})
@@ -143,7 +154,8 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
             case R.id.atd_action:
                 if (((TextView) view).getText().equals("商城下单"))
                     mPresenter.mallOrder();
-                else showToast("关联商品待添加");
+                else
+                    GoodsRelevanceListActivity.start(this, mBean);
                 break;
             case R.id.atd_cancel:
                 showCancelDialog();

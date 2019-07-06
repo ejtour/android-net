@@ -2,7 +2,7 @@ package com.hll_sc_app.app.goods.relevance.goods.fragment.relevance;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public interface GoodsRelevanceListFragmentContract {
          * @param append true-追加
          * @param total  indexList
          */
-        void showGoodsList(List<GoodsRelevanceBean> list, boolean append, int total);
+        void showGoodsList(List<TransferDetailBean> list, boolean append, int total);
 
         /**
          * 解除关联关系成功
@@ -77,6 +77,6 @@ public interface GoodsRelevanceListFragmentContract {
          *
          * @param bean 商品
          */
-        void removeGoodsRelevance(GoodsRelevanceBean bean);
+        void removeGoodsRelevance(TransferDetailBean bean);
     }
 }

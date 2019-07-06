@@ -26,8 +26,8 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderParam;
-import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
+import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
@@ -369,6 +369,13 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
             case OrderEvent.REFRESH_LIST:
                 setForceLoad(true);
                 lazyLoad();
+                break;
+            case OrderEvent.UPDATE_TRANSFER_ITEM:
+                TransferBean transferBean = (TransferBean) event.getData();
+                if (mCurResp != null)
+                    if (transferBean.getStatus() == 1 || transferBean.getStatus() == 3)
+                        mAdapter.replaceData(mCurResp, transferBean);
+                    else mAdapter.removeData(mCurResp);
                 break;
         }
     }

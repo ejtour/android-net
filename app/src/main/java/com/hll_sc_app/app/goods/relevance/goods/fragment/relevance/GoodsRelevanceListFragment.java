@@ -20,8 +20,8 @@ import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.goods.GoodsRelevanceBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -69,9 +69,7 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
         mPresenter = GoodsRelevanceListFragmentPresenter.newInstance();
         mPresenter.register(this);
         Bundle args = getArguments();
-        if (args != null) {
-            mBean = args.getParcelable("parcelable");
-        }
+        if (args != null) mBean = args.getParcelable("parcelable");
     }
 
     @Override
@@ -84,30 +82,30 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_goods_un_relevance_list, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        intView();
+        initView();
         return rootView;
     }
 
-    private void intView() {
+    private void initView() {
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreGoodsRelevanceList();
+                load(false);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryGoodsRelevanceList(false);
+                load(true);
             }
         });
         mEmptyView = EmptyView.newBuilder(requireActivity()).setTips("还没有已关联的商品数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireActivity(),
-            R.color.base_color_divider)
-            , UIUtils.dip2px(5)));
+                R.color.base_color_divider)
+                , UIUtils.dip2px(5)));
         mAdapter = new GoodsRelevanceListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            GoodsRelevanceBean bean = (GoodsRelevanceBean) adapter.getItem(position);
+            TransferDetailBean bean = (TransferDetailBean) adapter.getItem(position);
             if (bean == null) {
                 return;
             }
@@ -121,7 +119,17 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void showTipsDialog(GoodsRelevanceBean bean) {
+    private void load(boolean refresh) {
+        if (mBean == null) {
+            if (getActivity() instanceof GoodsRelevanceListActivity)
+                ((GoodsRelevanceListActivity) getActivity()).reqTransferDetail();
+            return;
+        }
+        if (refresh) mPresenter.queryGoodsRelevanceList(false);
+        else mPresenter.queryMoreGoodsRelevanceList();
+    }
+
+    private void showTipsDialog(TransferDetailBean bean) {
         SuccessDialog.newBuilder(requireActivity())
             .setImageTitle(R.drawable.ic_dialog_failure)
             .setImageState(R.drawable.ic_dialog_state_failure)
@@ -138,7 +146,8 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
 
     @Override
     protected void initData() {
-        mPresenter.start();
+        if (mBean != null) mPresenter.start();
+        else removeRelevanceSuccess();
     }
 
     @Override
@@ -162,7 +171,7 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
     }
 
     @Override
-    public void showGoodsList(List<GoodsRelevanceBean> list, boolean append, int total) {
+    public void showGoodsList(List<TransferDetailBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -200,20 +209,34 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
         }
     }
 
-    class GoodsRelevanceListAdapter extends BaseQuickAdapter<GoodsRelevanceBean, BaseViewHolder> {
+    @Override
+    public void refreshList(List<TransferDetailBean> beans) {
+        if (!isPrepared()) return;
+        hideLoading();
+        showGoodsList(beans, false, beans.size());
+    }
+
+    class GoodsRelevanceListAdapter extends BaseQuickAdapter<TransferDetailBean, BaseViewHolder> {
         GoodsRelevanceListAdapter() {
             super(R.layout.item_goods_relevance_list);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, GoodsRelevanceBean item) {
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            helper.addOnClickListener(R.id.txt_relevance_again)
+                    .addOnClickListener(R.id.txt_relevance_remove);
+            return helper;
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, TransferDetailBean item) {
             helper.setText(R.id.txt_goodsName, item.getGoodsName())
-                .setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_productSpec, item.getProductSpec())
-                .setText(R.id.txt_actionTime, CalendarUtils.format(CalendarUtils.parse(item.getActionTime(),
-                    "yyyyMMddHHmmss"), "yyyy/MM/dd"))
-                .addOnClickListener(R.id.txt_relevance_again)
-                .addOnClickListener(R.id.txt_relevance_remove);
+                    .setText(R.id.txt_productName, item.getProductName())
+                    .setText(R.id.txt_productSpec, item.getProductSpec())
+                    .setText(R.id.txt_actionTime, CalendarUtils.format(CalendarUtils.parse(item.getActionTime(),
+                            "yyyyMMddHHmmss"), "yyyy/MM/dd"))
+                    .setGone(R.id.txt_relevance_remove, item.getIsRelated() == null);
         }
     }
 }

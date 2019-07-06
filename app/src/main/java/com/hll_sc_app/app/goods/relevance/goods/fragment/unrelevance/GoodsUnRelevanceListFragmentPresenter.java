@@ -6,9 +6,11 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.goods.GoodsRelevanceResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Order;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -51,6 +53,16 @@ public class GoodsUnRelevanceListFragmentPresenter implements GoodsUnRelevanceLi
         mTempPageNum = mPageNum;
         mTempPageNum++;
         toQueryGoodsUnRelevanceList(false);
+    }
+
+    @Override
+    public void reqDoNotRelevance(String detailID) {
+        Order.tagDoNotRelevance(detailID, new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                mView.reloadTransferDetail();
+            }
+        });
     }
 
     private void toQueryGoodsUnRelevanceList(boolean showLoading) {
