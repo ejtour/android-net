@@ -520,7 +520,7 @@ public class TransferDetailBean implements Parcelable {
         dest.writeString(this.allotID);
         dest.writeString(this.allotName);
         dest.writeString(this.productName);
-        dest.writeInt(this.isRelated);
+        dest.writeValue(this.isRelated);
         dest.writeString(this.shipperType);
         dest.writeString(this.unRelatedReason);
         dest.writeString(this.auxiliaryUnit);
@@ -581,7 +581,7 @@ public class TransferDetailBean implements Parcelable {
         this.allotID = in.readString();
         this.allotName = in.readString();
         this.productName = in.readString();
-        this.isRelated = in.readInt();
+        this.isRelated = (Integer) in.readValue(Integer.class.getClassLoader());
         this.shipperType = in.readString();
         this.unRelatedReason = in.readString();
         this.auxiliaryUnit = in.readString();
