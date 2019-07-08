@@ -253,6 +253,147 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_main_mine_card"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_store_manage"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_store_manage"
+                            android:text="店铺管理"/>
+
+                        <TextView
+                            android:id="@+id/txt_staff_manage"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_staff_manage"
+                            android:text="员工管理"/>
+
+                        <TextView
+                            android:id="@+id/txt_invoice_manage"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_invoice_manage"
+                            android:text="发票管理"/>
+
+                        <TextView
+                            android:id="@+id/txt_complaint_manage"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_complaint_manage"
+                            android:text="投诉管理"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_new_product_demand"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_new_product_demand"
+                            android:text="新品需求"/>
+
+                        <TextView
+                            android:id="@+id/txt_product_special_demand"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_product_special_demand"
+                            android:text="商品特殊需求"/>
+
+                        <TextView
+                            android:id="@+id/txt_account_statement"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_account_statement"
+                            android:text="对账单"/>
+
+                        <TextView
+                            android:id="@+id/txt_report_center"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_report_center"
+                            android:text="报表中心"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_main_mine_card"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_wechat_mall"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_wechat_mall"
+                            android:text="微信商城"/>
+
+                        <TextView
+                            android:id="@+id/txt_transaction_record"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_transaction_record"
+                            android:text="交易记录"/>
+
+                        <TextView
+                            android:id="@+id/txt_check_inspection"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_check_inspection"
+                            android:text="查看验货单"/>
+
+                        <TextView
+                            android:id="@+id/txt_customer_purchase_template"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_customer_purchase_template"
+                            android:text="客户采购模版"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_market_price"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_market_price"
+                            android:text="市场价格"/>
+
+                        <TextView
+                            style="@style/MineButton"
+                            android:layout_weight="3"
+                            android:drawableTop="@drawable/ic_mine_product_special_demand"
+                            android:visibility="invisible"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
