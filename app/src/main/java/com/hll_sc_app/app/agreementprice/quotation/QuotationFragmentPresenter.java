@@ -8,8 +8,11 @@ import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -26,6 +29,7 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
     private QuotationFragmentContract.IHomeView mView;
     private int mPageNum;
     private int mTempNum;
+    private List<PurchaserBean> mListPurchaser;
 
     public static QuotationFragmentPresenter newInstance() {
         return new QuotationFragmentPresenter();
@@ -56,57 +60,40 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
     }
 
     @Override
-    public void getSuppliers(boolean show) {
-//        if (mView.getSupplierList() != null) {
-//            if (show) {
-//                mView.showSupplierWindow(mView.getSupplierList());
-//            }
-//            return;
-//        }
-//        UserBean userBean = GreenDaoUtils.getUser();
-//        if (userBean == null) {
-//            return;
-//        }
-//        BaseReq<QuotationSupplierReq> req = new BaseReq<>();
-//        QuotationSupplierReq groupReq = new QuotationSupplierReq();
-//        groupReq.setPurchaserID(userBean.getPurchaserID());
-//        req.setData(groupReq);
-//        PriceManagerService.INSTANCE
-//            .getQuotationSuppliers(req)
-//            .compose(ApiScheduler.getObservableScheduler())
-//            .map(new Precondition<>())
-//            .doOnSubscribe(disposable -> mView.showLoading())
-//            .doFinally(() -> {
-//                if (mView.isActive()) {
-//                    mView.hideLoading();
-//                }
-//            })
-//            .subscribe(new BaseCallback<QuotationSupplierResp>() {
-//                @Override
-//                public void onSuccess(QuotationSupplierResp result) {
-//                    if (mView.isActive() && result != null) {
-//                        mView.setSupplierList(result.getGroupList());
-//                        if (mView.getSupplierList() != null) {
-//                            QuotationSupplierResp.GroupListBean bean = new QuotationSupplierResp.GroupListBean();
-//                            bean.setGroupID("");
-//                            bean.setGroupName("全部");
-//                            mView.getSupplierList().add(0, bean);
-//                        }
-//                        if (show) {
-//                            mView.showSupplierWindow(mView.getSupplierList());
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(UseCaseException e) {
-//                    if (mView.isActive()) {
-//                        mView.showToast(e.getMessage());
-//                    }
-//                }
-//
-//
-//            });
+    public void queryCooperationPurchaserList() {
+        if (!CommonUtils.isEmpty(mListPurchaser)) {
+            mView.showPurchaserWindow(mListPurchaser);
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("searchParam", "")
+            .put("groupID", UserConfig.getGroupID())
+            .put("actionType", "quotation")
+            .create();
+        AgreementPriceService.INSTANCE.queryCooperationPurchaserList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<List<PurchaserBean>>() {
+                @Override
+                public void onSuccess(List<PurchaserBean> result) {
+                    mListPurchaser = result;
+                    PurchaserBean bean = new PurchaserBean();
+                    bean.setPurchaserID("");
+                    bean.setPurchaserName("全部");
+                    mListPurchaser.add(0, bean);
+                    mView.showPurchaserWindow(mListPurchaser);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    if (mView.isActive()) {
+                        mView.showToast(e.getMessage());
+                    }
+                }
+            });
     }
 
     @Override
@@ -127,7 +114,7 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
 //        QuotationExportReq.SearchParamsBean bean = new QuotationExportReq.SearchParamsBean();
 //        bean.setEndDate(mView.getEndDate());
 //        bean.setStartDate(mView.getStartDate());
-//        bean.setGroupID(mView.getSupplierID());
+//        bean.setGroupID(mView.getPurchaserId());
 //        bean.setPriceStartDate(mView.getPriceStartDate());
 //        bean.setPriceEndDate(mView.getPriceEndDate());
 //        exportReq.setSearchParams(bean);
@@ -177,6 +164,7 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
             .put("billNo", mView.getSearchParam())
             .put("pageNum", String.valueOf(mTempNum))
             .put("pageSize", String.valueOf(PAGE_SIZE))
+            .put("purchaserID", mView.getPurchaserId())
             .create();
         AgreementPriceService.INSTANCE.queryQuotationList(req)
             .compose(ApiScheduler.getObservableScheduler())

@@ -29,7 +29,7 @@ interface QuotationFragmentContract {
          *
          * @param list 采购商数据
          */
-        void showSupplierWindow(List<PurchaserBean> list);
+        void showPurchaserWindow(List<PurchaserBean> list);
 
         /**
          * 显示报价日期区间选择window
@@ -46,7 +46,7 @@ interface QuotationFragmentContract {
          *
          * @return 分类ID
          */
-        String getSupplierID();
+        String getPurchaserId();
 
         /**
          * 获取报价开始时间
@@ -75,13 +75,6 @@ interface QuotationFragmentContract {
          * @return 生效结束日期
          */
         String getPriceEndDate();
-
-        /**
-         * 获取供应商列表
-         *
-         * @return 供应商列表
-         */
-        List<PurchaserBean> getSupplierList();
 
         /**
          * 导出成功
@@ -131,11 +124,9 @@ interface QuotationFragmentContract {
         void queryMoreQuotationList();
 
         /**
-         * 配送报价供应商查询
-         *
-         * @param show true-显示
+         * 搜索合作采购商
          */
-        void getSuppliers(boolean show);
+        void queryCooperationPurchaserList();
 
         /**
          * 导出报价单到邮箱

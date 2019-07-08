@@ -5,6 +5,9 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
+import com.hll_sc_app.bean.goods.PurchaserBean;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -29,4 +32,14 @@ public interface AgreementPriceService {
     @POST(HttpConfig.URL)
     @Headers("pv:100023")
     Observable<BaseResp<QuotationResp>> queryQuotationList(@Body BaseMapReq req);
+
+    /**
+     * 搜索合作采购商
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102028")
+    Observable<BaseResp<List<PurchaserBean>>> queryCooperationPurchaserList(@Body BaseMapReq req);
 }

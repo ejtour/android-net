@@ -9,7 +9,7 @@
         android:id="@+id/rl_filter"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/base_white">
+        android:background="@drawable/base_bg_shadow_top_white_bar">
 
         <RelativeLayout
             android:id="@+id/ll_purchaser"
@@ -125,7 +125,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/rl_filter"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="1dp"
         android:layout_marginRight="10dp">
 
         <android.support.v7.widget.RecyclerView

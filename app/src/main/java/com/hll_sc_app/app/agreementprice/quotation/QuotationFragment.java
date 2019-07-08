@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
     SmartRefreshLayout mRefreshLayout;
     Unbinder unbinder;
     @BindView(R.id.txt_purchaser)
-    TextView mTxtSupplier;
+    TextView mTxtPurchaser;
     @BindView(R.id.img_purchaser)
     ImageView mImgSupplier;
     @BindView(R.id.txt_date)
@@ -71,7 +72,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
     @BindView(R.id.img_effectDate)
     ImageView mImgEffectDate;
     private QuotationFragmentContract.IHomePresenter mPresenter;
-    //    private CollectAllWindow<QuotationSupplierResp.GroupListBean> mSupplierWindow;
+    private PurchaserSelectWindow mPurchaserWindow;
     private DateRangeWindow mDateRangeWindow;
     private DateRangeWindow mDateEffectWindow;
     private QuotationListAdapter mAdapter;
@@ -180,27 +181,25 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
     }
 
     @Override
-    public void showSupplierWindow(List<PurchaserBean> list) {
-//        if (mSupplierWindow == null) {
-//            mSupplierWindow = new CollectAllWindow<>(getActivity(), QuotationSupplierResp
-//            .GroupListBean::getGroupName);
-//            mSupplierWindow.refreshListView(list);
-//            mSupplierWindow.setSelectListener(bean -> {
-//                if (TextUtils.equals(bean.getGroupName(), "全部")) {
-//                    mTxtSupplier.setText("供应商");
-//                } else {
-//                    mTxtSupplier.setText(bean.getGroupName());
-//                }
-//                mTxtSupplier.setTag(bean.getGroupID());
-//                mPresenter.queryQuotationList(true);
-//            });
-//            mSupplierWindow.setOnDismissListener(() -> {
-//                mTxtSupplier.setSelected(false);
-//                mImgSupplier.setSelected(false);
-//                mImgSupplier.setRotation(0F);
-//            });
-//        }
-//        mSupplierWindow.showAsDropDownFix(mViewDivider);
+    public void showPurchaserWindow(List<PurchaserBean> list) {
+        if (mPurchaserWindow == null) {
+            mPurchaserWindow = new PurchaserSelectWindow(getActivity(), list);
+            mPurchaserWindow.setListener(bean -> {
+                if (TextUtils.equals(bean.getPurchaserName(), "全部")) {
+                    mTxtPurchaser.setText("采购商");
+                } else {
+                    mTxtPurchaser.setText(bean.getPurchaserName());
+                }
+                mTxtPurchaser.setTag(bean.getPurchaserID());
+                mPresenter.queryQuotationList(true);
+            });
+            mPurchaserWindow.setOnDismissListener(() -> {
+                mTxtPurchaser.setSelected(false);
+                mImgSupplier.setSelected(false);
+                mImgSupplier.setRotation(0F);
+            });
+        }
+        mPurchaserWindow.showAsDropDownFix(mLlFilter);
     }
 
     @Override
@@ -282,11 +281,12 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
     }
 
     @Override
-    public String getSupplierID() {
-        if (mTxtSupplier != null && mTxtSupplier.getTag() != null) {
-            return (String) mTxtSupplier.getTag();
+    public String getPurchaserId() {
+        String purchaserId = null;
+        if (mTxtPurchaser != null && mTxtPurchaser.getTag() != null) {
+            purchaserId = (String) mTxtPurchaser.getTag();
         }
-        return null;
+        return purchaserId;
     }
 
     @Override
@@ -325,10 +325,6 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         return priceEndDate;
     }
 
-    @Override
-    public List<PurchaserBean> getSupplierList() {
-        return null;
-    }
 
     @Override
     public void exportSuccess(String email) {
@@ -364,9 +360,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         mPresenter.exportQuotation(email);
     }
 
-    @OnClick({
-        R.id.ll_date,
-        R.id.ll_effectDate})
+    @OnClick({R.id.ll_purchaser, R.id.ll_date, R.id.ll_effectDate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_date:
@@ -375,16 +369,19 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
             case R.id.ll_effectDate:
                 showDateEffectWindow();
                 break;
+            case R.id.ll_purchaser:
+                topurchaser();
+                break;
             default:
                 break;
         }
     }
 
-    private void toSupplier() {
-        mTxtSupplier.setSelected(true);
+    private void topurchaser() {
+        mTxtPurchaser.setSelected(true);
         mImgSupplier.setSelected(true);
         mImgSupplier.setRotation(-180F);
-        mPresenter.getSuppliers(true);
+        mPresenter.queryCooperationPurchaserList();
     }
 
     @Override

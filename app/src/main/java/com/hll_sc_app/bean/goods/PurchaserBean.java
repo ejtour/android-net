@@ -10,17 +10,6 @@ import android.os.Parcelable;
  * @date 2019-07-04
  */
 public class PurchaserBean implements Parcelable {
-    public static final Parcelable.Creator<PurchaserBean> CREATOR = new Parcelable.Creator<PurchaserBean>() {
-        @Override
-        public PurchaserBean createFromParcel(Parcel source) {
-            return new PurchaserBean(source);
-        }
-
-        @Override
-        public PurchaserBean[] newArray(int size) {
-            return new PurchaserBean[size];
-        }
-    };
     private String readStatus;
     private String uniformSocialCreditCode;
     private String unRelationProductNum;
@@ -58,9 +47,18 @@ public class PurchaserBean implements Parcelable {
     private String otherLicense;
     private String resourceType;
     private String status;
+    public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {
+        @Override
+        public PurchaserBean createFromParcel(Parcel source) {
+            return new PurchaserBean(source);
+        }
 
-    public PurchaserBean() {
-    }
+        @Override
+        public PurchaserBean[] newArray(int size) {
+            return new PurchaserBean[size];
+        }
+    };
+    private boolean select;
 
     protected PurchaserBean(Parcel in) {
         this.readStatus = in.readString();
@@ -100,6 +98,10 @@ public class PurchaserBean implements Parcelable {
         this.otherLicense = in.readString();
         this.resourceType = in.readString();
         this.status = in.readString();
+        this.select = in.readByte() != 0;
+    }
+
+    public PurchaserBean() {
     }
 
     public String getReadStatus() {
@@ -403,6 +405,14 @@ public class PurchaserBean implements Parcelable {
         return 0;
     }
 
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.readStatus);
@@ -442,5 +452,6 @@ public class PurchaserBean implements Parcelable {
         dest.writeString(this.otherLicense);
         dest.writeString(this.resourceType);
         dest.writeString(this.status);
+        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
     }
 }

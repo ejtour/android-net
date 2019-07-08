@@ -60,7 +60,7 @@
         app:month_view_show_mode="mode_only_current"
         app:select_mode="range_mode"
         app:selected_text_color="#fff"
-        app:selected_theme_color="@color/base_colorPrimary"
+        app:selected_theme_color="#A4C6EF"
         app:week_background="#fff"
         app:week_bar_view="com.hll_sc_app.base.widget.daterange.CustomWeekBarView"
         app:week_text_color="#666"/>
