@@ -167,4 +167,14 @@ public class RouterConfig {
      * 提交成功
      */
     public static final String SUBMIT_SUCCESS = "/activity/submit/success";
+
+    /**
+     * 协议价管理
+     */
+    public static final String MINE_AGREEMENT_PRICE = "/activity/mine/agreementPrice";
+
+    /**
+     * 协议价管理-报价单
+     */
+    public static final String MINE_AGREEMENT_PRICE_QUOTATION = "/fragment/mine/agreementPrice/quotation";
 }
