@@ -227,10 +227,10 @@
 -dontwarn org.conscrypt.**
 -dontwarn org.codehaus.mojo.animal_sniffer.**
 
--keep class com.hualala.citymall.wigdet.daterange.CustomRangeMonthView {
+-keep class com.hll_sc_app.base.widget.daterange.CustomRangeMonthView {
     public <init>(android.content.Context);
 }
--keep class com.hualala.citymall.wigdet.daterange.CustomWeekBarView {
+-keep class com.hll_sc_app.base.widget.daterange.CustomWeekBarView {
     public <init>(android.content.Context);
 }
 # aurora-imui

@@ -42,8 +42,6 @@ public class AgreementPriceActivity extends BaseLoadActivity {
     SlidingTabLayout mTlTitle;
     @BindView(R.id.viewPager)
     ViewPager mViewPager;
-    @BindView(R.id.img_back)
-    ImageView mImgBack;
     @BindView(R.id.img_add)
     ImageView mImgAdd;
     private PagerAdapter mAdapter;

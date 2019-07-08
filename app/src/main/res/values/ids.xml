@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="cart_input_watcher" type="id"/>
+    <item name="date_start" type="id"/>
+    <item name="date_end" type="id"/>
+</resources>

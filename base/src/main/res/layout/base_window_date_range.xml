@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/base_white">
+
+        <ImageView
+            android:id="@+id/img_left"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/base_ic_date_left"/>
+
+        <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="#666"
+            android:textSize="13sp"
+            tools:text="2018年3"/>
+
+        <ImageView
+            android:id="@+id/img_right"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/base_bg_selector_close"
+            android:rotation="180"
+            android:scaleType="centerInside"
+            android:src="@drawable/base_ic_date_left"/>
+
+    </RelativeLayout>
+
+    <com.haibin.calendarview.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        app:calendar_height="40dp"
+        app:calendar_padding="10dp"
+        app:current_day_text_color="#666666"
+        app:current_month_lunar_text_color="#CFCFCF"
+        app:current_month_text_color="#666666"
+        app:day_text_size="13sp"
+        app:max_select_range="-1"
+        app:min_select_range="-1"
+        app:min_year="2004"
+        app:month_view="com.hll_sc_app.base.widget.daterange.CustomRangeMonthView"
+        app:month_view_show_mode="mode_only_current"
+        app:select_mode="range_mode"
+        app:selected_text_color="#fff"
+        app:selected_theme_color="@color/base_colorPrimary"
+        app:week_background="#fff"
+        app:week_bar_view="com.hll_sc_app.base.widget.daterange.CustomWeekBarView"
+        app:week_text_color="#666"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/base_white"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txt_reset"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="125"
+            android:background="@drawable/base_bg_selector_dialog_cancel"
+            android:gravity="center"
+            android:text="重置"
+            android:textColor="@color/base_colorPrimary"
+            android:textSize="@dimen/base_text_12"/>
+
+        <TextView
+            android:id="@+id/txt_confirm"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="205"
+            android:height="30dp"
+            android:background="@drawable/base_bg_selector_dialog_confirm"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_12"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -18,10 +19,12 @@ import com.hll_sc_app.app.agreementprice.BaseAgreementPriceFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -32,6 +35,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,6 +53,8 @@ import butterknife.Unbinder;
 public class QuotationFragment extends BaseAgreementPriceFragment implements QuotationFragmentContract.IHomeView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.rl_filter)
+    LinearLayout mLlFilter;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     Unbinder unbinder;
@@ -66,8 +72,8 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
     ImageView mImgEffectDate;
     private QuotationFragmentContract.IHomePresenter mPresenter;
     //    private CollectAllWindow<QuotationSupplierResp.GroupListBean> mSupplierWindow;
-//    private DateRangeWindow mDateRangeWindow;
-//    private DateRangeWindow mDateEffectWindow;
+    private DateRangeWindow mDateRangeWindow;
+    private DateRangeWindow mDateEffectWindow;
     private QuotationListAdapter mAdapter;
 
     private EmptyView mEmptyView;
@@ -135,7 +141,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         }).create();
         mRecyclerView.setAdapter(mAdapter);
         if (isSearchActivity()) {
-            rootView.findViewById(R.id.rl_filter).setVisibility(View.GONE);
+            mLlFilter.setVisibility(View.GONE);
         }
     }
 
@@ -199,80 +205,80 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
 
     @Override
     public void showDateWindow() {
-//        mTxtDate.setSelected(true);
-//        mImgDate.setSelected(true);
-//        mImgDate.setRotation(-180F);
-//        if (mDateRangeWindow == null) {
-//            mDateRangeWindow = new DateRangeWindow(getActivity());
-//            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-//                if (start == null && end == null) {
-//                    mTxtDate.setText("报价日期");
-//                    mTxtDate.setTag(R.id.date_start, "");
-//                    mTxtDate.setTag(R.id.date_end, "");
-//                    mPresenter.queryQuotationList(true);
-//                    return;
-//                }
-//                if (start != null && end != null) {
-//                    Calendar calendarStart = Calendar.getInstance();
-//                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-//                    String startStr = CalendarUtils.format(calendarStart.getTime(), CalendarUtils.FORMAT_DATE_TIME);
-//                    Calendar calendarEnd = Calendar.getInstance();
-//                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-//                    String endStr = CalendarUtils.format(calendarEnd.getTime(), CalendarUtils.FORMAT_DATE_TIME);
-//                    mTxtDate.setText(String.format("%s\n%s", startStr, endStr));
-//                    mTxtDate.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
-//                        CalendarUtils.FORMAT_SERVER_DATE));
-//                    mTxtDate.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
-//                        CalendarUtils.FORMAT_SERVER_DATE));
-//                    mPresenter.queryQuotationList(true);
-//                }
-//            });
-//            mDateRangeWindow.setOnDismissListener(() -> {
-//                mTxtDate.setSelected(false);
-//                mImgDate.setSelected(false);
-//                mImgDate.setRotation(0F);
-//            });
-//        }
-//        mDateRangeWindow.showAsDropDownFix(mViewDivider);
+        mTxtDate.setSelected(true);
+        mImgDate.setSelected(true);
+        mImgDate.setRotation(-180F);
+        if (mDateRangeWindow == null) {
+            mDateRangeWindow = new DateRangeWindow(getActivity());
+            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
+                if (start == null && end == null) {
+                    mTxtDate.setText("报价日期");
+                    mTxtDate.setTag(R.id.date_start, "");
+                    mTxtDate.setTag(R.id.date_end, "");
+                    mPresenter.queryQuotationList(true);
+                    return;
+                }
+                if (start != null && end != null) {
+                    Calendar calendarStart = Calendar.getInstance();
+                    calendarStart.setTimeInMillis(start.getTimeInMillis());
+                    String startStr = CalendarUtils.format(calendarStart.getTime(), CalendarUtils.FORMAT_DATE_TIME);
+                    Calendar calendarEnd = Calendar.getInstance();
+                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
+                    String endStr = CalendarUtils.format(calendarEnd.getTime(), CalendarUtils.FORMAT_DATE_TIME);
+                    mTxtDate.setText(String.format("%s\n%s", startStr, endStr));
+                    mTxtDate.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE));
+                    mTxtDate.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE));
+                    mPresenter.queryQuotationList(true);
+                }
+            });
+            mDateRangeWindow.setOnDismissListener(() -> {
+                mTxtDate.setSelected(false);
+                mImgDate.setSelected(false);
+                mImgDate.setRotation(0F);
+            });
+        }
+        mDateRangeWindow.showAsDropDownFix(mLlFilter);
     }
 
     @Override
     public void showDateEffectWindow() {
-//        mTxtEffectDate.setSelected(true);
-//        mImgEffectDate.setSelected(true);
-//        mImgEffectDate.setRotation(-180F);
-//        if (mDateEffectWindow == null) {
-//            mDateEffectWindow = new DateRangeWindow(getActivity());
-//            mDateEffectWindow.setOnRangeSelectListener((start, end) -> {
-//                if (start == null && end == null) {
-//                    mTxtEffectDate.setText("生效期限");
-//                    mTxtEffectDate.setTag(R.id.date_start, "");
-//                    mTxtEffectDate.setTag(R.id.date_end, "");
-//                    mPresenter.queryQuotationList(true);
-//                    return;
-//                }
-//                if (start != null && end != null) {
-//                    Calendar calendarStart = Calendar.getInstance();
-//                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-//                    String startStr = CalendarUtils.format(calendarStart.getTime(), CalendarUtils.FORMAT_DATE_TIME);
-//                    Calendar calendarEnd = Calendar.getInstance();
-//                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-//                    String endStr = CalendarUtils.format(calendarEnd.getTime(), CalendarUtils.FORMAT_DATE_TIME);
-//                    mTxtEffectDate.setText(String.format("%s\n%s", startStr, endStr));
-//                    mTxtEffectDate.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
-//                        CalendarUtils.FORMAT_SERVER_DATE));
-//                    mTxtEffectDate.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
-//                        CalendarUtils.FORMAT_SERVER_DATE));
-//                    mPresenter.queryQuotationList(true);
-//                }
-//            });
-//            mDateEffectWindow.setOnDismissListener(() -> {
-//                mTxtEffectDate.setSelected(false);
-//                mImgEffectDate.setSelected(false);
-//                mImgEffectDate.setRotation(0F);
-//            });
-//        }
-//        mDateEffectWindow.showAsDropDownFix(mViewDivider);
+        mTxtEffectDate.setSelected(true);
+        mImgEffectDate.setSelected(true);
+        mImgEffectDate.setRotation(-180F);
+        if (mDateEffectWindow == null) {
+            mDateEffectWindow = new DateRangeWindow(getActivity());
+            mDateEffectWindow.setOnRangeSelectListener((start, end) -> {
+                if (start == null && end == null) {
+                    mTxtEffectDate.setText("生效期限");
+                    mTxtEffectDate.setTag(R.id.date_start, "");
+                    mTxtEffectDate.setTag(R.id.date_end, "");
+                    mPresenter.queryQuotationList(true);
+                    return;
+                }
+                if (start != null && end != null) {
+                    Calendar calendarStart = Calendar.getInstance();
+                    calendarStart.setTimeInMillis(start.getTimeInMillis());
+                    String startStr = CalendarUtils.format(calendarStart.getTime(), CalendarUtils.FORMAT_DATE_TIME);
+                    Calendar calendarEnd = Calendar.getInstance();
+                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
+                    String endStr = CalendarUtils.format(calendarEnd.getTime(), CalendarUtils.FORMAT_DATE_TIME);
+                    mTxtEffectDate.setText(String.format("%s\n%s", startStr, endStr));
+                    mTxtEffectDate.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE));
+                    mTxtEffectDate.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE));
+                    mPresenter.queryQuotationList(true);
+                }
+            });
+            mDateEffectWindow.setOnDismissListener(() -> {
+                mTxtEffectDate.setSelected(false);
+                mImgEffectDate.setSelected(false);
+                mImgEffectDate.setRotation(0F);
+            });
+        }
+        mDateEffectWindow.showAsDropDownFix(mLlFilter);
     }
 
     @Override
@@ -285,34 +291,38 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
 
     @Override
     public String getStartDate() {
-//        if (mTxtDate != null && mTxtDate.getTag(R.id.date_start) != null) {
-//            return (String) mTxtDate.getTag(R.id.date_start);
-//        }
-        return null;
+        String startDate = null;
+        if (mTxtDate != null && mTxtDate.getTag(R.id.date_start) != null) {
+            startDate = (String) mTxtDate.getTag(R.id.date_start);
+        }
+        return startDate;
     }
 
     @Override
     public String getEndDate() {
-//        if (mTxtDate != null && mTxtDate.getTag(R.id.date_end) != null) {
-//            return (String) mTxtDate.getTag(R.id.date_end);
-//        }
-        return null;
+        String endDate = null;
+        if (mTxtDate != null && mTxtDate.getTag(R.id.date_end) != null) {
+            endDate = (String) mTxtDate.getTag(R.id.date_end);
+        }
+        return endDate;
     }
 
     @Override
     public String getPriceStartDate() {
-//        if (mTxtEffectDate != null && mTxtEffectDate.getTag(R.id.date_start) != null) {
-//            return (String) mTxtEffectDate.getTag(R.id.date_start);
-//        }
-        return null;
+        String priceStartDate = null;
+        if (mTxtEffectDate != null && mTxtEffectDate.getTag(R.id.date_start) != null) {
+            priceStartDate = (String) mTxtEffectDate.getTag(R.id.date_start);
+        }
+        return priceStartDate;
     }
 
     @Override
     public String getPriceEndDate() {
-//        if (mTxtEffectDate != null && mTxtEffectDate.getTag(R.id.date_end) != null) {
-//            return (String) mTxtEffectDate.getTag(R.id.date_end);
-//        }
-        return null;
+        String priceEndDate = null;
+        if (mTxtEffectDate != null && mTxtEffectDate.getTag(R.id.date_end) != null) {
+            priceEndDate = (String) mTxtEffectDate.getTag(R.id.date_end);
+        }
+        return priceEndDate;
     }
 
     @Override
