@@ -73,7 +73,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
 
         helper.setText(R.id.iod_product_name, item.getProductName())
                 .setText(R.id.iod_product_spec, item.getProductSpec()) // 规格
-                .setText(R.id.iod_order_num, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName()) // 订货数量
+                .setText(R.id.iod_order_num, processNum("订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName(), false)) // 订货数量
                 .setText(R.id.iod_delivery_num, processNum(deliveryText, item.getAdjustmentNum() != item.getProductNum())) // 预发货/发货数量
                 .setText(R.id.iod_confirm_num, processNum(confirmText, item.getInspectionNum() != item.getProductNum())) // 签收数量
                 .setText(R.id.iod_sale_unit_spec, processPrice("单价：¥" + CommonUtils.formatMoney(item.getProductPrice()) + "/" + item.getSaleUnitName())) // 单价
@@ -88,11 +88,15 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
     }
 
     /**
-     * 签收数与实际数量不一致时改变文本颜色
+     * 数目与订货数不一致时强调
      */
-    private SpannableString processNum(String source, boolean numDiff) {
+    private CharSequence processNum(String source, boolean numDiff) {
+        boolean isNum = !source.endsWith("—");
+        if (!isNum) {
+            return source;
+        }
         SpannableString delivery = new SpannableString(source);
-        delivery.setSpan(new ForegroundColorSpan(Color.parseColor(!source.endsWith("-") && numDiff
+        delivery.setSpan(new ForegroundColorSpan(Color.parseColor(numDiff
                         ? ColorStr.COLOR_5695D2 : ColorStr.COLOR_666666)),
                 source.indexOf("：") + 1, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return delivery;
