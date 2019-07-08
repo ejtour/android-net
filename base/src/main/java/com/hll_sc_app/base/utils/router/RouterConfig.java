@@ -174,6 +174,11 @@ public class RouterConfig {
     public static final String MINE_AGREEMENT_PRICE = "/activity/mine/agreementPrice";
 
     /**
+     * 协议价管理-详情
+     */
+    public static final String MINE_AGREEMENT_PRICE_DETAIL = "/activity/mine/agreementPrice/detail";
+
+    /**
      * 协议价管理-报价单
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION = "/fragment/mine/agreementPrice/quotation";

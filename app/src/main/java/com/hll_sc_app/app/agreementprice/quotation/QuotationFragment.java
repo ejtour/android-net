@@ -20,6 +20,7 @@ import com.hll_sc_app.app.agreementprice.BaseAgreementPriceFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
@@ -131,8 +132,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             QuotationBean bean = (QuotationBean) adapter.getItem(position);
             if (bean != null) {
-                // 跳转到报价单详情页面
-//                RouterUtil.goToActivity(RouterConfig.USER_PRICE_MANAGER_QUOTATION_DETAIL, bean);
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_DETAIL, bean);
             }
         });
         mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();

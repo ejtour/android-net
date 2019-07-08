@@ -72,6 +72,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.agreementprice.quotation.detail.QuotationDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.goods.template.GoodsTemplateListActivity"
             android:screenOrientation="portrait" />
 
