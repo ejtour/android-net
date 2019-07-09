@@ -373,7 +373,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
                 topurchaser();
                 break;
             case R.id.img_quotation_add:
-                // TODO:新增报价单
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD);
                 break;
             default:
                 break;
