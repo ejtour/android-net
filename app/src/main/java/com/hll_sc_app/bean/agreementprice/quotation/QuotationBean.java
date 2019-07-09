@@ -34,6 +34,17 @@ public class QuotationBean implements Parcelable {
      * 放弃
      */
     public static final int BILL_STATUS_ABANDON = 6;
+    public static final Creator<QuotationBean> CREATOR = new Creator<QuotationBean>() {
+        @Override
+        public QuotationBean createFromParcel(Parcel source) {
+            return new QuotationBean(source);
+        }
+
+        @Override
+        public QuotationBean[] newArray(int size) {
+            return new QuotationBean[size];
+        }
+    };
     private String priceEndDate;
     private String reason;
     private String actionTime;
@@ -63,6 +74,54 @@ public class QuotationBean implements Parcelable {
     private String templateName;
     private String shopIDs;
     private String shopIDNum;
+    /**
+     * 是否选择了全部店铺（选择了全部店铺传1，未选择全部传0）
+     */
+    private String isAllShop;
+
+    public QuotationBean() {
+    }
+
+    protected QuotationBean(Parcel in) {
+        this.priceEndDate = in.readString();
+        this.reason = in.readString();
+        this.actionTime = in.readString();
+        this.auditBy = in.readString();
+        this.isSendEmail = in.readString();
+        this.shopName = in.readString();
+        this.priceStartDate = in.readString();
+        this.billCreateTime = in.readString();
+        this.createby = in.readString();
+        this.purchaserID = in.readString();
+        this.isWarehouse = in.readString();
+        this.billStatus = in.readInt();
+        this.action = in.readString();
+        this.billRemark = in.readString();
+        this.id = in.readString();
+        this.billNo = in.readString();
+        this.billCreateBy = in.readString();
+        this.actionBy = in.readString();
+        this.billType = in.readString();
+        this.groupID = in.readString();
+        this.billDate = in.readString();
+        this.productNum = in.readString();
+        this.templateID = in.readString();
+        this.purchaserName = in.readString();
+        this.auditTime = in.readString();
+        this.createTime = in.readString();
+        this.templateName = in.readString();
+        this.shopIDs = in.readString();
+        this.shopIDNum = in.readString();
+        this.isAllShop = in.readString();
+    }
+
+    public String getIsAllShop() {
+        return isAllShop;
+    }
+
+    public void setIsAllShop(String isAllShop) {
+        this.isAllShop = isAllShop;
+    }
 
     public String getPriceEndDate() {
         return priceEndDate;
@@ -296,53 +355,6 @@ public class QuotationBean implements Parcelable {
         this.shopIDNum = shopIDNum;
     }
 
-    public static final Parcelable.Creator<QuotationBean> CREATOR = new Parcelable.Creator<QuotationBean>() {
-        @Override
-        public QuotationBean createFromParcel(Parcel source) {
-            return new QuotationBean(source);
-        }
-
-        @Override
-        public QuotationBean[] newArray(int size) {
-            return new QuotationBean[size];
-        }
-    };
-
-    public QuotationBean() {
-    }
-
-    protected QuotationBean(Parcel in) {
-        this.priceEndDate = in.readString();
-        this.reason = in.readString();
-        this.actionTime = in.readString();
-        this.auditBy = in.readString();
-        this.isSendEmail = in.readString();
-        this.shopName = in.readString();
-        this.priceStartDate = in.readString();
-        this.billCreateTime = in.readString();
-        this.createby = in.readString();
-        this.purchaserID = in.readString();
-        this.isWarehouse = in.readString();
-        this.billStatus = in.readInt();
-        this.action = in.readString();
-        this.billRemark = in.readString();
-        this.id = in.readString();
-        this.billNo = in.readString();
-        this.billCreateBy = in.readString();
-        this.actionBy = in.readString();
-        this.billType = in.readString();
-        this.groupID = in.readString();
-        this.billDate = in.readString();
-        this.productNum = in.readString();
-        this.templateID = in.readString();
-        this.purchaserName = in.readString();
-        this.auditTime = in.readString();
-        this.createTime = in.readString();
-        this.templateName = in.readString();
-        this.shopIDs = in.readString();
-        this.shopIDNum = in.readString();
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -379,5 +391,6 @@ public class QuotationBean implements Parcelable {
         dest.writeString(this.templateName);
         dest.writeString(this.shopIDs);
         dest.writeString(this.shopIDNum);
+        dest.writeString(this.isAllShop);
     }
 }

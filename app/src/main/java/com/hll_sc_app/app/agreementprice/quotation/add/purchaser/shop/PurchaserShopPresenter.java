@@ -58,7 +58,7 @@ public class PurchaserShopPresenter implements PurchaserShopListContract.IPurcha
                 public void onSuccess(List<PurchaserShopBean> result) {
                     if (!CommonUtils.isEmpty(result)) {
                         PurchaserShopBean shopBean = new PurchaserShopBean();
-                        shopBean.setShopName("全部");
+                        shopBean.setShopName(PurchaserShopListActivity.STRING_ALL);
                         result.add(0, shopBean);
                     }
                     mView.showPurchaserShopList(result);
@@ -90,7 +90,7 @@ public class PurchaserShopPresenter implements PurchaserShopListContract.IPurcha
                     List<PurchaserShopBean> list = transformPurchaserBean(result.getShops());
                     if (!CommonUtils.isEmpty(list)) {
                         PurchaserShopBean shopBean = new PurchaserShopBean();
-                        shopBean.setShopName("全部");
+                        shopBean.setShopName(PurchaserShopListActivity.STRING_ALL);
                         list.add(0, shopBean);
                     }
                     mView.showPurchaserShopList(list);
@@ -109,6 +109,7 @@ public class PurchaserShopPresenter implements PurchaserShopListContract.IPurcha
             for (WarehouseShopBean bean : list) {
                 PurchaserShopBean shopBean = new PurchaserShopBean();
                 shopBean.setShopName(bean.getShopName());
+                shopBean.setShopID(bean.getId());
                 shopBeans.add(shopBean);
             }
         }

@@ -22,11 +22,15 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +66,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     private QuotationAddPresenter mPresenter;
     private GoodsListAdapter mAdapter;
     private SingleSelectionDialog mWarehouseDialog;
+    private QuotationBean mQuotationBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +77,15 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         mPresenter = QuotationAddPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        mQuotationBean = new QuotationBean();
         initView();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -85,13 +98,20 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     }
 
     private void addProduct() {
-
     }
 
+    @Subscribe
+    public void onEvent(QuotationBean event) {
+        mQuotationBean.setPurchaserID(event.getPurchaserID());
+        mQuotationBean.setPurchaserName(event.getPurchaserName());
+        mQuotationBean.setIsAllShop(event.getIsAllShop());
+        mQuotationBean.setShopIDs(event.getShopIDs());
+        mQuotationBean.setShopIDNum(event.getShopIDNum());
+        mTxtSelectPurchaser.setText(String.format("%s%s家门店", event.getPurchaserName(), event.getShopIDNum()));
+    }
 
     @Override
     public void showGoodsDetail(QuotationDetailResp resp) {
-
     }
 
     @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser})
@@ -123,7 +143,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 .setTitleText("报价类别")
                 .refreshList(values)
                 .setOnSelectListener(nameValue -> {
-                    mTxtIsWarehouse.setTag(nameValue.getValue());
+                    mQuotationBean.setIsWarehouse(nameValue.getValue());
                     mTxtIsWarehouse.setText(nameValue.getName());
                 }).create();
         }
@@ -135,8 +155,12 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             showToast("请先选择报价类别");
             return;
         }
-        boolean warehouse = TextUtils.equals("代仓客户", mTxtIsWarehouse.getText().toString());
-        RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER, warehouse);
+        if (TextUtils.isEmpty(mQuotationBean.getShopIDs())) {
+            boolean warehouse = TextUtils.equals("代仓客户", mTxtIsWarehouse.getText().toString());
+            RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER, warehouse);
+        } else {
+            RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP, mQuotationBean);
+        }
     }
 
     public class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {

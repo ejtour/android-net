@@ -81,6 +81,25 @@ public class RouterUtil {
         }
     }
 
+    /***
+     * 页面基本类型传参适配
+     * @param objects object
+     * @param context  context
+     */
+    public static void goToActivity(String url, Activity context, Object... objects) {
+        Postcard postcard = ARouter.getInstance().build(url);
+        for (int i = 0; i < objects.length; i++) {
+            getPostcard(postcard, "object" + i, objects[i]);
+        }
+        postcard.setProvider(new LoginInterceptor())
+            .navigation(context, new NavCallback() {
+                @Override
+                public void onArrival(Postcard postcard) {
+                    context.finish();
+                }
+            });
+    }
+
     /**
      * 通过url跳转页面
      *
@@ -130,39 +149,6 @@ public class RouterUtil {
         ARouter.getInstance().build(url)
             .withParcelable("parcelable", parcelable)
             .setProvider(new LoginInterceptor())
-            .navigation(context, new NavCallback() {
-                @Override
-                public void onArrival(Postcard postcard) {
-                    context.finish();
-                }
-            });
-    }
-
-    /**
-     * 通过url跳转页面并且关闭当前页面
-     * ARouter跳转后立即finish会使转场动画失效
-     *
-     * @param url     URL
-     * @param context Activity and so on.
-     */
-    public static void goToActivity(String url, Activity context, Object object) {
-        Postcard postcard = ARouter.getInstance().build(url);
-        if (object == null) {
-            return;
-        }
-        String type = object.getClass().getSimpleName();
-        if ("String".equals(type)) {
-            postcard = postcard.withString("object", (String) object);
-        } else if ("Integer".equals(type)) {
-            postcard = postcard.withInt("object", (Integer) object);
-        } else if ("Boolean".equals(type)) {
-            postcard = postcard.withBoolean("object", (Boolean) object);
-        } else if ("Float".equals(type)) {
-            postcard = postcard.withFloat("object", (Float) object);
-        } else if ("Long".equals(type)) {
-            postcard = postcard.withLong("object", (Long) object);
-        }
-        postcard.setProvider(new LoginInterceptor())
             .navigation(context, new NavCallback() {
                 @Override
                 public void onArrival(Postcard postcard) {

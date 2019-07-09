@@ -18,9 +18,11 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.event.SearchEvent;
@@ -32,6 +34,7 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,6 +49,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP, extras = Constant.LOGIN_EXTRA)
 public class PurchaserShopListActivity extends BaseLoadActivity implements PurchaserShopListContract.IPurchaserListView {
+    public static final String STRING_ALL = "全部";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.searchView)
@@ -90,7 +94,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
             if (bean == null) {
                 return;
             }
-            if (TextUtils.equals("全部", bean.getShopName())) {
+            if (TextUtils.equals(STRING_ALL, bean.getShopName())) {
                 selectAll(!bean.isSelect());
             } else {
                 bean.setSelect(!bean.isSelect());
@@ -146,7 +150,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
         List<PurchaserShopBean> list = mAdapter.getData();
         boolean select = true;
         for (PurchaserShopBean bean : list) {
-            if (!TextUtils.equals(bean.getShopName(), "全部")) {
+            if (!TextUtils.equals(bean.getShopName(), STRING_ALL)) {
                 if (!bean.isSelect()) {
                     select = false;
                     break;
@@ -165,17 +169,98 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
         }
     }
 
-    @OnClick({R.id.img_close})
+    @OnClick({R.id.img_close, R.id.txt_confirm})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
+            toClose();
+        } else if (view.getId() == R.id.txt_confirm) {
+            List<String> selectList = getSelectList();
+            if (CommonUtils.isEmpty(selectList)) {
+                showToast("您还没有选择门店");
+                return;
+            }
+            mQuotationBean.setShopIDs(TextUtils.join(",", selectList));
+            mQuotationBean.setShopIDNum(String.valueOf(selectList.size()));
+            EventBus.getDefault().post(mQuotationBean);
             finish();
         }
     }
 
+    /**
+     * 返回时候逻辑处理
+     */
+    private void toClose() {
+        String shopId = mQuotationBean.getShopIDs();
+        if (TextUtils.isEmpty(shopId)) {
+            finish();
+            return;
+        }
+        // 填写过数据后进行提示
+        showTipsDialog();
+    }
+
+    /**
+     * 获取选中的门店
+     *
+     * @return 选中的门店列表
+     */
+    private List<String> getSelectList() {
+        List<String> selectList = new ArrayList<>();
+        List<PurchaserShopBean> list = mAdapter.getData();
+        if (!CommonUtils.isEmpty(list)) {
+            for (PurchaserShopBean shopBean : list) {
+                if (TextUtils.equals(STRING_ALL, shopBean.getShopName())) {
+                    mQuotationBean.setIsAllShop(shopBean.isSelect() ? "1" : "0");
+                    continue;
+                }
+                if (shopBean.isSelect()) {
+                    selectList.add(shopBean.getShopID());
+                }
+            }
+        }
+        return selectList;
+    }
+
+    /**
+     * 退出提示对话框
+     */
+    private void showTipsDialog() {
+        SuccessDialog.newBuilder(this)
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("确认要离开么")
+            .setMessage("您已经填写了部分数据，离开会\n丢失当前已填写的数据")
+            .setCancelable(false)
+            .setButton((dialog, item) -> {
+                if (item == 0) {
+                    boolean warehouse = TextUtils.equals("1", mQuotationBean.getIsWarehouse());
+                    RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER, this, warehouse);
+                }
+                dialog.dismiss();
+            }, "确认离开", "我再想想").create().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        toClose();
+    }
+
     @Override
     public void showPurchaserShopList(List<PurchaserShopBean> list) {
+        if (!CommonUtils.isEmpty(list)) {
+            String shopId = mQuotationBean.getShopIDs();
+            if (!TextUtils.isEmpty(shopId)) {
+                for (PurchaserShopBean shopBean : list) {
+                    if (TextUtils.equals(STRING_ALL, shopBean.getShopName())) {
+                        continue;
+                    }
+                    shopBean.setSelect(shopId.contains(shopBean.getShopID()));
+                }
+            }
+        }
         mAdapter.setNewData(list);
         mAdapter.setEmptyView(mEmptyView);
+        checkSelectAll();
     }
 
     @Override
