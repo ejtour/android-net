@@ -360,7 +360,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         mPresenter.exportQuotation(email);
     }
 
-    @OnClick({R.id.ll_purchaser, R.id.ll_date, R.id.ll_effectDate})
+    @OnClick({R.id.ll_purchaser, R.id.ll_date, R.id.ll_effectDate, R.id.img_quotation_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_date:
@@ -371,6 +371,9 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
                 break;
             case R.id.ll_purchaser:
                 topurchaser();
+                break;
+            case R.id.img_quotation_add:
+                // TODO:新增报价单
                 break;
             default:
                 break;
