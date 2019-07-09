@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
@@ -114,7 +116,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     public void showGoodsDetail(QuotationDetailResp resp) {
     }
 
-    @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser})
+    @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser, R.id.rl_priceDate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -128,6 +130,9 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 break;
             case R.id.rl_select_purchaser:
                 toSelectPurchaser();
+                break;
+            case R.id.rl_priceDate:
+                showPriceDateWindow();
                 break;
             default:
                 break;
@@ -161,6 +166,11 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         } else {
             RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP, mQuotationBean);
         }
+    }
+
+    private void showPriceDateWindow() {
+        DateSelectWindow window = new DateSelectWindow(this);
+        window.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     public class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {
