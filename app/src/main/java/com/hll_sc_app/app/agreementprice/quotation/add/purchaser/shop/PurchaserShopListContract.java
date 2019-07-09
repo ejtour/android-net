@@ -21,6 +21,13 @@ public interface PurchaserShopListContract {
          * @param list list
          */
         void showPurchaserShopList(List<PurchaserShopBean> list);
+
+        /**
+         * 获取搜索词
+         *
+         * @return 搜索词
+         */
+        String getSearchParam();
     }
 
     interface IPurchaserListPresenter extends IPresenter<IPurchaserListView> {
@@ -28,8 +35,14 @@ public interface PurchaserShopListContract {
          * 查询合作采购商列表
          *
          * @param purchaserId 采购商 Id
-         * @param searchParam 搜索词
          */
-        void queryPurchaserShopList(String purchaserId, String searchParam);
+        void queryPurchaserShopList(String purchaserId);
+
+        /**
+         * 获取代仓签约详情
+         *
+         * @param purchaserId 代仓集团 Id
+         */
+        void queryCooperationWarehouseDetail(String purchaserId);
     }
 }

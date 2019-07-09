@@ -28,6 +28,7 @@ import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
 import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.SearchEvent;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -58,6 +59,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     public static final String FROM_GOODS_INV_WARN = "FROM_GOODS_INV_WARN";
     public static final String FROM_GOODS = "FROM_GOODS";
     public static final String FROM_BRAND = "FROM_BRAND";
+    public static final String FROM_SEARCH = "FROM_SEARCH";
     @BindView(R.id.aos_search_edit)
     EditText mSearchEdit;
     @BindView(R.id.aos_search_clear)
@@ -89,6 +91,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
                 && !isFromGoodsTop()
                 && !isFromGoodsTemplate()
                 && !isFromGoodsInvWarn()
+                && !isFromSearch()
                 && !isFromGoodsRelevanceList()) {
                 // 商品无提示词搜索
                 gotoSearch(s);
@@ -147,6 +150,15 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     }
 
     /**
+     * 搜索
+     *
+     * @return true
+     */
+    private boolean isFromSearch() {
+        return TextUtils.equals(mFrom, FROM_SEARCH);
+    }
+
+    /**
      * 来自第三方商品关联-列表
      *
      * @return true
@@ -175,6 +187,9 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             hint = tips;
         } else if (isFromGoodsRelevance()) {
             tips = "请输入采购商集团名称进行查询";
+            hint = tips;
+        } else if (isFromSearch()) {
+            tips = "请输入搜索词";
             hint = tips;
         }
         mSearchEdit.setHint(hint);
@@ -240,6 +255,8 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             EventBus.getDefault().post(new GoodsRelevanceSearchEvent(trim));
         } else if (isFromGoodsRelevanceList()) {
             EventBus.getDefault().post(new GoodsRelevanceListSearchEvent(trim));
+        } else if (isFromSearch()) {
+            EventBus.getDefault().post(new SearchEvent(trim));
         } else {
             if (mCurBean == null) {
                 mCurBean = new OrderSearchBean();

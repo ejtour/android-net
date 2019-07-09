@@ -6,10 +6,14 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.agreementprice.quotation.WarehouseDetailResp;
+import com.hll_sc_app.bean.agreementprice.quotation.WarehouseShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -38,10 +42,10 @@ public class PurchaserShopPresenter implements PurchaserShopListContract.IPurcha
     }
 
     @Override
-    public void queryPurchaserShopList(String purchaserId, String searchParam) {
+    public void queryPurchaserShopList(String purchaserId) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("purchaserID", purchaserId)
-            .put("searchParam", searchParam)
+            .put("searchParam", mView.getSearchParam())
             .create();
         AgreementPriceService.INSTANCE.queryCooperationPurchaserShopList(req)
             .compose(ApiScheduler.getObservableScheduler())
@@ -67,4 +71,47 @@ public class PurchaserShopPresenter implements PurchaserShopListContract.IPurcha
             });
     }
 
+    @Override
+    public void queryCooperationWarehouseDetail(String purchaserId) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("groupID", UserConfig.getGroupID())
+            .put("originator", "1")
+            .put("purchaserID", purchaserId)
+            .create();
+        AgreementPriceService.INSTANCE.queryCooperationWarehouseDetail(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<WarehouseDetailResp>() {
+                @Override
+                public void onSuccess(WarehouseDetailResp result) {
+                    List<PurchaserShopBean> list = transformPurchaserBean(result.getShops());
+                    if (!CommonUtils.isEmpty(list)) {
+                        PurchaserShopBean shopBean = new PurchaserShopBean();
+                        shopBean.setShopName("全部");
+                        list.add(0, shopBean);
+                    }
+                    mView.showPurchaserShopList(list);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showToast(e.getMessage());
+                }
+            });
+    }
+
+    private List<PurchaserShopBean> transformPurchaserBean(List<WarehouseShopBean> list) {
+        List<PurchaserShopBean> shopBeans = new ArrayList<>();
+        if (!CommonUtils.isEmpty(list)) {
+            for (WarehouseShopBean bean : list) {
+                PurchaserShopBean shopBean = new PurchaserShopBean();
+                shopBean.setShopName(bean.getShopName());
+                shopBeans.add(shopBean);
+            }
+        }
+        return shopBeans;
+    }
 }

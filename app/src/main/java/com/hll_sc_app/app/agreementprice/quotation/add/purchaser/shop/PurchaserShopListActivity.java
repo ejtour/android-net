@@ -23,7 +23,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
-import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
+import com.hll_sc_app.bean.event.SearchEvent;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -51,7 +51,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
     @BindView(R.id.searchView)
     SearchView mSearchView;
     @Autowired(name = "parcelable")
-    QuotationBean mPurchaserBean;
+    QuotationBean mQuotationBean;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
     private PurchaserShopListAdapter mAdapter;
@@ -70,10 +70,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
         mPresenter.register(this);
         mPresenter.start();
         EventBus.getDefault().register(this);
-        if (mPurchaserBean != null) {
-            mTxtTitle.setText(mPurchaserBean.getPurchaserName());
-            mPresenter.queryPurchaserShopList(mPurchaserBean.getPurchaserID(), null);
-        }
+        toQueryShopList();
     }
 
     @Override
@@ -83,6 +80,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
     }
 
     private void initView() {
+        mTxtTitle.setText(mQuotationBean.getPurchaserName());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
@@ -105,16 +103,26 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_RELEVANCE);
+                if (TextUtils.equals("0", mQuotationBean.getIsWarehouse())) {
+                    OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_SEARCH);
+                } else {
+                    showToast("代仓门店暂时不支持搜索");
+                }
             }
 
             @Override
             public void toSearch(String searchContent) {
-                if (mPurchaserBean != null) {
-                    mPresenter.queryPurchaserShopList(mPurchaserBean.getPurchaserID(), searchContent);
-                }
+                toQueryShopList();
             }
         });
+    }
+
+    private void toQueryShopList() {
+        if (TextUtils.equals("1", mQuotationBean.getIsWarehouse())) {
+            mPresenter.queryCooperationWarehouseDetail(mQuotationBean.getPurchaserID());
+        } else {
+            mPresenter.queryPurchaserShopList(mQuotationBean.getPurchaserID());
+        }
     }
 
     private void selectAll(boolean select) {
@@ -150,7 +158,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
     }
 
     @Subscribe
-    public void onEvent(GoodsRelevanceSearchEvent event) {
+    public void onEvent(SearchEvent event) {
         String name = event.getName();
         if (!TextUtils.isEmpty(name)) {
             mSearchView.showSearchContent(true, name);
@@ -168,6 +176,11 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
     public void showPurchaserShopList(List<PurchaserShopBean> list) {
         mAdapter.setNewData(list);
         mAdapter.setEmptyView(mEmptyView);
+    }
+
+    @Override
+    public String getSearchParam() {
+        return mSearchView.getSearchContent();
     }
 
     class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
