@@ -199,4 +199,9 @@ public class RouterConfig {
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP = "/activity/mine/agreementPrice" +
         "/quotation/add/purchaserShop";
+
+    /**
+     * 我的-退货审核
+     */
+    public static final String AFTER_SALES_AUDIT = "/activity/afterSales/audit";
 }

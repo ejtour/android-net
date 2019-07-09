@@ -189,7 +189,12 @@
             android:name=".app.order.settle.OrderSettlementActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme"/>
-        <activity android:name=".app.order.transfer.inventory.InventoryCheckActivity" />
+
+        <activity android:name=".app.order.transfer.inventory.InventoryCheckActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".app.aftersales.audit.AuditActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
