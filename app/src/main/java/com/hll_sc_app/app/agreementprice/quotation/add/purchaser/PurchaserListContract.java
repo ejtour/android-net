@@ -18,17 +18,36 @@ public interface PurchaserListContract {
         /**
          * 展示合作采购商列表
          *
-         * @param list list
+         * @param list   list
+         * @param append 追加
+         * @param total  总个数
          */
-        void showPurchaserList(List<QuotationBean> list);
+        void showPurchaserList(List<QuotationBean> list, boolean append, int total);
+
+        /**
+         * 获取搜索词
+         *
+         * @return 搜索词
+         */
+        String getSearchParam();
     }
 
     interface IPurchaserListPresenter extends IPresenter<IPurchaserListView> {
         /**
          * 查询合作采购商列表
-         *
-         * @param searchParam 搜索词
          */
-        void queryCooperationPurchaserList(String searchParam);
+        void queryCooperationPurchaserList();
+
+        /**
+         * 查询代仓合作集团
+         *
+         * @param showLoading 展示 loading
+         */
+        void queryCooperationGroupList(boolean showLoading);
+
+        /**
+         * 查询更多代仓合作集团
+         */
+        void queryMoreCooperationGroupList();
     }
 }

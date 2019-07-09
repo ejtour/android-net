@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.agreementprice.quotation.add.purchaser;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,9 @@ import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +54,8 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
     SearchView mSearchView;
     @Autowired(name = "object0")
     boolean isWarehouse;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
     private PurchaserListAdapter mAdapter;
     private EmptyView mEmptyView;
     private PurchaserListPresenter mPresenter;
@@ -66,12 +72,7 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
         mPresenter.register(this);
         mPresenter.start();
         EventBus.getDefault().register(this);
-        if (isWarehouse) {
-            // 查询代仓客户
-        } else {
-            // 查询合作采购商
-            mPresenter.queryCooperationPurchaserList(null);
-        }
+        toQueryGroupList();
     }
 
     @Override
@@ -88,6 +89,7 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             QuotationBean bean = (QuotationBean) adapter.getItem(position);
             if (bean != null) {
+                bean.setIsWarehouse(isWarehouse ? "1" : "0");
                 RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP, this, bean);
             }
         });
@@ -101,9 +103,38 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
 
             @Override
             public void toSearch(String searchContent) {
-                mPresenter.queryCooperationPurchaserList(searchContent);
+                toQueryGroupList();
             }
         });
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (isWarehouse) {
+                    mPresenter.queryMoreCooperationGroupList();
+                }
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                toQueryGroupList();
+            }
+        });
+    }
+
+    private void toQueryGroupList() {
+        if (isWarehouse) {
+            // 查询代仓客户
+            mPresenter.queryCooperationGroupList(true);
+        } else {
+            // 查询合作采购商
+            mPresenter.queryCooperationPurchaserList();
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
     }
 
     @Subscribe
@@ -122,9 +153,19 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
     }
 
     @Override
-    public void showPurchaserList(List<QuotationBean> list) {
-        mAdapter.setNewData(list);
+    public void showPurchaserList(List<QuotationBean> list, boolean append, int total) {
+        if (append) {
+            mAdapter.addData(list);
+        } else {
+            mAdapter.setNewData(list);
+        }
         mAdapter.setEmptyView(mEmptyView);
+        mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+    }
+
+    @Override
+    public String getSearchParam() {
+        return mSearchView.getSearchContent();
     }
 
     class PurchaserListAdapter extends BaseQuickAdapter<QuotationBean, BaseViewHolder> {
