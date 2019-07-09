@@ -14,6 +14,8 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
@@ -65,15 +67,8 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
             mView.showPurchaserWindow(mListPurchaser);
             return;
         }
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("searchParam", "")
-            .put("groupID", UserConfig.getGroupID())
-            .put("actionType", "quotation")
-            .create();
-        AgreementPriceService.INSTANCE.queryCooperationPurchaserList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
+
+        getCooperationPurchaserObservable(null).doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
             .subscribe(new BaseCallback<List<PurchaserBean>>() {
@@ -94,6 +89,17 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
                     }
                 }
             });
+    }
+
+    public static Observable<List<PurchaserBean>> getCooperationPurchaserObservable(String searchParam) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("searchParam", searchParam)
+            .put("groupID", UserConfig.getGroupID())
+            .put("actionType", "quotation")
+            .create();
+        return AgreementPriceService.INSTANCE.queryCooperationPurchaserList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>());
     }
 
     @Override

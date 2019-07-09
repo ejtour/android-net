@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,9 +21,15 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.SingleSelectionDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +61,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     ConstraintLayout mListTitle;
     private QuotationAddPresenter mPresenter;
     private GoodsListAdapter mAdapter;
+    private SingleSelectionDialog mWarehouseDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,7 +94,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
 
     }
 
-    @OnClick({R.id.img_close, R.id.txt_add_product})
+    @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -95,9 +103,40 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             case R.id.txt_add_product:
                 addProduct();
                 break;
+            case R.id.rl_isWarehouse:
+                showWarehouseSelect();
+                break;
+            case R.id.rl_select_purchaser:
+                toSelectPurchaser();
+                break;
             default:
                 break;
         }
+    }
+
+    private void showWarehouseSelect() {
+        if (mWarehouseDialog == null) {
+            List<NameValue> values = new ArrayList<>();
+            values.add(new NameValue("自营客户", "0"));
+            values.add(new NameValue("代仓客户", "1"));
+            mWarehouseDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                .setTitleText("报价类别")
+                .refreshList(values)
+                .setOnSelectListener(nameValue -> {
+                    mTxtIsWarehouse.setTag(nameValue.getValue());
+                    mTxtIsWarehouse.setText(nameValue.getName());
+                }).create();
+        }
+        mWarehouseDialog.show();
+    }
+
+    private void toSelectPurchaser() {
+        if (TextUtils.isEmpty(mTxtIsWarehouse.getText().toString())) {
+            showToast("请先选择报价类别");
+            return;
+        }
+        boolean warehouse = TextUtils.equals("代仓客户", mTxtIsWarehouse.getText().toString());
+        RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER, warehouse);
     }
 
     public class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {

@@ -186,5 +186,11 @@ public class RouterConfig {
     /**
      * 协议价管理-添加报价单
      */
-    public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD = "/fragment/mine/agreementPrice/quotation/add";
+    public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD = "/activity/mine/agreementPrice/quotation/add";
+
+    /**
+     * 协议价管理-添加报价单-选择报价对象
+     */
+    public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER = "/activity/mine/agreementPrice" +
+        "/quotation/add/purchaser";
 }
