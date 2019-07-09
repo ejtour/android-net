@@ -158,13 +158,25 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_bottom"
         android:layout_below="@+id/rl_templateID"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/include_title"
+            layout="@layout/item_agreement_price_quotation_detail_title"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/ll_bottom"
@@ -173,7 +185,8 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/base_bg_shadow_bottom_bar"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/txt_disable"

@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.agreementprice.quotation;
 
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -10,7 +9,6 @@ import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 协议价管理-报价单
@@ -22,8 +20,8 @@ public class QuotationListAdapter extends BaseQuickAdapter<QuotationBean, BaseVi
     private static final String YYYY_MM_DD = "yyyy/MM/dd";
     private static final String YYYY_MM_DD_2 = "yy / MM / dd";
 
-    QuotationListAdapter(@Nullable List<QuotationBean> data) {
-        super(R.layout.list_item_agreement_price_quotation, data);
+    QuotationListAdapter() {
+        super(R.layout.list_item_agreement_price_quotation);
     }
 
     @Override

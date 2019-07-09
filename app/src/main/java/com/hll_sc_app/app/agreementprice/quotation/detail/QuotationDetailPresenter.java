@@ -23,14 +23,16 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 public class QuotationDetailPresenter implements QuotationDetailContract.IPurchasePresenter {
     private QuotationDetailContract.IPurchaseView mView;
+    private String mBillId;
     private String mBillNo;
 
-    private QuotationDetailPresenter(String billNo) {
+    private QuotationDetailPresenter(String billId, String billNo) {
+        this.mBillId = billId;
         this.mBillNo = billNo;
     }
 
-    static QuotationDetailPresenter newInstance(String billNo) {
-        return new QuotationDetailPresenter(billNo);
+    static QuotationDetailPresenter newInstance(String billId, String billNo) {
+        return new QuotationDetailPresenter(billId, billNo);
     }
 
     @Override
@@ -45,11 +47,11 @@ public class QuotationDetailPresenter implements QuotationDetailContract.IPurcha
 
     @Override
     public void getQuotationDetail() {
-        if (TextUtils.isEmpty(mBillNo)) {
+        if (TextUtils.isEmpty(mBillId)) {
             return;
         }
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("billIDs", mBillNo)
+            .put("billIDs", mBillId)
             .put("groupID", UserConfig.getGroupID())
             .create();
         AgreementPriceService.INSTANCE
@@ -62,16 +64,39 @@ public class QuotationDetailPresenter implements QuotationDetailContract.IPurcha
             .subscribe(new BaseCallback<QuotationDetailResp>() {
                 @Override
                 public void onSuccess(QuotationDetailResp result) {
-                    if (mView.isActive() && result != null) {
-                        mView.showGoodsDetail(result);
-                    }
+                    mView.showGoodsDetail(result);
                 }
 
                 @Override
                 public void onFailure(UseCaseException e) {
-                    if (mView.isActive()) {
-                        mView.showToast(e.getMessage());
-                    }
+                    mView.showToast(e.getMessage());
+                }
+            });
+    }
+
+    @Override
+    public void disableQuotation() {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("billID", mBillId)
+            .put("billNo", mBillNo)
+            .put("groupID", UserConfig.getGroupID())
+            .put("flag", "1")
+            .create();
+        AgreementPriceService.INSTANCE.disableQuotation(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object result) {
+                    mView.disableQuotationSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showToast(e.getMessage());
                 }
             });
     }

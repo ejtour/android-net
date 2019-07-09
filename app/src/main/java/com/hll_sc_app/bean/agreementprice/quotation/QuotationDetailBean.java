@@ -11,10 +11,16 @@ public class QuotationDetailBean {
     private String actionTime;
     private String productID;
     private String categoryName;
+    /**
+     * 商品名称
+     */
     private String productName;
     private String billCreateTime;
     private String createby;
     private String purchaserID;
+    /**
+     * 价格
+     */
     private String price;
     private String billID;
     private String productSpecID;
@@ -28,14 +34,23 @@ public class QuotationDetailBean {
     private String actionBy;
     private String billType;
     private String groupID;
+    /**
+     * 成本价
+     */
     private String costPrice;
     private String billDate;
     private String categoryCode;
     private String purchaserName;
     private String imgUrl;
+    /**
+     * 商品规格
+     */
     private String productDesc;
     private String productCode;
     private String createTime;
+    /**
+     * 平台价格
+     */
     private String productPrice;
 
     public String getSaleUnitName() {

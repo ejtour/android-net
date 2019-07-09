@@ -45,6 +45,16 @@ public interface AgreementPriceService {
     Observable<BaseResp<QuotationDetailResp>> queryQuotationDetail(@Body BaseMapReq req);
 
     /**
+     * 停用和失效报价单
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100025")
+    Observable<BaseResp<Object>> disableQuotation(@Body BaseMapReq req);
+
+    /**
      * 搜索合作采购商
      *
      * @param req req

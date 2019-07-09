@@ -19,6 +19,11 @@ public interface QuotationDetailContract {
          * @param resp 报价商品数据
          */
         void showGoodsDetail(QuotationDetailResp resp);
+
+        /**
+         * 禁用报价单成功
+         */
+        void disableQuotationSuccess();
     }
 
     interface IPurchasePresenter extends IPresenter<IPurchaseView> {
@@ -26,5 +31,10 @@ public interface QuotationDetailContract {
          * 获取报价单详情
          */
         void getQuotationDetail();
+
+        /**
+         * 停用和失效报价单
+         */
+        void disableQuotation();
     }
 }

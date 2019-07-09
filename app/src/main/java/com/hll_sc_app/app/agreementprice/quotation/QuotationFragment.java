@@ -128,7 +128,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
             R.color.base_color_divider), UIUtils.dip2px(10)));
-        mAdapter = new QuotationListAdapter(null);
+        mAdapter = new QuotationListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             QuotationBean bean = (QuotationBean) adapter.getItem(position);
             if (bean != null) {
