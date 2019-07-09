@@ -4,6 +4,7 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
@@ -63,4 +64,14 @@ public interface AgreementPriceService {
     @POST(HttpConfig.URL)
     @Headers("pv:102028")
     Observable<BaseResp<List<PurchaserBean>>> queryCooperationPurchaserList(@Body BaseMapReq req);
+
+    /**
+     * 搜索合作采购商门店
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102017")
+    Observable<BaseResp<List<PurchaserShopBean>>> queryCooperationPurchaserShopList(@Body BaseMapReq req);
 }

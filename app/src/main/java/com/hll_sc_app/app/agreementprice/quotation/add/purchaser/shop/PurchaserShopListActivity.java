@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.agreementprice.quotation.add.purchaser;
+package com.hll_sc_app.app.agreementprice.quotation.add.purchaser.shop;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -20,9 +21,10 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -37,40 +39,40 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 选择合作采购商
+ * 选择合作采购商-选择门店
  *
  * @author zhuyingsong
  * @date 2019/7/9
  */
-@Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER, extras = Constant.LOGIN_EXTRA)
-public class PurchaserListActivity extends BaseLoadActivity implements PurchaserListContract.IPurchaserListView {
+@Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP, extras = Constant.LOGIN_EXTRA)
+public class PurchaserShopListActivity extends BaseLoadActivity implements PurchaserShopListContract.IPurchaserListView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.searchView)
     SearchView mSearchView;
-    @Autowired(name = "object0")
-    boolean isWarehouse;
-    private PurchaserListAdapter mAdapter;
+    @Autowired(name = "parcelable")
+    QuotationBean mPurchaserBean;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
+    private PurchaserShopListAdapter mAdapter;
     private EmptyView mEmptyView;
-    private PurchaserListPresenter mPresenter;
+    private PurchaserShopPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quotation_add_purchaser);
+        setContentView(R.layout.activity_quotation_add_purchaser_shop);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
-        mPresenter = PurchaserListPresenter.newInstance();
+        mPresenter = PurchaserShopPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
         EventBus.getDefault().register(this);
-        if (isWarehouse) {
-            // 查询代仓客户
-        } else {
-            // 查询合作采购商
-            mPresenter.queryCooperationPurchaserList(null);
+        if (mPurchaserBean != null) {
+            mTxtTitle.setText(mPurchaserBean.getPurchaserName());
+            mPresenter.queryPurchaserShopList(mPurchaserBean.getPurchaserID(), null);
         }
     }
 
@@ -84,14 +86,21 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
-        mAdapter = new PurchaserListAdapter();
+        mAdapter = new PurchaserShopListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            QuotationBean bean = (QuotationBean) adapter.getItem(position);
-            if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP, this, bean);
+            PurchaserShopBean bean = (PurchaserShopBean) adapter.getItem(position);
+            if (bean == null) {
+                return;
             }
+            if (TextUtils.equals("全部", bean.getShopName())) {
+                selectAll(!bean.isSelect());
+            } else {
+                bean.setSelect(!bean.isSelect());
+                checkSelectAll();
+            }
+
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商门店数据").create();
         mRecyclerView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
@@ -101,9 +110,43 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
 
             @Override
             public void toSearch(String searchContent) {
-                mPresenter.queryCooperationPurchaserList(searchContent);
+                if (mPurchaserBean != null) {
+                    mPresenter.queryPurchaserShopList(mPurchaserBean.getPurchaserID(), searchContent);
+                }
             }
         });
+    }
+
+    private void selectAll(boolean select) {
+        if (mAdapter == null || CommonUtils.isEmpty(mAdapter.getData())) {
+            return;
+        }
+        List<PurchaserShopBean> list = mAdapter.getData();
+        for (PurchaserShopBean bean : list) {
+            bean.setSelect(select);
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 判断是否设置全选
+     */
+    private void checkSelectAll() {
+        if (mAdapter == null || CommonUtils.isEmpty(mAdapter.getData())) {
+            return;
+        }
+        List<PurchaserShopBean> list = mAdapter.getData();
+        boolean select = true;
+        for (PurchaserShopBean bean : list) {
+            if (!TextUtils.equals(bean.getShopName(), "全部")) {
+                if (!bean.isSelect()) {
+                    select = false;
+                    break;
+                }
+            }
+        }
+        list.get(0).setSelect(select);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Subscribe
@@ -122,20 +165,21 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
     }
 
     @Override
-    public void showPurchaserList(List<QuotationBean> list) {
+    public void showPurchaserShopList(List<PurchaserShopBean> list) {
         mAdapter.setNewData(list);
         mAdapter.setEmptyView(mEmptyView);
     }
 
-    class PurchaserListAdapter extends BaseQuickAdapter<QuotationBean, BaseViewHolder> {
+    class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
 
-        PurchaserListAdapter() {
-            super(R.layout.item_purchaser_item);
+        PurchaserShopListAdapter() {
+            super(R.layout.item_purchaser_shop_item);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, QuotationBean bean) {
-            helper.setText(R.id.txt_purchaserName, bean.getPurchaserName());
+        protected void convert(BaseViewHolder helper, PurchaserShopBean bean) {
+            helper.setText(R.id.txt_shopName, bean.getShopName())
+                .getView(R.id.img_select).setSelected(bean.isSelect());
         }
     }
 }

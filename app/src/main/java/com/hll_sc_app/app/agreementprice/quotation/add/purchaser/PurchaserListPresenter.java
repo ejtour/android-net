@@ -3,10 +3,12 @@ package com.hll_sc_app.app.agreementprice.quotation.add.purchaser;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationFragmentPresenter;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.BaseCallback;
+import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -43,7 +45,7 @@ public class PurchaserListPresenter implements PurchaserListContract.IPurchaserL
             .subscribe(new BaseCallback<List<PurchaserBean>>() {
                 @Override
                 public void onSuccess(List<PurchaserBean> result) {
-                    mView.showPurchaserList(result);
+                    mView.showPurchaserList(transformPurchaserBean(result));
                 }
 
                 @Override
@@ -51,6 +53,19 @@ public class PurchaserListPresenter implements PurchaserListContract.IPurchaserL
                     mView.showToast(e.getMessage());
                 }
             });
+    }
+
+    private List<QuotationBean> transformPurchaserBean(List<PurchaserBean> list) {
+        List<QuotationBean> quotationBeans = new ArrayList<>();
+        if (!CommonUtils.isEmpty(list)) {
+            for (PurchaserBean bean : list) {
+                QuotationBean quotationBean = new QuotationBean();
+                quotationBean.setPurchaserID(bean.getPurchaserID());
+                quotationBean.setPurchaserName(bean.getPurchaserName());
+                quotationBeans.add(quotationBean);
+            }
+        }
+        return quotationBeans;
     }
 
 }
