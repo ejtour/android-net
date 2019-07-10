@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -62,6 +63,7 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD, extras = Constant.LOGIN_EXTRA)
 public class QuotationAddActivity extends BaseLoadActivity implements QuotationAddContract.IPurchaseView {
     public static final String STRING_WARE_HOUSE = "代仓客户";
+    public static final String STRING_SELF_SUPPORT = "自营客户";
     @BindView(R.id.txt_isWarehouse)
     TextView mTxtIsWarehouse;
     @BindView(R.id.txt_select_purchaser)
@@ -76,6 +78,8 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     LinearLayout mLlBottom;
     @BindView(R.id.include_title)
     ConstraintLayout mListTitle;
+    @Autowired(name = "parcelable")
+    QuotationReq mCopyReq;
     private QuotationAddPresenter mPresenter;
     private GoodsListAdapter mAdapter;
     private SingleSelectionDialog mWarehouseDialog;
@@ -87,12 +91,14 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quotation_add);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         mPresenter = QuotationAddPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
         mQuotationBean = new QuotationBean();
         initView();
+        showView();
         EventBus.getDefault().register(this);
     }
 
@@ -123,6 +129,36 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    /**
+     * 复制跳转过来
+     */
+    private void showView() {
+        if (mCopyReq == null) {
+            return;
+        }
+        // 报价商品
+        mAdapter.setNewData(mCopyReq.getList());
+        // 报价类别
+        QuotationBean bean = mCopyReq.getQuotation();
+        mQuotationBean.setIsWarehouse(bean.getIsWarehouse());
+        mTxtIsWarehouse.setText(TextUtils.equals("1", bean.getIsWarehouse()) ? STRING_WARE_HOUSE : STRING_SELF_SUPPORT);
+        // 报价对象
+        mQuotationBean.setPurchaserID(bean.getPurchaserID());
+        mQuotationBean.setPurchaserName(bean.getPurchaserName());
+        mQuotationBean.setIsAllShop(bean.getIsAllShop());
+        mQuotationBean.setShopIDs(bean.getShopIDs());
+        mQuotationBean.setShopIDNum(bean.getShopIDNum());
+        mTxtSelectPurchaser.setText(String.format("%s%s家门店", bean.getPurchaserName(), bean.getShopIDNum()));
+        // 生效期限
+        mQuotationBean.setPriceStartDate(bean.getPriceStartDate());
+        mQuotationBean.setPriceEndDate(bean.getPriceEndDate());
+        mTxtPriceDate.setText(QuotationListAdapter.getPriceDate(bean.getPriceStartDate(), bean.getPriceEndDate()));
+        // 比例模板
+        mQuotationBean.setTemplateID(bean.getTemplateID());
+        mQuotationBean.setTemplateName(bean.getTemplateName());
+        mTxtTemplateName.setText(bean.getTemplateName());
     }
 
     /**
@@ -305,7 +341,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     private void showWarehouseSelect() {
         if (mWarehouseDialog == null) {
             List<NameValue> values = new ArrayList<>();
-            values.add(new NameValue("自营客户", "0"));
+            values.add(new NameValue(STRING_SELF_SUPPORT, "0"));
             values.add(new NameValue(STRING_WARE_HOUSE, "1"));
             mWarehouseDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                 .setTitleText("报价类别")

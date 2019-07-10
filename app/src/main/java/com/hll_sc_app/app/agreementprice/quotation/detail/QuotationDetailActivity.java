@@ -22,9 +22,11 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
+import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
@@ -118,11 +120,21 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
                 mPresenter.disableQuotation();
                 break;
             case R.id.txt_copy:
-                // 复制
+                toCopy();
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 复制
+     */
+    private void toCopy() {
+        QuotationReq req = new QuotationReq();
+        req.setList(mAdapter.getData());
+        req.setQuotation(mBean);
+        RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD, this, req);
     }
 
     public class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {

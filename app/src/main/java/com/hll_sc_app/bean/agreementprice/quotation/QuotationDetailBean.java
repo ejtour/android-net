@@ -1,12 +1,15 @@
 package com.hll_sc_app.bean.agreementprice.quotation;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 报价单详情-商品信息
  *
  * @author zhuyingsong
  * @date 2019-07-08
  */
-public class QuotationDetailBean {
+public class QuotationDetailBean implements Parcelable {
     private String saleUnitName;
     private String actionTime;
     private String productID;
@@ -300,5 +303,95 @@ public class QuotationDetailBean {
 
     public void setProductPrice(String productPrice) {
         this.productPrice = productPrice;
+    }
+
+    public static final Parcelable.Creator<QuotationDetailBean> CREATOR =
+        new Parcelable.Creator<QuotationDetailBean>() {
+        @Override
+        public QuotationDetailBean createFromParcel(Parcel source) {
+            return new QuotationDetailBean(source);
+        }
+
+        @Override
+        public QuotationDetailBean[] newArray(int size) {
+            return new QuotationDetailBean[size];
+        }
+    };
+
+    public QuotationDetailBean() {
+    }
+
+    protected QuotationDetailBean(Parcel in) {
+        this.saleUnitName = in.readString();
+        this.actionTime = in.readString();
+        this.productID = in.readString();
+        this.categoryName = in.readString();
+        this.productName = in.readString();
+        this.billCreateTime = in.readString();
+        this.createby = in.readString();
+        this.purchaserID = in.readString();
+        this.price = in.readString();
+        this.billID = in.readString();
+        this.productSpecID = in.readString();
+        this.billStatus = in.readInt();
+        this.action = in.readString();
+        this.id = in.readString();
+        this.billNo = in.readString();
+        this.shopProductCategoryThreeID = in.readString();
+        this.billCreateBy = in.readString();
+        this.categoryID = in.readString();
+        this.actionBy = in.readString();
+        this.billType = in.readString();
+        this.groupID = in.readString();
+        this.costPrice = in.readString();
+        this.billDate = in.readString();
+        this.categoryCode = in.readString();
+        this.purchaserName = in.readString();
+        this.imgUrl = in.readString();
+        this.productDesc = in.readString();
+        this.productCode = in.readString();
+        this.createTime = in.readString();
+        this.productPrice = in.readString();
+        this.categorySubID = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.saleUnitName);
+        dest.writeString(this.actionTime);
+        dest.writeString(this.productID);
+        dest.writeString(this.categoryName);
+        dest.writeString(this.productName);
+        dest.writeString(this.billCreateTime);
+        dest.writeString(this.createby);
+        dest.writeString(this.purchaserID);
+        dest.writeString(this.price);
+        dest.writeString(this.billID);
+        dest.writeString(this.productSpecID);
+        dest.writeInt(this.billStatus);
+        dest.writeString(this.action);
+        dest.writeString(this.id);
+        dest.writeString(this.billNo);
+        dest.writeString(this.shopProductCategoryThreeID);
+        dest.writeString(this.billCreateBy);
+        dest.writeString(this.categoryID);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.billType);
+        dest.writeString(this.groupID);
+        dest.writeString(this.costPrice);
+        dest.writeString(this.billDate);
+        dest.writeString(this.categoryCode);
+        dest.writeString(this.purchaserName);
+        dest.writeString(this.imgUrl);
+        dest.writeString(this.productDesc);
+        dest.writeString(this.productCode);
+        dest.writeString(this.createTime);
+        dest.writeString(this.productPrice);
+        dest.writeString(this.categorySubID);
     }
 }
