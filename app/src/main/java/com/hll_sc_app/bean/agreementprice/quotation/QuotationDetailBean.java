@@ -52,6 +52,15 @@ public class QuotationDetailBean {
      * 平台价格
      */
     private String productPrice;
+    private String categorySubID;
+
+    public String getCategorySubID() {
+        return categorySubID;
+    }
+
+    public void setCategorySubID(String categorySubID) {
+        this.categorySubID = categorySubID;
+    }
 
     public String getSaleUnitName() {
         return saleUnitName;

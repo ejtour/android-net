@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -44,7 +43,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,19 +62,20 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     RecyclerView mRecyclerViewLevel1;
     @BindView(R.id.recyclerView_product)
     RecyclerView mRecyclerViewProduct;
-    @BindView(R.id.fl_bottom)
-    RelativeLayout mFlBottom;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    Map<String, List<SKUGoodsBean>> mSelectMap;
+    HashMap<String, ArrayList<SKUGoodsBean>> mSelectMap;
     @Autowired(name = "object0")
     String mPurchaserId;
+    @Autowired(name = "parcelable")
+    ArrayList<SKUGoodsBean> mSkuList;
     @BindView(R.id.txt_checkNum)
     TextView mTxtCheckNum;
     private GoodsQuotationSelectPresenter mPresenter;
     private CategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
     private GoodsSelectListAdapter mAdapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,10 +86,15 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         ButterKnife.bind(this);
         initView();
         EventBus.getDefault().register(this);
+        mSelectMap = new HashMap<>();
+        if (!CommonUtils.isEmpty(mSkuList)) {
+            for (SKUGoodsBean bean : mSkuList) {
+                add(bean);
+            }
+        }
         mPresenter = GoodsQuotationSelectPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        mSelectMap = new HashMap<>();
     }
 
     @Override
@@ -163,34 +167,46 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         });
     }
 
+    private void add(SKUGoodsBean bean) {
+        ArrayList<SKUGoodsBean> beans = mSelectMap.get(bean.getCategorySubID());
+        if (beans == null) {
+            beans = new ArrayList<>();
+        }
+        bean.setSelected(true);
+        beans.add(bean);
+        mSelectMap.put(bean.getCategorySubID(), beans);
+    }
+
     private void remove(SKUGoodsBean goodsBean) {
-        List<SKUGoodsBean> goodsBeans = mSelectMap.get(goodsBean.getShopProductCategorySubID());
+        List<SKUGoodsBean> goodsBeans = mSelectMap.get(goodsBean.getCategorySubID());
         if (!CommonUtils.isEmpty(goodsBeans)) {
             goodsBean.setSelected(false);
             goodsBeans.remove(goodsBean);
         }
     }
 
-    /**
-     * 显示底部已选数量
-     */
-    private void showBottomCount() {
-        int count = 0;
-        Collection<List<SKUGoodsBean>> lists = mSelectMap.values();
-        for (List<SKUGoodsBean> list : lists) {
-            count += list.size();
+    @Override
+    public void showList(List<SKUGoodsBean> list, boolean append, int total) {
+        if (!CommonUtils.isEmpty(list)) {
+            for (SKUGoodsBean bean : list) {
+                if (contains(bean)) {
+                    bean.setSelected(true);
+                }
+            }
         }
-        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", count));
-    }
-
-    private void add(SKUGoodsBean bean) {
-        List<SKUGoodsBean> beans = mSelectMap.get(bean.getShopProductCategorySubID());
-        if (beans == null) {
-            beans = new ArrayList<>();
+        if (append) {
+            mAdapter.addData(list);
+        } else {
+            mAdapter.setNewData(list);
         }
-        bean.setSelected(true);
-        beans.add(bean);
-        mSelectMap.put(bean.getShopProductCategorySubID(), beans);
+        if (mSearchView.isSearchStatus()) {
+            mEmptyView.setTips("搜索不到相关商品");
+        } else {
+            mEmptyView.setTips("该分类暂无商品数据");
+        }
+        mAdapter.setEmptyView(mEmptyView);
+        mRefreshLayout.setEnableLoadMore(total != mAdapter.getItemCount());
+        showBottomCount();
     }
 
     @Subscribe
@@ -221,29 +237,6 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         }
     }
 
-    @Override
-    public void showList(List<SKUGoodsBean> list, boolean append, int total) {
-        if (!CommonUtils.isEmpty(list)) {
-            for (SKUGoodsBean bean : list) {
-                if (contains(bean)) {
-                    bean.setSelected(true);
-                }
-            }
-        }
-        if (append) {
-            mAdapter.addData(list);
-        } else {
-            mAdapter.setNewData(list);
-        }
-        if (mSearchView.isSearchStatus()) {
-            mEmptyView.setTips("搜索不到相关商品");
-        } else {
-            mEmptyView.setTips("该分类暂无商品数据");
-        }
-        mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(total != mAdapter.getItemCount());
-    }
-
     /**
      * 是否添加到集合中
      *
@@ -252,11 +245,23 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
      */
     private boolean contains(SKUGoodsBean bean) {
         boolean contains = false;
-        List<SKUGoodsBean> goodsBeans = mSelectMap.get(bean.getShopProductCategorySubID());
+        List<SKUGoodsBean> goodsBeans = mSelectMap.get(bean.getCategorySubID());
         if (!CommonUtils.isEmpty(goodsBeans)) {
             contains = goodsBeans.contains(bean);
         }
         return contains;
+    }
+
+    /**
+     * 显示底部已选数量
+     */
+    private void showBottomCount() {
+        int count = 0;
+        Collection<ArrayList<SKUGoodsBean>> lists = mSelectMap.values();
+        for (ArrayList<SKUGoodsBean> list : lists) {
+            count += list.size();
+        }
+        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", count));
     }
 
     @Override
@@ -300,8 +305,8 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
 
     private void toAdd() {
         List<SKUGoodsBean> listAll = new ArrayList<>();
-        Collection<List<SKUGoodsBean>> lists = mSelectMap.values();
-        for (List<SKUGoodsBean> list : lists) {
+        Collection<ArrayList<SKUGoodsBean>> lists = mSelectMap.values();
+        for (ArrayList<SKUGoodsBean> list : lists) {
             listAll.addAll(list);
         }
         EventBus.getDefault().post(listAll);

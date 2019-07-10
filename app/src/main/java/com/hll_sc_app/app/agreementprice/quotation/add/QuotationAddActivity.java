@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
@@ -26,6 +27,7 @@ import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateSelectWindow;
@@ -136,10 +138,9 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 showToast("请选择报价对象");
                 return;
             }
-            RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS,
-                mQuotationBean.getPurchaserID());
+            toAddGoods(true);
         } else {
-            RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS);
+            toAddGoods(false);
         }
     }
 
@@ -190,6 +191,40 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         return TextUtils.isEmpty(mTxtIsWarehouse.getText().toString());
     }
 
+    private void toAddGoods(boolean isWarehouse) {
+        // 用于数据反显
+        ArrayList<SKUGoodsBean> goodsList = new ArrayList<>();
+        List<QuotationDetailBean> beans = mAdapter.getData();
+        if (!CommonUtils.isEmpty(beans)) {
+            for (QuotationDetailBean bean : beans) {
+                SKUGoodsBean skuGoodsBean = new SKUGoodsBean();
+                skuGoodsBean.setSpecContent(bean.getProductDesc());
+                skuGoodsBean.setShopProductCategoryThreeID(bean.getShopProductCategoryThreeID());
+                skuGoodsBean.setSpecID(bean.getProductSpecID());
+                skuGoodsBean.setCostPrice(bean.getCostPrice());
+                skuGoodsBean.setImgUrl(bean.getImgUrl());
+                skuGoodsBean.setProductCode(bean.getProductCode());
+                skuGoodsBean.setProductID(bean.getProductID());
+                skuGoodsBean.setProductName(bean.getProductName());
+                skuGoodsBean.setProductPrice(bean.getProductPrice());
+                skuGoodsBean.setSaleUnitName(bean.getSaleUnitName());
+                skuGoodsBean.setCategoryThreeID(bean.getCategoryID());
+                skuGoodsBean.setCategorySubID(bean.getCategorySubID());
+                goodsList.add(skuGoodsBean);
+            }
+        }
+        if (!isWarehouse) {
+            ARouter.getInstance().build(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS)
+                .withParcelableArrayList("parcelable", goodsList)
+                .setProvider(new LoginInterceptor()).navigation();
+        } else {
+            ARouter.getInstance().build(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS)
+                .withString("object0", mQuotationBean.getPurchaserID())
+                .withParcelableArrayList("parcelable", goodsList)
+                .setProvider(new LoginInterceptor()).navigation();
+        }
+    }
+
     @Subscribe
     public void onEvent(QuotationBean event) {
         // 选择报价对象
@@ -230,6 +265,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             quotationDetailBean.setProductPrice(bean.getProductPrice());
             quotationDetailBean.setSaleUnitName(bean.getSaleUnitName());
             quotationDetailBean.setCategoryID(bean.getCategoryThreeID());
+            quotationDetailBean.setCategorySubID(bean.getCategorySubID());
             list.add(quotationDetailBean);
         }
         mAdapter.setNewData(list);
