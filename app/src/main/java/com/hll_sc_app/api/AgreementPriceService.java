@@ -1,12 +1,14 @@
 package com.hll_sc_app.api;
 
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.agreementprice.quotation.GroupInfoResp;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
+import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateResp;
 import com.hll_sc_app.bean.agreementprice.quotation.WarehouseDetailResp;
@@ -27,6 +29,16 @@ import retrofit2.http.POST;
  */
 public interface AgreementPriceService {
     AgreementPriceService INSTANCE = HttpFactory.create(AgreementPriceService.class);
+
+    /**
+     * 添加报价单
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100020")
+    Observable<BaseResp<Object>> addQuotation(@Body BaseReq<QuotationReq> req);
 
     /**
      * 查询报价单列表

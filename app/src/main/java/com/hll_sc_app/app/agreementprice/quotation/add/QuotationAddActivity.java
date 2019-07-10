@@ -24,15 +24,19 @@ import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
+import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
+import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.goods.SKUGoodsBean;
 import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
@@ -40,6 +44,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,8 +70,6 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     TextView mTxtTemplateName;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.txt_add_product)
-    TextView mTxtAddProduct;
     @BindView(R.id.ll_bottom)
     LinearLayout mLlBottom;
     @BindView(R.id.include_title)
@@ -169,7 +172,13 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     }
 
     private void checkListTile() {
-        mListTitle.setVisibility(mAdapter.getData().size() > 0 ? View.VISIBLE : View.GONE);
+        if (mAdapter.getData().size() > 0) {
+            mListTitle.setVisibility(View.VISIBLE);
+            mLlBottom.setVisibility(View.VISIBLE);
+        } else {
+            mListTitle.setVisibility(View.GONE);
+            mLlBottom.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -228,7 +237,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     }
 
     @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser, R.id.rl_priceDate,
-        R.id.rl_templateID})
+        R.id.rl_templateID, R.id.txt_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -248,6 +257,9 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 break;
             case R.id.rl_templateID:
                 RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_RATIO);
+                break;
+            case R.id.txt_submit:
+                toSubmit();
                 break;
             default:
                 break;
@@ -302,6 +314,40 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             });
         }
         mDateSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
+    private void toSubmit() {
+        if (TextUtils.isEmpty(mQuotationBean.getIsWarehouse())) {
+            showToast("请选择报价类别");
+            return;
+        }
+        if (TextUtils.isEmpty(mQuotationBean.getPurchaserID())) {
+            showToast("请选择报价对象");
+            return;
+        }
+        if (TextUtils.isEmpty(mQuotationBean.getPriceStartDate())) {
+            showToast("请选择生效期限");
+            return;
+        }
+        if (CommonUtils.isEmpty(mAdapter.getData())) {
+            showToast("请选择报价商品");
+            return;
+        }
+        QuotationReq req = new QuotationReq();
+        mQuotationBean.setBillStatus(1);
+        mQuotationBean.setBillType("1");
+        mQuotationBean.setBillDate(CalendarUtils.format(new Date(), CalendarUtils.FORMAT_SERVER_DATE));
+        mQuotationBean.setGroupID(UserConfig.getGroupID());
+        req.setQuotation(mQuotationBean);
+        req.setList(mAdapter.getData());
+        mPresenter.addQuotation(req);
+    }
+
+    @Override
+    public void addSuccess() {
+        showToast("添加报价单成功");
+        EventBus.getDefault().post(new RefreshQuotationList());
+        finish();
     }
 
     public class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {
