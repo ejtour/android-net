@@ -69,9 +69,22 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider"
+        app:layout_constraintBottom_toTopOf="@+id/txt_price_ratio"
         app:layout_constraintRight_toLeftOf="@+id/view_divider_delete"
         app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
+        tools:text="12.00"/>
+
+    <TextView
+        android:id="@+id/txt_price_ratio"
+        android:layout_width="92dp"
+        android:layout_height="0dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Red"
+        app:layout_constraintBottom_toTopOf="@+id/view_divider"
+        app:layout_constraintRight_toLeftOf="@+id/view_divider_delete"
+        app:layout_constraintTop_toBottomOf="@+id/txt_price"
         tools:text="12.00"/>
 
     <android.support.constraint.Group

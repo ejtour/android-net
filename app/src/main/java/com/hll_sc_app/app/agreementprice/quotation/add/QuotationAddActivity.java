@@ -110,7 +110,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
 
     private void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new GoodsListAdapter();
+        mAdapter = new GoodsListAdapter(true);
         View emptyView = LayoutInflater.from(this).inflate(R.layout.view_quotation_add_empty, mRecyclerView, false);
         emptyView.findViewById(R.id.txt_product).setOnClickListener(v -> addProduct());
         mAdapter.setEmptyView(emptyView);
@@ -422,22 +422,46 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         finish();
     }
 
-    public class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {
+    public static class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {
+        private boolean mAdd;
 
-        GoodsListAdapter() {
+        public GoodsListAdapter(boolean add) {
             super(R.layout.item_agreement_price_quotation_detail);
+            this.mAdd = add;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, QuotationDetailBean item) {
+            String ratioString = getRation(item);
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
-            helper.addOnClickListener(R.id.txt_price)
+            helper
+                .addOnClickListener(R.id.txt_price)
+                .addOnClickListener(R.id.txt_price_ratio)
                 .addOnClickListener(R.id.img_delete)
                 .setText(R.id.txt_productName, item.getProductName())
                 .setText(R.id.txt_productDesc, item.getProductDesc())
                 .setText(R.id.txt_price, CommonUtils.formatNumber(item.getPrice()))
+                .setText(R.id.txt_price_ratio, ratioString)
+                .setGone(R.id.txt_price_ratio, !TextUtils.isEmpty(ratioString))
                 .setText(R.id.txt_costPrice, "成本价：" + CommonUtils.formatNumber(item.getCostPrice()))
-                .setText(R.id.txt_productPrice, "平台价：" + CommonUtils.formatNumber(item.getProductPrice()));
+                .setText(R.id.txt_productPrice, "平台价：" + CommonUtils.formatNumber(item.getProductPrice()))
+                .setGone(R.id.group_delete, mAdd);
+        }
+
+        private String getRation(QuotationDetailBean item) {
+            String result = null;
+            double price = CommonUtils.getDouble(item.getPrice());
+            double productPrice = CommonUtils.getDouble(item.getProductPrice());
+            if (productPrice != 0) {
+                double rate = CommonUtils.mulDouble(100, CommonUtils.divDouble(CommonUtils.subDouble(price,
+                    productPrice).doubleValue(), productPrice).doubleValue()).doubleValue();
+                if (rate > 0) {
+                    result = "高于平台价" + rate + "%";
+                } else if (rate < 0) {
+                    result = "低于平台价" + Math.abs(rate) + "%";
+                }
+            }
+            return result;
         }
     }
 }

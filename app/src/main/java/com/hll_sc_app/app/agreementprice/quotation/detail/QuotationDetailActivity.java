@@ -14,13 +14,11 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.agreementprice.quotation.add.QuotationAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
-import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
@@ -28,7 +26,6 @@ import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
-import com.hll_sc_app.citymall.util.CommonUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -65,7 +62,7 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
     @BindView(R.id.include_title)
     ConstraintLayout mListTitle;
     private QuotationDetailPresenter mPresenter;
-    private GoodsListAdapter mAdapter;
+    private QuotationAddActivity.GoodsListAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,13 +78,15 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
     }
 
     private void showContent() {
-        mTxtIsWarehouse.setText(TextUtils.equals("1", mBean.getIsWarehouse()) ? "代仓客户" : "自营客户");
+        mTxtIsWarehouse.setText(TextUtils.equals("1", mBean.getIsWarehouse()) ?
+            QuotationAddActivity.STRING_WARE_HOUSE : QuotationAddActivity.STRING_SELF_SUPPORT);
         mTxtSelectPurchaser.setText(String.format("%s-%s", mBean.getPurchaserName(), mBean.getShopName()));
         mTxtPriceDate.setText(getPriceDate(mBean.getPriceStartDate(), mBean.getPriceEndDate()));
         mTxtTemplateId.setText(TextUtils.isEmpty(mBean.getTemplateName()) ? "无" : mBean.getTemplateName());
         mListTitle.findViewById(R.id.group_delete).setVisibility(View.GONE);
+        ((TextView) mListTitle.findViewById(R.id.txt_price)).setText("协议价");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new GoodsListAdapter();
+        mAdapter = new QuotationAddActivity.GoodsListAdapter(false);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -135,23 +134,5 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
         req.setList(mAdapter.getData());
         req.setQuotation(mBean);
         RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD, this, req);
-    }
-
-    public class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {
-
-        GoodsListAdapter() {
-            super(R.layout.item_agreement_price_quotation_detail);
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, QuotationDetailBean item) {
-            ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
-            helper.setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_productDesc, item.getProductDesc())
-                .setText(R.id.txt_price, CommonUtils.formatNumber(item.getPrice()))
-                .setText(R.id.txt_costPrice, "成本价：" + CommonUtils.formatNumber(item.getCostPrice()))
-                .setText(R.id.txt_productPrice, "平台价：" + CommonUtils.formatNumber(item.getProductPrice()))
-                .setGone(R.id.group_delete, false);
-        }
     }
 }
