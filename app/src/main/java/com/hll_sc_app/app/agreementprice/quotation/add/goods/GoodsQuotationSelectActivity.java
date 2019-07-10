@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -23,9 +24,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
-import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SKUGoodsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -40,8 +39,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -56,7 +58,6 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS, extras = Constant.LOGIN_EXTRA)
 public class GoodsQuotationSelectActivity extends BaseLoadActivity implements GoodsQuotationSelectContract.IGoodsStickView {
-    public static final String STRING_CATEGORY = "推荐";
     @BindView(R.id.searchView)
     SearchView mSearchView;
     @BindView(R.id.recyclerView_level1)
@@ -67,11 +68,15 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     RelativeLayout mFlBottom;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    Map<String, List<GoodsBean>> mSelectMap;
+    Map<String, List<SKUGoodsBean>> mSelectMap;
+    @Autowired(name = "object0")
+    String mPurchaserId;
+    @BindView(R.id.txt_checkNum)
+    TextView mTxtCheckNum;
     private GoodsQuotationSelectPresenter mPresenter;
     private CategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
-    private GoodsRelevanceSelectListAdapter mAdapter;
+    private GoodsSelectListAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,13 +134,19 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         mRecyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProduct.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
             R.color.base_color_divider), UIUtils.dip2px(1)));
-        mAdapter = new GoodsRelevanceSelectListAdapter();
+        mAdapter = new GoodsSelectListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             SKUGoodsBean bean = (SKUGoodsBean) adapter.getItem(position);
             if (bean != null) {
-                setUnSelect();
-                bean.setSelected(!bean.isSelected());
-                mAdapter.notifyDataSetChanged();
+                if (bean.isSelected()) {
+                    remove(bean);
+                    adapter.notifyItemChanged(position);
+                    showBottomCount();
+                } else {
+                    add(bean);
+                    adapter.notifyItemChanged(position);
+                    showBottomCount();
+                }
             }
         });
         mRecyclerViewProduct.setAdapter(mAdapter);
@@ -152,19 +163,34 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         });
     }
 
-    /**
-     * 清空当前界面选中的商品
-     */
-    private void setUnSelect() {
-        if (mAdapter != null) {
-            List<SKUGoodsBean> beans = mAdapter.getData();
-            if (CommonUtils.isEmpty(beans)) {
-                return;
-            }
-            for (SKUGoodsBean bean : beans) {
-                bean.setSelected(false);
-            }
+    private void remove(SKUGoodsBean goodsBean) {
+        List<SKUGoodsBean> goodsBeans = mSelectMap.get(goodsBean.getShopProductCategorySubID());
+        if (!CommonUtils.isEmpty(goodsBeans)) {
+            goodsBean.setSelected(false);
+            goodsBeans.remove(goodsBean);
         }
+    }
+
+    /**
+     * 显示底部已选数量
+     */
+    private void showBottomCount() {
+        int count = 0;
+        Collection<List<SKUGoodsBean>> lists = mSelectMap.values();
+        for (List<SKUGoodsBean> list : lists) {
+            count += list.size();
+        }
+        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", count));
+    }
+
+    private void add(SKUGoodsBean bean) {
+        List<SKUGoodsBean> beans = mSelectMap.get(bean.getShopProductCategorySubID());
+        if (beans == null) {
+            beans = new ArrayList<>();
+        }
+        bean.setSelected(true);
+        beans.add(bean);
+        mSelectMap.put(bean.getShopProductCategorySubID(), beans);
     }
 
     @Subscribe
@@ -183,31 +209,27 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
 
     @Override
     public void showCategoryList(CategoryResp resp) {
-        if (resp != null) {
-            List<CategoryItem> list2 = resp.getList2();
-            if (!CommonUtils.isEmpty(list2)) {
-                // 添加推荐分类
-                CategoryItem categoryItem = new CategoryItem();
-                categoryItem.setCategoryName(STRING_CATEGORY);
-                list2.add(0, categoryItem);
-            }
-            mCategoryAdapter.setNewData(list2);
+        mCategoryAdapter.setNewData(resp.getList2());
+        if (!CommonUtils.isEmpty(mCategoryAdapter.getData())) {
             // 默认去选中第一个
-            if (!CommonUtils.isEmpty(mCategoryAdapter.getData())) {
-                CategoryItem bean = mCategoryAdapter.getItem(0);
-                if (bean != null) {
-                    bean.setSelected(true);
-                    mCategoryAdapter.notifyItemChanged(0);
-                    mPresenter.queryGoodsList(true);
-                }
+            CategoryItem bean = mCategoryAdapter.getItem(0);
+            if (bean != null) {
+                bean.setSelected(true);
+                mCategoryAdapter.notifyItemChanged(0);
+                mPresenter.queryGoodsList(true);
             }
-        } else {
-            mCategoryAdapter.setNewData(null);
         }
     }
 
     @Override
     public void showList(List<SKUGoodsBean> list, boolean append, int total) {
+        if (!CommonUtils.isEmpty(list)) {
+            for (SKUGoodsBean bean : list) {
+                if (contains(bean)) {
+                    bean.setSelected(true);
+                }
+            }
+        }
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -220,6 +242,21 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         }
         mAdapter.setEmptyView(mEmptyView);
         mRefreshLayout.setEnableLoadMore(total != mAdapter.getItemCount());
+    }
+
+    /**
+     * 是否添加到集合中
+     *
+     * @param bean SKUGoodsBean
+     * @return true-添加过
+     */
+    private boolean contains(SKUGoodsBean bean) {
+        boolean contains = false;
+        List<SKUGoodsBean> goodsBeans = mSelectMap.get(bean.getShopProductCategorySubID());
+        if (!CommonUtils.isEmpty(goodsBeans)) {
+            contains = goodsBeans.contains(bean);
+        }
+        return contains;
     }
 
     @Override
@@ -238,14 +275,13 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     }
 
     @Override
-    public String getName() {
-        return mSearchView.getSearchContent();
+    public String getCargoOwnId() {
+        return mPurchaserId;
     }
 
     @Override
-    public void addSuccess() {
-        EventBus.getDefault().post(new GoodsRelevanceRefreshEvent());
-        finish();
+    public String getName() {
+        return mSearchView.getSearchContent();
     }
 
     @OnClick({R.id.img_close, R.id.txt_save})
@@ -263,25 +299,18 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     }
 
     private void toAdd() {
-
-    }
-
-    private SKUGoodsBean getSelectProductBean() {
-        SKUGoodsBean bean = null;
-        if (mAdapter != null) {
-            List<SKUGoodsBean> list = mAdapter.getData();
-            if (!CommonUtils.isEmpty(list)) {
-                for (SKUGoodsBean productBean : list) {
-                    if (productBean.isSelected()) {
-                        bean = productBean;
-                        break;
-                    }
-                }
-            }
+        List<SKUGoodsBean> listAll = new ArrayList<>();
+        Collection<List<SKUGoodsBean>> lists = mSelectMap.values();
+        for (List<SKUGoodsBean> list : lists) {
+            listAll.addAll(list);
         }
-        return bean;
+        EventBus.getDefault().post(listAll);
+        finish();
     }
 
+    /**
+     * 分类适配器
+     */
     class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {
 
         CategoryAdapter() {
@@ -296,8 +325,11 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         }
     }
 
-    class GoodsRelevanceSelectListAdapter extends BaseQuickAdapter<SKUGoodsBean, BaseViewHolder> {
-        GoodsRelevanceSelectListAdapter() {
+    /**
+     * 商品列表适配器
+     */
+    class GoodsSelectListAdapter extends BaseQuickAdapter<SKUGoodsBean, BaseViewHolder> {
+        GoodsSelectListAdapter() {
             super(R.layout.item_goods_relevance_select_list);
         }
 

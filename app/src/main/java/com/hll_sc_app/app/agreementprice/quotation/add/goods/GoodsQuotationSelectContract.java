@@ -41,16 +41,18 @@ public interface GoodsQuotationSelectContract {
         String getCategorySubId();
 
         /**
+         * 获取货主的 id
+         *
+         * @return 货主的 id
+         */
+        String getCargoOwnId();
+
+        /**
          * 获取搜索词
          *
          * @return 搜索词
          */
         String getName();
-
-        /**
-         * 新增成功
-         */
-        void addSuccess();
     }
 
     interface IGoodsStickPresenter extends IPresenter<IGoodsStickView> {

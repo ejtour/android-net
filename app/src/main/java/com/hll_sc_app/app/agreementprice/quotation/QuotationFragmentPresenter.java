@@ -120,7 +120,7 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
 //        QuotationExportReq.SearchParamsBean bean = new QuotationExportReq.SearchParamsBean();
 //        bean.setEndDate(mView.getEndDate());
 //        bean.setStartDate(mView.getStartDate());
-//        bean.setGroupID(mView.getPurchaserId());
+//        bean.setGroupID(mView.getCargoOwnId());
 //        bean.setPriceStartDate(mView.getPriceStartDate());
 //        bean.setPriceEndDate(mView.getPriceEndDate());
 //        exportReq.setSearchParams(bean);

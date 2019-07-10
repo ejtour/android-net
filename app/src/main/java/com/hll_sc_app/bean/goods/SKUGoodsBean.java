@@ -3,7 +3,10 @@ package com.hll_sc_app.bean.goods;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.base.utils.UIUtils;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -742,5 +745,33 @@ public class SKUGoodsBean implements Parcelable {
         dest.writeList(this.supplierShops);
         dest.writeList(this.nicknames);
         dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[]{specID, productID, placeProvince, specStatus, productName, productAttr,
+            assistUnitStatus,
+            offShelfTime, appointSellType, productNameSuggest, bundlingGoodsType, productBrief, isWareHourse,
+            shopProductCategorySubID, action, isDecimalBuy, depositProductType, purchaserIsVisible, orgName,
+            cargoOwnerID, standardUnitName, groupID, nextDayDelivery, onShelfTime, stockCheckType, buyMinNum, brandId
+            , producer, productPrice, skuCode, saleUnitName, priceIsVisible, standardUnitStatus, actionTime,
+            saleUnitID, categoryThreeID, shopProductCategoryID, ration, placeCity, cargoOwnerName,
+            shopProductCategoryThreeID, categoryID, productType, specContent, supplierName, actionBy, costPrice,
+            productStatus, convertRatio, costPriceModifyFlag, isSupplierWarehouse, imgUrl, productNameKeyword,
+            productCode, depositNum, categorySubID, placeCityCode, createTime, guaranteePeriod, placeProvinceCode,
+            resourceType, supplierShops, nicknames, selected});
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final SKUGoodsBean other = (SKUGoodsBean) obj;
+        return UIUtils.equals(this.specID, other.specID);
     }
 }

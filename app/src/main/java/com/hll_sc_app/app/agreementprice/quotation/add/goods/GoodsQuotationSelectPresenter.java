@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.agreementprice.quotation.add.goods;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.base.UseCaseException;
@@ -75,6 +77,11 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
 
     private void toQueryGoodsList(boolean showLoading) {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder()
+            .put("actionType", "priceBill")
+            .put("categorySubID", mView.getCategorySubId())
+            .put("isWareHourse", TextUtils.isEmpty(mView.getCargoOwnId()) ? "0" : "1")
+            .put("cargoOwnerID", mView.getCargoOwnId())
+            .put("name", mView.getName())
             .put("groupID", UserConfig.getGroupID())
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20");

@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,7 +20,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationListAdapter;
+import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -27,8 +30,8 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
-import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
+import com.hll_sc_app.bean.goods.SKUGoodsBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
@@ -51,6 +54,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD, extras = Constant.LOGIN_EXTRA)
 public class QuotationAddActivity extends BaseLoadActivity implements QuotationAddContract.IPurchaseView {
+    public static final String STRING_WARE_HOUSE = "代仓客户";
     @BindView(R.id.txt_isWarehouse)
     TextView mTxtIsWarehouse;
     @BindView(R.id.txt_select_purchaser)
@@ -99,6 +103,20 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         View emptyView = LayoutInflater.from(this).inflate(R.layout.view_quotation_add_empty, mRecyclerView, false);
         emptyView.findViewById(R.id.txt_product).setOnClickListener(v -> addProduct());
         mAdapter.setEmptyView(emptyView);
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            QuotationDetailBean bean = (QuotationDetailBean) adapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+            int id = view.getId();
+            if (id == R.id.txt_price) {
+                showInputDialog(bean, adapter, position);
+            } else if (id == R.id.img_delete) {
+                adapter.remove(position);
+                adapter.notifyDataSetChanged();
+                checkListTile();
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -110,7 +128,48 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             showToast("请先选择报价类别");
             return;
         }
-        RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS);
+        if (TextUtils.equals(STRING_WARE_HOUSE, mTxtIsWarehouse.getText().toString())) {
+            if (TextUtils.isEmpty(mTxtSelectPurchaser.getText().toString())) {
+                showToast("请选择报价对象");
+                return;
+            }
+            RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS,
+                mQuotationBean.getPurchaserID());
+        } else {
+            RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS);
+        }
+    }
+
+    private void showInputDialog(QuotationDetailBean bean, BaseQuickAdapter adapter, int position) {
+        String price = CommonUtils.formatNumber(bean.getPrice());
+        InputDialog.newBuilder(this)
+            .setCancelable(false)
+            .setTextTitle("输入" + bean.getProductName() + "协议价")
+            .setHint("输入协议价")
+            .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
+            .setText(TextUtils.equals(price, "0") ? "" : price)
+            .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
+                if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
+                    s.delete(s.length() - 1, s.length());
+                    showToast("协议价值支持7位整数或小数点后两位");
+                }
+            })
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    if (TextUtils.isEmpty(dialog.getInputString())) {
+                        showToast("输入协议价不能为空");
+                        return;
+                    }
+                    bean.setPrice(CommonUtils.formatNumber(CommonUtils.getDouble(dialog.getInputString())));
+                    adapter.notifyItemChanged(position);
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
+    }
+
+    private void checkListTile() {
+        mListTitle.setVisibility(mAdapter.getData().size() > 0 ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -141,8 +200,31 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         mTxtTemplateName.setText(event.getTemplateName());
     }
 
-    @Override
-    public void showGoodsDetail(QuotationDetailResp resp) {
+    @Subscribe
+    public void onEvent(List<SKUGoodsBean> event) {
+        // 选择的商品数据
+        if (CommonUtils.isEmpty(event)) {
+            return;
+        }
+        List<QuotationDetailBean> list = new ArrayList<>();
+        for (SKUGoodsBean bean : event) {
+            QuotationDetailBean quotationDetailBean = new QuotationDetailBean();
+            quotationDetailBean.setProductDesc(bean.getSpecContent());
+            quotationDetailBean.setShopProductCategoryThreeID(bean.getShopProductCategoryThreeID());
+            quotationDetailBean.setProductSpecID(bean.getSpecID());
+            quotationDetailBean.setCostPrice(bean.getCostPrice());
+            quotationDetailBean.setImgUrl(bean.getImgUrl());
+            quotationDetailBean.setPrice(bean.getProductPrice());
+            quotationDetailBean.setProductCode(bean.getProductCode());
+            quotationDetailBean.setProductID(bean.getProductID());
+            quotationDetailBean.setProductName(bean.getProductName());
+            quotationDetailBean.setProductPrice(bean.getProductPrice());
+            quotationDetailBean.setSaleUnitName(bean.getSaleUnitName());
+            quotationDetailBean.setCategoryID(bean.getCategoryThreeID());
+            list.add(quotationDetailBean);
+        }
+        mAdapter.setNewData(list);
+        checkListTile();
     }
 
     @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser, R.id.rl_priceDate,
@@ -176,13 +258,22 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         if (mWarehouseDialog == null) {
             List<NameValue> values = new ArrayList<>();
             values.add(new NameValue("自营客户", "0"));
-            values.add(new NameValue("代仓客户", "1"));
+            values.add(new NameValue(STRING_WARE_HOUSE, "1"));
             mWarehouseDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                 .setTitleText("报价类别")
                 .refreshList(values)
                 .setOnSelectListener(nameValue -> {
                     mQuotationBean.setIsWarehouse(nameValue.getValue());
                     mTxtIsWarehouse.setText(nameValue.getName());
+                    // 重置商品和报价对象
+                    mAdapter.setNewData(null);
+                    mQuotationBean.setPurchaserID(null);
+                    mQuotationBean.setPurchaserName(null);
+                    mQuotationBean.setIsAllShop(null);
+                    mQuotationBean.setShopIDs(null);
+                    mQuotationBean.setShopIDNum(null);
+                    mTxtSelectPurchaser.setText(null);
+                    checkListTile();
                 }).create();
         }
         mWarehouseDialog.show();
@@ -194,7 +285,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             return;
         }
         if (TextUtils.isEmpty(mQuotationBean.getShopIDs())) {
-            boolean warehouse = TextUtils.equals("代仓客户", mTxtIsWarehouse.getText().toString());
+            boolean warehouse = TextUtils.equals(STRING_WARE_HOUSE, mTxtIsWarehouse.getText().toString());
             RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER, warehouse);
         } else {
             RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP, mQuotationBean);
@@ -222,7 +313,9 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         @Override
         protected void convert(BaseViewHolder helper, QuotationDetailBean item) {
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
-            helper.setText(R.id.txt_productName, item.getProductName())
+            helper.addOnClickListener(R.id.txt_price)
+                .addOnClickListener(R.id.img_delete)
+                .setText(R.id.txt_productName, item.getProductName())
                 .setText(R.id.txt_productDesc, item.getProductDesc())
                 .setText(R.id.txt_price, CommonUtils.formatNumber(item.getPrice()))
                 .setText(R.id.txt_costPrice, "成本价：" + CommonUtils.formatNumber(item.getCostPrice()))
