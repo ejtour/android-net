@@ -132,7 +132,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         });
         mRecyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProduct.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
-            R.color.base_color_divider), UIUtils.dip2px(1)));
+                R.color.base_color_divider), UIUtils.dip2px(1)));
         mAdapter = new GoodsRelevanceSelectListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             SKUGoodsBean bean = (SKUGoodsBean) adapter.getItem(position);
@@ -253,6 +253,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
 
     @Override
     public void addSuccess() {
+        showToast("新增修改关联商品成功");
         EventBus.getDefault().post(new GoodsRelevanceRefreshEvent());
         finish();
     }
@@ -318,8 +319,8 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         @Override
         protected void convert(BaseViewHolder helper, SKUGoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_specContent, item.getSpecContent())
-                .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
+                    .setText(R.id.txt_specContent, item.getSpecContent())
+                    .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
             helper.getView(R.id.img_check).setSelected(item.isSelected());
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
         }
