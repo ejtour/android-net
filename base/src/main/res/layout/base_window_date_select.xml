@@ -12,13 +12,15 @@
         android:layout_height="45dp"
         android:background="@drawable/base_bg_shadow_top_white_bar">
 
-        <ImageView
+        <TextView
             android:id="@+id/txt_cancel"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:background="@drawable/base_bg_selector_close"
-            android:scaleType="centerInside"
-            android:src="@drawable/base_ic_window_close"/>
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#666666"
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/txt_confirm"
@@ -43,21 +45,33 @@
             android:id="@+id/txt_start_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
+            android:background="@drawable/base_bg_shadow_top_primary_bar"
             android:gravity="center"
             android:textColor="@drawable/base_text_color_window_check"
-            android:textSize="12sp"
+            android:textSize="13sp"
             tools:text="2018-05-21"/>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/base_text666"/>
 
         <TextView
             android:id="@+id/txt_end_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
+            android:background="@drawable/base_bg_shadow_top_primary_bar"
             android:gravity="center"
             android:text="2018-06-21"
             android:textColor="@drawable/base_text_color_window_check"
-            android:textSize="12sp"/>
+            android:textSize="13sp"/>
     </LinearLayout>
 
     <LinearLayout

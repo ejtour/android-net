@@ -5,11 +5,14 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
@@ -32,6 +35,8 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
     private WheelView mDayPicker;
     private int startYear;
     private DateSelectListener mSelectListener;
+    private TextView mTxtStartDate;
+    private TextView mTxtEndDate;
 
 
     public DateSelectWindow(Activity context) {
@@ -45,7 +50,21 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.setBackgroundDrawable(new ColorDrawable(0xb000000));
-        startYear = 2000;
+        startYear = 2010;
+        mTxtEndDate = rootView.findViewById(R.id.txt_end_date);
+        mTxtStartDate = rootView.findViewById(R.id.txt_start_date);
+        mTxtStartDate.setOnClickListener(v -> {
+            mTxtStartDate.setSelected(true);
+            mTxtEndDate.setSelected(false);
+            String[] strings = mTxtStartDate.getText().toString().split("-");
+            setSelect(CommonUtils.getInt(strings[0]), CommonUtils.getInt(strings[1]), CommonUtils.getInt(strings[2]));
+        });
+        mTxtEndDate.setOnClickListener(v -> {
+            mTxtStartDate.setSelected(false);
+            mTxtEndDate.setSelected(true);
+            String[] strings = mTxtEndDate.getText().toString().split("-");
+            setSelect(CommonUtils.getInt(strings[0]), CommonUtils.getInt(strings[1]), CommonUtils.getInt(strings[2]));
+        });
         initStartPicker(rootView);
     }
 
@@ -54,6 +73,10 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
         mYear = startCalendar.get(Calendar.YEAR);
         mMonth = startCalendar.get(Calendar.MONTH) + 1;
         mDay = startCalendar.get(Calendar.DAY_OF_MONTH);
+        String dateString = CalendarUtils.format(startCalendar.getTime(), "yyyy-MM-dd");
+        mTxtStartDate.setText(dateString);
+        mTxtEndDate.setText(dateString);
+        mTxtEndDate.setSelected(true);
         initYearPicker(rootView);
         initMonthPicker(rootView);
         initDayPicker(rootView);
@@ -73,23 +96,24 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
 
             @Override
             public void onScrollingFinished(WheelView wheel) {
+                int temp = mYear;
                 mYear = mYearPicker.getCurrentItem() + startYear;
+                if (checkLegal()) {
+                    setDateText();
+                } else {
+                    mYear = temp;
+                    mYearPicker.setCurrentItem(mYear - startYear);
+                }
             }
         });
         mYearPicker.setViewAdapter(new YearWheelAdapter(mActivity));
+        mYearPicker.setCurrentItem(mYear - startYear);
     }
 
     private void initMonthPicker(View rootView) {
         mMonthPicker = rootView.findViewById(R.id.picker_month);
         mMonthPicker.setVisibleItems(5);
         mMonthPicker.setCyclic(true);
-        mMonthPicker.addChangingListener((wheel, oldValue, newValue) -> {
-            mMonth = newValue;
-            int maxDay = CalendarUtils.getEndDay(mYear, mMonth);
-            if (mDay > maxDay) {
-                mDay = maxDay;
-            }
-        });
         mMonthPicker.addScrollingListener(new OnWheelScrollListener() {
             @Override
             public void onScrollingStarted(WheelView wheel) {
@@ -98,10 +122,20 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
 
             @Override
             public void onScrollingFinished(WheelView wheel) {
-                mMonthPicker.setViewAdapter(new DayWheelAdapter(mActivity));
+                int temp = mMonth;
+                mMonth = mMonthPicker.getCurrentItem() + 1;
+                if (checkLegal()) {
+                    mDayPicker.setViewAdapter(new DayWheelAdapter(mActivity));
+                    mDayPicker.setCurrentItem(mDay - 1);
+                    setDateText();
+                } else {
+                    mMonth = temp;
+                    mMonthPicker.setCurrentItem(mMonth - 1);
+                }
             }
         });
         mMonthPicker.setViewAdapter(new MonthWheelAdapter(mActivity));
+        mMonthPicker.setCurrentItem(mMonth - 1);
     }
 
     private void initDayPicker(View rootView) {
@@ -116,10 +150,67 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
 
             @Override
             public void onScrollingFinished(WheelView wheel) {
+                int temp = mDay;
                 mDay = mDayPicker.getCurrentItem() + 1;
+                if (checkLegal()) {
+                    setDateText();
+                } else {
+                    mDay = temp;
+                    mDayPicker.setCurrentItem(mDay - 1);
+                }
             }
         });
         mDayPicker.setViewAdapter(new DayWheelAdapter(mActivity));
+        mDayPicker.setCurrentItem(mDay - 1);
+    }
+
+    private void setDateText() {
+        String dateString = CalendarUtils.format(CalendarUtils.toCalendar(mYear, mMonth, mDay).getTime(), "yyyy" +
+            "-MM-dd");
+        if (mTxtStartDate.isSelected()) {
+            mTxtStartDate.setText(dateString);
+        } else if (mTxtEndDate.isSelected()) {
+            mTxtEndDate.setText(dateString);
+        }
+    }
+
+    private boolean checkLegal() {
+        boolean isLegal = false;
+        if (mTxtStartDate.isSelected()) {
+            isLegal = checkStartLegal();
+        } else if (mTxtEndDate.isSelected()) {
+            isLegal = checkEndLegal();
+        }
+        return isLegal;
+    }
+
+    private boolean checkStartLegal() {
+        boolean isLegal = false;
+        Date selectDate =
+            CalendarUtils.parse(CalendarUtils.format(CalendarUtils.toCalendar(mYear, mMonth, mDay).getTime(),
+                CalendarUtils.FORMAT_SERVER_DATE), CalendarUtils.FORMAT_SERVER_DATE);
+        Date currentDate = CalendarUtils.parse(CalendarUtils.format(new Date(), CalendarUtils.FORMAT_SERVER_DATE),
+            CalendarUtils.FORMAT_SERVER_DATE);
+        Date endDate = CalendarUtils.parse(mTxtEndDate.getText().toString().replace("-", ""),
+            CalendarUtils.FORMAT_SERVER_DATE);
+        if (selectDate != null && endDate != null) {
+            // 起始时间大于当前时间小于结束时间
+            isLegal = !selectDate.before(currentDate) && !selectDate.after(endDate);
+        }
+        return isLegal;
+    }
+
+    private boolean checkEndLegal() {
+        boolean isLegal = false;
+        Date selectDate =
+            CalendarUtils.parse(CalendarUtils.format(CalendarUtils.toCalendar(mYear, mMonth, mDay).getTime(),
+                CalendarUtils.FORMAT_SERVER_DATE), CalendarUtils.FORMAT_SERVER_DATE);
+        Date startDate = CalendarUtils.parse(mTxtStartDate.getText().toString().replace("-", ""),
+            CalendarUtils.FORMAT_SERVER_DATE);
+        if (selectDate != null && startDate != null) {
+            isLegal = !selectDate.before(startDate);
+        }
+        return isLegal;
     }
 
     public void setSelectListener(DateSelectListener selectListener) {
@@ -135,7 +226,7 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
      */
     public void setSelect(int year, int month, int day) {
         mYear = year;
-        int indexYear = mYear - startYear - 1;
+        int indexYear = mYear - startYear;
         mYearPicker.setCurrentItem(indexYear < 0 ? 0 : indexYear);
 
         mMonth = month;
@@ -151,7 +242,9 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
     public void onClick(View v) {
         if (v.getId() == R.id.txt_confirm) {
             if (mSelectListener != null) {
-//                mSelectListener.select(mSelectDay, mSelectTime);
+                String startDate = mTxtStartDate.getText().toString().replace("-", "");
+                String endDate = mTxtEndDate.getText().toString().replace("-", "");
+                mSelectListener.select(startDate, endDate);
             }
         }
         dismiss();
@@ -162,12 +255,12 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
      */
     public interface DateSelectListener {
         /**
-         * 选择的配送日期、时间
+         * 选择日期区间
          *
-         * @param day  日期
-         * @param time 时间
+         * @param startDate 开始时间
+         * @param endDate   结束时间
          */
-        void select(String day, String time);
+        void select(String startDate, String endDate);
     }
 
     class MonthWheelAdapter extends AbstractWheelTextAdapter {
@@ -198,7 +291,7 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
 
         @Override
         public int getItemsCount() {
-            return 10;
+            return 20;
         }
     }
 

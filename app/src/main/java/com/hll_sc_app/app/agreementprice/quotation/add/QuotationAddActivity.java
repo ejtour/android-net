@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.agreementprice.quotation.QuotationListAdapter;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -69,6 +70,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     private GoodsListAdapter mAdapter;
     private SingleSelectionDialog mWarehouseDialog;
     private QuotationBean mQuotationBean;
+    private DateSelectWindow mDateSelectWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -169,8 +171,15 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     }
 
     private void showPriceDateWindow() {
-        DateSelectWindow window = new DateSelectWindow(this);
-        window.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+        if (mDateSelectWindow == null) {
+            mDateSelectWindow = new DateSelectWindow(this);
+            mDateSelectWindow.setSelectListener((startDate, endDate) -> {
+                mQuotationBean.setPriceStartDate(startDate);
+                mQuotationBean.setPriceEndDate(endDate);
+                mTxtPriceDate.setText(QuotationListAdapter.getPriceDate(startDate, endDate));
+            });
+        }
+        mDateSelectWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     public class GoodsListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {
