@@ -102,7 +102,24 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    /**
+     * 添加商品
+     */
     private void addProduct() {
+        if (isSelectWarehouse()) {
+            showToast("请先选择报价类别");
+            return;
+        }
+        RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS);
+    }
+
+    /**
+     * 是否选择了报价类别
+     *
+     * @return true-没有选择报价类表
+     */
+    private boolean isSelectWarehouse() {
+        return TextUtils.isEmpty(mTxtIsWarehouse.getText().toString());
     }
 
     @Subscribe
@@ -172,7 +189,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     }
 
     private void toSelectPurchaser() {
-        if (TextUtils.isEmpty(mTxtIsWarehouse.getText().toString())) {
+        if (isSelectWarehouse()) {
             showToast("请先选择报价类别");
             return;
         }

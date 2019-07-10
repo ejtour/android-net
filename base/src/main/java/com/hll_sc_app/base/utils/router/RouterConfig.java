@@ -205,4 +205,10 @@ public class RouterConfig {
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_RATIO = "/activity/mine/agreementPrice" +
         "/quotation/add/ratio";
+
+    /**
+     * 协议价管理-添加报价单-新增商品
+     */
+    public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS = "/activity/mine/agreementPrice" +
+        "/quotation/add/goods";
 }

@@ -88,6 +88,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.agreementprice.quotation.add.goods.GoodsQuotationSelectActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.agreementprice.quotation.add.purchaser.shop.PurchaserShopListActivity"
             android:screenOrientation="portrait"/>
 

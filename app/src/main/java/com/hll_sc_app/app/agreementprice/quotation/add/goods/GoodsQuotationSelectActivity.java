@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.goods.relevance.goods.select;
+package com.hll_sc_app.app.agreementprice.quotation.add.goods;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,8 +25,8 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SKUGoodsBean;
-import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -41,20 +40,22 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 第三方商品关联-选择关联商品
+ * 报价单-新增商品
  *
  * @author zhuyingsong
- * @date 2019/7/5
+ * @date 2019/7/10
  */
-@Route(path = RouterConfig.GOODS_RELEVANCE_LIST_SELECT, extras = Constant.LOGIN_EXTRA)
-public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements GoodsRelevanceSelectContract.IGoodsStickView {
+@Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS, extras = Constant.LOGIN_EXTRA)
+public class GoodsQuotationSelectActivity extends BaseLoadActivity implements GoodsQuotationSelectContract.IGoodsStickView {
     public static final String STRING_CATEGORY = "推荐";
     @BindView(R.id.searchView)
     SearchView mSearchView;
@@ -66,9 +67,8 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     RelativeLayout mFlBottom;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    @Autowired(name = "parcelable")
-    TransferDetailBean mBean;
-    private GoodsRelevanceSelectPresenter mPresenter;
+    Map<String, List<GoodsBean>> mSelectMap;
+    private GoodsQuotationSelectPresenter mPresenter;
     private CategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
     private GoodsRelevanceSelectListAdapter mAdapter;
@@ -76,15 +76,16 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods_relevance_select);
+        setContentView(R.layout.activity_goods_quotation_select);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
         EventBus.getDefault().register(this);
-        mPresenter = GoodsRelevanceSelectPresenter.newInstance();
+        mPresenter = GoodsQuotationSelectPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        mSelectMap = new HashMap<>();
     }
 
     @Override
@@ -181,11 +182,6 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     }
 
     @Override
-    public TransferDetailBean getGoodsBean() {
-        return mBean;
-    }
-
-    @Override
     public void showCategoryList(CategoryResp resp) {
         if (resp != null) {
             List<CategoryItem> list2 = resp.getList2();
@@ -267,12 +263,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     }
 
     private void toAdd() {
-        SKUGoodsBean bean = getSelectProductBean();
-        if (bean == null) {
-            showToast("您还没有选择要关联的商品");
-            return;
-        }
-        mPresenter.addGoodsRelevance(bean);
+
     }
 
     private SKUGoodsBean getSelectProductBean() {
