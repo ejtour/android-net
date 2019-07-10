@@ -28,6 +28,7 @@ import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
+import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
@@ -57,7 +58,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     @BindView(R.id.txt_priceDate)
     TextView mTxtPriceDate;
     @BindView(R.id.txt_templateID)
-    TextView mTxtTemplateId;
+    TextView mTxtTemplateName;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.txt_add_product)
@@ -106,6 +107,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
 
     @Subscribe
     public void onEvent(QuotationBean event) {
+        // 选择报价对象
         mQuotationBean.setPurchaserID(event.getPurchaserID());
         mQuotationBean.setPurchaserName(event.getPurchaserName());
         mQuotationBean.setIsAllShop(event.getIsAllShop());
@@ -114,11 +116,20 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         mTxtSelectPurchaser.setText(String.format("%s%s家门店", event.getPurchaserName(), event.getShopIDNum()));
     }
 
+    @Subscribe
+    public void onEvent(RatioTemplateBean event) {
+        // 协议价比例模板
+        mQuotationBean.setTemplateID(event.getTemplateID());
+        mQuotationBean.setTemplateName(event.getTemplateName());
+        mTxtTemplateName.setText(event.getTemplateName());
+    }
+
     @Override
     public void showGoodsDetail(QuotationDetailResp resp) {
     }
 
-    @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser, R.id.rl_priceDate})
+    @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser, R.id.rl_priceDate,
+        R.id.rl_templateID})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -135,6 +146,9 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 break;
             case R.id.rl_priceDate:
                 showPriceDateWindow();
+                break;
+            case R.id.rl_templateID:
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_RATIO);
                 break;
             default:
                 break;
