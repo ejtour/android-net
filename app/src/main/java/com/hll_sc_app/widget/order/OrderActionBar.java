@@ -1,14 +1,13 @@
 package com.hll_sc_app.widget.order;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
@@ -25,7 +24,7 @@ import butterknife.ButterKnife;
  * @since 2019/6/13
  */
 
-public class OrderActionBar extends LinearLayout {
+public class OrderActionBar extends ConstraintLayout {
     private static final int ACTION_RECEIVE = 1;
     private static final int ACTION_CANCEL = 2;
     private static final int ACTION_DELIVER = 3;
@@ -50,7 +49,11 @@ public class OrderActionBar extends LinearLayout {
     TextView mInspection;
     @BindView(R.id.oab_diff)
     TextView mDiffPrice;
-    @BindViews({R.id.oab_cancel, R.id.oab_modify, R.id.oab_receive, R.id.oab_deliver, R.id.oab_settle, R.id.oab_reject, R.id.oab_inspection, R.id.oab_diff})
+    @BindView(R.id.oab_confirm)
+    TextView mConfirm;
+    @BindViews({R.id.oab_cancel, R.id.oab_modify, R.id.oab_receive,
+            R.id.oab_deliver, R.id.oab_settle, R.id.oab_reject,
+            R.id.oab_inspection, R.id.oab_diff, R.id.oab_confirm})
     List<View> mActionViews;
 
     public OrderActionBar(Context context) {
@@ -64,7 +67,6 @@ public class OrderActionBar extends LinearLayout {
     public OrderActionBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setBackgroundResource(R.drawable.base_bg_shadow_bottom_bar);
-        setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         setPadding(UIUtils.dip2px(10), 0, 0, 0);
         View view = View.inflate(context, R.layout.view_order_action_bar, this);
         ButterKnife.bind(this, view);
@@ -98,6 +100,9 @@ public class OrderActionBar extends LinearLayout {
                     break;
                 case ACTION_MODIFY:
                     mModify.setVisibility(VISIBLE);
+                    break;
+                case ACTION_CONFIRM:
+                    mConfirm.setVisibility(VISIBLE);
                     break;
             }
         }
