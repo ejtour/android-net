@@ -372,10 +372,12 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
                 break;
             case OrderEvent.UPDATE_TRANSFER_ITEM:
                 TransferBean transferBean = (TransferBean) event.getData();
-                if (mCurResp != null)
+                if (mCurResp != null){
                     if (transferBean.getStatus() == 1 || transferBean.getStatus() == 3)
                         mAdapter.replaceData(mCurResp, transferBean);
                     else mAdapter.removeData(mCurResp);
+                    updateBottomBarData();
+                }
                 break;
         }
     }

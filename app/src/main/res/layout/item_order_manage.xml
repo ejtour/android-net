@@ -23,13 +23,13 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         app:base_RoundingRadius="3"
-        app:base_placeholder="@drawable/ic_placeholder_shop"
+        app:base_placeholder="@drawable/ic_shop_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toEndOf="@+id/iom_check_box"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginLeft="@dimen/dp_10"
-        tools:src="@drawable/ic_placeholder_shop" />
+        tools:src="@drawable/ic_shop_placeholder" />
 
     <TextView
         android:id="@+id/iom_image_tag"
@@ -85,11 +85,27 @@
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
         android:text="补单"
-        android:visibility="gone"
         android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/iom_name"
+        app:layout_constraintEnd_toStartOf="@+id/iom_next_day_tag"
+        app:layout_constraintStart_toEndOf="@+id/iom_self_lift_tag"
+        app:layout_constraintTop_toTopOf="@+id/iom_name" />
+
+    <TextView
+        android:id="@+id/iom_next_day_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="隔日达"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/iom_name"
         app:layout_constraintEnd_toStartOf="@+id/iom_name"
-        app:layout_constraintStart_toEndOf="@+id/iom_self_lift_tag"
+        app:layout_constraintStart_toEndOf="@+id/iom_makeup_tag"
         app:layout_constraintTop_toTopOf="@+id/iom_name" />
 
     <TextView
@@ -100,7 +116,7 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iom_makeup_tag"
+        app:layout_constraintStart_toEndOf="@+id/iom_next_day_tag"
         app:layout_constraintTop_toTopOf="@+id/iom_image"
         tools:text="二十二城西直门旗舰店" />
 

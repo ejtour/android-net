@@ -10,8 +10,8 @@ import com.hll_sc_app.R;
  */
 
 public enum OrderStatus {
-    PENDING_TRANSFER(R.drawable.ic_filter_option, 0, "待转单", "您有一个待转换商城的订单，请及时处理"),
-    PENDING_RECEIVE(R.drawable.ic_filter_option, 1, "待接单", "您有新的订单，请注意查收"),
+    PENDING_TRANSFER(R.drawable.ic_order_process, 0, "待转单", "您有一个待转换商城的订单，请及时处理"),
+    PENDING_RECEIVE(R.drawable.ic_order_process, 1, "待接单", "您有新的订单，请注意查收"),
     PENDING_DELIVER(R.drawable.ic_order_deliver, 2, "待发货", "请注意核对发货数量，及时发货"),
     DELIVERED(R.drawable.ic_order_transport, 3, "已发货", "您已发货，请等待采购商验收"),
     PENDING_SETTLE(R.drawable.ic_order_settle, 4, "待结算", "订单已发货，等待结算"),

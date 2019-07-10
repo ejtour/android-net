@@ -597,6 +597,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             mAdapter.removeData(mCurResp);
             if (CommonUtils.isEmpty(mAdapter.getData())) refreshListData(null);
         }
+        updateBottomBarData();
     }
 
     @Override
