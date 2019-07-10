@@ -24,4 +24,12 @@
         <attr name="iug_margin" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="ThumbnailView">
+        <attr name="ctv_padding" format="dimension" />
+        <attr name="ctv_margin" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="AfterSalesActionBar">
+        <attr name="sab_item" format="boolean" />
+    </declare-styleable>
 </resources>

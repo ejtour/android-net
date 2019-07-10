@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/base_white"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <View
+        android:id="@+id/sdh_top_bar_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_7ab9f7"
+        app:layout_constraintBottom_toBottomOf="@+id/sdh_status_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sdh_status_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="13dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle.White"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sdh_top_bar_bg"
+        tools:text="退货退款申请被拒绝！" />
+
+    <TextView
+        android:id="@+id/sdh_status_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:lineSpacingMultiplier="1.3"
+        android:paddingBottom="12dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintStart_toStartOf="@+id/sdh_status_info"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_status_info"
+        tools:text="2018-06-19 17:21:23\n拒绝原因：请上传相关凭证。" />
+
+    <TextView
+        android:id="@+id/sdh_refund_extra"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:text="退款说明和凭证"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_top_bar_bg" />
+
+    <View
+        android:id="@+id/sdh_refund_extra_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@drawable/bg_refund_extra"
+        app:layout_constraintBottom_toTopOf="@+id/sdh_divider_1"
+        app:layout_constraintEnd_toEndOf="@+id/sdh_refund_extra"
+        app:layout_constraintStart_toStartOf="@+id/sdh_refund_extra"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_refund_extra" />
+
+    <TextView
+        android:id="@+id/sdh_refund_remark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="@+id/sdh_refund_extra_bg"
+        app:layout_constraintStart_toStartOf="@+id/sdh_refund_extra_bg"
+        app:layout_constraintTop_toTopOf="@+id/sdh_refund_extra_bg"
+        tools:text="马上就要过期了！怎么卖！" />
+
+    <com.hll_sc_app.widget.ThumbnailView
+        android:id="@+id/sdh_voucher_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:ctv_margin="20dp"
+        app:ctv_padding="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/sdh_refund_extra_bg"
+        app:layout_constraintStart_toStartOf="@+id/sdh_refund_extra_bg"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_refund_remark" />
+
+    <View
+        android:id="@+id/sdh_divider_1"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_voucher_container" />
+
+    <TextView
+        android:id="@+id/sdh_refund_total_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:text="退款总金额"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="@+id/sdh_divider_2"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_divider_1" />
+
+    <TextView
+        android:id="@+id/sdh_refund_total_amount_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textColor="@color/color_f33030"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintBottom_toBottomOf="@+id/sdh_refund_total_amount"
+        app:layout_constraintEnd_toEndOf="@+id/sdh_divider_2"
+        app:layout_constraintTop_toTopOf="@+id/sdh_refund_total_amount"
+        tools:text="¥126.00" />
+
+    <View
+        android:id="@+id/sdh_divider_2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_refund_total_amount" />
+
+    <android.support.constraint.Group
+        android:id="@+id/sdh_total_amount_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="sdh_refund_total_amount,sdh_refund_total_amount_txt,sdh_divider_2" />
+
+    <TextView
+        android:id="@+id/sdh_negotiation_history"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:text="协商历史"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_divider_2" />
+
+    <View
+        android:id="@+id/sdh_divider_3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_negotiation_history" />
+
+    <TextView
+        android:id="@+id/sdh_view_exchange_order"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:paddingTop="13dp"
+        android:paddingBottom="13dp"
+        android:text="查看换货新订单"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_divider_3" />
+
+    <android.support.constraint.Group
+        android:id="@+id/sdh_exchange_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="sdh_view_exchange_order,sdh_divider_3" />
+
+    <View
+        android:id="@+id/sdh_divider_4"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_view_exchange_order" />
+
+    <TextView
+        android:id="@+id/sdh_operation_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="退款信息"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="@+id/sdh_negotiation_history"
+        app:layout_constraintTop_toBottomOf="@+id/sdh_divider_4" />
+
+    <android.support.constraint.Group
+        android:id="@+id/sdh_refund_extra_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="sdh_refund_extra,sdh_refund_extra_bg,sdh_divider_1" />
+
+</merge>

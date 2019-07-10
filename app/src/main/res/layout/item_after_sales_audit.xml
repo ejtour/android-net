@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/asa_supplier_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_small_shop"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="供应商店铺名称" />
+
+    <com.hll_sc_app.widget.ThumbnailView
+        android:id="@+id/asa_thumbnail_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/asa_supplier_name" />
+
+    <ImageView
+        android:id="@+id/asa_bill_type"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:src="@drawable/ic_after_sales_goods"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_bill_status"
+        app:layout_constraintStart_toStartOf="@+id/asa_thumbnail_wrapper"
+        app:layout_constraintTop_toTopOf="@+id/asa_bill_status" />
+
+    <TextView
+        android:id="@+id/asa_bill_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:drawablePadding="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toEndOf="@+id/asa_bill_type"
+        app:layout_constraintTop_toBottomOf="@+id/asa_thumbnail_wrapper"
+        tools:text="收货差异退款、等待供应商处理" />
+
+    <TextView
+        android:id="@+id/asa_apply_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_bill_status"
+        app:layout_constraintEnd_toEndOf="@+id/asa_thumbnail_wrapper"
+        app:layout_constraintTop_toTopOf="@+id/asa_bill_status"
+        tools:text="申请时间：2019/04/05" />
+
+    <View
+        android:id="@+id/asa_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="@+id/asa_thumbnail_wrapper"
+        app:layout_constraintStart_toStartOf="@+id/asa_thumbnail_wrapper"
+        app:layout_constraintTop_toBottomOf="@+id/asa_bill_status" />
+
+    <com.hll_sc_app.widget.aftersales.AfterSalesActionBar
+        android:id="@+id/asa_action_bar"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/asa_divider"
+        app:sab_item="true" />
+
+</android.support.constraint.ConstraintLayout>

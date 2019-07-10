@@ -47,20 +47,20 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
     @Override
     public void queryCategory() {
         RegisterComplementPresenter.getCategoryObservable()
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<CategoryResp>() {
-                @Override
-                public void onSuccess(CategoryResp resp) {
-                    mView.showCategoryList(resp);
-                }
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<CategoryResp>() {
+                    @Override
+                    public void onSuccess(CategoryResp resp) {
+                        mView.showCategoryList(resp);
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 
     @Override
@@ -85,87 +85,90 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
         }
         // http://rap.hualala.com/workspace/myWorkspace.do?projectId=1147#13869
         BaseMapReq req = BaseMapReq.newBuilder()
-            // 三方商品
-            .put("goodsCode", relevanceBean.getGoodsCode())
-            .put("thirdGroupID", relevanceBean.getThirdGroupID())
-            .put("operateModel", relevanceBean.getOperateModel())
-            .put("resourceType", relevanceBean.getResourceType())
-            .put("shipperType", relevanceBean.getShipperType())
-            .put("erpShopID", relevanceBean.getErpShopID())
-            // 平台商品
-            .put("cargoOwnerID", bean.getCargoOwnerID())
-            .put("cargoOwnerName", bean.getCargoOwnerName())
-            .put("imgUrl", bean.getImgUrl())
-            .put("isWareHourse", bean.getIsWareHourse())
-            .put("plateSupplierID", bean.getGroupID())
-            .put("productCategoryID", bean.getCategoryThreeID())
-            .put("productCode", bean.getProductCode())
-            .put("productID", bean.getProductID())
-            .put("productName", bean.getProductName())
-            .put("productPrice", bean.getProductPrice())
-            .put("productSpec", bean.getSpecContent())
-            .put("productSpecID", bean.getSpecID())
-            .put("ration", bean.getRation())
-            .put("saleUnitName", bean.getSaleUnitName())
-            .put("skuCode", bean.getSkuCode())
-            .create();
+                // 三方商品
+                .put("goodsCode", relevanceBean.getGoodsCode())
+                .put("thirdGroupID", TextUtils.isEmpty(relevanceBean.getThirdGroupID())
+                        ? relevanceBean.getGroupID() : relevanceBean.getThirdGroupID())
+                .put("operateModel", relevanceBean.getOperateModel())
+                .put("resourceType", TextUtils.isEmpty(relevanceBean.getResourceType())
+                        ? String.valueOf(relevanceBean.getBillSource()) : relevanceBean.getResourceType())
+                .put("shipperType", relevanceBean.getShipperType())
+                .put("erpShopID", TextUtils.isEmpty(relevanceBean.getErpShopID())
+                        ? relevanceBean.getAllotID() : relevanceBean.getErpShopID())
+                // 平台商品
+                .put("cargoOwnerID", bean.getCargoOwnerID())
+                .put("cargoOwnerName", bean.getCargoOwnerName())
+                .put("imgUrl", bean.getImgUrl())
+                .put("isWareHourse", bean.getIsWareHourse())
+                .put("plateSupplierID", bean.getGroupID())
+                .put("productCategoryID", bean.getCategoryThreeID())
+                .put("productCode", bean.getProductCode())
+                .put("productID", bean.getProductID())
+                .put("productName", bean.getProductName())
+                .put("productPrice", bean.getProductPrice())
+                .put("productSpec", bean.getSpecContent())
+                .put("productSpecID", bean.getSpecID())
+                .put("ration", bean.getRation())
+                .put("saleUnitName", bean.getSaleUnitName())
+                .put("skuCode", bean.getSkuCode())
+                .create();
         GoodsService.INSTANCE.addGoodsRelevance(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<Object>() {
-                @Override
-                public void onSuccess(Object resp) {
-                    mView.addSuccess();
-                }
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object resp) {
+                        mView.addSuccess();
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 
     private void toQueryGoodsList(boolean showLoading) {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("pageNum", String.valueOf(mTempPageNum))
-            .put("pageSize", "20");
+                .put("groupID", UserConfig.getGroupID())
+                .put("pageNum", String.valueOf(mTempPageNum))
+                .put("pageSize", "20");
         if (TextUtils.isEmpty(mView.getCategorySubId())) {
             // 推荐
             TransferDetailBean relevanceBean = mView.getGoodsBean();
             if (relevanceBean != null) {
                 builder.put("name", relevanceBean.getGoodsName())
-                    .put("productCode", relevanceBean.getGoodsCode())
-                    .put("actionType", "relateRecommend");
+                        .put("productCode", relevanceBean.getGoodsCode())
+                        .put("actionType", "relateRecommend");
             }
         } else {
             builder.put("name", mView.getName())
-                .put("categorySubID", mView.getCategorySubId());
+                    .put("categorySubID", mView.getCategorySubId());
         }
         GoodsService.INSTANCE.queryDepositProducts(builder.create())
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> {
-                if (showLoading) {
-                    mView.showLoading();
-                }
-            })
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<DepositProductsResp>() {
-                @Override
-                public void onSuccess(DepositProductsResp resp) {
-                    mPageNum = mTempPageNum;
-                    mView.showList(resp.getRecords(), mPageNum != 1, resp.getTotal());
-                }
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    if (showLoading) {
+                        mView.showLoading();
+                    }
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<DepositProductsResp>() {
+                    @Override
+                    public void onSuccess(DepositProductsResp resp) {
+                        mPageNum = mTempPageNum;
+                        mView.showList(resp.getRecords(), mPageNum != 1, resp.getTotal());
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 }

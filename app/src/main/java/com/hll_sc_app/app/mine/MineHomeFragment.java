@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -176,7 +177,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         mImgGroupLogoUrl.setImageURL(0);
     }
 
-    @OnClick({R.id.txt_wallet, R.id.txt_agreement_price, R.id.txt_warehouse_manage, R.id.txt_cooperation_purchaser})
+    @OnClick({R.id.txt_wallet, R.id.txt_agreement_price, R.id.txt_warehouse_manage, R.id.txt_cooperation_purchaser,R.id.txt_return_audit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -188,6 +189,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             case R.id.txt_warehouse_manage:
                 break;
             case R.id.txt_cooperation_purchaser:
+                break;
+            case R.id.txt_return_audit:
+                AuditActivity.start();
                 break;
             default:
                 break;

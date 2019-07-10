@@ -1,0 +1,164 @@
+package com.hll_sc_app.widget.aftersales;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Group;
+import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
+import com.hll_sc_app.app.order.common.OrderHelper;
+import com.hll_sc_app.app.order.details.OrderDetailActivity;
+import com.hll_sc_app.base.utils.PhoneUtil;
+import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
+ * @since 2019/7/10
+ */
+
+public class AfterSalesDetailFooter extends ConstraintLayout {
+    @BindView(R.id.sdf_refund_type)
+    TextView mRefundType;
+    @BindView(R.id.sdf_refund_id)
+    TextView mRefundId;
+    @BindView(R.id.sdf_refund_id_group)
+    Group mRefundIdGroup;
+    @BindView(R.id.sdf_create_time)
+    TextView mCreateTime;
+    @BindView(R.id.sdf_type)
+    TextView mType;
+    @BindView(R.id.sdf_refund_reason_label)
+    TextView mRefundReasonLabel;
+    @BindView(R.id.sdf_refund_reason)
+    TextView mRefundReason;
+    @BindView(R.id.sdf_refund_reason_group)
+    Group mRefundReasonGroup;
+    @BindView(R.id.sdf_refund_amount)
+    TextView mRefundAmount;
+    @BindView(R.id.sdf_refund_amount_group)
+    Group mRefundAmountGroup;
+    @BindView(R.id.sdf_diff_price)
+    TextView mDiffPrice;
+    @BindView(R.id.sdf_diff_price_group)
+    Group mDiffPriceGroup;
+    @BindView(R.id.sdf_view_related_bill)
+    TextView mViewRelatedBill;
+    @BindView(R.id.sdf_related_bill_number)
+    TextView mRelatedBillNumber;
+    @BindView(R.id.sdf_related_bill_amount)
+    TextView mRelatedBillAmount;
+    @BindView(R.id.sdf_related_bill_group)
+    Group mRelatedBillGroup;
+    @BindView(R.id.sdf_pay_method)
+    TextView mPayMethod;
+    @BindView(R.id.sdf_pay_method_group)
+    Group mPayMethodGroup;
+    @BindView(R.id.sdf_sale_name)
+    TextView mSaleName;
+    @BindView(R.id.sdf_sale_phone)
+    TextView mSalePhone;
+    @BindView(R.id.sdf_sale_group)
+    Group mSaleGroup;
+
+    public AfterSalesDetailFooter(Context context) {
+        this(context, null);
+    }
+
+    public AfterSalesDetailFooter(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public AfterSalesDetailFooter(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initView();
+    }
+
+    private void initView() {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_after_sales_detail_footer, this, true);
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        ButterKnife.bind(this, view);
+        setBackgroundColor(Color.WHITE);
+        setPadding(0, 0, 0, UIUtils.dip2px(10));
+    }
+
+    public void setData(AfterSalesBean data) {
+        // 退款类型
+        mRefundType.setText(data.getBillSource() == 1 ? "快速退款" : "自由退款");
+        // 售后类型
+        mType.setText(AfterSalesHelper.getRefundTypeDesc(data.getRefundBillType()));
+
+        // 售后原因
+        String reason = data.getRefundReasonDesc();
+        if (!TextUtils.isEmpty(reason)) {
+            mRefundReasonGroup.setVisibility(View.VISIBLE);
+            mRefundReasonLabel.setText(String.format("%s原因：", AfterSalesHelper.getReasonPrefix(data.getRefundBillType())));
+            mRefundReason.setText(reason);
+        }
+
+        // 退款金额
+        if (data.getRefundBillType() != 5) {
+            mRefundAmountGroup.setVisibility(View.VISIBLE);
+            mRefundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
+        }
+
+        // 差价金额
+        if (data.getRefundBillType() == 2) {
+            mDiffPriceGroup.setVisibility(View.VISIBLE);
+            mDiffPrice.setText(String.format("¥%s", CommonUtils.formatMoney(data.getPriceDifferences())));
+        }
+
+        // 申请时间
+        mCreateTime.setText(CalendarUtils.getFormatYyyyMmDdHhMm(String.valueOf(data.getRefundBillCreateTime())));
+
+        // 原订单号
+        mRelatedBillNumber.setText(data.getSubBillNo());
+        mViewRelatedBill.setTag(data.getSubBillID());
+
+        // 原单信息
+        if (data.getBillSource() == 1) {
+            mRelatedBillGroup.setVisibility(View.VISIBLE);
+            mRelatedBillAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getSubBillInspectionAmount())));
+        }
+
+        // 支付方式
+        String payType = OrderHelper.getPayType(data.getPayType()), paymentWay = OrderHelper.getPaymentWay(data.getPaymentWay());
+        if (!TextUtils.isEmpty(payType) && data.getBillSource() == 1) {
+            mPayMethodGroup.setVisibility(View.VISIBLE);
+            mPayMethod.setText(paymentWay.length() > 0 ? payType + "（" + paymentWay + "）" : payType);
+        }
+
+        // 退款编号
+        String refundBillNo = data.getRefundBillNo();
+        if (!TextUtils.isEmpty(refundBillNo)) {
+            mRefundIdGroup.setVisibility(View.VISIBLE);
+            mRefundId.setText(refundBillNo);
+        }
+
+        // 销售员信息
+        if (data.getSaleInfoVo() != null && data.getBillSource() == 1) {
+            mSaleGroup.setVisibility(View.VISIBLE);
+            mSaleName.setText(data.getSaleInfoVo().getSalesmanName());
+            mSalePhone.setText(PhoneUtil.formatPhoneNum(data.getSaleInfoVo().getSalesmanPhone()));
+        }
+    }
+
+    @OnClick(R.id.sdf_view_related_bill)
+    public void onViewClicked(View view) {
+        if (view.getTag() == null) return;
+        OrderDetailActivity.start(view.getTag().toString());
+    }
+}

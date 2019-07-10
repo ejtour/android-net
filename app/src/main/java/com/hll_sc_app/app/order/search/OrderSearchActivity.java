@@ -76,7 +76,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     private OrderSearchBean mCurBean;
 
     public static void start(String... strings) {
-        RouterUtil.goToActivity(RouterConfig.ORDER_SEARCH, strings);
+        RouterUtil.goToActivity(RouterConfig.ORDER_SEARCH, (Object[]) strings);
     }
 
     @Override

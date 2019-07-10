@@ -7,8 +7,8 @@ package com.hll_sc_app.bean.order.search;
 
 public class OrderSearchBean {
 
-    private String name;
-    private String shopMallId;
+    private String name = "";
+    private String shopMallId = "";
 
     public String getName() {
         return name;

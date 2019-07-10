@@ -11,7 +11,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
@@ -95,7 +94,7 @@ public class OrderDetailHeader extends ConstraintLayout {
         handleTimeAddress(data.getDeliverType() == 2,
                 data.getTargetExecuteDate(),
                 data.getTargetAddress());
-        handleLabel(data.getWareHourseName());
+        handleLabel(data.getWareHourseName(), data.getSubbillCategory() == 2);
     }
 
     public void setData(TransferBean data) {
@@ -137,8 +136,8 @@ public class OrderDetailHeader extends ConstraintLayout {
         return ss;
     }
 
-    private void handleLabel(String wareHouseName) {
-        if (TextUtils.isEmpty(wareHouseName))
+    private void handleLabel(String wareHouseName, boolean wareHouse) {
+        if (!wareHouse)
             mLabel.setText("商品清单");
         else {
             mLabel.setTextColor(ContextCompat.getColor(getContext(), R.color.color_666666));

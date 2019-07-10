@@ -1,10 +1,14 @@
 package com.hll_sc_app.base.utils;
 
+import android.content.Intent;
 import android.text.TextUtils;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
+import com.hll_sc_app.base.utils.router.RouterConfig;
 
 /**
  * UserConfig
@@ -28,6 +32,14 @@ public class UserConfig {
 
     public static boolean isLogin() {
         return !TextUtils.isEmpty(UserConfig.accessToken()) && GreenDaoUtils.getUser() != null;
+    }
+
+    public static void reLogin(){
+        clearToken();
+        ARouter.getInstance().build(RouterConfig.USER_LOGIN)
+                .setProvider(new LoginInterceptor())
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .navigation();
     }
 
     /**

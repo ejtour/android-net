@@ -69,15 +69,15 @@
 
         <activity
             android:name=".app.agreementprice.AgreementPriceActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.detail.QuotationDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.add.QuotationAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.add.ratiotemplate.QuotationRatioActivity"
@@ -85,7 +85,7 @@
 
         <activity
             android:name=".app.agreementprice.quotation.add.purchaser.PurchaserListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.add.goods.GoodsQuotationSelectActivity"
@@ -93,7 +93,7 @@
 
         <activity
             android:name=".app.agreementprice.quotation.add.purchaser.shop.PurchaserShopListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.template.GoodsTemplateListActivity"
@@ -101,23 +101,23 @@
 
         <activity
             android:name=".app.goods.invwarn.GoodsInvWarnActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.relevance.GoodsRelevancePurchaserActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.relevance.goods.GoodsRelevanceListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.relevance.goods.select.GoodsRelevanceSelectActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.stick.GoodsStickActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
 
         <activity
@@ -183,7 +183,8 @@
 
         <activity
             android:name=".app.order.reject.OrderRejectActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".app.submit.SubmitSuccessActivity"
@@ -196,8 +197,20 @@
         <activity
             android:name=".app.order.settle.OrderSettlementActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/TranslucentTheme"/>
-        <activity android:name=".app.order.transfer.inventory.InventoryCheckActivity" />
+            android:theme="@style/TranslucentTheme" />
+
+        <activity
+            android:name=".app.order.transfer.inventory.InventoryCheckActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.audit.AuditActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.negotiationhistory.NegotiationHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".app.aftersales.detail.AfterSalesDetailActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

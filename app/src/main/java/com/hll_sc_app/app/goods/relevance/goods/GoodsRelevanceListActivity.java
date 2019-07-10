@@ -155,7 +155,7 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
 
     public void refreshFragment() {
         if (!CommonUtils.isEmpty(mListFragment)) {
-            if (transferBean != null) {
+            if (transferBean != null) { // 对转单数据进行本地处理
                 showTransferDetail(transferBean);
                 return;
             }
@@ -165,6 +165,9 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
         }
     }
 
+    /**
+     * 请求转单明细
+     */
     public void reqTransferDetail() {
         if (mPresenter != null) mPresenter.reqTransferDetail();
     }
@@ -179,7 +182,8 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
 
     @Subscribe
     public void onEvent(GoodsRelevanceRefreshEvent event) {
-        refreshFragment();
+        if (mPresenter == null) refreshFragment();
+        else reqTransferDetail();
     }
 
     @Override

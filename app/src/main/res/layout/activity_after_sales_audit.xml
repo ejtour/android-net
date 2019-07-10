@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/asa_top_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/base_white"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_purchase_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/asa_header"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_title="退货审核"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightVisibility="true" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/asa_tab"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/asa_header"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_indicator_corner_radius="1dp"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_margin_bottom="6dp"
+        app:tl_indicator_width="45dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/color_666666"
+        app:tl_textsize="@dimen/text_small_size" />
+
+    <View
+        android:id="@+id/asa_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/asa_tab" />
+
+    <View
+        android:id="@+id/asa_line1"
+        android:layout_width="1dp"
+        android:layout_height="18dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_purchase_btn"
+        app:layout_constraintEnd_toStartOf="@+id/asa_line2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/asa_purchase_btn" />
+
+    <View
+        android:id="@+id/asa_line2"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintBottom_toBottomOf="@id/asa_line1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/asa_line1"
+        app:layout_constraintTop_toTopOf="@id/asa_line1" />
+
+    <View
+        android:id="@+id/asa_purchase_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toStartOf="@+id/asa_line1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/asa_divider" />
+
+    <TextView
+        android:id="@+id/asa_purchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="采购商"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_purchase_btn"
+        app:layout_constraintEnd_toStartOf="@+id/asa_purchase_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/asa_purchase_btn"
+        app:layout_constraintTop_toTopOf="@+id/asa_purchase_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/asa_purchase_arrow"
+        android:layout_width="8dp"
+        android:layout_height="4dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_purchase"
+        app:layout_constraintEnd_toEndOf="@+id/asa_purchase_btn"
+        app:layout_constraintStart_toEndOf="@+id/asa_purchase"
+        app:layout_constraintTop_toTopOf="@+id/asa_purchase"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <View
+        android:id="@+id/asa_date_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toStartOf="@id/asa_line2"
+        app:layout_constraintStart_toEndOf="@+id/asa_line1"
+        app:layout_constraintTop_toTopOf="@+id/asa_purchase_btn" />
+
+    <TextView
+        android:id="@+id/asa_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="申请退换货日期"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_date_btn"
+        app:layout_constraintEnd_toStartOf="@+id/asa_date_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/asa_date_btn"
+        app:layout_constraintTop_toTopOf="@+id/asa_date_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/asa_date_arrow"
+        android:layout_width="8dp"
+        android:layout_height="4dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_date"
+        app:layout_constraintEnd_toEndOf="@+id/asa_date_btn"
+        app:layout_constraintStart_toEndOf="@+id/asa_date"
+        app:layout_constraintTop_toTopOf="@+id/asa_date"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <View
+        android:id="@+id/asa_type_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/asa_line2"
+        app:layout_constraintTop_toTopOf="@id/asa_purchase_btn" />
+
+    <TextView
+        android:id="@+id/asa_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="退货类型"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_date_btn"
+        app:layout_constraintEnd_toStartOf="@+id/asa_type_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/asa_type_btn"
+        app:layout_constraintTop_toTopOf="@+id/asa_date_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/asa_type_arrow"
+        android:layout_width="8dp"
+        android:layout_height="4dp"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_type"
+        app:layout_constraintEnd_toEndOf="@+id/asa_type_btn"
+        app:layout_constraintStart_toEndOf="@+id/asa_type"
+        app:layout_constraintTop_toTopOf="@+id/asa_type"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/asa_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/asa_purchase_btn" />
+</android.support.constraint.ConstraintLayout>

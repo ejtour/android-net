@@ -1,11 +1,10 @@
 package com.hll_sc_app.app.order.details;
 
 import android.graphics.Color;
-import android.support.constraint.ConstraintLayout;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -44,9 +43,6 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
         // 代仓是否显示
         holder.setGone(R.id.iod_ware_house, mWareHouse);
-        View view = holder.getView(R.id.iod_image);
-        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-        layoutParams.dimensionRatio = mLabel.equals("小计") ? "6:7" : "1";
         return holder;
     }
 
@@ -71,12 +67,17 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         else builder.append("— —");
         String confirmText = builder.toString();
 
+        builder.delete(0, confirmText.length()).append("单价：¥").append(CommonUtils.formatMoney(item.getProductPrice()));
+        if (!TextUtils.isEmpty(item.getSaleUnitName()))
+            builder.append("/").append(item.getSaleUnitName());
+        String unitPrice = builder.toString();
+
         helper.setText(R.id.iod_product_name, item.getProductName())
                 .setText(R.id.iod_product_spec, item.getProductSpec()) // 规格
                 .setText(R.id.iod_order_num, processNum("订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName(), false)) // 订货数量
                 .setText(R.id.iod_delivery_num, processNum(deliveryText, item.getAdjustmentNum() != item.getProductNum())) // 预发货/发货数量
                 .setText(R.id.iod_confirm_num, processNum(confirmText, item.getInspectionNum() != item.getProductNum())) // 签收数量
-                .setText(R.id.iod_sale_unit_spec, processPrice("单价：¥" + CommonUtils.formatMoney(item.getProductPrice()) + "/" + item.getSaleUnitName())) // 单价
+                .setText(R.id.iod_sale_unit_spec, processPrice(unitPrice)) // 单价
                 .setText(R.id.iod_amount, processPrice(mLabel + "：¥" + CommonUtils.formatMoney(item.getInspectionAmount()))); // 小计
     }
 

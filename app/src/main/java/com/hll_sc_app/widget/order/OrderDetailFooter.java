@@ -145,10 +145,10 @@ public class OrderDetailFooter extends ConstraintLayout {
                     payType + "（" + paymentWay + "）" : payType);
         else mPayMethod.setText(null);
         handleOrderType(data);
-        if (data.getBillSource() == 1 || data.getBillSource() == 2) {
+        /*if (data.getBillSource() == 1 || data.getBillSource() == 2) {
             mOrderSourceGroup.setVisibility(VISIBLE);
-            mOrderSource.setText(data.getBillSource() == 1 ? "商城订单" : "哗啦啦供应链订单");
-        }
+            mOrderSource.setText(data.getBillSource() == 1 ? "商城订单" : "哗啦啦供应链");
+        }*/
         handleDeliveryInfo(data);
     }
 

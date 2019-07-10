@@ -7,8 +7,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializer;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.SystemUtils;
 
 import org.json.JSONException;
@@ -42,8 +40,7 @@ public abstract class BaseCallback<T> extends DisposableObserver<T> {
         // 接口性错误
         if (e instanceof UseCaseException) {
             if (TextUtils.equals(((UseCaseException) e).getCode(), "00120110118")) {
-                UserConfig.clearToken();
-                RouterUtil.goToActivity(RouterConfig.USER_LOGIN);
+                UserConfig.reLogin();
             }
             onFailure((UseCaseException) e);
             return;
@@ -53,10 +50,10 @@ public abstract class BaseCallback<T> extends DisposableObserver<T> {
         if (!SystemUtils.isNetConnected()) {
             ex = new UseCaseException(UseCaseException.Level.NET, "999", "无网络连接，请检查是否连接到网络");
         } else if (e instanceof JsonParseException
-            || e instanceof JSONException
-            || e instanceof JsonSerializer
-            || e instanceof NotSerializableException
-            || e instanceof ParseException) {
+                || e instanceof JSONException
+                || e instanceof JsonSerializer
+                || e instanceof NotSerializableException
+                || e instanceof ParseException) {
             ex = new UseCaseException(UseCaseException.Level.NET, "1001", "解析错误");
         } else if (e instanceof ClassCastException) {
             ex = new UseCaseException(UseCaseException.Level.NET, "1002", "类型转换错误");
