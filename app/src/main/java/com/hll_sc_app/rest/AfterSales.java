@@ -10,6 +10,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.bean.aftersales.NegotiationHistoryResp;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -127,6 +128,10 @@ public class AfterSales {
 
     /**
      * 修改单价
+     *
+     * @param price        单价
+     * @param detailsID    退货单id
+     * @param refundBillID 退货单明细id
      */
     public static void modifyUnitPrice(String price, String detailsID, String refundBillID, SimpleObserver<Object> observer) {
         AfterSalesService.INSTANCE
@@ -170,6 +175,22 @@ public class AfterSales {
         req.setRefundBillDetailList(list);
         AfterSalesService.INSTANCE
                 .afterSalesAction(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取协商历史
+     *
+     * @param refundBillID 退换货订单id
+     * @param subBillID    订单id
+     */
+    public static void getNegotiationHistory(String refundBillID, String subBillID, SimpleObserver<NegotiationHistoryResp> observer) {
+        AfterSalesService.INSTANCE
+                .getNegotiationHistory(BaseMapReq.newBuilder()
+                        .put("refundBillID", refundBillID)
+                        .put("subBillID", subBillID).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

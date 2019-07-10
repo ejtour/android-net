@@ -219,12 +219,6 @@ public class AfterSalesDetailsBean implements Parcelable {
         return refundableAmount;
     }
 
-    public double getPendingRefundAmount() {
-        return refundNum >= refundableNum ?
-                refundableAmount :
-                CommonUtils.mulDouble(refundNum, newPrice, 4).doubleValue();
-    }
-
     public void setRefundableAmount(double refundableAmount) {
         this.refundableAmount = refundableAmount;
     }

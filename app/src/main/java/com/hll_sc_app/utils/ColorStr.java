@@ -12,4 +12,5 @@ public interface ColorStr {
     String COLOR_666666 = "#ff666666";
     String COLOR_999999 = "#ff999999";
     String COLOR_DDDDDD = "#ffdddddd";
+    String COLOR_F33030 = "#fff33030";
 }

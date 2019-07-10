@@ -196,6 +196,10 @@
         <activity android:name=".app.aftersales.audit.AuditActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".app.aftersales.negotiationhistory.NegotiationHistoryActivity"
+            android:screenOrientation="portrait"  />
+        <activity android:name=".app.aftersales.detail.AfterSalesDetailActivity" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

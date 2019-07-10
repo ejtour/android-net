@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
@@ -297,10 +298,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
 
     @Override
     public void actionViewDetails() {
-        showToast("退换货详情待添加");
-        /*DetailsShowActivity.start(getActivity(),
-                mCurBean,
-                mCurBean.getId(),
-                BackType.AFTER_SALES_CHECK_LIST, true);*/
+        AfterSalesDetailActivity.start(requireActivity(), mCurBean);
     }
 }

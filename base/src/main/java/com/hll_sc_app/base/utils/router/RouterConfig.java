@@ -204,4 +204,14 @@ public class RouterConfig {
      * 我的-退货审核
      */
     public static final String AFTER_SALES_AUDIT = "/activity/afterSales/audit";
+
+    /**
+     * 我的-退货审核-售后详情
+     */
+    public static final String AFTER_SALES_DETAIL = "/activity/afterSales/detail";
+
+    /**
+     * 售后详情-协商历史
+     */
+    public static final String AFTER_SALES_NEGOTIATION_HISTORY = "/activity/afterSales/negotiationHistory";
 }
