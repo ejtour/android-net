@@ -4,6 +4,7 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.user.CategoryResp;
 
 import java.util.List;
 
@@ -31,9 +32,11 @@ interface GoodsPriceContract {
         void showPurchaserWindow(List<PurchaserBean> list);
 
         /**
-         * 显示报价日期区间选择window
+         * 显示分类选择window
+         *
+         * @param resp 分类数据
          */
-        void showDateWindow();
+        void showCategoryWindow(CategoryResp resp);
 
         /**
          * 显示生效期限日期区间选择window
@@ -135,6 +138,11 @@ interface GoodsPriceContract {
          * 搜索合作采购商
          */
         void queryCooperationPurchaserList();
+
+        /**
+         * 获取分类列表
+         */
+        void queryCategory();
 
         /**
          * 导出商品数据到邮箱

@@ -27,6 +27,7 @@ import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -59,10 +60,10 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
     TextView mTxtPurchaser;
     @BindView(R.id.img_purchaser)
     ImageView mImgSupplier;
-    @BindView(R.id.txt_date)
-    TextView mTxtDate;
-    @BindView(R.id.img_date)
-    ImageView mImgDate;
+    @BindView(R.id.txt_category)
+    TextView mTxtCategory;
+    @BindView(R.id.img_category)
+    ImageView mImgCategory;
     @BindView(R.id.txt_effectDate)
     TextView mTxtEffectDate;
     @BindView(R.id.img_effectDate)
@@ -71,7 +72,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
     RelativeLayout mLlEffectDate;
     private GoodsPriceContract.IGoodsPricePresenter mPresenter;
     private PurchaserSelectWindow mPurchaserWindow;
-    private DateRangeWindow mDateRangeWindow;
+    private GoodsPriceCategoryWindow mCategoryWindow;
     private DateRangeWindow mDateEffectWindow;
     private GoodsPriceListAdapter mAdapter;
     private EmptyView mEmptyView;
@@ -172,42 +173,23 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
     }
 
     @Override
-    public void showDateWindow() {
-        mTxtDate.setSelected(true);
-        mImgDate.setSelected(true);
-        mImgDate.setRotation(-180F);
-        if (mDateRangeWindow == null) {
-            mDateRangeWindow = new DateRangeWindow(getActivity());
-            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                if (start == null && end == null) {
-                    mTxtDate.setText("报价日期");
-                    mTxtDate.setTag(R.id.date_start, "");
-                    mTxtDate.setTag(R.id.date_end, "");
-                    mPresenter.queryGoodsPriceList(true);
-                    return;
-                }
-                if (start != null && end != null) {
-                    Calendar calendarStart = Calendar.getInstance();
-                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    String startStr = CalendarUtils.format(calendarStart.getTime(), CalendarUtils.FORMAT_DATE_TIME);
-                    Calendar calendarEnd = Calendar.getInstance();
-                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    String endStr = CalendarUtils.format(calendarEnd.getTime(), CalendarUtils.FORMAT_DATE_TIME);
-                    mTxtDate.setText(String.format("%s\n%s", startStr, endStr));
-                    mTxtDate.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
-                        CalendarUtils.FORMAT_SERVER_DATE));
-                    mTxtDate.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
-                        CalendarUtils.FORMAT_SERVER_DATE));
-                    mPresenter.queryGoodsPriceList(true);
-                }
+    public void showCategoryWindow(CategoryResp resp) {
+        mTxtCategory.setSelected(true);
+        mImgCategory.setSelected(true);
+        mImgCategory.setRotation(-180F);
+        if (mCategoryWindow == null) {
+            mCategoryWindow = new GoodsPriceCategoryWindow(getActivity(), resp);
+            mCategoryWindow.setListener(categoryIds -> {
+                mTxtCategory.setTag(categoryIds);
+                mPresenter.queryGoodsPriceList(true);
             });
-            mDateRangeWindow.setOnDismissListener(() -> {
-                mTxtDate.setSelected(false);
-                mImgDate.setSelected(false);
-                mImgDate.setRotation(0F);
+            mCategoryWindow.setOnDismissListener(() -> {
+                mTxtCategory.setSelected(false);
+                mImgCategory.setSelected(false);
+                mImgCategory.setRotation(0F);
             });
         }
-        mDateRangeWindow.showAsDropDownFix(mLlFilter);
+        mCategoryWindow.showAsDropDownFix(mLlFilter);
     }
 
     @Override
@@ -261,8 +243,8 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
     @Override
     public String getStartDate() {
         String startDate = null;
-        if (mTxtDate != null && mTxtDate.getTag(R.id.date_start) != null) {
-            startDate = (String) mTxtDate.getTag(R.id.date_start);
+        if (mTxtCategory != null && mTxtCategory.getTag(R.id.date_start) != null) {
+            startDate = (String) mTxtCategory.getTag(R.id.date_start);
         }
         return startDate;
     }
@@ -270,8 +252,8 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
     @Override
     public String getEndDate() {
         String endDate = null;
-        if (mTxtDate != null && mTxtDate.getTag(R.id.date_end) != null) {
-            endDate = (String) mTxtDate.getTag(R.id.date_end);
+        if (mTxtCategory != null && mTxtCategory.getTag(R.id.date_end) != null) {
+            endDate = (String) mTxtCategory.getTag(R.id.date_end);
         }
         return endDate;
     }
@@ -296,7 +278,11 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
 
     @Override
     public String getCategoryId() {
-        return null;
+        String categoryId = null;
+        if (mTxtCategory.getTag() != null) {
+            categoryId = (String) mTxtCategory.getTag();
+        }
+        return categoryId;
     }
 
     @Override
@@ -318,11 +304,11 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
         mPresenter.queryGoodsPriceList(true);
     }
 
-    @OnClick({R.id.ll_purchaser, R.id.ll_date, R.id.ll_effectDate})
+    @OnClick({R.id.ll_purchaser, R.id.ll_category, R.id.ll_effectDate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_date:
-                showDateWindow();
+            case R.id.ll_category:
+                mPresenter.queryCategory();
                 break;
             case R.id.ll_effectDate:
                 showDateEffectWindow();

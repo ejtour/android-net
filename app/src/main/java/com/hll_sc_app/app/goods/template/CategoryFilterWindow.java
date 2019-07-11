@@ -156,7 +156,7 @@ public class CategoryFilterWindow extends BasePopupWindow {
     }
 
     /**
-     * 展示一级分类
+     * 展示三级分类
      *
      * @param context Activity
      */

@@ -201,6 +201,7 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
         if (!TextUtils.isEmpty(address)) {
             if (address.length() < 5) {
                 mView.showToast("地址最少输入5个字符");
+                return false;
             }
         }
         return true;
@@ -215,6 +216,7 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
         if (!TextUtils.isEmpty(operationGroupID)) {
             if (!patternOperationGroupID.matcher(operationGroupID).matches()) {
                 mView.showToast("请输入正确的推荐码");
+                return false;
             }
         }
         return true;
