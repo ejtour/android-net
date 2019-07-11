@@ -3,6 +3,11 @@ package com.hll_sc_app.bean.goods;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 采购商Bean
  *
@@ -59,47 +64,6 @@ public class PurchaserBean implements Parcelable {
         }
     };
     private boolean select;
-
-    protected PurchaserBean(Parcel in) {
-        this.readStatus = in.readString();
-        this.uniformSocialCreditCode = in.readString();
-        this.unRelationProductNum = in.readString();
-        this.auditBy = in.readString();
-        this.mail = in.readString();
-        this.erpShopName = in.readString();
-        this.relationProductNum = in.readString();
-        this.licenceGroupName = in.readString();
-        this.licencePhotoUrl = in.readString();
-        this.purchaserID = in.readString();
-        this.legalPerson = in.readString();
-        this.plateSupplierID = in.readString();
-        this.action = in.readString();
-        this.groupCity = in.readString();
-        this.erpShopID = in.readString();
-        this.id = in.readString();
-        this.cancelReason = in.readString();
-        this.fax = in.readString();
-        this.auditDate = in.readString();
-        this.groupID = in.readString();
-        this.identityCard = in.readString();
-        this.message = in.readString();
-        this.linkman = in.readString();
-        this.purchaserName = in.readString();
-        this.groupName = in.readString();
-        this.operateModel = in.readString();
-        this.groupProvince = in.readString();
-        this.createTime = in.readString();
-        this.frontImg = in.readString();
-        this.groupAddress = in.readString();
-        this.groupPhone = in.readString();
-        this.shopID = in.readString();
-        this.applyDate = in.readString();
-        this.groupDistrict = in.readString();
-        this.otherLicense = in.readString();
-        this.resourceType = in.readString();
-        this.status = in.readString();
-        this.select = in.readByte() != 0;
-    }
 
     public PurchaserBean() {
     }
@@ -400,17 +364,70 @@ public class PurchaserBean implements Parcelable {
         this.status = status;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public boolean isSelect() {
         return select;
     }
 
     public void setSelect(boolean select) {
         this.select = select;
+    }
+
+    private List<PurchaserShopBean> shopList;
+
+    protected PurchaserBean(Parcel in) {
+        this.readStatus = in.readString();
+        this.uniformSocialCreditCode = in.readString();
+        this.unRelationProductNum = in.readString();
+        this.auditBy = in.readString();
+        this.mail = in.readString();
+        this.erpShopName = in.readString();
+        this.relationProductNum = in.readString();
+        this.licenceGroupName = in.readString();
+        this.licencePhotoUrl = in.readString();
+        this.purchaserID = in.readString();
+        this.legalPerson = in.readString();
+        this.plateSupplierID = in.readString();
+        this.action = in.readString();
+        this.groupCity = in.readString();
+        this.erpShopID = in.readString();
+        this.id = in.readString();
+        this.cancelReason = in.readString();
+        this.fax = in.readString();
+        this.auditDate = in.readString();
+        this.groupID = in.readString();
+        this.identityCard = in.readString();
+        this.message = in.readString();
+        this.linkman = in.readString();
+        this.purchaserName = in.readString();
+        this.groupName = in.readString();
+        this.operateModel = in.readString();
+        this.groupProvince = in.readString();
+        this.createTime = in.readString();
+        this.frontImg = in.readString();
+        this.groupAddress = in.readString();
+        this.groupPhone = in.readString();
+        this.shopID = in.readString();
+        this.applyDate = in.readString();
+        this.groupDistrict = in.readString();
+        this.otherLicense = in.readString();
+        this.resourceType = in.readString();
+        this.status = in.readString();
+        this.shopList = new ArrayList<PurchaserShopBean>();
+        in.readList(this.shopList, PurchaserShopBean.class.getClassLoader());
+        this.select = in.readByte() != 0;
+    }
+
+    public List<PurchaserShopBean> getShopList() {
+        return shopList;
+    }
+
+    public void setShopList(List<PurchaserShopBean> shopList) {
+        this.shopList = shopList;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -452,6 +469,7 @@ public class PurchaserBean implements Parcelable {
         dest.writeString(this.otherLicense);
         dest.writeString(this.resourceType);
         dest.writeString(this.status);
+        dest.writeList(this.shopList);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
     }
 }

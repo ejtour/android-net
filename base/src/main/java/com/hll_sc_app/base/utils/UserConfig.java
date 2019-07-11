@@ -20,26 +20,8 @@ public class UserConfig {
     public static final String ACCESS_TOKEN = "access_token";
     private static String mToken;
 
-    /**
-     * 退出登录时候，置空token
-     * 删除存储的用户信息
-     */
-    public static void clearToken() {
-        mToken = "";
-        GlobalPreference.putParam(ACCESS_TOKEN, "");
-        GreenDaoUtils.clear();
-    }
-
     public static boolean isLogin() {
         return !TextUtils.isEmpty(UserConfig.accessToken()) && GreenDaoUtils.getUser() != null;
-    }
-
-    public static void reLogin(){
-        clearToken();
-        ARouter.getInstance().build(RouterConfig.USER_LOGIN)
-                .setProvider(new LoginInterceptor())
-                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                .navigation();
     }
 
     /**
@@ -52,6 +34,24 @@ public class UserConfig {
             mToken = GlobalPreference.getParam("access_token", "");
         }
         return mToken;
+    }
+
+    public static void reLogin() {
+        clearToken();
+        ARouter.getInstance().build(RouterConfig.USER_LOGIN)
+            .setProvider(new LoginInterceptor())
+            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+            .navigation();
+    }
+
+    /**
+     * 退出登录时候，置空token
+     * 删除存储的用户信息
+     */
+    public static void clearToken() {
+        mToken = "";
+        GlobalPreference.putParam(ACCESS_TOKEN, "");
+        GreenDaoUtils.clear();
     }
 
     public static String getGroupID() {

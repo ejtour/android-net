@@ -84,6 +84,16 @@ public interface AgreementPriceService {
     Observable<BaseResp<List<QuotationDetailBean>>> queryGoodsPriceList(@Body BaseMapReq req);
 
     /**
+     * 查询适用店铺成功
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100027")
+    Observable<BaseResp<List<PurchaserBean>>> queryPriceUsePurchaser(@Body BaseMapReq req);
+
+    /**
      * 查询查询配送价格列表
      *
      * @param req req

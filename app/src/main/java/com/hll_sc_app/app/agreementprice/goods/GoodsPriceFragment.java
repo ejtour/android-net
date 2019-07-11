@@ -23,6 +23,7 @@ import com.hll_sc_app.app.agreementprice.quotation.PurchaserSelectWindow;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
@@ -119,6 +120,12 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
             R.color.base_color_divider), UIUtils.dip2px(5)));
         mAdapter = new GoodsPriceListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            QuotationDetailBean bean = (QuotationDetailBean) adapter.getItem(position);
+            if (bean != null) {
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_GOODS_DETAIL, bean);
+            }
+        });
         mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
         mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
             setForceLoad(true);

@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.agreementprice.quotation;
 
+import java.util.List;
+
 /**
  * 采购商门店
  *
@@ -24,6 +26,15 @@ public class PurchaserShopBean {
     private String shopPhone;
     private String shopID;
     private boolean select;
+    private List<TimeBean> time;
+
+    public List<TimeBean> getTime() {
+        return time;
+    }
+
+    public void setTime(List<TimeBean> time) {
+        this.time = time;
+    }
 
     public boolean isSelect() {
         return select;
