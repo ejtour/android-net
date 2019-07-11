@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.export;
 
+import java.util.List;
+
 /**
  * 统一导出文件请求参数
  *
@@ -88,6 +90,18 @@ public class ExportReq {
          * 规格上下架日志导出
          */
         private SkuShelfFlowBean skuShelfFlow;
+        /**
+         * 协议价请求参数
+         */
+        private SupplierQuotationBean supplierQuotation;
+
+        public SupplierQuotationBean getSupplierQuotation() {
+            return supplierQuotation;
+        }
+
+        public void setSupplierQuotation(SupplierQuotationBean supplierQuotation) {
+            this.supplierQuotation = supplierQuotation;
+        }
 
         public SkuShelfFlowBean getSkuShelfFlow() {
             return skuShelfFlow;
@@ -106,6 +120,27 @@ public class ExportReq {
 
             public void setGroupID(String groupID) {
                 this.groupID = groupID;
+            }
+        }
+
+        public static class SupplierQuotationBean {
+            private String groupID;
+            private List<String> billNos;
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public List<String> getBillNos() {
+                return billNos;
+            }
+
+            public void setBillNos(List<String> billNos) {
+                this.billNos = billNos;
             }
         }
     }

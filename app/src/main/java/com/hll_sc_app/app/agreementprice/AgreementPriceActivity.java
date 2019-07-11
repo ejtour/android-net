@@ -87,6 +87,7 @@ public class AgreementPriceActivity extends BaseLoadActivity {
                 if (fragment != null) {
                     fragment.toExport();
                 }
+                mOptionsWindow.dismiss();
             }).refreshList(list);
         }
         mOptionsWindow.showAsDropDownFix(mImgAdd, Gravity.END);

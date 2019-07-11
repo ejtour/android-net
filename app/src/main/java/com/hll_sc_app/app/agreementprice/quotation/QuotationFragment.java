@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -27,6 +28,7 @@ import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -39,6 +41,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,14 +75,27 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
     TextView mTxtEffectDate;
     @BindView(R.id.img_effectDate)
     ImageView mImgEffectDate;
+    @BindView(R.id.ll_effectDate)
+    RelativeLayout mLlEffectDate;
+    @BindView(R.id.txt_confirm_export)
+    TextView mTxtConfirmExport;
+    @BindView(R.id.rl_bottom)
+    RelativeLayout mRlBottom;
+    @BindView(R.id.img_quotation_add)
+    ImageView mImgQuotationAdd;
+    @BindView(R.id.img_select_all)
+    ImageView mImgSelectAll;
     private QuotationFragmentContract.IHomePresenter mPresenter;
     private PurchaserSelectWindow mPurchaserWindow;
     private DateRangeWindow mDateRangeWindow;
     private DateRangeWindow mDateEffectWindow;
     private QuotationListAdapter mAdapter;
-
     private EmptyView mEmptyView;
     private EmptyView mNetEmptyView;
+
+    public QuotationFragmentContract.IHomePresenter getPresenter() {
+        return mPresenter;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,10 +145,16 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
             R.color.base_color_divider), UIUtils.dip2px(10)));
         mAdapter = new QuotationListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             QuotationBean bean = (QuotationBean) adapter.getItem(position);
             if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_DETAIL, bean);
+                if (mAdapter.isExportStatus()) {
+                    bean.setSelect(!bean.isSelect());
+                    adapter.notifyDataSetChanged();
+                    showExportCount();
+                } else {
+                    RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_DETAIL, bean);
+                }
             }
         });
         mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
@@ -144,6 +166,27 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         if (isSearchActivity()) {
             mLlFilter.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 显示底部导出数量
+     */
+    private void showExportCount() {
+        int count = 0;
+        boolean selectAll = true;
+        List<QuotationBean> list = mAdapter.getData();
+        if (!CommonUtils.isEmpty(list)) {
+            for (QuotationBean bean : list) {
+                if (bean.isSelect()) {
+                    count++;
+                } else {
+                    selectAll = false;
+                }
+            }
+        }
+        mTxtConfirmExport.setEnabled(count != 0);
+        mTxtConfirmExport.setText(String.format(Locale.getDefault(), "确定导出（%d）", count));
+        mImgSelectAll.setSelected(selectAll);
     }
 
     @Subscribe
@@ -178,6 +221,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
             mAdapter.setNewData(list);
         }
         mRefreshLayout.setEnableLoadMore(list.size() == QuotationFragmentPresenter.PAGE_SIZE);
+        showExportCount();
     }
 
     @Override
@@ -325,22 +369,6 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         return priceEndDate;
     }
 
-
-    @Override
-    public void exportSuccess(String email) {
-
-    }
-
-    @Override
-    public void exportFailure(String message) {
-
-    }
-
-    @Override
-    public void unbindEmail() {
-
-    }
-
     @Override
     public boolean isSearchActivity() {
         return false;
@@ -351,16 +379,26 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         return null;
     }
 
+    @Override
+    public List<String> getBillNos() {
+        List<String> listBillNos = new ArrayList<>();
+        List<QuotationBean> list = mAdapter.getData();
+        if (!CommonUtils.isEmpty(list)) {
+            for (QuotationBean bean : list) {
+                if (bean.isSelect()) {
+                    listBillNos.add(bean.getBillNo());
+                }
+            }
+        }
+        return listBillNos;
+    }
 
     public void toSearch() {
         mPresenter.queryQuotationList(true);
     }
 
-    protected void toExport(String email) {
-        mPresenter.exportQuotation(email);
-    }
-
-    @OnClick({R.id.ll_purchaser, R.id.ll_date, R.id.ll_effectDate, R.id.img_quotation_add})
+    @OnClick({R.id.ll_purchaser, R.id.ll_date, R.id.ll_effectDate, R.id.img_quotation_add, R.id.img_select_all,
+        R.id.txt_confirm_export, R.id.txt_select_all})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_date:
@@ -370,25 +408,63 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
                 showDateEffectWindow();
                 break;
             case R.id.ll_purchaser:
-                topurchaser();
+                toPurchaser();
                 break;
             case R.id.img_quotation_add:
                 RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD);
+                break;
+            case R.id.img_select_all:
+            case R.id.txt_select_all:
+                selectAll();
+                break;
+            case R.id.txt_confirm_export:
+                // 确定导出
+                mPresenter.exportQuotation(null);
                 break;
             default:
                 break;
         }
     }
 
-    private void topurchaser() {
+    private void toPurchaser() {
         mTxtPurchaser.setSelected(true);
         mImgSupplier.setSelected(true);
         mImgSupplier.setRotation(-180F);
         mPresenter.queryCooperationPurchaserList();
     }
 
+    /**
+     * 全选
+     */
+    private void selectAll() {
+        boolean select = !mImgSelectAll.isSelected();
+        List<QuotationBean> list = mAdapter.getData();
+        if (!CommonUtils.isEmpty(list)) {
+            for (QuotationBean bean : list) {
+                bean.setSelect(select);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
+        showExportCount();
+    }
+
     @Override
     public void toExport() {
+        if (!isFragmentVisible()) {
+            return;
+        }
+        mAdapter.setExport(true);
+        mAdapter.notifyDataSetChanged();
+        mRlBottom.setVisibility(View.VISIBLE);
+        mImgQuotationAdd.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void exportSuccess(String email) {
+        super.exportSuccess(email);
+        mAdapter.setExport(false);
+        mAdapter.notifyDataSetChanged();
+        mRlBottom.setVisibility(View.GONE);
+        mImgQuotationAdd.setVisibility(View.VISIBLE);
     }
 }

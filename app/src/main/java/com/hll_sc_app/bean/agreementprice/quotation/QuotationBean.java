@@ -78,6 +78,7 @@ public class QuotationBean implements Parcelable {
      * 是否选择了全部店铺（选择了全部店铺传1，未选择全部传0）
      */
     private String isAllShop;
+    private boolean select;
 
     public QuotationBean() {
     }
@@ -113,6 +114,15 @@ public class QuotationBean implements Parcelable {
         this.shopIDs = in.readString();
         this.shopIDNum = in.readString();
         this.isAllShop = in.readString();
+        this.select = in.readByte() != 0;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
     }
 
     public String getIsAllShop() {
@@ -392,5 +402,6 @@ public class QuotationBean implements Parcelable {
         dest.writeString(this.shopIDs);
         dest.writeString(this.shopIDNum);
         dest.writeString(this.isAllShop);
+        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
     }
 }

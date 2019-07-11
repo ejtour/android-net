@@ -1,13 +1,21 @@
 package com.hll_sc_app.app.agreementprice.quotation;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.AgreementPriceService;
+import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
+import com.hll_sc_app.bean.export.ExportReq;
+import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -25,13 +33,11 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @date 2019/2/13
  */
 public class QuotationFragmentPresenter implements QuotationFragmentContract.IHomePresenter {
-    public static final String CODE_UNBIND_EMAIL = "00120112037";
-    public static final String CODE_NO_DATA = "00120112038";
     static final int PAGE_SIZE = 20;
-    private QuotationFragmentContract.IHomeView mView;
     private int mPageNum;
     private int mTempNum;
     private List<PurchaserBean> mListPurchaser;
+    private QuotationFragmentContract.IHomeView mView;
 
     public static QuotationFragmentPresenter newInstance() {
         return new QuotationFragmentPresenter();
@@ -67,8 +73,8 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
             mView.showPurchaserWindow(mListPurchaser);
             return;
         }
-
-        getCooperationPurchaserObservable(null).doOnSubscribe(disposable -> mView.showLoading())
+        getCooperationPurchaserObservable(null)
+            .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
             .subscribe(new BaseCallback<List<PurchaserBean>>() {
@@ -104,60 +110,51 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
 
     @Override
     public void exportQuotation(String email) {
-//        UserBean userBean = GreenDaoUtils.getUser();
-//        if (userBean == null) {
-//            return;
-//        }
-//        BaseReq<QuotationExportReq> req = new BaseReq<>();
-//        QuotationExportReq exportReq = new QuotationExportReq();
-//        exportReq.setPurchaserID(userBean.getPurchaserID());
-//        if (TextUtils.isEmpty(email)) {
-//            exportReq.setIsBindEmail(0);
-//        } else {
-//            exportReq.setIsBindEmail(1);
-//            exportReq.setEmail(email);
-//        }
-//        QuotationExportReq.SearchParamsBean bean = new QuotationExportReq.SearchParamsBean();
-//        bean.setEndDate(mView.getEndDate());
-//        bean.setStartDate(mView.getStartDate());
-//        bean.setGroupID(mView.getCargoOwnId());
-//        bean.setPriceStartDate(mView.getPriceStartDate());
-//        bean.setPriceEndDate(mView.getPriceEndDate());
-//        exportReq.setSearchParams(bean);
-//        req.setData(exportReq);
-//        PriceManagerService.INSTANCE
-//            .exportQuotation(req)
-//            .compose(ApiScheduler.getObservableScheduler())
-//            .map(new Precondition<>())
-//            .doOnSubscribe(disposable -> mView.showLoading())
-//            .doFinally(() -> {
-//                if (mView.isActive()) {
-//                    mView.hideLoading();
-//                }
-//            })
-//            .subscribe(new BaseCallback<QuotationExportResp>() {
-//                @Override
-//                public void onSuccess(QuotationExportResp result) {
-//                    if (mView.isActive() && result != null) {
-//                        mView.exportSuccess(result.getGroupMail());
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(UseCaseException e) {
-//                    if (mView.isActive()) {
-//                        if (TextUtils.equals(e.getCode(), CODE_UNBIND_EMAIL)) {
-//                            // 员工未绑定邮箱
-//                            mView.unbindEmail();
-//                        } else if (TextUtils.equals(e.getCode(), QuotationFragmentPresenter.CODE_NO_DATA)) {
-//                            mView.showToast("当前没有可导出的数据");
-//                        } else {
-//                            mView.exportFailure(e.getMessage());
-//                        }
-//                    }
-//                }
-//            });
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        ExportReq req = new ExportReq();
+        req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
+        req.setTypeCode("quotation");
+        req.setUserID(userBean.getEmployeeID());
+        ExportReq.ParamsBean paramsBean = new ExportReq.ParamsBean();
+        ExportReq.ParamsBean.SupplierQuotationBean quotationBean = new ExportReq.ParamsBean.SupplierQuotationBean();
+        quotationBean.setGroupID(userBean.getGroupID());
+        quotationBean.setBillNos(mView.getBillNos());
+        paramsBean.setSupplierQuotation(quotationBean);
+        req.setParams(paramsBean);
+        BaseReq<ExportReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        GoodsService.INSTANCE.exportRecord(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<ExportResp>() {
+                @Override
+                public void onSuccess(ExportResp resp) {
+                    if (!TextUtils.isEmpty(email)) {
+                        mView.exportSuccess(email);
+                    } else {
+                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    }
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    if (TextUtils.equals("00120112037", e.getCode())) {
+                        mView.bindEmail();
+                    } else if (TextUtils.equals("00120112038", e.getCode())) {
+                        mView.exportFailure("当前没有可导出的数据");
+                    } else {
+                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    }
+                }
+            });
     }
+
 
     private void toQueryQuotationList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()

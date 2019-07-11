@@ -79,21 +79,21 @@ interface QuotationFragmentContract {
         /**
          * 导出成功
          *
-         * @param email 成功的邮箱地址
+         * @param email 邮箱地址
          */
         void exportSuccess(String email);
 
         /**
-         * 失败
+         * 导出失败
          *
-         * @param message 失败
+         * @param tip 失败提示
          */
-        void exportFailure(String message);
+        void exportFailure(String tip);
 
         /**
-         * 导出邮箱的时候未绑定邮箱提示
+         * 绑定邮箱
          */
-        void unbindEmail();
+        void bindEmail();
 
         /**
          * 当前Fragment位置搜索页面中
@@ -108,6 +108,13 @@ interface QuotationFragmentContract {
          * @return 搜索词
          */
         String getSearchParam();
+
+        /**
+         * 返回订单号
+         *
+         * @return 订单号
+         */
+        List<String> getBillNos();
     }
 
     interface IHomePresenter extends IPresenter<IHomeView> {

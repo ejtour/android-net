@@ -19,14 +19,26 @@ import java.util.Date;
 public class QuotationListAdapter extends BaseQuickAdapter<QuotationBean, BaseViewHolder> {
     private static final String YYYY_MM_DD = "yyyy/MM/dd";
     private static final String YYYY_MM_DD_2 = "yy / MM / dd";
+    private boolean mExport;
 
     QuotationListAdapter() {
         super(R.layout.list_item_agreement_price_quotation);
     }
 
+    void setExport(boolean export) {
+        this.mExport = export;
+    }
+
+    boolean isExportStatus() {
+        return mExport;
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, QuotationBean item) {
-        helper.setText(R.id.txt_billNo, "报价单号：" + getString(item.getBillNo()))
+        helper.addOnClickListener(R.id.img_select)
+            .addOnClickListener(R.id.ll_content)
+            .setGone(R.id.img_select, mExport)
+            .setText(R.id.txt_billNo, "报价单号：" + getString(item.getBillNo()))
             .setText(R.id.txt_purchaserName, "适用集团：" + getString(item.getPurchaserName()))
             .setText(R.id.txt_shopName, "适用门店：" + getString(item.getShopName()))
             .setText(R.id.txt_priceDate, "生效期限：" + getPriceDate(item.getPriceStartDate(), item.getPriceEndDate()))
@@ -48,6 +60,7 @@ public class QuotationListAdapter extends BaseQuickAdapter<QuotationBean, BaseVi
         } else {
             helper.setImageResource(R.id.img_logoUrl, 0);
         }
+        helper.getView(R.id.img_select).setSelected(item.isSelect());
     }
 
     private String getString(String str) {
