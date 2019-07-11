@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="设置"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_title"
+        android:layout_alignParentBottom="true"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/SettingStyle"
+                android:layout_marginTop="10dp"
+                android:text="帐号管理"/>
+
+            <TextView
+                style="@style/SettingStyle"
+                android:text="订单设置"/>
+
+            <TextView
+                style="@style/SettingStyle"
+                android:text="合作采购商设置"/>
+
+            <TextView
+                style="@style/SettingStyle"
+                android:text="价格比例设置"/>
+
+            <TextView
+                style="@style/SettingStyle"
+                android:text="税率设置"/>
+
+            <TextView
+                style="@style/SettingStyle"
+                android:text="提醒设置"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_clearData"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/base_bg_item_white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/txt_clearData_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="清除缓存"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+                <TextView
+                    android:id="@+id/txt_categoryName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/txt_clearData_title"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical|right"
+                    android:hint="0M"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"
+                    android:textColorHint="@color/color_aeaeae"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_version"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/base_bg_item_white"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/txt_version_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="版本信息"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+                <TextView
+                    android:id="@+id/txt_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/txt_version_title"
+                    android:background="@null"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical|right"
+                    android:hint="2.16.0"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"
+                    android:textColorHint="@color/color_aeaeae"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_logout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/bg_white_solid"
+                android:gravity="center"
+                android:text="退出登录"
+                android:textAppearance="@style/TextAppearance.City22.Middle"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</RelativeLayout>

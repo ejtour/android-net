@@ -8,6 +8,10 @@ package com.hll_sc_app.base.utils.router;
  */
 public class RouterConfig {
     /**
+     * 设置界面
+     */
+    public static final String SETTING = "/activity/setting";
+    /**
      * 登录
      */
     public static final String USER_LOGIN = "/activity/user/login";

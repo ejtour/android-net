@@ -77,6 +77,16 @@ public interface UserService {
     Observable<BaseResp<CategoryResp>> queryCategory(@Body BaseMapReq req);
 
     /**
+     * 退出登录
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101013")
+    Observable<BaseResp<Object>> logout(@Body BaseMapReq req);
+
+    /**
      * 图片上传
      *
      * @param file req
