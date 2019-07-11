@@ -149,8 +149,6 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_CHECK_DETAILS));
                 list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_CHECK_CATEGORY));
             }
-            list.add(new OptionsBean(R.drawable.ic_sort_option, OptionType.OPTION_SORT_CREATE));
-            list.add(new OptionsBean(R.drawable.ic_sort_option, OptionType.OPTION_SORT_DELIVER));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_CREATE));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_EXECUTE));
             if (mTabLayout.getCurrentTab() == 5) {
@@ -173,18 +171,6 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 case OptionType.OPTION_FILTER_EXECUTE:
                 case OptionType.OPTION_FILTER_SIGN:
                     showDatePicker(label);
-                    break;
-                case OptionType.OPTION_SORT_CREATE:
-                    if (mOrderParam.getFlag() != 0) {
-                        mOrderParam.setFlag(0);
-                        EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
-                    }
-                    break;
-                case OptionType.OPTION_SORT_DELIVER:
-                    if (mOrderParam.getFlag() != 1) {
-                        mOrderParam.setFlag(1);
-                        EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
-                    }
                     break;
                 default:
                     EventBus.getDefault().post(new ExportEvent(label));

@@ -38,7 +38,6 @@ public class OrderRejectPresenter implements IOrderRejectContract.IOrderRejectPr
         List<OrderInspectionReq.OrderInspectionItem> items = new ArrayList<>();
         for (OrderDetailBean bean : orderResp.getBillDetailList()) {
             OrderInspectionReq.OrderInspectionItem item = OrderInspectionReq.OrderInspectionItem.copyFromDetailList(bean);
-            item.setInspectionNum(0); // 拒收传 0
             items.add(item);
         }
         req.setList(items);

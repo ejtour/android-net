@@ -65,7 +65,6 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     private void getOrderList(boolean showLoading) {
         OrderParam param = mView.getOrderParam();
         Order.getOrderList(mPageNum,
-                param.getFlag(),
                 mView.getOrderStatus().getType(),
                 TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
                 param.getSearchShopID(),

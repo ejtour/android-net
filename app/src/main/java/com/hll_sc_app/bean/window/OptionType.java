@@ -12,8 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 @StringDef({OptionType.OPTION_EXPORT_ASSEMBLY, OptionType.OPTION_EXPORT_CHECK_CATEGORY,
     OptionType.OPTION_EXPORT_CHECK_DETAILS, OptionType.OPTION_EXPORT_ORDER,
     OptionType.OPTION_EXPORT_ORDER_DETAILS, OptionType.OPTION_EXPORT_OUT_CATEGORY,
-    OptionType.OPTION_EXPORT_OUT_DETAILS, OptionType.OPTION_SORT_CREATE,
-    OptionType.OPTION_SORT_DELIVER, OptionType.OPTION_FILTER_CREATE, OptionType.OPTION_EXPORT_OUT,
+    OptionType.OPTION_EXPORT_OUT_DETAILS,  OptionType.OPTION_FILTER_CREATE, OptionType.OPTION_EXPORT_OUT,
     OptionType.OPTION_FILTER_EXECUTE, OptionType.OPTION_FILTER_SIGN, OptionType.OPTION_GOODS_ADD,
     OptionType.OPTION_GOODS_IMPORT, OptionType.OPTION_GOODS_TOP, OptionType.OPTION_GOODS_RELATION,
     OptionType.OPTION_GOODS_WARN, OptionType.OPTION_GOODS_EXPORT, OptionType.OPTION_EXPORT_RECORD,
@@ -28,8 +27,6 @@ public @interface OptionType {
     String OPTION_EXPORT_ORDER_DETAILS = "导出订单明细";
     String OPTION_EXPORT_CHECK_DETAILS = "导出明细验货单";
     String OPTION_EXPORT_CHECK_CATEGORY = "导出分类验货单";
-    String OPTION_SORT_CREATE = "按下单时间排序";
-    String OPTION_SORT_DELIVER = "按送货时间排序";
     String OPTION_FILTER_CREATE = "按下单时间筛选";
     String OPTION_FILTER_EXECUTE = "按到货时间筛选";
     String OPTION_FILTER_SIGN = "按签收时间筛选";

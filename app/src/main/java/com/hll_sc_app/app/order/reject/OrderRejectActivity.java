@@ -23,6 +23,8 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.detail.OrderDepositBean;
+import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.ImageUploadGroup;
@@ -78,7 +80,8 @@ public class OrderRejectActivity extends BaseLoadActivity implements IOrderRejec
     }
 
     private void initView() {
-        OrderDetailAdapter adapter = new OrderDetailAdapter(mResp.getBillDetailList(), "退款");
+        preProcessOrder();
+        OrderDetailAdapter adapter = new OrderDetailAdapter(mResp.getBillDetailList(), OrderDetailAdapter.REJECT_TEXT);
         mListView.setAdapter(adapter);
         View header = LayoutInflater.from(this).inflate(R.layout.view_order_reject_header, mListView, false);
         header.findViewById(R.id.orh_reject_option).setOnClickListener(this::showRejectDialog);
@@ -88,7 +91,21 @@ public class OrderRejectActivity extends BaseLoadActivity implements IOrderRejec
         mRejectExplainEdit = header.findViewById(R.id.orh_edit_reject_desc);
         mUploadImgGroup = header.findViewById(R.id.orh_upload_group);
         mUploadImgGroup.register(this);
-        ((TextView) footer.findViewById(R.id.orf_money)).setText(String.format("¥%s", CommonUtils.formatMoney(mResp.getPayType() == 3 ? mResp.getTotalAmount() : 0)));
+        // 拒收时金额数量统一显示为0
+        ((TextView) footer.findViewById(R.id.orf_money)).setText(String.format("¥%s", CommonUtils.formatMoney(0)));
+    }
+
+    /**
+     * 拒收数量传0
+     */
+    private void preProcessOrder() {
+        for (OrderDetailBean bean : mResp.getBillDetailList()) {
+            bean.setInspectionNum(0);
+            if (CommonUtils.isEmpty(bean.getDepositList())) continue;
+            for (OrderDepositBean depositBean : bean.getDepositList()) {
+                depositBean.setProductNum(0);
+            }
+        }
     }
 
     @OnClick(R.id.aor_submit)

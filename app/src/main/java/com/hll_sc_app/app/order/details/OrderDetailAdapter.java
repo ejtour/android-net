@@ -25,12 +25,14 @@ import java.util.List;
  */
 
 public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseViewHolder> {
+    private static final String DETAIL_TEXT = "小计";
+    public static final String REJECT_TEXT = "收款";
 
     private boolean mWareHouse;
     private String mLabel;
 
     OrderDetailAdapter() {
-        this(null, "小计");
+        this(null, DETAIL_TEXT);
     }
 
     public OrderDetailAdapter(List<OrderDetailBean> data, String label) {
@@ -48,7 +50,8 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, OrderDetailBean item) {
-        helper.itemView.setBackgroundResource(mData.indexOf(item) % 2 == 0 ? android.R.color.white : R.color.color_f7f8fa);
+        helper.itemView.setBackgroundResource(!isDetailList() || mData.indexOf(item) % 2 == 0
+                ? android.R.color.white : R.color.color_f7f8fa);
         ((GlideImageView) helper.getView(R.id.iod_image)).setImageURL(item.getImgUrl());
         // 押金商品
         List<OrderDepositBean> depositList = item.getDepositList();
@@ -62,7 +65,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
         String deliveryText = builder.toString();
 
         builder.delete(0, deliveryText.length()).append("签收：");
-        if (item.getSubBillStatus() == 4 || item.getSubBillStatus() == 6 || item.getSubBillStatus() == 8)
+        if (!isDetailList() || item.getSubBillStatus() == 4 || item.getSubBillStatus() == 6 || item.getSubBillStatus() == 8)
             builder.append(CommonUtils.formatNum(item.getInspectionNum())).append(item.getInspectionUnit());
         else builder.append("— —");
         String confirmText = builder.toString();
@@ -78,7 +81,8 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
                 .setText(R.id.iod_delivery_num, processNum(deliveryText, item.getAdjustmentNum() != item.getProductNum())) // 预发货/发货数量
                 .setText(R.id.iod_confirm_num, processNum(confirmText, item.getInspectionNum() != item.getProductNum())) // 签收数量
                 .setText(R.id.iod_sale_unit_spec, processPrice(unitPrice)) // 单价
-                .setText(R.id.iod_amount, processPrice(mLabel + "：¥" + CommonUtils.formatMoney(item.getInspectionAmount()))); // 小计
+                .setText(R.id.iod_amount, processPrice(mLabel + "：¥" + CommonUtils.formatMoney(isDetailList()
+                        ? item.getInspectionAmount() : 0))); // 小计，拒收金额显示 0
     }
 
     private SpannableString processPrice(String source) {
@@ -92,8 +96,7 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
      * 数目与订货数不一致时强调
      */
     private CharSequence processNum(String source, boolean numDiff) {
-        boolean isNum = !source.endsWith("—");
-        if (!isNum) {
+        if (source.endsWith("—") || !isDetailList()) {
             return source;
         }
         SpannableString delivery = new SpannableString(source);
@@ -101,6 +104,10 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
                         ? ColorStr.COLOR_5695D2 : ColorStr.COLOR_666666)),
                 source.indexOf("：") + 1, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return delivery;
+    }
+
+    private boolean isDetailList() {
+        return DETAIL_TEXT.equals(mLabel);
     }
 
     public void setNewData(List<OrderDetailBean> data, boolean wareHouse) {
