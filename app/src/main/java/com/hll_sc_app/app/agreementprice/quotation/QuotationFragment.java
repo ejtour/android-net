@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.BaseAgreementPriceFragment;
+import com.hll_sc_app.app.agreementprice.search.AgreementPriceSearchActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -126,46 +127,14 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
 
     @Override
     protected void initData() {
-        mPresenter.start();
+        if (!isSearchActivity()) {
+            mPresenter.start();
+        }
     }
 
-    private void initView() {
-        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreQuotationList();
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryQuotationList(false);
-            }
-        });
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
-            R.color.base_color_divider), UIUtils.dip2px(10)));
-        mAdapter = new QuotationListAdapter();
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            QuotationBean bean = (QuotationBean) adapter.getItem(position);
-            if (bean != null) {
-                if (mAdapter.isExportStatus()) {
-                    bean.setSelect(!bean.isSelect());
-                    adapter.notifyDataSetChanged();
-                    showExportCount();
-                } else {
-                    RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_DETAIL, bean);
-                }
-            }
-        });
-        mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
-        mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
-            setForceLoad(true);
-            lazyLoad();
-        }).create();
-        mRecyclerView.setAdapter(mAdapter);
-        if (isSearchActivity()) {
-            mLlFilter.setVisibility(View.GONE);
-        }
+    @Override
+    public boolean isSearchActivity() {
+        return getActivity() instanceof AgreementPriceSearchActivity;
     }
 
     /**
@@ -369,14 +338,46 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         return priceEndDate;
     }
 
-    @Override
-    public boolean isSearchActivity() {
-        return false;
-    }
+    private void initView() {
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryMoreQuotationList();
+            }
 
-    @Override
-    public String getSearchParam() {
-        return null;
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryQuotationList(false);
+            }
+        });
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
+            R.color.base_color_divider), UIUtils.dip2px(10)));
+        mAdapter = new QuotationListAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            QuotationBean bean = (QuotationBean) adapter.getItem(position);
+            if (bean != null) {
+                if (mAdapter.isExportStatus()) {
+                    bean.setSelect(!bean.isSelect());
+                    adapter.notifyDataSetChanged();
+                    showExportCount();
+                } else {
+                    RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_DETAIL, bean);
+                }
+            }
+        });
+        mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
+        mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
+            setForceLoad(true);
+            lazyLoad();
+        }).create();
+        mRecyclerView.setAdapter(mAdapter);
+        if (isSearchActivity()) {
+            mEmptyView.setTips("输入报价单号、采购商名称进行搜索");
+            mAdapter.setEmptyView(mEmptyView);
+            mLlFilter.setVisibility(View.GONE);
+            mImgQuotationAdd.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -391,10 +392,6 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
             }
         }
         return listBillNos;
-    }
-
-    public void toSearch() {
-        mPresenter.queryQuotationList(true);
     }
 
     @OnClick({R.id.ll_purchaser, R.id.ll_date, R.id.ll_effectDate, R.id.img_quotation_add, R.id.img_select_all,
@@ -457,6 +454,14 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         mAdapter.notifyDataSetChanged();
         mRlBottom.setVisibility(View.VISIBLE);
         mImgQuotationAdd.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void toSearch() {
+        if (!isFragmentVisible()) {
+            return;
+        }
+        mPresenter.queryQuotationList(true);
     }
 
     @Override

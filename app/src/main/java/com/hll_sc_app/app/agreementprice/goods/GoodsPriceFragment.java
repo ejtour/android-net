@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.BaseAgreementPriceFragment;
 import com.hll_sc_app.app.agreementprice.quotation.PurchaserSelectWindow;
+import com.hll_sc_app.app.agreementprice.search.AgreementPriceSearchActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -112,29 +113,14 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
 
     @Override
     protected void initData() {
-        mPresenter.start();
+        if (!isSearchActivity()) {
+            mPresenter.start();
+        }
     }
 
-    private void initView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
-            R.color.base_color_divider), UIUtils.dip2px(5)));
-        mAdapter = new GoodsPriceListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            QuotationDetailBean bean = (QuotationDetailBean) adapter.getItem(position);
-            if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_GOODS_DETAIL, bean);
-            }
-        });
-        mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
-        mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
-            setForceLoad(true);
-            lazyLoad();
-        }).create();
-        mRecyclerView.setAdapter(mAdapter);
-        if (isSearchActivity()) {
-            mLlFilter.setVisibility(View.GONE);
-        }
+    @Override
+    public boolean isSearchActivity() {
+        return getActivity() instanceof AgreementPriceSearchActivity;
     }
 
 
@@ -270,18 +256,28 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
         return null;
     }
 
-    @Override
-    public boolean isSearchActivity() {
-        return false;
-    }
-
-    @Override
-    public String getSearchParam() {
-        return null;
-    }
-
-    public void toSearch() {
-        mPresenter.queryGoodsPriceList(true);
+    private void initView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
+            R.color.base_color_divider), UIUtils.dip2px(5)));
+        mAdapter = new GoodsPriceListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            QuotationDetailBean bean = (QuotationDetailBean) adapter.getItem(position);
+            if (bean != null) {
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_GOODS_DETAIL, bean);
+            }
+        });
+        mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
+        mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
+            setForceLoad(true);
+            lazyLoad();
+        }).create();
+        mRecyclerView.setAdapter(mAdapter);
+        if (isSearchActivity()) {
+            mEmptyView.setTips("输入商品名称、采购商名称进行搜索");
+            mAdapter.setEmptyView(mEmptyView);
+            mLlFilter.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.ll_purchaser, R.id.ll_category, R.id.ll_effectDate})
@@ -314,6 +310,14 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
             return;
         }
         mPresenter.exportQuotation(null);
+    }
+
+    @Override
+    public void toSearch() {
+        if (!isFragmentVisible()) {
+            return;
+        }
+        mPresenter.queryGoodsPriceList(true);
     }
 
     public class GoodsPriceListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {

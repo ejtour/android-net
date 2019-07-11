@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class AgreementPriceActivity extends BaseLoadActivity {
     ViewPager mViewPager;
     @BindView(R.id.img_add)
     ImageView mImgAdd;
+    @BindView(R.id.searchView)
+    SearchView mSearchView;
     private PagerAdapter mAdapter;
     private ContextOptionsWindow mOptionsWindow;
 
@@ -59,6 +62,17 @@ public class AgreementPriceActivity extends BaseLoadActivity {
         mAdapter = new PagerAdapter(getSupportFragmentManager(), list);
         mViewPager.setAdapter(mAdapter);
         mTlTitle.setViewPager(mViewPager, new String[]{"报价单", "商品"});
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_SEARCH, mViewPager.getCurrentItem());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                // no-op
+            }
+        });
     }
 
     @OnClick({R.id.img_back, R.id.img_add})
@@ -93,11 +107,10 @@ public class AgreementPriceActivity extends BaseLoadActivity {
         mOptionsWindow.showAsDropDownFix(mImgAdd, Gravity.END);
     }
 
-
     public static class PagerAdapter extends FragmentPagerAdapter {
         private List<BaseAgreementPriceFragment> mFragmentList;
 
-        PagerAdapter(FragmentManager fm, List<BaseAgreementPriceFragment> fragmentList) {
+        public PagerAdapter(FragmentManager fm, List<BaseAgreementPriceFragment> fragmentList) {
             super(fm);
             this.mFragmentList = fragmentList;
         }

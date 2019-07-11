@@ -187,6 +187,7 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
         if (!TextUtils.isEmpty(groupName)) {
             if (groupName.length() < 3 || patternGroupName.matcher(groupName).matches()) {
                 mView.showToast("公司名称仅支持3-100个不含特殊符号的字符");
+                return false;
             }
         }
         return true;
