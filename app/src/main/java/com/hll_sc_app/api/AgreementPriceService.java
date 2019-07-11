@@ -7,11 +7,14 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.agreementprice.quotation.GroupInfoResp;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateResp;
 import com.hll_sc_app.bean.agreementprice.quotation.WarehouseDetailResp;
+import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.export.GoodsPriceExportReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 
 import java.util.List;
@@ -69,6 +72,26 @@ public interface AgreementPriceService {
     @POST(HttpConfig.URL)
     @Headers("pv:100025")
     Observable<BaseResp<Object>> disableQuotation(@Body BaseMapReq req);
+
+    /**
+     * 查询查询配送价格列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100026")
+    Observable<BaseResp<List<QuotationDetailBean>>> queryGoodsPriceList(@Body BaseMapReq req);
+
+    /**
+     * 查询查询配送价格列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100088")
+    Observable<BaseResp<ExportResp>> exportGoodsPriceList(@Body BaseReq<GoodsPriceExportReq> req);
 
     /**
      * 搜索合作采购商

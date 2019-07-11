@@ -55,7 +55,7 @@ public class AgreementPriceActivity extends BaseLoadActivity {
         ButterKnife.bind(this);
         ArrayList<BaseAgreementPriceFragment> list = new ArrayList<>(2);
         list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION));
-        list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION));
+        list.add((BaseAgreementPriceFragment) RouterUtil.getFragment(RouterConfig.MINE_AGREEMENT_PRICE_GOODS));
         mAdapter = new PagerAdapter(getSupportFragmentManager(), list);
         mViewPager.setAdapter(mAdapter);
         mTlTitle.setViewPager(mViewPager, new String[]{"报价单", "商品"});

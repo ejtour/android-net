@@ -125,6 +125,7 @@ public class GoodsHomePresenter implements GoodsHomeContract.IGoodsHomePresenter
         }
         ExportReq req = new ExportReq();
         req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
+        req.setEmail(email);
         req.setTypeCode("skuShelfFlow");
         req.setUserID(userBean.getEmployeeID());
         ExportReq.ParamsBean paramsBean = new ExportReq.ParamsBean();

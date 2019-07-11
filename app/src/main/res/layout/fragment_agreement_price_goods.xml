@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg">
+
+    <LinearLayout
+        android:id="@+id/rl_filter"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar">
+
+        <RelativeLayout
+            android:id="@+id/ll_purchaser"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_selector_close"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/txt_purchaser"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="采购商"
+                android:textColor="@drawable/base_text_color_window_check"
+                android:textSize="@dimen/text_small_size"/>
+
+            <ImageView
+                android:id="@+id/img_purchaser"
+                android:layout_width="6dp"
+                android:layout_height="4dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txt_purchaser"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_select_window_arrow"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ddd"/>
+
+        <RelativeLayout
+            android:id="@+id/ll_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_selector_close"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="报价日期"
+                android:textColor="@drawable/base_text_color_window_check"
+                android:textSize="@dimen/text_small_size"/>
+
+            <ImageView
+                android:id="@+id/img_date"
+                android:layout_width="6dp"
+                android:layout_height="4dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txt_date"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_select_window_arrow"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center_vertical"
+            android:background="#ddd"/>
+
+        <RelativeLayout
+            android:id="@+id/ll_effectDate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_selector_close"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/txt_effectDate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="生效期限"
+                android:textColor="@drawable/base_text_color_window_check"
+                android:textSize="@dimen/text_small_size"/>
+
+            <ImageView
+                android:id="@+id/img_effectDate"
+                android:layout_width="6dp"
+                android:layout_height="4dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txt_effectDate"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_select_window_arrow"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_filter"
+        android:clipToPadding="false"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"/>
+
+</RelativeLayout>
+
+
+
+
+
+
+

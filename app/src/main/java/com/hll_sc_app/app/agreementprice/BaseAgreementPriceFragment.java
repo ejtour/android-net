@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.agreementprice;
 
+import com.hll_sc_app.app.agreementprice.goods.GoodsPriceFragment;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationFragment;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.utils.Utils;
@@ -28,6 +29,8 @@ public abstract class BaseAgreementPriceFragment extends BaseLazyFragment {
         Utils.bindEmail(requireActivity(), email -> {
             if (BaseAgreementPriceFragment.this instanceof QuotationFragment) {
                 ((QuotationFragment) BaseAgreementPriceFragment.this).getPresenter().exportQuotation(email);
+            } else if (BaseAgreementPriceFragment.this instanceof GoodsPriceFragment) {
+                ((GoodsPriceFragment) BaseAgreementPriceFragment.this).getPresenter().exportQuotation(email);
             }
         });
     }

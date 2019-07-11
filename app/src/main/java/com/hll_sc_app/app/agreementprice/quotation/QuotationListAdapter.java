@@ -35,7 +35,8 @@ public class QuotationListAdapter extends BaseQuickAdapter<QuotationBean, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, QuotationBean item) {
-        helper.addOnClickListener(R.id.img_select)
+        helper
+            .addOnClickListener(R.id.img_select)
             .addOnClickListener(R.id.ll_content)
             .setGone(R.id.img_select, mExport)
             .setText(R.id.txt_billNo, "报价单号：" + getString(item.getBillNo()))
@@ -44,23 +45,9 @@ public class QuotationListAdapter extends BaseQuickAdapter<QuotationBean, BaseVi
             .setText(R.id.txt_priceDate, "生效期限：" + getPriceDate(item.getPriceStartDate(), item.getPriceEndDate()))
             .setText(R.id.txt_billCreateBy, "创建人：" + getString(item.getBillCreateBy()))
             .setText(R.id.txt_billDate, CalendarUtils.format(CalendarUtils.parse(item.getBillDate(),
-                CalendarUtils.FORMAT_SERVER_DATE), YYYY_MM_DD_2));
-        if (item.getBillStatus() == QuotationBean.BILL_STATUS_AUDIT) {
-            helper.setImageResource(R.id.img_logoUrl, R.drawable.ic_price_manager_audit);
-        } else if (item.getBillStatus() == QuotationBean.BILL_STATUS_ABANDON) {
-            helper.setImageResource(R.id.img_logoUrl, R.drawable.ic_price_manager_abandon);
-        } else if (item.getBillStatus() == QuotationBean.BILL_STATUS_EXPIRE) {
-            helper.setImageResource(R.id.img_logoUrl, R.drawable.ic_price_manager_expire);
-        } else if (item.getBillStatus() == QuotationBean.BILL_STATUS_NO_AUDIT) {
-            helper.setImageResource(R.id.img_logoUrl, R.drawable.ic_price_manager_no_audit);
-        } else if (item.getBillStatus() == QuotationBean.BILL_STATUS_REJECT) {
-            helper.setImageResource(R.id.img_logoUrl, R.drawable.ic_price_manager_reject);
-        } else if (item.getBillStatus() == QuotationBean.BILL_STATUS_CANCEL) {
-            helper.setImageResource(R.id.img_logoUrl, R.drawable.ic_price_manager_cancel);
-        } else {
-            helper.setImageResource(R.id.img_logoUrl, 0);
-        }
-        helper.getView(R.id.img_select).setSelected(item.isSelect());
+                CalendarUtils.FORMAT_SERVER_DATE), YYYY_MM_DD_2))
+            .setImageResource(R.id.img_logoUrl, getImageResource(item.getBillStatus()))
+            .getView(R.id.img_select).setSelected(item.isSelect());
     }
 
     private String getString(String str) {
@@ -92,5 +79,23 @@ public class QuotationListAdapter extends BaseQuickAdapter<QuotationBean, BaseVi
         } else {
             return String.format("%s - %s", startStr, endStr);
         }
+    }
+
+    private int getImageResource(int billStatus) {
+        int resource = 0;
+        if (billStatus == QuotationBean.BILL_STATUS_AUDIT) {
+            resource = R.drawable.ic_price_manager_audit;
+        } else if (billStatus == QuotationBean.BILL_STATUS_ABANDON) {
+            resource = R.drawable.ic_price_manager_abandon;
+        } else if (billStatus == QuotationBean.BILL_STATUS_EXPIRE) {
+            resource = R.drawable.ic_price_manager_expire;
+        } else if (billStatus == QuotationBean.BILL_STATUS_NO_AUDIT) {
+            resource = R.drawable.ic_price_manager_no_audit;
+        } else if (billStatus == QuotationBean.BILL_STATUS_REJECT) {
+            resource = R.drawable.ic_price_manager_reject;
+        } else if (billStatus == QuotationBean.BILL_STATUS_CANCEL) {
+            resource = R.drawable.ic_price_manager_cancel;
+        }
+        return resource;
     }
 }

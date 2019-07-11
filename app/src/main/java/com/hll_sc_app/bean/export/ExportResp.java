@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ExportResp {
-    @SerializedName("Email")
+    @SerializedName(value = "Email", alternate = {"groupMail"})
     private String mockEmail;
     private String email;
 
@@ -22,11 +22,11 @@ public class ExportResp {
         this.email = email;
     }
 
-    public void setMockEmail(String mockEmail) {
-        this.mockEmail = mockEmail;
-    }
-
     public String getMockEmail() {
         return mockEmail;
+    }
+
+    public void setMockEmail(String mockEmail) {
+        this.mockEmail = mockEmail;
     }
 }
