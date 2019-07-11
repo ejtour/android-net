@@ -53,6 +53,8 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
     public void queryGoodsPriceList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("groupID", UserConfig.getGroupID())
+            .put("startDate", mView.getPriceStartDate())
+            .put("endDate", mView.getPriceEndDate())
             .create();
         AgreementPriceService.INSTANCE.queryGoodsPriceList(req)
             .compose(ApiScheduler.getObservableScheduler())
