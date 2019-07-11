@@ -56,7 +56,6 @@ public class Order {
      * 获取订单列表
      *
      * @param pageNum          页码
-     * @param flag             排序，0下单排序，1到货排序
      * @param subBillStatus    订单状态
      * @param shopID           搜索门店ID
      * @param searchWords      搜索词
@@ -69,7 +68,6 @@ public class Order {
      * @param deliverType      发货类型 1 自有物流配送 2 自提 3 第三方配送
      */
     public static void getOrderList(int pageNum,
-                                    int flag,
                                     int subBillStatus,
                                     String searchWords,
                                     String shopID,
@@ -92,7 +90,7 @@ public class Order {
                         .put("groupID", user.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
-                        .put("flag", String.valueOf(flag))
+                        .put("flag", "0")
                         .put("subBillStatus", String.valueOf(subBillStatus))
                         .put("subBillCreateTimeStart", createTimeStart)
                         .put("subBillCreateTimeEnd", createTimeEnd)

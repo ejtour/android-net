@@ -11,7 +11,6 @@ import java.util.Date;
  */
 
 public class OrderParam {
-    private int flag;
     private OrderSearchBean searchBean;
     private long createStart;
     private long createEnd;
@@ -19,14 +18,6 @@ public class OrderParam {
     private long executeEnd;
     private long signStart;
     private long signEnd;
-
-    public int getFlag() {
-        return flag;
-    }
-
-    public void setFlag(int flag) {
-        this.flag = flag;
-    }
 
     public void setSearchBean(OrderSearchBean searchBean) {
         this.searchBean = searchBean;
