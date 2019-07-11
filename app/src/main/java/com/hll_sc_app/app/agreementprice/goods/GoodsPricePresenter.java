@@ -3,6 +3,7 @@ package com.hll_sc_app.app.agreementprice.goods;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.AgreementPriceService;
+import com.hll_sc_app.app.agreementprice.quotation.QuotationFragmentPresenter;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -22,8 +23,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -52,47 +51,6 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
         this.mView = CommonUtils.checkNotNull(view);
     }
 
-    public static Observable<List<PurchaserBean>> getCooperationPurchaserObservable(String searchParam) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("searchParam", searchParam)
-            .put("groupID", UserConfig.getGroupID())
-            .put("actionType", "quotation")
-            .create();
-        return AgreementPriceService.INSTANCE.queryCooperationPurchaserList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>());
-    }
-
-    @Override
-    public void queryCooperationPurchaserList() {
-        if (!CommonUtils.isEmpty(mListPurchaser)) {
-            mView.showPurchaserWindow(mListPurchaser);
-            return;
-        }
-        getCooperationPurchaserObservable(null)
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<PurchaserBean>>() {
-                @Override
-                public void onSuccess(List<PurchaserBean> result) {
-                    mListPurchaser = result;
-                    PurchaserBean bean = new PurchaserBean();
-                    bean.setPurchaserID("");
-                    bean.setPurchaserName("全部");
-                    mListPurchaser.add(0, bean);
-                    mView.showPurchaserWindow(mListPurchaser);
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    if (mView.isActive()) {
-                        mView.showToast(e.getMessage());
-                    }
-                }
-            });
-    }
-
     @Override
     public void queryGoodsPriceList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
@@ -100,6 +58,7 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
             .put("startDate", mView.getPriceStartDate())
             .put("endDate", mView.getPriceEndDate())
             .put("categoryID", mView.getCategoryId())
+            .put("shopIDs", mView.getShopIds())
             .create();
         AgreementPriceService.INSTANCE.queryGoodsPriceList(req)
             .compose(ApiScheduler.getObservableScheduler())
@@ -121,50 +80,30 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
     }
 
     @Override
-    public void exportQuotation(String email) {
-        UserBean userBean = GreenDaoUtils.getUser();
-        if (userBean == null) {
+    public void queryCooperationPurchaserList() {
+        if (!CommonUtils.isEmpty(mListPurchaser)) {
+            mView.showPurchaserWindow(mListPurchaser);
             return;
         }
-        GoodsPriceExportReq req = new GoodsPriceExportReq();
-        req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
-        req.setEmail(email);
-        req.setGroupID(UserConfig.getGroupID());
-        GoodsPriceExportReq.SearchParamsBean bean = new GoodsPriceExportReq.SearchParamsBean();
-        bean.setCategoryID(mView.getCategoryId());
-        bean.setEndDate(mView.getEndDate());
-        bean.setStartDate(mView.getStartDate());
-        bean.setPriceStartDate(mView.getPriceStartDate());
-        bean.setPriceEndDate(mView.getPriceEndDate());
-        bean.setPurchaserID(mView.getPurchaserId());
-        bean.setShopIDs(mView.getShopIds());
-        req.setSearchParams(bean);
-        BaseReq<GoodsPriceExportReq> baseReq = new BaseReq<>();
-        baseReq.setData(req);
-        AgreementPriceService.INSTANCE.exportGoodsPriceList(baseReq)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
+        QuotationFragmentPresenter.getCooperationPurchaserObservable(null)
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<ExportResp>() {
+            .subscribe(new BaseCallback<List<PurchaserBean>>() {
                 @Override
-                public void onSuccess(ExportResp resp) {
-                    if (!TextUtils.isEmpty(resp.getEmail())) {
-                        mView.exportSuccess(resp.getEmail());
-                    } else {
-                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                    }
+                public void onSuccess(List<PurchaserBean> result) {
+                    mListPurchaser = result;
+                    PurchaserBean bean = new PurchaserBean();
+                    bean.setPurchaserID("");
+                    bean.setPurchaserName("全部");
+                    mListPurchaser.add(0, bean);
+                    mView.showPurchaserWindow(mListPurchaser);
                 }
 
                 @Override
                 public void onFailure(UseCaseException e) {
-                    if (TextUtils.equals("00120112037", e.getCode())) {
-                        mView.bindEmail();
-                    } else if (TextUtils.equals("00120112038", e.getCode())) {
-                        mView.exportFailure("当前没有可导出的数据");
-                    } else {
-                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    if (mView.isActive()) {
+                        mView.showToast(e.getMessage());
                     }
                 }
             });
@@ -190,6 +129,54 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
                 @Override
                 public void onFailure(UseCaseException e) {
                     mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void exportQuotation(String email) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        GoodsPriceExportReq req = new GoodsPriceExportReq();
+        req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
+        req.setEmail(email);
+        req.setGroupID(UserConfig.getGroupID());
+        GoodsPriceExportReq.SearchParamsBean bean = new GoodsPriceExportReq.SearchParamsBean();
+        bean.setShopIDs(mView.getShopIds());
+        bean.setCategoryID(mView.getCategoryId());
+        bean.setPriceStartDate(mView.getPriceStartDate());
+        bean.setPriceEndDate(mView.getPriceEndDate());
+        req.setSearchParams(bean);
+        BaseReq<GoodsPriceExportReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        AgreementPriceService.INSTANCE
+            .exportGoodsPriceList(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<ExportResp>() {
+                @Override
+                public void onSuccess(ExportResp resp) {
+                    if (!TextUtils.isEmpty(resp.getEmail())) {
+                        mView.exportSuccess(resp.getEmail());
+                    } else {
+                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    }
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    if (TextUtils.equals("00120112037", e.getCode())) {
+                        mView.bindEmail();
+                    } else if (TextUtils.equals("00120112038", e.getCode())) {
+                        mView.exportFailure("当前没有可导出的数据");
+                    } else {
+                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    }
                 }
             });
     }

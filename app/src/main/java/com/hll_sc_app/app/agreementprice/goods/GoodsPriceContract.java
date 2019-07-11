@@ -44,27 +44,6 @@ interface GoodsPriceContract {
         void showDateEffectWindow();
 
         /**
-         * 获取筛选供应商ID
-         *
-         * @return 分类ID
-         */
-        String getPurchaserId();
-
-        /**
-         * 获取报价开始时间
-         *
-         * @return 报价开始时间
-         */
-        String getStartDate();
-
-        /**
-         * 获取报价结束时间
-         *
-         * @return 报价结束时间
-         */
-        String getEndDate();
-
-        /**
          * 获取生效开始日期
          *
          * @return 生效开始日期

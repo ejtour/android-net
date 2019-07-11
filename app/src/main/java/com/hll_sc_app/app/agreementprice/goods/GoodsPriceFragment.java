@@ -239,33 +239,6 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
     }
 
     @Override
-    public String getPurchaserId() {
-        String purchaserId = null;
-        if (mTxtPurchaser != null && mTxtPurchaser.getTag() != null) {
-            purchaserId = (String) mTxtPurchaser.getTag();
-        }
-        return purchaserId;
-    }
-
-    @Override
-    public String getStartDate() {
-        String startDate = null;
-        if (mTxtCategory != null && mTxtCategory.getTag(R.id.date_start) != null) {
-            startDate = (String) mTxtCategory.getTag(R.id.date_start);
-        }
-        return startDate;
-    }
-
-    @Override
-    public String getEndDate() {
-        String endDate = null;
-        if (mTxtCategory != null && mTxtCategory.getTag(R.id.date_end) != null) {
-            endDate = (String) mTxtCategory.getTag(R.id.date_end);
-        }
-        return endDate;
-    }
-
-    @Override
     public String getPriceStartDate() {
         String priceStartDate = null;
         if (mTxtEffectDate != null && mTxtEffectDate.getTag(R.id.date_start) != null) {
