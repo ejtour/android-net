@@ -223,7 +223,9 @@
         <activity
             android:name=".app.aftersales.negotiationhistory.NegotiationHistoryActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".app.aftersales.detail.AfterSalesDetailActivity"/>
+
+        <activity android:name=".app.aftersales.detail.AfterSalesDetailActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

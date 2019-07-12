@@ -1,19 +1,17 @@
 package com.hll_sc_app.widget.aftersales;
 
 import android.app.Activity;
-import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.widget.BaseShadowPopupWindow;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
@@ -31,7 +29,8 @@ import butterknife.OnTextChanged;
  * @since 2019/5/22
  */
 
-public class AfterSalesAuditWindow extends BaseShadowPopupWindow implements PopupWindow.OnDismissListener {
+public class AfterSalesAuditDialog extends BaseDialog {
+    private final Activity mActivity;
     @BindView(R.id.asa_select_method)
     TextView mSelectMethod;
     @BindView(R.id.asa_remark)
@@ -46,31 +45,46 @@ public class AfterSalesAuditWindow extends BaseShadowPopupWindow implements Popu
         void callback(String payType, String remark);
     }
 
-    public AfterSalesAuditWindow canModify(boolean modify) {
+    public AfterSalesAuditDialog canModify(boolean modify) {
         mSelectMethod.setVisibility(modify ? View.VISIBLE : View.GONE);
         return this;
     }
 
-    public AfterSalesAuditWindow setCallback(AuditCallback callback) {
+    public AfterSalesAuditDialog setCallback(AuditCallback callback) {
         mCallback = callback;
         return this;
     }
 
-    private AfterSalesAuditWindow(@NonNull Activity context) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initWindow();
+    }
+
+    private void initWindow() {
+        if (getWindow() == null) {
+            return;
+        }
+        getWindow().setBackgroundDrawableResource(R.drawable.bg_white_radius_5_solid);
+        getWindow().getAttributes().width = UIUtils.getScreenWidth(getContext()) - UIUtils.dip2px(110);
+        setCancelable(false);
+    }
+
+    private AfterSalesAuditDialog(@NonNull Activity context) {
         super(context);
-        View view = View.inflate(context, R.layout.window_after_sales_audit, null);
+        mActivity = context;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater) {
+        View view = View.inflate(getContext(), R.layout.window_after_sales_audit, null);
         ButterKnife.bind(this, view);
-        setContentView(view);
-        setWidth(UIUtils.getScreenWidth(context) - UIUtils.dip2px(110));
-        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setBackgroundDrawable(new ColorDrawable());
-        setFocusable(true);
+        return view;
     }
 
-    public static AfterSalesAuditWindow create(Activity context) {
-        return new AfterSalesAuditWindow(context);
+    public static AfterSalesAuditDialog create(Activity context) {
+        return new AfterSalesAuditDialog(context);
     }
-
 
     @OnClick(R.id.asa_select_method)
     public void select() {
@@ -86,7 +100,7 @@ public class AfterSalesAuditWindow extends BaseShadowPopupWindow implements Popu
                         mSelectMethod.setTag(nameValue.getValue());
                     })
                     .create();
-            mDialog.setOnDismissListener(dialog -> showAtLocation(mActivity.getWindow().getDecorView(), Gravity.CENTER, 0, 0));
+            mDialog.setOnDismissListener(dialog -> show());
         }
         mDialog.show();
     }
@@ -105,7 +119,7 @@ public class AfterSalesAuditWindow extends BaseShadowPopupWindow implements Popu
                 }
                 dismiss();
             } else {
-                ToastUtils.showShort(mActivity, "请选择退款方式");
+                ToastUtils.showShort(getContext(), "请选择退款方式");
             }
         } else {
             if (mCallback != null) {
@@ -118,10 +132,5 @@ public class AfterSalesAuditWindow extends BaseShadowPopupWindow implements Popu
     @OnTextChanged(R.id.asa_remark)
     public void textChanged(CharSequence charSequence) {
         mRemainLength.setText(String.valueOf(TextUtils.isEmpty(charSequence) ? LIMIT : LIMIT - charSequence.length()));
-    }
-
-    @Override
-    public void onDismiss() {
-        showAtLocation(mActivity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
 }

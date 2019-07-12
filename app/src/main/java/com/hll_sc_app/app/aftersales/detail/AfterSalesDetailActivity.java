@@ -26,7 +26,7 @@ import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.aftersales.AfterSalesActionBar;
-import com.hll_sc_app.widget.aftersales.AfterSalesAuditWindow;
+import com.hll_sc_app.widget.aftersales.AfterSalesAuditDialog;
 import com.hll_sc_app.widget.aftersales.AfterSalesDetailFooter;
 import com.hll_sc_app.widget.aftersales.AfterSalesDetailHeader;
 import com.hll_sc_app.widget.aftersales.ModifyUnitPriceDialog;
@@ -231,13 +231,13 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
     @Override
     public void actionCustomerService() {
-        AfterSalesAuditWindow.create(this)
+        AfterSalesAuditDialog.create(this)
                 .canModify(mBean.canModify())
                 .setCallback((payType, remark) ->
                         present.doAction(1, payType, mBean.getId(),
                                 mBean.getRefundBillStatus(), mBean.getRefundBillType(),
                                 remark))
-                .showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+                .show();
     }
 
     private void rejectReq(String reason) {
