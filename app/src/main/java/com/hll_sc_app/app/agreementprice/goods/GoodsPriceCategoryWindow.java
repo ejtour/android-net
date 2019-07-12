@@ -32,9 +32,8 @@ import butterknife.OnClick;
  */
 public class GoodsPriceCategoryWindow extends BasePopupWindow {
     private static final String STRING_SELECT_ALL = "全选";
-    @BindView(R.id.recyclerView_categoryThree)
+    @BindView(R.id.recyclerView_categorySub)
     RecyclerView mRecyclerViewCategorySub;
-
     private CategoryResp mResp;
     private CategoryAdapter mAdapter2;
     private ConfirmListener mListener;
@@ -76,7 +75,8 @@ public class GoodsPriceCategoryWindow extends BasePopupWindow {
                 // 没选中或者取消选中一个，都要判断整个数据的状态，用于第一个全选状态的更新
                 adapter.notifyItemChanged(position);
                 CategoryItem categoryItem = mAdapter2.getItem(0);
-                if (categoryItem != null) {
+                if (categoryItem != null && TextUtils.equals(STRING_SELECT_ALL, categoryItem.getCategoryName())) {
+                    // 为全选按钮
                     categoryItem.setSelected(isSelectAll());
                     adapter.notifyItemChanged(0);
                 }

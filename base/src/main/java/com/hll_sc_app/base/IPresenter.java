@@ -8,8 +8,8 @@ package com.hll_sc_app.base;
  */
 public interface IPresenter<T extends IView> {
 
-    void start();
+    default void start() {
+    }
 
     void register(T view);
-
 }

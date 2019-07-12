@@ -23,16 +23,12 @@ public abstract class BaseAgreementPriceFragment extends BaseLazyFragment {
      */
     public abstract void toSearch();
 
-    /**
-     * 获取搜索词
-     *
-     * @return 搜索词
-     */
     public String getSearchParam() {
+        String searchPram = "";
         if (getActivity() instanceof AgreementPriceSearchActivity) {
-            return ((AgreementPriceSearchActivity) getActivity()).getSearchText();
+            searchPram = ((AgreementPriceSearchActivity) getActivity()).getSearchText();
         }
-        return "";
+        return searchPram;
     }
 
     public void exportSuccess(String email) {
