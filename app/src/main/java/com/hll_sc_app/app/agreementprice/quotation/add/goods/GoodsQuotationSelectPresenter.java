@@ -10,7 +10,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.goods.DepositProductsResp;
+import com.hll_sc_app.bean.goods.SkuProductsResp;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -85,7 +85,7 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
             .put("groupID", UserConfig.getGroupID())
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20");
-        GoodsService.INSTANCE.queryDepositProducts(builder.create())
+        GoodsService.INSTANCE.querySkuProducts(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> {
@@ -95,9 +95,9 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
             })
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<DepositProductsResp>() {
+            .subscribe(new BaseCallback<SkuProductsResp>() {
                 @Override
-                public void onSuccess(DepositProductsResp resp) {
+                public void onSuccess(SkuProductsResp resp) {
                     mPageNum = mTempPageNum;
                     mView.showList(resp.getRecords(), mPageNum != 1, resp.getTotal());
                 }

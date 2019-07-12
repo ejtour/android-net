@@ -34,8 +34,8 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.goods.DepositProductReq;
-import com.hll_sc_app.bean.goods.SKUGoodsBean;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
+import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -168,7 +168,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
             R.color.base_color_divider), UIUtils.dip2px(1)));
         mDepositProductAdapter = new DepositProductAdapter();
         mDepositProductAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            SKUGoodsBean bean = (SKUGoodsBean) adapter.getItem(position);
+            SkuGoodsBean bean = (SkuGoodsBean) adapter.getItem(position);
             if (bean == null) {
                 return;
             }
@@ -230,7 +230,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
      * @param bean     押金商品
      * @param position 位置
      */
-    private void showInputDialog(SKUGoodsBean bean, int position) {
+    private void showInputDialog(SkuGoodsBean bean, int position) {
         InputDialog.newBuilder(this)
             .setCancelable(false)
             .setTextTitle("输入" + bean.getProductName() + "数量")
@@ -265,7 +265,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
                 }
             } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
                 // 押金商品
-                ArrayList<SKUGoodsBean> arrayList =
+                ArrayList<SkuGoodsBean> arrayList =
                     data.getParcelableArrayListExtra(DepositProductsActivity.INTENT_TAG);
                 mDepositProductAdapter.setNewData(arrayList);
             }
@@ -321,7 +321,7 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         }
         boolean depositProductPass = true;
         if (mDepositProductAdapter != null && !CommonUtils.isEmpty(mDepositProductAdapter.getData())) {
-            for (SKUGoodsBean bean : mDepositProductAdapter.getData()) {
+            for (SkuGoodsBean bean : mDepositProductAdapter.getData()) {
                 if (TextUtils.isEmpty(bean.getDepositNum())) {
                     depositProductPass = false;
                     break;
@@ -377,14 +377,14 @@ public class GoodsSpecsAddActivity extends BaseLoadActivity implements GoodsSpec
         }
     }
 
-    class DepositProductAdapter extends BaseQuickAdapter<SKUGoodsBean, BaseViewHolder> {
+    class DepositProductAdapter extends BaseQuickAdapter<SkuGoodsBean, BaseViewHolder> {
 
         DepositProductAdapter() {
             super(R.layout.item_spec_deposit_product);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, SKUGoodsBean item) {
+        protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
                 .setText(R.id.txt_depositNum, item.getDepositNum())
                 .addOnClickListener(R.id.img_del)

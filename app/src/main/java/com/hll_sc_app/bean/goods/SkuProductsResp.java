@@ -8,9 +8,9 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-06-20
  */
-public class DepositProductsResp {
+public class SkuProductsResp {
     private int total;
-    private List<SKUGoodsBean> records;
+    private List<SkuGoodsBean> records;
 
     public int getTotal() {
         return total;
@@ -20,11 +20,11 @@ public class DepositProductsResp {
         this.total = total;
     }
 
-    public List<SKUGoodsBean> getRecords() {
+    public List<SkuGoodsBean> getRecords() {
         return records;
     }
 
-    public void setRecords(List<SKUGoodsBean> records) {
+    public void setRecords(List<SkuGoodsBean> records) {
         this.records = records;
     }
 }

@@ -12,6 +12,10 @@ public class RouterConfig {
      */
     public static final String SETTING = "/activity/setting";
     /**
+     * 售价设置
+     */
+    public static final String PRICE_MANAGE = "/activity/priceManage";
+    /**
      * 登录
      */
     public static final String USER_LOGIN = "/activity/user/login";

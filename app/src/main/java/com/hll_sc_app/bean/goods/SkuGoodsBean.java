@@ -15,16 +15,16 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-06-20
  */
-public class SKUGoodsBean implements Parcelable {
-    public static final Parcelable.Creator<SKUGoodsBean> CREATOR = new Parcelable.Creator<SKUGoodsBean>() {
+public class SkuGoodsBean implements Parcelable {
+    public static final Parcelable.Creator<SkuGoodsBean> CREATOR = new Parcelable.Creator<SkuGoodsBean>() {
         @Override
-        public SKUGoodsBean createFromParcel(Parcel source) {
-            return new SKUGoodsBean(source);
+        public SkuGoodsBean createFromParcel(Parcel source) {
+            return new SkuGoodsBean(source);
         }
 
         @Override
-        public SKUGoodsBean[] newArray(int size) {
-            return new SKUGoodsBean[size];
+        public SkuGoodsBean[] newArray(int size) {
+            return new SkuGoodsBean[size];
         }
     };
     private String specID;
@@ -92,10 +92,10 @@ public class SKUGoodsBean implements Parcelable {
     private List<NicknamesBean> nicknames;
     private boolean selected;
 
-    public SKUGoodsBean() {
+    public SkuGoodsBean() {
     }
 
-    protected SKUGoodsBean(Parcel in) {
+    protected SkuGoodsBean(Parcel in) {
         this.specID = in.readString();
         this.productID = in.readString();
         this.placeProvince = in.readString();
@@ -771,7 +771,7 @@ public class SKUGoodsBean implements Parcelable {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final SKUGoodsBean other = (SKUGoodsBean) obj;
+        final SkuGoodsBean other = (SkuGoodsBean) obj;
         return UIUtils.equals(this.specID, other.specID);
     }
 }

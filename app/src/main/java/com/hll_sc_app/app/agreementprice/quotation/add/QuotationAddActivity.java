@@ -37,7 +37,7 @@ import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
 import com.hll_sc_app.bean.event.RefreshQuotationList;
-import com.hll_sc_app.bean.goods.SKUGoodsBean;
+import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -229,11 +229,11 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
 
     private void toAddGoods(boolean isWarehouse) {
         // 用于数据反显
-        ArrayList<SKUGoodsBean> goodsList = new ArrayList<>();
+        ArrayList<SkuGoodsBean> goodsList = new ArrayList<>();
         List<QuotationDetailBean> beans = mAdapter.getData();
         if (!CommonUtils.isEmpty(beans)) {
             for (QuotationDetailBean bean : beans) {
-                SKUGoodsBean skuGoodsBean = new SKUGoodsBean();
+                SkuGoodsBean skuGoodsBean = new SkuGoodsBean();
                 skuGoodsBean.setSpecContent(bean.getProductDesc());
                 skuGoodsBean.setShopProductCategoryThreeID(bean.getShopProductCategoryThreeID());
                 skuGoodsBean.setSpecID(bean.getProductSpecID());
@@ -281,13 +281,13 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
     }
 
     @Subscribe
-    public void onEvent(List<SKUGoodsBean> event) {
+    public void onEvent(List<SkuGoodsBean> event) {
         // 选择的商品数据
         if (CommonUtils.isEmpty(event)) {
             return;
         }
         List<QuotationDetailBean> list = new ArrayList<>();
-        for (SKUGoodsBean bean : event) {
+        for (SkuGoodsBean bean : event) {
             QuotationDetailBean quotationDetailBean = new QuotationDetailBean();
             quotationDetailBean.setProductDesc(bean.getSpecContent());
             quotationDetailBean.setShopProductCategoryThreeID(bean.getShopProductCategoryThreeID());
