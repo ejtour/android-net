@@ -21,7 +21,7 @@ import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
-import com.hll_sc_app.widget.aftersales.AfterSalesAuditWindow;
+import com.hll_sc_app.widget.aftersales.AfterSalesAuditDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -270,13 +270,13 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
 
     @Override
     public void actionCustomerService() {
-        AfterSalesAuditWindow.create(getActivity())
+        AfterSalesAuditDialog.create(getActivity())
                 .canModify(mCurBean.canModify())
                 .setCallback((payType, remark) ->
                         mPresenter.doAction(1, mCurBean.getId(),
                                 mCurBean.getRefundBillStatus(), mCurBean.getRefundBillType(), payType,
                                 remark))
-                .showAtLocation(getView(), Gravity.CENTER, 0, 0);
+                .show();
     }
 
     private void rejectReq(String reason) {
