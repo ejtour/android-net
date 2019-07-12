@@ -59,6 +59,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.setting.bill.BillSettingActivityActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.user.register.RegisterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
