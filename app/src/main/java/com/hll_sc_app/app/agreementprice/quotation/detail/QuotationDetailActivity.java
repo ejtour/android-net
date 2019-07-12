@@ -18,6 +18,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.add.QuotationAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -116,7 +117,7 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
                 finish();
                 break;
             case R.id.txt_disable:
-                mPresenter.disableQuotation();
+                showTipsDialog();
                 break;
             case R.id.txt_copy:
                 toCopy();
@@ -124,6 +125,20 @@ public class QuotationDetailActivity extends BaseLoadActivity implements Quotati
             default:
                 break;
         }
+    }
+
+    private void showTipsDialog() {
+        SuccessDialog.newBuilder(this)
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("确认要停用报价单么")
+            .setMessage("停用将对协议中的采购商恢复原价售卖\n一旦停用不可再启用，请慎重操作\n停用后的记录可在历史报价单中查看")
+            .setButton((dialog, item) -> {
+                dialog.dismiss();
+                if (item == 1) {
+                    mPresenter.disableQuotation();
+                }
+            }, "我再看看", "确认停用").create().show();
     }
 
     /**

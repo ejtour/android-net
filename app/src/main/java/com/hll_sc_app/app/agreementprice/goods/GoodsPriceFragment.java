@@ -19,23 +19,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.BaseAgreementPriceFragment;
-import com.hll_sc_app.app.agreementprice.quotation.PurchaserSelectWindow;
 import com.hll_sc_app.app.agreementprice.search.AgreementPriceSearchActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
-import com.hll_sc_app.bean.event.RefreshQuotationList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Calendar;
 import java.util.List;
@@ -73,7 +69,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
     @BindView(R.id.ll_effectDate)
     RelativeLayout mLlEffectDate;
     private GoodsPriceContract.IGoodsPricePresenter mPresenter;
-    private PurchaserSelectWindow mPurchaserWindow;
+    private GoodsPriceShopSelectWindow mPurchaserWindow;
     private GoodsPriceCategoryWindow mCategoryWindow;
     private DateRangeWindow mDateEffectWindow;
     private GoodsPriceListAdapter mAdapter;
@@ -89,18 +85,12 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
         super.onCreate(savedInstanceState);
         mPresenter = GoodsPricePresenter.newInstance();
         mPresenter.register(this);
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
     @Override
@@ -118,15 +108,28 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
         }
     }
 
-    @Override
-    public boolean isSearchActivity() {
-        return getActivity() instanceof AgreementPriceSearchActivity;
-    }
-
-
-    @Subscribe
-    public void onEvent(RefreshQuotationList event) {
-        mPresenter.queryGoodsPriceList(false);
+    private void initView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
+            R.color.base_color_divider), UIUtils.dip2px(5)));
+        mAdapter = new GoodsPriceListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            QuotationDetailBean bean = (QuotationDetailBean) adapter.getItem(position);
+            if (bean != null) {
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_GOODS_DETAIL, bean);
+            }
+        });
+        mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
+        mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
+            setForceLoad(true);
+            lazyLoad();
+        }).create();
+        mRecyclerView.setAdapter(mAdapter);
+        if (isSearchActivity()) {
+            mEmptyView.setTips("输入商品名称、采购商名称进行搜索");
+            mAdapter.setEmptyView(mEmptyView);
+            mLlFilter.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -146,15 +149,18 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
     @Override
     public void showPurchaserWindow(List<PurchaserBean> list) {
         if (mPurchaserWindow == null) {
-            mPurchaserWindow = new PurchaserSelectWindow(getActivity(), list);
-            mPurchaserWindow.setListener(bean -> {
-                if (TextUtils.equals(bean.getPurchaserName(), "全部")) {
-                    mTxtPurchaser.setText("采购商");
-                } else {
-                    mTxtPurchaser.setText(bean.getPurchaserName());
+            mPurchaserWindow = new GoodsPriceShopSelectWindow(getActivity(), list);
+            mPurchaserWindow.setListener(new GoodsPriceShopSelectWindow.ConfirmListener() {
+                @Override
+                public void confirm(String shopIds) {
+                    mTxtPurchaser.setTag(shopIds);
+                    mPresenter.queryGoodsPriceList();
                 }
-                mTxtPurchaser.setTag(bean.getPurchaserID());
-                mPresenter.queryGoodsPriceList(true);
+
+                @Override
+                public void queryShopList(String purchaserId) {
+                    mPresenter.queryPurchaserShopList(purchaserId);
+                }
             });
             mPurchaserWindow.setOnDismissListener(() -> {
                 mTxtPurchaser.setSelected(false);
@@ -174,7 +180,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
             mCategoryWindow = new GoodsPriceCategoryWindow(getActivity(), resp);
             mCategoryWindow.setListener(categoryIds -> {
                 mTxtCategory.setTag(categoryIds);
-                mPresenter.queryGoodsPriceList(true);
+                mPresenter.queryGoodsPriceList();
             });
             mCategoryWindow.setOnDismissListener(() -> {
                 mTxtCategory.setSelected(false);
@@ -197,7 +203,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
                     mTxtEffectDate.setText("生效期限");
                     mTxtEffectDate.setTag(R.id.date_start, "");
                     mTxtEffectDate.setTag(R.id.date_end, "");
-                    mPresenter.queryGoodsPriceList(true);
+                    mPresenter.queryGoodsPriceList();
                     return;
                 }
                 if (start != null && end != null) {
@@ -212,7 +218,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
                         CalendarUtils.FORMAT_SERVER_DATE));
                     mTxtEffectDate.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
                         CalendarUtils.FORMAT_SERVER_DATE));
-                    mPresenter.queryGoodsPriceList(true);
+                    mPresenter.queryGoodsPriceList();
                 }
             });
             mDateEffectWindow.setOnDismissListener(() -> {
@@ -253,30 +259,22 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
 
     @Override
     public String getShopIds() {
-        return null;
+        String shopIds = null;
+        if (mTxtPurchaser.getTag() != null) {
+            shopIds = (String) mTxtPurchaser.getTag();
+        }
+        return shopIds;
     }
 
-    private void initView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
-            R.color.base_color_divider), UIUtils.dip2px(5)));
-        mAdapter = new GoodsPriceListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            QuotationDetailBean bean = (QuotationDetailBean) adapter.getItem(position);
-            if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_GOODS_DETAIL, bean);
-            }
-        });
-        mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
-        mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
-            setForceLoad(true);
-            lazyLoad();
-        }).create();
-        mRecyclerView.setAdapter(mAdapter);
-        if (isSearchActivity()) {
-            mEmptyView.setTips("输入商品名称、采购商名称进行搜索");
-            mAdapter.setEmptyView(mEmptyView);
-            mLlFilter.setVisibility(View.GONE);
+    @Override
+    public boolean isSearchActivity() {
+        return getActivity() instanceof AgreementPriceSearchActivity;
+    }
+
+    @Override
+    public void showPurchaserShopList(List<PurchaserShopBean> list) {
+        if (mPurchaserWindow != null) {
+            mPurchaserWindow.showShopList(list);
         }
     }
 
@@ -317,7 +315,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
         if (!isFragmentVisible()) {
             return;
         }
-        mPresenter.queryGoodsPriceList(true);
+        mPresenter.queryGoodsPriceList();
     }
 
     public class GoodsPriceListAdapter extends BaseQuickAdapter<QuotationDetailBean, BaseViewHolder> {

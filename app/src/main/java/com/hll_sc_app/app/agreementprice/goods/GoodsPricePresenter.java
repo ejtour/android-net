@@ -14,6 +14,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.GoodsPriceExportReq;
@@ -43,7 +44,7 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
 
     @Override
     public void start() {
-        queryGoodsPriceList(true);
+        queryGoodsPriceList();
     }
 
     @Override
@@ -52,7 +53,7 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
     }
 
     @Override
-    public void queryGoodsPriceList(boolean showLoading) {
+    public void queryGoodsPriceList() {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("groupID", UserConfig.getGroupID())
             .put("startDate", mView.getPriceStartDate())
@@ -94,8 +95,7 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
                 public void onSuccess(List<PurchaserBean> result) {
                     mListPurchaser = result;
                     PurchaserBean bean = new PurchaserBean();
-                    bean.setPurchaserID("");
-                    bean.setPurchaserName("全部");
+                    bean.setPurchaserName(GoodsPriceShopSelectWindow.STRING_SELECT_ALL);
                     mListPurchaser.add(0, bean);
                     mView.showPurchaserWindow(mListPurchaser);
                 }
@@ -105,6 +105,38 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
                     if (mView.isActive()) {
                         mView.showToast(e.getMessage());
                     }
+                }
+            });
+    }
+
+    @Override
+    public void queryPurchaserShopList(String purchaserId) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("groupID", UserConfig.getGroupID())
+            .put("actionType", "quotation")
+            .put("purchaserID", purchaserId)
+            .put("searchParam", mView.getSearchParam())
+            .create();
+        AgreementPriceService.INSTANCE.queryCooperationPurchaserShopList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<List<PurchaserShopBean>>() {
+                @Override
+                public void onSuccess(List<PurchaserShopBean> result) {
+                    if (!CommonUtils.isEmpty(result)) {
+                        PurchaserShopBean shopBean = new PurchaserShopBean();
+                        shopBean.setShopName(GoodsPriceShopSelectWindow.STRING_SELECT_ALL);
+                        result.add(0, shopBean);
+                    }
+                    mView.showPurchaserShopList(result);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showToast(e.getMessage());
                 }
             });
     }

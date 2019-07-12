@@ -40,7 +40,7 @@ public class PurchaserSelectWindow extends BasePopupWindow {
     private List<PurchaserBean> mList;
     private PurchaserListAdapter mAdapter;
 
-    public PurchaserSelectWindow(Activity context, List<PurchaserBean> list) {
+    PurchaserSelectWindow(Activity context, List<PurchaserBean> list) {
         super(context);
         this.mList = list;
         View view = View.inflate(context, R.layout.window_purchaser_select, null);
@@ -73,7 +73,7 @@ public class PurchaserSelectWindow extends BasePopupWindow {
         mRecyclerView.setAdapter(mAdapter);
         mEdtSearchContent.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                search();
+                toSearch();
             }
             return true;
         });
@@ -91,7 +91,7 @@ public class PurchaserSelectWindow extends BasePopupWindow {
     /**
      * 搜索
      */
-    private void search() {
+    private void toSearch() {
         String searchContent = mEdtSearchContent.getText().toString().trim();
         if (CommonUtils.isEmpty(mList)) {
             return;
@@ -111,7 +111,7 @@ public class PurchaserSelectWindow extends BasePopupWindow {
 
     @OnClick(R.id.txt_search)
     public void onViewClicked() {
-        search();
+        toSearch();
     }
 
     public interface SelectConfirmListener {

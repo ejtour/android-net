@@ -2,6 +2,7 @@ package com.hll_sc_app.app.agreementprice.goods;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -103,15 +104,20 @@ interface GoodsPriceContract {
          * @return 搜索词
          */
         String getSearchParam();
+
+        /**
+         * 展示门店数据
+         *
+         * @param list 门店列表
+         */
+        void showPurchaserShopList(List<PurchaserShopBean> list);
     }
 
     interface IGoodsPricePresenter extends IPresenter<IGoodsPriceView> {
         /**
          * 加载商品数据
-         *
-         * @param showLoading true-显示加载
          */
-        void queryGoodsPriceList(boolean showLoading);
+        void queryGoodsPriceList();
 
         /**
          * 搜索合作采购商
@@ -129,5 +135,12 @@ interface GoodsPriceContract {
          * @param email 邮箱
          */
         void exportQuotation(String email);
+
+        /**
+         * 查询采购商门店列表
+         *
+         * @param purchaserId 采购商 Id
+         */
+        void queryPurchaserShopList(String purchaserId);
     }
 }
