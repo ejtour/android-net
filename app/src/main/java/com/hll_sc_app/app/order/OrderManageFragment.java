@@ -396,13 +396,14 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     @Override
     public void showExpressCompanyList(List<ExpressResp.ExpressBean> beans, ExpressResp.ExpressBean company) {
-        SingleSelectionDialog.newBuilder(requireActivity(), ExpressResp.ExpressBean::getDeliveryCompanyName)
+        SingleSelectionDialog selectionDialog = SingleSelectionDialog.newBuilder(requireActivity(), ExpressResp.ExpressBean::getDeliveryCompanyName)
                 .setTitleText("物流公司")
                 .refreshList(beans)
                 .select(company)
                 .setOnSelectListener(bean -> mExpressInfoDialog.setCompany(bean, beans))
-                .create()
-                .show();
+                .create();
+        selectionDialog.setOnDismissListener(dialog -> mExpressInfoDialog.show());
+        selectionDialog.show();
     }
 
     /**

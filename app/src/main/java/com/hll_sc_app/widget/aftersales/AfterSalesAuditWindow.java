@@ -1,12 +1,12 @@
 package com.hll_sc_app.widget.aftersales;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -62,6 +62,7 @@ public class AfterSalesAuditWindow extends BaseShadowPopupWindow implements Popu
         ButterKnife.bind(this, view);
         setContentView(view);
         setWidth(UIUtils.getScreenWidth(context) - UIUtils.dip2px(110));
+        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setBackgroundDrawable(new ColorDrawable());
         setFocusable(true);
     }
