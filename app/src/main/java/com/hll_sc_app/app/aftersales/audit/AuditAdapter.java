@@ -51,6 +51,7 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
         helper.setImageResource(R.id.asa_bill_type, item.getRefundBillType() == 1 || item.getRefundBillType() == 2
                 ? R.drawable.ic_after_sales_money : R.drawable.ic_after_sales_goods)
                 .setText(R.id.asa_bill_status, descBuilder.toString())
+                .setGone(R.id.asa_warehouse_tag, item.getShipperID() > 0)
                 .setText(R.id.asa_apply_time, "申请时间：" + CalendarUtils.format(
                         CalendarUtils.parse(String.valueOf(item.getRefundBillCreateTime())),
                         Constants.FORMAT_YYYY_MM_DD_DASH));
