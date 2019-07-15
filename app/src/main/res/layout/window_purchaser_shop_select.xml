@@ -96,6 +96,17 @@
         app:layout_constraintStart_toEndOf="@id/pss_toggle_btn"
         app:layout_constraintTop_toTopOf="@id/pss_top_bar_bg" />
 
+    <ImageView
+        android:id="@+id/pss_clear_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/ic_clear_search_aeaeae"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/pss_search_edit"
+        app:layout_constraintEnd_toStartOf="@id/pss_ver_div"
+        app:layout_constraintTop_toTopOf="@id/pss_search_edit" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/pss_left_list"
         android:layout_width="0dp"

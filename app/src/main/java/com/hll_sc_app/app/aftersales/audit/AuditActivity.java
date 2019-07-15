@@ -182,13 +182,21 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
      */
     private void showPurchaserWindow(View view) {
         if (mSelectionWindow == null) {
-            mSelectionWindow = new PurchaserShopSelectWindow(this);
+            mSelectionWindow = PurchaserShopSelectWindow.create(this, new PurchaserShopSelectWindow.PurchaserShopSelectCallback() {
+                @Override
+                public void onSelect(String purchaserID, String shopID) {
+
+                }
+            });
             mSelectionWindow.setOnDismissListener(() -> {
                 mShopArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
                 mShop.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
             });
         }
-        mSelectionWindow.showAsDropDownFix(view);
+        if (mPurchaserListResp != null) {
+            mSelectionWindow.setLeftList(mPurchaserListResp.getList());
+            mSelectionWindow.showAsDropDownFix(view);
+        }
     }
 
     @OnClick(R.id.asa_date_btn)

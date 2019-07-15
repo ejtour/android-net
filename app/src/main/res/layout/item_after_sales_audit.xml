@@ -52,6 +52,21 @@
         tools:text="收货差异退款、等待供应商处理" />
 
     <TextView
+        android:id="@+id/asa_warehouse_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/bg_tag_primary_stroke"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="代仓"
+        android:textAppearance="@style/TextAppearance.City22.Little.Blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/asa_bill_status"
+        app:layout_constraintStart_toEndOf="@id/asa_bill_status"
+        app:layout_constraintTop_toTopOf="@id/asa_bill_status" />
+
+    <TextView
         android:id="@+id/asa_apply_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
