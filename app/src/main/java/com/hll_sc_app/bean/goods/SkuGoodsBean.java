@@ -76,6 +76,9 @@ public class SkuGoodsBean implements Parcelable {
     private String costPrice;
     private String productStatus;
     private String convertRatio;
+    /**
+     * 是否可修改成本价(0-可修改,1-不可修改)
+     */
     private String costPriceModifyFlag;
     private String isSupplierWarehouse;
     private String imgUrl;
