@@ -71,12 +71,12 @@ public class OrderInspectionAdapter extends BaseQuickAdapter<OrderDetailBean, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, OrderDetailBean item) {
-        helper.setText(R.id.ioi_name, item.getProductName()); // 商品名
-        helper.setText(R.id.ioi_spec, item.getProductSpec()); // 商品规格
-        helper.setText(R.id.ioi_order, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName()); // 订货数
-        helper.setText(R.id.ioi_deliver, "发货： " + CommonUtils.formatNum(item.getAdjustmentNum()) + item.getAdjustmentUnit()); // 发货数
-        helper.setText(R.id.ioi_unit, item.getInspectionUnit()); //签收单位
-        helper.setText(R.id.ioi_edit, CommonUtils.formatNum(item.getInspectionNum())); // 签收数量
+        helper.setText(R.id.ioi_name, item.getProductName()) // 商品名
+                .setText(R.id.ioi_spec, item.getProductSpec()) // 商品规格
+                .setText(R.id.ioi_order, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName()) // 订货数
+                .setText(R.id.ioi_deliver, "发货： " + CommonUtils.formatNum(item.getAdjustmentNum()) + item.getAdjustmentUnit()) // 发货数
+                .setText(R.id.ioi_unit, item.getInspectionUnit()) //签收单位
+                .setText(R.id.ioi_edit, CommonUtils.formatNum(item.getInspectionNum())); // 签收数量
         GlideImageView imageView = helper.getView(R.id.ioi_image);
         imageView.setImageURL(item.getImgUrl()); // 商品图
         // 押金商品
