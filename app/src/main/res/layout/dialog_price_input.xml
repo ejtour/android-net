@@ -76,10 +76,42 @@
         android:textColor="@color/base_red"
         android:textColorHint="@color/base_text_hint"
         android:textSize="@dimen/base_text_13"
-        app:layout_constraintBottom_toTopOf="@+id/view_divider_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/txt_recommend_price"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_specContent"/>
+
+    <TextView
+        android:id="@+id/txt_recommend_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="16dp"
+        android:textAppearance="@style/TextAppearance.City22.Little"
+        app:layout_constraintBottom_toTopOf="@+id/view_divider_bottom"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_content"
+        tools:text="推荐价格:3000"/>
+
+    <TextView
+        android:id="@+id/txt_cost_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="16dp"
+        android:textAppearance="@style/TextAppearance.City22.Little"
+        app:layout_constraintBottom_toTopOf="@+id/view_divider_bottom"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_content"
+        tools:text="成本价:¥2800"/>
+
+    <android.support.constraint.Group
+        android:id="@+id/group_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="txt_cost_price,txt_recommend_price"/>
 
     <View
         android:id="@+id/view_divider_bottom"
@@ -91,14 +123,15 @@
         app:layout_constraintBottom_toTopOf="@+id/barrier"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_content"/>
+        app:layout_constraintTop_toBottomOf="@+id/txt_recommend_price"/>
 
     <android.support.constraint.Barrier
         android:id="@+id/barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="edt_content"/>
+        app:constraint_referenced_ids="edt_content"
+        app:layout_constraintTop_toBottomOf="@+id/view_divider_bottom"/>
 
     <TextView
         android:id="@+id/txt_cancel"

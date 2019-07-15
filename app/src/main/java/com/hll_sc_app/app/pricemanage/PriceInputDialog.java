@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.constraint.Group;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,11 +63,6 @@ public class PriceInputDialog extends BaseDialog {
         }
     }
 
-    private void setTextTitle(String text) {
-        TextView textView = mRootView.findViewById(R.id.txt_title);
-        textView.setText(text);
-    }
-
     private void setProductName(String mProductName) {
         TextView textView = mRootView.findViewById(R.id.txt_productName);
         textView.setText(mProductName);
@@ -120,6 +116,31 @@ public class PriceInputDialog extends BaseDialog {
         });
     }
 
+    private void setType(boolean isProductPrice) {
+        Group group = mRootView.findViewById(R.id.group_price);
+        group.setVisibility(isProductPrice ? View.VISIBLE : View.GONE);
+
+    }
+
+    private void setRecommendPrice(String price) {
+        TextView textView = mRootView.findViewById(R.id.txt_recommend_price);
+        if (!TextUtils.isEmpty(price)) {
+            textView.setText(String.format("推荐价格:¥%s", price));
+        }
+    }
+
+    private void setCostPrice(String price) {
+        TextView textView = mRootView.findViewById(R.id.txt_cost_price);
+        if (!TextUtils.isEmpty(price)) {
+            textView.setText(String.format("成本价:¥%s", price));
+        }
+    }
+
+    private void setTextTitle(String title) {
+        TextView textView = mRootView.findViewById(R.id.txt_title);
+        textView.setText(title);
+    }
+
     public interface OnClickListener {
         void onItem(PriceInputDialog dialog, int item);
     }
@@ -131,11 +152,6 @@ public class PriceInputDialog extends BaseDialog {
             p = new Params();
             p.mContext = context;
             p.mCancelable = true;
-        }
-
-        public Builder setTextTitle(String textTitle) {
-            p.mTextTitle = textTitle;
-            return this;
         }
 
         public Builder setProductName(String productName) {
@@ -164,34 +180,55 @@ public class PriceInputDialog extends BaseDialog {
             return this;
         }
 
-        public Builder setText(String text) {
-            p.mText = text;
+        public Builder showRecommend(boolean isShow) {
+            p.mIsShow = isShow;
             return this;
         }
 
+        public Builder setRecommendPrice(String recommendPrice) {
+            p.mRecommendPrice = recommendPrice;
+            return this;
+        }
+
+        public Builder setCostPrice(String costPrice) {
+            p.mCostPrice = costPrice;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            p.mTitle = title;
+            return this;
+        }
+
+
         public PriceInputDialog create() {
             final PriceInputDialog dialog = new PriceInputDialog(p.mContext, R.style.BaseDialog);
-            dialog.setTextTitle(p.mTextTitle);
             dialog.setProductName(p.mProductName);
             dialog.setSpecContent(p.mSpecContent);
             dialog.setPrice(p.mPrice);
             dialog.setButton(p.mOnClickListener, p.items);
             dialog.setCancelable(p.mCancelable);
             dialog.setCanceledOnTouchOutside(p.mCancelable);
+            dialog.setType(p.mIsShow);
+            dialog.setRecommendPrice(p.mRecommendPrice);
+            dialog.setCostPrice(p.mCostPrice);
+            dialog.setTextTitle(p.mTitle);
             return dialog;
         }
     }
 
-
     static class Params {
         Activity mContext;
         boolean mCancelable;
-        String mTextTitle;
         String mProductName;
         String mSpecContent;
         String mPrice;
         OnClickListener mOnClickListener;
         String[] items;
         String mText;
+        boolean mIsShow;
+        String mRecommendPrice;
+        String mCostPrice;
+        String mTitle;
     }
 }
