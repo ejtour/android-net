@@ -59,7 +59,6 @@ public class PriceInputDialog extends BaseDialog {
             WindowManager.LayoutParams params = window.getAttributes();
             params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE;
             params.width = UIUtils.getScreenWidth(getContext()) - UIUtils.dip2px(110);
-            ;
         }
     }
 

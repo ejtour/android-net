@@ -3,6 +3,7 @@ package com.hll_sc_app.app.pricemanage;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
+import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 
 import java.util.List;
@@ -38,6 +39,27 @@ public interface PriceManageContract {
          * @param values 数据
          */
         void showRatioTemplateWindow(List<RatioTemplateBean> values);
+
+        /**
+         * 显示筛选弹窗
+         *
+         * @param resp resp
+         */
+        void showCustomCategoryWindow(CustomCategoryResp resp);
+
+        /**
+         * 获取过滤商品状态
+         *
+         * @return 上下架
+         */
+        String getProductStatus();
+
+        /**
+         * 获取过滤商品分类
+         *
+         * @return 商品分类
+         */
+        String getProductCategoryIds();
     }
 
     interface IPriceManagePresenter extends IPresenter<IPriceManageView> {
@@ -73,5 +95,10 @@ public interface PriceManageContract {
          * 加载比例模板列表
          */
         void queryRatioTemplateList();
+
+        /**
+         * 查询自定义分类
+         */
+        void queryCustomCategory();
     }
 }

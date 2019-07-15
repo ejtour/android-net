@@ -11,6 +11,7 @@ import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateResp;
+import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.goods.SkuProductsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -31,6 +32,7 @@ public class PriceManagePresenter implements PriceManageContract.IPriceManagePre
     private int mPageNum;
     private int mTempPageNum;
     private List<RatioTemplateBean> mListRation;
+    private CustomCategoryResp mCategoryResp;
 
     static PriceManagePresenter newInstance() {
         return new PriceManagePresenter();
@@ -146,12 +148,44 @@ public class PriceManagePresenter implements PriceManageContract.IPriceManagePre
             });
     }
 
+    @Override
+    public void queryCustomCategory() {
+        if (mCategoryResp != null) {
+            mView.showCustomCategoryWindow(mCategoryResp);
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("getResource", "0")
+            .put("groupID", UserConfig.getGroupID())
+            .create();
+        GoodsService.INSTANCE.queryCustomCategory2Top(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<CustomCategoryResp>() {
+                @Override
+                public void onSuccess(CustomCategoryResp resp) {
+                    mCategoryResp = resp;
+                    mView.showCustomCategoryWindow(resp);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
     private void toQueryDepositProducts(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("actionType", "sellPrice")
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
             .put("name", mView.getSearchParam())
+            .put("productStatus", mView.getProductStatus())
+            .put("shopProductCategoryThreeIds", mView.getProductCategoryIds())
             .create();
         GoodsService.INSTANCE.querySkuProducts(req)
             .compose(ApiScheduler.getObservableScheduler())

@@ -32,6 +32,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
+import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
@@ -71,6 +72,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     private PriceManageListAdapter mAdapter;
     private PriceManagePresenter mPresenter;
     private TopSingleSelectWindow<RatioTemplateBean> mRatioTemplateWindow;
+    private PriceManageFilterWindow mFilterWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,6 +162,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
             case R.id.txt_log:
                 break;
             case R.id.txt_filter:
+                mPresenter.queryCustomCategory();
                 break;
             case R.id.rl_select_ratio:
                 mPresenter.queryRatioTemplateList();
@@ -202,6 +205,33 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
             });
         }
         mRatioTemplateWindow.showAsDropDownFix(mRlSelectRatio, Gravity.NO_GRAVITY);
+    }
+
+    @Override
+    public void showCustomCategoryWindow(CustomCategoryResp resp) {
+        if (mFilterWindow == null) {
+            mFilterWindow = new PriceManageFilterWindow(this, resp);
+            mFilterWindow.setConfirmListener(() -> mPresenter.queryPriceManageList(true));
+        }
+        mFilterWindow.showAtLocation(getWindow().getDecorView(), Gravity.END, 0, 0);
+    }
+
+    @Override
+    public String getProductStatus() {
+        String productStatus = null;
+        if (mFilterWindow != null) {
+            productStatus = mFilterWindow.getProductStatus();
+        }
+        return productStatus;
+    }
+
+    @Override
+    public String getProductCategoryIds() {
+        String categoryIds = null;
+        if (mFilterWindow != null) {
+            categoryIds = mFilterWindow.getCategoryIds();
+        }
+        return categoryIds;
     }
 
     @Override
