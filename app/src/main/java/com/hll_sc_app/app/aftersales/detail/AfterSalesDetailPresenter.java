@@ -35,19 +35,12 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
 
     @Override
     public void doAction(int actionType, String payType, String billID, int status, int type, String msg) {
-        AfterSales.afterSalesAction(actionType,
-                billID,
-                status,
-                type,
-                msg,
-                null,
-                null,
-                new SimpleObserver<Object>(mView) {
-                    @Override
-                    public void onSuccess(Object o) {
-                        mView.handleStatusChange();
-                    }
-                });
+        AfterSales.afterSalesAction(actionType, billID, status, type, payType, msg, null, new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                mView.handleStatusChange();
+            }
+        });
     }
 
     @Override
