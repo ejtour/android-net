@@ -17,6 +17,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
+import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -121,9 +122,13 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AfterSalesDetailActivity.REQ_CODE && resultCode == RESULT_OK && data != null) {
-            AfterSalesBean parcelable = data.getParcelableExtra("parcelable");
-            refreshCurrentData(parcelable);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == AfterSalesDetailActivity.REQ_CODE && data != null) {
+                AfterSalesBean parcelable = data.getParcelableExtra("parcelable");
+                refreshCurrentData(parcelable);
+            } else if (requestCode == GoodsOperationActivity.REQ_CODE) {
+                EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.RELOAD_ITEM));
+            }
         }
     }
 

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -16,6 +15,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
+import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -156,6 +156,13 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == GoodsOperationActivity.REQ_CODE)
+            handleStatusChange();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
@@ -179,10 +186,8 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                 actionCancel();
                 break;
             case R.id.after_sales_actions_driver:
-                actionDriver();
-                break;
             case R.id.after_sales_actions_warehouse:
-                actionWarehouse();
+                actionGoodsOperation();
                 break;
             case R.id.after_sales_actions_customer_service:
                 actionCustomerService();
@@ -220,13 +225,8 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     }
 
     @Override
-    public void actionDriver() {
-        showToast("司机提货待添加");
-    }
-
-    @Override
-    public void actionWarehouse() {
-        showToast("仓库收货待添加");
+    public void actionGoodsOperation() {
+        GoodsOperationActivity.start(this, mBean);
     }
 
     @Override

@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
+import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.AfterSalesEvent;
@@ -53,6 +54,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
      */
     private Integer mBillType;
     private AfterSalesBean mCurBean;
+    private EmptyView mEmptyView;
 
     public static AuditFragment newInstance(int type) {
         Bundle args = new Bundle();
@@ -110,10 +112,8 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                     actionCancel();
                     break;
                 case R.id.after_sales_actions_driver:
-                    actionDriver();
-                    break;
                 case R.id.after_sales_actions_warehouse:
-                    actionWarehouse();
+                    actionGoodsOperation();
                     break;
                 case R.id.after_sales_actions_customer_service:
                     actionCustomerService();
@@ -139,6 +139,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     public void onDestroyView() {
         EventBus.getDefault().unregister(this);
         mAdapter = null;
+        mEmptyView = null;
         mListView.setAdapter(null);
         super.onDestroyView();
         unbinder.unbind();
@@ -164,8 +165,11 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     public void showList(List<AfterSalesBean> recordsBeans, boolean isMore) {
         if (isMore) mAdapter.addData(recordsBeans);
         else {
-            if (CommonUtils.isEmpty(recordsBeans) && mAdapter.getEmptyView() == null)  // 设置空布局
-                mAdapter.setEmptyView(EmptyView.newBuilder(getActivity()).setTipsTitle("搜索不到相关退货审核单").create());
+            if (CommonUtils.isEmpty(recordsBeans)) {// 设置空布局
+                initEmptyView();
+                mEmptyView.reset();
+                mEmptyView.setTipsTitle("搜索不到相关退货审核单");
+            }
             mAdapter.setNewData(recordsBeans);
         }
     }
@@ -204,7 +208,9 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     private void replaceDetails(AfterSalesBean bean) {
         if (mBillType == null || mBillType == bean.getRefundBillStatus()) // 如果参数属于当前列表
             mAdapter.replaceData(mCurBean, bean);
-        else mAdapter.removeData(mCurBean);
+        else if (mAdapter.getData().size() > 1)
+            mAdapter.removeData(mCurBean);
+        else showList(null, false);
     }
 
     @Subscribe
@@ -259,13 +265,8 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     }
 
     @Override
-    public void actionDriver() {
-        showToast("司机提货待添加");
-    }
-
-    @Override
-    public void actionWarehouse() {
-        showToast("仓库收货待添加");
+    public void actionGoodsOperation() {
+        GoodsOperationActivity.start(requireActivity(), mCurBean);
     }
 
     @Override
@@ -299,5 +300,27 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     @Override
     public void actionViewDetails() {
         AfterSalesDetailActivity.start(requireActivity(), mCurBean);
+    }
+
+    @Override
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        if (e.getLevel() == UseCaseException.Level.NET) {
+            initEmptyView();
+            mEmptyView.setNetError();
+        }
+    }
+
+    /**
+     * 初始化空布局
+     */
+    private void initEmptyView() {
+        if (mEmptyView == null) {
+            mEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
+                setForceLoad(true);
+                lazyLoad();
+            }).create();
+            mAdapter.setEmptyView(mEmptyView);
+        }
     }
 }
