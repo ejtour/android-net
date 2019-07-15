@@ -106,6 +106,11 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
                         showToast("请输入修改的价格");
                         return;
                     }
+                    if (isProductPrice) {
+                        mPresenter.updateProductPrice(bean, editPrice);
+                    } else {
+                        mPresenter.updateCostPrice(bean, editPrice);
+                    }
                 }
                 dialog.dismiss();
             }, "容我想想", "确认修改")

@@ -37,5 +37,21 @@ public interface PriceManageContract {
          * 加载更多售价设置列表
          */
         void queryMorePriceManageList();
+
+        /**
+         * 商品价格修改服务
+         *
+         * @param bean         商品
+         * @param productPrice 修改后的价格
+         */
+        void updateProductPrice(SkuGoodsBean bean, String productPrice);
+
+        /**
+         * 商品成本价修改
+         *
+         * @param bean      商品
+         * @param costPrice 修改后的价格
+         */
+        void updateCostPrice(SkuGoodsBean bean, String costPrice);
     }
 }

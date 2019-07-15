@@ -1,10 +1,9 @@
 package com.hll_sc_app.api;
 
-import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -21,12 +20,22 @@ public interface PriceManageService {
     PriceManageService INSTANCE = HttpFactory.create(PriceManageService.class);
 
     /**
-     * 添加报价单
+     * 商品价格修改服务
      *
      * @param req req
      * @return resp
      */
     @POST(HttpConfig.URL)
-    @Headers("pv:100020")
-    Observable<BaseResp<Object>> addQuotation(@Body BaseReq<QuotationReq> req);
+    @Headers("pv:100017")
+    Observable<BaseResp<Object>> updateProductPrice(@Body BaseMapReq req);
+
+    /**
+     * 商品成本价修改
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100071")
+    Observable<BaseResp<Object>> updateCostPrice(@Body BaseMapReq req);
 }

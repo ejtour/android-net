@@ -1,11 +1,14 @@
 package com.hll_sc_app.app.pricemanage;
 
 import com.hll_sc_app.api.GoodsService;
+import com.hll_sc_app.api.PriceManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.goods.SkuProductsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -49,6 +52,60 @@ public class PriceManagePresenter implements PriceManageContract.IPriceManagePre
         mTempPageNum = mPageNum;
         mTempPageNum++;
         toQueryDepositProducts(false);
+    }
+
+    @Override
+    public void updateProductPrice(SkuGoodsBean bean, String productPrice) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("groupID", UserConfig.getGroupID())
+            .put("productID", bean.getProductID())
+            .put("productPrice", productPrice)
+            .put("specID", bean.getSpecID())
+            .create();
+        PriceManageService.INSTANCE.updateProductPrice(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object object) {
+                    queryPriceManageList(true);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void updateCostPrice(SkuGoodsBean bean, String costPrice) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("groupID", UserConfig.getGroupID())
+            .put("productID", bean.getProductID())
+            .put("costPrice", costPrice)
+            .put("specID", bean.getSpecID())
+            .create();
+        PriceManageService.INSTANCE.updateCostPrice(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object object) {
+                    queryPriceManageList(true);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
     }
 
     private void toQueryDepositProducts(boolean showLoading) {
