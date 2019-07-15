@@ -249,4 +249,9 @@ public class RouterConfig {
      * 售后详情-协商历史
      */
     public static final String AFTER_SALES_NEGOTIATION_HISTORY = "/activity/afterSales/negotiationHistory";
+
+    /**
+     * 售后审核-仓库/司机收货
+     */
+    public static final String AFTER_SALES_GOODS_OPERATION = "/activity/afterSales/goodsOperation";
 }

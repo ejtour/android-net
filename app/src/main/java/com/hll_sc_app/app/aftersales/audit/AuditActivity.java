@@ -16,6 +16,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
+import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -23,18 +25,22 @@ import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
 import com.hll_sc_app.bean.event.AfterSalesEvent;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.SingleSelectionWindow;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 import com.hll_sc_app.widget.aftersales.PurchaserShopSelectWindow;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +68,11 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
      */
     @BindView(R.id.asa_date)
     TextView mDate;
+    /**
+     * 退货类型
+     */
+    @BindView(R.id.asa_type)
+    TextView mType;
     @BindView(R.id.asa_pager)
     ViewPager mPager;
     @BindView(R.id.asa_purchase_arrow)
@@ -80,6 +91,7 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
     private DateRangeWindow mDateRangeWindow;
     private final AuditParam mParam = new AuditParam();
     private ContextOptionsWindow mOptionsWindow;
+    private SingleSelectionWindow<NameValue> mTypeWindow;
     private IAuditActivityContract.IAuditActivityPresenter mPresenter;
     private PurchaserListResp mPurchaserListResp;
 
@@ -110,10 +122,14 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /*if (requestCode == DetailsShowActivity.REQ_CODE && resultCode == RESULT_OK && data != null) {
-            OrderListResp.RecordsBean parcelable = data.getParcelableExtra("parcelable");
-            refreshCurrentData(parcelable);
-        }*/
+        if (resultCode == RESULT_OK) {
+            if (requestCode == AfterSalesDetailActivity.REQ_CODE && data != null) {
+                AfterSalesBean parcelable = data.getParcelableExtra("parcelable");
+                refreshCurrentData(parcelable);
+            } else if (requestCode == GoodsOperationActivity.REQ_CODE) {
+                EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.RELOAD_ITEM));
+            }
+        }
     }
 
     private void initView() {
@@ -177,26 +193,53 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
         showPurchaserWindow(view);
     }
 
+    @OnClick(R.id.asa_type_btn)
+    public void selectType(View view) {
+        mTypeArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
+        mType.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        showTypeWindow(view);
+    }
+
     /**
      * 初始化采购商选择弹窗
      */
     private void showPurchaserWindow(View view) {
         if (mSelectionWindow == null) {
-            mSelectionWindow = PurchaserShopSelectWindow.create(this, new PurchaserShopSelectWindow.PurchaserShopSelectCallback() {
-                @Override
-                public void onSelect(String purchaserID, String shopID) {
-
-                }
+            mSelectionWindow = PurchaserShopSelectWindow.create(this, (purchaserID, shopID) -> {
+                mSelectionWindow.dismiss();
+                mParam.setPurchaserID(purchaserID);
+                mParam.setPurchaserShopID(shopID);
+                EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REFRESH_LIST));
             });
             mSelectionWindow.setOnDismissListener(() -> {
                 mShopArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
                 mShop.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
             });
         }
-        if (mPurchaserListResp != null) {
-            mSelectionWindow.setLeftList(mPurchaserListResp.getList());
-            mSelectionWindow.showAsDropDownFix(view);
+        if (mPurchaserListResp != null)
+            mSelectionWindow.setLeftList(mPurchaserListResp.getList())
+                    .showAsDropDownFix(view);
+    }
+
+    private void showTypeWindow(View view) {
+        if (mTypeWindow == null) {
+            List<NameValue> list = new ArrayList<>();
+            list.add(new NameValue("全部", "0"));
+            list.add(new NameValue("自由退款", "1"));
+            list.add(new NameValue("快速退款", "2"));
+            mTypeWindow = new SingleSelectionWindow<>(this, NameValue::getName);
+            mTypeWindow.refreshList(list);
+            mTypeWindow.setOnDismissListener(() -> {
+                mTypeArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
+                mType.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
+            });
+            mTypeWindow.setSelectListener(nameValue -> {
+                mParam.setSourceType(Integer.valueOf(nameValue.getValue()));
+                mType.setText(nameValue.getName());
+                EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REFRESH_LIST));
+            });
         }
+        mTypeWindow.showAsDropDownFix(view);
     }
 
     @OnClick(R.id.asa_date_btn)

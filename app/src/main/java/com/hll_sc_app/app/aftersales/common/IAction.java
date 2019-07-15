@@ -10,9 +10,7 @@ public interface IAction {
 
     void actionCancel();
 
-    void actionDriver();
-
-    void actionWarehouse();
+    void actionGoodsOperation();
 
     void actionCustomerService();
 
