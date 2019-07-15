@@ -12,6 +12,9 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -19,6 +22,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -26,6 +30,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -52,9 +57,13 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_ration_name)
     TextView mTxtRationName;
+    @BindView(R.id.edt_search)
+    EditText mEdtSearch;
+    @BindView(R.id.img_clear)
+    ImageView mImgClear;
+    private EmptyView mEmptyView;
     private PriceManageListAdapter mAdapter;
     private PriceManagePresenter mPresenter;
-    private EmptyView mEmptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +78,14 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     }
 
     private void initView() {
+        mEdtSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                toSearch();
+            }
+            return true;
+        });
+        mEdtSearch.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s
+            -> mImgClear.setVisibility(TextUtils.isEmpty(s) ? View.GONE : View.VISIBLE));
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -91,6 +108,12 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有售价设置数据").create();
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void toSearch() {
+        mEdtSearch.clearFocus();
+        ViewUtils.clearEditFocus(mEdtSearch);
+        mPresenter.queryPriceManageList(true);
     }
 
     private void showInputDialog(SkuGoodsBean bean, boolean isProductPrice) {
@@ -117,12 +140,15 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
             .create().show();
     }
 
-
-    @OnClick({R.id.img_back, R.id.txt_log, R.id.txt_filter})
+    @OnClick({R.id.img_back, R.id.img_clear, R.id.txt_log, R.id.txt_filter, R.id.rl_select_ratio})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
                 finish();
+                break;
+            case R.id.img_clear:
+                mEdtSearch.setText(null);
+                toSearch();
                 break;
             case R.id.txt_log:
                 break;
@@ -144,6 +170,11 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
         }
         mAdapter.setEmptyView(mEmptyView);
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+    }
+
+    @Override
+    public String getSearchParam() {
+        return mEdtSearch.getText().toString().trim();
     }
 
     @Override

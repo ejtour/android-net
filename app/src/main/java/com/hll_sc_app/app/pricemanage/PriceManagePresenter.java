@@ -113,6 +113,7 @@ public class PriceManagePresenter implements PriceManageContract.IPriceManagePre
             .put("actionType", "sellPrice")
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
+            .put("name", mView.getSearchParam())
             .create();
         GoodsService.INSTANCE.querySkuProducts(req)
             .compose(ApiScheduler.getObservableScheduler())

@@ -23,6 +23,13 @@ public interface PriceManageContract {
          * @param total  indexList
          */
         void showPriceManageList(List<SkuGoodsBean> list, boolean append, int total);
+
+        /**
+         * 获取搜索词
+         *
+         * @return 搜索词
+         */
+        String getSearchParam();
     }
 
     interface IPriceManagePresenter extends IPresenter<IPriceManageView> {
