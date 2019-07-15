@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -24,6 +25,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
+import com.hll_sc_app.app.goods.invwarn.TopSingleSelectWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -35,7 +37,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
-import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -64,10 +65,12 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     EditText mEdtSearch;
     @BindView(R.id.img_clear)
     ImageView mImgClear;
+    @BindView(R.id.rl_select_ratio)
+    RelativeLayout mRlSelectRatio;
     private EmptyView mEmptyView;
     private PriceManageListAdapter mAdapter;
     private PriceManagePresenter mPresenter;
-    private SingleSelectionDialog mRatioTemplateDialog;
+    private TopSingleSelectWindow<RatioTemplateBean> mRatioTemplateWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -159,24 +162,11 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
             case R.id.txt_filter:
                 break;
             case R.id.rl_select_ratio:
+                mPresenter.queryRatioTemplateList();
                 break;
             default:
                 break;
         }
-    }
-
-    private void showRatioTemplateWindow(List<RatioTemplateBean> values) {
-        if (mRatioTemplateDialog == null) {
-            mRatioTemplateDialog = SingleSelectionDialog.newBuilder(this, RatioTemplateBean::getTemplateName)
-                .setTitleText("报价类别")
-                .refreshList(values)
-                .setOnSelectListener(nameValue -> {
-
-                })
-                .create();
-            mRatioTemplateDialog.getWindow().setGravity(Gravity.TOP);
-        }
-        mRatioTemplateDialog.show();
     }
 
     @Override
@@ -193,6 +183,25 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     @Override
     public String getSearchParam() {
         return mEdtSearch.getText().toString().trim();
+    }
+
+    @Override
+    public void showRatioTemplateWindow(List<RatioTemplateBean> values) {
+        if (mRatioTemplateWindow == null) {
+            mRatioTemplateWindow = new TopSingleSelectWindow<>(this, RatioTemplateBean::getTemplateName, true);
+            mRatioTemplateWindow.setRecyclerViewHeight(UIUtils.dip2px(260));
+            mRatioTemplateWindow.refreshList(values);
+            mRatioTemplateWindow.setListener(ratioTemplateBean -> {
+                if (ratioTemplateBean != null) {
+                    mTxtRationName.setText(ratioTemplateBean.getTemplateName());
+                    mTxtRationName.setTag(ratioTemplateBean.getTemplateID());
+                } else {
+                    mTxtRationName.setText(null);
+                    mTxtRationName.setTag(null);
+                }
+            });
+        }
+        mRatioTemplateWindow.showAsDropDownFix(mRlSelectRatio, Gravity.NO_GRAVITY);
     }
 
     @Override

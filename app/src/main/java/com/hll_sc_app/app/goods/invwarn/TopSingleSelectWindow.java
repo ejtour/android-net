@@ -6,6 +6,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 代仓商品库存预警-仓库选择
@@ -30,14 +33,20 @@ import butterknife.ButterKnife;
 public class TopSingleSelectWindow<T> extends BasePopupWindow {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.fl_bottom)
+    FrameLayout mFlBottom;
     private ListAdapter mAdapter;
     private WrapperName<T> mWrapperName;
     private SelectConfirmListener<T> mListener;
 
-    public TopSingleSelectWindow(Activity context, WrapperName<T> wrapperName) {
+    public TopSingleSelectWindow(Activity context, WrapperName<T> wrapperName, boolean showCancel) {
         super(context);
+        init(context, wrapperName, showCancel);
+    }
+
+    private void init(Activity context, WrapperName<T> wrapperName, boolean showCancel) {
         this.mWrapperName = wrapperName;
-        View view = View.inflate(context, R.layout.window_house_select, null);
+        View view = View.inflate(context, R.layout.window_top_single_select, null);
         view.setOnClickListener(v -> dismiss());
         ButterKnife.bind(this, view);
         this.setContentView(view);
@@ -46,6 +55,7 @@ public class TopSingleSelectWindow<T> extends BasePopupWindow {
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.setBackgroundDrawable(new ColorDrawable(0xbb000000));
+        mFlBottom.setVisibility(showCancel ? View.VISIBLE : View.GONE);
         initView();
     }
 
@@ -65,12 +75,32 @@ public class TopSingleSelectWindow<T> extends BasePopupWindow {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    public TopSingleSelectWindow(Activity context, WrapperName<T> wrapperName) {
+        super(context);
+        init(context, wrapperName, false);
+    }
+
+    public void setRecyclerViewHeight(int height) {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mRecyclerView.getLayoutParams();
+        params.height = height;
+    }
+
     public void refreshList(List<T> list) {
         mAdapter.setNewData(list);
     }
 
     public void setListener(SelectConfirmListener<T> listener) {
         this.mListener = listener;
+    }
+
+    @OnClick(R.id.txt_cancel)
+    public void onViewClicked() {
+        mAdapter.select(null);
+        if (mListener != null) {
+            mListener.confirm(null);
+        }
+        mAdapter.notifyDataSetChanged();
+        dismiss();
     }
 
     public interface WrapperName<T> {
