@@ -10,6 +10,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -28,11 +29,13 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -64,6 +67,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     private EmptyView mEmptyView;
     private PriceManageListAdapter mAdapter;
     private PriceManagePresenter mPresenter;
+    private SingleSelectionDialog mRatioTemplateDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -159,6 +163,20 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
             default:
                 break;
         }
+    }
+
+    private void showRatioTemplateWindow(List<RatioTemplateBean> values) {
+        if (mRatioTemplateDialog == null) {
+            mRatioTemplateDialog = SingleSelectionDialog.newBuilder(this, RatioTemplateBean::getTemplateName)
+                .setTitleText("报价类别")
+                .refreshList(values)
+                .setOnSelectListener(nameValue -> {
+
+                })
+                .create();
+            mRatioTemplateDialog.getWindow().setGravity(Gravity.TOP);
+        }
+        mRatioTemplateDialog.show();
     }
 
     @Override

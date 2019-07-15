@@ -21,7 +21,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.goods.invwarn.HouseSelectWindow;
+import com.hll_sc_app.app.goods.invwarn.TopSingleSelectWindow;
 import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -73,7 +73,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     SmartRefreshLayout mRefreshLayout;
     private PurchaserListAdapter mAdapter;
     private GoodsRelevancePurchaserPresenter mPresenter;
-    private HouseSelectWindow mResourceTypeSelectWindow;
+    private TopSingleSelectWindow<HouseBean> mResourceTypeSelectWindow;
     private EmptyView mEmptyView;
     private List<HouseBean> mListResource;
 
@@ -177,7 +177,8 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     @Override
     public void showResourceTypeWindow() {
         if (mResourceTypeSelectWindow == null) {
-            mResourceTypeSelectWindow = new HouseSelectWindow(this, mListResource);
+            mResourceTypeSelectWindow = new TopSingleSelectWindow<>(this, HouseBean::getHouseName);
+            mResourceTypeSelectWindow.refreshList(mListResource);
             mResourceTypeSelectWindow.setListener(this::showSelectResourceType);
         }
         mResourceTypeSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
