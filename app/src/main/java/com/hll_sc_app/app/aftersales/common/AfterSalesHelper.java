@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.aftersales.common;
 
+import com.hll_sc_app.R;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/7/8
@@ -78,6 +80,24 @@ public class AfterSalesHelper {
     }
 
     /**
+     * 获取售后订单标记
+     * @param type 类型
+     */
+    public static int getRefundBillFlag(int type) {
+        switch (type) {
+            case 1:
+            case 2:
+                return R.drawable.ic_after_sales_money;
+            case 3:
+                return R.drawable.ic_after_sales_goods;
+            case 4:
+                return R.drawable.ic_after_sales_deposit;
+            default:
+                return 0;
+        }
+    }
+
+    /**
      * 获取售后信息前缀
      *
      * @param type 售后类型状态码
@@ -107,7 +127,7 @@ public class AfterSalesHelper {
     public static String getOperatedNumPrefix(int type) {
         switch (type) {
             case 4: // 退押金
-                return "退回：";
+                return "退押金：";
             case 5: // 换货
                 return "换货：";
             default: // 退货退款
