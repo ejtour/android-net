@@ -70,7 +70,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Blue"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/txt_relevance"
+        app:layout_constraintEnd_toStartOf="@+id/txt_relevance"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
