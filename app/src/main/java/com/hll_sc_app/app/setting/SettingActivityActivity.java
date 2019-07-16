@@ -11,6 +11,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,12 +42,14 @@ public class SettingActivityActivity extends BaseLoadActivity implements Setting
 
     }
 
-    @OnClick({R.id.img_close, R.id.txt_logout})
+    @OnClick({R.id.img_close, R.id.txt_logout, R.id.txt_account_manage})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
         } else if (view.getId() == R.id.txt_logout) {
             mPresenter.logout();
+        } else if (view.getId() == R.id.txt_account_manage) {
+            RouterUtil.goToActivity(RouterConfig.USER_CHANGE);
         }
     }
 

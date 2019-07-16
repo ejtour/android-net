@@ -57,6 +57,16 @@ public interface UserService {
     Observable<BaseResp<Object>> find(@Body BaseMapReq req);
 
     /**
+     * 修改密码
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101037")
+    Observable<BaseResp<Object>> changePassword(@Body BaseMapReq req);
+
+    /**
      * 供应商集团注册(简化版)
      *
      * @param req req

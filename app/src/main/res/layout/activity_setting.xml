@@ -43,6 +43,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_account_manage"
                 style="@style/SettingStyle"
                 android:layout_marginTop="10dp"
                 android:text="帐号管理"/>

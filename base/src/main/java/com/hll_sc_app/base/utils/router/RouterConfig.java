@@ -28,6 +28,10 @@ public class RouterConfig {
      */
     public static final String USER_FIND = "/activity/user/findPassword";
     /**
+     * 修改密码
+     */
+    public static final String USER_CHANGE = "/activity/user/changePassword";
+    /**
      * 协议
      */
     public static final String WEB_VIEW_PROTOCOL = "/activity/webView/Protocol";
