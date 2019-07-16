@@ -56,8 +56,7 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
         this.setOutsideTouchable(true);
         this.setBackgroundDrawable(new ColorDrawable());
         // 二级分类展示
-        List<CustomCategoryBean> list2 = resp.getList2();
-        mAdapter = new CategoryListAdapter(list2);
+        mAdapter = new CategoryListAdapter(resp.getList2());
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             CustomCategoryBean bean = (CustomCategoryBean) adapter.getItem(position);
             if (bean != null) {
@@ -200,9 +199,8 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
 
         @Override
         protected void convert(BaseViewHolder helper, CustomCategoryBean item) {
-            TextView txtName = helper.getView(R.id.txt_name);
-            txtName.setText(item.getCategoryName());
-            txtName.setSelected(item.isChecked());
+            helper.setText(R.id.txt_name, item.getCategoryName())
+                .getView(R.id.txt_name).setSelected(item.isChecked());
         }
 
         void setOpen(boolean open) {

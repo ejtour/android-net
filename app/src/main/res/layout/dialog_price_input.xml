@@ -59,8 +59,8 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
         tools:text="商品规格"/>
 
-    <EditText
-        android:id="@+id/edt_content"
+    <RelativeLayout
+        android:id="@+id/rl_content"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginLeft="15dp"
@@ -68,18 +68,45 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/bg_edit_solid_gray"
-        android:hint="输入价格"
-        android:inputType="numberDecimal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:singleLine="true"
-        android:textColor="@color/base_red"
-        android:textColorHint="@color/base_text_hint"
-        android:textSize="@dimen/base_text_13"
         app:layout_constraintBottom_toTopOf="@+id/txt_recommend_price"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_specContent"/>
+        app:layout_constraintTop_toBottomOf="@+id/txt_specContent">
+
+        <EditText
+            android:id="@+id/edt_content"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/txt_percent"
+            android:background="@null"
+            android:hint="输入价格"
+            android:inputType="numberDecimal"
+            android:singleLine="true"
+            android:textColor="@color/base_red"
+            android:textColorHint="@color/base_text_hint"
+            android:textSize="@dimen/base_text_13"/>
+
+        <TextView
+            android:id="@+id/txt_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:singleLine="true"
+            android:text="高于采购价15%"
+            android:textColor="@color/base_red"
+            android:textColorHint="@color/base_text_hint"
+            android:textSize="@dimen/base_text_10"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/txt_recommend_price"
@@ -91,7 +118,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little"
         app:layout_constraintBottom_toTopOf="@+id/view_divider_bottom"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_content"
+        app:layout_constraintTop_toBottomOf="@+id/rl_content"
         tools:text="推荐价格:3000"/>
 
     <TextView
@@ -104,7 +131,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little"
         app:layout_constraintBottom_toTopOf="@+id/view_divider_bottom"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_content"
+        app:layout_constraintTop_toBottomOf="@+id/rl_content"
         tools:text="成本价:¥2800"/>
 
     <android.support.constraint.Group

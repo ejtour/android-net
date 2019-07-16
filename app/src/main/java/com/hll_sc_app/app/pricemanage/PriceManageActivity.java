@@ -71,10 +71,10 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     @BindView(R.id.rl_select_ratio)
     RelativeLayout mRlSelectRatio;
     private EmptyView mEmptyView;
-    private PriceManageListAdapter mAdapter;
     private PriceManagePresenter mPresenter;
-    private TopSingleSelectWindow<RatioTemplateBean> mRatioTemplateWindow;
+    private PriceManageListAdapter mAdapter;
     private PriceManageFilterWindow mFilterWindow;
+    private TopSingleSelectWindow<RatioTemplateBean> mRatioTemplateWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,8 +128,11 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     }
 
     private void showInputDialog(SkuGoodsBean bean, boolean isProductPrice) {
+        // 是否显示推荐价格 和 成本价格
         boolean isShow = false;
+        // 推荐价格
         String recommendPrice = null;
+        // 修改售价时 有比例模板
         if (isProductPrice && mTxtRationName.getTag() != null) {
             RatioTemplateBean templateBean = (RatioTemplateBean) mTxtRationName.getTag();
             List<CategoryRatioListBean> listBeans = templateBean.getCategoryRatioList();
