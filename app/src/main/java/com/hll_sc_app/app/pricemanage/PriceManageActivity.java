@@ -31,6 +31,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
@@ -185,6 +186,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
                 toSearch();
                 break;
             case R.id.txt_log:
+                RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE_LOG);
                 break;
             case R.id.txt_filter:
                 mPresenter.queryCustomCategory();

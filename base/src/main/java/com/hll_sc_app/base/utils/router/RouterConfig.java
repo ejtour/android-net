@@ -16,6 +16,10 @@ public class RouterConfig {
      */
     public static final String PRICE_MANAGE = "/activity/priceManage";
     /**
+     * 售价设置-变更日志
+     */
+    public static final String PRICE_MANAGE_LOG = "/activity/priceManage/log";
+    /**
      * 登录
      */
     public static final String USER_LOGIN = "/activity/user/login";
