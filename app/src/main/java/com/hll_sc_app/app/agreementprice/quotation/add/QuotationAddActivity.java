@@ -126,7 +126,13 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             } else if (id == R.id.img_delete) {
                 adapter.remove(position);
                 adapter.notifyDataSetChanged();
-                checkListTile();
+                if (mAdapter.getData().size() > 0) {
+                    mListTitle.setVisibility(View.VISIBLE);
+                    mLlBottom.setVisibility(View.VISIBLE);
+                } else {
+                    mListTitle.setVisibility(View.GONE);
+                    mLlBottom.setVisibility(View.GONE);
+                }
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -140,8 +146,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             return;
         }
         // 报价商品
-        mAdapter.setNewData(mCopyReq.getList());
-        checkListTile();
+        refreshList(mCopyReq.getList());
         // 报价类别
         QuotationBean bean = mCopyReq.getQuotation();
         mQuotationBean.setIsWarehouse(bean.getIsWarehouse());
@@ -208,16 +213,6 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 dialog.dismiss();
             }, "取消", "确定")
             .create().show();
-    }
-
-    private void checkListTile() {
-        if (mAdapter.getData().size() > 0) {
-            mListTitle.setVisibility(View.VISIBLE);
-            mLlBottom.setVisibility(View.VISIBLE);
-        } else {
-            mListTitle.setVisibility(View.GONE);
-            mLlBottom.setVisibility(View.GONE);
-        }
     }
 
     /**
@@ -313,6 +308,17 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         return recommendPrice;
     }
 
+    private void refreshList(List<QuotationDetailBean> list) {
+        mAdapter.setNewData(list);
+        if (mAdapter.getData().size() > 0) {
+            mListTitle.setVisibility(View.VISIBLE);
+            mLlBottom.setVisibility(View.VISIBLE);
+        } else {
+            mListTitle.setVisibility(View.GONE);
+            mLlBottom.setVisibility(View.GONE);
+        }
+    }
+
     @Subscribe
     public void onEvent(List<SkuGoodsBean> event) {
         // 选择的商品数据
@@ -338,8 +344,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                 bean.getShopProductCategoryThreeID()));
             list.add(quotationDetailBean);
         }
-        mAdapter.setNewData(list);
-        checkListTile();
+        refreshList(list);
     }
 
     @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser, R.id.rl_priceDate,
@@ -384,14 +389,13 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                     mQuotationBean.setIsWarehouse(nameValue.getValue());
                     mTxtIsWarehouse.setText(nameValue.getName());
                     // 重置商品和报价对象
-                    mAdapter.setNewData(null);
+                    refreshList(null);
                     mQuotationBean.setPurchaserID(null);
                     mQuotationBean.setPurchaserName(null);
                     mQuotationBean.setIsAllShop(null);
                     mQuotationBean.setShopIDs(null);
                     mQuotationBean.setShopIDNum(null);
                     mTxtSelectPurchaser.setText(null);
-                    checkListTile();
                 }).create();
         }
         mWarehouseDialog.show();
