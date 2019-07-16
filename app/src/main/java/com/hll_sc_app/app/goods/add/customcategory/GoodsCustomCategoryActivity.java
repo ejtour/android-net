@@ -55,6 +55,8 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
     RecyclerView mRecyclerViewLevel2;
     @Autowired(name = "object0")
     String shopProductCategorySubId;
+    @Autowired(name = "object1")
+    String shopProductCategoryThreeId;
     @BindView(R.id.txt_edit)
     TextView mTxtEdit;
     private GoodsCustomCategoryPresenter mPresenter;
@@ -115,13 +117,9 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
             if (bean == null) {
                 return;
             }
-            CopyCategoryBean copyCategoryBean = new CopyCategoryBean();
-            copyCategoryBean.setShopProductCategorySubID(bean.getShopCategoryPID());
-            copyCategoryBean.setShopProductCategorySubName(getShopProductCategorySubName(bean.getShopCategoryPID()));
-            copyCategoryBean.setShopProductCategoryThreeID(bean.getId());
-            copyCategoryBean.setShopProductCategoryThreeName(bean.getCategoryName());
-            EventBus.getDefault().post(copyCategoryBean);
-            finish();
+            reset();
+            bean.setChecked(true);
+            confirm();
         });
         mCustomCategoryAdapter2.setOnItemChildClickListener(this::editCustomCategory);
         mRecyclerViewLevel2.setAdapter(mCustomCategoryAdapter2);
@@ -139,6 +137,9 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         if (!TextUtils.isEmpty(id) && resp != null && !CommonUtils.isEmpty(resp.getList3())) {
             for (CustomCategoryBean customCategoryBean : resp.getList3()) {
                 if (TextUtils.equals(id, customCategoryBean.getShopCategoryPID())) {
+                    if (TextUtils.equals(customCategoryBean.getId(), shopProductCategoryThreeId)) {
+                        customCategoryBean.setChecked(true);
+                    }
                     list.add(customCategoryBean);
                 }
             }
@@ -167,23 +168,31 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
         return TextUtils.equals(mTxtEdit.getText(), "完成");
     }
 
-    /**
-     * 获取选中的一级分类的分类名称
-     *
-     * @param id 一级分类的 ID
-     * @return 分类名称
-     */
-    private String getShopProductCategorySubName(String id) {
-        String categoryName = "";
-        if (!CommonUtils.isEmpty(mCustomCategoryAdapter1.getData())) {
-            for (CustomCategoryBean bean : mCustomCategoryAdapter1.getData()) {
-                if (TextUtils.equals(id, bean.getId())) {
-                    categoryName = bean.getCategoryName();
+    private void reset() {
+        List<CustomCategoryBean> list = mCustomCategoryAdapter2.getData();
+        if (!CommonUtils.isEmpty(list)) {
+            for (CustomCategoryBean bean : list) {
+                bean.setChecked(false);
+            }
+        }
+    }
+
+    private void confirm() {
+        List<CustomCategoryBean> list = mCustomCategoryAdapter2.getData();
+        if (!CommonUtils.isEmpty(list)) {
+            for (CustomCategoryBean bean : list) {
+                if (bean.isChecked()) {
+                    CopyCategoryBean copyCategoryBean = new CopyCategoryBean();
+                    copyCategoryBean.setShopProductCategorySubID(bean.getShopCategoryPID());
+                    copyCategoryBean.setShopProductCategorySubName(getShopProductCategorySubName(bean.getShopCategoryPID()));
+                    copyCategoryBean.setShopProductCategoryThreeID(bean.getId());
+                    copyCategoryBean.setShopProductCategoryThreeName(bean.getCategoryName());
+                    EventBus.getDefault().post(copyCategoryBean);
                     break;
                 }
             }
         }
-        return categoryName;
+        finish();
     }
 
     /**
@@ -236,11 +245,35 @@ public class GoodsCustomCategoryActivity extends BaseLoadActivity implements Goo
             .create().show();
     }
 
+    /**
+     * 获取选中的一级分类的分类名称
+     *
+     * @param id 一级分类的 ID
+     * @return 分类名称
+     */
+    private String getShopProductCategorySubName(String id) {
+        String categoryName = "";
+        if (!CommonUtils.isEmpty(mCustomCategoryAdapter1.getData())) {
+            for (CustomCategoryBean bean : mCustomCategoryAdapter1.getData()) {
+                if (TextUtils.equals(id, bean.getId())) {
+                    categoryName = bean.getCategoryName();
+                    break;
+                }
+            }
+        }
+        return categoryName;
+    }
+
+    @Override
+    public void onBackPressed() {
+        confirm();
+    }
+
     @OnClick({R.id.img_close, R.id.txt_edit, R.id.txt_create_level1, R.id.txt_create_level2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
-                finish();
+                confirm();
                 break;
             case R.id.txt_edit:
                 // 编辑

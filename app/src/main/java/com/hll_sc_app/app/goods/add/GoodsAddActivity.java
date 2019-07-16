@@ -669,10 +669,15 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 mPresenter.queryCategory();
                 break;
             case R.id.rl_shopProductCategorySubName:
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY,
-                    mTxtShopProductCategorySubName.getTag() != null ?
-                        ((CopyCategoryBean) mTxtShopProductCategorySubName.getTag()).getShopProductCategorySubID() :
-                        "");
+                if (mTxtShopProductCategorySubName.getTag() != null) {
+                    CopyCategoryBean bean = (CopyCategoryBean) mTxtShopProductCategorySubName.getTag();
+                    if (bean != null) {
+                        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY,
+                            bean.getShopProductCategorySubID(), bean.getShopProductCategoryThreeID());
+                    }
+                } else {
+                    RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY);
+                }
                 break;
             case R.id.txt_categoryName_copy:
                 toCopy();
