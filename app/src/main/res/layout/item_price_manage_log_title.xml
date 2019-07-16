@@ -59,7 +59,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:singleLine="true"
-        android:text="规格+单位"
+        android:text="规格/单位"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
 
     <View

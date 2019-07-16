@@ -9,7 +9,9 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,10 +20,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
+import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.bean.pricemanage.PriceLogBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -30,9 +34,13 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -62,11 +70,13 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
     TextView mTxtDateName;
     @BindView(R.id.rl_select_date)
     RelativeLayout mRlSelectDate;
+    @BindView(R.id.searchView)
+    SearchView mSearchView;
     private EmptyView mEmptyView;
     private PriceLogListAdapter mAdapter;
+    private DateRangeWindow mDateRangeWindow;
     private PriceChangeLogPresenter mPresenter;
     private ContextOptionsWindow mOptionsWindow;
-    private DateRangeWindow mDateRangeWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,9 +89,37 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
         mPresenter = PriceChangeLogPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
+        mSearchView.setPadding(0, 0, 0, 0);
+        mSearchView.setBackgroundResource(R.color.base_colorPrimary);
+        LinearLayout llContent = mSearchView.getContentView();
+        if (llContent != null) {
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) llContent.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
+            llContent.setBackgroundResource(R.drawable.bg_search_text);
+            llContent.setGravity(Gravity.CENTER_VERTICAL);
+            mSearchView.setTextColorWhite();
+        }
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_RELEVANCE_LIST);
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                mPresenter.queryPriceLogList(true);
+            }
+        });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -111,6 +149,14 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
         mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(endDate, CalendarUtils.FORMAT_SERVER_DATE));
     }
 
+    @Subscribe
+    public void onEvent(GoodsRelevanceListSearchEvent event) {
+        String name = event.getName();
+        if (!TextUtils.isEmpty(name)) {
+            mSearchView.showSearchContent(true, name);
+        }
+    }
+
     @OnClick({R.id.img_back, R.id.txt_options, R.id.rl_select_date})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -128,9 +174,6 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
         }
     }
 
-    /**
-     * 导出到邮箱
-     */
     private void showAddWindow() {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
@@ -187,7 +230,7 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
 
     @Override
     public String getSearchParam() {
-        return null;
+        return mSearchView.getSearchContent();
     }
 
     @Override
@@ -246,8 +289,8 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
                 .setText(R.id.txt_priceBefore, CommonUtils.formatNumber(bean.getPriceBefore()))
                 .setText(R.id.txt_priceAfter, CommonUtils.formatNumber(bean.getPriceAfter()))
                 .setText(R.id.txt_modifier, bean.getModifier())
-                .setText(R.id.txt_modifyTime, formatModifyTime(bean.getModifyTime()));
-            helper.itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
+                .setText(R.id.txt_modifyTime, formatModifyTime(bean.getModifyTime()))
+                .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
                 R.drawable.bg_price_log_content_gray : R.drawable.bg_price_log_content_white);
         }
 
