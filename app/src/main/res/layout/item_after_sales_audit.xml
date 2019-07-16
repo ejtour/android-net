@@ -62,9 +62,9 @@
         android:text="代仓"
         android:textAppearance="@style/TextAppearance.City22.Little.Blue"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/asa_bill_status"
-        app:layout_constraintStart_toEndOf="@id/asa_bill_status"
-        app:layout_constraintTop_toTopOf="@id/asa_bill_status" />
+        app:layout_constraintBottom_toBottomOf="@+id/asa_bill_status"
+        app:layout_constraintStart_toEndOf="@+id/asa_bill_status"
+        app:layout_constraintTop_toTopOf="@+id/asa_bill_status" />
 
     <TextView
         android:id="@+id/asa_apply_time"

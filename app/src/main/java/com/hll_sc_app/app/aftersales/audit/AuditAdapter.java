@@ -48,8 +48,7 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
         else if (item.getRefundBillStatus() == 7)
             descBuilder.append(AfterSalesHelper.getCancelRoleDes(item.getCancelRole()));
         descBuilder.append(AfterSalesHelper.getRefundStatusDesc(item.getRefundBillStatus()));
-        helper.setImageResource(R.id.asa_bill_type, item.getRefundBillType() == 1 || item.getRefundBillType() == 2
-                ? R.drawable.ic_after_sales_money : R.drawable.ic_after_sales_goods)
+        helper.setImageResource(R.id.asa_bill_type, AfterSalesHelper.getRefundBillFlag(item.getRefundBillType()))
                 .setText(R.id.asa_bill_status, descBuilder.toString())
                 .setGone(R.id.asa_warehouse_tag, item.getShipperID() > 0)
                 .setText(R.id.asa_apply_time, "申请时间：" + CalendarUtils.format(

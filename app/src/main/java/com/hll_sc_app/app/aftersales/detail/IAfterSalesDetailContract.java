@@ -22,19 +22,17 @@ public interface IAfterSalesDetailContract {
     interface IAfterSalesDetailPresenter extends IPresenter<IAfterSalesDetailView> {
         /**
          * 获取售后详情
-         *
-         * @param refundBillID 售后订单 ID
          */
-        void getDetail(String refundBillID);
+        void getDetail();
 
         /**
          * 进行售后单操作
          */
-        void doAction(int actionType, String payType, String billID, int status, int type, String msg);
+        void doAction(int actionType, String payType ,int status, int type, String msg);
 
         /**
          * 修改价格
          */
-        void modifyPrice(String price, String refundBillDetailID, String refundBillID);
+        void modifyPrice(String price, String refundBillDetailID);
     }
 }

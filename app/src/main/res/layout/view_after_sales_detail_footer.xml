@@ -236,13 +236,6 @@
         app:layout_constraintStart_toStartOf="@+id/sdf_refund_type"
         tools:text="¥2520" />
 
-    <android.support.constraint.Group
-        android:id="@+id/sdf_related_bill_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="sdf_divider,sdf_related_bill_number_label,sdf_related_bill_number,sdf_view_related_bill,sdf_related_bill_amount,sdf_related_bill_amount_label" />
-
     <TextView
         android:id="@+id/sdf_pay_method_label"
         android:layout_width="wrap_content"

@@ -55,6 +55,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.GOODS_RELEVANCE_LIST_SELECT, extras = Constant.LOGIN_EXTRA)
 public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements GoodsRelevanceSelectContract.IGoodsStickView {
+    public static final int REQ_CODE = 0x788;
     public static final String STRING_CATEGORY = "推荐";
     @BindView(R.id.searchView)
     SearchView mSearchView;
@@ -250,6 +251,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     public void addSuccess() {
         showToast("新增修改关联商品成功");
         EventBus.getDefault().post(new GoodsRelevanceRefreshEvent());
+        setResult(RESULT_OK);
         finish();
     }
 

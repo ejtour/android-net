@@ -44,17 +44,17 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:text="合计："
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintBottom_toBottomOf="@id/sgo_bottom_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/sgo_bottom_bg"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/sgo_bottom_bg" />
+        app:layout_constraintTop_toTopOf="@+id/sgo_bottom_bg" />
 
     <TextView
         android:id="@+id/sgo_sum_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Little.Red"
-        app:layout_constraintBaseline_toBaselineOf="@id/sgo_sum_label"
-        app:layout_constraintStart_toEndOf="@id/sgo_sum_label"
+        app:layout_constraintBaseline_toBaselineOf="@+id/sgo_sum_label"
+        app:layout_constraintStart_toEndOf="@+id/sgo_sum_label"
         tools:text="¥11200.00" />
 
     <android.support.v7.widget.RecyclerView
