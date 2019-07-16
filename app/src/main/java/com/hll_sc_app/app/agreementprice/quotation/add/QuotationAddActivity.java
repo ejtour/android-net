@@ -32,6 +32,7 @@ import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateSelectWindow;
+import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
@@ -140,6 +141,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         }
         // 报价商品
         mAdapter.setNewData(mCopyReq.getList());
+        checkListTile();
         // 报价类别
         QuotationBean bean = mCopyReq.getQuotation();
         mQuotationBean.setIsWarehouse(bean.getIsWarehouse());
@@ -277,7 +279,38 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         // 协议价比例模板
         mQuotationBean.setTemplateID(event.getTemplateID());
         mQuotationBean.setTemplateName(event.getTemplateName());
+        mTxtTemplateName.setTag(event);
         mTxtTemplateName.setText(event.getTemplateName());
+        List<QuotationDetailBean> list = mAdapter.getData();
+        if (!CommonUtils.isEmpty(list)) {
+            for (QuotationDetailBean bean : list) {
+                bean.setPrice(getRecommendPrice(bean.getProductPrice(), bean.getShopProductCategoryThreeID()));
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private String getRecommendPrice(String productPrice, String shopProductCategoryThreeId) {
+        String recommendPrice = productPrice;
+        // 有比例模板
+        if (mTxtTemplateName.getTag() != null) {
+            RatioTemplateBean templateBean = (RatioTemplateBean) mTxtTemplateName.getTag();
+            List<CategoryRatioListBean> listBeans = templateBean.getCategoryRatioList();
+            if (!CommonUtils.isEmpty(listBeans)) {
+                for (CategoryRatioListBean categoryRatioListBean : listBeans) {
+                    if (TextUtils.equals(categoryRatioListBean.getShopProductCategoryThreeID(),
+                        shopProductCategoryThreeId)) {
+                        double ratio = CommonUtils.addDouble(CommonUtils.getDouble(categoryRatioListBean.getRatio()),
+                            100).doubleValue();
+                        double result =
+                            CommonUtils.mulDouble(ratio, CommonUtils.getDouble(productPrice)).doubleValue();
+                        recommendPrice = CommonUtils.formatNumber(CommonUtils.divDouble(result, 100).doubleValue());
+                        break;
+                    }
+                }
+            }
+        }
+        return recommendPrice;
     }
 
     @Subscribe
@@ -294,7 +327,6 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             quotationDetailBean.setProductSpecID(bean.getSpecID());
             quotationDetailBean.setCostPrice(bean.getCostPrice());
             quotationDetailBean.setImgUrl(bean.getImgUrl());
-            quotationDetailBean.setPrice(bean.getProductPrice());
             quotationDetailBean.setProductCode(bean.getProductCode());
             quotationDetailBean.setProductID(bean.getProductID());
             quotationDetailBean.setProductName(bean.getProductName());
@@ -302,6 +334,8 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             quotationDetailBean.setSaleUnitName(bean.getSaleUnitName());
             quotationDetailBean.setCategoryID(bean.getCategoryThreeID());
             quotationDetailBean.setCategorySubID(bean.getCategorySubID());
+            quotationDetailBean.setPrice(getRecommendPrice(bean.getProductPrice(),
+                bean.getShopProductCategoryThreeID()));
             list.add(quotationDetailBean);
         }
         mAdapter.setNewData(list);
