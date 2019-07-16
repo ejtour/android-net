@@ -16,6 +16,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
+import com.hll_sc_app.app.goods.relevance.goods.select.GoodsRelevanceSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -93,19 +94,21 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
         listView.addItemDecoration(new SimpleDecoration(Color.WHITE, UIUtils.dip2px(5)));
         listView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (view.getId() == R.id.asd_change_price) {
-                AfterSalesDetailsBean item = (AfterSalesDetailsBean) adapter.getItem(position);
-                if (item == null) {
-                    return;
-                }
+            AfterSalesDetailsBean item = (AfterSalesDetailsBean) adapter.getItem(position);
+            if (item == null) return;
+            if (view.getId() == R.id.asd_change_price)
                 new ModifyUnitPriceDialog(this)
                         .setProductName(item.getProductName())
                         .setProductSpec(item.getProductSpec())
                         .setRawPrice(item.getProductPrice())
                         .setModifyCallback(price -> modifyPrice(price, item.getId()))
                         .show();
-            }
         });
+
+        mAdapter.setCallback(bean ->
+                RouterUtil.goToActivity(RouterConfig.GOODS_RELEVANCE_LIST_SELECT,
+                        this, GoodsRelevanceSelectActivity.REQ_CODE,
+                        bean.convertToTransferDetail(mBean.getErpShopID())));
 
         // 头部状态栏
         mHeaderView = new AfterSalesDetailHeader(this);
@@ -118,7 +121,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     }
 
     private void modifyPrice(String price, String detailsID) {
-        present.modifyPrice(price, detailsID, mBean.getId());
+        present.modifyPrice(price, detailsID);
     }
 
     /**
@@ -140,7 +143,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
 
     private void initData() {
-        present = AfterSalesDetailPresenter.newInstance();
+        present = AfterSalesDetailPresenter.newInstance(mBean.getId());
         present.register(this);
         showDetail(mBean);
     }
@@ -158,8 +161,19 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == GoodsOperationActivity.REQ_CODE)
+        if (resultCode == RESULT_OK)
+            if (requestCode == GoodsRelevanceSelectActivity.REQ_CODE)
+                delayLoad();
+            else if (requestCode == GoodsOperationActivity.REQ_CODE)
+                handleStatusChange();
+    }
+
+    private void delayLoad() {
+        showLoading();
+        listView.postDelayed(() -> {
+            hideLoading();
             handleStatusChange();
+        }, 1000);
     }
 
     @Override
@@ -234,7 +248,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
         AfterSalesAuditDialog.create(this)
                 .canModify(mBean.canModify())
                 .setCallback((payType, remark) ->
-                        present.doAction(1, payType, mBean.getId(),
+                        present.doAction(1, payType,
                                 mBean.getRefundBillStatus(), mBean.getRefundBillType(),
                                 remark))
                 .show();
@@ -242,7 +256,6 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
     private void rejectReq(String reason) {
         present.doAction(5, null,
-                mBean.getId(),
                 mBean.getRefundBillStatus(),
                 mBean.getRefundBillType(),
                 reason);
@@ -251,7 +264,6 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     @Override
     public void actionFinance() {
         present.doAction(4, null,
-                mBean.getId(),
                 mBean.getRefundBillStatus(),
                 mBean.getRefundBillType(),
                 null);
@@ -260,7 +272,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     @Override
     public void handleStatusChange() {
         hasChanged = true;
-        present.getDetail(mBean.getId());
+        present.getDetail();
     }
 
     @Override
