@@ -10,6 +10,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -19,6 +21,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.pricemanage.PriceLogBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -32,6 +35,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -47,16 +51,22 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.PRICE_MANAGE_LOG, extras = Constant.LOGIN_EXTRA)
 public class PriceChangeLogActivity extends BaseLoadActivity implements PriceChangeLogContract.IPriceManageView {
+    private static final String FORMAT_DATE = "yyyy/MM/dd";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_options)
     ImageView mTxtOptions;
+    @BindView(R.id.txt_date_name)
+    TextView mTxtDateName;
+    @BindView(R.id.rl_select_date)
+    RelativeLayout mRlSelectDate;
     private EmptyView mEmptyView;
     private PriceLogListAdapter mAdapter;
     private PriceChangeLogPresenter mPresenter;
     private ContextOptionsWindow mOptionsWindow;
+    private DateRangeWindow mDateRangeWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +75,7 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
+        initDefaultTime();
         mPresenter = PriceChangeLogPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
@@ -90,6 +101,16 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    private void initDefaultTime() {
+        Date endDate = new Date();
+        Date startDate = CalendarUtils.getDateBeforeMonth(endDate, 1);
+        String startStr = CalendarUtils.format(startDate, FORMAT_DATE);
+        String endStr = CalendarUtils.format(endDate, FORMAT_DATE);
+        mTxtDateName.setText(String.format("%s-%s", startStr, endStr));
+        mTxtDateName.setTag(R.id.date_start, CalendarUtils.format(startDate, CalendarUtils.FORMAT_SERVER_DATE));
+        mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(endDate, CalendarUtils.FORMAT_SERVER_DATE));
+    }
+
     @OnClick({R.id.img_back, R.id.txt_options, R.id.rl_select_date})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -100,6 +121,7 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
                 showAddWindow();
                 break;
             case R.id.rl_select_date:
+                showDateRangeWindow();
                 break;
             default:
                 break;
@@ -122,6 +144,36 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
         mOptionsWindow.showAsDropDownFix(mTxtOptions, Gravity.END);
     }
 
+    private void showDateRangeWindow() {
+        if (mDateRangeWindow == null) {
+            mDateRangeWindow = new DateRangeWindow(this);
+            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
+                if (start == null && end == null) {
+                    mTxtDateName.setText(null);
+                    mTxtDateName.setTag(R.id.date_start, "");
+                    mTxtDateName.setTag(R.id.date_end, "");
+                    mPresenter.queryPriceLogList(true);
+                    return;
+                }
+                if (start != null && end != null) {
+                    Calendar calendarStart = Calendar.getInstance();
+                    calendarStart.setTimeInMillis(start.getTimeInMillis());
+                    String startStr = CalendarUtils.format(calendarStart.getTime(), FORMAT_DATE);
+                    Calendar calendarEnd = Calendar.getInstance();
+                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
+                    String endStr = CalendarUtils.format(calendarEnd.getTime(), FORMAT_DATE);
+                    mTxtDateName.setText(String.format("%s-%s", startStr, endStr));
+                    mTxtDateName.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE));
+                    mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE));
+                    mPresenter.queryPriceLogList(true);
+                }
+            });
+        }
+        mDateRangeWindow.showAsDropDownFix(mRlSelectDate);
+    }
+
     @Override
     public void showPriceLogList(List<PriceLogBean> list, boolean append, int total) {
         if (append) {
@@ -140,12 +192,20 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
 
     @Override
     public String getStartTime() {
-        return "20190616";
+        String startTime = null;
+        if (mTxtDateName.getTag(R.id.date_start) != null) {
+            startTime = (String) mTxtDateName.getTag(R.id.date_start);
+        }
+        return startTime;
     }
 
     @Override
     public String getEndTime() {
-        return "20190716";
+        String endTime = null;
+        if (mTxtDateName.getTag(R.id.date_end) != null) {
+            endTime = (String) mTxtDateName.getTag(R.id.date_end);
+        }
+        return endTime;
     }
 
     @Override

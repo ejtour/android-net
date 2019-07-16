@@ -94,6 +94,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:drawableRight="@drawable/ic_arrow_drop"
+            android:drawableLeft="@drawable/ic_date"
             android:drawablePadding="5dp"
             android:gravity="right"
             android:hint="请选择日期"
