@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -18,13 +20,18 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.pricemanage.PriceLogBean;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,9 +51,12 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.txt_options)
+    ImageView mTxtOptions;
     private EmptyView mEmptyView;
     private PriceLogListAdapter mAdapter;
     private PriceChangeLogPresenter mPresenter;
+    private ContextOptionsWindow mOptionsWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,12 +97,29 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
                 finish();
                 break;
             case R.id.txt_options:
+                showAddWindow();
                 break;
             case R.id.rl_select_date:
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 导出到邮箱
+     */
+    private void showAddWindow() {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_AGREEMENT_PRICE_EXPORT));
+            mOptionsWindow = new ContextOptionsWindow(this).setListener((adapter, view, position)
+                -> {
+                mPresenter.exportLog(null);
+                mOptionsWindow.dismiss();
+            }).refreshList(list);
+        }
+        mOptionsWindow.showAsDropDownFix(mTxtOptions, Gravity.END);
     }
 
     @Override
@@ -119,6 +146,21 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
     @Override
     public String getEndTime() {
         return "20190716";
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String tip) {
+        Utils.exportFailure(this, tip);
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, email -> mPresenter.exportLog(email));
     }
 
     @Override

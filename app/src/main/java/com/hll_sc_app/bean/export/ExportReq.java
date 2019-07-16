@@ -102,6 +102,18 @@ public class ExportReq {
          * 协议价请求参数
          */
         private SupplierQuotationBean supplierQuotation;
+        /**
+         * 售价变更请求参数
+         */
+        private PriceFlowBean priceFlow;
+
+        public PriceFlowBean getPriceFlow() {
+            return priceFlow;
+        }
+
+        public void setPriceFlow(PriceFlowBean priceFlow) {
+            this.priceFlow = priceFlow;
+        }
 
         public SupplierQuotationBean getSupplierQuotation() {
             return supplierQuotation;
@@ -149,6 +161,45 @@ public class ExportReq {
 
             public void setBillNos(List<String> billNos) {
                 this.billNos = billNos;
+            }
+        }
+
+        public static class PriceFlowBean {
+            private String groupID;
+            private String endTime;
+            private String startTime;
+            private String productName;
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getEndTime() {
+                return endTime;
+            }
+
+            public void setEndTime(String endTime) {
+                this.endTime = endTime;
+            }
+
+            public String getStartTime() {
+                return startTime;
+            }
+
+            public void setStartTime(String startTime) {
+                this.startTime = startTime;
+            }
+
+            public String getProductName() {
+                return productName;
+            }
+
+            public void setProductName(String productName) {
+                this.productName = productName;
             }
         }
     }

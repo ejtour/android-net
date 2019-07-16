@@ -44,6 +44,25 @@ public interface PriceChangeLogContract {
          * @return 结束时间
          */
         String getEndTime();
+
+        /**
+         * 导出成功
+         *
+         * @param email 邮箱地址
+         */
+        void exportSuccess(String email);
+
+        /**
+         * 导出失败
+         *
+         * @param tip 失败提示
+         */
+        void exportFailure(String tip);
+
+        /**
+         * 绑定邮箱
+         */
+        void bindEmail();
     }
 
     interface IPriceManagePresenter extends IPresenter<IPriceManageView> {
@@ -58,5 +77,12 @@ public interface PriceChangeLogContract {
          * 加载更多售价设置列表
          */
         void queryMorePriceLogList();
+
+        /**
+         * 导出日志
+         *
+         * @param email 邮箱地址
+         */
+        void exportLog(String email);
     }
 }
