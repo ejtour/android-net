@@ -18,8 +18,8 @@ import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.DateUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,7 +120,7 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
         }
 
         // 申请时间
-        mCreateTime.setText(CalendarUtils.getFormatYyyyMmDdHhMm(String.valueOf(data.getRefundBillCreateTime())));
+        mCreateTime.setText(DateUtil.getReadableTime(String.valueOf(data.getRefundBillCreateTime())));
 
         // 原单信息
         mRelatedBillNumber.setText(data.getSubBillNo());
