@@ -188,6 +188,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         } else if (isFromGoodsRelevance()) {
             tips = "请输入采购商集团名称进行查询";
             hint = tips;
+            resId = R.drawable.ic_search_empty_purchaser;
         } else if (isFromSearch()) {
             tips = "请输入搜索词";
             hint = tips;

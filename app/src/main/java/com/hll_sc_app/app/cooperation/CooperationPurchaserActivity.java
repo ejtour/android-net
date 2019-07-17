@@ -26,6 +26,7 @@ import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
@@ -248,22 +249,27 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
             return;
         }
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_ADD)) {
-            // 新增合作采购商
+            RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_ADD);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
             // 我收到的申请
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
             // 我发出的申请
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_EXPORT)) {
-            // 导出合作采购商
             mPresenter.exportPurchaser(null);
         }
         mOptionsWindow.dismiss();
     }
 
-    class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
+    public static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
+        private boolean mAdd;
 
-        PurchaserListAdapter() {
+        public PurchaserListAdapter() {
             super(R.layout.item_cooperation_purchaser);
+        }
+
+        public PurchaserListAdapter(boolean add) {
+            super(R.layout.item_cooperation_purchaser);
+            this.mAdd = add;
         }
 
         @Override
@@ -279,6 +285,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
                 .setText(R.id.txt_linkMan,
                     getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
                 .setText(R.id.txt_shopCount, getShopCountString(item))
+                .setGone(R.id.txt_shopCount, !mAdd)
                 .setGone(R.id.txt_newShopNum, CommonUtils.getDouble(item.getNewShopNum()) != 0);
             ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getLogoUrl());
         }

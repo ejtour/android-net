@@ -5,6 +5,9 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
+import com.hll_sc_app.bean.goods.PurchaserBean;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -39,4 +42,14 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:102022")
     Observable<BaseResp<Object>> delCooperationPurchaser(@Body BaseMapReq req);
+
+    /**
+     * 合作关系使用-集团搜索
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101041")
+    Observable<BaseResp<List<PurchaserBean>>> queryPurchaserList(@Body BaseMapReq req);
 }

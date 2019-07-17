@@ -3,6 +3,7 @@ package com.hll_sc_app.bean.goods;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 
 import java.util.ArrayList;
@@ -15,6 +16,17 @@ import java.util.List;
  * @date 2019-07-04
  */
 public class PurchaserBean implements Parcelable {
+    public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {
+        @Override
+        public PurchaserBean createFromParcel(Parcel source) {
+            return new PurchaserBean(source);
+        }
+
+        @Override
+        public PurchaserBean[] newArray(int size) {
+            return new PurchaserBean[size];
+        }
+    };
     private String readStatus;
     private String uniformSocialCreditCode;
     private String unRelationProductNum;
@@ -38,6 +50,7 @@ public class PurchaserBean implements Parcelable {
     private String identityCard;
     private String message;
     private String linkman;
+    @SerializedName(value = "name")
     private String purchaserName;
     private String groupName;
     private String operateModel;
@@ -52,17 +65,6 @@ public class PurchaserBean implements Parcelable {
     private String otherLicense;
     private String resourceType;
     private String status;
-    public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {
-        @Override
-        public PurchaserBean createFromParcel(Parcel source) {
-            return new PurchaserBean(source);
-        }
-
-        @Override
-        public PurchaserBean[] newArray(int size) {
-            return new PurchaserBean[size];
-        }
-    };
     private boolean select;
     private List<PurchaserShopBean> shopList;
     private String logoUrl;
@@ -117,6 +119,9 @@ public class PurchaserBean implements Parcelable {
         this.mobile = in.readString();
     }
 
+    public PurchaserBean() {
+    }
+
     public String getMobile() {
         return mobile;
     }
@@ -139,9 +144,6 @@ public class PurchaserBean implements Parcelable {
 
     public void setNewShopNum(String newShopNum) {
         this.newShopNum = newShopNum;
-    }
-
-    public PurchaserBean() {
     }
 
     public String getReadStatus() {
@@ -461,14 +463,6 @@ public class PurchaserBean implements Parcelable {
         return 0;
     }
 
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
-    }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.readStatus);
@@ -514,5 +508,13 @@ public class PurchaserBean implements Parcelable {
         dest.writeString(this.shopCount);
         dest.writeString(this.newShopNum);
         dest.writeString(this.mobile);
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 }
