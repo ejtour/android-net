@@ -149,7 +149,7 @@ public class AfterSales {
      * 进行售后操作
      *
      * @param action           1. 客服审核 2. 司机提货 3. 仓库收货  4. 财务审核  5. 客服驳回、司机取消 6. 采购商取消
-     * @param refundBillID     退货单id
+     * @param refundBillIDs    退货单id，多个id 用逗号分隔
      * @param refundBillStatus 订单状态 1-待处理 2-已处理待收货 3-退货发货确认 4-供应商已收货 5-已退款 6-驳回 7-关闭 8-退款受理
      * @param refundBillType   订单类型 1 退款单 2 验货差异处理单 3 退货退款单
      * @param payType          自由退货客服审核必传的支付类型 1-货到付款 2- 账期支付
@@ -157,7 +157,7 @@ public class AfterSales {
      * @param list             退货明细列表，司机收货和仓库收货时传入
      */
     public static void afterSalesAction(int action,
-                                        String refundBillID,
+                                        String refundBillIDs,
                                         int refundBillStatus,
                                         int refundBillType,
                                         String payType,
@@ -166,7 +166,7 @@ public class AfterSales {
                                         SimpleObserver<Object> observer) {
         AfterSalesActionReq req = new AfterSalesActionReq();
         req.setOrderAction(action);
-        req.setRefundBillID(refundBillID);
+        req.setRefundBillIDs(refundBillIDs);
         req.setRefundBillStatus(refundBillStatus);
         req.setRefundBillType(refundBillType);
         req.setPayType(payType);
