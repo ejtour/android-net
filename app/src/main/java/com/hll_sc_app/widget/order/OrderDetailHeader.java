@@ -81,7 +81,7 @@ public class OrderDetailHeader extends ConstraintLayout {
         handleOrderStatus(data.getSubBillStatus(), data.getCanceler(), data.getActionBy(), data.getCancelReason());
         mShopLogo.setImageURL(data.getImgUrl());
         mShopName.setText(data.getShopName());
-        mGroupName.setText(data.getGroupName());
+        mGroupName.setText(data.getPurchaserName());
         mOrderer.setText(String.format("订货人：%s", data.getSubBillCreateBy()));
         mOrdererDial.setTag(data.getOrdererMobile());
         mOrdererDial.setText(handlePhoneNum(data.getOrdererMobile()));
