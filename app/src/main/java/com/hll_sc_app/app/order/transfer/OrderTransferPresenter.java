@@ -2,8 +2,6 @@ package com.hll_sc_app.app.order.transfer;
 
 import android.text.TextUtils;
 
-import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
@@ -36,8 +34,8 @@ public class OrderTransferPresenter implements IOrderTransferContract.IOrderTran
     private void getTransferOrderList(boolean showLoading) {
         OrderParam param = mView.getOrderParam();
         Order.getPendingTransferList(mPageNum,
-                param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
-                param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
+                param.getFormatCreateStart(Constants.UNSIGNED_YYYY_MM_DD),
+                param.getFormatCreateEnd(Constants.UNSIGNED_YYYY_MM_DD),
                 TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
                 param.getSearchShopID(),
                 new SimpleObserver<TransferResp>(mView, showLoading) {

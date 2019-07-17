@@ -3,7 +3,6 @@ package com.hll_sc_app.bean.order.transfer;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.utils.Constants;
@@ -68,11 +67,11 @@ public class TransferBean implements Parcelable {
 
     public String getTargetExecuteDate() {
         String HhMm = "2400";
-        String formatDateStr = CalendarUtils.getDateFormatString(billExecuteTime, Constants.FORMAT_YYYY_MM_DD_HH_MM,
-                Constants.FORMAT_YYYY_MM_DD_HH_MM_DASH);
+        String formatDateStr = CalendarUtils.getDateFormatString(billExecuteTime, Constants.UNSIGNED_YYYY_MM_DD_HH_MM,
+                Constants.SIGNED_YYYY_MM_DD_HH_MM);
         if (billExecuteEndTime.endsWith(HhMm)) return formatDateStr + "-" + "24:00";
         return formatDateStr + "-" + CalendarUtils.getDateFormatString(billExecuteEndTime,
-                Constants.FORMAT_YYYY_MM_DD_HH_MM, "HH:mm");
+                Constants.UNSIGNED_YYYY_MM_DD_HH_MM, Constants.SIGNED_HH_MM);
     }
 
     public long getActionTime() {
