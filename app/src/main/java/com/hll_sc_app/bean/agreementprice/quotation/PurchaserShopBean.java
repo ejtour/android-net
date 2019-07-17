@@ -27,6 +27,15 @@ public class PurchaserShopBean {
     private String shopID;
     private boolean select;
     private List<TimeBean> time;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public List<TimeBean> getTime() {
         return time;

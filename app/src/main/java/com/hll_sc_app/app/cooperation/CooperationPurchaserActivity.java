@@ -129,11 +129,12 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         mAdapter.addHeaderView(headView);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = mAdapter.getItem(position);
-            if (bean == null) {
-                return;
-            }
-            if (view.getId() == R.id.txt_del) {
-                showDelTipsDialog(bean);
+            if (bean != null) {
+                if (view.getId() == R.id.txt_del) {
+                    showDelTipsDialog(bean);
+                } else if (view.getId() == R.id.content) {
+                    RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL, bean.getPurchaserID());
+                }
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -263,7 +264,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
     public static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
         private boolean mAdd;
 
-        public PurchaserListAdapter() {
+        PurchaserListAdapter() {
             super(R.layout.item_cooperation_purchaser);
         }
 
@@ -275,7 +276,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.addOnClickListener(R.id.txt_del);
+            viewHolder.addOnClickListener(R.id.txt_del).addOnClickListener(R.id.content);
             return viewHolder;
         }
 

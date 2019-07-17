@@ -4,6 +4,7 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 
@@ -52,4 +53,14 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101041")
     Observable<BaseResp<List<PurchaserBean>>> queryPurchaserList(@Body BaseMapReq req);
+
+    /**
+     * 合作商详情获取
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102031")
+    Observable<BaseResp<CooperationPurchaserDetail>> queryCooperationPurchaserDetail(@Body BaseMapReq req);
 }

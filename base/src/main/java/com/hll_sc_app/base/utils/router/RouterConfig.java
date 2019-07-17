@@ -80,6 +80,10 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_ADD = "/activity/cooperationPurchaser/add";
     /**
+     * 合作采购商详情
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL = "/activity/cooperationPurchaser/detail";
+    /**
      * 商品置顶管理
      */
     public static final String GOODS_STICK_MANAGE = "/activity/goods/stickManage";
