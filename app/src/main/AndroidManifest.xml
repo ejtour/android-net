@@ -129,6 +129,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.cooperation.CooperationPurchaserActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.goods.relevance.goods.GoodsRelevanceListActivity"
             android:screenOrientation="portrait" />
 

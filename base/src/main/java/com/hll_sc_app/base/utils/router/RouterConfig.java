@@ -72,6 +72,10 @@ public class RouterConfig {
      */
     public static final String GOODS_TEMPLATE_LIST = "/activity/goods/template/list";
     /**
+     * 合作采购商列表
+     */
+    public static final String COOPERATION_PURCHASER_LIST = "/activity/cooperationPurchaser/list";
+    /**
      * 商品置顶管理
      */
     public static final String GOODS_STICK_MANAGE = "/activity/goods/stickManage";
