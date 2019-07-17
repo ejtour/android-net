@@ -41,5 +41,12 @@ public interface CooperationPurchaserContract {
          * 查询下一页商品关联的采购商列表
          */
         void queryMorePurchaserList();
+
+        /**
+         * 删除合作餐企
+         *
+         * @param purchaserId 采购商集团ID
+         */
+        void delCooperationPurchaser(String purchaserId);
     }
 }

@@ -29,4 +29,14 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:102007")
     Observable<BaseResp<CooperationPurchaserResp>> queryCooperationPurchaserList(@Body BaseMapReq req);
+
+    /**
+     * 删除合作餐企
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102022")
+    Observable<BaseResp<Object>> delCooperationPurchaser(@Body BaseMapReq req);
 }

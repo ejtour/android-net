@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -19,11 +20,13 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsListReq;
@@ -122,13 +125,37 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         mTxtShopTotal = headView.findViewById(R.id.txt_shopTotal);
         mAdapter = new PurchaserListAdapter();
         mAdapter.addHeaderView(headView);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
-            if (bean != null) {
-                // TODO:详情
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            PurchaserBean bean = mAdapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+            if (view.getId() == R.id.txt_del) {
+                showDelTipsDialog(bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
+    }
+
+    /**
+     * 删除合作提示框
+     *
+     * @param bean 采购商
+     */
+    private void showDelTipsDialog(PurchaserBean bean) {
+        TipsDialog.newBuilder(this)
+            .setTitle("解除合作")
+            .setMessage("确定要解除合作采购商【" + bean.getPurchaserName() + "】嘛？")
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    mPresenter.delCooperationPurchaser(bean.getPurchaserID());
+                } else {
+                    SwipeItemLayout.closeAllItems(mRecyclerView);
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
     }
 
     @Subscribe
@@ -220,6 +247,13 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
 
         PurchaserListAdapter() {
             super(R.layout.item_cooperation_purchaser);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
+            viewHolder.addOnClickListener(R.id.txt_del);
+            return viewHolder;
         }
 
         @Override

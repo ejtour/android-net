@@ -56,6 +56,32 @@ public class CooperationPurchaserPresenter implements CooperationPurchaserContra
         toQueryPurchaserList(false);
     }
 
+    @Override
+    public void delCooperationPurchaser(String purchaserId) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("groupID", UserConfig.getGroupID())
+            .put("originator", "1")
+            .put("purchaserID", purchaserId)
+            .create();
+        CooperationPurchaserService.INSTANCE.delCooperationPurchaser(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    queryPurchaserList(true);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
     private void toQueryPurchaserList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("actionType", "formalCooperation")
