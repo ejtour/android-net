@@ -6,16 +6,37 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white">
 
+    <ImageView
+        android:id="@+id/asa_check"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:paddingRight="3dp"
+        android:visibility="gone"
+        android:src="@drawable/bg_selector_check_box"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_supplier_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/asa_supplier_name" />
+
+    <ImageView
+        android:id="@+id/asa_shop_flag"
+        android:layout_width="wrap_content"
+        app:layout_goneMarginLeft="@dimen/dp_10"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_small_shop"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_supplier_name"
+        app:layout_constraintStart_toEndOf="@+id/asa_check"
+        app:layout_constraintTop_toTopOf="@+id/asa_supplier_name" />
+
     <TextView
         android:id="@+id/asa_supplier_name"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_40"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:drawableLeft="@drawable/ic_small_shop"
-        android:drawablePadding="5dp"
+        android:layout_marginLeft="5dp"
+        app:layout_goneMarginLeft="0dp"
         android:gravity="center_vertical"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/asa_shop_flag"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="供应商店铺名称" />
 

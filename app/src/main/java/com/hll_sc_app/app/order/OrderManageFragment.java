@@ -456,7 +456,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         for (OrderResp resp : mAdapter.getData()) {
             if (resp.isCanSelect(groupID)) resp.setSelected(!view.isSelected());
         }
-        view.setSelected(!view.isSelected());
         mAdapter.notifyDataSetChanged();
         updateBottomBarData();
     }

@@ -5,9 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
@@ -30,6 +35,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,10 +48,14 @@ import butterknife.Unbinder;
  */
 
 public class AuditFragment extends BaseLazyFragment implements IAuditFragmentContract.IAuditFragmentView {
-    @BindView(R.id.srl_list)
+    @BindView(R.id.asa_list_view)
     RecyclerView mListView;
-    @BindView(R.id.srl_refresh)
+    @BindView(R.id.asa_refresh_view)
     SmartRefreshLayout mRefreshView;
+    @BindView(R.id.asa_bottom_bar_stub)
+    ViewStub mBottomBarStub;
+    private View mBottomBarRoot;
+    private TextView mConfirm;
     Unbinder unbinder;
     private AuditAdapter mAdapter;
     private IAuditFragmentContract.IAuditFragmentPresenter mPresenter;
@@ -55,6 +65,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     private Integer mBillType;
     private AfterSalesBean mCurBean;
     private EmptyView mEmptyView;
+    private ImageView mSelectAll;
 
     public static AuditFragment newInstance(int type) {
         Bundle args = new Bundle();
@@ -78,11 +89,13 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     @Override
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-        View view = inflater.inflate(R.layout.layout_simple_refresh_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_after_sales_audit, container, false);
         unbinder = ButterKnife.bind(this, view);
         mAdapter = new AuditAdapter();
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
         mListView.setAdapter(mAdapter);
+        // 避免 notifyItemChanged 闪烁
+        ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
         setListener();
         return view;
     }
@@ -124,6 +137,11 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 case R.id.asa_thumbnail_wrapper:
                     actionViewDetails();
                     break;
+                case R.id.asa_check:
+                    mCurBean.setSelected(!mCurBean.isSelected());
+                    adapter.notifyItemChanged(position);
+                    updateBottomBar();
+                    break;
                 default:
                     break;
             }
@@ -135,13 +153,64 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
         mPresenter.start();
     }
 
+    private void updateBottomBar() {
+        if (mBillType != null && ((mBillType == 1 && getAuditParam().getSourceType() == 2) || mBillType == 4)) {
+            if (mBottomBarRoot == null) {
+                mBottomBarRoot = mBottomBarStub.inflate();
+                mConfirm = mBottomBarRoot.findViewById(R.id.abb_confirm);
+                mConfirm.setOnClickListener(this::confirm);
+                mSelectAll = mBottomBarRoot.findViewById(R.id.abb_select_all);
+                mSelectAll.setOnClickListener(this::selectAll);
+            }
+            int size = mAdapter.getData().size();
+            if (size > 0) {
+                mAdapter.setCheckable(true);
+                mBottomBarRoot.setVisibility(View.VISIBLE);
+                int count = mAdapter.getSelectedCount();
+                mConfirm.setText(String.format("批量同意(%s)", count));
+                mSelectAll.setSelected(count == size);
+                mConfirm.setEnabled(count > 0);
+            } else mBottomBarRoot.setVisibility(View.GONE);
+        } else {
+            mAdapter.setCheckable(false);
+            if (mBottomBarRoot != null) mBottomBarRoot.setVisibility(View.GONE);
+        }
+    }
+
+    private void confirm(View view) {
+        List<String> ids = new ArrayList<>();
+        for (AfterSalesBean bean : mAdapter.getData()) {
+            if (bean.isSelected()) ids.add(bean.getId());
+        }
+        mPresenter.doAction(mBillType,
+                TextUtils.join(",", ids),
+                mCurBean.getRefundBillStatus(),
+                mCurBean.getRefundBillType(),
+                null, null);
+        mCurBean = null;
+    }
+
+    private void selectAll(View view) {
+        for (AfterSalesBean resp : mAdapter.getData()) {
+            resp.setSelected(!view.isSelected());
+        }
+        mAdapter.notifyDataSetChanged();
+        updateBottomBar();
+    }
+
     @Override
     public void onDestroyView() {
         EventBus.getDefault().unregister(this);
-        mAdapter = null;
-        mEmptyView = null;
-        mListView.setAdapter(null);
+        dispose();
         super.onDestroyView();
+    }
+
+    private void dispose() {
+        mAdapter = null;
+        mBottomBarRoot = null;
+        mSelectAll = null;
+        mConfirm = null;
+        mEmptyView = null;
         unbinder.unbind();
     }
 
@@ -171,19 +240,20 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 mEmptyView.setTipsTitle("搜索不到相关退货审核单");
             }
             mAdapter.setNewData(recordsBeans);
+            updateBottomBar();
         }
     }
 
     @Override
     public void actionSuccess() {
-        mPresenter.requestDetails(mCurBean.getId());
+        if (mCurBean != null) mPresenter.requestDetails(mCurBean.getId());
+        else EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REMOVE_SELECTED));
     }
 
     @Override
     public void updateItem(AfterSalesBean bean) {
-        if (getActivity() instanceof AuditActivity) {
+        if (getActivity() instanceof AuditActivity)
             ((AuditActivity) getActivity()).refreshCurrentData(bean);
-        }
     }
 
     @Override
@@ -231,11 +301,21 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                     replaceDetails((AfterSalesBean) event.getData());
                 break;
             case AfterSalesEvent.REMOVE_SELECTED:
+                if (!isFragmentVisible()) setForceLoad(true);
+                else removeSelected();
                 break;
             case AfterSalesEvent.EXPORT_ORDER:
                 if (isFragmentVisible()) exportOrder(null);
                 break;
         }
+    }
+
+    private void removeSelected() {
+        List<AfterSalesBean> list = new ArrayList<>();
+        for (AfterSalesBean bean : mAdapter.getData()) {
+            if (!bean.isSelected()) list.add(bean);
+        }
+        showList(list, false);
     }
 
     @Override
