@@ -3,6 +3,7 @@ package com.hll_sc_app.app.cooperation.detail;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 
 /**
  * 合作采购商详情
@@ -12,7 +13,7 @@ import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
  */
 public interface CooperationDetailContract {
 
-    interface IGoodsRelevancePurchaserView extends ILoadView {
+    interface ICooperationDetailView extends ILoadView {
         /**
          * 展示采购商集团详情
          *
@@ -28,17 +29,18 @@ public interface CooperationDetailContract {
         String getPurchaserId();
     }
 
-    interface IGoodsRelevancePurchaserPresenter extends IPresenter<IGoodsRelevancePurchaserView> {
+    interface ICooperationDetailPresenter extends IPresenter<ICooperationDetailView> {
+
         /**
-         * 查询商品关联的采购商列表
+         * 查询采购商集团详情
          */
         void queryPurchaserDetail();
 
         /**
-         * 删除合作餐企
+         * 新增或删除合作门店
          *
-         * @param purchaserId 采购商集团ID
+         * @param req req
          */
-        void delCooperationPurchaser(String purchaserId);
+        void editCooperationPurchaserShop(CooperationShopReq req);
     }
 }

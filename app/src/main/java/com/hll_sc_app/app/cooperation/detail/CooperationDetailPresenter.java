@@ -3,11 +3,13 @@ package com.hll_sc_app.app.cooperation.detail;
 import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -19,8 +21,8 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/7/16
  */
-public class CooperationDetailPresenter implements CooperationDetailContract.IGoodsRelevancePurchaserPresenter {
-    private CooperationDetailContract.IGoodsRelevancePurchaserView mView;
+public class CooperationDetailPresenter implements CooperationDetailContract.ICooperationDetailPresenter {
+    private CooperationDetailContract.ICooperationDetailView mView;
 
     static CooperationDetailPresenter newInstance() {
         return new CooperationDetailPresenter();
@@ -32,7 +34,7 @@ public class CooperationDetailPresenter implements CooperationDetailContract.IGo
     }
 
     @Override
-    public void register(CooperationDetailContract.IGoodsRelevancePurchaserView view) {
+    public void register(CooperationDetailContract.ICooperationDetailView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
@@ -66,15 +68,14 @@ public class CooperationDetailPresenter implements CooperationDetailContract.IGo
             });
     }
 
-
     @Override
-    public void delCooperationPurchaser(String purchaserId) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", purchaserId)
-            .create();
-        CooperationPurchaserService.INSTANCE.delCooperationPurchaser(req)
+    public void editCooperationPurchaserShop(CooperationShopReq req) {
+        if (req == null) {
+            return;
+        }
+        BaseReq<CooperationShopReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        CooperationPurchaserService.INSTANCE.editCooperationPurchaserShop(baseReq)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -83,6 +84,7 @@ public class CooperationDetailPresenter implements CooperationDetailContract.IGo
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
+                    queryPurchaserDetail();
                 }
 
                 @Override

@@ -23,11 +23,13 @@ import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -49,7 +51,7 @@ import butterknife.OnClick;
  * @date 2019/7/16
  */
 @Route(path = RouterConfig.COOPERATION_PURCHASER_DETAIL, extras = Constant.LOGIN_EXTRA)
-public class CooperationDetailActivity extends BaseLoadActivity implements CooperationDetailContract.IGoodsRelevancePurchaserView, BaseQuickAdapter.OnItemClickListener {
+public class CooperationDetailActivity extends BaseLoadActivity implements CooperationDetailContract.ICooperationDetailView, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Autowired(name = "object0")
@@ -68,6 +70,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     private CooperationDetailPresenter mPresenter;
     private PurchaserShopListAdapter mAdapter;
     private ContextOptionsWindow mOptionsWindow;
+    private CooperationPurchaserDetail mDetail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,15 +117,32 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             .setButton((dialog, item) -> {
                 dialog.dismiss();
                 if (item == 1) {
-                    mPresenter.delCooperationPurchaser(bean.getPurchaserID());
+                    toDelShop(bean);
                 } else {
                     SwipeItemLayout.closeAllItems(mRecyclerView);
                 }
             }, "我再看看", "立即解除").create().show();
     }
 
+    private void toDelShop(PurchaserShopBean bean) {
+        if (mDetail == null) {
+            return;
+        }
+        CooperationShopReq req = new CooperationShopReq();
+        req.setActionType("delete");
+        req.setGroupID(UserConfig.getGroupID());
+        req.setOriginator("1");
+        req.setPurchaserID(mDetail.getPurchaserID());
+        req.setPurchaserName(mDetail.getName());
+        List<CooperationShopReq.ShopBean> list = new ArrayList<>();
+        list.add(new CooperationShopReq.ShopBean(bean.getShopID(), bean.getShopName()));
+        req.setShopList(list);
+        mPresenter.editCooperationPurchaserShop(req);
+    }
+
     @Override
     public void showPurchaserDetail(CooperationPurchaserDetail resp) {
+        mDetail = resp;
         mImgLogoUrl.setImageURL(resp.getLogoUrl());
         mTxtName.setText(resp.getName());
         mTxtDefaultDeliveryWay.setText(String.format("默认结算方式：%s", getDeliveryWay(resp.getDefaultDeliveryWay())));

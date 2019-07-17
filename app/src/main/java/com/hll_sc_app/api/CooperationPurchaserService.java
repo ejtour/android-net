@@ -1,11 +1,13 @@
 package com.hll_sc_app.api;
 
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
+import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 
 import java.util.List;
@@ -63,4 +65,14 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:102031")
     Observable<BaseResp<CooperationPurchaserDetail>> queryCooperationPurchaserDetail(@Body BaseMapReq req);
+
+    /**
+     * 新增或删除合作门店
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102034")
+    Observable<BaseResp<Object>> editCooperationPurchaserShop(@Body BaseReq<CooperationShopReq> req);
 }
