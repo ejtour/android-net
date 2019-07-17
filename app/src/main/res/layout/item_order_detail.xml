@@ -48,12 +48,16 @@
 
     <TextView
         android:id="@+id/iod_ware_house"
-        android:layout_width="26dp"
-        android:layout_height="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="5dp"
         android:background="@drawable/bg_tag_primary_solid"
         android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingTop="1dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="1dp"
         android:text="代仓"
         android:textAppearance="@style/TextAppearance.City22.Little.White"
         app:layout_constraintBottom_toBottomOf="@+id/iod_product_name"
