@@ -84,6 +84,10 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_DETAIL = "/activity/cooperationPurchaser/detail";
     /**
+     * 合作采购商详情-新增门店
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_ADD_SHOP = "/activity/cooperationPurchaser/detail/addShop";
+    /**
      * 商品置顶管理
      */
     public static final String GOODS_STICK_MANAGE = "/activity/goods/stickManage";

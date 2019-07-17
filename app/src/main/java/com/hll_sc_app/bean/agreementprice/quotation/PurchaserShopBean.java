@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.agreementprice.quotation;
 
+import com.hll_sc_app.base.utils.UIUtils;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,6 +31,24 @@ public class PurchaserShopBean {
     private boolean select;
     private List<TimeBean> time;
     private String status;
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[]{purchaserID, shopID});
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final PurchaserShopBean other = (PurchaserShopBean) obj;
+        return UIUtils.equals(this.purchaserID, other.purchaserID)
+            && UIUtils.equals(this.shopID, other.shopID);
+    }
 
     public String getStatus() {
         return status;

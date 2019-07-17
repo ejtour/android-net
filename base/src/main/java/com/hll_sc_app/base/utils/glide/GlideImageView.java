@@ -28,6 +28,8 @@ import java.util.List;
  * @date 2018/12/20
  */
 public class GlideImageView extends android.support.v7.widget.AppCompatImageView {
+    public static final String DISABLE_IMAGE = "DISABLE_IMAGE";
+    public static final String DISABLE_SHOP = "DISABLE_SHOP";
     /**
      * 是否按宽度等比例显示
      */
@@ -49,7 +51,6 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     private Context mContext;
     private String mUrl;
     private boolean mNeedLoad;
-    private boolean mDisable;
     private int mWidth, mHeight;
     /**
      * 开启预览模式
@@ -59,6 +60,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      * 所有url 用于预览时，提供所有url，实现多图的滚动浏览
      */
     private List<String> mUrls;
+    private String mType;
 
     public GlideImageView(Context context) {
         super(context);
@@ -134,7 +136,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      */
     public void setDisableImageUrl(String url) {
         mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
-        mDisable = true;
+        mType = DISABLE_IMAGE;
         loadUrl();
     }
 
@@ -145,13 +147,23 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
                 sb.insert(mUrl.lastIndexOf("."), "=" + mWidth + "x" + mHeight);
             }
             String myUrl = "http://res.hualala.com/" + sb.toString();
-            if (mDisable) {
-                mDisable = false;
-                setOptions(GlideApp.with(this).load(myUrl)).into(new ActivityCustomViewTarget(this));
+            if (!TextUtils.isEmpty(mType)) {
+                setOptions(GlideApp.with(this).load(myUrl)).into(new ActivityCustomViewTarget(this, mType));
             } else {
                 setOptions(GlideApp.with(this).load(myUrl)).into(this);
             }
         }
+    }
+
+    /**
+     * 图片上显示禁用提示
+     *
+     * @param url 商品URL
+     */
+    public void setShopDisableImageUrl(String url) {
+        mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
+        mType = DISABLE_SHOP;
+        loadUrl();
     }
 
     @Override
@@ -187,6 +199,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      */
     public void setImageURL(String url) {
         mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
+        mType = null;
         loadUrl();
     }
 

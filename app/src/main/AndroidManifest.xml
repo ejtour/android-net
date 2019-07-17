@@ -137,6 +137,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.cooperation.detail.shopadd.CooperationAddShopActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.cooperation.add.CooperationAddActivity"
             android:screenOrientation="portrait"/>
 

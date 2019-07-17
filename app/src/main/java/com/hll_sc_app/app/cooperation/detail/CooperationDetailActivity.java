@@ -26,6 +26,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
@@ -33,9 +34,13 @@ import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,10 +72,10 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     @BindView(R.id.txt_shopCount)
     TextView mTxtShopCount;
 
-    private CooperationDetailPresenter mPresenter;
     private PurchaserShopListAdapter mAdapter;
-    private ContextOptionsWindow mOptionsWindow;
     private CooperationPurchaserDetail mDetail;
+    private ContextOptionsWindow mOptionsWindow;
+    private CooperationDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +88,13 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         mPresenter = CooperationDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -136,6 +148,30 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         req.setPurchaserName(mDetail.getName());
         List<CooperationShopReq.ShopBean> list = new ArrayList<>();
         list.add(new CooperationShopReq.ShopBean(bean.getShopID(), bean.getShopName()));
+        req.setShopList(list);
+        mPresenter.editCooperationPurchaserShop(req);
+    }
+
+    /**
+     * 门店新增
+     *
+     * @param listBean 新增的门店数据
+     */
+    @Subscribe
+    public void onEvent(List<PurchaserShopBean> listBean) {
+        if (CommonUtils.isEmpty(listBean) || mDetail == null) {
+            return;
+        }
+        CooperationShopReq req = new CooperationShopReq();
+        req.setActionType("insert");
+        req.setGroupID(UserConfig.getGroupID());
+        req.setOriginator("1");
+        req.setPurchaserID(mDetail.getPurchaserID());
+        req.setPurchaserName(mDetail.getName());
+        List<CooperationShopReq.ShopBean> list = new ArrayList<>();
+        for (PurchaserShopBean bean : listBean) {
+            list.add(new CooperationShopReq.ShopBean(bean.getShopID(), bean.getShopName()));
+        }
         req.setShopList(list);
         mPresenter.editCooperationPurchaserShop(req);
     }
@@ -255,20 +291,27 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_DRIVER)) {
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_DELIVERY)) {
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_SHOP)) {
+            RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_ADD_SHOP, mDetail.getPurchaserID());
         }
         mOptionsWindow.dismiss();
     }
 
-    private static class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
+    public static class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
+        private boolean mIsAdd;
 
         PurchaserShopListAdapter() {
             super(R.layout.item_cooperation_purchaser_shop);
         }
 
+        public PurchaserShopListAdapter(boolean add) {
+            super(R.layout.item_cooperation_purchaser_shop);
+            this.mIsAdd = add;
+        }
+
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.addOnClickListener(R.id.txt_del);
+            viewHolder.addOnClickListener(R.id.txt_del).addOnClickListener(R.id.content);
             return viewHolder;
         }
 
@@ -278,8 +321,16 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 .setText(R.id.txt_shopAdmin, "联系人：" + getString(item.getShopAdmin()) + " / "
                     + getString(PhoneUtil.formatPhoneNum(item.getShopPhone())))
                 .setText(R.id.txt_shopAddress, "地址：" + getString(item.getShopAddress()))
-                .setGone(R.id.txt_newShopNum, CommonUtils.getDouble(item.getStatus()) == 0);
-            ((GlideImageView) helper.getView(R.id.img_imagePath)).setImageURL(item.getImagePath());
+                .setGone(R.id.txt_newShopNum, !mIsAdd && CommonUtils.getDouble(item.getStatus()) == 0)
+                .setGone(R.id.img_select, mIsAdd)
+                .getView(R.id.img_select).setSelected(item.isSelect());
+            GlideImageView imageView = helper.getView(R.id.img_imagePath);
+            LogUtil.d("ZYS", " is Activie =" + TextUtils.equals(item.getIsActive(), "0"));
+            if (TextUtils.equals(item.getIsActive(), "0")) {
+                imageView.setShopDisableImageUrl(item.getImagePath());
+            } else {
+                imageView.setImageURL(item.getImagePath());
+            }
         }
 
         private String getString(String str) {

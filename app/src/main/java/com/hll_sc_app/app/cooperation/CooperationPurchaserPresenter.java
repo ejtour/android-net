@@ -16,11 +16,8 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-
-import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -32,7 +29,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 public class CooperationPurchaserPresenter implements CooperationPurchaserContract.IGoodsRelevancePurchaserPresenter {
     private CooperationPurchaserContract.IGoodsRelevancePurchaserView mView;
-    private List<HouseBean> mListHouseBean;
     private int mPageNum;
     private int mTempPageNum;
 

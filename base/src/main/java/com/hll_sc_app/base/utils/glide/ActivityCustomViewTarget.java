@@ -13,11 +13,11 @@ import com.bumptech.glide.request.transition.Transition;
  * 活动、商品售罄
  */
 class ActivityCustomViewTarget extends CustomViewTarget<GlideImageView, BitmapDrawable> {
-    private String activityName;
+    private String type;
 
     ActivityCustomViewTarget(GlideImageView view, String activityName) {
         super(view);
-        this.activityName = activityName;
+        this.type = activityName;
     }
 
     ActivityCustomViewTarget(GlideImageView view) {
@@ -36,10 +36,10 @@ class ActivityCustomViewTarget extends CustomViewTarget<GlideImageView, BitmapDr
 
     @Override
     public void onResourceReady(@NonNull BitmapDrawable resource, @Nullable Transition transition) {
-        if (TextUtils.isEmpty(activityName)) {
+        if (TextUtils.equals(type, GlideImageView.DISABLE_IMAGE)) {
             view.setImageDrawable(new DisableDrawable(view.getContext(), resource.getBitmap()));
-        } else {
-            view.setImageDrawable(new ActivityMarkDrawable(view.getContext(), resource.getBitmap(), activityName));
+        } else if (TextUtils.equals(type, GlideImageView.DISABLE_SHOP)) {
+            view.setImageDrawable(new ShopDisableDrawable(resource.getBitmap()));
         }
     }
 }
