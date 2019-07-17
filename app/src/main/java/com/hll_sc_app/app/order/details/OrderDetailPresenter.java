@@ -47,13 +47,14 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
     @Override
     public void orderCancel(String cancelReason) {
         Order.modifyOrderStatus(3, mSubBillID, 2, cancelReason,
-                null, null, getObserver());
+                null, null, getObserver("成功放弃订单"));
     }
 
-    private SimpleObserver<Object> getObserver() {
+    private SimpleObserver<Object> getObserver(String msg) {
         return new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
+                if (!TextUtils.isEmpty(msg)) mView.showToast(msg);
                 mView.handleStatusChanged();
             }
         };
@@ -62,13 +63,13 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
     @Override
     public void orderReceive() {
         Order.modifyOrderStatus(1, mSubBillID,
-                0, null, null, null, getObserver());
+                0, null, null, null, getObserver(null));
     }
 
     @Override
     public void orderDeliver() {
         Order.modifyOrderStatus(2, mSubBillID,
-                0, null, null, null, getObserver());
+                0, null, null, null, getObserver(null));
     }
 
     @Override
