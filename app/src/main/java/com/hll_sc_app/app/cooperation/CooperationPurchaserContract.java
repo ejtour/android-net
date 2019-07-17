@@ -27,6 +27,25 @@ public interface CooperationPurchaserContract {
          * @param append true-追加
          */
         void showPurchaserList(CooperationPurchaserResp resp, boolean append);
+
+        /**
+         * 导出成功
+         *
+         * @param email 邮箱地址
+         */
+        void exportSuccess(String email);
+
+        /**
+         * 导出失败
+         *
+         * @param tip 失败提示
+         */
+        void exportFailure(String tip);
+
+        /**
+         * 绑定邮箱
+         */
+        void bindEmail();
     }
 
     interface IGoodsRelevancePurchaserPresenter extends IPresenter<IGoodsRelevancePurchaserView> {
@@ -48,5 +67,12 @@ public interface CooperationPurchaserContract {
          * @param purchaserId 采购商集团ID
          */
         void delCooperationPurchaser(String purchaserId);
+
+        /**
+         * 导出合作采购商
+         *
+         * @param email 邮箱
+         */
+        void exportPurchaser(String email);
     }
 }

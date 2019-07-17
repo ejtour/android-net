@@ -106,6 +106,18 @@ public class ExportReq {
          * 售价变更请求参数
          */
         private PriceFlowBean priceFlow;
+        /**
+         * 合作关系请求参数
+         */
+        private CooperationBean cooperation;
+
+        public CooperationBean getCooperation() {
+            return cooperation;
+        }
+
+        public void setCooperation(CooperationBean cooperation) {
+            this.cooperation = cooperation;
+        }
 
         public PriceFlowBean getPriceFlow() {
             return priceFlow;
@@ -161,6 +173,18 @@ public class ExportReq {
 
             public void setBillNos(List<String> billNos) {
                 this.billNos = billNos;
+            }
+        }
+
+        public static class CooperationBean {
+            private String groupID;
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
             }
         }
 

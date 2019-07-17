@@ -34,6 +34,7 @@ import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -199,6 +200,21 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
     }
 
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String tip) {
+        Utils.exportFailure(this, tip);
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, email -> mPresenter.exportPurchaser(email));
+    }
+
     @OnClick({R.id.img_close, R.id.txt_options})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -239,6 +255,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
             // 我发出的申请
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_EXPORT)) {
             // 导出合作采购商
+            mPresenter.exportPurchaser(null);
         }
         mOptionsWindow.dismiss();
     }
