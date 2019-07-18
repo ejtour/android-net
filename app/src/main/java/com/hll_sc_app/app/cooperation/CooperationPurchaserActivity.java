@@ -199,7 +199,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
             mEmptyView.setTips("还没有合作采购商数据");
         }
         mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == GoodsListReq.PAGE_SIZE);
     }
 
     @Override

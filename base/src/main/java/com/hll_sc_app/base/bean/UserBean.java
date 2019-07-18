@@ -75,8 +75,8 @@ public class UserBean {
 
     @Generated(hash = 392085566)
     public UserBean(String authType, String accessToken, String email, String employeeID,
-            String employeeName, String groupID, String groupLogoUrl, String groupName,
-            List<String> roleCode, String roleNames, String roles, String selfOperated, String roleID) {
+                    String employeeName, String groupID, String groupLogoUrl, String groupName,
+                    List<String> roleCode, String roleNames, String roles, String selfOperated, String roleID) {
         this.authType = authType;
         this.accessToken = accessToken;
         this.email = email;

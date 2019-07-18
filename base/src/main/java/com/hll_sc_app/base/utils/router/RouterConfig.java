@@ -98,6 +98,11 @@ public class RouterConfig {
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DELIVERY = "/activity/cooperationPurchaser/detail" +
         "/shop/delivery";
     /**
+     * 合作采购商详情- 批量指派销售
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SHOP_SALES = "/activity/cooperationPurchaser/detail" +
+        "/shop/sales";
+    /**
      * 合作采购商详情-选择门店
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SELECT_SHOP = "/activity/cooperationPurchaser/detail" +

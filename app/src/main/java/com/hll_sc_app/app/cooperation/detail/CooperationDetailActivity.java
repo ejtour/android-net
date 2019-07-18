@@ -294,8 +294,9 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_SETTLEMENT)) {
             toSelectShop(CooperationSelectShopActivity.TYPE_SETTLEMENT);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_SALESMAN)) {
+            toSelectShop(CooperationSelectShopActivity.TYPE_SALESMAN);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_DRIVER)) {
-            toSelectShop(CooperationSelectShopActivity.TYPE_DELIVERY);
+            toSelectShop(CooperationSelectShopActivity.TYPE_DRIVER);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_DELIVERY)) {
             toSelectShop(CooperationSelectShopActivity.TYPE_DELIVERY);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_SHOP)) {
@@ -314,8 +315,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         req.setChangeAllShops("0");
         req.setGroupID(UserConfig.getGroupID());
         req.setPurchaserID(mDetail.getPurchaserID());
-        ARouter
-            .getInstance()
+        ARouter.getInstance()
             .build(RouterConfig.COOPERATION_PURCHASER_DETAIL_SELECT_SHOP)
             .withParcelableArrayList("parcelable", new ArrayList<>(mAdapter.getData()))
             .withParcelable("parcelable1", req)

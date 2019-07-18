@@ -242,7 +242,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         if (total != 0) {
             mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
         } else {
-            mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
+            mRefreshLayout.setEnableLoadMore(list != null && list.size() == GoodsListReq.PAGE_SIZE);
         }
     }
 
