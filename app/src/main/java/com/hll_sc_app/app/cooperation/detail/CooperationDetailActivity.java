@@ -18,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -31,6 +32,7 @@ import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -288,13 +290,33 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             return;
         }
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_SETTLEMENT)) {
+            toSelectShop(CooperationSelectShopActivity.TYPE_SETTLEMENT);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_SALESMAN)) {
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_DRIVER)) {
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_DELIVERY)) {
+            toSelectShop(CooperationSelectShopActivity.TYPE_DELIVERY);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_SHOP)) {
             RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_ADD_SHOP, mDetail.getPurchaserID());
         }
         mOptionsWindow.dismiss();
+    }
+
+    private void toSelectShop(String type) {
+        if (CommonUtils.isEmpty(mAdapter.getData()) || mDetail == null) {
+            showToast("当前没有门店");
+            return;
+        }
+        ShopSettlementReq req = new ShopSettlementReq();
+        req.setActionType(type);
+        req.setChangeAllShops("0");
+        req.setGroupID(UserConfig.getGroupID());
+        req.setPurchaserID(mDetail.getPurchaserID());
+        ARouter
+            .getInstance()
+            .build(RouterConfig.COOPERATION_PURCHASER_DETAIL_SELECT_SHOP)
+            .withParcelableArrayList("parcelable", new ArrayList<>(mAdapter.getData()))
+            .withParcelable("parcelable1", req)
+            .navigation();
     }
 
     public static class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
@@ -326,7 +348,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 .setText(R.id.txt_shopAddress, "地址：" + getString(item.getShopAddress()))
                 .setGone(R.id.txt_newShopNum, !mIsAdd && CommonUtils.getDouble(item.getStatus()) == 0)
                 .setGone(R.id.img_select, mIsAdd)
-                .getView(R.id.img_select).setSelected(mSelectMap != null && mSelectMap.get(item.getShopID()) != null);
+                .getView(R.id.img_select).setSelected(mSelectMap != null && mSelectMap.containsKey(item.getShopID()));
             GlideImageView imageView = helper.getView(R.id.img_imagePath);
             if (TextUtils.equals(item.getIsActive(), "0")) {
                 imageView.setShopDisableImageUrl(item.getImagePath());

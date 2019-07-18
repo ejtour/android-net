@@ -1,5 +1,9 @@
 package com.hll_sc_app.bean.agreementprice.quotation;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +12,7 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-07-09
  */
-public class PurchaserShopBean {
+public class PurchaserShopBean implements Parcelable {
     private String shopCode;
     private String shopArea;
     private String addressGaoDe;
@@ -179,5 +183,71 @@ public class PurchaserShopBean {
 
     public void setShopID(String shopID) {
         this.shopID = shopID;
+    }
+
+    public static final Parcelable.Creator<PurchaserShopBean> CREATOR = new Parcelable.Creator<PurchaserShopBean>() {
+        @Override
+        public PurchaserShopBean createFromParcel(Parcel source) {
+            return new PurchaserShopBean(source);
+        }
+
+        @Override
+        public PurchaserShopBean[] newArray(int size) {
+            return new PurchaserShopBean[size];
+        }
+    };
+
+    public PurchaserShopBean() {
+    }
+
+    protected PurchaserShopBean(Parcel in) {
+        this.shopCode = in.readString();
+        this.shopArea = in.readString();
+        this.addressGaoDe = in.readString();
+        this.imagePath = in.readString();
+        this.mobile = in.readString();
+        this.shopName = in.readString();
+        this.source = in.readString();
+        this.isActive = in.readString();
+        this.shopAddress = in.readString();
+        this.linkman = in.readString();
+        this.purchaserID = in.readString();
+        this.latGaoDe = in.readString();
+        this.shopAdmin = in.readString();
+        this.lonGaoDe = in.readString();
+        this.shopPhone = in.readString();
+        this.shopID = in.readString();
+        this.select = in.readByte() != 0;
+        this.time = new ArrayList<TimeBean>();
+        in.readList(this.time, TimeBean.class.getClassLoader());
+        this.status = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.shopCode);
+        dest.writeString(this.shopArea);
+        dest.writeString(this.addressGaoDe);
+        dest.writeString(this.imagePath);
+        dest.writeString(this.mobile);
+        dest.writeString(this.shopName);
+        dest.writeString(this.source);
+        dest.writeString(this.isActive);
+        dest.writeString(this.shopAddress);
+        dest.writeString(this.linkman);
+        dest.writeString(this.purchaserID);
+        dest.writeString(this.latGaoDe);
+        dest.writeString(this.shopAdmin);
+        dest.writeString(this.lonGaoDe);
+        dest.writeString(this.shopPhone);
+        dest.writeString(this.shopID);
+        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
+        dest.writeList(this.time);
+        dest.writeString(this.status);
     }
 }

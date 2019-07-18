@@ -1,11 +1,9 @@
 package com.hll_sc_app.app.cooperation.detail.shopadd;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,24 +14,17 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
-import com.hll_sc_app.bean.event.SearchEvent;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
-import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,65 +37,47 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 合作采购商详情- 新增门店
+ * 合作采购商详情-批量修改选择门店
  *
  * @author zhuyingsong
- * @date 2019/7/17
+ * @date 2019/7/18
  */
-@Route(path = RouterConfig.COOPERATION_PURCHASER_DETAIL_ADD_SHOP, extras = Constant.LOGIN_EXTRA)
-public class CooperationAddShopActivity extends BaseLoadActivity implements CooperationAddShopContract.ICooperationAddShopView {
+@Route(path = RouterConfig.COOPERATION_PURCHASER_DETAIL_SELECT_SHOP, extras = Constant.LOGIN_EXTRA)
+public class CooperationSelectShopActivity extends BaseLoadActivity {
+    public static final String TYPE_SETTLEMENT = "settlementWay";
+    public static final String TYPE_DELIVERY = "deliveryWay";
+    public static final String TYPE_SALESMAN = "salesRepresentative";
+    public static final String TYPE_DRIVER = "driver";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @BindView(R.id.searchView)
-    SearchView mSearchView;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.img_allCheck)
     ImageView mImgAllCheck;
     @BindView(R.id.txt_checkNum)
     TextView mTxtCheckNum;
     @BindView(R.id.txt_confirm)
     TextView mTxtConfirm;
-    @Autowired(name = "object0")
-    String mPurchaserId;
-    private EmptyView mEmptyView;
-    private CooperationAddShopPresenter mPresenter;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
+    @Autowired(name = "parcelable1", required = true)
+    ShopSettlementReq mReq;
+    @Autowired(name = "parcelable", required = true)
+    ArrayList<PurchaserShopBean> mData;
     private Map<String, PurchaserShopBean> mSelectMap;
     private CooperationDetailActivity.PurchaserShopListAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cooperation_add_shop);
+        setContentView(R.layout.activity_cooperation_select_shop);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         mSelectMap = new HashMap<>();
         initView();
-        mPresenter = CooperationAddShopPresenter.newInstance();
-        mPresenter.register(this);
-        mPresenter.start();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
-        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMorePurchaserShopList();
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryPurchaserShopList(false);
-            }
-        });
+        showTitle(mReq.getActionType());
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
         mAdapter = new CooperationDetailActivity.PurchaserShopListAdapter(mSelectMap);
@@ -116,19 +89,32 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
                 adapter.notifyItemChanged(position);
             }
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商门店数据").create();
         mRecyclerView.setAdapter(mAdapter);
-        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
-            @Override
-            public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_SEARCH);
-            }
+        mAdapter.setNewData(mData);
+        mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("您还没有合作采购商门店数据").create());
+    }
 
-            @Override
-            public void toSearch(String searchContent) {
-                mPresenter.queryPurchaserShopList(true);
-            }
-        });
+    private void showTitle(String type) {
+        switch (type) {
+            case TYPE_SETTLEMENT:
+                mTxtConfirm.setText("去选择结算方式");
+                mTxtTitle.setText("批量修改结算方式");
+                break;
+            case TYPE_SALESMAN:
+                mTxtConfirm.setText("去选择销售");
+                mTxtTitle.setText("批量指派销售");
+                break;
+            case TYPE_DRIVER:
+                mTxtConfirm.setText("去选择司机");
+                mTxtTitle.setText("批量指派司机");
+                break;
+            case TYPE_DELIVERY:
+                mTxtConfirm.setText("去选择配送方式");
+                mTxtTitle.setText("批量修改配送方式");
+                break;
+            default:
+                break;
+        }
     }
 
     private void addOrRemove(PurchaserShopBean shopBean) {
@@ -143,9 +129,6 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         }
     }
 
-    /**
-     * 判断是否设置全选
-     */
     private void checkSelectAll() {
         if (mAdapter == null || CommonUtils.isEmpty(mAdapter.getData())) {
             return;
@@ -163,20 +146,6 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         mTxtConfirm.setEnabled(!mSelectMap.isEmpty());
     }
 
-    @Override
-    public void hideLoading() {
-        super.hideLoading();
-        mRefreshLayout.closeHeaderOrFooter();
-    }
-
-    @Subscribe
-    public void onEvent(SearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
-        }
-    }
-
     @OnClick({R.id.img_close, R.id.txt_confirm, R.id.img_allCheck, R.id.txt_allCheck})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -184,8 +153,7 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
                 toClose();
                 break;
             case R.id.txt_confirm:
-                EventBus.getDefault().post(new ArrayList<>(mSelectMap.values()));
-                finish();
+                toConfirm();
                 break;
             case R.id.img_allCheck:
             case R.id.txt_allCheck:
@@ -196,9 +164,6 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         }
     }
 
-    /**
-     * 返回时候逻辑处理
-     */
     private void toClose() {
         if (mSelectMap.isEmpty()) {
             finish();
@@ -206,6 +171,24 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         }
         // 填写过数据后进行提示
         showTipsDialog();
+    }
+
+    private void toConfirm() {
+        List<String> listShopIds = new ArrayList<>();
+        List<PurchaserShopBean> listSelectShop = new ArrayList<>(mSelectMap.values());
+        if (!CommonUtils.isEmpty(listSelectShop)) {
+            for (PurchaserShopBean bean : listSelectShop) {
+                listShopIds.add(bean.getShopID());
+            }
+        }
+        mReq.setShopIds(listShopIds);
+        switch (mReq.getActionType()) {
+            case TYPE_SETTLEMENT:
+                RouterUtil.goToActivity("", this, mReq);
+                break;
+            default:
+                break;
+        }
     }
 
     private void selectAll(boolean select) {
@@ -227,9 +210,6 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         mTxtConfirm.setEnabled(!mSelectMap.isEmpty());
     }
 
-    /**
-     * 退出提示对话框
-     */
     private void showTipsDialog() {
         SuccessDialog.newBuilder(this)
             .setImageTitle(R.drawable.ic_dialog_failure)
@@ -248,27 +228,5 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
     @Override
     public void onBackPressed() {
         toClose();
-    }
-
-    @Override
-    public void showPurchaserShopList(List<PurchaserShopBean> list, boolean append) {
-        if (append) {
-            mAdapter.addData(list);
-        } else {
-            mAdapter.setNewData(list);
-        }
-        mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
-        checkSelectAll();
-    }
-
-    @Override
-    public String getSearchParam() {
-        return mSearchView.getSearchContent();
-    }
-
-    @Override
-    public String getPurchaserId() {
-        return mPurchaserId;
     }
 }

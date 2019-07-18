@@ -7,7 +7,7 @@ import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import java.util.List;
 
 /**
- * 合作采购商想起- 新增门店
+ * 合作采购商详情- 新增门店
  *
  * @author zhuyingsong
  * @date 2019/7/17

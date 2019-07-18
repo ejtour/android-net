@@ -88,6 +88,11 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_DETAIL_ADD_SHOP = "/activity/cooperationPurchaser/detail/addShop";
     /**
+     * 合作采购商详情-选择门店
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SELECT_SHOP = "/activity/cooperationPurchaser/detail" +
+        "/selectShop";
+    /**
      * 商品置顶管理
      */
     public static final String GOODS_STICK_MANAGE = "/activity/goods/stickManage";
