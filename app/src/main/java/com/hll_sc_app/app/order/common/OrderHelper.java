@@ -48,8 +48,8 @@ public class OrderHelper {
             case 1: // 待接单
             case 2: // 待发货
                 String formatTime = CalendarUtils.getDateFormatString(resp.getSubBillExecuteDate(),
-                        Constants.FORMAT_YYYY_MM_DD_HH_MM,
-                        Constants.FORMAT_YYYY_MM_DD_HH_MM_DASH);
+                        Constants.UNSIGNED_YYYY_MM_DD_HH_MM,
+                        Constants.SIGNED_YYYY_MM_DD_HH_MM);
                 source = "要求：" + formatTime + "送达";
                 SpannableString spannableString = new SpannableString(source);
                 spannableString.setSpan(new ForegroundColorSpan(
@@ -60,10 +60,10 @@ public class OrderHelper {
                 return spannableString;
             case 3: // 已发货
             case 4: // 待结算
-                source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), "yyyy-MM-dd HH:mm:ss") + "发货";
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "发货";
                 break;
             case 6: // 已签收
-                source = CalendarUtils.format(CalendarUtils.parse(resp.getSignTime()), "yyyy-MM-dd HH:mm:ss") + "签收";
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getSignTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "签收";
                 break;
             case 7: // 已取消
                 source = getCancelRole(resp.getCanceler()) + "取消";

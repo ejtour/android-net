@@ -60,8 +60,8 @@ public class OrderTransferAdapter extends BaseQuickAdapter<TransferBean, BaseVie
 
     private SpannableString processExtraInfo(String extra) {
         String formatTime = CalendarUtils.getDateFormatString(extra,
-                Constants.FORMAT_YYYY_MM_DD_HH_MM,
-                Constants.FORMAT_YYYY_MM_DD_HH_MM_DASH);
+                Constants.UNSIGNED_YYYY_MM_DD_HH_MM,
+                Constants.SIGNED_YYYY_MM_DD_HH_MM);
         String source = "要求：" + formatTime + "送达";
         SpannableString spannableString = new SpannableString(source);
         spannableString.setSpan(new ForegroundColorSpan(

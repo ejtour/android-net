@@ -65,20 +65,20 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
         StringBuilder statusBuilder = new StringBuilder(AfterSalesHelper.getRefundStatusDesc(data.getRefundBillStatus()));
         if (data.getRefundBillStatus() == 5)
             statusBuilder.insert(0, AfterSalesHelper.getRefundInfoPrefix(data.getRefundBillType()));
+        else if (data.getRefundBillStatus() == 7)
+            statusBuilder.insert(0, AfterSalesHelper.getCancelRoleDes(data.getCancelRole()));
         // 订单状态
         statusInfo.setText(statusBuilder.toString());
         // 动作时间
         String desc = CalendarUtils.getFormatYyyyMmDdHhMm(String.valueOf(data.getActionTime()));
         if (data.getRefundBillStatus() == 7) {
             // 取消原因
-            String cancelDesc = AfterSalesHelper.getCancelRoleDes(data.getCancelRole()) + (TextUtils.isEmpty(data.getCancelReason()) ? "" : "取消原因：" + data.getCancelReason());
-            if (!TextUtils.isEmpty(cancelDesc))
-                desc += "\n" + cancelDesc;
+            String cancelDesc = TextUtils.isEmpty(data.getCancelReason()) ? "" : "取消原因：" + data.getCancelReason();
+            if (!TextUtils.isEmpty(cancelDesc)) desc += "\n" + cancelDesc;
         } else if (data.getRefundBillStatus() == 6) {
             // 拒绝原因
-            String refuseDesc = data.getRefuseBy() + (TextUtils.isEmpty(data.getRefuseReason()) ? "" : "已拒绝，拒绝原因：" + data.getRefuseReason());
-            if (!TextUtils.isEmpty(refuseDesc))
-                desc += "\n" + refuseDesc;
+            String refuseDesc = TextUtils.isEmpty(data.getRefuseReason()) ? "" : "拒绝原因：" + data.getRefuseReason();
+            if (!TextUtils.isEmpty(refuseDesc)) desc += "\n" + refuseDesc;
         }
         statusDesc.setText(desc);
         // 退款说明和凭证

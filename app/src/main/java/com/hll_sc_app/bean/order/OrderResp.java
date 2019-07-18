@@ -162,11 +162,11 @@ public class OrderResp implements Parcelable {
 
     public String getTargetExecuteDate() {
         String HhMm = "2400";
-        String formatDateStr = CalendarUtils.getDateFormatString(subBillExecuteDate, Constants.FORMAT_YYYY_MM_DD_HH_MM,
-                Constants.FORMAT_YYYY_MM_DD_HH_MM_DASH);
+        String formatDateStr = CalendarUtils.getDateFormatString(subBillExecuteDate, Constants.UNSIGNED_YYYY_MM_DD_HH_MM,
+                Constants.SIGNED_YYYY_MM_DD_HH_MM);
         if (subBillExecuteEndDate.endsWith(HhMm)) return formatDateStr + "-" + "24:00";
         return formatDateStr + "-" + CalendarUtils.getDateFormatString(subBillExecuteEndDate,
-                Constants.FORMAT_YYYY_MM_DD_HH_MM, "HH:mm");
+                Constants.UNSIGNED_YYYY_MM_DD_HH_MM, Constants.SIGNED_HH_MM);
     }
 
     public String getCouponDiscountRuleName() {

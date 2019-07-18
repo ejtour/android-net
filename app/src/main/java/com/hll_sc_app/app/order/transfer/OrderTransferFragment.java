@@ -212,21 +212,21 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
 
     @Override
     protected void initData() {
-        if (!TextUtils.isEmpty(mOrderParam.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD_DASH))) {
+        if (!TextUtils.isEmpty(mOrderParam.getFormatCreateStart(Constants.SIGNED_YYYY_MM_DD))) {
             mFilterHeader.setVisibility(View.VISIBLE);
             mLabel.setText("当前按下单时间筛选");
-            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD_DASH),
-                    mOrderParam.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD_DASH)));
-        } else if (!TextUtils.isEmpty(mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH))) {
+            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatCreateStart(Constants.SIGNED_YYYY_MM_DD),
+                    mOrderParam.getFormatCreateEnd(Constants.SIGNED_YYYY_MM_DD)));
+        } else if (!TextUtils.isEmpty(mOrderParam.getFormatExecuteStart(Constants.SIGNED_YYYY_MM_DD_HH))) {
             mFilterHeader.setVisibility(View.VISIBLE);
             mLabel.setText("当前按到货时间筛选");
-            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH),
-                    mOrderParam.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH_DASH)));
-        } else if (!TextUtils.isEmpty(mOrderParam.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH))) {
+            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatExecuteStart(Constants.SIGNED_YYYY_MM_DD_HH),
+                    mOrderParam.getFormatExecuteEnd(Constants.SIGNED_YYYY_MM_DD_HH)));
+        } else if (!TextUtils.isEmpty(mOrderParam.getFormatSignStart(Constants.SIGNED_YYYY_MM_DD_HH))) {
             mFilterHeader.setVisibility(View.VISIBLE);
             mLabel.setText("当前按签收时间筛选");
-            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH_DASH),
-                    mOrderParam.getFormatSignEnd(Constants.FORMAT_YYYY_MM_DD_HH_DASH)));
+            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatSignStart(Constants.SIGNED_YYYY_MM_DD_HH),
+                    mOrderParam.getFormatSignEnd(Constants.SIGNED_YYYY_MM_DD_HH)));
         } else {
             mFilterHeader.setVisibility(View.GONE);
         }

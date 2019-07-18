@@ -6,10 +6,18 @@ package com.hll_sc_app.utils;
  */
 
 public interface Constants {
-    String FORMAT_YYYY_MM_DD = "yyyyMMdd";
-    String FORMAT_YYYY_MM_DD_HH = "yyyyMMddHH";
-    String FORMAT_YYYY_MM_DD_HH_MM = "yyyyMMddHHmm";
-    String FORMAT_YYYY_MM_DD_DASH = "yyyy-MM-dd";
-    String FORMAT_YYYY_MM_DD_HH_DASH = "yyyy-MM-dd HH";
-    String FORMAT_YYYY_MM_DD_HH_MM_DASH = "yyyy-MM-dd HH:mm";
+    String UNSIGNED_HH_MM = "HHmm";
+    String UNSIGNED_YYYY_MM = "yyyyMM";
+    String UNSIGNED_YYYY_MM_DD = "yyyyMMdd";
+    String UNSIGNED_YYYY_MM_DD_HH = "yyyyMMddHH";
+    String UNSIGNED_YYYY_MM_DD_HH_MM = "yyyyMMddHHmm";
+    String UNSIGNED_YYYY_MM_DD_HH_MM_SS = "yyyyMMddHHmmss";
+    String UNSIGNED_YYYY_MM_DD_HH_MM_SS_SSS = "yyyyMMddHHmmssSSS";
+    String SIGNED_HH_MM = "HH:mm";
+    String SIGNED_YYYY_MM = "yyyy-MM";
+    String SIGNED_YYYY_MM_DD = "yyyy-MM-dd";
+    String SIGNED_YYYY_MM_DD_HH = "yyyy-MM-dd HH";
+    String SIGNED_YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
+    String SIGNED_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    String SIGNED_YYYY_MM_DD_HH_MM_SS_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
 }

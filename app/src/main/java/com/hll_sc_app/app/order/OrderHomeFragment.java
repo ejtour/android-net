@@ -33,6 +33,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.DatePickerDialog;
 
@@ -198,7 +199,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             endTime.set(Calendar.YEAR, year + 3);
         }
         DatePickerDialog.newBuilder(requireActivity())
-                .setBeginTime(CalendarUtils.parse("20170101", "yyyyMMdd").getTime())
+                .setBeginTime(CalendarUtils.parse("20170101", Constants.UNSIGNED_YYYY_MM_DD).getTime())
                 .setEndTime(endTime.getTimeInMillis())
                 .setSelectBeginTime(selectBegin)
                 .setSelectEndTime(selectEnd)

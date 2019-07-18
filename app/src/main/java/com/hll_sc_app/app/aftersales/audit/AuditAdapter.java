@@ -12,6 +12,7 @@ import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.ThumbnailView;
 import com.hll_sc_app.widget.aftersales.AfterSalesActionBar;
 
@@ -74,8 +75,8 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
                 .setGone(R.id.asa_shop_flag, !mIsCheckable)
                 .setGone(R.id.asa_check, mIsCheckable)
                 .setText(R.id.asa_apply_time, "申请时间：" + CalendarUtils.format(
-                        CalendarUtils.parse(String.valueOf(item.getRefundBillCreateTime())),
-                        Constants.FORMAT_YYYY_MM_DD_DASH));
+                        DateUtil.parse(String.valueOf(item.getRefundBillCreateTime())),
+                        Constants.SIGNED_YYYY_MM_DD));
         helper.getView(R.id.asa_check).setSelected(item.isSelected());
         AfterSalesActionBar actionBar = helper.getView(R.id.asa_action_bar);
         actionBar.setData(item.getButtonList());
