@@ -63,13 +63,13 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
     @Override
     public void orderReceive() {
         Order.modifyOrderStatus(1, mSubBillID,
-                0, null, null, null, getObserver(null));
+                0, null, null, null, getObserver("成功接单"));
     }
 
     @Override
     public void orderDeliver() {
         Order.modifyOrderStatus(2, mSubBillID,
-                0, null, null, null, getObserver(null));
+                0, null, null, null, getObserver("成功发货"));
     }
 
     @Override
