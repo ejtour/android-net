@@ -21,6 +21,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.BrandSearchEvent;
+import com.hll_sc_app.bean.event.EmployeeSearchEvent;
 import com.hll_sc_app.bean.event.GoodsInvWarnSearchEvent;
 import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
@@ -60,6 +61,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     public static final String FROM_GOODS = "FROM_GOODS";
     public static final String FROM_BRAND = "FROM_BRAND";
     public static final String FROM_SEARCH = "FROM_SEARCH";
+    public static final String FROM_EMPLOYEE = "FROM_EMPLOYEE";
     @BindView(R.id.aos_search_edit)
     EditText mSearchEdit;
     @BindView(R.id.aos_search_clear)
@@ -92,6 +94,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
                 && !isFromGoodsTemplate()
                 && !isFromGoodsInvWarn()
                 && !isFromSearch()
+                && !isFromEmployee()
                 && !isFromGoodsRelevanceList()) {
                 // 商品无提示词搜索
                 gotoSearch(s);
@@ -159,6 +162,15 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     }
 
     /**
+     * 搜索员工
+     *
+     * @return true
+     */
+    private boolean isFromEmployee() {
+        return TextUtils.equals(mFrom, FROM_EMPLOYEE);
+    }
+
+    /**
      * 来自第三方商品关联-列表
      *
      * @return true
@@ -189,6 +201,9 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             tips = "请输入采购商集团名称进行查询";
             hint = tips;
             resId = R.drawable.ic_search_empty_purchaser;
+        } else if (isFromEmployee()) {
+            tips = "您可以根据员工的名称、编号、电话来搜索";
+            hint = tips;
         } else if (isFromSearch()) {
             tips = "请输入搜索词";
             hint = tips;
@@ -258,6 +273,8 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             EventBus.getDefault().post(new GoodsRelevanceListSearchEvent(trim));
         } else if (isFromSearch()) {
             EventBus.getDefault().post(new SearchEvent(trim));
+        } else if (isFromEmployee()) {
+            EventBus.getDefault().post(new EmployeeSearchEvent(trim));
         } else {
             if (mCurBean == null) {
                 mCurBean = new OrderSearchBean();

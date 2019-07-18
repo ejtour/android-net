@@ -105,10 +105,10 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
 
     private void toConfirm() {
         List<String> list = new ArrayList<>();
-        if (mCbOnlinePayment.isSelected()) {
+        if (mCbOnlinePayment.isChecked()) {
             list.add(PAY_ONLINE);
         }
-        if (mCbCashPayment.isSelected()) {
+        if (mCbCashPayment.isChecked()) {
             list.add(PAY_CASH);
         }
         if (mCbAccountPayment.isChecked()) {

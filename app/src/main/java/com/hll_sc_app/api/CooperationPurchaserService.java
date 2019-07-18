@@ -111,6 +111,16 @@ public interface CooperationPurchaserService {
     Observable<BaseResp<Object>> editShopSettlement(@Body BaseReq<ShopSettlementReq> req);
 
     /**
+     * 修改合作商人员信息
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102042")
+    Observable<BaseResp<Object>> editShopEmployee(@Body BaseReq<ShopSettlementReq> req);
+
+    /**
      * 供应商员工列表
      *
      * @param req req

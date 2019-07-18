@@ -3,11 +3,12 @@ package com.hll_sc_app.app.cooperation.detail.shopsaleman;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.cooperation.EmployeeBean;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 
 import java.util.List;
 
 /**
- * 合作采购商详情- 批量指派销售
+ * 合作采购商详情- 批量指派销售/司机
  *
  * @author zhuyingsong
  * @date 2019/7/18
@@ -28,7 +29,7 @@ public interface CooperationShopSalesContract {
          *
          * @return 搜索词
          */
-        String getSearchParam();
+        String getKeyWord();
 
         /**
          * 获取角色类型
@@ -36,6 +37,11 @@ public interface CooperationShopSalesContract {
          * @return 1-销售 2-司机
          */
         String getRoleType();
+
+        /**
+         * 修改成功
+         */
+        void editSuccess();
     }
 
     interface ICooperationAddShopPresenter extends IPresenter<ICooperationAddShopView> {
@@ -44,11 +50,18 @@ public interface CooperationShopSalesContract {
          *
          * @param show 是否显示 loading
          */
-        void queryPurchaserShopList(boolean show);
+        void queryEmployeeList(boolean show);
 
         /*
          *加载下一页
          */
-        void queryMorePurchaserShopList();
+        void queryMoreEmployeeList();
+
+        /**
+         * 修改合作商人员信息
+         *
+         * @param req req
+         */
+        void editShopEmployee(ShopSettlementReq req);
     }
 }

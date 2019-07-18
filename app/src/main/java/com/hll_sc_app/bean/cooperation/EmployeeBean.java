@@ -37,6 +37,15 @@ public class EmployeeBean {
     private String loginPhone;
     private String purchaserToken;
     private String resourceType;
+    private boolean select;
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
 
     public String getActionTime() {
         return actionTime;

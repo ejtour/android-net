@@ -1,13 +1,14 @@
 package com.hll_sc_app.app.cooperation.detail.shopsaleman;
 
-import com.hll_sc_app.api.AgreementPriceService;
+import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.cooperation.EmployeeBean;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -16,7 +17,7 @@ import java.util.List;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
- * 合作采购商详情- 批量指派销售
+ * 合作采购商详情- 批量指派销售/司机
  *
  * @author zhuyingsong
  * @date 2019/7/18
@@ -32,7 +33,7 @@ public class CooperationShopSalesPresenter implements CooperationShopSalesContra
 
     @Override
     public void start() {
-        queryPurchaserShopList(true);
+        queryEmployeeList(true);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class CooperationShopSalesPresenter implements CooperationShopSalesContra
     }
 
     @Override
-    public void queryPurchaserShopList(boolean show) {
+    public void queryEmployeeList(boolean show) {
         mPageNum = 1;
         mTempPageNum = mPageNum;
         toQueryPurchaserShopList(show);
@@ -49,14 +50,13 @@ public class CooperationShopSalesPresenter implements CooperationShopSalesContra
 
     private void toQueryPurchaserShopList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("purchaserID", mView.getPurchaserId())
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
-            .put("searchParam", mView.getSearchParam())
-            .put("actionType", "addCooperation")
+            .put("keyword", mView.getKeyWord())
+            .put("roleType", mView.getRoleType())
             .create();
-        AgreementPriceService.INSTANCE.queryCooperationPurchaserShopList(req)
+        CooperationPurchaserService.INSTANCE
+            .queryEmployeeList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> {
@@ -66,9 +66,9 @@ public class CooperationShopSalesPresenter implements CooperationShopSalesContra
             })
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<PurchaserShopBean>>() {
+            .subscribe(new BaseCallback<List<EmployeeBean>>() {
                 @Override
-                public void onSuccess(List<PurchaserShopBean> result) {
+                public void onSuccess(List<EmployeeBean> result) {
                     mPageNum = mTempPageNum;
                     mView.showEmployeeList(result, mPageNum != 1);
                 }
@@ -81,9 +81,37 @@ public class CooperationShopSalesPresenter implements CooperationShopSalesContra
     }
 
     @Override
-    public void queryMorePurchaserShopList() {
+    public void queryMoreEmployeeList() {
         mTempPageNum = mPageNum;
         mTempPageNum++;
         toQueryPurchaserShopList(false);
+    }
+
+    @Override
+    public void editShopEmployee(ShopSettlementReq req) {
+        if (req == null) {
+            return;
+        }
+        BaseReq<ShopSettlementReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        CooperationPurchaserService
+            .INSTANCE
+            .editShopEmployee(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object object) {
+                    mView.editSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
     }
 }

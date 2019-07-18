@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -182,15 +183,21 @@ public class CooperationSelectShopActivity extends BaseLoadActivity {
                 listShopIds.add(bean.getShopID());
             }
         }
-        mReq.setShopIds(listShopIds);
         switch (mReq.getActionType()) {
             case TYPE_SETTLEMENT:
+                mReq.setShopIds(listShopIds);
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, mReq);
                 break;
             case TYPE_DELIVERY:
+                mReq.setShopIds(listShopIds);
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DELIVERY, mReq);
                 break;
             case TYPE_SALESMAN:
+                mReq.setShopIDs(TextUtils.join(",", listShopIds));
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, mReq);
+                break;
+            case TYPE_DRIVER:
+                mReq.setShopIDs(TextUtils.join(",", listShopIds));
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, mReq);
                 break;
             default:
