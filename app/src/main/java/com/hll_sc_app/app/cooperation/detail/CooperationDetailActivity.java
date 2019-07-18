@@ -34,7 +34,6 @@ import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -44,6 +43,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +59,6 @@ import butterknife.OnClick;
 public class CooperationDetailActivity extends BaseLoadActivity implements CooperationDetailContract.ICooperationDetailView, BaseQuickAdapter.OnItemClickListener {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @Autowired(name = "object0")
-    String mPurchaserId;
     @BindView(R.id.img_logoUrl)
     GlideImageView mImgLogoUrl;
     @BindView(R.id.txt_purchaserName)
@@ -71,6 +69,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     TextView mTxtDefaultDeliveryWay;
     @BindView(R.id.txt_shopCount)
     TextView mTxtShopCount;
+    @Autowired(name = "object0")
+    String mPurchaserId;
 
     private PurchaserShopListAdapter mAdapter;
     private CooperationPurchaserDetail mDetail;
@@ -133,7 +133,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 } else {
                     SwipeItemLayout.closeAllItems(mRecyclerView);
                 }
-            }, "我再看看", "立即解除").create().show();
+            }, "我再看看", "立即解除")
+            .create().show();
     }
 
     private void toDelShop(PurchaserShopBean bean) {
@@ -298,14 +299,16 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
 
     public static class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
         private boolean mIsAdd;
+        private Map<String, PurchaserShopBean> mSelectMap;
 
         PurchaserShopListAdapter() {
             super(R.layout.item_cooperation_purchaser_shop);
         }
 
-        public PurchaserShopListAdapter(boolean add) {
+        public PurchaserShopListAdapter(Map<String, PurchaserShopBean> map) {
             super(R.layout.item_cooperation_purchaser_shop);
-            this.mIsAdd = add;
+            this.mIsAdd = true;
+            this.mSelectMap = map;
         }
 
         @Override
@@ -323,9 +326,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 .setText(R.id.txt_shopAddress, "地址：" + getString(item.getShopAddress()))
                 .setGone(R.id.txt_newShopNum, !mIsAdd && CommonUtils.getDouble(item.getStatus()) == 0)
                 .setGone(R.id.img_select, mIsAdd)
-                .getView(R.id.img_select).setSelected(item.isSelect());
+                .getView(R.id.img_select).setSelected(mSelectMap != null && mSelectMap.get(item.getShopID()) != null);
             GlideImageView imageView = helper.getView(R.id.img_imagePath);
-            LogUtil.d("ZYS", " is Activie =" + TextUtils.equals(item.getIsActive(), "0"));
             if (TextUtils.equals(item.getIsActive(), "0")) {
                 imageView.setShopDisableImageUrl(item.getImagePath());
             } else {

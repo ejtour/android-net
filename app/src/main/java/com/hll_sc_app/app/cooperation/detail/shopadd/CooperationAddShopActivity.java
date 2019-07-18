@@ -36,10 +36,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,8 +68,8 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
     @Autowired(name = "object0")
     String mPurchaserId;
     private EmptyView mEmptyView;
-    private Set<PurchaserShopBean> mListSelect;
     private CooperationAddShopPresenter mPresenter;
+    private Map<String, PurchaserShopBean> mSelectMap;
     private CooperationDetailActivity.PurchaserShopListAdapter mAdapter;
 
     @Override
@@ -79,11 +79,11 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
+        mSelectMap = new HashMap<>();
         initView();
         mPresenter = CooperationAddShopPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        mListSelect = new HashSet<>();
         EventBus.getDefault().register(this);
     }
 
@@ -107,11 +107,10 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         });
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
-        mAdapter = new CooperationDetailActivity.PurchaserShopListAdapter(true);
+        mAdapter = new CooperationDetailActivity.PurchaserShopListAdapter(mSelectMap);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserShopBean bean = (PurchaserShopBean) adapter.getItem(position);
             if (bean != null) {
-                bean.setSelect(!bean.isSelect());
                 addOrRemove(bean);
                 checkSelectAll();
                 adapter.notifyItemChanged(position);
@@ -133,10 +132,14 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
     }
 
     private void addOrRemove(PurchaserShopBean shopBean) {
-        if (shopBean.isSelect()) {
-            mListSelect.add(shopBean);
+        if (shopBean == null) {
+            return;
+        }
+        String shopId = shopBean.getShopID();
+        if (mSelectMap.get(shopId) != null) {
+            mSelectMap.remove(shopId);
         } else {
-            mListSelect.remove(shopBean);
+            mSelectMap.put(shopId, shopBean);
         }
     }
 
@@ -150,14 +153,14 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         List<PurchaserShopBean> list = mAdapter.getData();
         boolean select = true;
         for (PurchaserShopBean bean : list) {
-            if (!bean.isSelect()) {
+            if (mSelectMap.get(bean.getShopID()) == null) {
                 select = false;
                 break;
             }
         }
         mImgAllCheck.setSelected(select);
-        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", mListSelect.size()));
-        mTxtConfirm.setEnabled(!mListSelect.isEmpty());
+        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", mSelectMap.size()));
+        mTxtConfirm.setEnabled(!mSelectMap.isEmpty());
     }
 
     @Override
@@ -181,7 +184,7 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
                 toClose();
                 break;
             case R.id.txt_confirm:
-                EventBus.getDefault().post(new ArrayList<>(mListSelect));
+                EventBus.getDefault().post(new ArrayList<>(mSelectMap.values()));
                 finish();
                 break;
             case R.id.img_allCheck:
@@ -197,7 +200,7 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
      * 返回时候逻辑处理
      */
     private void toClose() {
-        if (CommonUtils.isEmpty(mListSelect)) {
+        if (mSelectMap.isEmpty()) {
             finish();
             return;
         }
@@ -209,14 +212,19 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         if (mAdapter == null || CommonUtils.isEmpty(mAdapter.getData())) {
             return;
         }
-        List<PurchaserShopBean> list = mAdapter.getData();
-        for (PurchaserShopBean bean : list) {
-            bean.setSelect(select);
-            addOrRemove(bean);
+        if (select) {
+            List<PurchaserShopBean> list = mAdapter.getData();
+            for (PurchaserShopBean bean : list) {
+                if (mSelectMap.get(bean.getShopID()) == null) {
+                    mSelectMap.put(bean.getShopID(), bean);
+                }
+            }
+        } else {
+            mSelectMap.clear();
         }
         mAdapter.notifyDataSetChanged();
-        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", mListSelect.size()));
-        mTxtConfirm.setEnabled(!mListSelect.isEmpty());
+        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", mSelectMap.size()));
+        mTxtConfirm.setEnabled(!mSelectMap.isEmpty());
     }
 
     /**
@@ -244,13 +252,6 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
 
     @Override
     public void showPurchaserShopList(List<PurchaserShopBean> list, boolean append) {
-        if (!CommonUtils.isEmpty(list) && !CommonUtils.isEmpty(mListSelect)) {
-            for (PurchaserShopBean bean : list) {
-                if (mListSelect.contains(bean)) {
-                    bean.setSelect(true);
-                }
-            }
-        }
         if (append) {
             mAdapter.addData(list);
         } else {

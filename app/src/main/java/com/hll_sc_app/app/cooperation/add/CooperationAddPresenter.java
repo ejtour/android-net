@@ -7,8 +7,6 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
-import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -27,8 +25,6 @@ public class CooperationAddPresenter implements CooperationAddContract.ICooperat
     private CooperationAddContract.ICooperationAddView mView;
     private int mPageNum;
     private int mTempPageNum;
-    private List<RatioTemplateBean> mListRation;
-    private CustomCategoryResp mCategoryResp;
 
     static CooperationAddPresenter newInstance() {
         return new CooperationAddPresenter();
