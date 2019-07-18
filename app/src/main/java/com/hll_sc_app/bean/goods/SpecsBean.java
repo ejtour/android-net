@@ -26,6 +26,7 @@ public class SpecsBean implements Parcelable {
             return new SpecsBean[size];
         }
     };
+    private String id;
     private String specTemplateID;
     private String specID;
     private String productSale;
@@ -64,7 +65,6 @@ public class SpecsBean implements Parcelable {
     private String skuCode;
     private String minOrder;
     private List<DepositProductReq> depositProducts;
-    private boolean edit;
     /**
      * 所属的商品是否为押金商品
      */
@@ -75,6 +75,7 @@ public class SpecsBean implements Parcelable {
     }
 
     protected SpecsBean(Parcel in) {
+        this.id = in.readString();
         this.specTemplateID = in.readString();
         this.specID = in.readString();
         this.productSale = in.readString();
@@ -107,7 +108,6 @@ public class SpecsBean implements Parcelable {
         this.skuCode = in.readString();
         this.minOrder = in.readString();
         this.depositProducts = in.createTypedArrayList(DepositProductReq.CREATOR);
-        this.edit = in.readByte() != 0;
         this.isDepositProduct = in.readByte() != 0;
         this.select = in.readByte() != 0;
     }
@@ -126,14 +126,6 @@ public class SpecsBean implements Parcelable {
 
     public void setDepositProduct(boolean depositProduct) {
         isDepositProduct = depositProduct;
-    }
-
-    public boolean isEdit() {
-        return edit;
-    }
-
-    public void setEdit(boolean edit) {
-        this.edit = edit;
     }
 
     public String getMinOrder() {
@@ -392,6 +384,22 @@ public class SpecsBean implements Parcelable {
         this.select = select;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isLowStock() {
+        return isLowStock;
+    }
+
+    public void setLowStock(boolean lowStock) {
+        isLowStock = lowStock;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -399,6 +407,7 @@ public class SpecsBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
         dest.writeString(this.specTemplateID);
         dest.writeString(this.specID);
         dest.writeString(this.productSale);
@@ -431,7 +440,6 @@ public class SpecsBean implements Parcelable {
         dest.writeString(this.skuCode);
         dest.writeString(this.minOrder);
         dest.writeTypedList(this.depositProducts);
-        dest.writeByte(this.edit ? (byte) 1 : (byte) 0);
         dest.writeByte(this.isDepositProduct ? (byte) 1 : (byte) 0);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
     }
