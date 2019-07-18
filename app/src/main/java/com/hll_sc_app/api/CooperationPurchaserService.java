@@ -8,6 +8,8 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
+import com.hll_sc_app.bean.cooperation.SettlementBean;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 
 import java.util.List;
@@ -75,4 +77,24 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:102034")
     Observable<BaseResp<Object>> editCooperationPurchaserShop(@Body BaseReq<CooperationShopReq> req);
+
+    /**
+     * 查询支付方式
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101038")
+    Observable<BaseResp<SettlementBean>> querySettlementList(@Body BaseMapReq req);
+
+    /**
+     * 修改合作关系支付相关设置
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102033")
+    Observable<BaseResp<Object>> editShopSettlement(@Body BaseReq<ShopSettlementReq> req);
 }

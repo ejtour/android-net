@@ -159,6 +159,7 @@ public class CooperationSelectShopActivity extends BaseLoadActivity {
             case R.id.txt_allCheck:
                 mImgAllCheck.setSelected(!mImgAllCheck.isSelected());
                 selectAll(mImgAllCheck.isSelected());
+                break;
             default:
                 break;
         }
@@ -184,7 +185,7 @@ public class CooperationSelectShopActivity extends BaseLoadActivity {
         mReq.setShopIds(listShopIds);
         switch (mReq.getActionType()) {
             case TYPE_SETTLEMENT:
-                RouterUtil.goToActivity("", this, mReq);
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, mReq);
                 break;
             default:
                 break;

@@ -191,6 +191,7 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
             case R.id.txt_allCheck:
                 mImgAllCheck.setSelected(!mImgAllCheck.isSelected());
                 selectAll(mImgAllCheck.isSelected());
+                break;
             default:
                 break;
         }

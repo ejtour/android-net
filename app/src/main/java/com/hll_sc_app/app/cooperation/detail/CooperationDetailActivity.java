@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.cooperation.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +20,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
+import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -184,8 +186,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         mDetail = resp;
         mImgLogoUrl.setImageURL(resp.getLogoUrl());
         mTxtName.setText(resp.getName());
-        mTxtDefaultDeliveryWay.setText(String.format("默认结算方式：%s", getDeliveryWay(resp.getDefaultDeliveryWay())));
-        mTxtDefaultSettlementWay.setText(String.format("默认配送方式：%s", getSettlementWay(resp.getDefaultSettlementWay())));
+        mTxtDefaultDeliveryWay.setText(String.format("默认配送方式：%s", getDeliveryWay(resp.getDefaultDeliveryWay())));
+        mTxtDefaultSettlementWay.setText(String.format("默认结算方式：%s", getSettlementWay(resp.getDefaultSettlementWay())));
         mTxtShopCount.setText(String.format("当前合作门店数量：%s", CommonUtils.formatNumber(resp.getShopCount())));
         mAdapter.setNewData(resp.getShopDetailList());
         mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("还没有合作门店数据").create());
@@ -235,11 +237,11 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         if (!TextUtils.isEmpty(defaultSettlementWay)) {
             String[] strings = defaultSettlementWay.split(",");
             for (String s : strings) {
-                if (TextUtils.equals(s, "1")) {
+                if (TextUtils.equals(s, CooperationShopSettlementActivity.PAY_CASH)) {
                     builder.append("货到付款").append("/");
-                } else if (TextUtils.equals(s, "2")) {
+                } else if (TextUtils.equals(s, CooperationShopSettlementActivity.PAY_ACCOUNT)) {
                     builder.append("账期支付").append("/");
-                } else if (TextUtils.equals(s, "3")) {
+                } else if (TextUtils.equals(s, CooperationShopSettlementActivity.PAY_ONLINE)) {
                     builder.append("线上支付").append("/");
                 }
             }
@@ -317,6 +319,12 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             .withParcelableArrayList("parcelable", new ArrayList<>(mAdapter.getData()))
             .withParcelable("parcelable1", req)
             .navigation();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresenter.queryPurchaserDetail();
     }
 
     public static class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {

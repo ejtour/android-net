@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择结算方式"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/fl_bottom"
+        android:layout_below="@+id/rl_title"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:background="@color/color_fafafa"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="请选择结算方式"
+            android:textColor="@color/color_aeaeae"
+            android:textSize="9sp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_onlinePayment"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/img_onlinePayment"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_selector_check_box"/>
+
+            <TextView
+                android:id="@+id/txt_onlinePayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="在线支付"
+                android:textColor="@drawable/color_purchase_select_text"
+                android:textSize="@dimen/text_middle_size"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_cashPayment"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/img_cashPayment"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_selector_check_box"/>
+
+            <TextView
+                android:id="@+id/txt_cashPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="货到付款"
+                android:textColor="@drawable/color_purchase_select_text"
+                android:textSize="@dimen/text_middle_size"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_accountPayment"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/img_accountPayment"
+                android:layout_width="35dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_selector_check_box"/>
+
+            <TextView
+                android:id="@+id/txt_accountPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账期支付"
+                android:textColor="@drawable/color_purchase_select_text"
+                android:textSize="@dimen/text_middle_size"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/txt_confirm"
+            style="@style/BtnOrderAction.PrimarySolid"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:text="确定"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

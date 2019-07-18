@@ -29,6 +29,22 @@ public class ShopSettlementReq implements Parcelable {
     private String groupID;
     private String purchaserID;
     private List<String> shopIds;
+    /**
+     * 结算方式
+     */
+    private String settlementWay;
+    /**
+     * 账期支付日
+     */
+    private String settleDate;
+    /**
+     * 账期日类型,0-未设置,1-按周,2-按月
+     */
+    private String accountPeriodType;
+    /**
+     * 账期日
+     */
+    private String accountPeriod;
     private String employeeID;
     private String employeeName;
     private String employeePhone;
@@ -43,6 +59,10 @@ public class ShopSettlementReq implements Parcelable {
         this.groupID = in.readString();
         this.purchaserID = in.readString();
         this.shopIds = in.createStringArrayList();
+        this.settlementWay = in.readString();
+        this.settleDate = in.readString();
+        this.accountPeriodType = in.readString();
+        this.accountPeriod = in.readString();
         this.employeeID = in.readString();
         this.employeeName = in.readString();
         this.employeePhone = in.readString();
@@ -120,6 +140,38 @@ public class ShopSettlementReq implements Parcelable {
         this.employeePhone = employeePhone;
     }
 
+    public String getSettlementWay() {
+        return settlementWay;
+    }
+
+    public void setSettlementWay(String settlementWay) {
+        this.settlementWay = settlementWay;
+    }
+
+    public String getSettleDate() {
+        return settleDate;
+    }
+
+    public void setSettleDate(String settleDate) {
+        this.settleDate = settleDate;
+    }
+
+    public String getAccountPeriodType() {
+        return accountPeriodType;
+    }
+
+    public void setAccountPeriodType(String accountPeriodType) {
+        this.accountPeriodType = accountPeriodType;
+    }
+
+    public String getAccountPeriod() {
+        return accountPeriod;
+    }
+
+    public void setAccountPeriod(String accountPeriod) {
+        this.accountPeriod = accountPeriod;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -133,6 +185,10 @@ public class ShopSettlementReq implements Parcelable {
         dest.writeString(this.groupID);
         dest.writeString(this.purchaserID);
         dest.writeStringList(this.shopIds);
+        dest.writeString(this.settlementWay);
+        dest.writeString(this.settleDate);
+        dest.writeString(this.accountPeriodType);
+        dest.writeString(this.accountPeriod);
         dest.writeString(this.employeeID);
         dest.writeString(this.employeeName);
         dest.writeString(this.employeePhone);
