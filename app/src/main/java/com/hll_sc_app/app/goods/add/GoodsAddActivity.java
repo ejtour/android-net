@@ -361,6 +361,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
         // 商品规格
         mSpecsAdapter.setNewData(mGoodsBean.getSpecs());
+        showSpecsAddAssistUnit();
         // 商品简介
         mEtProductBrief.setText(mGoodsBean.getProductBrief());
         // 别称
