@@ -30,104 +30,64 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:layout_below="@+id/rl_title"
+        android:background="@color/color_fafafa"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="请选择结算方式"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="9sp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/fl_bottom"
-        android:layout_below="@+id/rl_title"
-        android:layout_marginTop="5dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_title"
+        android:background="@color/base_white"
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="33dp"
-            android:background="@color/color_fafafa"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="请选择结算方式"
-            android:textColor="@color/color_aeaeae"
-            android:textSize="9sp"/>
-
-        <LinearLayout
-            android:id="@+id/ll_onlinePayment"
+        <CheckBox
+            android:id="@+id/cb_onlinePayment"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/base_bg_shadow_top_white_bar"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:button="@drawable/bg_selector_check_box"
+            android:padding="5dp"
+            android:text="在线支付"
+            android:textColor="@drawable/base_text_color_window_check"
+            android:textSize="@dimen/text_middle_size"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="visible"/>
 
-            <ImageView
-                android:id="@+id/img_onlinePayment"
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:scaleType="centerInside"
-                android:src="@drawable/bg_selector_check_box"/>
-
-            <TextView
-                android:id="@+id/txt_onlinePayment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="在线支付"
-                android:textColor="@drawable/base_text_color_window_check"
-                android:textSize="@dimen/text_middle_size"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_cashPayment"
+        <CheckBox
+            android:id="@+id/cb_cashPayment"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/base_bg_shadow_top_white_bar"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:button="@drawable/bg_selector_check_box"
+            android:padding="5dp"
+            android:text="货到付款"
+            android:textColor="@drawable/base_text_color_window_check"
+            android:textSize="@dimen/text_middle_size"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="visible"/>
 
-            <ImageView
-                android:id="@+id/img_cashPayment"
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:scaleType="centerInside"
-                android:src="@drawable/bg_selector_check_box"/>
-
-            <TextView
-                android:id="@+id/txt_cashPayment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="货到付款"
-                android:textColor="@drawable/base_text_color_window_check"
-                android:textSize="@dimen/text_middle_size"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_accountPayment"
+        <CheckBox
+            android:id="@+id/cb_accountPayment"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/base_bg_shadow_top_white_bar"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:button="@drawable/bg_selector_check_box"
+            android:padding="5dp"
+            android:text="账期支付"
+            android:textColor="@drawable/base_text_color_window_check"
+            android:textSize="@dimen/text_middle_size"
             android:visibility="gone"
-            tools:visibility="visible">
-
-            <ImageView
-                android:id="@+id/img_accountPayment"
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:scaleType="centerInside"
-                android:src="@drawable/bg_selector_check_box"/>
-
-            <TextView
-                android:id="@+id/txt_accountPayment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="账期支付"
-                android:textColor="@drawable/base_text_color_window_check"
-                android:textSize="@dimen/text_middle_size"/>
-
-        </LinearLayout>
+            tools:visibility="visible"/>
 
         <LinearLayout
             android:id="@+id/ll_account_detail"
@@ -142,7 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/base_bg_shadow_top_white_bar"
-                android:paddingLeft="35dp"
+                android:paddingLeft="20dp"
                 android:paddingRight="10dp">
 
                 <TextView
@@ -174,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/base_bg_shadow_top_white_bar"
-                android:paddingLeft="35dp"
+                android:paddingLeft="20dp"
                 android:paddingRight="10dp">
 
                 <TextView

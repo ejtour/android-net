@@ -187,6 +187,8 @@ public class CooperationSelectShopActivity extends BaseLoadActivity {
             case TYPE_SETTLEMENT:
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, mReq);
                 break;
+            case TYPE_DELIVERY:
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DELIVERY, mReq);
             default:
                 break;
         }

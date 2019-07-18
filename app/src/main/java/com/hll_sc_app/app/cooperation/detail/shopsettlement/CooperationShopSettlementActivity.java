@@ -8,7 +8,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,35 +44,23 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     public static final String PAY_CASH = "1";
     public static final String PAY_ACCOUNT = "2";
     public static final String PAY_ONLINE = "3";
-    public static final String[] STRINGS_WEEK = {"每周日", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六"};
     public static final String TERM_WEEK = "1";
     public static final String TERM_MONTH = "2";
+    public static final String[] STRINGS_WEEK = {"每周日", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六"};
     @Autowired(name = "parcelable", required = true)
     ShopSettlementReq mReq;
-    @BindView(R.id.img_onlinePayment)
-    ImageView mImgOnlinePayment;
-    @BindView(R.id.txt_onlinePayment)
-    TextView mTxtOnlinePayment;
-    @BindView(R.id.ll_onlinePayment)
-    LinearLayout mLlOnlinePayment;
-    @BindView(R.id.img_cashPayment)
-    ImageView mImgCashPayment;
-    @BindView(R.id.txt_cashPayment)
-    TextView mTxtCashPayment;
-    @BindView(R.id.ll_cashPayment)
-    LinearLayout mLlCashPayment;
-    @BindView(R.id.img_accountPayment)
-    ImageView mImgAccountPayment;
-    @BindView(R.id.txt_accountPayment)
-    TextView mTxtAccountPayment;
-    @BindView(R.id.ll_accountPayment)
-    LinearLayout mLlAccountPayment;
     @BindView(R.id.txt_accountPeriod)
     TextView mTxtAccountPeriod;
     @BindView(R.id.txt_settleDate)
     TextView mTxtSettleDate;
     @BindView(R.id.ll_account_detail)
     LinearLayout mLlAccountDetail;
+    @BindView(R.id.cb_onlinePayment)
+    CheckBox mCbOnlinePayment;
+    @BindView(R.id.cb_cashPayment)
+    CheckBox mCbCashPayment;
+    @BindView(R.id.cb_accountPayment)
+    CheckBox mCbAccountPayment;
     private CooperationShopSettlementPresenter mPresenter;
 
     @Override
@@ -85,27 +73,21 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         mPresenter = CooperationShopSettlementPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        mCbAccountPayment.setOnCheckedChangeListener((buttonView, isChecked) -> showAccountDetail());
     }
 
-    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.ll_onlinePayment, R.id.ll_cashPayment, R.id.ll_accountPayment,
-        R.id.rl_accountPeriod, R.id.rl_settleDate})
+    /**
+     * 是否显示账期信息
+     */
+    private void showAccountDetail() {
+        mLlAccountDetail.setVisibility(mCbAccountPayment.isChecked() ? View.VISIBLE : View.GONE);
+    }
+
+    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_accountPeriod, R.id.rl_settleDate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
                 finish();
-                break;
-            case R.id.ll_onlinePayment:
-                mImgOnlinePayment.setSelected(!mImgOnlinePayment.isSelected());
-                mTxtOnlinePayment.setSelected(!mTxtOnlinePayment.isSelected());
-                break;
-            case R.id.ll_cashPayment:
-                mImgCashPayment.setSelected(!mImgCashPayment.isSelected());
-                mTxtCashPayment.setSelected(!mTxtCashPayment.isSelected());
-                break;
-            case R.id.ll_accountPayment:
-                mImgAccountPayment.setSelected(!mImgAccountPayment.isSelected());
-                mTxtAccountPayment.setSelected(!mTxtAccountPayment.isSelected());
-                showAccountDetail();
                 break;
             case R.id.txt_confirm:
                 toConfirm();
@@ -121,22 +103,15 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         }
     }
 
-    /**
-     * 是否显示账期信息
-     */
-    private void showAccountDetail() {
-        mLlAccountDetail.setVisibility(mImgAccountPayment.isSelected() ? View.VISIBLE : View.GONE);
-    }
-
     private void toConfirm() {
         List<String> list = new ArrayList<>();
-        if (mImgOnlinePayment.isSelected()) {
+        if (mCbOnlinePayment.isSelected()) {
             list.add(PAY_ONLINE);
         }
-        if (mImgCashPayment.isSelected()) {
+        if (mCbCashPayment.isSelected()) {
             list.add(PAY_CASH);
         }
-        if (mImgAccountPayment.isSelected()) {
+        if (mCbAccountPayment.isChecked()) {
             list.add(PAY_ACCOUNT);
         }
         if (CommonUtils.isEmpty(list)) {
@@ -224,13 +199,13 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             for (String s : payTypeEnum) {
                 switch (s) {
                     case PAY_CASH:
-                        mLlCashPayment.setVisibility(View.VISIBLE);
+                        mCbCashPayment.setVisibility(View.VISIBLE);
                         break;
                     case PAY_ACCOUNT:
-                        mLlAccountPayment.setVisibility(View.VISIBLE);
+                        mCbAccountPayment.setVisibility(View.VISIBLE);
                         break;
                     case PAY_ONLINE:
-                        mLlOnlinePayment.setVisibility(View.VISIBLE);
+                        mCbOnlinePayment.setVisibility(View.VISIBLE);
                         break;
                     default:
                         break;
@@ -241,6 +216,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
 
     @Override
     public void editSuccess() {
+        showToast("结算方式修改成功");
         ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_DETAIL)
             .setProvider(new LoginInterceptor())
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)

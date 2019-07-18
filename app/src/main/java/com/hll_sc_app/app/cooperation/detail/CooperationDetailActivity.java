@@ -295,6 +295,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             toSelectShop(CooperationSelectShopActivity.TYPE_SETTLEMENT);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_SALESMAN)) {
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_DRIVER)) {
+            toSelectShop(CooperationSelectShopActivity.TYPE_DELIVERY);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_DELIVERY)) {
             toSelectShop(CooperationSelectShopActivity.TYPE_DELIVERY);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_DETAIL_SHOP)) {

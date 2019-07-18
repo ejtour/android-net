@@ -20,7 +20,7 @@ import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 
 /**
- * 代仓管理-我的代仓公司-代仓公司详情-门店详细资料账期选择
+ * 选择结算方式-账期选择
  *
  * @author 朱英松
  * @date 2017/11/3
