@@ -101,24 +101,32 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         EventBus.getDefault().unregister(this);
     }
 
-    private void initView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
-        mAdapter = new PurchaserShopListAdapter();
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            PurchaserShopBean bean = mAdapter.getItem(position);
-            if (bean == null) {
-                return;
+    /**
+     * 获取配送方式显示
+     *
+     * @param defaultDeliveryWay 配送方式数字表示
+     * @return 配送方式
+     */
+    public static String getDeliveryWay(String defaultDeliveryWay) {
+        StringBuilder builder = new StringBuilder();
+        if (!TextUtils.isEmpty(defaultDeliveryWay)) {
+            String[] strings = defaultDeliveryWay.split(",");
+            for (String s : strings) {
+                if (TextUtils.equals(s, "1")) {
+                    builder.append("自有物流配送").append("/");
+                } else if (TextUtils.equals(s, "2")) {
+                    builder.append("上门自提").append("/");
+                } else if (TextUtils.equals(s, "3")) {
+                    builder.append("第三方配送公司").append("/");
+                }
             }
-            if (view.getId() == R.id.txt_del) {
-                showDelTipsDialog(bean);
-            } else if (view.getId() == R.id.txt_content) {
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL, bean);
-            }
-        });
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
+        }
+        if (builder.length() != 0) {
+            builder.delete(builder.length() - 1, builder.length());
+        } else {
+            builder.append("无");
+        }
+        return builder.toString();
     }
 
     /**
@@ -201,40 +209,12 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     }
 
     /**
-     * 获取配送方式显示
-     *
-     * @param defaultDeliveryWay 配送方式数字表示
-     * @return 配送方式
-     */
-    private String getDeliveryWay(String defaultDeliveryWay) {
-        StringBuilder builder = new StringBuilder();
-        if (!TextUtils.isEmpty(defaultDeliveryWay)) {
-            String[] strings = defaultDeliveryWay.split(",");
-            for (String s : strings) {
-                if (TextUtils.equals(s, "1")) {
-                    builder.append("自有物流配送").append("/");
-                } else if (TextUtils.equals(s, "2")) {
-                    builder.append("上门自提").append("/");
-                } else if (TextUtils.equals(s, "3")) {
-                    builder.append("第三方配送公司").append("/");
-                }
-            }
-        }
-        if (builder.length() != 0) {
-            builder.delete(builder.length() - 1, builder.length());
-        } else {
-            builder.append("无");
-        }
-        return builder.toString();
-    }
-
-    /**
      * 获取结算方式显示
      *
      * @param defaultSettlementWay 结算方式数字表示
      * @return 结算方式
      */
-    private String getSettlementWay(String defaultSettlementWay) {
+    public static String getSettlementWay(String defaultSettlementWay) {
         StringBuilder builder = new StringBuilder();
         if (!TextUtils.isEmpty(defaultSettlementWay)) {
             String[] strings = defaultSettlementWay.split(",");
@@ -254,6 +234,26 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             builder.append("无");
         }
         return builder.toString();
+    }
+
+    private void initView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
+            , UIUtils.dip2px(1)));
+        mAdapter = new PurchaserShopListAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            PurchaserShopBean bean = mAdapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+            if (view.getId() == R.id.txt_del) {
+                showDelTipsDialog(bean);
+            } else if (view.getId() == R.id.content) {
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL, bean);
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
 
     @OnClick({R.id.img_close, R.id.txt_options})

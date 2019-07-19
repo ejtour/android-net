@@ -2,7 +2,6 @@ package com.hll_sc_app.app.cooperation.detail.shopdetail;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.cooperation.DeliveryBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 
 /**
@@ -13,13 +12,7 @@ import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
  */
 public interface CooperationShopDetailContract {
 
-    interface ICooperationShopDeliveryView extends ILoadView {
-        /**
-         * 展示支持的配送方式
-         *
-         * @param bean 配送方式
-         */
-        void showDeliveryList(DeliveryBean bean);
+    interface ICooperationShopDetailView extends ILoadView {
 
         /**
          * 修改成功
@@ -27,12 +20,7 @@ public interface CooperationShopDetailContract {
         void editSuccess();
     }
 
-    interface ICooperationShopDeliveryPresenter extends IPresenter<ICooperationShopDeliveryView> {
-        /**
-         * 查询配送方式
-         */
-        void queryDeliveryList();
-
+    interface ICooperationShopDetailPresenter extends IPresenter<ICooperationShopDetailView> {
         /**
          * 批量修改配送方式
          *

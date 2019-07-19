@@ -3,7 +3,6 @@ package com.hll_sc_app.bean.agreementprice.quotation;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,9 +28,124 @@ public class PurchaserShopBean implements Parcelable {
     private String lonGaoDe;
     private String shopPhone;
     private String shopID;
+    public static final Creator<PurchaserShopBean> CREATOR = new Creator<PurchaserShopBean>() {
+        @Override
+        public PurchaserShopBean createFromParcel(Parcel source) {
+            return new PurchaserShopBean(source);
+        }
+
+        @Override
+        public PurchaserShopBean[] newArray(int size) {
+            return new PurchaserShopBean[size];
+        }
+    };
+    private String shopProvince;
+    private String shopDistrict;
+    private String shopCity;
     private boolean select;
     private List<TimeBean> time;
     private String status;
+    private String settlementWay;
+    private String salesRepresentativeName;
+    private String driverName;
+    private String deliveryWay;
+    private String agreeTime;
+    private String deliveryPeriod;
+
+    protected PurchaserShopBean(Parcel in) {
+        this.shopCode = in.readString();
+        this.shopArea = in.readString();
+        this.addressGaoDe = in.readString();
+        this.imagePath = in.readString();
+        this.mobile = in.readString();
+        this.shopName = in.readString();
+        this.source = in.readString();
+        this.isActive = in.readString();
+        this.shopAddress = in.readString();
+        this.linkman = in.readString();
+        this.purchaserID = in.readString();
+        this.latGaoDe = in.readString();
+        this.shopAdmin = in.readString();
+        this.lonGaoDe = in.readString();
+        this.shopPhone = in.readString();
+        this.shopID = in.readString();
+        this.shopProvince = in.readString();
+        this.shopDistrict = in.readString();
+        this.shopCity = in.readString();
+        this.settlementWay = in.readString();
+        this.select = in.readByte() != 0;
+        this.time = in.createTypedArrayList(TimeBean.CREATOR);
+        this.status = in.readString();
+        this.salesRepresentativeName = in.readString();
+        this.driverName = in.readString();
+        this.deliveryWay = in.readString();
+        this.agreeTime = in.readString();
+        this.deliveryPeriod = in.readString();
+    }
+
+    public String getSalesRepresentativeName() {
+        return salesRepresentativeName;
+    }
+
+    public void setSalesRepresentativeName(String salesRepresentativeName) {
+        this.salesRepresentativeName = salesRepresentativeName;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getDeliveryWay() {
+        return deliveryWay;
+    }
+
+    public void setDeliveryWay(String deliveryWay) {
+        this.deliveryWay = deliveryWay;
+    }
+
+    public String getAgreeTime() {
+        return agreeTime;
+    }
+
+    public void setAgreeTime(String agreeTime) {
+        this.agreeTime = agreeTime;
+    }
+
+    public String getDeliveryPeriod() {
+        return deliveryPeriod;
+    }
+
+    public void setDeliveryPeriod(String deliveryPeriod) {
+        this.deliveryPeriod = deliveryPeriod;
+    }
+
+    public String getSettlementWay() {
+        return settlementWay;
+    }
+
+    public void setSettlementWay(String settlementWay) {
+        this.settlementWay = settlementWay;
+    }
+
+    public String getShopProvince() {
+        return shopProvince;
+    }
+
+    public void setShopProvince(String shopProvince) {
+        this.shopProvince = shopProvince;
+    }
+
+    public String getShopDistrict() {
+        return shopDistrict;
+    }
+
+    public void setShopDistrict(String shopDistrict) {
+        this.shopDistrict = shopDistrict;
+    }
 
     public String getStatus() {
         return status;
@@ -185,47 +299,20 @@ public class PurchaserShopBean implements Parcelable {
         this.shopID = shopID;
     }
 
-    public static final Parcelable.Creator<PurchaserShopBean> CREATOR = new Parcelable.Creator<PurchaserShopBean>() {
-        @Override
-        public PurchaserShopBean createFromParcel(Parcel source) {
-            return new PurchaserShopBean(source);
-        }
-
-        @Override
-        public PurchaserShopBean[] newArray(int size) {
-            return new PurchaserShopBean[size];
-        }
-    };
-
     public PurchaserShopBean() {
-    }
-
-    protected PurchaserShopBean(Parcel in) {
-        this.shopCode = in.readString();
-        this.shopArea = in.readString();
-        this.addressGaoDe = in.readString();
-        this.imagePath = in.readString();
-        this.mobile = in.readString();
-        this.shopName = in.readString();
-        this.source = in.readString();
-        this.isActive = in.readString();
-        this.shopAddress = in.readString();
-        this.linkman = in.readString();
-        this.purchaserID = in.readString();
-        this.latGaoDe = in.readString();
-        this.shopAdmin = in.readString();
-        this.lonGaoDe = in.readString();
-        this.shopPhone = in.readString();
-        this.shopID = in.readString();
-        this.select = in.readByte() != 0;
-        this.time = new ArrayList<TimeBean>();
-        in.readList(this.time, TimeBean.class.getClassLoader());
-        this.status = in.readString();
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public String getShopCity() {
+        return shopCity;
+    }
+
+    public void setShopCity(String shopCity) {
+        this.shopCity = shopCity;
     }
 
     @Override
@@ -246,8 +333,17 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeString(this.lonGaoDe);
         dest.writeString(this.shopPhone);
         dest.writeString(this.shopID);
+        dest.writeString(this.shopProvince);
+        dest.writeString(this.shopDistrict);
+        dest.writeString(this.shopCity);
+        dest.writeString(this.settlementWay);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
-        dest.writeList(this.time);
+        dest.writeTypedList(this.time);
         dest.writeString(this.status);
+        dest.writeString(this.salesRepresentativeName);
+        dest.writeString(this.driverName);
+        dest.writeString(this.deliveryWay);
+        dest.writeString(this.agreeTime);
+        dest.writeString(this.deliveryPeriod);
     }
 }
