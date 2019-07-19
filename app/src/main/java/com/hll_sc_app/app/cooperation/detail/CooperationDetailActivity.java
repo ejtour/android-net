@@ -113,6 +113,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             }
             if (view.getId() == R.id.txt_del) {
                 showDelTipsDialog(bean);
+            } else if (view.getId() == R.id.txt_content) {
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL, bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

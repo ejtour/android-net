@@ -106,14 +106,15 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
         mAdapter = new EmployeeListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             EmployeeBean employeeBean = (EmployeeBean) adapter.getItem(position);
+            if (employeeBean == null) {
+                return;
+            }
             employeeBean.setSelect(true);
             adapter.notifyItemChanged(position);
-            if (employeeBean != null) {
-                mReq.setEmployeeID(employeeBean.getEmployeeID());
-                mReq.setEmployeeName(employeeBean.getEmployeeName());
-                mReq.setEmployeePhone(employeeBean.getLoginPhone());
-                mPresenter.editShopEmployee(mReq);
-            }
+            mReq.setEmployeeID(employeeBean.getEmployeeID());
+            mReq.setEmployeeName(employeeBean.getEmployeeName());
+            mReq.setEmployeePhone(employeeBean.getLoginPhone());
+            mPresenter.editShopEmployee(mReq);
         });
         mRecyclerView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
