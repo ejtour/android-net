@@ -87,14 +87,11 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
         BaseMapReq req = BaseMapReq.newBuilder()
                 // 三方商品
                 .put("goodsCode", relevanceBean.getGoodsCode())
-                .put("thirdGroupID", TextUtils.isEmpty(relevanceBean.getThirdGroupID())
-                        ? relevanceBean.getGroupID() : relevanceBean.getThirdGroupID())
+                .put("thirdGroupID", relevanceBean.getThirdGroupID())
                 .put("operateModel", relevanceBean.getOperateModel())
-                .put("resourceType", TextUtils.isEmpty(relevanceBean.getResourceType())
-                        ? String.valueOf(relevanceBean.getBillSource()) : relevanceBean.getResourceType())
+                .put("resourceType", relevanceBean.getResourceType())
                 .put("shipperType", relevanceBean.getShipperType())
-                .put("erpShopID", TextUtils.isEmpty(relevanceBean.getErpShopID())
-                        ? relevanceBean.getAllotID() : relevanceBean.getErpShopID())
+                .put("erpShopID", relevanceBean.getErpShopID())
                 // 平台商品
                 .put("cargoOwnerID", bean.getCargoOwnerID())
                 .put("cargoOwnerName", bean.getCargoOwnerName())
@@ -158,7 +155,7 @@ public class GoodsRelevanceSelectPresenter implements GoodsRelevanceSelectContra
                 })
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<SkuProductsResp>() {
+                .subscribe(new BaseCallback<SkuProductsResp>() {
                     @Override
                     public void onSuccess(SkuProductsResp resp) {
                         mPageNum = mTempPageNum;

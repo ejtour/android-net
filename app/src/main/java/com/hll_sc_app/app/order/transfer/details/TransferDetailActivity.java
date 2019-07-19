@@ -85,6 +85,7 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
     }
 
     private void initView() {
+        mTitleBar.setLeftBtnClick(v -> onBackPressed());
         TransferDetailAdapter adapter = new TransferDetailAdapter();
         mDetailHeader = new OrderDetailHeader(this);
         adapter.addHeaderView(mDetailHeader);
