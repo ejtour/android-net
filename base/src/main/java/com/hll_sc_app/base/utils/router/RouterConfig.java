@@ -16,6 +16,10 @@ public class RouterConfig {
      */
     public static final String BILL_SETTING = "/activity/setting/bill";
     /**
+     * 合作关系设置界面
+     */
+    public static final String COOPERATION_SETTING = "/activity/setting/cooperation";
+    /**
      * 登录
      */
     public static final String USER_LOGIN = "/activity/user/login";
@@ -117,7 +121,7 @@ public class RouterConfig {
      * 新增商品-选择商品属性-商品品牌-新增
      */
     public static final String ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND_ADD = "/activity/home/goods/productAttr/brand/add";
-    /**
+    /**router
      * 新增商品-自定义分类
      */
     public static final String ROOT_HOME_GOODS_CUSTOM_CATEGORY = "/activity/home/goods/customCategory";

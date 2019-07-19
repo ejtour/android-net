@@ -170,7 +170,6 @@ public class BillSettingActivityActivity extends BaseLoadActivity implements IBi
 
     @Override
     public void showAlertDialog(boolean isChecked, Integer type) {
-        // TODO: 2019/7/12 提示语
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_failure)
                 .setImageState(R.drawable.ic_dialog_state_failure)

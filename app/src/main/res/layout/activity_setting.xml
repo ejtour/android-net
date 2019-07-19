@@ -53,6 +53,7 @@
                 android:text="订单设置"/>
 
             <TextView
+                android:id="@+id/txt_cooperation_setting"
                 style="@style/SettingStyle"
                 android:text="合作采购商设置"/>
 

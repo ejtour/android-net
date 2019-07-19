@@ -42,7 +42,7 @@ public class SettingActivityActivity extends BaseLoadActivity implements Setting
 
     }
 
-    @OnClick({R.id.img_close, R.id.txt_logout, R.id.txt_bill_setting})
+    @OnClick({R.id.img_close, R.id.txt_logout, R.id.txt_bill_setting, R.id.txt_cooperation_setting})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
@@ -50,6 +50,8 @@ public class SettingActivityActivity extends BaseLoadActivity implements Setting
             mPresenter.logout();
         } else if (view.getId() == R.id.txt_bill_setting) {
             RouterUtil.goToActivity(RouterConfig.BILL_SETTING);
+        } else if (view.getId() == R.id.txt_cooperation_setting) {
+            RouterUtil.goToActivity(RouterConfig.COOPERATION_SETTING);
         }
     }
 
