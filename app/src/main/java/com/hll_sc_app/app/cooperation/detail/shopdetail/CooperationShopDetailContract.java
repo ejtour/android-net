@@ -2,7 +2,7 @@ package com.hll_sc_app.app.cooperation.detail.shopdetail;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 
 /**
  * 合作采购商详情-门店详情
@@ -18,14 +18,26 @@ public interface CooperationShopDetailContract {
          * 修改成功
          */
         void editSuccess();
+
+        /**
+         * 获取 shopBean
+         *
+         * @return shopBean
+         */
+        PurchaserShopBean getShopBean();
     }
 
     interface ICooperationShopDetailPresenter extends IPresenter<ICooperationShopDetailView> {
         /**
-         * 批量修改配送方式
+         * 编辑合作门店
          *
-         * @param req req
+         * @param actionType 操作类型（同意申请-agree，拒绝申请-refuse，重新申请-revalidation）
          */
-        void editShopDelivery(ShopSettlementReq req);
+        void editCooperationShop(String actionType);
+
+        /**
+         * 解除合作
+         */
+        void delCooperationShop();
     }
 }

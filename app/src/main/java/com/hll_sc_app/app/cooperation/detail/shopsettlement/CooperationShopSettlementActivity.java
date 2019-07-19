@@ -180,20 +180,6 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
 
     @Override
     public void showSettlementList(SettlementBean bean) {
-        if (TextUtils.equals(bean.getPayTermType(), TERM_WEEK)) {
-            mTxtAccountPeriod.setTag(R.id.date_start, 1);
-            mTxtAccountPeriod.setTag(R.id.date_end, bean.getPayTerm());
-            mTxtAccountPeriod.setText(String.format("周结,%s", getPayTermStr(CommonUtils.getInt(bean.getPayTerm()))));
-        } else if (TextUtils.equals(bean.getPayTermType(), TERM_MONTH)) {
-            mTxtAccountPeriod.setTag(R.id.date_start, 2);
-            mTxtAccountPeriod.setTag(R.id.date_end, bean.getPayTerm());
-            mTxtAccountPeriod.setText(String.format("月结，每月%s号", bean.getPayTerm()));
-        } else {
-            mTxtAccountPeriod.setText(null);
-        }
-        mTxtSettleDate.setText(String.format("对账单产生后%s日", bean.getSettleDate()));
-        mTxtSettleDate.setTag(bean.getSettleDate());
-
         List<String> payTypeEnum = bean.getPayTypeEnum();
         if (!CommonUtils.isEmpty(payTypeEnum)) {
             for (String s : payTypeEnum) {
@@ -211,6 +197,48 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
                         break;
                 }
             }
+        }
+        // 数据反显
+        if (TextUtils.isEmpty(mReq.getSettlementWay())) {
+            if (TextUtils.equals(bean.getPayTermType(), TERM_WEEK)) {
+                mTxtAccountPeriod.setTag(R.id.date_start, 1);
+                mTxtAccountPeriod.setTag(R.id.date_end, bean.getPayTerm());
+                mTxtAccountPeriod.setText(String.format("周结,%s", getPayTermStr(CommonUtils.getInt(bean.getPayTerm()))));
+            } else if (TextUtils.equals(bean.getPayTermType(), TERM_MONTH)) {
+                mTxtAccountPeriod.setTag(R.id.date_start, 2);
+                mTxtAccountPeriod.setTag(R.id.date_end, bean.getPayTerm());
+                mTxtAccountPeriod.setText(String.format("月结，每月%s号", bean.getPayTerm()));
+            } else {
+                mTxtAccountPeriod.setText(null);
+            }
+            mTxtSettleDate.setText(String.format("对账单产生后%s日", bean.getSettleDate()));
+            mTxtSettleDate.setTag(bean.getSettleDate());
+        } else {
+            if (!TextUtils.isEmpty(mReq.getSettlementWay())) {
+                if (mCbCashPayment.getVisibility() == View.VISIBLE) {
+                    mCbCashPayment.setChecked(mReq.getSettlementWay().contains(PAY_CASH));
+                }
+                if (mCbAccountPayment.getVisibility() == View.VISIBLE) {
+                    mCbAccountPayment.setChecked(mReq.getSettlementWay().contains(PAY_ACCOUNT));
+                }
+                if (mCbOnlinePayment.getVisibility() == View.VISIBLE) {
+                    mCbOnlinePayment.setChecked(mReq.getSettlementWay().contains(PAY_ONLINE));
+                }
+            }
+            if (TextUtils.equals(mReq.getAccountPeriodType(), TERM_WEEK)) {
+                mTxtAccountPeriod.setTag(R.id.date_start, 1);
+                mTxtAccountPeriod.setTag(R.id.date_end, mReq.getAccountPeriod());
+                mTxtAccountPeriod.setText(String.format("周结,%s",
+                    getPayTermStr(CommonUtils.getInt(mReq.getAccountPeriod()))));
+            } else if (TextUtils.equals(mReq.getAccountPeriodType(), TERM_MONTH)) {
+                mTxtAccountPeriod.setTag(R.id.date_start, 2);
+                mTxtAccountPeriod.setTag(R.id.date_end, mReq.getAccountPeriod());
+                mTxtAccountPeriod.setText(String.format("月结，每月%s号", mReq.getAccountPeriod()));
+            } else {
+                mTxtAccountPeriod.setText(null);
+            }
+            mTxtSettleDate.setText(String.format("对账单产生后%s日", mReq.getSettleDate()));
+            mTxtSettleDate.setTag(mReq.getSettleDate());
         }
     }
 

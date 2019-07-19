@@ -1,14 +1,22 @@
 package com.hll_sc_app.app.cooperation.detail.shopdetail;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -34,17 +42,21 @@ public class CooperationShopDetailPresenter implements CooperationShopDetailCont
         this.mView = CommonUtils.checkNotNull(view);
     }
 
-
     @Override
-    public void editShopDelivery(ShopSettlementReq req) {
-        if (req == null) {
+    public void editCooperationShop(String actionType) {
+        PurchaserShopBean bean = mView.getShopBean();
+        if (bean == null) {
             return;
         }
-        BaseReq<ShopSettlementReq> baseReq = new BaseReq<>();
-        baseReq.setData(req);
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("actionType", actionType)
+            .put("groupID", UserConfig.getGroupID())
+            .put("purchaserID", bean.getPurchaserID())
+            .put("shopID", bean.getShopID())
+            .create();
         CooperationPurchaserService
             .INSTANCE
-            .editShopSettlement(baseReq)
+            .editCooperationShop(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -53,6 +65,48 @@ public class CooperationShopDetailPresenter implements CooperationShopDetailCont
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object object) {
+                    if (TextUtils.equals("agree", actionType)) {
+                        mView.showToast("同意合作成功");
+                    } else if (TextUtils.equals("refuse", actionType)) {
+                        mView.showToast("拒绝合作成功");
+                    }
+                    mView.editSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void delCooperationShop() {
+        PurchaserShopBean bean = mView.getShopBean();
+        if (bean == null) {
+            return;
+        }
+        CooperationShopReq req = new CooperationShopReq();
+        req.setActionType("delete");
+        req.setGroupID(UserConfig.getGroupID());
+        req.setOriginator("1");
+        req.setPurchaserID(bean.getPurchaserID());
+        req.setPurchaserName(bean.getPurchaserName());
+        List<CooperationShopReq.ShopBean> list = new ArrayList<>();
+        list.add(new CooperationShopReq.ShopBean(bean.getShopID(), bean.getShopName()));
+        req.setShopList(list);
+        BaseReq<CooperationShopReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        CooperationPurchaserService.INSTANCE.addCooperationShop(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.showToast("解除合作成功");
                     mView.editSuccess();
                 }
 

@@ -75,7 +75,7 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
         }
         BaseReq<CooperationShopReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
-        CooperationPurchaserService.INSTANCE.editCooperationPurchaserShop(baseReq)
+        CooperationPurchaserService.INSTANCE.addCooperationShop(baseReq)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())

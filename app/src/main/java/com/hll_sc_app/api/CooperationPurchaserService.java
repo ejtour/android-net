@@ -71,16 +71,6 @@ public interface CooperationPurchaserService {
     Observable<BaseResp<CooperationPurchaserDetail>> queryCooperationPurchaserDetail(@Body BaseMapReq req);
 
     /**
-     * 新增或删除合作门店
-     *
-     * @param req req
-     * @return resp
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:102034")
-    Observable<BaseResp<Object>> editCooperationPurchaserShop(@Body BaseReq<CooperationShopReq> req);
-
-    /**
      * 查询支付方式
      *
      * @param req req
@@ -109,6 +99,26 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:102033")
     Observable<BaseResp<Object>> editShopSettlement(@Body BaseReq<ShopSettlementReq> req);
+
+    /**
+     * 新增或删除合作门店
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102034")
+    Observable<BaseResp<Object>> addCooperationShop(@Body BaseReq<CooperationShopReq> req);
+
+    /**
+     * 编辑合作门店
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102055")
+    Observable<BaseResp<Object>> editCooperationShop(@Body BaseMapReq req);
 
     /**
      * 修改合作商人员信息

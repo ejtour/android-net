@@ -28,6 +28,15 @@ public class PurchaserShopBean implements Parcelable {
     private String lonGaoDe;
     private String shopPhone;
     private String shopID;
+    private String purchaserName;
+
+    private String shopProvince;
+    private String shopDistrict;
+    private String shopCity;
+    private boolean select;
+    private List<TimeBean> time;
+    private String status;
+    private String settlementWay;
     public static final Creator<PurchaserShopBean> CREATOR = new Creator<PurchaserShopBean>() {
         @Override
         public PurchaserShopBean createFromParcel(Parcel source) {
@@ -39,18 +48,16 @@ public class PurchaserShopBean implements Parcelable {
             return new PurchaserShopBean[size];
         }
     };
-    private String shopProvince;
-    private String shopDistrict;
-    private String shopCity;
-    private boolean select;
-    private List<TimeBean> time;
-    private String status;
-    private String settlementWay;
+    private String accountPeriodType;
+    private String accountPeriod;
     private String salesRepresentativeName;
+    private String settleDate;
     private String driverName;
+    private String salesRepresentativeID;
     private String deliveryWay;
     private String agreeTime;
     private String deliveryPeriod;
+    private String driverID;
 
     protected PurchaserShopBean(Parcel in) {
         this.shopCode = in.readString();
@@ -69,18 +76,56 @@ public class PurchaserShopBean implements Parcelable {
         this.lonGaoDe = in.readString();
         this.shopPhone = in.readString();
         this.shopID = in.readString();
+        this.purchaserName = in.readString();
         this.shopProvince = in.readString();
         this.shopDistrict = in.readString();
         this.shopCity = in.readString();
-        this.settlementWay = in.readString();
         this.select = in.readByte() != 0;
         this.time = in.createTypedArrayList(TimeBean.CREATOR);
         this.status = in.readString();
+        this.settlementWay = in.readString();
+        this.accountPeriodType = in.readString();
+        this.accountPeriod = in.readString();
+        this.settleDate = in.readString();
         this.salesRepresentativeName = in.readString();
+        this.salesRepresentativeID = in.readString();
         this.driverName = in.readString();
+        this.driverID = in.readString();
         this.deliveryWay = in.readString();
         this.agreeTime = in.readString();
         this.deliveryPeriod = in.readString();
+    }
+
+    public String getAccountPeriodType() {
+        return accountPeriodType;
+    }
+
+    public void setAccountPeriodType(String accountPeriodType) {
+        this.accountPeriodType = accountPeriodType;
+    }
+
+    public String getAccountPeriod() {
+        return accountPeriod;
+    }
+
+    public void setAccountPeriod(String accountPeriod) {
+        this.accountPeriod = accountPeriod;
+    }
+
+    public String getSettleDate() {
+        return settleDate;
+    }
+
+    public void setSettleDate(String settleDate) {
+        this.settleDate = settleDate;
+    }
+
+    public String getDriverID() {
+        return driverID;
+    }
+
+    public void setDriverID(String driverID) {
+        this.driverID = driverID;
     }
 
     public String getSalesRepresentativeName() {
@@ -302,17 +347,33 @@ public class PurchaserShopBean implements Parcelable {
     public PurchaserShopBean() {
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public String getShopCity() {
         return shopCity;
     }
 
     public void setShopCity(String shopCity) {
         this.shopCity = shopCity;
+    }
+
+    public String getPurchaserName() {
+        return purchaserName;
+    }
+
+    public void setPurchaserName(String purchaserName) {
+        this.purchaserName = purchaserName;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public String getSalesRepresentativeID() {
+        return salesRepresentativeID;
+    }
+
+    public void setSalesRepresentativeID(String salesRepresentativeID) {
+        this.salesRepresentativeID = salesRepresentativeID;
     }
 
     @Override
@@ -333,15 +394,21 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeString(this.lonGaoDe);
         dest.writeString(this.shopPhone);
         dest.writeString(this.shopID);
+        dest.writeString(this.purchaserName);
         dest.writeString(this.shopProvince);
         dest.writeString(this.shopDistrict);
         dest.writeString(this.shopCity);
-        dest.writeString(this.settlementWay);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.time);
         dest.writeString(this.status);
+        dest.writeString(this.settlementWay);
+        dest.writeString(this.accountPeriodType);
+        dest.writeString(this.accountPeriod);
+        dest.writeString(this.settleDate);
         dest.writeString(this.salesRepresentativeName);
+        dest.writeString(this.salesRepresentativeID);
         dest.writeString(this.driverName);
+        dest.writeString(this.driverID);
         dest.writeString(this.deliveryWay);
         dest.writeString(this.agreeTime);
         dest.writeString(this.deliveryPeriod);

@@ -110,6 +110,17 @@ public class CooperationShopDeliveryActivity extends BaseLoadActivity implements
                 }
             }
         }
+        if (!TextUtils.isEmpty(mReq.getDeliveryWay())) {
+            if (mRbDeliveryOneSelf.getVisibility() == View.VISIBLE) {
+                mRbDeliveryOneSelf.setChecked(mReq.getDeliveryWay().contains("1"));
+            }
+            if (mRbDeliveryPick.getVisibility() == View.VISIBLE) {
+                mRbDeliveryPick.setChecked(mReq.getDeliveryWay().contains("2"));
+            }
+            if (mRbDeliveryThird.getVisibility() == View.VISIBLE) {
+                mRbDeliveryThird.setChecked(mReq.getDeliveryWay().contains("3"));
+            }
+        }
     }
 
     @Override

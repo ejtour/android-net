@@ -28,6 +28,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.cooperation.EmployeeBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.event.EmployeeSearchEvent;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -157,6 +158,15 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
 
     @Override
     public void showEmployeeList(List<EmployeeBean> list, boolean append) {
+        if (!TextUtils.isEmpty(mReq.getEmployeeID()) && !CommonUtils.isEmpty(list)) {
+            for (EmployeeBean bean : list) {
+                if (TextUtils.equals(bean.getEmployeeID(), mReq.getEmployeeID())) {
+                    bean.setSelect(true);
+                    break;
+                }
+            }
+        }
+
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -178,7 +188,7 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
 
     @Override
     public void editSuccess() {
-        showToast(isSales() ? "批量指派销售成功" : "批量指派司机成功");
+        showToast(isSales() ? "指派销售成功" : "指派司机成功");
         ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_DETAIL)
             .setProvider(new LoginInterceptor())
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)

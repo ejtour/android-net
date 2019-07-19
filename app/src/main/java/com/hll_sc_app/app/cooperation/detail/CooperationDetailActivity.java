@@ -203,9 +203,25 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("还没有合作门店数据").create());
     }
 
-    @Override
-    public String getPurchaserId() {
-        return mPurchaserId;
+    private void initView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
+            , UIUtils.dip2px(1)));
+        mAdapter = new PurchaserShopListAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            PurchaserShopBean bean = mAdapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+            if (view.getId() == R.id.txt_del) {
+                showDelTipsDialog(bean);
+            } else if (view.getId() == R.id.content) {
+                bean.setPurchaserID(mDetail.getPurchaserID());
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL, bean);
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
 
     /**
@@ -236,24 +252,9 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         return builder.toString();
     }
 
-    private void initView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
-        mAdapter = new PurchaserShopListAdapter();
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            PurchaserShopBean bean = mAdapter.getItem(position);
-            if (bean == null) {
-                return;
-            }
-            if (view.getId() == R.id.txt_del) {
-                showDelTipsDialog(bean);
-            } else if (view.getId() == R.id.content) {
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL, bean);
-            }
-        });
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
+    @Override
+    public String getPurchaserId() {
+        return mPurchaserId;
     }
 
     @OnClick({R.id.img_close, R.id.txt_options})

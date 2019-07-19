@@ -15,15 +15,23 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
+import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.widget.SingleSelectionDialog;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,25 +122,101 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
     }
 
     @OnClick({R.id.img_close, R.id.ll_settlementWay, R.id.ll_salesRepresentativeName,
-        R.id.ll_driverName, R.id.ll_deliveryWay, R.id.ll_cooperationSource, R.id.ll__deliveryPeriod
+        R.id.ll_driverName, R.id.ll_deliveryWay, R.id.ll_cooperationSource, R.id.ll_deliveryPeriod
         , R.id.txt_del, R.id.txt_agree, R.id.txt_reject})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
                 finish();
                 break;
+            case R.id.txt_agree:
+                mPresenter.editCooperationShop("agree");
+                break;
+            case R.id.txt_reject:
+                mPresenter.editCooperationShop("refuse");
+                break;
+            case R.id.txt_del:
+                mPresenter.delCooperationShop();
+                break;
+            case R.id.ll_settlementWay:
+                toSelect(CooperationSelectShopActivity.TYPE_SETTLEMENT);
+                break;
+            case R.id.ll_deliveryWay:
+                toSelect(CooperationSelectShopActivity.TYPE_DELIVERY);
+                break;
+            case R.id.ll_salesRepresentativeName:
+                toSelect(CooperationSelectShopActivity.TYPE_SALESMAN);
+                break;
+            case R.id.ll_driverName:
+                toSelect(CooperationSelectShopActivity.TYPE_DRIVER);
+                break;
+            case R.id.ll_deliveryPeriod:
+                toSelect(CooperationSelectShopActivity.TYPE_DRIVER);
+                break;
             default:
                 break;
         }
     }
 
+    private void toSelect(String actionType) {
+        ShopSettlementReq req = new ShopSettlementReq();
+        req.setActionType(actionType);
+        req.setChangeAllShops("0");
+        req.setGroupID(UserConfig.getGroupID());
+        req.setPurchaserID(mShopBean.getPurchaserID());
+        switch (actionType) {
+            case CooperationSelectShopActivity.TYPE_SETTLEMENT:
+                req.setShopIds(Collections.singletonList(mShopBean.getShopID()));
+                req.setSettlementWay(mShopBean.getSettlementWay());
+                req.setAccountPeriodType(mShopBean.getAccountPeriodType());
+                req.setAccountPeriod(mShopBean.getAccountPeriod());
+                req.setSettleDate(mShopBean.getSettleDate());
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+                break;
+            case CooperationSelectShopActivity.TYPE_DELIVERY:
+                req.setShopIds(Collections.singletonList(mShopBean.getShopID()));
+                req.setDeliveryWay(mShopBean.getDeliveryWay());
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DELIVERY, req);
+                break;
+            case CooperationSelectShopActivity.TYPE_SALESMAN:
+                req.setShopIDs(mShopBean.getShopID());
+                req.setEmployeeID(mShopBean.getSalesRepresentativeID());
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, req);
+                break;
+            case CooperationSelectShopActivity.TYPE_DRIVER:
+                req.setShopIDs(mShopBean.getShopID());
+                req.setEmployeeID(mShopBean.getDriverID());
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, req);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void showDeliveryPeriodWindow(List<DeliveryPeriodBean> list) {
+        SingleSelectionDialog.newBuilder(this, (SingleSelectionDialog.WrapperName<DeliveryPeriodBean>) bean
+            -> bean.getArrivalStartTime() + "-" + bean.getArrivalEndTime())
+            .setTitleText("到货时间选择")
+            .setOnSelectListener(new SingleSelectionDialog.OnSelectListener<DeliveryPeriodBean>() {
+                @Override
+                public void onSelectItem(DeliveryPeriodBean bean) {
+                    // TODO:
+                }
+            })
+            .refreshList(list)
+            .create().show();
+    }
 
     @Override
     public void editSuccess() {
-        showToast("修改成功");
         ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_DETAIL)
             .setProvider(new LoginInterceptor())
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
             .navigation(this);
+    }
+
+    @Override
+    public PurchaserShopBean getShopBean() {
+        return mShopBean;
     }
 }

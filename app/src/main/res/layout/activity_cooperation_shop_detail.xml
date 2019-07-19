@@ -347,7 +347,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll__deliveryPeriod"
+                android:id="@+id/ll_deliveryPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/base_bg_shadow_top_white_bar"
