@@ -40,7 +40,7 @@ public class DeliverInfoAdapter extends BaseQuickAdapter<DeliverInfoResp, BaseVi
     @Override
     protected void convert(BaseViewHolder helper, DeliverInfoResp item) {
         helper.setText(R.id.odi_name, item.getProductName())
-                .setText(R.id.odi_spec, item.getProductSpec())
+                .setText(R.id.odi_spec, "规格：" + item.getProductSpec())
                 .setText(R.id.odi_unit, String.format("x %s %s", CommonUtils.formatNum(item.getProductNum()), item.getSaleUnitName()));
         ((GlideImageView) helper.getView(R.id.odi_image)).setImageURL(item.getImgUrl());
         TriangleView arrow = helper.getView(R.id.odi_arrow);

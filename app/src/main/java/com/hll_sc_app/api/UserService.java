@@ -7,7 +7,11 @@ import com.hll_sc_app.base.bean.LoginResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.user.CategoryResp;
+import com.hll_sc_app.bean.user.GroupParame;
+import com.hll_sc_app.bean.user.GroupParameReq;
 import com.hll_sc_app.bean.user.RegisterReq;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -106,5 +110,24 @@ public interface UserService {
     @Multipart
     @POST("/upload!mobileClient.action")
     Observable<String> imageUpload(@Part() MultipartBody.Part file);
+
+
+    /**
+     * 设置页面里的查询集团参数
+     *
+     * @param body 请求参数
+     * @return result
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101032")
+    Observable<BaseResp<List<GroupParame>>> queryGroupParameterInSetting(@Body BaseReq<GroupParameReq> body);
+
+
+    /**
+     * 设置页面里更改集团参数
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101033")
+    Observable<BaseResp<Object>> changeGroupParameterInSetting(@Body BaseReq<GroupParame> body);
 
 }
