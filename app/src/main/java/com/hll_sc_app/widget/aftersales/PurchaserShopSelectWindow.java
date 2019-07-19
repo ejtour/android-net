@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -51,6 +52,8 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
     ImageView mClearSearch;
     @BindView(R.id.pss_reset)
     TextView mReset;
+    @BindView(R.id.pss_empty_view)
+    LinearLayout mEmptyView;
     private PurchaserSelectAdapter mPurchaserAdapter;
     private PurchaserShopSelectAdapter mShopAdapter;
     private PurchaserBean mCurBean;
@@ -123,7 +126,7 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
 
     public PurchaserShopSelectWindow setLeftList(List<PurchaserBean> list) {
         mPurchaserBeans = list;
-        mPurchaserAdapter.setNewData(list);
+        refreshList(list);
         return this;
     }
 
@@ -138,6 +141,11 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
         mReset.setVisibility(multi ? View.VISIBLE : View.GONE);
         mShopAdapter.notifyDataSetChanged();
         return this;
+    }
+
+    public void refreshList(List<PurchaserBean> list) {
+        mPurchaserAdapter.setNewData(list);
+        mEmptyView.setVisibility(CommonUtils.isEmpty(list) ? View.VISIBLE : View.GONE);
     }
 
     @OnClick({R.id.pss_toggle_btn, R.id.pss_search_btn, R.id.pss_reset, R.id.pss_confirm, R.id.pss_clear_search})
@@ -188,7 +196,7 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
         if (CommonUtils.isEmpty(mPurchaserBeans)) return;
         String words = mSearchEdit.getTag().toString();
         if (TextUtils.isEmpty(words)) {
-            mPurchaserAdapter.setNewData(mPurchaserBeans);
+            refreshList(mPurchaserBeans);
             return;
         } else {
             List<PurchaserBean> list = new ArrayList<>();
@@ -210,7 +218,7 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
                     if (add) list.add(copy);
                 }
             }
-            mPurchaserAdapter.setNewData(list);
+            refreshList(list);
         }
         List<PurchaserBean> data = mPurchaserAdapter.getData();
         for (PurchaserBean bean : data) {
