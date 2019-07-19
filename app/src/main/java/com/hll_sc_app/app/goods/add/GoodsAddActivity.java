@@ -739,12 +739,15 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (mAssistUnitSelectWindow == null) {
             mAssistUnitSelectWindow = new AssistUnitSelectWindow(this);
             mAssistUnitSelectWindow.setListener(beans -> {
-                if (CommonUtils.isEmpty(beans)) {
-                    List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
+                // 重置
+                List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
+                if (!CommonUtils.isEmpty(specsBeanList)) {
                     for (SpecsBean specsBean : specsBeanList) {
                         specsBean.setAssistUnitStatus("0");
                     }
-                } else {
+                }
+                // 设置选中
+                if (!CommonUtils.isEmpty(beans)) {
                     for (SpecsBean bean : beans) {
                         bean.setAssistUnitStatus("1");
                     }
