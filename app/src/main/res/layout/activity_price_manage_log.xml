@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_back"
+            style="@style/BtnClose"/>
+
+        <com.hll_sc_app.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/txt_options"
+            android:layout_toRightOf="@+id/img_back"/>
+
+        <ImageView
+            android:id="@+id/txt_options"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_options"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_select_date"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/txt_date_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="按日期筛选"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+        <TextView
+            android:id="@+id/txt_date_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/ic_date"
+            android:drawableRight="@drawable/ic_arrow_drop"
+            android:drawablePadding="5dp"
+            android:gravity="right"
+            android:hint="请选择日期"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+            android:textColorHint="@color/color_aeaeae"/>
+
+    </RelativeLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@color/base_white">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:padding="10dp"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+            </RelativeLayout>
+
+        </HorizontalScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

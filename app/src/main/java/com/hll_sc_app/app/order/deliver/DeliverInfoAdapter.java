@@ -11,6 +11,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TriangleView;
 
@@ -40,7 +41,7 @@ public class DeliverInfoAdapter extends BaseQuickAdapter<DeliverInfoResp, BaseVi
     protected void convert(BaseViewHolder helper, DeliverInfoResp item) {
         helper.setText(R.id.odi_name, item.getProductName())
                 .setText(R.id.odi_spec, item.getProductSpec())
-                .setText(R.id.odi_unit, String.format("x %s %s", item.getProductNum(), item.getSaleUnitName()));
+                .setText(R.id.odi_unit, String.format("x %s %s", CommonUtils.formatNum(item.getProductNum()), item.getSaleUnitName()));
         ((GlideImageView) helper.getView(R.id.odi_image)).setImageURL(item.getImgUrl());
         TriangleView arrow = helper.getView(R.id.odi_arrow);
         RecyclerView listView = helper.getView(R.id.odi_list_view);

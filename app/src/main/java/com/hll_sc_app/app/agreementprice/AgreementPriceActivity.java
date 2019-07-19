@@ -62,17 +62,8 @@ public class AgreementPriceActivity extends BaseLoadActivity {
         mAdapter = new PagerAdapter(getSupportFragmentManager(), list);
         mViewPager.setAdapter(mAdapter);
         mTlTitle.setViewPager(mViewPager, new String[]{"报价单", "商品"});
-        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
-            @Override
-            public void click(String searchContent) {
-                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_SEARCH, mViewPager.getCurrentItem());
-            }
-
-            @Override
-            public void toSearch(String searchContent) {
-                // no-op
-            }
-        });
+        mSearchView.setContentClickListener(searchContent ->
+            RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_SEARCH, mViewPager.getCurrentItem()));
     }
 
     @OnClick({R.id.img_back, R.id.img_add})

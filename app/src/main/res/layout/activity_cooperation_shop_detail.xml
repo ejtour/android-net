@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="合作门店详情"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:background="@color/base_white"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <com.hll_sc_app.base.utils.glide.GlideImageView
+                    android:id="@+id/img_imagePath"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:base_placeholder="@drawable/ic_shop_placeholder"
+                    tools:src="@drawable/ic_shop_placeholder"/>
+
+                <TextView
+                    android:id="@+id/txt_shopName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.City22.Middle"
+                    tools:text="北京市二十二城采购集团"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/base_bg_shadow_top_white_bar"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="联&#160;&#160;系&#160;&#160;人"
+                    android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+                <TextView
+                    android:id="@+id/txt_shopAdmin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    tools:text="北京市二十二城采购集团"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/base_bg_shadow_top_white_bar"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="联系方式"
+                    android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+                <TextView
+                    android:id="@+id/txt_shopPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    tools:text="北京市二十二城采购集团"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/base_bg_shadow_top_white_bar"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="所在地区"
+                    android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+                <TextView
+                    android:id="@+id/txt_shopProvince"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    tools:text="北京市-西城区"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/base_bg_shadow_top_white_bar"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="地&#160;&#160;&#160;&#160;址&#160;&#160;&#160;&#160;"
+                    android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+                <TextView
+                    android:id="@+id/txt_shopAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    tools:text="小市口胡同3号院2号楼底商"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/base_bg_shadow_top_white_bar"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="结算方式"
+                    android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+                <TextView
+                    android:id="@+id/txt_settlementWay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    tools:text="货到付款"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/base_bg_shadow_top_white_bar"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="指派销售"
+                    android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+                <TextView
+                    android:id="@+id/txt_salesRepresentativeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    tools:text="货到付款"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

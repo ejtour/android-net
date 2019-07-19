@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/base_white"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/sgo_image"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:base_RoundingRadius="3"
+        app:base_placeholder="@drawable/ic_placeholder"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder" />
+
+    <TextView
+        android:id="@+id/sgo_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintStart_toEndOf="@+id/sgo_image"
+        app:layout_constraintTop_toTopOf="@+id/sgo_image"
+        tools:text="新鲜柠檬特别酸" />
+
+    <TextView
+        android:id="@+id/sgo_spec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintStart_toStartOf="@+id/sgo_name"
+        app:layout_constraintTop_toBottomOf="@+id/sgo_name"
+        tools:text="规格：42斤／箱" />
+
+    <TextView
+        android:id="@+id/sgo_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/sgo_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sgo_order"
+        tools:text="箱" />
+
+    <EditText
+        android:id="@+id/sgo_edit"
+        android:layout_width="75dp"
+        android:layout_height="24dp"
+        android:background="@drawable/bg_order_inspection_edit"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintBottom_toBottomOf="@+id/sgo_unit"
+        app:layout_constraintEnd_toStartOf="@+id/sgo_unit"
+        app:layout_constraintTop_toTopOf="@+id/sgo_unit"
+        tools:text="100" />
+
+    <TextView
+        android:id="@+id/sgo_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toStartOf="@+id/sgo_deliver"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@+id/sgo_name"
+        app:layout_constraintTop_toBottomOf="@+id/sgo_spec"
+        tools:text="订货：100箱" />
+
+    <TextView
+        android:id="@+id/sgo_deliver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/sgo_order"
+        app:layout_constraintEnd_toStartOf="@+id/sgo_inspection"
+        app:layout_constraintStart_toEndOf="@+id/sgo_order"
+        app:layout_constraintTop_toTopOf="@+id/sgo_order"
+        tools:text="发货：100箱" />
+
+    <TextView
+        android:id="@+id/sgo_inspection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="收货："
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/sgo_deliver"
+        app:layout_constraintEnd_toStartOf="@+id/sgo_edit"
+        app:layout_constraintStart_toEndOf="@+id/sgo_deliver"
+        app:layout_constraintTop_toTopOf="@+id/sgo_deliver" />
+</android.support.constraint.ConstraintLayout>

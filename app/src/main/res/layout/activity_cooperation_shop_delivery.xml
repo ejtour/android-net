@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择配送方式"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:layout_below="@+id/rl_title"
+        android:background="@color/color_fafafa"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="请选择配送"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="9sp"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_title"
+        android:background="@color/base_white"
+        android:orientation="vertical"
+        android:paddingLeft="10dp">
+
+
+        <RadioButton
+            android:id="@+id/rb_deliveryOneSelf"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:button="@drawable/bg_selector_check_box"
+            android:padding="5dp"
+            android:text="自有物流配送"
+            android:textColor="@drawable/base_text_color_window_check"
+            android:textSize="@dimen/text_middle_size"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <RadioButton
+            android:id="@+id/rb_deliveryPick"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:button="@drawable/bg_selector_check_box"
+            android:padding="5dp"
+            android:text="上门自提"
+            android:textColor="@drawable/base_text_color_window_check"
+            android:textSize="@dimen/text_middle_size"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <RadioButton
+            android:id="@+id/rb_deliveryThird"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:button="@drawable/bg_selector_check_box"
+            android:padding="5dp"
+            android:text="三方物流配送"
+            android:textColor="@drawable/base_text_color_window_check"
+            android:textSize="@dimen/text_middle_size"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/fl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/txt_confirm"
+            style="@style/BtnOrderAction.PrimarySolid"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="55dp"
+            android:text="确定"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

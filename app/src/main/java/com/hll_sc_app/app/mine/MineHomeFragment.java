@@ -43,8 +43,6 @@ import butterknife.Unbinder;
  */
 @Route(path = RouterConfig.ROOT_HOME_MINE)
 public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragmentContract.IHomeView {
-
-
     @BindView(R.id.parallax)
     ImageView mParallax;
     @BindView(R.id.img_groupLogoUrl)
@@ -178,7 +176,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     }
 
     @OnClick({R.id.txt_wallet, R.id.txt_agreement_price, R.id.txt_warehouse_manage, R.id.txt_cooperation_purchaser,
-        R.id.txt_return_audit, R.id.img_setting})
+        R.id.txt_return_audit, R.id.img_setting, R.id.txt_price_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -190,12 +188,16 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             case R.id.txt_warehouse_manage:
                 break;
             case R.id.txt_cooperation_purchaser:
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
                 break;
             case R.id.txt_return_audit:
                 AuditActivity.start();
                 break;
             case R.id.img_setting:
                 RouterUtil.goToActivity(RouterConfig.SETTING);
+                break;
+            case R.id.txt_price_setting:
+                RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE);
                 break;
             default:
                 break;

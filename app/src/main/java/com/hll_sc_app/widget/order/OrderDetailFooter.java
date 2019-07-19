@@ -165,10 +165,12 @@ public class OrderDetailFooter extends ConstraintLayout {
 
     private void handleOrderType(OrderResp data) {
         StringBuilder sb = new StringBuilder();
-        if (data.getSubbillCategory() == 2) sb.append("代仓订单");
+        if (data.getShipperType() == 1) sb.append("采购商代仓订单");
+        else if (data.getShipperType() == 2) sb.append("供应商代仓订单");
         if (data.getIsSupplement() == 1) sb.append("/补单订单");
         if (data.getIsExchange() == 1) sb.append("/换货订单");
         if (data.getNextDayDelivery() == 1) sb.append("/隔日配送订单");
+        if (data.getDeliverType() == 2) sb.append("/自提订单");
         if (!TextUtils.isEmpty(sb.toString())) {
             mOrderTypeGroup.setVisibility(View.VISIBLE);
             if (sb.toString().startsWith("/")) sb.deleteCharAt(0);

@@ -21,6 +21,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.OrderResp;
@@ -28,6 +29,7 @@ import com.hll_sc_app.bean.order.detail.OrderDepositBean;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -86,6 +88,9 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
     private void initView() {
         mAdapter = new OrderInspectionAdapter(mResp.getBillDetailList());
         mListView.setAdapter(mAdapter);
+        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
+        decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
+        mListView.addItemDecoration(decor);
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
     }
 
@@ -94,6 +99,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
         mInspectionResp = result;
         hasChanged = true;
         mConfirm.setText("立即收款");
+        showToast("修改验货数量成功");
         if (result.getPayType() == 1) {
             goToPayment(mResp);
         } else {
@@ -112,7 +118,6 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
                         }, "我再看看", "收取差价").create().show();
                 return;
             }
-            showToast("验货完成");
             onBackPressed();
         }
     }
@@ -197,7 +202,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
 
     private SpannableString processMsg(String source) {
         SpannableString ss = SpannableString.valueOf(source);
-        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#ED5655")), source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_ed5655)), source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new RelativeSizeSpan(1.5f), source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;
     }

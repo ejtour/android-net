@@ -48,7 +48,7 @@ import butterknife.OnClick;
  * @date 2019/7/11
  */
 @Route(path = RouterConfig.MINE_AGREEMENT_PRICE_GOODS_DETAIL, extras = Constant.LOGIN_EXTRA)
-public class GoodsPriceDetailActivity extends BaseLoadActivity implements GoodsPriceDetailContract.IPurchaseView {
+public class GoodsPriceDetailActivity extends BaseLoadActivity implements GoodsPriceDetailContract.IGoodsPriceDetailView {
     @Autowired(name = "parcelable", required = true)
     QuotationDetailBean mBean;
     @BindView(R.id.recyclerView)
@@ -71,11 +71,10 @@ public class GoodsPriceDetailActivity extends BaseLoadActivity implements GoodsP
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        showView();
         mPresenter = GoodsPriceDetailPresenter.newInstance();
         mPresenter.register(this);
-        mPresenter.start();
         mPresenter.queryPriceUsePurchaser(mBean.getProductSpecID());
-        showView();
     }
 
     private void showView() {
@@ -89,11 +88,7 @@ public class GoodsPriceDetailActivity extends BaseLoadActivity implements GoodsP
         });
         mEdtSearch.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
             mImgSearchClose.setVisibility(TextUtils.isEmpty(s) ? View.GONE : View.VISIBLE);
-            if (s != null) {
-                toSearch(s.toString());
-            } else {
-                toSearch("");
-            }
+            toSearch(s != null ? s.toString() : "");
         });
         mTxtTitle.setText(mBean.getProductName());
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee),

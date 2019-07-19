@@ -19,7 +19,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.goods.SKUGoodsBean;
+import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -81,7 +81,7 @@ public class DepositProductsActivity extends BaseLoadActivity implements Deposit
             , UIUtils.dip2px(1)));
         mAdapter = new DepositProductAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            SKUGoodsBean depositProductBean = (SKUGoodsBean) adapter.getItem(position);
+            SkuGoodsBean depositProductBean = (SkuGoodsBean) adapter.getItem(position);
             if (depositProductBean != null) {
                 depositProductBean.setSelected(!depositProductBean.isSelected());
                 if (getSelectDepositProductList().size() > INT_MAX_COUNT) {
@@ -103,10 +103,10 @@ public class DepositProductsActivity extends BaseLoadActivity implements Deposit
      *
      * @return 押金商品列表
      */
-    private ArrayList<SKUGoodsBean> getSelectDepositProductList() {
-        ArrayList<SKUGoodsBean> list = new ArrayList<>();
+    private ArrayList<SkuGoodsBean> getSelectDepositProductList() {
+        ArrayList<SkuGoodsBean> list = new ArrayList<>();
         if (mAdapter != null && !CommonUtils.isEmpty(mAdapter.getData())) {
-            for (SKUGoodsBean bean : mAdapter.getData()) {
+            for (SkuGoodsBean bean : mAdapter.getData()) {
                 if (bean.isSelected()) {
                     list.add(bean);
                 }
@@ -128,7 +128,7 @@ public class DepositProductsActivity extends BaseLoadActivity implements Deposit
     }
 
     @Override
-    public void showDepositProductsList(List<SKUGoodsBean> list, boolean append, int total) {
+    public void showDepositProductsList(List<SkuGoodsBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -144,20 +144,20 @@ public class DepositProductsActivity extends BaseLoadActivity implements Deposit
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    class DepositProductAdapter extends BaseQuickAdapter<SKUGoodsBean, BaseViewHolder> {
+    class DepositProductAdapter extends BaseQuickAdapter<SkuGoodsBean, BaseViewHolder> {
 
         DepositProductAdapter() {
             super(R.layout.item_deposit_product);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, SKUGoodsBean bean) {
+        protected void convert(BaseViewHolder helper, SkuGoodsBean bean) {
             helper.setText(R.id.txt_productName, bean.getProductName())
                 .setText(R.id.txt_specContent, getContent(bean))
                 .getView(R.id.img_select).setSelected(bean.isSelected());
         }
 
-        private String getContent(SKUGoodsBean bean) {
+        private String getContent(SkuGoodsBean bean) {
             StringBuilder builder = new StringBuilder();
             if (!TextUtils.isEmpty(bean.getSpecContent())) {
                 builder.append(bean.getSpecContent());

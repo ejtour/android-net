@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface GoodsPriceDetailContract {
 
-    interface IPurchaseView extends ILoadView {
+    interface IGoodsPriceDetailView extends ILoadView {
         /**
          * 显示报价商品列表
          *
@@ -23,13 +23,13 @@ public interface GoodsPriceDetailContract {
         void showPurchaserList(List<PurchaserBean> list);
     }
 
-    interface IPurchasePresenter extends IPresenter<IPurchaseView> {
+    interface IGoodsPriceDetailPresenter extends IPresenter<IGoodsPriceDetailView> {
         /**
          * 获取商品详情
          *
-         * @param productSpecID 规格 Id
+         * @param productSpecId 规格 Id
          */
-        void queryPriceUsePurchaser(String productSpecID);
+        void queryPriceUsePurchaser(String productSpecId);
 
         /**
          * 获取商品详情内容

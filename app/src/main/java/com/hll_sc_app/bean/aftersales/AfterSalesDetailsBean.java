@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -114,10 +114,30 @@ public class AfterSalesDetailsBean implements Parcelable {
     private String refundBillNo;
     private int operateModel;
     private double deliveryNum;
+    private String goodsCode;
     private String spareField1;
     private String spareField2;
     private int homologous;
     private boolean selected;
+
+    public TransferDetailBean convertToTransferDetail(String erpShopID) {
+        TransferDetailBean detailBean = new TransferDetailBean();
+        detailBean.setGoodsCode(goodsCode);
+        detailBean.setThirdGroupID(erpGroupID);
+        detailBean.setOperateModel(String.valueOf(operateModel));
+        detailBean.setResourceType(String.valueOf(billSource - 1));
+        detailBean.setErpShopID(erpShopID);
+        detailBean.setGoodsName(goodsName);
+        return detailBean;
+    }
+
+    public String getGoodsCode() {
+        return goodsCode;
+    }
+
+    public void setGoodsCode(String goodsCode) {
+        this.goodsCode = goodsCode;
+    }
 
     public boolean isSelected() {
         return selected;
@@ -1080,6 +1100,7 @@ public class AfterSalesDetailsBean implements Parcelable {
         dest.writeString(this.refundBillNo);
         dest.writeInt(this.operateModel);
         dest.writeDouble(this.deliveryNum);
+        dest.writeString(this.goodsCode);
         dest.writeString(this.spareField1);
         dest.writeString(this.spareField2);
         dest.writeInt(this.homologous);
@@ -1189,6 +1210,7 @@ public class AfterSalesDetailsBean implements Parcelable {
         this.refundBillNo = in.readString();
         this.operateModel = in.readInt();
         this.deliveryNum = in.readDouble();
+        this.goodsCode = in.readString();
         this.spareField1 = in.readString();
         this.spareField2 = in.readString();
         this.homologous = in.readInt();

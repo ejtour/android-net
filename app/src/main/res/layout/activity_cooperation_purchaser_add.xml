@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_back"
+            style="@style/BtnClose"/>
+
+        <RelativeLayout
+            android:id="@+id/search_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/txt_search"
+            android:layout_toRightOf="@+id/img_back"
+            android:background="@drawable/bg_search_edit"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingLeft="10dp">
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_toLeftOf="@+id/img_clear"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_search_aeaeae"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:hint="请输入商品名称或别名进行查询"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                android:textColorHint="@color/color_999999"/>
+
+            <ImageView
+                android:id="@+id/img_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_clear_search"
+                android:tint="@color/base_text999"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_search"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_selector_close"
+            android:gravity="center"
+            android:text="搜索"
+            android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
+    </RelativeLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

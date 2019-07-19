@@ -72,7 +72,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     SmartRefreshLayout mRefreshLayout;
     private GoodsListAdapter mAdapter;
     private GoodsInvWarnPresenter mPresenter;
-    private HouseSelectWindow mHouseSelectWindow;
+    private TopSingleSelectWindow<HouseBean> mHouseSelectWindow;
     private EmptyView mEmptyView;
 
     @Override
@@ -198,7 +198,8 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
             return;
         }
         if (mHouseSelectWindow == null) {
-            mHouseSelectWindow = new HouseSelectWindow(this, list);
+            mHouseSelectWindow = new TopSingleSelectWindow<>(this, HouseBean::getHouseName);
+            mHouseSelectWindow.refreshList(list);
             mHouseSelectWindow.setListener(this::showSelectHouse);
         }
         mHouseSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
@@ -241,7 +242,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         if (total != 0) {
             mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
         } else {
-            mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
+            mRefreshLayout.setEnableLoadMore(list != null && list.size() == GoodsListReq.PAGE_SIZE);
         }
     }
 

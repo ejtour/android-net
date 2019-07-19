@@ -26,7 +26,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
-import com.hll_sc_app.bean.goods.SKUGoodsBean;
+import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -55,6 +55,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.GOODS_RELEVANCE_LIST_SELECT, extras = Constant.LOGIN_EXTRA)
 public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements GoodsRelevanceSelectContract.IGoodsStickView {
+    public static final int REQ_CODE = 0x788;
     public static final String STRING_CATEGORY = "推荐";
     @BindView(R.id.searchView)
     SearchView mSearchView;
@@ -130,7 +131,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
                 R.color.base_color_divider), UIUtils.dip2px(1)));
         mAdapter = new GoodsRelevanceSelectListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            SKUGoodsBean bean = (SKUGoodsBean) adapter.getItem(position);
+            SkuGoodsBean bean = (SkuGoodsBean) adapter.getItem(position);
             if (bean != null) {
                 setUnSelect();
                 bean.setSelected(!bean.isSelected());
@@ -156,11 +157,11 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
      */
     private void setUnSelect() {
         if (mAdapter != null) {
-            List<SKUGoodsBean> beans = mAdapter.getData();
+            List<SkuGoodsBean> beans = mAdapter.getData();
             if (CommonUtils.isEmpty(beans)) {
                 return;
             }
-            for (SKUGoodsBean bean : beans) {
+            for (SkuGoodsBean bean : beans) {
                 bean.setSelected(false);
             }
         }
@@ -211,7 +212,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     }
 
     @Override
-    public void showList(List<SKUGoodsBean> list, boolean append, int total) {
+    public void showList(List<SkuGoodsBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -250,6 +251,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     public void addSuccess() {
         showToast("新增修改关联商品成功");
         EventBus.getDefault().post(new GoodsRelevanceRefreshEvent());
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -268,7 +270,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     }
 
     private void toAdd() {
-        SKUGoodsBean bean = getSelectProductBean();
+        SkuGoodsBean bean = getSelectProductBean();
         if (bean == null) {
             showToast("您还没有选择要关联的商品");
             return;
@@ -276,12 +278,12 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         mPresenter.addGoodsRelevance(bean);
     }
 
-    private SKUGoodsBean getSelectProductBean() {
-        SKUGoodsBean bean = null;
+    private SkuGoodsBean getSelectProductBean() {
+        SkuGoodsBean bean = null;
         if (mAdapter != null) {
-            List<SKUGoodsBean> list = mAdapter.getData();
+            List<SkuGoodsBean> list = mAdapter.getData();
             if (!CommonUtils.isEmpty(list)) {
-                for (SKUGoodsBean productBean : list) {
+                for (SkuGoodsBean productBean : list) {
                     if (productBean.isSelected()) {
                         bean = productBean;
                         break;
@@ -306,13 +308,13 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         }
     }
 
-    class GoodsRelevanceSelectListAdapter extends BaseQuickAdapter<SKUGoodsBean, BaseViewHolder> {
+    class GoodsRelevanceSelectListAdapter extends BaseQuickAdapter<SkuGoodsBean, BaseViewHolder> {
         GoodsRelevanceSelectListAdapter() {
             super(R.layout.item_goods_relevance_select_list);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, SKUGoodsBean item) {
+        protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
                     .setText(R.id.txt_specContent, item.getSpecContent())
                     .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));

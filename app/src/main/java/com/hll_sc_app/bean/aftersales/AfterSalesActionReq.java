@@ -12,7 +12,7 @@ public class AfterSalesActionReq {
      * 1. 客服审核 2. 司机提货 3. 仓库收货  4. 财务审核  5. 客服驳回、司机取消 6. 采购商取消
      */
     private int orderAction;
-    private String refundBillID;
+    private String refundBillIDs;
     /**
      * 0 采购商审核 1 供应商审核
      */
@@ -49,12 +49,12 @@ public class AfterSalesActionReq {
         this.orderAction = orderAction;
     }
 
-    public String getRefundBillID() {
-        return refundBillID;
+    public String getRefundBillIDs() {
+        return refundBillIDs;
     }
 
-    public void setRefundBillID(String refundBillID) {
-        this.refundBillID = refundBillID;
+    public void setRefundBillIDs(String refundBillIDs) {
+        this.refundBillIDs = refundBillIDs;
     }
 
     public int getRefundBillType() {

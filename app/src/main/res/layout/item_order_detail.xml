@@ -48,12 +48,16 @@
 
     <TextView
         android:id="@+id/iod_ware_house"
-        android:layout_width="26dp"
-        android:layout_height="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="5dp"
         android:background="@drawable/bg_tag_primary_solid"
         android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingTop="1dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="1dp"
         android:text="代仓"
         android:textAppearance="@style/TextAppearance.City22.Little.White"
         app:layout_constraintBottom_toBottomOf="@+id/iod_product_name"
@@ -117,6 +121,19 @@
         app:layout_constraintStart_toEndOf="@+id/iod_sale_unit_spec"
         app:layout_constraintTop_toTopOf="@+id/iod_sale_unit_spec"
         tools:text="小计：¥2520.00" />
+
+    <TextView
+        android:id="@+id/iod_remark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:lineSpacingMultiplier="1.2"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/iod_order_num"
+        app:layout_constraintTop_toBottomOf="@id/iod_image"
+        tools:text="备注：要保证新鲜程度啊，千万小心别磕碰了。" />
 
     <com.hll_sc_app.widget.TriangleView
         android:id="@+id/iod_arrow"

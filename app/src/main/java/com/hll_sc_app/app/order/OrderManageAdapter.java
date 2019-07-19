@@ -59,7 +59,7 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
                 .setText(R.id.iom_extra_info, OrderHelper.handleExtraInfo(item))
                 .setGone(R.id.iom_divider, helper.getAdapterPosition() != getItemCount() - 1)
                 .setGone(R.id.iom_self_lift_tag, item.getDeliverType() == 2)
-                .setGone(R.id.iom_warehouse_tag, item.getSubbillCategory() == 2)
+                .setGone(R.id.iom_warehouse_tag, item.getShipperType() > 0)
                 .setGone(R.id.iom_makeup_tag, item.getIsSupplement() == 1)
                 .setGone(R.id.iom_next_day_tag, item.getNextDayDelivery() == 1);
     }

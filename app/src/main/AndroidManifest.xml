@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.hll_sc_app">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hll_sc_app">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name="com.hll_sc_app.MyApplication"
@@ -32,30 +32,38 @@
         <activity
             android:name=".app.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Splash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".app.user.login.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BasePersonTheme"/>
+            android:theme="@style/BasePersonTheme" />
 
         <activity
             android:name=".app.user.find.FindPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.user.change.ChangePasswordActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.setting.SettingActivityActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.setting.account.AccountManageActivity"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -69,169 +77,220 @@
         <activity
             android:name=".app.user.register.RegisterActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".app.goods.detail.GoodsDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.GoodsAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.AgreementPriceActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.search.AgreementPriceSearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateVisible" />
 
         <activity
             android:name=".app.agreementprice.goods.detail.GoodsPriceDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.detail.QuotationDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.add.QuotationAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.add.ratiotemplate.QuotationRatioActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.add.purchaser.PurchaserListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.add.goods.GoodsQuotationSelectActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.agreementprice.quotation.add.purchaser.shop.PurchaserShopListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.template.GoodsTemplateListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.invwarn.GoodsInvWarnActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.relevance.GoodsRelevancePurchaserActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.cooperation.CooperationPurchaserActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.CooperationDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopadd.CooperationAddShopActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopdelivery.CooperationShopDeliveryActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopsaleman.CooperationShopSalesActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopdetail.CooperationShopDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopadd.CooperationSelectShopActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.add.CooperationAddActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.goods.relevance.goods.GoodsRelevanceListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.relevance.goods.select.GoodsRelevanceSelectActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.stick.GoodsStickActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
 
         <activity
             android:name=".app.goods.template.edit.GoodsTemplateEditActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.productattr.ProductAttrActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.productattr.brand.ProductBrandActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.productattr.brand.add.ProductBrandAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.specs.GoodsSpecsAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.specs.saleunitname.SaleUnitNameActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.specs.depositproducts.DepositProductsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.pricemanage.PriceManageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.pricemanage.log.PriceChangeLogActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.goods.add.customcategory.GoodsCustomCategoryActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.user.register.RegisterComplementActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.user.register.WebViewProtocolActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.order.search.OrderSearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateVisible" />
 
         <activity
             android:name=".app.order.deliver.DeliverInfoActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.order.details.OrderDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.order.transfer.details.TransferDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.order.deliver.modify.ModifyDeliverInfoActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.order.reject.OrderRejectActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".app.submit.SubmitSuccessActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.order.inspection.OrderInspectionActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.order.settle.OrderSettlementActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/TranslucentTheme"/>
+            android:theme="@style/TranslucentTheme" />
 
         <activity
             android:name=".app.order.transfer.inventory.InventoryCheckActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.aftersales.audit.AuditActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.aftersales.negotiationhistory.NegotiationHistoryActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".app.aftersales.detail.AfterSalesDetailActivity"/>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.detail.AfterSalesDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.goodsoperation.GoodsOperationActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -240,28 +299,28 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths_public"/>
+                android:resource="@xml/file_paths_public" />
         </provider>
 
         <!-- 阿里云推送配置开始-->
         <meta-data
             android:name="com.alibaba.app.appkey"
-            android:value="${ALIBABA_APP_KEY}"/>
+            android:value="${ALIBABA_APP_KEY}" />
         <meta-data
             android:name="com.alibaba.app.appsecret"
-            android:value="${ALIBABA_APP_SECRET}"/>
+            android:value="${ALIBABA_APP_SECRET}" />
 
         <receiver
             android:name=".receiver.NotificationMessageReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.alibaba.sdk.android.push.RECEIVE"/>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
             </intent-filter>
         </receiver>
         <!-- 阿里云推送配置结束-->

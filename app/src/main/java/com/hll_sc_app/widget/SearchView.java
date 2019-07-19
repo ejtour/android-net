@@ -116,6 +116,7 @@ public class SearchView extends FrameLayout {
          *
          * @param searchContent 搜索栏内的搜索词
          */
-        void toSearch(String searchContent);
+        default void toSearch(String searchContent) {
+        }
     }
 }

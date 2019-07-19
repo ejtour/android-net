@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * 协议价管理-搜索页面
  *
  * @author zhuyingsong
- * @date 2019/2/12
+ * @date 2019/7/12
  */
 @Route(path = RouterConfig.MINE_AGREEMENT_PRICE_SEARCH, extras = Constant.LOGIN_EXTRA)
 public class AgreementPriceSearchActivity extends BaseLoadActivity {
@@ -101,7 +101,6 @@ public class AgreementPriceSearchActivity extends BaseLoadActivity {
             }
         });
     }
-
 
     private void toSearch() {
         ViewUtils.clearEditFocus(mEdtSearch);

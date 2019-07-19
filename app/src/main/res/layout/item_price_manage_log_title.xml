@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:background="@drawable/bg_price_log_title">
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+    <TextView
+        android:id="@+id/txt_productCode"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="商品编码"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+    <TextView
+        android:id="@+id/txt_skuCode"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="SKU编码"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+    <TextView
+        android:id="@+id/txt_productName"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="商品名称"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+    <TextView
+        android:id="@+id/txt_specContent"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="规格/单位"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+    <TextView
+        android:id="@+id/txt_type"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="类型"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+    <TextView
+        android:id="@+id/txt_priceBefore"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="原价"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+    <TextView
+        android:id="@+id/txt_priceAfter"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="现价"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+    <TextView
+        android:id="@+id/txt_modifier"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="修改人"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+    <TextView
+        android:id="@+id/txt_modifyTime"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="修改时间"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd"/>
+
+</LinearLayout>

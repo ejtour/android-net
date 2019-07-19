@@ -68,12 +68,12 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
                 mView.getOrderStatus().getType(),
                 TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
                 param.getSearchShopID(),
-                param.getFormatCreateStart(Constants.FORMAT_YYYY_MM_DD),
-                param.getFormatCreateEnd(Constants.FORMAT_YYYY_MM_DD),
-                param.getFormatExecuteStart(Constants.FORMAT_YYYY_MM_DD_HH),
-                param.getFormatExecuteEnd(Constants.FORMAT_YYYY_MM_DD_HH),
-                param.getFormatSignStart(Constants.FORMAT_YYYY_MM_DD_HH),
-                param.getFormatSignEnd(Constants.FORMAT_YYYY_MM_DD_HH),
+                param.getFormatCreateStart(Constants.UNSIGNED_YYYY_MM_DD),
+                param.getFormatCreateEnd(Constants.UNSIGNED_YYYY_MM_DD),
+                param.getFormatExecuteStart(Constants.UNSIGNED_YYYY_MM_DD_HH),
+                param.getFormatExecuteEnd(Constants.UNSIGNED_YYYY_MM_DD_HH),
+                param.getFormatSignStart(Constants.UNSIGNED_YYYY_MM_DD_HH),
+                param.getFormatSignEnd(Constants.UNSIGNED_YYYY_MM_DD_HH),
                 mView.getDeliverType(),
                 new SimpleObserver<List<OrderResp>>(mView, showLoading) {
                     @Override

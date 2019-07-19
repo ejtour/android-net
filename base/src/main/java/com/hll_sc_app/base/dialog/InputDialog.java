@@ -67,8 +67,10 @@ public class InputDialog extends BaseDialog {
     }
 
     public void setInputType(int type) {
-        EditText editText = mRootView.findViewById(R.id.edt_content);
-        editText.setInputType(type);
+        if (type != -11) {
+            EditText editText = mRootView.findViewById(R.id.edt_content);
+            editText.setInputType(type);
+        }
     }
 
     public void setTextWatcher(TextWatcher textWatcher) {
@@ -204,7 +206,7 @@ public class InputDialog extends BaseDialog {
         String mText;
         String mTextTitle;
         int mMaxLength;
-        int mType;
+        int mType = -11;
         TextWatcher textWatcher;
     }
 }

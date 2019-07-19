@@ -10,7 +10,6 @@ import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.CustomCategorySortReq;
-import com.hll_sc_app.bean.goods.DepositProductsResp;
 import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
@@ -27,6 +26,7 @@ import com.hll_sc_app.bean.goods.ProductBrandResp;
 import com.hll_sc_app.bean.goods.RelevancePurchaserResp;
 import com.hll_sc_app.bean.goods.SaleUnitNameBean;
 import com.hll_sc_app.bean.goods.SkuCheckResp;
+import com.hll_sc_app.bean.goods.SkuProductsResp;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
 
 import java.util.ArrayList;
@@ -127,14 +127,14 @@ public interface GoodsService {
     Observable<BaseResp<List<SaleUnitNameBean>>> querySaleUnitName(@Body BaseMapReq req);
 
     /**
-     * 查询押金商品列表
+     * 查询sku商品列表
      *
      * @param req req
      * @return resp
      */
     @POST(HttpConfig.URL)
     @Headers("pv:100019")
-    Observable<BaseResp<DepositProductsResp>> queryDepositProducts(@Body BaseMapReq req);
+    Observable<BaseResp<SkuProductsResp>> querySkuProducts(@Body BaseMapReq req);
 
     /**
      * 商品sku条码校验

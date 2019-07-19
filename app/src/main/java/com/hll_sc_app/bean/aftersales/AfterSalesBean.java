@@ -83,6 +83,15 @@ public class AfterSalesBean implements Parcelable {
     private List<Integer> buttonList;
     private List<AfterSalesDetailsBean> detailList;
     private String refundReasonDesc;
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getRefundReasonDesc() {
         return refundReasonDesc;
@@ -793,6 +802,7 @@ public class AfterSalesBean implements Parcelable {
         dest.writeList(this.buttonList);
         dest.writeTypedList(this.detailList);
         dest.writeString(this.refundReasonDesc);
+        dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
     }
 
     protected AfterSalesBean(Parcel in) {
@@ -867,6 +877,7 @@ public class AfterSalesBean implements Parcelable {
         in.readList(this.buttonList, Integer.class.getClassLoader());
         this.detailList = in.createTypedArrayList(AfterSalesDetailsBean.CREATOR);
         this.refundReasonDesc = in.readString();
+        this.isSelected = in.readByte() != 0;
     }
 
     public static final Creator<AfterSalesBean> CREATOR = new Creator<AfterSalesBean>() {

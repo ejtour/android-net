@@ -21,20 +21,16 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/7/11
  */
-public class GoodsPriceDetailPresenter implements GoodsPriceDetailContract.IPurchasePresenter {
+public class GoodsPriceDetailPresenter implements GoodsPriceDetailContract.IGoodsPriceDetailPresenter {
     private List<PurchaserBean> mListResp;
-    private GoodsPriceDetailContract.IPurchaseView mView;
+    private GoodsPriceDetailContract.IGoodsPriceDetailView mView;
 
     static GoodsPriceDetailPresenter newInstance() {
         return new GoodsPriceDetailPresenter();
     }
 
     @Override
-    public void start() {
-    }
-
-    @Override
-    public void register(GoodsPriceDetailContract.IPurchaseView view) {
+    public void register(GoodsPriceDetailContract.IGoodsPriceDetailView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 

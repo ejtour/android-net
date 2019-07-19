@@ -32,8 +32,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:singleLine="true"
+        android:layout_marginRight="20dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="@+id/odh_status_bg"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@+id/odh_status_label"
         app:layout_constraintTop_toBottomOf="@+id/odh_status_label"
         tools:text="您有新的订单，请注意查收" />
@@ -42,11 +47,11 @@
         android:id="@+id/odh_status_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:src="@drawable/ic_order_process"
         app:layout_constraintBottom_toBottomOf="@+id/odh_status_label"
         app:layout_constraintEnd_toStartOf="@+id/odh_status_label"
         app:layout_constraintStart_toStartOf="@+id/odh_status_bg"
-        app:layout_constraintTop_toTopOf="@+id/odh_status_label" />
+        app:layout_constraintTop_toTopOf="@+id/odh_status_label"
+        tools:src="@drawable/ic_order_process" />
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/odh_shop_logo"

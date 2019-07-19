@@ -9,18 +9,21 @@ import java.util.List;
 
 public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAfterSalesDetailPresenter {
     private IAfterSalesDetailContract.IAfterSalesDetailView mView;
+    private String billID;
 
-    static AfterSalesDetailPresenter newInstance() {
-        return new AfterSalesDetailPresenter();
+    static AfterSalesDetailPresenter newInstance(String detailID) {
+        AfterSalesDetailPresenter presenter = new AfterSalesDetailPresenter();
+        presenter.billID = detailID;
+        return presenter;
     }
 
     private AfterSalesDetailPresenter() {
     }
 
     @Override
-    public void getDetail(String refundBillID) {
+    public void getDetail() {
         AfterSales.requestAfterSalesDetail(
-                refundBillID,
+                billID,
                 new SimpleObserver<List<AfterSalesBean>>(mView) {
                     @Override
                     public void onSuccess(List<AfterSalesBean> recordsBeans) {
@@ -34,25 +37,18 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
     }
 
     @Override
-    public void doAction(int actionType, String payType, String billID, int status, int type, String msg) {
-        AfterSales.afterSalesAction(actionType,
-                billID,
-                status,
-                type,
-                msg,
-                null,
-                null,
-                new SimpleObserver<Object>(mView) {
-                    @Override
-                    public void onSuccess(Object o) {
-                        mView.handleStatusChange();
-                    }
-                });
+    public void doAction(int actionType, String payType, int status, int type, String msg) {
+        AfterSales.afterSalesAction(actionType, billID, status, type, payType, msg, null, new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                mView.handleStatusChange();
+            }
+        });
     }
 
     @Override
-    public void modifyPrice(String price, String refundBillDetailID, String refundBillID) {
-        AfterSales.modifyUnitPrice(price, refundBillDetailID, refundBillID, new SimpleObserver<Object>(mView) {
+    public void modifyPrice(String price, String refundBillDetailID) {
+        AfterSales.modifyUnitPrice(price, refundBillDetailID, billID, new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
                 mView.handleStatusChange();

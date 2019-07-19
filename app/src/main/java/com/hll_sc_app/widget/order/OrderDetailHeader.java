@@ -81,20 +81,18 @@ public class OrderDetailHeader extends ConstraintLayout {
         handleOrderStatus(data.getSubBillStatus(), data.getCanceler(), data.getActionBy(), data.getCancelReason());
         mShopLogo.setImageURL(data.getImgUrl());
         mShopName.setText(data.getShopName());
-        mGroupName.setText(data.getGroupName());
+        mGroupName.setText(data.getPurchaserName());
         mOrderer.setText(String.format("订货人：%s", data.getSubBillCreateBy()));
         mOrdererDial.setTag(data.getOrdererMobile());
         mOrdererDial.setText(handlePhoneNum(data.getOrdererMobile()));
         mConsignee.setText(String.format("收货人：%s", data.getReceiverName()));
         mConsigneeDial.setTag(data.getReceiverMobile());
         mConsigneeDial.setText(handlePhoneNum(data.getReceiverMobile()));
-        if (data.getDeliverType() == 2) {
-            mSelfLiftTag.setVisibility(VISIBLE);
-        }
+        if (data.getDeliverType() == 2) mSelfLiftTag.setVisibility(VISIBLE);
         handleTimeAddress(data.getDeliverType() == 2,
                 data.getTargetExecuteDate(),
                 data.getTargetAddress());
-        handleLabel(data.getWareHourseName(), data.getSubbillCategory() == 2);
+        handleLabel(data.getWareHourseName(), data.getShipperType() > 0);
     }
 
     public void setData(TransferBean data) {
