@@ -151,9 +151,7 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
 
     @OnClick({R.id.img_close})
     public void onViewClicked(View view) {
-        if (view.getId() == R.id.img_close) {
-            finish();
-        }
+        finish();
     }
 
     @Override

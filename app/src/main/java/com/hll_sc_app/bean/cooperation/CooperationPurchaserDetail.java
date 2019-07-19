@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.cooperation;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 
 import java.util.List;
@@ -10,7 +13,7 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-07-17
  */
-public class CooperationPurchaserDetail {
+public class CooperationPurchaserDetail implements Parcelable {
     private String defaultAccountPeriod;
     private String agreeTime;
     private String businessModel;
@@ -50,6 +53,7 @@ public class CooperationPurchaserDetail {
     private String status;
     private List<PurchaserShopBean> shopDetailList;
     private List<OtherLicensesBean> otherLicenses;
+
 
     public String getDefaultAccountPeriod() {
         return defaultAccountPeriod;
@@ -361,5 +365,111 @@ public class CooperationPurchaserDetail {
 
     public void setOtherLicenses(List<OtherLicensesBean> otherLicenses) {
         this.otherLicenses = otherLicenses;
+    }
+
+    public static final Parcelable.Creator<CooperationPurchaserDetail> CREATOR =
+        new Parcelable.Creator<CooperationPurchaserDetail>() {
+        @Override
+        public CooperationPurchaserDetail createFromParcel(Parcel source) {
+            return new CooperationPurchaserDetail(source);
+        }
+
+        @Override
+        public CooperationPurchaserDetail[] newArray(int size) {
+            return new CooperationPurchaserDetail[size];
+        }
+    };
+
+    public CooperationPurchaserDetail() {
+    }
+
+    protected CooperationPurchaserDetail(Parcel in) {
+        this.defaultAccountPeriod = in.readString();
+        this.agreeTime = in.readString();
+        this.businessModel = in.readString();
+        this.defaultDeliveryWay = in.readString();
+        this.entityIDNo = in.readString();
+        this.businessEntity = in.readString();
+        this.defaultSettleDate = in.readString();
+        this.groupMail = in.readString();
+        this.businessNo = in.readString();
+        this.licencePhotoUrl = in.readString();
+        this.purchaserID = in.readString();
+        this.defaultAccountPeriodType = in.readString();
+        this.defaultDeliveryPeriod = in.readString();
+        this.groupCity = in.readString();
+        this.startTime = in.readString();
+        this.fax = in.readString();
+        this.reply = in.readString();
+        this.verification = in.readString();
+        this.isCertified = in.readString();
+        this.groupID = in.readString();
+        this.mobile = in.readString();
+        this.licenseName = in.readString();
+        this.customerLevel = in.readString();
+        this.linkman = in.readString();
+        this.logoUrl = in.readString();
+        this.actionType = in.readString();
+        this.maintainLevel = in.readString();
+        this.groupProvince = in.readString();
+        this.frontImg = in.readString();
+        this.groupAddress = in.readString();
+        this.shopCount = in.readString();
+        this.name = in.readString();
+        this.defaultSettlementWay = in.readString();
+        this.endTime = in.readString();
+        this.groupDistrict = in.readString();
+        this.resourceType = in.readString();
+        this.status = in.readString();
+        this.shopDetailList = in.createTypedArrayList(PurchaserShopBean.CREATOR);
+        this.otherLicenses = in.createTypedArrayList(OtherLicensesBean.CREATOR);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.defaultAccountPeriod);
+        dest.writeString(this.agreeTime);
+        dest.writeString(this.businessModel);
+        dest.writeString(this.defaultDeliveryWay);
+        dest.writeString(this.entityIDNo);
+        dest.writeString(this.businessEntity);
+        dest.writeString(this.defaultSettleDate);
+        dest.writeString(this.groupMail);
+        dest.writeString(this.businessNo);
+        dest.writeString(this.licencePhotoUrl);
+        dest.writeString(this.purchaserID);
+        dest.writeString(this.defaultAccountPeriodType);
+        dest.writeString(this.defaultDeliveryPeriod);
+        dest.writeString(this.groupCity);
+        dest.writeString(this.startTime);
+        dest.writeString(this.fax);
+        dest.writeString(this.reply);
+        dest.writeString(this.verification);
+        dest.writeString(this.isCertified);
+        dest.writeString(this.groupID);
+        dest.writeString(this.mobile);
+        dest.writeString(this.licenseName);
+        dest.writeString(this.customerLevel);
+        dest.writeString(this.linkman);
+        dest.writeString(this.logoUrl);
+        dest.writeString(this.actionType);
+        dest.writeString(this.maintainLevel);
+        dest.writeString(this.groupProvince);
+        dest.writeString(this.frontImg);
+        dest.writeString(this.groupAddress);
+        dest.writeString(this.shopCount);
+        dest.writeString(this.name);
+        dest.writeString(this.defaultSettlementWay);
+        dest.writeString(this.endTime);
+        dest.writeString(this.groupDistrict);
+        dest.writeString(this.resourceType);
+        dest.writeString(this.status);
+        dest.writeTypedList(this.shopDetailList);
+        dest.writeTypedList(this.otherLicenses);
     }
 }

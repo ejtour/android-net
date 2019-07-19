@@ -257,7 +257,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         return mPurchaserId;
     }
 
-    @OnClick({R.id.img_close, R.id.txt_options})
+    @OnClick({R.id.img_close, R.id.txt_options, R.id.cons_details})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -265,6 +265,9 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 break;
             case R.id.txt_options:
                 showOptionsWindow(view);
+                break;
+            case R.id.cons_details:
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, mDetail);
                 break;
             default:
                 break;

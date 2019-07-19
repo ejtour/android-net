@@ -147,9 +147,7 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
 
     @OnClick({R.id.img_close})
     public void onViewClicked(View view) {
-        if (view.getId() == R.id.img_close) {
-            finish();
-        }
+        finish();
     }
 
     @Override

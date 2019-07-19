@@ -92,6 +92,10 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_DETAIL = "/activity/cooperationPurchaser/detail";
     /**
+     * 合作采购商详情-详细资料
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_DETAILS = "/activity/cooperationPurchaser/detail/details";
+    /**
      * 合作采购商详情-新增门店
      */
     public static final String COOPERATION_PURCHASER_DETAIL_ADD_SHOP = "/activity/cooperationPurchaser/detail/addShop";

@@ -59,9 +59,7 @@ public class CooperationSourceActivity extends BaseLoadActivity {
 
     @OnClick({R.id.img_close})
     public void onViewClicked(View view) {
-        if (view.getId() == R.id.img_close) {
-            finish();
-        }
+        finish();
     }
 
     private static class CooperationSourceListAdapter extends BaseQuickAdapter<CooperationSourceBean, BaseViewHolder> {
