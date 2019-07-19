@@ -50,7 +50,7 @@ public class PurchaserBean implements Parcelable {
     private String identityCard;
     private String message;
     private String linkman;
-    @SerializedName(value = "name")
+    @SerializedName(value = "name", alternate = {"purchaserName"})
     private String purchaserName;
     private String groupName;
     private String operateModel;
