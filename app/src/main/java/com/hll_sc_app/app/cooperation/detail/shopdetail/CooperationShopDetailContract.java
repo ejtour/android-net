@@ -3,6 +3,10 @@ package com.hll_sc_app.app.cooperation.detail.shopdetail;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+
+import java.util.List;
 
 /**
  * 合作采购商详情-门店详情
@@ -25,6 +29,13 @@ public interface CooperationShopDetailContract {
          * @return shopBean
          */
         PurchaserShopBean getShopBean();
+
+        /**
+         * 显示到货时间选择框
+         *
+         * @param list 到货时间
+         */
+        void showDeliveryPeriodWindow(List<DeliveryPeriodBean> list);
     }
 
     interface ICooperationShopDetailPresenter extends IPresenter<ICooperationShopDetailView> {
@@ -39,5 +50,18 @@ public interface CooperationShopDetailContract {
          * 解除合作
          */
         void delCooperationShop();
+
+
+        /**
+         * 配送时段列表查询
+         */
+        void queryDeliveryPeriod();
+
+        /**
+         * 修改配送方式
+         *
+         * @param req req
+         */
+        void editShopDeliveryPeriod(ShopSettlementReq req);
     }
 }

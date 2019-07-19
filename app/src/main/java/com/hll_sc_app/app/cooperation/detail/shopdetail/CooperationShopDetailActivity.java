@@ -27,6 +27,7 @@ import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.Collections;
@@ -151,7 +152,7 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
                 toSelect(CooperationSelectShopActivity.TYPE_DRIVER);
                 break;
             case R.id.ll_deliveryPeriod:
-                toSelect(CooperationSelectShopActivity.TYPE_DRIVER);
+                mPresenter.queryDeliveryPeriod();
                 break;
             default:
                 break;
@@ -188,23 +189,14 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
                 req.setEmployeeID(mShopBean.getDriverID());
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, req);
                 break;
+            case CooperationSelectShopActivity.TYPE_DELIVERY_PERIOD:
+                req.setShopIds(Collections.singletonList(mShopBean.getShopID()));
+                req.setDeliveryPeriod(mTxtDeliveryPeriod.getText().toString());
+                mPresenter.editShopDeliveryPeriod(req);
+                break;
             default:
                 break;
         }
-    }
-
-    private void showDeliveryPeriodWindow(List<DeliveryPeriodBean> list) {
-        SingleSelectionDialog.newBuilder(this, (SingleSelectionDialog.WrapperName<DeliveryPeriodBean>) bean
-            -> bean.getArrivalStartTime() + "-" + bean.getArrivalEndTime())
-            .setTitleText("到货时间选择")
-            .setOnSelectListener(new SingleSelectionDialog.OnSelectListener<DeliveryPeriodBean>() {
-                @Override
-                public void onSelectItem(DeliveryPeriodBean bean) {
-                    // TODO:
-                }
-            })
-            .refreshList(list)
-            .create().show();
     }
 
     @Override
@@ -218,5 +210,23 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
     @Override
     public PurchaserShopBean getShopBean() {
         return mShopBean;
+    }
+
+    @Override
+    public void showDeliveryPeriodWindow(List<DeliveryPeriodBean> list) {
+        if (CommonUtils.isEmpty(list)) {
+            showToast("到货时间列表查询为空");
+            return;
+        }
+        SingleSelectionDialog.newBuilder(this, (SingleSelectionDialog.WrapperName<DeliveryPeriodBean>) bean
+            -> bean.getArrivalStartTime() + "-" + bean.getArrivalEndTime())
+            .setTitleText("到货时间选择")
+            .setOnSelectListener(bean -> {
+                mTxtDeliveryPeriod.setText(String.format("%s-%s", bean.getArrivalStartTime(),
+                    bean.getArrivalEndTime()));
+                toSelect(CooperationSelectShopActivity.TYPE_DELIVERY_PERIOD);
+            })
+            .refreshList(list)
+            .create().show();
     }
 }

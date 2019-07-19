@@ -12,12 +12,6 @@ import java.util.List;
  * @date 2019-07-18
  */
 public class ShopSettlementReq implements Parcelable {
-    private String actionType;
-    private String changeAllShops;
-    private String deliveryWay;
-    private String groupID;
-    private String purchaserID;
-    private List<String> shopIds;
     public static final Creator<ShopSettlementReq> CREATOR = new Creator<ShopSettlementReq>() {
         @Override
         public ShopSettlementReq createFromParcel(Parcel source) {
@@ -29,6 +23,18 @@ public class ShopSettlementReq implements Parcelable {
             return new ShopSettlementReq[size];
         }
     };
+    private String changeAllShops;
+    private String deliveryWay;
+    /**
+     * 操作类型（
+     * settlementWay-修改支付方式
+     * deliveryWay-修改配送方式
+     * deliveryPeriod-修改配送时间
+     */
+    private String actionType;
+    private String groupID;
+    private String purchaserID;
+    private List<String> shopIds;
     /**
      * 结算方式
      */
@@ -49,15 +55,16 @@ public class ShopSettlementReq implements Parcelable {
     private String employeeName;
     private String employeePhone;
     private String shopIDs;
+    private String deliveryPeriod;
 
     protected ShopSettlementReq(Parcel in) {
         this.actionType = in.readString();
         this.changeAllShops = in.readString();
         this.deliveryWay = in.readString();
+        this.deliveryPeriod = in.readString();
         this.groupID = in.readString();
         this.purchaserID = in.readString();
         this.shopIds = in.createStringArrayList();
-        this.shopIDs = in.readString();
         this.settlementWay = in.readString();
         this.settleDate = in.readString();
         this.accountPeriodType = in.readString();
@@ -65,6 +72,7 @@ public class ShopSettlementReq implements Parcelable {
         this.employeeID = in.readString();
         this.employeeName = in.readString();
         this.employeePhone = in.readString();
+        this.shopIDs = in.readString();
     }
 
     public ShopSettlementReq() {
@@ -174,11 +182,6 @@ public class ShopSettlementReq implements Parcelable {
         this.accountPeriod = accountPeriod;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public String getShopIDs() {
         return shopIDs;
     }
@@ -187,15 +190,28 @@ public class ShopSettlementReq implements Parcelable {
         this.shopIDs = shopIDs;
     }
 
+    public String getDeliveryPeriod() {
+        return deliveryPeriod;
+    }
+
+    public void setDeliveryPeriod(String deliveryPeriod) {
+        this.deliveryPeriod = deliveryPeriod;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.actionType);
         dest.writeString(this.changeAllShops);
         dest.writeString(this.deliveryWay);
+        dest.writeString(this.deliveryPeriod);
         dest.writeString(this.groupID);
         dest.writeString(this.purchaserID);
         dest.writeStringList(this.shopIds);
-        dest.writeString(this.shopIDs);
         dest.writeString(this.settlementWay);
         dest.writeString(this.settleDate);
         dest.writeString(this.accountPeriodType);
@@ -203,5 +219,6 @@ public class ShopSettlementReq implements Parcelable {
         dest.writeString(this.employeeID);
         dest.writeString(this.employeeName);
         dest.writeString(this.employeePhone);
+        dest.writeString(this.shopIDs);
     }
 }

@@ -9,6 +9,7 @@ import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.cooperation.DeliveryBean;
+import com.hll_sc_app.bean.cooperation.DeliveryPeriodResp;
 import com.hll_sc_app.bean.cooperation.EmployeeBean;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
@@ -139,4 +140,14 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101080")
     Observable<BaseResp<List<EmployeeBean>>> queryEmployeeList(@Body BaseMapReq req);
+
+    /**
+     * 配送时段列表查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103067")
+    Observable<BaseResp<DeliveryPeriodResp>> queryDeliveryPeriodList(@Body BaseMapReq req);
 }

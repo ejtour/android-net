@@ -12,6 +12,9 @@ import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
+import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
+import com.hll_sc_app.bean.cooperation.DeliveryPeriodResp;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -28,6 +31,7 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 public class CooperationShopDetailPresenter implements CooperationShopDetailContract.ICooperationShopDetailPresenter {
     private CooperationShopDetailContract.ICooperationShopDetailView mView;
+    private List<DeliveryPeriodBean> mListPeriod;
 
     static CooperationShopDetailPresenter newInstance() {
         return new CooperationShopDetailPresenter();
@@ -107,6 +111,67 @@ public class CooperationShopDetailPresenter implements CooperationShopDetailCont
                 @Override
                 public void onSuccess(Object resp) {
                     mView.showToast("解除合作成功");
+                    mView.editSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void queryDeliveryPeriod() {
+        if (!CommonUtils.isEmpty(mListPeriod)) {
+            mView.showDeliveryPeriodWindow(mListPeriod);
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("flg", "2")
+            .put("groupID", UserConfig.getGroupID())
+            .create();
+        CooperationPurchaserService
+            .INSTANCE
+            .queryDeliveryPeriodList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<DeliveryPeriodResp>() {
+                @Override
+                public void onSuccess(DeliveryPeriodResp resp) {
+                    mListPeriod = resp.getRecords();
+                    mView.showDeliveryPeriodWindow(mListPeriod);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void editShopDeliveryPeriod(ShopSettlementReq req) {
+        if (req == null) {
+            return;
+        }
+        BaseReq<ShopSettlementReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        CooperationPurchaserService
+            .INSTANCE
+            .editShopSettlement(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object object) {
+                    mView.showToast("修改到货时间成功");
                     mView.editSuccess();
                 }
 
