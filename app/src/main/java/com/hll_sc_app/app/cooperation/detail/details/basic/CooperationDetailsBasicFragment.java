@@ -104,11 +104,11 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
         mTxtResourceType.setText(getResourceType(mDetail.getResourceType()));
 
         mTxtGroupCity.setText(String.format("%s-%s", mDetail.getGroupCity(), mDetail.getGroupDistrict()));
-        mTxtGroupAddress.setText(mDetail.getGroupAddress());
-        mTxtLinkman.setText(mDetail.getLinkman());
-        mTxtMobile.setText(mDetail.getMobile());
-        mTxtFax.setText(mDetail.getFax());
-        mTxtGroupMail.setText(mDetail.getGroupMail());
+        mTxtGroupAddress.setText(checkNull(mDetail.getGroupAddress()));
+        mTxtLinkman.setText(checkNull(mDetail.getLinkman()));
+        mTxtMobile.setText(checkNull(mDetail.getMobile()));
+        mTxtFax.setText(checkNull(mDetail.getFax()));
+        mTxtGroupMail.setText(checkNull(mDetail.getGroupMail()));
 
         mTxtDefaultSettlementWay.setText(CooperationDetailActivity.getSettlementWay(mDetail.getDefaultSettlementWay()));
         mTxtMaintainLevel.setText(getMaintainLevel(mDetail.getMaintainLevel()));
@@ -116,10 +116,12 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
         mTxtCustomerLevel.setText(getCustomerLevel(mDetail.getCustomerLevel()));
 
         Date date = CalendarUtils.parse(mDetail.getAgreeTime(), CalendarUtils.FORMAT_HH_MM_SS);
+        String dateString = null;
         if (date != null) {
-            mTxtAgreeTime.setText(CalendarUtils.format(date, "yyyy/MM/dd"));
+            dateString = CalendarUtils.format(date, "yyyy/MM/dd");
         }
-        mTxtDeliveryPeriod.setText(mDetail.getDefaultDeliveryPeriod());
+        mTxtAgreeTime.setText(checkNull(dateString));
+        mTxtDeliveryPeriod.setText(checkNull(mDetail.getDefaultDeliveryPeriod()));
     }
 
     private String getResourceType(String type) {
@@ -132,6 +134,13 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
             resourceType = "天财供应链";
         }
         return resourceType;
+    }
+
+    private String checkNull(String s) {
+        if (TextUtils.isEmpty(s)) {
+            return "暂无";
+        }
+        return s;
     }
 
     private String getMaintainLevel(String level) {
