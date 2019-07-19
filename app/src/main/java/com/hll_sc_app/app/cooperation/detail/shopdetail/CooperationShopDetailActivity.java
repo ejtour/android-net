@@ -30,6 +30,7 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -120,6 +121,7 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
         } else if (TextUtils.equals(mShopBean.getStatus(), STATUS_AGREE)) {
             mTxtDel.setVisibility(View.VISIBLE);
         }
+        mTxtCooperationSource.setText(CommonUtils.isEmpty(mShopBean.getCooperationSource()) ? "暂无" : "点击查看合作方式");
     }
 
     @OnClick({R.id.img_close, R.id.ll_settlementWay, R.id.ll_salesRepresentativeName,
@@ -153,6 +155,12 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
                 break;
             case R.id.ll_deliveryPeriod:
                 mPresenter.queryDeliveryPeriod();
+                break;
+            case R.id.ll_cooperationSource:
+                if (!CommonUtils.isEmpty(mShopBean.getCooperationSource())) {
+                    RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL_SOURCE,
+                        new ArrayList<>(mShopBean.getCooperationSource()));
+                }
                 break;
             default:
                 break;

@@ -3,6 +3,8 @@ package com.hll_sc_app.bean.agreementprice.quotation;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.bean.cooperation.CooperationSourceBean;
+
 import java.util.List;
 
 /**
@@ -48,6 +50,7 @@ public class PurchaserShopBean implements Parcelable {
             return new PurchaserShopBean[size];
         }
     };
+
     private String accountPeriodType;
     private String accountPeriod;
     private String salesRepresentativeName;
@@ -58,43 +61,6 @@ public class PurchaserShopBean implements Parcelable {
     private String agreeTime;
     private String deliveryPeriod;
     private String driverID;
-
-    protected PurchaserShopBean(Parcel in) {
-        this.shopCode = in.readString();
-        this.shopArea = in.readString();
-        this.addressGaoDe = in.readString();
-        this.imagePath = in.readString();
-        this.mobile = in.readString();
-        this.shopName = in.readString();
-        this.source = in.readString();
-        this.isActive = in.readString();
-        this.shopAddress = in.readString();
-        this.linkman = in.readString();
-        this.purchaserID = in.readString();
-        this.latGaoDe = in.readString();
-        this.shopAdmin = in.readString();
-        this.lonGaoDe = in.readString();
-        this.shopPhone = in.readString();
-        this.shopID = in.readString();
-        this.purchaserName = in.readString();
-        this.shopProvince = in.readString();
-        this.shopDistrict = in.readString();
-        this.shopCity = in.readString();
-        this.select = in.readByte() != 0;
-        this.time = in.createTypedArrayList(TimeBean.CREATOR);
-        this.status = in.readString();
-        this.settlementWay = in.readString();
-        this.accountPeriodType = in.readString();
-        this.accountPeriod = in.readString();
-        this.settleDate = in.readString();
-        this.salesRepresentativeName = in.readString();
-        this.salesRepresentativeID = in.readString();
-        this.driverName = in.readString();
-        this.driverID = in.readString();
-        this.deliveryWay = in.readString();
-        this.agreeTime = in.readString();
-        this.deliveryPeriod = in.readString();
-    }
 
     public String getAccountPeriodType() {
         return accountPeriodType;
@@ -363,17 +329,57 @@ public class PurchaserShopBean implements Parcelable {
         this.purchaserName = purchaserName;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public String getSalesRepresentativeID() {
         return salesRepresentativeID;
     }
 
     public void setSalesRepresentativeID(String salesRepresentativeID) {
         this.salesRepresentativeID = salesRepresentativeID;
+    }
+
+    private List<CooperationSourceBean> cooperationSource;
+
+    protected PurchaserShopBean(Parcel in) {
+        this.shopCode = in.readString();
+        this.shopArea = in.readString();
+        this.addressGaoDe = in.readString();
+        this.imagePath = in.readString();
+        this.mobile = in.readString();
+        this.shopName = in.readString();
+        this.source = in.readString();
+        this.isActive = in.readString();
+        this.shopAddress = in.readString();
+        this.linkman = in.readString();
+        this.purchaserID = in.readString();
+        this.latGaoDe = in.readString();
+        this.shopAdmin = in.readString();
+        this.lonGaoDe = in.readString();
+        this.shopPhone = in.readString();
+        this.shopID = in.readString();
+        this.purchaserName = in.readString();
+        this.shopProvince = in.readString();
+        this.shopDistrict = in.readString();
+        this.shopCity = in.readString();
+        this.select = in.readByte() != 0;
+        this.time = in.createTypedArrayList(TimeBean.CREATOR);
+        this.status = in.readString();
+        this.settlementWay = in.readString();
+        this.cooperationSource = in.createTypedArrayList(CooperationSourceBean.CREATOR);
+        this.accountPeriodType = in.readString();
+        this.accountPeriod = in.readString();
+        this.salesRepresentativeName = in.readString();
+        this.settleDate = in.readString();
+        this.driverName = in.readString();
+        this.salesRepresentativeID = in.readString();
+        this.deliveryWay = in.readString();
+        this.agreeTime = in.readString();
+        this.deliveryPeriod = in.readString();
+        this.driverID = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -402,15 +408,24 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeTypedList(this.time);
         dest.writeString(this.status);
         dest.writeString(this.settlementWay);
+        dest.writeTypedList(this.cooperationSource);
         dest.writeString(this.accountPeriodType);
         dest.writeString(this.accountPeriod);
-        dest.writeString(this.settleDate);
         dest.writeString(this.salesRepresentativeName);
-        dest.writeString(this.salesRepresentativeID);
+        dest.writeString(this.settleDate);
         dest.writeString(this.driverName);
-        dest.writeString(this.driverID);
+        dest.writeString(this.salesRepresentativeID);
         dest.writeString(this.deliveryWay);
         dest.writeString(this.agreeTime);
         dest.writeString(this.deliveryPeriod);
+        dest.writeString(this.driverID);
+    }
+
+    public List<CooperationSourceBean> getCooperationSource() {
+        return cooperationSource;
+    }
+
+    public void setCooperationSource(List<CooperationSourceBean> cooperationSource) {
+        this.cooperationSource = cooperationSource;
     }
 }
