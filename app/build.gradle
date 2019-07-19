@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
 
+def cmd = 'git rev-list HEAD --count'
+def gitVersion = cmd.execute().text.trim().toInteger()
+
 android {
     compileSdkVersion COMPILESDKVERSION as int
     defaultConfig {
         applicationId "com.hll_sc_app"
         minSdkVersion MINSDKVERSION as int
         targetSdkVersion TARGETSDKVERSION as int
-        versionCode 1
+        versionCode gitVersion
         versionName "2.11.0"
         multiDexEnabled true
         flavorDimensions "default"
