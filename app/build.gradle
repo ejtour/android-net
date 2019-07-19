@@ -103,4 +103,6 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.4.0'
     // arouter
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+    // switchbutton
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
 }
