@@ -122,6 +122,7 @@ public class CooperationButtonView extends LinearLayout {
                 mListener.del(mDetail);
                 break;
             case R.id.txt_add:
+                mListener.add(mDetail);
                 break;
             case R.id.txt_agree_other:
                 mListener.agree(mDetail);
@@ -130,6 +131,7 @@ public class CooperationButtonView extends LinearLayout {
                 mListener.reject(mDetail);
                 break;
             case R.id.txt_repeat_my:
+                mListener.repeat(mDetail);
                 break;
             default:
                 break;
@@ -162,5 +164,19 @@ public class CooperationButtonView extends LinearLayout {
          * @param detail detail
          */
         void agree(CooperationPurchaserDetail detail);
+
+        /**
+         * 添加合作
+         *
+         * @param detail detail
+         */
+        void add(CooperationPurchaserDetail detail);
+
+        /**
+         * 重新验证合作
+         *
+         * @param detail detail
+         */
+        void repeat(CooperationPurchaserDetail detail);
     }
 }

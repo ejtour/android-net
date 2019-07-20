@@ -12,6 +12,17 @@ import java.util.List;
  * @date 2019-07-18
  */
 public class ShopSettlementReq implements Parcelable {
+    public static final Creator<ShopSettlementReq> CREATOR = new Creator<ShopSettlementReq>() {
+        @Override
+        public ShopSettlementReq createFromParcel(Parcel source) {
+            return new ShopSettlementReq(source);
+        }
+
+        @Override
+        public ShopSettlementReq[] newArray(int size) {
+            return new ShopSettlementReq[size];
+        }
+    };
     private String changeAllShops;
     private String deliveryWay;
     /**
@@ -45,18 +56,11 @@ public class ShopSettlementReq implements Parcelable {
     private String employeePhone;
     private String shopIDs;
     private String deliveryPeriod;
-    public static final Creator<ShopSettlementReq> CREATOR = new Creator<ShopSettlementReq>() {
-        @Override
-        public ShopSettlementReq createFromParcel(Parcel source) {
-            return new ShopSettlementReq(source);
-        }
-
-        @Override
-        public ShopSettlementReq[] newArray(int size) {
-            return new ShopSettlementReq[size];
-        }
-    };
+    private String purchaserName;
     private String from;
+
+    public ShopSettlementReq() {
+    }
 
     protected ShopSettlementReq(Parcel in) {
         this.changeAllShops = in.readString();
@@ -74,10 +78,16 @@ public class ShopSettlementReq implements Parcelable {
         this.employeePhone = in.readString();
         this.shopIDs = in.readString();
         this.deliveryPeriod = in.readString();
+        this.purchaserName = in.readString();
         this.from = in.readString();
     }
 
-    public ShopSettlementReq() {
+    public String getPurchaserName() {
+        return purchaserName;
+    }
+
+    public void setPurchaserName(String purchaserName) {
+        this.purchaserName = purchaserName;
     }
 
     public String getActionType() {
@@ -200,17 +210,17 @@ public class ShopSettlementReq implements Parcelable {
         this.deliveryPeriod = deliveryPeriod;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public String getFrom() {
         return from;
     }
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -230,6 +240,7 @@ public class ShopSettlementReq implements Parcelable {
         dest.writeString(this.employeePhone);
         dest.writeString(this.shopIDs);
         dest.writeString(this.deliveryPeriod);
+        dest.writeString(this.purchaserName);
         dest.writeString(this.from);
     }
 }

@@ -22,7 +22,7 @@
         tools:hint="可输入驳回理由，选填" />
 
     <TextView
-        android:id="@+id/dr_remain_num"
+        android:id="@+id/txt_remain_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

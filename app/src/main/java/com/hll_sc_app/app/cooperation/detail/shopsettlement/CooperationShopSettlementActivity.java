@@ -3,12 +3,15 @@ package com.hll_sc_app.app.cooperation.detail.shopsettlement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * 合作采购商详情-选择结算方式
@@ -48,6 +52,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     public static final String TERM_WEEK = "1";
     public static final String TERM_MONTH = "2";
     public static final String[] STRINGS_WEEK = {"每周日", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六"};
+    private static final int MAX = 100;
     @Autowired(name = "parcelable", required = true)
     ShopSettlementReq mReq;
     @BindView(R.id.txt_accountPeriod)
@@ -62,6 +67,12 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     CheckBox mCbCashPayment;
     @BindView(R.id.cb_accountPayment)
     CheckBox mCbAccountPayment;
+    @BindView(R.id.edt_verification)
+    EditText mEdtVerification;
+    @BindView(R.id.txt_remain_num)
+    TextView mTxtRemainNum;
+    @BindView(R.id.ll_verification)
+    ConstraintLayout mLlVerification;
     private CooperationShopSettlementPresenter mPresenter;
 
     @Override
@@ -75,6 +86,12 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         mPresenter.register(this);
         mPresenter.start();
         mCbAccountPayment.setOnCheckedChangeListener((buttonView, isChecked) -> showAccountDetail());
+        mEdtVerification.setFilters(new InputFilter[]{new InputFilter.LengthFilter(MAX)});
+        mTxtRemainNum.setText(String.valueOf(MAX));
+        if (TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_ADD) ||
+            TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_REPEAT)) {
+            mPresenter.queryGroupParameterInSetting(mReq.getPurchaserID());
+        }
     }
 
     /**
@@ -135,9 +152,18 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
                 mReq.setSettleDate(String.valueOf(mTxtSettleDate.getTag()));
             }
         }
+
         if (TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_AGREE)) {
             // 合作采购商-详细资料-同意合作
             mPresenter.editCooperationPurchaser(mReq);
+        } else if (TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_ADD)) {
+            // 合作采购商-详细资料-添加合作采购商
+            mReq.setActionType("normal");
+            mPresenter.addCooperationPurchaser(mReq);
+        } else if (TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_REPEAT)) {
+            // 合作采购商-详细资料-重新验证合作采购商
+            mReq.setActionType("revalidation");
+            mPresenter.addCooperationPurchaser(mReq);
         } else {
             mPresenter.editShopSettlement(mReq);
         }
@@ -177,11 +203,17 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
                 }
                 dialog.dismiss();
             }, "取消", "确定")
-            .create().show();
+            .create()
+            .show();
     }
 
     public static String getPayTermStr(int payTerm) {
         return payTerm > STRINGS_WEEK.length ? "" : STRINGS_WEEK[payTerm];
+    }
+
+    @OnTextChanged(R.id.edt_verification)
+    public void onTextChanged(CharSequence s) {
+        mTxtRemainNum.setText(String.valueOf(MAX - s.length()));
     }
 
     @Override
@@ -250,8 +282,10 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
 
     @Override
     public void editSuccess() {
-        String path = null;
-        if (TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_AGREE)) {
+        String path;
+        if (TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_AGREE) ||
+            TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_ADD) ||
+            TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_REPEAT)) {
             path = RouterConfig.COOPERATION_PURCHASER_LIST;
         } else {
             path = RouterConfig.COOPERATION_PURCHASER_DETAIL;
@@ -260,5 +294,19 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             .setProvider(new LoginInterceptor())
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
             .navigation(this);
+    }
+
+    @Override
+    public void showEditText() {
+        mLlVerification.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public String getVerification() {
+        String verification = null;
+        if (mLlVerification.getVisibility() == View.VISIBLE) {
+            verification = mEdtVerification.getText().toString().trim();
+        }
+        return verification;
     }
 }

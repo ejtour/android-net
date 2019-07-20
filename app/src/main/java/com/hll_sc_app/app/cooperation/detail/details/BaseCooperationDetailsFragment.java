@@ -30,6 +30,8 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 public abstract class BaseCooperationDetailsFragment extends BaseLazyFragment implements CooperationButtonView.Listener {
 
     public static final String FROM_COOPERATION_DETAILS_AGREE = "FROM_COOPERATION_DETAILS_AGREE";
+    public static final String FROM_COOPERATION_DETAILS_ADD = "FROM_COOPERATION_DETAILS_ADD";
+    public static final String FROM_COOPERATION_DETAILS_REPEAT = "FROM_COOPERATION_DETAILS_REPEAT";
 
     @Override
     public void del(CooperationPurchaserDetail detail) {
@@ -80,6 +82,24 @@ public abstract class BaseCooperationDetailsFragment extends BaseLazyFragment im
         req.setFrom(FROM_COOPERATION_DETAILS_AGREE);
         req.setPurchaserID(detail.getPurchaserID());
         // 同意之前先选择结算方式
+        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+    }
+
+    @Override
+    public void add(CooperationPurchaserDetail detail) {
+        ShopSettlementReq req = new ShopSettlementReq();
+        req.setPurchaserName(detail.getName());
+        req.setFrom(FROM_COOPERATION_DETAILS_ADD);
+        req.setPurchaserID(detail.getPurchaserID());
+        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+    }
+
+    @Override
+    public void repeat(CooperationPurchaserDetail detail) {
+        ShopSettlementReq req = new ShopSettlementReq();
+        req.setPurchaserName(detail.getName());
+        req.setFrom(FROM_COOPERATION_DETAILS_REPEAT);
+        req.setPurchaserID(detail.getPurchaserID());
         RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
     }
 
