@@ -51,7 +51,6 @@ public interface CooperationShopDetailContract {
          */
         void delCooperationShop();
 
-
         /**
          * 配送时段列表查询
          */

@@ -27,6 +27,7 @@ import java.util.List;
 public class GoodsOperationAdapter extends BaseQuickAdapter<AfterSalesDetailsBean, BaseViewHolder> {
     private boolean mDecimal;
     private OnNumChangedListener mListener;
+    private boolean isDriver;
 
     interface OnNumChangedListener {
         void onNumChanged();
@@ -38,18 +39,23 @@ public class GoodsOperationAdapter extends BaseQuickAdapter<AfterSalesDetailsBea
         mListener = listener;
     }
 
+    void setDriver(boolean driver) {
+        isDriver = driver;
+        notifyDataSetChanged();
+    }
+
     /**
      * 获取请求参数
      */
-    List<AfterSalesActionReq.ActionBean> getReqList(boolean driver) {
+    List<AfterSalesActionReq.ActionBean> getReqList() {
         List<AfterSalesActionReq.ActionBean> list = new ArrayList<>();
         for (AfterSalesDetailsBean bean : getData()) {
             AfterSalesActionReq.ActionBean item = new AfterSalesActionReq.ActionBean();
-            if (driver) {
+            if (isDriver) {
                 item.setDeliveryNum(bean.getRefundNum());
                 item.setDeliveryPrice(bean.getProductPrice());
             } else {
-                item.setInNum(bean.getRefundNum());
+                item.setInNum(bean.getDeliveryNum());
                 item.setInPrice(bean.getProductPrice());
             }
             item.setRefundBillDetailID(bean.getId());
@@ -80,13 +86,13 @@ public class GoodsOperationAdapter extends BaseQuickAdapter<AfterSalesDetailsBea
                 AfterSalesDetailsBean bean = getItem(helper.getAdapterPosition());
                 if (bean == null) return;
                 if (mDecimal) {
-                    if (s.toString().startsWith("."))
-                        s.insert(0, "0");
-                    if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1) {
+                    if (s.toString().startsWith(".")) s.insert(0, "0");
+                    if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1)
                         s.delete(s.length() - 1, s.length());
-                    }
                 }
-                bean.setInspectionNum(Double.parseDouble(TextUtils.isEmpty(s.toString()) ? "0" : s.toString()));
+                double num = Double.parseDouble(TextUtils.isEmpty(s.toString()) ? "0" : s.toString());
+                if (isDriver) bean.setRefundNum(num);
+                else bean.setDeliveryNum(num);
                 if (mListener != null) mListener.onNumChanged();
             }
         });
@@ -102,6 +108,6 @@ public class GoodsOperationAdapter extends BaseQuickAdapter<AfterSalesDetailsBea
                 .setText(R.id.sgo_order, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName()) // 订货数
                 .setText(R.id.sgo_deliver, "发货： " + CommonUtils.formatNum(item.getAdjustmentNum()) + item.getAdjustmentUnit()) // 发货数
                 .setText(R.id.sgo_unit, item.getRefundUnit()) // 单位
-                .setText(R.id.sgo_edit, CommonUtils.formatNumber(item.getRefundNum())); // 数量
+                .setText(R.id.sgo_edit, CommonUtils.formatNumber(isDriver ? item.getRefundNum() : item.getDeliveryNum())); // 数量
     }
 }

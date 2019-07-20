@@ -267,7 +267,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 showOptionsWindow(view);
                 break;
             case R.id.cons_details:
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, mDetail);
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, mDetail.getPurchaserID());
                 break;
             default:
                 break;
@@ -331,7 +331,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mPresenter.queryPurchaserDetail();
+        mPresenter.start();
     }
 
     public static class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {

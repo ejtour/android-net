@@ -28,7 +28,7 @@ import butterknife.OnTextChanged;
 public class RemarkDialog extends BaseDialog {
     @BindView(R.id.dr_edit)
     EditText mEdit;
-    @BindView(R.id.dr_remain_num)
+    @BindView(R.id.txt_remain_num)
     TextView mRemainNum;
     @BindView(R.id.dr_cancel)
     TextView mCancel;

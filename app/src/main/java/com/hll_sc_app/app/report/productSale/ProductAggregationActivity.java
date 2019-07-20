@@ -3,6 +3,7 @@ package com.hll_sc_app.app.report.productSale;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,14 +22,11 @@ import com.hll_sc_app.bean.report.req.ProductSaleAggregationReq;
 import com.hll_sc_app.bean.report.req.ProductSaleTopReq;
 import com.hll_sc_app.bean.report.resp.product.ProductCategory;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleAggregationResp;
-import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTopDetail;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.DateUtil;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -55,6 +53,9 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
     TextView productSaleAggregationCustomerTime;
     @BindView(R.id.product_sales_pie_chart)
     PieChart productSalesPieChart;
+
+    @BindView(R.id.item_product_sale_detail)
+    RecyclerView mRecyclerView;
 
     private DateRangeWindow mDateRangeWindow;
 
@@ -83,6 +84,7 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
         mPresenter = ProductAggregationPresenter.newInstance();
         mPresenter.register(this);
         adapter = new ProductAggregationAdapter();
+        mRecyclerView.setAdapter(adapter);
         initProductDatas();
     }
 

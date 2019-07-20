@@ -169,7 +169,6 @@
         android:gravity="center"
         android:text="重置"
         android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/pss_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"

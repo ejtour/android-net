@@ -25,6 +25,18 @@ public interface CooperationShopSettlementContract {
          * 修改成功
          */
         void editSuccess();
+
+        /**
+         * 要求输入验证信息
+         */
+        void showEditText();
+
+        /**
+         * 获取验证信息
+         *
+         * @return 验证信息
+         */
+        String getVerification();
     }
 
     interface ICooperationShopSettlementPresenter extends IPresenter<ICooperationShopSettlementView> {
@@ -39,5 +51,26 @@ public interface CooperationShopSettlementContract {
          * @param req req
          */
         void editShopSettlement(ShopSettlementReq req);
+
+        /**
+         * 合作商信息编辑
+         *
+         * @param req req
+         */
+        void editCooperationPurchaser(ShopSettlementReq req);
+
+        /**
+         * 添加合作餐企
+         *
+         * @param req req
+         */
+        void addCooperationPurchaser(ShopSettlementReq req);
+
+        /**
+         * 查询集团参数:5-添加为合作采购商时需要验证开关
+         *
+         * @param purchaserId purchaserId
+         */
+        void queryGroupParameterInSetting(String purchaserId);
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,147 +31,199 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="match_parent"
-        android:layout_height="33dp"
-        android:layout_below="@+id/rl_title"
-        android:background="@color/color_fafafa"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:text="请选择结算方式"
-        android:textColor="@color/color_aeaeae"
-        android:textSize="9sp"/>
-
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_title"
-        android:background="@color/base_white"
-        android:orientation="vertical"
-        android:paddingLeft="10dp">
-
-        <CheckBox
-            android:id="@+id/cb_onlinePayment"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/base_bg_shadow_top_white_bar"
-            android:button="@drawable/bg_selector_check_box"
-            android:padding="5dp"
-            android:text="在线支付"
-            android:textColor="@drawable/base_text_color_window_check"
-            android:textSize="@dimen/text_middle_size"
-            android:visibility="gone"
-            tools:visibility="visible"/>
-
-        <CheckBox
-            android:id="@+id/cb_cashPayment"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/base_bg_shadow_top_white_bar"
-            android:button="@drawable/bg_selector_check_box"
-            android:padding="5dp"
-            android:text="货到付款"
-            android:textColor="@drawable/base_text_color_window_check"
-            android:textSize="@dimen/text_middle_size"
-            android:visibility="gone"
-            tools:visibility="visible"/>
-
-        <CheckBox
-            android:id="@+id/cb_accountPayment"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/base_bg_shadow_top_white_bar"
-            android:button="@drawable/bg_selector_check_box"
-            android:padding="5dp"
-            android:text="账期支付"
-            android:textColor="@drawable/base_text_color_window_check"
-            android:textSize="@dimen/text_middle_size"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+        android:layout_above="@+id/fl_bottom"
+        android:layout_below="@+id/rl_title"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/ll_account_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <RelativeLayout
-                android:id="@+id/rl_accountPeriod"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/base_bg_shadow_top_white_bar"
-                android:paddingLeft="20dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:id="@+id/txt_accountPeriod_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="账单日"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
-
-                <TextView
-                    android:id="@+id/txt_accountPeriod"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/txt_accountPeriod_title"
-                    android:background="@null"
-                    android:drawableRight="@drawable/ic_arrow_gray"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical|right"
-                    android:hint="请选择账单日"
-                    android:singleLine="true"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-                    android:textColorHint="@color/color_aeaeae"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_settleDate"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/base_bg_shadow_top_white_bar"
-                android:paddingLeft="20dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:id="@+id/txt_settleDate_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="结算日"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
-
-                <TextView
-                    android:id="@+id/txt_settleDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@+id/txt_settleDate_title"
-                    android:gravity="center_vertical|right"
-                    android:singleLine="true"
-                    android:text="对账单产生后0日"
-                    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-                    android:textColorHint="@color/color_aeaeae"/>
-
-            </RelativeLayout>
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_title"
                 android:layout_width="match_parent"
                 android:layout_height="33dp"
+                android:layout_below="@+id/rl_title"
                 android:background="@color/color_fafafa"
-                android:gravity="center_vertical|right"
+                android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="点击可修改结算日"
+                android:text="请选择结算方式"
                 android:textColor="@color/color_aeaeae"
                 android:textSize="9sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_title"
+                android:background="@color/base_white"
+                android:orientation="vertical"
+                android:paddingLeft="10dp">
+
+                <CheckBox
+                    android:id="@+id/cb_onlinePayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/base_bg_shadow_top_white_bar"
+                    android:button="@drawable/bg_selector_check_box"
+                    android:padding="5dp"
+                    android:text="在线支付"
+                    android:textColor="@drawable/base_text_color_window_check"
+                    android:textSize="@dimen/text_middle_size"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+
+                <CheckBox
+                    android:id="@+id/cb_cashPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/base_bg_shadow_top_white_bar"
+                    android:button="@drawable/bg_selector_check_box"
+                    android:padding="5dp"
+                    android:text="货到付款"
+                    android:textColor="@drawable/base_text_color_window_check"
+                    android:textSize="@dimen/text_middle_size"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+
+                <CheckBox
+                    android:id="@+id/cb_accountPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/base_bg_shadow_top_white_bar"
+                    android:button="@drawable/bg_selector_check_box"
+                    android:padding="5dp"
+                    android:text="账期支付"
+                    android:textColor="@drawable/base_text_color_window_check"
+                    android:textSize="@dimen/text_middle_size"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_account_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_accountPeriod"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/base_bg_shadow_top_white_bar"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_accountPeriod_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="账单日"
+                            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+                        <TextView
+                            android:id="@+id/txt_accountPeriod"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@+id/txt_accountPeriod_title"
+                            android:background="@null"
+                            android:drawableRight="@drawable/ic_arrow_gray"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical|right"
+                            android:hint="请选择账单日"
+                            android:singleLine="true"
+                            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                            android:textColorHint="@color/color_aeaeae"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_settleDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@drawable/base_bg_shadow_top_white_bar"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="10dp">
+
+                        <TextView
+                            android:id="@+id/txt_settleDate_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="结算日"
+                            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+                        <TextView
+                            android:id="@+id/txt_settleDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_toRightOf="@+id/txt_settleDate_title"
+                            android:gravity="center_vertical|right"
+                            android:singleLine="true"
+                            android:text="对账单产生后0日"
+                            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                            android:textColorHint="@color/color_aeaeae"/>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="33dp"
+                        android:background="@color/color_fafafa"
+                        android:gravity="center_vertical|right"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="点击可修改结算日"
+                        android:textColor="@color/color_aeaeae"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/ll_verification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/base_white"
+                android:padding="10dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <EditText
+                    android:id="@+id/edt_verification"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/bg_edit_stroke_gray"
+                    android:gravity="top"
+                    android:hint="你需要发送验证申请，等对方同意"
+                    android:maxLength="100"
+                    android:padding="@dimen/dp_10"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    android:textColorHint="@color/color_aeaeae"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/txt_remain_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="100"
+                    android:textColor="@color/color_aeaeae"
+                    android:textSize="8sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/edt_verification"
+                    app:layout_constraintEnd_toEndOf="@+id/edt_verification"/>
+            </android.support.constraint.ConstraintLayout>
         </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/fl_bottom"

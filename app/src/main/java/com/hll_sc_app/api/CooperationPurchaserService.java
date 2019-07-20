@@ -52,6 +52,36 @@ public interface CooperationPurchaserService {
     Observable<BaseResp<Object>> delCooperationPurchaser(@Body BaseMapReq req);
 
     /**
+     * 合作商信息编辑
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102032")
+    Observable<BaseResp<Object>> editCooperationPurchaser(@Body BaseMapReq req);
+
+    /**
+     * 添加合作餐企
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102009")
+    Observable<BaseResp<Object>> addCooperationPurchaser(@Body BaseMapReq req);
+
+    /**
+     * 接口名称 编辑合作关系拜访维护级别/客户级别
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102054")
+    Observable<BaseResp<Object>> editCooperationPurchaserLevel(@Body BaseMapReq req);
+
+    /**
      * 合作关系使用-集团搜索
      *
      * @param req req

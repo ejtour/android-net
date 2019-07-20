@@ -35,8 +35,6 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
     TextView mRefundType;
     @BindView(R.id.sdf_refund_id)
     TextView mRefundId;
-    @BindView(R.id.sdf_refund_id_group)
-    Group mRefundIdGroup;
     @BindView(R.id.sdf_create_time)
     TextView mCreateTime;
     @BindView(R.id.sdf_type)
@@ -45,12 +43,8 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
     TextView mRefundReasonLabel;
     @BindView(R.id.sdf_refund_reason)
     TextView mRefundReason;
-    @BindView(R.id.sdf_refund_reason_group)
-    Group mRefundReasonGroup;
     @BindView(R.id.sdf_refund_amount)
     TextView mRefundAmount;
-    @BindView(R.id.sdf_refund_amount_group)
-    Group mRefundAmountGroup;
     @BindView(R.id.sdf_diff_price)
     TextView mDiffPrice;
     @BindView(R.id.sdf_diff_price_group)
@@ -63,14 +57,10 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
     TextView mRelatedBillAmount;
     @BindView(R.id.sdf_pay_method)
     TextView mPayMethod;
-    @BindView(R.id.sdf_pay_method_group)
-    Group mPayMethodGroup;
     @BindView(R.id.sdf_sale_name)
     TextView mSaleName;
     @BindView(R.id.sdf_sale_phone)
     TextView mSalePhone;
-    @BindView(R.id.sdf_sale_group)
-    Group mSaleGroup;
 
     public AfterSalesDetailFooter(Context context) {
         this(context, null);
@@ -102,16 +92,12 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
         // 售后原因
         String reason = data.getRefundReasonDesc();
         if (!TextUtils.isEmpty(reason)) {
-            mRefundReasonGroup.setVisibility(View.VISIBLE);
             mRefundReasonLabel.setText(String.format("%s原因：", AfterSalesHelper.getReasonPrefix(data.getRefundBillType())));
             mRefundReason.setText(reason);
         }
 
         // 退款金额
-        if (data.getRefundBillType() != 5) {
-            mRefundAmountGroup.setVisibility(View.VISIBLE);
-            mRefundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
-        }
+        mRefundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
 
         // 差价金额
         if (data.getRefundBillType() == 2) {
@@ -134,20 +120,14 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
         // 支付方式
         String payType = OrderHelper.getPayType(data.getPayType()), paymentWay = OrderHelper.getPaymentWay(data.getPaymentWay());
         if (!TextUtils.isEmpty(payType)) {
-            mPayMethodGroup.setVisibility(View.VISIBLE);
             mPayMethod.setText(paymentWay.length() > 0 ? payType + "（" + paymentWay + "）" : payType);
         }
 
         // 退款编号
-        String refundBillNo = data.getRefundBillNo();
-        if (!TextUtils.isEmpty(refundBillNo)) {
-            mRefundIdGroup.setVisibility(View.VISIBLE);
-            mRefundId.setText(refundBillNo);
-        }
+        mRefundId.setText(data.getRefundBillNo());
 
         // 销售员信息
-        if (data.getSaleInfoVo() != null && data.getBillSource() == 1) {
-            mSaleGroup.setVisibility(View.VISIBLE);
+        if (data.getSaleInfoVo() != null) {
             mSaleName.setText(data.getSaleInfoVo().getSalesmanName());
             mSalePhone.setText(PhoneUtil.formatPhoneNum(data.getSaleInfoVo().getSalesmanPhone()));
         }

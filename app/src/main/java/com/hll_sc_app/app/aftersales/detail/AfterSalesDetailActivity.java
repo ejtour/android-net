@@ -129,7 +129,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
      */
     private void updateData() {
         // 标题
-        mHeaderBar.setHeaderTitle(AfterSalesHelper.getRefundTypeDesc(mBean.getRefundBillType()) + "详情");
+        mHeaderBar.setHeaderTitle(AfterSalesHelper.getRefundInfoPrefix(mBean.getRefundBillType()) + "详情");
         mAdapter.setRefundBillType(mBean.getRefundBillType());
         mAdapter.setCanModify(mBean.canModify());
         mAdapter.setNewData(mBean.getDetailList());
@@ -245,12 +245,24 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
     @Override
     public void actionCustomerService() {
-        AfterSalesAuditDialog.create(this)
-                .canModify(mBean.canModify())
-                .setCallback((payType, remark) ->
-                        present.doAction(1, payType,
+        if (mBean.canModify())
+            AfterSalesAuditDialog.create(this)
+                    .setCallback((payType, remark) ->
+                            present.doAction(1, payType,
+                                    mBean.getRefundBillStatus(), mBean.getRefundBillType(),
+                                    remark))
+                    .show();
+        else RemarkDialog.newBuilder(this)
+                .setHint("请输入审核备注（最多200字）")
+                .setMaxLength(200)
+                .setButtons("容我再想想", "确认通过", (dialog, positive, content) -> {
+                    dialog.dismiss();
+                    if (positive)
+                        present.doAction(1, null,
                                 mBean.getRefundBillStatus(), mBean.getRefundBillType(),
-                                remark))
+                                content);
+                })
+                .create()
                 .show();
     }
 
