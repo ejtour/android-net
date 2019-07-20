@@ -21,10 +21,10 @@ import com.hll_sc_app.bean.report.req.ProductSaleAggregationReq;
 import com.hll_sc_app.bean.report.req.ProductSaleTopReq;
 import com.hll_sc_app.bean.report.resp.product.ProductCategory;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleAggregationResp;
-import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTopDetail;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,8 +90,8 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
         //请求商品销售汇总
 
         byte dataFlag = (byte) 1;
-        long startDate = CalendarUtils.getWeekFirstDay(0);
-        long endDate = CalendarUtils.getWeekLastDay(0);
+        long startDate = DateUtil.getWeekFirstDay(0);
+        long endDate = DateUtil.getWeekLastDay(0);
         productSaleAggregationReq.setDateFlag(dataFlag);
         productSaleAggregationReq.setStartDate(startDate);
         productSaleAggregationReq.setEndDate(endDate);
@@ -182,22 +182,22 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
         switch (view.getId()) {
             case R.id.product_sale_aggregation_current_week:
                 dataFlag = (byte) 1;
-                startDate = CalendarUtils.getWeekFirstDay(0);
-                endDate = CalendarUtils.getWeekLastDay(0);
+                startDate = DateUtil.getWeekFirstDay(0);
+                endDate = DateUtil.getWeekLastDay(0);
                 dateSelected = 0 ;
                 break;
             case R.id.product_sale_aggregation_current_month:
                 productSaleAggregationReq.setDateFlag((byte) 2);
                 dataFlag = (byte) 2;
-                startDate = CalendarUtils.getMonthFirstDay(0);
-                endDate = CalendarUtils.getMonthLastDay(0);
+                startDate = DateUtil.getMonthFirstDay(0);
+                endDate = DateUtil.getMonthLastDay(0);
                 dateSelected = 1 ;
                 break;
             case R.id.product_sale_aggregation_last_month:
                 productSaleAggregationReq.setDateFlag((byte) 3);
                 dataFlag = (byte) 3;
-                startDate = CalendarUtils.getMonthFirstDay(-1);
-                endDate = CalendarUtils.getMonthLastDay(-1);
+                startDate = DateUtil.getMonthFirstDay(-1);
+                endDate = DateUtil.getMonthLastDay(-1);
                 dateSelected = 2 ;
                 break;
             case R.id.product_sale_list_num_header:
@@ -223,16 +223,16 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
         //封装查询 商品销售top10
         if(dateSelected==0){
             dataFlag = (byte) 1;
-            startDate = CalendarUtils.getWeekFirstDay(0);
-            endDate = CalendarUtils.getWeekLastDay(0);
+            startDate = DateUtil.getWeekFirstDay(0);
+            endDate = DateUtil.getWeekLastDay(0);
         }else if(dateSelected ==1){
             dataFlag = (byte) 2;
-            startDate = CalendarUtils.getMonthFirstDay(0);
-            endDate = CalendarUtils.getMonthLastDay(0);
+            startDate = DateUtil.getMonthFirstDay(0);
+            endDate = DateUtil.getMonthLastDay(0);
         }else if(dateSelected ==2){
             dataFlag = (byte) 3;
-            startDate = CalendarUtils.getMonthFirstDay(-1);
-            endDate = CalendarUtils.getMonthLastDay(-1);
+            startDate = DateUtil.getMonthFirstDay(-1);
+            endDate = DateUtil.getMonthLastDay(-1);
         }
         productSaleTopReq.setDateFlag(dataFlag);
         productSaleTopReq.setStartDate(startDate);
