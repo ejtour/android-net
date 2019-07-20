@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="商品规格"
+        android:text="规格："
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintStart_toStartOf="@+id/mup_product_name"
         app:layout_constraintTop_toBottomOf="@+id/mup_product_name" />
@@ -60,6 +60,7 @@
         android:background="@drawable/bg_order_reject_edit"
         android:gravity="center_vertical"
         android:hint="0.00"
+        android:selectAllOnFocus="true"
         android:inputType="numberDecimal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
