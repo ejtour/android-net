@@ -9,12 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 合作采购商详细资料底部按钮
@@ -45,12 +47,15 @@ public class CooperationButtonView extends LinearLayout {
     TextView mTxtWaitMy;
     @BindView(R.id.ll_status1_my)
     LinearLayout mLlStatus1My;
+    @BindView(R.id.ll_status0_other)
+    LinearLayout mLlStatus0Other;
     @BindViews({R.id.txt_del, R.id.txt_add, R.id.txt_agree_other, R.id.txt_reject_other, R.id.ll_status0_other,
         R.id.txt_delete_my0, R.id.ll_status0_my, R.id.txt_repeat_my, R.id.txt_delete_my, R.id.ll_status1_my,
         R.id.txt_wait_my0})
     List<View> mButtonList;
-    @BindView(R.id.ll_status0_other)
-    LinearLayout mLlStatus0Other;
+
+    private Listener mListener;
+    private CooperationPurchaserDetail mDetail;
 
     public CooperationButtonView(Context context) {
         super(context);
@@ -99,5 +104,45 @@ public class CooperationButtonView extends LinearLayout {
             default:
                 break;
         }
+    }
+
+    @OnClick({R.id.txt_del, R.id.txt_add, R.id.txt_agree_other, R.id.txt_reject_other, R.id.txt_delete_my0,
+        R.id.txt_repeat_my, R.id.txt_delete_my})
+    public void onViewClicked(View view) {
+        if (mListener == null) {
+            return;
+        }
+        switch (view.getId()) {
+            case R.id.txt_del:
+                // 解除合作
+                mListener.del(mDetail);
+                break;
+            case R.id.txt_add:
+                break;
+            case R.id.txt_agree_other:
+                break;
+            case R.id.txt_reject_other:
+                break;
+            case R.id.txt_delete_my0:
+                break;
+            case R.id.txt_repeat_my:
+                break;
+            case R.id.txt_delete_my:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void setListener(Listener listener, CooperationPurchaserDetail detail) {
+        this.mListener = listener;
+        this.mDetail = detail;
+    }
+
+    public interface Listener {
+        /**
+         * 解除合作
+         */
+        void del(CooperationPurchaserDetail detail);
     }
 }

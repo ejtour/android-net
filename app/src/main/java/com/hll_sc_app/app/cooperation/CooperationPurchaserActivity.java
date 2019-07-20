@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.cooperation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -256,6 +257,12 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
             mPresenter.exportPurchaser(null);
         }
         mOptionsWindow.dismiss();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresenter.start();
     }
 
     public static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {

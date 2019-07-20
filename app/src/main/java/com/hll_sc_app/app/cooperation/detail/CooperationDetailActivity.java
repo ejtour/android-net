@@ -331,7 +331,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mPresenter.queryPurchaserDetail();
+        mPresenter.start();
     }
 
     public static class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {

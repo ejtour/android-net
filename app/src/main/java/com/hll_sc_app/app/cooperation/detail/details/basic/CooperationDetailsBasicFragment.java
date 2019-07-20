@@ -101,6 +101,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
 
     private void showView() {
         mButtonView.showButton(mDetail.getActionType(), mDetail.getStatus());
+        mButtonView.setListener(this, mDetail);
         mImgLogoUrl.setImageURL(mDetail.getLogoUrl());
         mTxtName.setText(mDetail.getName());
         mTxtResourceType.setText(getResourceType(mDetail.getResourceType()));
