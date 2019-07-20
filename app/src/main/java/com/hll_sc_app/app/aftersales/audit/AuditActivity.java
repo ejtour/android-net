@@ -204,22 +204,20 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
      * 初始化采购商选择弹窗
      */
     private void showPurchaserWindow(View view) {
+        if (mPurchaserListResp == null) return;
         if (mSelectionWindow == null) {
             mSelectionWindow = PurchaserShopSelectWindow.create(this, (purchaserID, shopID) -> {
                 mSelectionWindow.dismiss();
                 mParam.setPurchaserID(purchaserID);
                 mParam.setPurchaserShopID(shopID);
                 EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REFRESH_LIST));
-            });
+            }).setLeftList(mPurchaserListResp.getList()).setRightList(null);
             mSelectionWindow.setOnDismissListener(() -> {
                 mShopArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
                 mShop.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
             });
         }
-        if (mPurchaserListResp != null)
-            mSelectionWindow.setLeftList(mPurchaserListResp.getList())
-                    .setRightList(null)
-                    .showAsDropDownFix(view);
+        mSelectionWindow.showAsDropDownFix(view);
     }
 
     private void showTypeWindow(View view) {
