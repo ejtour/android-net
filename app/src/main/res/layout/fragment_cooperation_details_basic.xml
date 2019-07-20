@@ -315,7 +315,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="客户登记"
+                android:text="客户等级"
                 android:textAppearance="@style/TextAppearance.City22.Small"/>
 
             <TextView
@@ -331,6 +331,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_agreeTime"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
@@ -381,6 +382,98 @@
                 android:layout_marginLeft="12dp"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:hint="请选择到货时间"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                android:textColorHint="@color/color_999999"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_shopsNum"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="合作门店"
+                android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+            <TextView
+                android:id="@+id/txt_shopsNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:hint="暂无"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                android:textColorHint="@color/color_999999"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_verification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:minHeight="40dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/txt_verification_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="验证信息"
+                android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+            <TextView
+                android:id="@+id/txt_verification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                android:hint="暂无"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                android:textColorHint="@color/color_999999"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:minHeight="40dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="回复信息"
+                android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+            <TextView
+                android:id="@+id/txt_reply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                android:hint="暂无"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                 android:textColorHint="@color/color_999999"/>
 

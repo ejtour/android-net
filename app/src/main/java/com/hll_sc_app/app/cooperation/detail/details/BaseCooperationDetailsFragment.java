@@ -63,7 +63,7 @@ public abstract class BaseCooperationDetailsFragment extends BaseLazyFragment im
     public void reject(CooperationPurchaserDetail detail) {
         RemarkDialog.newBuilder(requireActivity())
             .setHint("可输入驳回理由，选填")
-            .setMaxLength(200)
+            .setMaxLength(100)
             .setButtons("容我再想想", "确认拒绝", (dialog, positive, content) -> {
                 dialog.dismiss();
                 if (positive) {
