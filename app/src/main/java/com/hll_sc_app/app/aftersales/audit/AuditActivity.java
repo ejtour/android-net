@@ -218,6 +218,7 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
         }
         if (mPurchaserListResp != null)
             mSelectionWindow.setLeftList(mPurchaserListResp.getList())
+                    .setRightList(null)
                     .showAsDropDownFix(view);
     }
 
