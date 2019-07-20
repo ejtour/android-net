@@ -74,13 +74,13 @@ public class AfterSalesHelper {
                 break;
             default:
                 break;
-
         }
         return desc;
     }
 
     /**
      * 获取售后订单标记
+     *
      * @param type 类型
      */
     public static int getRefundBillFlag(int type) {
@@ -126,12 +126,17 @@ public class AfterSalesHelper {
      */
     public static String getOperatedNumPrefix(int type) {
         switch (type) {
+            case 1:
+            case 2:
+                return "退款";
+            case 3:
+                return "退货";
             case 4: // 退押金
-                return "退押金：";
+                return "退押金";
             case 5: // 换货
-                return "换货：";
+                return "换货";
             default: // 退货退款
-                return "退货：";
+                return "退货";
         }
     }
 
@@ -144,6 +149,8 @@ public class AfterSalesHelper {
     public static String getReasonPrefix(int type) {
         if (type == 5) {
             return "换货";
+        } else if (type == 4 || type == 3) {
+            return "退货";
         }
         return "退款";
     }

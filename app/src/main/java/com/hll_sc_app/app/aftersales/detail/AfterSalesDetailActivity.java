@@ -129,7 +129,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
      */
     private void updateData() {
         // 标题
-        mHeaderBar.setHeaderTitle(AfterSalesHelper.getRefundTypeDesc(mBean.getRefundBillType()) + "详情");
+        mHeaderBar.setHeaderTitle(AfterSalesHelper.getRefundInfoPrefix(mBean.getRefundBillType()) + "详情");
         mAdapter.setRefundBillType(mBean.getRefundBillType());
         mAdapter.setCanModify(mBean.canModify());
         mAdapter.setNewData(mBean.getDetailList());

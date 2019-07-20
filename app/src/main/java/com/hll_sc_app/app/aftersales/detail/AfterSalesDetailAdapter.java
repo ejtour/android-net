@@ -75,7 +75,7 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
         ((GlideImageView) helper.getView(R.id.asd_img)).setImageURL(item.getImgUrl()); // 商品图片
         String refundText = "退款：¥" + CommonUtils.formatMoney(item.getRefundAmount()); // 售后金额
         helper.setText(R.id.asd_productName, item.getProductName()) // 商品名
-                .setText(R.id.asd_spec_content, item.getProductSpec()) // 商品规格
+                .setText(R.id.asd_spec_content, "规格："+item.getProductSpec()) // 商品规格
                 .setText(R.id.asd_spec_price, "¥" + CommonUtils.formatMoney(item.getProductPrice()) + "/" + item.getRefundUnit()) // 商品单价
                 .setText(R.id.asd_order_num, "订货：" + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName()) // 订货数量
                 .setText(R.id.asd_order_delivery_num, "发货：" + CommonUtils.formatNum(item.getAdjustmentNum()) + item.getAdjustmentUnit()) // 发货数量
@@ -83,7 +83,7 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
                 .setText(R.id.asd_refund_amount, processAmount(refundText))// 退款总金额
                 .setVisible(R.id.asd_order_operation_num, mRefundBillType == 3 || mRefundBillType == 4)
                 // 售后操作数
-                .setText(R.id.asd_order_operation_num, AfterSalesHelper.getOperatedNumPrefix(mRefundBillType)
+                .setText(R.id.asd_order_operation_num, AfterSalesHelper.getOperatedNumPrefix(mRefundBillType)+"："
                         + CommonUtils.formatNum(item.getRefundNum()) + item.getRefundUnit())
                 .setVisible(R.id.asd_order_pick_num, mRefundBillType == 3 || mRefundBillType == 4)
                 // 提货数量
