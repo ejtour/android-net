@@ -99,6 +99,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
         mInspectionResp = result;
         hasChanged = true;
         mConfirm.setText("立即收款");
+        showToast("修改验货数量成功");
         if (result.getPayType() == 1) {
             goToPayment(mResp);
         } else {
@@ -117,7 +118,6 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
                         }, "我再看看", "收取差价").create().show();
                 return;
             }
-            showToast("验货完成");
             onBackPressed();
         }
     }
@@ -202,7 +202,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
 
     private SpannableString processMsg(String source) {
         SpannableString ss = SpannableString.valueOf(source);
-        ss.setSpan(new ForegroundColorSpan(Color.parseColor("#ED5655")), source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_ed5655)), source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new RelativeSizeSpan(1.5f), source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;
     }

@@ -31,6 +31,8 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
 import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
@@ -69,10 +71,10 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     @BindView(R.id.rl_select_ratio)
     RelativeLayout mRlSelectRatio;
     private EmptyView mEmptyView;
-    private PriceManageListAdapter mAdapter;
     private PriceManagePresenter mPresenter;
-    private TopSingleSelectWindow<RatioTemplateBean> mRatioTemplateWindow;
+    private PriceManageListAdapter mAdapter;
     private PriceManageFilterWindow mFilterWindow;
+    private TopSingleSelectWindow<RatioTemplateBean> mRatioTemplateWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,8 +128,35 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     }
 
     private void showInputDialog(SkuGoodsBean bean, boolean isProductPrice) {
+        // 是否显示推荐价格 和 成本价格
+        boolean isShow = false;
+        // 推荐价格
+        String recommendPrice = null;
+        // 修改售价时 有比例模板
+        if (isProductPrice && mTxtRationName.getTag() != null) {
+            RatioTemplateBean templateBean = (RatioTemplateBean) mTxtRationName.getTag();
+            List<CategoryRatioListBean> listBeans = templateBean.getCategoryRatioList();
+            if (!CommonUtils.isEmpty(listBeans)) {
+                for (CategoryRatioListBean categoryRatioListBean : listBeans) {
+                    if (TextUtils.equals(categoryRatioListBean.getShopProductCategoryThreeID(),
+                        bean.getShopProductCategoryThreeID())) {
+                        isShow = true;
+                        double ratio = CommonUtils.addDouble(CommonUtils.getDouble(categoryRatioListBean.getRatio()),
+                            100).doubleValue();
+                        double result =
+                            CommonUtils.mulDouble(ratio, CommonUtils.getDouble(bean.getCostPrice())).doubleValue();
+                        recommendPrice = CommonUtils.formatNumber(CommonUtils.divDouble(result, 100).doubleValue());
+                        break;
+                    }
+                }
+            }
+        }
+
         PriceInputDialog.newBuilder(this)
-            .setTextTitle(isProductPrice ? "修改售价" : "修改成本")
+            .showRecommend(isShow)
+            .setCostPrice(CommonUtils.formatNumber(bean.getCostPrice()))
+            .setRecommendPrice(recommendPrice)
+            .setTitle(isProductPrice ? "修改售价" : "修改成本")
             .setProductName(bean.getProductName())
             .setSpecContent(bean.getSpecContent())
             .setPrice(CommonUtils.formatNumber(isProductPrice ? bean.getProductPrice() : bean.getCostPrice()))
@@ -160,6 +189,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
                 toSearch();
                 break;
             case R.id.txt_log:
+                RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE_LOG);
                 break;
             case R.id.txt_filter:
                 mPresenter.queryCustomCategory();
@@ -197,7 +227,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
             mRatioTemplateWindow.setListener(ratioTemplateBean -> {
                 if (ratioTemplateBean != null) {
                     mTxtRationName.setText(ratioTemplateBean.getTemplateName());
-                    mTxtRationName.setTag(ratioTemplateBean.getTemplateID());
+                    mTxtRationName.setTag(ratioTemplateBean);
                 } else {
                     mTxtRationName.setText(null);
                     mTxtRationName.setTag(null);

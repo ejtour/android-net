@@ -64,10 +64,10 @@
         android:layout_width="1dp"
         android:layout_height="0dp"
         android:background="@color/color_dddddd"
-        app:layout_constraintBottom_toBottomOf="@id/asa_line1"
+        app:layout_constraintBottom_toBottomOf="@+id/asa_line1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/asa_line1"
-        app:layout_constraintTop_toTopOf="@id/asa_line1" />
+        app:layout_constraintStart_toEndOf="@+id/asa_line1"
+        app:layout_constraintTop_toTopOf="@+id/asa_line1" />
 
     <View
         android:id="@+id/asa_purchase_btn"
@@ -105,7 +105,7 @@
         android:id="@+id/asa_date_btn"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        app:layout_constraintEnd_toStartOf="@id/asa_line2"
+        app:layout_constraintEnd_toStartOf="@+id/asa_line2"
         app:layout_constraintStart_toEndOf="@+id/asa_line1"
         app:layout_constraintTop_toTopOf="@+id/asa_purchase_btn" />
 
@@ -138,8 +138,8 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/asa_line2"
-        app:layout_constraintTop_toTopOf="@id/asa_purchase_btn" />
+        app:layout_constraintStart_toEndOf="@+id/asa_line2"
+        app:layout_constraintTop_toTopOf="@+id/asa_purchase_btn" />
 
     <TextView
         android:id="@+id/asa_type"

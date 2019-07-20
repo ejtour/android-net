@@ -216,7 +216,6 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
             // 去规格详情中去修改
             SpecsBean specsBean = (SpecsBean) adapter.getItem(position);
             if (specsBean != null) {
-                specsBean.setEdit(true);
                 specsBean.setDepositProduct(mSwitchDepositProductType.isChecked());
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_SPECS, specsBean);
             }
@@ -361,6 +360,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
         // 商品规格
         mSpecsAdapter.setNewData(mGoodsBean.getSpecs());
+        showSpecsAddAssistUnit();
         // 商品简介
         mEtProductBrief.setText(mGoodsBean.getProductBrief());
         // 别称
@@ -582,38 +582,34 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (CommonUtils.isEmpty(mSpecsAdapter.getData())) {
             // 第一个默认为标注规格
             bean.setStandardUnitStatus("1");
-        }
-        if (bean.isEdit()) {
-            int position = -1;
-            if (!CommonUtils.isEmpty(mSpecsAdapter.getData())) {
-                List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
-                int size = specsBeanList.size();
-                for (int i = 0; i < size; i++) {
-                    SpecsBean specsBean = specsBeanList.get(i);
-                    if (specsBean.isEdit()) {
-                        specsBean.setEdit(false);
-                        specsBean.setSpecContent(bean.getSpecContent());
-                        specsBean.setSaleUnitName(bean.getSaleUnitName());
-                        specsBean.setSaleUnitID(bean.getSaleUnitID());
-                        specsBean.setProductPrice(bean.getProductPrice());
-                        specsBean.setDepositProducts(bean.getDepositProducts());
-                        specsBean.setSkuCode(bean.getSkuCode());
-                        specsBean.setRation(bean.getRation());
-                        specsBean.setBuyMinNum(bean.getBuyMinNum());
-                        specsBean.setMinOrder(bean.getMinOrder());
-                        specsBean.setIsDecimalBuy(bean.getIsDecimalBuy());
-                        position = i;
-                        break;
-                    }
+            bean.setId(String.valueOf(mSpecsAdapter.getItemCount()));
+            mSpecsAdapter.addData(bean);
+        } else {
+            List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
+            boolean has = false;
+            for (SpecsBean specsBean : specsBeanList) {
+                if (TextUtils.equals(specsBean.getId(), bean.getId()) && TextUtils.equals(specsBean.getSkuCode(),
+                    bean.getSkuCode())) {
+                    has = true;
+                    specsBean.setSpecContent(bean.getSpecContent());
+                    specsBean.setSaleUnitName(bean.getSaleUnitName());
+                    specsBean.setSaleUnitID(bean.getSaleUnitID());
+                    specsBean.setProductPrice(bean.getProductPrice());
+                    specsBean.setDepositProducts(bean.getDepositProducts());
+                    specsBean.setSkuCode(bean.getSkuCode());
+                    specsBean.setRation(bean.getRation());
+                    specsBean.setBuyMinNum(bean.getBuyMinNum());
+                    specsBean.setMinOrder(bean.getMinOrder());
+                    specsBean.setIsDecimalBuy(bean.getIsDecimalBuy());
+                    break;
                 }
             }
-            if (position != -1) {
-                mSpecsAdapter.notifyItemChanged(position);
+            if (!has) {
+                bean.setId(String.valueOf(mSpecsAdapter.getItemCount()));
+                mSpecsAdapter.addData(bean);
             }
-        } else {
-            mSpecsAdapter.addData(bean);
-            mSpecsAdapter.notifyDataSetChanged();
         }
+        mSpecsAdapter.notifyDataSetChanged();
         showSpecsAddAssistUnit();
     }
 
@@ -669,10 +665,15 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
                 mPresenter.queryCategory();
                 break;
             case R.id.rl_shopProductCategorySubName:
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY,
-                    mTxtShopProductCategorySubName.getTag() != null ?
-                        ((CopyCategoryBean) mTxtShopProductCategorySubName.getTag()).getShopProductCategorySubID() :
-                        "");
+                if (mTxtShopProductCategorySubName.getTag() != null) {
+                    CopyCategoryBean bean = (CopyCategoryBean) mTxtShopProductCategorySubName.getTag();
+                    if (bean != null) {
+                        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY,
+                            bean.getShopProductCategorySubID(), bean.getShopProductCategoryThreeID());
+                    }
+                } else {
+                    RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_CUSTOM_CATEGORY);
+                }
                 break;
             case R.id.txt_categoryName_copy:
                 toCopy();
@@ -738,12 +739,15 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (mAssistUnitSelectWindow == null) {
             mAssistUnitSelectWindow = new AssistUnitSelectWindow(this);
             mAssistUnitSelectWindow.setListener(beans -> {
-                if (CommonUtils.isEmpty(beans)) {
-                    List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
+                // 重置
+                List<SpecsBean> specsBeanList = mSpecsAdapter.getData();
+                if (!CommonUtils.isEmpty(specsBeanList)) {
                     for (SpecsBean specsBean : specsBeanList) {
                         specsBean.setAssistUnitStatus("0");
                     }
-                } else {
+                }
+                // 设置选中
+                if (!CommonUtils.isEmpty(beans)) {
                     for (SpecsBean bean : beans) {
                         bean.setAssistUnitStatus("1");
                     }

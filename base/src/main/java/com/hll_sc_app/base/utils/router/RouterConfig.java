@@ -12,9 +12,25 @@ public class RouterConfig {
      */
     public static final String SETTING = "/activity/setting";
     /**
+     * 订单设置界面
+     */
+    public static final String BILL_SETTING = "/activity/setting/bill";
+    /**
+     * 合作关系设置界面
+     */
+    public static final String COOPERATION_SETTING = "/activity/setting/cooperation";
+    /**
+     * 设置界面-帐号管理
+     */
+    public static final String SETTING_ACCOUNT = "/activity/setting/account";
+    /**
      * 售价设置
      */
     public static final String PRICE_MANAGE = "/activity/priceManage";
+    /**
+     * 售价设置-变更日志
+     */
+    public static final String PRICE_MANAGE_LOG = "/activity/priceManage/log";
     /**
      * 登录
      */
@@ -23,6 +39,10 @@ public class RouterConfig {
      * 找回密码
      */
     public static final String USER_FIND = "/activity/user/findPassword";
+    /**
+     * 修改密码
+     */
+    public static final String USER_CHANGE = "/activity/user/changePassword";
     /**
      * 协议
      */
@@ -59,6 +79,57 @@ public class RouterConfig {
      * 从商品库导入
      */
     public static final String GOODS_TEMPLATE_LIST = "/activity/goods/template/list";
+    /**
+     * 合作采购商列表
+     */
+    public static final String COOPERATION_PURCHASER_LIST = "/activity/cooperationPurchaser/list";
+    /**
+     * 合作采购商新增
+     */
+    public static final String COOPERATION_PURCHASER_ADD = "/activity/cooperationPurchaser/add";
+    /**
+     * 合作采购商详情
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL = "/activity/cooperationPurchaser/detail";
+    /**
+     * 合作采购商详情-详细资料
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_DETAILS = "/activity/cooperationPurchaser/detail/details";
+    /**
+     * 合作采购商详情-新增门店
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_ADD_SHOP = "/activity/cooperationPurchaser/detail/addShop";
+    /**
+     * 合作采购商详情-选择结算方式
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT = "/activity/cooperationPurchaser/detail" +
+        "/shop/settlement";
+    /**
+     * 合作采购商详情-选择配送方式
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DELIVERY = "/activity/cooperationPurchaser/detail" +
+        "/shop/delivery";
+    /**
+     * 合作采购商详情-门店详情
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL = "/activity/cooperationPurchaser/detail" +
+        "/shopDetail";
+    /**
+     * 合作采购商详情-门店详情-合作方式
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL_SOURCE = "/activity/cooperationPurchaser" +
+        "/detail" +
+        "/shopDetail/source";
+    /**
+     * 合作采购商详情- 批量指派销售
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SHOP_SALES = "/activity/cooperationPurchaser/detail" +
+        "/shop/sales";
+    /**
+     * 合作采购商详情-选择门店
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SELECT_SHOP = "/activity/cooperationPurchaser/detail" +
+        "/selectShop";
     /**
      * 商品置顶管理
      */
@@ -118,6 +189,7 @@ public class RouterConfig {
      */
     public static final String ROOT_HOME_GOODS_PRODUCT_ATTR_BRAND_ADD = "/activity/home/goods/productAttr/brand/add";
     /**
+     * router
      * 新增商品-自定义分类
      */
     public static final String ROOT_HOME_GOODS_CUSTOM_CATEGORY = "/activity/home/goods/customCategory";

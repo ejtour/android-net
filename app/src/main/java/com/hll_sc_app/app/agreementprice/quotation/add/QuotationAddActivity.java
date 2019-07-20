@@ -32,6 +32,7 @@ import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateSelectWindow;
+import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
@@ -125,7 +126,13 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             } else if (id == R.id.img_delete) {
                 adapter.remove(position);
                 adapter.notifyDataSetChanged();
-                checkListTile();
+                if (mAdapter.getData().size() > 0) {
+                    mListTitle.setVisibility(View.VISIBLE);
+                    mLlBottom.setVisibility(View.VISIBLE);
+                } else {
+                    mListTitle.setVisibility(View.GONE);
+                    mLlBottom.setVisibility(View.GONE);
+                }
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -139,7 +146,7 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             return;
         }
         // 报价商品
-        mAdapter.setNewData(mCopyReq.getList());
+        refreshList(mCopyReq.getList());
         // 报价类别
         QuotationBean bean = mCopyReq.getQuotation();
         mQuotationBean.setIsWarehouse(bean.getIsWarehouse());
@@ -208,16 +215,6 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             .create().show();
     }
 
-    private void checkListTile() {
-        if (mAdapter.getData().size() > 0) {
-            mListTitle.setVisibility(View.VISIBLE);
-            mLlBottom.setVisibility(View.VISIBLE);
-        } else {
-            mListTitle.setVisibility(View.GONE);
-            mLlBottom.setVisibility(View.GONE);
-        }
-    }
-
     /**
      * 是否选择了报价类别
      *
@@ -277,7 +274,49 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
         // 协议价比例模板
         mQuotationBean.setTemplateID(event.getTemplateID());
         mQuotationBean.setTemplateName(event.getTemplateName());
+        mTxtTemplateName.setTag(event);
         mTxtTemplateName.setText(event.getTemplateName());
+        List<QuotationDetailBean> list = mAdapter.getData();
+        if (!CommonUtils.isEmpty(list)) {
+            for (QuotationDetailBean bean : list) {
+                bean.setPrice(getRecommendPrice(bean.getProductPrice(), bean.getShopProductCategoryThreeID()));
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private String getRecommendPrice(String productPrice, String shopProductCategoryThreeId) {
+        String recommendPrice = productPrice;
+        // 有比例模板
+        if (mTxtTemplateName.getTag() != null) {
+            RatioTemplateBean templateBean = (RatioTemplateBean) mTxtTemplateName.getTag();
+            List<CategoryRatioListBean> listBeans = templateBean.getCategoryRatioList();
+            if (!CommonUtils.isEmpty(listBeans)) {
+                for (CategoryRatioListBean categoryRatioListBean : listBeans) {
+                    if (TextUtils.equals(categoryRatioListBean.getShopProductCategoryThreeID(),
+                        shopProductCategoryThreeId)) {
+                        double ratio = CommonUtils.addDouble(CommonUtils.getDouble(categoryRatioListBean.getRatio()),
+                            100).doubleValue();
+                        double result =
+                            CommonUtils.mulDouble(ratio, CommonUtils.getDouble(productPrice)).doubleValue();
+                        recommendPrice = CommonUtils.formatNumber(CommonUtils.divDouble(result, 100).doubleValue());
+                        break;
+                    }
+                }
+            }
+        }
+        return recommendPrice;
+    }
+
+    private void refreshList(List<QuotationDetailBean> list) {
+        mAdapter.setNewData(list);
+        if (mAdapter.getData().size() > 0) {
+            mListTitle.setVisibility(View.VISIBLE);
+            mLlBottom.setVisibility(View.VISIBLE);
+        } else {
+            mListTitle.setVisibility(View.GONE);
+            mLlBottom.setVisibility(View.GONE);
+        }
     }
 
     @Subscribe
@@ -294,7 +333,6 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             quotationDetailBean.setProductSpecID(bean.getSpecID());
             quotationDetailBean.setCostPrice(bean.getCostPrice());
             quotationDetailBean.setImgUrl(bean.getImgUrl());
-            quotationDetailBean.setPrice(bean.getProductPrice());
             quotationDetailBean.setProductCode(bean.getProductCode());
             quotationDetailBean.setProductID(bean.getProductID());
             quotationDetailBean.setProductName(bean.getProductName());
@@ -302,10 +340,11 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
             quotationDetailBean.setSaleUnitName(bean.getSaleUnitName());
             quotationDetailBean.setCategoryID(bean.getCategoryThreeID());
             quotationDetailBean.setCategorySubID(bean.getCategorySubID());
+            quotationDetailBean.setPrice(getRecommendPrice(bean.getProductPrice(),
+                bean.getShopProductCategoryThreeID()));
             list.add(quotationDetailBean);
         }
-        mAdapter.setNewData(list);
-        checkListTile();
+        refreshList(list);
     }
 
     @OnClick({R.id.img_close, R.id.txt_add_product, R.id.rl_isWarehouse, R.id.rl_select_purchaser, R.id.rl_priceDate,
@@ -350,14 +389,13 @@ public class QuotationAddActivity extends BaseLoadActivity implements QuotationA
                     mQuotationBean.setIsWarehouse(nameValue.getValue());
                     mTxtIsWarehouse.setText(nameValue.getName());
                     // 重置商品和报价对象
-                    mAdapter.setNewData(null);
+                    refreshList(null);
                     mQuotationBean.setPurchaserID(null);
                     mQuotationBean.setPurchaserName(null);
                     mQuotationBean.setIsAllShop(null);
                     mQuotationBean.setShopIDs(null);
                     mQuotationBean.setShopIDNum(null);
                     mTxtSelectPurchaser.setText(null);
-                    checkListTile();
                 }).create();
         }
         mWarehouseDialog.show();

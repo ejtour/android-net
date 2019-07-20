@@ -102,6 +102,6 @@ public class GoodsOperationAdapter extends BaseQuickAdapter<AfterSalesDetailsBea
                 .setText(R.id.sgo_order, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName()) // 订货数
                 .setText(R.id.sgo_deliver, "发货： " + CommonUtils.formatNum(item.getAdjustmentNum()) + item.getAdjustmentUnit()) // 发货数
                 .setText(R.id.sgo_unit, item.getRefundUnit()) // 单位
-                .setText(R.id.sgo_edit, CommonUtils.formatNum(item.getRefundNum())); // 数量
+                .setText(R.id.sgo_edit, CommonUtils.formatNumber(item.getRefundNum())); // 数量
     }
 }

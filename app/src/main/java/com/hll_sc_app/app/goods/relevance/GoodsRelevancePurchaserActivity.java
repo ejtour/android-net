@@ -200,7 +200,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         if (total != 0) {
             mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
         } else {
-            mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
+            mRefreshLayout.setEnableLoadMore(list != null && list.size() == GoodsListReq.PAGE_SIZE);
         }
     }
 

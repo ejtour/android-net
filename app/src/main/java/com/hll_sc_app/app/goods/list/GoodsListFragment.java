@@ -195,7 +195,7 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
             mAdapter.setNewData(list);
         }
         mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == GoodsListReq.PAGE_SIZE);
     }
 
     public void refreshFragment(String productStatus, String name) {

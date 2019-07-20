@@ -18,8 +18,8 @@ import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.DateUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,8 +61,6 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
     TextView mRelatedBillNumber;
     @BindView(R.id.sdf_related_bill_amount)
     TextView mRelatedBillAmount;
-    @BindView(R.id.sdf_related_bill_group)
-    Group mRelatedBillGroup;
     @BindView(R.id.sdf_pay_method)
     TextView mPayMethod;
     @BindView(R.id.sdf_pay_method_group)
@@ -122,21 +120,20 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
         }
 
         // 申请时间
-        mCreateTime.setText(CalendarUtils.getFormatYyyyMmDdHhMm(String.valueOf(data.getRefundBillCreateTime())));
-
-        // 原订单号
-        mRelatedBillNumber.setText(data.getSubBillNo());
-        mViewRelatedBill.setTag(data.getSubBillID());
+        mCreateTime.setText(DateUtil.getReadableTime(String.valueOf(data.getRefundBillCreateTime())));
 
         // 原单信息
-        if (data.getBillSource() == 1) {
-            mRelatedBillGroup.setVisibility(View.VISIBLE);
-            mRelatedBillAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getSubBillInspectionAmount())));
-        }
+        mRelatedBillNumber.setText(data.getSubBillNo());
+        String subBillID = data.getSubBillID();
+        if (!TextUtils.isEmpty(subBillID) && !"0".equals(subBillID)) {
+            mViewRelatedBill.setTag(subBillID);
+            mViewRelatedBill.setVisibility(VISIBLE);
+        } else mViewRelatedBill.setVisibility(GONE);
+        mRelatedBillAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getSubBillInspectionAmount())));
 
         // 支付方式
         String payType = OrderHelper.getPayType(data.getPayType()), paymentWay = OrderHelper.getPaymentWay(data.getPaymentWay());
-        if (!TextUtils.isEmpty(payType) && data.getBillSource() == 1) {
+        if (!TextUtils.isEmpty(payType)) {
             mPayMethodGroup.setVisibility(View.VISIBLE);
             mPayMethod.setText(paymentWay.length() > 0 ? payType + "（" + paymentWay + "）" : payType);
         }

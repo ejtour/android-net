@@ -62,7 +62,7 @@ public class OrderInspectionDepositList extends RecyclerView {
         protected void convert(BaseViewHolder helper, OrderDepositBean item) {
             helper.setText(R.id.oid_name_spec, TextUtils.isEmpty(item.getProductSpec()) ?
                     item.getProductName() : String.format("%s（%s）", item.getProductName(), item.getProductSpec()));
-            helper.setText(R.id.oid_edit_num, CommonUtils.formatNum(item.getProductNum()));
+            helper.setText(R.id.oid_edit_num, CommonUtils.formatNumber(item.getProductNum()));
             helper.setText(R.id.oid_unit, item.getSaleUnitName());
         }
 

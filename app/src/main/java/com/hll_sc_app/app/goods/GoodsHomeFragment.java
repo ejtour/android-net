@@ -170,9 +170,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
     @OnClick({R.id.img_add})
     public void onViewClicked(View view) {
-        if (view.getId() == R.id.img_add) {
-            showOptionsWindow(mImgAdd);
-        }
+        showOptionsWindow(mImgAdd);
     }
 
     private void showOptionsWindow(View view) {

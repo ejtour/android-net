@@ -271,7 +271,7 @@ public class GoodsStickActivity extends BaseLoadActivity implements GoodsStickCo
             mEmptyView.setTips("该分类暂无商品数据");
         }
         mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(list.size() == GoodsListReq.PAGE_SIZE);
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == GoodsListReq.PAGE_SIZE);
         showBottomCount(getCurrentSelectCount());
     }
 

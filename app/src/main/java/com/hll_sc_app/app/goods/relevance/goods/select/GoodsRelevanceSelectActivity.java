@@ -55,6 +55,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.GOODS_RELEVANCE_LIST_SELECT, extras = Constant.LOGIN_EXTRA)
 public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements GoodsRelevanceSelectContract.IGoodsStickView {
+    public static final int REQ_CODE = 0x788;
     public static final String STRING_CATEGORY = "推荐";
     @BindView(R.id.searchView)
     SearchView mSearchView;
@@ -127,7 +128,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         });
         mRecyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProduct.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
-                R.color.base_color_divider), UIUtils.dip2px(1)));
+            R.color.base_color_divider), UIUtils.dip2px(1)));
         mAdapter = new GoodsRelevanceSelectListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             SkuGoodsBean bean = (SkuGoodsBean) adapter.getItem(position);
@@ -212,6 +213,17 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
 
     @Override
     public void showList(List<SkuGoodsBean> list, boolean append, int total) {
+        if (mBean != null
+            && !TextUtils.isEmpty(mBean.getProductID())
+            && !TextUtils.equals("0", mBean.getProductID())
+            && !CommonUtils.isEmpty(list)) {
+            for (SkuGoodsBean skuGoodsBean : list) {
+                if (TextUtils.equals(skuGoodsBean.getProductID(), mBean.getProductID())) {
+                    skuGoodsBean.setSelected(true);
+                    break;
+                }
+            }
+        }
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -250,6 +262,7 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
     public void addSuccess() {
         showToast("新增修改关联商品成功");
         EventBus.getDefault().post(new GoodsRelevanceRefreshEvent());
+        setResult(RESULT_OK);
         finish();
     }
 
@@ -314,8 +327,8 @@ public class GoodsRelevanceSelectActivity extends BaseLoadActivity implements Go
         @Override
         protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
-                    .setText(R.id.txt_specContent, item.getSpecContent())
-                    .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
+                .setText(R.id.txt_specContent, item.getSpecContent())
+                .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
             helper.getView(R.id.img_check).setSelected(item.isSelected());
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
         }

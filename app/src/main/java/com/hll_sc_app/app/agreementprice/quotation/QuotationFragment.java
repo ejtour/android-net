@@ -132,9 +132,46 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         }
     }
 
-    @Override
-    public boolean isSearchActivity() {
-        return getActivity() instanceof AgreementPriceSearchActivity;
+    private void initView() {
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryMoreQuotationList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryQuotationList(false);
+            }
+        });
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
+            R.color.base_color_divider), UIUtils.dip2px(10)));
+        mAdapter = new QuotationListAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            QuotationBean bean = (QuotationBean) adapter.getItem(position);
+            if (bean != null) {
+                if (mAdapter.isExportStatus()) {
+                    bean.setSelect(!bean.isSelect());
+                    adapter.notifyDataSetChanged();
+                    showExportCount();
+                } else {
+                    RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_DETAIL, bean);
+                }
+            }
+        });
+        mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
+        mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
+            setForceLoad(true);
+            lazyLoad();
+        }).create();
+        mRecyclerView.setAdapter(mAdapter);
+        if (isSearchActivity()) {
+            mEmptyView.setTips("输入报价单号、采购商名称进行搜索");
+            mAdapter.setEmptyView(mEmptyView);
+            mLlFilter.setVisibility(View.GONE);
+            mImgQuotationAdd.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -189,7 +226,7 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         } else {
             mAdapter.setNewData(list);
         }
-        mRefreshLayout.setEnableLoadMore(list.size() == QuotationFragmentPresenter.PAGE_SIZE);
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == QuotationFragmentPresenter.PAGE_SIZE);
         showExportCount();
     }
 
@@ -338,46 +375,9 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
         return priceEndDate;
     }
 
-    private void initView() {
-        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreQuotationList();
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryQuotationList(false);
-            }
-        });
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
-            R.color.base_color_divider), UIUtils.dip2px(10)));
-        mAdapter = new QuotationListAdapter();
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            QuotationBean bean = (QuotationBean) adapter.getItem(position);
-            if (bean != null) {
-                if (mAdapter.isExportStatus()) {
-                    bean.setSelect(!bean.isSelect());
-                    adapter.notifyDataSetChanged();
-                    showExportCount();
-                } else {
-                    RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_DETAIL, bean);
-                }
-            }
-        });
-        mEmptyView = EmptyView.newBuilder(getActivity()).setTipsTitle("喔唷，居然是「 空 」的").create();
-        mNetEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(() -> {
-            setForceLoad(true);
-            lazyLoad();
-        }).create();
-        mRecyclerView.setAdapter(mAdapter);
-        if (isSearchActivity()) {
-            mEmptyView.setTips("输入报价单号、采购商名称进行搜索");
-            mAdapter.setEmptyView(mEmptyView);
-            mLlFilter.setVisibility(View.GONE);
-            mImgQuotationAdd.setVisibility(View.GONE);
-        }
+    @Override
+    public boolean isSearchActivity() {
+        return getActivity() instanceof AgreementPriceSearchActivity;
     }
 
     @Override

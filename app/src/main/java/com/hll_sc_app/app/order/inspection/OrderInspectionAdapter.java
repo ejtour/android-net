@@ -76,7 +76,7 @@ public class OrderInspectionAdapter extends BaseQuickAdapter<OrderDetailBean, Ba
                 .setText(R.id.ioi_order, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName()) // 订货数
                 .setText(R.id.ioi_deliver, "发货： " + CommonUtils.formatNum(item.getAdjustmentNum()) + item.getAdjustmentUnit()) // 发货数
                 .setText(R.id.ioi_unit, item.getInspectionUnit()) //签收单位
-                .setText(R.id.ioi_edit, CommonUtils.formatNum(item.getInspectionNum())); // 签收数量
+                .setText(R.id.ioi_edit, CommonUtils.formatNumber(item.getInspectionNum())); // 签收数量
         GlideImageView imageView = helper.getView(R.id.ioi_image);
         imageView.setImageURL(item.getImgUrl()); // 商品图
         // 押金商品

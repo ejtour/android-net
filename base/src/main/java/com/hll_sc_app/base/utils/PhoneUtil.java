@@ -13,6 +13,7 @@ public class PhoneUtil {
      * @param phoneNum 手机号
      */
     public static String formatPhoneNum(String phoneNum) {
+        if (TextUtils.isEmpty(phoneNum)) return phoneNum;
         String result;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             result = PhoneNumberUtils.formatNumber(phoneNum, Locale.CHINA.getCountry());

@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@id/iic_name"
+        app:layout_constraintBaseline_toBaselineOf="@+id/iic_name"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="规格／单位：5粒/盒" />
 
@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintStart_toStartOf="@id/iic_name"
-        app:layout_constraintTop_toBottomOf="@id/iic_name"
+        app:layout_constraintStart_toStartOf="@+id/iic_name"
+        app:layout_constraintTop_toBottomOf="@+id/iic_name"
         tools:text="商品编码：0823197320" />
 
     <TextView
@@ -42,8 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBaseline_toBaselineOf="@id/iic_product_code"
-        app:layout_constraintEnd_toEndOf="@id/iic_spec_unit"
+        app:layout_constraintBaseline_toBaselineOf="@+id/iic_product_code"
+        app:layout_constraintEnd_toEndOf="@+id/iic_spec_unit"
         tools:text="SKU码：923177932" />
 
     <TextView
@@ -52,9 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textAppearance="@style/TextAppearance.City22.Small"
-        app:layout_constraintEnd_toStartOf="@id/iic_order_num"
-        app:layout_constraintStart_toStartOf="@id/iic_name"
-        app:layout_constraintTop_toBottomOf="@id/iic_product_code"
+        app:layout_constraintEnd_toStartOf="@+id/iic_order_num"
+        app:layout_constraintStart_toStartOf="@+id/iic_name"
+        app:layout_constraintTop_toBottomOf="@+id/iic_product_code"
         tools:text="可用库存：20" />
 
     <TextView
@@ -62,9 +62,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small"
-        app:layout_constraintBaseline_toBaselineOf="@id/iic_available_inventory"
-        app:layout_constraintEnd_toStartOf="@id/iic_goods_num_label"
-        app:layout_constraintStart_toEndOf="@id/iic_available_inventory"
+        app:layout_constraintBaseline_toBaselineOf="@+id/iic_available_inventory"
+        app:layout_constraintEnd_toStartOf="@+id/iic_goods_num_label"
+        app:layout_constraintStart_toEndOf="@+id/iic_available_inventory"
         tools:text="订货数量：30" />
 
     <TextView
@@ -73,9 +73,9 @@
         android:layout_height="wrap_content"
         android:text="下单量："
         android:textAppearance="@style/TextAppearance.City22.Small"
-        app:layout_constraintBaseline_toBaselineOf="@id/iic_available_inventory"
-        app:layout_constraintEnd_toStartOf="@id/iic_goods_num_edit"
-        app:layout_constraintStart_toEndOf="@id/iic_order_num" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/iic_available_inventory"
+        app:layout_constraintEnd_toStartOf="@+id/iic_goods_num_edit"
+        app:layout_constraintStart_toEndOf="@+id/iic_order_num" />
 
     <EditText
         android:id="@+id/iic_goods_num_edit"
@@ -87,10 +87,10 @@
         android:inputType="numberDecimal"
         android:textAppearance="@style/TextAppearance.City22.Small"
         android:textColorHint="@color/color_222222"
-        app:layout_constraintBottom_toBottomOf="@id/iic_goods_num_label"
-        app:layout_constraintEnd_toEndOf="@id/iic_spec_unit"
-        app:layout_constraintStart_toEndOf="@id/iic_goods_num_label"
-        app:layout_constraintTop_toTopOf="@id/iic_goods_num_label" />
+        app:layout_constraintBottom_toBottomOf="@+id/iic_goods_num_label"
+        app:layout_constraintEnd_toEndOf="@+id/iic_spec_unit"
+        app:layout_constraintStart_toEndOf="@+id/iic_goods_num_label"
+        app:layout_constraintTop_toTopOf="@+id/iic_goods_num_label" />
 
     <View
         android:id="@+id/iic_div"
@@ -98,9 +98,9 @@
         android:layout_height="1dp"
         android:layout_marginTop="20dp"
         android:background="@color/color_eeeeee"
-        app:layout_constraintEnd_toEndOf="@id/iic_spec_unit"
-        app:layout_constraintStart_toStartOf="@id/iic_name"
-        app:layout_constraintTop_toBottomOf="@id/iic_available_inventory" />
+        app:layout_constraintEnd_toEndOf="@+id/iic_spec_unit"
+        app:layout_constraintStart_toStartOf="@+id/iic_name"
+        app:layout_constraintTop_toBottomOf="@+id/iic_available_inventory" />
 
     <TextView
         android:id="@+id/iic_select_method"
@@ -111,17 +111,17 @@
         android:text="请选择处理方式："
         android:textAppearance="@style/TextAppearance.City22.Small.Blue"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/iic_name"
-        app:layout_constraintTop_toBottomOf="@id/iic_div" />
+        app:layout_constraintStart_toStartOf="@+id/iic_name"
+        app:layout_constraintTop_toBottomOf="@+id/iic_div" />
 
     <View
         android:id="@+id/iic_modify_btn"
         android:layout_width="100dp"
         android:layout_height="25dp"
         android:background="@drawable/bg_inventory_check_button"
-        app:layout_constraintBottom_toBottomOf="@id/iic_select_method"
-        app:layout_constraintEnd_toEndOf="@id/iic_spec_unit"
-        app:layout_constraintTop_toTopOf="@id/iic_select_method" />
+        app:layout_constraintBottom_toBottomOf="@+id/iic_select_method"
+        app:layout_constraintEnd_toEndOf="@+id/iic_spec_unit"
+        app:layout_constraintTop_toTopOf="@+id/iic_select_method" />
 
     <TextView
         android:id="@+id/iic_modify_text"
@@ -130,11 +130,11 @@
         android:text="按填写数量下单"
         android:textColor="@drawable/color_inventory_check_text"
         android:textSize="@dimen/text_little_size"
-        app:layout_constraintBottom_toBottomOf="@id/iic_modify_btn"
-        app:layout_constraintEnd_toStartOf="@id/iic_modify_check"
+        app:layout_constraintBottom_toBottomOf="@+id/iic_modify_btn"
+        app:layout_constraintEnd_toStartOf="@+id/iic_modify_check"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/iic_modify_btn"
-        app:layout_constraintTop_toTopOf="@id/iic_modify_btn" />
+        app:layout_constraintStart_toStartOf="@+id/iic_modify_btn"
+        app:layout_constraintTop_toTopOf="@+id/iic_modify_btn" />
 
     <ImageView
         android:id="@+id/iic_modify_check"
@@ -144,10 +144,10 @@
         android:src="@drawable/ic_ok"
         android:tint="@android:color/white"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/iic_modify_btn"
-        app:layout_constraintEnd_toEndOf="@id/iic_modify_btn"
-        app:layout_constraintStart_toEndOf="@id/iic_modify_text"
-        app:layout_constraintTop_toTopOf="@id/iic_modify_btn" />
+        app:layout_constraintBottom_toBottomOf="@+id/iic_modify_btn"
+        app:layout_constraintEnd_toEndOf="@+id/iic_modify_btn"
+        app:layout_constraintStart_toEndOf="@+id/iic_modify_text"
+        app:layout_constraintTop_toTopOf="@+id/iic_modify_btn" />
 
     <View
         android:id="@+id/iic_cancel_btn"
@@ -155,9 +155,9 @@
         android:layout_height="25dp"
         android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/bg_inventory_check_button"
-        app:layout_constraintBottom_toBottomOf="@id/iic_select_method"
-        app:layout_constraintEnd_toStartOf="@id/iic_modify_btn"
-        app:layout_constraintTop_toTopOf="@id/iic_select_method" />
+        app:layout_constraintBottom_toBottomOf="@+id/iic_select_method"
+        app:layout_constraintEnd_toStartOf="@+id/iic_modify_btn"
+        app:layout_constraintTop_toTopOf="@+id/iic_select_method" />
 
     <TextView
         android:id="@+id/iic_cancel_text"
@@ -166,11 +166,11 @@
         android:text="取消此品下单"
         android:textColor="@drawable/color_inventory_check_text"
         android:textSize="@dimen/text_little_size"
-        app:layout_constraintBottom_toBottomOf="@id/iic_cancel_btn"
-        app:layout_constraintEnd_toStartOf="@id/iic_cancel_check"
+        app:layout_constraintBottom_toBottomOf="@+id/iic_cancel_btn"
+        app:layout_constraintEnd_toStartOf="@+id/iic_cancel_check"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/iic_cancel_btn"
-        app:layout_constraintTop_toTopOf="@id/iic_cancel_btn" />
+        app:layout_constraintStart_toStartOf="@+id/iic_cancel_btn"
+        app:layout_constraintTop_toTopOf="@+id/iic_cancel_btn" />
 
     <ImageView
         android:id="@+id/iic_cancel_check"
@@ -180,8 +180,8 @@
         android:src="@drawable/ic_ok"
         android:tint="@android:color/white"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/iic_cancel_btn"
-        app:layout_constraintEnd_toEndOf="@id/iic_cancel_btn"
-        app:layout_constraintStart_toEndOf="@id/iic_cancel_text"
-        app:layout_constraintTop_toTopOf="@id/iic_cancel_btn" />
+        app:layout_constraintBottom_toBottomOf="@+id/iic_cancel_btn"
+        app:layout_constraintEnd_toEndOf="@+id/iic_cancel_btn"
+        app:layout_constraintStart_toEndOf="@+id/iic_cancel_text"
+        app:layout_constraintTop_toTopOf="@+id/iic_cancel_btn" />
 </android.support.constraint.ConstraintLayout>

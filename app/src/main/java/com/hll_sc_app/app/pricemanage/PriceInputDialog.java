@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
+import android.support.constraint.Group;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,10 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+
+import java.math.BigDecimal;
 
 /**
  * 修改售价、成本价
@@ -62,11 +66,6 @@ public class PriceInputDialog extends BaseDialog {
         }
     }
 
-    private void setTextTitle(String text) {
-        TextView textView = mRootView.findViewById(R.id.txt_title);
-        textView.setText(text);
-    }
-
     private void setProductName(String mProductName) {
         TextView textView = mRootView.findViewById(R.id.txt_productName);
         textView.setText(mProductName);
@@ -79,6 +78,11 @@ public class PriceInputDialog extends BaseDialog {
     }
 
     private void setPrice(String price) {
+        Group group = mRootView.findViewById(R.id.group_price);
+        TextView textView = mRootView.findViewById(R.id.txt_cost_price);
+        TextView txtPercent = mRootView.findViewById(R.id.txt_percent);
+        txtPercent.setVisibility(View.GONE);
+        calculateInput(group, textView, txtPercent, price);
         EditText edt = mRootView.findViewById(R.id.edt_content);
         edt.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
             if (s.toString().startsWith(".")) {
@@ -87,13 +91,41 @@ public class PriceInputDialog extends BaseDialog {
             if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
                 s.delete(s.length() - 1, s.length());
                 ToastUtils.showShort(getContext(), "价格支持7位整数或小数点后两位");
+            } else {
+                // 计算升高、降低
+                calculateInput(group, textView, txtPercent, s.toString());
             }
         });
         edt.setText(price);
         edt.setSelection(!TextUtils.isEmpty(price) ? price.length() : 0);
     }
 
-    public String getInputString() {
+    private void calculateInput(Group group, TextView textView, TextView txtPercent, String inputPrice) {
+        if (group.getVisibility() == View.GONE) {
+            return;
+        }
+        double costPrice = 0;
+        if (textView.getTag() != null) {
+            costPrice = CommonUtils.getDouble((String) textView.getTag());
+        }
+        if (costPrice == 0) {
+            return;
+        }
+        double currentPrice = CommonUtils.getDouble(inputPrice);
+        double difference = CommonUtils.subDouble(currentPrice, costPrice).doubleValue();
+        double rate =
+            CommonUtils.mulDouble(CommonUtils.divDouble(difference, costPrice).doubleValue(), 100).doubleValue();
+        String result = null;
+        if (rate > 0) {
+            result = "高于采购价" + BigDecimal.valueOf(rate).toPlainString() + "%";
+        } else if (rate < 0) {
+            result = "低于采购价" + BigDecimal.valueOf(Math.abs(rate)).toPlainString() + "%";
+        }
+        txtPercent.setVisibility(TextUtils.isEmpty(result) ? View.GONE : View.VISIBLE);
+        txtPercent.setText(result);
+    }
+
+    String getInputString() {
         EditText editText = mRootView.findViewById(R.id.edt_content);
         return editText.getText().toString().trim();
     }
@@ -120,6 +152,32 @@ public class PriceInputDialog extends BaseDialog {
         });
     }
 
+    private void setType(boolean isProductPrice) {
+        Group group = mRootView.findViewById(R.id.group_price);
+        group.setVisibility(isProductPrice ? View.VISIBLE : View.GONE);
+
+    }
+
+    private void setRecommendPrice(String price) {
+        TextView textView = mRootView.findViewById(R.id.txt_recommend_price);
+        if (!TextUtils.isEmpty(price)) {
+            textView.setText(String.format("推荐价格:¥%s", price));
+        }
+    }
+
+    private void setCostPrice(String price) {
+        TextView textView = mRootView.findViewById(R.id.txt_cost_price);
+        if (!TextUtils.isEmpty(price)) {
+            textView.setTag(price);
+            textView.setText(String.format("成本价:¥%s", price));
+        }
+    }
+
+    private void setTextTitle(String title) {
+        TextView textView = mRootView.findViewById(R.id.txt_title);
+        textView.setText(title);
+    }
+
     public interface OnClickListener {
         void onItem(PriceInputDialog dialog, int item);
     }
@@ -131,11 +189,6 @@ public class PriceInputDialog extends BaseDialog {
             p = new Params();
             p.mContext = context;
             p.mCancelable = true;
-        }
-
-        public Builder setTextTitle(String textTitle) {
-            p.mTextTitle = textTitle;
-            return this;
         }
 
         public Builder setProductName(String productName) {
@@ -164,34 +217,55 @@ public class PriceInputDialog extends BaseDialog {
             return this;
         }
 
-        public Builder setText(String text) {
-            p.mText = text;
+        public Builder showRecommend(boolean isShow) {
+            p.mIsShow = isShow;
             return this;
         }
 
+        public Builder setRecommendPrice(String recommendPrice) {
+            p.mRecommendPrice = recommendPrice;
+            return this;
+        }
+
+        public Builder setCostPrice(String costPrice) {
+            p.mCostPrice = costPrice;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            p.mTitle = title;
+            return this;
+        }
+
+
         public PriceInputDialog create() {
             final PriceInputDialog dialog = new PriceInputDialog(p.mContext, R.style.BaseDialog);
-            dialog.setTextTitle(p.mTextTitle);
             dialog.setProductName(p.mProductName);
+            dialog.setCostPrice(p.mCostPrice);
+            dialog.setTextTitle(p.mTitle);
             dialog.setSpecContent(p.mSpecContent);
             dialog.setPrice(p.mPrice);
             dialog.setButton(p.mOnClickListener, p.items);
             dialog.setCancelable(p.mCancelable);
             dialog.setCanceledOnTouchOutside(p.mCancelable);
+            dialog.setType(p.mIsShow);
+            dialog.setRecommendPrice(p.mRecommendPrice);
             return dialog;
         }
     }
 
-
     static class Params {
         Activity mContext;
         boolean mCancelable;
-        String mTextTitle;
         String mProductName;
         String mSpecContent;
         String mPrice;
         OnClickListener mOnClickListener;
         String[] items;
         String mText;
+        boolean mIsShow;
+        String mRecommendPrice;
+        String mCostPrice;
+        String mTitle;
     }
 }

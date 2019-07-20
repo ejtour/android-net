@@ -28,26 +28,23 @@ import java.util.List;
 public class InventoryCheckAdapter extends BaseQuickAdapter<InventoryBean, BaseViewHolder> {
     public InventoryCheckAdapter(@Nullable List<InventoryBean> data) {
         super(R.layout.item_inventory_check, data);
-        setOnItemChildClickListener(new OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                InventoryBean item = getItem(position);
-                if (item == null)
-                    return;
-                switch (view.getId()) {
-                    case R.id.iic_cancel_btn:
-                        if (item.getFlag() == 2)
-                            return;
-                        item.setFlag(2);
-                        break;
-                    case R.id.iic_modify_btn:
-                        if (item.getFlag() == 1)
-                            return;
-                        item.setFlag(1);
-                        break;
-                }
-                notifyItemChanged(position);
+        setOnItemChildClickListener((adapter, view, position) -> {
+            InventoryBean item = getItem(position);
+            if (item == null)
+                return;
+            switch (view.getId()) {
+                case R.id.iic_cancel_btn:
+                    if (item.getFlag() == 2)
+                        return;
+                    item.setFlag(2);
+                    break;
+                case R.id.iic_modify_btn:
+                    if (item.getFlag() == 1)
+                        return;
+                    item.setFlag(1);
+                    break;
             }
+            notifyItemChanged(position);
         });
     }
 
@@ -105,7 +102,7 @@ public class InventoryCheckAdapter extends BaseQuickAdapter<InventoryBean, BaseV
                 .setText(R.id.iic_sku_code, "SKU码：" + item.getSkuCode())
                 .setText(R.id.iic_available_inventory, "可用库存：" + CommonUtils.formatNum(item.getStockNum()))
                 .setText(R.id.iic_order_num, "订货数量:" + CommonUtils.formatNum(item.getOrderNum()))
-                .setText(R.id.iic_goods_num_edit, item.getFlag() != 1 || item.getGoodsNum() == 0 ? "" : CommonUtils.formatNum(item.getGoodsNum()))
+                .setText(R.id.iic_goods_num_edit, item.getFlag() != 1 || item.getGoodsNum() == 0 ? "" : CommonUtils.formatNumber(item.getGoodsNum()))
                 .setGone(R.id.iic_modify_check, modify)
                 .setGone(R.id.iic_cancel_check, cancel);
         EditText editText = helper.getView(R.id.iic_goods_num_edit);

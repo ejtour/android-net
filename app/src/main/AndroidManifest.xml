@@ -55,7 +55,23 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.user.change.ChangePasswordActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.setting.SettingActivityActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.setting.account.AccountManageActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.setting.bill.BillSettingActivityActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.setting.cooperation.CooperationSettingActivityActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -121,6 +137,50 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.cooperation.CooperationPurchaserActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.CooperationDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.details.CooperationDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopadd.CooperationAddShopActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopdelivery.CooperationShopDeliveryActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopsaleman.CooperationShopSalesActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopdetail.CooperationShopDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopdetail.CooperationSourceActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.shopadd.CooperationSelectShopActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.add.CooperationAddActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.goods.relevance.goods.GoodsRelevanceListActivity"
             android:screenOrientation="portrait" />
 
@@ -164,6 +224,10 @@
         <activity
             android:name=".app.pricemanage.PriceManageActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.pricemanage.log.PriceChangeLogActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.goods.add.customcategory.GoodsCustomCategoryActivity"

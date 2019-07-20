@@ -79,7 +79,7 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
         helper.setText(R.id.mdi_name, item.getProductName())
                 .setText(R.id.mdi_spec, item.getProductSpec())
                 .setText(R.id.mdi_order_num, "订货： " + CommonUtils.formatNum(item.getProductNum()) + item.getSaleUnitName())
-                .setText(R.id.mdi_edit, CommonUtils.formatNum(item.getAdjustmentNum()))
+                .setText(R.id.mdi_edit, CommonUtils.formatNumber(item.getAdjustmentNum()))
                 .setGone(R.id.mdi_modify_unit, !TextUtils.isEmpty(item.getAuxiliaryUnit()))
                 .setText(R.id.mdi_unit, item.getDeliverUnit())
                 .getView(R.id.mdi_unit).setClickable(!TextUtils.isEmpty(item.getAuxiliaryUnit()));
