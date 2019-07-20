@@ -12,15 +12,25 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
 import com.hll_sc_app.app.cooperation.detail.details.CooperationButtonView;
+import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -250,4 +260,89 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     @Override
     protected void initData() {
     }
+
+    @OnClick({R.id.ll_defaultSettlementWay, R.id.ll_maintainLevel, R.id.ll_defaultDeliveryWay, R.id.ll_deliveryPeriod})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_defaultSettlementWay:
+                toSelect(CooperationSelectShopActivity.TYPE_SETTLEMENT);
+                break;
+            case R.id.ll_defaultDeliveryWay:
+                toSelect(CooperationSelectShopActivity.TYPE_DELIVERY);
+                break;
+            case R.id.ll_deliveryPeriod:
+                mPresenter.queryDeliveryPeriod();
+                break;
+            case R.id.ll_maintainLevel:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void toSelect(String actionType) {
+        ShopSettlementReq req = new ShopSettlementReq();
+        req.setFrom(FROM_COOPERATION_DETAILS_PROPERTY);
+        req.setActionType(actionType);
+        req.setGroupID(UserConfig.getGroupID());
+        req.setPurchaserID(mDetail.getPurchaserID());
+        switch (actionType) {
+            case CooperationSelectShopActivity.TYPE_SETTLEMENT:
+                // 修改结算方式
+                req.setSettlementWay(mDetail.getDefaultSettlementWay());
+                req.setAccountPeriodType(mDetail.getDefaultAccountPeriodType());
+                req.setAccountPeriod(mDetail.getDefaultAccountPeriod());
+                req.setSettleDate(mDetail.getDefaultSettleDate());
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+                break;
+            case CooperationSelectShopActivity.TYPE_DELIVERY:
+                // 修改配送方式
+                req.setDeliveryWay(mDetail.getDefaultDeliveryWay());
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DELIVERY, req);
+                break;
+            case CooperationSelectShopActivity.TYPE_DELIVERY_PERIOD:
+                // 修改到货时间
+                req.setDeliveryPeriod(mTxtDeliveryPeriod.getText().toString());
+                showChangeRangeWindow(req);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void showChangeRangeWindow(ShopSettlementReq req) {
+        SuccessDialog.newBuilder(requireActivity())
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("是否统一修改配送时间")
+            .setMessage("是否要修改集团下所有门店的配送时\n间，确认修改后将统一所有门店配送时间")
+            .setButton((dialog, item) -> {
+                dialog.dismiss();
+                if (item == 1) {
+                    req.setChangeAllShops("0");
+                } else {
+                    req.setChangeAllShops("1");
+                }
+                mPresenter.editShopDeliveryPeriod(req);
+            }, "确认修改", "暂不修改").create().show();
+    }
+
+    @Override
+    public void showDeliveryPeriodWindow(List<DeliveryPeriodBean> list) {
+        if (CommonUtils.isEmpty(list)) {
+            showToast("到货时间列表查询为空");
+            return;
+        }
+        SingleSelectionDialog.newBuilder(requireActivity(), (SingleSelectionDialog.WrapperName<DeliveryPeriodBean>) bean
+            -> bean.getArrivalStartTime() + "-" + bean.getArrivalEndTime())
+            .setTitleText("到货时间选择")
+            .setOnSelectListener(bean -> {
+                mTxtDeliveryPeriod.setText(String.format("%s-%s", bean.getArrivalStartTime(),
+                    bean.getArrivalEndTime()));
+                toSelect(CooperationSelectShopActivity.TYPE_DELIVERY_PERIOD);
+            })
+            .refreshList(list)
+            .create().show();
+    }
+
 }

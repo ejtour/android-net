@@ -32,6 +32,10 @@ public abstract class BaseCooperationDetailsFragment extends BaseLazyFragment im
     public static final String FROM_COOPERATION_DETAILS_AGREE = "FROM_COOPERATION_DETAILS_AGREE";
     public static final String FROM_COOPERATION_DETAILS_ADD = "FROM_COOPERATION_DETAILS_ADD";
     public static final String FROM_COOPERATION_DETAILS_REPEAT = "FROM_COOPERATION_DETAILS_REPEAT";
+    /**
+     * 修改集团级别的属性
+     */
+    public static final String FROM_COOPERATION_DETAILS_PROPERTY = "FROM_COOPERATION_DETAILS_PROPERTY";
 
     @Override
     public void del(CooperationPurchaserDetail detail) {

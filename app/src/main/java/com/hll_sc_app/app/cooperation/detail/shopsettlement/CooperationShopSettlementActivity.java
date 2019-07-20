@@ -23,6 +23,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -165,7 +166,11 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             mReq.setActionType("revalidation");
             mPresenter.addCooperationPurchaser(mReq);
         } else {
-            mPresenter.editShopSettlement(mReq);
+            if (changeGroupProperty()) {
+                showChangeRangeWindow();
+            } else {
+                mPresenter.editShopSettlement(mReq);
+            }
         }
     }
 
@@ -205,6 +210,33 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             }, "取消", "确定")
             .create()
             .show();
+    }
+
+    /**
+     * 修改集团参数
+     *
+     * @return true-时
+     */
+    private boolean changeGroupProperty() {
+        return TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_PROPERTY);
+    }
+
+    private void showChangeRangeWindow() {
+        SuccessDialog.newBuilder(this)
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("是否统一修改结算方式")
+            .setMessage("是否要修改集团下所有门店的结算方\n式，确认修改后将统一所有门店结算方式")
+            .setButton((dialog, item) -> {
+                dialog.dismiss();
+                if (item == 1) {
+                    mReq.setChangeAllShops("0");
+                } else {
+                    mReq.setChangeAllShops("1");
+                }
+                mPresenter.editShopSettlement(mReq);
+            }, "确认修改", "暂不修改")
+            .create().show();
     }
 
     public static String getPayTermStr(int payTerm) {
