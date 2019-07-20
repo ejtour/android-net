@@ -39,5 +39,12 @@ public interface CooperationShopSettlementContract {
          * @param req req
          */
         void editShopSettlement(ShopSettlementReq req);
+
+        /**
+         * 合作商信息编辑
+         *
+         * @param req req
+         */
+        void editCooperationPurchaser(ShopSettlementReq req);
     }
 }

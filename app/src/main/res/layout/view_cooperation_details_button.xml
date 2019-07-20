@@ -136,7 +136,7 @@
             android:textSize="@dimen/base_text_13"/>
 
         <TextView
-            android:id="@+id/txt_delete_my"
+            android:id="@+id/txt_delete_my1"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="35dp"

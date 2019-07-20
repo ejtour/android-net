@@ -80,6 +80,39 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object object) {
+                    mView.showToast("结算方式修改成功");
+                    mView.editSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void editCooperationPurchaser(ShopSettlementReq req) {
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder()
+            .put("actionType", "agree")
+            .put("groupID", UserConfig.getGroupID())
+            .put("originator", "1")
+            .put("purchaserID", req.getPurchaserID())
+            .put("defaultSettlementWay", req.getSettlementWay())
+            .put("defaultAccountPeriod", req.getAccountPeriod())
+            .put("defaultAccountPeriodType", req.getAccountPeriodType())
+            .put("defaultSettleDate", req.getSettleDate());
+        CooperationPurchaserService.INSTANCE
+            .editCooperationPurchaser(builder.create())
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.showToast("同意合作成功");
                     mView.editSuccess();
                 }
 
