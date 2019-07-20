@@ -254,4 +254,13 @@ public class RouterConfig {
      * 售后审核-仓库/司机收货
      */
     public static final String AFTER_SALES_GOODS_OPERATION = "/activity/afterSales/goodsOperation";
+
+    /**
+     * 报表菜单
+     */
+    public static final String REPORT_CATEGORY_LIST="/activity/category/list";
+    /**
+     * 商品销售汇总
+     */
+    public static final String REPORT_PRODUCT_AGGREGATION = "/activity/reportProduct/aggregation";
 }
