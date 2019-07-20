@@ -2,6 +2,7 @@ package com.hll_sc_app.app.cooperation.detail.details.basic;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 
@@ -26,9 +27,9 @@ public interface CooperationDetailsBasicContract {
         void showDeliveryPeriodWindow(List<DeliveryPeriodBean> list);
 
         /**
-         * 修改成功
+         *  属性修改成功
          */
-        void editSuccess();
+        void saveSuccess();
 
     }
 
@@ -44,5 +45,12 @@ public interface CooperationDetailsBasicContract {
          * @param req req
          */
         void editShopDeliveryPeriod(ShopSettlementReq req);
+
+        /**
+         * 编辑合作关系拜访维护级别/客户级别
+         *
+         * @param req 请求参数
+         */
+        void editCooperationPurchaserLevel(BaseMapReq req);
     }
 }

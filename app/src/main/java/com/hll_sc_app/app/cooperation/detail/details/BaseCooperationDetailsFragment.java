@@ -141,4 +141,11 @@ public abstract class BaseCooperationDetailsFragment extends BaseLazyFragment im
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
             .navigation(requireActivity());
     }
+
+    /**
+     * 刷新 Fragment
+     *
+     * @param detail detail
+     */
+    protected abstract void refreshFragment(CooperationPurchaserDetail detail);
 }

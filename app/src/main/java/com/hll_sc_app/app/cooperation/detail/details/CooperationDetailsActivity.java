@@ -26,6 +26,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
@@ -64,11 +65,6 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
         queryPurchaserDetail();
     }
 
-    @OnClick(R.id.img_close)
-    public void onViewClicked() {
-        finish();
-    }
-
     public void queryPurchaserDetail() {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("originator", "1")
@@ -84,7 +80,11 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
             .subscribe(new BaseCallback<CooperationPurchaserDetail>() {
                 @Override
                 public void onSuccess(CooperationPurchaserDetail resp) {
-                    initView(resp);
+                    if (!CommonUtils.isEmpty(mListFragment)) {
+                        refreshFragment(resp);
+                    } else {
+                        initView(resp);
+                    }
                 }
 
                 @Override
@@ -94,12 +94,25 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
             });
     }
 
+    public void refreshFragment(CooperationPurchaserDetail detail) {
+        if (!CommonUtils.isEmpty(mListFragment)) {
+            for (BaseCooperationDetailsFragment fragment : mListFragment) {
+                fragment.refreshFragment(detail);
+            }
+        }
+    }
+
     private void initView(CooperationPurchaserDetail detail) {
         mListFragment = new ArrayList<>();
         mListFragment.add(CooperationDetailsBasicFragment.newInstance(detail));
         mListFragment.add(CooperationDetailsBasicFragment.newInstance(detail));
         mViewPager.setAdapter(new FragmentListAdapter(getSupportFragmentManager(), mListFragment));
         mTab.setViewPager(mViewPager, STR_TITLE);
+    }
+
+    @OnClick(R.id.img_close)
+    public void onViewClicked() {
+        finish();
     }
 
     class FragmentListAdapter extends FragmentPagerAdapter {

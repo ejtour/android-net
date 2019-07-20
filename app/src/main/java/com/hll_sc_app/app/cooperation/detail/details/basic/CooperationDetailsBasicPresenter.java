@@ -89,7 +89,31 @@ public class CooperationDetailsBasicPresenter implements CooperationDetailsBasic
                 @Override
                 public void onSuccess(Object object) {
                     mView.showToast("修改到货时间成功");
-                    mView.editSuccess();
+                    mView.saveSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void editCooperationPurchaserLevel(BaseMapReq req) {
+        CooperationPurchaserService
+            .INSTANCE
+            .editCooperationPurchaserLevel(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object object) {
+                    mView.showToast("修改成功");
+                    mView.saveSuccess();
                 }
 
                 @Override

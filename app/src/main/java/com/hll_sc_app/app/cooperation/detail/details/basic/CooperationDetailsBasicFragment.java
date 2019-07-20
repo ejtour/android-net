@@ -12,7 +12,9 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
 import com.hll_sc_app.app.cooperation.detail.details.CooperationButtonView;
+import com.hll_sc_app.app.cooperation.detail.details.CooperationDetailsActivity;
 import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -21,10 +23,12 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -82,6 +86,10 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     @BindView(R.id.buttonView)
     CooperationButtonView mButtonView;
 
+    private SingleSelectionDialog mMaintainLevelDialog;
+    private SingleSelectionDialog mCustomerLevelDialog;
+    private SingleSelectionDialog mDeliveryPeriodDialog;
+
     private CooperationPurchaserDetail mDetail;
     private CooperationDetailsBasicPresenter mPresenter;
 
@@ -114,8 +122,12 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_cooperation_details_basic, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        showView();
         return rootView;
+    }
+
+    @Override
+    protected void initData() {
+        showView();
     }
 
     private void showView() {
@@ -257,11 +269,8 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
         }
     }
 
-    @Override
-    protected void initData() {
-    }
-
-    @OnClick({R.id.ll_defaultSettlementWay, R.id.ll_maintainLevel, R.id.ll_defaultDeliveryWay, R.id.ll_deliveryPeriod})
+    @OnClick({R.id.ll_defaultSettlementWay, R.id.ll_maintainLevel, R.id.ll_customerLevel, R.id.ll_defaultDeliveryWay,
+        R.id.ll_deliveryPeriod})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_defaultSettlementWay:
@@ -274,6 +283,10 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 mPresenter.queryDeliveryPeriod();
                 break;
             case R.id.ll_maintainLevel:
+                showMaintainLevelWindow();
+                break;
+            case R.id.ll_customerLevel:
+                showCustomerLevelWindow();
                 break;
             default:
                 break;
@@ -281,6 +294,61 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     }
 
     private void toSelect(String actionType) {
+        toSelect(actionType, null);
+    }
+
+    /**
+     * 客户维护
+     */
+    private void showMaintainLevelWindow() {
+        if (mMaintainLevelDialog == null) {
+            List<NameValue> values = new ArrayList<>();
+            values.add(new NameValue("门店级别", "0"));
+            values.add(new NameValue("集团级别", "1"));
+            mMaintainLevelDialog = SingleSelectionDialog.newBuilder(requireActivity(), NameValue::getName)
+                .setTitleText("客户维护设置")
+                .setOnSelectListener(bean -> {
+                    BaseMapReq req = BaseMapReq.newBuilder()
+                        .put("actionType", "maintainLevel")
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("maintainLevel", bean.getValue())
+                        .put("purchaserID", mDetail.getPurchaserID())
+                        .create();
+                    mPresenter.editCooperationPurchaserLevel(req);
+                })
+                .refreshList(values)
+                .create();
+        }
+        mMaintainLevelDialog.show();
+
+    }
+
+    /**
+     * 客户等级
+     */
+    private void showCustomerLevelWindow() {
+        if (mCustomerLevelDialog == null) {
+            List<NameValue> values = new ArrayList<>();
+            values.add(new NameValue("普通客户", "0"));
+            values.add(new NameValue("VIP客户", "1"));
+            mCustomerLevelDialog = SingleSelectionDialog.newBuilder(requireActivity(), NameValue::getName)
+                .setTitleText("客户等级设置")
+                .setOnSelectListener(bean -> {
+                    BaseMapReq req = BaseMapReq.newBuilder()
+                        .put("actionType", "customerLevel")
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("customerLevel", bean.getValue())
+                        .put("purchaserID", mDetail.getPurchaserID())
+                        .create();
+                    mPresenter.editCooperationPurchaserLevel(req);
+                })
+                .refreshList(values)
+                .create();
+        }
+        mCustomerLevelDialog.show();
+    }
+
+    private void toSelect(String actionType, String deliveryPeriod) {
         ShopSettlementReq req = new ShopSettlementReq();
         req.setFrom(FROM_COOPERATION_DETAILS_PROPERTY);
         req.setActionType(actionType);
@@ -302,7 +370,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 break;
             case CooperationSelectShopActivity.TYPE_DELIVERY_PERIOD:
                 // 修改到货时间
-                req.setDeliveryPeriod(mTxtDeliveryPeriod.getText().toString());
+                req.setDeliveryPeriod(deliveryPeriod);
                 showChangeRangeWindow(req);
                 break;
             default:
@@ -328,21 +396,37 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     }
 
     @Override
+    public void refreshFragment(CooperationPurchaserDetail detail) {
+        this.mDetail = detail;
+        setForceLoad(true);
+        if (isFragmentVisible()) {
+            lazyLoad();
+        }
+    }
+
+    @Override
     public void showDeliveryPeriodWindow(List<DeliveryPeriodBean> list) {
         if (CommonUtils.isEmpty(list)) {
             showToast("到货时间列表查询为空");
             return;
         }
-        SingleSelectionDialog.newBuilder(requireActivity(), (SingleSelectionDialog.WrapperName<DeliveryPeriodBean>) bean
-            -> bean.getArrivalStartTime() + "-" + bean.getArrivalEndTime())
-            .setTitleText("到货时间选择")
-            .setOnSelectListener(bean -> {
-                mTxtDeliveryPeriod.setText(String.format("%s-%s", bean.getArrivalStartTime(),
-                    bean.getArrivalEndTime()));
-                toSelect(CooperationSelectShopActivity.TYPE_DELIVERY_PERIOD);
-            })
-            .refreshList(list)
-            .create().show();
+        if (mDeliveryPeriodDialog == null) {
+            mDeliveryPeriodDialog = SingleSelectionDialog.newBuilder(requireActivity(),
+                (SingleSelectionDialog.WrapperName<DeliveryPeriodBean>) bean
+                    -> bean.getArrivalStartTime() + "-" + bean.getArrivalEndTime())
+                .setTitleText("到货时间选择")
+                .setOnSelectListener(bean -> toSelect(CooperationSelectShopActivity.TYPE_DELIVERY_PERIOD,
+                    String.format("%s-%s", bean.getArrivalStartTime(), bean.getArrivalEndTime())))
+                .refreshList(list)
+                .create();
+        }
+        mDeliveryPeriodDialog.show();
     }
 
+    @Override
+    public void saveSuccess() {
+        if (getActivity() instanceof CooperationDetailsActivity) {
+            ((CooperationDetailsActivity) getActivity()).queryPurchaserDetail();
+        }
+    }
 }

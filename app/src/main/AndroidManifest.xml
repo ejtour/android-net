@@ -177,6 +177,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:windowSoftInputMode="stateVisible"
             android:name=".app.cooperation.add.CooperationAddActivity"
             android:screenOrientation="portrait"/>
 
