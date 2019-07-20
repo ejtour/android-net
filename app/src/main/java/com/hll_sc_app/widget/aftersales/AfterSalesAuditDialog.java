@@ -30,7 +30,6 @@ import butterknife.OnTextChanged;
  */
 
 public class AfterSalesAuditDialog extends BaseDialog {
-    private final Activity mActivity;
     @BindView(R.id.asa_select_method)
     TextView mSelectMethod;
     @BindView(R.id.asa_remark)
@@ -43,11 +42,6 @@ public class AfterSalesAuditDialog extends BaseDialog {
 
     public interface AuditCallback {
         void callback(String payType, String remark);
-    }
-
-    public AfterSalesAuditDialog canModify(boolean modify) {
-        mSelectMethod.setVisibility(modify ? View.VISIBLE : View.GONE);
-        return this;
     }
 
     public AfterSalesAuditDialog setCallback(AuditCallback callback) {
@@ -72,7 +66,7 @@ public class AfterSalesAuditDialog extends BaseDialog {
 
     private AfterSalesAuditDialog(@NonNull Activity context) {
         super(context);
-        mActivity = context;
+        setOwnerActivity(context);
     }
 
     @Override
@@ -92,7 +86,7 @@ public class AfterSalesAuditDialog extends BaseDialog {
             List<NameValue> list = new ArrayList<>();
             list.add(new NameValue("货到付款", "1"));
             list.add(new NameValue("账期支付", "2"));
-            mDialog = SingleSelectionDialog.newBuilder(mActivity, NameValue::getName)
+            mDialog = SingleSelectionDialog.newBuilder((getOwnerActivity()), NameValue::getName)
                     .refreshList(list)
                     .setTitleText("请选择退款方式")
                     .setOnSelectListener(nameValue -> {
@@ -112,21 +106,11 @@ public class AfterSalesAuditDialog extends BaseDialog {
 
     @OnClick(R.id.asa_ok)
     public void ok() {
-        if (mSelectMethod.getVisibility() == View.VISIBLE) {
-            if (mSelectMethod.getTag() != null) {
-                if (mCallback != null) {
-                    mCallback.callback(mSelectMethod.getTag().toString(), mRemark.getText().toString());
-                }
-                dismiss();
-            } else {
-                ToastUtils.showShort(getContext(), "请选择退款方式");
-            }
-        } else {
-            if (mCallback != null) {
-                mCallback.callback(null, mRemark.getText().toString());
-            }
+        if (mSelectMethod.getTag() != null) {
+            if (mCallback != null)
+                mCallback.callback(mSelectMethod.getTag().toString(), mRemark.getText().toString());
             dismiss();
-        }
+        } else ToastUtils.showShort(getContext(), "请选择退款方式");
     }
 
     @OnTextChanged(R.id.asa_remark)

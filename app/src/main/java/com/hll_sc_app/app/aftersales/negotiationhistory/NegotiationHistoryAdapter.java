@@ -22,8 +22,7 @@ public class NegotiationHistoryAdapter extends BaseQuickAdapter<NegotiationHisto
         ((GlideImageView) helper.getView(R.id.inh_img)).setImageURL(item.getLogoUrl());
         helper.setText(R.id.inh_name, item.getGroupName()) // 供应商名称
                 // 操作人和操作时间
-                .setText(R.id.inh_handler, item.getHandleBy()
-                        + " " + CalendarUtils.getFormatYyyyMmDdHhMm(String.valueOf(item.getHandleTime())))
+                .setText(R.id.inh_handler, String.format("操作员%s %s", item.getHandleBy(), CalendarUtils.getFormatYyyyMmDdHhMm(String.valueOf(item.getHandleTime()))))
                 // 操作日志
                 .setText(R.id.inh_handle_log, item.getHandleLog())
                 // 详细日志

@@ -103,11 +103,11 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
             mExchangeGroup.setVisibility(VISIBLE);
         } else {
             // 金额
-            refundAmount.setText("¥" + CommonUtils.formatMoney(data.getTotalAmount()));
+            refundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
             mAmountGroup.setVisibility(VISIBLE);
             mExchangeGroup.setVisibility(GONE);
         }
-        mOperationInfo.setText(String.format("%s信息", AfterSalesHelper.getRefundInfoPrefix(data.getRefundBillType())));
+        mOperationInfo.setText(String.format("%s信息", AfterSalesHelper.getOperatedNumPrefix(data.getRefundBillType())));
     }
 
     @OnClick({R.id.sdh_negotiation_history, R.id.sdh_view_exchange_order})

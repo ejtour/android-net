@@ -73,8 +73,9 @@ public class GoodsOperationActivity extends BaseLoadActivity implements IGoodsOp
     }
 
     private void initView() {
-        mTitleBar.setHeaderTitle(String.format("%s收货", mResp.getRefundBillStatus() == 2 ? PREF_DRIVER : PREF_WAREHOUSE));
+        mTitleBar.setHeaderTitle(String.format("%s收货", isDriver() ? PREF_DRIVER : PREF_WAREHOUSE));
         mAdapter = new GoodsOperationAdapter(mResp.getDetailList(), mResp.getRefundBillType() == 3, this::calcTotalAmount);
+        mAdapter.setDriver(isDriver());
         mListView.setAdapter(mAdapter);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
@@ -82,10 +83,15 @@ public class GoodsOperationActivity extends BaseLoadActivity implements IGoodsOp
         calcTotalAmount();
     }
 
+    private boolean isDriver() {
+        return mResp.getRefundBillStatus() == 2;
+    }
+
     private void calcTotalAmount() {
         double total = 0;
         for (AfterSalesDetailsBean bean : mAdapter.getData()) {
-            total = CommonUtils.addDouble(0, total, CommonUtils.mulDouble(bean.getProductPrice(), bean.getRefundNum(), 4).doubleValue()).doubleValue();
+            total = CommonUtils.addDouble(0, total, CommonUtils.mulDouble(bean.getProductPrice(),
+                    isDriver() ? bean.getRefundNum() : bean.getDeliveryNum(), 4).doubleValue()).doubleValue();
         }
         String source = "¥" + CommonUtils.formatMoney(total);
         SpannableString ss = new SpannableString(source);
@@ -95,7 +101,7 @@ public class GoodsOperationActivity extends BaseLoadActivity implements IGoodsOp
 
     @OnClick(R.id.sgo_confirm)
     public void confirm() {
-        mPresenter.doAction(mAdapter.getReqList(mResp.getRefundBillStatus() == 2));
+        mPresenter.doAction(mAdapter.getReqList());
     }
 
     @Override

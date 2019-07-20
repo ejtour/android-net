@@ -351,12 +351,23 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
 
     @Override
     public void actionCustomerService() {
-        AfterSalesAuditDialog.create(getActivity())
-                .canModify(mCurBean.canModify())
-                .setCallback((payType, remark) ->
-                        mPresenter.doAction(1, mCurBean.getId(),
-                                mCurBean.getRefundBillStatus(), mCurBean.getRefundBillType(), payType,
-                                remark))
+        if (mCurBean.canModify())
+            AfterSalesAuditDialog.create(getActivity())
+                    .setCallback((payType, remark) ->
+                            mPresenter.doAction(1, mCurBean.getId(),
+                                    mCurBean.getRefundBillStatus(), mCurBean.getRefundBillType(), payType,
+                                    remark))
+                    .show();
+        else RemarkDialog.newBuilder(getActivity())
+                .setHint("请输入审核备注（最多200字）")
+                .setMaxLength(200)
+                .setButtons("容我再想想", "确认通过", (dialog, positive, content) -> {
+                    dialog.dismiss();
+                    if (positive)
+                        mPresenter.doAction(1, mCurBean.getId(), mCurBean.getRefundBillStatus(),
+                                mCurBean.getRefundBillType(), null, content);
+                })
+                .create()
                 .show();
     }
 

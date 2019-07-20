@@ -70,12 +70,13 @@ public class ModifyUnitPriceDialog extends BaseDialog {
     }
 
     public ModifyUnitPriceDialog setProductSpec(String spec) {
-        mProductSpec.setText(spec);
+        mProductSpec.setText(String.format("规格：%s", spec));
         return this;
     }
 
     public ModifyUnitPriceDialog setRawPrice(double price) {
-        mRawPrice.setText(String.format("¥%s", CommonUtils.formatMoney(price)));
+        mRawPrice.setText(String.format("原价：¥%s", CommonUtils.formatMoney(price)));
+        mEditNewPrice.setText(CommonUtils.formatNumber(price));
         return this;
     }
 

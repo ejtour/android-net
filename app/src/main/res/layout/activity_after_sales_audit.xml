@@ -113,7 +113,7 @@
         android:id="@+id/asa_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="申请退换货日期"
+        android:text="申请退货日期"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintBottom_toBottomOf="@+id/asa_date_btn"
         app:layout_constraintEnd_toStartOf="@+id/asa_date_arrow"

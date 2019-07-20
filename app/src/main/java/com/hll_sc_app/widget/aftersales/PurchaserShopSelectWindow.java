@@ -198,7 +198,7 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
             bean.setSelected(false);
         }
         mCurBean = mCurShopBean = null;
-        mPurchaserAdapter.setNewData(mPurchaserBeans);
+        refreshList(mPurchaserBeans);
         mShopAdapter.setNewData(null);
         mSearchType.setText(GROUP);
         mSearchEdit.setText("");

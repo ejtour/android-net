@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="13dp"
         android:paddingBottom="13dp"
-        android:text="退款总金额"
+        android:text="退款总额"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
         app:layout_constraintStart_toStartOf="@+id/sdh_divider_2"
         app:layout_constraintTop_toBottomOf="@+id/sdh_divider_1" />

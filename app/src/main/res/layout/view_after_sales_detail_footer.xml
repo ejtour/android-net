@@ -47,13 +47,6 @@
         app:layout_constraintStart_toStartOf="@+id/sdf_refund_type"
         tools:text="20180623172123" />
 
-    <android.support.constraint.Group
-        android:id="@+id/sdf_refund_id_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="sdf_refund_id,sdf_refund_id_label" />
-
     <TextView
         android:id="@+id/sdf_create_time_label"
         android:layout_width="wrap_content"
@@ -112,19 +105,12 @@
         app:layout_constraintStart_toStartOf="@+id/sdf_refund_type"
         tools:text="商品质量原因" />
 
-    <android.support.constraint.Group
-        android:id="@+id/sdf_refund_reason_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="sdf_refund_reason_label,sdf_refund_reason" />
-
     <TextView
         android:id="@+id/sdf_refund_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
-        android:text="退款金额："
+        android:text="退款总额："
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintStart_toStartOf="@+id/sdf_refund_type_label"
         app:layout_constraintTop_toBottomOf="@+id/sdf_refund_reason_label" />
@@ -137,13 +123,6 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/sdf_refund_amount_label"
         app:layout_constraintStart_toStartOf="@+id/sdf_refund_type"
         tools:text="¥126.00" />
-
-    <android.support.constraint.Group
-        android:id="@+id/sdf_refund_amount_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="sdf_refund_amount_label,sdf_refund_amount" />
 
     <TextView
         android:id="@+id/sdf_diff_price_label"
@@ -259,7 +238,7 @@
         android:id="@+id/sdf_pay_method_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:constraint_referenced_ids="sdf_pay_method,sdf_pay_method_label" />
 
     <View
@@ -286,7 +265,9 @@
         android:id="@+id/sdf_sale_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="——"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:textColorHint="@color/color_999999"
         app:layout_constraintBaseline_toBaselineOf="@+id/sdf_sale_name_label"
         app:layout_constraintStart_toStartOf="@+id/sdf_refund_type"
         tools:text="王铁锤" />
@@ -305,15 +286,10 @@
         android:id="@+id/sdf_sale_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="——"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:textColorHint="@color/color_999999"
         app:layout_constraintBaseline_toBaselineOf="@+id/sdf_sale_phone_label"
         app:layout_constraintStart_toStartOf="@+id/sdf_refund_type"
         tools:text="177 8765 4321" />
-
-    <android.support.constraint.Group
-        android:id="@+id/sdf_sale_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="sdf_divider2,sdf_sale_name_label,sdf_sale_name,sdf_sale_phone_label,sdf_sale_phone" />
 </merge>
