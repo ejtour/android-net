@@ -335,4 +335,9 @@ public class RouterConfig {
      * 商品销售汇总
      */
     public static final String REPORT_PRODUCT_AGGREGATION = "/activity/reportProduct/aggregation";
+
+    /**
+     * 日销售汇总
+     */
+    public static final String REPORT_DAILY_AGGREGATION="/activity/daily/aggregation";
 }

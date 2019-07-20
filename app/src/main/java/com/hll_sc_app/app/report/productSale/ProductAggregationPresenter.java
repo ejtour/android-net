@@ -35,7 +35,6 @@ public class ProductAggregationPresenter  implements  IProductAggregationContrac
         ReportRest.queryProductSaleTop(req, new SimpleObserver<ProductSaleTop10Resp>(mView, false) {
             @Override
             public void onSuccess(ProductSaleTop10Resp result) {
-                System.out.println(result);
                 mView.setProductTopList(result.getRecords());
             }
         });

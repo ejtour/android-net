@@ -36,6 +36,11 @@ public class BaseReportReqParam {
      */
     private int  sortBy;
 
+    /**
+     * 1:日，2：周，3：月
+     */
+    private int  timeType;
+
     public long getGroupID() {
         return groupID;
     }
@@ -98,5 +103,13 @@ public class BaseReportReqParam {
 
     public void setSortBy(int sortBy) {
         this.sortBy = sortBy;
+    }
+
+    public int getTimeType() {
+        return timeType;
+    }
+
+    public void setTimeType(int timeType) {
+        this.timeType = timeType;
     }
 }

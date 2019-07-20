@@ -308,6 +308,9 @@
             android:name=".app.report.ReportCategoryManagerActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".app.report.dailySale.DailyAggregationActivity"
+            android:screenOrientation="portrait"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

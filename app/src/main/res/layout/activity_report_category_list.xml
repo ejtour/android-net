@@ -56,7 +56,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="215dp"
-                android:src="@drawable/report_right_arrow"/>
+                android:src="@drawable/ic_report_right_arrow"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/report_daily_aggregation"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/ic_report_daily_aggregation"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="16dp"
+                android:text="日销售额汇总"
+                android:textSize="@dimen/base_text_13"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="240dp"
+                android:src="@drawable/ic_report_right_arrow"/>
         </LinearLayout>
     </LinearLayout>
 

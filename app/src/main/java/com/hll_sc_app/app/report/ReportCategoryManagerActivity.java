@@ -2,6 +2,7 @@ package com.hll_sc_app.app.report;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -30,8 +31,16 @@ public class ReportCategoryManagerActivity extends BaseLoadActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.report_product_sale)
-    public void onViewClicked() {
-        RouterUtil.goToActivity(RouterConfig.REPORT_PRODUCT_AGGREGATION);
+    @OnClick({R.id.report_product_sale,R.id.report_daily_aggregation})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.report_product_sale:
+                RouterUtil.goToActivity(RouterConfig.REPORT_PRODUCT_AGGREGATION);
+                break;
+            case R.id.report_daily_aggregation:
+                RouterUtil.goToActivity(RouterConfig.REPORT_DAILY_AGGREGATION);
+                break;
+        }
+
     }
 }
