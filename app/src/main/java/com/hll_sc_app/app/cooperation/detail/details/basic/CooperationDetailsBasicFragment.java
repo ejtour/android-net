@@ -6,12 +6,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
+import com.hll_sc_app.app.cooperation.detail.details.CooperationButtonView;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -60,10 +60,11 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     TextView mTxtAgreeTime;
     @BindView(R.id.txt_deliveryPeriod)
     TextView mTxtDeliveryPeriod;
-    @BindView(R.id.ll_status0)
-    LinearLayout mLlStatus0;
-    private CooperationDetailsBasicPresenter mPresenter;
+    @BindView(R.id.buttonView)
+    CooperationButtonView mButtonView;
+
     private CooperationPurchaserDetail mDetail;
+    private CooperationDetailsBasicPresenter mPresenter;
 
     public static CooperationDetailsBasicFragment newInstance(CooperationPurchaserDetail bean) {
         Bundle args = new Bundle();
@@ -99,6 +100,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     }
 
     private void showView() {
+        mButtonView.showButton(mDetail.getActionType(), mDetail.getStatus());
         mImgLogoUrl.setImageURL(mDetail.getLogoUrl());
         mTxtName.setText(mDetail.getName());
         mTxtResourceType.setText(getResourceType(mDetail.getResourceType()));

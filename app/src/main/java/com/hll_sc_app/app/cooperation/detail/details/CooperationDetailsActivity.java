@@ -14,11 +14,19 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.app.cooperation.detail.details.basic.CooperationDetailsBasicFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.BaseCallback;
+import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +34,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * 合作采购商详情-详细资料
@@ -40,10 +50,9 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
     SlidingTabLayout mTab;
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
-    @Autowired(name = "parcelable", required = true)
-    CooperationPurchaserDetail mDetail;
+    @Autowired(name = "object0", required = true)
+    String mPurchaserId;
     private List<BaseCooperationDetailsFragment> mListFragment;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,20 +61,45 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
         ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
-        initView();
-    }
-
-    private void initView() {
-        mListFragment = new ArrayList<>();
-        mListFragment.add(CooperationDetailsBasicFragment.newInstance(mDetail));
-        mListFragment.add(CooperationDetailsBasicFragment.newInstance(mDetail));
-        mViewPager.setAdapter(new FragmentListAdapter(getSupportFragmentManager(), mListFragment));
-        mTab.setViewPager(mViewPager, STR_TITLE);
+        queryPurchaserDetail();
     }
 
     @OnClick(R.id.img_close)
     public void onViewClicked() {
         finish();
+    }
+
+    public void queryPurchaserDetail() {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("originator", "1")
+            .put("groupID", UserConfig.getGroupID())
+            .put("purchaserID", mPurchaserId)
+            .create();
+        CooperationPurchaserService.INSTANCE.queryCooperationPurchaserDetail(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> showLoading())
+            .doFinally(this::hideLoading)
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
+            .subscribe(new BaseCallback<CooperationPurchaserDetail>() {
+                @Override
+                public void onSuccess(CooperationPurchaserDetail resp) {
+                    initView(resp);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    showError(e);
+                }
+            });
+    }
+
+    private void initView(CooperationPurchaserDetail detail) {
+        mListFragment = new ArrayList<>();
+        mListFragment.add(CooperationDetailsBasicFragment.newInstance(detail));
+        mListFragment.add(CooperationDetailsBasicFragment.newInstance(detail));
+        mViewPager.setAdapter(new FragmentListAdapter(getSupportFragmentManager(), mListFragment));
+        mTab.setViewPager(mViewPager, STR_TITLE);
     }
 
     class FragmentListAdapter extends FragmentPagerAdapter {

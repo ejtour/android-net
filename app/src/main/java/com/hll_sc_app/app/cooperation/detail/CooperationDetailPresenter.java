@@ -41,9 +41,9 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
     @Override
     public void queryPurchaserDetail() {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("originator", "1")
             .put("pageNo", "1")
             .put("pageSize", "20")
+            .put("originator", "1")
             .put("groupID", UserConfig.getGroupID())
             .put("purchaserID", mView.getPurchaserId())
             .create();

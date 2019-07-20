@@ -20,6 +20,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -42,14 +43,14 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.COOPERATION_PURCHASER_ADD, extras = Constant.LOGIN_EXTRA)
 public class CooperationAddActivity extends BaseLoadActivity implements CooperationAddContract.ICooperationAddView {
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.edt_search)
     EditText mEdtSearch;
     @BindView(R.id.img_clear)
     ImageView mImgClear;
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
     private CooperationAddPresenter mPresenter;
     private CooperationPurchaserActivity.PurchaserListAdapter mAdapter;
 
@@ -87,6 +88,12 @@ public class CooperationAddActivity extends BaseLoadActivity implements Cooperat
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
         mAdapter = new CooperationPurchaserActivity.PurchaserListAdapter(true);
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
+            if (bean != null) {
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, bean.getPurchaserID());
+            }
+        });
         EmptyView emptyView = EmptyView.newBuilder(this)
             .setTips("您可以根据采购商名称或ID搜索\n以添加新的合作采购商")
             .setImage(R.drawable.ic_search_empty_purchaser)

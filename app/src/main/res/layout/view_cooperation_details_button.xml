@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:parentTag="LinearLayout">
+
+    <TextView
+        android:id="@+id/txt_del"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_button_large_solid_primary"
+        android:gravity="center"
+        android:text="解除合作"
+        android:textColor="@color/base_white"
+        android:textSize="@dimen/base_text_13"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/txt_add"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/bg_button_large_solid_primary"
+        android:gravity="center"
+        android:text="添加为合作采购商"
+        android:textColor="@color/base_white"
+        android:textSize="@dimen/base_text_13"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <LinearLayout
+        android:id="@+id/ll_status0_other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/txt_agree_other"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/bg_button_large_solid_primary"
+            android:gravity="center"
+            android:text="同意合作"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_13"/>
+
+        <TextView
+            android:id="@+id/txt_reject_other"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/bg_white_solid"
+            android:gravity="center"
+            android:text="拒绝合作"
+            android:textColor="@color/base_text222"
+            android:textSize="@dimen/base_text_13"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_status0_my"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/txt_wait_my0"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/bg_button_large_solid_primary"
+            android:enabled="false"
+            android:gravity="center"
+            android:text=" 等待对方同意"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_13"/>
+
+        <TextView
+            android:id="@+id/txt_delete_my0"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/bg_white_solid"
+            android:gravity="center"
+            android:text="删除合作"
+            android:textColor="@color/base_text222"
+            android:textSize="@dimen/base_text_13"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_status1_my"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/txt_repeat_my"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/bg_button_large_solid_primary"
+            android:gravity="center"
+            android:text="重新验证"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_13"/>
+
+        <TextView
+            android:id="@+id/txt_delete_my"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/bg_white_solid"
+            android:gravity="center"
+            android:text="删除合作"
+            android:textColor="@color/base_text222"
+            android:textSize="@dimen/base_text_13"/>
+
+    </LinearLayout>
+
+</merge>
+
+
+
