@@ -303,7 +303,7 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
             TextView itemView = (TextView) helper.itemView;
             itemView.setText(item.getPurchaserName());
             itemView.setSelected(item.isSelected());
-            itemView.setBackgroundResource(item.isSelected() ? R.color.color_fafafa : 0);
+            itemView.setBackgroundResource(item.isSelected() ? android.R.color.white : 0);
         }
     }
 

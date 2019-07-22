@@ -1,9 +1,11 @@
 package com.hll_sc_app.api;
 
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.CustomerOrderReq;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
@@ -16,8 +18,6 @@ import com.hll_sc_app.bean.report.resp.product.CustomerOrderAggregationResp;
 import com.hll_sc_app.bean.report.resp.product.OrderDetailTotalResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleAggregationResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -97,5 +97,7 @@ public interface ReportService {
     @Headers("pv:111004")
     Observable<BaseResp<CustomerSalesResp>>   queryCustomerSales(@Body BaseReq<CustomerSaleReq> req);
 
-
+    @POST(HttpConfig.URL)
+    @Headers("pv:103098")
+    Observable<BaseResp<OrderGoodsResp>> queryOrderGoodsDetails(@Body BaseMapReq req);
 }

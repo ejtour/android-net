@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/aog_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightVisibility="true"
+        app:tb_title="客户订货明细汇总" />
+
+    <View
+        android:id="@+id/aog_purchaser_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toStartOf="@id/aog_date_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aog_title_bar" />
+
+    <View
+        android:id="@+id/aog_date_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/aog_purchaser_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/aog_purchaser_btn"
+        app:layout_constraintTop_toTopOf="@id/aog_purchaser_btn" />
+
+    <View
+        android:id="@+id/aog_ver_line"
+        android:layout_width="1dp"
+        android:layout_height="18dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintBottom_toBottomOf="@id/aog_purchaser_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/aog_purchaser_btn" />
+
+    <TextView
+        android:id="@+id/aog_purchaser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="全部采购商"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/aog_purchaser_btn"
+        app:layout_constraintEnd_toStartOf="@id/aog_purchaser_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/aog_purchaser_btn"
+        app:layout_constraintTop_toTopOf="@id/aog_purchaser_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/aog_purchaser_arrow"
+        android:layout_width="8dp"
+        android:layout_height="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/aog_purchaser_btn"
+        app:layout_constraintEnd_toEndOf="@id/aog_purchaser_btn"
+        app:layout_constraintStart_toEndOf="@id/aog_purchaser"
+        app:layout_constraintTop_toTopOf="@id/aog_purchaser_btn"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <TextView
+        android:id="@+id/aog_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="按日期筛选"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/aog_date_btn"
+        app:layout_constraintEnd_toStartOf="@id/aog_date_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/aog_date_btn"
+        app:layout_constraintTop_toTopOf="@id/aog_date_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/aog_date_arrow"
+        android:layout_width="8dp"
+        android:layout_height="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/aog_date_btn"
+        app:layout_constraintEnd_toEndOf="@id/aog_date_btn"
+        app:layout_constraintStart_toEndOf="@id/aog_date"
+        app:layout_constraintTop_toTopOf="@id/aog_date_btn"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/aog_refresh_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aog_purchaser_btn">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/aog_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/dp_10"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</android.support.constraint.ConstraintLayout>
