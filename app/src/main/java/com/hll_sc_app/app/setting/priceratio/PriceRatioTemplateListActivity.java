@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -47,15 +48,16 @@ import butterknife.OnClick;
 public class PriceRatioTemplateListActivity extends BaseLoadActivity implements PriceRatioTemplateListContract.IPriceRatioView {
     @Autowired(name = "object0")
     String mTemplateType;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    @BindView(R.id.txt_title)
-    TextView mTxtTitle;
+
+    private EmptyView mEmptyView;
     private RatioTemplateListAdapter mAdapter;
     private PriceRatioTemplateListPresenter mPresenter;
-    private EmptyView mEmptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
     }
 
     private void initView() {
-        mTxtTitle.setText(TextUtils.equals("1", mTemplateType) ? "协议价比例模版列表" : "售价比例模版列表");
+        mTxtTitle.setText(isAgreementPriceRatio() ? "协议价比例模版列表" : "售价比例模版列表");
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -98,9 +100,28 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
             } else if (id == R.id.txt_content) {
             }
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有比例模板数据").create();
+        mEmptyView = EmptyView.newBuilder(this)
+            .setTipsTitle("您还没有" + (isAgreementPriceRatio() ? "协议价比例模版" : "售价比例模版") + "数据")
+            .setTips("您可以在分类中按照百分比进行设置")
+            .setTipsButton("新增售价比例模版")
+            .setOnClickListener(new EmptyView.OnActionClickListener() {
+                @Override
+                public void retry() {
+                    // no-op
+                }
+
+                @Override
+                public void action() {
+                    toAdd();
+                }
+            })
+            .create();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
+    }
+
+    private boolean isAgreementPriceRatio() {
+        return TextUtils.equals("1", mTemplateType);
     }
 
     private void showDelTipsDialog(RatioTemplateBean bean) {
@@ -118,6 +139,10 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
             .create().show();
     }
 
+    private void toAdd() {
+        LogUtil.d("ZYS", "toADD");
+    }
+
     @OnClick({R.id.img_close, R.id.txt_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -125,11 +150,11 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
                 finish();
                 break;
             case R.id.txt_add:
+                toAdd();
                 break;
             default:
                 break;
         }
-
     }
 
     @Override
