@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
 import com.hll_sc_app.app.cooperation.detail.details.CooperationButtonView;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 
 import butterknife.BindView;
@@ -127,6 +129,11 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
         switch (view.getId()) {
             case R.id.ll_imagePath:
                 // 门头照
+                if (!TextUtils.isEmpty(mDetail.getFrontImg())) {
+                    RouterUtil.goToActivity(RouterConfig.STORE_FRONT_IMAGE, mDetail.getFrontImg());
+                } else {
+                    showToast("暂无数据");
+                }
                 break;
             case R.id.ll_licencePhotoUrl:
                 // 营业执照

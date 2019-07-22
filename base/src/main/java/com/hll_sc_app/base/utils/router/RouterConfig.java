@@ -92,6 +92,10 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_DETAIL = "/activity/cooperationPurchaser/detail";
     /**
+     *  门头照
+     */
+    public static final String STORE_FRONT_IMAGE = "/activity/store/frontImage";
+    /**
      * 合作采购商详情-详细资料
      */
     public static final String COOPERATION_PURCHASER_DETAIL_DETAILS = "/activity/cooperationPurchaser/detail/details";
