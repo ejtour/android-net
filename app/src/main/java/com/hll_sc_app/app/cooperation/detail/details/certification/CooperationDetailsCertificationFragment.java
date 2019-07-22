@@ -19,6 +19,7 @@ import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragm
 import com.hll_sc_app.app.cooperation.detail.details.CooperationButtonView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.cooperation.BusinessLicensesBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
@@ -140,6 +141,13 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
                 break;
             case R.id.ll_licencePhotoUrl:
                 // 营业执照
+                BusinessLicensesBean businessLicensesBean = new BusinessLicensesBean();
+                businessLicensesBean.setBusinessNo(mDetail.getBusinessNo());
+                businessLicensesBean.setLicenseName(mDetail.getLicenseName());
+                businessLicensesBean.setLicencePhotoUrl(mDetail.getLicencePhotoUrl());
+                businessLicensesBean.setStartTime(mDetail.getStartTime());
+                businessLicensesBean.setEndTime(mDetail.getEndTime());
+                RouterUtil.goToActivity(RouterConfig.STORE_BUSINESS_LICENSE_IMAGE, businessLicensesBean);
                 break;
             case R.id.ll_otherLicenses:
                 // 其他证照

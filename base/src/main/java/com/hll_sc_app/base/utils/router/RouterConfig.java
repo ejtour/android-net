@@ -100,6 +100,10 @@ public class RouterConfig {
      */
     public static final String STORE_OTHER_LICENSE_IMAGE = "/activity/store/otherLicense";
     /**
+     * 营业证照
+     */
+    public static final String STORE_BUSINESS_LICENSE_IMAGE = "/activity/store/ businessLicense";
+    /**
      * 合作采购商详情-详细资料
      */
     public static final String COOPERATION_PURCHASER_DETAIL_DETAILS = "/activity/cooperationPurchaser/detail/details";
