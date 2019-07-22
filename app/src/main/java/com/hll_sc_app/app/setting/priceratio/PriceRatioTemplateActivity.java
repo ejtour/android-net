@@ -12,6 +12,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
  * @date 2019-07-22
  */
 @Route(path = RouterConfig.SETTING_PRICE_RATIO, extras = Constant.LOGIN_EXTRA)
-public class PriceRatioActivity extends BaseLoadActivity {
+public class PriceRatioTemplateActivity extends BaseLoadActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,9 +43,11 @@ public class PriceRatioActivity extends BaseLoadActivity {
                 break;
             case R.id.txt_agreement_price:
                 // 协议价比例模版设置
+                RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_LIST, "1");
                 break;
             case R.id.txt_price_manage:
                 // 售价比例模版设置
+                RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_LIST, "2");
                 break;
             default:
                 break;

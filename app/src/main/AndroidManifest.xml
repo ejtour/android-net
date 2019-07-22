@@ -157,7 +157,11 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".app.setting.priceratio.PriceRatioActivity"
+            android:name=".app.setting.priceratio.PriceRatioTemplateActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.setting.priceratio.PriceRatioTemplateListActivity"
             android:screenOrientation="portrait"/>
 
         <activity

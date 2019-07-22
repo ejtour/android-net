@@ -2,9 +2,9 @@ package com.hll_sc_app.app.pricemanage;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
+import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 
 import java.util.List;
 

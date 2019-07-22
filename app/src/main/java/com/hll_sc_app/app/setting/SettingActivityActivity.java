@@ -51,7 +51,7 @@ public class SettingActivityActivity extends BaseLoadActivity implements Setting
     }
 
 
-    @OnClick({R.id.img_close, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting,
+    @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting,
         R.id.txt_cooperation_setting})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {

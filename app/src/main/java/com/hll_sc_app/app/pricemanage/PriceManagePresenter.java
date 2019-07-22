@@ -1,19 +1,19 @@
 package com.hll_sc_app.app.pricemanage;
 
-import com.hll_sc_app.api.AgreementPriceService;
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.api.PriceManageService;
+import com.hll_sc_app.api.PriceRatioTemplateService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
-import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateResp;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.goods.SkuProductsResp;
+import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
+import com.hll_sc_app.bean.priceratio.RatioTemplateResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -128,7 +128,7 @@ public class PriceManagePresenter implements PriceManageContract.IPriceManagePre
             .put("pageSize", "0")
             .put("templateType", "2")
             .create();
-        AgreementPriceService.INSTANCE.queryRatioTemplateList(req)
+        PriceRatioTemplateService.INSTANCE.queryRatioTemplateList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())

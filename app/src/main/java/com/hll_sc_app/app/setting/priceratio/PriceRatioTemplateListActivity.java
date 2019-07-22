@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.agreementprice.quotation.add.ratiotemplate;
+package com.hll_sc_app.app.setting.priceratio;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,25 +6,30 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -33,67 +38,102 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 选择协议价比例模板列表
+ * 设置界面-价格比例设置-列表
  *
  * @author zhuyingsong
- * @date 2019/7/10
+ * @date 2019/7/22
  */
-@Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_RATIO, extras = Constant.LOGIN_EXTRA)
-public class QuotationRatioActivity extends BaseLoadActivity implements QuotationRatioContract.IQuotationRatioView {
+@Route(path = RouterConfig.SETTING_PRICE_RATIO_LIST, extras = Constant.LOGIN_EXTRA)
+public class PriceRatioTemplateListActivity extends BaseLoadActivity implements PriceRatioTemplateListContract.IPriceRatioView {
+    @Autowired(name = "object0")
+    String mTemplateType;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
     private RatioTemplateListAdapter mAdapter;
-    private QuotationRatioPresenter mPresenter;
+    private PriceRatioTemplateListPresenter mPresenter;
     private EmptyView mEmptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quotation_add_ratio);
+        setContentView(R.layout.activity_setting_price_ratio_template_list);
+        ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        mPresenter = QuotationRatioPresenter.newInstance();
+        mPresenter = PriceRatioTemplateListPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
 
     private void initView() {
+        mTxtTitle.setText(TextUtils.equals("1", mTemplateType) ? "协议价比例模版列表" : "售价比例模版列表");
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreRatioTemplateList();
+                mPresenter.queryMorePriceRatioTemplate();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryRatioTemplateList(false);
+                mPresenter.queryPriceRatioTemplate(false);
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+            , UIUtils.dip2px(5)));
         mAdapter = new RatioTemplateListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             RatioTemplateBean ratioTemplateBean = (RatioTemplateBean) adapter.getItem(position);
-            if (ratioTemplateBean != null) {
-                EventBus.getDefault().post(ratioTemplateBean);
-                finish();
+            if (ratioTemplateBean == null) {
+                return;
+            }
+            int id = view.getId();
+            if (id == R.id.txt_del) {
+                showDelTipsDialog(ratioTemplateBean);
+            } else if (id == R.id.txt_content) {
             }
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有比例模板数据").create();
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
 
-    @OnClick({R.id.img_close})
+    private void showDelTipsDialog(RatioTemplateBean bean) {
+        TipsDialog.newBuilder(this)
+            .setTitle("删除比例模板")
+            .setMessage("确定要删除【" + bean.getTemplateName() + "】嘛？")
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    mPresenter.delPriceRatioTemplate(bean.getTemplateID());
+                } else {
+                    SwipeItemLayout.closeAllItems(mRecyclerView);
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
+    }
+
+    @OnClick({R.id.img_close, R.id.txt_add})
     public void onViewClicked(View view) {
-        finish();
+        switch (view.getId()) {
+            case R.id.img_close:
+                finish();
+                break;
+            case R.id.txt_add:
+                break;
+            default:
+                break;
+        }
+
     }
 
     @Override
-    public void showRatioTemplateList(List<RatioTemplateBean> list, boolean append, int total) {
+    public void showPriceRatioTemplate(List<RatioTemplateBean> list, boolean append, int total) {
         if (append) {
             mAdapter.addData(list);
         } else {
@@ -101,6 +141,11 @@ public class QuotationRatioActivity extends BaseLoadActivity implements Quotatio
         }
         mAdapter.setEmptyView(mEmptyView);
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
+    }
+
+    @Override
+    public String getTemplateType() {
+        return mTemplateType;
     }
 
     @Override
@@ -112,13 +157,20 @@ public class QuotationRatioActivity extends BaseLoadActivity implements Quotatio
     class RatioTemplateListAdapter extends BaseQuickAdapter<RatioTemplateBean, BaseViewHolder> {
 
         RatioTemplateListAdapter() {
-            super(R.layout.item_purchaser_shop_item);
+            super(R.layout.item_price_ratio);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder baseViewHolder = super.onCreateDefViewHolder(parent, viewType);
+            baseViewHolder.addOnClickListener(R.id.txt_del).addOnClickListener(R.id.content);
+            return baseViewHolder;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, RatioTemplateBean bean) {
-            helper.setText(R.id.txt_shopName, bean.getTemplateName())
-                .setGone(R.id.img_select, false);
+            helper.setText(R.id.txt_templateName, bean.getTemplateName())
+                .setText(R.id.txt_category, "包含" + bean.getCategoryCount() + "个分类");
         }
     }
 }
