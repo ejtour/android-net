@@ -1,9 +1,11 @@
 package com.hll_sc_app.base.http;
 
 import android.arch.lifecycle.LifecycleOwner;
+import android.text.TextUtils;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.MsgWrapper;
 
 import java.lang.ref.WeakReference;
 
@@ -18,14 +20,24 @@ public abstract class SimpleObserver<T> extends BaseCallback<T> {
      */
     private WeakReference<ILoadView> mView;
     private boolean mShowLoading;
+    private boolean mToastMsg;
 
     protected SimpleObserver(ILoadView view) {
-        this(view, true);
+        this(false, view, true);
     }
 
     protected SimpleObserver(ILoadView view, boolean showLoading) {
+        this(false, view, showLoading);
+    }
+
+    protected SimpleObserver(boolean toastMsg, ILoadView view, boolean showLoading) {
         mView = new WeakReference<>(view);
         mShowLoading = showLoading;
+        mToastMsg = toastMsg;
+    }
+
+    protected SimpleObserver(boolean toastMsg, ILoadView view) {
+        this(toastMsg, view, true);
     }
 
     public void startReq() {
@@ -54,6 +66,10 @@ public abstract class SimpleObserver<T> extends BaseCallback<T> {
     @Override
     public void onNext(T resp) {
         if (mView.get() != null && mView.get().isActive()) {
+            if (resp instanceof MsgWrapper && mToastMsg) {
+                String msg = ((MsgWrapper) resp).getMessage();
+                if (!TextUtils.isEmpty(msg)) mView.get().showToast(msg);
+            }
             super.onNext(resp);
         }
     }
