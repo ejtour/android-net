@@ -157,6 +157,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.setting.priceratio.PriceRatioActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.cooperation.detail.details.CooperationDetailsActivity"
             android:screenOrientation="portrait"/>
 

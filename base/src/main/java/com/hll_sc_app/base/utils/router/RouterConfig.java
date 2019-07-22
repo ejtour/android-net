@@ -12,6 +12,10 @@ public class RouterConfig {
      */
     public static final String SETTING = "/activity/setting";
     /**
+     * 设置界面-价格比例设置
+     */
+    public static final String SETTING_PRICE_RATIO = "/activity/setting/priceRatio";
+    /**
      * 订单设置界面
      */
     public static final String BILL_SETTING = "/activity/setting/bill";
