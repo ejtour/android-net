@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.aftersales.goodsoperation;
 
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
@@ -33,9 +34,9 @@ public class GoodsOperationPresenter implements IGoodsOperationContract.IGoodsOp
                 null,
                 null,
                 list,
-                new SimpleObserver<Object>(mView) {
+                new SimpleObserver<MsgWrapper<Object>>(true, mView) {
                     @Override
-                    public void onSuccess(Object o) {
+                    public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                         mView.handleStatusChange();
                     }
                 });

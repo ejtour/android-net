@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.aftersales.detail;
 
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -38,12 +39,13 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
 
     @Override
     public void doAction(int actionType, String payType, int status, int type, String msg) {
-        AfterSales.afterSalesAction(actionType, billID, status, type, payType, msg, null, new SimpleObserver<Object>(mView) {
-            @Override
-            public void onSuccess(Object o) {
-                mView.handleStatusChange();
-            }
-        });
+        AfterSales.afterSalesAction(actionType, billID, status, type, payType, msg, null,
+                new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+                    @Override
+                    public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                        mView.handleStatusChange();
+                    }
+                });
     }
 
     @Override
