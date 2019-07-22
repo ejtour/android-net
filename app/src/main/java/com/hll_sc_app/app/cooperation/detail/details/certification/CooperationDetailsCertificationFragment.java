@@ -20,6 +20,9 @@ import com.hll_sc_app.app.cooperation.detail.details.CooperationButtonView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.hll_sc_app.citymall.util.CommonUtils;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -140,6 +143,12 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
                 break;
             case R.id.ll_otherLicenses:
                 // 其他证照
+                if (!CommonUtils.isEmpty(mDetail.getOtherLicenses())) {
+                    RouterUtil.goToActivity(RouterConfig.STORE_OTHER_LICENSE_IMAGE,
+                        new ArrayList<>(mDetail.getOtherLicenses()));
+                } else {
+                    showToast("暂无数据");
+                }
                 break;
             default:
                 break;

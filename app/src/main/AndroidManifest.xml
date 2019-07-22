@@ -149,6 +149,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.cooperation.detail.imgs.OtherLicenseActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.cooperation.detail.details.CooperationDetailsActivity"
             android:screenOrientation="portrait"/>
 

@@ -92,9 +92,13 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_DETAIL = "/activity/cooperationPurchaser/detail";
     /**
-     *  门头照
+     * 门头照
      */
     public static final String STORE_FRONT_IMAGE = "/activity/store/frontImage";
+    /**
+     * 其他证照
+     */
+    public static final String STORE_OTHER_LICENSE_IMAGE = "/activity/store/otherLicense";
     /**
      * 合作采购商详情-详细资料
      */
@@ -334,7 +338,7 @@ public class RouterConfig {
     /**
      * 报表菜单
      */
-    public static final String REPORT_CATEGORY_LIST="/activity/category/list";
+    public static final String REPORT_CATEGORY_LIST = "/activity/category/list";
     /**
      * 商品销售汇总
      */
@@ -343,5 +347,5 @@ public class RouterConfig {
     /**
      * 日销售汇总
      */
-    public static final String REPORT_DAILY_AGGREGATION="/activity/daily/aggregation";
+    public static final String REPORT_DAILY_AGGREGATION = "/activity/daily/aggregation";
 }
