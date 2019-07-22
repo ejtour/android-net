@@ -200,7 +200,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE);
                 break;
             case R.id.txt_report_center:
-                RouterUtil.goToActivity(RouterConfig.REPORT_CATEGORY_LIST);
+                RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY);
                 break;
             default:
                 break;

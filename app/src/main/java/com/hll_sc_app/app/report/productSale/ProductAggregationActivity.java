@@ -39,7 +39,7 @@ import butterknife.OnClick;
  * 商品销售汇总
  * @author chukun
  */
-@Route(path = RouterConfig.REPORT_PRODUCT_AGGREGATION)
+@Route(path = RouterConfig.REPORT_PRODUCT_SALES_STATISTICS)
 public class ProductAggregationActivity extends BaseLoadActivity implements IProductAggregationContract.IProductAggregationView {
 
 

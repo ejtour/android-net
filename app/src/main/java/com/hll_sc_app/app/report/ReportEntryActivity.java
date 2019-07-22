@@ -1,0 +1,54 @@
+package com.hll_sc_app.app.report;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.R;
+import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.report.ReportIcon;
+import com.hll_sc_app.bean.report.ReportItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+@Route(path = RouterConfig.REPORT_ENTRY)
+public class ReportEntryActivity extends BaseLoadActivity {
+
+    @BindView(R.id.are_list_view)
+    RecyclerView mListView;
+
+    public static void start() {
+        RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        setContentView(R.layout.activity_report_entry);
+        ButterKnife.bind(this);
+        initView();
+    }
+
+    private void initView() {
+        mListView.setAdapter(new ReportEntryAdapter(prepareMenu()));
+    }
+
+    private List<ReportItem> prepareMenu() {
+        List<ReportItem> list = new ArrayList<>();
+        list.add(new ReportItem(ReportIcon.SALES_STATISTICS, "商品销量统计汇总", RouterConfig.REPORT_PRODUCT_SALES_STATISTICS));
+        list.add(new ReportItem(ReportIcon.CUSTOMER_ORDER_DETAILS, "客户订货明细汇总", RouterConfig.REPORT_CUSTOMER_ORDER_DETAILS, true));
+        list.add(new ReportItem(ReportIcon.DAILY_SALES_VOLUME, "日销售额汇总", RouterConfig.REPORT_DAILY_AGGREGATION));
+        list.add(new ReportItem(ReportIcon.CUSTOMER_SALES, "客户销售汇总", null /*此处填写 activity 路径*/));
+        return list;
+    }
+}

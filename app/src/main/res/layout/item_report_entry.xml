@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/ire_name"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="40dp"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="商品销量统计汇总" />
+
+    <ImageView
+        android:id="@+id/ire_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/ire_name"
+        app:layout_constraintEnd_toStartOf="@id/ire_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ire_name"
+        tools:src="@drawable/ic_report_sales_statistics" />
+
+    <View
+        android:id="@+id/ire_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ire_name" />
+</android.support.constraint.ConstraintLayout>

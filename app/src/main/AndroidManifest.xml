@@ -306,7 +306,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.ReportCategoryManagerActivity"
+            android:name=".app.report.ReportEntryActivity"
             android:screenOrientation="portrait" />
 
         <activity android:name=".app.report.dailySale.DailyAggregationActivity"
