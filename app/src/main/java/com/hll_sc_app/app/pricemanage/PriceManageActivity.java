@@ -220,6 +220,10 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
 
     @Override
     public void showRatioTemplateWindow(List<RatioTemplateBean> values) {
+        if (CommonUtils.isEmpty(values)) {
+            showToast("您还没有可供选择的比例模板");
+            return;
+        }
         if (mRatioTemplateWindow == null) {
             mRatioTemplateWindow = new TopSingleSelectWindow<>(this, RatioTemplateBean::getTemplateName, true);
             mRatioTemplateWindow.setRecyclerViewHeight(UIUtils.dip2px(260));
