@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
  * @since 2019/6/10
  */
 @StringDef({OptionType.OPTION_EXPORT_ASSEMBLY, OptionType.OPTION_EXPORT_CHECK_CATEGORY,
-        OptionType.OPTION_EXPORT_CHECK_DETAILS, OptionType.OPTION_EXPORT_ORDER, OptionType.OPTION_EXPORT_DETAIL,
+        OptionType.OPTION_EXPORT_CHECK_DETAILS, OptionType.OPTION_EXPORT_ORDER, OptionType.OPTION_EXPORT_DETAILS,
         OptionType.OPTION_EXPORT_ORDER_DETAILS, OptionType.OPTION_EXPORT_OUT_CATEGORY,
         OptionType.OPTION_EXPORT_OUT_DETAILS, OptionType.OPTION_FILTER_CREATE, OptionType.OPTION_EXPORT_OUT,
         OptionType.OPTION_FILTER_EXECUTE, OptionType.OPTION_FILTER_SIGN, OptionType.OPTION_GOODS_ADD,
@@ -20,7 +20,7 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_COOPERATION_RECEIVE, OptionType.OPTION_COOPERATION_SEND, OptionType.OPTION_COOPERATION_EXPORT,
         OptionType.OPTION_COOPERATION_DETAIL_SETTLEMENT, OptionType.OPTION_COOPERATION_DETAIL_SALESMAN,
         OptionType.OPTION_COOPERATION_DETAIL_DRIVER, OptionType.OPTION_COOPERATION_DETAIL_DELIVERY,
-        OptionType.OPTION_COOPERATION_DETAIL_SHOP})
+        OptionType.OPTION_COOPERATION_DETAIL_SHOP, OptionType.OPTION_EXPORT_DETAIL_INFO})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -28,7 +28,6 @@ public @interface OptionType {
     String OPTION_EXPORT_OUT_DETAILS = "导出明细出库单";
     String OPTION_EXPORT_OUT_CATEGORY = "导出分类出库单";
     String OPTION_EXPORT_ORDER = "导出订单";
-    String OPTION_EXPORT_DETAIL = "导出明细";
     String OPTION_EXPORT_ORDER_DETAILS = "导出订单明细";
     String OPTION_EXPORT_CHECK_DETAILS = "导出明细验货单";
     String OPTION_EXPORT_CHECK_CATEGORY = "导出分类验货单";
@@ -56,4 +55,8 @@ public @interface OptionType {
     String OPTION_COOPERATION_DETAIL_DRIVER = "批量指派司机";
     String OPTION_COOPERATION_DETAIL_DELIVERY = "批量修改配送方式";
     String OPTION_COOPERATION_DETAIL_SHOP = "新增合作门店";
+
+    String OPTION_EXPORT_DETAILS = "导出明细";
+
+    String OPTION_EXPORT_DETAIL_INFO = "导出详细信息";
 }

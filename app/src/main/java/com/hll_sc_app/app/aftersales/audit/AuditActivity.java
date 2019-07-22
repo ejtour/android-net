@@ -143,7 +143,7 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
     private void showOptionsWindow(View v) {
         if (mOptionsWindow == null) {
             mOptionsWindow = new ContextOptionsWindow(this)
-                    .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_DETAIL)))
+                    .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_DETAILS)))
                     .setListener((adapter, view, position) -> {
                         mOptionsWindow.dismiss();
                         exportOrder();

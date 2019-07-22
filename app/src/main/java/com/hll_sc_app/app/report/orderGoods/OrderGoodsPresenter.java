@@ -1,13 +1,25 @@
 package com.hll_sc_app.app.report.orderGoods;
 
+import android.text.TextUtils;
+
+import com.hll_sc_app.api.UserService;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.Date;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -35,18 +47,18 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
         getOrderGoodsDetails(false);
     }
 
-    private void getOrderGoodsDetails(boolean showLoading) {
-        Date endDate = null, startDate = null;
+    @Override
+    public void getOrderGoodsDetails(boolean showLoading) {
+        String endDate, startDate;
         if (mParam.getStartDate() == null) {
-            endDate = new Date();
-            startDate = CalendarUtils.getDateBefore(endDate, 29);
+            Date end = new Date();
+            endDate = CalendarUtils.toLocalDate(end);
+            startDate = CalendarUtils.toLocalDate(CalendarUtils.getDateBefore(end, 29));
         } else {
             startDate = mParam.getStartDate();
             endDate = mParam.getEndDate();
         }
-        Report.queryOrderGoodsDetails(mParam.getShopIDs(),
-                CalendarUtils.toLocalDate(startDate),
-                CalendarUtils.toLocalDate(endDate),
+        Report.queryOrderGoodsDetails(mParam.getShopIDs(), startDate, endDate,
                 mPageNum, new SimpleObserver<OrderGoodsResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(OrderGoodsResp orderGoodsResp) {
@@ -60,6 +72,60 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
     public void refresh() {
         mPageNum = 1;
         loadMore();
+    }
+
+    @Override
+    public void export(String email) {
+        if (!TextUtils.isEmpty(email)) {
+            bindEmail(email);
+            return;
+        }
+        String endDate, startDate;
+        if (mParam.getStartDate() == null) {
+            Date end = new Date();
+            endDate = CalendarUtils.toLocalDate(end);
+            startDate = CalendarUtils.toLocalDate(CalendarUtils.getDateBefore(end, 29));
+        } else {
+            startDate = mParam.getStartDate();
+            endDate = mParam.getEndDate();
+        }
+        Report.exportOrderGoodsDetails(mParam.getShopIDs(), startDate, endDate,
+                new SimpleObserver<ExportResp>(mView) {
+                    @Override
+                    public void onSuccess(ExportResp exportResp) {
+                        if (!TextUtils.isEmpty(exportResp.getEmail()))
+                            mView.exportSuccess(exportResp.getEmail());
+                        else mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if ("00120112037".equals(e.getCode())) mView.bindEmail();
+                        else if ("00120112038".equals(e.getCode()))
+                            mView.exportFailure("当前没有可导出的数据");
+                        else mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    }
+                });
+    }
+
+    private void bindEmail(String email) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null)
+            return;
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("email", email)
+                .put("employeeID", user.getEmployeeID())
+                .create();
+        SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                export(null);
+            }
+        };
+        UserService.INSTANCE.bindEmail(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(observer);
     }
 
     @Override

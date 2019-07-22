@@ -5,10 +5,12 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.CustomerOrderReq;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
+import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.req.ProductDetailReq;
 import com.hll_sc_app.bean.report.req.ProductSaleAggregationReq;
 import com.hll_sc_app.bean.report.req.ProductSaleTopReq;
@@ -100,4 +102,12 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:103098")
     Observable<BaseResp<OrderGoodsResp>> queryOrderGoodsDetails(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103100")
+    Observable<BaseResp<ExportResp>> exportOrderGoodsDetails(@Body BaseMapReq body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111037")
+    Observable<BaseResp<ExportResp>> exportReport(@Body BaseReq<ReportExportReq> body);
 }
