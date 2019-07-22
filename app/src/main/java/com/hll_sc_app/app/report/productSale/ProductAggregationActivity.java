@@ -26,7 +26,9 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleTopDetail;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.DateUtil;
+
 import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -39,7 +41,7 @@ import butterknife.OnClick;
  * 商品销售汇总
  * @author chukun
  */
-@Route(path = RouterConfig.REPORT_PRODUCT_AGGREGATION)
+@Route(path = RouterConfig.REPORT_PRODUCT_SALES_STATISTICS)
 public class ProductAggregationActivity extends BaseLoadActivity implements IProductAggregationContract.IProductAggregationView {
 
 

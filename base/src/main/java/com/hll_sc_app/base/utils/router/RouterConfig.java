@@ -340,13 +340,19 @@ public class RouterConfig {
     public static final String AFTER_SALES_GOODS_OPERATION = "/activity/afterSales/goodsOperation";
 
     /**
-     * 报表菜单
+     * 报表中心
      */
-    public static final String REPORT_CATEGORY_LIST = "/activity/category/list";
+    public static final String REPORT_ENTRY = "/activity/report/entry";
+
     /**
-     * 商品销售汇总
+     * 商品销量统计汇总
      */
-    public static final String REPORT_PRODUCT_AGGREGATION = "/activity/reportProduct/aggregation";
+    public static final String REPORT_PRODUCT_SALES_STATISTICS = "/activity/report/salesStatistics";
+
+    /**
+     * 客户订货明细汇总
+     */
+    public static final String REPORT_CUSTOMER_ORDER_DETAILS = "/activity/report/customerOrderDetails";
 
     /**
      * 日销售汇总

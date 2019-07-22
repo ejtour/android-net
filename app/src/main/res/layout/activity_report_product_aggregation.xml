@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/product_sale_aggregation"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/base_activity_bg"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/product_sale_aggregation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/base_activity_bg"
+                android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="375dp"
@@ -22,91 +21,92 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            app:srcCompat="@drawable/ic_report_header_background" />
+            android:src="@drawable/ic_main_mine_background"/>
+
         <ImageView
             android:id="@+id/img_close"
             style="@style/BtnClose"
-            android:layout_marginTop="20dp"
             android:layout_width="44dp"
             android:layout_height="44dp"
-            />
+            android:layout_marginTop="20dp"/>
+
         <TextView
             android:id="@+id/product_sale_aggregation_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="116dp"
+            android:layout_marginTop="30dp"
             android:text="商品销量统计汇总"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_18"
-            />
+            android:textSize="@dimen/base_text_18"/>
+
         <TextView
             android:id="@+id/product_sale_aggregation_analyse_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="76dp"
             android:layout_marginBottom="101dp"
             android:text="统计日期"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_12"
-            />
+            android:textSize="@dimen/base_text_12"/>
+
         <TextView
             android:id="@+id/product_sale_aggregation_current_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
             android:layout_marginLeft="206dp"
+            android:layout_marginTop="76dp"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp"
             android:paddingTop="2dp"
+            android:paddingRight="8dp"
             android:paddingBottom="2dp"
             android:text="本周"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_10"
-            />
+            android:textSize="@dimen/base_text_10"/>
+
         <TextView
             android:id="@+id/product_sale_aggregation_current_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
             android:layout_marginLeft="247dp"
+            android:layout_marginTop="76dp"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp"
             android:paddingTop="2dp"
+            android:paddingRight="8dp"
             android:paddingBottom="2dp"
             android:text="本月"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_10"
-            />
+            android:textSize="@dimen/base_text_10"/>
+
         <TextView
             android:id="@+id/product_sale_aggregation_last_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
             android:layout_marginLeft="288dp"
+            android:layout_marginTop="76dp"
             android:paddingLeft="8dp"
-            android:paddingRight="8dp"
             android:paddingTop="2dp"
+            android:paddingRight="8dp"
             android:paddingBottom="2dp"
             android:text="上月"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_10"
-            />
+            android:textSize="@dimen/base_text_10"/>
+
         <TextView
             android:id="@+id/product_sale_aggregation_customer_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
             android:layout_marginLeft="329dp"
+            android:layout_marginTop="76dp"
             android:paddingLeft="3dp"
-            android:paddingRight="3dp"
             android:paddingTop="2dp"
+            android:paddingRight="3dp"
             android:paddingBottom="2dp"
             android:text="自定义"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_10"
-            />
+            android:textSize="@dimen/base_text_10"/>
+
         <LinearLayout
             android:id="@+id/product_sale_aggregation_header"
             android:layout_width="match_parent"
@@ -114,13 +114,15 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="104dp"
             android:layout_marginRight="10dp"
-            android:orientation="horizontal"
-            android:background="@color/base_white">
+            android:background="@color/base_white"
+            android:orientation="horizontal">
+
             <LinearLayout
                 android:id="@+id/product_sale_aggregation_header_product"
                 android:layout_width="118dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/product_sale_aggregation_header_product_value"
                     android:layout_width="wrap_content"
@@ -131,22 +133,25 @@
                     android:text="2323"
                     android:textColor="@color/base_text_black"
                     android:textSize="@dimen/base_text_20" />
+
                 <TextView
                     android:id="@+id/product_sale_aggregation_header_product_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="28dp"
                     android:layout_marginTop="6dp"
-                    android:textColor="@color/base_text_black"
                     android:text="商品总数(sku)"
+                    android:textColor="@color/base_text_black"
                     android:textSize="@dimen/base_text_10"/>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/product_sale_aggregation_header_salesnum"
                 android:layout_width="118dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="3dp"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/product_sale_aggregation_header_salesnum_value"
                     android:layout_width="wrap_content"
@@ -157,21 +162,24 @@
                     android:text="2323"
                     android:textColor="@color/base_text_black"
                     android:textSize="@dimen/base_text_20" />
+
                 <TextView
                     android:id="@+id/product_sale_aggregation_header_salesnum_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="39dp"
                     android:layout_marginTop="6dp"
-                    android:textColor="@color/base_text_black"
                     android:text="销售数量"
+                    android:textColor="@color/base_text_black"
                     android:textSize="@dimen/base_text_10"/>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/product_sale_aggregation_header_amount"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/product_sale_aggregation_header_amount_value"
                     android:layout_width="wrap_content"
@@ -182,18 +190,20 @@
                     android:text="23230.00"
                     android:textColor="@color/base_text_black"
                     android:textSize="@dimen/base_text_20" />
+
                 <TextView
                     android:id="@+id/product_sale_aggregation_header_amount_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="6dp"
-                    android:textColor="@color/base_text_black"
                     android:text="销售金额(元)"
+                    android:textColor="@color/base_text_black"
                     android:textSize="@dimen/base_text_10"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/product_sale_aggregation_middle_header"
         android:layout_width="match_parent"
@@ -201,25 +211,29 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="194dp"
         android:background="@color/base_white">
+
         <LinearLayout
             android:id="@+id/product_sale_aggregation_chart_title"
             android:layout_width="match_parent"
             android:layout_height="40dp">
+
             <TextView
                 android:id="@+id/product_sale_classify_header"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginTop="12dp"
                 android:layout_marginLeft="11dp"
+                android:layout_marginTop="12dp"
                 android:text="分类指标"
                 android:textColor="@color/base_text_black"
                 android:textSize="@dimen/base_text_12"/>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/product_sale_aggregation_chart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp">
+
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/product_sales_pie_chart"
                 android:layout_width="match_parent"
@@ -227,12 +241,14 @@
         </LinearLayout>
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/product_sale_aggregation_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="424dp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="424dp">
+
         <TextView
             android:id="@+id/product_sale_list_title_header"
             android:layout_width="wrap_content"
@@ -241,8 +257,8 @@
             android:layout_marginTop="12dp"
             android:text="商品销量TOP10"
             android:textColor="@color/base_text_black"
-            android:textSize="@dimen/base_text_12"
-            />
+            android:textSize="@dimen/base_text_12"/>
+
         <TextView
             android:id="@+id/product_sale_list_num_header"
             android:layout_width="wrap_content"
@@ -251,8 +267,8 @@
             android:layout_marginTop="12dp"
             android:text="销量"
             android:textColor="#5695D2"
-            android:textSize="@dimen/base_text_12"
-            />
+            android:textSize="@dimen/base_text_12"/>
+
         <TextView
             android:id="@+id/product_sale_list_amount_header"
             android:layout_width="wrap_content"
@@ -261,8 +277,8 @@
             android:layout_marginTop="12dp"
             android:text="金额"
             android:textColor="#5695D2"
-            android:textSize="@dimen/base_text_12"
-            />
+            android:textSize="@dimen/base_text_12"/>
+
         <TextView
             android:id="@+id/product_sale_list_footer_tab_sort_title"
             android:layout_width="wrap_content"
@@ -271,8 +287,8 @@
             android:layout_marginTop="51dp"
             android:text="排名"
             android:textColor="@color/base_text_black"
-            android:textSize="@dimen/base_text_10"
-            />
+            android:textSize="@dimen/base_text_10"/>
+
         <TextView
             android:id="@+id/product_sale_list_footer_tab_product_title"
             android:layout_width="wrap_content"
@@ -281,8 +297,8 @@
             android:layout_marginTop="51dp"
             android:text="商品"
             android:textColor="@color/base_text_black"
-            android:textSize="@dimen/base_text_10"
-            />
+            android:textSize="@dimen/base_text_10"/>
+
         <TextView
             android:id="@+id/product_sale_list_footer_tab_spec_title"
             android:layout_width="wrap_content"
@@ -291,8 +307,8 @@
             android:layout_marginTop="51dp"
             android:text="规格"
             android:textColor="@color/base_text_black"
-            android:textSize="@dimen/base_text_10"
-            />
+            android:textSize="@dimen/base_text_10"/>
+
         <TextView
             android:id="@+id/product_sale_list_footer_tab_salenum_title"
             android:layout_width="wrap_content"
@@ -301,8 +317,8 @@
             android:layout_marginTop="51dp"
             android:text="销量"
             android:textColor="@color/base_text_black"
-            android:textSize="@dimen/base_text_10"
-            />
+            android:textSize="@dimen/base_text_10"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/item_product_sale_detail"
             android:layout_width="match_parent"
