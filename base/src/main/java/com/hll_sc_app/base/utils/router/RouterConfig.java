@@ -352,7 +352,7 @@ public class RouterConfig {
     /**
      * 客户订货明细汇总
      */
-    public static final String REPORT_CUSTOMER_ORDER_DETAILS = "/activity/report/customerOrderDetails";
+    public static final String REPORT_ORDER_GOODS = "/activity/report/orderGoods";
 
     /**
      * 日销售汇总

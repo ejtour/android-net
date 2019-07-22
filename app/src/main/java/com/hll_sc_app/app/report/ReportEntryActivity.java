@@ -13,6 +13,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.ReportIcon;
 import com.hll_sc_app.bean.report.ReportItem;
+import com.hll_sc_app.bean.report.ReportLabel;
 
 import java.util.ArrayList;
 import java.util.List;
