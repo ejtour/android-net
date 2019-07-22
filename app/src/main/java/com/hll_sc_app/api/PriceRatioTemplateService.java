@@ -4,7 +4,10 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.priceratio.RatioTemplateResp;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -19,6 +22,16 @@ import retrofit2.http.POST;
  */
 public interface PriceRatioTemplateService {
     PriceRatioTemplateService INSTANCE = HttpFactory.create(PriceRatioTemplateService.class);
+
+    /**
+     * 查询比例模板详情
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100069")
+    Observable<BaseResp<List<CopyCategoryBean>>> queryRatioTemplateDetail(@Body BaseMapReq req);
 
     /**
      * 查询比例模板列表

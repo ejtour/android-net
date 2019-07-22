@@ -177,7 +177,7 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
             List<CustomCategoryBean> list3 = getListItem(item.getId(), mResp.getList3());
             helper.setText(R.id.txt_categoryName, item.getCategoryName())
                 .setText(R.id.txt_open, item.isChecked() ? "收起" : "展开")
-                .setGone(R.id.txt_open, list3.size() != 2);
+                .setGone(R.id.txt_open, list3.size() > 2);
             RecyclerView recyclerView = helper.getView(R.id.recyclerView);
             CategoryThreeListAdapter adapter = (CategoryThreeListAdapter) recyclerView.getAdapter();
             adapter.setOpen(item.isChecked());
@@ -194,7 +194,7 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
 
         @Override
         public int getItemCount() {
-            return open ? super.getItemCount() : 2;
+            return open ? super.getItemCount() : (super.getItemCount() > 2 ? 2 : super.getItemCount());
         }
 
         @Override

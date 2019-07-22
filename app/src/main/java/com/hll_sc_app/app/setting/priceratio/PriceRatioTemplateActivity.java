@@ -26,6 +26,9 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.SETTING_PRICE_RATIO, extras = Constant.LOGIN_EXTRA)
 public class PriceRatioTemplateActivity extends BaseLoadActivity {
 
+    public static final String TYPE_AGREEMENT_PRICE = "1";
+    public static final String TYPE_PRICE_MANAGE = "2";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +46,11 @@ public class PriceRatioTemplateActivity extends BaseLoadActivity {
                 break;
             case R.id.txt_agreement_price:
                 // 协议价比例模版设置
-                RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_LIST, "1");
+                RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_LIST, TYPE_AGREEMENT_PRICE);
                 break;
             case R.id.txt_price_manage:
                 // 售价比例模版设置
-                RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_LIST, "2");
+                RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_LIST, TYPE_PRICE_MANAGE);
                 break;
             default:
                 break;

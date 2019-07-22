@@ -18,14 +18,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.setting.priceratio.add.PriceRatioTemplateAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -98,12 +99,15 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
             if (id == R.id.txt_del) {
                 showDelTipsDialog(ratioTemplateBean);
             } else if (id == R.id.txt_content) {
+                RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_ADD, isAgreementPriceRatio() ?
+                        PriceRatioTemplateActivity.TYPE_AGREEMENT_PRICE : PriceRatioTemplateActivity.TYPE_PRICE_MANAGE,
+                    PriceRatioTemplateAddActivity.TYPE_ADD, ratioTemplateBean.getTemplateID());
             }
         });
         mEmptyView = EmptyView.newBuilder(this)
             .setTipsTitle("您还没有" + (isAgreementPriceRatio() ? "协议价比例模版" : "售价比例模版") + "数据")
             .setTips("您可以在分类中按照百分比进行设置")
-            .setTipsButton("新增售价比例模版")
+            .setTipsButton(isAgreementPriceRatio() ? "新增协议价比例模版" : "新增售价比例模版")
             .setOnClickListener(new EmptyView.OnActionClickListener() {
                 @Override
                 public void retry() {
@@ -121,7 +125,7 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
     }
 
     private boolean isAgreementPriceRatio() {
-        return TextUtils.equals("1", mTemplateType);
+        return TextUtils.equals(PriceRatioTemplateActivity.TYPE_AGREEMENT_PRICE, mTemplateType);
     }
 
     private void showDelTipsDialog(RatioTemplateBean bean) {
@@ -140,7 +144,9 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
     }
 
     private void toAdd() {
-        LogUtil.d("ZYS", "toADD");
+        RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_ADD, isAgreementPriceRatio() ?
+                PriceRatioTemplateActivity.TYPE_AGREEMENT_PRICE : PriceRatioTemplateActivity.TYPE_PRICE_MANAGE,
+            PriceRatioTemplateAddActivity.TYPE_ADD);
     }
 
     @OnClick({R.id.img_close, R.id.txt_add})
