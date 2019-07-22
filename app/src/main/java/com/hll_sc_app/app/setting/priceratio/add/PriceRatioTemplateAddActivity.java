@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -15,8 +16,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.app.setting.priceratio.PriceRatioTemplateActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -100,7 +103,41 @@ public class PriceRatioTemplateAddActivity extends BaseLoadActivity implements P
         mRecyclerViewThreeId.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
             R.color.base_color_divider), UIUtils.dip2px(1)));
         mThreeAdapter = new ThreeCategoryAdapter();
+        mThreeAdapter.setOnItemClickListener((adapter, view, position) -> {
+            CopyCategoryBean bean = (CopyCategoryBean) adapter.getItem(position);
+            if (bean != null) {
+                showInputDialog(bean);
+            }
+        });
         mRecyclerViewThreeId.setAdapter(mThreeAdapter);
+    }
+
+    private void showInputDialog(CopyCategoryBean bean) {
+        String ration = CommonUtils.formatNumber(bean.getRatio());
+        InputDialog.newBuilder(this)
+            .setCancelable(false)
+            .setTextTitle("输入" + bean.getShopProductCategoryThreeName() + "的比例")
+            .setHint("输入比例")
+            .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
+            .setText(TextUtils.equals(ration, "0") ? null : ration)
+            .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
+                if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
+                    s.delete(s.length() - 1, s.length());
+                    showToast("比例设置支持7位整数或小数点后两位");
+                }
+            })
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    if (TextUtils.isEmpty(dialog.getInputString())) {
+                        showToast("输入比例不能为空");
+                        return;
+                    }
+                    bean.setRatio(dialog.getInputString());
+                    mThreeAdapter.notifyDataSetChanged();
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
     }
 
     @Override
@@ -195,7 +232,7 @@ public class PriceRatioTemplateAddActivity extends BaseLoadActivity implements P
         @Override
         protected void convert(BaseViewHolder helper, CopyCategoryBean item) {
             helper.setText(R.id.txt_categoryName, item.getShopProductCategoryThreeName())
-                .setText(R.id.txt_ratio, item.getRatio() + "%");
+                .setText(R.id.txt_ratio, item.getRatio());
         }
     }
 }
