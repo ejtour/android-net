@@ -1,8 +1,13 @@
 package com.hll_sc_app.app.cooperation.detail.details.certification;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +21,7 @@ import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -24,17 +30,22 @@ import butterknife.Unbinder;
  * @author zhuyingsong
  * @date 2019/7/22
  */
-public class CooperationDetailsCertificationFragment extends BaseCooperationDetailsFragment implements CooperationDetailsCertificationContract.ICertificationView {
+public class CooperationDetailsCertificationFragment extends BaseCooperationDetailsFragment {
     Unbinder unbinder;
     @BindView(R.id.buttonView)
     CooperationButtonView mButtonView;
     @BindView(R.id.txt_certification)
     TextView mTxtCertification;
+    @BindView(R.id.txt_certification2)
+    TextView mTxtCertification2;
     @BindView(R.id.ll_certification013)
     LinearLayout mLlCertification013;
+    @BindView(R.id.txt_businessEntity)
+    TextView mTxtBusinessEntity;
+    @BindView(R.id.ll_certification2)
+    LinearLayout mLlCertification2;
 
     private CooperationPurchaserDetail mDetail;
-    private CooperationDetailsCertificationPresenter mPresenter;
 
     public static CooperationDetailsCertificationFragment newInstance(CooperationPurchaserDetail bean) {
         Bundle args = new Bundle();
@@ -47,8 +58,6 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = CooperationDetailsCertificationPresenter.newInstance();
-        mPresenter.register(this);
         Bundle bundle = getArguments();
         if (bundle != null) {
             mDetail = bundle.getParcelable("parcelable");
@@ -75,8 +84,17 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
         if (TextUtils.equals(mDetail.getIsCertified(), "2")) {
             // 已通过
             mLlCertification013.setVisibility(View.GONE);
+            mLlCertification2.setVisibility(View.VISIBLE);
+            SpannableString spannableString = new SpannableString(mTxtCertification2.getText());
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#1AB394")),
+                spannableString.length() - 6, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new RelativeSizeSpan(1.3f), spannableString.length() - 6,
+                spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mTxtCertification2.setText(spannableString);
+            mTxtBusinessEntity.setText(mDetail.getBusinessEntity());
         } else {
             mLlCertification013.setVisibility(View.VISIBLE);
+            mLlCertification2.setVisibility(View.GONE);
             String certificationTitle = null;
             switch (mDetail.getIsCertified()) {
                 case "0":
@@ -101,6 +119,23 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
         setForceLoad(true);
         if (isFragmentVisible()) {
             lazyLoad();
+        }
+    }
+
+    @OnClick({R.id.ll_imagePath, R.id.ll_licencePhotoUrl, R.id.ll_otherLicenses})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_imagePath:
+                // 门头照
+                break;
+            case R.id.ll_licencePhotoUrl:
+                // 营业执照
+                break;
+            case R.id.ll_otherLicenses:
+                // 其他证照
+                break;
+            default:
+                break;
         }
     }
 }
