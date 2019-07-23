@@ -2,7 +2,8 @@ package com.hll_sc_app.app.setting.priceratio.add;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
+import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 
 import java.util.List;
 
@@ -14,14 +15,14 @@ import java.util.List;
  */
 public interface PriceRatioTemplateAddContract {
 
-    interface IGoodsStickView extends ILoadView {
+    interface IPriceRatioTemplateAddView extends ILoadView {
 
         /**
          * 处理数据
          *
          * @param list list
          */
-        void processData(List<CopyCategoryBean> list);
+        void processData(List<CategoryRatioListBean> list);
 
         /**
          * 模板类型
@@ -50,10 +51,25 @@ public interface PriceRatioTemplateAddContract {
         void addSuccess();
     }
 
-    interface IGoodsStickPresenter extends IPresenter<IGoodsStickView> {
+    interface IPriceRatioTemplateAddPresenter extends IPresenter<IPriceRatioTemplateAddView> {
         /**
          * 查询自定义分类
          */
         void queryCustomCategory();
+
+        /**
+         * 修改报价模板
+         *
+         * @param bean 模板
+         */
+        void editRatioTemplate(RatioTemplateBean bean);
+
+        /**
+         * 新增报价模板
+         *
+         * @param bean 模板
+         */
+        void addRatioTemplate(RatioTemplateBean bean);
+
     }
 }

@@ -1,10 +1,12 @@
 package com.hll_sc_app.api;
 
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.goods.CopyCategoryBean;
+import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
+import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 import com.hll_sc_app.bean.priceratio.RatioTemplateResp;
 
 import java.util.List;
@@ -31,7 +33,7 @@ public interface PriceRatioTemplateService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:100069")
-    Observable<BaseResp<List<CopyCategoryBean>>> queryRatioTemplateDetail(@Body BaseMapReq req);
+    Observable<BaseResp<List<CategoryRatioListBean>>> queryRatioTemplateDetail(@Body BaseMapReq req);
 
     /**
      * 查询比例模板列表
@@ -52,6 +54,26 @@ public interface PriceRatioTemplateService {
     @POST(HttpConfig.URL)
     @Headers("pv:100067")
     Observable<BaseResp<Object>> delPriceRatioTemplate(@Body BaseMapReq req);
+
+    /**
+     * 编辑报价模板
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100066")
+    Observable<BaseResp<Object>> editPriceRatioTemplate(@Body BaseReq<RatioTemplateBean> req);
+
+    /**
+     * 编辑报价模板
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100065")
+    Observable<BaseResp<Object>> addPriceRatioTemplate(@Body BaseReq<RatioTemplateBean> req);
 
 
 }

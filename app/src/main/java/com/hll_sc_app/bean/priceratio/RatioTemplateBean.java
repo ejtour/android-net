@@ -19,7 +19,16 @@ public class RatioTemplateBean {
     private String categoryCount;
     private String groupID;
     private String templateID;
+    private String templateType;
     private List<CategoryRatioListBean> categoryRatioList;
+
+    public String getTemplateType() {
+        return templateType;
+    }
+
+    public void setTemplateType(String templateType) {
+        this.templateType = templateType;
+    }
 
     public String getActionTime() {
         return actionTime;

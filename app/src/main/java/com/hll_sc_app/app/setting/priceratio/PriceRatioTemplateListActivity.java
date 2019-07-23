@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.setting.priceratio;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -98,10 +99,11 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
             int id = view.getId();
             if (id == R.id.txt_del) {
                 showDelTipsDialog(ratioTemplateBean);
-            } else if (id == R.id.txt_content) {
+            } else if (id == R.id.content) {
                 RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_ADD, isAgreementPriceRatio() ?
                         PriceRatioTemplateActivity.TYPE_AGREEMENT_PRICE : PriceRatioTemplateActivity.TYPE_PRICE_MANAGE,
-                    PriceRatioTemplateAddActivity.TYPE_ADD, ratioTemplateBean.getTemplateID());
+                    PriceRatioTemplateAddActivity.TYPE_ADD, ratioTemplateBean.getTemplateID(),
+                    ratioTemplateBean.getTemplateName());
             }
         });
         mEmptyView = EmptyView.newBuilder(this)
@@ -147,6 +149,12 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
         RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_ADD, isAgreementPriceRatio() ?
                 PriceRatioTemplateActivity.TYPE_AGREEMENT_PRICE : PriceRatioTemplateActivity.TYPE_PRICE_MANAGE,
             PriceRatioTemplateAddActivity.TYPE_ADD);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresenter.start();
     }
 
     @OnClick({R.id.img_close, R.id.txt_add})

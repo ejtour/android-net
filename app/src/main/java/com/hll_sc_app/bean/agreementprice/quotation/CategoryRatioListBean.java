@@ -12,6 +12,15 @@ public class CategoryRatioListBean {
     private String shopProductCategoryThreeName;
     private String shopProductCategoryThreeID;
     private String ratio;
+    private boolean select;
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
 
     public String getShopProductCategorySubID() {
         return shopProductCategorySubID;
