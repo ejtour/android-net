@@ -12,6 +12,18 @@ public class RouterConfig {
      */
     public static final String SETTING = "/activity/setting";
     /**
+     * 设置界面-价格比例设置
+     */
+    public static final String SETTING_PRICE_RATIO = "/activity/setting/priceRatio";
+    /**
+     * 设置界面-价格比例设置-列表-新增界面
+     */
+    public static final String SETTING_PRICE_RATIO_ADD = "/activity/setting/priceRatio/add";
+    /**
+     * 设置界面-价格比例设置-列表
+     */
+    public static final String SETTING_PRICE_RATIO_LIST = "/activity/setting/priceRatio/list";
+    /**
      * 订单设置界面
      */
     public static final String BILL_SETTING = "/activity/setting/bill";
@@ -91,6 +103,18 @@ public class RouterConfig {
      * 合作采购商详情
      */
     public static final String COOPERATION_PURCHASER_DETAIL = "/activity/cooperationPurchaser/detail";
+    /**
+     * 门头照
+     */
+    public static final String STORE_FRONT_IMAGE = "/activity/store/frontImage";
+    /**
+     * 其他证照
+     */
+    public static final String STORE_OTHER_LICENSE_IMAGE = "/activity/store/otherLicense";
+    /**
+     * 营业证照
+     */
+    public static final String STORE_BUSINESS_LICENSE_IMAGE = "/activity/store/ businessLicense";
     /**
      * 合作采购商详情-详细资料
      */
@@ -330,7 +354,7 @@ public class RouterConfig {
     /**
      * 报表中心
      */
-    public static final String REPORT_ENTRY ="/activity/report/entry";
+    public static final String REPORT_ENTRY = "/activity/report/entry";
 
     /**
      * 商品销量统计汇总
@@ -340,10 +364,10 @@ public class RouterConfig {
     /**
      * 客户订货明细汇总
      */
-    public static final String REPORT_CUSTOMER_ORDER_DETAILS = "/activity/report/customerOrderDetails";
+    public static final String REPORT_ORDER_GOODS = "/activity/report/orderGoods";
 
     /**
      * 日销售汇总
      */
-    public static final String REPORT_DAILY_AGGREGATION="/activity/daily/aggregation";
+    public static final String REPORT_DAILY_AGGREGATION = "/activity/daily/aggregation";
 }

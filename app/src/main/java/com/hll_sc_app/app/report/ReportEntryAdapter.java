@@ -32,8 +32,8 @@ public class ReportEntryAdapter extends BaseQuickAdapter<ReportItem, BaseViewHol
     @Override
     protected void convert(BaseViewHolder helper, ReportItem item) {
         View divider = helper.setText(R.id.ire_name, item.getLabel())
-                .setImageResource(R.id.ire_icon, item.getIcon())
-                .getView(R.id.ire_divider);
+            .setImageResource(R.id.ire_icon, item.getIcon())
+            .getView(R.id.ire_divider);
         ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) divider.getLayoutParams();
         if (item.isBottomDivider() || helper.getAdapterPosition() == getItemCount() - 1) {
             params.leftMargin = 0;

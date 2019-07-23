@@ -1,4 +1,6 @@
-package com.hll_sc_app.bean.agreementprice.quotation;
+package com.hll_sc_app.bean.priceratio;
+
+import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
 
 import java.util.List;
 

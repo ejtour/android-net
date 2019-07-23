@@ -34,7 +34,7 @@ public class GoodsOperationPresenter implements IGoodsOperationContract.IGoodsOp
                 null,
                 null,
                 list,
-                new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+            new SimpleObserver<MsgWrapper<Object>>(true, mView) {
                     @Override
                     public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                         mView.handleStatusChange();

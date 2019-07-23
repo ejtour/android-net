@@ -42,10 +42,10 @@ public class SimpleDecoration extends RecyclerView.ItemDecoration {
     /**
      * 分别设置分割线四周的边距
      *
-     * @param left   左边距
-     * @param top    上边距
-     * @param right  右边距
-     * @param bottom 下边距
+     * @param left       左边距
+     * @param top        上边距
+     * @param right      右边距
+     * @param bottom     下边距
      * @param decorColor 装饰颜色，用于为分割线左右（竖直布局）或上下（水平布局）的间距区域绘制颜色
      */
     public void setLineMargin(int left, int top, int right, int bottom, @ColorInt int decorColor) {
@@ -84,7 +84,7 @@ public class SimpleDecoration extends RecyclerView.ItemDecoration {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
             int posY = child.getBottom() + params.bottomMargin + mTopMargin + mLineWidth / 2;
             mLinePaint.setColor(mDecorColor);
-            c.drawLine(parent.getPaddingLeft(), posY, parent.getWidth() - parent.getPaddingRight(), posY, mLinePaint);
+            c.drawLine(0, posY, parent.getWidth(), posY, mLinePaint);
             mLinePaint.setColor(mLineColor);
             c.drawLine(startX, posY, stopX, posY, mLinePaint);
         }
@@ -93,7 +93,7 @@ public class SimpleDecoration extends RecyclerView.ItemDecoration {
     private void drawHorizontal(Canvas c, RecyclerView parent) {
         int childCount = parent.getChildCount();
         int startY = parent.getPaddingTop() + mTopMargin;
-        int stopY = parent.getHeight() - parent.getPaddingBottom() - mRightMargin;
+        int stopY = parent.getHeight() - parent.getPaddingBottom() - mBottomMargin;
         int step = 1;
         if (parent.getLayoutManager() instanceof GridLayoutManager) {
             step = ((GridLayoutManager) parent.getLayoutManager()).getSpanCount();
@@ -103,7 +103,7 @@ public class SimpleDecoration extends RecyclerView.ItemDecoration {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
             int posX = child.getRight() + params.rightMargin + mLeftMargin + mLineWidth / 2;
             mLinePaint.setColor(mDecorColor);
-            c.drawLine(posX, parent.getPaddingTop(), posX, parent.getHeight() - parent.getPaddingBottom(), mLinePaint);
+            c.drawLine(posX, 0, posX, parent.getHeight(), mLinePaint);
             mLinePaint.setColor(mLineColor);
             c.drawLine(posX, startY, posX, stopY, mLinePaint);
         }
@@ -118,11 +118,10 @@ public class SimpleDecoration extends RecyclerView.ItemDecoration {
         if (parent.getChildAdapterPosition(view) == childCount - 1) {
             return;
         }
-        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
         if (((LinearLayoutManager) parent.getLayoutManager()).getOrientation() == RecyclerView.HORIZONTAL) {
-            outRect.set(lp.leftMargin, lp.topMargin, lp.rightMargin + mLineWidth + mRightMargin + mLeftMargin, lp.bottomMargin);
+            outRect.set(0, 0, mLineWidth + mRightMargin + mLeftMargin, 0);
         } else {
-            outRect.set(lp.leftMargin, lp.topMargin, lp.rightMargin, lp.bottomMargin + mLineWidth + mBottomMargin + mTopMargin);
+            outRect.set(0, 0, 0, mLineWidth + mBottomMargin + mTopMargin);
         }
     }
 }

@@ -176,7 +176,7 @@ public class AfterSales {
         req.setRefundBillDetailList(list);
         AfterSalesService.INSTANCE
                 .afterSalesAction(new BaseReq<>(req))
-                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+            .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

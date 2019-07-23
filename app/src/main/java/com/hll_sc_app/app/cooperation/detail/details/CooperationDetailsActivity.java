@@ -16,6 +16,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.app.cooperation.detail.details.basic.CooperationDetailsBasicFragment;
+import com.hll_sc_app.app.cooperation.detail.details.certification.CooperationDetailsCertificationFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -105,7 +106,7 @@ public class CooperationDetailsActivity extends BaseLoadActivity {
     private void initView(CooperationPurchaserDetail detail) {
         mListFragment = new ArrayList<>();
         mListFragment.add(CooperationDetailsBasicFragment.newInstance(detail));
-        mListFragment.add(CooperationDetailsBasicFragment.newInstance(detail));
+        mListFragment.add(CooperationDetailsCertificationFragment.newInstance(detail));
         mViewPager.setAdapter(new FragmentListAdapter(getSupportFragmentManager(), mListFragment));
         mTab.setViewPager(mViewPager, STR_TITLE);
     }

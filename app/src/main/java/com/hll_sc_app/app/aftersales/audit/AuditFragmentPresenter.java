@@ -116,7 +116,7 @@ public class AuditFragmentPresenter implements IAuditFragmentContract.IAuditFrag
     @Override
     public void doAction(int actionType, String billID, int status, int type, String payType, String reason) {
         AfterSales.afterSalesAction(actionType, billID, status, type, payType, reason, null,
-                new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+            new SimpleObserver<MsgWrapper<Object>>(true, mView) {
                     @Override
                     public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                         mView.actionSuccess();

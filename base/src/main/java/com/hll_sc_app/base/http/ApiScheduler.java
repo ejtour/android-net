@@ -31,9 +31,9 @@ public class ApiScheduler {
 
     public static <R, T extends BaseResp<R>> ObservableTransformer<T, MsgWrapper<R>> getMsgLoadingScheduler(SimpleObserver<MsgWrapper<R>> observer) {
         return upstream -> upstream.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new MsgPrecondition<>())
-                .doOnSubscribe(disposable -> observer.startReq())
-                .doFinally((Action) observer::reqOver);
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(new MsgPrecondition<>())
+            .doOnSubscribe(disposable -> observer.startReq())
+            .doFinally((Action) observer::reqOver);
     }
 }

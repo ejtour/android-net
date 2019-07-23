@@ -2,7 +2,7 @@ package com.hll_sc_app.app.agreementprice.quotation.add.ratiotemplate;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
+import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 
 import java.util.List;
 

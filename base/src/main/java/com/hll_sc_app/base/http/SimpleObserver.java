@@ -26,14 +26,14 @@ public abstract class SimpleObserver<T> extends BaseCallback<T> {
         this(false, view, true);
     }
 
-    protected SimpleObserver(ILoadView view, boolean showLoading) {
-        this(false, view, showLoading);
-    }
-
     protected SimpleObserver(boolean toastMsg, ILoadView view, boolean showLoading) {
         mView = new WeakReference<>(view);
         mShowLoading = showLoading;
         mToastMsg = toastMsg;
+    }
+
+    protected SimpleObserver(ILoadView view, boolean showLoading) {
+        this(false, view, showLoading);
     }
 
     protected SimpleObserver(boolean toastMsg, ILoadView view) {
