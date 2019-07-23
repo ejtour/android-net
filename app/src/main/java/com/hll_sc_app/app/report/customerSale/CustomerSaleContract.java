@@ -1,28 +1,17 @@
-package com.hll_sc_app.app.report.dailySale;
+package com.hll_sc_app.app.report.customerSale;
 
+import com.hll_sc_app.app.report.dailySale.DailyAggregationContract;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.pricemanage.PriceLogBean;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
-import com.hll_sc_app.bean.report.resp.bill.DateSaleAmount;
-import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 
-import java.util.List;
-
-/**
- * 售价设置-变更日志
- *
- * @author zhuyingsong
- * @date 2019/7/16
- */
-public interface DailyAggregationContract {
-
-    interface IDailyAggregationView extends ILoadView {
+public interface CustomerSaleContract {
+    interface ICustomerSaleView extends ILoadView {
         /**
          * 展示客户销售汇总的数据
-         * @param dateSaleAmountResp
+         * @param customerSalesResp
          */
-        void showDailyAggregationList(DateSaleAmountResp dateSaleAmountResp,boolean append, int total);
+        void showCustomerSaleGather(CustomerSalesResp customerSalesResp);
 
 
         /**
@@ -59,24 +48,24 @@ public interface DailyAggregationContract {
         void bindEmail();
     }
 
-    interface IDailyAggregationManagePresenter extends IPresenter<IDailyAggregationView> {
+    interface ICustomerSaleManagePresenter extends IPresenter<CustomerSaleContract.ICustomerSaleView> {
         /**
          * 加载日销售汇总列表
          *
          * @param showLoading true-显示对话框
          */
-        void queryDailyAggregationList(boolean showLoading);
+        void queryCustomerSaleList(boolean showLoading);
 
         /**
          * 加载更多日汇总列表
          */
-        void queryMoreDailyAggregationList();
+        void queryMoreCustomerSaleList();
 
         /**
          * 导出日汇总报表
          *
          * @param email 邮箱地址
          */
-        void exportDailyReport(String email);
+        void exportCustomerSaleReport(String email);
     }
 }
