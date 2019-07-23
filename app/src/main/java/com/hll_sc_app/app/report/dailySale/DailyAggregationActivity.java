@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmount;
+import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
@@ -45,6 +47,10 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     TextView mTxtDateName;
     @BindView(R.id.rl_select_date)
     RelativeLayout mRlSelectDate;
+    @BindView(R.id.daily_totalAmount)
+    TextView dailyTotalAmount;
+    @BindView(R.id.daily_totalnum)
+    TextView dailyTotalnum;
     private DailyAggregationListAdapter mAdapter;
     private DateRangeWindow mDateRangeWindow;
     private DailyAggregationPresenter mPresenter;
@@ -79,7 +85,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(endDate, CalendarUtils.FORMAT_SERVER_DATE));
     }
 
-    @OnClick({R.id.img_back,  R.id.rl_select_date})
+    @OnClick({R.id.img_back, R.id.rl_select_date})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -113,9 +119,9 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
                     String endStr = CalendarUtils.format(calendarEnd.getTime(), FORMAT_DATE);
                     mTxtDateName.setText(String.format("%s-%s", startStr, endStr));
                     mTxtDateName.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
-                        CalendarUtils.FORMAT_SERVER_DATE));
+                            CalendarUtils.FORMAT_SERVER_DATE));
                     mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
-                        CalendarUtils.FORMAT_SERVER_DATE));
+                            CalendarUtils.FORMAT_SERVER_DATE));
                     mPresenter.queryDailyAggregationList(true);
                 }
             });
@@ -124,12 +130,14 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     }
 
     @Override
-    public void showDailyAggregationList(List<DateSaleAmount> list, boolean append, int total) {
+    public void showDailyAggregationList(DateSaleAmountResp dateSaleAmountResp, boolean append, int total) {
         if (append) {
-            mAdapter.addData(list);
+            mAdapter.addData(dateSaleAmountResp.getRecords());
         } else {
-            mAdapter.setNewData(list);
+            mAdapter.setNewData(dateSaleAmountResp.getRecords());
         }
+        dailyTotalAmount.setText("总交易金额:¥"+CommonUtils.format(dateSaleAmountResp.getTotalSubtotalAmount(),2));
+        dailyTotalnum.setText("总订单数:"+dateSaleAmountResp.getTotalOrderNum());
     }
 
     @Override
@@ -178,12 +186,12 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
 
         @Override
         protected void convert(BaseViewHolder helper, DateSaleAmount bean) {
-            helper.setText(R.id.daily_amount, CommonUtils.format(bean.getSubtotalAmount(),2))
-                    .setText(R.id.daily_time,CalendarUtils.format(CalendarUtils.parseLocal(bean.getDate()+"",CalendarUtils.FORMAT_LOCAL_DATE),"yyyy/MM/dd"))
-                .setText(R.id.daily_order_num, bean.getOrderNum()+"")
-                .setText(R.id.daily_customer_price, CommonUtils.format(bean.getAverageShopAmount(),2))
-                .setText(R.id.daily_avg_price, CommonUtils.format(bean.getAverageAmount(),2))
-                .setText(R.id.daily_order_customers, bean.getOrderCustomerNum()+"/"+bean.getOrderCustomerShopNum());
+            helper.setText(R.id.daily_amount, CommonUtils.format(bean.getSubtotalAmount(), 2))
+                    .setText(R.id.daily_time, CalendarUtils.format(CalendarUtils.parseLocal(bean.getDate() + "", CalendarUtils.FORMAT_LOCAL_DATE), "yyyy/MM/dd"))
+                    .setText(R.id.daily_order_num, bean.getOrderNum() + "")
+                    .setText(R.id.daily_customer_price, CommonUtils.format(bean.getAverageShopAmount(), 2))
+                    .setText(R.id.daily_avg_price, CommonUtils.format(bean.getAverageAmount(), 2))
+                    .setText(R.id.daily_order_customers, bean.getOrderCustomerNum() + "/" + bean.getOrderCustomerShopNum());
         }
     }
 }

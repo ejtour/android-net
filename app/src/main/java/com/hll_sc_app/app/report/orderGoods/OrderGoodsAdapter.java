@@ -13,15 +13,15 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 
 public class OrderGoodsAdapter extends BaseQuickAdapter<OrderGoodsBean, BaseViewHolder> {
     OrderGoodsAdapter() {
-        super(R.layout.item_order_goods);
+        super(R.layout.item_report_order_goods);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, OrderGoodsBean item) {
-        helper.setText(R.id.iog_shop_name, item.getShopName())
-                .setText(R.id.iog_group_name, item.getPurchaserName())
-                .setText(R.id.iog_product_num, CommonUtils.formatNum(item.getSkuNum()))
-                .setText(R.id.iog_inspection_num, CommonUtils.formatNum(item.getInspectionNum()))
-                .setText(R.id.iog_amount, String.format("¥%s", CommonUtils.formatMoney(item.getInspectionAmount())));
+        helper.setText(R.id.rog_shop_name, item.getShopName())
+                .setText(R.id.rog_group_name, item.getPurchaserName())
+                .setText(R.id.rog_product_num, CommonUtils.formatNum(item.getSkuNum()))
+                .setText(R.id.rog_inspection_num, CommonUtils.formatNum(item.getInspectionNum()))
+                .setText(R.id.rog_amount, String.format("¥%s", CommonUtils.formatMoney(item.getInspectionAmount())));
     }
 }

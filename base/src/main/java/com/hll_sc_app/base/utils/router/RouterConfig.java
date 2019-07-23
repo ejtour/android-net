@@ -371,6 +371,11 @@ public class RouterConfig {
     public static final String REPORT_ORDER_GOODS = "/activity/report/orderGoods";
 
     /**
+     * 客户订货明细汇总-门店详情
+     */
+    public static final String REPORT_ORDER_GOODS_DETAIL = "/activity/report/orderGoods/detail";
+
+    /**
      * 日销售汇总
      */
     public static final String REPORT_DAILY_AGGREGATION = "/activity/daily/aggregation";

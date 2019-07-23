@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.report.orderGoods;
 
+import com.hll_sc_app.citymall.util.CalendarUtils;
+
 import java.util.Date;
 
 /**
@@ -11,6 +13,15 @@ public class OrderGoodsParam {
     private Date startDate;
     private Date endDate;
     private String shopIDs;
+
+
+    public String getFormatStartDate(){
+        return startDate == null ? null : CalendarUtils.toLocalDate(startDate);
+    }
+
+    public String getFormatEndDate(){
+        return endDate == null ? null : CalendarUtils.toLocalDate(endDate);
+    }
 
     public Date getStartDate() {
         return startDate;

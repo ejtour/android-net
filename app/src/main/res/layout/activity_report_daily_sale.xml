@@ -71,6 +71,38 @@
             android:clipToPadding="false"
             android:padding="10dp"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:background="@color/base_white">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/daily_totalAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="总交易金额:235607"
+                    android:textColor="@color/base_text_black"
+                    android:textSize="@dimen/base_text_12"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/daily_totalnum"
+                    android:text="总订单数:235607"
+                    android:textColor="@color/base_text_black"
+                    android:textSize="@dimen/base_text_12"/>
+            </LinearLayout>
+        </LinearLayout>>
     </RelativeLayout>
-
 </LinearLayout>

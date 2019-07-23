@@ -18,8 +18,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.widget.BasePopupWindow;
-import com.hll_sc_app.bean.aftersales.PurchaserBean;
-import com.hll_sc_app.bean.aftersales.PurchaserShopBean;
+import com.hll_sc_app.bean.common.PurchaserBean;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.ArrayList;
@@ -64,17 +64,18 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
 
     public interface PurchaserShopSelectCallback {
         /**
-         * @param flag 0 集团，1门店
+         * @param flag        0 集团，1门店
+         * @param purchaserID 搜索门店时传purchaserID
          * @return 是否进行网络请求
          */
-        default boolean search(String content, int flag) {
+        default boolean search(String searchWords, int flag, String purchaserID) {
             return false;
         }
 
-        default void loadPurchaserShop(String purchaserID) {
+        default void loadPurchaserShop(String purchaserID, String searchWords) {
         }
 
-        void onSelect(String purchaserID, String shopID);
+        void onSelect(String purchaserID, String shopID, List<String> shopNameList);
     }
 
     public static PurchaserShopSelectWindow create(Activity activity, PurchaserShopSelectCallback callback) {
@@ -111,7 +112,7 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
                 if (CommonUtils.isEmpty(mCurBean.getShopList())) {
                     mShopAdapter.setNewData(mCurBean.getShopList());
                     if (!TextUtils.isEmpty(mCurBean.getPurchaserID()))
-                        mCallback.loadPurchaserShop(mCurBean.getPurchaserID());
+                        mCallback.loadPurchaserShop(mCurBean.getPurchaserID(), mSearchEdit.getText().toString().trim());
                 } else mShopAdapter.setNewData(mCurBean.getShopList());
             }
         });
@@ -175,16 +176,26 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
                 break;
             case R.id.pss_confirm:
                 String purchaserID = null, shopID = null;
+                List<String> shopList = new ArrayList<>();
+                List<String> shopIDList = new ArrayList<>();
                 if (mCurBean != null) {
                     purchaserID = mCurBean.getPurchaserID();
-                    for (PurchaserShopBean bean : mCurBean.getShopList()) {
-                        if (bean.isSelected()) {
-                            shopID = bean.getShopID();
-                            break;
+                    if (!CommonUtils.isEmpty(mCurBean.getShopList()))
+                        for (PurchaserShopBean bean : mCurBean.getShopList()) {
+                            if (bean.isSelected()) {
+                                shopList.add(bean.getShopName());
+                                if (mIsMulti) {
+                                    if (!TextUtils.isEmpty(bean.getShopID())) {
+                                        shopIDList.add(bean.getShopID());
+                                    }
+                                } else {
+                                    shopID = bean.getShopID();
+                                    break;
+                                }
+                            }
                         }
-                    }
                 }
-                mCallback.onSelect(purchaserID, shopID);
+                mCallback.onSelect(purchaserID, mIsMulti ? TextUtils.join(",", shopIDList) : shopID, shopList);
                 break;
             case R.id.pss_clear_search:
                 mSearchEdit.setText("");
@@ -198,17 +209,20 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
             bean.setSelected(false);
         }
         mCurBean = mCurShopBean = null;
-        refreshList(mPurchaserBeans);
         mShopAdapter.setNewData(null);
         mSearchType.setText(GROUP);
         mSearchEdit.setText("");
+        mSearchEdit.setTag("");
+        if (!mCallback.search("", 0, null))
+            localProcessData();
     }
 
     private void toSearch() {
         String tag = mSearchEdit.getText().toString().trim();
         if (tag.equals(mSearchEdit.getTag())) return;
         mSearchEdit.setTag(tag);
-        if (!mCallback.search(tag, isGroup() ? 0 : 1)) localProcessData();
+        if (!mCallback.search(tag, isGroup() ? 0 : 1, mCurBean == null ? null : mCurBean.getPurchaserID()))
+            localProcessData();
     }
 
     private boolean isGroup() {
@@ -354,7 +368,7 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
         public void setNewData(@Nullable List<PurchaserShopBean> data) {
             List<PurchaserShopBean> list = new ArrayList<>();
             PurchaserShopBean element = new PurchaserShopBean();
-            element.setSelected(true);
+            element.setSelected(!mIsMulti);
             element.setShopName(STRING_ALL);
             list.add(element);
             if (!CommonUtils.isEmpty(data)) {
