@@ -96,6 +96,10 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_LIST = "/activity/cooperationPurchaser/list";
     /**
+     * 合作采购商-我发出的申请
+     */
+    public static final String COOPERATION_PURCHASER_MY_APPLICATION = "/activity/cooperationPurchaser/myApplication";
+    /**
      * 合作采购商新增
      */
     public static final String COOPERATION_PURCHASER_ADD = "/activity/cooperationPurchaser/add";

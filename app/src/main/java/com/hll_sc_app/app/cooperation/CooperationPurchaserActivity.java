@@ -253,6 +253,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
             // 我收到的申请
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
             // 我发出的申请
+            RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_MY_APPLICATION);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_EXPORT)) {
             mPresenter.exportPurchaser(null);
         }

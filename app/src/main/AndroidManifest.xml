@@ -141,6 +141,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.cooperation.invite.CooperationInviteActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.cooperation.detail.CooperationDetailActivity"
             android:screenOrientation="portrait" />
 
