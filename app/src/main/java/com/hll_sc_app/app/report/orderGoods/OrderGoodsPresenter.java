@@ -9,15 +9,17 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.common.PurchaserBean;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Report;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.util.Date;
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -39,7 +41,23 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
 
     @Override
     public void getPurchaserList(String searchWords) {
+        Common.queryPurchaserList("customerOrder", searchWords, new SimpleObserver<List<PurchaserBean>>(mView) {
+            @Override
+            public void onSuccess(List<PurchaserBean> purchaserBeans) {
+                mView.refreshPurchaserList(purchaserBeans);
+            }
+        });
+    }
 
+    @Override
+    public void getShopList(String purchaseID, String searchWords) {
+        if (TextUtils.isEmpty(purchaseID)) return;
+        Common.queryPurchaserShopList(purchaseID, "customerOrder", searchWords, new SimpleObserver<List<PurchaserShopBean>>(mView) {
+            @Override
+            public void onSuccess(List<PurchaserShopBean> purchaserShopBeans) {
+                mView.refreshShopList(purchaserShopBeans);
+            }
+        });
     }
 
     @Override
@@ -60,6 +78,12 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
     }
 
     @Override
+    public void reload() {
+        mPageNum = 1;
+        getOrderGoodsDetails(true);
+    }
+
+    @Override
     public void refresh() {
         mPageNum = 1;
         loadMore();
@@ -71,7 +95,7 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
             bindEmail(email);
             return;
         }
-        Report.exportOrderGoodsDetails(mParam.getShopIDs(),  mParam.getFormatStartDate(), mParam.getFormatEndDate(),
+        Report.exportOrderGoodsDetails(mParam.getShopIDs(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
                 new SimpleObserver<ExportResp>(mView) {
                     @Override
                     public void onSuccess(ExportResp exportResp) {
@@ -113,8 +137,7 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
     @Override
     public void start() {
         getPurchaserList("");
-        mPageNum = 1;
-        getOrderGoodsDetails(true);
+        reload();
     }
 
     @Override

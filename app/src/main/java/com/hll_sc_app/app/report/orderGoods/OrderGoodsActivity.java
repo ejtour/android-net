@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -17,16 +18,20 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
+import com.hll_sc_app.bean.common.PurchaserBean;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsParam;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
+import com.hll_sc_app.widget.aftersales.PurchaserShopSelectWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -63,6 +68,8 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     SmartRefreshLayout mRefreshView;
     private ContextOptionsWindow mOptionsWindow;
     private DateRangeWindow mDateRangeWindow;
+    private PurchaserShopSelectWindow mSelectionWindow;
+    private List<PurchaserBean> mPurchaserBeans;
     private IOrderGoodsContract.IOrderGoodsPresenter mPresenter;
     private final OrderGoodsParam mParam = new OrderGoodsParam();
 
@@ -130,6 +137,11 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.aog_purchaser_btn:
+                if (mPurchaserBeans == null) {
+                    mPresenter.getPurchaserList("");
+                    return;
+                }
+                showPurchaserWindow(view);
                 break;
             case R.id.aog_date_btn:
                 showDateRangeWindow(view);
@@ -165,6 +177,19 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
         Utils.exportFailure(this, msg);
     }
 
+    @Override
+    public void refreshPurchaserList(List<PurchaserBean> list) {
+        mPurchaserBeans = list;
+        if (mSelectionWindow != null && mSelectionWindow.isShowing()) {
+            mSelectionWindow.setLeftList(list);
+        }
+    }
+
+    @Override
+    public void refreshShopList(List<PurchaserShopBean> list) {
+        mSelectionWindow.setRightList(list);
+    }
+
     private void showDateRangeWindow(View view) {
         mDateArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
         mDate.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -178,7 +203,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
                     mParam.setEndDate(null);
                     mDate.setText("按日期筛选");
                     if (oldBegin != null && oldEnd != null) {
-                        mPresenter.getOrderGoodsDetails(true);
+                        mPresenter.reload();
                     }
                     return;
                 }
@@ -193,7 +218,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
                     if ((oldBegin == null && oldEnd == null) ||
                             !mParam.getFormatStartDate().equals(oldBegin) ||
                             !mParam.getFormatEndDate().equals(oldEnd)) {
-                        mPresenter.getOrderGoodsDetails(true);
+                        mPresenter.reload();
                     }
                 }
             });
@@ -209,5 +234,40 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
                     end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }
         mDateRangeWindow.showAsDropDownFix(view);
+    }
+
+    private void showPurchaserWindow(View view) {
+        mPurchaserArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
+        mPurchaser.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
+        if (mSelectionWindow == null) {
+            mSelectionWindow = PurchaserShopSelectWindow.create(this, new PurchaserShopSelectWindow.PurchaserShopSelectCallback() {
+                @Override
+                public void onSelect(String purchaserID, String shopID, List<String> shopNameList) {
+                    mSelectionWindow.dismiss();
+                    mParam.setShopIDs(shopID);
+                    mPresenter.reload();
+                    if (!CommonUtils.isEmpty(shopNameList)) {
+                        mPurchaser.setText(TextUtils.join(",", shopNameList));
+                    } else mPurchaser.setText("全部采购商");
+                }
+
+                @Override
+                public boolean search(String searchWords, int flag, String purchaserID) {
+                    if (flag == 0) mPresenter.getPurchaserList(searchWords);
+                    else mPresenter.getShopList(purchaserID, searchWords);
+                    return true;
+                }
+
+                @Override
+                public void loadPurchaserShop(String purchaserID, String searchWords) {
+                    mPresenter.getShopList(purchaserID, searchWords);
+                }
+            }).setMulti(true).setLeftList(mPurchaserBeans).setRightList(null);
+            mSelectionWindow.setOnDismissListener(() -> {
+                mPurchaserArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
+                mPurchaser.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
+            });
+        }
+        mSelectionWindow.showAsDropDownFix(view);
     }
 }

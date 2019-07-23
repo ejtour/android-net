@@ -206,7 +206,7 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
     private void showPurchaserWindow(View view) {
         if (mPurchaserListResp == null) return;
         if (mSelectionWindow == null) {
-            mSelectionWindow = PurchaserShopSelectWindow.create(this, (purchaserID, shopID) -> {
+            mSelectionWindow = PurchaserShopSelectWindow.create(this, (purchaserID, shopID, list) -> {
                 mSelectionWindow.dismiss();
                 mParam.setPurchaserID(purchaserID);
                 mParam.setPurchaserShopID(shopID);

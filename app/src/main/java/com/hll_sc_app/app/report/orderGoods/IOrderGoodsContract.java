@@ -2,6 +2,8 @@ package com.hll_sc_app.app.report.orderGoods;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.common.PurchaserBean;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 
 import java.util.List;
@@ -33,12 +35,20 @@ public interface IOrderGoodsContract {
          * @param msg 失败消息
          */
         void exportFailure(String msg);
+
+        void refreshPurchaserList(List<PurchaserBean> list);
+
+        void refreshShopList(List<PurchaserShopBean> list);
     }
 
     interface IOrderGoodsPresenter extends IPresenter<IOrderGoodsView> {
         void getPurchaserList(String searchWords);
 
+        void getShopList(String purchaseID, String searchWords);
+
         void getOrderGoodsDetails(boolean showLoading);
+
+        void reload();
 
         void loadMore();
 

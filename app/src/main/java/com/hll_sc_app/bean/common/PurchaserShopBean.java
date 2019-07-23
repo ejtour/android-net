@@ -1,4 +1,4 @@
-package com.hll_sc_app.bean.aftersales;
+package com.hll_sc_app.bean.common;
 
 import android.os.Parcel;
 
