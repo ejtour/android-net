@@ -21,10 +21,11 @@ import java.util.Locale;
  * @date 2019/2/13
  */
 public class DateRangeWindow extends BasePopupWindow implements
-    CalendarView.OnCalendarRangeSelectListener, View.OnClickListener {
+        CalendarView.OnCalendarRangeSelectListener, View.OnClickListener {
     private Calendar mEnd;
     private Calendar mStart;
     private TextView mTxtDate;
+    private TextView mBtnReset;
     private CalendarView mRangeCalendarView;
     private OnRangeSelectListener mSelectListener;
 
@@ -39,7 +40,8 @@ public class DateRangeWindow extends BasePopupWindow implements
         this.setOutsideTouchable(true);
         this.setBackgroundDrawable(new ColorDrawable(0xbb000000));
         rootView.setOnClickListener(this);
-        rootView.findViewById(R.id.txt_reset).setOnClickListener(this);
+        mBtnReset = rootView.findViewById(R.id.txt_reset);
+        mBtnReset.setOnClickListener(this);
         rootView.findViewById(R.id.txt_confirm).setOnClickListener(this);
         rootView.findViewById(R.id.img_left).setOnClickListener(this);
         rootView.findViewById(R.id.img_right).setOnClickListener(this);
@@ -59,6 +61,10 @@ public class DateRangeWindow extends BasePopupWindow implements
      */
     public void setOnRangeSelectListener(OnRangeSelectListener onSingleSelectListener) {
         this.mSelectListener = onSingleSelectListener;
+    }
+
+    public void setReset(boolean canReset) {
+        mBtnReset.setVisibility(canReset ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -125,7 +131,7 @@ public class DateRangeWindow extends BasePopupWindow implements
     public void setSelectCalendarRange(int startYear, int startMonth, int startDay,
                                        int endYear, int endMonth, int endDay) {
         mRangeCalendarView.setSelectCalendarRange(startYear, startMonth, startDay,
-            endYear, endMonth, endDay);
+                endYear, endMonth, endDay);
     }
 
     /**

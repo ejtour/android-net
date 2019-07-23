@@ -49,16 +49,7 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
 
     @Override
     public void getOrderGoodsDetails(boolean showLoading) {
-        String endDate, startDate;
-        if (mParam.getStartDate() == null) {
-            Date end = new Date();
-            endDate = CalendarUtils.toLocalDate(end);
-            startDate = CalendarUtils.toLocalDate(CalendarUtils.getDateBefore(end, 29));
-        } else {
-            startDate = mParam.getStartDate();
-            endDate = mParam.getEndDate();
-        }
-        Report.queryOrderGoodsDetails(mParam.getShopIDs(), startDate, endDate,
+        Report.queryOrderGoodsDetails(mParam.getShopIDs(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
                 mPageNum, new SimpleObserver<OrderGoodsResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(OrderGoodsResp orderGoodsResp) {
@@ -80,16 +71,7 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
             bindEmail(email);
             return;
         }
-        String endDate, startDate;
-        if (mParam.getStartDate() == null) {
-            Date end = new Date();
-            endDate = CalendarUtils.toLocalDate(end);
-            startDate = CalendarUtils.toLocalDate(CalendarUtils.getDateBefore(end, 29));
-        } else {
-            startDate = mParam.getStartDate();
-            endDate = mParam.getEndDate();
-        }
-        Report.exportOrderGoodsDetails(mParam.getShopIDs(), startDate, endDate,
+        Report.exportOrderGoodsDetails(mParam.getShopIDs(),  mParam.getFormatStartDate(), mParam.getFormatEndDate(),
                 new SimpleObserver<ExportResp>(mView) {
                     @Override
                     public void onSuccess(ExportResp exportResp) {

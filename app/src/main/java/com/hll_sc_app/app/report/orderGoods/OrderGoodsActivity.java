@@ -33,6 +33,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,9 +77,19 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     }
 
     private void initData() {
+        Date endDate = new Date();
+        mParam.setEndDate(endDate);
+        mParam.setStartDate(CalendarUtils.getDateBefore(endDate, 29));
+        updateSelectedDate();
         mPresenter = OrderGoodsPresenter.newInstance(mParam);
         mPresenter.register(this);
         mPresenter.start();
+    }
+
+    private void updateSelectedDate() {
+        mDate.setText(String.format("%s-%s",
+                CalendarUtils.format(mParam.getStartDate(), CalendarUtils.FORMAT_DATE_TIME),
+                CalendarUtils.format(mParam.getEndDate(), CalendarUtils.FORMAT_DATE_TIME)));
     }
 
     private void initView() {
@@ -121,6 +132,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
             case R.id.aog_purchaser_btn:
                 break;
             case R.id.aog_date_btn:
+                showDateRangeWindow(view);
                 break;
         }
     }
@@ -153,20 +165,19 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
         Utils.exportFailure(this, msg);
     }
 
-    /**
-     * 初始化日期弹窗
-     */
-    private void initDateWindow() {
+    private void showDateRangeWindow(View view) {
+        mDateArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
+        mDate.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
             mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                String beginDate = mParam.getStartDate();
-                String endDate = mParam.getEndDate();
+                String oldBegin = mParam.getFormatStartDate();
+                String oldEnd = mParam.getFormatEndDate();
                 if (start == null && end == null) {
                     mParam.setStartDate(null);
                     mParam.setEndDate(null);
                     mDate.setText("按日期筛选");
-                    if (beginDate != null && endDate != null) {
+                    if (oldBegin != null && oldEnd != null) {
                         mPresenter.getOrderGoodsDetails(true);
                     }
                     return;
@@ -174,16 +185,14 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
                 if (start != null && end != null) {
                     Calendar calendarStart = Calendar.getInstance();
                     calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    String startStr = CalendarUtils.format(calendarStart.getTime(), CalendarUtils.FORMAT_DATE_TIME);
                     Calendar calendarEnd = Calendar.getInstance();
                     calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    String endStr = CalendarUtils.format(calendarEnd.getTime(), CalendarUtils.FORMAT_DATE_TIME);
-                    mParam.setStartDate(CalendarUtils.toLocalDate(calendarStart.getTime()));
-                    mParam.setEndDate(CalendarUtils.toLocalDate(calendarEnd.getTime()));
-                    mDate.setText(String.format("%s~%s", startStr, endStr));
-                    if ((beginDate == null && endDate == null) ||
-                            !mParam.getStartDate().equals(beginDate) ||
-                            !mParam.getEndDate().equals(endDate)) {
+                    mParam.setStartDate(calendarStart.getTime());
+                    mParam.setEndDate(calendarEnd.getTime());
+                    updateSelectedDate();
+                    if ((oldBegin == null && oldEnd == null) ||
+                            !mParam.getFormatStartDate().equals(oldBegin) ||
+                            !mParam.getFormatEndDate().equals(oldEnd)) {
                         mPresenter.getOrderGoodsDetails(true);
                     }
                 }
@@ -192,6 +201,13 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
                 mDateArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
                 mDate.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
             });
+            mDateRangeWindow.setReset(false);
+            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+            start.setTime(mParam.getStartDate());
+            end.setTime(mParam.getEndDate());
+            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
+                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }
+        mDateRangeWindow.showAsDropDownFix(view);
     }
 }
