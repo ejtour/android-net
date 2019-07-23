@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white_radius_5_solid"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/identify_new_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@null"
+            android:drawableLeft="@drawable/ic_login_pwd"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:hint="请设置新密码"
+            android:textColor="@color/base_text222"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_eeeeee" />
+
+        <EditText
+            android:id="@+id/identify_pwd_again"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@null"
+            android:drawableLeft="@drawable/ic_login_pwd"
+            android:drawablePadding="10dp"
+            android:hint="请再次输入新密码"
+            android:textColor="@color/base_text222"
+            android:textColorHint="@color/color_aeaeae"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
