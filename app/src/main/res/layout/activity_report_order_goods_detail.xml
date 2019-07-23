@@ -21,20 +21,20 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="15dp"
-        tools:text="采购商门店名称"
         android:textAppearance="@style/TextAppearance.City22.Small"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ogd_title_bar" />
+        app:layout_constraintTop_toBottomOf="@id/ogd_title_bar"
+        tools:text="采购商门店名称" />
 
     <TextView
         android:id="@+id/ogd_group_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        tools:text="采购商集团名称"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintStart_toStartOf="@id/ogd_shop_name"
-        app:layout_constraintTop_toBottomOf="@id/ogd_shop_name" />
+        app:layout_constraintTop_toBottomOf="@id/ogd_shop_name"
+        tools:text="采购商集团名称" />
 
     <TextView
         android:id="@+id/ogd_time"
@@ -154,4 +154,16 @@
         app:layout_constraintEnd_toEndOf="@id/ogd_data_bg"
         app:layout_constraintStart_toStartOf="@id/ogd_data_bg"
         app:layout_constraintTop_toBottomOf="@id/ogd_data_bg" />
+
+    <com.hll_sc_app.widget.report.ExcelLayout
+        android:id="@+id/ogd_excel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ogd_hor_div" />
 </android.support.constraint.ConstraintLayout>
