@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/dp_10">
 
     <TextView
-        android:id="@+id/iog_shop_name"
+        android:id="@+id/rog_shop_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -23,7 +23,7 @@
         tools:text="采购商门店名称" />
 
     <TextView
-        android:id="@+id/iog_group_name"
+        android:id="@+id/rog_group_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -31,102 +31,102 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iog_shop_name"
+        app:layout_constraintTop_toBottomOf="@id/rog_shop_name"
         tools:text="采购商集团名称" />
 
     <View
-        android:id="@+id/iog_data_bg"
+        android:id="@+id/rog_data_bg"
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/bg_f5f5f5_radius_2_solid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iog_group_name" />
+        app:layout_constraintTop_toBottomOf="@id/rog_group_name" />
 
     <View
-        android:id="@+id/iog_div1"
+        android:id="@+id/rog_div1"
         android:layout_width="1dp"
         android:layout_height="12dp"
         android:background="@color/color_dddddd"
-        app:layout_constraintBottom_toBottomOf="@id/iog_data_bg"
-        app:layout_constraintEnd_toStartOf="@id/iog_div2"
+        app:layout_constraintBottom_toBottomOf="@id/rog_data_bg"
+        app:layout_constraintEnd_toStartOf="@id/rog_div2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iog_data_bg" />
+        app:layout_constraintTop_toTopOf="@id/rog_data_bg" />
 
     <View
-        android:id="@+id/iog_div2"
+        android:id="@+id/rog_div2"
         android:layout_width="1dp"
         android:layout_height="12dp"
         android:background="@color/color_dddddd"
-        app:layout_constraintBottom_toBottomOf="@id/iog_data_bg"
+        app:layout_constraintBottom_toBottomOf="@id/rog_data_bg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iog_div1"
-        app:layout_constraintTop_toTopOf="@id/iog_data_bg" />
+        app:layout_constraintStart_toEndOf="@id/rog_div1"
+        app:layout_constraintTop_toTopOf="@id/rog_data_bg" />
 
     <TextView
-        android:id="@+id/iog_product_num_label"
+        android:id="@+id/rog_product_num_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="商品数"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/iog_data_bg"
-        app:layout_constraintStart_toStartOf="@id/iog_data_bg"
-        app:layout_constraintTop_toTopOf="@id/iog_data_bg" />
+        app:layout_constraintBottom_toBottomOf="@id/rog_data_bg"
+        app:layout_constraintStart_toStartOf="@id/rog_data_bg"
+        app:layout_constraintTop_toTopOf="@id/rog_data_bg" />
 
     <TextView
-        android:id="@+id/iog_product_num"
+        android:id="@+id/rog_product_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        app:layout_constraintBottom_toBottomOf="@id/iog_data_bg"
-        app:layout_constraintEnd_toStartOf="@id/iog_div1"
-        app:layout_constraintTop_toTopOf="@id/iog_data_bg"
+        app:layout_constraintBottom_toBottomOf="@id/rog_data_bg"
+        app:layout_constraintEnd_toStartOf="@id/rog_div1"
+        app:layout_constraintTop_toTopOf="@id/rog_data_bg"
         tools:text="1" />
 
     <TextView
-        android:id="@+id/iog_inspection_num_label"
+        android:id="@+id/rog_inspection_num_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="验货数"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/iog_data_bg"
-        app:layout_constraintStart_toEndOf="@id/iog_div1"
-        app:layout_constraintTop_toTopOf="@id/iog_data_bg" />
+        app:layout_constraintBottom_toBottomOf="@id/rog_data_bg"
+        app:layout_constraintStart_toEndOf="@id/rog_div1"
+        app:layout_constraintTop_toTopOf="@id/rog_data_bg" />
 
     <TextView
-        android:id="@+id/iog_inspection_num"
+        android:id="@+id/rog_inspection_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        app:layout_constraintBottom_toBottomOf="@id/iog_data_bg"
-        app:layout_constraintEnd_toStartOf="@id/iog_div2"
-        app:layout_constraintTop_toTopOf="@id/iog_data_bg"
+        app:layout_constraintBottom_toBottomOf="@id/rog_data_bg"
+        app:layout_constraintEnd_toStartOf="@id/rog_div2"
+        app:layout_constraintTop_toTopOf="@id/rog_data_bg"
         tools:text="11300" />
 
     <TextView
-        android:id="@+id/iog_amount_label"
+        android:id="@+id/rog_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:text="金额"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/iog_data_bg"
-        app:layout_constraintStart_toEndOf="@id/iog_div2"
-        app:layout_constraintTop_toTopOf="@id/iog_data_bg" />
+        app:layout_constraintBottom_toBottomOf="@id/rog_data_bg"
+        app:layout_constraintStart_toEndOf="@id/rog_div2"
+        app:layout_constraintTop_toTopOf="@id/rog_data_bg" />
 
     <TextView
-        android:id="@+id/iog_amount"
+        android:id="@+id/rog_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        app:layout_constraintBottom_toBottomOf="@id/iog_data_bg"
-        app:layout_constraintEnd_toEndOf="@id/iog_data_bg"
-        app:layout_constraintTop_toTopOf="@id/iog_data_bg"
+        app:layout_constraintBottom_toBottomOf="@id/rog_data_bg"
+        app:layout_constraintEnd_toEndOf="@id/rog_data_bg"
+        app:layout_constraintTop_toTopOf="@id/rog_data_bg"
         tools:text="¥10,000" />
 </android.support.constraint.ConstraintLayout>

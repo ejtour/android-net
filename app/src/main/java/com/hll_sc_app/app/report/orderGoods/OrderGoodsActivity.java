@@ -52,19 +52,19 @@ import butterknife.OnClick;
 
 @Route(path = RouterConfig.REPORT_ORDER_GOODS)
 public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsContract.IOrderGoodsView {
-    @BindView(R.id.aog_title_bar)
+    @BindView(R.id.rog_title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.aog_purchaser)
+    @BindView(R.id.rog_purchaser)
     TextView mPurchaser;
-    @BindView(R.id.aog_purchaser_arrow)
+    @BindView(R.id.rog_purchaser_arrow)
     TriangleView mPurchaserArrow;
-    @BindView(R.id.aog_date)
+    @BindView(R.id.rog_date)
     TextView mDate;
-    @BindView(R.id.aog_date_arrow)
+    @BindView(R.id.rog_date_arrow)
     TriangleView mDateArrow;
-    @BindView(R.id.aog_list_view)
+    @BindView(R.id.rog_list_view)
     RecyclerView mListView;
-    @BindView(R.id.aog_refresh_view)
+    @BindView(R.id.rog_refresh_view)
     SmartRefreshLayout mRefreshView;
     private ContextOptionsWindow mOptionsWindow;
     private DateRangeWindow mDateRangeWindow;
@@ -76,7 +76,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_goods);
+        setContentView(R.layout.activity_report_order_goods);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ButterKnife.bind(this);
         initView();
@@ -133,17 +133,17 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
         mPresenter.export(email);
     }
 
-    @OnClick({R.id.aog_purchaser_btn, R.id.aog_date_btn})
+    @OnClick({R.id.rog_purchaser_btn, R.id.rog_date_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.aog_purchaser_btn:
+            case R.id.rog_purchaser_btn:
                 if (mPurchaserBeans == null) {
                     mPresenter.getPurchaserList("");
                     return;
                 }
                 showPurchaserWindow(view);
                 break;
-            case R.id.aog_date_btn:
+            case R.id.rog_date_btn:
                 showDateRangeWindow(view);
                 break;
         }
