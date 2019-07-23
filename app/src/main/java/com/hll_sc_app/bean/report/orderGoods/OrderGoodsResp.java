@@ -7,7 +7,7 @@ import java.util.List;
  * @since 2019/7/22
  */
 
-public class OrderGoodsResp {
+public class OrderGoodsResp<T> {
     public static class PageBean {
         private int pageCount;
         private int pageNo;
@@ -16,7 +16,7 @@ public class OrderGoodsResp {
     }
 
     private PageBean page;
-    private List<OrderGoodsBean> records;
+    private List<T> records;
 
     public PageBean getPage() {
         return page;
@@ -26,11 +26,11 @@ public class OrderGoodsResp {
         this.page = page;
     }
 
-    public List<OrderGoodsBean> getRecords() {
+    public List<T> getRecords() {
         return records;
     }
 
-    public void setRecords(List<OrderGoodsBean> records) {
+    public void setRecords(List<T> records) {
         this.records = records;
     }
 }
