@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="地&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;址"
+                android:text="详细地址"
                 android:textAppearance="@style/TextAppearance.City22.Small"/>
 
             <TextView
