@@ -8,6 +8,8 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
+import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -31,9 +33,9 @@ public class Report {
      * @param endDate   结束时间 yyyyMMdd
      * @param pageNum   页码
      */
-    public static void queryOrderGoodsDetails(String shopIDs, String startDate, String endDate, int pageNum, SimpleObserver<OrderGoodsResp> observer) {
+    public static void queryOrderGoods(String shopIDs, String startDate, String endDate, int pageNum, SimpleObserver<OrderGoodsResp<OrderGoodsBean>> observer) {
         ReportService.INSTANCE
-                .queryOrderGoodsDetails(BaseMapReq.newBuilder()
+                .queryOrderGoods(BaseMapReq.newBuilder()
                         .put("shopIDs", shopIDs)
                         .put("startDate", startDate)
                         .put("endDate", endDate)
@@ -79,6 +81,28 @@ public class Report {
         req.setReqParams(reqParams);
         ReportService.INSTANCE
                 .exportReport(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询订货门店详情
+     *
+     * @param shopID    门店 id
+     * @param startDate 开始时间
+     * @param endDate   结束时间
+     * @param pageNum   页码
+     */
+    public static void queryOrderGoodsDetail(String shopID, String startDate, String endDate, int pageNum, SimpleObserver<OrderGoodsResp<OrderGoodsDetailBean>> observer) {
+        ReportService.INSTANCE
+                .queryOrderGoodsDetail(BaseMapReq.newBuilder()
+                        .put("shopID", shopID)
+                        .put("startDate", startDate)
+                        .put("endDate", endDate)
+                        .put("pageNo", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

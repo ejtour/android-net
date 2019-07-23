@@ -14,12 +14,14 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
+import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +32,7 @@ import butterknife.ButterKnife;
  */
 
 @Route(path = RouterConfig.REPORT_ORDER_GOODS_DETAIL)
-public class OrderGoodsDetailActivity extends BaseLoadActivity {
+public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrderGoodsDetailContract.IOrderGoodsDetailView {
     @BindView(R.id.ogd_shop_name)
     TextView mShopName;
     @BindView(R.id.ogd_group_name)
@@ -45,6 +47,7 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity {
     TextView mAmount;
     @Autowired(name = "parcelable")
     OrderGoodsDetailParam mParam;
+    private IOrderGoodsDetailContract.IOrderGoodsDetailPresenter mPresenter;
 
     /**
      * @param bean      订货门店条目
@@ -71,7 +74,9 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity {
     }
 
     private void initData() {
-
+        mPresenter = OrderGoodsDetailPresenter.newInstance(mParam);
+        mPresenter.register(this);
+        mPresenter.start();
     }
 
     private void initView() {
@@ -84,5 +89,10 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity {
         mTime.setText(String.format("%s - %s",
                 CalendarUtils.format(mParam.getStartDate(), Constants.SLASH_YYYY_MM_DD),
                 CalendarUtils.format(mParam.getEndDate(), Constants.SLASH_YYYY_MM_DD)));
+    }
+
+    @Override
+    public void setList(List<OrderGoodsDetailBean> beans, boolean append) {
+
     }
 }

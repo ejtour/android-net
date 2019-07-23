@@ -12,6 +12,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -62,13 +63,13 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
 
     @Override
     public void loadMore() {
-        getOrderGoodsDetails(false);
+        getOrderGoods(false);
     }
 
     @Override
-    public void getOrderGoodsDetails(boolean showLoading) {
-        Report.queryOrderGoodsDetails(mParam.getShopIDs(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
-                mPageNum, new SimpleObserver<OrderGoodsResp>(mView, showLoading) {
+    public void getOrderGoods(boolean showLoading) {
+        Report.queryOrderGoods(mParam.getShopIDs(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
+                mPageNum, new SimpleObserver<OrderGoodsResp<OrderGoodsBean>>(mView, showLoading) {
                     @Override
                     public void onSuccess(OrderGoodsResp orderGoodsResp) {
                         mView.showList(orderGoodsResp.getRecords(), mPageNum > 1);
@@ -80,7 +81,7 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
     @Override
     public void reload() {
         mPageNum = 1;
-        getOrderGoodsDetails(true);
+        getOrderGoods(true);
     }
 
     @Override

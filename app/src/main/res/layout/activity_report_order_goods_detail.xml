@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="15dp"
-        android:text="采购商门店名称"
+        tools:text="采购商门店名称"
         android:textAppearance="@style/TextAppearance.City22.Small"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ogd_title_bar" />
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="采购商集团名称"
+        tools:text="采购商集团名称"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintStart_toStartOf="@id/ogd_shop_name"
         app:layout_constraintTop_toBottomOf="@id/ogd_shop_name" />

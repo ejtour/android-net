@@ -46,7 +46,7 @@ public interface IOrderGoodsContract {
 
         void getShopList(String purchaseID, String searchWords);
 
-        void getOrderGoodsDetails(boolean showLoading);
+        void getOrderGoods(boolean showLoading);
 
         void reload();
 
