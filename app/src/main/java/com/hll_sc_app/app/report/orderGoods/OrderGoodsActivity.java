@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.orderGoods.detail.OrderGoodsDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -26,6 +27,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -72,6 +74,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     private List<PurchaserBean> mPurchaserBeans;
     private IOrderGoodsContract.IOrderGoodsPresenter mPresenter;
     private final OrderGoodsParam mParam = new OrderGoodsParam();
+    private OrderGoodsAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,16 +97,21 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     }
 
     private void updateSelectedDate() {
-        mDate.setText(String.format("%s-%s",
-                CalendarUtils.format(mParam.getStartDate(), CalendarUtils.FORMAT_DATE_TIME),
-                CalendarUtils.format(mParam.getEndDate(), CalendarUtils.FORMAT_DATE_TIME)));
+        mDate.setText(String.format("%s - %s",
+                CalendarUtils.format(mParam.getStartDate(), Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(mParam.getEndDate(), Constants.SLASH_YYYY_MM_DD)));
     }
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
-        OrderGoodsAdapter adapter = new OrderGoodsAdapter();
+        mAdapter = new OrderGoodsAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            OrderGoodsBean item = mAdapter.getItem(position);
+            if (item == null) return;
+            OrderGoodsDetailActivity.start(item, mParam.getStartDate(), mParam.getEndDate());
+        });
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
-        mListView.setAdapter(adapter);
+        mListView.setAdapter(mAdapter);
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -157,9 +165,8 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
 
     @Override
     public void showList(List<OrderGoodsBean> list, boolean append) {
-        OrderGoodsAdapter adapter = (OrderGoodsAdapter) mListView.getAdapter();
-        if (append) adapter.addData(list);
-        else adapter.setNewData(list);
+        if (append) mAdapter.addData(list);
+        else mAdapter.setNewData(list);
     }
 
     @Override
