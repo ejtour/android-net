@@ -338,7 +338,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         private boolean mIsAdd;
         private Map<String, PurchaserShopBean> mSelectMap;
 
-        PurchaserShopListAdapter() {
+        public PurchaserShopListAdapter() {
             super(R.layout.item_cooperation_purchaser_shop);
         }
 

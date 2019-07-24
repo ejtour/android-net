@@ -209,6 +209,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.cooperation.detail.details.basic.CooperationShopListActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.cooperation.add.CooperationAddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />

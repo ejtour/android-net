@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.cooperation.application.platform;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,17 +10,21 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.BaseCooperationApplicationFragment;
+import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -98,6 +103,20 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
             lazyLoad();
         }).create();
         mAdapter = new PurchaserListAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            PurchaserBean bean = mAdapter.getItem(position);
+            if (bean != null) {
+                if (view.getId() == R.id.txt_status && TextUtils.equals(bean.getStatus(), "0")) {
+                    ShopSettlementReq req = new ShopSettlementReq();
+                    req.setFrom(BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_AGREE);
+                    req.setPurchaserID(bean.getPurchaserID());
+                    // 同意之前先选择结算方式
+                    RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+                } else {
+                    RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, bean.getPurchaserID());
+                }
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -143,13 +162,13 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
     private static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
 
         PurchaserListAdapter() {
-            super(R.layout.item_cooperation_purchaser);
+            super(R.layout.item_cooperation_purchaser_application);
         }
 
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.addOnClickListener(R.id.txt_del).addOnClickListener(R.id.content);
+            viewHolder.addOnClickListener(R.id.txt_status).addOnClickListener(R.id.content);
             return viewHolder;
         }
 
@@ -161,6 +180,7 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
                 .setText(R.id.txt_shopCount, getShopCountString(item))
                 .setGone(R.id.txt_newShopNum, CommonUtils.getDouble(item.getNewShopNum()) != 0);
             ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getLogoUrl());
+            setStatus(helper, item);
         }
 
         private String getString(String str) {
@@ -184,6 +204,32 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
                 }
             }
             return content;
+        }
+
+        private void setStatus(BaseViewHolder helper, PurchaserBean item) {
+            TextView txtStatus = helper.getView(R.id.txt_status);
+            switch (item.getStatus()) {
+                case "0":
+                    // 待同意
+                    txtStatus.setBackgroundResource(R.drawable.bg_button_mid_solid_primary);
+                    txtStatus.setTextColor(0xFFFFFFFF);
+                    txtStatus.setText(R.string.agree);
+                    break;
+                case "1":
+                    // 未同意
+                    txtStatus.setBackground(new ColorDrawable());
+                    txtStatus.setTextColor(0xFF999999);
+                    txtStatus.setText("已拒绝");
+                    break;
+                case "2":
+                    // 已同意
+                    txtStatus.setBackground(new ColorDrawable());
+                    txtStatus.setTextColor(0xFF999999);
+                    txtStatus.setText("已同意");
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

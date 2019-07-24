@@ -270,7 +270,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     }
 
     @OnClick({R.id.ll_defaultSettlementWay, R.id.ll_maintainLevel, R.id.ll_customerLevel, R.id.ll_defaultDeliveryWay,
-        R.id.ll_deliveryPeriod})
+        R.id.ll_deliveryPeriod, R.id.ll_shopsNum})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_defaultSettlementWay:
@@ -287,6 +287,11 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 break;
             case R.id.ll_customerLevel:
                 showCustomerLevelWindow();
+                break;
+            case R.id.ll_shopsNum:
+                // 合作门店展示
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOPS,
+                    new ArrayList<>(mDetail.getShopDetailList()));
                 break;
             default:
                 break;

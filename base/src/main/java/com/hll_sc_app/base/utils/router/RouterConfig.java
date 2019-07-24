@@ -164,6 +164,11 @@ public class RouterConfig {
     public static final String COOPERATION_PURCHASER_DETAIL_SELECT_SHOP = "/activity/cooperationPurchaser/detail" +
         "/selectShop";
     /**
+     * 合作采购商详情-已选择的门店
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SHOPS = "/activity/cooperationPurchaser/detail" +
+        "/Shops";
+    /**
      * 商品置顶管理
      */
     public static final String GOODS_STICK_MANAGE = "/activity/goods/stickManage";
