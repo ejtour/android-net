@@ -162,9 +162,9 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
         finish();
     }
 
-    private static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
+    public static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
 
-        PurchaserListAdapter() {
+        public PurchaserListAdapter() {
             super(R.layout.item_cooperation_purchaser_invite);
         }
 

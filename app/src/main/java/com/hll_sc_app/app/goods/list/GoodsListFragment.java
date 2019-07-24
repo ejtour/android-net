@@ -204,8 +204,6 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
         this.mName = name;
         this.mProductStatus = productStatus;
         setForceLoad(true);
-        if (isFragmentVisible()) {
-            lazyLoad();
-        }
+        lazyLoad();
     }
 }

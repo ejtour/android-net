@@ -399,9 +399,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     public void refreshFragment(CooperationPurchaserDetail detail) {
         this.mDetail = detail;
         setForceLoad(true);
-        if (isFragmentVisible()) {
-            lazyLoad();
-        }
+        lazyLoad();
     }
 
     @Override

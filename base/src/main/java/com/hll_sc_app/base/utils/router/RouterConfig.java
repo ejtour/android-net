@@ -120,6 +120,11 @@ public class RouterConfig {
      */
     public static final String STORE_BUSINESS_LICENSE_IMAGE = "/activity/store/ businessLicense";
     /**
+     * 合作采购商-我收到的申请
+     */
+    public static final String COOPERATION_PURCHASER_APPLICATION = "/activity/cooperationPurchaser" +
+        "/cooperationApplication";
+    /**
      * 合作采购商详情-详细资料
      */
     public static final String COOPERATION_PURCHASER_DETAIL_DETAILS = "/activity/cooperationPurchaser/detail/details";

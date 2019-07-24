@@ -123,9 +123,7 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
     public void refreshFragment(CooperationPurchaserDetail detail) {
         this.mDetail = detail;
         setForceLoad(true);
-        if (isFragmentVisible()) {
-            lazyLoad();
-        }
+        lazyLoad();
     }
 
     @OnClick({R.id.ll_imagePath, R.id.ll_licencePhotoUrl, R.id.ll_otherLicenses})
