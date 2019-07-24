@@ -2,6 +2,7 @@ package com.hll_sc_app.app.cooperation.application.thirdpart.detail;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
 
 
@@ -42,15 +43,10 @@ public interface CooperationThirdPartDetailContract {
         void queryThirdPartDetail();
 
         /**
-         * 编辑合作门店
+         * 采购商申请状态变更
          *
-         * @param actionType 操作类型（同意申请-agree，拒绝申请-refuse，重新申请-revalidation）
+         * @param req 请求参数
          */
-        void editCooperationShop(String actionType);
-
-        /**
-         * 解除合作
-         */
-        void delCooperationShop();
+        void editCooperationThirdPartStatus(BaseMapReq req);
     }
 }

@@ -66,46 +66,25 @@ public class CooperationThirdPartDetailPresenter implements CooperationThirdPart
             });
     }
 
-
     @Override
-    public void editCooperationShop(String actionType) {
+    public void editCooperationThirdPartStatus(BaseMapReq req) {
+        CooperationPurchaserService.INSTANCE.editThirdPartPurchaserDetail(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.showToast("修改成功");
+                    mView.editSuccess();
+                }
 
-    }
-
-    @Override
-    public void delCooperationShop() {
-//        PurchaserShopBean bean = mView.getShopBean();
-//        if (bean == null) {
-//            return;
-//        }
-//        CooperationShopReq req = new CooperationShopReq();
-//        req.setActionType("delete");
-//        req.setGroupID(UserConfig.getGroupID());
-//        req.setOriginator("1");
-//        req.setPurchaserID(bean.getPurchaserID());
-//        req.setPurchaserName(bean.getPurchaserName());
-//        List<CooperationShopReq.ShopBean> list = new ArrayList<>();
-//        list.add(new CooperationShopReq.ShopBean(bean.getShopID(), bean.getShopName()));
-//        req.setShopList(list);
-//        BaseReq<CooperationShopReq> baseReq = new BaseReq<>();
-//        baseReq.setData(req);
-//        CooperationPurchaserService.INSTANCE.addCooperationShop(baseReq)
-//            .compose(ApiScheduler.getObservableScheduler())
-//            .map(new Precondition<>())
-//            .doOnSubscribe(disposable -> mView.showLoading())
-//            .doFinally(() -> mView.hideLoading())
-//            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-//            .subscribe(new BaseCallback<Object>() {
-//                @Override
-//                public void onSuccess(Object resp) {
-//                    mView.showToast("解除合作成功");
-//                    mView.editSuccess();
-//                }
-//
-//                @Override
-//                public void onFailure(UseCaseException e) {
-//                    mView.showError(e);
-//                }
-//            });
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
     }
 }

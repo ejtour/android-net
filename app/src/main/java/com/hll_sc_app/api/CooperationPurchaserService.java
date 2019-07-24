@@ -202,4 +202,14 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:103702")
     Observable<BaseResp<ThirdPartyPurchaserBean>> queryThirdPartPurchaserDetail(@Body BaseMapReq req);
+
+    /**
+     * 采购商申请状态变更
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103703")
+    Observable<BaseResp<Object>> editThirdPartPurchaserDetail(@Body BaseMapReq req);
 }

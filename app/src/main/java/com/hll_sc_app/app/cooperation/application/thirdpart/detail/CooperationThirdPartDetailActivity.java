@@ -16,10 +16,15 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.thirdpart.CooperationThirdPartFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
+import com.hll_sc_app.widget.RemarkDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,14 +86,59 @@ public class CooperationThirdPartDetailActivity extends BaseLoadActivity impleme
                 finish();
                 break;
             case R.id.txt_agree:
-                mPresenter.editCooperationShop("agree");
+                toAgree();
                 break;
             case R.id.txt_reject:
-                mPresenter.editCooperationShop("refuse");
+                reject();
                 break;
             default:
                 break;
         }
+    }
+
+    private void toAgree() {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+            // 1-同意 2-拒绝 3-解除
+            .put("flag", "1")
+            .put("id", getId())
+            .put("plateSupplierID", UserConfig.getGroupID())
+            .put("actionBy", userBean.getEmployeeName())
+            .create();
+        mPresenter.editCooperationThirdPartStatus(req);
+    }
+
+    public void reject() {
+        RemarkDialog.newBuilder(this)
+            .setHint("可输入驳回理由，选填")
+            .setMaxLength(100)
+            .setButtons("容我再想想", "确认拒绝", (dialog, positive, content) -> {
+                dialog.dismiss();
+                if (positive) {
+                    toReject(content);
+                }
+            })
+            .create()
+            .show();
+    }
+
+    private void toReject(String content) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+            // 1-同意 2-拒绝 3-解除
+            .put("flag", "2")
+            .put("id", getId())
+            .put("plateSupplierID", UserConfig.getGroupID())
+            .put("actionBy", userBean.getEmployeeName())
+            .put("rejectReson", content)
+            .create();
+        mPresenter.editCooperationThirdPartStatus(req);
     }
 
     @Override
