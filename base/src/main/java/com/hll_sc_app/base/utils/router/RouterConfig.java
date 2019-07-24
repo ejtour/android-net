@@ -125,6 +125,11 @@ public class RouterConfig {
     public static final String COOPERATION_PURCHASER_APPLICATION = "/activity/cooperationPurchaser" +
         "/cooperationApplication";
     /**
+     * 合作采购商-我收到的申请-详情
+     */
+    public static final String COOPERATION_PURCHASER_APPLICATION_THIRD_PART_DETAIL = "/activity/cooperationPurchaser" +
+        "/cooperationApplication/thirdPart/Detail";
+    /**
      * 合作采购商详情-详细资料
      */
     public static final String COOPERATION_PURCHASER_DETAIL_DETAILS = "/activity/cooperationPurchaser/detail/details";

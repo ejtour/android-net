@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.cooperation.application;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -94,6 +95,16 @@ public class CooperationApplicationActivity extends BaseLoadActivity {
         if (!CommonUtils.isEmpty(mListFragment)) {
             for (BaseCooperationApplicationFragment fragment : mListFragment) {
                 fragment.toSearch(searchContent);
+            }
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (!CommonUtils.isEmpty(mListFragment)) {
+            for (BaseCooperationApplicationFragment fragment : mListFragment) {
+                fragment.refresh();
             }
         }
     }

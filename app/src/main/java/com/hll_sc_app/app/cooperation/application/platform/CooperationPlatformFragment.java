@@ -159,6 +159,12 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
         lazyLoad();
     }
 
+    @Override
+    public void refresh() {
+        setForceLoad(true);
+        lazyLoad();
+    }
+
     private static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
 
         PurchaserListAdapter() {

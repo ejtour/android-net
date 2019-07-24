@@ -17,6 +17,8 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.BaseCooperationApplicationFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -52,6 +54,21 @@ public class CooperationThirdPartFragment extends BaseCooperationApplicationFrag
 
     public static CooperationThirdPartFragment newInstance() {
         return new CooperationThirdPartFragment();
+    }
+
+    public static String getResourceType(String resourceType) {
+        String content = null;
+        if (TextUtils.equals(resourceType, "1")) {
+            // 哗啦啦供应链
+            content = "哗啦啦供应链";
+        } else if (TextUtils.equals(resourceType, "2")) {
+            // 天财供应链
+            content = "天财供应链";
+        } else if (TextUtils.equals(resourceType, "0")) {
+            // 二十二城
+            content = "二十二城";
+        }
+        return content;
     }
 
     @Override
@@ -94,6 +111,13 @@ public class CooperationThirdPartFragment extends BaseCooperationApplicationFrag
             lazyLoad();
         }).create();
         mAdapter = new ThirdPartListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ThirdPartyPurchaserBean bean = (ThirdPartyPurchaserBean) adapter.getItem(position);
+            if (bean != null) {
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_APPLICATION_THIRD_PART_DETAIL,
+                    bean.getId());
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -136,6 +160,12 @@ public class CooperationThirdPartFragment extends BaseCooperationApplicationFrag
         lazyLoad();
     }
 
+    @Override
+    public void refresh() {
+        setForceLoad(true);
+        lazyLoad();
+    }
+
     private static class ThirdPartListAdapter extends BaseQuickAdapter<ThirdPartyPurchaserBean, BaseViewHolder> {
 
         ThirdPartListAdapter() {
@@ -147,23 +177,8 @@ public class CooperationThirdPartFragment extends BaseCooperationApplicationFrag
             helper
                 .setGone(R.id.img_readStatus, TextUtils.equals(item.getReadStatus(), "0"))
                 .setText(R.id.txt_groupName, item.getGroupName())
-                .setText(R.id.txt_resourceType, getResourceType(item));
+                .setText(R.id.txt_resourceType, getResourceType(item.getResourceType()));
             setStatus(helper, item);
-        }
-
-        private String getResourceType(ThirdPartyPurchaserBean item) {
-            String content = null;
-            if (TextUtils.equals(item.getResourceType(), "1")) {
-                // 哗啦啦供应链
-                content = "哗啦啦供应链";
-            } else if (TextUtils.equals(item.getResourceType(), "2")) {
-                // 天财供应链
-                content = "天财供应链";
-            } else if (TextUtils.equals(item.getResourceType(), "0")) {
-                // 二十二城
-                content = "二十二城";
-            }
-            return content;
         }
 
         private void setStatus(BaseViewHolder helper, ThirdPartyPurchaserBean item) {

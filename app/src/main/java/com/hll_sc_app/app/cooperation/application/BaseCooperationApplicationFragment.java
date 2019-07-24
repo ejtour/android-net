@@ -16,4 +16,9 @@ public abstract class BaseCooperationApplicationFragment extends BaseLazyFragmen
      * @param searchParam 搜索词
      */
     public abstract void toSearch(String searchParam);
+
+    /**
+     * 触发刷新
+     */
+    public abstract void refresh();
 }
