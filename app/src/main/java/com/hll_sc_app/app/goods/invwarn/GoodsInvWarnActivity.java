@@ -229,7 +229,9 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     @Override
     public void showGoodsInvList(List<GoodsBean> list, boolean append, int total) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }

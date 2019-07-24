@@ -254,7 +254,9 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
     @Override
     public void showPurchaserShopList(List<PurchaserShopBean> list, boolean append) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }

@@ -187,7 +187,9 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         mTxtShopTotal.setText(CommonUtils.formatNumber(resp.getShopTotal()));
         List<PurchaserBean> list = resp.getRecords();
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }

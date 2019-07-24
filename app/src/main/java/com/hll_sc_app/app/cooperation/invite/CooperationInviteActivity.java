@@ -27,6 +27,7 @@ import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.event.CooperationInviteSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -141,7 +142,9 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
     public void showPurchaserList(CooperationPurchaserResp resp, boolean append) {
         List<PurchaserBean> list = resp.getRecords();
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }
