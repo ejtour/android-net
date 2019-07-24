@@ -13,6 +13,7 @@ import com.hll_sc_app.bean.cooperation.DeliveryPeriodResp;
 import com.hll_sc_app.bean.cooperation.EmployeeBean;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 
 import java.util.List;
@@ -180,4 +181,14 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:103067")
     Observable<BaseResp<DeliveryPeriodResp>> queryDeliveryPeriodList(@Body BaseMapReq req);
+
+    /**
+     * 获取第三方申请审核列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103701")
+    Observable<BaseResp<ThirdPartyPurchaserResp>> queryThirdPartPurchaserList(@Body BaseMapReq req);
 }

@@ -15,6 +15,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.platform.CooperationPlatformFragment;
+import com.hll_sc_app.app.cooperation.application.thirdpart.CooperationThirdPartFragment;
 import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -84,7 +85,7 @@ public class CooperationApplicationActivity extends BaseLoadActivity {
         });
         mListFragment = new ArrayList<>();
         mListFragment.add(CooperationPlatformFragment.newInstance());
-        mListFragment.add(CooperationPlatformFragment.newInstance());
+        mListFragment.add(CooperationThirdPartFragment.newInstance());
         mViewPager.setAdapter(new FragmentListAdapter(getSupportFragmentManager(), mListFragment));
         mTab.setViewPager(mViewPager, STR_TITLE);
     }

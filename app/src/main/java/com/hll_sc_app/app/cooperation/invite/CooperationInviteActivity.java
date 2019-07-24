@@ -162,9 +162,9 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
         finish();
     }
 
-    public static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
+    private static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
 
-        public PurchaserListAdapter() {
+        PurchaserListAdapter() {
             super(R.layout.item_cooperation_purchaser_invite);
         }
 
@@ -183,28 +183,23 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
 
         private void setStatus(BaseViewHolder helper, PurchaserBean item) {
             TextView txtStatus = helper.getView(R.id.txt_status);
-            TextView txtReason = helper.getView(R.id.txt_reason);
             switch (item.getStatus()) {
                 case "0":
                     // 待同意
                     txtStatus.setTextColor(0xFFF6BB42);
                     txtStatus.setText("待同意");
-                    txtReason.setVisibility(View.GONE);
                     break;
                 case "1":
                     // 未同意
                     txtStatus.setTextColor(0xFFED5655);
                     txtStatus.setText("未同意");
-                    txtReason.setVisibility(View.VISIBLE);
                     break;
                 case "2":
                     // 已同意
                     txtStatus.setTextColor(0xFFAEAEAE);
                     txtStatus.setText("已同意");
-                    txtReason.setVisibility(View.GONE);
                     break;
                 default:
-                    txtReason.setVisibility(View.GONE);
                     break;
             }
         }
