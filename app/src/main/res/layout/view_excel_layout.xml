@@ -25,11 +25,17 @@
             android:layout_height="match_parent"
             android:scrollbars="none">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/vel_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="@drawable/bg_excel_body">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/vel_list_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            </FrameLayout>
         </com.hll_sc_app.widget.SyncHorizontalScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

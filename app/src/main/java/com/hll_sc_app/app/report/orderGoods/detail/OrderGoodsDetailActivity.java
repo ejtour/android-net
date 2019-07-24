@@ -136,7 +136,7 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrder
         array[6] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[6]));
         row.updateItemData(array);
         row.updateRowDate("商品编码", "商品名称", "规格", "订货数量/单位", "订货金额(元)", "验货数量/单位", "验货金额(元)");
-        row.setBackgroundResource(R.color.base_activity_bg);
+        row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }
 
