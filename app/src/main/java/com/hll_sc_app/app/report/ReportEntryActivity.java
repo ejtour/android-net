@@ -49,7 +49,7 @@ public class ReportEntryActivity extends BaseLoadActivity {
         list.add(new ReportItem(ReportIcon.SALES_STATISTICS, ReportLabel.SALES_STATISTICS, RouterConfig.REPORT_PRODUCT_SALES_STATISTICS));
         list.add(new ReportItem(ReportIcon.ORDER_GOODS_DETAILS, ReportLabel.ORDER_GOODS_DETAILS, RouterConfig.REPORT_ORDER_GOODS, true));
         list.add(new ReportItem(ReportIcon.DAILY_SALES_VOLUME, ReportLabel.DAILY_SALES_VOLUME, RouterConfig.REPORT_DAILY_AGGREGATION));
-        list.add(new ReportItem(ReportIcon.CUSTOMER_SALES, ReportLabel.CUSTOMER_SALES, null /*此处填写 activity 路径*/));
+        list.add(new ReportItem(ReportIcon.CUSTOMER_SALES, ReportLabel.CUSTOMER_SALES, RouterConfig.CUSTOMER_SALE_AGGREGATION));
         return list;
     }
 }

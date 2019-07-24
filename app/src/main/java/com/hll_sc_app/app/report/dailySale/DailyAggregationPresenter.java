@@ -122,9 +122,9 @@ public class DailyAggregationPresenter implements DailyAggregationContract.IDail
     private void toQueryDailyAggregationList(boolean showLoading) {
         BaseReportReqParam dailyReq = new BaseReportReqParam();
         dailyReq.setTimeType(1);
-        dailyReq.setStartDate(Long.valueOf(mView.getStartDate()));
-        dailyReq.setEndDate(Long.valueOf(mView.getEndDate()));
-        dailyReq.setGroupID(Long.valueOf(UserConfig.getGroupID()));
+        dailyReq.setStartDate(mView.getStartDate());
+        dailyReq.setEndDate(mView.getEndDate());
+        dailyReq.setGroupID(UserConfig.getGroupID());
         dailyReq.setPageNum(mTempPageNum);
         dailyReq.setPageSize(20);
         ReportRest.queryDateSaleAmount(dailyReq, new SimpleObserver<DateSaleAmountResp>(mView,showLoading) {

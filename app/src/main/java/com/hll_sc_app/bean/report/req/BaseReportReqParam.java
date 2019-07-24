@@ -6,15 +6,15 @@ public class BaseReportReqParam {
     /**
      * 供应商集团ID
      */
-    private long groupID;
+    private String groupID;
     /**
      * 开始日期
      */
-    private long startDate;
+    private String startDate;
     /**
      * 结束日期
      */
-    private long endDate;
+    private String endDate;
     /**
      * 页码，不传默认第一页
      */
@@ -41,27 +41,27 @@ public class BaseReportReqParam {
      */
     private int  timeType;
 
-    public long getGroupID() {
+    public String getGroupID() {
         return groupID;
     }
 
-    public void setGroupID(long groupID) {
+    public void setGroupID(String groupID) {
         this.groupID = groupID;
     }
 
-    public long getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(long startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public long getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(long endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

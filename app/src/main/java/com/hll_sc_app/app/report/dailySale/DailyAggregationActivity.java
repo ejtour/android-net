@@ -51,6 +51,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     TextView dailyTotalAmount;
     @BindView(R.id.daily_totalnum)
     TextView dailyTotalnum;
+
     private DailyAggregationListAdapter mAdapter;
     private DateRangeWindow mDateRangeWindow;
     private DailyAggregationPresenter mPresenter;
@@ -136,7 +137,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         } else {
             mAdapter.setNewData(dateSaleAmountResp.getRecords());
         }
-        dailyTotalAmount.setText("总交易金额:¥"+CommonUtils.format(dateSaleAmountResp.getTotalSubtotalAmount(),2));
+        dailyTotalAmount.setText("总交易金额:¥"+CommonUtils.formatMoney(dateSaleAmountResp.getTotalSubtotalAmount()));
         dailyTotalnum.setText("总订单数:"+dateSaleAmountResp.getTotalOrderNum());
     }
 
@@ -186,11 +187,11 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
 
         @Override
         protected void convert(BaseViewHolder helper, DateSaleAmount bean) {
-            helper.setText(R.id.daily_amount, CommonUtils.format(bean.getSubtotalAmount(), 2))
+            helper.setText(R.id.daily_amount, CommonUtils.formatMoney(bean.getSubtotalAmount()))
                     .setText(R.id.daily_time, CalendarUtils.format(CalendarUtils.parseLocal(bean.getDate() + "", CalendarUtils.FORMAT_LOCAL_DATE), "yyyy/MM/dd"))
                     .setText(R.id.daily_order_num, bean.getOrderNum() + "")
-                    .setText(R.id.daily_customer_price, CommonUtils.format(bean.getAverageShopAmount(), 2))
-                    .setText(R.id.daily_avg_price, CommonUtils.format(bean.getAverageAmount(), 2))
+                    .setText(R.id.daily_customer_price, CommonUtils.formatMoney(bean.getAverageShopAmount()))
+                    .setText(R.id.daily_avg_price, CommonUtils.formatMoney(bean.getAverageAmount()))
                     .setText(R.id.daily_order_customers, bean.getOrderCustomerNum() + "/" + bean.getOrderCustomerShopNum());
         }
     }
