@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -33,19 +35,41 @@
                 android:layout_height="match_parent"
                 android:background="@color/base_color_divider"/>
 
-            <EditText
-                android:id="@+id/edt_search_content"
+            <RelativeLayout
+                android:id="@+id/search_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@null"
-                android:hint="请输入关键字搜索"
-                android:imeOptions="actionSearch"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-                android:textColorHint="@color/color_aeaeae"/>
+                android:paddingLeft="10dp">
+
+                <EditText
+                    android:id="@+id/edt_search_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/img_clear"
+                    android:background="@null"
+                    android:hint="请输入关键字搜索"
+                    android:imeOptions="actionSearch"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    android:textColorHint="@color/color_aeaeae"/>
+
+                <ImageView
+                    android:id="@+id/img_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_clear_search"
+                    android:tint="@color/base_text999"
+                    android:visibility="gone"
+                    tools:visibility="visible"/>
+            </RelativeLayout>
+
 
             <View
                 android:layout_width="1dp"
@@ -69,7 +93,8 @@
         android:layout_width="match_parent"
         android:layout_height="360dp"
         android:layout_below="@+id/fl_search"
-        android:background="@color/base_white"/>
+        android:background="@color/base_white"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 </RelativeLayout>
 
 

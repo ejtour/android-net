@@ -39,7 +39,6 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.STAFF_DETAIL, extras = Constant.LOGIN_EXTRA)
 public class StaffManagerEditActivity extends BaseLoadActivity implements StaffManagerEditContract.IStaffManageEditView {
-
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
     @BindView(R.id.txt_save)

@@ -3,13 +3,14 @@ package com.hll_sc_app.app.agreementprice.quotation;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.EmptyView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * 采购商弹窗选择
@@ -38,9 +41,11 @@ public class PurchaserSelectWindow extends BasePopupWindow {
     RecyclerView mRecyclerView;
     @BindView(R.id.edt_search_content)
     EditText mEdtSearchContent;
-    private SelectConfirmListener mListener;
+    @BindView(R.id.img_clear)
+    ImageView mImgClear;
     private List<PurchaserBean> mList;
     private PurchaserListAdapter mAdapter;
+    private SelectConfirmListener mListener;
 
     PurchaserSelectWindow(Activity context, List<PurchaserBean> list) {
         super(context);
@@ -60,7 +65,9 @@ public class PurchaserSelectWindow extends BasePopupWindow {
     }
 
     private void initView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        EmptyView emptyView = EmptyView.newBuilder(mActivity)
+            .setImage(R.drawable.ic_search_empty_purchaser)
+            .setTips("没有搜索到相关的集团噢").create();
         mAdapter = new PurchaserListAdapter(mList);
         mAdapter.setOnItemClickListener((adapter1, view, position) -> {
             PurchaserBean purchaserBean = (PurchaserBean) adapter1.getItem(position);
@@ -75,6 +82,7 @@ public class PurchaserSelectWindow extends BasePopupWindow {
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setEmptyView(emptyView);
         mEdtSearchContent.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 toSearch();
@@ -109,14 +117,30 @@ public class PurchaserSelectWindow extends BasePopupWindow {
         mAdapter.setNewData(listFilter);
     }
 
+    @OnTextChanged(R.id.edt_search_content)
+    public void onTextChange(CharSequence s) {
+        mImgClear.setVisibility(!TextUtils.isEmpty(s) ? View.VISIBLE : View.GONE);
+        toSearch();
+    }
+
     public void setListener(SelectConfirmListener listener) {
         this.mListener = listener;
     }
 
-    @OnClick(R.id.txt_search)
-    public void onViewClicked() {
-        toSearch();
+    @OnClick({R.id.img_clear, R.id.txt_search})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_clear:
+                mEdtSearchContent.setText(null);
+                break;
+            case R.id.txt_search:
+                toSearch();
+                break;
+            default:
+                break;
+        }
     }
+
 
     public interface SelectConfirmListener {
         /**

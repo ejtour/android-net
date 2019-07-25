@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.EmptyView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * 协议价管理-商品-采购商门店筛选
@@ -46,6 +49,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
     TextView mTxtSearchType;
     @BindView(R.id.edt_search_content)
     EditText mEdtSearchContent;
+    @BindView(R.id.img_clear)
+    ImageView mImgClear;
     private ConfirmListener mListener;
     private List<PurchaserBean> mList;
     private PurchaserListAdapter mAdapterPurchaser;
@@ -89,6 +94,9 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
      * 显示采购商列表
      */
     private void showPurchaserList() {
+        EmptyView emptyView = EmptyView.newBuilder(mActivity)
+            .setImage(R.drawable.ic_search_empty_purchaser)
+            .setTips("没有找到相关的集团噢").create();
         mAdapterPurchaser = new PurchaserListAdapter(mList);
         mAdapterPurchaser.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
@@ -107,7 +115,12 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
             }
         });
         mRecyclerViewPurchaser.setAdapter(mAdapterPurchaser);
+        mAdapterPurchaser.setEmptyView(emptyView);
 
+
+        EmptyView emptyViewShop = EmptyView.newBuilder(mActivity)
+            .setImage(R.drawable.ic_empty_shop_view)
+            .setTips("没有找到相关的门店噢").create();
         mAdapterPurchaserShop = new PurchaserShopListAdapter();
         mAdapterPurchaserShop.setOnItemClickListener((adapter, view, position) -> {
             PurchaserShopBean shopBean = (PurchaserShopBean) adapter.getItem(position);
@@ -123,6 +136,7 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
             adapter.notifyDataSetChanged();
         });
         mRecyclerViewPurchaserShop.setAdapter(mAdapterPurchaserShop);
+        mAdapterPurchaserShop.setEmptyView(emptyViewShop);
     }
 
     private void toSearchGroup(String searchParam) {
@@ -204,6 +218,12 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
         }
     }
 
+    @OnTextChanged(R.id.edt_search_content)
+    public void onTextChange(CharSequence s) {
+        mImgClear.setVisibility(!TextUtils.isEmpty(s) ? View.VISIBLE : View.GONE);
+        toSearch();
+    }
+
     void showShopList(List<PurchaserShopBean> list) {
         mShopList = list;
         mAdapterPurchaserShop.setNewData(list);
@@ -213,7 +233,7 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
         this.mListener = listener;
     }
 
-    @OnClick({R.id.txt_confirm, R.id.txt_reset, R.id.txt_search, R.id.txt_search_type})
+    @OnClick({R.id.txt_confirm, R.id.txt_reset, R.id.txt_search, R.id.txt_search_type, R.id.img_clear})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.txt_reset) {
@@ -224,9 +244,14 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
             dismiss();
         } else if (id == R.id.txt_search) {
             toSearch();
+        } else if (id == R.id.img_clear) {
+            mEdtSearchContent.setText(null);
         } else if (id == R.id.txt_search_type) {
             String searchType = mTxtSearchType.getText().toString().trim();
             mTxtSearchType.setText(TextUtils.equals(searchType, STRING_GROUP) ? STRING_SHOP : STRING_GROUP);
+            mEdtSearchContent.setText(null);
+            toSearchGroup(null);
+            toSearchShop(null);
         }
     }
 
