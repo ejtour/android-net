@@ -97,12 +97,12 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
         //请求商品销售汇总
 
         byte dataFlag = (byte) 1;
-        long startDate = DateUtil.getWeekFirstDay(0);
-        long endDate = DateUtil.getWeekLastDay(0);
+        String startDate = DateUtil.getWeekFirstDay(0)+"";
+        String endDate = DateUtil.getWeekLastDay(0)+"";
         productSaleAggregationReq.setDateFlag(dataFlag);
         productSaleAggregationReq.setStartDate(startDate);
         productSaleAggregationReq.setEndDate(endDate);
-        productSaleAggregationReq.setGroupID(Long.valueOf(UserConfig.getGroupID()));
+        productSaleAggregationReq.setGroupID(UserConfig.getGroupID());
         mPresenter.queryProductSaleAggregation(productSaleAggregationReq);
         //请求商品销量top10
         productSaleTopReq.setDateFlag(dataFlag);
@@ -110,7 +110,7 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
         productSaleTopReq.setEndDate(endDate);
         //表示销量
         productSaleTopReq.setType((byte)1);
-        productSaleTopReq.setGroupID(Long.valueOf(UserConfig.getGroupID()));
+        productSaleTopReq.setGroupID(UserConfig.getGroupID());
         mPresenter.queryProductSaleTop(productSaleTopReq);
     }
 
@@ -152,13 +152,13 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
                     Calendar calendarEnd = Calendar.getInstance();
                     calendarEnd.setTimeInMillis(end.getTimeInMillis());
                     String endStr = CalendarUtils.format(calendarEnd.getTime(), CalendarUtils.FORMAT_DATE_TIME);
-                    productSaleAggregationReq.setGroupID(Long.valueOf(UserConfig.getGroupID()));
-                    productSaleAggregationReq.setStartDate(Long.valueOf(CalendarUtils.toLocalDate(calendarStart.getTime())));
-                    productSaleAggregationReq.setEndDate(Long.valueOf(CalendarUtils.toLocalDate(calendarEnd.getTime())));
+                    productSaleAggregationReq.setGroupID(UserConfig.getGroupID());
+                    productSaleAggregationReq.setStartDate(CalendarUtils.toLocalDate(calendarStart.getTime()));
+                    productSaleAggregationReq.setEndDate(CalendarUtils.toLocalDate(calendarEnd.getTime()));
                     productSaleAggregationReq.setDateFlag((byte) 4);
-                    productSaleTopReq.setGroupID(Long.valueOf(UserConfig.getGroupID()));
-                    productSaleTopReq.setStartDate(Long.valueOf(CalendarUtils.toLocalDate(calendarStart.getTime())));
-                    productSaleTopReq.setEndDate(Long.valueOf(CalendarUtils.toLocalDate(calendarEnd.getTime())));
+                    productSaleTopReq.setGroupID(UserConfig.getGroupID());
+                    productSaleTopReq.setStartDate(CalendarUtils.toLocalDate(calendarStart.getTime()));
+                    productSaleTopReq.setEndDate(CalendarUtils.toLocalDate(calendarEnd.getTime()));
                     productSaleTopReq.setDateFlag((byte) 4);
                     //
                     dateSelected = 3;
@@ -187,30 +187,30 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
     @OnClick({R.id.product_sale_aggregation_current_week, R.id.product_sale_aggregation_current_month,
               R.id.product_sale_aggregation_last_month,R.id.product_sale_list_num_header, R.id.product_sale_list_amount_header})
     public void onViewClicked(View view) {
-        long startDate = 0L;
-        long endDate = 0L;
+        String startDate = "";
+        String endDate = "";
         byte dataFlag = 0;
         byte type = 1;
         boolean isOnlyTopReq = false;
         switch (view.getId()) {
             case R.id.product_sale_aggregation_current_week:
                 dataFlag = (byte) 1;
-                startDate = DateUtil.getWeekFirstDay(0);
-                endDate = DateUtil.getWeekLastDay(0);
+                startDate = DateUtil.getWeekFirstDay(0)+"";
+                endDate = DateUtil.getWeekLastDay(0)+"";
                 dateSelected = 0 ;
                 break;
             case R.id.product_sale_aggregation_current_month:
                 productSaleAggregationReq.setDateFlag((byte) 2);
                 dataFlag = (byte) 2;
-                startDate = DateUtil.getMonthFirstDay(0);
-                endDate = DateUtil.getMonthLastDay(0);
+                startDate = DateUtil.getMonthFirstDay(0)+"";
+                endDate = DateUtil.getMonthLastDay(0)+"";
                 dateSelected = 1 ;
                 break;
             case R.id.product_sale_aggregation_last_month:
                 productSaleAggregationReq.setDateFlag((byte) 3);
                 dataFlag = (byte) 3;
-                startDate = DateUtil.getMonthFirstDay(-1);
-                endDate = DateUtil.getMonthLastDay(-1);
+                startDate = DateUtil.getMonthFirstDay(-1)+"";
+                endDate = DateUtil.getMonthLastDay(-1)+"";
                 dateSelected = 2 ;
                 break;
             case R.id.product_sale_list_num_header:
@@ -230,28 +230,28 @@ public class ProductAggregationActivity extends BaseLoadActivity implements IPro
             productSaleAggregationReq.setDateFlag(dataFlag);
             productSaleAggregationReq.setStartDate(startDate);
             productSaleAggregationReq.setEndDate(endDate);
-            productSaleAggregationReq.setGroupID(Long.valueOf(UserConfig.getGroupID()));
+            productSaleAggregationReq.setGroupID(UserConfig.getGroupID());
             mPresenter.queryProductSaleAggregation(productSaleAggregationReq);
         }
         //封装查询 商品销售top10
         if(dateSelected==0){
             dataFlag = (byte) 1;
-            startDate = DateUtil.getWeekFirstDay(0);
-            endDate = DateUtil.getWeekLastDay(0);
+            startDate = DateUtil.getWeekFirstDay(0)+"";
+            endDate = DateUtil.getWeekLastDay(0)+"";
         }else if(dateSelected ==1){
             dataFlag = (byte) 2;
-            startDate = DateUtil.getMonthFirstDay(0);
-            endDate = DateUtil.getMonthLastDay(0);
+            startDate = DateUtil.getMonthFirstDay(0)+"";
+            endDate = DateUtil.getMonthLastDay(0)+"";
         }else if(dateSelected ==2){
             dataFlag = (byte) 3;
-            startDate = DateUtil.getMonthFirstDay(-1);
-            endDate = DateUtil.getMonthLastDay(-1);
+            startDate = DateUtil.getMonthFirstDay(-1)+"";
+            endDate = DateUtil.getMonthLastDay(-1)+"";
         }
         productSaleTopReq.setDateFlag(dataFlag);
         productSaleTopReq.setStartDate(startDate);
         productSaleTopReq.setEndDate(endDate);
         productSaleTopReq.setType(type);
-        productSaleTopReq.setGroupID(Long.valueOf(UserConfig.getGroupID()));
+        productSaleTopReq.setGroupID(UserConfig.getGroupID());
         mPresenter.queryProductSaleTop(productSaleTopReq);
     }
 }

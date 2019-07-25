@@ -394,4 +394,19 @@ public class RouterConfig {
      * 日销售汇总
      */
     public static final String REPORT_DAILY_AGGREGATION = "/activity/daily/aggregation";
+
+    /**
+     * 客户销售汇总
+     */
+    public static final String CUSTOMER_SALE_AGGREGATION = "/activity/customer/aggregation";
+
+    /**
+     * 客户销售汇总明细
+     */
+    public static final String CUSTOMER_SALE_DETAILS="/activity/customer/sale/detail";
+
+    /**
+     * 客户销售汇总门店明细
+     */
+    public static final String CUSTOMER_SALE_SHOP_DETAILS="/activity/customer/sale/shop/detail";
 }

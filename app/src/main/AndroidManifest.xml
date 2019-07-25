@@ -356,6 +356,15 @@
         <activity
             android:name=".app.report.orderGoods.OrderGoodsActivity"
             android:screenOrientation="portrait" />
+        <!--客户销售汇总-->
+        <activity android:name=".app.report.customerSale.CustomerSaleActivity"
+            android:screenOrientation="portrait"/>
+         <!--客户销售汇总明细-->
+        <activity android:name=".app.report.customerSale.saleDetail.CustomerSalesDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!--客户销售汇总门店明细-->
+        <activity android:name=".app.report.customerSale.shopDetail.CustomerShopDetailActivity"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
             android:screenOrientation="portrait" />

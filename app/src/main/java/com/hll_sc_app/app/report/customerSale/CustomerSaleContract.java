@@ -3,6 +3,7 @@ package com.hll_sc_app.app.report.customerSale;
 import com.hll_sc_app.app.report.dailySale.DailyAggregationContract;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 
 public interface CustomerSaleContract {
@@ -13,20 +14,12 @@ public interface CustomerSaleContract {
          */
         void showCustomerSaleGather(CustomerSalesResp customerSalesResp);
 
-
         /**
-         * 获取开始时间
+         * 获取参数
          *
-         * @return 开始时间
+         * @return 参数
          */
-        String getStartDate();
-
-        /**
-         * 获取结束时间
-         *
-         * @return 结束时间
-         */
-        String getEndDate();
+        CustomerSaleReq getParams();
 
         /**
          * 导出成功
@@ -54,12 +47,8 @@ public interface CustomerSaleContract {
          *
          * @param showLoading true-显示对话框
          */
-        void queryCustomerSaleList(boolean showLoading);
+        void queryCustomerSaleGather(boolean showLoading);
 
-        /**
-         * 加载更多日汇总列表
-         */
-        void queryMoreCustomerSaleList();
 
         /**
          * 导出日汇总报表

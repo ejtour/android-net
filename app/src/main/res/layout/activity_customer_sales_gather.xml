@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:layout_width="match_parent"
@@ -42,6 +43,7 @@
         android:src="@drawable/ic_options" />
 
     <TextView
+        android:id="@+id/date_flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="28dp"
@@ -51,12 +53,14 @@
         android:textSize="@dimen/base_text_12" />
 
     <TextView
+        android:id="@+id/text_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="83dp"
-        android:text="2018/08/08"
+        tools:text="2018/08/08"
         android:textColor="@color/base_white"
+        android:layout_marginRight="10dp"
         android:textSize="@dimen/base_text_12" />
 
     <LinearLayout
