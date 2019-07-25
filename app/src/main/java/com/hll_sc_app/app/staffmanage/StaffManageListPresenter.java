@@ -4,6 +4,8 @@ import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.api.StaffManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
@@ -33,12 +35,43 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
 
     @Override
     public void start() {
+        queryStaffNum();
         queryStaffList(true);
     }
 
     @Override
     public void register(StaffManageListContract.IStaffListView view) {
         this.mView = CommonUtils.checkNotNull(view);
+    }
+
+    @Override
+    public void queryStaffNum() {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("flag", "2")
+            .put("groupID", UserConfig.getGroupID())
+            .create();
+        StaffManageService.INSTANCE
+            .queryStaffNum(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<StaffBean>() {
+                @Override
+                public void onSuccess(StaffBean staffBean) {
+                    mView.showStaffNum(staffBean.getEmployeeNum());
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
     }
 
     @Override

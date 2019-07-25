@@ -31,4 +31,14 @@ public interface StaffManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101025")
     Observable<BaseResp<List<StaffBean>>> queryStaffList(@Body BaseMapReq req);
+
+    /**
+     * 查询员工数量
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101103")
+    Observable<BaseResp<StaffBean>> queryStaffNum(@Body BaseMapReq req);
 }

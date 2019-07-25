@@ -29,9 +29,21 @@ public interface StaffManageListContract {
          * @param append true-追加
          */
         void showStaffList(List<StaffBean> list, boolean append);
+
+        /**
+         * 显示员工数量
+         *
+         * @param num 员工数量
+         */
+        void showStaffNum(String num);
     }
 
     interface IStaffListPresenter extends IPresenter<IStaffListView> {
+        /**
+         * 查询员工数量
+         */
+        void queryStaffNum();
+
         /**
          * 查询员工列表
          *

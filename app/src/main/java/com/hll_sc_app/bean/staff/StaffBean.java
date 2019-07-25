@@ -16,6 +16,16 @@ public class StaffBean {
     private String employeeCode;
     private List<RolesBean> roles;
 
+    private String employeeNum;
+
+    public String getEmployeeNum() {
+        return employeeNum;
+    }
+
+    public void setEmployeeNum(String employeeNum) {
+        this.employeeNum = employeeNum;
+    }
+
     public String getEmployeeName() {
         return employeeName;
     }

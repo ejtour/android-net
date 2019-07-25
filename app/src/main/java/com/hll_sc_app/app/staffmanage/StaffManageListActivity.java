@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,6 +21,7 @@ import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
@@ -57,6 +59,8 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     SearchView mSearchView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.txt_staffNum)
+    TextView mTxtStaffNum;
     private EmptyView mEmptyView;
     private EmptyView mSearchEmptyView;
     private StaffManageListPresenter mPresenter;
@@ -82,6 +86,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     }
 
     private void initView() {
+        mSearchView.setBackgroundResource(R.drawable.base_bg_shadow_top_white_bar);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -204,6 +209,11 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         mRefreshLayout.setEnableLoadMore(list != null && list.size() == GoodsListReq.PAGE_SIZE);
     }
 
+    @Override
+    public void showStaffNum(String num) {
+        mTxtStaffNum.setText(String.format("员工总数：%s", num));
+    }
+
     @OnClick({R.id.img_close, R.id.txt_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -239,18 +249,10 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
 
         @Override
         protected void convert(BaseViewHolder helper, StaffBean item) {
-//            helper.setText(R.id.txt_purchaserName, item.getPurchaserName())
-//                .setText(R.id.txt_linkMan,
-//                    getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
-//                .setText(R.id.txt_shopCount, getShopCountString(item))
-//                .setGone(R.id.txt_shopCount, !mAdd)
-//                .setGone(R.id.txt_newShopNum, CommonUtils.getDouble(item.getNewShopNum()) != 0);
-//            ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getLogoUrl());
+            helper.setText(R.id.txt_employeeName, item.getEmployeeName())
+                .setText(R.id.txt_loginPhone, PhoneUtil.formatPhoneNum(item.getLoginPhone()))
+                .setText(R.id.txt_roles, "拥有职务" + (CommonUtils.isEmpty(item.getRoles()) ? "0" :
+                    item.getRoles().size()) + "个");
         }
-
-        private String getString(String str) {
-            return TextUtils.isEmpty(str) ? "无" : str;
-        }
-
     }
 }
