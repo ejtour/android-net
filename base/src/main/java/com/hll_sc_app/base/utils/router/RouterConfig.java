@@ -104,6 +104,10 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_LIST = "/activity/cooperationPurchaser/list";
     /**
+     * 员工列表
+     */
+    public static final String STAFF_LIST = "/activity/staff/list";
+    /**
      * 合作采购商-我发出的申请
      */
     public static final String COOPERATION_PURCHASER_MY_APPLICATION = "/activity/cooperationPurchaser/myApplication";
@@ -411,10 +415,10 @@ public class RouterConfig {
     /**
      * 客户销售汇总明细
      */
-    public static final String CUSTOMER_SALE_DETAILS="/activity/customer/sale/detail";
+    public static final String CUSTOMER_SALE_DETAILS = "/activity/customer/sale/detail";
 
     /**
      * 客户销售汇总门店明细
      */
-    public static final String CUSTOMER_SALE_SHOP_DETAILS="/activity/customer/sale/shop/detail";
+    public static final String CUSTOMER_SALE_SHOP_DETAILS = "/activity/customer/sale/shop/detail";
 }
