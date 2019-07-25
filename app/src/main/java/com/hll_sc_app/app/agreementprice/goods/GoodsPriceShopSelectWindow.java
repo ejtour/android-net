@@ -7,8 +7,10 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -62,6 +64,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.setBackgroundDrawable(new ColorDrawable(0xbb000000));
+        this.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mEdtSearchContent.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 toSearch();

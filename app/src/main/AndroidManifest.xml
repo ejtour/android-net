@@ -96,6 +96,7 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".app.agreementprice.AgreementPriceActivity"
             android:screenOrientation="portrait" />
 
