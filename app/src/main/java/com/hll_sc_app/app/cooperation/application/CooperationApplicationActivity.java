@@ -17,7 +17,8 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.platform.CooperationPlatformFragment;
 import com.hll_sc_app.app.cooperation.application.thirdpart.CooperationThirdPartFragment;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.CooperationSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -76,7 +77,7 @@ public class CooperationApplicationActivity extends BaseLoadActivity {
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_COOPERATION_SEARCH);
+                SearchActivity.start(searchContent, CooperationSearch.class.getSimpleName());
             }
 
             @Override

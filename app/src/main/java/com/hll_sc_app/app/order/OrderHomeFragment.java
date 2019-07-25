@@ -21,8 +21,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderType;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.OrderSearch;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.ExportEvent;
@@ -116,7 +117,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fmo_search:
-                OrderSearchActivity.start(mOrderParam.getSearchWords());
+                SearchActivity.start(mOrderParam.getSearchWords(), OrderSearch.class.getSimpleName());
                 break;
             case R.id.fmo_clear_search:
                 EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, new OrderSearchBean()));
