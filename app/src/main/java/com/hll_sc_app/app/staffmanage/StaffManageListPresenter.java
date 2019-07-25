@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.staffmanage;
 
-import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.api.StaffManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -89,13 +88,12 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
     }
 
     @Override
-    public void delStaff(String purchaserId) {
+    public void delStaff(String employeeId) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", purchaserId)
+            .put("employeeID", employeeId)
             .create();
-        CooperationPurchaserService.INSTANCE.delCooperationPurchaser(req)
+        StaffManageService.INSTANCE
+            .delStaff(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -104,7 +102,10 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
+                    mView.showToast("删除成功");
                     queryStaffList(true);
+                    // 查询员工数量
+                    queryStaffNum();
                 }
 
                 @Override
