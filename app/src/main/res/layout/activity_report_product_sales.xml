@@ -276,6 +276,8 @@
                 android:id="@+id/rps_pie_chart"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
                 app:layout_constraintBottom_toBottomOf="@id/rps_chart_bg"
                 app:layout_constraintEnd_toEndOf="@id/rps_div3"
                 app:layout_constraintStart_toStartOf="@id/rps_div3"

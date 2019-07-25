@@ -15,11 +15,19 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.report.product.ProductSalesParam;
+import com.hll_sc_app.bean.report.resp.product.ProductCategory;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Bean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -27,6 +35,8 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.TitleBar;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -107,11 +117,75 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
         mAdapter.addHeaderView(header);
         mListView.setAdapter(mAdapter);
         mTab.addOnTabSelectedListener(this);
+        initChart();
+    }
+
+    private void initChart() {
+        mPieChart.setUsePercentValues(true); // 用百分比值
+        mPieChart.getDescription().setEnabled(false); // 禁用图表底部描述
+        mPieChart.setDrawHoleEnabled(true); // 允许花中心圆
+        mPieChart.setHoleColor(Color.WHITE); // 设置中心圆颜色
+        mPieChart.setTransparentCircleColor(Color.WHITE); // 设置透明圆颜色
+        mPieChart.setTransparentCircleAlpha(110); // 设置透明圆透明度
+        mPieChart.setTransparentCircleRadius(42.6f); // 设置透明圆半径
+        mPieChart.setHoleRadius(42.6f); // 设置中心圆半径
+        mPieChart.setRotationEnabled(false); // 启用旋转
+        mPieChart.setHighlightPerTapEnabled(true); // 点击高亮
+        mPieChart.setDrawEntryLabels(false); // 禁用饼描述
+        mPieChart.animateY(1400, Easing.EaseInOutQuad); // 动画展示
+        Legend legend = mPieChart.getLegend();
+        legend.setTextSize(10);
+        legend.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legend.setDrawInside(false);
     }
 
     private void showStatusBar() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
             ((ViewGroup.MarginLayoutParams) mTitleBar.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
+        }
+    }
+
+    private void setChartData(List<ProductCategory> list) {
+        List<PieEntry> entryList = new ArrayList<>();
+        if (!CommonUtils.isEmpty(list)) {
+            for (ProductCategory category : list) {
+                entryList.add(new PieEntry(category.getCategoryOrderAmount(), category.getCategoryName()));
+            }
+            mCategoryNum.setText(String.format("(%s)", list.size()));
+        } else {
+            mCategoryNum.setText("(0)");
+        }
+        PieDataSet dataSet = new PieDataSet(entryList, "");
+        dataSet.setSliceSpace(1f); // 设置饼图每个饼之间的间隔
+        dataSet.setSelectionShift(7f); // 设置高亮的饼突出大小
+        List<Integer> colorList = Arrays.asList(Color.rgb(133, 165, 255),
+                Color.rgb(186, 230, 55), Color.rgb(255, 77, 79),
+                Color.rgb(255, 245, 102), Color.rgb(255, 173, 210),
+                Color.rgb(133, 165, 255), Color.rgb(255, 197, 61),
+                Color.rgb(92, 219, 211), ColorTemplate.getHoloBlue());
+        dataSet.setColors(colorList); // 设置颜色组
+        dataSet.setValueLinePart1Length(0.3f);
+        dataSet.setValueLinePart2Length(0.6f);
+        dataSet.setValueLinePart1OffsetPercentage(75f);
+        // dataSet.setUsingSliceColorAsValueLineColor(true); // 将线颜色与饼颜色保持一致
+        dataSet.setValueLineColor(ContextCompat.getColor(this, R.color.color_222222));
+        dataSet.setValueTextColor(ContextCompat.getColor(this, R.color.color_222222));
+        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+        PieData pieData = new PieData(dataSet);
+        pieData.setValueFormatter(new MyFormatter());
+        pieData.setValueTextSize(10);
+        mPieChart.setData(pieData);
+        mPieChart.highlightValues(null); // 取消高亮
+        mPieChart.invalidate();
+    }
+
+    public class MyFormatter extends PercentFormatter {
+        @Override
+        public String getPieLabel(float value, PieEntry pieEntry) {
+            return pieEntry.getLabel() + "：" + getFormattedValue(value);
         }
     }
 
@@ -150,6 +224,7 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
         mSalesNum.setText(CommonUtils.formatNum(resp.getOrderNum()));
         mSkuNum.setText(CommonUtils.formatNum(resp.getSkuNum()));
         mSalesAmount.setText(CommonUtils.formatMoney(resp.getOrderAmount()));
+        setChartData(resp.getProductCategorySaleVo());
     }
 
     @Override
