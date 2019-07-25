@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
@@ -45,7 +44,6 @@ import butterknife.Unbinder;
  * @author zhuyingsong
  * @date 2019/7/24
  */
-@Route(path = RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION)
 public class CooperationPlatformFragment extends BaseCooperationApplicationFragment implements CooperationPlatformContract.ICooperationPlatformView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
