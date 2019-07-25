@@ -68,11 +68,11 @@
 
         <activity
             android:name=".app.setting.account.unbindmainaccount.UnbindMainAccountActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.account.unbindgroup.UnbindGroupActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.bill.BillSettingActivityActivity"
@@ -159,15 +159,15 @@
 
         <activity
             android:name=".app.cooperation.invite.CooperationInviteActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.application.CooperationApplicationActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.application.thirdpart.detail.CooperationThirdPartDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.CooperationDetailActivity"
@@ -187,15 +187,15 @@
 
         <activity
             android:name=".app.setting.priceratio.PriceRatioTemplateActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.priceratio.add.PriceRatioTemplateAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.priceratio.PriceRatioTemplateListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.details.CooperationDetailsActivity"
@@ -231,7 +231,7 @@
 
         <activity
             android:name=".app.cooperation.detail.details.basic.CooperationShopListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.add.CooperationAddActivity"
@@ -370,20 +370,29 @@
             android:name=".app.report.orderGoods.OrderGoodsActivity"
             android:screenOrientation="portrait" />
         <!--客户销售汇总-->
-        <activity android:name=".app.report.customerSale.CustomerSaleActivity"
-            android:screenOrientation="portrait"/>
-         <!--客户销售汇总明细-->
-        <activity android:name=".app.report.customerSale.saleDetail.CustomerSalesDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.customerSale.CustomerSaleActivity"
+            android:screenOrientation="portrait" />
+        <!--客户销售汇总明细-->
+        <activity
+            android:name=".app.report.customerSale.saleDetail.CustomerSalesDetailActivity"
+            android:screenOrientation="portrait" />
         <!--客户销售汇总门店明细-->
-        <activity android:name=".app.report.customerSale.shopDetail.CustomerShopDetailActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
+        <activity
+            android:name=".app.report.customerSale.shopDetail.CustomerShopDetailActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".app.report.productSale.ProductSalesActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.productSale.ProductSalesActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.search.SearchActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

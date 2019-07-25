@@ -11,6 +11,11 @@ public class RouterConfig {
      * 设置界面
      */
     public static final String SETTING = "/activity/setting";
+
+    /**
+     * 通用简单搜索页
+     */
+    public static final String SEARCH = "/activity/search";
     /**
      * 设置界面-价格比例设置
      */
