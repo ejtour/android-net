@@ -1,18 +1,17 @@
 package com.hll_sc_app.bean.report.resp.product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 商品销售统计汇总响应参数
  */
 
-public class ProductSaleAggregationResp {
+public class ProductSaleResp {
 
     private double orderAmount;
-    private long   orderNum;
-    private long   skuNum;
-    private List<ProductCategory> productCategorySaleVo  = new ArrayList<>();
+    private double orderNum;
+    private double skuNum;
+    private List<ProductCategory> productCategorySaleVo;
 
     public double getOrderAmount() {
         return orderAmount;
@@ -22,19 +21,19 @@ public class ProductSaleAggregationResp {
         this.orderAmount = orderAmount;
     }
 
-    public long getOrderNum() {
+    public double getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderNum(long orderNum) {
+    public void setOrderNum(double orderNum) {
         this.orderNum = orderNum;
     }
 
-    public long getSkuNum() {
+    public double getSkuNum() {
         return skuNum;
     }
 
-    public void setSkuNum(long skuNum) {
+    public void setSkuNum(double skuNum) {
         this.skuNum = skuNum;
     }
 

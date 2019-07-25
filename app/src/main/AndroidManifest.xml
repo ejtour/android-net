@@ -350,10 +350,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.productSale.ProductAggregationActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".app.report.ReportEntryActivity"
             android:screenOrientation="portrait" />
 
@@ -376,6 +372,9 @@
 
         <activity android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".app.report.productSale.ProductSalesActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
