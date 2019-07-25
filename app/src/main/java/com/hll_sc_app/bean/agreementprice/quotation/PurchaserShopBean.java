@@ -3,7 +3,8 @@ package com.hll_sc_app.bean.agreementprice.quotation;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
+import com.hll_sc_app.bean.cooperation.CooperationSourceBean;
+
 import java.util.List;
 
 /**
@@ -29,9 +30,133 @@ public class PurchaserShopBean implements Parcelable {
     private String lonGaoDe;
     private String shopPhone;
     private String shopID;
+    private String purchaserName;
+
+    private String shopProvince;
+    private String shopDistrict;
+    private String shopCity;
     private boolean select;
     private List<TimeBean> time;
     private String status;
+    private String settlementWay;
+    public static final Creator<PurchaserShopBean> CREATOR = new Creator<PurchaserShopBean>() {
+        @Override
+        public PurchaserShopBean createFromParcel(Parcel source) {
+            return new PurchaserShopBean(source);
+        }
+
+        @Override
+        public PurchaserShopBean[] newArray(int size) {
+            return new PurchaserShopBean[size];
+        }
+    };
+
+    private String accountPeriodType;
+    private String accountPeriod;
+    private String salesRepresentativeName;
+    private String settleDate;
+    private String driverName;
+    private String salesRepresentativeID;
+    private String deliveryWay;
+    private String agreeTime;
+    private String deliveryPeriod;
+    private String driverID;
+
+    public String getAccountPeriodType() {
+        return accountPeriodType;
+    }
+
+    public void setAccountPeriodType(String accountPeriodType) {
+        this.accountPeriodType = accountPeriodType;
+    }
+
+    public String getAccountPeriod() {
+        return accountPeriod;
+    }
+
+    public void setAccountPeriod(String accountPeriod) {
+        this.accountPeriod = accountPeriod;
+    }
+
+    public String getSettleDate() {
+        return settleDate;
+    }
+
+    public void setSettleDate(String settleDate) {
+        this.settleDate = settleDate;
+    }
+
+    public String getDriverID() {
+        return driverID;
+    }
+
+    public void setDriverID(String driverID) {
+        this.driverID = driverID;
+    }
+
+    public String getSalesRepresentativeName() {
+        return salesRepresentativeName;
+    }
+
+    public void setSalesRepresentativeName(String salesRepresentativeName) {
+        this.salesRepresentativeName = salesRepresentativeName;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getDeliveryWay() {
+        return deliveryWay;
+    }
+
+    public void setDeliveryWay(String deliveryWay) {
+        this.deliveryWay = deliveryWay;
+    }
+
+    public String getAgreeTime() {
+        return agreeTime;
+    }
+
+    public void setAgreeTime(String agreeTime) {
+        this.agreeTime = agreeTime;
+    }
+
+    public String getDeliveryPeriod() {
+        return deliveryPeriod;
+    }
+
+    public void setDeliveryPeriod(String deliveryPeriod) {
+        this.deliveryPeriod = deliveryPeriod;
+    }
+
+    public String getSettlementWay() {
+        return settlementWay;
+    }
+
+    public void setSettlementWay(String settlementWay) {
+        this.settlementWay = settlementWay;
+    }
+
+    public String getShopProvince() {
+        return shopProvince;
+    }
+
+    public void setShopProvince(String shopProvince) {
+        this.shopProvince = shopProvince;
+    }
+
+    public String getShopDistrict() {
+        return shopDistrict;
+    }
+
+    public void setShopDistrict(String shopDistrict) {
+        this.shopDistrict = shopDistrict;
+    }
 
     public String getStatus() {
         return status;
@@ -185,20 +310,34 @@ public class PurchaserShopBean implements Parcelable {
         this.shopID = shopID;
     }
 
-    public static final Parcelable.Creator<PurchaserShopBean> CREATOR = new Parcelable.Creator<PurchaserShopBean>() {
-        @Override
-        public PurchaserShopBean createFromParcel(Parcel source) {
-            return new PurchaserShopBean(source);
-        }
-
-        @Override
-        public PurchaserShopBean[] newArray(int size) {
-            return new PurchaserShopBean[size];
-        }
-    };
-
     public PurchaserShopBean() {
     }
+
+    public String getShopCity() {
+        return shopCity;
+    }
+
+    public void setShopCity(String shopCity) {
+        this.shopCity = shopCity;
+    }
+
+    public String getPurchaserName() {
+        return purchaserName;
+    }
+
+    public void setPurchaserName(String purchaserName) {
+        this.purchaserName = purchaserName;
+    }
+
+    public String getSalesRepresentativeID() {
+        return salesRepresentativeID;
+    }
+
+    public void setSalesRepresentativeID(String salesRepresentativeID) {
+        this.salesRepresentativeID = salesRepresentativeID;
+    }
+
+    private List<CooperationSourceBean> cooperationSource;
 
     protected PurchaserShopBean(Parcel in) {
         this.shopCode = in.readString();
@@ -217,10 +356,25 @@ public class PurchaserShopBean implements Parcelable {
         this.lonGaoDe = in.readString();
         this.shopPhone = in.readString();
         this.shopID = in.readString();
+        this.purchaserName = in.readString();
+        this.shopProvince = in.readString();
+        this.shopDistrict = in.readString();
+        this.shopCity = in.readString();
         this.select = in.readByte() != 0;
-        this.time = new ArrayList<TimeBean>();
-        in.readList(this.time, TimeBean.class.getClassLoader());
+        this.time = in.createTypedArrayList(TimeBean.CREATOR);
         this.status = in.readString();
+        this.settlementWay = in.readString();
+        this.cooperationSource = in.createTypedArrayList(CooperationSourceBean.CREATOR);
+        this.accountPeriodType = in.readString();
+        this.accountPeriod = in.readString();
+        this.salesRepresentativeName = in.readString();
+        this.settleDate = in.readString();
+        this.driverName = in.readString();
+        this.salesRepresentativeID = in.readString();
+        this.deliveryWay = in.readString();
+        this.agreeTime = in.readString();
+        this.deliveryPeriod = in.readString();
+        this.driverID = in.readString();
     }
 
     @Override
@@ -246,8 +400,32 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeString(this.lonGaoDe);
         dest.writeString(this.shopPhone);
         dest.writeString(this.shopID);
+        dest.writeString(this.purchaserName);
+        dest.writeString(this.shopProvince);
+        dest.writeString(this.shopDistrict);
+        dest.writeString(this.shopCity);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
-        dest.writeList(this.time);
+        dest.writeTypedList(this.time);
         dest.writeString(this.status);
+        dest.writeString(this.settlementWay);
+        dest.writeTypedList(this.cooperationSource);
+        dest.writeString(this.accountPeriodType);
+        dest.writeString(this.accountPeriod);
+        dest.writeString(this.salesRepresentativeName);
+        dest.writeString(this.settleDate);
+        dest.writeString(this.driverName);
+        dest.writeString(this.salesRepresentativeID);
+        dest.writeString(this.deliveryWay);
+        dest.writeString(this.agreeTime);
+        dest.writeString(this.deliveryPeriod);
+        dest.writeString(this.driverID);
+    }
+
+    public List<CooperationSourceBean> getCooperationSource() {
+        return cooperationSource;
+    }
+
+    public void setCooperationSource(List<CooperationSourceBean> cooperationSource) {
+        this.cooperationSource = cooperationSource;
     }
 }

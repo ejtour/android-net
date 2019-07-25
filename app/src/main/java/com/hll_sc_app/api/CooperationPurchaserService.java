@@ -9,9 +9,12 @@ import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.cooperation.DeliveryBean;
+import com.hll_sc_app.bean.cooperation.DeliveryPeriodResp;
 import com.hll_sc_app.bean.cooperation.EmployeeBean;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
+import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 
 import java.util.List;
@@ -51,6 +54,36 @@ public interface CooperationPurchaserService {
     Observable<BaseResp<Object>> delCooperationPurchaser(@Body BaseMapReq req);
 
     /**
+     * 合作商信息编辑
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102032")
+    Observable<BaseResp<Object>> editCooperationPurchaser(@Body BaseMapReq req);
+
+    /**
+     * 添加合作餐企
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102009")
+    Observable<BaseResp<Object>> addCooperationPurchaser(@Body BaseMapReq req);
+
+    /**
+     * 接口名称 编辑合作关系拜访维护级别/客户级别
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102054")
+    Observable<BaseResp<Object>> editCooperationPurchaserLevel(@Body BaseMapReq req);
+
+    /**
      * 合作关系使用-集团搜索
      *
      * @param req req
@@ -69,16 +102,6 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:102031")
     Observable<BaseResp<CooperationPurchaserDetail>> queryCooperationPurchaserDetail(@Body BaseMapReq req);
-
-    /**
-     * 新增或删除合作门店
-     *
-     * @param req req
-     * @return resp
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:102034")
-    Observable<BaseResp<Object>> editCooperationPurchaserShop(@Body BaseReq<CooperationShopReq> req);
 
     /**
      * 查询支付方式
@@ -111,6 +134,26 @@ public interface CooperationPurchaserService {
     Observable<BaseResp<Object>> editShopSettlement(@Body BaseReq<ShopSettlementReq> req);
 
     /**
+     * 新增或删除合作门店
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102034")
+    Observable<BaseResp<Object>> addCooperationShop(@Body BaseReq<CooperationShopReq> req);
+
+    /**
+     * 编辑合作门店
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102055")
+    Observable<BaseResp<Object>> editCooperationShop(@Body BaseMapReq req);
+
+    /**
      * 修改合作商人员信息
      *
      * @param req req
@@ -129,4 +172,44 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101080")
     Observable<BaseResp<List<EmployeeBean>>> queryEmployeeList(@Body BaseMapReq req);
+
+    /**
+     * 配送时段列表查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103067")
+    Observable<BaseResp<DeliveryPeriodResp>> queryDeliveryPeriodList(@Body BaseMapReq req);
+
+    /**
+     * 获取第三方申请审核列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103701")
+    Observable<BaseResp<ThirdPartyPurchaserResp>> queryThirdPartPurchaserList(@Body BaseMapReq req);
+
+    /**
+     * 根据申请记录id查询第三方采购商审核记录详情
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103702")
+    Observable<BaseResp<ThirdPartyPurchaserBean>> queryThirdPartPurchaserDetail(@Body BaseMapReq req);
+
+    /**
+     * 采购商申请状态变更
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103703")
+    Observable<BaseResp<Object>> editThirdPartPurchaserDetail(@Body BaseMapReq req);
 }

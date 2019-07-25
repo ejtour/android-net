@@ -187,7 +187,9 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
     @Override
     public void showPurchaserList(List<PurchaserBean> list, boolean append, int total) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }

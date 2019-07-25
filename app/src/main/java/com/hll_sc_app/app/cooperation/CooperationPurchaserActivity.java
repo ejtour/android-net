@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.cooperation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -185,11 +186,10 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         mTxtGroupTotal.setText(CommonUtils.formatNumber(resp.getGroupTotal()));
         mTxtShopTotal.setText(CommonUtils.formatNumber(resp.getShopTotal()));
         List<PurchaserBean> list = resp.getRecords();
-        if (list == null) {
-            list = new ArrayList<>();
-        }
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }
@@ -253,12 +253,20 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
             RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_ADD);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
             // 我收到的申请
+            RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_APPLICATION);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
             // 我发出的申请
+            RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_MY_APPLICATION);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_EXPORT)) {
             mPresenter.exportPurchaser(null);
         }
         mOptionsWindow.dismiss();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresenter.start();
     }
 
     public static class PurchaserListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {

@@ -176,7 +176,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     }
 
     @OnClick({R.id.txt_wallet, R.id.txt_agreement_price, R.id.txt_warehouse_manage, R.id.txt_cooperation_purchaser,
-        R.id.txt_return_audit, R.id.img_setting, R.id.txt_price_setting})
+        R.id.txt_return_audit, R.id.img_setting, R.id.txt_price_setting,R.id.txt_report_center})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -198,6 +198,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 break;
             case R.id.txt_price_setting:
                 RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE);
+                break;
+            case R.id.txt_report_center:
+                RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY);
                 break;
             default:
                 break;

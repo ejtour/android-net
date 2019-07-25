@@ -22,6 +22,8 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @date 2019/7/16
  */
 public class CooperationDetailPresenter implements CooperationDetailContract.ICooperationDetailPresenter {
+    private int mPageNum;
+    private int mTempPageNum;
     private CooperationDetailContract.ICooperationDetailView mView;
 
     static CooperationDetailPresenter newInstance() {
@@ -30,7 +32,7 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
 
     @Override
     public void start() {
-        queryPurchaserDetail();
+        queryPurchaserDetail(false);
     }
 
     @Override
@@ -39,33 +41,17 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
     }
 
     @Override
-    public void queryPurchaserDetail() {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("originator", "1")
-            .put("pageNo", "1")
-            .put("pageSize", "20")
-            .put("groupID", UserConfig.getGroupID())
-            .put("purchaserID", mView.getPurchaserId())
-            .create();
-        CooperationPurchaserService.INSTANCE.queryCooperationPurchaserDetail(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> {
-                mView.showLoading();
-            })
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<CooperationPurchaserDetail>() {
-                @Override
-                public void onSuccess(CooperationPurchaserDetail resp) {
-                    mView.showPurchaserDetail(resp);
-                }
+    public void queryPurchaserDetail(boolean showLoading) {
+        mPageNum = 1;
+        mTempPageNum = mPageNum;
+        toQueryPurchaserDetail(showLoading);
+    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+    @Override
+    public void queryMorePurchaserDetail() {
+        mTempPageNum = mPageNum;
+        mTempPageNum++;
+        toQueryPurchaserDetail(false);
     }
 
     @Override
@@ -75,7 +61,7 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
         }
         BaseReq<CooperationShopReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
-        CooperationPurchaserService.INSTANCE.editCooperationPurchaserShop(baseReq)
+        CooperationPurchaserService.INSTANCE.addCooperationShop(baseReq)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -84,7 +70,39 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
-                    queryPurchaserDetail();
+                    queryPurchaserDetail(true);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    private void toQueryPurchaserDetail(boolean showLoading) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("pageNo", String.valueOf(mTempPageNum))
+            .put("pageSize", "20")
+            .put("originator", "1")
+            .put("groupID", UserConfig.getGroupID())
+            .put("purchaserID", mView.getPurchaserId())
+            .create();
+        CooperationPurchaserService.INSTANCE.queryCooperationPurchaserDetail(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> {
+                if (showLoading) {
+                    mView.showLoading();
+                }
+            })
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<CooperationPurchaserDetail>() {
+                @Override
+                public void onSuccess(CooperationPurchaserDetail resp) {
+                    mPageNum = mTempPageNum;
+                    mView.showPurchaserDetail(resp, mPageNum != 1);
                 }
 
                 @Override

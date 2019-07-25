@@ -87,8 +87,8 @@
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
         android:background="@null"
-        android:imeOptions="actionSearch"
         android:hint="请输入关键字搜索"
+        android:imeOptions="actionSearch"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_aeaeae"
@@ -132,6 +132,32 @@
         app:layout_constraintStart_toEndOf="@+id/pss_left_list"
         app:layout_constraintTop_toTopOf="@+id/pss_left_list" />
 
+    <LinearLayout
+        android:id="@+id/pss_empty_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_divider_bottom"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/pss_left_list"
+        app:layout_constraintEnd_toEndOf="@id/pss_right_list"
+        app:layout_constraintStart_toStartOf="@id/pss_left_list"
+        app:layout_constraintTop_toTopOf="@id/pss_left_list">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_search_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="没有搜到相关的集团或门店噢"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/pss_reset"
         android:layout_width="0dp"
@@ -142,7 +168,6 @@
         android:background="@drawable/bg_button_mid_stroke_primary"
         android:gravity="center"
         android:text="重置"
-        android:visibility="gone"
         android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
         app:layout_constraintBottom_toBottomOf="@+id/pss_bg"
         app:layout_constraintEnd_toEndOf="parent"

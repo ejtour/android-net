@@ -115,7 +115,7 @@
             android:layout_height="70dp"
             android:gravity="center"
             android:text="解除"
-            android:textAppearance="@style/TextAppearance.City22.Little.White"/>
+            android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
     </FrameLayout>
 
 

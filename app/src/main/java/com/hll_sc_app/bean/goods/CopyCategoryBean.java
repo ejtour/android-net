@@ -10,6 +10,17 @@ import android.os.Parcelable;
  * @date 2019-06-17
  */
 public class CopyCategoryBean implements Parcelable {
+    public static final Creator<CopyCategoryBean> CREATOR = new Creator<CopyCategoryBean>() {
+        @Override
+        public CopyCategoryBean createFromParcel(Parcel source) {
+            return new CopyCategoryBean(source);
+        }
+
+        @Override
+        public CopyCategoryBean[] newArray(int size) {
+            return new CopyCategoryBean[size];
+        }
+    };
     /**
      * 自定义一级分类ID（店铺商品二级分类ID）
      */
@@ -26,6 +37,16 @@ public class CopyCategoryBean implements Parcelable {
      * 二级分类名称
      */
     private String shopProductCategoryThreeName;
+
+    public CopyCategoryBean() {
+    }
+
+    protected CopyCategoryBean(Parcel in) {
+        this.shopProductCategorySubID = in.readString();
+        this.shopProductCategorySubName = in.readString();
+        this.shopProductCategoryThreeID = in.readString();
+        this.shopProductCategoryThreeName = in.readString();
+    }
 
     public String getShopProductCategorySubID() {
         return shopProductCategorySubID;
@@ -57,28 +78,6 @@ public class CopyCategoryBean implements Parcelable {
 
     public void setShopProductCategoryThreeName(String shopProductCategoryThreeName) {
         this.shopProductCategoryThreeName = shopProductCategoryThreeName;
-    }
-
-    public static final Parcelable.Creator<CopyCategoryBean> CREATOR = new Parcelable.Creator<CopyCategoryBean>() {
-        @Override
-        public CopyCategoryBean createFromParcel(Parcel source) {
-            return new CopyCategoryBean(source);
-        }
-
-        @Override
-        public CopyCategoryBean[] newArray(int size) {
-            return new CopyCategoryBean[size];
-        }
-    };
-
-    public CopyCategoryBean() {
-    }
-
-    protected CopyCategoryBean(Parcel in) {
-        this.shopProductCategorySubID = in.readString();
-        this.shopProductCategorySubName = in.readString();
-        this.shopProductCategoryThreeID = in.readString();
-        this.shopProductCategoryThreeName = in.readString();
     }
 
     @Override

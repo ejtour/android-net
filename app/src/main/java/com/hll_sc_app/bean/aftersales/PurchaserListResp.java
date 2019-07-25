@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.aftersales;
 
+import com.hll_sc_app.bean.common.PurchaserBean;
+
 import java.util.List;
 
 /**

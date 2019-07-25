@@ -2,6 +2,7 @@ package com.hll_sc_app.bean.order.detail;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -475,7 +476,7 @@ public class TransferDetailBean implements Parcelable {
     }
 
     public String getThirdGroupID() {
-        return thirdGroupID;
+        return TextUtils.isEmpty(thirdGroupID) ? groupID : thirdGroupID;
     }
 
     public void setThirdGroupID(String thirdGroupID) {
@@ -483,7 +484,7 @@ public class TransferDetailBean implements Parcelable {
     }
 
     public String getErpShopID() {
-        return erpShopID;
+        return TextUtils.isEmpty(erpShopID) ? allotID : erpShopID;
     }
 
     public void setErpShopID(String erpShopID) {
@@ -499,7 +500,7 @@ public class TransferDetailBean implements Parcelable {
     }
 
     public String getResourceType() {
-        return resourceType;
+        return TextUtils.isEmpty(resourceType) ? String.valueOf(billSource) : resourceType;
     }
 
     public void setResourceType(String resourceType) {

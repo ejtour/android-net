@@ -3,8 +3,10 @@ package com.hll_sc_app.widget;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -26,6 +28,10 @@ public class ContextOptionsWindow extends BasePopupWindow {
     @BindView(R.id.wco_list)
     RecyclerView mListView;
     private OptionsAdapter mAdapter;
+    @BindView(R.id.triangle_arrow)
+    TriangleView triangleView;
+    @BindView(R.id.select_dialog)
+    LinearLayout linearLayout;
 
     public ContextOptionsWindow(Activity context) {
         super(context);
@@ -57,6 +63,18 @@ public class ContextOptionsWindow extends BasePopupWindow {
     public ContextOptionsWindow setListener(BaseQuickAdapter.OnItemClickListener listener) {
         mAdapter.setOnItemClickListener(listener);
         return this;
+    }
+
+    public void setTriangleViewStyle(int left,int top,int right,int bottom ){
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        LinearLayout.LayoutParams layoutParams = triangleView.getLayoutParams();
+        layoutParams.setMargins(left,top,right,bottom);
+        triangleView.setLayoutParams(layoutParams);
+        if(left>0) {
+            linearLayout.setGravity(Gravity.LEFT);
+        }else if(right>0){
+            linearLayout.setGravity(Gravity.RIGHT);
+        }
     }
 
     class OptionsAdapter extends BaseQuickAdapter<OptionsBean, BaseViewHolder> {

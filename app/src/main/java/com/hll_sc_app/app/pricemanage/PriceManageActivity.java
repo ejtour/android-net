@@ -33,9 +33,9 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
-import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
+import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -220,6 +220,10 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
 
     @Override
     public void showRatioTemplateWindow(List<RatioTemplateBean> values) {
+        if (CommonUtils.isEmpty(values)) {
+            showToast("您还没有可供选择的比例模板");
+            return;
+        }
         if (mRatioTemplateWindow == null) {
             mRatioTemplateWindow = new TopSingleSelectWindow<>(this, RatioTemplateBean::getTemplateName, true);
             mRatioTemplateWindow.setRecyclerViewHeight(UIUtils.dip2px(260));

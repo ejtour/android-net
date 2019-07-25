@@ -190,7 +190,9 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
     @Override
     public void showList(List<GoodsBean> list, boolean append) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }
@@ -202,8 +204,6 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
         this.mName = name;
         this.mProductStatus = productStatus;
         setForceLoad(true);
-        if (isFragmentVisible()) {
-            lazyLoad();
-        }
+        lazyLoad();
     }
 }

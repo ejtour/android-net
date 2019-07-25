@@ -39,7 +39,6 @@
         android:padding="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         android:textColorHint="@color/color_aeaeae"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/asa_tip" />
@@ -62,7 +61,7 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/bg_edit_border_gray"
         android:gravity="top"
-        android:hint="备注信息"
+        android:hint="请输入审核备注（最多200字）"
         android:maxLength="200"
         android:padding="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"

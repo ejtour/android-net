@@ -1,4 +1,4 @@
-package com.hll_sc_app.bean.agreementprice.quotation;
+package com.hll_sc_app.bean.priceratio;
 
 /**
  * 分页数据

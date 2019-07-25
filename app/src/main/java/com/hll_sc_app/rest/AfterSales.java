@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.AfterSalesService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -163,7 +164,7 @@ public class AfterSales {
                                         String payType,
                                         String msg,
                                         List<AfterSalesActionReq.ActionBean> list,
-                                        SimpleObserver<Object> observer) {
+                                        SimpleObserver<MsgWrapper<Object>> observer) {
         AfterSalesActionReq req = new AfterSalesActionReq();
         req.setOrderAction(action);
         req.setRefundBillIDs(refundBillIDs);
@@ -175,7 +176,7 @@ public class AfterSales {
         req.setRefundBillDetailList(list);
         AfterSalesService.INSTANCE
                 .afterSalesAction(new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

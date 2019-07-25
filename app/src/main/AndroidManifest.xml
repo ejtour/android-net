@@ -56,7 +56,7 @@
 
         <activity
             android:name=".app.user.change.ChangePasswordActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.SettingActivityActivity"
@@ -64,7 +64,7 @@
 
         <activity
             android:name=".app.setting.account.AccountManageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.account.unbindmainaccount.UnbindMainAccountActivity"
@@ -146,39 +146,88 @@
 
         <activity
             android:name=".app.cooperation.CooperationPurchaserActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.cooperation.invite.CooperationInviteActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.application.CooperationApplicationActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.application.thirdpart.detail.CooperationThirdPartDetailActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.cooperation.detail.CooperationDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.cooperation.detail.imgs.StoreFrontActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.cooperation.detail.imgs.OtherLicenseActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.cooperation.detail.imgs.BusinessLicenseActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.setting.priceratio.PriceRatioTemplateActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.setting.priceratio.add.PriceRatioTemplateAddActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.setting.priceratio.PriceRatioTemplateListActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.cooperation.detail.details.CooperationDetailsActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.shopadd.CooperationAddShopActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.shopdelivery.CooperationShopDeliveryActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.shopsaleman.CooperationShopSalesActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.shopdetail.CooperationShopDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.cooperation.detail.shopdetail.CooperationSourceActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.shopadd.CooperationSelectShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.cooperation.detail.details.basic.CooperationShopListActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.cooperation.add.CooperationAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
 
         <activity
             android:name=".app.goods.relevance.goods.GoodsRelevanceListActivity"
@@ -227,7 +276,7 @@
 
         <activity
             android:name=".app.pricemanage.log.PriceChangeLogActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.goods.add.customcategory.GoodsCustomCategoryActivity"
@@ -298,6 +347,34 @@
 
         <activity
             android:name=".app.aftersales.goodsoperation.GoodsOperationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.productSale.ProductAggregationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.ReportEntryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.dailySale.DailyAggregationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.orderGoods.OrderGoodsActivity"
+            android:screenOrientation="portrait" />
+        <!--客户销售汇总-->
+        <activity android:name=".app.report.customerSale.CustomerSaleActivity"
+            android:screenOrientation="portrait"/>
+         <!--客户销售汇总明细-->
+        <activity android:name=".app.report.customerSale.saleDetail.CustomerSalesDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!--客户销售汇总门店明细-->
+        <activity android:name=".app.report.customerSale.shopDetail.CustomerShopDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
             android:screenOrientation="portrait" />
 
         <provider

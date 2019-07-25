@@ -18,5 +18,5 @@
     <dimen name="base_text_16">16sp</dimen>
     <dimen name="base_text_18">18sp</dimen>
     <dimen name="base_text_36">36sp</dimen>
-
+    <dimen name="base_text_20">20sp</dimen>
 </resources>

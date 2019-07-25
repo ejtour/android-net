@@ -1,6 +1,7 @@
 package com.hll_sc_app.base.http;
 
 import com.hll_sc_app.base.bean.BaseResp;
+import com.hll_sc_app.base.bean.MsgWrapper;
 
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,6 +25,14 @@ public class ApiScheduler {
         return upstream -> upstream.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map(new Precondition<>())
+            .doOnSubscribe(disposable -> observer.startReq())
+            .doFinally((Action) observer::reqOver);
+    }
+
+    public static <R, T extends BaseResp<R>> ObservableTransformer<T, MsgWrapper<R>> getMsgLoadingScheduler(SimpleObserver<MsgWrapper<R>> observer) {
+        return upstream -> upstream.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map(new MsgPrecondition<>())
             .doOnSubscribe(disposable -> observer.startReq())
             .doFinally((Action) observer::reqOver);
     }

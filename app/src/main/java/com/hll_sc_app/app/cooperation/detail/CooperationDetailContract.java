@@ -17,9 +17,10 @@ public interface CooperationDetailContract {
         /**
          * 展示采购商集团详情
          *
-         * @param resp resp
+         * @param resp   resp
+         * @param append 追加
          */
-        void showPurchaserDetail(CooperationPurchaserDetail resp);
+        void showPurchaserDetail(CooperationPurchaserDetail resp, boolean append);
 
         /**
          * 获取采购商ID
@@ -32,9 +33,16 @@ public interface CooperationDetailContract {
     interface ICooperationDetailPresenter extends IPresenter<ICooperationDetailView> {
 
         /**
-         * 查询采购商集团详情
+         * 查询采购商集团详情-包含门店信息
+         *
+         * @param showLoading true-显示加载 loading
          */
-        void queryPurchaserDetail();
+        void queryPurchaserDetail(boolean showLoading);
+
+        /**
+         * 查询采购商集团详情-更多门店
+         */
+        void queryMorePurchaserDetail();
 
         /**
          * 新增或删除合作门店

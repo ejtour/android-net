@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hll_sc_app.base.widget.SwipeItemLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="45dp">
+
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/base_white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/txt_templateName"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            tools:text="比例模版一"/>
+
+        <TextView
+            android:id="@+id/txt_category"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
+            tools:text="包含5个分类"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:background="@color/base_colorPrimary">
+
+        <TextView
+            android:id="@+id/txt_del"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="删除"
+            android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
+    </FrameLayout>
+
+</com.hll_sc_app.base.widget.SwipeItemLayout>
+

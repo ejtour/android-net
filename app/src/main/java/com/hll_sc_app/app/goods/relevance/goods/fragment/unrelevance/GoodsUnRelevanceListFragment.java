@@ -103,8 +103,8 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
         mEmptyView = EmptyView.newBuilder(requireActivity()).setTips("还没有未关联的商品数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireActivity(),
-                R.color.base_color_divider)
-                , UIUtils.dip2px(1)));
+            R.color.base_color_divider)
+            , UIUtils.dip2px(1)));
         mAdapter = new GoodsRelevanceListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             TransferDetailBean bean = (TransferDetailBean) adapter.getItem(position);
@@ -180,19 +180,6 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
             ((GoodsRelevanceListActivity) getActivity()).reqTransferDetail();
     }
 
-    public SpannableString getTipString(String total) {
-        SpannableString spannableString = new SpannableString("有" + total + "个第三方品项未关联商城商品，请及时关联，否则未关联的品项将无法下单。");
-        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.base_red)),
-                1, total.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spannableString;
-    }
-
-    @Override
-    public void hideLoading() {
-        super.hideLoading();
-        mRefreshLayout.closeHeaderOrFooter();
-    }
-
     /**
      * 刷新当前 Fragment
      *
@@ -202,9 +189,7 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
     public void refreshFragment(String name) {
         this.mGoodsName = name;
         setForceLoad(true);
-        if (isFragmentVisible()) {
-            lazyLoad();
-        }
+        lazyLoad();
     }
 
     @Override
@@ -212,6 +197,19 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
         if (!isPrepared()) return;
         hideLoading();
         showGoodsList(beans, false, beans.size());
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
+    }
+
+    public SpannableString getTipString(String total) {
+        SpannableString spannableString = new SpannableString("有" + total + "个第三方品项未关联商城商品，请及时关联，否则未关联的品项将无法下单。");
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireActivity(), R.color.base_red)),
+            1, total.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannableString;
     }
 
     class GoodsRelevanceListAdapter extends BaseQuickAdapter<TransferDetailBean, BaseViewHolder> {
@@ -229,11 +227,11 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
         @Override
         protected void convert(BaseViewHolder helper, TransferDetailBean item) {
             helper.setText(R.id.txt_goodsName, item.getGoodsName())
-                    .setText(R.id.txt_goodsCode, "商品编码：" + getString(item.getGoodsCode()))
-                    .setText(R.id.txt_saleUnitName, "单位：" + getString(item.getSaleUnitName()))
-                    .setGone(R.id.txt_not_relevance, item.getIsRelated() != null && item.getIsRelated() == 1)
-                    .setGone(R.id.txt_relevance, item.getIsRelated() == null || item.getIsRelated() == 1)
-                    .setGone(R.id.txt_no_relevance, item.getIsRelated() != null && item.getIsRelated() == 0);
+                .setText(R.id.txt_goodsCode, "商品编码：" + getString(item.getGoodsCode()))
+                .setText(R.id.txt_saleUnitName, "单位：" + getString(item.getSaleUnitName()))
+                .setGone(R.id.txt_not_relevance, item.getIsRelated() != null && item.getIsRelated() == 1)
+                .setGone(R.id.txt_relevance, item.getIsRelated() == null || item.getIsRelated() == 1)
+                .setGone(R.id.txt_no_relevance, item.getIsRelated() != null && item.getIsRelated() == 0);
         }
 
         private String getString(String str) {

@@ -126,10 +126,8 @@ public class LoginCheckDialog extends BaseDialog {
 
     @OnClick({R.id.txt_login})
     void onViewClicked(View view) {
-        if (view.getId() == R.id.txt_login) {
-            if (mListener != null) {
-                mListener.login(getCode());
-            }
+        if (mListener != null) {
+            mListener.login(getCode());
         }
         dismiss();
     }

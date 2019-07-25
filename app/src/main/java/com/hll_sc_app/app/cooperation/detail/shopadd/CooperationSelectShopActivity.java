@@ -49,6 +49,7 @@ public class CooperationSelectShopActivity extends BaseLoadActivity {
     public static final String TYPE_DELIVERY = "deliveryWay";
     public static final String TYPE_SALESMAN = "salesRepresentative";
     public static final String TYPE_DRIVER = "driver";
+    public static final String TYPE_DELIVERY_PERIOD = "deliveryPeriod";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.img_allCheck)

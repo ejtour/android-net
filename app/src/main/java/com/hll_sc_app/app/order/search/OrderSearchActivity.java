@@ -21,6 +21,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.BrandSearchEvent;
+import com.hll_sc_app.bean.event.CooperationInviteSearchEvent;
 import com.hll_sc_app.bean.event.EmployeeSearchEvent;
 import com.hll_sc_app.bean.event.GoodsInvWarnSearchEvent;
 import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
@@ -62,6 +63,9 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     public static final String FROM_BRAND = "FROM_BRAND";
     public static final String FROM_SEARCH = "FROM_SEARCH";
     public static final String FROM_EMPLOYEE = "FROM_EMPLOYEE";
+
+    public static final String FROM_COOPERATION_SEARCH = "FROM_COOPERATION_SEARCH";
+
     @BindView(R.id.aos_search_edit)
     EditText mSearchEdit;
     @BindView(R.id.aos_search_clear)
@@ -197,7 +201,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         } else if (isFromGoodsRelevanceList()) {
             tips = "请输入商品名称进行查询";
             hint = tips;
-        } else if (isFromGoodsRelevance()) {
+        } else if (isFromGoodsRelevance() || isFromCooperationSearch()) {
             tips = "请输入采购商集团名称进行查询";
             hint = tips;
             resId = R.drawable.ic_search_empty_purchaser;
@@ -254,6 +258,15 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
         return TextUtils.equals(mFrom, FROM_GOODS_RELEVANCE);
     }
 
+    /**
+     * 合作采购商搜索
+     *
+     * @return true
+     */
+    private boolean isFromCooperationSearch() {
+        return TextUtils.equals(mFrom, FROM_COOPERATION_SEARCH);
+    }
+
     @OnClick(R.id.aos_search_button)
     public void search() {
         String trim = mSearchEdit.getText().toString().trim();
@@ -275,6 +288,8 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             EventBus.getDefault().post(new SearchEvent(trim));
         } else if (isFromEmployee()) {
             EventBus.getDefault().post(new EmployeeSearchEvent(trim));
+        } else if (isFromCooperationSearch()) {
+            EventBus.getDefault().post(new CooperationInviteSearchEvent(trim));
         } else {
             if (mCurBean == null) {
                 mCurBean = new OrderSearchBean();

@@ -2,9 +2,9 @@ package com.hll_sc_app.app.cooperation.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -41,6 +41,9 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -75,6 +78,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     TextView mTxtShopCount;
     @Autowired(name = "object0")
     String mPurchaserId;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
 
     private PurchaserShopListAdapter mAdapter;
     private CooperationPurchaserDetail mDetail;
@@ -102,7 +107,17 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     }
 
     private void initView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryMorePurchaserDetail();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryPurchaserDetail(false);
+            }
+        });
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
         mAdapter = new PurchaserShopListAdapter();
@@ -113,7 +128,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             }
             if (view.getId() == R.id.txt_del) {
                 showDelTipsDialog(bean);
-            } else if (view.getId() == R.id.txt_content) {
+            } else if (view.getId() == R.id.content) {
+                bean.setPurchaserID(mDetail.getPurchaserID());
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL, bean);
             }
         });
@@ -159,6 +175,12 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         mPresenter.editCooperationPurchaserShop(req);
     }
 
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
+    }
+
     /**
      * 门店新增
      *
@@ -184,20 +206,26 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     }
 
     @Override
-    public void showPurchaserDetail(CooperationPurchaserDetail resp) {
-        mDetail = resp;
-        mImgLogoUrl.setImageURL(resp.getLogoUrl());
-        mTxtName.setText(resp.getName());
-        mTxtDefaultDeliveryWay.setText(String.format("默认配送方式：%s", getDeliveryWay(resp.getDefaultDeliveryWay())));
-        mTxtDefaultSettlementWay.setText(String.format("默认结算方式：%s", getSettlementWay(resp.getDefaultSettlementWay())));
-        mTxtShopCount.setText(String.format("当前合作门店数量：%s", CommonUtils.formatNumber(resp.getShopCount())));
-        mAdapter.setNewData(resp.getShopDetailList());
+    public void showPurchaserDetail(CooperationPurchaserDetail resp, boolean append) {
+        if (!append) {
+            mDetail = resp;
+            mImgLogoUrl.setImageURL(resp.getLogoUrl());
+            mTxtName.setText(resp.getName());
+            mTxtDefaultDeliveryWay.setText(String.format("默认配送方式：%s", getDeliveryWay(resp.getDefaultDeliveryWay())));
+            mTxtDefaultSettlementWay.setText(String.format("默认结算方式：%s",
+                getSettlementWay(resp.getDefaultSettlementWay())));
+            mTxtShopCount.setText(String.format("当前合作门店数量：%s", CommonUtils.formatNumber(resp.getShopCount())));
+        }
+        List<PurchaserShopBean> shopBeans = resp.getShopDetailList();
+        if (append) {
+            if (!CommonUtils.isEmpty(shopBeans)) {
+                mAdapter.addData(shopBeans);
+            }
+        } else {
+            mAdapter.setNewData(shopBeans);
+        }
         mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("还没有合作门店数据").create());
-    }
-
-    @Override
-    public String getPurchaserId() {
-        return mPurchaserId;
+        mRefreshLayout.setEnableLoadMore(shopBeans != null && shopBeans.size() == 20);
     }
 
     /**
@@ -206,7 +234,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
      * @param defaultDeliveryWay 配送方式数字表示
      * @return 配送方式
      */
-    private String getDeliveryWay(String defaultDeliveryWay) {
+    public static String getDeliveryWay(String defaultDeliveryWay) {
         StringBuilder builder = new StringBuilder();
         if (!TextUtils.isEmpty(defaultDeliveryWay)) {
             String[] strings = defaultDeliveryWay.split(",");
@@ -234,7 +262,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
      * @param defaultSettlementWay 结算方式数字表示
      * @return 结算方式
      */
-    private String getSettlementWay(String defaultSettlementWay) {
+    public static String getSettlementWay(String defaultSettlementWay) {
         StringBuilder builder = new StringBuilder();
         if (!TextUtils.isEmpty(defaultSettlementWay)) {
             String[] strings = defaultSettlementWay.split(",");
@@ -256,7 +284,12 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         return builder.toString();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_options})
+    @Override
+    public String getPurchaserId() {
+        return mPurchaserId;
+    }
+
+    @OnClick({R.id.img_close, R.id.txt_options, R.id.cons_details})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -264,6 +297,9 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 break;
             case R.id.txt_options:
                 showOptionsWindow(view);
+                break;
+            case R.id.cons_details:
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, mDetail.getPurchaserID());
                 break;
             default:
                 break;
@@ -327,14 +363,14 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mPresenter.queryPurchaserDetail();
+        mPresenter.start();
     }
 
     public static class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
         private boolean mIsAdd;
         private Map<String, PurchaserShopBean> mSelectMap;
 
-        PurchaserShopListAdapter() {
+        public PurchaserShopListAdapter() {
             super(R.layout.item_cooperation_purchaser_shop);
         }
 

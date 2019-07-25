@@ -3,6 +3,7 @@ package com.hll_sc_app.app.aftersales.audit;
 import android.text.TextUtils;
 
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.export.ExportResp;
@@ -115,10 +116,9 @@ public class AuditFragmentPresenter implements IAuditFragmentContract.IAuditFrag
     @Override
     public void doAction(int actionType, String billID, int status, int type, String payType, String reason) {
         AfterSales.afterSalesAction(actionType, billID, status, type, payType, reason, null,
-                new SimpleObserver<Object>(mView) {
+            new SimpleObserver<MsgWrapper<Object>>(true, mView) {
                     @Override
-                    public void onSuccess(Object o) {
-                        mView.showToast("操作成功");
+                    public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                         mView.actionSuccess();
                     }
                 });

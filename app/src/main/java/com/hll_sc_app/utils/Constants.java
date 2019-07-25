@@ -20,4 +20,6 @@ public interface Constants {
     String SIGNED_YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
     String SIGNED_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     String SIGNED_YYYY_MM_DD_HH_MM_SS_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
+
+    String SLASH_YYYY_MM_DD = "yyyy/MM/dd";
 }

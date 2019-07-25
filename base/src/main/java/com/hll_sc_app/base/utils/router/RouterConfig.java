@@ -12,6 +12,18 @@ public class RouterConfig {
      */
     public static final String SETTING = "/activity/setting";
     /**
+     * 设置界面-价格比例设置
+     */
+    public static final String SETTING_PRICE_RATIO = "/activity/setting/priceRatio";
+    /**
+     * 设置界面-价格比例设置-列表-新增界面
+     */
+    public static final String SETTING_PRICE_RATIO_ADD = "/activity/setting/priceRatio/add";
+    /**
+     * 设置界面-价格比例设置-列表
+     */
+    public static final String SETTING_PRICE_RATIO_LIST = "/activity/setting/priceRatio/list";
+    /**
      * 订单设置界面
      */
     public static final String BILL_SETTING = "/activity/setting/bill";
@@ -92,6 +104,10 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_LIST = "/activity/cooperationPurchaser/list";
     /**
+     * 合作采购商-我发出的申请
+     */
+    public static final String COOPERATION_PURCHASER_MY_APPLICATION = "/activity/cooperationPurchaser/myApplication";
+    /**
      * 合作采购商新增
      */
     public static final String COOPERATION_PURCHASER_ADD = "/activity/cooperationPurchaser/add";
@@ -99,6 +115,32 @@ public class RouterConfig {
      * 合作采购商详情
      */
     public static final String COOPERATION_PURCHASER_DETAIL = "/activity/cooperationPurchaser/detail";
+    /**
+     * 门头照
+     */
+    public static final String STORE_FRONT_IMAGE = "/activity/store/frontImage";
+    /**
+     * 其他证照
+     */
+    public static final String STORE_OTHER_LICENSE_IMAGE = "/activity/store/otherLicense";
+    /**
+     * 营业证照
+     */
+    public static final String STORE_BUSINESS_LICENSE_IMAGE = "/activity/store/ businessLicense";
+    /**
+     * 合作采购商-我收到的申请
+     */
+    public static final String COOPERATION_PURCHASER_APPLICATION = "/activity/cooperationPurchaser" +
+        "/cooperationApplication";
+    /**
+     * 合作采购商-我收到的申请-详情
+     */
+    public static final String COOPERATION_PURCHASER_APPLICATION_THIRD_PART_DETAIL = "/activity/cooperationPurchaser" +
+        "/cooperationApplication/thirdPart/Detail";
+    /**
+     * 合作采购商详情-详细资料
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_DETAILS = "/activity/cooperationPurchaser/detail/details";
     /**
      * 合作采购商详情-新增门店
      */
@@ -119,6 +161,12 @@ public class RouterConfig {
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL = "/activity/cooperationPurchaser/detail" +
         "/shopDetail";
     /**
+     * 合作采购商详情-门店详情-合作方式
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL_SOURCE = "/activity/cooperationPurchaser" +
+        "/detail" +
+        "/shopDetail/source";
+    /**
      * 合作采购商详情- 批量指派销售
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_SALES = "/activity/cooperationPurchaser/detail" +
@@ -128,6 +176,11 @@ public class RouterConfig {
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SELECT_SHOP = "/activity/cooperationPurchaser/detail" +
         "/selectShop";
+    /**
+     * 合作采购商详情-已选择的门店
+     */
+    public static final String COOPERATION_PURCHASER_DETAIL_SHOPS = "/activity/cooperationPurchaser/detail" +
+        "/Shops";
     /**
      * 商品置顶管理
      */
@@ -324,4 +377,44 @@ public class RouterConfig {
      * 售后审核-仓库/司机收货
      */
     public static final String AFTER_SALES_GOODS_OPERATION = "/activity/afterSales/goodsOperation";
+
+    /**
+     * 报表中心
+     */
+    public static final String REPORT_ENTRY = "/activity/report/entry";
+
+    /**
+     * 商品销量统计汇总
+     */
+    public static final String REPORT_PRODUCT_SALES_STATISTICS = "/activity/report/salesStatistics";
+
+    /**
+     * 客户订货明细汇总
+     */
+    public static final String REPORT_ORDER_GOODS = "/activity/report/orderGoods";
+
+    /**
+     * 客户订货明细汇总-门店详情
+     */
+    public static final String REPORT_ORDER_GOODS_DETAIL = "/activity/report/orderGoods/detail";
+
+    /**
+     * 日销售汇总
+     */
+    public static final String REPORT_DAILY_AGGREGATION = "/activity/daily/aggregation";
+
+    /**
+     * 客户销售汇总
+     */
+    public static final String CUSTOMER_SALE_AGGREGATION = "/activity/customer/aggregation";
+
+    /**
+     * 客户销售汇总明细
+     */
+    public static final String CUSTOMER_SALE_DETAILS="/activity/customer/sale/detail";
+
+    /**
+     * 客户销售汇总门店明细
+     */
+    public static final String CUSTOMER_SALE_SHOP_DETAILS="/activity/customer/sale/shop/detail";
 }

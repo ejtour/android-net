@@ -1,13 +1,13 @@
 package com.hll_sc_app.app.agreementprice.quotation.add.ratiotemplate;
 
-import com.hll_sc_app.api.AgreementPriceService;
+import com.hll_sc_app.api.PriceRatioTemplateService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.agreementprice.quotation.RatioTemplateResp;
+import com.hll_sc_app.bean.priceratio.RatioTemplateResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -58,7 +58,7 @@ public class QuotationRatioPresenter implements QuotationRatioContract.IQuotatio
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
             .create();
-        AgreementPriceService.INSTANCE.queryRatioTemplateList(req)
+        PriceRatioTemplateService.INSTANCE.queryRatioTemplateList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> {
