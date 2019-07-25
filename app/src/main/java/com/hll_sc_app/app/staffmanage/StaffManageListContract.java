@@ -2,7 +2,7 @@ package com.hll_sc_app.app.staffmanage;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.staff.StaffBean;
+import com.hll_sc_app.bean.staff.EmployeeBean;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public interface StaffManageListContract {
          * @param list   list
          * @param append true-追加
          */
-        void showStaffList(List<StaffBean> list, boolean append);
+        void showStaffList(List<EmployeeBean> list, boolean append);
 
         /**
          * 显示员工数量

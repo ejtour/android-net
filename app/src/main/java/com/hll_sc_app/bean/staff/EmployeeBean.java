@@ -1,4 +1,6 @@
-package com.hll_sc_app.bean.cooperation;
+package com.hll_sc_app.bean.staff;
+
+import java.util.List;
 
 /**
  * 供应商员工
@@ -38,6 +40,9 @@ public class EmployeeBean {
     private String purchaserToken;
     private String resourceType;
     private boolean select;
+    private List<RolesBean> roles;
+    private String employeeNum;
+
 
     public boolean isSelect() {
         return select;
@@ -285,5 +290,47 @@ public class EmployeeBean {
 
     public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
+    }
+
+    public List<RolesBean> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<RolesBean> roles) {
+        this.roles = roles;
+    }
+
+    public String getEmployeeNum() {
+        return employeeNum;
+    }
+
+    public void setEmployeeNum(String employeeNum) {
+        this.employeeNum = employeeNum;
+    }
+
+    public static class RolesBean {
+        /**
+         * roleID : 45
+         * roleName : 超级管理员
+         */
+
+        private String roleID;
+        private String roleName;
+
+        public String getRoleID() {
+            return roleID;
+        }
+
+        public void setRoleID(String roleID) {
+            this.roleID = roleID;
+        }
+
+        public String getRoleName() {
+            return roleName;
+        }
+
+        public void setRoleName(String roleName) {
+            this.roleName = roleName;
+        }
     }
 }

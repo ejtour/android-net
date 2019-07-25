@@ -10,12 +10,12 @@ import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.cooperation.DeliveryBean;
 import com.hll_sc_app.bean.cooperation.DeliveryPeriodResp;
-import com.hll_sc_app.bean.cooperation.EmployeeBean;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.staff.EmployeeBean;
 
 import java.util.List;
 

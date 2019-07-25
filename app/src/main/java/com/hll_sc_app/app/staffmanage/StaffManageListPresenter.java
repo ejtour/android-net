@@ -9,7 +9,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.staff.StaffBean;
+import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -60,10 +60,10 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<StaffBean>() {
+            .subscribe(new BaseCallback<EmployeeBean>() {
                 @Override
-                public void onSuccess(StaffBean staffBean) {
-                    mView.showStaffNum(staffBean.getEmployeeNum());
+                public void onSuccess(EmployeeBean EmployeeBean) {
+                    mView.showStaffNum(EmployeeBean.getEmployeeNum());
                 }
 
                 @Override
@@ -133,9 +133,9 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
             })
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<StaffBean>>() {
+            .subscribe(new BaseCallback<List<EmployeeBean>>() {
                 @Override
-                public void onSuccess(List<StaffBean> list) {
+                public void onSuccess(List<EmployeeBean> list) {
                     mPageNum = mTempPageNum;
                     mView.showStaffList(list, mPageNum != 1);
                 }

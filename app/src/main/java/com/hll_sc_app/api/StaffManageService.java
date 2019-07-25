@@ -4,7 +4,7 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.staff.StaffBean;
+import com.hll_sc_app.bean.staff.EmployeeBean;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public interface StaffManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:101025")
-    Observable<BaseResp<List<StaffBean>>> queryStaffList(@Body BaseMapReq req);
+    Observable<BaseResp<List<EmployeeBean>>> queryStaffList(@Body BaseMapReq req);
 
     /**
      * 查询员工数量
@@ -40,7 +40,7 @@ public interface StaffManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:101103")
-    Observable<BaseResp<StaffBean>> queryStaffNum(@Body BaseMapReq req);
+    Observable<BaseResp<EmployeeBean>> queryStaffNum(@Body BaseMapReq req);
 
     /**
      * 删除供应商员工

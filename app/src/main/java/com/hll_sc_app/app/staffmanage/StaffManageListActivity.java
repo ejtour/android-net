@@ -25,9 +25,9 @@ import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
-import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
+import com.hll_sc_app.bean.event.EmployeeSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsListReq;
-import com.hll_sc_app.bean.staff.StaffBean;
+import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -90,7 +90,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_RELEVANCE);
+                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_EMPLOYEE);
             }
 
             @Override
@@ -111,7 +111,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         });
 
         mEmptyView = EmptyView.newBuilder(this)
-            .setTipsTitle("哎呀，还没有设置员工呢")
+            .setTipsTitle("哎呀，还没有员工呢")
             .setTipsButton("添加员工")
             .setOnClickListener(new EmptyView.OnActionClickListener() {
                 @Override
@@ -136,7 +136,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
             , UIUtils.dip2px(5)));
         mAdapter = new StaffListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            StaffBean bean = mAdapter.getItem(position);
+            EmployeeBean bean = mAdapter.getItem(position);
             if (bean != null) {
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
@@ -157,7 +157,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
      *
      * @param bean 员工
      */
-    private void showDelTipsDialog(StaffBean bean) {
+    private void showDelTipsDialog(EmployeeBean bean) {
         TipsDialog.newBuilder(this)
             .setTitle("删除员工")
             .setMessage("确定要删除员工【" + bean.getEmployeeName() + "】嘛？")
@@ -173,7 +173,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     }
 
     @Subscribe
-    public void onEvent(GoodsRelevanceSearchEvent event) {
+    public void onEvent(EmployeeSearchEvent event) {
         String name = event.getName();
         if (!TextUtils.isEmpty(name)) {
             mSearchView.showSearchContent(true, name);
@@ -192,7 +192,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     }
 
     @Override
-    public void showStaffList(List<StaffBean> list, boolean append) {
+    public void showStaffList(List<EmployeeBean> list, boolean append) {
         if (append) {
             if (!CommonUtils.isEmpty(list)) {
                 mAdapter.addData(list);
@@ -234,7 +234,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         mPresenter.start();
     }
 
-    public static class StaffListAdapter extends BaseQuickAdapter<StaffBean, BaseViewHolder> {
+    public static class StaffListAdapter extends BaseQuickAdapter<EmployeeBean, BaseViewHolder> {
 
         StaffListAdapter() {
             super(R.layout.item_staff_list);
@@ -248,7 +248,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, StaffBean item) {
+        protected void convert(BaseViewHolder helper, EmployeeBean item) {
             helper.setText(R.id.txt_employeeName, item.getEmployeeName())
                 .setText(R.id.txt_loginPhone, PhoneUtil.formatPhoneNum(item.getLoginPhone()))
                 .setText(R.id.txt_roles, "拥有职务" + (CommonUtils.isEmpty(item.getRoles()) ? "0" :
