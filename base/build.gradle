@@ -42,6 +42,10 @@ android {
     }
 }
 
+greendao {
+    schemaVersion 3
+}
+
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     // EventBus

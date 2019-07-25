@@ -3,12 +3,16 @@ package com.hll_sc_app.app.setting;
 import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -55,5 +59,15 @@ public class SettingActivityPresenter implements SettingActivityContract.ISaleUn
                 public void onFailure(UseCaseException e) {
                 }
             });
+    }
+
+    public static Observable<Object> logoutObservable() {
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("accessToken", UserConfig.accessToken())
+                .create();
+        return UserService.INSTANCE
+                .logout(req)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>());
     }
 }

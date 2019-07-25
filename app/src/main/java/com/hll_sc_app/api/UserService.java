@@ -6,6 +6,8 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.LoginResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.account.UnbindGroupReq;
+import com.hll_sc_app.bean.account.UnbindMainAccountReq;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
@@ -129,5 +131,25 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101033")
     Observable<BaseResp<Object>> changeGroupParameterInSetting(@Body BaseReq<GroupParame> body);
+
+
+    /**
+     * 主账号解绑
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101035")
+    Observable<BaseResp<Object>> unBindMainAccount(@Body BaseReq<UnbindMainAccountReq> body);
+
+
+
+    /**
+     * 子账号解绑
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101036")
+    Observable<BaseResp<Object>> unbindGroup(@Body BaseReq<UnbindGroupReq> body);
 
 }

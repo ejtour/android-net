@@ -72,11 +72,20 @@ public class UserBean {
      * 角色 ID
      */
     private String roleID;
-
-    @Generated(hash = 392085566)
-    public UserBean(String authType, String accessToken, String email, String employeeID,
-                    String employeeName, String groupID, String groupLogoUrl, String groupName,
-                    List<String> roleCode, String roleNames, String roles, String selfOperated, String roleID) {
+    /**
+     * 登录手机号
+     */
+    private String loginPhone;
+    /**
+     * 账号类型(0-主账号，1-子账号)
+     */
+    private String accountType;
+    @Generated(hash = 1538480509)
+    public UserBean(String authType, String accessToken, String email,
+            String employeeID, String employeeName, String groupID,
+            String groupLogoUrl, String groupName, List<String> roleCode,
+            String roleNames, String roles, String selfOperated, String roleID,
+            String loginPhone, String accountType) {
         this.authType = authType;
         this.accessToken = accessToken;
         this.email = email;
@@ -90,113 +99,102 @@ public class UserBean {
         this.roles = roles;
         this.selfOperated = selfOperated;
         this.roleID = roleID;
+        this.loginPhone = loginPhone;
+        this.accountType = accountType;
     }
-
     @Generated(hash = 1203313951)
     public UserBean() {
     }
-
     public String getAuthType() {
-        return authType;
+        return this.authType;
     }
-
     public void setAuthType(String authType) {
         this.authType = authType;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getEmployeeID() {
-        return employeeID;
-    }
-
-    public void setEmployeeID(String employeeID) {
-        this.employeeID = employeeID;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
-
-    public String getGroupID() {
-        return groupID;
-    }
-
-    public void setGroupID(String groupID) {
-        this.groupID = groupID;
-    }
-
-    public String getGroupLogoUrl() {
-        return groupLogoUrl;
-    }
-
-    public void setGroupLogoUrl(String groupLogoUrl) {
-        this.groupLogoUrl = groupLogoUrl;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public List<String> getRoleCode() {
-        return roleCode;
-    }
-
-    public void setRoleCode(List<String> roleCode) {
-        this.roleCode = roleCode;
-    }
-
-    public String getRoleNames() {
-        return roleNames;
-    }
-
-    public void setRoleNames(String roleNames) {
-        this.roleNames = roleNames;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
-
-    public String getSelfOperated() {
-        return selfOperated;
-    }
-
-    public void setSelfOperated(String selfOperated) {
-        this.selfOperated = selfOperated;
-    }
-
     public String getAccessToken() {
         return this.accessToken;
     }
-
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
-
+    public String getEmail() {
+        return this.email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getEmployeeID() {
+        return this.employeeID;
+    }
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+    public String getEmployeeName() {
+        return this.employeeName;
+    }
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+    public String getGroupID() {
+        return this.groupID;
+    }
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
+    }
+    public String getGroupLogoUrl() {
+        return this.groupLogoUrl;
+    }
+    public void setGroupLogoUrl(String groupLogoUrl) {
+        this.groupLogoUrl = groupLogoUrl;
+    }
+    public String getGroupName() {
+        return this.groupName;
+    }
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+    public List<String> getRoleCode() {
+        return this.roleCode;
+    }
+    public void setRoleCode(List<String> roleCode) {
+        this.roleCode = roleCode;
+    }
+    public String getRoleNames() {
+        return this.roleNames;
+    }
+    public void setRoleNames(String roleNames) {
+        this.roleNames = roleNames;
+    }
+    public String getRoles() {
+        return this.roles;
+    }
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+    public String getSelfOperated() {
+        return this.selfOperated;
+    }
+    public void setSelfOperated(String selfOperated) {
+        this.selfOperated = selfOperated;
+    }
     public String getRoleID() {
         return this.roleID;
     }
-
     public void setRoleID(String roleID) {
         this.roleID = roleID;
     }
+    public String getLoginPhone() {
+        return this.loginPhone;
+    }
+    public void setLoginPhone(String loginPhone) {
+        this.loginPhone = loginPhone;
+    }
+    public String getAccountType() {
+        return this.accountType;
+    }
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+
 }

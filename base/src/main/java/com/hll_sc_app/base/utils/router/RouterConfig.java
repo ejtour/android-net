@@ -36,6 +36,14 @@ public class RouterConfig {
      */
     public static final String SETTING_ACCOUNT = "/activity/setting/account";
     /**
+     * 设置界面-修改集团手机号
+     */
+    public static final String ACTIVITY_CHANGE_GROUP_PHONE = "/activity/setting/changeGroupPhone";
+    /**
+     * 设置界面-子账号解绑
+     */
+    public static final String ACTIVITY_UNBIND_GROUP = "/activity/setting/unbindGroup";
+    /**
      * 售价设置
      */
     public static final String PRICE_MANAGE = "/activity/priceManage";

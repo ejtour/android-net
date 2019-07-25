@@ -67,6 +67,14 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.setting.account.unbindmainaccount.UnbindMainAccountActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.setting.account.unbindgroup.UnbindGroupActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.setting.bill.BillSettingActivityActivity"
             android:screenOrientation="portrait" />
 
