@@ -12,7 +12,7 @@ public class ProductCategory {
     /**
      * 分类金额
      */
-    private double categoryOrderAmount;
+    private float categoryOrderAmount;
 
     public String getCategoryName() {
         return categoryName;
@@ -22,11 +22,11 @@ public class ProductCategory {
         this.categoryName = categoryName;
     }
 
-    public double getCategoryOrderAmount() {
+    public float getCategoryOrderAmount() {
         return categoryOrderAmount;
     }
 
-    public void setCategoryOrderAmount(double categoryOrderAmount) {
+    public void setCategoryOrderAmount(float categoryOrderAmount) {
         this.categoryOrderAmount = categoryOrderAmount;
     }
 }

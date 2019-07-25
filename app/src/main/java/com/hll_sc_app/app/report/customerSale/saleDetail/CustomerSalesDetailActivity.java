@@ -163,7 +163,6 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_MONTH));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
             mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
-            mOptionsWindow.setTriangleViewStyle(14, 0, 0, 0);
         }
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }

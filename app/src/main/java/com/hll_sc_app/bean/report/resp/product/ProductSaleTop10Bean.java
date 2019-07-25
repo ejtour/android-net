@@ -1,11 +1,11 @@
 package com.hll_sc_app.bean.report.resp.product;
 
-public class ProductSaleTopDetail {
+public class ProductSaleTop10Bean {
 
     /**
      * 毛利
      */
-    private long grossProfit;
+    private double grossProfit;
     /**
      * 毛利率
      */
@@ -17,7 +17,7 @@ public class ProductSaleTopDetail {
     /**
      * 销量
      */
-    private long orderNum;
+    private double orderNum;
     /**
      * 商品名称
      */
@@ -28,11 +28,11 @@ public class ProductSaleTopDetail {
     private String productSpec;
 
 
-    public long getGrossProfit() {
+    public double getGrossProfit() {
         return grossProfit;
     }
 
-    public void setGrossProfit(long grossProfit) {
+    public void setGrossProfit(double grossProfit) {
         this.grossProfit = grossProfit;
     }
 
@@ -52,11 +52,11 @@ public class ProductSaleTopDetail {
         this.orderAmount = orderAmount;
     }
 
-    public long getOrderNum() {
+    public double getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderNum(long orderNum) {
+    public void setOrderNum(double orderNum) {
         this.orderNum = orderNum;
     }
 

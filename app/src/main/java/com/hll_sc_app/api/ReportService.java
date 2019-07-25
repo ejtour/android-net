@@ -10,17 +10,13 @@ import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
-import com.hll_sc_app.bean.report.req.CustomerOrderReq;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.req.ProductDetailReq;
-import com.hll_sc_app.bean.report.req.ProductSaleAggregationReq;
-import com.hll_sc_app.bean.report.req.ProductSaleTopReq;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
-import com.hll_sc_app.bean.report.resp.product.CustomerOrderAggregationResp;
 import com.hll_sc_app.bean.report.resp.product.OrderDetailTotalResp;
-import com.hll_sc_app.bean.report.resp.product.ProductSaleAggregationResp;
+import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 
 import io.reactivex.Observable;
@@ -36,43 +32,6 @@ public interface ReportService {
 
     ReportService INSTANCE = HttpFactory.create(ReportService.class);
 
-
-    /**
-     * 商品销售统计汇总
-     * @return
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:103096")
-    Observable<BaseResp<ProductSaleAggregationResp>> queryProductSaleAggregation(@Body BaseReq<ProductSaleAggregationReq> req);
-
-    /**
-     * 商品销售统计top10
-     * @return
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:103097")
-    Observable<BaseResp<ProductSaleTop10Resp>> queryProductSaleTop(@Body BaseReq<ProductSaleTopReq> req);
-
-
-    /**
-     * 客户订货汇总
-     * @param req
-     * @return
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:111042")
-    Observable<BaseResp<CustomerOrderAggregationResp>> queryCustomerOrderAggregation(@Body BaseReq<CustomerOrderReq> req);
-
-    /**
-     * 客户订货明细
-     * @param req
-     * @return
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:111043")
-    Observable<BaseResp<OrderDetailTotalResp>> queryCustomerOrderDetailList(@Body BaseReq<CustomerOrderReq> req);
-
-
     /**
      * 商品统计（明细）
      * @param req
@@ -81,7 +40,6 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111040")
     Observable<BaseResp<OrderDetailTotalResp>> queryProductDetailList(@Body BaseReq<ProductDetailReq> req);
-
 
     /**
      * 日销售额查询
@@ -116,4 +74,12 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:103099")
     Observable<BaseResp<OrderGoodsResp<OrderGoodsDetailBean>>> queryOrderGoodsDetail(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103096")
+    Observable<BaseResp<ProductSaleResp>> queryProductSales(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103097")
+    Observable<BaseResp<ProductSaleTop10Resp>> queryProductSalesTop10(@Body BaseMapReq req);
 }

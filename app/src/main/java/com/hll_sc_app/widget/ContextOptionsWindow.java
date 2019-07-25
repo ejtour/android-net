@@ -28,10 +28,8 @@ public class ContextOptionsWindow extends BasePopupWindow {
     @BindView(R.id.wco_list)
     RecyclerView mListView;
     private OptionsAdapter mAdapter;
-    @BindView(R.id.triangle_arrow)
-    TriangleView triangleView;
-    @BindView(R.id.select_dialog)
-    LinearLayout linearLayout;
+    @BindView(R.id.wco_arrow)
+    TriangleView mArrow;
 
     public ContextOptionsWindow(Activity context) {
         super(context);
@@ -65,16 +63,11 @@ public class ContextOptionsWindow extends BasePopupWindow {
         return this;
     }
 
-    public void setTriangleViewStyle(int left,int top,int right,int bottom ){
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        LinearLayout.LayoutParams layoutParams = triangleView.getLayoutParams();
-        layoutParams.setMargins(left,top,right,bottom);
-        triangleView.setLayoutParams(layoutParams);
-        if(left>0) {
-            linearLayout.setGravity(Gravity.LEFT);
-        }else if(right>0){
-            linearLayout.setGravity(Gravity.RIGHT);
-        }
+    @Override
+    public void showAsDropDownFix(View anchor, int gravity) {
+        super.showAsDropDownFix(anchor, gravity);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mArrow.getLayoutParams();
+        params.gravity = gravity;
     }
 
     class OptionsAdapter extends BaseQuickAdapter<OptionsBean, BaseViewHolder> {
