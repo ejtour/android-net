@@ -108,6 +108,10 @@ public class RouterConfig {
      */
     public static final String STAFF_LIST = "/activity/staff/list";
     /**
+     * 员工详情
+     */
+    public static final String STAFF_DETAIL = "/activity/staff/detail";
+    /**
      * 合作采购商-我发出的申请
      */
     public static final String COOPERATION_PURCHASER_MY_APPLICATION = "/activity/cooperationPurchaser/myApplication";

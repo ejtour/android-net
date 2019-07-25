@@ -1,5 +1,9 @@
 package com.hll_sc_app.bean.staff;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,7 +12,18 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-07-18
  */
-public class EmployeeBean {
+public class EmployeeBean implements Parcelable {
+    public static final Parcelable.Creator<EmployeeBean> CREATOR = new Parcelable.Creator<EmployeeBean>() {
+        @Override
+        public EmployeeBean createFromParcel(Parcel source) {
+            return new EmployeeBean(source);
+        }
+
+        @Override
+        public EmployeeBean[] newArray(int size) {
+            return new EmployeeBean[size];
+        }
+    };
     private String actionTime;
     private String loginPWD;
     private String purchaserOemToken;
@@ -43,6 +58,45 @@ public class EmployeeBean {
     private List<RolesBean> roles;
     private String employeeNum;
 
+    public EmployeeBean() {
+    }
+
+    protected EmployeeBean(Parcel in) {
+        this.actionTime = in.readString();
+        this.loginPWD = in.readString();
+        this.purchaserOemToken = in.readString();
+        this.roleID = in.readString();
+        this.employeeID = in.readString();
+        this.adminCodeConfirmed = in.readString();
+        this.employeeImg = in.readString();
+        this.employeeCode = in.readString();
+        this.createby = in.readString();
+        this.loginTime = in.readString();
+        this.loginName = in.readString();
+        this.action = in.readString();
+        this.email = in.readString();
+        this.employeeName = in.readString();
+        this.actionBy = in.readString();
+        this.supplierToken = in.readString();
+        this.accountType = in.readString();
+        this.groupID = in.readString();
+        this.loginStatus = in.readString();
+        this.recommendCode = in.readString();
+        this.purchaserWebToken = in.readString();
+        this.supplierDeviceId = in.readString();
+        this.token = in.readString();
+        this.employeeType = in.readString();
+        this.recommendQRCode = in.readString();
+        this.codeConfirmed = in.readString();
+        this.createTime = in.readString();
+        this.loginPhone = in.readString();
+        this.purchaserToken = in.readString();
+        this.resourceType = in.readString();
+        this.select = in.readByte() != 0;
+        this.roles = new ArrayList<RolesBean>();
+        in.readList(this.roles, RolesBean.class.getClassLoader());
+        this.employeeNum = in.readString();
+    }
 
     public boolean isSelect() {
         return select;
@@ -308,14 +362,74 @@ public class EmployeeBean {
         this.employeeNum = employeeNum;
     }
 
-    public static class RolesBean {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.actionTime);
+        dest.writeString(this.loginPWD);
+        dest.writeString(this.purchaserOemToken);
+        dest.writeString(this.roleID);
+        dest.writeString(this.employeeID);
+        dest.writeString(this.adminCodeConfirmed);
+        dest.writeString(this.employeeImg);
+        dest.writeString(this.employeeCode);
+        dest.writeString(this.createby);
+        dest.writeString(this.loginTime);
+        dest.writeString(this.loginName);
+        dest.writeString(this.action);
+        dest.writeString(this.email);
+        dest.writeString(this.employeeName);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.supplierToken);
+        dest.writeString(this.accountType);
+        dest.writeString(this.groupID);
+        dest.writeString(this.loginStatus);
+        dest.writeString(this.recommendCode);
+        dest.writeString(this.purchaserWebToken);
+        dest.writeString(this.supplierDeviceId);
+        dest.writeString(this.token);
+        dest.writeString(this.employeeType);
+        dest.writeString(this.recommendQRCode);
+        dest.writeString(this.codeConfirmed);
+        dest.writeString(this.createTime);
+        dest.writeString(this.loginPhone);
+        dest.writeString(this.purchaserToken);
+        dest.writeString(this.resourceType);
+        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
+        dest.writeList(this.roles);
+        dest.writeString(this.employeeNum);
+    }
+
+    public static class RolesBean implements Parcelable {
+        public static final Creator<RolesBean> CREATOR = new Creator<RolesBean>() {
+            @Override
+            public RolesBean createFromParcel(Parcel source) {
+                return new RolesBean(source);
+            }
+
+            @Override
+            public RolesBean[] newArray(int size) {
+                return new RolesBean[size];
+            }
+        };
         /**
          * roleID : 45
          * roleName : 超级管理员
          */
-
         private String roleID;
         private String roleName;
+
+        public RolesBean() {
+        }
+
+        protected RolesBean(Parcel in) {
+            this.roleID = in.readString();
+            this.roleName = in.readString();
+        }
 
         public String getRoleID() {
             return roleID;
@@ -331,6 +445,17 @@ public class EmployeeBean {
 
         public void setRoleName(String roleName) {
             this.roleName = roleName;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.roleID);
+            dest.writeString(this.roleName);
         }
     }
 }

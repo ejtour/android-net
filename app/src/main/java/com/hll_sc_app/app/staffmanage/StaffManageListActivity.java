@@ -24,6 +24,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.EmployeeSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsListReq;
@@ -141,6 +142,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
                 } else if (view.getId() == R.id.content) {
+                    RouterUtil.goToActivity(RouterConfig.STAFF_DETAIL, bean);
                 }
             }
         });
