@@ -19,6 +19,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
@@ -131,6 +132,8 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 toSave();
                 break;
             case R.id.ll_roles:
+                // 测试
+                RouterUtil.goToActivity(RouterConfig.STAFF_PERMISSION);
                 break;
             default:
                 break;

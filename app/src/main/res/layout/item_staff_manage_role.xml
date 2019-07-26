@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/txt_purchaserName"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/base_white"
+    android:gravity="center_vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:singleLine="true"
+    android:textAppearance="@style/TextAppearance.City22.Small"
+    android:textColor="@drawable/bg_text_window_assist_unit"
+    tools:text="多来点仓库"/>
+
