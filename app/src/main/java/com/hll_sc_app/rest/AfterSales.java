@@ -167,7 +167,8 @@ public class AfterSales {
                                         SimpleObserver<MsgWrapper<Object>> observer) {
         AfterSalesActionReq req = new AfterSalesActionReq();
         req.setOrderAction(action);
-        req.setRefundBillIDs(refundBillIDs);
+        if (refundBillIDs.contains(",")) req.setRefundBillIDs(refundBillIDs);
+        else req.setRefundBillID(refundBillIDs);
         req.setRefundBillStatus(refundBillStatus);
         req.setRefundBillType(refundBillType);
         req.setPayType(payType);
@@ -176,7 +177,7 @@ public class AfterSales {
         req.setRefundBillDetailList(list);
         AfterSalesService.INSTANCE
                 .afterSalesAction(new BaseReq<>(req))
-            .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

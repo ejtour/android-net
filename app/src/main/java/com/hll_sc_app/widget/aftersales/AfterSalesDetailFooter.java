@@ -131,6 +131,7 @@ public class AfterSalesDetailFooter extends ConstraintLayout {
             mSaleName.setText(data.getSaleInfoVo().getSalesmanName());
             mSalePhone.setText(PhoneUtil.formatPhoneNum(data.getSaleInfoVo().getSalesmanPhone()));
         }
+        requestLayout();
     }
 
     @OnClick(R.id.sdf_view_related_bill)

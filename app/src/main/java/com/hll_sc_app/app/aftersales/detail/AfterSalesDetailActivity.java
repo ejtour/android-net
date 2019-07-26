@@ -49,11 +49,11 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
      * 跳转售后详情
      *
      * @param activity 上下文
-     * @param bean     售后详情参数，为空时根据售后订单 ID 进行请求
+     * @param id       售后订单 id
      */
-    public static void start(Activity activity,
-                             @Nullable AfterSalesBean bean) {
-        RouterUtil.goToActivity(RouterConfig.AFTER_SALES_DETAIL, activity, REQ_CODE, bean);
+    public static void start(Activity activity, String id) {
+        String[] array = {id};
+        RouterUtil.goToActivity(RouterConfig.AFTER_SALES_DETAIL, activity, REQ_CODE, (Object[]) array);
     }
 
     private AfterSalesDetailHeader mHeaderView;
@@ -71,8 +71,9 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     AfterSalesActionBar mActionBar;
 
     private IAfterSalesDetailContract.IAfterSalesDetailPresenter present;
-    @Autowired(name = "parcelable")
-    AfterSalesBean mBean;
+    @Autowired(name = "object0")
+    String mId;
+    private AfterSalesBean mBean;
     /*
      * 是否修改了订单状态
      */
@@ -90,7 +91,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     }
 
     private void initView() {
-        mAdapter = new AfterSalesDetailAdapter(mBean.getDetailList());
+        mAdapter = new AfterSalesDetailAdapter(null);
         listView.addItemDecoration(new SimpleDecoration(Color.WHITE, UIUtils.dip2px(5)));
         listView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -117,7 +118,6 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
         // 列表底部
         mFooterView = new AfterSalesDetailFooter(this);
         mAdapter.addFooterView(mFooterView);
-        updateData();
     }
 
     private void modifyPrice(String price, String detailsID) {
@@ -128,6 +128,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
      * 更新数据
      */
     private void updateData() {
+        if (mBean == null) return;
         // 标题
         mHeaderBar.setHeaderTitle(AfterSalesHelper.getRefundInfoPrefix(mBean.getRefundBillType()) + "详情");
         mAdapter.setRefundBillType(mBean.getRefundBillType());
@@ -143,9 +144,9 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
 
     private void initData() {
-        present = AfterSalesDetailPresenter.newInstance(mBean.getId());
+        present = AfterSalesDetailPresenter.newInstance(mId);
         present.register(this);
-        showDetail(mBean);
+        present.start();
     }
 
     @Override
@@ -284,7 +285,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     @Override
     public void handleStatusChange() {
         hasChanged = true;
-        present.getDetail();
+        present.start();
     }
 
     @Override

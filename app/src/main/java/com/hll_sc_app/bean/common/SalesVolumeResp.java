@@ -6,8 +6,10 @@ package com.hll_sc_app.bean.common;
  */
 
 public class SalesVolumeResp {
+
     private int productNumMonth;
     private int salesToday;
+    private int wareHouseBillNum;
     private int wareHousedRefundNum;
     private int billNum;
     private int customServicedRefundNum;
@@ -18,8 +20,11 @@ public class SalesVolumeResp {
     private int purchaserNum;
     private int purchaserNumToday;
     private int purchaserShopNum;
+    private int wareHouseShopNum;
     private int unSettlementBillNum;
+    private double wareHouseDeliveryGoodsNum;
     private int unReceiveBillNum;
+    private double wareHouseDeliveryGoodsAmount;
     private int purchaserNumWeek;
     private int unSignOrderNum;
     private int productNumToday;
@@ -50,6 +55,14 @@ public class SalesVolumeResp {
 
     public void setSalesToday(int salesToday) {
         this.salesToday = salesToday;
+    }
+
+    public int getWareHouseBillNum() {
+        return wareHouseBillNum;
+    }
+
+    public void setWareHouseBillNum(int wareHouseBillNum) {
+        this.wareHouseBillNum = wareHouseBillNum;
     }
 
     public int getWareHousedRefundNum() {
@@ -132,6 +145,14 @@ public class SalesVolumeResp {
         this.purchaserShopNum = purchaserShopNum;
     }
 
+    public int getWareHouseShopNum() {
+        return wareHouseShopNum;
+    }
+
+    public void setWareHouseShopNum(int wareHouseShopNum) {
+        this.wareHouseShopNum = wareHouseShopNum;
+    }
+
     public int getUnSettlementBillNum() {
         return unSettlementBillNum;
     }
@@ -140,12 +161,28 @@ public class SalesVolumeResp {
         this.unSettlementBillNum = unSettlementBillNum;
     }
 
+    public double getWareHouseDeliveryGoodsNum() {
+        return wareHouseDeliveryGoodsNum;
+    }
+
+    public void setWareHouseDeliveryGoodsNum(double wareHouseDeliveryGoodsNum) {
+        this.wareHouseDeliveryGoodsNum = wareHouseDeliveryGoodsNum;
+    }
+
     public int getUnReceiveBillNum() {
         return unReceiveBillNum;
     }
 
     public void setUnReceiveBillNum(int unReceiveBillNum) {
         this.unReceiveBillNum = unReceiveBillNum;
+    }
+
+    public double getWareHouseDeliveryGoodsAmount() {
+        return wareHouseDeliveryGoodsAmount;
+    }
+
+    public void setWareHouseDeliveryGoodsAmount(double wareHouseDeliveryGoodsAmount) {
+        this.wareHouseDeliveryGoodsAmount = wareHouseDeliveryGoodsAmount;
     }
 
     public int getPurchaserNumWeek() {

@@ -20,10 +20,6 @@ public interface IAfterSalesDetailContract {
     }
 
     interface IAfterSalesDetailPresenter extends IPresenter<IAfterSalesDetailView> {
-        /**
-         * 获取售后详情
-         */
-        void getDetail();
 
         /**
          * 进行售后单操作

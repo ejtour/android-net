@@ -390,7 +390,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
 
     @Override
     public void actionViewDetails() {
-        AfterSalesDetailActivity.start(requireActivity(), mCurBean);
+        AfterSalesDetailActivity.start(requireActivity(), mCurBean.getId());
     }
 
     @Override

@@ -4,6 +4,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,14 +41,13 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
- * 首页Fragment
+ * 首页 fragment
  *
- * @author 朱英松
- * @date 2018/12/19
+ * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
+ * @since 2019/7/25
  */
 @Route(path = RouterConfig.ROOT_HOME_MAIN)
 public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContract.IMainHomeView, BaseQuickAdapter.OnItemClickListener {
-
 
     @BindView(R.id.fmh_top_bg)
     ImageView mTopBg;
@@ -59,6 +62,38 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     @BindView(R.id.fmh_message_icon)
     ImageView mMessageIcon;
     Unbinder unbinder;
+    @BindView(R.id.fmh_bill_num)
+    TextView mBillNum;
+    @BindView(R.id.fmh_group_shop)
+    TextView mGroupShop;
+    @BindView(R.id.fmh_product_num)
+    TextView mProductNum;
+    @BindView(R.id.fmh_warehouse_bill_num)
+    TextView mWarehouseBillNum;
+    @BindView(R.id.fmh_warehouse_shop)
+    TextView mWarehouseShop;
+    @BindView(R.id.fmh_warehouse_delivery_num)
+    TextView mWarehouseDeliveryNum;
+    @BindView(R.id.fmh_warehouse_amount)
+    TextView mWarehouseAmount;
+    @BindView(R.id.fmh_warehouse_group)
+    Group mWarehouseGroup;
+    @BindView(R.id.fmh_pending_receive)
+    TextView mPendingReceive;
+    @BindView(R.id.fmh_pending_delivery)
+    TextView mPendingDelivery;
+    @BindView(R.id.fmh_delivered)
+    TextView mDelivered;
+    @BindView(R.id.fmh_pending_settle)
+    TextView mPendingSettle;
+    @BindView(R.id.fmh_customer_service)
+    TextView mCustomerService;
+    @BindView(R.id.fmh_driver)
+    TextView mDriver;
+    @BindView(R.id.fmh_warehouse_in)
+    TextView mWarehouseIn;
+    @BindView(R.id.fmh_finance)
+    TextView mFinance;
     @IMainHomeContract.DateType
     private int mDateType = IMainHomeContract.DateType.TYPE_DAY;
     private IMainHomeContract.IMainHomePresenter mPresenter;
@@ -113,17 +148,6 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
         unbinder.unbind();
     }
 
-    @OnClick({R.id.fmh_message_icon, R.id.fmh_top_tag})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.fmh_message_icon:
-                break;
-            case R.id.fmh_top_tag:
-                showOptionsWindow(view);
-                break;
-        }
-    }
-
     private void showOptionsWindow(View view) {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
@@ -139,7 +163,41 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     @Override
     public void updateSalesVolume(SalesVolumeResp resp) {
+        updateSummary(resp);
+        updateWarehouse(resp);
+        updateOrderBoard(resp);
+    }
+
+    private void updateOrderBoard(SalesVolumeResp resp) {
+        mPendingReceive.setText(CommonUtils.formatNumber(resp.getUnReceiveBillNum()));
+        mPendingDelivery.setText(CommonUtils.formatNumber(resp.getUnDeliveryBillNum()));
+        mDelivered.setText(CommonUtils.formatNumber(resp.getDeliveryBillNum()));
+        mPendingSettle.setText(CommonUtils.formatNumber(resp.getUnSettlementBillNum()));
+        mCustomerService.setText(CommonUtils.formatNumber(resp.getCustomServicedRefundNum()));
+        mDriver.setText(CommonUtils.formatNumber(resp.getDrivedRefundNum()));
+        mWarehouseIn.setText(CommonUtils.formatNumber(resp.getWareHousedRefundNum()));
+        mFinance.setText(CommonUtils.formatNumber(resp.getFinanceReviewRefundNum()));
+    }
+
+    private void updateWarehouse(SalesVolumeResp resp) {
+        if (resp.getWareHouseBillNum() > 0) {
+            mWarehouseGroup.setVisibility(View.VISIBLE);
+            mWarehouseBillNum.setText(CommonUtils.formatNumber(resp.getWareHouseBillNum()));
+            mWarehouseShop.setText(CommonUtils.formatNumber(resp.getWareHouseShopNum()));
+            mWarehouseDeliveryNum.setText(CommonUtils.formatNumber(resp.getWareHouseDeliveryGoodsNum()));
+            String source = String.format("¥%s", CommonUtils.formatMoney(resp.getWareHouseDeliveryGoodsAmount()));
+            SpannableString ss = new SpannableString(source);
+            ss.setSpan(new RelativeSizeSpan(0.81f), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new RelativeSizeSpan(0.81f), source.indexOf("."), source.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mWarehouseAmount.setText(ss);
+        } else mWarehouseGroup.setVisibility(View.GONE);
+    }
+
+    private void updateSummary(SalesVolumeResp resp) {
         mSaleVolume.setText(CommonUtils.formatMoney(resp.getSales()));
+        mBillNum.setText(CommonUtils.formatNumber(resp.getBillNum()));
+        mGroupShop.setText(String.format("%s/%s", CommonUtils.formatNumber(resp.getPurchaserShopNum()), CommonUtils.formatNumber(resp.getPurchaserNum())));
+        mProductNum.setText(CommonUtils.formatNumber(resp.getProductNum()));
     }
 
     @Override
@@ -178,5 +236,67 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
         mTagFlag.setImageResource(item.getIconRes());
         mTopTag.setText(item.getLabel());
         mPresenter.start();
+    }
+
+    @OnClick({R.id.fmh_pending_receive_btn, R.id.fmh_pending_delivery_btn, R.id.fmh_delivered_btn, R.id.fmh_pending_settle_btn})
+    public void gotoOrderManager(View view) {
+        switch (view.getId()) {
+            case R.id.fmh_pending_receive_btn:
+                break;
+            case R.id.fmh_pending_delivery_btn:
+                break;
+            case R.id.fmh_delivered_btn:
+                break;
+            case R.id.fmh_pending_settle_btn:
+                break;
+        }
+    }
+
+    @OnClick({R.id.fmh_customer_service_btn, R.id.fmh_driver_btn, R.id.fmh_warehouse_in_btn, R.id.fmh_finance_btn})
+    public void gotoAfterSales(View view) {
+        switch (view.getId()) {
+            case R.id.fmh_customer_service_btn:
+                break;
+            case R.id.fmh_driver_btn:
+                break;
+            case R.id.fmh_warehouse_in_btn:
+                break;
+            case R.id.fmh_finance_btn:
+                break;
+        }
+    }
+
+    @OnClick({R.id.fmh_entry_add_product, R.id.fmh_entry_price_manage, R.id.fmh_entry_agreement_price, R.id.fmh_entry_bill_list,
+            R.id.fmh_entry_purchaser, R.id.fmh_entry_sale, R.id.fmh_entry_report_center, R.id.fmh_entry_market_price})
+    public void shortcut(View view) {
+        switch (view.getId()) {
+            case R.id.fmh_entry_add_product:
+                break;
+            case R.id.fmh_entry_price_manage:
+                break;
+            case R.id.fmh_entry_agreement_price:
+                break;
+            case R.id.fmh_entry_bill_list:
+                break;
+            case R.id.fmh_entry_purchaser:
+                break;
+            case R.id.fmh_entry_sale:
+                break;
+            case R.id.fmh_entry_report_center:
+                break;
+            case R.id.fmh_entry_market_price:
+                break;
+        }
+    }
+
+    @OnClick({R.id.fmh_message_icon, R.id.fmh_top_tag})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.fmh_message_icon:
+                break;
+            case R.id.fmh_top_tag:
+                showOptionsWindow(view);
+                break;
+        }
     }
 }
