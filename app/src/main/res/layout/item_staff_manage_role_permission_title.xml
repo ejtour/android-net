@@ -10,6 +10,7 @@
     android:paddingLeft="10dp"
     android:paddingTop="10dp"
     android:paddingRight="10dp"
+    android:paddingBottom="5dp"
     android:singleLine="true"
     android:textAppearance="@style/TextAppearance.City22.Small"
     android:textColor="@drawable/bg_text_window_assist_unit"

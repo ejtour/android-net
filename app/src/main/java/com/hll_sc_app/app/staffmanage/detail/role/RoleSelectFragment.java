@@ -10,6 +10,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,8 +124,9 @@ public class RoleSelectFragment extends BaseLazyFragment {
                 ds.setUnderlineText(false);
             }
         }, tips.length(), tips.length() + look.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(new ImageSpan(requireContext(), R.drawable.ic_staff_select_role_notice),
-            tips.length(), tips.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ImageSpan imageSpan = new ImageSpan(requireContext(), R.drawable.ic_staff_select_role_notice,
+            DynamicDrawableSpan.ALIGN_BASELINE);
+        spannableString.setSpan(imageSpan, tips.length(), tips.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTxtTips.setMovementMethod(LinkMovementMethod.getInstance());
         mTxtTips.setText(spannableString);
     }
