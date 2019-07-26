@@ -63,6 +63,8 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
     private EmptyView mEmptyView;
     private PurchaserShopPresenter mPresenter;
 
+    private List<PurchaserShopBean> mList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +90,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
         mTxtTitle.setText(mQuotationBean.getPurchaserName());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-                , UIUtils.dip2px(1)));
+            , UIUtils.dip2px(1)));
         mAdapter = new PurchaserShopListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserShopBean bean = (PurchaserShopBean) adapter.getItem(position);
@@ -101,41 +103,27 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
                 bean.setSelect(!bean.isSelect());
                 checkSelectAll();
             }
-
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商门店数据").create();
         mRecyclerView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                if (TextUtils.equals("0", mQuotationBean.getIsWarehouse())) {
-                    SearchActivity.start(searchContent, CommonSearch.class.getSimpleName());
-                } else {
-                    showToast("代仓门店暂时不支持搜索");
-                }
+                SearchActivity.start(searchContent, CommonSearch.class.getSimpleName());
             }
 
             @Override
             public void toSearch(String searchContent) {
-                toQueryShopList();
+                searchShops(searchContent);
             }
         });
     }
 
-    private void toQueryShopList() {
-        if (TextUtils.equals("1", mQuotationBean.getIsWarehouse())) {
-            mPresenter.queryCooperationWarehouseDetail(mQuotationBean.getPurchaserID());
-        } else {
-            mPresenter.queryPurchaserShopList(mQuotationBean.getPurchaserID());
-        }
-    }
-
     private void selectAll(boolean select) {
-        if (mAdapter == null || CommonUtils.isEmpty(mAdapter.getData())) {
+        if (CommonUtils.isEmpty(mList)) {
             return;
         }
-        List<PurchaserShopBean> list = mAdapter.getData();
-        for (PurchaserShopBean bean : list) {
+        for (PurchaserShopBean bean : mList) {
             bean.setSelect(select);
         }
         mAdapter.notifyDataSetChanged();
@@ -145,12 +133,11 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
      * 判断是否设置全选
      */
     private void checkSelectAll() {
-        if (mAdapter == null || CommonUtils.isEmpty(mAdapter.getData())) {
+        if (CommonUtils.isEmpty(mList)) {
             return;
         }
-        List<PurchaserShopBean> list = mAdapter.getData();
         boolean select = true;
-        for (PurchaserShopBean bean : list) {
+        for (PurchaserShopBean bean : mList) {
             if (!TextUtils.equals(bean.getShopName(), STRING_ALL)) {
                 if (!bean.isSelect()) {
                     select = false;
@@ -158,8 +145,42 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
                 }
             }
         }
-        list.get(0).setSelect(select);
+        mList.get(0).setSelect(select);
         mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 本地搜索门店
+     *
+     * @param searchContent 搜索词
+     */
+    private void searchShops(String searchContent) {
+        if (TextUtils.isEmpty(searchContent)) {
+            mAdapter.setNewData(mList);
+            return;
+        }
+        List<PurchaserShopBean> listFilter = new ArrayList<>();
+        if (!CommonUtils.isEmpty(mList)) {
+            for (PurchaserShopBean bean : mList) {
+                if (!TextUtils.equals(bean.getShopName(), STRING_ALL)
+                    && bean.getShopName().contains(searchContent)) {
+                    listFilter.add(bean);
+                }
+            }
+        }
+        mAdapter.setNewData(listFilter);
+    }
+
+    private void toQueryShopList() {
+        if (isWarehouse()) {
+            mPresenter.queryCooperationWarehouseDetail(mQuotationBean.getPurchaserID());
+        } else {
+            mPresenter.queryPurchaserShopList(mQuotationBean.getPurchaserID());
+        }
+    }
+
+    private boolean isWarehouse() {
+        return TextUtils.equals("1", mQuotationBean.getIsWarehouse());
     }
 
     @Subscribe
@@ -207,9 +228,8 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
      */
     private List<String> getSelectList() {
         List<String> selectList = new ArrayList<>();
-        List<PurchaserShopBean> list = mAdapter.getData();
-        if (!CommonUtils.isEmpty(list)) {
-            for (PurchaserShopBean shopBean : list) {
+        if (!CommonUtils.isEmpty(mList)) {
+            for (PurchaserShopBean shopBean : mList) {
                 if (TextUtils.equals(STRING_ALL, shopBean.getShopName())) {
                     mQuotationBean.setIsAllShop(shopBean.isSelect() ? "1" : "0");
                     continue;
@@ -227,18 +247,18 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
      */
     private void showTipsDialog() {
         SuccessDialog.newBuilder(this)
-                .setImageTitle(R.drawable.ic_dialog_failure)
-                .setImageState(R.drawable.ic_dialog_state_failure)
-                .setMessageTitle("确认要离开么")
-                .setMessage("您已经填写了部分数据，离开会\n丢失当前已填写的数据")
-                .setCancelable(false)
-                .setButton((dialog, item) -> {
-                    if (item == 0) {
-                        boolean warehouse = TextUtils.equals("1", mQuotationBean.getIsWarehouse());
-                        RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER, this, warehouse);
-                    }
-                    dialog.dismiss();
-                }, "确认离开", "我再想想").create().show();
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("确认要离开么")
+            .setMessage("您已经填写了部分数据，离开会\n丢失当前已填写的数据")
+            .setCancelable(false)
+            .setButton((dialog, item) -> {
+                if (item == 0) {
+                    RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER, this,
+                        isWarehouse());
+                }
+                dialog.dismiss();
+            }, "确认离开", "我再想想").create().show();
     }
 
     @Override
@@ -248,6 +268,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
 
     @Override
     public void showPurchaserShopList(List<PurchaserShopBean> list) {
+        mList = list;
         if (!CommonUtils.isEmpty(list)) {
             String shopId = mQuotationBean.getShopIDs();
             if (!TextUtils.isEmpty(shopId)) {
@@ -278,7 +299,7 @@ public class PurchaserShopListActivity extends BaseLoadActivity implements Purch
         @Override
         protected void convert(BaseViewHolder helper, PurchaserShopBean bean) {
             helper.setText(R.id.txt_shopName, bean.getShopName())
-                    .getView(R.id.img_select).setSelected(bean.isSelect());
+                .getView(R.id.img_select).setSelected(bean.isSelect());
         }
     }
 }
