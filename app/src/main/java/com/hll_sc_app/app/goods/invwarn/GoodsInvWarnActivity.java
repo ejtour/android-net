@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -203,7 +202,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
             mHouseSelectWindow.refreshList(list);
             mHouseSelectWindow.setListener(this::showSelectHouse);
         }
-        mHouseSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
+        mHouseSelectWindow.showAsDropDownFix(mRlToolbar);
     }
 
     @Override

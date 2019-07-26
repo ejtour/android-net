@@ -35,14 +35,6 @@ public class BasePopupWindow extends PopupWindow {
         }
     }
 
-    public void showAsDropDownFix(View anchor, int gravity) {
-        if (android.os.Build.VERSION.SDK_INT >= 19) {
-            super.showAsDropDown(anchor, 0, 0, gravity);
-        } else {
-            super.showAsDropDown(anchor);
-        }
-    }
-
     @Override
     public void showAsDropDown(View anchor, int xOff, int yOff) {
         if (Build.VERSION.SDK_INT >= 24) {

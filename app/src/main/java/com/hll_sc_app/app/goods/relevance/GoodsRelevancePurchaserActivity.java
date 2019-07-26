@@ -10,7 +10,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -182,7 +181,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
             mResourceTypeSelectWindow.refreshList(mListResource);
             mResourceTypeSelectWindow.setListener(this::showSelectResourceType);
         }
-        mResourceTypeSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
+        mResourceTypeSelectWindow.showAsDropDownFix(mRlToolbar);
     }
 
     @Override

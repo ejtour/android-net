@@ -62,7 +62,6 @@ public class ContextOptionsWindow extends BasePopupWindow {
         return this;
     }
 
-    @Override
     public void showAsDropDownFix(View anchor, int gravity) {
         showAsDropDownFix(anchor, 0, 0, gravity);
     }

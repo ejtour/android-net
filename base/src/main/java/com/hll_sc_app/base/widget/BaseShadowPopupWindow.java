@@ -23,11 +23,6 @@ public class BaseShadowPopupWindow extends BasePopupWindow {
         super.showAsDropDownFix(anchor);
     }
 
-    @Override
-    public void showAsDropDownFix(View anchor, int gravity) {
-        showAnim();
-        super.showAsDropDownFix(anchor, gravity);
-    }
 
     @Override
     public void showAsDropDown(View anchor, int xOff, int yOff) {
