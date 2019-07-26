@@ -21,6 +21,7 @@ import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Tuple;
 import com.hll_sc_app.widget.EmptyView;
 
 import java.util.ArrayList;
@@ -240,7 +241,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
             resetPurchaserShopList();
             mAdapterPurchaserShop.notifyDataSetChanged();
         } else if (id == R.id.txt_confirm && mListener != null) {
-            mListener.confirm(TextUtils.join(",", getSelectShopIds()));
+            Tuple<List<String>, List<String>> tuple = getSelectShopIds();
+            mListener.confirm(TextUtils.join(",", tuple.getKey1()), TextUtils.join(",", tuple.getKey2()));
             dismiss();
         } else if (id == R.id.txt_search) {
             toSearch();
@@ -267,8 +269,9 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
         }
     }
 
-    private List<String> getSelectShopIds() {
-        List<String> list = new ArrayList<>();
+    private Tuple<List<String>, List<String>> getSelectShopIds() {
+        List<String> selectId = new ArrayList<>();
+        List<String> selectName = new ArrayList<>();
         List<PurchaserShopBean> shopBeans = mAdapterPurchaserShop.getData();
         if (!CommonUtils.isEmpty(shopBeans)) {
             for (PurchaserShopBean bean : shopBeans) {
@@ -276,20 +279,25 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
                     continue;
                 }
                 if (bean.isSelect()) {
-                    list.add(bean.getShopID());
+                    selectId.add(bean.getShopID());
+                    selectName.add(bean.getShopName());
                 }
             }
         }
-        return list;
+        Tuple<List<String>, List<String>> tuple = new Tuple<>();
+        tuple.setKey1(selectId);
+        tuple.setKey2(selectName);
+        return tuple;
     }
 
     interface ConfirmListener {
         /**
          * 确定
          *
-         * @param shopIds 门店Id
+         * @param shopIds   门店Id
+         * @param shopNames 门店名称
          */
-        void confirm(String shopIds);
+        void confirm(String shopIds, String shopNames);
 
         /**
          * 查询门店列表

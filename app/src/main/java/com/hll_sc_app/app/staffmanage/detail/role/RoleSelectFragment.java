@@ -43,18 +43,14 @@ import butterknife.Unbinder;
  * @date 2019/7/25
  */
 public class RoleSelectFragment extends BaseLazyFragment {
-    Unbinder unbinder;
     @BindView(R.id.txt_tips)
     TextView mTxtTips;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-
-    private RoleListAdapter mAdapter;
-
-
-    private ArrayList<RoleBean> mList;
-
+    Unbinder unbinder;
     private int mType;
+    private RoleListAdapter mAdapter;
+    private ArrayList<RoleBean> mList;
 
     public static RoleSelectFragment newInstance(int type, ArrayList<RoleBean> list) {
         Bundle args = new Bundle();
@@ -138,7 +134,6 @@ public class RoleSelectFragment extends BaseLazyFragment {
             .setTipsTitle("暂无此类型的员工岗位")
             .create());
     }
-
 
     public List<RoleBean> getSelectRole() {
         List<RoleBean> list = new ArrayList<>();
