@@ -116,6 +116,10 @@ public class RouterConfig {
      */
     public static final String STAFF_PERMISSION = "/activity/staff/permission";
     /**
+     * 员工管理-选择员工岗位
+     */
+    public static final String STAFF_ROLE_SELECT = "/activity/staff/roleSelect";
+    /**
      * 合作采购商-我发出的申请
      */
     public static final String COOPERATION_PURCHASER_MY_APPLICATION = "/activity/cooperationPurchaser/myApplication";

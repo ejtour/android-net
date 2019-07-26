@@ -21,8 +21,12 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.staff.EmployeeBean;
+import com.hll_sc_app.bean.staff.RoleBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 import java.util.Locale;
@@ -67,11 +71,18 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         setContentView(R.layout.activity_staff_manager_edit);
         ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         mPresenter = StaffManagerEditPresenter.newInstance();
         mPresenter.register(this);
         showView(mEmployeeBean);
         mTxtTitle.setText(isAdd() ? "新增员工" : "编辑员工");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public void showView(EmployeeBean bean) {
@@ -86,10 +97,10 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         mTxtLoginPassWord.setEnabled(false);
         mTxtLoginPassWord.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
         mTxtEmail.setText(bean.getEmail());
-        List<EmployeeBean.RolesBean> rolesBeans = bean.getRoles();
+        List<RoleBean> rolesBeans = bean.getRoles();
         if (!CommonUtils.isEmpty(rolesBeans)) {
             StringBuilder roleId = new StringBuilder();
-            for (EmployeeBean.RolesBean rolesBean : rolesBeans) {
+            for (RoleBean rolesBean : rolesBeans) {
                 roleId.append(rolesBean.getRoleID()).append(",");
             }
             if (!TextUtils.isEmpty(roleId)) {
@@ -132,8 +143,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 toSave();
                 break;
             case R.id.ll_roles:
-                // 测试
-                RouterUtil.goToActivity(RouterConfig.STAFF_PERMISSION);
+                RouterUtil.goToActivity(RouterConfig.STAFF_ROLE_SELECT);
                 break;
             default:
                 break;
@@ -213,5 +223,27 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             flag = false;
         }
         return flag;
+    }
+
+    @Subscribe
+    public void onEvent(List<RoleBean> list) {
+        if (CommonUtils.isEmpty(list)) {
+            mTxtRoles.setTag(null);
+            mTxtRoles.setText(null);
+        } else {
+            if (list.size() == 1) {
+                mTxtRoles.setText(list.get(0).getRoleName());
+            } else {
+                mTxtRoles.setText(String.format(Locale.getDefault(), "已选择%d个岗位", list.size()));
+            }
+            StringBuilder roleId = new StringBuilder();
+            for (RoleBean rolesBean : list) {
+                roleId.append(rolesBean.getId()).append(",");
+            }
+            if (!TextUtils.isEmpty(roleId)) {
+                roleId.delete(roleId.length() - 1, roleId.length());
+            }
+            mTxtRoles.setTag(roleId.toString());
+        }
     }
 }

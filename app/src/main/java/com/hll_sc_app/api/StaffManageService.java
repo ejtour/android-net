@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.staff.RolePermissionResp;
+import com.hll_sc_app.bean.staff.RoleResp;
 
 import java.util.List;
 
@@ -83,4 +84,14 @@ public interface StaffManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101076")
     Observable<BaseResp<List<RolePermissionResp>>> queryRolesPermission(@Body BaseMapReq req);
+
+    /**
+     * 查询员工岗位
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:104124")
+    Observable<BaseResp<RoleResp>> queryRoles(@Body BaseMapReq req);
 }

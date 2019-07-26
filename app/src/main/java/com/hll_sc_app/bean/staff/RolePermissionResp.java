@@ -9,7 +9,7 @@ import java.util.List;
  * @date 2019/1/28
  */
 public class RolePermissionResp {
-    private EmployeeBean.RolesBean role;
+    private RoleBean role;
     private List<AuthInfo> auths;
     private boolean select;
 
@@ -21,11 +21,11 @@ public class RolePermissionResp {
         this.select = select;
     }
 
-    public EmployeeBean.RolesBean getRole() {
+    public RoleBean getRole() {
         return role;
     }
 
-    public void setRole(EmployeeBean.RolesBean role) {
+    public void setRole(RoleBean role) {
         this.role = role;
     }
 

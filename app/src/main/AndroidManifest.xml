@@ -162,6 +162,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.staffmanage.detail.role.RoleSelectActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.cooperation.invite.CooperationInviteActivity"
             android:screenOrientation="portrait"/>
 
