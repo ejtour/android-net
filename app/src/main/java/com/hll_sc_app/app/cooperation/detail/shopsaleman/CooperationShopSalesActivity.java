@@ -18,7 +18,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.EmployeeSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
@@ -102,7 +103,7 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
             }
         });
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mEmptyView = EmptyView.newBuilder(this).setTips(isSales() ? "您还没有销售人员数据" : "您还没有司机人员数据").create();
         mAdapter = new EmployeeListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -121,7 +122,7 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_EMPLOYEE);
+                SearchActivity.start(searchContent, EmployeeSearch.class.getSimpleName());
             }
 
             @Override
@@ -190,9 +191,9 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
     public void editSuccess() {
         showToast(isSales() ? "指派销售成功" : "指派司机成功");
         ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_DETAIL)
-            .setProvider(new LoginInterceptor())
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            .navigation(this);
+                .setProvider(new LoginInterceptor())
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                .navigation(this);
     }
 
     public static class EmployeeListAdapter extends BaseQuickAdapter<EmployeeBean, BaseViewHolder> {
@@ -204,9 +205,9 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
         @Override
         protected void convert(BaseViewHolder helper, EmployeeBean item) {
             helper.setText(R.id.txt_employeeName, item.getEmployeeName())
-                .setText(R.id.txt_employeeCode, item.getGroupID() + item.getEmployeeCode())
-                .setText(R.id.txt_loginPhone, PhoneUtil.formatPhoneNum(item.getLoginPhone()))
-                .setGone(R.id.img_select, item.isSelect());
+                    .setText(R.id.txt_employeeCode, item.getGroupID() + item.getEmployeeCode())
+                    .setText(R.id.txt_loginPhone, PhoneUtil.formatPhoneNum(item.getLoginPhone()))
+                    .setGone(R.id.img_select, item.isSelect());
 
             helper.getView(R.id.txt_employeeName).setSelected(item.isSelect());
             helper.getView(R.id.txt_employeeCode).setSelected(item.isSelect());

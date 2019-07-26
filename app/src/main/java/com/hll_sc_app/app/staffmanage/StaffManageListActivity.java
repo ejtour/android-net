@@ -17,7 +17,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.EmployeeSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -91,7 +92,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_EMPLOYEE);
+                SearchActivity.start(searchContent, EmployeeSearch.class.getSimpleName());
             }
 
             @Override
@@ -112,29 +113,29 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         });
 
         mEmptyView = EmptyView.newBuilder(this)
-            .setTipsTitle("哎呀，还没有员工呢")
-            .setTipsButton("添加员工")
-            .setOnClickListener(new EmptyView.OnActionClickListener() {
-                @Override
-                public void retry() {
-                    // no-op
-                }
+                .setTipsTitle("哎呀，还没有员工呢")
+                .setTipsButton("添加员工")
+                .setOnClickListener(new EmptyView.OnActionClickListener() {
+                    @Override
+                    public void retry() {
+                        // no-op
+                    }
 
-                @Override
-                public void action() {
-                    toAdd();
-                }
-            })
-            .create();
+                    @Override
+                    public void action() {
+                        toAdd();
+                    }
+                })
+                .create();
 
         mSearchEmptyView = EmptyView.newBuilder(this)
-            .setTipsTitle("没有找到相关的员工噢")
-            .setTips("换个名字或者电话再试试吧")
-            .create();
+                .setTipsTitle("没有找到相关的员工噢")
+                .setTips("换个名字或者电话再试试吧")
+                .create();
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(5)));
+                , UIUtils.dip2px(5)));
         mAdapter = new StaffListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             EmployeeBean bean = mAdapter.getItem(position);
@@ -161,17 +162,17 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
      */
     private void showDelTipsDialog(EmployeeBean bean) {
         TipsDialog.newBuilder(this)
-            .setTitle("删除员工")
-            .setMessage("确定要删除员工【" + bean.getEmployeeName() + "】嘛？")
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    mPresenter.delStaff(bean.getEmployeeID());
-                } else {
-                    SwipeItemLayout.closeAllItems(mRecyclerView);
-                }
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create().show();
+                .setTitle("删除员工")
+                .setMessage("确定要删除员工【" + bean.getEmployeeName() + "】嘛？")
+                .setButton((dialog, item) -> {
+                    if (item == 1) {
+                        mPresenter.delStaff(bean.getEmployeeID());
+                    } else {
+                        SwipeItemLayout.closeAllItems(mRecyclerView);
+                    }
+                    dialog.dismiss();
+                }, "取消", "确定")
+                .create().show();
     }
 
     @Subscribe
@@ -252,9 +253,9 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         @Override
         protected void convert(BaseViewHolder helper, EmployeeBean item) {
             helper.setText(R.id.txt_employeeName, item.getEmployeeName())
-                .setText(R.id.txt_loginPhone, PhoneUtil.formatPhoneNum(item.getLoginPhone()))
-                .setText(R.id.txt_roles, "拥有职务" + (CommonUtils.isEmpty(item.getRoles()) ? "0" :
-                    item.getRoles().size()) + "个");
+                    .setText(R.id.txt_loginPhone, PhoneUtil.formatPhoneNum(item.getLoginPhone()))
+                    .setText(R.id.txt_roles, "拥有职务" + (CommonUtils.isEmpty(item.getRoles()) ? "0" :
+                            item.getRoles().size()) + "个");
         }
     }
 }

@@ -19,7 +19,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsTemplateSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -140,7 +141,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new GoodsTemplateAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             GoodsBean goodsBean = (GoodsBean) adapter.getItem(position);
@@ -162,7 +163,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_TEMPLATE);
+                SearchActivity.start(searchContent, GoodsTemplateSearch.class.getSimpleName());
             }
 
             @Override
@@ -296,7 +297,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     }
 
     @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck, R.id.rl_category, R.id.rl_label
-        , R.id.rl_filter})
+            , R.id.rl_filter})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.text_commit:
@@ -379,9 +380,9 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         protected void convert(BaseViewHolder helper, GoodsBean bean) {
             helper.getView(R.id.img_check).setSelected(bean.isCheck());
             ((GlideImageView) helper.setText(R.id.txt_specsContent, !CommonUtils.isEmpty(bean.getSpecs()) ?
-                "规格：" + bean.getSpecs().get(0).getSpecContent() : "")
-                .setText(R.id.txt_productName, bean.getProductName())
-                .getView(R.id.img_imgUrl)).setImageURL(bean.getImgUrl());
+                    "规格：" + bean.getSpecs().get(0).getSpecContent() : "")
+                    .setText(R.id.txt_productName, bean.getProductName())
+                    .getView(R.id.img_imgUrl)).setImageURL(bean.getImgUrl());
         }
     }
 }

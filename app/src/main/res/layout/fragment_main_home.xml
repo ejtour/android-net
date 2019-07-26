@@ -1,14 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/base_activity_bg">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/fmh_top_bg"
+        android:layout_width="0dp"
+        android:layout_height="220dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_main_mine_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/fmh_refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableLoadMore="false"
+        app:srlEnableOverScrollBounce="true"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/white"
+            app:srlEnableLastTime="false"
+            app:srlTextSizeTitle="@dimen/text_small_size" />
+
+        <ScrollView
+            android:id="@+id/fmh_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/fmh_sales_volume"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="77dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="44sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="8892.89" />
+
+                <TextView
+                    android:id="@+id/fmh_sales_volume_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="销售额(元)"
+                    android:textAppearance="@style/TextAppearance.City22.Little.White"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_sales_volume"
+                    app:layout_constraintStart_toStartOf="@id/fmh_sales_volume"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_sales_volume" />
+
+                <View
+                    android:id="@+id/fmh_summary_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/bg_white_radius_5_solid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_sales_volume_label" />
+
+                <View
+                    android:id="@+id/fmh_warehouse_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/bg_white_radius_5_solid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_summary_bg" />
+
+                <View
+                    android:id="@+id/fmh_order_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="216dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/bg_white_radius_5_solid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_bg" />
+
+                <View
+                    android:id="@+id/fmh_dashboard_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="230dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/bg_white_radius_5_solid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_order_bg" />
+
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <ImageView
+        android:id="@+id/fmh_message_icon"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:background="@drawable/base_bg_selector_close"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_mine_title_message"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
+        android:id="@+id/fmh_top_tag"
+        android:layout_width="65dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/bg_white_border_radius_5"
         android:gravity="center"
-        android:text="main"/>
-</RelativeLayout>
+        android:text="今日"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintBottom_toBottomOf="@id/fmh_message_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fmh_message_icon" />
+
+    <ImageView
+        android:id="@+id/fmh_tag_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="90"
+        android:src="@drawable/ic_little_right_arrow"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/fmh_top_tag"
+        app:layout_constraintEnd_toEndOf="@id/fmh_top_tag"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="@id/fmh_top_tag"
+        app:layout_constraintTop_toTopOf="@id/fmh_top_tag" />
+
+    <ImageView
+        android:id="@+id/fmh_tag_flag"
+        android:layout_width="@dimen/dp_10"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_day_option"
+        app:layout_constraintBottom_toBottomOf="@id/fmh_top_tag"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="@id/fmh_top_tag"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="@id/fmh_top_tag"
+        app:layout_constraintTop_toTopOf="@id/fmh_top_tag" />
+</android.support.constraint.ConstraintLayout>
