@@ -76,6 +76,10 @@ public class RouterConfig {
      */
     public static final String USER_REGISTER_COMPLEMENT = "/activity/user/register/complement";
     /**
+     * 退货时效
+     */
+    public static final String REFUND_TIME = "/activity/refundTime";
+    /**
      * 首页
      */
     public static final String ROOT_HOME = "/activity/home/main";

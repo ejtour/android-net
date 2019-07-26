@@ -177,6 +177,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.refundtime.RefundTimeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.setting.priceratio.PriceRatioTemplateActivity"
             android:screenOrientation="portrait"/>
 

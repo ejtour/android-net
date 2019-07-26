@@ -8,6 +8,8 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.account.UnbindGroupReq;
 import com.hll_sc_app.bean.account.UnbindMainAccountReq;
+import com.hll_sc_app.bean.refundtime.RefundTimeResp;
+import com.hll_sc_app.bean.refundtime.SetRefundTimeReq;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
@@ -141,7 +143,6 @@ public interface UserService {
     Observable<BaseResp<Object>> unBindMainAccount(@Body BaseReq<UnbindMainAccountReq> body);
 
 
-
     /**
      * 子账号解绑
      *
@@ -151,5 +152,26 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101036")
     Observable<BaseResp<Object>> unbindGroup(@Body BaseReq<UnbindGroupReq> body);
+
+    /**
+     * 获取退货时效
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101065")
+    Observable<BaseResp<RefundTimeResp>> listRefundTime(@Body BaseMapReq body);
+
+
+    /**
+     * 设置退货时效
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101066")
+    Observable<BaseResp<RefundTimeResp>> setRefundTime(@Body BaseReq<SetRefundTimeReq> body);
 
 }
