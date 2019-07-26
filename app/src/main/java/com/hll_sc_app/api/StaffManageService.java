@@ -1,6 +1,7 @@
 package com.hll_sc_app.api;
 
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
@@ -51,4 +52,14 @@ public interface StaffManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101027")
     Observable<BaseResp<Object>> delStaff(@Body BaseMapReq req);
+
+    /**
+     * 修改供应商员工
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101079")
+    Observable<BaseResp<Object>> editStaff(@Body BaseReq<EmployeeBean> req);
 }

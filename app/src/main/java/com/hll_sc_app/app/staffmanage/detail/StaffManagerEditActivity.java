@@ -86,6 +86,14 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         mTxtEmail.setText(bean.getEmail());
         List<EmployeeBean.RolesBean> rolesBeans = bean.getRoles();
         if (!CommonUtils.isEmpty(rolesBeans)) {
+            StringBuilder roleId = new StringBuilder();
+            for (EmployeeBean.RolesBean rolesBean : rolesBeans) {
+                roleId.append(rolesBean.getRoleID()).append(",");
+            }
+            if (!TextUtils.isEmpty(roleId)) {
+                roleId.delete(roleId.length() - 1, roleId.length());
+            }
+            mTxtRoles.setTag(roleId.toString());
             if (rolesBeans.size() == 1) {
                 mTxtRoles.setText(rolesBeans.get(0).getRoleName());
             } else {
@@ -99,7 +107,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
     }
 
     @Override
-    public void updateSuccess() {
+    public void editSuccess() {
         if (isAdd()) {
             showToast("新增员工信息成功");
         } else {
@@ -119,7 +127,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 finish();
                 break;
             case R.id.txt_save:
-                save();
+                toSave();
                 break;
             case R.id.ll_roles:
                 break;
@@ -128,7 +136,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         }
     }
 
-    private void save() {
+    private void toSave() {
         if (TextUtils.isEmpty(mTxtEmployeeCode.getText().toString().trim())) {
             showToast("请填写员工编号,字母+数字组合必须3位");
             return;
@@ -160,6 +168,17 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         if (!Utils.checkEmail(mTxtEmail.getText().toString().trim())) {
             showToast("邮箱格式不正确");
             return;
+        }
+        if (isAdd()) {
+
+        } else {
+            mEmployeeBean.setEmail(mTxtEmail.getText().toString().trim());
+            mEmployeeBean.setEmployeeName(mTxtEmployeeName.getText().toString().trim());
+            mEmployeeBean.setEmployeeCode(mTxtEmployeeCode.getText().toString().trim());
+            if (mTxtRoles.getTag() != null) {
+                mEmployeeBean.setRoleID((String) mTxtRoles.getTag());
+            }
+            mPresenter.editStaff(mEmployeeBean);
         }
     }
 

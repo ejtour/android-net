@@ -16,7 +16,7 @@ public interface StaffManagerEditContract {
         /**
          * 更新、保存员工信息成功
          */
-        void updateSuccess();
+        void editSuccess();
     }
 
     interface IStaffManagerPresenter extends IPresenter<IStaffManageEditView> {
