@@ -143,7 +143,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 toSave();
                 break;
             case R.id.ll_roles:
-                RouterUtil.goToActivity(RouterConfig.STAFF_ROLE_SELECT);
+                RouterUtil.goToActivity(RouterConfig.STAFF_ROLE_SELECT, mTxtRoles.getTag());
                 break;
             default:
                 break;

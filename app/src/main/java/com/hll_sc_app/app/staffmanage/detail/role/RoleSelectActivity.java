@@ -6,9 +6,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -32,6 +34,7 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -56,6 +59,8 @@ public class RoleSelectActivity extends BaseLoadActivity {
     SlidingTabLayout mTab;
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
+    @Autowired(name = "object0")
+    String mRoleId;
     private List<RoleSelectFragment> mListFragment;
 
     @Override
@@ -96,6 +101,12 @@ public class RoleSelectActivity extends BaseLoadActivity {
     }
 
     private void initView(RoleResp resp) {
+        List<String> listRoleId = null;
+        if (!TextUtils.isEmpty(mRoleId)) {
+            String[] strings = mRoleId.split(",");
+            listRoleId = Arrays.asList(strings);
+        }
+
         mListFragment = new ArrayList<>();
         ArrayList<RoleBean> listManage = new ArrayList<>();
         ArrayList<RoleBean> listBusiness = new ArrayList<>();
@@ -103,6 +114,9 @@ public class RoleSelectActivity extends BaseLoadActivity {
         List<RoleBean> listResp = resp.getRecords();
         if (!CommonUtils.isEmpty(listResp)) {
             for (RoleBean bean : listResp) {
+                if (!CommonUtils.isEmpty(listRoleId) && listRoleId.contains(bean.getId())) {
+                    bean.setSelect(true);
+                }
                 if (bean.getAuthType() == TYPE_BUSINESS) {
                     listBusiness.add(bean);
                 } else if (bean.getAuthType() == TYPE_MANAGE) {

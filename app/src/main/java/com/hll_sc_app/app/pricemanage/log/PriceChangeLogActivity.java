@@ -177,7 +177,7 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
     private void showAddWindow() {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_AGREEMENT_PRICE_EXPORT));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_AGREEMENT_PRICE_LOG_EXPORT));
             mOptionsWindow = new ContextOptionsWindow(this).setListener((adapter, view, position)
                 -> {
                 mPresenter.exportLog(null);
