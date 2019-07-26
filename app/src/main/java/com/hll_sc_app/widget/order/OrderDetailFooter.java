@@ -150,6 +150,7 @@ public class OrderDetailFooter extends ConstraintLayout {
             mOrderSource.setText(data.getBillSource() == 1 ? "商城订单" : "哗啦啦供应链");
         }*/
         handleDeliveryInfo(data);
+        requestLayout();
     }
 
     private void handleDeliveryInfo(OrderResp data) {
