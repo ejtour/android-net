@@ -110,7 +110,7 @@ public class RouterConfig {
     /**
      * 员工详情
      */
-    public static final String STAFF_DETAIL = "/activity/staff/detail";
+    public static final String STAFF_EDIT = "/activity/staff/detail";
     /**
      * 合作采购商-我发出的申请
      */

@@ -142,7 +142,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
                 } else if (view.getId() == R.id.content) {
-                    RouterUtil.goToActivity(RouterConfig.STAFF_DETAIL, bean);
+                    RouterUtil.goToActivity(RouterConfig.STAFF_EDIT, bean);
                 }
             }
         });
@@ -151,7 +151,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     }
 
     private void toAdd() {
-
+        RouterUtil.goToActivity(RouterConfig.STAFF_EDIT);
     }
 
     /**

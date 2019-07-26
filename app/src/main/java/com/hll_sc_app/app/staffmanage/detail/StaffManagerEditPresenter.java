@@ -63,6 +63,27 @@ public class StaffManagerEditPresenter implements StaffManagerEditContract.IStaf
 
     @Override
     public void addStaff(EmployeeBean resp) {
+        if (resp == null) {
+            return;
+        }
+        BaseReq<EmployeeBean> baseReq = new BaseReq<>(resp);
+        StaffManageService.INSTANCE
+            .addStaff(baseReq)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object list) {
+                    mView.editSuccess();
+                }
 
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
     }
 }

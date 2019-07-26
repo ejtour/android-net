@@ -62,4 +62,14 @@ public interface StaffManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101079")
     Observable<BaseResp<Object>> editStaff(@Body BaseReq<EmployeeBean> req);
+
+    /**
+     * 添加供应商员工
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101026")
+    Observable<BaseResp<Object>> addStaff(@Body BaseReq<EmployeeBean> req);
 }

@@ -17,6 +17,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -37,7 +38,7 @@ import butterknife.OnClick;
  * @author zhuyingsong
  * @date 2018/7/25
  */
-@Route(path = RouterConfig.STAFF_DETAIL, extras = Constant.LOGIN_EXTRA)
+@Route(path = RouterConfig.STAFF_EDIT, extras = Constant.LOGIN_EXTRA)
 public class StaffManagerEditActivity extends BaseLoadActivity implements StaffManagerEditContract.IStaffManageEditView {
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
@@ -170,7 +171,17 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             return;
         }
         if (isAdd()) {
-
+            EmployeeBean bean = new EmployeeBean();
+            bean.setEmail(mTxtEmail.getText().toString().trim());
+            bean.setEmployeeCode(mTxtEmployeeCode.getText().toString().trim());
+            bean.setEmployeeName(mTxtEmployeeName.getText().toString().trim());
+            bean.setGroupID(UserConfig.getGroupID());
+            bean.setLoginPWD(mTxtLoginPassWord.getText().toString().trim());
+            bean.setLoginPhone(mTxtLoginPhone.getText().toString().trim());
+            if (mTxtRoles.getTag() != null) {
+                bean.setRoleID((String) mTxtRoles.getTag());
+            }
+            mPresenter.addStaff(bean);
         } else {
             mEmployeeBean.setEmail(mTxtEmail.getText().toString().trim());
             mEmployeeBean.setEmployeeName(mTxtEmployeeName.getText().toString().trim());
