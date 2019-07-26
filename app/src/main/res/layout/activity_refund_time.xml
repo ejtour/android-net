@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_activity_bg">
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_title"
@@ -36,54 +38,26 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_explain"
+    <TextView
+        android:id="@+id/txt_explain"
         android:layout_width="match_parent"
-        android:layout_below="@+id/rl_title"
-        android:layout_marginTop="12dp"
-        android:layout_height="44dp">
-        <TextView
-            android:id="@+id/txt_explain"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:text="退货时效：是指订单从验货完成开始计算，验货时间+时效天数*24H=最大退货时间；默认退货时效为7天！"
-            android:textColor="@color/base_text999"
-            android:textSize="@dimen/sp_12"
-            android:lineSpacingExtra="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
-    </RelativeLayout>
+        android:layout_height="44dp"
+        android:layout_margin="10dp"
+        android:lineSpacingExtra="5dp"
+        android:text="退货时效：是指订单从验货完成开始计算，验货时间+时效天数*24H=最大退货时间；默认退货时效为7天！"
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/sp_12"/>
 
+    <TextView
+        android:id="@+id/txt_vip"
+        style="@style/SettingStyle"
+        android:text="VIP客户退货时效"/>
 
-
-    <RelativeLayout
-        android:id="@+id/rl_vip"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@+id/rl_explain"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/base_bg_item_white">
-
-        <TextView
-            android:id="@+id/txt_vip"
-            style="@style/SettingStyle"
-            android:text="VIP客户退货时效"/>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ll_bottom"
-        android:layout_below="@+id/rl_explain"
-        android:layout_marginTop="67dp"
-        android:orientation="vertical">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="5dp"/>
-    </LinearLayout>
-</RelativeLayout>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="5dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+</LinearLayout>
