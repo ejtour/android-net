@@ -20,9 +20,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.app.report.ReportEntryActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.window.OptionType;
@@ -293,20 +295,28 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     public void shortcut(View view) {
         switch (view.getId()) {
             case R.id.fmh_entry_add_product:
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD);
                 break;
             case R.id.fmh_entry_price_manage:
+                showToast("售价管理待添加");
                 break;
             case R.id.fmh_entry_agreement_price:
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
                 break;
             case R.id.fmh_entry_bill_list:
+                showToast("对账单待添加");
                 break;
             case R.id.fmh_entry_purchaser:
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
                 break;
             case R.id.fmh_entry_sale:
+                showToast("定向售卖待添加");
                 break;
             case R.id.fmh_entry_report_center:
+                ReportEntryActivity.start();
                 break;
             case R.id.fmh_entry_market_price:
+                showToast("市场价格待添加");
                 break;
         }
     }
