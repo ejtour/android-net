@@ -30,6 +30,9 @@ import com.hll_sc_app.bean.delivery.DeliveryCompanyBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.kyleduo.switchbutton.SwitchButton;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +49,7 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.DELIVERY_TYPE_SET, extras = Constant.LOGIN_EXTRA)
 public class DeliveryTypeSetActivity extends BaseLoadActivity implements DeliveryTypeSetContract.IDeliveryTypeSetView,
     CompoundButton.OnCheckedChangeListener {
+    public static final int INT_MAX = 6;
     @BindView(R.id.switch_1)
     SwitchButton mSwitch1;
     @BindView(R.id.switch_2)
@@ -56,8 +60,8 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
     TextView mTxtDeliveryName;
     @BindView(R.id.ll_delivery_name)
     LinearLayout mLlDeliveryName;
-    private DeliveryTypeSetPresenter mPresenter;
     private DeliveryBean mBean;
+    private DeliveryTypeSetPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,12 +73,24 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
         mPresenter = DeliveryTypeSetPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
         mSwitch1.setOnCheckedChangeListener(this);
         mSwitch2.setOnCheckedChangeListener(this);
         mSwitch3.setOnCheckedChangeListener(this);
+    }
+
+    @Subscribe
+    public void onEvent(ArrayList<DeliveryCompanyBean> list) {
+        mBean.setDeliveryCompanyList(list);
     }
 
     @Override
@@ -101,6 +117,9 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
     @Override
     public void showDeliveryList(DeliveryBean bean) {
         this.mBean = bean;
+        mSwitch1.setCheckedNoEvent(false);
+        mSwitch2.setCheckedNoEvent(false);
+        mSwitch3.setCheckedNoEvent(false);
         String deliveryWay = bean.getDeliveryWay();
         if (!TextUtils.isEmpty(deliveryWay)) {
             String[] strings = deliveryWay.split(",");
@@ -131,6 +150,7 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
     private void showDeliveryName(List<DeliveryCompanyBean> deliveryCompanyBeans) {
         if (mSwitch3.isChecked()) {
             mLlDeliveryName.setVisibility(View.VISIBLE);
+            mTxtDeliveryName.setText(null);
             if (!CommonUtils.isEmpty(deliveryCompanyBeans)) {
                 List<DeliveryCompanyBean> listStatus1 = new ArrayList<>();
                 for (DeliveryCompanyBean bean : deliveryCompanyBeans) {
@@ -139,17 +159,18 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
                     }
                 }
                 StringBuilder stringBuilder = new StringBuilder();
+                int all = listStatus1.size();
                 if (!CommonUtils.isEmpty(listStatus1)) {
-                    for (DeliveryCompanyBean bean : listStatus1) {
-                        stringBuilder.append(bean.getDeliveryCompanyName(), 0, 1).append(" ");
+                    for (int i = 0, size = all > INT_MAX ? INT_MAX : all; i < size; i++) {
+                        stringBuilder.append(listStatus1.get(i).getDeliveryCompanyName(), 0, 1).append(" ");
                     }
                 }
-                if (listStatus1.size() > 6) {
-                    stringBuilder.append("等").append(listStatus1.size()).append("家");
+                if (all > INT_MAX) {
+                    stringBuilder.append("等").append(all).append("家");
                 }
                 SpannableString spannableString = new SpannableString(stringBuilder.toString());
                 int width = UIUtils.dip2px(18);
-                for (int i = 0; i < listStatus1.size(); i++) {
+                for (int i = 0, size = all > INT_MAX ? INT_MAX : all; i < size; i++) {
                     spannableString.setSpan(new CustomReplacementSpan(width), 2 * i, 2 * i + 1,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }

@@ -20,10 +20,14 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +46,12 @@ import butterknife.OnClick;
 public class DeliveryCompanyActivity extends BaseLoadActivity implements DeliveryCompanyContract.IDeliveryCompanyView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @Autowired(name = "parcelable", required = true)
-    ArrayList<DeliveryCompanyBean> mList;
     @BindView(R.id.img_allCheck)
     ImageView mImgAllCheck;
-    private DeliveryCompanyPresenter mPresenter;
+    @Autowired(name = "parcelable", required = true)
+    ArrayList<DeliveryCompanyBean> mList;
     private CompanyListAdapter mAdapter;
+    private DeliveryCompanyPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +63,13 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
         initView();
         mPresenter = DeliveryCompanyPresenter.newInstance();
         mPresenter.register(this);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -73,9 +84,8 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
                 checkAllSelect();
             }
         });
-        EmptyView emptyView = EmptyView.newBuilder(this).setTips("暂无第三方物流公司数据").create();
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setEmptyView(emptyView);
+        mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("暂无第三方物流公司数据").create());
         checkAllSelect();
     }
 
@@ -93,6 +103,12 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
         mImgAllCheck.setSelected(select);
     }
 
+    @Subscribe
+    public void onEvent(ArrayList<DeliveryCompanyBean> list) {
+        mList = list;
+        mAdapter.setNewData(mList);
+    }
+
     @OnClick({R.id.img_back, R.id.txt_add, R.id.img_allCheck, R.id.txt_allCheck, R.id.txt_commit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -100,6 +116,7 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
                 finish();
                 break;
             case R.id.txt_add:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_COMPANY_ADD, new ArrayList<>(mAdapter.getData()));
                 break;
             case R.id.txt_allCheck:
             case R.id.img_allCheck:
@@ -136,11 +153,6 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
             }
         }
         return listSelect;
-    }
-
-    @Override
-    public void showCompanyList(List<DeliveryCompanyBean> list) {
-
     }
 
     @Override

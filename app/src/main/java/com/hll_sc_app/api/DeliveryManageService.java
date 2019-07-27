@@ -51,4 +51,14 @@ public interface DeliveryManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101108")
     Observable<BaseResp<Object>> editDeliveryCompanyStatus(@Body BaseReq<DeliveryCompanyReq> req);
+
+    /**
+     * 添加三方配送公司
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101105")
+    Observable<BaseResp<Object>> addDeliveryCompany(@Body BaseReq<DeliveryCompanyReq> req);
 }

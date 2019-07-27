@@ -11,6 +11,15 @@ import java.util.List;
 public class DeliveryCompanyReq {
     private String groupID;
     private List<String> deliveryCompanyIDs;
+    private List<String> deliveryCompanyName;
+
+    public List<String> getDeliveryCompanyName() {
+        return deliveryCompanyName;
+    }
+
+    public void setDeliveryCompanyName(List<String> deliveryCompanyName) {
+        this.deliveryCompanyName = deliveryCompanyName;
+    }
 
     public String getGroupID() {
         return groupID;

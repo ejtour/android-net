@@ -69,7 +69,7 @@ public class DeliveryTypeSetPresenter implements DeliveryTypeSetContract.IDelive
             .subscribe(new DeliveryBeanBaseCallback());
     }
 
-    private Observable<DeliveryBean> getDeliveryListObservable() {
+    public static Observable<DeliveryBean> getDeliveryListObservable() {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("groupID", UserConfig.getGroupID())
             .create();

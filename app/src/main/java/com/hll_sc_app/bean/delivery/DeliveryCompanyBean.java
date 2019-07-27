@@ -3,13 +3,27 @@ package com.hll_sc_app.bean.delivery;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * 配送公司
  *
  * @author zhuyingsong
  * @date 2019-07-27
  */
-public class DeliveryCompanyBean implements Parcelable {
+public class DeliveryCompanyBean implements Parcelable, Serializable {
+    public static final Parcelable.Creator<DeliveryCompanyBean> CREATOR =
+        new Parcelable.Creator<DeliveryCompanyBean>() {
+            @Override
+            public DeliveryCompanyBean createFromParcel(Parcel source) {
+                return new DeliveryCompanyBean(source);
+            }
+
+            @Override
+            public DeliveryCompanyBean[] newArray(int size) {
+                return new DeliveryCompanyBean[size];
+            }
+        };
     private String actionTime;
     private String deliveryCompanyName;
     private String createTime;
@@ -18,6 +32,18 @@ public class DeliveryCompanyBean implements Parcelable {
     private String id;
     private String status;
 
+    public DeliveryCompanyBean() {
+    }
+
+    protected DeliveryCompanyBean(Parcel in) {
+        this.actionTime = in.readString();
+        this.deliveryCompanyName = in.readString();
+        this.createTime = in.readString();
+        this.groupID = in.readString();
+        this.action = in.readString();
+        this.id = in.readString();
+        this.status = in.readString();
+    }
 
     public String getActionTime() {
         return actionTime;
@@ -73,32 +99,6 @@ public class DeliveryCompanyBean implements Parcelable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public static final Parcelable.Creator<DeliveryCompanyBean> CREATOR =
-        new Parcelable.Creator<DeliveryCompanyBean>() {
-            @Override
-            public DeliveryCompanyBean createFromParcel(Parcel source) {
-                return new DeliveryCompanyBean(source);
-            }
-
-            @Override
-            public DeliveryCompanyBean[] newArray(int size) {
-                return new DeliveryCompanyBean[size];
-            }
-        };
-
-    public DeliveryCompanyBean() {
-    }
-
-    protected DeliveryCompanyBean(Parcel in) {
-        this.actionTime = in.readString();
-        this.deliveryCompanyName = in.readString();
-        this.createTime = in.readString();
-        this.groupID = in.readString();
-        this.action = in.readString();
-        this.id = in.readString();
-        this.status = in.readString();
     }
 
     @Override
