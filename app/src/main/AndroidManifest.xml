@@ -198,6 +198,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.deliverymanage.DeliveryManageActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.setting.priceratio.add.PriceRatioTemplateAddActivity"
             android:screenOrientation="portrait" />
 
