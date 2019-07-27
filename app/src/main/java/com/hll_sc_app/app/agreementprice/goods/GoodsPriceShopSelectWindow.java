@@ -186,9 +186,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
      * @param check true-全选 false-全不选
      */
     private void checkAll(boolean check) {
-        List<PurchaserShopBean> shopBeans = mAdapterPurchaserShop.getData();
-        if (!CommonUtils.isEmpty(shopBeans)) {
-            for (PurchaserShopBean bean : shopBeans) {
+        if (!CommonUtils.isEmpty(mShopList)) {
+            for (PurchaserShopBean bean : mShopList) {
                 if (TextUtils.equals(bean.getShopName(), STRING_SELECT_ALL)) {
                     continue;
                 }
@@ -199,13 +198,12 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
 
     private void checkSelectAll() {
         boolean selectAll = true;
-        List<PurchaserShopBean> shopBeans = mAdapterPurchaserShop.getData();
-        if (!CommonUtils.isEmpty(shopBeans)) {
+        if (!CommonUtils.isEmpty(mShopList)) {
             // 首位是全选的时候需要遍历判断是否要全部选中
-            if (!TextUtils.equals(shopBeans.get(0).getShopName(), STRING_SELECT_ALL)) {
+            if (!TextUtils.equals(mShopList.get(0).getShopName(), STRING_SELECT_ALL)) {
                 return;
             }
-            for (PurchaserShopBean bean : shopBeans) {
+            for (PurchaserShopBean bean : mShopList) {
                 if (TextUtils.equals(bean.getShopName(), STRING_SELECT_ALL)) {
                     continue;
                 }
@@ -215,7 +213,7 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
                 }
             }
             // 设置全部的选中状态
-            shopBeans.get(0).setSelect(selectAll);
+            mShopList.get(0).setSelect(selectAll);
         }
     }
 
@@ -261,9 +259,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
      * 重置采购商门店列表
      */
     private void resetPurchaserShopList() {
-        List<PurchaserShopBean> list = mAdapterPurchaserShop.getData();
-        if (!CommonUtils.isEmpty(list)) {
-            for (PurchaserShopBean bean : list) {
+        if (!CommonUtils.isEmpty(mShopList)) {
+            for (PurchaserShopBean bean : mShopList) {
                 bean.setSelect(false);
             }
         }
@@ -272,9 +269,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
     private Tuple<List<String>, List<String>> getSelectShopIds() {
         List<String> selectId = new ArrayList<>();
         List<String> selectName = new ArrayList<>();
-        List<PurchaserShopBean> shopBeans = mAdapterPurchaserShop.getData();
-        if (!CommonUtils.isEmpty(shopBeans)) {
-            for (PurchaserShopBean bean : shopBeans) {
+        if (!CommonUtils.isEmpty(mShopList)) {
+            for (PurchaserShopBean bean : mShopList) {
                 if (TextUtils.equals(bean.getShopName(), STRING_SELECT_ALL)) {
                     continue;
                 }
