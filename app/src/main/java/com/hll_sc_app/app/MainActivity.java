@@ -6,6 +6,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -22,6 +23,8 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -39,6 +42,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseLoadActivity {
     @BindView(R.id.group_type)
     RadioGroup mGroupType;
+    @BindView(R.id.rbtn_order)
+    RadioButton mOrderBtn;
     private int mOldFragmentTag;
     private Fragment mOldFragment;
 
@@ -52,9 +57,23 @@ public class MainActivity extends BaseLoadActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         StatusBarCompat.setTranslucent(getWindow(), true);
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         mGroupType.setOnCheckedChangeListener(new TypeOnCheckedChangeListener());
         setCurrentTab(PageType.HOME);
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(priority = 2, threadMode = ThreadMode.MAIN)
+    public void handleOrderEvent(OrderEvent event) {
+        if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
+            mOrderBtn.setChecked(true);
+        }
     }
 
     /**
