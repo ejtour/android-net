@@ -78,10 +78,10 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_order, container, false);
-        EventBus.getDefault().register(this);
         unbinder = ButterKnife.bind(this, rootView);
         showStatusBar();
         initView();
+        EventBus.getDefault().register(this);
         return rootView;
     }
 
@@ -97,12 +97,14 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         }
     }
 
-    @Subscribe(priority = 1, threadMode = ThreadMode.MAIN)
+    @Subscribe(priority = 1, threadMode = ThreadMode.MAIN, sticky = true)
     public void handleOrderEvent(OrderEvent event) {
         if (event.getMessage().equals(OrderEvent.SEARCH_WORDS)) {
             OrderSearchBean data = (OrderSearchBean) event.getData();
             mClearSearch.setVisibility(!TextUtils.isEmpty(data.getName()) ? View.VISIBLE : View.GONE);
             mSearch.setText(data.getName());
+        } else if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
+            if (mPager != null) mPager.setCurrentItem(((Integer) event.getData()));
         }
     }
 

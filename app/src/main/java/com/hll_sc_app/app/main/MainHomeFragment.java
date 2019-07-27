@@ -18,10 +18,15 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.audit.AuditActivity;
+import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.app.report.ReportEntryActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
+import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -31,6 +36,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +132,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
         mRefreshView.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
+                if (mTopBg == null) return;
                 mTopBg.setScaleX(1 + percent * 0.7f);
                 mTopBg.setScaleY(1 + percent * 0.7f);
             }
@@ -240,30 +248,46 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     @OnClick({R.id.fmh_pending_receive_btn, R.id.fmh_pending_delivery_btn, R.id.fmh_delivered_btn, R.id.fmh_pending_settle_btn})
     public void gotoOrderManager(View view) {
+        OrderType type = OrderType.PENDING_TRANSFER;
         switch (view.getId()) {
             case R.id.fmh_pending_receive_btn:
+                type = OrderType.PENDING_RECEIVE;
                 break;
             case R.id.fmh_pending_delivery_btn:
+                type = OrderType.PENDING_DELIVER;
                 break;
             case R.id.fmh_delivered_btn:
+                type = OrderType.DELIVERED;
                 break;
             case R.id.fmh_pending_settle_btn:
+                type = OrderType.PENDING_SETTLE;
                 break;
+            default:
+                return;
         }
+        EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.CHANGE_INDEX, type.getType()));
     }
 
     @OnClick({R.id.fmh_customer_service_btn, R.id.fmh_driver_btn, R.id.fmh_warehouse_in_btn, R.id.fmh_finance_btn})
     public void gotoAfterSales(View view) {
+        int position = 0;
         switch (view.getId()) {
             case R.id.fmh_customer_service_btn:
+                position = 1;
                 break;
             case R.id.fmh_driver_btn:
+                position = 2;
                 break;
             case R.id.fmh_warehouse_in_btn:
+                position = 3;
                 break;
             case R.id.fmh_finance_btn:
+                position = 4;
                 break;
+            default:
+                return;
         }
+        AuditActivity.start(position);
     }
 
     @OnClick({R.id.fmh_entry_add_product, R.id.fmh_entry_price_manage, R.id.fmh_entry_agreement_price, R.id.fmh_entry_bill_list,
@@ -271,20 +295,28 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     public void shortcut(View view) {
         switch (view.getId()) {
             case R.id.fmh_entry_add_product:
+                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD);
                 break;
             case R.id.fmh_entry_price_manage:
+                showToast("售价管理待添加");
                 break;
             case R.id.fmh_entry_agreement_price:
+                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);
                 break;
             case R.id.fmh_entry_bill_list:
+                showToast("对账单待添加");
                 break;
             case R.id.fmh_entry_purchaser:
+                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
                 break;
             case R.id.fmh_entry_sale:
+                showToast("定向售卖待添加");
                 break;
             case R.id.fmh_entry_report_center:
+                ReportEntryActivity.start();
                 break;
             case R.id.fmh_entry_market_price:
+                showToast("市场价格待添加");
                 break;
         }
     }
