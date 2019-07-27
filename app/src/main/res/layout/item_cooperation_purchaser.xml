@@ -18,6 +18,7 @@
             android:id="@+id/img_logoUrl"
             android:layout_width="60dp"
             android:layout_height="0dp"
+            app:srcCompat="@drawable/bg_selector_check_box"
             android:src="@drawable/ic_group_placeholder"
             app:base_placeholder="@drawable/ic_group_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"

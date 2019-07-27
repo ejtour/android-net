@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.deliverymanage.deliverytype;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -23,11 +24,13 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.kyleduo.switchbutton.SwitchButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,6 +57,7 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
     @BindView(R.id.ll_delivery_name)
     LinearLayout mLlDeliveryName;
     private DeliveryTypeSetPresenter mPresenter;
+    private DeliveryBean mBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +77,12 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
         mSwitch3.setOnCheckedChangeListener(this);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresenter.start();
+    }
+
     @OnClick({R.id.img_close, R.id.ll_delivery_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -80,6 +90,8 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
                 finish();
                 break;
             case R.id.ll_delivery_name:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_COMPANY,
+                    new ArrayList<>(mBean.getDeliveryCompanyList()));
                 break;
             default:
                 break;
@@ -88,6 +100,7 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
 
     @Override
     public void showDeliveryList(DeliveryBean bean) {
+        this.mBean = bean;
         String deliveryWay = bean.getDeliveryWay();
         if (!TextUtils.isEmpty(deliveryWay)) {
             String[] strings = deliveryWay.split(",");
@@ -118,29 +131,25 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
     private void showDeliveryName(List<DeliveryCompanyBean> deliveryCompanyBeans) {
         if (mSwitch3.isChecked()) {
             mLlDeliveryName.setVisibility(View.VISIBLE);
-            StringBuilder stringBuilder = new StringBuilder();
             if (!CommonUtils.isEmpty(deliveryCompanyBeans)) {
-                int count = 0;
-                for (int i = 0, all = deliveryCompanyBeans.size(); i < all; i++) {
-                    DeliveryCompanyBean deliveryCompanyBean = deliveryCompanyBeans.get(i);
-                    if (TextUtils.equals(deliveryCompanyBean.getStatus(), "1")) {
-                        count++;
+                List<DeliveryCompanyBean> listStatus1 = new ArrayList<>();
+                for (DeliveryCompanyBean bean : deliveryCompanyBeans) {
+                    if (TextUtils.equals(bean.getStatus(), "1")) {
+                        listStatus1.add(bean);
                     }
                 }
-                int size = count > 6 ? 6 : count;
-                for (int i = 0; i < size; i++) {
-                    DeliveryCompanyBean deliveryCompanyBean = deliveryCompanyBeans.get(i);
-                    if (TextUtils.equals(deliveryCompanyBean.getStatus(), "1")) {
-                        // 生效
-                        stringBuilder.append(deliveryCompanyBean.getDeliveryCompanyName(), 0, 1).append(" ");
+                StringBuilder stringBuilder = new StringBuilder();
+                if (!CommonUtils.isEmpty(listStatus1)) {
+                    for (DeliveryCompanyBean bean : listStatus1) {
+                        stringBuilder.append(bean.getDeliveryCompanyName(), 0, 1).append(" ");
                     }
                 }
-                if (count > 6) {
-                    stringBuilder.append("等").append(count).append("家");
+                if (listStatus1.size() > 6) {
+                    stringBuilder.append("等").append(listStatus1.size()).append("家");
                 }
                 SpannableString spannableString = new SpannableString(stringBuilder.toString());
                 int width = UIUtils.dip2px(18);
-                for (int i = 0; i < size; i++) {
+                for (int i = 0; i < listStatus1.size(); i++) {
                     spannableString.setSpan(new CustomReplacementSpan(width), 2 * i, 2 * i + 1,
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }

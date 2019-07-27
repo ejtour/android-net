@@ -29,6 +29,10 @@ public class RouterConfig {
      */
     public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";
     /**
+     * 配送管理-配送方式设置-选择第三方物流公司
+     */
+    public static final String DELIVERY_TYPE_COMPANY = "/activity/delivery/company";
+    /**
      * 设置界面-价格比例设置-列表-新增界面
      */
     public static final String SETTING_PRICE_RATIO_ADD = "/activity/setting/priceRatio/add";

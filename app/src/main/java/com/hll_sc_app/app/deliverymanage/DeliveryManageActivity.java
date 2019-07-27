@@ -41,6 +41,7 @@ public class DeliveryManageActivity extends BaseLoadActivity {
         switch (view.getId()) {
             case R.id.img_close:
                 finish();
+                break;
             case R.id.txt_DeliveryType:
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_SET);
                 break;
