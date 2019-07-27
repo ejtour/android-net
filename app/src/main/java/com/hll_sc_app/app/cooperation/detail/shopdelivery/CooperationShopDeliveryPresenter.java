@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.cooperation.detail.shopdelivery;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
+import com.hll_sc_app.api.DeliveryManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -44,8 +45,7 @@ public class CooperationShopDeliveryPresenter implements CooperationShopDelivery
             .newBuilder()
             .put("groupID", UserConfig.getGroupID())
             .create();
-        CooperationPurchaserService
-            .INSTANCE
+        DeliveryManageService.INSTANCE
             .queryDeliveryList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())

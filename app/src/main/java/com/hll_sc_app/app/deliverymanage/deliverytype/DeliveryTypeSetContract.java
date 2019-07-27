@@ -2,7 +2,6 @@ package com.hll_sc_app.app.deliverymanage.deliverytype;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.delivery.DeliveryBean;
 
 /**
@@ -34,10 +33,11 @@ public interface DeliveryTypeSetContract {
         void queryDeliveryList();
 
         /**
-         * 批量修改配送方式
+         * 修改配送方式
          *
-         * @param req req
+         * @param actionType  操作类型（insert-添加配送方式，delete-删除配送方式
+         * @param deliveryWay 配送方式 1-自有物流配送 2-上门自提 3-第三方配送公司
          */
-        void editShopDelivery(ShopSettlementReq req);
+        void editDeliveryType(String actionType, String deliveryWay);
     }
 }

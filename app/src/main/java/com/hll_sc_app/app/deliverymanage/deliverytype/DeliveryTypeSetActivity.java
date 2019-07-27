@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.deliverymanage.deliverytype;
 
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,13 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyBean;
@@ -157,21 +154,31 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
     @Override
     public void editSuccess() {
         showToast("配送方式修改成功");
-        ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_DETAIL)
-            .setProvider(new LoginInterceptor())
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            .navigation(this);
+        mPresenter.start();
     }
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (!mSwitch1.isChecked() && !mSwitch2.isChecked() && !mSwitch3.isChecked()) {
+            ((SwitchButton) buttonView).setCheckedNoEvent(!isChecked);
+            showToast("至少保留一种配送方式噢");
+            return;
+        }
+        String actionType = isChecked ? "insert" : "delete";
+        String deliveryWay = null;
         if (buttonView == mSwitch1) {
             // 自有物流配送
+            deliveryWay = "1";
         } else if (buttonView == mSwitch2) {
             // 上门自提
+            deliveryWay = "2";
         } else if (buttonView == mSwitch3) {
             // 第三方物流公司
+            deliveryWay = "3";
             mLlDeliveryName.setVisibility(mSwitch3.isChecked() ? View.VISIBLE : View.GONE);
+        }
+        if (!TextUtils.isEmpty(actionType) && !TextUtils.isEmpty(deliveryWay)) {
+            mPresenter.editDeliveryType(actionType, deliveryWay);
         }
     }
 
