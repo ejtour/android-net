@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.cooperation.detail.shopdelivery;
+package com.hll_sc_app.app.deliverymanage.deliverytype;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
@@ -6,16 +6,16 @@ import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.delivery.DeliveryBean;
 
 /**
- * 合作采购商详情-选择配送方式
+ * 配送方式设置
  *
  * @author zhuyingsong
- * @date 2019/7/18
+ * @date 2019/7/27
  */
-public interface CooperationShopDeliveryContract {
+public interface DeliveryTypeSetContract {
 
-    interface ICooperationShopDeliveryView extends ILoadView {
+    interface IDeliveryTypeSetView extends ILoadView {
         /**
-         * 展示支持的配送方式
+         * 展示选中的配送方式
          *
          * @param bean 配送方式
          */
@@ -27,7 +27,7 @@ public interface CooperationShopDeliveryContract {
         void editSuccess();
     }
 
-    interface ICooperationShopDeliveryPresenter extends IPresenter<ICooperationShopDeliveryView> {
+    interface IDeliveryTypeSetPresenter extends IPresenter<IDeliveryTypeSetView> {
         /**
          * 查询配送方式
          */

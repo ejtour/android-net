@@ -12,6 +12,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -41,6 +42,7 @@ public class DeliveryManageActivity extends BaseLoadActivity {
             case R.id.img_close:
                 finish();
             case R.id.txt_DeliveryType:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_SET);
                 break;
             default:
                 break;

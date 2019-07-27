@@ -12,9 +12,9 @@ import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
-import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
-import com.hll_sc_app.bean.cooperation.DeliveryPeriodResp;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 

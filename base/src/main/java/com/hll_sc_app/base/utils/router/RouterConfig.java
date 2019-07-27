@@ -25,6 +25,10 @@ public class RouterConfig {
      */
     public static final String DELIVERY_MANAGE = "/activity/deliveryManage";
     /**
+     * 配送管理-配送方式设置
+     */
+    public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";
+    /**
      * 设置界面-价格比例设置-列表-新增界面
      */
     public static final String SETTING_PRICE_RATIO_ADD = "/activity/setting/priceRatio/add";

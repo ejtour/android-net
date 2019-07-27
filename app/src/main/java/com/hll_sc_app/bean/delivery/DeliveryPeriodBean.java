@@ -1,4 +1,4 @@
-package com.hll_sc_app.bean.cooperation;
+package com.hll_sc_app.bean.delivery;
 
 /**
  * 配送时段列表查询

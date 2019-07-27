@@ -3,8 +3,8 @@ package com.hll_sc_app.app.cooperation.detail.details.basic;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
 
 import java.util.List;
 

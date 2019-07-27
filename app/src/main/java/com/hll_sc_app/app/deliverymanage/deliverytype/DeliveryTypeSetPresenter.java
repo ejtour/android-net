@@ -1,62 +1,60 @@
-package com.hll_sc_app.app.cooperation.application.thirdpart.detail;
+package com.hll_sc_app.app.deliverymanage.deliverytype;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
-import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
+import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.util.List;
-
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
-
 /**
- * 合作采购商-我收到的申请-第三方申请-详情
+ * 配送方式设置
  *
  * @author zhuyingsong
- * @date 2019/7/24
+ * @date 2019/7/27
  */
-public class CooperationThirdPartDetailPresenter implements CooperationThirdPartDetailContract.ICooperationThirdPartDetailPresenter {
-    private CooperationThirdPartDetailContract.ICooperationThirdDetailView mView;
-    private List<DeliveryPeriodBean> mListPeriod;
+public class DeliveryTypeSetPresenter implements DeliveryTypeSetContract.IDeliveryTypeSetPresenter {
+    private DeliveryTypeSetContract.IDeliveryTypeSetView mView;
 
-    static CooperationThirdPartDetailPresenter newInstance() {
-        return new CooperationThirdPartDetailPresenter();
+    static DeliveryTypeSetPresenter newInstance() {
+        return new DeliveryTypeSetPresenter();
     }
 
     @Override
     public void start() {
-        queryThirdPartDetail();
+        queryDeliveryList();
     }
 
     @Override
-    public void register(CooperationThirdPartDetailContract.ICooperationThirdDetailView view) {
+    public void register(DeliveryTypeSetContract.IDeliveryTypeSetView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
     @Override
-    public void queryThirdPartDetail() {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("plateSupplierID", UserConfig.getGroupID())
-            .put("id", mView.getId())
+    public void queryDeliveryList() {
+        BaseMapReq req = BaseMapReq
+            .newBuilder()
+            .put("groupID", UserConfig.getGroupID())
             .create();
-        CooperationPurchaserService.INSTANCE.queryThirdPartPurchaserDetail(req)
+        CooperationPurchaserService.INSTANCE
+            .queryDeliveryList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<ThirdPartyPurchaserBean>() {
+            .subscribe(new BaseCallback<DeliveryBean>() {
                 @Override
-                public void onSuccess(ThirdPartyPurchaserBean resp) {
-                    mView.showView(resp);
+                public void onSuccess(DeliveryBean resp) {
+                    mView.showDeliveryList(resp);
                 }
 
                 @Override
@@ -67,8 +65,15 @@ public class CooperationThirdPartDetailPresenter implements CooperationThirdPart
     }
 
     @Override
-    public void editCooperationThirdPartStatus(BaseMapReq req) {
-        CooperationPurchaserService.INSTANCE.editThirdPartPurchaserDetail(req)
+    public void editShopDelivery(ShopSettlementReq req) {
+        if (req == null) {
+            return;
+        }
+        BaseReq<ShopSettlementReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        CooperationPurchaserService
+            .INSTANCE
+            .editShopSettlement(baseReq)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -76,8 +81,7 @@ public class CooperationThirdPartDetailPresenter implements CooperationThirdPart
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
             .subscribe(new BaseCallback<Object>() {
                 @Override
-                public void onSuccess(Object resp) {
-                    mView.showToast("修改成功");
+                public void onSuccess(Object object) {
                     mView.editSuccess();
                 }
 

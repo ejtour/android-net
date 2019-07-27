@@ -1,4 +1,6 @@
-package com.hll_sc_app.bean.cooperation;
+package com.hll_sc_app.bean.delivery;
+
+import java.util.List;
 
 /**
  * 配送方式
@@ -15,6 +17,15 @@ public class DeliveryBean {
      * 集团ID
      */
     private String groupID;
+    private List<DeliveryCompanyBean> deliveryCompanyList;
+
+    public List<DeliveryCompanyBean> getDeliveryCompanyList() {
+        return deliveryCompanyList;
+    }
+
+    public void setDeliveryCompanyList(List<DeliveryCompanyBean> deliveryCompanyList) {
+        this.deliveryCompanyList = deliveryCompanyList;
+    }
 
     public String getDeliveryWay() {
         return deliveryWay;
