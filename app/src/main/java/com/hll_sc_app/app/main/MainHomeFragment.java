@@ -298,7 +298,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD);
                 break;
             case R.id.fmh_entry_price_manage:
-                showToast("售价管理待添加");
+                RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE);
                 break;
             case R.id.fmh_entry_agreement_price:
                 RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE);

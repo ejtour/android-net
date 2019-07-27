@@ -201,7 +201,7 @@
                             android:id="@+id/txt_price_setting"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_price_setting"
-                            android:text="售价设置"/>
+                            android:text="售价管理"/>
 
                         <TextView
                             android:id="@+id/txt_marketing_settings"
