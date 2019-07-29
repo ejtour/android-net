@@ -270,5 +270,24 @@ public class RouterUtil {
         return (Fragment) ARouter.getInstance().build(url).navigation();
     }
 
+    /**
+     * 获取Fragment
+     */
+    public static Fragment getFragment(String url, Parcelable parcelable) {
+        return (Fragment) ARouter.getInstance().build(url)
+                .withParcelable("parcelable", parcelable)
+                .navigation();
+    }
 
+    /**
+     * 获取Fragment
+     */
+    public static Fragment getFragment(String url, Object... objects) {
+        Postcard postcard = ARouter.getInstance().build(url);
+        for (int i = 0; i < objects.length; i++) {
+            getPostcard(postcard, "object" + i, objects[i]);
+        }
+        postcard.setProvider(new LoginInterceptor()).navigation();
+        return (Fragment) postcard.setProvider(new LoginInterceptor()).navigation();
+    }
 }

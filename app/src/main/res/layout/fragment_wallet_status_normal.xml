@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/wsn_top_bg"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/wsn_top_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:alpha="0.1"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/wsn_top_bg"
+        app:layout_constraintEnd_toEndOf="@id/wsn_top_bg"
+        app:layout_constraintStart_toStartOf="@id/wsn_top_bg" />
+
+    <com.hll_sc_app.widget.EasingTextView
+        android:id="@+id/wsn_balance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="@id/wsn_top_bg"
+        app:layout_constraintStart_toStartOf="@id/wsn_top_bg"
+        app:layout_constraintTop_toTopOf="@id/wsn_top_bg"
+        tools:text="50000.00" />
+
+    <TextView
+        android:id="@+id/wsn_balance_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="我的余额"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintEnd_toEndOf="@id/wsn_top_bg"
+        app:layout_constraintStart_toStartOf="@id/wsn_top_bg"
+        app:layout_constraintTop_toBottomOf="@id/wsn_balance" />
+
+    <View
+        android:id="@+id/wsn_div"
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:alpha="0.5"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/wsn_top_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/wsn_top_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/wsn_top_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/wsn_top_bottom_bg" />
+
+    <com.hll_sc_app.widget.EasingTextView
+        android:id="@+id/wsn_withdraw_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Large.White"
+        app:layout_constraintBottom_toTopOf="@id/wsn_withdraw_amount_label"
+        app:layout_constraintEnd_toStartOf="@id/wsn_div"
+        app:layout_constraintStart_toStartOf="@id/wsn_top_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/wsn_top_bottom_bg"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="30000.00" />
+
+    <TextView
+        android:id="@+id/wsn_withdraw_amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="可提现金额"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintBottom_toBottomOf="@id/wsn_top_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/wsn_withdraw_amount"
+        app:layout_constraintStart_toStartOf="@id/wsn_withdraw_amount"
+        app:layout_constraintTop_toBottomOf="@id/wsn_withdraw_amount" />
+
+    <com.hll_sc_app.widget.EasingTextView
+        android:id="@+id/wsn_freeze_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Large.White"
+        app:layout_constraintBottom_toTopOf="@id/wsn_freeze_amount_label"
+        app:layout_constraintEnd_toEndOf="@id/wsn_top_bottom_bg"
+        app:layout_constraintStart_toEndOf="@id/wsn_div"
+        app:layout_constraintTop_toTopOf="@id/wsn_top_bottom_bg"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="20000.00" />
+
+    <TextView
+        android:id="@+id/wsn_freeze_amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="冻结金额"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintBottom_toBottomOf="@id/wsn_top_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/wsn_freeze_amount"
+        app:layout_constraintStart_toStartOf="@id/wsn_freeze_amount"
+        app:layout_constraintTop_toBottomOf="@id/wsn_freeze_amount" />
+
+    <TextView
+        android:id="@+id/wsn_account_btn"
+        android:layout_width="0dp"
+        android:layout_height="104dp"
+        android:background="@android:color/white"
+        android:drawableTop="@drawable/ic_wallet_account"
+        android:gravity="center_horizontal|bottom"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:text="我的账号"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintEnd_toStartOf="@id/wsn_recharge_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wsn_top_bg" />
+
+    <TextView
+        android:id="@+id/wsn_recharge_btn"
+        android:layout_width="0dp"
+        android:layout_height="104dp"
+        android:background="@android:color/white"
+        android:drawableTop="@drawable/ic_wallet_account"
+        android:gravity="center_horizontal|bottom"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:text="充值"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintEnd_toStartOf="@id/wsn_withdraw_btn"
+        app:layout_constraintStart_toEndOf="@id/wsn_account_btn"
+        app:layout_constraintTop_toBottomOf="@id/wsn_top_bg" />
+
+    <TextView
+        android:id="@+id/wsn_withdraw_btn"
+        android:layout_width="0dp"
+        android:layout_height="104dp"
+        android:background="@android:color/white"
+        android:drawableTop="@drawable/ic_wallet_account"
+        android:gravity="center_horizontal|bottom"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:text="提现"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintEnd_toStartOf="@id/wsn_details_btn"
+        app:layout_constraintStart_toEndOf="@id/wsn_recharge_btn"
+        app:layout_constraintTop_toBottomOf="@id/wsn_top_bg" />
+
+    <TextView
+        android:id="@+id/wsn_details_btn"
+        android:layout_width="0dp"
+        android:layout_height="104dp"
+        android:background="@android:color/white"
+        android:drawableTop="@drawable/ic_wallet_details"
+        android:gravity="center_horizontal|bottom"
+        android:paddingTop="30dp"
+        android:paddingBottom="20dp"
+        android:text="明细"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/wsn_withdraw_btn"
+        app:layout_constraintTop_toBottomOf="@id/wsn_top_bg" />
+
+    <View
+        android:id="@+id/wsn_tip_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/color_fffbe6"
+        app:layout_constraintBottom_toBottomOf="@id/wsn_tip_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/wsn_tip_content" />
+
+    <TextView
+        android:id="@+id/wsn_tip_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="18dp"
+        android:drawableLeft="@drawable/ic_horn"
+        android:drawablePadding="8dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="5dp"
+        android:textColor="@color/color_faad14"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="请完成企业账务主体实名认证，享受更多服务，马上认证" />
+
+    <ImageView
+        android:id="@+id/wsn_tip_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@drawable/ic_arrow_right_double"
+        app:layout_constraintBottom_toBottomOf="@id/wsn_tip_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/wsn_tip_content"
+        app:layout_constraintTop_toTopOf="@id/wsn_tip_content" />
+
+    <android.support.constraint.Group
+        android:id="@+id/wsn_tip_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="wsn_tip_bg,wsn_tip_content,wsn_tip_arrow" />
+</android.support.constraint.ConstraintLayout>
