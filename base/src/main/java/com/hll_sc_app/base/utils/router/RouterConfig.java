@@ -168,12 +168,12 @@ public class RouterConfig {
      * 合作采购商-我收到的申请
      */
     public static final String COOPERATION_PURCHASER_APPLICATION = "/activity/cooperationPurchaser" +
-        "/cooperationApplication";
+            "/cooperationApplication";
     /**
      * 合作采购商-我收到的申请-详情
      */
     public static final String COOPERATION_PURCHASER_APPLICATION_THIRD_PART_DETAIL = "/activity/cooperationPurchaser" +
-        "/cooperationApplication/thirdPart/Detail";
+            "/cooperationApplication/thirdPart/Detail";
     /**
      * 合作采购商详情-详细资料
      */
@@ -186,38 +186,38 @@ public class RouterConfig {
      * 合作采购商详情-选择结算方式
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT = "/activity/cooperationPurchaser/detail" +
-        "/shop/settlement";
+            "/shop/settlement";
     /**
      * 合作采购商详情-选择配送方式
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DELIVERY = "/activity/cooperationPurchaser/detail" +
-        "/shop/delivery";
+            "/shop/delivery";
     /**
      * 合作采购商详情-门店详情
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL = "/activity/cooperationPurchaser/detail" +
-        "/shopDetail";
+            "/shopDetail";
     /**
      * 合作采购商详情-门店详情-合作方式
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL_SOURCE = "/activity/cooperationPurchaser" +
-        "/detail" +
-        "/shopDetail/source";
+            "/detail" +
+            "/shopDetail/source";
     /**
      * 合作采购商详情- 批量指派销售
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_SALES = "/activity/cooperationPurchaser/detail" +
-        "/shop/sales";
+            "/shop/sales";
     /**
      * 合作采购商详情-选择门店
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SELECT_SHOP = "/activity/cooperationPurchaser/detail" +
-        "/selectShop";
+            "/selectShop";
     /**
      * 合作采购商详情-已选择的门店
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOPS = "/activity/cooperationPurchaser/detail" +
-        "/Shops";
+            "/Shops";
     /**
      * 商品置顶管理
      */
@@ -285,11 +285,6 @@ public class RouterConfig {
      * 我的
      */
     public static final String ROOT_HOME_MINE = "/fragment/home/mine";
-
-    /**
-     * 订单管理-搜索
-     */
-    public static final String ORDER_SEARCH = "/activity/order/search";
 
     /**
      * 订单管理-待发货商品总量
@@ -375,25 +370,25 @@ public class RouterConfig {
      * 协议价管理-添加报价单-选择报价对象
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER = "/activity/mine/agreementPrice" +
-        "/quotation/add/purchaser";
+            "/quotation/add/purchaser";
 
     /**
      * 协议价管理-添加报价单-选择报价对象-选择报价门店
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP = "/activity/mine/agreementPrice" +
-        "/quotation/add/purchaserShop";
+            "/quotation/add/purchaserShop";
 
     /**
      * 协议价管理-添加报价单-选择比例模板
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_RATIO = "/activity/mine/agreementPrice" +
-        "/quotation/add/ratio";
+            "/quotation/add/ratio";
 
     /**
      * 协议价管理-添加报价单-新增商品
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS = "/activity/mine/agreementPrice" +
-        "/quotation/add/goods";
+            "/quotation/add/goods";
 
     /**
      * 我的-退货审核
@@ -454,4 +449,64 @@ public class RouterConfig {
      * 客户销售汇总门店明细
      */
     public static final String CUSTOMER_SALE_SHOP_DETAILS = "/activity/customer/sale/shop/detail";
+
+    /**
+     * 我的钱包
+     */
+    public static final String WALLET = "/activity/wallet";
+
+    /**
+     * 我的钱包-明细
+     */
+    public static final String WALLET_DETAILS_LIST = "/activity/wallet/details/list";
+
+    /**
+     * 我的钱包-明细展示
+     */
+    public static final String WALLET_DETAILS_SHOW = "/activity/wallet/details/show";
+
+    /**
+     * 我的钱包-开通账户
+     */
+    public static final String WALLET_ACCOUNT_OPEN = "/activity/wallet/account/open";
+
+    /**
+     * 我的钱包-绑定账户
+     */
+    public static final String WALLET_ACCOUNT_BIND = "/activity/wallet/account/bind";
+
+    /**
+     * 我的钱包-状态-未开通账户
+     */
+    public static final String WALLET_STATUS_NONE = "/fragment/wallet/status/none";
+
+    /**
+     * 我的钱包-状态-正常开通账户
+     */
+    public static final String WALLET_STATUS_NORMAL = "/fragment/wallet/status/normal";
+
+    /**
+     * 我的钱包-状态-账户核验状态
+     */
+    public static final String WALLET_STATUS_VERIFY = "/fragment/wallet/status/verify";
+
+    /**
+     * 我的钱包-企业认证
+     */
+    public static final String WALLET_AUTH_ACCOUNT = "/activity/wallet/authAccount";
+
+    /**
+     * 我的钱包-我的账号
+     */
+    public static final String WALLET_MY_ACCOUNT = "/activity/wallet/myAccount";
+
+    /**
+     * 我的钱包-充值
+     */
+    public static final String WALLET_RECHARGE = "/activity/wallet/recharge";
+
+    /**
+     * 我的钱包-提现
+     */
+    public static final String WALLET_WITHDRAW = "/activity/wallet/withdraw";
 }
