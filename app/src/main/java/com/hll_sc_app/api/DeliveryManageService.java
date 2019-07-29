@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyReq;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -61,4 +62,14 @@ public interface DeliveryManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101105")
     Observable<BaseResp<Object>> addDeliveryCompany(@Body BaseReq<DeliveryCompanyReq> req);
+
+    /**
+     * 配送时段列表查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103067")
+    Observable<BaseResp<DeliveryPeriodResp>> queryDeliveryPeriodList(@Body BaseMapReq req);
 }
