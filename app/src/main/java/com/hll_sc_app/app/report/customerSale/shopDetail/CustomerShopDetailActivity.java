@@ -364,7 +364,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
                     .setText(R.id.txt_refund_amount, CommonUtils.formatMoney(bean.getRefundAmount()))
                     .setText(R.id.txt_total_amount, CommonUtils.formatMoney(bean.getSubtotalAmount()))
                     .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
-                    R.drawable.bg_price_log_content_gray : R.drawable.bg_price_log_content_white);
+                    R.drawable.bg_price_log_content_white: R.drawable.bg_price_log_content_gray);
         }
     }
 
