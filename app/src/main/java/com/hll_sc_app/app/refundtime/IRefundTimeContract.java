@@ -14,6 +14,12 @@ public interface IRefundTimeContract {
         Integer getLevel();
 
         /**
+         * 获取adapter
+         */
+        RefundTimeAdapter getMAdapter();
+
+
+        /**
          * 展示数据
          */
         void show(List<RefundTimeBean> list);
@@ -28,6 +34,6 @@ public interface IRefundTimeContract {
         /**
          * 退货时效保存
          */
-        void setRefundTime(RefundTimeAdapter mAdapter);
+        void setRefundTime();
     }
 }

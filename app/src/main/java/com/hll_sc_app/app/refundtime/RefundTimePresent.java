@@ -61,7 +61,8 @@ public class RefundTimePresent implements IRefundTimeContract.IPresent {
     }
 
     @Override
-    public void setRefundTime(RefundTimeAdapter mAdapter) {
+    public void setRefundTime() {
+        RefundTimeAdapter mAdapter = mView.getMAdapter();
         List<RefundTimeBean> list = new ArrayList<>();
         for (int i = 0; ; i++) {
             RefundTimeBean refundTimeBean = mAdapter.getItem(i);
@@ -74,27 +75,25 @@ public class RefundTimePresent implements IRefundTimeContract.IPresent {
         refundTimeReq.setCustomerLevel(mView.getLevel());
         refundTimeReq.setGroupID(Long.parseLong(UserConfig.getGroupID()));
         refundTimeReq.setRefunds(list);
-        
+
         BaseReq<SetRefundTimeReq> req = new BaseReq<>();
         req.setData(refundTimeReq);
         UserService.INSTANCE.setRefundTime(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doFinally(() -> mView.hideLoading())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<RefundTimeResp>() {
+                    @Override
+                    public void onSuccess(RefundTimeResp resp) {
+                        mView.showToast("设置退货时效成功");
+                    }
 
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<RefundTimeResp>() {
-                @Override
-                public void onSuccess(RefundTimeResp resp) {
-                    mView.showToast("设置退货时效成功");
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
-
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
-
 }

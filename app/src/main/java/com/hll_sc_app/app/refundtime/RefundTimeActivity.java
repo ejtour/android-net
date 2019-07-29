@@ -116,6 +116,11 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
     }
 
     @Override
+    public RefundTimeAdapter getMAdapter() {
+        return mAdapter;
+    }
+
+    @Override
     public void show(List<RefundTimeBean> list) {
         mAdapter.setNewData(list);
         mAdapter.setEmptyView(mEmptyView);
@@ -132,10 +137,13 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
                 RouterUtil.goToActivity(RouterConfig.REFUND_TIME, 1);
                 break;
             case R.id.txt_set:
-                if (status != null && status == 0) {
-                    status = 1;
-                } else {
+                if (status != null && status == 1) {
                     status = 0;
+                    mTxtSet.setText("编辑");
+                    mPresenter.setRefundTime();
+                } else {
+                    status = 1;
+                    mTxtSet.setText("保存");
                 }
                 if (mAdapter != null) {
                     mAdapter.setStatus(status);
