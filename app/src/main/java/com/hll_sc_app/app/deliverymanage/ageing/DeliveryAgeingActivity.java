@@ -55,7 +55,7 @@ public class DeliveryAgeingActivity extends BaseLoadActivity {
 
     private void initView() {
         mListFragment = new ArrayList<>(STR_TITLE.length);
-        mListFragment.add(DeliveryAgeingBookFragment.newInstance());
+        mListFragment.add(DeliveryAgeingFragment.newInstance());
         mListFragment.add(DeliveryAgeingBookFragment.newInstance());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

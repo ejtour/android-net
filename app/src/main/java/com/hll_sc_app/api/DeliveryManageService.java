@@ -72,4 +72,14 @@ public interface DeliveryManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:103067")
     Observable<BaseResp<DeliveryPeriodResp>> queryDeliveryPeriodList(@Body BaseMapReq req);
+
+    /**
+     * 配送时效列表查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103064")
+    Observable<BaseResp<DeliveryPeriodResp>> queryDeliveryAgeingList(@Body BaseMapReq req);
 }

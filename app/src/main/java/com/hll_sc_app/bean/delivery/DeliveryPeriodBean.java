@@ -19,6 +19,30 @@ public class DeliveryPeriodBean {
      * 配送时段id
      */
     private String deliveryTimeID;
+    /**
+     * 截单时间
+     */
+    private String billUpDateTime;
+    /**
+     * 送达时间标识 0-当天 1-次日 2-第三天....6-第七天
+     */
+    private int dayTimeFlag;
+
+    public int getDayTimeFlag() {
+        return dayTimeFlag;
+    }
+
+    public void setDayTimeFlag(int dayTimeFlag) {
+        this.dayTimeFlag = dayTimeFlag;
+    }
+
+    public String getBillUpDateTime() {
+        return billUpDateTime;
+    }
+
+    public void setBillUpDateTime(String billUpDateTime) {
+        this.billUpDateTime = billUpDateTime;
+    }
 
     public String getArrivalEndTime() {
         return arrivalEndTime;
