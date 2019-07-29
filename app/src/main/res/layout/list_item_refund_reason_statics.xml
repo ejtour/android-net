@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_container"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd" />
+
+    <TextView
+        android:id="@+id/txt_number"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/base_text222"
+        android:textSize="10sp"
+        tools:text="1" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd" />
+
+    <TextView
+        android:id="@+id/txt_reason"
+        android:layout_width="170dp"
+        android:layout_height="match_parent"
+        android:gravity="center|left"
+        android:paddingLeft="10dp"
+        android:textColor="@color/base_text222"
+        android:textSize="10sp"
+        tools:text="验货差异退款" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd" />
+
+    <TextView
+        android:id="@+id/txt_money"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:gravity="center|right"
+        android:paddingRight="10dp"
+        android:textColor="@color/base_text222"
+        android:textSize="10sp"
+        tools:text="1,000.00" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd" />
+
+    <TextView
+        android:id="@+id/txt_proportion"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/base_text222"
+        android:textSize="10sp"
+        tools:text="21.2%" />
+
+    <View
+        android:layout_width="0.5dp"
+        android:layout_height="match_parent"
+        android:background="@color/color_dddddd" />
+
+</LinearLayout>
