@@ -12,10 +12,13 @@ import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.bean.goods.SkuGoodsBean;
+import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -102,7 +105,7 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
                 @Override
                 public void onSuccess(List<GoodsBean> resp) {
                     mPageNum = mTempPageNum;
-                    mView.showList(resp, mPageNum != 1);
+                    processData(resp);
                 }
 
                 @Override
@@ -110,5 +113,31 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
                     mView.showError(e);
                 }
             });
+    }
+
+    private void processData(List<GoodsBean> list) {
+        ArrayList<SkuGoodsBean> goodsList = new ArrayList<>();
+        if (!CommonUtils.isEmpty(list)) {
+            for (GoodsBean bean : list) {
+                List<SpecsBean> specsBeans = bean.getSpecs();
+                for (SpecsBean specsBean : specsBeans) {
+                    SkuGoodsBean skuGoodsBean = new SkuGoodsBean();
+                    skuGoodsBean.setSpecContent(specsBean.getSpecContent());
+                    skuGoodsBean.setShopProductCategoryThreeID(bean.getShopProductCategoryThreeID());
+                    skuGoodsBean.setSpecID(specsBean.getProductSpecID());
+                    skuGoodsBean.setCostPrice(specsBean.getCostPrice());
+                    skuGoodsBean.setImgUrl(bean.getImgUrl());
+                    skuGoodsBean.setProductCode(bean.getProductCode());
+                    skuGoodsBean.setProductID(bean.getProductID());
+                    skuGoodsBean.setProductName(bean.getProductName());
+                    skuGoodsBean.setProductPrice(specsBean.getProductPrice());
+                    skuGoodsBean.setSaleUnitName(specsBean.getSaleUnitName());
+                    skuGoodsBean.setCategoryThreeID(bean.getCategoryID());
+                    skuGoodsBean.setCategorySubID(bean.getCategorySubID());
+                    goodsList.add(skuGoodsBean);
+                }
+            }
+        }
+        mView.showList(goodsList, mPageNum != 1);
     }
 }
