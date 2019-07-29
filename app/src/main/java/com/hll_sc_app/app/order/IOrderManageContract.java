@@ -41,12 +41,7 @@ interface IOrderManageContract {
         /**
          * 刷新列表数据
          */
-        void refreshListData(List<OrderResp> resps);
-
-        /**
-         * 追加列表数据
-         */
-        void appendListData(List<OrderResp> resps);
+        void updateListData(List<OrderResp> resps, boolean append);
 
         /**
          * 状态改变

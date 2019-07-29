@@ -57,7 +57,7 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
                 if (!CommonUtils.isEmpty(resp.getDeliverTypes())) {
                     mPageNum = 1;
                     getOrderList(showLoading);
-                } else mView.refreshListData(null);
+                } else mView.updateListData(null, false);
             }
         });
     }
@@ -78,8 +78,8 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
                 new SimpleObserver<List<OrderResp>>(mView, showLoading) {
                     @Override
                     public void onSuccess(List<OrderResp> resps) {
-                        if (mPageNum == 1) mView.refreshListData(resps);
-                        else mView.appendListData(resps);
+                        if (mPageNum == 1) mView.updateListData(resps, false);
+                        else mView.updateListData(resps, true);
                         if (!CommonUtils.isEmpty(resps)) mPageNum++;
                     }
                 });
