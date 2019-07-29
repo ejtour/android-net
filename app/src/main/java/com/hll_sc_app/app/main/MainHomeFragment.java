@@ -188,7 +188,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     }
 
     private void updateWarehouse(SalesVolumeResp resp) {
-        if (resp.getWareHouseBillNum() > 0) {
+        if (resp.isWareHouse()) {
             mWarehouseGroup.setVisibility(View.VISIBLE);
             mWarehouseBillNum.setText(CommonUtils.formatNumber(resp.getWareHouseBillNum()));
             mWarehouseShop.setText(CommonUtils.formatNumber(resp.getWareHouseShopNum()));

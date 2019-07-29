@@ -40,6 +40,7 @@ public class SalesVolumeResp {
     private int deliveryBillNum;
     private int salesMonth;
     private int purchaserNumMonth;
+    private boolean wareHouse;
 
     public int getProductNumMonth() {
         return productNumMonth;
@@ -303,5 +304,13 @@ public class SalesVolumeResp {
 
     public void setPurchaserNumMonth(int purchaserNumMonth) {
         this.purchaserNumMonth = purchaserNumMonth;
+    }
+
+    public boolean isWareHouse() {
+        return wareHouse;
+    }
+
+    public void setWareHouse(boolean wareHouse) {
+        this.wareHouse = wareHouse;
     }
 }
