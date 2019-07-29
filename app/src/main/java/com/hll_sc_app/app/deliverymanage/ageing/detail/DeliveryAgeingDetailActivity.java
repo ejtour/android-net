@@ -19,6 +19,12 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
+import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.widget.SingleSelectionDialog;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +50,8 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
     @BindView(R.id.txt_arrivalTime)
     TextView mTxtArrivalTime;
     private DeliveryAgeingDetailPresenter mPresenter;
+    private SingleSelectionDialog mBillUpDateDialog;
+    private SingleSelectionDialog mDayTimeFlagDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +71,7 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
         if (mBean != null) {
             mTxtBillUpDateTime.setText(mBean.getBillUpDateTime());
             mTxtDayTimeFlag.setText(getDayTimeFlag(mBean.getDayTimeFlag()));
-            mTxtDayTimeFlag.setTag(mBean.getDayTimeFlag());
+            mTxtDayTimeFlag.setTag(String.valueOf(mBean.getDayTimeFlag()));
             mTxtArrivalTime.setText(String.format("%s-%s", mBean.getArrivalStartTime(), mBean.getArrivalEndTime()));
             mTxtArrivalTime.setTag(R.id.date_start, mBean.getArrivalStartTime());
             mTxtArrivalTime.setTag(R.id.date_end, mBean.getArrivalEndTime());
@@ -89,8 +97,10 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
                 finish();
                 break;
             case R.id.rl_billUpDateTime:
+                showBillUpdateSelectWindow();
                 break;
             case R.id.rl_dayTimeFlag:
+                showDayTimeFlagSelectWindow();
                 break;
             case R.id.rl_arrivalTime:
                 break;
@@ -100,6 +110,46 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
             default:
                 break;
         }
+    }
+
+    /**
+     * 选择截单时间
+     */
+    private void showBillUpdateSelectWindow() {
+        if (mBillUpDateDialog == null) {
+            List<String> list = new ArrayList<>();
+            DecimalFormat format = new DecimalFormat("00");
+            for (int i = 1; i < 24; i++) {
+                list.add(format.format(i) + ":00");
+            }
+            mBillUpDateDialog = SingleSelectionDialog.newBuilder(this,
+                (SingleSelectionDialog.WrapperName<String>) s -> s)
+                .refreshList(list)
+                .setTitleText("选择截单时间")
+                .setOnSelectListener(s -> mTxtBillUpDateTime.setText(s)).create();
+        }
+        mBillUpDateDialog.show();
+    }
+
+    /**
+     * 选择最早的配送日期
+     */
+    private void showDayTimeFlagSelectWindow() {
+        if (mDayTimeFlagDialog == null) {
+            List<NameValue> list = new ArrayList<>();
+            for (int i = 0; i < STRINGS.length; i++) {
+                list.add(new NameValue(STRINGS[i], String.valueOf(i)));
+            }
+            mDayTimeFlagDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                .refreshList(list)
+                .setTitleText("选择最早的配送日期")
+                .setOnSelectListener(s -> {
+                    mTxtDayTimeFlag.setTag(s.getValue());
+                    mTxtDayTimeFlag.setText(s.getName());
+                })
+                .create();
+        }
+        mDayTimeFlagDialog.show();
     }
 
     private void toSave() {
