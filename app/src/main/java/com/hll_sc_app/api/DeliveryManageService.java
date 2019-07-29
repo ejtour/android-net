@@ -91,5 +91,5 @@ public interface DeliveryManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:103065")
-    Observable<BaseResp<Object>> delDeliveryAgeing(@Body BaseMapReq req);
+    Observable<BaseResp<Object>> editDeliveryAgeing(@Body BaseMapReq req);
 }

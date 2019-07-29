@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.deliverymanage.ageing.detail.DeliveryAgeingDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
@@ -82,7 +84,7 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
     }
 
     class AgeListAdapter extends BaseQuickAdapter<DeliveryPeriodBean, BaseViewHolder> {
-        final String[] STRINGS = {"当天", "次日", "第三天", "第四天", "第五天", "第六天", "第七天"};
+
 
         AgeListAdapter() {
             super(R.layout.item_delivery_ageing);
@@ -104,9 +106,9 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
 
         private String getArrivalTime(DeliveryPeriodBean item) {
             StringBuilder stringBuilder = new StringBuilder();
-            int flag = item.getDayTimeFlag();
-            if (flag >= 0 && flag < STRINGS.length) {
-                stringBuilder.append(STRINGS[flag]).append(",");
+            String flag = DeliveryAgeingDetailActivity.getDayTimeFlag(item.getDayTimeFlag());
+            if (!TextUtils.isEmpty(flag)) {
+                stringBuilder.append(flag).append(",");
             }
             stringBuilder.append(item.getArrivalStartTime()).append("-").append(item.getArrivalEndTime());
             return stringBuilder.toString();

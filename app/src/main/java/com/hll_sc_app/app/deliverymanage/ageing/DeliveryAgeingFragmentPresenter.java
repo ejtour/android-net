@@ -53,7 +53,7 @@ public class DeliveryAgeingFragmentPresenter implements DeliveryAgeingFragmentCo
             .put("deliveryTimeID", deliveryTimeId)
             .create();
         DeliveryManageService.INSTANCE
-            .delDeliveryAgeing(req)
+            .editDeliveryAgeing(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .flatMap((Function<Object, ObservableSource<DeliveryPeriodResp>>) o -> {
@@ -70,7 +70,7 @@ public class DeliveryAgeingFragmentPresenter implements DeliveryAgeingFragmentCo
             .put("groupID", UserConfig.getGroupID())
             .create();
         return DeliveryManageService.INSTANCE
-            .queryDeliveryPeriodList(req)
+            .queryDeliveryAgeingList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>());
     }

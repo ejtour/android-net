@@ -88,7 +88,6 @@ public class DeliveryAgeingActivity extends BaseLoadActivity {
                 break;
 
         }
-
     }
 
     class FragmentListAdapter extends FragmentPagerAdapter {

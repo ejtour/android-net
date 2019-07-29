@@ -206,6 +206,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.deliverymanage.ageing.detail.DeliveryAgeingDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.deliverymanage.deliverytype.DeliveryTypeSetActivity"
             android:screenOrientation="portrait"/>
 
