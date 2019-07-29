@@ -28,5 +28,12 @@ interface DeliveryAgeingFragmentContract {
          * 配送时效列表查询
          */
         void queryDeliveryAgeingList();
+
+        /**
+         * 删除配送时效
+         *
+         * @param deliveryTimeId 配送时效ID
+         */
+        void delAgeing(String deliveryTimeId);
     }
 }

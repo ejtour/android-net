@@ -57,16 +57,13 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(),
             R.color.base_color_divider), UIUtils.dip2px(10)));
         mAdapter = new AgeListAdapter();
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                DeliveryPeriodBean bean = (DeliveryPeriodBean) adapter.getItem(position);
-                if (bean == null) {
-                    return;
-                }
-                if (view.getId() == R.id.img_close) {
-                    //  TODO:
-                }
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            DeliveryPeriodBean bean = (DeliveryPeriodBean) adapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+            if (view.getId() == R.id.img_close) {
+                mPresenter.delAgeing(bean.getDeliveryTimeID());
             }
         });
         mRecyclerView.setAdapter(mAdapter);
