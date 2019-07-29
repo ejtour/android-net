@@ -11,7 +11,7 @@ public class ReportExportReq {
     private String pv;
     private String email;
     private int isBindEmail;
-    private HashMap<String, String> reqParams;
+    private String reqParams;
 
     public String getPv() {
         return pv;
@@ -37,11 +37,11 @@ public class ReportExportReq {
         this.isBindEmail = isBindEmail;
     }
 
-    public HashMap<String, String> getReqParams() {
+    public String getReqParams() {
         return reqParams;
     }
 
-    public void setReqParams(HashMap<String, String> reqParams) {
+    public void setReqParams(String reqParams) {
         this.reqParams = reqParams;
     }
 }

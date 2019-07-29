@@ -25,7 +25,9 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.report.product.ProductSalesParam;
 import com.hll_sc_app.bean.report.resp.product.ProductCategory;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
@@ -33,10 +35,12 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Bean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -77,7 +81,10 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
     RecyclerView mListView;
     @BindViews({R.id.rps_tag_custom, R.id.rps_tag_last_month, R.id.rps_tag_this_month, R.id.rps_tag_this_week})
     List<TextView> mBtnList;
+    @BindView(R.id.rps_date_range)
+    TextView mDateRange;
     private ProductSalesAdapter mAdapter;
+    private DateRangeWindow mDateRangeWindow;
     private IProductSalesContract.IProductSalesPresenter mPresenter;
     private final ProductSalesParam mParam = new ProductSalesParam();
     private TextView mSaleType;
@@ -182,6 +189,52 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
         mPieChart.invalidate();
     }
 
+    private void showDateRangeWindow(View view) {
+        if (mDateRangeWindow == null) {
+            Date endTime = new Date();
+            updateSelectedDate(CalendarUtils.getDateBefore(endTime, 29), endTime);
+            mDateRangeWindow = new DateRangeWindow(this);
+            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
+                String oldBegin = mParam.getFormatStartDate();
+                String oldEnd = mParam.getFormatEndDate();
+                if (start == null && end == null) {
+                    Date endDate = new Date();
+                    updateSelectedDate(CalendarUtils.getDateBefore(endDate, 29), endDate);
+                    mPresenter.start();
+                    return;
+                }
+                if (start != null && end != null) {
+                    Calendar calendarStart = Calendar.getInstance();
+                    calendarStart.setTimeInMillis(start.getTimeInMillis());
+                    Calendar calendarEnd = Calendar.getInstance();
+                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
+                    updateSelectedDate(calendarStart.getTime(), calendarEnd.getTime());
+                    if ((oldBegin == null && oldEnd == null) ||
+                            !mParam.getFormatStartDate().equals(oldBegin) ||
+                            !mParam.getFormatEndDate().equals(oldEnd)) {
+                        mPresenter.start();
+                    }
+                }
+            });
+            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+            start.setTime(mParam.getStartDate());
+            end.setTime(mParam.getEndDate());
+            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
+                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
+        }
+        mDateRangeWindow.showAsDropDown(view, 0, UIUtils.dip2px(5));
+        mDateRange.setVisibility(View.VISIBLE);
+    }
+
+    private void updateSelectedDate(Date startDate, Date endDate) {
+        mParam.setEndDate(endDate);
+        mParam.setStartDate(startDate);
+        mDateRange.setText(String.format("%s - %s",
+                CalendarUtils.format(startDate, Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(endDate, Constants.SLASH_YYYY_MM_DD)));
+    }
+
+
     public class MyFormatter extends PercentFormatter {
         @Override
         public String getPieLabel(float value, PieEntry pieEntry) {
@@ -191,20 +244,17 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
 
     @OnClick({R.id.rps_tag_custom, R.id.rps_tag_last_month, R.id.rps_tag_this_month, R.id.rps_tag_this_week})
     public void onViewClicked(TextView view) {
+        mDateRange.setVisibility(View.GONE);
         ButterKnife.apply(mBtnList, (v, index) -> {
             v.setBackgroundResource(0);
             v.setTextColor(Color.WHITE);
         });
         view.setBackgroundResource(R.drawable.bg_tag_white_solid);
         view.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        mParam.setEndDate(null);
-        mParam.setStartDate(null);
         switch (view.getId()) {
             case R.id.rps_tag_custom:
                 mParam.setDateFlag(4);
-                Date endDate = new Date();
-                mParam.setEndDate(endDate);
-                mParam.setStartDate(CalendarUtils.getDateBefore(endDate, 29));
+                showDateRangeWindow(view);
                 break;
             case R.id.rps_tag_last_month:
                 mParam.setDateFlag(3);

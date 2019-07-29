@@ -35,11 +35,6 @@ public class CustomerSalesPresenter implements  CustomerSaleContract.ICustomerSa
         toCustomerSaleList(showLoading);
     }
 
-    @Override
-    public void exportCustomerSaleReport(String email) {
-
-    }
-
     private void toCustomerSaleList(boolean showLoading){
         CustomerSaleReq params = mView.getParams();
         params.setGroupID(UserConfig.getGroupID());

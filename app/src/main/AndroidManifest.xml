@@ -96,9 +96,9 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".app.agreementprice.AgreementPriceActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".app.agreementprice.search.AgreementPriceSearchActivity"
@@ -151,19 +151,19 @@
 
         <activity
             android:name=".app.staffmanage.StaffManageListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.staffmanage.detail.StaffManagerEditActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.staffmanage.detail.permission.RolePermissionActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.staffmanage.detail.role.RoleSelectActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.invite.CooperationInviteActivity"
@@ -413,12 +413,26 @@
             android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".app.report.productSale.ProductSalesActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".app.report.productSale.ProductSalesActivity"
+            android:screenOrientation="portrait"/>
+        <!--客户销售汇总搜索-->
+        <activity android:name=".app.report.search.ReportSearchActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.search.SearchActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.WalletActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.details.list.DetailsListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.details.show.DetailsShowActivity"
             android:screenOrientation="portrait" />
 
         <provider

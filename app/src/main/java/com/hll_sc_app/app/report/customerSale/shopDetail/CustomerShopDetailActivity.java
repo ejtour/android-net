@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.customerSale.shopDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -8,21 +9,26 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
+import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
 import com.hll_sc_app.bean.enums.TimeTypeEnum;
-import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesRecords;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
+import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -31,12 +37,10 @@ import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
-import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,6 +58,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.CUSTOMER_SALE_SHOP_DETAILS)
 public class CustomerShopDetailActivity extends BaseLoadActivity implements CustomerShopDetailContract.ICustomerShopDetailView, BaseQuickAdapter.OnItemClickListener {
+    private static final int CUSTOMER_SHOP_DETAIL_CODE = 10003;
     private static final String FORMAT_DATE = "yyyy/MM/dd";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -61,8 +66,6 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_date_name)
     TextView mTxtDateName;
-    @BindView(R.id.searchView)
-    SearchView mSearchView;
     @BindView(R.id.txt_date_name_title)
     TextView dateFlagTextView;
     @BindView(R.id.txt_total)
@@ -87,10 +90,24 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     SyncHorizontalScrollView syncHorizontalScrollView;
     @BindView(R.id.customer_shop_total_detail)
     SyncHorizontalScrollView footSyncHorizontalScrollView;
+    @BindView(R.id.txt_options)
+    ImageView txtOptions;
+    @BindView(R.id.edt_search)
+    EditText edtSearch;
+    @BindView(R.id.img_clear)
+    ImageView imgClear;
+    @BindView(R.id.report_date_arrow)
+    ImageView reportDateArrow;
+
     private CustomerShopListAdapter mAdapter;
     private CustomerShopDetailPresenter mPresenter;
     private ContextOptionsWindow mOptionsWindow;
+    private ContextOptionsWindow mExportOptionsWindow;
     private EmptyView mEmptyView;
+    String serverDate = "";
+    String localDate = "";
+    int timeType = TimeTypeEnum.DAY.getCode();
+    int timeFlag = TimeFlagEnum.TODAY.getCode();
     private CustomerSaleReq params = new CustomerSaleReq();
 
     @Override
@@ -127,19 +144,24 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         mTxtDateName.setText(String.format("%s", displayDate));
     }
 
-    @Subscribe
-    public void onEvent(GoodsRelevanceListSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
-        }
-    }
-
-    @OnClick({R.id.img_back})
+    @OnClick({R.id.img_back, R.id.edt_search, R.id.img_clear})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
                 finish();
+                break;
+            case R.id.edt_search:
+                RouterUtil.goToActivity(RouterConfig.CUSTOMER_SALE_SEARCH, this, CUSTOMER_SHOP_DETAIL_CODE);
+                break;
+            case R.id.img_clear:
+                edtSearch.setText(null);
+                CustomerSaleReq params = getParams();
+                params.setDate(serverDate);
+                params.setTimeType(timeType);
+                params.setTimeFlag(timeFlag);
+                params.setPurchaserID("");
+                mPresenter.queryCustomerShopDetailList(true);
+                imgClear.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -148,6 +170,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
 
     @OnClick(R.id.txt_date_name_title)
     public void onViewClicked() {
+        reportDateArrow.setRotation(180);
         showOptionsWindow(dateFlagTextView);
     }
 
@@ -166,6 +189,16 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }
 
+    private void showExportOptionsWindow(View view) {
+        if (mExportOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_REPORT_DETAIL));
+            mExportOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
+        }
+        mExportOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
+    }
+
+
     @Override
     public void showCustomerShopDetailList(List<CustomerSalesRecords> list, boolean append, int total) {
         if (append) {
@@ -174,6 +207,11 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             mAdapter.setNewData(list);
         }
         mAdapter.setEmptyView(mEmptyView);
+        if (null == list || list.size() == 0) {
+            footSyncHorizontalScrollView.setVisibility(View.GONE);
+        } else {
+            footSyncHorizontalScrollView.setVisibility(View.VISIBLE);
+        }
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() - 1 != total);
     }
 
@@ -193,7 +231,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
 
     @Override
     public String getSearchParam() {
-        return mSearchView.getSearchContent();
+        return "";
     }
 
     @Override
@@ -204,6 +242,11 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         return params;
     }
 
+    @OnClick(R.id.txt_options)
+    public void OnExportClick() {
+        showExportOptionsWindow(txtOptions);
+    }
+
 
     @Override
     public void exportSuccess(String email) {
@@ -211,13 +254,15 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     }
 
     @Override
-    public void exportFailure(String tip) {
-        Utils.exportFailure(this, tip);
+    public void exportFailure(String email) {
+        Utils.exportFailure(this, email);
     }
 
     @Override
     public void bindEmail() {
-        Utils.bindEmail(this, email -> mPresenter.exportCustomerShopDetail(email));
+        Gson gson = new Gson();
+        String reqParams = gson.toJson(params);
+        Utils.bindEmail(this, (email) -> mPresenter.exportCustomerShopDetail(email, reqParams));
     }
 
     @Override
@@ -233,10 +278,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         if (optionsBean == null) {
             return;
         }
-        String serverDate = "";
-        String localDate = "";
-        int timeType = TimeTypeEnum.DAY.getCode();
-        int timeFlag = TimeFlagEnum.TODAY.getCode();
+        boolean isExport = false;
         String dateText = TimeFlagEnum.TODAY.getDesc();
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_DATE)) {
             serverDate = DateUtil.currentTimeHllDT8() + "";
@@ -280,14 +322,27 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CUSTOMER_DEFINE)) {
 
+        } else {
+            //导出
+            isExport = true;
         }
         params.setDate(serverDate);
         params.setTimeType(timeType);
         params.setTimeFlag(timeFlag);
-        mTxtDateName.setText(String.format("%s", localDate));
-        dateFlagTextView.setText(dateText);
-        mPresenter.queryCustomerShopDetailList(true);
-        mOptionsWindow.dismiss();
+        if (!isExport) {
+            mTxtDateName.setText(String.format("%s", localDate));
+            dateFlagTextView.setText(dateText);
+            mPresenter.queryCustomerShopDetailList(true);
+        } else {
+            bindEmail();
+        }
+        if (mOptionsWindow != null) {
+            reportDateArrow.setRotation(0);
+            mOptionsWindow.dismiss();
+        }
+        if (mExportOptionsWindow != null) {
+            mExportOptionsWindow.dismiss();
+        }
     }
 
 
@@ -310,6 +365,21 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
                     .setText(R.id.txt_total_amount, CommonUtils.formatMoney(bean.getSubtotalAmount()))
                     .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
                     R.drawable.bg_price_log_content_gray : R.drawable.bg_price_log_content_white);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CUSTOMER_SHOP_DETAIL_CODE && resultCode == RESULT_OK) {
+            PurchaserGroupBean bean = data.getParcelableExtra("result");
+            edtSearch.setText(bean.getPurchaserName());
+            imgClear.setVisibility(View.VISIBLE);
+            CustomerSaleReq params = getParams();
+            params.setDate(serverDate);
+            params.setTimeType(timeType);
+            params.setTimeFlag(timeFlag);
+            params.setPurchaserID(String.valueOf(bean.getPurchaserID()));
+            mPresenter.queryCustomerShopDetailList(true);
         }
     }
 }

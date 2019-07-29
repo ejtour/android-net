@@ -3,6 +3,8 @@ package com.hll_sc_app.app.report.dailySale;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,16 +16,22 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
+import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmount;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +47,7 @@ import butterknife.OnClick;
  * @date 20190720
  */
 @Route(path = RouterConfig.REPORT_DAILY_AGGREGATION)
-public class DailyAggregationActivity extends BaseLoadActivity implements DailyAggregationContract.IDailyAggregationView {
+public class DailyAggregationActivity extends BaseLoadActivity implements DailyAggregationContract.IDailyAggregationView,BaseQuickAdapter.OnItemClickListener {
     private static final String FORMAT_DATE = "yyyy/MM/dd";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -51,9 +59,13 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     TextView dailyTotalAmount;
     @BindView(R.id.daily_totalnum)
     TextView dailyTotalnum;
+    @BindView(R.id.txt_options)
+    ImageView txtOptions;
+
 
     private DailyAggregationListAdapter mAdapter;
     private DateRangeWindow mDateRangeWindow;
+    private ContextOptionsWindow mExportOptionsWindow;
     private DailyAggregationPresenter mPresenter;
 
     @Override
@@ -86,7 +98,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(endDate, CalendarUtils.FORMAT_SERVER_DATE));
     }
 
-    @OnClick({R.id.img_back, R.id.rl_select_date})
+    @OnClick({R.id.img_back, R.id.rl_select_date,R.id.txt_options})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -94,6 +106,9 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
                 break;
             case R.id.rl_select_date:
                 showDateRangeWindow();
+                break;
+            case R.id.txt_options:
+                showExportOptionsWindow(txtOptions);
                 break;
             default:
                 break;
@@ -130,6 +145,15 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         mDateRangeWindow.showAsDropDownFix(mRlSelectDate);
     }
 
+    private void showExportOptionsWindow(View view) {
+        if (mExportOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_REPORT_DETAIL));
+            mExportOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
+        }
+        mExportOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
+    }
+
     @Override
     public void showDailyAggregationList(DateSaleAmountResp dateSaleAmountResp, boolean append, int total) {
         if (append) {
@@ -137,8 +161,8 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         } else {
             mAdapter.setNewData(dateSaleAmountResp.getRecords());
         }
-        dailyTotalAmount.setText("总交易金额:¥"+CommonUtils.formatMoney(dateSaleAmountResp.getTotalSubtotalAmount()));
-        dailyTotalnum.setText("总订单数:"+dateSaleAmountResp.getTotalOrderNum());
+        dailyTotalAmount.setText("总交易金额:¥" + CommonUtils.formatMoney(dateSaleAmountResp.getTotalSubtotalAmount()));
+        dailyTotalnum.setText("总订单数:" + dateSaleAmountResp.getTotalOrderNum());
     }
 
     @Override
@@ -177,6 +201,19 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     @Override
     public void hideLoading() {
         super.hideLoading();
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        // 选项监听
+        OptionsBean optionsBean = (OptionsBean) adapter.getItem(position);
+        if (optionsBean == null) {
+            return;
+        }
+        if(TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_DETAIL)){
+           bindEmail();
+        }
+
     }
 
     class DailyAggregationListAdapter extends BaseQuickAdapter<DateSaleAmount, BaseViewHolder> {

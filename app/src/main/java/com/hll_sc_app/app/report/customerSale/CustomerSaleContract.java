@@ -21,24 +21,6 @@ public interface CustomerSaleContract {
          */
         CustomerSaleReq getParams();
 
-        /**
-         * 导出成功
-         *
-         * @param email 邮箱地址
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param tip 失败提示
-         */
-        void exportFailure(String tip);
-
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
     }
 
     interface ICustomerSaleManagePresenter extends IPresenter<CustomerSaleContract.ICustomerSaleView> {
@@ -49,12 +31,5 @@ public interface CustomerSaleContract {
          */
         void queryCustomerSaleGather(boolean showLoading);
 
-
-        /**
-         * 导出日汇总报表
-         *
-         * @param email 邮箱地址
-         */
-        void exportCustomerSaleReport(String email);
     }
 }
