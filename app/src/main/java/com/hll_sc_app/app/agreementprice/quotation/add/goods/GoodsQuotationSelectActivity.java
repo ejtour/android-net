@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -76,7 +77,6 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     private CategoryAdapter mCategoryAdapter;
     private EmptyView mEmptyView;
     private GoodsSelectListAdapter mAdapter;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -227,27 +227,27 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     }
 
     @Override
-    public void showList(List<SkuGoodsBean> list, boolean append, int total) {
-        if (!CommonUtils.isEmpty(list)) {
-            for (SkuGoodsBean bean : list) {
-                if (contains(bean)) {
-                    bean.setSelected(true);
-                }
-            }
-        }
-        if (append) {
-            mAdapter.addData(list);
-        } else {
-            mAdapter.setNewData(list);
-        }
-        if (mSearchView.isSearchStatus()) {
-            mEmptyView.setTips("搜索不到相关商品");
-        } else {
-            mEmptyView.setTips("该分类暂无商品数据");
-        }
-        mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(total != mAdapter.getItemCount());
-        showBottomCount();
+    public void showList(List<GoodsBean> list, boolean append) {
+//        if (!CommonUtils.isEmpty(list)) {
+//            for (SkuGoodsBean bean : list) {
+//                if (contains(bean)) {
+//                    bean.setSelected(true);
+//                }
+//            }
+//        }
+//        if (append) {
+//            mAdapter.addData(list);
+//        } else {
+//            mAdapter.setNewData(list);
+//        }
+//        if (mSearchView.isSearchStatus()) {
+//            mEmptyView.setTips("搜索不到相关商品");
+//        } else {
+//            mEmptyView.setTips("该分类暂无商品数据");
+//        }
+//        mAdapter.setEmptyView(mEmptyView);
+//        mRefreshLayout.setEnableLoadMore(total != mAdapter.getItemCount());
+//        showBottomCount();
     }
 
     /**
