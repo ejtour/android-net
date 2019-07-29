@@ -33,6 +33,10 @@ public class RouterConfig {
      */
     public static final String DELIVERY_AGEING_DETAIL = "/activity/deliveryManage/ageing/detail";
     /**
+     * 配送管理-配送时效管理-新增、编辑界面-配送时段
+     */
+    public static final String DELIVERY_AGEING_DETAIL_PERIOD = "/activity/deliveryManage/ageing/detail/period";
+    /**
      * 配送管理-配送方式设置
      */
     public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";
@@ -176,12 +180,12 @@ public class RouterConfig {
      * 合作采购商-我收到的申请
      */
     public static final String COOPERATION_PURCHASER_APPLICATION = "/activity/cooperationPurchaser" +
-            "/cooperationApplication";
+        "/cooperationApplication";
     /**
      * 合作采购商-我收到的申请-详情
      */
     public static final String COOPERATION_PURCHASER_APPLICATION_THIRD_PART_DETAIL = "/activity/cooperationPurchaser" +
-            "/cooperationApplication/thirdPart/Detail";
+        "/cooperationApplication/thirdPart/Detail";
     /**
      * 合作采购商详情-详细资料
      */
@@ -194,38 +198,38 @@ public class RouterConfig {
      * 合作采购商详情-选择结算方式
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT = "/activity/cooperationPurchaser/detail" +
-            "/shop/settlement";
+        "/shop/settlement";
     /**
      * 合作采购商详情-选择配送方式
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DELIVERY = "/activity/cooperationPurchaser/detail" +
-            "/shop/delivery";
+        "/shop/delivery";
     /**
      * 合作采购商详情-门店详情
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL = "/activity/cooperationPurchaser/detail" +
-            "/shopDetail";
+        "/shopDetail";
     /**
      * 合作采购商详情-门店详情-合作方式
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL_SOURCE = "/activity/cooperationPurchaser" +
-            "/detail" +
-            "/shopDetail/source";
+        "/detail" +
+        "/shopDetail/source";
     /**
      * 合作采购商详情- 批量指派销售
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOP_SALES = "/activity/cooperationPurchaser/detail" +
-            "/shop/sales";
+        "/shop/sales";
     /**
      * 合作采购商详情-选择门店
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SELECT_SHOP = "/activity/cooperationPurchaser/detail" +
-            "/selectShop";
+        "/selectShop";
     /**
      * 合作采购商详情-已选择的门店
      */
     public static final String COOPERATION_PURCHASER_DETAIL_SHOPS = "/activity/cooperationPurchaser/detail" +
-            "/Shops";
+        "/Shops";
     /**
      * 商品置顶管理
      */
@@ -378,25 +382,25 @@ public class RouterConfig {
      * 协议价管理-添加报价单-选择报价对象
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER = "/activity/mine/agreementPrice" +
-            "/quotation/add/purchaser";
+        "/quotation/add/purchaser";
 
     /**
      * 协议价管理-添加报价单-选择报价对象-选择报价门店
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP = "/activity/mine/agreementPrice" +
-            "/quotation/add/purchaserShop";
+        "/quotation/add/purchaserShop";
 
     /**
      * 协议价管理-添加报价单-选择比例模板
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_RATIO = "/activity/mine/agreementPrice" +
-            "/quotation/add/ratio";
+        "/quotation/add/ratio";
 
     /**
      * 协议价管理-添加报价单-新增商品
      */
     public static final String MINE_AGREEMENT_PRICE_QUOTATION_ADD_GOODS = "/activity/mine/agreementPrice" +
-            "/quotation/add/goods";
+        "/quotation/add/goods";
 
     /**
      * 我的-退货审核
@@ -456,12 +460,12 @@ public class RouterConfig {
     /**
      * 客户销售汇总门店明细
      */
-    public static final String CUSTOMER_SALE_SHOP_DETAILS="/activity/customer/sale/shop/detail";
+    public static final String CUSTOMER_SALE_SHOP_DETAILS = "/activity/customer/sale/shop/detail";
 
     /**
      * 客户销售汇总搜索
      */
-    public static final String CUSTOMER_SALE_SEARCH="/activity/customer/sale/search";
+    public static final String CUSTOMER_SALE_SEARCH = "/activity/customer/sale/search";
 
     /**
      * 我的钱包

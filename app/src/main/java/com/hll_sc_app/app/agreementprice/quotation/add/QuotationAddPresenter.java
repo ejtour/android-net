@@ -26,10 +26,6 @@ public class QuotationAddPresenter implements QuotationAddContract.IPurchasePres
     }
 
     @Override
-    public void start() {
-    }
-
-    @Override
     public void register(QuotationAddContract.IPurchaseView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }

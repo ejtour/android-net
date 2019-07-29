@@ -18,9 +18,13 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.widget.SingleSelectionDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -64,6 +68,13 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
         mPresenter = DeliveryAgeingDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -72,9 +83,7 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
             mTxtBillUpDateTime.setText(mBean.getBillUpDateTime());
             mTxtDayTimeFlag.setText(getDayTimeFlag(mBean.getDayTimeFlag()));
             mTxtDayTimeFlag.setTag(String.valueOf(mBean.getDayTimeFlag()));
-            mTxtArrivalTime.setText(String.format("%s-%s", mBean.getArrivalStartTime(), mBean.getArrivalEndTime()));
-            mTxtArrivalTime.setTag(R.id.date_start, mBean.getArrivalStartTime());
-            mTxtArrivalTime.setTag(R.id.date_end, mBean.getArrivalEndTime());
+            showArrivalTime(mBean.getArrivalStartTime(), mBean.getArrivalEndTime());
         }
     }
 
@@ -90,6 +99,19 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
         return string;
     }
 
+    private void showArrivalTime(String start, String end) {
+        mTxtArrivalTime.setTag(R.id.date_start, start);
+        mTxtArrivalTime.setTag(R.id.date_end, end);
+        mTxtArrivalTime.setText(String.format("%s-%s", start, end));
+    }
+
+    @Subscribe
+    public void onEvent(DeliveryPeriodBean bean) {
+        if (bean != null) {
+            showArrivalTime(bean.getArrivalStartTime(), bean.getArrivalEndTime());
+        }
+    }
+
     @OnClick({R.id.img_close, R.id.rl_billUpDateTime, R.id.rl_dayTimeFlag, R.id.rl_arrivalTime, R.id.txt_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -103,6 +125,7 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
                 showDayTimeFlagSelectWindow();
                 break;
             case R.id.rl_arrivalTime:
+                toArrivalTime();
                 break;
             case R.id.txt_save:
                 toSave();
@@ -150,6 +173,20 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
                 .create();
         }
         mDayTimeFlagDialog.show();
+    }
+
+    private void toArrivalTime() {
+        if (TextUtils.isEmpty(mTxtBillUpDateTime.getText())) {
+            showToast("请选择截单时间");
+            return;
+        }
+        if (mTxtDayTimeFlag.getTag() == null) {
+            showToast("请选择最早的配送日期");
+            return;
+        }
+        String flg = TextUtils.equals(String.valueOf(mTxtDayTimeFlag.getTag()), "0") ? "1" : "2";
+        RouterUtil.goToActivity(RouterConfig.DELIVERY_AGEING_DETAIL_PERIOD, mTxtBillUpDateTime.getText().toString(),
+            flg);
     }
 
     private void toSave() {

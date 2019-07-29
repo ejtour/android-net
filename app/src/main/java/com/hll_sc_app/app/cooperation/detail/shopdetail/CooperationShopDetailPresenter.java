@@ -39,10 +39,6 @@ public class CooperationShopDetailPresenter implements CooperationShopDetailCont
     }
 
     @Override
-    public void start() {
-    }
-
-    @Override
     public void register(CooperationShopDetailContract.ICooperationShopDetailView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
