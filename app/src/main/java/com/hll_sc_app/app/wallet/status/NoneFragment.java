@@ -12,7 +12,6 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.wallet.WalletStatusResp;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,6 +26,7 @@ public class NoneFragment extends BaseFragment {
     public static NoneFragment newInstance() {
         return (NoneFragment) RouterUtil.getFragment(RouterConfig.WALLET_STATUS_NONE);
     }
+
     private Unbinder unbinder;
 
     @Nullable
@@ -43,17 +43,8 @@ public class NoneFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.wsn_open_account_btn, R.id.wsn_bind_account_btn})
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.wsn_open_account_btn:
-                RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_OPEN);
-                break;
-            case R.id.wsn_bind_account_btn:
-                RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_BIND);
-                break;
-            default:
-                break;
-        }
+    @OnClick({R.id.wsn_open_account_btn})
+    public void openAccount(View v) {
+        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_OPEN);
     }
 }

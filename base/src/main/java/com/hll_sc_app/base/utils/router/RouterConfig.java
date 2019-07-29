@@ -25,6 +25,14 @@ public class RouterConfig {
      */
     public static final String DELIVERY_MANAGE = "/activity/deliveryManage";
     /**
+     * 配送管理-配送时效管理
+     */
+    public static final String DELIVERY_AGEING_MANAGE = "/activity/deliveryManage/ageing";
+    /**
+     * 配送管理-配送时效管理-新增、编辑界面
+     */
+    public static final String DELIVERY_AGEING_DETAIL = "/activity/deliveryManage/ageing/detail";
+    /**
      * 配送管理-配送方式设置
      */
     public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";

@@ -167,6 +167,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     public void showList(List<OrderGoodsBean> list, boolean append) {
         if (append) mAdapter.addData(list);
         else mAdapter.setNewData(list);
+        mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
     }
 
     @Override

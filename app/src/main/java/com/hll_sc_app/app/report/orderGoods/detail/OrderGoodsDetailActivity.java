@@ -154,6 +154,7 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrder
 
     @Override
     public void setList(List<OrderGoodsDetailBean> beans, boolean append) {
+        mExcel.setEnableLoadMore(!CommonUtils.isEmpty(beans) && beans.size() == 20);
         List<List<CharSequence>> list = new ArrayList<>();
         if (!CommonUtils.isEmpty(beans)) {
             for (OrderGoodsDetailBean bean : beans) {

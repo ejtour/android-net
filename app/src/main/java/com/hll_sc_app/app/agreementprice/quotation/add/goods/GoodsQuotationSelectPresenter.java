@@ -5,15 +5,21 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.goods.SkuProductsResp;
+import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.goods.GoodsListReq;
+import com.hll_sc_app.bean.goods.SkuGoodsBean;
+import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -76,16 +82,16 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
     }
 
     private void toQueryGoodsList(boolean showLoading) {
-        BaseMapReq.Builder builder = BaseMapReq.newBuilder()
-            .put("actionType", "priceBill")
-            .put("categorySubID", mView.getCategorySubId())
-            .put("isWareHourse", TextUtils.isEmpty(mView.getCargoOwnId()) ? "0" : "1")
-            .put("cargoOwnerID", mView.getCargoOwnId())
-            .put("name", mView.getName())
-            .put("groupID", UserConfig.getGroupID())
-            .put("pageNum", String.valueOf(mTempPageNum))
-            .put("pageSize", "20");
-        GoodsService.INSTANCE.querySkuProducts(builder.create())
+        GoodsListReq req = new GoodsListReq();
+        req.setActionType("priceBill");
+        req.setCategorySubID(mView.getCategorySubId());
+        req.setIsWareHourse(TextUtils.isEmpty(mView.getCargoOwnId()) ? "0" : "1");
+        req.setCargoOwnerID(mView.getCargoOwnId());
+        req.setName(mView.getName());
+        req.setGroupID(UserConfig.getGroupID());
+        req.setPageNum(mTempPageNum);
+        req.setPageSize(20);
+        GoodsService.INSTANCE.queryGoodsList(new BaseReq<>(req))
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> {
@@ -95,11 +101,11 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
             })
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<SkuProductsResp>() {
+            .subscribe(new BaseCallback<List<GoodsBean>>() {
                 @Override
-                public void onSuccess(SkuProductsResp resp) {
+                public void onSuccess(List<GoodsBean> resp) {
                     mPageNum = mTempPageNum;
-                    mView.showList(resp.getRecords(), mPageNum != 1, resp.getTotal());
+                    processData(resp);
                 }
 
                 @Override
@@ -107,5 +113,31 @@ public class GoodsQuotationSelectPresenter implements GoodsQuotationSelectContra
                     mView.showError(e);
                 }
             });
+    }
+
+    private void processData(List<GoodsBean> list) {
+        ArrayList<SkuGoodsBean> goodsList = new ArrayList<>();
+        if (!CommonUtils.isEmpty(list)) {
+            for (GoodsBean bean : list) {
+                List<SpecsBean> specsBeans = bean.getSpecs();
+                for (SpecsBean specsBean : specsBeans) {
+                    SkuGoodsBean skuGoodsBean = new SkuGoodsBean();
+                    skuGoodsBean.setSpecContent(specsBean.getSpecContent());
+                    skuGoodsBean.setShopProductCategoryThreeID(bean.getShopProductCategoryThreeID());
+                    skuGoodsBean.setSpecID(specsBean.getProductSpecID());
+                    skuGoodsBean.setCostPrice(specsBean.getCostPrice());
+                    skuGoodsBean.setImgUrl(bean.getImgUrl());
+                    skuGoodsBean.setProductCode(bean.getProductCode());
+                    skuGoodsBean.setProductID(bean.getProductID());
+                    skuGoodsBean.setProductName(bean.getProductName());
+                    skuGoodsBean.setProductPrice(specsBean.getProductPrice());
+                    skuGoodsBean.setSaleUnitName(specsBean.getSaleUnitName());
+                    skuGoodsBean.setCategoryThreeID(bean.getCategoryID());
+                    skuGoodsBean.setCategorySubID(bean.getCategorySubID());
+                    goodsList.add(skuGoodsBean);
+                }
+            }
+        }
+        mView.showList(goodsList, mPageNum != 1);
     }
 }

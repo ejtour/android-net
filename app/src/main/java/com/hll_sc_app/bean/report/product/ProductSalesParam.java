@@ -16,11 +16,11 @@ public class ProductSalesParam {
     private int type = 1;
 
     public String getFormatStartDate() {
-        return startDate == null ? null : CalendarUtils.toLocalDate(startDate);
+        return dateFlag != 4 || startDate == null ? null : CalendarUtils.toLocalDate(startDate);
     }
 
     public String getFormatEndDate() {
-        return endDate == null ? null : CalendarUtils.toLocalDate(endDate);
+        return dateFlag != 4 || endDate == null ? null : CalendarUtils.toLocalDate(endDate);
     }
 
     public Date getStartDate() {

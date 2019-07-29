@@ -29,9 +29,8 @@ public interface GoodsQuotationSelectContract {
          *
          * @param list   列表
          * @param append 追加
-         * @param total  总量
          */
-        void showList(List<SkuGoodsBean> list, boolean append, int total);
+        void showList(List<SkuGoodsBean> list, boolean append);
 
         /**
          * 获取分类 ID
