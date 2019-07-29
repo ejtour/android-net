@@ -14,7 +14,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.deliverymanage.ageing.detail.DeliveryAgeingDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -43,6 +46,11 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
         return new DeliveryAgeingFragment();
     }
 
+    public void refresh() {
+        setForceLoad(true);
+        lazyLoad();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +73,9 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
                 return;
             }
             if (view.getId() == R.id.img_close) {
-                mPresenter.delAgeing(bean.getDeliveryTimeID());
+                showTipsDialog(bean);
+            } else {
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_AGEING_DETAIL, bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -77,6 +87,22 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
         mPresenter.start();
     }
 
+    private void showTipsDialog(DeliveryPeriodBean bean) {
+        SuccessDialog.newBuilder(requireActivity())
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("确认要删除么")
+            .setMessage("删除后采购商在下单时\n将失去该配送时间段选项")
+            .setCancelable(false)
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    mPresenter.delAgeing(bean.getDeliveryTimeID());
+                }
+                dialog.dismiss();
+            }, "我再看看", "立即删除")
+            .create().show();
+    }
+
     @Override
     public void showList(List<DeliveryPeriodBean> list) {
         mAdapter.setNewData(list);
@@ -85,7 +111,6 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
 
     class AgeListAdapter extends BaseQuickAdapter<DeliveryPeriodBean, BaseViewHolder> {
 
-
         AgeListAdapter() {
             super(R.layout.item_delivery_ageing);
         }
@@ -93,13 +118,13 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.addOnClickListener(R.id.img_close);
+            viewHolder.addOnClickListener(R.id.img_close).addOnClickListener(R.id.content);
             return viewHolder;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, DeliveryPeriodBean item) {
-            helper.setText(R.id.txt_ageing_title, "时效管理" + helper.getLayoutPosition())
+            helper.setText(R.id.txt_ageing_title, "时效管理" + (helper.getLayoutPosition() + 1))
                 .setText(R.id.txt_billUpDateTime, item.getBillUpDateTime())
                 .setText(R.id.txt_arrivalTime, getArrivalTime(item));
         }

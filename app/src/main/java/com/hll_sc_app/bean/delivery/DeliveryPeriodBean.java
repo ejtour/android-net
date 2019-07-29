@@ -1,12 +1,15 @@
 package com.hll_sc_app.bean.delivery;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 配送时段列表查询
  *
  * @author zhuyingsong
  * @date 2019-07-19
  */
-public class DeliveryPeriodBean {
+public class DeliveryPeriodBean implements Parcelable {
     /**
      * 送达截止时间
      */
@@ -66,5 +69,42 @@ public class DeliveryPeriodBean {
 
     public void setDeliveryTimeID(String deliveryTimeID) {
         this.deliveryTimeID = deliveryTimeID;
+    }
+
+    public static final Parcelable.Creator<DeliveryPeriodBean> CREATOR = new Parcelable.Creator<DeliveryPeriodBean>() {
+        @Override
+        public DeliveryPeriodBean createFromParcel(Parcel source) {
+            return new DeliveryPeriodBean(source);
+        }
+
+        @Override
+        public DeliveryPeriodBean[] newArray(int size) {
+            return new DeliveryPeriodBean[size];
+        }
+    };
+
+    public DeliveryPeriodBean() {
+    }
+
+    protected DeliveryPeriodBean(Parcel in) {
+        this.arrivalEndTime = in.readString();
+        this.arrivalStartTime = in.readString();
+        this.deliveryTimeID = in.readString();
+        this.billUpDateTime = in.readString();
+        this.dayTimeFlag = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.arrivalEndTime);
+        dest.writeString(this.arrivalStartTime);
+        dest.writeString(this.deliveryTimeID);
+        dest.writeString(this.billUpDateTime);
+        dest.writeInt(this.dayTimeFlag);
     }
 }

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.deliverymanage.ageing.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -58,7 +59,7 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
     }
 
     private void initView() {
-        mTxtTitle.setText(isAdd() ? "新增时效" : "编辑时效");
+        mTxtTitle.setText(isAdd() ? "新增配送时效" : "编辑配送时效");
         if (mBean != null) {
             mTxtBillUpDateTime.setText(mBean.getBillUpDateTime());
             mTxtDayTimeFlag.setText(getDayTimeFlag(mBean.getDayTimeFlag()));
@@ -128,7 +129,7 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
         if (isAdd()) {
             builder.put("operationType", "0");
         } else {
-            builder.put("operationType", "2")
+            builder.put("operationType", "1")
                 .put("deliveryTimeID", mBean.getDeliveryTimeID())
                 .create();
         }
@@ -138,9 +139,12 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
     @Override
     public void editSuccess() {
         if (isAdd()) {
-            showToast("新增成功");
+            showToast("新增配送时效成功");
         } else {
-            showToast("编辑成功");
+            showToast("编辑配送时效成功");
         }
+        ARouter.getInstance().build(RouterConfig.DELIVERY_AGEING_MANAGE)
+            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            .navigation(this);
     }
 }

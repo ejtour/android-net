@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.deliverymanage.ageing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,8 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +79,15 @@ public class DeliveryAgeingActivity extends BaseLoadActivity {
         mTab.setViewPager(mViewPager, STR_TITLE);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (!CommonUtils.isEmpty(mListFragment)) {
+            DeliveryAgeingFragment lazyFragment = (DeliveryAgeingFragment) mListFragment.get(0);
+            lazyFragment.refresh();
+        }
+    }
+
     @OnClick({R.id.img_close, R.id.txt_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -83,6 +95,7 @@ public class DeliveryAgeingActivity extends BaseLoadActivity {
                 finish();
                 break;
             case R.id.txt_add:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_AGEING_DETAIL);
                 break;
             default:
                 break;
