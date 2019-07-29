@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -46,6 +47,7 @@ public class DeliveryPeriodActivity extends BaseLoadActivity implements Delivery
     private EmptyView mEmptyView;
     private PeriodListAdapter mAdapter;
     private DeliveryPeriodPresenter mPresenter;
+    private DeliveryPeriodSelectWindow mWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,10 +85,24 @@ public class DeliveryPeriodActivity extends BaseLoadActivity implements Delivery
                 finish();
                 break;
             case R.id.txt_add:
+                showPeriodWindow();
                 break;
             default:
                 break;
         }
+    }
+
+    private void showPeriodWindow() {
+        if (mWindow == null) {
+            mWindow = new DeliveryPeriodSelectWindow(this);
+            mWindow.setSelectListener(new DeliveryPeriodSelectWindow.PeriodSelectListener() {
+                @Override
+                public void select(String start, String end) {
+                    // TODO:
+                }
+            });
+        }
+        mWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     @Override
