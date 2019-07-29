@@ -8,14 +8,13 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
-import com.hll_sc_app.bean.cooperation.DeliveryBean;
-import com.hll_sc_app.bean.cooperation.DeliveryPeriodResp;
-import com.hll_sc_app.bean.cooperation.EmployeeBean;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserResp;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.staff.EmployeeBean;
 
 import java.util.List;
 
@@ -113,15 +112,6 @@ public interface CooperationPurchaserService {
     @Headers("pv:101038")
     Observable<BaseResp<SettlementBean>> querySettlementList(@Body BaseMapReq req);
 
-    /**
-     * 查询配送方式
-     *
-     * @param req req
-     * @return resp
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:101106")
-    Observable<BaseResp<DeliveryBean>> queryDeliveryList(@Body BaseMapReq req);
 
     /**
      * 修改合作关系支付相关设置

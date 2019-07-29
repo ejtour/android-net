@@ -15,7 +15,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.CooperationSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
@@ -86,7 +87,7 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_COOPERATION_SEARCH);
+                SearchActivity.start(searchContent, CooperationSearch.class.getSimpleName());
             }
 
             @Override
@@ -108,7 +109,7 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
         mEmptyView = EmptyView.newBuilder(this).setTips("还没有合作采购商数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new PurchaserListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = mAdapter.getItem(position);
@@ -171,8 +172,8 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
         @Override
         protected void convert(BaseViewHolder helper, PurchaserBean item) {
             helper.setText(R.id.txt_purchaserName, item.getPurchaserName())
-                .setText(R.id.txt_linkMan,
-                    getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())));
+                    .setText(R.id.txt_linkMan,
+                            getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())));
             ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getLogoUrl());
             setStatus(helper, item);
         }

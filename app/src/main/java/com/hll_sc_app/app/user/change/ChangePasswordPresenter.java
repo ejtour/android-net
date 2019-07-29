@@ -45,6 +45,10 @@ public class ChangePasswordPresenter implements ChangePasswordContract.IChangePr
             || !samePassword(newLoginPassword, checkLoginPassword)) {
             return;
         }
+        if (TextUtils.equals(newLoginPassword, loginPassword)) {
+            mView.showToast("新密码与原密码一致");
+            return;
+        }
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("flag", "1")
             .put("loginPWD", loginPassword)

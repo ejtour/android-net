@@ -1,14 +1,1037 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/base_activity_bg">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/fmh_top_bg"
+        android:layout_width="0dp"
+        android:layout_height="220dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_main_mine_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/fmh_refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnableLoadMore="false"
+        app:srlEnableOverScrollBounce="true"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/white"
+            app:srlEnableLastTime="false"
+            app:srlTextSizeTitle="@dimen/text_small_size" />
+
+        <ScrollView
+            android:id="@+id/fmh_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/fmh_sales_volume"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="77dp"
+                    android:layout_marginEnd="20dp"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="44sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="8892.89" />
+
+                <TextView
+                    android:id="@+id/fmh_sales_volume_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="销售额(元)"
+                    android:textAppearance="@style/TextAppearance.City22.Little.White"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_sales_volume"
+                    app:layout_constraintStart_toStartOf="@id/fmh_sales_volume"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_sales_volume" />
+
+                <!-- 摘要 start -->
+
+                <View
+                    android:id="@+id/fmh_summary_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/bg_white_radius_5_solid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_sales_volume_label" />
+
+                <View
+                    android:id="@+id/fmh_summary_div1"
+                    android:layout_width="1dp"
+                    android:layout_height="42dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_summary_bg"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_summary_div2"
+                    app:layout_constraintStart_toStartOf="@id/fmh_summary_bg"
+                    app:layout_constraintTop_toTopOf="@id/fmh_summary_bg" />
+
+                <View
+                    android:id="@+id/fmh_summary_div2"
+                    android:layout_width="1dp"
+                    android:layout_height="42dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_summary_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_summary_bg"
+                    app:layout_constraintStart_toEndOf="@id/fmh_summary_div1"
+                    app:layout_constraintTop_toTopOf="@id/fmh_summary_bg" />
+
+                <TextView
+                    android:id="@+id/fmh_bill_num"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/base_text_20"
+                    app:autoSizeMaxTextSize="@dimen/base_text_20"
+                    app:autoSizeMinTextSize="@dimen/text_middle_size"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_bill_num_label"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_summary_div1"
+                    app:layout_constraintStart_toStartOf="@id/fmh_summary_bg"
+                    app:layout_constraintTop_toTopOf="@id/fmh_summary_bg"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="231" />
+
+                <TextView
+                    android:id="@+id/fmh_bill_num_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="订单数"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_summary_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_bill_num"
+                    app:layout_constraintStart_toStartOf="@id/fmh_bill_num"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_bill_num" />
+
+                <TextView
+                    android:id="@+id/fmh_group_shop"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/base_text_20"
+                    app:autoSizeMaxTextSize="@dimen/base_text_20"
+                    app:autoSizeMinTextSize="@dimen/text_middle_size"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_group_shop_label"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_summary_div2"
+                    app:layout_constraintStart_toEndOf="@id/fmh_summary_div1"
+                    app:layout_constraintTop_toTopOf="@id/fmh_summary_bg"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="50/10" />
+
+                <TextView
+                    android:id="@+id/fmh_group_shop_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="活跃门店/集团"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_summary_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_group_shop"
+                    app:layout_constraintStart_toStartOf="@id/fmh_group_shop"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_group_shop" />
+
+                <TextView
+                    android:id="@+id/fmh_product_num"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/base_text_20"
+                    app:autoSizeMaxTextSize="@dimen/base_text_20"
+                    app:autoSizeMinTextSize="@dimen/text_middle_size"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_product_num_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_summary_bg"
+                    app:layout_constraintStart_toEndOf="@id/fmh_summary_div2"
+                    app:layout_constraintTop_toTopOf="@id/fmh_summary_bg"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="131" />
+
+                <TextView
+                    android:id="@+id/fmh_product_num_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="销售商品数"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_summary_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_product_num"
+                    app:layout_constraintStart_toStartOf="@id/fmh_product_num"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_product_num" />
+
+                <!-- 摘要 end -->
+
+                <!-- 代仓业务 start -->
+
+                <View
+                    android:id="@+id/fmh_warehouse_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/bg_white_radius_5_solid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_summary_bg" />
+
+                <View
+                    android:id="@+id/fmh_warehouse_hor_line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintTop_toTopOf="@id/fmh_warehouse_bg" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="代仓业务"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_warehouse_hor_line"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_hor_line"
+                    app:layout_constraintTop_toTopOf="@id/fmh_warehouse_bg" />
+
+                <ImageView
+                    android:id="@+id/fmh_warehouse_icon"
+                    android:layout_width="13dp"
+                    android:layout_height="12dp"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_warehouse_title"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_hor_line"
+                    app:layout_constraintTop_toTopOf="@id/fmh_warehouse_title" />
+
+                <View
+                    android:id="@+id/fmh_warehouse_div1"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintHorizontal_bias="0.6"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_hor_line" />
+
+                <View
+                    android:id="@+id/fmh_warehouse_div2"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_warehouse_div1"
+                    app:layout_constraintStart_toEndOf="@id/fmh_warehouse_div3"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_hor_line" />
+
+                <View
+                    android:id="@+id/fmh_warehouse_div3"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_warehouse_div2"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_hor_line" />
+
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_bill_num"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.City22.Large"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_warehouse_bill_num_label"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_warehouse_div3"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_hor_line"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="200" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_bill_num_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="发货单数"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_bill_num"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_bill_num"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_bill_num" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_shop"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.City22.Large"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_warehouse_shop_label"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_warehouse_div2"
+                    app:layout_constraintStart_toEndOf="@id/fmh_warehouse_div3"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_hor_line"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="45" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_shop_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="发货门店"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_shop"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_shop"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_shop" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_delivery_num"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.City22.Large"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_warehouse_delivery_num_label"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_warehouse_div1"
+                    app:layout_constraintStart_toEndOf="@id/fmh_warehouse_div2"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_hor_line"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="666" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_delivery_num_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="发货件数"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_delivery_num"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_delivery_num"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_delivery_num" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.City22.Large"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_warehouse_amount_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintStart_toEndOf="@id/fmh_warehouse_div1"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_hor_line"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="¥34,032.20" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_amount_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="发货商品货值"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_warehouse_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_amount"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_amount"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_amount" />
+
+                <android.support.constraint.Group
+                    android:id="@+id/fmh_warehouse_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="fmh_warehouse_bg,
+fmh_warehouse_hor_line,fmh_warehouse_title,fmh_warehouse_icon,
+fmh_warehouse_hor_line,fmh_warehouse_div1,fmh_warehouse_div2,
+fmh_warehouse_div3,fmh_warehouse_bill_num,fmh_warehouse_bill_num_label,
+fmh_warehouse_shop,fmh_warehouse_shop_label,fmh_warehouse_delivery_num,
+fmh_warehouse_delivery_num_label,fmh_warehouse_amount,fmh_warehouse_amount_label" />
+
+                <!-- 代仓业务 end -->
+
+                <View
+                    android:id="@+id/fmh_order_board_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="216dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/bg_white_radius_5_solid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_bg" />
+
+                <View
+                    android:id="@+id/fmh_order_board_hor_line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_order_board_bg"
+                    app:layout_constraintStart_toStartOf="@id/fmh_order_board_bg"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_board_bg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单看板"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_order_board_hor_line"
+                    app:layout_constraintStart_toStartOf="@id/fmh_order_board_hor_line"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_board_bg" />
+
+                <View
+                    android:id="@+id/fmh_order_board_div1"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div2"
+                    app:layout_constraintStart_toStartOf="@id/fmh_order_board_bg"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_order_board_div2"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div3"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div1"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_order_board_div3"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div4"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div2"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_order_board_div4"
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_order_board_bg"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div3"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_goods_statistic" />
+
+                <TextView
+                    android:id="@+id/fmh_order_goods_statistic"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:drawableTop="@drawable/ic_order_goods_statistic"
+                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:text="订货统计"
+                    android:textAppearance="@style/TextAppearance.City22.Little"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div1"
+                    app:layout_constraintStart_toStartOf="@id/fmh_order_board_bg"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_order_board_hor_line" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintStart_toStartOf="@id/fmh_order_board_div1"
+                    app:layout_constraintTop_toTopOf="@id/fmh_return_goods_statistic" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintStart_toStartOf="@id/fmh_order_board_div2"
+                    app:layout_constraintTop_toTopOf="@id/fmh_return_goods_statistic" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintStart_toStartOf="@id/fmh_order_board_div3"
+                    app:layout_constraintTop_toTopOf="@id/fmh_return_goods_statistic" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintStart_toStartOf="@id/fmh_order_board_div4"
+                    app:layout_constraintTop_toTopOf="@id/fmh_return_goods_statistic" />
+
+                <TextView
+                    android:id="@+id/fmh_return_goods_statistic"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:drawableTop="@drawable/ic_return_goods_statistic"
+                    android:gravity="center"
+                    android:paddingTop="20dp"
+                    android:text="退货统计"
+                    android:textAppearance="@style/TextAppearance.City22.Little"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_order_board_bg"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div1"
+                    app:layout_constraintStart_toStartOf="@id/fmh_order_board_bg"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_order_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_order_board_line1"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div2"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div1"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintWidth_percent="0.133" />
+
+                <View
+                    android:id="@+id/fmh_order_board_line2"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div3"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div2"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintWidth_percent="0.133" />
+
+                <View
+                    android:id="@+id/fmh_order_board_line3"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div4"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div3"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintWidth_percent="0.133" />
+
+                <View
+                    android:id="@+id/fmh_order_board_line4"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_order_board_bg"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div4"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintWidth_percent="0.133" />
+
+                <View
+                    android:id="@+id/fmh_pending_receive_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div2"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div1"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_pending_delivery_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div3"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div2"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_delivered_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div4"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div3"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_pending_settle_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_order_goods_statistic"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_order_board_bg"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div4"
+                    app:layout_constraintTop_toTopOf="@id/fmh_order_goods_statistic" />
+
+                <TextView
+                    android:id="@+id/fmh_pending_receive"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_20"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_pending_receive_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_pending_receive_btn"
+                    app:layout_constraintStart_toStartOf="@id/fmh_pending_receive_btn"
+                    app:layout_constraintTop_toTopOf="@id/fmh_pending_receive_btn"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="200" />
+
+                <TextView
+                    android:id="@+id/fmh_pending_receive_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="待接单"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_pending_receive_btn"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_pending_receive"
+                    app:layout_constraintStart_toStartOf="@id/fmh_pending_receive"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_pending_receive" />
+
+                <TextView
+                    android:id="@+id/fmh_pending_delivery"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_20"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_pending_receive"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_pending_delivery_btn"
+                    app:layout_constraintStart_toStartOf="@id/fmh_pending_delivery_btn"
+                    tools:text="1200" />
+
+                <TextView
+                    android:id="@+id/fmh_pending_delivery_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="待发货"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_pending_receive_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_pending_delivery"
+                    app:layout_constraintStart_toStartOf="@id/fmh_pending_delivery" />
+
+                <TextView
+                    android:id="@+id/fmh_delivered"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_20"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_pending_receive"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_delivered_btn"
+                    app:layout_constraintStart_toStartOf="@id/fmh_delivered_btn"
+                    tools:text="0" />
+
+                <TextView
+                    android:id="@+id/fmh_delivered_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="已发货"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_pending_receive_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_delivered"
+                    app:layout_constraintStart_toStartOf="@id/fmh_delivered" />
+
+                <TextView
+                    android:id="@+id/fmh_pending_settle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_20"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_pending_receive"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_pending_settle_btn"
+                    app:layout_constraintStart_toStartOf="@id/fmh_pending_settle_btn"
+                    tools:text="34" />
+
+                <TextView
+                    android:id="@+id/fmh_pending_settle_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="待结算"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_pending_receive_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_pending_settle"
+                    app:layout_constraintStart_toStartOf="@id/fmh_pending_settle" />
+
+                <View
+                    android:id="@+id/fmh_customer_service_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div2"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div1"
+                    app:layout_constraintTop_toTopOf="@id/fmh_return_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_driver_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div3"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div2"
+                    app:layout_constraintTop_toTopOf="@id/fmh_return_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_warehouse_in_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_order_board_div4"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div3"
+                    app:layout_constraintTop_toTopOf="@id/fmh_return_goods_statistic" />
+
+                <View
+                    android:id="@+id/fmh_finance_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_return_goods_statistic"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_order_board_bg"
+                    app:layout_constraintStart_toEndOf="@id/fmh_order_board_div4"
+                    app:layout_constraintTop_toTopOf="@id/fmh_return_goods_statistic" />
+
+                <TextView
+                    android:id="@+id/fmh_customer_service"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_20"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_customer_service_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_customer_service_btn"
+                    app:layout_constraintStart_toStartOf="@id/fmh_customer_service_btn"
+                    app:layout_constraintTop_toTopOf="@id/fmh_customer_service_btn"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="18" />
+
+                <TextView
+                    android:id="@+id/fmh_customer_service_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="客服审核"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_customer_service_btn"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_customer_service"
+                    app:layout_constraintStart_toStartOf="@id/fmh_customer_service"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_customer_service" />
+
+                <TextView
+                    android:id="@+id/fmh_driver"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_20"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_customer_service"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_driver_btn"
+                    app:layout_constraintStart_toStartOf="@id/fmh_driver_btn"
+                    tools:text="9" />
+
+                <TextView
+                    android:id="@+id/fmh_driver_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="司机提货"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_customer_service_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_driver"
+                    app:layout_constraintStart_toStartOf="@id/fmh_driver" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_in"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_20"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_customer_service"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_in_btn"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_in_btn"
+                    tools:text="27" />
+
+                <TextView
+                    android:id="@+id/fmh_warehouse_in_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="仓库收货"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_customer_service_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_warehouse_in"
+                    app:layout_constraintStart_toStartOf="@id/fmh_warehouse_in" />
+
+                <TextView
+                    android:id="@+id/fmh_finance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/base_text_20"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_customer_service"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_finance_btn"
+                    app:layout_constraintStart_toStartOf="@id/fmh_finance_btn"
+                    tools:text="65" />
+
+                <TextView
+                    android:id="@+id/fmh_finance_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="财务审核"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fmh_customer_service_label"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_finance"
+                    app:layout_constraintStart_toStartOf="@id/fmh_finance" />
+
+                <!-- 订单看板 end-->
+
+                <View
+                    android:id="@+id/fmh_dashboard_bg"
+                    android:layout_width="0dp"
+                    android:layout_height="230dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@drawable/bg_white_radius_5_solid"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_order_board_bg" />
+
+                <View
+                    android:id="@+id/fmh_dashboard_hor_line"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@color/color_eeeeee"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_dashboard_bg"
+                    app:layout_constraintStart_toStartOf="@id/fmh_dashboard_bg"
+                    app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
+
+                <TextView
+                    android:id="@+id/fmh_dashboard_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="工作台"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_dashboard_hor_line"
+                    app:layout_constraintStart_toStartOf="@id/fmh_dashboard_hor_line"
+                    app:layout_constraintTop_toTopOf="@id/fmh_dashboard_bg" />
+
+                <TextView
+                    android:id="@+id/fmh_entry_add_product"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:drawableTop="@drawable/ic_entry_add_product"
+                    android:gravity="bottom|center_horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="12dp"
+                    android:text="添加商品"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toTopOf="@id/fmh_entry_purchaser"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_entry_price_manage"
+                    app:layout_constraintStart_toStartOf="@id/fmh_dashboard_bg"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_dashboard_hor_line" />
+
+                <TextView
+                    android:id="@+id/fmh_entry_price_manage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:drawableTop="@drawable/ic_entry_price_manage"
+                    android:gravity="bottom|center_horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="12dp"
+                    android:text="售价管理"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_entry_add_product"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_entry_agreement_price"
+                    app:layout_constraintStart_toEndOf="@id/fmh_entry_add_product"
+                    app:layout_constraintTop_toTopOf="@id/fmh_entry_add_product" />
+
+                <TextView
+                    android:id="@+id/fmh_entry_agreement_price"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:drawableTop="@drawable/ic_entry_agreement_price"
+                    android:gravity="bottom|center_horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="12dp"
+                    android:text="协议价"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_entry_add_product"
+                    app:layout_constraintEnd_toStartOf="@id/fmh_entry_bill_list"
+                    app:layout_constraintStart_toEndOf="@id/fmh_entry_price_manage"
+                    app:layout_constraintTop_toTopOf="@id/fmh_entry_add_product" />
+
+                <TextView
+                    android:id="@+id/fmh_entry_bill_list"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:drawableTop="@drawable/ic_entry_bill_list"
+                    android:gravity="bottom|center_horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="12dp"
+                    android:text="对账单"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_entry_add_product"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_dashboard_bg"
+                    app:layout_constraintStart_toEndOf="@id/fmh_entry_agreement_price"
+                    app:layout_constraintTop_toTopOf="@id/fmh_entry_add_product" />
+
+                <TextView
+                    android:id="@+id/fmh_entry_purchaser"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:drawableTop="@drawable/ic_entry_purchaser"
+                    android:gravity="bottom|center_horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="12dp"
+                    android:text="合作采购商"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_dashboard_bg"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_entry_add_product"
+                    app:layout_constraintStart_toStartOf="@id/fmh_entry_add_product"
+                    app:layout_constraintTop_toBottomOf="@id/fmh_entry_add_product" />
+
+                <TextView
+                    android:id="@+id/fmh_entry_sale"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:drawableTop="@drawable/ic_entry_sale"
+                    android:gravity="bottom|center_horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="12dp"
+                    android:text="定向售卖"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_entry_purchaser"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_entry_price_manage"
+                    app:layout_constraintStart_toStartOf="@id/fmh_entry_price_manage"
+                    app:layout_constraintTop_toTopOf="@id/fmh_entry_purchaser" />
+
+                <TextView
+                    android:id="@+id/fmh_entry_report_center"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:drawableTop="@drawable/ic_entry_report_center"
+                    android:gravity="bottom|center_horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="12dp"
+                    android:text="报表中心"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_entry_purchaser"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_entry_agreement_price"
+                    app:layout_constraintStart_toStartOf="@id/fmh_entry_agreement_price"
+                    app:layout_constraintTop_toTopOf="@id/fmh_entry_purchaser" />
+
+                <TextView
+                    android:id="@+id/fmh_entry_market_price"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:drawableTop="@drawable/ic_entry_market_price"
+                    android:gravity="bottom|center_horizontal"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="12dp"
+                    android:text="市场价格"
+                    android:textAppearance="@style/TextAppearance.City22.Small"
+                    app:layout_constraintBottom_toBottomOf="@id/fmh_entry_purchaser"
+                    app:layout_constraintEnd_toEndOf="@id/fmh_entry_bill_list"
+                    app:layout_constraintStart_toStartOf="@id/fmh_entry_bill_list"
+                    app:layout_constraintTop_toTopOf="@id/fmh_entry_purchaser" />
+
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <ImageView
+        android:id="@+id/fmh_message_icon"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:background="@drawable/base_bg_selector_close"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_mine_title_message"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
+        android:id="@+id/fmh_top_tag"
+        android:layout_width="65dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/bg_white_border_radius_5"
         android:gravity="center"
-        android:text="main"/>
-</RelativeLayout>
+        android:text="今日"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintBottom_toBottomOf="@id/fmh_message_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fmh_message_icon" />
+
+    <ImageView
+        android:id="@+id/fmh_tag_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotation="90"
+        android:src="@drawable/ic_little_right_arrow"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/fmh_top_tag"
+        app:layout_constraintEnd_toEndOf="@id/fmh_top_tag"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="@id/fmh_top_tag"
+        app:layout_constraintTop_toTopOf="@id/fmh_top_tag" />
+
+    <ImageView
+        android:id="@+id/fmh_tag_flag"
+        android:layout_width="@dimen/dp_10"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_day_option"
+        app:layout_constraintBottom_toBottomOf="@id/fmh_top_tag"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="@id/fmh_top_tag"
+        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintStart_toStartOf="@id/fmh_top_tag"
+        app:layout_constraintTop_toTopOf="@id/fmh_top_tag" />
+</android.support.constraint.ConstraintLayout>

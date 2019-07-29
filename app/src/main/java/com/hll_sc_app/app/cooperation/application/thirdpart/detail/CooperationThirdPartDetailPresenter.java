@@ -7,8 +7,8 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 

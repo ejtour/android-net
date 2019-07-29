@@ -87,6 +87,8 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
     EditText edtSearch;
     @BindView(R.id.img_clear)
     ImageView imgClear;
+    @BindView(R.id.report_date_arrow)
+    ImageView reportDateArrow;
 
 
     private CustomerSalesPresenter mPresenter;
@@ -187,6 +189,7 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
 
     @OnClick(R.id.date_flag)
     public void onViewClicked() {
+        reportDateArrow.setRotation(180);
         showOptionsWindow(dateFlag);
     }
 
@@ -246,6 +249,7 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
         textDate.setText(String.format("%s", localDate));
         dateFlag.setText(dateText);
         mPresenter.queryCustomerSaleGather(true);
+        reportDateArrow.setRotation(0);
         mOptionsWindow.dismiss();
     }
 

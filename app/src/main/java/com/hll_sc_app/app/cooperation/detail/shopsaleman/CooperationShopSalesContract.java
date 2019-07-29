@@ -2,8 +2,8 @@ package com.hll_sc_app.app.cooperation.detail.shopsaleman;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.cooperation.EmployeeBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.staff.EmployeeBean;
 
 import java.util.List;
 

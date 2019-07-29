@@ -13,6 +13,7 @@ public class AfterSalesActionReq {
      */
     private int orderAction;
     private String refundBillIDs;
+    private String refundBillID;
     /**
      * 0 采购商审核 1 供应商审核
      */
@@ -55,6 +56,14 @@ public class AfterSalesActionReq {
 
     public void setRefundBillIDs(String refundBillIDs) {
         this.refundBillIDs = refundBillIDs;
+    }
+
+    public String getRefundBillID() {
+        return refundBillID;
+    }
+
+    public void setRefundBillID(String refundBillID) {
+        this.refundBillID = refundBillID;
     }
 
     public int getRefundBillType() {

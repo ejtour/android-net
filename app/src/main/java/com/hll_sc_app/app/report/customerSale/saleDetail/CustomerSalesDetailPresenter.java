@@ -50,7 +50,7 @@ public class CustomerSalesDetailPresenter implements CustomerSalesDetailContract
     }
 
     @Override
-    public void exportCustomerSaleDetail(String email, int isBindEmail, String reqParams) {
+    public void exportCustomerSaleDetail(String email, String reqParams) {
         Report.exportReport(reqParams,"111004",email,new SimpleObserver<ExportResp>(mView){
             @Override
             public void onSuccess(ExportResp exportResp) {

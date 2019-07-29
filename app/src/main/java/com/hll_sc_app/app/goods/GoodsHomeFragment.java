@@ -22,7 +22,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.list.GoodsListFragment;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -55,7 +56,7 @@ import butterknife.Unbinder;
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS)
 public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener,
-    GoodsHomeContract.IGoodsHomeView {
+        GoodsHomeContract.IGoodsHomeView {
     static final String[] STR_TITLE = {"普通商品", "组合商品", "押金商品", "代仓商品"};
     static final String[] STR_ACTION_TYPE = {"normalProduct", "bundlingGoods", "depositProduct", "warehouse"};
     @BindView(R.id.space)
@@ -132,7 +133,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS);
+                SearchActivity.start(searchContent, GoodsSearch.class.getSimpleName());
             }
 
             @Override

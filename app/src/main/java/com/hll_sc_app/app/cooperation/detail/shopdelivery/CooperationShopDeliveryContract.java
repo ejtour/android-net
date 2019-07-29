@@ -2,8 +2,8 @@ package com.hll_sc_app.app.cooperation.detail.shopdelivery;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.cooperation.DeliveryBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryBean;
 
 /**
  * 合作采购商详情-选择配送方式

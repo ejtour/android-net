@@ -22,22 +22,6 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
     }
 
     @Override
-    public void getDetail() {
-        AfterSales.requestAfterSalesDetail(
-                billID,
-                new SimpleObserver<List<AfterSalesBean>>(mView) {
-                    @Override
-                    public void onSuccess(List<AfterSalesBean> recordsBeans) {
-                        if (!CommonUtils.isEmpty(recordsBeans)) {
-                            mView.showDetail(recordsBeans.get(0));
-                        } else {
-                            mView.showToast("获取数据失败");
-                        }
-                    }
-                });
-    }
-
-    @Override
     public void doAction(int actionType, String payType, int status, int type, String msg) {
         AfterSales.afterSalesAction(actionType, billID, status, type, payType, msg, null,
             new SimpleObserver<MsgWrapper<Object>>(true, mView) {
@@ -60,7 +44,18 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
 
     @Override
     public void start() {
-        // no-op
+        AfterSales.requestAfterSalesDetail(
+                billID,
+                new SimpleObserver<List<AfterSalesBean>>(mView) {
+                    @Override
+                    public void onSuccess(List<AfterSalesBean> recordsBeans) {
+                        if (!CommonUtils.isEmpty(recordsBeans)) {
+                            mView.showDetail(recordsBeans.get(0));
+                        } else {
+                            mView.showToast("获取数据失败");
+                        }
+                    }
+                });
     }
 
     @Override

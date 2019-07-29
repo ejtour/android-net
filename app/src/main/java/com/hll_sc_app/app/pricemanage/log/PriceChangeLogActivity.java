@@ -20,7 +20,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsRelevanceListSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -112,7 +113,7 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_RELEVANCE_LIST);
+                SearchActivity.start(searchContent, GoodsRelevanceListSearch.class.getSimpleName());
             }
 
             @Override
@@ -177,9 +178,9 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
     private void showAddWindow() {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_AGREEMENT_PRICE_EXPORT));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_AGREEMENT_PRICE_LOG_EXPORT));
             mOptionsWindow = new ContextOptionsWindow(this).setListener((adapter, view, position)
-                -> {
+                    -> {
                 mPresenter.exportLog(null);
                 mOptionsWindow.dismiss();
             }).refreshList(list);
@@ -207,9 +208,9 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
                     String endStr = CalendarUtils.format(calendarEnd.getTime(), FORMAT_DATE);
                     mTxtDateName.setText(String.format("%s-%s", startStr, endStr));
                     mTxtDateName.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
-                        CalendarUtils.FORMAT_SERVER_DATE));
+                            CalendarUtils.FORMAT_SERVER_DATE));
                     mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
-                        CalendarUtils.FORMAT_SERVER_DATE));
+                            CalendarUtils.FORMAT_SERVER_DATE));
                     mPresenter.queryPriceLogList(true);
                 }
             });
@@ -281,17 +282,17 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
         @Override
         protected void convert(BaseViewHolder helper, PriceLogBean bean) {
             helper.setText(R.id.txt_productCode, bean.getProductCode())
-                .setText(R.id.txt_skuCode, bean.getSkuCode())
-                .setText(R.id.txt_productName, bean.getProductName())
-                .setText(R.id.txt_specContent,
-                    getString(bean.getSpecContent()) + "/" + getString(bean.getSaleUnitName()))
-                .setText(R.id.txt_type, TextUtils.equals(bean.getType(), "1") ? "售价" : "成本价")
-                .setText(R.id.txt_priceBefore, CommonUtils.formatNumber(bean.getPriceBefore()))
-                .setText(R.id.txt_priceAfter, CommonUtils.formatNumber(bean.getPriceAfter()))
-                .setText(R.id.txt_modifier, bean.getModifier())
-                .setText(R.id.txt_modifyTime, formatModifyTime(bean.getModifyTime()))
-                .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
-                R.drawable.bg_price_log_content_gray : R.drawable.bg_price_log_content_white);
+                    .setText(R.id.txt_skuCode, bean.getSkuCode())
+                    .setText(R.id.txt_productName, bean.getProductName())
+                    .setText(R.id.txt_specContent,
+                            getString(bean.getSpecContent()) + "/" + getString(bean.getSaleUnitName()))
+                    .setText(R.id.txt_type, TextUtils.equals(bean.getType(), "1") ? "售价" : "成本价")
+                    .setText(R.id.txt_priceBefore, CommonUtils.formatNumber(bean.getPriceBefore()))
+                    .setText(R.id.txt_priceAfter, CommonUtils.formatNumber(bean.getPriceAfter()))
+                    .setText(R.id.txt_modifier, bean.getModifier())
+                    .setText(R.id.txt_modifyTime, formatModifyTime(bean.getModifyTime()))
+                    .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
+                    R.drawable.bg_price_log_content_gray : R.drawable.bg_price_log_content_white);
         }
 
         private String getString(String str) {

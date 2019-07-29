@@ -16,7 +16,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -106,7 +107,7 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
             }
         });
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new CooperationDetailActivity.PurchaserShopListAdapter(mSelectMap);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserShopBean bean = (PurchaserShopBean) adapter.getItem(position);
@@ -121,7 +122,7 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_SEARCH);
+                SearchActivity.start(searchContent, CommonSearch.class.getSimpleName());
             }
 
             @Override
@@ -233,17 +234,17 @@ public class CooperationAddShopActivity extends BaseLoadActivity implements Coop
      */
     private void showTipsDialog() {
         SuccessDialog.newBuilder(this)
-            .setImageTitle(R.drawable.ic_dialog_failure)
-            .setImageState(R.drawable.ic_dialog_state_failure)
-            .setMessageTitle("确认要离开么")
-            .setMessage("您已经填写了部分数据，离开会\n丢失当前已填写的数据")
-            .setCancelable(false)
-            .setButton((dialog, item) -> {
-                if (item == 0) {
-                    finish();
-                }
-                dialog.dismiss();
-            }, "确认离开", "我再想想").create().show();
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setMessageTitle("确认要离开么")
+                .setMessage("您已经填写了部分数据，离开会\n丢失当前已填写的数据")
+                .setCancelable(false)
+                .setButton((dialog, item) -> {
+                    if (item == 0) {
+                        finish();
+                    }
+                    dialog.dismiss();
+                }, "确认离开", "我再想想").create().show();
     }
 
     @Override

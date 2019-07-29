@@ -238,7 +238,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
                 }
             });
         }
-        mRatioTemplateWindow.showAsDropDownFix(mRlSelectRatio, Gravity.NO_GRAVITY);
+        mRatioTemplateWindow.showAsDropDownFix(mRlSelectRatio);
     }
 
     @Override

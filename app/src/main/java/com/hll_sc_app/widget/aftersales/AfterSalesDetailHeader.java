@@ -40,10 +40,6 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
     ThumbnailView mVouchers;
     @BindView(R.id.sdh_refund_extra_group)
     Group mRefundExtraGroup;
-    @BindView(R.id.sdh_total_amount_group)
-    Group mAmountGroup;
-    @BindView(R.id.sdh_exchange_group)
-    Group mExchangeGroup;
     @BindView(R.id.sdh_operation_info)
     TextView mOperationInfo;
     private AfterSalesBean mRecordsBean;
@@ -81,44 +77,35 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
             if (!TextUtils.isEmpty(refuseDesc)) desc += "\n" + refuseDesc;
         }
         statusDesc.setText(desc);
+
         // 退款说明和凭证
-        mRefundExtraGroup.setVisibility(TextUtils.isEmpty(data.getRefundExplain().trim()) && TextUtils.isEmpty(data.getRefundVoucher().trim()) ? GONE : VISIBLE);
+        String explain = data.getRefundExplain().trim();
+        String voucher = data.getRefundVoucher().trim();
+        mRefundExtraGroup.setVisibility(TextUtils.isEmpty(explain) && TextUtils.isEmpty(voucher) ? GONE : VISIBLE);
         // 退款说明
-        if (TextUtils.isEmpty(data.getRefundExplain().trim())) {
+        if (TextUtils.isEmpty(explain)) {
             mRefundRemark.setVisibility(GONE);
         } else {
             mRefundRemark.setVisibility(VISIBLE);
             mRefundRemark.setText(data.getRefundExplain());
         }
         // 退款凭证
-        if (TextUtils.isEmpty(data.getRefundVoucher().trim())) {
+        if (TextUtils.isEmpty(voucher)) {
             mVouchers.setVisibility(GONE);
         } else {
             mVouchers.setVisibility(VISIBLE);
             String[] array = data.getRefundVoucher().split(",");
             mVouchers.setData(array);
         }
-        if (data.getRefundBillType() == 5) { // 换货时
-            mAmountGroup.setVisibility(GONE);
-            mExchangeGroup.setVisibility(VISIBLE);
-        } else {
-            // 金额
-            refundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
-            mAmountGroup.setVisibility(VISIBLE);
-            mExchangeGroup.setVisibility(GONE);
-        }
+        // 金额
+        refundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
         mOperationInfo.setText(String.format("%s信息", AfterSalesHelper.getOperatedNumPrefix(data.getRefundBillType())));
+        requestLayout();
     }
 
-    @OnClick({R.id.sdh_negotiation_history, R.id.sdh_view_exchange_order})
+    @OnClick(R.id.sdh_negotiation_history)
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.sdh_negotiation_history:
-                NegotiationHistoryActivity.start(mRecordsBean);
-                break;
-            case R.id.sdh_view_exchange_order:
-                break;
-        }
+        NegotiationHistoryActivity.start(mRecordsBean);
     }
 }
 

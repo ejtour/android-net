@@ -92,12 +92,12 @@ public class RouterUtil {
             getPostcard(postcard, "object" + i, objects[i]);
         }
         postcard.setProvider(new LoginInterceptor())
-            .navigation(context, new NavCallback() {
-                @Override
-                public void onArrival(Postcard postcard) {
-                    context.finish();
-                }
-            });
+                .navigation(context, new NavCallback() {
+                    @Override
+                    public void onArrival(Postcard postcard) {
+                        context.finish();
+                    }
+                });
     }
 
     /**
@@ -147,14 +147,31 @@ public class RouterUtil {
      */
     public static void goToActivity(String url, Activity context, Parcelable parcelable) {
         ARouter.getInstance().build(url)
-            .withParcelable("parcelable", parcelable)
-            .setProvider(new LoginInterceptor())
-            .navigation(context, new NavCallback() {
-                @Override
-                public void onArrival(Postcard postcard) {
-                    context.finish();
-                }
-            });
+                .withParcelable("parcelable", parcelable)
+                .setProvider(new LoginInterceptor())
+                .navigation(context, new NavCallback() {
+                    @Override
+                    public void onArrival(Postcard postcard) {
+                        context.finish();
+                    }
+                });
+    }
+
+    /**
+     * startActivityForResult
+     *
+     * @param url         URL
+     * @param activity    activity
+     * @param requestCode requestCode
+     * @param args        args
+     */
+    public static void goToActivity(String url, Activity activity, int requestCode, Object... args) {
+        Postcard postcard = ARouter.getInstance().build(url);
+        for (int i = 0; i < args.length; i++) {
+            getPostcard(postcard, "object" + i, args[i]);
+        }
+        postcard.setProvider(new LoginInterceptor())
+                .navigation(activity, requestCode);
     }
 
     /**
@@ -166,9 +183,9 @@ public class RouterUtil {
      */
     public static void goToActivity(String url, Activity activity, int requestCode, Parcelable parcelable) {
         ARouter.getInstance().build(url)
-            .withParcelable("parcelable", parcelable)
-            .setProvider(new LoginInterceptor())
-            .navigation(activity, requestCode);
+                .withParcelable("parcelable", parcelable)
+                .setProvider(new LoginInterceptor())
+                .navigation(activity, requestCode);
     }
 
     /**
@@ -181,9 +198,9 @@ public class RouterUtil {
      */
     public static void goToActivity(String url, Activity activity, int requestCode, Bundle bundle) {
         ARouter.getInstance().build(url)
-            .withBundle("bundle", bundle)
-            .setProvider(new LoginInterceptor())
-            .navigation(activity, requestCode);
+                .withBundle("bundle", bundle)
+                .setProvider(new LoginInterceptor())
+                .navigation(activity, requestCode);
     }
 
 
@@ -197,9 +214,9 @@ public class RouterUtil {
     public static void goToActivity(String url, Activity activity, int requestCode,
                                     ArrayList<? extends Parcelable> value) {
         ARouter.getInstance().build(url)
-            .withParcelableArrayList("parcelable", value)
-            .setProvider(new LoginInterceptor())
-            .navigation(activity, requestCode);
+                .withParcelableArrayList("parcelable", value)
+                .setProvider(new LoginInterceptor())
+                .navigation(activity, requestCode);
     }
 
     /**
@@ -209,9 +226,9 @@ public class RouterUtil {
      */
     public static void goToActivity(String url, ArrayList<? extends Parcelable> value) {
         ARouter.getInstance().build(url)
-            .withParcelableArrayList("parcelable", value)
-            .setProvider(new LoginInterceptor())
-            .navigation();
+                .withParcelableArrayList("parcelable", value)
+                .setProvider(new LoginInterceptor())
+                .navigation();
     }
 
     /**
@@ -223,14 +240,14 @@ public class RouterUtil {
      */
     public static void goToActivity(String url, Activity context, ArrayList<? extends Parcelable> value) {
         ARouter.getInstance().build(url)
-            .withParcelableArrayList("parcelable", value)
-            .setProvider(new LoginInterceptor())
-            .navigation(context, new NavCallback() {
-                @Override
-                public void onArrival(Postcard postcard) {
-                    context.finish();
-                }
-            });
+                .withParcelableArrayList("parcelable", value)
+                .setProvider(new LoginInterceptor())
+                .navigation(context, new NavCallback() {
+                    @Override
+                    public void onArrival(Postcard postcard) {
+                        context.finish();
+                    }
+                });
     }
 
     /**

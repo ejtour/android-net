@@ -36,7 +36,8 @@
             android:gravity="center"
             android:text="保存"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_13"/>
+            android:textSize="@dimen/base_text_13"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

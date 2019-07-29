@@ -74,15 +74,29 @@
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="19dp">
+           <TextView
+               android:id="@+id/txt_date_name_title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:drawableLeft="@drawable/ic_date_filter"
+               android:layout_alignParentLeft="true"
+               android:layout_centerVertical="true"
+               android:drawablePadding="5dp"
+               android:text="今日"
+               android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+           <ImageView
+               android:id="@+id/report_date_arrow"
+               android:layout_width="7dp"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_arrow_drop"
+               android:layout_marginLeft="3dp"
+               android:layout_gravity="center_vertical"/>
+       </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_date_name_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="今日"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
         <TextView
             android:id="@+id/txt_date_name"
@@ -128,9 +142,7 @@
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
             </RelativeLayout>
-
         </com.hll_sc_app.widget.SyncHorizontalScrollView>
-
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.hll_sc_app.widget.SyncHorizontalScrollView

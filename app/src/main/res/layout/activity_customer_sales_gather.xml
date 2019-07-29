@@ -7,11 +7,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_main_mine_background" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_main_mine_background" />
 
     <ImageView
         android:id="@+id/img_back"
@@ -56,16 +56,31 @@
             tools:visibility="visible"/>
     </RelativeLayout>
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/date_flag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
+    <LinearLayout
         android:layout_marginTop="83dp"
-        android:text="今日"
-        android:textColor="@color/base_white"
-        android:textSize="@dimen/base_text_12" />
+        android:layout_marginLeft="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/date_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_report_drawable_date_type_white"
+            android:text="今日"
+            android:drawableTint="@color/base_white"
+            android:drawablePadding="5dp"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_12" />
+
+        <ImageView
+            android:id="@+id/report_date_arrow"
+            android:src="@drawable/ic_arrow_drop"
+            android:layout_width="7dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/text_date"
@@ -73,10 +88,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="83dp"
-        tools:text="2018/08/08"
+        android:layout_marginRight="5dp"
+        android:drawableTint="@color/base_white"
+        android:drawableLeft="@drawable/ic_report_drawable_date_filter_white"
+        android:drawablePadding="5dp"
         android:textColor="@color/base_white"
-        android:layout_marginRight="10dp"
-        android:textSize="@dimen/base_text_12" />
+        android:textSize="@dimen/base_text_12"
+        tools:text="2018/08/08" />
 
     <LinearLayout
         android:id="@+id/order_statics"

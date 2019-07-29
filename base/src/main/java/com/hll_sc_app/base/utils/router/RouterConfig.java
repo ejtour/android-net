@@ -11,10 +11,31 @@ public class RouterConfig {
      * 设置界面
      */
     public static final String SETTING = "/activity/setting";
+
+    /**
+     * 通用简单搜索页
+     */
+    public static final String SEARCH = "/activity/search";
     /**
      * 设置界面-价格比例设置
      */
     public static final String SETTING_PRICE_RATIO = "/activity/setting/priceRatio";
+    /**
+     * 配送管理
+     */
+    public static final String DELIVERY_MANAGE = "/activity/deliveryManage";
+    /**
+     * 配送管理-配送方式设置
+     */
+    public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";
+    /**
+     * 配送管理-配送方式设置-选择第三方物流公司
+     */
+    public static final String DELIVERY_TYPE_COMPANY = "/activity/delivery/company";
+    /**
+     * 配送管理-配送方式设置-新增第三方物流公司
+     */
+    public static final String DELIVERY_TYPE_COMPANY_ADD = "/activity/delivery/company/add";
     /**
      * 设置界面-价格比例设置-列表-新增界面
      */
@@ -103,6 +124,22 @@ public class RouterConfig {
      * 合作采购商列表
      */
     public static final String COOPERATION_PURCHASER_LIST = "/activity/cooperationPurchaser/list";
+    /**
+     * 员工列表
+     */
+    public static final String STAFF_LIST = "/activity/staff/list";
+    /**
+     * 员工详情
+     */
+    public static final String STAFF_EDIT = "/activity/staff/detail";
+    /**
+     * 员工详情-岗位权限简介
+     */
+    public static final String STAFF_PERMISSION = "/activity/staff/permission";
+    /**
+     * 员工管理-选择员工岗位
+     */
+    public static final String STAFF_ROLE_SELECT = "/activity/staff/roleSelect";
     /**
      * 合作采购商-我发出的申请
      */
@@ -411,7 +448,7 @@ public class RouterConfig {
     /**
      * 客户销售汇总明细
      */
-    public static final String CUSTOMER_SALE_DETAILS="/activity/customer/sale/detail";
+    public static final String CUSTOMER_SALE_DETAILS = "/activity/customer/sale/detail";
 
     /**
      * 客户销售汇总门店明细

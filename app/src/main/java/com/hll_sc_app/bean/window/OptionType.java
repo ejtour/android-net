@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_COOPERATION_DETAIL_SHOP, OptionType.OPTION_EXPORT_DETAIL_INFO,OptionType.OPTION_REPORT_CURRENT_DATE,
         OptionType.OPTION_REPORT_YES_DATE,OptionType.OPTION_REPORT_CURRENT_WEEK,OptionType.OPTION_REPORT_PRE_WEEK,
         OptionType.OPTION_REPORT_CURRENT_MONTH,OptionType.OPTION_REPORT_PRE_MONTH,OptionType.OPTION_REPORT_CUSTOMER_DEFINE,
-        OptionType.OPTION_REPORT_DETAIL})
+        OptionType.OPTION_REPORT_DETAIL,OptionType.OPTION_AGREEMENT_PRICE_LOG_EXPORT})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -47,6 +47,7 @@ public @interface OptionType {
     String OPTION_EXPORT_RECORD = "上下架记录导出";
 
     String OPTION_AGREEMENT_PRICE_EXPORT = "导出协议价";
+    String OPTION_AGREEMENT_PRICE_LOG_EXPORT = "导出变更日志";
 
     String OPTION_COOPERATION_ADD = "新增合作采购商";
     String OPTION_COOPERATION_RECEIVE = "我收到的申请";
@@ -71,4 +72,5 @@ public @interface OptionType {
     String OPTION_REPORT_PRE_MONTH="上月";
     String OPTION_REPORT_CUSTOMER_DEFINE="自定义";
     String OPTION_REPORT_DETAIL="导出详细信息";
+
 }

@@ -3,7 +3,6 @@ package com.hll_sc_app.widget;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -63,9 +62,16 @@ public class ContextOptionsWindow extends BasePopupWindow {
         return this;
     }
 
-    @Override
     public void showAsDropDownFix(View anchor, int gravity) {
-        super.showAsDropDownFix(anchor, gravity);
+        showAsDropDownFix(anchor, 0, 0, gravity);
+    }
+
+    public void showAsDropDownFix(View anchor, int xOff, int yOff, int gravity) {
+        if (android.os.Build.VERSION.SDK_INT >= 19) {
+            super.showAsDropDown(anchor, xOff, yOff, gravity);
+        } else {
+            super.showAsDropDown(anchor);
+        }
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mArrow.getLayoutParams();
         params.gravity = gravity;
     }

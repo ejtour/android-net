@@ -109,18 +109,6 @@ public class PriceRatioTemplateListActivity extends BaseLoadActivity implements 
         mEmptyView = EmptyView.newBuilder(this)
             .setTipsTitle("您还没有" + (isAgreementPriceRatio() ? "协议价比例模版" : "售价比例模版") + "数据")
             .setTips("您可以在分类中按照百分比进行设置")
-            .setTipsButton(isAgreementPriceRatio() ? "新增协议价比例模版" : "新增售价比例模版")
-            .setOnClickListener(new EmptyView.OnActionClickListener() {
-                @Override
-                public void retry() {
-                    // no-op
-                }
-
-                @Override
-                public void action() {
-                    toAdd();
-                }
-            })
             .create();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));

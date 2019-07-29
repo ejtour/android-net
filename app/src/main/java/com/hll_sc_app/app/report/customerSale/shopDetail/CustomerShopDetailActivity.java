@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.report.customerSale.shopDetail;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -21,12 +21,10 @@ import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
 import com.hll_sc_app.bean.enums.TimeTypeEnum;
-import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesRecords;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
@@ -39,12 +37,10 @@ import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
-import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -100,6 +96,9 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     EditText edtSearch;
     @BindView(R.id.img_clear)
     ImageView imgClear;
+    @BindView(R.id.report_date_arrow)
+    ImageView reportDateArrow;
+
     private CustomerShopListAdapter mAdapter;
     private CustomerShopDetailPresenter mPresenter;
     private ContextOptionsWindow mOptionsWindow;
@@ -145,14 +144,14 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         mTxtDateName.setText(String.format("%s", displayDate));
     }
 
-    @OnClick({R.id.img_back,R.id.edt_search,R.id.img_clear})
+    @OnClick({R.id.img_back, R.id.edt_search, R.id.img_clear})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
                 finish();
                 break;
             case R.id.edt_search:
-                RouterUtil.goToActivity(RouterConfig.CUSTOMER_SALE_SEARCH,this,CUSTOMER_SHOP_DETAIL_CODE);
+                RouterUtil.goToActivity(RouterConfig.CUSTOMER_SALE_SEARCH, this, CUSTOMER_SHOP_DETAIL_CODE);
                 break;
             case R.id.img_clear:
                 edtSearch.setText(null);
@@ -171,6 +170,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
 
     @OnClick(R.id.txt_date_name_title)
     public void onViewClicked() {
+        reportDateArrow.setRotation(180);
         showOptionsWindow(dateFlagTextView);
     }
 
@@ -199,7 +199,6 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     }
 
 
-
     @Override
     public void showCustomerShopDetailList(List<CustomerSalesRecords> list, boolean append, int total) {
         if (append) {
@@ -208,9 +207,9 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             mAdapter.setNewData(list);
         }
         mAdapter.setEmptyView(mEmptyView);
-        if(null==list || list.size()==0){
+        if (null == list || list.size() == 0) {
             footSyncHorizontalScrollView.setVisibility(View.GONE);
-        }else{
+        } else {
             footSyncHorizontalScrollView.setVisibility(View.VISIBLE);
         }
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() - 1 != total);
@@ -261,9 +260,9 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
 
     @Override
     public void bindEmail() {
-        Gson gson  = new Gson();
+        Gson gson = new Gson();
         String reqParams = gson.toJson(params);
-        Utils.bindEmail(this, (email) -> mPresenter.exportCustomerShopDetail(email,reqParams));
+        Utils.bindEmail(this, (email) -> mPresenter.exportCustomerShopDetail(email, reqParams));
     }
 
     @Override
@@ -279,7 +278,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         if (optionsBean == null) {
             return;
         }
-        boolean isExport=false;
+        boolean isExport = false;
         String dateText = TimeFlagEnum.TODAY.getDesc();
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_DATE)) {
             serverDate = DateUtil.currentTimeHllDT8() + "";
@@ -323,24 +322,25 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CUSTOMER_DEFINE)) {
 
-        }else{
+        } else {
             //导出
             isExport = true;
         }
         params.setDate(serverDate);
         params.setTimeType(timeType);
         params.setTimeFlag(timeFlag);
-        if(!isExport) {
+        if (!isExport) {
             mTxtDateName.setText(String.format("%s", localDate));
             dateFlagTextView.setText(dateText);
             mPresenter.queryCustomerShopDetailList(true);
-        }else{
+        } else {
             bindEmail();
         }
-        if(mOptionsWindow!=null) {
+        if (mOptionsWindow != null) {
+            reportDateArrow.setRotation(0);
             mOptionsWindow.dismiss();
         }
-        if(mExportOptionsWindow!=null) {
+        if (mExportOptionsWindow != null) {
             mExportOptionsWindow.dismiss();
         }
     }
@@ -370,7 +370,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==CUSTOMER_SHOP_DETAIL_CODE && resultCode==RESULT_OK){
+        if (requestCode == CUSTOMER_SHOP_DETAIL_CODE && resultCode == RESULT_OK) {
             PurchaserGroupBean bean = data.getParcelableExtra("result");
             edtSearch.setText(bean.getPurchaserName());
             imgClear.setVisibility(View.VISIBLE);

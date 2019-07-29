@@ -17,7 +17,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsTopSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -107,7 +108,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_TOP);
+                SearchActivity.start(searchContent, GoodsTopSearch.class.getSimpleName());
             }
 
             @Override
@@ -137,7 +138,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         });
         mRecyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProduct.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
-            R.color.base_color_divider), UIUtils.dip2px(1)));
+                R.color.base_color_divider), UIUtils.dip2px(1)));
         mAdapter = new GoodsSelectListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             SkuGoodsBean bean = (SkuGoodsBean) adapter.getItem(position);
@@ -341,8 +342,8 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         @Override
         protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_specContent, item.getSpecContent())
-                .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
+                    .setText(R.id.txt_specContent, item.getSpecContent())
+                    .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
             helper.getView(R.id.img_check).setSelected(item.isSelected());
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
         }
