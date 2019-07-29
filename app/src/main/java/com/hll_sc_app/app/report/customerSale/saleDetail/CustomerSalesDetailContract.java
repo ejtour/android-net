@@ -85,6 +85,6 @@ public interface CustomerSalesDetailContract {
          *
          * @param email 邮箱地址
          */
-        void exportCustomerSaleDetail(String email);
+        void exportCustomerSaleDetail(String email, String reqParams);
     }
 }

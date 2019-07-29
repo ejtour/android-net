@@ -75,7 +75,7 @@ public class Report {
      * @param pv        查询的pv号
      * @param email     邮箱地址
      */
-    public static void exportReport(HashMap<String, String> reqParams, String pv, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportReport( String reqParams, String pv, String email, SimpleObserver<ExportResp> observer) {
         ReportExportReq req = new ReportExportReq();
         req.setEmail(email);
         req.setIsBindEmail(TextUtils.isEmpty(email) ? 0 : 1);

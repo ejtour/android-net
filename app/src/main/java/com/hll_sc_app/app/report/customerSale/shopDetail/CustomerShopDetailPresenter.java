@@ -1,10 +1,16 @@
 package com.hll_sc_app.app.report.customerSale.shopDetail;
 
+import android.text.TextUtils;
+
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.rest.ReportRest;
 
 public class CustomerShopDetailPresenter implements CustomerShopDetailContract.ICustomerShopDetailPresenter {
@@ -37,8 +43,23 @@ public class CustomerShopDetailPresenter implements CustomerShopDetailContract.I
     }
 
     @Override
-    public void exportCustomerShopDetail(String email) {
+    public void exportCustomerShopDetail(String email, String reqParams ) {
+        Report.exportReport(reqParams,"111004",email,new SimpleObserver<ExportResp>(mView){
+                    @Override
+                    public void onSuccess(ExportResp exportResp) {
+                        if (!TextUtils.isEmpty(exportResp.getEmail()))
+                            mView.exportSuccess(exportResp.getEmail());
+                        else mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    }
 
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if ("00120112037".equals(e.getCode())) mView.bindEmail();
+                        else if ("00120112038".equals(e.getCode()))
+                            mView.exportFailure("当前没有可导出的数据");
+                        else mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    }
+             });
     }
 
     @Override
@@ -56,6 +77,9 @@ public class CustomerShopDetailPresenter implements CustomerShopDetailContract.I
             public void onSuccess(CustomerSalesResp customerSalesResp) {
                 mPageNum = mTempPageNum;
                 mView.showCustomerShopDetailList(customerSalesResp.getRecords(),mPageNum != 1, customerSalesResp.getTotalSize());
+                if(customerSalesResp.getTotalSize()>0){
+                    mView.showCustomerShopGatherDatas(customerSalesResp);
+                }
             }
         });
     }

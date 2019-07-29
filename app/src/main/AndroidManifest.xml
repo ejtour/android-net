@@ -375,6 +375,9 @@
 
         <activity android:name=".app.report.productSale.ProductSalesActivity"
             android:screenOrientation="portrait"/>
+        <!--客户销售汇总搜索-->
+        <activity android:name=".app.report.search.ReportSearchActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

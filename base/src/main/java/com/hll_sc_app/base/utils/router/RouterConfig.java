@@ -417,4 +417,9 @@ public class RouterConfig {
      * 客户销售汇总门店明细
      */
     public static final String CUSTOMER_SALE_SHOP_DETAILS="/activity/customer/sale/shop/detail";
+
+    /**
+     * 客户销售汇总搜索
+     */
+    public static final String CUSTOMER_SALE_SEARCH="/activity/customer/sale/search";
 }
