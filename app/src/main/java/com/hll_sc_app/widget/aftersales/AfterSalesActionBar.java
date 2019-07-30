@@ -65,6 +65,8 @@ public class AfterSalesActionBar extends ConstraintLayout {
             R.id.after_sales_actions_finance, R.id.after_sales_actions_complain})
     List<View> mButtons;
 
+    private boolean isItem;
+
     public AfterSalesActionBar(Context context) {
         this(context, null);
     }
@@ -81,7 +83,7 @@ public class AfterSalesActionBar extends ConstraintLayout {
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AfterSalesActionBar);
-        boolean isItem = typedArray.getBoolean(R.styleable.AfterSalesActionBar_sab_item, false);
+        isItem = typedArray.getBoolean(R.styleable.AfterSalesActionBar_sab_item, false);
         typedArray.recycle();
         ViewGroup rootView = (ViewGroup) View.inflate(context, !isItem ? R.layout.view_after_sales_action : R.layout.item_after_sales_action, this);
         ButterKnife.bind(this, rootView);
@@ -113,7 +115,9 @@ public class AfterSalesActionBar extends ConstraintLayout {
                 case 8: // 司机取消订单
                     mActionDriverCancel.setVisibility(VISIBLE);
                 case 9:// 生成投诉单
-                    mActionComplain.setVisibility(VISIBLE);
+                    if (!isItem) { //在详情页中才显示 列表中不显示
+                        mActionComplain.setVisibility(VISIBLE);
+                    }
                     break;
                 default:
                     break;
