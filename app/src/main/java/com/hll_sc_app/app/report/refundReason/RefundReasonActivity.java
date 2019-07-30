@@ -139,6 +139,8 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
         mPie.animateY(1400, Easing.EaseInOutQuad);
         //设置饼状图里的文字大小
         mPie.setEntryLabelTextSize(0f);
+        //不绘画中间
+        mPie.setDrawHoleEnabled(false);
         //设置统计维度显示
         Legend l = mPie.getLegend();
         l.setEnabled(false);
