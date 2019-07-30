@@ -91,4 +91,23 @@ public class Wallet {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+    /**
+     * 提现
+     *
+     * @param money        金额
+     * @param settleUnitID 结算主体 id
+     */
+    public static void withdraw(double money, String settleUnitID, SimpleObserver<Object> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        WalletService.INSTANCE
+                .withdraw(BaseMapReq.newBuilder()
+                        .put("groupID", user.getGroupID())
+                        .put("settleUnitID", settleUnitID)
+                        .put("transAmount", String.valueOf(money))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }

@@ -39,4 +39,8 @@ public interface WalletService {
     @POST(HttpConfig.URL)
     @Headers("pv:103076")
     Observable<BaseResp<RechargeResp>> recharge(@Body BaseMapReq body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101058")
+    Observable<BaseResp<Object>> withdraw(@Body BaseMapReq body);
 }

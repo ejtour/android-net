@@ -199,7 +199,7 @@
 
         <activity
             android:name=".app.deliverymanage.DeliveryManageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"
@@ -207,27 +207,27 @@
 
         <activity
             android:name=".app.deliverymanage.ageing.DeliveryAgeingActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.ageing.detail.DeliveryAgeingDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.ageing.detail.period.DeliveryPeriodActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.deliverytype.DeliveryTypeSetActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.deliverytype.company.DeliveryCompanyActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.deliverytype.company.add.DeliveryCompanyAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.priceratio.add.PriceRatioTemplateAddActivity"
@@ -421,11 +421,13 @@
             android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".app.report.productSale.ProductSalesActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.productSale.ProductSalesActivity"
+            android:screenOrientation="portrait" />
         <!--客户销售汇总搜索-->
-        <activity android:name=".app.report.search.ReportSearchActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.search.ReportSearchActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.search.SearchActivity"
@@ -445,6 +447,10 @@
 
         <activity
             android:name=".app.wallet.recharge.RechargeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.withdraw.WithdrawActivity"
             android:screenOrientation="portrait" />
 
         <provider
