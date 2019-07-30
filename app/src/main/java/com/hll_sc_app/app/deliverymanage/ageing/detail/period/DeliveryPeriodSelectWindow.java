@@ -24,14 +24,12 @@ import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
  * @date 2019/7/29
  */
 public class DeliveryPeriodSelectWindow extends BaseShadowPopupWindow implements View.OnClickListener {
+    private String mSelectEnd;
+    private List<String> mData;
     private String mSelectStart;
+
     private PayTermTypeAdapter mAdapter;
     private PayTermTypeAdapter mAdapterEnd;
-
-    private String mSelectEnd;
-    private WheelView mPayTermPicker;
-
-    private List<String> mData;
     private PeriodSelectListener mSelectListener;
 
     DeliveryPeriodSelectWindow(Activity context) {

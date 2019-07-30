@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -18,6 +19,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -59,7 +61,7 @@ public class DeliveryPeriodActivity extends BaseLoadActivity implements Delivery
         initView();
         mPresenter = DeliveryPeriodPresenter.newInstance();
         mPresenter.register(this);
-        mPresenter.queryDeliveryPeriodList(billUpDateTime, flg);
+        mPresenter.queryDeliveryPeriodList();
     }
 
     private void initView() {
@@ -68,14 +70,24 @@ public class DeliveryPeriodActivity extends BaseLoadActivity implements Delivery
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(5)));
         mAdapter = new PeriodListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            DeliveryPeriodBean bean = mAdapter.getItem(position);
-            if (bean != null) {
-                EventBus.getDefault().post(bean);
-                finish();
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                DeliveryPeriodBean bean = mAdapter.getItem(position);
+                if (bean == null) {
+                    return;
+                }
+                int id = view.getId();
+                if (id == R.id.txt_del) {
+                    mPresenter.editDeliveryPeriod(bean, "2");
+                } else if (id == R.id.content) {
+                    EventBus.getDefault().post(bean);
+                    finish();
+                }
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
 
     @OnClick({R.id.img_close, R.id.txt_add})
@@ -111,10 +123,27 @@ public class DeliveryPeriodActivity extends BaseLoadActivity implements Delivery
         mAdapter.setEmptyView(mEmptyView);
     }
 
+    @Override
+    public String getBillUpDateTime() {
+        return billUpDateTime;
+    }
+
+    @Override
+    public String getFlag() {
+        return flg;
+    }
+
     class PeriodListAdapter extends BaseQuickAdapter<DeliveryPeriodBean, BaseViewHolder> {
 
         PeriodListAdapter() {
             super(R.layout.item_delivery_period);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
+            viewHolder.addOnClickListener(R.id.txt_del).addOnClickListener(R.id.content);
+            return viewHolder;
         }
 
         @Override

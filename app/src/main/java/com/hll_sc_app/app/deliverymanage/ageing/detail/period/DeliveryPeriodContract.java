@@ -2,7 +2,6 @@ package com.hll_sc_app.app.deliverymanage.ageing.detail.period;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
 
 import java.util.List;
@@ -22,22 +21,34 @@ public interface DeliveryPeriodContract {
          * @param list 配送时段数据源
          */
         void showList(List<DeliveryPeriodBean> list);
+
+        /**
+         * 获取截止时间
+         *
+         * @return 截止时间
+         */
+        String getBillUpDateTime();
+
+        /**
+         * 获取日期参数
+         *
+         * @return 1-当日，2-其它日
+         */
+        String getFlag();
     }
 
     interface IDeliveryPeriodPresenter extends IPresenter<IDeliveryPeriodView> {
         /**
          * 查询配送方式
-         *
-         * @param billUpDateTime 截单时间
-         * @param flg            1-当日，2-其它日
          */
-        void queryDeliveryPeriodList(String billUpDateTime, String flg);
+        void queryDeliveryPeriodList();
 
         /**
-         * 配送时效操作
+         * 配送时段操作
          *
-         * @param req 请求参数
+         * @param bean           请求参数
+         * @param operationType 操作类型，0-新增，1-更新，2-删除
          */
-        void editDeliveryAgeing(BaseMapReq req);
+        void editDeliveryPeriod(DeliveryPeriodBean bean, String operationType);
     }
 }

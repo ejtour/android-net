@@ -61,7 +61,6 @@ public class DeliveryAgeingDetailPresenter implements DeliveryAgeingDetailContra
                 public void onFailure(UseCaseException e) {
                     mView.showError(e);
                 }
-            })
-        ;
+            });
     }
 }

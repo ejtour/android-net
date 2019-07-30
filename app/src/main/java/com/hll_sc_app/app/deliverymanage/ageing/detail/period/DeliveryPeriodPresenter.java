@@ -7,11 +7,14 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -34,18 +37,18 @@ public class DeliveryPeriodPresenter implements DeliveryPeriodContract.IDelivery
     }
 
     @Override
-    public void queryDeliveryPeriodList(String billUpDateTime, String flg) {
-        getListObservable(billUpDateTime, flg)
+    public void queryDeliveryPeriodList() {
+        getListObservable()
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
             .subscribe(new DeliveryPeriodRespBaseCallback());
     }
 
-    private Observable<DeliveryPeriodResp> getListObservable(String billUpDateTime, String flg) {
+    private Observable<DeliveryPeriodResp> getListObservable() {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("billUpDateTime", billUpDateTime)
-            .put("flg", flg)
+            .put("billUpDateTime", mView.getBillUpDateTime())
+            .put("flg", mView.getFlag())
             .put("groupID", UserConfig.getGroupID())
             .create();
         return DeliveryManageService.INSTANCE
@@ -55,8 +58,44 @@ public class DeliveryPeriodPresenter implements DeliveryPeriodContract.IDelivery
     }
 
     @Override
-    public void editDeliveryAgeing(BaseMapReq req) {
+    public void editDeliveryPeriod(DeliveryPeriodBean bean, String operationType) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("operationType", operationType)
+            .put("groupID", UserConfig.getGroupID())
+            .put("deliveryTimeID", bean.getDeliveryTimeID())
+            .put("arrivalStartTime", bean.getArrivalStartTime())
+            .put("arrivalEndTime", bean.getArrivalEndTime())
+            .create();
+        DeliveryManageService.INSTANCE
+            .editDeliveryAgeing(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .flatMap((Function<Object, ObservableSource<DeliveryPeriodResp>>) o -> {
+                mView.showToast("配送时段" + getOperationString(operationType) + "成功");
+                return getListObservable();
+            })
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new DeliveryPeriodRespBaseCallback());
+    }
 
+    private String getOperationString(String operationType) {
+        String string = null;
+        switch (operationType) {
+            case "0":
+                string = "新增";
+                break;
+            case "1":
+                string = "更新";
+                break;
+            case "2":
+                string = "删除";
+                break;
+            default:
+                break;
+        }
+        return string;
     }
 
     private class DeliveryPeriodRespBaseCallback extends BaseCallback<DeliveryPeriodResp> {
