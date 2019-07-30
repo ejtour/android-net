@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/dr_close"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dr_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="充值支付"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toBottomOf="@+id/dr_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dr_close" />
+
+    <View
+        android:id="@+id/dr_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dr_close" />
+
+    <TextView
+        android:id="@+id/dr_money"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/color_ed5655"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dr_divider"
+        tools:text="¥ 997.00" />
+
+    <TextView
+        android:id="@+id/dr_money_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="充值总额"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/dr_money"
+        app:layout_constraintStart_toStartOf="@id/dr_money"
+        app:layout_constraintTop_toBottomOf="@id/dr_money" />
+
+    <View
+        android:id="@+id/dr_div1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dr_money_label" />
+
+    <TextView
+        android:id="@+id/dr_bank_card"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/bg_divider_bottom"
+        android:drawableLeft="@drawable/ic_bank_card_pay"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:text="银行卡支付"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="@id/dr_div1"
+        app:layout_constraintStart_toStartOf="@id/dr_div1"
+        app:layout_constraintTop_toBottomOf="@id/dr_div1" />
+
+</android.support.constraint.ConstraintLayout>

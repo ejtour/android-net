@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.details.list.DetailsListActivity;
+import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -84,8 +85,7 @@ public class NormalFragment extends BaseFragment {
         showTip();
     }
 
-    public void refreshData(WalletStatusResp resp){
-        LogUtil.d("vixb-ddd","refreshData");
+    public void refreshData(WalletStatusResp resp) {
         mResp = resp;
         initView();
     }
@@ -121,7 +121,7 @@ public class NormalFragment extends BaseFragment {
                 RouterUtil.goToActivity(RouterConfig.WALLET_MY_ACCOUNT);
                 break;
             case R.id.wsn_recharge_btn:
-                RouterUtil.goToActivity(RouterConfig.WALLET_RECHARGE, mResp);
+                RechargeActivity.start(requireActivity(), mResp.getSettleUnitID());
                 break;
             case R.id.wsn_withdraw_btn:
                 switch (mResp.getCertifyStatus()) {

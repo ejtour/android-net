@@ -6,6 +6,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.wallet.RechargeResp;
 import com.hll_sc_app.bean.wallet.details.DetailsExportReq;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.hll_sc_app.bean.wallet.WalletStatusResp;
@@ -34,4 +35,8 @@ public interface WalletService {
     @POST(HttpConfig.URL)
     @Headers("pv:103142")
     Observable<BaseResp<ExportResp>> exportWalletDetailsList(@Body BaseReq<DetailsExportReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103076")
+    Observable<BaseResp<RechargeResp>> recharge(@Body BaseMapReq body);
 }

@@ -488,11 +488,6 @@ public class RouterConfig {
     public static final String WALLET_ACCOUNT_OPEN = "/activity/wallet/account/open";
 
     /**
-     * 我的钱包-绑定账户
-     */
-    public static final String WALLET_ACCOUNT_BIND = "/activity/wallet/account/bind";
-
-    /**
      * 我的钱包-状态-未开通账户
      */
     public static final String WALLET_STATUS_NONE = "/fragment/wallet/status/none";
