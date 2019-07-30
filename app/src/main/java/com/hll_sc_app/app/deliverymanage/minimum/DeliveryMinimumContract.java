@@ -28,5 +28,12 @@ public interface DeliveryMinimumContract {
          * 起送金额列表查询
          */
         void queryDeliveryMinimumList();
+
+        /**
+         * 删除起送金额分组
+         *
+         * @param bean 起送金额分组
+         */
+        void delDeliveryMinimum(DeliveryMinimumBean bean);
     }
 }

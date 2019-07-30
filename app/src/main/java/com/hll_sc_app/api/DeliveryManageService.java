@@ -114,5 +114,15 @@ public interface DeliveryManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:103037")
-    Observable<BaseResp<List<DeliveryMinimumBean>>> queryDeliveryMinimunList(@Body BaseMapReq req);
+    Observable<BaseResp<List<DeliveryMinimumBean>>> queryDeliveryMinimumList(@Body BaseMapReq req);
+
+    /**
+     * 删除起送金额分组
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103040")
+    Observable<BaseResp<Object>> delDeliveryMinimum(@Body BaseMapReq req);
 }
