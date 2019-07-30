@@ -23,8 +23,6 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.delivery.AreaListBean;
-import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
@@ -49,8 +47,8 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.DELIVERY_MINIMUM_DETAIL, extras = Constant.LOGIN_EXTRA)
 public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements DeliveryMinimumDetailContract.IDeliveryMinimumDetailView {
-    public static final Pattern PRICE = Pattern.compile("^[0-9]{1,6}([.]{1}[0-9]{0,2})?$");
     public static final String TYPE_AREA = "0";
+    public static final Pattern PRICE = Pattern.compile("^[0-9]{1,6}([.]{1}[0-9]{0,2})?$");
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Autowired(name = "parcelable")
@@ -63,9 +61,10 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     EditText mEdtSendPrice;
     @BindView(R.id.txt_settings)
     TextView mTxtSettings;
+
     private MinimumListAdapter mAdapter;
-    private DeliveryMinimumDetailPresenter mPresenter;
     private SingleSelectionDialog mDialog;
+    private DeliveryMinimumDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -211,28 +210,12 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     }
 
     private List<String> getCodeList() {
-
         List<String> codeList = new ArrayList<>();
         List<ProvinceListBean> provinceListBeans = mAdapter.getData();
         if (!CommonUtils.isEmpty(provinceListBeans) && isAreaType()) {
             for (ProvinceListBean bean : provinceListBeans) {
-                // 省
                 if (bean.isSelect()) {
-                    // 市
-                    List<CityListBean> cityListBeans = bean.getCityList();
-                    if (!CommonUtils.isEmpty(cityListBeans)) {
-                        for (CityListBean cityListBean : cityListBeans) {
-                            // 区
-                            List<AreaListBean> areaListBeans = cityListBean.getAreaList();
-                            if (!CommonUtils.isEmpty(areaListBeans)) {
-                                for (AreaListBean areaListBean : areaListBeans) {
-                                    if (TextUtils.equals("3", areaListBean.getFlag())) {
-                                        codeList.add(areaListBean.getAreaCode());
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    codeList.addAll(bean.getCodeList());
                 }
             }
         }
@@ -273,10 +256,19 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
 
         @Override
         protected void convert(BaseViewHolder helper, ProvinceListBean item) {
+            int selectedNum = getSelectedNum(item);
             helper.setText(R.id.txt_provinceName, item.getProvinceName())
-                .setText(R.id.txt_selectedNum, "已选" + item.getSelectedNum())
-                .setText(R.id.txt_optionalNum, "可选" + item.getOptionalNum())
+                .setText(R.id.txt_selectedNum, "已选" + selectedNum)
+                .setText(R.id.txt_optionalNum, "可选" + (item.getAllNum() - selectedNum))
                 .getView(R.id.content).setSelected(item.isSelect());
+        }
+
+        private int getSelectedNum(ProvinceListBean item) {
+            int num = 0;
+            if (!CommonUtils.isEmpty(item.getCodeList())) {
+                num = item.getCodeList().size();
+            }
+            return num;
         }
     }
 }

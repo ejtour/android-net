@@ -12,6 +12,8 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.bean.delivery.AreaListBean;
+import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
@@ -113,24 +115,44 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
             provinceListBean.setProvinceCode(bean.getCode());
             provinceListBean.setProvinceName(bean.getName());
             if (!map.isEmpty() && map.containsKey(bean.getCode())) {
+                // 省
                 ProvinceListBean backBean = map.get(bean.getCode());
                 provinceListBean.setSelect(true);
-                provinceListBean.setSelectedNum(backBean.getSelectedNum());
-                provinceListBean.setCityList(backBean.getCityList());
+                List<CityListBean> cityListBeans = backBean.getCityList();
+                List<String> codeList = new ArrayList<>();
+                if (!CommonUtils.isEmpty(cityListBeans)) {
+                    for (CityListBean cityListBean : cityListBeans) {
+                        // 市
+                        List<AreaListBean> areaListBeans = cityListBean.getAreaList();
+                        if (!CommonUtils.isEmpty(areaListBeans)) {
+                            // 区
+                            for (AreaListBean areaListBean : areaListBeans) {
+                                if (TextUtils.equals(areaListBean.getFlag(), "3")) {
+                                    codeList.add(areaListBean.getAreaCode());
+                                }
+                            }
+                        }
+                    }
+                }
+                provinceListBean.setCodeList(codeList);
             }
+
+            // 省下面的所有区数量
             if (!CommonUtils.isEmpty(bean.getChild())) {
+                // 市
                 int count = 0;
                 List<AreaBean.ChildBeanX> cityList = bean.getChild();
                 if (!CommonUtils.isEmpty(cityList)) {
                     for (AreaBean.ChildBeanX cityBean : cityList) {
+                        // 区
                         if (!CommonUtils.isEmpty(cityBean.getChild())) {
                             count += cityBean.getChild().size();
                         }
                     }
                 }
-                provinceListBean.setOptionalNum(count - provinceListBean.getSelectedNum());
+                provinceListBean.setAllNum(count);
             } else {
-                provinceListBean.setOptionalNum(0);
+                provinceListBean.setAllNum(0);
             }
             provinceListBeans.add(provinceListBean);
         }

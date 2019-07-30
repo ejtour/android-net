@@ -69,7 +69,7 @@
             android:gravity="right|center_vertical"
             android:hint="15字以内"
             android:maxLength="15"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color222"/>
+            android:textColor="@color/base_text222"/>
 
     </LinearLayout>
 
@@ -98,7 +98,7 @@
             android:gravity="right|center_vertical"
             android:hint="7位数以内"
             android:inputType="numberDecimal"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color222"/>
+            android:textColor="@color/base_text222"/>
 
     </LinearLayout>
 

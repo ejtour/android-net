@@ -12,9 +12,30 @@ public class ProvinceListBean {
     private String provinceCode;
     private String provinceName;
     private int optionalNum;
+    /**
+     * 该省下面的区的数量
+     */
+    private int allNum;
     private int selectedNum;
     private List<CityListBean> cityList;
+    private List<String> codeList;
     private boolean select;
+
+    public int getAllNum() {
+        return allNum;
+    }
+
+    public void setAllNum(int allNum) {
+        this.allNum = allNum;
+    }
+
+    public List<String> getCodeList() {
+        return codeList;
+    }
+
+    public void setCodeList(List<String> codeList) {
+        this.codeList = codeList;
+    }
 
     public boolean isSelect() {
         return select;
