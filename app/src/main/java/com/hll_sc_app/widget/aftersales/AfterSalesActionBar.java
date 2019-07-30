@@ -114,6 +114,7 @@ public class AfterSalesActionBar extends ConstraintLayout {
                     break;
                 case 8: // 司机取消订单
                     mActionDriverCancel.setVisibility(VISIBLE);
+                    break;
                 case 9:// 生成投诉单
                     if (!isItem) { //在详情页中才显示 列表中不显示
                         mActionComplain.setVisibility(VISIBLE);

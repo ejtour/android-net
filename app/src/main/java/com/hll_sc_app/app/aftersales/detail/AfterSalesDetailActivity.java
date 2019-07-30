@@ -227,6 +227,8 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
             case R.id.after_sales_actions_complain:
                 SuccessDialog.newBuilder(this)
                         .setMessageTitle("确定生成投诉单么")
+                        .setImageTitle(R.drawable.ic_dialog_failure)
+                        .setImageState(R.drawable.ic_dialog_state_failure)
                         .setMessage(String.format("您确定将退货单%s\n生成投诉单么？", mBean.getRefundBillNo()))
                         .setButton((d, i) -> {
                             d.dismiss();
