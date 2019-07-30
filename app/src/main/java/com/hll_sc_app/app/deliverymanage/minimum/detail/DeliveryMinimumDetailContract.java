@@ -5,6 +5,7 @@ import android.app.Activity;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
+import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 
 import java.util.List;
@@ -38,6 +39,11 @@ public interface DeliveryMinimumDetailContract {
          * @return 上下文对象
          */
         Activity getContext();
+
+        /**
+         * 编辑成功
+         */
+        void editSuccess();
     }
 
     interface IDeliveryMinimumDetailPresenter extends IPresenter<IDeliveryMinimumDetailView> {
@@ -47,11 +53,11 @@ public interface DeliveryMinimumDetailContract {
         void queryDeliveryMinimumDetail();
 
         /**
-         * 删除起送金额分组
+         * 新增、编辑起送金额
          *
          * @param bean 起送金额分组
          */
-        void delDeliveryMinimum(ProvinceListBean bean);
+        void editDeliveryMinimum(DeliveryMinimumReq bean);
 
         /**
          * 地区数据处理

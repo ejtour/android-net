@@ -8,10 +8,12 @@ import com.hll_sc_app.api.DeliveryManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
+import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.FileManager;
@@ -57,23 +59,19 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
         }
     }
 
-    private void queryArea(DeliveryMinimumBean bean) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("sendAmountID", bean.getSendAmountID())
-            .put("supplyID", bean.getSupplyID())
-            .put("supplyShopID", bean.getSupplyShopID())
-            .create();
+    @Override
+    public void editDeliveryMinimum(DeliveryMinimumReq bean) {
         DeliveryManageService.INSTANCE
-            .queryDeliveryMinimumArea(req)
+            .editDeliveryMinimum(new BaseReq<>(bean))
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<ProvinceListBean>>() {
+            .subscribe(new BaseCallback<Object>() {
                 @Override
-                public void onSuccess(List<ProvinceListBean> provinceListBeans) {
-                    processAreaData(provinceListBeans);
+                public void onSuccess(Object o) {
+                    mView.editSuccess();
                 }
 
                 @Override
@@ -81,9 +79,6 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
                     mView.showError(e);
                 }
             });
-    }
-
-    private void queryPurchaser(DeliveryMinimumBean bean) {
     }
 
     /**
@@ -142,8 +137,32 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
         mView.showAreaList(provinceListBeans);
     }
 
-    @Override
-    public void delDeliveryMinimum(ProvinceListBean bean) {
+    private void queryArea(DeliveryMinimumBean bean) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("sendAmountID", bean.getSendAmountID())
+            .put("supplyID", bean.getSupplyID())
+            .put("supplyShopID", bean.getSupplyShopID())
+            .create();
+        DeliveryManageService.INSTANCE
+            .queryDeliveryMinimumArea(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<List<ProvinceListBean>>() {
+                @Override
+                public void onSuccess(List<ProvinceListBean> provinceListBeans) {
+                    processAreaData(provinceListBeans);
+                }
 
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    private void queryPurchaser(DeliveryMinimumBean bean) {
     }
 }

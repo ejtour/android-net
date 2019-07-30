@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.deliverymanage.minimum.detail;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -20,8 +21,12 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.delivery.AreaListBean;
+import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
+import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -45,6 +50,7 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.DELIVERY_MINIMUM_DETAIL, extras = Constant.LOGIN_EXTRA)
 public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements DeliveryMinimumDetailContract.IDeliveryMinimumDetailView {
     public static final Pattern PRICE = Pattern.compile("^[0-9]{1,6}([.]{1}[0-9]{0,2})?$");
+    public static final String TYPE_AREA = "0";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Autowired(name = "parcelable")
@@ -90,16 +96,16 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             mEdtSendPrice.setText(CommonUtils.formatNumber(mBean.getSendPrice()));
             mTxtSettings.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             mTxtSettings.setTag(mBean.getSettings());
-            mTxtSettings.setText(TextUtils.equals(mBean.getSettings(), "0") ? "根据地区设置" : "根据采购商设置");
+            mTxtSettings.setText(isAreaType() ? "根据地区设置" : "根据采购商设置");
             mPresenter.queryDeliveryMinimumDetail();
         } else {
-            mTxtSettings.setTag("0");
+            mTxtSettings.setTag(TYPE_AREA);
             mTxtSettings.setText("根据地区设置");
             showType();
         }
         mEdtSendPrice.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
             if (s.toString().startsWith(".")) {
-                s.insert(0, "0");
+                s.insert(0, TYPE_AREA);
             }
             if (!PRICE.matcher(s.toString()).find() && s.length() > 1) {
                 s.delete(s.length() - 1, s.length());
@@ -112,15 +118,16 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         return mBean == null;
     }
 
-    private void showType() {
-        String settings = null;
+    private boolean isAreaType() {
+        boolean flag = false;
         if (mTxtSettings.getTag() != null) {
-            settings = (String) mTxtSettings.getTag();
+            flag = TextUtils.equals(TYPE_AREA, (CharSequence) mTxtSettings.getTag());
         }
-        if (TextUtils.isEmpty(settings)) {
-            return;
-        }
-        if (TextUtils.equals("0", settings)) {
+        return flag;
+    }
+
+    private void showType() {
+        if (isAreaType()) {
             // 地区选择
             mPresenter.processAreaData(null);
         } else {
@@ -135,6 +142,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 finish();
                 break;
             case R.id.txt_save:
+                toSave();
                 break;
             case R.id.ll_settings:
             case R.id.txt_settings:
@@ -147,10 +155,45 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         }
     }
 
+    /**
+     * 保存
+     */
+    private void toSave() {
+        if (TextUtils.isEmpty(mEdtDivideName.getText().toString().trim())) {
+            showToast("分组名称不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(mEdtSendPrice.getText().toString().trim())) {
+            showToast("起订金额不能为空");
+            return;
+        }
+        if (mTxtSettings.getTag() == null) {
+            showToast("选择类型不能为空");
+            return;
+        }
+        DeliveryMinimumReq req = new DeliveryMinimumReq();
+        req.setAmount(mEdtSendPrice.getText().toString().trim());
+        req.setName(mEdtDivideName.getText().toString().trim());
+        if (mTxtSettings.getTag() != null) {
+            req.setSettings((String) mTxtSettings.getTag());
+        }
+        req.setCodeList(getCodeList());
+        if (isAdd()) {
+            req.setSupplyID(UserConfig.getGroupID());
+            req.setType("1");
+        } else {
+            req.setSendAmountID(mBean.getSendAmountID());
+            req.setSupplyID(mBean.getSupplyID());
+            req.setSupplyShopID(mBean.getSupplyShopID());
+            req.setType("2");
+        }
+        mPresenter.editDeliveryMinimum(req);
+    }
+
     private void showSettingDialog() {
         if (mDialog == null) {
             List<NameValue> list = new ArrayList<>();
-            list.add(new NameValue("根据地区设置", "0"));
+            list.add(new NameValue("根据地区设置", TYPE_AREA));
             list.add(new NameValue("根据采购商设置", "1"));
             mDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                 .setTitleText("选择类型")
@@ -167,6 +210,35 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         mDialog.show();
     }
 
+    private List<String> getCodeList() {
+
+        List<String> codeList = new ArrayList<>();
+        List<ProvinceListBean> provinceListBeans = mAdapter.getData();
+        if (!CommonUtils.isEmpty(provinceListBeans) && isAreaType()) {
+            for (ProvinceListBean bean : provinceListBeans) {
+                // 省
+                if (bean.isSelect()) {
+                    // 市
+                    List<CityListBean> cityListBeans = bean.getCityList();
+                    if (!CommonUtils.isEmpty(cityListBeans)) {
+                        for (CityListBean cityListBean : cityListBeans) {
+                            // 区
+                            List<AreaListBean> areaListBeans = cityListBean.getAreaList();
+                            if (!CommonUtils.isEmpty(areaListBeans)) {
+                                for (AreaListBean areaListBean : areaListBeans) {
+                                    if (TextUtils.equals("3", areaListBean.getFlag())) {
+                                        codeList.add(areaListBean.getAreaCode());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return codeList;
+    }
+
     @Override
     public void showAreaList(List<ProvinceListBean> list) {
         mAdapter.setNewData(list);
@@ -180,6 +252,18 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     @Override
     public Activity getContext() {
         return this;
+    }
+
+    @Override
+    public void editSuccess() {
+        if (isAdd()) {
+            showToast("新增起订金额成功");
+        } else {
+            showToast("编辑起订金额成功");
+        }
+        ARouter.getInstance().build(RouterConfig.DELIVERY_MINIMUM)
+            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            .navigation(this);
     }
 
     class MinimumListAdapter extends BaseQuickAdapter<ProvinceListBean, BaseViewHolder> {
