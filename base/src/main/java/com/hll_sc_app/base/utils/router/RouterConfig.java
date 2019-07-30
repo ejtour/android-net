@@ -489,12 +489,7 @@ public class RouterConfig {
     /**
      * 我的钱包-开通账户
      */
-    public static final String WALLET_ACCOUNT_OPEN = "/activity/wallet/account/open";
-
-    /**
-     * 我的钱包-绑定账户
-     */
-    public static final String WALLET_ACCOUNT_BIND = "/activity/wallet/account/bind";
+    public static final String WALLET_ACCOUNT_CREATE = "/activity/wallet/account/create";
 
     /**
      * 我的钱包-状态-未开通账户
@@ -514,12 +509,12 @@ public class RouterConfig {
     /**
      * 我的钱包-企业认证
      */
-    public static final String WALLET_AUTH_ACCOUNT = "/activity/wallet/authAccount";
+    public static final String WALLET_ACCOUNT_AUTH = "/activity/wallet/account/auth";
 
     /**
      * 我的钱包-我的账号
      */
-    public static final String WALLET_MY_ACCOUNT = "/activity/wallet/myAccount";
+    public static final String WALLET_ACCOUNT_MY = "/activity/wallet/account_my";
 
     /**
      * 我的钱包-充值

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.wallet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.FrameLayout;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
 import com.hll_sc_app.app.wallet.status.NoneFragment;
 import com.hll_sc_app.app.wallet.status.NormalFragment;
 import com.hll_sc_app.app.wallet.status.VerifyFragment;
@@ -36,6 +38,7 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     @BindView(R.id.aw_empty_view)
     EmptyView mEmptyView;
     private Unbinder unbinder;
+    private WalletPresenter mPresenter;
 
     @Override
     public void showError(UseCaseException e) {
@@ -49,11 +52,11 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
         setContentView(R.layout.activity_wallet);
         unbinder = ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        IWalletContract.IWalletPresenter presenter = WalletPresenter.newInstance();
-        presenter.register(this);
-        presenter.start();
+        mPresenter = WalletPresenter.newInstance();
+        mPresenter.register(this);
+        mPresenter.start();
         mEmptyView.setNetError();
-        mEmptyView.setOnActionClickListener(presenter::start);
+        mEmptyView.setOnActionClickListener(mPresenter::start);
     }
 
     @Override
@@ -86,6 +89,14 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == RechargeActivity.REQ_CODE) {
+            mPresenter.start();
         }
     }
 }

@@ -443,6 +443,10 @@
             android:name=".app.wallet.details.show.DetailsShowActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.wallet.recharge.RechargeActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

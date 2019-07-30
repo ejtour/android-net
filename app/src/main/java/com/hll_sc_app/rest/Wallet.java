@@ -3,13 +3,17 @@ package com.hll_sc_app.rest;
 import com.hll_sc_app.api.WalletService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.wallet.RechargeResp;
+import com.hll_sc_app.bean.wallet.WalletStatusResp;
 import com.hll_sc_app.bean.wallet.details.DetailsExportReq;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
-import com.hll_sc_app.bean.wallet.WalletStatusResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -61,6 +65,28 @@ public class Wallet {
     public static void exportWalletDetailsList(DetailsExportReq req, SimpleObserver<ExportResp> observer) {
         WalletService.INSTANCE
                 .exportWalletDetailsList(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 充值
+     *
+     * @param money        金额
+     * @param settleUnitID 结算主体 id
+     */
+    public static void recharge(double money, String settleUnitID, SimpleObserver<RechargeResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        WalletService.INSTANCE
+                .recharge(BaseMapReq.newBuilder()
+                        .put("groupID", user.getGroupID())
+                        .put("groupName", user.getGroupName())
+                        .put("terminalIp", UIUtils.getIpAddressString())
+                        .put("redirectUrl", "22cityRecharge")
+                        .put("settleUnitID", settleUnitID)
+                        .put("transAmount", String.valueOf(money))
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
