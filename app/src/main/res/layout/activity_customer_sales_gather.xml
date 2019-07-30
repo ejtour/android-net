@@ -51,7 +51,6 @@
             android:paddingRight="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_clear_search"
-            android:tint="@color/base_text999"
             android:visibility="gone"
             tools:visibility="visible"/>
     </RelativeLayout>

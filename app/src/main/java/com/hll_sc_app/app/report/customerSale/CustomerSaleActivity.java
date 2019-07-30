@@ -1,9 +1,12 @@
 package com.hll_sc_app.app.report.customerSale;
 
 import android.content.Intent;
+import android.graphics.ColorSpace;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;

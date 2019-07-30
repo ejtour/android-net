@@ -100,7 +100,7 @@ public class ReportRest {
         }
         ReportService.INSTANCE.queryPurchaser(
                        BaseMapReq.newBuilder()
-                                 .put("groupType","0")
+                                 .put("groupType",groupType)
                                  .put("searchParam", StringUtil.isEmpty(searchParam)?"":searchParam)
                                  .put("pageNo",pageNo==null?"1":pageNo+"")
                                  .put("pageSize",pageSize==null?"50":pageSize+"")

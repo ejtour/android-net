@@ -356,7 +356,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
         @Override
         protected void convert(BaseViewHolder helper, CustomerSalesRecords bean) {
             helper.setText(R.id.txt_purchaser_name, bean.getPurchaserName())
-                    .setText(R.id.txt_coop_shop_num, String.valueOf(bean.getCooperationShopNum()))
+                    .setText(R.id.txt_coop_shop_num, "")
                     .setText(R.id.txt_order_num, CommonUtils.formatNumber(bean.getOrderNum()))
                     .setText(R.id.txt_valid_order_num, CommonUtils.formatNumber(bean.getValidOrderNum()))
                     .setText(R.id.txt_trade_amount, CommonUtils.formatMoney(bean.getTradeAmount()))
