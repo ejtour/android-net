@@ -45,6 +45,6 @@ public class NoneFragment extends BaseFragment {
 
     @OnClick({R.id.wsn_open_account_btn})
     public void openAccount(View v) {
-        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_OPEN);
+        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_CREATE);
     }
 }

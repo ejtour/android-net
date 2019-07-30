@@ -21,7 +21,7 @@ public class WalletDetailsParam {
     }
 
     public String getFormatEndTime() {
-        return endTime == null ? null : CalendarUtils.toLocalDate(endTime);
+        return endTime == null ? null : CalendarUtils.toLocalDate(CalendarUtils.getDateAfter(endTime, 1));
     }
 
     public Date getBeginTime() {

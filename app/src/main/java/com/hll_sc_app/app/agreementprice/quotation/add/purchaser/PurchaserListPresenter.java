@@ -36,11 +36,6 @@ public class PurchaserListPresenter implements PurchaserListContract.IPurchaserL
     }
 
     @Override
-    public void start() {
-        // no-op
-    }
-
-    @Override
     public void register(PurchaserListContract.IPurchaserListView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }

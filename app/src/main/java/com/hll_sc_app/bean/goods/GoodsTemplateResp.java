@@ -9,15 +9,15 @@ import java.util.List;
  * @date 2019-06-27
  */
 public class GoodsTemplateResp {
-    private int totalSize;
+    private int total;
     private List<GoodsBean> records;
 
-    public int getTotalSize() {
-        return totalSize;
+    public int getTotal() {
+        return total;
     }
 
-    public void setTotalSize(int totalSize) {
-        this.totalSize = totalSize;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public List<GoodsBean> getRecords() {

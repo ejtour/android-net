@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/base_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar">
+
+        <ImageView
+            android:id="@+id/txt_cancel"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/base_ic_window_close"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text="新增配送时段"
+            android:textColor="#030303"
+            android:textSize="13sp"/>
+
+        <TextView
+            android:id="@+id/txt_confirm"
+            android:layout_width="44dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_selector_close"
+            android:gravity="center"
+            android:text="保存"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="开始时间"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="结束时间"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/picker_start"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"/>
+
+        <kankan.wheel.widget.WheelView
+            android:id="@+id/picker_end"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>

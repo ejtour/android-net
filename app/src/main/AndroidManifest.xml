@@ -202,11 +202,19 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.deliverymanage.ageing.DeliveryAgeingActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.deliverymanage.ageing.detail.DeliveryAgeingDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.deliverymanage.ageing.detail.period.DeliveryPeriodActivity"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -433,6 +441,10 @@
 
         <activity
             android:name=".app.wallet.details.show.DetailsShowActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.recharge.RechargeActivity"
             android:screenOrientation="portrait" />
 
         <provider

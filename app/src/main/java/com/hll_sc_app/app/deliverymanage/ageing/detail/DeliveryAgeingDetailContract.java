@@ -21,11 +21,6 @@ public interface DeliveryAgeingDetailContract {
 
     interface IDeliveryAgeingDetailPresenter extends IPresenter<IDeliveryAgeingDetailView> {
         /**
-         * 查询配送方式
-         */
-        void queryDeliveryList();
-
-        /**
          * 配送时效操作
          *
          * @param req 请求参数

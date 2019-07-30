@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.details.list.DetailsListActivity;
+import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -84,8 +85,7 @@ public class NormalFragment extends BaseFragment {
         showTip();
     }
 
-    public void refreshData(WalletStatusResp resp){
-        LogUtil.d("vixb-ddd","refreshData");
+    public void refreshData(WalletStatusResp resp) {
         mResp = resp;
         initView();
     }
@@ -115,13 +115,13 @@ public class NormalFragment extends BaseFragment {
                 if (mResp.getCertifyStatus() == WalletStatusResp.CERTIFY_ING) {
                     return;
                 }
-                RouterUtil.goToActivity(RouterConfig.WALLET_AUTH_ACCOUNT, mResp);
+                RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_AUTH, mResp);
                 break;
             case R.id.wsn_account_btn:
-                RouterUtil.goToActivity(RouterConfig.WALLET_MY_ACCOUNT);
+                RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_MY);
                 break;
             case R.id.wsn_recharge_btn:
-                RouterUtil.goToActivity(RouterConfig.WALLET_RECHARGE, mResp);
+                RechargeActivity.start(requireActivity(), mResp.getSettleUnitID());
                 break;
             case R.id.wsn_withdraw_btn:
                 switch (mResp.getCertifyStatus()) {
@@ -141,7 +141,7 @@ public class NormalFragment extends BaseFragment {
                                 .setButton((dialog, item) -> {
                                     dialog.dismiss();
                                     if (item == 1)
-                                        RouterUtil.goToActivity(RouterConfig.WALLET_AUTH_ACCOUNT, mResp);
+                                        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_AUTH, mResp);
                                 }, "继续准备", "马上认证")
                                 .create()
                                 .show();

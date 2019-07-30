@@ -25,21 +25,8 @@ public class DeliveryAgeingDetailPresenter implements DeliveryAgeingDetailContra
     }
 
     @Override
-    public void start() {
-        queryDeliveryList();
-    }
-
-    @Override
     public void register(DeliveryAgeingDetailContract.IDeliveryAgeingDetailView view) {
         this.mView = CommonUtils.checkNotNull(view);
-    }
-
-    @Override
-    public void queryDeliveryList() {
-//        getDeliveryListObservable().doOnSubscribe(disposable -> mView.showLoading())
-//            .doFinally(() -> mView.hideLoading())
-//            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-//            .subscribe(new DeliveryBeanBaseCallback());
     }
 
     @Override
@@ -61,7 +48,6 @@ public class DeliveryAgeingDetailPresenter implements DeliveryAgeingDetailContra
                 public void onFailure(UseCaseException e) {
                     mView.showError(e);
                 }
-            })
-        ;
+            });
     }
 }

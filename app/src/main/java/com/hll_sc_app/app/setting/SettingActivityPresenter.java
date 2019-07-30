@@ -3,8 +3,6 @@ package com.hll_sc_app.app.setting;
 import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.BaseReq;
-import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
@@ -27,10 +25,6 @@ public class SettingActivityPresenter implements SettingActivityContract.ISaleUn
 
     static SettingActivityPresenter newInstance() {
         return new SettingActivityPresenter();
-    }
-
-    @Override
-    public void start() {
     }
 
     @Override

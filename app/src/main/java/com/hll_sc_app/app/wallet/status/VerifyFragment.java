@@ -84,6 +84,6 @@ public class VerifyFragment extends BaseFragment {
 
     @OnClick(R.id.wsv_btn)
     public void reApply() {
-        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_OPEN);
+        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_CREATE);
     }
 }
