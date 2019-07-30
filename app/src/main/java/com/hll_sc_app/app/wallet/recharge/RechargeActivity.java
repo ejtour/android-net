@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
@@ -113,6 +114,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
     @Override
     protected void onDestroy() {
         mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+        ((ViewGroup) mWebView.getParent()).removeView(mWebView);
         mWebView.destroy();
         unbinder.unbind();
         super.onDestroy();
@@ -148,10 +150,10 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
 
     @OnTextChanged(value = R.id.awr_edit, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextChanged(Editable s) {
-        mNextStep.setEnabled(!TextUtils.isEmpty(s));
         if (s.toString().startsWith(".")) s.insert(0, "0");
         if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1)
             s.delete(s.length() - 1, s.length());
+        mNextStep.setEnabled(!TextUtils.isEmpty(s) && Double.parseDouble(s.toString()) > 0);
     }
 
     @OnEditorAction(R.id.awr_edit)
