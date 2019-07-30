@@ -199,6 +199,11 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     }
 
     @Override
+    public void export(String email) {
+        mPresenter.exportDailyReport(email);
+    }
+
+    @Override
     public void hideLoading() {
         super.hideLoading();
     }
@@ -211,7 +216,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
             return;
         }
         if(TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_DETAIL)){
-           bindEmail();
+            export(null);
         }
 
     }

@@ -3,10 +3,14 @@ package com.hll_sc_app.app.report.customerSale.saleDetail;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.hll_sc_app.api.PriceManageService;
 import com.hll_sc_app.api.ReportService;
+import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
@@ -19,6 +23,9 @@ import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.rest.ReportRest;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 
 public class CustomerSalesDetailPresenter implements CustomerSalesDetailContract.ICustomerSaleDetailPresenter {
@@ -51,6 +58,10 @@ public class CustomerSalesDetailPresenter implements CustomerSalesDetailContract
 
     @Override
     public void exportCustomerSaleDetail(String email, String reqParams) {
+        if(!TextUtils.isEmpty(email)){
+            bindEmail(email);
+            return;
+        }
         Report.exportReport(reqParams,"111004",email,new SimpleObserver<ExportResp>(mView){
             @Override
             public void onSuccess(ExportResp exportResp) {
@@ -90,4 +101,31 @@ public class CustomerSalesDetailPresenter implements CustomerSalesDetailContract
             }
         });
     }
+
+    private void bindEmail(String email) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null)
+            return;
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("email", email)
+                .put("employeeID", user.getEmployeeID())
+                .create();
+        SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                CustomerSaleReq params = mView.getParams();
+                params.setGroupID(UserConfig.getGroupID());
+                params.setPageNum(mTempPageNum);
+                params.setPageSize(20);
+                Gson gson = new Gson();
+                String reqParams = gson.toJson(params);
+                exportCustomerSaleDetail(null,reqParams);
+            }
+        };
+        UserService.INSTANCE.bindEmail(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(observer);
+    }
+
 }

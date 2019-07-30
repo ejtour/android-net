@@ -220,7 +220,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
     @Override
     public void showCustomerSaleGatherDatas(CustomerSalesResp customerSalesResp) {
         txtTotal.setText("合计");
-        totalCoopShopNum.setText(String.valueOf(customerSalesResp.getTotalCooperationShopNum()));
+        totalCoopShopNum.setText("");
         totalOrderNum.setText(String.valueOf(customerSalesResp.getTotalOrderNum()));
         totalValidOrderNum.setText(String.valueOf(customerSalesResp.getTotalValidBillNum()));
         totalValidOrderNum.setText(String.valueOf(customerSalesResp.getTotalValidBillNum()));
@@ -265,6 +265,13 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
         Gson gson = new Gson();
         String reqParams = gson.toJson(params);
         Utils.bindEmail(this, email -> mPresenter.exportCustomerSaleDetail(email, reqParams));
+    }
+
+    @Override
+    public void export(String email) {
+        Gson gson = new Gson();
+        String reqParams = gson.toJson(params);
+        mPresenter.exportCustomerSaleDetail(email,reqParams);
     }
 
     @Override
@@ -336,7 +343,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
             dateFlagTextView.setText(dateText);
             mPresenter.queryCustomerGatherDetailList(true);
         } else {
-            bindEmail();
+            export(null);
         }
         if (mOptionsWindow != null) {
             reportDateArrow.setRotation(0);
@@ -356,7 +363,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
         @Override
         protected void convert(BaseViewHolder helper, CustomerSalesRecords bean) {
             helper.setText(R.id.txt_purchaser_name, bean.getPurchaserName())
-                    .setText(R.id.txt_coop_shop_num, "")
+                    .setText(R.id.txt_coop_shop_num, String.valueOf(bean.getCooperationShopNum()))
                     .setText(R.id.txt_order_num, CommonUtils.formatNumber(bean.getOrderNum()))
                     .setText(R.id.txt_valid_order_num, CommonUtils.formatNumber(bean.getValidOrderNum()))
                     .setText(R.id.txt_trade_amount, CommonUtils.formatMoney(bean.getTradeAmount()))

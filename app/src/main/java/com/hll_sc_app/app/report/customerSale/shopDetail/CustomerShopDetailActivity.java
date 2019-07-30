@@ -20,7 +20,14 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
+import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
@@ -39,6 +46,7 @@ import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -49,6 +57,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * 客户销售汇总明细
@@ -266,6 +276,13 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     }
 
     @Override
+    public void export(String email) {
+        Gson gson = new Gson();
+        String reqParams = gson.toJson(params);
+        mPresenter.exportCustomerShopDetail(email,reqParams);
+    }
+
+    @Override
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
@@ -334,7 +351,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             dateFlagTextView.setText(dateText);
             mPresenter.queryCustomerShopDetailList(true);
         } else {
-            bindEmail();
+            export(null);
         }
         if (mOptionsWindow != null) {
             reportDateArrow.setRotation(0);
@@ -382,4 +399,5 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             mPresenter.queryCustomerShopDetailList(true);
         }
     }
+
 }
