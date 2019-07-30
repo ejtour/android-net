@@ -67,7 +67,7 @@ public class DeliveryPeriodPresenter implements DeliveryPeriodContract.IDelivery
             .put("arrivalEndTime", bean.getArrivalEndTime())
             .create();
         DeliveryManageService.INSTANCE
-            .editDeliveryAgeing(req)
+            .editDeliveryPeriod(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .flatMap((Function<Object, ObservableSource<DeliveryPeriodResp>>) o -> {

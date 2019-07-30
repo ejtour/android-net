@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -107,14 +109,23 @@ public class DeliveryPeriodActivity extends BaseLoadActivity implements Delivery
     private void showPeriodWindow() {
         if (mWindow == null) {
             mWindow = new DeliveryPeriodSelectWindow(this);
-            mWindow.setSelectListener(new DeliveryPeriodSelectWindow.PeriodSelectListener() {
-                @Override
-                public void select(String start, String end) {
-                    // TODO:
+            mWindow.setSelectListener((start, end) -> {
+                if (TextUtils.isEmpty(start) || TextUtils.isEmpty(end)) {
+                    return;
                 }
+                DeliveryPeriodBean bean = new DeliveryPeriodBean();
+                bean.setArrivalStartTime(start);
+                bean.setArrivalEndTime(end);
+                mPresenter.editDeliveryPeriod(bean, "0");
             });
         }
         mWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
+    @Override
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        SwipeItemLayout.closeAllItems(mRecyclerView);
     }
 
     @Override
