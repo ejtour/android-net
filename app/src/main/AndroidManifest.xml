@@ -203,7 +203,7 @@
 
         <activity
             android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.ageing.DeliveryAgeingActivity"
@@ -451,6 +451,10 @@
 
         <activity
             android:name=".app.wallet.withdraw.WithdrawActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.account.my.MyAccountActivity"
             android:screenOrientation="portrait" />
 
         <provider
