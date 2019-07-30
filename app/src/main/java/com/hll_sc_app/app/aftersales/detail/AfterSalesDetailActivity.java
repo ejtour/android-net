@@ -18,11 +18,13 @@ import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.app.goods.relevance.goods.select.GoodsRelevanceSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
+import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
@@ -44,6 +46,24 @@ import butterknife.Unbinder;
 @Route(path = RouterConfig.AFTER_SALES_DETAIL)
 public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfterSalesDetailContract.IAfterSalesDetailView {
     public static final int REQ_CODE = 0x533;
+    @BindView(R.id.asd_header)
+    TitleBar mHeaderBar;
+    @BindView(R.id.asd_list)
+    RecyclerView listView;
+    @BindView(R.id.asd_action_bar)
+    AfterSalesActionBar mActionBar;
+    @Autowired(name = "object0")
+    String mId;
+    private AfterSalesDetailHeader mHeaderView;
+    private AfterSalesDetailFooter mFooterView;
+    private AfterSalesDetailAdapter mAdapter;
+    private Unbinder unbinder;
+    private IAfterSalesDetailContract.IAfterSalesDetailPresenter present;
+    private AfterSalesBean mBean;
+    /*
+     * 是否修改了订单状态
+     */
+    private boolean hasChanged;
 
     /**
      * 跳转售后详情
@@ -55,29 +75,6 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
         String[] array = {id};
         RouterUtil.goToActivity(RouterConfig.AFTER_SALES_DETAIL, activity, REQ_CODE, (Object[]) array);
     }
-
-    private AfterSalesDetailHeader mHeaderView;
-    private AfterSalesDetailFooter mFooterView;
-    private AfterSalesDetailAdapter mAdapter;
-
-    @BindView(R.id.asd_header)
-    TitleBar mHeaderBar;
-    private Unbinder unbinder;
-
-    @BindView(R.id.asd_list)
-    RecyclerView listView;
-
-    @BindView(R.id.asd_action_bar)
-    AfterSalesActionBar mActionBar;
-
-    private IAfterSalesDetailContract.IAfterSalesDetailPresenter present;
-    @Autowired(name = "object0")
-    String mId;
-    private AfterSalesBean mBean;
-    /*
-     * 是否修改了订单状态
-     */
-    private boolean hasChanged;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,8 +117,60 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
         mAdapter.addFooterView(mFooterView);
     }
 
+    private void initData() {
+        present = AfterSalesDetailPresenter.newInstance(mId);
+        present.register(this);
+        present.start();
+    }
+
     private void modifyPrice(String price, String detailsID) {
         present.modifyPrice(price, detailsID);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK)
+            if (requestCode == GoodsRelevanceSelectActivity.REQ_CODE)
+                delayLoad();
+            else if (requestCode == GoodsOperationActivity.REQ_CODE)
+                handleStatusChange();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (hasChanged) { // 如果有订单状态更改
+            Intent intent = new Intent();
+            intent.putExtra("parcelable", mBean);
+            setResult(Activity.RESULT_OK, intent);
+        }
+        super.onBackPressed();
+    }
+
+    private void delayLoad() {
+        showLoading();
+        listView.postDelayed(() -> {
+            hideLoading();
+            handleStatusChange();
+        }, 1000);
+    }
+
+    @Override
+    public void handleStatusChange() {
+        hasChanged = true;
+        present.start();
+    }
+
+    @Override
+    public void showDetail(AfterSalesBean data) {
+        mBean = data;
+        updateData();
     }
 
     /**
@@ -142,45 +191,9 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
         mActionBar.setData(mBean.getButtonList());
     }
 
-
-    private void initData() {
-        present = AfterSalesDetailPresenter.newInstance(mId);
-        present.register(this);
-        present.start();
-    }
-
     @Override
-    public void onBackPressed() {
-        if (hasChanged) { // 如果有订单状态更改
-            Intent intent = new Intent();
-            intent.putExtra("parcelable", mBean);
-            setResult(Activity.RESULT_OK, intent);
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK)
-            if (requestCode == GoodsRelevanceSelectActivity.REQ_CODE)
-                delayLoad();
-            else if (requestCode == GoodsOperationActivity.REQ_CODE)
-                handleStatusChange();
-    }
-
-    private void delayLoad() {
-        showLoading();
-        listView.postDelayed(() -> {
-            hideLoading();
-            handleStatusChange();
-        }, 1000);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
+    public void genereteComplainSuccess(GenerateCompainResp resp) {
+        showToast("生成投诉单成功");
     }
 
     @OnClick({R.id.after_sales_actions_reject,
@@ -188,7 +201,8 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
             R.id.after_sales_actions_customer_service,
             R.id.after_sales_actions_finance,
             R.id.after_sales_actions_driver,
-            R.id.after_sales_actions_warehouse})
+            R.id.after_sales_actions_warehouse,
+            R.id.after_sales_actions_complain})
     public void onActionClick(View view) {
         if (mBean == null) {
             return;
@@ -209,6 +223,21 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                 break;
             case R.id.after_sales_actions_finance:
                 actionFinance();
+                break;
+            case R.id.after_sales_actions_complain:
+                SuccessDialog.newBuilder(this)
+                        .setMessageTitle("确定生成投诉单么")
+                        .setMessage(String.format("您确定将退货单%s\n生成投诉单么？", mBean.getRefundBillNo()))
+                        .setButton((d, i) -> {
+                            d.dismiss();
+                            if (i == 1) {
+
+                            }
+                        }, "我再看看", "确定生成")
+                        .create()
+                        .show();
+                break;
+            default:
                 break;
         }
     }
@@ -267,13 +296,6 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                 .show();
     }
 
-    private void rejectReq(String reason) {
-        present.doAction(5, null,
-                mBean.getRefundBillStatus(),
-                mBean.getRefundBillType(),
-                reason);
-    }
-
     @Override
     public void actionFinance() {
         present.doAction(4, null,
@@ -282,15 +304,10 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                 null);
     }
 
-    @Override
-    public void handleStatusChange() {
-        hasChanged = true;
-        present.start();
-    }
-
-    @Override
-    public void showDetail(AfterSalesBean data) {
-        mBean = data;
-        updateData();
+    private void rejectReq(String reason) {
+        present.doAction(5, null,
+                mBean.getRefundBillStatus(),
+                mBean.getRefundBillType(),
+                reason);
     }
 }

@@ -3,6 +3,7 @@ package com.hll_sc_app.app.aftersales.detail;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.AfterSales;
 
@@ -12,24 +13,24 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
     private IAfterSalesDetailContract.IAfterSalesDetailView mView;
     private String billID;
 
+    private AfterSalesDetailPresenter() {
+    }
+
     static AfterSalesDetailPresenter newInstance(String detailID) {
         AfterSalesDetailPresenter presenter = new AfterSalesDetailPresenter();
         presenter.billID = detailID;
         return presenter;
     }
 
-    private AfterSalesDetailPresenter() {
-    }
-
     @Override
     public void doAction(int actionType, String payType, int status, int type, String msg) {
         AfterSales.afterSalesAction(actionType, billID, status, type, payType, msg, null,
-            new SimpleObserver<MsgWrapper<Object>>(true, mView) {
-                @Override
-                public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
-                    mView.handleStatusChange();
-                }
-            });
+                new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+                    @Override
+                    public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                        mView.handleStatusChange();
+                    }
+                });
     }
 
     @Override
@@ -38,6 +39,16 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
             @Override
             public void onSuccess(Object o) {
                 mView.handleStatusChange();
+            }
+        });
+    }
+
+    @Override
+    public void genereteComplain(AfterSalesBean data) {
+        AfterSales.generateComplain(data, new SimpleObserver<GenerateCompainResp>(mView) {
+            @Override
+            public void onSuccess(GenerateCompainResp generateCompainResp) {
+
             }
         });
     }
