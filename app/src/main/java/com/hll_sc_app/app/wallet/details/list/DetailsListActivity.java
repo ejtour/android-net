@@ -119,7 +119,7 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
 
     private void initData() {
         Date curTime = new Date();
-        mParam.setEndTime(CalendarUtils.getDateAfter(curTime, 1));
+        mParam.setEndTime(curTime);
         mParam.setBeginTime(CalendarUtils.getDateBefore(curTime, 89));
         mParam.setSettleUnitID(settleUnitID);
         mPresenter = DetailsListPresenter.newInstance(mParam);
