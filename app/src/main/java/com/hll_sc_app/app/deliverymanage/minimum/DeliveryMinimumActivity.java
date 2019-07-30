@@ -19,6 +19,7 @@ import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -72,7 +73,7 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
             if (id == R.id.txt_del) {
                 showTipsDialog(bean);
             } else if (id == R.id.content) {
-
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_DETAIL, bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -107,6 +108,7 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
                 finish();
                 break;
             case R.id.txt_add:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_DETAIL);
                 break;
             default:
                 break;

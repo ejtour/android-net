@@ -9,6 +9,7 @@ import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyReq;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
+import com.hll_sc_app.bean.delivery.ProvinceListBean;
 
 import java.util.List;
 
@@ -125,4 +126,14 @@ public interface DeliveryManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:103040")
     Observable<BaseResp<Object>> delDeliveryMinimum(@Body BaseMapReq req);
+
+    /**
+     * 起送金额明细查询 新增和修改时用
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103038")
+    Observable<BaseResp<List<ProvinceListBean>>> queryDeliveryMinimumArea(@Body BaseMapReq req);
 }
