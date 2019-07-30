@@ -132,7 +132,7 @@ public class GoodsTemplateListPresenter implements GoodsTemplateListContract.IGo
                 @Override
                 public void onSuccess(GoodsTemplateResp resp) {
                     mPageNum = mTempPageNum;
-                    mView.showGoodsTemplateList(resp.getRecords(), mPageNum != 1, resp.getTotalSize());
+                    mView.showGoodsTemplateList(resp.getRecords(), mPageNum != 1, resp.getTotal());
                 }
 
                 @Override
