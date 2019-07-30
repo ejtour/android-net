@@ -202,6 +202,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.deliverymanage.ageing.DeliveryAgeingActivity"
             android:screenOrientation="portrait"/>
 

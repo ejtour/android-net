@@ -41,6 +41,10 @@ public class RouterConfig {
      */
     public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";
     /**
+     * 配送管理-起订金额设置
+     */
+    public static final String DELIVERY_MINIMUM = "/activity/delivery/minimum";
+    /**
      * 配送管理-配送方式设置-选择第三方物流公司
      */
     public static final String DELIVERY_TYPE_COMPANY = "/activity/delivery/company";
