@@ -6,6 +6,7 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
+import com.hll_sc_app.bean.delivery.DeliveryPurchaserBean;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 
 import java.util.List;
@@ -25,6 +26,13 @@ public interface DeliveryMinimumDetailContract {
          * @param list 列表数据
          */
         void showAreaList(List<ProvinceListBean> list);
+
+        /**
+         * 展示采购商列表
+         *
+         * @param list 采购商数据
+         */
+        void showPurchaserList(List<DeliveryPurchaserBean> list);
 
         /**
          * 获取最小起购量分组Bean

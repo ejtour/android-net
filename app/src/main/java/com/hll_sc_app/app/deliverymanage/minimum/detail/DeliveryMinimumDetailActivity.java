@@ -2,6 +2,7 @@ package com.hll_sc_app.app.deliverymanage.minimum.detail;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -21,6 +22,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -28,10 +30,12 @@ import com.hll_sc_app.bean.delivery.AreaListBean;
 import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
+import com.hll_sc_app.bean.delivery.DeliveryPurchaserBean;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.GirdSimpleDecoration;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -73,7 +77,8 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     TextView mTxtTips;
     @BindView(R.id.txt_purchaser)
     TextView mTxtPurchaser;
-    private MinimumListAdapter mAdapter;
+    private AreaListAdapter mAreaAdapter;
+    private PurchaserListAdapter mPurchaserAdapter;
     private SingleSelectionDialog mDialog;
     private DeliveryMinimumDetailPresenter mPresenter;
 
@@ -120,15 +125,25 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 showToast("起送金额7位数以内");
             }
         });
-        mRecyclerViewArea.addItemDecoration(new GirdSimpleDecoration(4));
-        mAdapter = new MinimumListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+        mAreaAdapter = new AreaListAdapter();
+        mAreaAdapter.setOnItemClickListener((adapter, view, position) -> {
             ProvinceListBean bean = (ProvinceListBean) adapter.getItem(position);
             if (bean != null) {
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_AREA, bean);
             }
         });
-        mRecyclerViewArea.setAdapter(mAdapter);
+        mRecyclerViewArea.addItemDecoration(new GirdSimpleDecoration(4));
+        mRecyclerViewArea.setAdapter(mAreaAdapter);
+
+        mPurchaserAdapter = new PurchaserListAdapter();
+        mPurchaserAdapter.setOnItemClickListener((adapter, view, position) -> {
+            DeliveryPurchaserBean bean = (DeliveryPurchaserBean) adapter.getItem(position);
+            if (bean != null) {
+                // TODO:跳转详情
+            }
+        });
+        mRecyclerViewPurchaser.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mRecyclerViewPurchaser.setAdapter(mPurchaserAdapter);
     }
 
     private boolean isAdd() {
@@ -160,7 +175,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         if (bean == null) {
             return;
         }
-        List<ProvinceListBean> beans = mAdapter.getData();
+        List<ProvinceListBean> beans = mAreaAdapter.getData();
         if (!CommonUtils.isEmpty(beans)) {
             for (int position = 0; position < beans.size(); position++) {
                 ProvinceListBean provinceListBean = beans.get(position);
@@ -169,10 +184,18 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                     provinceListBean.setOptionalNum(bean.getOptionalNum());
                     provinceListBean.setSelectedNum(bean.getSelectedNum());
                     provinceListBean.setSelect(bean.getSelectedNum() != 0);
-                    mAdapter.notifyItemChanged(position);
+                    mAreaAdapter.notifyItemChanged(position);
                     break;
                 }
             }
+        }
+    }
+
+    @Subscribe
+    public void onEvent(DeliveryPurchaserBean bean) {
+        // 根据采购商设置
+        if (bean == null) {
+            return;
         }
     }
 
@@ -217,20 +240,29 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             return;
         }
         DeliveryMinimumReq req = new DeliveryMinimumReq();
-        req.setAmount(mEdtSendPrice.getText().toString().trim());
-        req.setName(mEdtDivideName.getText().toString().trim());
         if (mTxtSettings.getTag() != null) {
             req.setSettings((String) mTxtSettings.getTag());
         }
-        req.setCodeList(getCodeList());
+        req.setAmount(mEdtSendPrice.getText().toString().trim());
+        req.setName(mEdtDivideName.getText().toString().trim());
+
+        if (isAreaType()) {
+            req.setCodeList(getCodeList());
+        } else {
+            if (CommonUtils.isEmpty(mPurchaserAdapter.getData())) {
+                showToast("请选择合作采购商");
+                return;
+            }
+            req.setPurchaserList(mPurchaserAdapter.getData());
+        }
         if (isAdd()) {
             req.setSupplyID(UserConfig.getGroupID());
             req.setType("1");
         } else {
-            req.setSendAmountID(mBean.getSendAmountID());
             req.setSupplyID(mBean.getSupplyID());
-            req.setSupplyShopID(mBean.getSupplyShopID());
             req.setType("2");
+            req.setSendAmountID(mBean.getSendAmountID());
+            req.setSupplyShopID(mBean.getSupplyShopID());
         }
         mPresenter.editDeliveryMinimum(req);
     }
@@ -262,7 +294,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
      */
     private List<String> getCodeList() {
         List<String> codeList = new ArrayList<>();
-        List<ProvinceListBean> provinceListBeans = mAdapter.getData();
+        List<ProvinceListBean> provinceListBeans = mAreaAdapter.getData();
         if (!CommonUtils.isEmpty(provinceListBeans) && isAreaType()) {
             for (ProvinceListBean bean : provinceListBeans) {
                 // 省
@@ -290,7 +322,12 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
 
     @Override
     public void showAreaList(List<ProvinceListBean> list) {
-        mAdapter.setNewData(list);
+        mAreaAdapter.setNewData(list);
+    }
+
+    @Override
+    public void showPurchaserList(List<DeliveryPurchaserBean> list) {
+        mPurchaserAdapter.setNewData(list);
     }
 
     @Override
@@ -324,8 +361,20 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         return flag;
     }
 
-    class MinimumListAdapter extends BaseQuickAdapter<ProvinceListBean, BaseViewHolder> {
-        MinimumListAdapter() {
+    class PurchaserListAdapter extends BaseQuickAdapter<DeliveryPurchaserBean, BaseViewHolder> {
+        PurchaserListAdapter() {
+            super(R.layout.item_delivery_minimum_detail_purchaser);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, DeliveryPurchaserBean item) {
+            helper.setText(R.id.txt_purchaserName, item.getPurchaserName())
+                .setText(R.id.txt_purchaserShopNum, "已选" + item.getPurchaserShopNum() + "个门店");
+        }
+    }
+
+    class AreaListAdapter extends BaseQuickAdapter<ProvinceListBean, BaseViewHolder> {
+        AreaListAdapter() {
             super(R.layout.item_delivery_minimum_detail_area);
         }
 
