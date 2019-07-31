@@ -115,6 +115,15 @@ public class AreaBean {
             private String code;
             private String name;
             private String flag = "2";
+            private String divideName;
+
+            public String getDivideName() {
+                return divideName;
+            }
+
+            public void setDivideName(String divideName) {
+                this.divideName = divideName;
+            }
 
             public String getFlag() {
                 return flag;

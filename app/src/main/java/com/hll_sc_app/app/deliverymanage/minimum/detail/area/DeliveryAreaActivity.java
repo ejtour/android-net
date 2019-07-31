@@ -49,6 +49,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.DELIVERY_AREA, extras = Constant.LOGIN_EXTRA)
 public class DeliveryAreaActivity extends BaseLoadActivity {
+    public static final String STRING_ALL = "全部";
     @Autowired(name = "parcelable", required = true)
     ProvinceListBean mBean;
     @BindView(R.id.recyclerView_city)
@@ -57,6 +58,8 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
     RecyclerView mRecyclerViewArea;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
+    @BindView(R.id.img_allCheck)
+    ImageView mImgAllCheck;
 
     private AreaListAdapter mAreaAdapter;
     private CityListAdapter mCityAdapter;
@@ -78,6 +81,32 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
 
         mAreaAdapter = new AreaListAdapter();
         mRecyclerViewArea.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mAreaAdapter.setOnItemClickListener((adapter, view, position) -> {
+            AreaBean.ChildBeanX.ChildBean childBean = (AreaBean.ChildBeanX.ChildBean) adapter.getItem(position);
+            if (childBean == null) {
+                return;
+            }
+            if (TextUtils.equals(childBean.getFlag(), "1")) {
+                showToast("该地区已在\"" + childBean.getDivideName() + "\"组选择");
+                return;
+            }
+            // 全选
+            if (TextUtils.equals(childBean.getName(), STRING_ALL)) {
+                selectAllArea(TextUtils.equals(childBean.getFlag(), "2"));
+                checkSelectAllCity();
+                return;
+            }
+
+            // 普通选择
+            if (TextUtils.equals(childBean.getFlag(), "2")) {
+                childBean.setFlag("3");
+            } else if (TextUtils.equals(childBean.getFlag(), "3")) {
+                childBean.setFlag("2");
+            }
+            adapter.notifyItemChanged(position);
+            checkSelectAllArea();
+            checkSelectAllCity();
+        });
         mRecyclerViewArea.setAdapter(mAreaAdapter);
 
         mCityAdapter = new CityListAdapter(mData);
@@ -124,15 +153,79 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
             for (AreaBean.ChildBeanX cityBean : list) {
                 List<AreaBean.ChildBeanX.ChildBean> childBeans = cityBean.getChild();
                 if (!CommonUtils.isEmpty(childBeans)) {
+                    AreaBean.ChildBeanX.ChildBean allBean = new AreaBean.ChildBeanX.ChildBean();
+                    allBean.setName(STRING_ALL);
+                    childBeans.add(0, allBean);
                     for (AreaBean.ChildBeanX.ChildBean childBean : childBeans) {
-                        if (mapArea.containsKey(childBean.getCode())) {
-                            childBean.setFlag(mapArea.get(childBean.getCode()).getFlag());
+                        AreaListBean areaListBean = mapArea.get(childBean.getCode());
+                        if (areaListBean != null) {
+                            childBean.setFlag(areaListBean.getFlag());
+                            childBean.setDivideName(areaListBean.getDivideName());
                         }
                     }
                 }
             }
         }
         return list;
+    }
+
+    /**
+     * 选中全部的区
+     */
+    private void selectAllArea(boolean select) {
+        List<AreaBean.ChildBeanX.ChildBean> childBeans = mAreaAdapter.getData();
+        if (!CommonUtils.isEmpty(childBeans)) {
+            for (AreaBean.ChildBeanX.ChildBean childBean : childBeans) {
+                if (!TextUtils.equals(childBean.getFlag(), "1")) {
+                    childBean.setFlag(select ? "3" : "2");
+                }
+            }
+            mAreaAdapter.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 判断是否选中了所有的地区
+     */
+    private void checkSelectAllCity() {
+        boolean select = true;
+        if (!CommonUtils.isEmpty(mData)) {
+            CITY:
+            for (AreaBean.ChildBeanX cityBean : mData) {
+                List<AreaBean.ChildBeanX.ChildBean> areaList = cityBean.getChild();
+                if (!CommonUtils.isEmpty(areaList)) {
+                    for (AreaBean.ChildBeanX.ChildBean areaBean : areaList) {
+                        if (TextUtils.equals(areaBean.getFlag(), "2")) {
+                            select = false;
+                            break CITY;
+                        }
+                    }
+                }
+            }
+        }
+
+        mImgAllCheck.setSelected(select);
+    }
+
+    /**
+     * 判断是否选中的全部区
+     */
+    private void checkSelectAllArea() {
+        boolean select = true;
+        List<AreaBean.ChildBeanX.ChildBean> childBeans = mAreaAdapter.getData();
+        if (!CommonUtils.isEmpty(childBeans)) {
+            for (AreaBean.ChildBeanX.ChildBean childBean : childBeans) {
+                if (!TextUtils.equals(childBean.getName(), STRING_ALL) && TextUtils.equals(childBean.getFlag(), "2")) {
+                    select = false;
+                    break;
+                }
+            }
+            AreaBean.ChildBeanX.ChildBean bean = childBeans.get(0);
+            if (TextUtils.equals(bean.getName(), STRING_ALL)) {
+                bean.setFlag(select ? "3" : "2");
+                mAreaAdapter.notifyItemChanged(0);
+            }
+        }
     }
 
     private void selectCityBean(BaseQuickAdapter adapter, int position) {
@@ -144,6 +237,7 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
         cityBean.setSelect(true);
         adapter.notifyDataSetChanged();
         mAreaAdapter.setNewData(cityBean.getChild());
+        checkSelectAllArea();
     }
 
     /**
@@ -184,6 +278,8 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
                 toSave();
                 break;
             case R.id.rl_allCheck:
+                mImgAllCheck.setSelected(!mImgAllCheck.isSelected());
+                selectAllCity(mImgAllCheck.isSelected());
                 break;
             default:
                 break;
@@ -192,6 +288,27 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
 
     private void toSave() {
 
+    }
+
+    /**
+     * 选中全部地区
+     *
+     * @param select true-选中 false-取消选中
+     */
+    private void selectAllCity(boolean select) {
+        if (!CommonUtils.isEmpty(mData)) {
+            for (AreaBean.ChildBeanX cityBean : mData) {
+                List<AreaBean.ChildBeanX.ChildBean> areaList = cityBean.getChild();
+                if (!CommonUtils.isEmpty(areaList)) {
+                    for (AreaBean.ChildBeanX.ChildBean areaBean : areaList) {
+                        if (!TextUtils.equals(areaBean.getFlag(), "1")) {
+                            areaBean.setFlag(select ? "3" : "2");
+                        }
+                    }
+                }
+            }
+        }
+        mAreaAdapter.notifyDataSetChanged();
     }
 
     class CityListAdapter extends BaseQuickAdapter<AreaBean.ChildBeanX, BaseViewHolder> {

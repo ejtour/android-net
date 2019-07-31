@@ -23,6 +23,25 @@ public class AreaListBean implements Parcelable {
      */
     private String flag;
     private String areaName;
+    public static final Creator<AreaListBean> CREATOR = new Creator<AreaListBean>() {
+        @Override
+        public AreaListBean createFromParcel(Parcel source) {
+            return new AreaListBean(source);
+        }
+
+        @Override
+        public AreaListBean[] newArray(int size) {
+            return new AreaListBean[size];
+        }
+    };
+    private String divideName;
+
+    protected AreaListBean(Parcel in) {
+        this.areaCode = in.readString();
+        this.flag = in.readString();
+        this.areaName = in.readString();
+        this.divideName = in.readString();
+    }
 
     public String getAreaCode() {
         return areaCode;
@@ -48,25 +67,7 @@ public class AreaListBean implements Parcelable {
         this.areaName = areaName;
     }
 
-    public static final Parcelable.Creator<AreaListBean> CREATOR = new Parcelable.Creator<AreaListBean>() {
-        @Override
-        public AreaListBean createFromParcel(Parcel source) {
-            return new AreaListBean(source);
-        }
-
-        @Override
-        public AreaListBean[] newArray(int size) {
-            return new AreaListBean[size];
-        }
-    };
-
     public AreaListBean() {
-    }
-
-    protected AreaListBean(Parcel in) {
-        this.areaCode = in.readString();
-        this.flag = in.readString();
-        this.areaName = in.readString();
     }
 
     @Override
@@ -74,10 +75,19 @@ public class AreaListBean implements Parcelable {
         return 0;
     }
 
+    public String getDivideName() {
+        return divideName;
+    }
+
+    public void setDivideName(String divideName) {
+        this.divideName = divideName;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.areaCode);
         dest.writeString(this.flag);
         dest.writeString(this.areaName);
+        dest.writeString(this.divideName);
     }
 }
