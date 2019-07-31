@@ -30,11 +30,10 @@ public class RechargeDialog extends BaseDialog {
     TextView mMoney;
     @BindView(R.id.dr_bank_card)
     TextView mBankCard;
-    private View.OnClickListener mListener;
 
     public RechargeDialog(@NonNull Activity context, View.OnClickListener listener) {
         super(context);
-        mListener = listener;
+        mBankCard.setOnClickListener(listener);
     }
 
     @Override
@@ -59,16 +58,9 @@ public class RechargeDialog extends BaseDialog {
         return view;
     }
 
-    @OnClick({R.id.dr_close, R.id.dr_bank_card})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.dr_close:
-                dismiss();
-                break;
-            case R.id.dr_bank_card:
-                mListener.onClick(view);
-                break;
-        }
+    @OnClick(R.id.dr_close)
+    public void close() {
+        dismiss();
     }
 
     public void show(double money) {

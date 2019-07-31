@@ -8,7 +8,9 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyReq;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
+import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
+import com.hll_sc_app.bean.delivery.ProvinceListBean;
 
 import java.util.List;
 
@@ -114,5 +116,35 @@ public interface DeliveryManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:103037")
-    Observable<BaseResp<List<DeliveryMinimumBean>>> queryDeliveryMinimunList(@Body BaseMapReq req);
+    Observable<BaseResp<List<DeliveryMinimumBean>>> queryDeliveryMinimumList(@Body BaseMapReq req);
+
+    /**
+     * 删除起送金额分组
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103040")
+    Observable<BaseResp<Object>> delDeliveryMinimum(@Body BaseMapReq req);
+
+    /**
+     * 起送金额明细查询 新增和修改时用
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103038")
+    Observable<BaseResp<List<ProvinceListBean>>> queryDeliveryMinimumArea(@Body BaseMapReq req);
+
+    /**
+     * 新增、编辑起送金额
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103039")
+    Observable<BaseResp<Object>> editDeliveryMinimum(@Body BaseReq<DeliveryMinimumReq> req);
 }

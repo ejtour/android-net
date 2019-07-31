@@ -65,16 +65,16 @@ public @interface OptionType {
 
     String OPTION_EXPORT_DETAIL_INFO = "导出详细信息";
 
-    String OPTION_REPORT_CURRENT_DATE = "今日";
-    String OPTION_REPORT_YES_DATE = "昨日";
-    String OPTION_REPORT_CURRENT_WEEK = "本周";
-    String OPTION_REPORT_PRE_WEEK = "上周";
-    String OPTION_REPORT_CURRENT_MONTH = "本月";
-    String OPTION_REPORT_PRE_MONTH = "上月";
-    String OPTION_REPORT_CUSTOMER_DEFINE = "自定义";
+    String OPTION_REPORT_CURRENT_DATE="今日  ";
+    String OPTION_REPORT_YES_DATE="昨日  ";
+    String OPTION_REPORT_CURRENT_WEEK="本周  ";
+    String OPTION_REPORT_PRE_WEEK="上周  ";
+    String OPTION_REPORT_CURRENT_MONTH="本月  ";
+    String OPTION_REPORT_PRE_MONTH="上月  ";
+    String OPTION_REPORT_CUSTOMER_DEFINE="自定义  ";
+    String OPTION_REPORT_DETAIL="导出详细信息";
 
     String OPTION_ALL = "全部";
     String OPTION_NOT_CONTAIN_DEPOSIT = "不含押金商品";
-    String OPTION_REPORT_DETAIL = "导出详细信息";
 
 }

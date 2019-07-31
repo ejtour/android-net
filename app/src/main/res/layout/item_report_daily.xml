@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_white_radius_5_solid"
+    android:background="@drawable/base_bg_white_radius_5_solid"
     android:layout_marginTop="10dp"
     android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="32dp"
         android:id="@+id/daily_time"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
         android:background="@drawable/bg_fafafa_radius_half_5_solid"
         android:textSize="12dp"
         android:text="20190723"/>
@@ -21,128 +21,141 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
+
         <RelativeLayout
             android:layout_width="119dp"
-            android:layout_height="100dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="33dp"
+            android:paddingBottom="33dp">
+
             <TextView
                 android:id="@+id/daily_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="8490.00"
                 android:textColor="#222222"
-                android:textSize="@dimen/base_text_16"
-                android:layout_centerInParent="true"/>
+                android:textSize="@dimen/base_text_16" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/daily_amount"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
                 android:text="交易金额(元)"
                 android:textColor="@color/base_text_black"
-                android:textSize="@dimen/base_text_10"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/daily_amount"
-                android:layout_centerInParent="true"/>
+                android:textSize="@dimen/base_text_10" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="118dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="119dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="119dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp">
             <TextView
                 android:id="@+id/daily_order_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="32"
                 android:textColor="#222222"
                 android:textSize="@dimen/base_text_13"
-                android:layout_centerInParent="true"
                 />
             <TextView
                 android:id="@+id/daily_order_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_below="@id/daily_order_num"
                 android:text="有效订单(笔)"
                 android:textColor="@color/base_text_black"
                 android:textSize="@dimen/base_text_10"
-                android:layout_marginTop="3dp"
-                android:layout_centerInParent="true"
+                android:layout_marginTop="5dp"
                 />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="118dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="237dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="237dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp">
             <TextView
                 android:id="@+id/daily_customer_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="32.00"
                 android:textColor="#222222"
                 android:textSize="@dimen/base_text_13"
-                android:layout_centerInParent="true"
                 />
             <TextView
                 android:id="@+id/daily_customer_price_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="客单价(元)"
                 android:layout_below="@+id/daily_customer_price"
                 android:textColor="@color/base_text_black"
                 android:textSize="@dimen/base_text_10"
                 android:layout_marginTop="3dp"
-                android:layout_centerInParent="true"
                 />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="118dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="119dp"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="50dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp">
             <TextView
                 android:id="@+id/daily_avg_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="32.00"
                 android:textColor="#222222"
                 android:textSize="@dimen/base_text_13"
-                android:layout_centerInParent="true"
                 />
             <TextView
                 android:id="@+id/daily_avg_price_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="单均(元)"
                 android:layout_below="@+id/daily_avg_price"
                 android:textColor="@color/base_text_black"
                 android:textSize="@dimen/base_text_10"
                 android:layout_marginTop="3dp"
-                android:layout_centerInParent="true"
                 />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="118dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="237dp"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="50dp"
+            android:paddingTop="11dp"
+            android:paddingBottom="11dp">
             <TextView
                 android:id="@+id/daily_order_customers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="32.00"
                 android:textColor="#222222"
                 android:textSize="@dimen/base_text_13"
-                android:layout_centerInParent="true"
                 />
             <TextView
                 android:id="@+id/daily_order_customers_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="下单客户/门店"
                 android:layout_marginTop="3dp"
                 android:textColor="@color/base_text_black"
                 android:textSize="@dimen/base_text_10"
                 android:layout_below="@+id/daily_order_customers"
-                android:layout_centerInParent="true"
                 />
         </RelativeLayout>
     </RelativeLayout>

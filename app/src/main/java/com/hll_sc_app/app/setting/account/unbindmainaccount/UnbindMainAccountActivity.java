@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.setting.widget.NoScrollViewPager;
+import com.hll_sc_app.widget.ScrollableViewPager;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -36,7 +36,7 @@ import butterknife.Unbinder;
 @Route(path = RouterConfig.ACTIVITY_CHANGE_GROUP_PHONE)
 public class UnbindMainAccountActivity extends BaseLoadActivity implements IUnbindMainAccountContract.IView {
     @BindView(R.id.view_pager)
-    NoScrollViewPager mViewPager;
+    ScrollableViewPager mViewPager;
     @BindView(R.id.next_step)
     TextView mNextStep;
     @BindView(R.id.step_two)
@@ -79,7 +79,6 @@ public class UnbindMainAccountActivity extends BaseLoadActivity implements IUnbi
     }
 
     private void initView() {
-        mViewPager.setScroll(false);
         initFragments();
         initViewPager();
     }

@@ -59,7 +59,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.setting.SettingActivityActivity"
+            android:name=".app.setting.SettingActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -205,6 +205,14 @@
         <activity
             android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.minimum.detail.DeliveryMinimumDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.deliverymanage.minimum.detail.area.DeliveryAreaActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.deliverymanage.ageing.DeliveryAgeingActivity"

@@ -32,12 +32,6 @@ public interface CustomerShopDetailContract {
          * @param customerSalesResp
          */
         void showCustomerShopGatherDatas(CustomerSalesResp customerSalesResp);
-        /**
-         * 获取搜索词
-         *
-         * @return 搜索词
-         */
-        String getSearchParam();
 
         /**
          * 获取参数

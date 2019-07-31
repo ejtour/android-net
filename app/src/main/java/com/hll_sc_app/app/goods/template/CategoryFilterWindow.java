@@ -19,6 +19,7 @@ import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Tuple;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -301,14 +302,19 @@ public class CategoryFilterWindow extends BasePopupWindow {
         }
     }
 
-    String getCategoryThreeIds() {
-        List<String> list = new ArrayList<>();
+    Tuple<List<String>, List<String>> getCategoryThreeIds() {
+        Tuple<List<String>, List<String>> tuple = new Tuple<>();
+        List<String> listId = new ArrayList<>();
+        List<String> listName = new ArrayList<>();
         if (!CommonUtils.isEmpty(mSelectList)) {
             for (CategoryItem item : mSelectList) {
-                list.add(item.getCategoryID());
+                listId.add(item.getCategoryID());
+                listName.add(item.getCategoryName());
             }
         }
-        return TextUtils.join(",", list);
+        tuple.setKey1(listName);
+        tuple.setKey2(listId);
+        return tuple;
     }
 
     interface ConfirmListener {

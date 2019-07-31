@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -28,10 +29,10 @@ import butterknife.OnClick;
  * @date 2019/7/11
  */
 @Route(path = RouterConfig.SETTING)
-public class SettingActivityActivity extends BaseLoadActivity implements SettingActivityContract.ISaleUnitNameAddView {
+public class SettingActivity extends BaseLoadActivity implements SettingContract.ISaleUnitNameAddView {
     @BindView(R.id.txt_version)
     TextView mTxtVersion;
-    private SettingActivityPresenter mPresenter;
+    private SettingPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class SettingActivityActivity extends BaseLoadActivity implements Setting
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        mPresenter = SettingActivityPresenter.newInstance();
+        mPresenter = SettingPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -57,7 +58,8 @@ public class SettingActivityActivity extends BaseLoadActivity implements Setting
         if (view.getId() == R.id.img_close) {
             finish();
         } else if (view.getId() == R.id.txt_logout) {
-            mPresenter.logout();
+            if (BuildConfig.isDebug) logoutSuccess();
+            else mPresenter.logout();
         } else if (view.getId() == R.id.txt_price_ratio) {
             RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO);
         } else if (view.getId() == R.id.txt_bill_setting) {

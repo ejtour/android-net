@@ -65,7 +65,7 @@ public class ExportDialog extends BaseDialog {
         if (getWindow() == null) {
             return;
         }
-        getWindow().setBackgroundDrawableResource(R.drawable.bg_white_radius_5_solid);
+        getWindow().setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
         if (mEdit.getVisibility() == View.VISIBLE)
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         getWindow().getAttributes().width = UIUtils.getScreenWidth(getContext()) - UIUtils.dip2px(110);

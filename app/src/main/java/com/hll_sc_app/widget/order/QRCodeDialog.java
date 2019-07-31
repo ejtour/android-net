@@ -75,7 +75,7 @@ public class QRCodeDialog extends Dialog {
         if (getWindow() == null) {
             return;
         }
-        getWindow().setBackgroundDrawableResource(R.drawable.bg_white_radius_5_solid);
+        getWindow().setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
         getWindow().getAttributes().width = UIUtils.dip2px(300);
         setCancelable(false);
     }

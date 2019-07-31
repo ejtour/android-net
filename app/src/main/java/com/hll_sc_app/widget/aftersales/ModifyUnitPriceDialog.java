@@ -53,7 +53,7 @@ public class ModifyUnitPriceDialog extends BaseDialog {
         if (getWindow() != null) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
             getWindow().getAttributes().width = UIUtils.getScreenWidth(getContext()) - UIUtils.dip2px(110);
-            getWindow().setBackgroundDrawableResource(R.drawable.bg_white_radius_5_solid);
+            getWindow().setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
         }
     }
 

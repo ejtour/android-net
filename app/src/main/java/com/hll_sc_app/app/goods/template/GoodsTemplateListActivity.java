@@ -33,6 +33,7 @@ import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Tuple;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -141,7 +142,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-                , UIUtils.dip2px(1)));
+            , UIUtils.dip2px(1)));
         mAdapter = new GoodsTemplateAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             GoodsBean goodsBean = (GoodsBean) adapter.getItem(position);
@@ -244,12 +245,24 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
 
     @Override
     public String getLabelIds() {
-        return mLabelFilterWindow != null ? TextUtils.join(",", mLabelFilterWindow.getSelectList()) : null;
+        String ids = null;
+        if (mLabelFilterWindow != null) {
+            Tuple<List<String>, List<String>> tuple = mLabelFilterWindow.getSelectList();
+            ids = TextUtils.join(",", tuple.getKey2());
+            mTxtLabel.setText(TextUtils.join(",", tuple.getKey1()));
+        }
+        return ids;
     }
 
     @Override
     public String getCategoryThreeIds() {
-        return mCategoryWindow != null ? mCategoryWindow.getCategoryThreeIds() : null;
+        String ids = null;
+        if (mCategoryWindow != null) {
+            Tuple<List<String>, List<String>> tuple = mCategoryWindow.getCategoryThreeIds();
+            ids = TextUtils.join(",", tuple.getKey2());
+            mTxtCategory.setText(TextUtils.join(",", tuple.getKey1()));
+        }
+        return ids;
     }
 
     @Override
@@ -297,7 +310,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     }
 
     @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck, R.id.rl_category, R.id.rl_label
-            , R.id.rl_filter})
+        , R.id.rl_filter})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.text_commit:
@@ -380,9 +393,9 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         protected void convert(BaseViewHolder helper, GoodsBean bean) {
             helper.getView(R.id.img_check).setSelected(bean.isCheck());
             ((GlideImageView) helper.setText(R.id.txt_specsContent, !CommonUtils.isEmpty(bean.getSpecs()) ?
-                    "规格：" + bean.getSpecs().get(0).getSpecContent() : "")
-                    .setText(R.id.txt_productName, bean.getProductName())
-                    .getView(R.id.img_imgUrl)).setImageURL(bean.getImgUrl());
+                "规格：" + bean.getSpecs().get(0).getSpecContent() : "")
+                .setText(R.id.txt_productName, bean.getProductName())
+                .getView(R.id.img_imgUrl)).setImageURL(bean.getImgUrl());
         }
     }
 }

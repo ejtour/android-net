@@ -1,7 +1,7 @@
 package com.hll_sc_app.app.setting.account.unbindmainaccount;
 
 import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.app.setting.SettingActivityPresenter;
+import com.hll_sc_app.app.setting.SettingPresenter;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.UserBean;
@@ -60,7 +60,7 @@ public class UnbindMainAccountPresent implements IUnbindMainAccountContract.IPre
      */
     @Override
     public void logout() {
-        SettingActivityPresenter.logoutObservable()
+        SettingPresenter.logoutObservable()
                 .subscribe(new BaseCallback<Object>() {
                     @Override
                     public void onFailure(UseCaseException e) {

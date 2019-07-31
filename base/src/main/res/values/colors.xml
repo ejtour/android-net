@@ -36,6 +36,7 @@
     <color name="base_activity_bg">#F3F3F3</color>
     <color name="base_color_divider">#EEEEEE</color>
     <color name="base_press_bg">#0A000000</color>
+    <color name="base_colorF4F5F9">#F4F5F9</color>
 
 
     <color name="base_color_bg_btn_normal">#03a9f4</color>
