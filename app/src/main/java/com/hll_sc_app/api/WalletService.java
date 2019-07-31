@@ -6,11 +6,14 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.wallet.AuthResp;
+import com.hll_sc_app.bean.wallet.AreaInfo;
+import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.wallet.RechargeResp;
 import com.hll_sc_app.bean.wallet.WalletStatusResp;
 import com.hll_sc_app.bean.wallet.details.DetailsExportReq;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -47,5 +50,13 @@ public interface WalletService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:101062")
-    Observable<BaseResp<AuthResp>> queryAuthInfo(@Body BaseMapReq body);
+    Observable<BaseResp<AuthInfo>> queryAuthInfo(@Body BaseMapReq body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101057")
+    Observable<BaseResp<List<AreaInfo>>> queryAreaList(@Body BaseMapReq body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101054")
+    Observable<BaseResp<Object>> createAccount(@Body BaseReq<AuthInfo> body);
 }

@@ -8,7 +8,7 @@ import android.os.Parcelable;
  * @since 2019/7/30
  */
 
-public class AuthResp implements Parcelable {
+public class AuthInfo implements Parcelable {
 
     private int groupType=0;
     private String busiPermissionBeginDate;
@@ -118,7 +118,7 @@ public class AuthResp implements Parcelable {
     private String comBankName;
     private String licenseCityCode;
     private String weixinMPAPPID;
-    public AuthResp() {
+    public AuthInfo() {
     }
 
     public String getImgContactProxyContract() {
@@ -1102,7 +1102,7 @@ public class AuthResp implements Parcelable {
         dest.writeString(this.weixinMPAPPID);
     }
 
-    protected AuthResp(Parcel in) {
+    protected AuthInfo(Parcel in) {
         this.groupType = in.readInt();
         this.busiPermissionBeginDate = in.readString();
         this.busiPermissionEndDate = in.readString();
@@ -1213,15 +1213,15 @@ public class AuthResp implements Parcelable {
         this.weixinMPAPPID = in.readString();
     }
 
-    public static final Creator<AuthResp> CREATOR = new Creator<AuthResp>() {
+    public static final Creator<AuthInfo> CREATOR = new Creator<AuthInfo>() {
         @Override
-        public AuthResp createFromParcel(Parcel source) {
-            return new AuthResp(source);
+        public AuthInfo createFromParcel(Parcel source) {
+            return new AuthInfo(source);
         }
 
         @Override
-        public AuthResp[] newArray(int size) {
-            return new AuthResp[size];
+        public AuthInfo[] newArray(int size) {
+            return new AuthInfo[size];
         }
     };
 }

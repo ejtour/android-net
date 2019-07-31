@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.wallet.account.create.CreateAccountActivity;
 import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
 import com.hll_sc_app.app.wallet.status.NoneFragment;
 import com.hll_sc_app.app.wallet.status.NormalFragment;
@@ -97,7 +98,9 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK &&
-                (requestCode == RechargeActivity.REQ_CODE || requestCode == WithdrawActivity.REQ_CODE)) {
+                (requestCode == RechargeActivity.REQ_CODE ||
+                        requestCode == WithdrawActivity.REQ_CODE ||
+                        requestCode == CreateAccountActivity.REQ_CODE)) {
             mPresenter.start();
         }
     }

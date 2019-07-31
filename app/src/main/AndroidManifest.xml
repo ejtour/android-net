@@ -208,11 +208,11 @@
 
         <activity
             android:name=".app.deliverymanage.minimum.detail.DeliveryMinimumDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.minimum.detail.area.DeliveryAreaActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.ageing.DeliveryAgeingActivity"
@@ -225,7 +225,6 @@
         <activity
             android:name=".app.deliverymanage.ageing.detail.period.DeliveryPeriodActivity"
             android:screenOrientation="portrait" />
-        >>>>>>> origin/dev
 
         <activity
             android:name=".app.deliverymanage.deliverytype.DeliveryTypeSetActivity"
@@ -466,6 +465,10 @@
 
         <activity
             android:name=".app.wallet.account.my.MyAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.account.create.CreateAccountActivity"
             android:screenOrientation="portrait" />
 
         <activity
