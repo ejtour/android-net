@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.deliverymanage.minimum.detail;
 
 import com.hll_sc_app.api.DeliveryManageService;
+import com.hll_sc_app.app.deliverymanage.minimum.area.DeliveryAreaActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.bean.BaseMapReq;

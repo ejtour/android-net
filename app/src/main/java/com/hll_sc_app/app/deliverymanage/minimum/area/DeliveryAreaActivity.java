@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.deliverymanage.minimum.detail;
+package com.hll_sc_app.app.deliverymanage.minimum.area;
 
 import android.content.Context;
 import android.graphics.Color;

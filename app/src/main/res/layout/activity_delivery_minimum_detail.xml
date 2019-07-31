@@ -106,7 +106,7 @@
         android:id="@+id/ll_settings"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/base_white"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
@@ -133,6 +133,19 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/txt_purchaser"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="选择采购商"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+    <TextView
+        android:id="@+id/txt_tips"
         android:layout_width="match_parent"
         android:layout_height="37dp"
         android:gravity="center_vertical"
@@ -141,13 +154,20 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerView_area"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/base_white"
         android:clipToPadding="false"
         android:padding="10dp"
+        android:visibility="gone"
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
         app:spanCount="4"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView_purchaser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
 </LinearLayout>

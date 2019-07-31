@@ -55,8 +55,10 @@ import butterknife.OnClick;
 public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements DeliveryMinimumDetailContract.IDeliveryMinimumDetailView {
     public static final String TYPE_AREA = "0";
     public static final Pattern PRICE = Pattern.compile("^[0-9]{1,6}([.]{1}[0-9]{0,2})?$");
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.recyclerView_area)
+    RecyclerView mRecyclerViewArea;
+    @BindView(R.id.recyclerView_purchaser)
+    RecyclerView mRecyclerViewPurchaser;
     @Autowired(name = "parcelable")
     DeliveryMinimumBean mBean;
     @BindView(R.id.txt_title)
@@ -67,7 +69,10 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     EditText mEdtSendPrice;
     @BindView(R.id.txt_settings)
     TextView mTxtSettings;
-
+    @BindView(R.id.txt_tips)
+    TextView mTxtTips;
+    @BindView(R.id.txt_purchaser)
+    TextView mTxtPurchaser;
     private MinimumListAdapter mAdapter;
     private SingleSelectionDialog mDialog;
     private DeliveryMinimumDetailPresenter mPresenter;
@@ -105,6 +110,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             mTxtSettings.setTag(TYPE_AREA);
             mTxtSettings.setText("根据地区设置");
         }
+        showType();
         mEdtSendPrice.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
             if (s.toString().startsWith(".")) {
                 s.insert(0, TYPE_AREA);
@@ -114,7 +120,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 showToast("起订金额7位数以内");
             }
         });
-        mRecyclerView.addItemDecoration(new GirdSimpleDecoration(4));
+        mRecyclerViewArea.addItemDecoration(new GirdSimpleDecoration(4));
         mAdapter = new MinimumListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             ProvinceListBean bean = (ProvinceListBean) adapter.getItem(position);
@@ -122,15 +128,35 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_AREA, bean);
             }
         });
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerViewArea.setAdapter(mAdapter);
     }
 
     private boolean isAdd() {
         return mBean == null;
     }
 
+    /**
+     * 根据选择的不同类型展示不同的 UI
+     */
+    private void showType() {
+        if (isAreaType()) {
+            // 地区选择
+            mTxtTips.setText("可选范围");
+            mTxtPurchaser.setVisibility(View.GONE);
+            mRecyclerViewArea.setVisibility(View.VISIBLE);
+            mRecyclerViewPurchaser.setVisibility(View.GONE);
+        } else {
+            // 采购商选择
+            mTxtTips.setText("注意：针对选择的采购商设置起送金额后，不受地区起送金额限制");
+            mTxtPurchaser.setVisibility(View.VISIBLE);
+            mRecyclerViewArea.setVisibility(View.GONE);
+            mRecyclerViewPurchaser.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Subscribe
     public void onEvent(ProvinceListBean bean) {
+        // 根据地区设置
         if (bean == null) {
             return;
         }
@@ -150,7 +176,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         }
     }
 
-    @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_settings, R.id.txt_settings})
+    @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_settings, R.id.txt_settings, R.id.txt_purchaser})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -164,6 +190,10 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 if (isAdd()) {
                     showSettingDialog();
                 }
+                break;
+            case R.id.txt_purchaser:
+                // 选择采购商
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_PURCHASER);
                 break;
             default:
                 break;
@@ -256,15 +286,6 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             }
         }
         return codeList;
-    }
-
-    private void showType() {
-//        if (isAreaType()) {
-//            // 地区选择
-//            mPresenter.processAreaData(null);
-//        } else {
-//            // 采购商选择
-//        }
     }
 
     @Override

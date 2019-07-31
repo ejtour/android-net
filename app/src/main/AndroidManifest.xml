@@ -206,12 +206,17 @@
             android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"
             android:screenOrientation="portrait" />
 
+
+        <activity
+            android:name=".app.deliverymanage.minimum.purchaser.PurchaserMinimumActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".app.deliverymanage.minimum.detail.DeliveryMinimumDetailActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".app.deliverymanage.minimum.detail.DeliveryAreaActivity"
+            android:name=".app.deliverymanage.minimum.area.DeliveryAreaActivity"
             android:screenOrientation="portrait"/>
 
         <activity
