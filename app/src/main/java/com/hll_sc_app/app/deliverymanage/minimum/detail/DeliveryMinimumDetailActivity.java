@@ -34,6 +34,9 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.GirdSimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -80,6 +83,13 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         mPresenter = DeliveryMinimumDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -117,6 +127,27 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
 
     private boolean isAdd() {
         return mBean == null;
+    }
+
+    @Subscribe
+    public void onEvent(ProvinceListBean bean) {
+        if (bean == null) {
+            return;
+        }
+        List<ProvinceListBean> beans = mAdapter.getData();
+        if (!CommonUtils.isEmpty(beans)) {
+            for (int position = 0; position < beans.size(); position++) {
+                ProvinceListBean provinceListBean = beans.get(position);
+                if (TextUtils.equals(provinceListBean.getProvinceCode(), bean.getProvinceCode())) {
+                    provinceListBean.setCityList(bean.getCityList());
+                    provinceListBean.setOptionalNum(bean.getOptionalNum());
+                    provinceListBean.setSelectedNum(bean.getSelectedNum());
+                    provinceListBean.setSelect(bean.getSelectedNum() != 0);
+                    mAdapter.notifyItemChanged(position);
+                    break;
+                }
+            }
+        }
     }
 
     @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_settings, R.id.txt_settings})
@@ -227,13 +258,13 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         return codeList;
     }
 
-    @Override
-    public boolean isAreaType() {
-        boolean flag = false;
-        if (mTxtSettings.getTag() != null) {
-            flag = TextUtils.equals(TYPE_AREA, (CharSequence) mTxtSettings.getTag());
-        }
-        return flag;
+    private void showType() {
+//        if (isAreaType()) {
+//            // 地区选择
+//            mPresenter.processAreaData(null);
+//        } else {
+//            // 采购商选择
+//        }
     }
 
     @Override
@@ -263,13 +294,13 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             .navigation(this);
     }
 
-    private void showType() {
-//        if (isAreaType()) {
-//            // 地区选择
-//            mPresenter.processAreaData(null);
-//        } else {
-//            // 采购商选择
-//        }
+    @Override
+    public boolean isAreaType() {
+        boolean flag = false;
+        if (mTxtSettings.getTag() != null) {
+            flag = TextUtils.equals(TYPE_AREA, (CharSequence) mTxtSettings.getTag());
+        }
+        return flag;
     }
 
     class MinimumListAdapter extends BaseQuickAdapter<ProvinceListBean, BaseViewHolder> {

@@ -211,7 +211,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".app.deliverymanage.minimum.detail.area.DeliveryAreaActivity"
+            android:name=".app.deliverymanage.minimum.detail.DeliveryAreaActivity"
             android:screenOrientation="portrait"/>
 
         <activity

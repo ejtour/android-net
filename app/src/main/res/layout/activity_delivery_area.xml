@@ -49,8 +49,7 @@
         android:layout_height="45dp"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingLeft="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,9 +59,10 @@
 
         <ImageView
             android:id="@+id/img_allCheck"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
             android:src="@drawable/bg_selector_check_box_circular"/>
     </RelativeLayout>
 

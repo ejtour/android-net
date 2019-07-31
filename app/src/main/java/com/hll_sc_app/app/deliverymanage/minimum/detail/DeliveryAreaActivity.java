@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.deliverymanage.minimum.detail.area;
+package com.hll_sc_app.app.deliverymanage.minimum.detail;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -32,6 +32,8 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.FileManager;
 import com.hll_sc_app.widget.SimpleDecoration;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,14 +54,14 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
     public static final String STRING_ALL = "全部";
     @Autowired(name = "parcelable", required = true)
     ProvinceListBean mBean;
-    @BindView(R.id.recyclerView_city)
-    RecyclerView mRecyclerViewCity;
-    @BindView(R.id.recyclerView_area)
-    RecyclerView mRecyclerViewArea;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
     @BindView(R.id.img_allCheck)
     ImageView mImgAllCheck;
+    @BindView(R.id.recyclerView_city)
+    RecyclerView mRecyclerViewCity;
+    @BindView(R.id.recyclerView_area)
+    RecyclerView mRecyclerViewArea;
 
     private AreaListAdapter mAreaAdapter;
     private CityListAdapter mCityAdapter;
@@ -76,8 +78,8 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
     }
 
     private void initView() {
-        mTxtTitle.setText(mBean.getProvinceName());
         mData = processData();
+        mTxtTitle.setText(mBean.getProvinceName());
 
         mAreaAdapter = new AreaListAdapter();
         mRecyclerViewArea.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
@@ -287,7 +289,53 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
     }
 
     private void toSave() {
-
+        int selectedNum = 0;
+        int disableCount = 0;
+        int count = 0;
+        ProvinceListBean provinceListBean = new ProvinceListBean();
+        provinceListBean.setProvinceCode(mBean.getProvinceCode());
+        provinceListBean.setProvinceName(mBean.getProvinceName());
+        provinceListBean.setOptionalNum(0);
+        // 市
+        List<AreaBean.ChildBeanX> seconds = mCityAdapter.getData();
+        List<CityListBean> cityListBeans = new ArrayList<>();
+        if (!CommonUtils.isEmpty(seconds)) {
+            for (AreaBean.ChildBeanX second : seconds) {
+                List<AreaBean.ChildBeanX.ChildBean> thirds = second.getChild();
+                if (!CommonUtils.isEmpty(thirds)) {
+                    // 减一是因为有个全部 item
+                    count += (thirds.size() - 1);
+                    List<AreaListBean> areaListBeans = new ArrayList<>();
+                    for (AreaBean.ChildBeanX.ChildBean third : thirds) {
+                        if (TextUtils.equals("2", third.getFlag()) || TextUtils.equals(third.getName(), STRING_ALL)) {
+                            continue;
+                        }
+                        AreaListBean areaListBean = new AreaListBean();
+                        areaListBean.setAreaCode(third.getCode());
+                        areaListBean.setAreaName(third.getName());
+                        areaListBean.setFlag(third.getFlag());
+                        areaListBean.setDivideName(third.getDivideName());
+                        if (TextUtils.equals("3", third.getFlag())) {
+                            selectedNum++;
+                        }
+                        areaListBeans.add(areaListBean);
+                    }
+                    if (!CommonUtils.isEmpty(areaListBeans)) {
+                        CityListBean cityListBean = new CityListBean();
+                        cityListBean.setCityCode(second.getCode());
+                        cityListBean.setCityName(second.getName());
+                        cityListBean.setAreaList(areaListBeans);
+                        disableCount += areaListBeans.size();
+                        cityListBeans.add(cityListBean);
+                    }
+                }
+            }
+        }
+        provinceListBean.setCityList(cityListBeans);
+        provinceListBean.setOptionalNum(count - disableCount);
+        provinceListBean.setSelectedNum(selectedNum);
+        EventBus.getDefault().post(provinceListBean);
+        finish();
     }
 
     /**
