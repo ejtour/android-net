@@ -49,6 +49,10 @@ public class RouterConfig {
      */
     public static final String DELIVERY_MINIMUM_PURCHASER = "/activity/delivery/minimum/purchaser";
     /**
+     * 配送管理-起订金额设置-选择采购商门店
+     */
+    public static final String DELIVERY_MINIMUM_PURCHASER_SHOP = "/activity/delivery/minimum/purchaserShop";
+    /**
      * 配送管理-起订金额设置-详情
      */
     public static final String DELIVERY_MINIMUM_DETAIL = "/activity/delivery/minimum/detail";

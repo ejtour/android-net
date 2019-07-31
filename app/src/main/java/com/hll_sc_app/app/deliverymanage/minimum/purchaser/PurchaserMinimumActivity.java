@@ -21,7 +21,6 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.agreementprice.quotation.QuotationBean;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -84,9 +83,10 @@ public class PurchaserMinimumActivity extends BaseLoadActivity implements Purcha
             , UIUtils.dip2px(1)));
         mAdapter = new PurchaserListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            QuotationBean bean = (QuotationBean) adapter.getItem(position);
+            PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER_SHOP, this, bean);
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_PURCHASER_SHOP, bean.getPurchaserID(),
+                    bean.getPurchaserName());
             }
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商").create();

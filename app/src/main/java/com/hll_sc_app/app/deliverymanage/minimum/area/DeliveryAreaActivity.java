@@ -77,50 +77,24 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
         initView();
     }
 
-    private void initView() {
-        mData = processData();
-        mTxtTitle.setText(mBean.getProvinceName());
-
-        mAreaAdapter = new AreaListAdapter();
-        mRecyclerViewArea.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
-        mAreaAdapter.setOnItemClickListener((adapter, view, position) -> {
-            AreaBean.ChildBeanX.ChildBean childBean = (AreaBean.ChildBeanX.ChildBean) adapter.getItem(position);
-            if (childBean == null) {
-                return;
+    /**
+     * 获取城市数据（不包含海外数据）
+     *
+     * @param context 上下文
+     * @return 城市数据
+     */
+    public static List<AreaBean> getAreaListWithOutOverSeas(Context context) {
+        List<AreaBean> areaBeans = null;
+        String json = FileManager.getAssetsData("productarea.json", context);
+        if (!TextUtils.isEmpty(json)) {
+            areaBeans = new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
+            }.getType());
+            if (!CommonUtils.isEmpty(areaBeans)) {
+                // 去掉海外的城市
+                areaBeans.remove(areaBeans.size() - 1);
             }
-            if (TextUtils.equals(childBean.getFlag(), "1")) {
-                showToast("该地区已在\"" + childBean.getDivideName() + "\"组选择");
-                return;
-            }
-            // 全选
-            if (TextUtils.equals(childBean.getName(), STRING_ALL)) {
-                selectAllArea(TextUtils.equals(childBean.getFlag(), "2"));
-                checkSelectAllCity();
-                return;
-            }
-
-            // 普通选择
-            if (TextUtils.equals(childBean.getFlag(), "2")) {
-                childBean.setFlag("3");
-            } else if (TextUtils.equals(childBean.getFlag(), "3")) {
-                childBean.setFlag("2");
-            }
-            adapter.notifyItemChanged(position);
-            checkSelectAllArea();
-            checkSelectAllCity();
-        });
-        mRecyclerViewArea.setAdapter(mAreaAdapter);
-
-        mCityAdapter = new CityListAdapter(mData);
-        mCityAdapter.setOnItemClickListener((adapter, view, position) -> selectCityBean(adapter, position));
-        mRecyclerViewCity.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
-        mRecyclerViewCity.setAdapter(mCityAdapter);
-        // 默认选中第一个
-        selectCityBean(mCityAdapter, 0);
-        // 只有一个城市的直接选择地区
-        if (!CommonUtils.isEmpty(mData) && mData.size() == 1) {
-            mRecyclerViewCity.setVisibility(View.GONE);
         }
+        return areaBeans;
     }
 
     private List<AreaBean.ChildBeanX> processData() {
@@ -169,6 +143,64 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
             }
         }
         return list;
+    }
+
+    private void initView() {
+        mData = processData();
+        mTxtTitle.setText(mBean.getProvinceName());
+        mRecyclerViewArea.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mAreaAdapter = new AreaListAdapter();
+        mAreaAdapter.setOnItemClickListener((adapter, view, position) -> selectShopBean(adapter, position));
+        mRecyclerViewArea.setAdapter(mAreaAdapter);
+        mRecyclerViewCity.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mCityAdapter = new CityListAdapter(mData);
+        mCityAdapter.setOnItemClickListener((adapter, view, position) -> selectCityBean(adapter, position));
+        mRecyclerViewCity.setAdapter(mCityAdapter);
+        // 默认选中第一个
+        selectCityBean(mCityAdapter, 0);
+        // 只有一个城市的直接选择地区
+        if (!CommonUtils.isEmpty(mData) && mData.size() == 1) {
+            mRecyclerViewCity.setVisibility(View.GONE);
+        }
+    }
+
+    private void selectShopBean(BaseQuickAdapter adapter, int position) {
+        AreaBean.ChildBeanX.ChildBean childBean = (AreaBean.ChildBeanX.ChildBean) adapter.getItem(position);
+        if (childBean == null) {
+            return;
+        }
+        if (TextUtils.equals(childBean.getFlag(), "1")) {
+            DeliveryAreaActivity.this.showToast("该地区已在\"" + childBean.getDivideName() + "\"组选择");
+            return;
+        }
+        // 全选
+        if (TextUtils.equals(childBean.getName(), STRING_ALL)) {
+            DeliveryAreaActivity.this.selectAllArea(TextUtils.equals(childBean.getFlag(), "2"));
+            DeliveryAreaActivity.this.checkSelectAllCity();
+            return;
+        }
+
+        // 普通选择
+        if (TextUtils.equals(childBean.getFlag(), "2")) {
+            childBean.setFlag("3");
+        } else if (TextUtils.equals(childBean.getFlag(), "3")) {
+            childBean.setFlag("2");
+        }
+        adapter.notifyItemChanged(position);
+        DeliveryAreaActivity.this.checkSelectAllArea();
+        DeliveryAreaActivity.this.checkSelectAllCity();
+    }
+
+    private void selectCityBean(BaseQuickAdapter adapter, int position) {
+        AreaBean.ChildBeanX cityBean = (AreaBean.ChildBeanX) adapter.getItem(position);
+        if (cityBean == null) {
+            return;
+        }
+        unSelectAllCity();
+        cityBean.setSelect(true);
+        adapter.notifyDataSetChanged();
+        mAreaAdapter.setNewData(cityBean.getChild());
+        checkSelectAllArea();
     }
 
     /**
@@ -228,38 +260,6 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
                 mAreaAdapter.notifyItemChanged(0);
             }
         }
-    }
-
-    private void selectCityBean(BaseQuickAdapter adapter, int position) {
-        AreaBean.ChildBeanX cityBean = (AreaBean.ChildBeanX) adapter.getItem(position);
-        if (cityBean == null) {
-            return;
-        }
-        unSelectAllCity();
-        cityBean.setSelect(true);
-        adapter.notifyDataSetChanged();
-        mAreaAdapter.setNewData(cityBean.getChild());
-        checkSelectAllArea();
-    }
-
-    /**
-     * 获取城市数据（不包含海外数据）
-     *
-     * @param context 上下文
-     * @return 城市数据
-     */
-    public static List<AreaBean> getAreaListWithOutOverSeas(Context context) {
-        List<AreaBean> areaBeans = null;
-        String json = FileManager.getAssetsData("productarea.json", context);
-        if (!TextUtils.isEmpty(json)) {
-            areaBeans = new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
-            }.getType());
-            if (!CommonUtils.isEmpty(areaBeans)) {
-                // 去掉海外的城市
-                areaBeans.remove(areaBeans.size() - 1);
-            }
-        }
-        return areaBeans;
     }
 
     private void unSelectAllCity() {
@@ -371,7 +371,6 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
                 .setBackgroundColor(R.id.txt_categoryName, item.isSelect() ? 0xFFF3F3F3 : 0xFFFFFFFF);
         }
     }
-
 
     class AreaListAdapter extends BaseQuickAdapter<AreaBean.ChildBeanX.ChildBean, BaseViewHolder> {
         AreaListAdapter() {
