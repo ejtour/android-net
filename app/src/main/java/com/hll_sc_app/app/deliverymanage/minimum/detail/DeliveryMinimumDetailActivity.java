@@ -23,6 +23,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.delivery.AreaListBean;
 import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
@@ -107,8 +108,8 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         mAdapter = new MinimumListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             ProvinceListBean bean = (ProvinceListBean) adapter.getItem(position);
-            if (bean == null) {
-                return;
+            if (bean != null) {
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_AREA, bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -193,15 +194,6 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         mDialog.show();
     }
 
-    @Override
-    public boolean isAreaType() {
-        boolean flag = false;
-        if (mTxtSettings.getTag() != null) {
-            flag = TextUtils.equals(TYPE_AREA, (CharSequence) mTxtSettings.getTag());
-        }
-        return flag;
-    }
-
     /**
      * 获取已选的区编码列表
      *
@@ -233,6 +225,15 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             }
         }
         return codeList;
+    }
+
+    @Override
+    public boolean isAreaType() {
+        boolean flag = false;
+        if (mTxtSettings.getTag() != null) {
+            flag = TextUtils.equals(TYPE_AREA, (CharSequence) mTxtSettings.getTag());
+        }
+        return flag;
     }
 
     @Override

@@ -1,7 +1,10 @@
-package com.hll_sc_app.app.deliverymanage.minimum.detail;
+package com.hll_sc_app.app.deliverymanage.minimum.detail.area;
 
+import android.text.TextUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hll_sc_app.api.DeliveryManageService;
-import com.hll_sc_app.app.deliverymanage.minimum.detail.area.DeliveryAreaActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -15,6 +18,7 @@ import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.FileManager;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
@@ -25,16 +29,16 @@ import java.util.Map;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
- * 起送金额详情
+ * 地区选择
  *
  * @author zhuyingsong
- * @date 2019/7/30
+ * @date 2019/7/31
  */
-public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailContract.IDeliveryMinimumDetailPresenter {
-    private DeliveryMinimumDetailContract.IDeliveryMinimumDetailView mView;
+public class DeliveryAreaPresenter implements DeliveryAreaContract.IDeliveryMinimumDetailPresenter {
+    private DeliveryAreaContract.IDeliveryMinimumDetailView mView;
 
-    static DeliveryMinimumDetailPresenter newInstance() {
-        return new DeliveryMinimumDetailPresenter();
+    static DeliveryAreaPresenter newInstance() {
+        return new DeliveryAreaPresenter();
     }
 
     @Override
@@ -43,7 +47,7 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
     }
 
     @Override
-    public void register(DeliveryMinimumDetailContract.IDeliveryMinimumDetailView view) {
+    public void register(DeliveryAreaContract.IDeliveryMinimumDetailView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
@@ -87,12 +91,21 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
                 map.put(bean.getProvinceCode(), bean);
             }
         }
-        List<AreaBean> areaBeans = DeliveryAreaActivity.getAreaListWithOutOverSeas(mView.getContext());
-        if (CommonUtils.isEmpty(areaBeans)) {
+        String json = FileManager.getAssetsData("productarea.json", mView.getContext());
+        if (TextUtils.isEmpty(json)) {
+            return;
+        }
+        List<AreaBean> list = new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
+        }.getType());
+        if (!CommonUtils.isEmpty(list)) {
+            // 去掉海外的城市
+            list.remove(list.size() - 1);
+        }
+        if (CommonUtils.isEmpty(list)) {
             return;
         }
         List<ProvinceListBean> provinceListBeans = new ArrayList<>();
-        for (AreaBean bean : areaBeans) {
+        for (AreaBean bean : list) {
             ProvinceListBean provinceListBean = new ProvinceListBean();
             provinceListBean.setProvinceCode(bean.getCode());
             provinceListBean.setProvinceName(bean.getName());
