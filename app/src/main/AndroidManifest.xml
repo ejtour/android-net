@@ -201,6 +201,24 @@
             android:name=".app.deliverymanage.DeliveryManageActivity"
             android:screenOrientation="portrait" />
 
+
+        <activity
+            android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.ageing.DeliveryAgeingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.ageing.detail.DeliveryAgeingDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.ageing.detail.period.DeliveryPeriodActivity"
+            android:screenOrientation="portrait" />
+        >>>>>>> origin/dev
+
         <activity
             android:name=".app.deliverymanage.deliverytype.DeliveryTypeSetActivity"
             android:screenOrientation="portrait" />
@@ -408,6 +426,10 @@
         <activity
             android:name=".app.report.productSale.ProductSalesActivity"
             android:screenOrientation="portrait" />
+        <!--客户销售汇总搜索-->
+        <activity
+            android:name=".app.report.search.ReportSearchActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.search.SearchActivity"
@@ -415,6 +437,31 @@
 
         <activity
             android:name=".app.report.refundReason.RefundReasonActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".app.wallet.details.list.DetailsListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.details.show.DetailsShowActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.recharge.RechargeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.withdraw.WithdrawActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.account.my.MyAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.WalletActivity"
             android:screenOrientation="portrait" />
 
         <provider

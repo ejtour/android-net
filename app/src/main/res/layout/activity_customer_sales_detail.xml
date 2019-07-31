@@ -18,14 +18,43 @@
             android:id="@+id/img_back"
             style="@style/BtnClose"/>
 
-        <com.hll_sc_app.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="287dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@color/base_colorPrimary"
-            android:layout_toLeftOf="@+id/txt_options"
-            android:layout_toRightOf="@+id/img_back"/>
+            android:layout_toRightOf="@+id/img_back"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="15dp">
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="287dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/bg_fafafa_radius_20_solid"
+                android:drawableLeft="@drawable/ic_search_aeaeae"
+                android:drawablePadding="10dp"
+                android:hint="搜索"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                android:textColor="@color/base_white"
+                android:textColorHint="#FFFFFF" />
+            <ImageView
+                android:id="@+id/img_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_clear_search"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/txt_options"
@@ -44,15 +73,29 @@
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="19dp">
+           <TextView
+               android:id="@+id/txt_date_name_title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:drawableLeft="@drawable/ic_date_filter"
+               android:layout_alignParentLeft="true"
+               android:layout_centerVertical="true"
+               android:drawablePadding="5dp"
+               android:text="今日"
+               android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+           <ImageView
+               android:id="@+id/report_date_arrow"
+               android:layout_width="7dp"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_arrow_drop"
+               android:layout_marginLeft="3dp"
+               android:layout_gravity="center_vertical"/>
+       </LinearLayout>
 
-        <TextView
-            android:id="@+id/txt_date_name_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="今日"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
 
         <TextView
             android:id="@+id/txt_date_name"
@@ -95,12 +138,10 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:padding="10dp"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
             </RelativeLayout>
-
         </com.hll_sc_app.widget.SyncHorizontalScrollView>
-
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.hll_sc_app.widget.SyncHorizontalScrollView
@@ -114,15 +155,14 @@
             android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/base_white">
+            android:background="@drawable/bg_customer_total">
             <View
-                android:layout_width="90dp"
+                android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="@color/base_white"/>
-
             <TextView
                 android:id="@+id/txt_total"
-                android:layout_width="wrap_content"
+                android:layout_width="90dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:singleLine="true"

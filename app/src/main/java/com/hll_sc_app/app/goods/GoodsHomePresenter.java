@@ -36,10 +36,6 @@ public class GoodsHomePresenter implements GoodsHomeContract.IGoodsHomePresenter
     }
 
     @Override
-    public void start() {
-    }
-
-    @Override
     public void register(GoodsHomeContract.IGoodsHomeView view) {
         this.mView = view;
     }

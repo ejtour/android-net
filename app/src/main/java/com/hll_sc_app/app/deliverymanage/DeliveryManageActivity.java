@@ -45,6 +45,12 @@ public class DeliveryManageActivity extends BaseLoadActivity {
             case R.id.txt_DeliveryType:
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_SET);
                 break;
+            case R.id.txt_ageing:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_AGEING_MANAGE);
+                break;
+            case R.id.txt_minimum:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM);
+                break;
             default:
                 break;
         }

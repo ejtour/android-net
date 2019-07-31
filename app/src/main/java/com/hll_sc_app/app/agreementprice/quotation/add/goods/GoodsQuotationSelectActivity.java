@@ -138,7 +138,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         });
         mRecyclerViewProduct.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewProduct.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
-                R.color.base_color_divider), UIUtils.dip2px(1)));
+            R.color.base_color_divider), UIUtils.dip2px(1)));
         mAdapter = new GoodsSelectListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             SkuGoodsBean bean = (SkuGoodsBean) adapter.getItem(position);
@@ -227,7 +227,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     }
 
     @Override
-    public void showList(List<SkuGoodsBean> list, boolean append, int total) {
+    public void showList(List<SkuGoodsBean> list, boolean append) {
         if (!CommonUtils.isEmpty(list)) {
             for (SkuGoodsBean bean : list) {
                 if (contains(bean)) {
@@ -236,7 +236,9 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
             }
         }
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }
@@ -246,7 +248,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
             mEmptyView.setTips("该分类暂无商品数据");
         }
         mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(total != mAdapter.getItemCount());
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
         showBottomCount();
     }
 
@@ -342,8 +344,8 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         @Override
         protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
-                    .setText(R.id.txt_specContent, item.getSpecContent())
-                    .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
+                .setText(R.id.txt_specContent, item.getSpecContent())
+                .setText(R.id.txt_productPrice, "¥" + CommonUtils.formatNumber(item.getProductPrice()));
             helper.getView(R.id.img_check).setSelected(item.isSelected());
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
         }

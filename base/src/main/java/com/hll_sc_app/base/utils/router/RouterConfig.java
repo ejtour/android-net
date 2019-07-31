@@ -25,9 +25,25 @@ public class RouterConfig {
      */
     public static final String DELIVERY_MANAGE = "/activity/deliveryManage";
     /**
+     * 配送管理-配送时效管理
+     */
+    public static final String DELIVERY_AGEING_MANAGE = "/activity/deliveryManage/ageing";
+    /**
+     * 配送管理-配送时效管理-新增、编辑界面
+     */
+    public static final String DELIVERY_AGEING_DETAIL = "/activity/deliveryManage/ageing/detail";
+    /**
+     * 配送管理-配送时效管理-新增、编辑界面-配送时段
+     */
+    public static final String DELIVERY_AGEING_DETAIL_PERIOD = "/activity/deliveryManage/ageing/detail/period";
+    /**
      * 配送管理-配送方式设置
      */
     public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";
+    /**
+     * 配送管理-起订金额设置
+     */
+    public static final String DELIVERY_MINIMUM = "/activity/delivery/minimum";
     /**
      * 配送管理-配送方式设置-选择第三方物流公司
      */
@@ -287,11 +303,6 @@ public class RouterConfig {
     public static final String ROOT_HOME_MINE = "/fragment/home/mine";
 
     /**
-     * 订单管理-搜索
-     */
-    public static final String ORDER_SEARCH = "/activity/order/search";
-
-    /**
      * 订单管理-待发货商品总量
      */
     public static final String ORDER_DELIVER = "/activity/order/deliver";
@@ -459,5 +470,65 @@ public class RouterConfig {
      * 退货原因统计
      */
     public static final String REFUND_REASON_STATICS = "/activity/report/refundreason";
+
+    /**
+     * 客户销售汇总搜索
+     */
+    public static final String CUSTOMER_SALE_SEARCH = "/activity/customer/sale/search";
+
+    /**
+     * 我的钱包
+     */
+    public static final String WALLET = "/activity/wallet";
+
+    /**
+     * 我的钱包-明细
+     */
+    public static final String WALLET_DETAILS_LIST = "/activity/wallet/details/list";
+
+    /**
+     * 我的钱包-明细展示
+     */
+    public static final String WALLET_DETAILS_SHOW = "/activity/wallet/details/show";
+
+    /**
+     * 我的钱包-开通账户
+     */
+    public static final String WALLET_ACCOUNT_CREATE = "/activity/wallet/account/create";
+
+    /**
+     * 我的钱包-状态-未开通账户
+     */
+    public static final String WALLET_STATUS_NONE = "/fragment/wallet/status/none";
+
+    /**
+     * 我的钱包-状态-正常开通账户
+     */
+    public static final String WALLET_STATUS_NORMAL = "/fragment/wallet/status/normal";
+
+    /**
+     * 我的钱包-状态-账户核验状态
+     */
+    public static final String WALLET_STATUS_VERIFY = "/fragment/wallet/status/verify";
+
+    /**
+     * 我的钱包-企业认证
+     */
+    public static final String WALLET_ACCOUNT_AUTH = "/activity/wallet/account/auth";
+
+    /**
+     * 我的钱包-我的账号
+     */
+    public static final String WALLET_ACCOUNT_MY = "/activity/wallet/account_my";
+
+    /**
+     * 我的钱包-充值
+     */
+    public static final String WALLET_RECHARGE = "/activity/wallet/recharge";
+
+    /**
+     * 我的钱包-提现
+     */
+    public static final String WALLET_WITHDRAW = "/activity/wallet/withdraw";
 }
 

@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.cooperation.detail.details.basic;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
+import com.hll_sc_app.api.DeliveryManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -48,7 +49,7 @@ public class CooperationDetailsBasicPresenter implements CooperationDetailsBasic
             .put("flg", "2")
             .put("groupID", UserConfig.getGroupID())
             .create();
-        CooperationPurchaserService
+        DeliveryManageService
             .INSTANCE
             .queryDeliveryPeriodList(req)
             .compose(ApiScheduler.getObservableScheduler())

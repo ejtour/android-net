@@ -36,11 +36,6 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
     }
 
     @Override
-    public void start() {
-        // no-op
-    }
-
-    @Override
     public void register(LoginContract.ILoginView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }

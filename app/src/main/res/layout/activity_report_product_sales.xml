@@ -97,6 +97,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/rps_tag_custom" />
 
+            <TextView
+                android:id="@+id/rps_date_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@style/TextAppearance.City22.Little.White"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/rps_tag_custom"
+                app:layout_constraintTop_toBottomOf="@id/rps_tag_custom"
+                tools:text="2018/03/13 - 2018/03/16" />
+
             <View
                 android:id="@+id/rps_summary_bg"
                 android:layout_width="0dp"
@@ -107,7 +118,7 @@
                 android:background="@drawable/base_bg_white_radius_5_solid"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rps_tag_custom" />
+                app:layout_constraintTop_toBottomOf="@id/rps_date_range" />
 
             <View
                 android:id="@+id/rps_div1"

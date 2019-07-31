@@ -16,9 +16,12 @@ import com.hll_sc_app.bean.report.req.ProductDetailReq;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
+import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
 import com.hll_sc_app.bean.report.resp.product.OrderDetailTotalResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -90,4 +93,8 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111077")
     Observable<BaseResp<RefundReasonStaticsResp>> queryRefundReasonStatics(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101024")
+    Observable<BaseResp<List<PurchaserGroupBean>>> queryPurchaser(@Body BaseMapReq body);
 }

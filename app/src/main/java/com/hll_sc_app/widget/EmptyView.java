@@ -222,11 +222,15 @@ public class EmptyView extends ConstraintLayout {
 
         public EmptyView create() {
             final EmptyView view = new EmptyView(P.mContext);
+            if (P.mNetError) {
+                view.setNetError();
+            } else {
+                view.setTips(P.mTips);
+                view.setTipsTitle(P.mTipsTitle);
+                view.setTipsButton(P.mButton);
+                view.setImage(P.mResID);
+            }
             view.setOnActionClickListener(P.mListener);
-            view.setTips(P.mTips);
-            view.setTipsTitle(P.mTipsTitle);
-            view.setTipsButton(P.mButton);
-            view.setImage(P.mResID);
             return view;
         }
     }

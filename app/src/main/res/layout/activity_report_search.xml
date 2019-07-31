@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_back"
+            style="@style/BtnClose"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_back"
+            android:paddingLeft="15dp">
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="287dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_fafafa_radius_20_solid"
+                android:drawableLeft="@drawable/ic_search_aeaeae"
+                android:drawablePadding="10dp"
+                android:hint="搜索"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                android:textColor="@color/base_white"
+                android:textColorHint="#FFFFFF" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_search"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#FFFFFF"
+            android:textSize="13dp"/>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/report_search_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/dp_10"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+</LinearLayout>

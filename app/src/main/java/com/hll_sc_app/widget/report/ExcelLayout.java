@@ -93,6 +93,10 @@ public class ExcelLayout extends LinearLayout {
         }
     }
 
+    public void setEnableLoadMore(boolean loadMore){
+        mRefreshView.setEnableLoadMore(loadMore);
+    }
+
     public class StringArrayAdapter extends BaseQuickAdapter<List<CharSequence>, BaseViewHolder> {
 
         StringArrayAdapter() {

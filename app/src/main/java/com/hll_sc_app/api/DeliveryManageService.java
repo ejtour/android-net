@@ -7,6 +7,10 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyReq;
+import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -61,4 +65,54 @@ public interface DeliveryManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101105")
     Observable<BaseResp<Object>> addDeliveryCompany(@Body BaseReq<DeliveryCompanyReq> req);
+
+    /**
+     * 配送时段列表查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103067")
+    Observable<BaseResp<DeliveryPeriodResp>> queryDeliveryPeriodList(@Body BaseMapReq req);
+
+    /**
+     * 配送时段操作
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103068")
+    Observable<BaseResp<Object>> editDeliveryPeriod(@Body BaseMapReq req);
+
+    /**
+     * 配送时效列表查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103064")
+    Observable<BaseResp<DeliveryPeriodResp>> queryDeliveryAgeingList(@Body BaseMapReq req);
+
+    /**
+     * 配送时效操作
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103065")
+    Observable<BaseResp<Object>> editDeliveryAgeing(@Body BaseMapReq req);
+
+    /**
+     * 起送金额列表查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103037")
+    Observable<BaseResp<List<DeliveryMinimumBean>>> queryDeliveryMinimunList(@Body BaseMapReq req);
 }
