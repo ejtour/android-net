@@ -144,7 +144,7 @@ public class WithdrawActivity extends BaseLoadActivity implements IWithdrawContr
 
     @OnEditorAction(R.id.aww_money_edit)
     public boolean onEditorAction(int actionId) {
-        if (actionId == EditorInfo.IME_ACTION_GO && !TextUtils.isEmpty(mMoneyEdit.getText()))
+        if (actionId == EditorInfo.IME_ACTION_GO && mConfirm.isEnabled())
             withdraw(Float.parseFloat(mMoneyEdit.getText().toString()));
         return true;
     }

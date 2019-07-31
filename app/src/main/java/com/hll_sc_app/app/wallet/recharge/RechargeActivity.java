@@ -158,7 +158,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
 
     @OnEditorAction(R.id.awr_edit)
     public boolean onEditorAction(int actionId) {
-        if (actionId == EditorInfo.IME_ACTION_NEXT && !TextUtils.isEmpty(mEdit.getText()))
+        if (actionId == EditorInfo.IME_ACTION_NEXT && mNextStep.isEnabled())
             recharge();
         return true;
     }
