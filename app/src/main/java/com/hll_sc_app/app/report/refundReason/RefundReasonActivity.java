@@ -78,6 +78,8 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
     ImageView mArrowLeft;
     @BindView(R.id.img_arrow_date)
     ImageView mArrowRight;
+    @BindView(R.id.ll_char_empty)
+    LinearLayout mCharEmpty;
     private Unbinder unbinder;
 
     private DateRangeWindow mDateRangeWindow;
@@ -237,6 +239,8 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
     @Override
     public void querySuccess(RefundReasonStaticsResp staticsResp) {
         if (staticsResp.getRecords().size() > 0) {
+            mCharEmpty.setVisibility(View.GONE);
+            mPie.setVisibility(View.VISIBLE);
             //列表数据
             mAdapter.setNewData(staticsResp.getRecords());
             //饼状图
@@ -247,39 +251,45 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
                 }
                 entries.add(new PieEntry((float) refundReasonBean.getProportion(), refundReasonBean.getRefundReasonDesc()));
             }
-            PieDataSet dataSet = new PieDataSet(entries, "Election Results");
-            //颜色
-            ArrayList<Integer> colors = new ArrayList<>();
-            //设置
-            for (int c : ColorTemplate.VORDIPLOM_COLORS)
-                colors.add(c);
-            for (int c : ColorTemplate.JOYFUL_COLORS)
-                colors.add(c);
-            for (int c : ColorTemplate.COLORFUL_COLORS)
-                colors.add(c);
-            for (int c : ColorTemplate.LIBERTY_COLORS)
-                colors.add(c);
-            for (int c : ColorTemplate.PASTEL_COLORS)
-                colors.add(c);
-            colors.add(ColorTemplate.getHoloBlue());
-            dataSet.setColors(colors);
-            //横线
-            dataSet.setValueLinePart1OffsetPercentage(80.f);
-            dataSet.setValueLinePart1Length(0.2f);
-            dataSet.setValueLinePart2Length(0.4f);
-            //横线值
-            dataSet.setValueTextSize(11f);
-            dataSet.setValueFormatter(new ValueFormatter() {
-                @Override
-                public String getPieLabel(float value, PieEntry pieEntry) {
-                    return String.format("%s: %s", pieEntry.getLabel(), new DecimalFormat("#.##").format(value)) + "%";
-                }
-            });
+            if (entries.size() > 0) {
+                PieDataSet dataSet = new PieDataSet(entries, "Election Results");
+                //颜色
+                ArrayList<Integer> colors = new ArrayList<>();
+                //设置
+                for (int c : ColorTemplate.VORDIPLOM_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.JOYFUL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.COLORFUL_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.LIBERTY_COLORS)
+                    colors.add(c);
+                for (int c : ColorTemplate.PASTEL_COLORS)
+                    colors.add(c);
+                colors.add(ColorTemplate.getHoloBlue());
+                dataSet.setColors(colors);
+                //横线
+                dataSet.setValueLinePart1OffsetPercentage(80.f);
+                dataSet.setValueLinePart1Length(0.2f);
+                dataSet.setValueLinePart2Length(0.4f);
+                //横线值
+                dataSet.setValueTextSize(11f);
+                dataSet.setValueFormatter(new ValueFormatter() {
+                    @Override
+                    public String getPieLabel(float value, PieEntry pieEntry) {
+                        return String.format("%s: %s", pieEntry.getLabel(), new DecimalFormat("#.##").format(value)) + "%";
+                    }
+                });
 
-            dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-            PieData data = new PieData(dataSet);
-            mPie.setData(data);
-            mPie.invalidate();
+                dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+                PieData data = new PieData(dataSet);
+                mPie.setData(data);
+                mPie.invalidate();
+            } else {
+                mCharEmpty.setVisibility(View.VISIBLE);
+                mPie.setVisibility(View.GONE);
+            }
+
         } else {
             mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("您还没有退货原因统计数据").create());
             mAdapter.setNewData(null);

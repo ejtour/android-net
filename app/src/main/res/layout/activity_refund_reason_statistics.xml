@@ -77,6 +77,27 @@
         android:layout_height="240dp"
         android:background="@color/base_white" />
 
+    <LinearLayout
+        android:id="@+id/ll_char_empty"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_char_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="当前日期下没有统计数据噢"
+            android:textColor="@color/color_aeaeae"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
