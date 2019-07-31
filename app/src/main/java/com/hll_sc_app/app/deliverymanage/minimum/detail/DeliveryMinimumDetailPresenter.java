@@ -12,7 +12,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.bean.delivery.AreaListBean;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
@@ -42,6 +42,11 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
     }
 
     @Override
+    public void start() {
+        queryDeliveryMinimumDetail();
+    }
+
+    @Override
     public void register(DeliveryMinimumDetailContract.IDeliveryMinimumDetailView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
@@ -49,14 +54,9 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
     @Override
     public void queryDeliveryMinimumDetail() {
         DeliveryMinimumBean bean = mView.getDeliveryMinimumBean();
-        if (bean == null) {
-            return;
-        }
-        if (TextUtils.equals(bean.getSettings(), "0")) {
-            // 地区
+        if (mView.isAreaType()) {
             queryArea(bean);
         } else {
-            // 采购商
             queryPurchaser(bean);
         }
     }
@@ -83,11 +83,6 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
             });
     }
 
-    /**
-     * 处理地区数据
-     *
-     * @param backList 选中的地区数据
-     */
     @Override
     public void processAreaData(List<ProvinceListBean> backList) {
         Map<String, ProvinceListBean> map = new HashMap<>();
@@ -115,26 +110,10 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
             provinceListBean.setProvinceCode(bean.getCode());
             provinceListBean.setProvinceName(bean.getName());
             if (!map.isEmpty() && map.containsKey(bean.getCode())) {
-                // 省
                 ProvinceListBean backBean = map.get(bean.getCode());
-                provinceListBean.setSelect(true);
-                List<CityListBean> cityListBeans = backBean.getCityList();
-                List<String> codeList = new ArrayList<>();
-                if (!CommonUtils.isEmpty(cityListBeans)) {
-                    for (CityListBean cityListBean : cityListBeans) {
-                        // 市
-                        List<AreaListBean> areaListBeans = cityListBean.getAreaList();
-                        if (!CommonUtils.isEmpty(areaListBeans)) {
-                            // 区
-                            for (AreaListBean areaListBean : areaListBeans) {
-                                if (TextUtils.equals(areaListBean.getFlag(), "3")) {
-                                    codeList.add(areaListBean.getAreaCode());
-                                }
-                            }
-                        }
-                    }
-                }
-                provinceListBean.setCodeList(codeList);
+                provinceListBean.setSelect(backBean.getSelectedNum() != 0);
+                provinceListBean.setCityList(backBean.getCityList());
+                provinceListBean.setSelectedNum(backBean.getSelectedNum());
             }
 
             // 省下面的所有区数量
@@ -150,9 +129,18 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
                         }
                     }
                 }
-                provinceListBean.setAllNum(count);
+                int disableCount = 0;
+                List<CityListBean> disableList = provinceListBean.getCityList();
+                if (!CommonUtils.isEmpty(disableList)) {
+                    for (CityListBean cityListBean : disableList) {
+                        if (!CommonUtils.isEmpty(cityListBean.getAreaList())) {
+                            disableCount += cityListBean.getAreaList().size();
+                        }
+                    }
+                }
+                provinceListBean.setOptionalNum(count - disableCount);
             } else {
-                provinceListBean.setAllNum(0);
+                provinceListBean.setOptionalNum(0);
             }
             provinceListBeans.add(provinceListBean);
         }
@@ -160,13 +148,18 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
     }
 
     private void queryArea(DeliveryMinimumBean bean) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("sendAmountID", bean.getSendAmountID())
-            .put("supplyID", bean.getSupplyID())
-            .put("supplyShopID", bean.getSupplyShopID())
-            .create();
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        if (bean == null) {
+            builder.put("supplyID", UserConfig.getGroupID())
+                .put("settings", "0")
+                .put("sendAmountID", "0");
+        } else {
+            builder.put("sendAmountID", bean.getSendAmountID())
+                .put("supplyID", bean.getSupplyID())
+                .put("supplyShopID", bean.getSupplyShopID());
+        }
         DeliveryManageService.INSTANCE
-            .queryDeliveryMinimumArea(req)
+            .queryDeliveryMinimumArea(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())

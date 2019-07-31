@@ -44,6 +44,13 @@ public interface DeliveryMinimumDetailContract {
          * 编辑成功
          */
         void editSuccess();
+
+        /**
+         * 起订金额按照地区类型设置
+         *
+         * @return true-是
+         */
+        boolean isAreaType();
     }
 
     interface IDeliveryMinimumDetailPresenter extends IPresenter<IDeliveryMinimumDetailView> {
@@ -60,9 +67,9 @@ public interface DeliveryMinimumDetailContract {
         void editDeliveryMinimum(DeliveryMinimumReq bean);
 
         /**
-         * 地区数据处理
+         * 处理地区数据
          *
-         * @param backList 选中地区数据
+         * @param backList 选中的地区数据
          */
         void processAreaData(List<ProvinceListBean> backList);
     }

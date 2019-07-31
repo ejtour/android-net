@@ -1,5 +1,9 @@
 package com.hll_sc_app.bean.delivery;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,34 +12,13 @@ import java.util.List;
  * @author zhuyingsong
  * @date 2019-07-30
  */
-public class ProvinceListBean {
+public class ProvinceListBean implements Parcelable {
     private String provinceCode;
     private String provinceName;
     private int optionalNum;
-    /**
-     * 该省下面的区的数量
-     */
-    private int allNum;
     private int selectedNum;
     private List<CityListBean> cityList;
-    private List<String> codeList;
     private boolean select;
-
-    public int getAllNum() {
-        return allNum;
-    }
-
-    public void setAllNum(int allNum) {
-        this.allNum = allNum;
-    }
-
-    public List<String> getCodeList() {
-        return codeList;
-    }
-
-    public void setCodeList(List<String> codeList) {
-        this.codeList = codeList;
-    }
 
     public boolean isSelect() {
         return select;
@@ -83,5 +66,45 @@ public class ProvinceListBean {
 
     public void setCityList(List<CityListBean> cityList) {
         this.cityList = cityList;
+    }
+
+    public static final Parcelable.Creator<ProvinceListBean> CREATOR = new Parcelable.Creator<ProvinceListBean>() {
+        @Override
+        public ProvinceListBean createFromParcel(Parcel source) {
+            return new ProvinceListBean(source);
+        }
+
+        @Override
+        public ProvinceListBean[] newArray(int size) {
+            return new ProvinceListBean[size];
+        }
+    };
+
+    public ProvinceListBean() {
+    }
+
+    protected ProvinceListBean(Parcel in) {
+        this.provinceCode = in.readString();
+        this.provinceName = in.readString();
+        this.optionalNum = in.readInt();
+        this.selectedNum = in.readInt();
+        this.cityList = new ArrayList<CityListBean>();
+        in.readList(this.cityList, CityListBean.class.getClassLoader());
+        this.select = in.readByte() != 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.provinceCode);
+        dest.writeString(this.provinceName);
+        dest.writeInt(this.optionalNum);
+        dest.writeInt(this.selectedNum);
+        dest.writeList(this.cityList);
+        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
     }
 }

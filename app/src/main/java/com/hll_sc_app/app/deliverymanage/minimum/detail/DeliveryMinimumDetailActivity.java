@@ -23,6 +23,8 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.delivery.AreaListBean;
+import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
@@ -73,22 +75,13 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
+        initView();
         mPresenter = DeliveryMinimumDetailPresenter.newInstance();
         mPresenter.register(this);
-        initView();
+        mPresenter.start();
     }
 
     private void initView() {
-        mRecyclerView.addItemDecoration(new GirdSimpleDecoration(4));
-        mAdapter = new MinimumListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ProvinceListBean bean = (ProvinceListBean) adapter.getItem(position);
-            if (bean == null) {
-                return;
-            }
-        });
-        mRecyclerView.setAdapter(mAdapter);
-
         mTxtTitle.setText(isAdd() ? "新增起订金额" : "编辑起订金额");
         if (mBean != null) {
             mEdtDivideName.setText(mBean.getDivideName());
@@ -96,11 +89,10 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             mTxtSettings.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
             mTxtSettings.setTag(mBean.getSettings());
             mTxtSettings.setText(isAreaType() ? "根据地区设置" : "根据采购商设置");
-            mPresenter.queryDeliveryMinimumDetail();
         } else {
+            // 默认为根据地区设置
             mTxtSettings.setTag(TYPE_AREA);
             mTxtSettings.setText("根据地区设置");
-            showType();
         }
         mEdtSendPrice.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
             if (s.toString().startsWith(".")) {
@@ -111,27 +103,19 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 showToast("起订金额7位数以内");
             }
         });
+        mRecyclerView.addItemDecoration(new GirdSimpleDecoration(4));
+        mAdapter = new MinimumListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ProvinceListBean bean = (ProvinceListBean) adapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private boolean isAdd() {
         return mBean == null;
-    }
-
-    private boolean isAreaType() {
-        boolean flag = false;
-        if (mTxtSettings.getTag() != null) {
-            flag = TextUtils.equals(TYPE_AREA, (CharSequence) mTxtSettings.getTag());
-        }
-        return flag;
-    }
-
-    private void showType() {
-        if (isAreaType()) {
-            // 地区选择
-            mPresenter.processAreaData(null);
-        } else {
-            // 采购商选择
-        }
     }
 
     @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_settings, R.id.txt_settings})
@@ -209,13 +193,42 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         mDialog.show();
     }
 
+    @Override
+    public boolean isAreaType() {
+        boolean flag = false;
+        if (mTxtSettings.getTag() != null) {
+            flag = TextUtils.equals(TYPE_AREA, (CharSequence) mTxtSettings.getTag());
+        }
+        return flag;
+    }
+
+    /**
+     * 获取已选的区编码列表
+     *
+     * @return 已选的区编码列表
+     */
     private List<String> getCodeList() {
         List<String> codeList = new ArrayList<>();
         List<ProvinceListBean> provinceListBeans = mAdapter.getData();
         if (!CommonUtils.isEmpty(provinceListBeans) && isAreaType()) {
             for (ProvinceListBean bean : provinceListBeans) {
+                // 省
                 if (bean.isSelect()) {
-                    codeList.addAll(bean.getCodeList());
+                    // 市
+                    List<CityListBean> cityListBeans = bean.getCityList();
+                    if (!CommonUtils.isEmpty(cityListBeans)) {
+                        for (CityListBean cityListBean : cityListBeans) {
+                            // 区
+                            List<AreaListBean> areaListBeans = cityListBean.getAreaList();
+                            if (!CommonUtils.isEmpty(areaListBeans)) {
+                                for (AreaListBean areaListBean : areaListBeans) {
+                                    if (TextUtils.equals("3", areaListBean.getFlag())) {
+                                        codeList.add(areaListBean.getAreaCode());
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -249,6 +262,15 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             .navigation(this);
     }
 
+    private void showType() {
+//        if (isAreaType()) {
+//            // 地区选择
+//            mPresenter.processAreaData(null);
+//        } else {
+//            // 采购商选择
+//        }
+    }
+
     class MinimumListAdapter extends BaseQuickAdapter<ProvinceListBean, BaseViewHolder> {
         MinimumListAdapter() {
             super(R.layout.item_delivery_minimum_detail_area);
@@ -256,19 +278,10 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
 
         @Override
         protected void convert(BaseViewHolder helper, ProvinceListBean item) {
-            int selectedNum = getSelectedNum(item);
             helper.setText(R.id.txt_provinceName, item.getProvinceName())
-                .setText(R.id.txt_selectedNum, "已选" + selectedNum)
-                .setText(R.id.txt_optionalNum, "可选" + (item.getAllNum() - selectedNum))
+                .setText(R.id.txt_selectedNum, "已选" + item.getSelectedNum())
+                .setText(R.id.txt_optionalNum, "可选" + item.getOptionalNum())
                 .getView(R.id.content).setSelected(item.isSelect());
-        }
-
-        private int getSelectedNum(ProvinceListBean item) {
-            int num = 0;
-            if (!CommonUtils.isEmpty(item.getCodeList())) {
-                num = item.getCodeList().size();
-            }
-            return num;
         }
     }
 }
