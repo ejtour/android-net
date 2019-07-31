@@ -9,7 +9,7 @@ import com.hll_sc_app.base.IPresenter;
  * @author zhuyingsong
  * @date 2019/6/19
  */
-public interface SettingActivityContract {
+public interface SettingContract {
 
     interface ISaleUnitNameAddView extends ILoadView {
         /**

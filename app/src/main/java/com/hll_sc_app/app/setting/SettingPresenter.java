@@ -20,15 +20,15 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/6/19
  */
-public class SettingActivityPresenter implements SettingActivityContract.ISaleUnitNameAddPresenter {
-    private SettingActivityContract.ISaleUnitNameAddView mView;
+public class SettingPresenter implements SettingContract.ISaleUnitNameAddPresenter {
+    private SettingContract.ISaleUnitNameAddView mView;
 
-    static SettingActivityPresenter newInstance() {
-        return new SettingActivityPresenter();
+    static SettingPresenter newInstance() {
+        return new SettingPresenter();
     }
 
     @Override
-    public void register(SettingActivityContract.ISaleUnitNameAddView view) {
+    public void register(SettingContract.ISaleUnitNameAddView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 

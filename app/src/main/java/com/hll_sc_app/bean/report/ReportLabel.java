@@ -12,7 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 @StringDef({ReportLabel.SALES_STATISTICS, ReportLabel.ORDER_GOODS_DETAILS, ReportLabel.DAILY_SALES_VOLUME,
         ReportLabel.CUSTOMER_SALES, ReportLabel.SIGNING_PERFORMANCE, ReportLabel.SALES_PERFORMANCE,
         ReportLabel.STOCKOUT_DIFFERENCES, ReportLabel.RECEIVE_DIFFERENCE, ReportLabel.STOCKOUT_PRODUCTS_DETAILS,
-        ReportLabel.RECEIVE_DIFFERENCE_DETAILS, ReportLabel.STOCKOUT_STATISTICS})
+        ReportLabel.RECEIVE_DIFFERENCE_DETAILS, ReportLabel.STOCKOUT_STATISTICS, ReportLabel.REFUND_REASONS})
 @Retention(RetentionPolicy.SOURCE)
 public @interface ReportLabel {
     String SALES_STATISTICS = "商品销量统计汇总";
@@ -26,4 +26,5 @@ public @interface ReportLabel {
     String STOCKOUT_PRODUCTS_DETAILS = "缺货产品明细表";
     String RECEIVE_DIFFERENCE_DETAILS = "收货差异产品明细表";
     String STOCKOUT_STATISTICS = "客户缺货统计表";
+    String REFUND_REASONS = "退货原因统计表";
 }

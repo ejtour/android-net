@@ -4,6 +4,7 @@ import com.hll_sc_app.app.aftersales.common.IAction;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 
 public interface IAfterSalesDetailContract {
     interface IAfterSalesDetailView extends ILoadView, IAction {
@@ -17,6 +18,11 @@ public interface IAfterSalesDetailContract {
          * 获取售后详情成功
          */
         void showDetail(AfterSalesBean data);
+
+        /**
+         *生成投诉单成功
+         */
+        void  genereteComplainSuccess(GenerateCompainResp resp);
     }
 
     interface IAfterSalesDetailPresenter extends IPresenter<IAfterSalesDetailView> {
@@ -30,5 +36,11 @@ public interface IAfterSalesDetailContract {
          * 修改价格
          */
         void modifyPrice(String price, String refundBillDetailID);
+
+
+        /**
+         * 生成投诉单
+         */
+        void genereteComplain(AfterSalesBean data);
     }
 }
