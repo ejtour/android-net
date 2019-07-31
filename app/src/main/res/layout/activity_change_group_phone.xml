@@ -64,7 +64,7 @@
             android:textSize="10sp" />
     </LinearLayout>
 
-    <com.hll_sc_app.app.setting.widget.NoScrollViewPager
+    <com.hll_sc_app.widget.ScrollableViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="100dp"
