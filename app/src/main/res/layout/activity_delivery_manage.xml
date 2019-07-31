@@ -53,7 +53,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="起订金额设置"
+        android:text="起送金额设置"
         android:textAppearance="@style/TextAppearance.City22.Middle"/>
 
     <TextView

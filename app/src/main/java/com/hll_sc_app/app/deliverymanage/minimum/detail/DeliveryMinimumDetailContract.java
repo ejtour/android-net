@@ -46,7 +46,7 @@ public interface DeliveryMinimumDetailContract {
         void editSuccess();
 
         /**
-         * 起订金额按照地区类型设置
+         * 起送金额按照地区类型设置
          *
          * @return true-是
          */

@@ -16,7 +16,7 @@ public interface DeliveryMinimumContract {
 
     interface IDeliveryMinimumView extends ILoadView {
         /**
-         * 展示起订金额列表
+         * 展示起送金额列表
          *
          * @param list 列表数据
          */

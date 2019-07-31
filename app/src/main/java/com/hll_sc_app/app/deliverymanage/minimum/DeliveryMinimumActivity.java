@@ -60,7 +60,7 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
 
     private void initView() {
         mEmptyView = EmptyView.newBuilder(this)
-            .setTipsTitle("您还没有设置起订金额哦").setTips("点击右上角新增添加").create();
+            .setTipsTitle("您还没有设置起送金额哦").setTips("点击右上角新增添加").create();
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
             R.color.base_color_divider), UIUtils.dip2px(5)));
         mAdapter = new MinimumListAdapter();

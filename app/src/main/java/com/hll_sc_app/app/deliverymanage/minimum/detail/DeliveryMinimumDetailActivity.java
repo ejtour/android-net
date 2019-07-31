@@ -98,7 +98,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     }
 
     private void initView() {
-        mTxtTitle.setText(isAdd() ? "新增起订金额" : "编辑起订金额");
+        mTxtTitle.setText(isAdd() ? "新增起送金额" : "编辑起送金额");
         if (mBean != null) {
             mEdtDivideName.setText(mBean.getDivideName());
             mEdtSendPrice.setText(CommonUtils.formatNumber(mBean.getSendPrice()));
@@ -117,7 +117,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             }
             if (!PRICE.matcher(s.toString()).find() && s.length() > 1) {
                 s.delete(s.length() - 1, s.length());
-                showToast("起订金额7位数以内");
+                showToast("起送金额7位数以内");
             }
         });
         mRecyclerViewArea.addItemDecoration(new GirdSimpleDecoration(4));
@@ -209,7 +209,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             return;
         }
         if (TextUtils.isEmpty(mEdtSendPrice.getText().toString().trim())) {
-            showToast("起订金额不能为空");
+            showToast("起送金额不能为空");
             return;
         }
         if (mTxtSettings.getTag() == null) {
@@ -306,9 +306,9 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     @Override
     public void editSuccess() {
         if (isAdd()) {
-            showToast("新增起订金额成功");
+            showToast("新增起送金额成功");
         } else {
-            showToast("编辑起订金额成功");
+            showToast("编辑起送金额成功");
         }
         ARouter.getInstance().build(RouterConfig.DELIVERY_MINIMUM)
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)

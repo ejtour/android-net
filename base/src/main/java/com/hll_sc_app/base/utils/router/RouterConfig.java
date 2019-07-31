@@ -41,19 +41,19 @@ public class RouterConfig {
      */
     public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";
     /**
-     * 配送管理-起订金额设置
+     * 配送管理-起送金额设置
      */
     public static final String DELIVERY_MINIMUM = "/activity/delivery/minimum";
     /**
-     * 配送管理-起订金额设置-选择采购商
+     * 配送管理-起送金额设置-选择采购商
      */
     public static final String DELIVERY_MINIMUM_PURCHASER = "/activity/delivery/minimum/purchaser";
     /**
-     * 配送管理-起订金额设置-选择采购商门店
+     * 配送管理-起送金额设置-选择采购商门店
      */
     public static final String DELIVERY_MINIMUM_PURCHASER_SHOP = "/activity/delivery/minimum/purchaserShop";
     /**
-     * 配送管理-起订金额设置-详情
+     * 配送管理-起送金额设置-详情
      */
     public static final String DELIVERY_MINIMUM_DETAIL = "/activity/delivery/minimum/detail";
     /**
