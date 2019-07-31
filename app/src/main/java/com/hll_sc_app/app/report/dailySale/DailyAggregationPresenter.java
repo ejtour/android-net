@@ -8,6 +8,7 @@ import com.google.zxing.common.StringUtils;
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.api.PriceManageService;
 import com.hll_sc_app.api.ReportService;
+import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -73,6 +74,10 @@ public class DailyAggregationPresenter implements DailyAggregationContract.IDail
 
     @Override
     public void exportDailyReport(String email) {
+        if (!TextUtils.isEmpty(email)) {
+            bindEmail(email);
+            return;
+        }
         BaseReportReqParam dailyReq = new BaseReportReqParam();
         dailyReq.setTimeType(1);
         dailyReq.setStartDate(mView.getStartDate());
@@ -112,6 +117,31 @@ public class DailyAggregationPresenter implements DailyAggregationContract.IDail
                 mPageNum = mTempPageNum;
                 mView.showDailyAggregationList(dateSaleAmountResp,mPageNum!=1,(int)dateSaleAmountResp.getTotalSize());
             }
+            @Override
+            public void onFailure(UseCaseException e) {
+                mView.showError(e);
+            }
         });
     }
+
+    private void bindEmail(String email) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null)
+            return;
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("email", email)
+                .put("employeeID", user.getEmployeeID())
+                .create();
+        SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                exportDailyReport(null);
+            }
+        };
+        UserService.INSTANCE.bindEmail(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(observer);
+    }
+
 }

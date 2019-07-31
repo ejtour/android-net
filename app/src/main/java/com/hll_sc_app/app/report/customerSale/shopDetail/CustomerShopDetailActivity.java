@@ -2,6 +2,7 @@ package com.hll_sc_app.app.report.customerSale.shopDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +21,14 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
+import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
@@ -39,6 +47,9 @@ import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -49,6 +60,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * 客户销售汇总明细
@@ -118,6 +131,17 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         ButterKnife.bind(this);
         initDefaultTime();
         mPresenter = CustomerShopDetailPresenter.newInstance();
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryMoreCustomerShopDetailList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryCustomerShopDetailList(false);
+            }
+        });
         mAdapter = new CustomerShopListAdapter();
         mRecyclerView.setAdapter(mAdapter);
         View headView = LayoutInflater.from(this).inflate(R.layout.item_customer_shop_detail_title, mRecyclerView, false);
@@ -186,6 +210,10 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
             mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
         }
+        mOptionsWindow.setOnDismissListener(()->{
+            reportDateArrow.setRotation(0);
+        });
+        reportDateArrow.setRotation(180);
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }
 
@@ -230,11 +258,6 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     }
 
     @Override
-    public String getSearchParam() {
-        return "";
-    }
-
-    @Override
     public CustomerSaleReq getParams() {
         params.setOrder(1);
         params.setSortBy(1);
@@ -263,6 +286,13 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         Gson gson = new Gson();
         String reqParams = gson.toJson(params);
         Utils.bindEmail(this, (email) -> mPresenter.exportCustomerShopDetail(email, reqParams));
+    }
+
+    @Override
+    public void export(String email) {
+        Gson gson = new Gson();
+        String reqParams = gson.toJson(params);
+        mPresenter.exportCustomerShopDetail(email,reqParams);
     }
 
     @Override
@@ -334,10 +364,9 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             dateFlagTextView.setText(dateText);
             mPresenter.queryCustomerShopDetailList(true);
         } else {
-            bindEmail();
+            export(null);
         }
         if (mOptionsWindow != null) {
-            reportDateArrow.setRotation(0);
             mOptionsWindow.dismiss();
         }
         if (mExportOptionsWindow != null) {
@@ -382,4 +411,5 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             mPresenter.queryCustomerShopDetailList(true);
         }
     }
+
 }

@@ -1,9 +1,12 @@
 package com.hll_sc_app.app.report.customerSale;
 
 import android.content.Intent;
+import android.graphics.ColorSpace;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -183,6 +186,10 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
             mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
         }
+        mOptionsWindow.setOnDismissListener(()->{
+            reportDateArrow.setRotation(0);
+        });
+        reportDateArrow.setRotation(180);
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }
 
@@ -249,7 +256,6 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
         textDate.setText(String.format("%s", localDate));
         dateFlag.setText(dateText);
         mPresenter.queryCustomerSaleGather(true);
-        reportDateArrow.setRotation(0);
         mOptionsWindow.dismiss();
     }
 

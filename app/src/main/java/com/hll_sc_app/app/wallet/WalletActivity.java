@@ -17,6 +17,7 @@ import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
 import com.hll_sc_app.app.wallet.status.NoneFragment;
 import com.hll_sc_app.app.wallet.status.NormalFragment;
 import com.hll_sc_app.app.wallet.status.VerifyFragment;
+import com.hll_sc_app.app.wallet.withdraw.WithdrawActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -95,7 +96,8 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == RechargeActivity.REQ_CODE) {
+        if (resultCode == RESULT_OK &&
+                (requestCode == RechargeActivity.REQ_CODE || requestCode == WithdrawActivity.REQ_CODE)) {
             mPresenter.start();
         }
     }

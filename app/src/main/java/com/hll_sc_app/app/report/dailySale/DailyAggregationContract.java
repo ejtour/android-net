@@ -57,6 +57,11 @@ public interface DailyAggregationContract {
          * 绑定邮箱
          */
         void bindEmail();
+
+        /**
+         * 导出邮箱
+         */
+        void export(String email);
     }
 
     interface IDailyAggregationManagePresenter extends IPresenter<IDailyAggregationView> {

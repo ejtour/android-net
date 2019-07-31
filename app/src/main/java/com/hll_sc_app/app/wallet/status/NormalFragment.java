@@ -20,12 +20,12 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.details.list.DetailsListActivity;
 import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
+import com.hll_sc_app.app.wallet.withdraw.WithdrawActivity;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.wallet.WalletStatusResp;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.EasingTextView;
 
@@ -147,7 +147,7 @@ public class NormalFragment extends BaseFragment {
                                 .show();
                         break;
                     case WalletStatusResp.CERTIFY_SUCCESS:
-                        RouterUtil.goToActivity(RouterConfig.WALLET_WITHDRAW, mResp);
+                        WithdrawActivity.start(requireActivity(), mResp);
                         break;
                     default:
                         break;

@@ -10,6 +10,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.wallet.AuthResp;
 import com.hll_sc_app.bean.wallet.RechargeResp;
 import com.hll_sc_app.bean.wallet.WalletStatusResp;
 import com.hll_sc_app.bean.wallet.details.DetailsExportReq;
@@ -87,6 +88,37 @@ public class Wallet {
                         .put("settleUnitID", settleUnitID)
                         .put("transAmount", String.valueOf(money))
                         .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 提现
+     *
+     * @param money        金额
+     * @param settleUnitID 结算主体 id
+     */
+    public static void withdraw(double money, String settleUnitID, SimpleObserver<Object> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        WalletService.INSTANCE
+                .withdraw(BaseMapReq.newBuilder()
+                        .put("groupID", user.getGroupID())
+                        .put("settleUnitID", settleUnitID)
+                        .put("transAmount", String.valueOf(money))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取认证信息/进件详情
+     */
+    public static void queryAuthInfo(SimpleObserver<AuthResp> observer) {
+        WalletService.INSTANCE
+                .queryAuthInfo(BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

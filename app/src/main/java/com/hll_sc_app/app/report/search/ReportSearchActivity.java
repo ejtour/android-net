@@ -66,7 +66,7 @@ public class ReportSearchActivity extends BaseLoadActivity implements IReportSea
 
     @Override
     public void showSearchList(List<PurchaserGroupBean> list) {
-        mAdapter.addData(list);
+        mAdapter.setNewData(list);
     }
 
     @Override

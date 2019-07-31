@@ -6,6 +6,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
@@ -37,6 +38,7 @@ public interface ReportService {
 
     /**
      * 商品统计（明细）
+     *
      * @param req
      * @return
      */
@@ -46,21 +48,23 @@ public interface ReportService {
 
     /**
      * 日销售额查询
+     *
      * @param req
      * @return
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111005")
-    Observable<BaseResp<DateSaleAmountResp>>  queryDateSaleAmount(@Body BaseReq<BaseReportReqParam> req);
+    Observable<BaseResp<DateSaleAmountResp>> queryDateSaleAmount(@Body BaseReq<BaseReportReqParam> req);
 
     /**
      * 客户销售/门店汇总查询
+     *
      * @param req
      * @return
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111004")
-    Observable<BaseResp<CustomerSalesResp>>   queryCustomerSales(@Body BaseReq<CustomerSaleReq> req);
+    Observable<BaseResp<CustomerSalesResp>> queryCustomerSales(@Body BaseReq<CustomerSaleReq> req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103098")
@@ -85,6 +89,10 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:103097")
     Observable<BaseResp<ProductSaleTop10Resp>> queryProductSalesTop10(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111077")
+    Observable<BaseResp<RefundReasonStaticsResp>> queryRefundReasonStatics(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:101024")
