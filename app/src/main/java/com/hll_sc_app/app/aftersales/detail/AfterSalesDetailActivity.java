@@ -233,7 +233,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                         .setButton((d, i) -> {
                             d.dismiss();
                             if (i == 1) {
-
+                                present.genereteComplain(mBean);
                             }
                         }, "我再看看", "确定生成")
                         .create()

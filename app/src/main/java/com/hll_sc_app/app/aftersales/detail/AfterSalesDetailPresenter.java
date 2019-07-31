@@ -48,7 +48,7 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
         AfterSales.generateComplain(data, new SimpleObserver<GenerateCompainResp>(mView) {
             @Override
             public void onSuccess(GenerateCompainResp generateCompainResp) {
-
+                mView.genereteComplainSuccess(generateCompainResp);
             }
         });
     }
