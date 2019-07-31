@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="@drawable/bg_white_radius_5_solid">
+    tools:background="@drawable/base_bg_white_radius_5_solid">
 
     <EditText
         android:id="@+id/dr_edit"

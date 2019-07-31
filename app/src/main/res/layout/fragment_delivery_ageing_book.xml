@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="155dp"
         android:layout_margin="10dp"
-        android:background="@drawable/bg_white_radius_5_solid"
+        android:background="@drawable/base_bg_white_radius_5_solid"
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
