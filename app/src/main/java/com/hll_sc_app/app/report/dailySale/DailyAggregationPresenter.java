@@ -117,6 +117,10 @@ public class DailyAggregationPresenter implements DailyAggregationContract.IDail
                 mPageNum = mTempPageNum;
                 mView.showDailyAggregationList(dateSaleAmountResp,mPageNum!=1,(int)dateSaleAmountResp.getTotalSize());
             }
+            @Override
+            public void onFailure(UseCaseException e) {
+                mView.showError(e);
+            }
         });
     }
 

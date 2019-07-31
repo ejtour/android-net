@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.report.dailySale;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,6 +29,9 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -61,6 +65,8 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     TextView dailyTotalnum;
     @BindView(R.id.txt_options)
     ImageView txtOptions;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
 
 
     private DailyAggregationListAdapter mAdapter;
@@ -78,6 +84,17 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         mPresenter = DailyAggregationPresenter.newInstance();
         mAdapter = new DailyAggregationListAdapter();
         mRecyclerView.setAdapter(mAdapter);
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryMoreDailyAggregationList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryDailyAggregationList(false);
+            }
+        });
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -206,6 +223,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     @Override
     public void hideLoading() {
         super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
     }
 
     @Override
@@ -237,4 +255,6 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
                     .setText(R.id.daily_order_customers, bean.getOrderCustomerNum() + "/" + bean.getOrderCustomerShopNum());
         }
     }
+
+
 }

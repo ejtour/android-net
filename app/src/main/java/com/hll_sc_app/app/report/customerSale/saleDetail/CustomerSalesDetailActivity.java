@@ -2,6 +2,7 @@ package com.hll_sc_app.app.report.customerSale.saleDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +41,8 @@ import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -119,6 +122,17 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
         ButterKnife.bind(this);
         initDefaultTime();
         mPresenter = CustomerSalesDetailPresenter.newInstance();
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryMoreCustomerGatherDetailList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryCustomerGatherDetailList(false);
+            }
+        });
         mAdapter = new CustomerSaleListAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mPresenter.register(this);
@@ -189,6 +203,10 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
             mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
         }
+        mOptionsWindow.setOnDismissListener(()->{
+            reportDateArrow.setRotation(0);
+        });
+        reportDateArrow.setRotation(180);
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }
 
@@ -346,7 +364,6 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
             export(null);
         }
         if (mOptionsWindow != null) {
-            reportDateArrow.setRotation(0);
             mOptionsWindow.dismiss();
         }
         if (mExportOptionsWindow != null) {
