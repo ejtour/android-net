@@ -116,6 +116,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
         mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
         ((ViewGroup) mWebView.getParent()).removeView(mWebView);
         mWebView.destroy();
+        mWebView = null;
         unbinder.unbind();
         super.onDestroy();
     }
