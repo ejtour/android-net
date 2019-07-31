@@ -169,7 +169,7 @@
         android:drawablePadding="3dp"
         android:gravity="center_vertical"
         tools:text="该品项尚未关联二十二城商品，请点击关联商品操作"
-        android:textColor="#F6BB42"
+        android:textColor="@color/color_f6bb42"
         android:textSize="@dimen/text_little_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
