@@ -189,6 +189,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     public void handleAuthInfo(AuthInfo info) {
         if (info == null) return;
         mAuthInfo = info;
+        mNameInputView.setCompanyName(info.getCompanyName());
         mInfoInputView.initData(info);
         if (!TextUtils.isEmpty(info.getLicenseProvinceName())) {
             String licenseAddress = info.getLicenseProvinceName() + "-" + info.getLicenseCityName() + "-" + info.getLicenseDistrictName();

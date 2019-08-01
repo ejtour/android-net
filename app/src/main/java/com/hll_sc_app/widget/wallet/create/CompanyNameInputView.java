@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.utils.UIUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,5 +59,12 @@ public class CompanyNameInputView extends ConstraintLayout {
 
     public CharSequence getCompanyName() {
         return mNameEdit.getText();
+    }
+
+    public void setCompanyName(CharSequence text) {
+        if (!TextUtils.isEmpty(text)) {
+            mNameEdit.setText(text);
+            mNameEdit.setSelection(text.length());
+        }
     }
 }

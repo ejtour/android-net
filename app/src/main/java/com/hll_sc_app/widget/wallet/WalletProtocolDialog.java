@@ -25,7 +25,7 @@ import butterknife.OnClick;
  */
 
 public class WalletProtocolDialog extends BaseDialog {
-    WebView mWebView;
+    private WebView mWebView;
     @BindView(R.id.dwp_reject)
     TextView mReject;
     @BindView(R.id.dwp_web_view_container)
