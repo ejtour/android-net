@@ -151,13 +151,13 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
         l.setEnabled(true);
 
 
-
     }
 
     private void initData() {
-        Date date = new Date();
-        Date preDate = CalendarUtils.getDateBeforeMonth(date, 1);
-        setDate(preDate, date);
+        Date currentDate = new Date();
+        Date firstDate = CalendarUtils.getFirstDataInMonth(currentDate);
+        Date lastDate = CalendarUtils.getLastDataInMonth(currentDate);
+        setDate(firstDate, lastDate);
         mPresenter.queryRefundReasonStatics();
     }
 
@@ -211,9 +211,13 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
                     });
                     mDateRangeWindow.setOnDismissListener(() -> mArrowRight.setRotation(0));
                     //设置初始时间范围选择
-                    Calendar end = Calendar.getInstance();
+                    Date currentDate = new Date();
+                    Date firstDate = CalendarUtils.getFirstDataInMonth(currentDate);
+                    Date lastDate = CalendarUtils.getLastDataInMonth(currentDate);
                     Calendar start = Calendar.getInstance();
-                    start.add(Calendar.MONTH, -1);
+                    Calendar end = Calendar.getInstance();
+                    start.setTime(firstDate);
+                    end.setTime(lastDate);
                     mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
                             end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
                 }
