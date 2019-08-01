@@ -21,23 +21,23 @@ import butterknife.OnTextChanged;
  * @since 2019/7/31
  */
 
-public class CompanyNameInputView extends ConstraintLayout {
+public class CreateNameInputView extends ConstraintLayout {
     @BindView(R.id.cni_name_edit)
     EditText mNameEdit;
     @BindView(R.id.cni_next)
     TextView mNext;
 
-    public CompanyNameInputView(Context context) {
+    public CreateNameInputView(Context context) {
         this(context, null);
     }
 
-    public CompanyNameInputView(Context context, AttributeSet attrs) {
+    public CreateNameInputView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CompanyNameInputView(Context context, AttributeSet attrs, int defStyle) {
+    public CreateNameInputView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        View view = View.inflate(context, R.layout.view_wallet_company_name_input, this);
+        View view = View.inflate(context, R.layout.view_wallet_create_name_input, this);
         ButterKnife.bind(this, view);
     }
 
