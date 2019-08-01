@@ -319,7 +319,7 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
             mNumber.setText(String.valueOf(helper.getLayoutPosition() + 1));
             mReason.setText(item.getRefundReasonDesc());
             mMoney.setText(CommonUtils.formatMoney(item.getAmount()));
-            mProportion.setText(String.valueOf(item.getProportion() * 100 + "%"));
+            mProportion.setText(new DecimalFormat("#.##").format(item.getProportion() * 100)+"%");
             mContainer.setBackgroundColor(Color.parseColor(helper.getLayoutPosition() % 2 == 0 ? "#ffffff" : "#FAFAFA"));
 
         }
