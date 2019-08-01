@@ -302,6 +302,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
             mDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                 .setTitleText("选择类型")
                 .refreshList(list)
+                .select(list.get(0))
                 .setOnSelectListener(nameValue -> {
                     if (!TextUtils.equals(mTxtSettings.getText(), nameValue.getName())) {
                         mTxtSettings.setText(nameValue.getName());

@@ -8,18 +8,13 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
         android:background="@color/base_colorPrimary">
 
         <ImageView
             android:id="@+id/img_close"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:background="@drawable/base_bg_selector_close"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_close"/>
+            style="@style/BtnClose"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +31,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/bg_selector_close"
             android:gravity="center"
-            android:text="新增"
+            android:text="添加"
             android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
 
     </RelativeLayout>

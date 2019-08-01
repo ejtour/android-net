@@ -38,7 +38,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/bg_selector_close"
             android:gravity="center"
-            android:text="保存"
+            android:text="确定"
             android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
 
     </RelativeLayout>
