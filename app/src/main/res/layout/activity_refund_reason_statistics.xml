@@ -30,6 +30,7 @@
         android:layout_height="45dp"
         android:background="@color/base_white"
         android:paddingLeft="15dp"
+        android:layout_marginBottom="5dp"
         android:paddingRight="15dp">
 
         <TextView
