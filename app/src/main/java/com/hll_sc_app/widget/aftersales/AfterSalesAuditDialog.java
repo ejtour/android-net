@@ -59,7 +59,7 @@ public class AfterSalesAuditDialog extends BaseDialog {
         if (getWindow() == null) {
             return;
         }
-        getWindow().setBackgroundDrawableResource(R.drawable.bg_white_radius_5_solid);
+        getWindow().setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
         getWindow().getAttributes().width = UIUtils.getScreenWidth(getContext()) - UIUtils.dip2px(110);
         setCancelable(false);
     }

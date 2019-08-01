@@ -7,6 +7,9 @@ package com.hll_sc_app.base.utils.router;
  * @date 2018/12/12
  */
 public class RouterConfig {
+
+    public static final String WEB = "/activity/web";
+
     /**
      * 设置界面
      */
@@ -116,10 +119,6 @@ public class RouterConfig {
      * 修改密码
      */
     public static final String USER_CHANGE = "/activity/user/changePassword";
-    /**
-     * 协议
-     */
-    public static final String WEB_VIEW_PROTOCOL = "/activity/webView/Protocol";
     /**
      * 注册
      */

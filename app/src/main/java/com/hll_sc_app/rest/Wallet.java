@@ -10,12 +10,15 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.wallet.AuthResp;
+import com.hll_sc_app.bean.wallet.AreaInfo;
+import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.wallet.RechargeResp;
 import com.hll_sc_app.bean.wallet.WalletStatusResp;
 import com.hll_sc_app.bean.wallet.details.DetailsExportReq;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -115,12 +118,43 @@ public class Wallet {
     /**
      * 获取认证信息/进件详情
      */
-    public static void queryAuthInfo(SimpleObserver<AuthResp> observer) {
+    public static void queryAuthInfo(SimpleObserver<AuthInfo> observer) {
         WalletService.INSTANCE
                 .queryAuthInfo(BaseMapReq.newBuilder()
                         .put("groupID", UserConfig.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
+    }
+
+    /**
+     * 查询省市列表
+     *
+     * @param areaType     获取省列表时 areaType传2,areaParentId 传ZP1
+     *                     获取省的市列表 areaType 传3,areaParentId 传省编码
+     *                     获取市的区列表 areaType 传4,areaParentId 传市编码
+     * @param areaParentId 上级区域编码
+     */
+    public static void queryAreaList(int areaType, String areaParentId, SimpleObserver<List<AreaInfo>> observer) {
+        WalletService.INSTANCE
+            .queryAreaList(BaseMapReq.newBuilder()
+                .put("areaType", String.valueOf(areaType))
+                .put("areaParentId", areaParentId).create())
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+            .subscribe(observer);
+    }
+
+    /**
+     * 开通账号
+     *
+     * @param info 待核验信息
+     */
+    public static void createAccount(AuthInfo info, SimpleObserver<Object> observer) {
+        WalletService.INSTANCE
+            .createAccount(new BaseReq<>(info))
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+            .subscribe(observer);
     }
 }

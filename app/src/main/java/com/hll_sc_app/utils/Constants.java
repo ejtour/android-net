@@ -22,4 +22,11 @@ public interface Constants {
     String SIGNED_YYYY_MM_DD_HH_MM_SS_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
 
     String SLASH_YYYY_MM_DD = "yyyy/MM/dd";
+
+
+    String WEB_TITLE = "web_title";
+    String WEB_JS_FUNCTION = "js_function";
+    String WEB_JS_NAME = "js_bridge_name";
+    String WEB_URL = "web_url";
+    String WEB_ZOOM = "web_zoom";
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.wallet.account.create.CreateAccountActivity;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -45,6 +46,6 @@ public class NoneFragment extends BaseFragment {
 
     @OnClick({R.id.wsn_open_account_btn})
     public void openAccount(View v) {
-        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_CREATE);
+        CreateAccountActivity.start(requireActivity());
     }
 }

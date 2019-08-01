@@ -233,7 +233,6 @@
         <activity
             android:name=".app.deliverymanage.ageing.detail.period.DeliveryPeriodActivity"
             android:screenOrientation="portrait" />
-        >>>>>>> origin/dev
 
         <activity
             android:name=".app.deliverymanage.deliverytype.DeliveryTypeSetActivity"
@@ -351,10 +350,6 @@
 
         <activity
             android:name=".app.user.register.RegisterComplementActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.user.register.WebViewProtocolActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -477,8 +472,16 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.wallet.account.create.CreateAccountActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.wallet.WalletActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.web.WebActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

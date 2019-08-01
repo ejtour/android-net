@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <View
+        android:id="@+id/cni_bg"
+        android:layout_width="0dp"
+        android:layout_height="217dp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/cni_input_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:text="您当前营业执照的公司名称："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@id/cni_bg"
+        app:layout_constraintTop_toTopOf="@id/cni_bg"/>
+
+    <EditText
+        android:id="@+id/cni_name_edit"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_divider_bottom"
+        android:drawableLeft="@drawable/ic_company"
+        android:drawablePadding="@dimen/dp_10"
+        android:hint="请输入营业执照上的公司名称"
+        android:imeOptions="actionNext"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        android:textColorHint="@color/color_aeaeae"
+        app:layout_constraintEnd_toEndOf="@id/cni_bg"
+        app:layout_constraintStart_toStartOf="@id/cni_bg"
+        app:layout_constraintTop_toBottomOf="@id/cni_input_label"/>
+
+    <TextView
+        android:id="@+id/cni_input_warn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/ic_product_no_relate"
+        android:drawablePadding="@dimen/dp_10"
+        android:text="请确认输入营业执照名称，否则审核不通过"
+        android:textColor="@color/color_f6bb42"
+        android:textSize="@dimen/text_little_size"
+        app:layout_constraintStart_toStartOf="@id/cni_name_edit"
+        app:layout_constraintTop_toBottomOf="@id/cni_name_edit"/>
+
+    <TextView
+        android:id="@+id/cni_next"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:layout_width="200dp"
+        android:layout_marginTop="25dp"
+        android:enabled="false"
+        android:text="确认进入下一步"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintEnd_toEndOf="@id/cni_bg"
+        app:layout_constraintStart_toStartOf="@id/cni_bg"
+        app:layout_constraintTop_toBottomOf="@id/cni_input_warn"/>
+</merge>
