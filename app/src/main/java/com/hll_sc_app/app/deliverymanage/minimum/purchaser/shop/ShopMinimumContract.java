@@ -23,6 +23,20 @@ public interface ShopMinimumContract {
         String getPurchaserId();
 
         /**
+         * 获取起送金额Id
+         *
+         * @return Id
+         */
+        String getSendAmountId();
+
+        /**
+         * 获取上层页面已选中的门店
+         *
+         * @return list
+         */
+        List<String> getPurchaserShopList();
+
+        /**
          * 展示合作采购商门店列表
          *
          * @param list list

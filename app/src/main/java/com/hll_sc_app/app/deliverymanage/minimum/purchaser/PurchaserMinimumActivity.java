@@ -9,18 +9,21 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.deliverymanage.minimum.purchaser.shop.ShopMinimumActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsRelevanceSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.delivery.DeliveryPurchaserBean;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -34,6 +37,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,15 +58,28 @@ public class PurchaserMinimumActivity extends BaseLoadActivity implements Purcha
     SearchView mSearchView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @Autowired(name = "object0")
+    String mSendAmountId;
+    @Autowired(name = "parcelable")
+    ArrayList<DeliveryPurchaserBean> mList;
     private EmptyView mEmptyView;
     private PurchaserListAdapter mAdapter;
     private PurchaserMinimumPresenter mPresenter;
+
+
+    public static void start(String id, ArrayList<DeliveryPurchaserBean> value) {
+        ARouter.getInstance().build(RouterConfig.DELIVERY_MINIMUM_PURCHASER)
+            .withString("object0", id)
+            .withParcelableArrayList("parcelable", value)
+            .navigation();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quotation_add_purchaser);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
+        ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
         mPresenter = PurchaserMinimumPresenter.newInstance();
@@ -85,8 +102,8 @@ public class PurchaserMinimumActivity extends BaseLoadActivity implements Purcha
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_PURCHASER_SHOP, bean.getPurchaserID(),
-                    bean.getPurchaserName());
+                ShopMinimumActivity.start(bean.getPurchaserID(), bean.getPurchaserName(), mSendAmountId,
+                    getSelectIds(bean.getPurchaserID()));
             }
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商").create();
@@ -113,6 +130,19 @@ public class PurchaserMinimumActivity extends BaseLoadActivity implements Purcha
                 mPresenter.queryPurchaserList(false);
             }
         });
+    }
+
+    private List<String> getSelectIds(String purchaserId) {
+        List<String> list = new ArrayList<>();
+        if (!CommonUtils.isEmpty(mList)) {
+            for (DeliveryPurchaserBean bean : mList) {
+                if (TextUtils.equals(bean.getPurchaserID(), purchaserId)) {
+                    list = bean.getPurchaserShopList();
+                    break;
+                }
+            }
+        }
+        return list;
     }
 
     @Override

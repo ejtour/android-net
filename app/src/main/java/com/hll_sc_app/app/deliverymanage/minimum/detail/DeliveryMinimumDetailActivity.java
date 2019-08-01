@@ -19,6 +19,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.deliverymanage.minimum.purchaser.PurchaserMinimumActivity;
+import com.hll_sc_app.app.deliverymanage.minimum.purchaser.shop.ShopMinimumActivity;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -77,9 +79,10 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     TextView mTxtTips;
     @BindView(R.id.txt_purchaser)
     TextView mTxtPurchaser;
+
     private AreaListAdapter mAreaAdapter;
-    private PurchaserListAdapter mPurchaserAdapter;
     private SingleSelectionDialog mDialog;
+    private PurchaserListAdapter mPurchaserAdapter;
     private DeliveryMinimumDetailPresenter mPresenter;
 
     @Override
@@ -139,7 +142,8 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         mPurchaserAdapter.setOnItemClickListener((adapter, view, position) -> {
             DeliveryPurchaserBean bean = (DeliveryPurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                // TODO:跳转详情
+                ShopMinimumActivity.start(bean.getPurchaserID(), bean.getPurchaserName(), mBean.getSendAmountID(),
+                    bean.getPurchaserShopList());
             }
         });
         mRecyclerViewPurchaser.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
@@ -197,6 +201,31 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         if (bean == null) {
             return;
         }
+        List<DeliveryPurchaserBean> purchaserBeans = mPurchaserAdapter.getData();
+        if (!CommonUtils.isEmpty(purchaserBeans)) {
+            boolean find = false;
+            for (int i = 0, size = purchaserBeans.size(); i < size; i++) {
+                DeliveryPurchaserBean purchaserBean = purchaserBeans.get(i);
+                if (TextUtils.equals(purchaserBean.getPurchaserID(), bean.getPurchaserID())) {
+                    find = true;
+                    purchaserBean.setPurchaserShopNum(bean.getPurchaserShopNum());
+                    purchaserBean.setPurchaserShopList(bean.getPurchaserShopList());
+                    if (bean.getPurchaserShopNum() != 0) {
+                        mPurchaserAdapter.notifyItemChanged(i);
+                    } else {
+                        mPurchaserAdapter.remove(i);
+                    }
+                    break;
+                }
+            }
+            if (!find && bean.getPurchaserShopNum() != 0) {
+                mPurchaserAdapter.addData(bean);
+            }
+        } else if (bean.getPurchaserShopNum() != 0) {
+            List<DeliveryPurchaserBean> list = new ArrayList<>();
+            list.add(bean);
+            mPurchaserAdapter.setNewData(list);
+        }
     }
 
     @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_settings, R.id.txt_settings, R.id.txt_purchaser})
@@ -216,16 +245,14 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 break;
             case R.id.txt_purchaser:
                 // 选择采购商
-                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_PURCHASER);
+                PurchaserMinimumActivity.start(mBean != null ? mBean.getSendAmountID() : "",
+                    (ArrayList<DeliveryPurchaserBean>) mPurchaserAdapter.getData());
                 break;
             default:
                 break;
         }
     }
 
-    /**
-     * 保存
-     */
     private void toSave() {
         if (TextUtils.isEmpty(mEdtDivideName.getText().toString().trim())) {
             showToast("分组名称不能为空");

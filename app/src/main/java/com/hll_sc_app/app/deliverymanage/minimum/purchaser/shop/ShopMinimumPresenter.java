@@ -47,6 +47,7 @@ public class ShopMinimumPresenter implements ShopMinimumContract.IShopMinimumPre
     public void querySelectShop() {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("purchaserID", mView.getPurchaserId())
+            .put("sendAmountID", mView.getSendAmountId())
             .put("supplyID", UserConfig.getGroupID())
             .create();
         DeliveryManageService.INSTANCE
@@ -96,12 +97,23 @@ public class ShopMinimumPresenter implements ShopMinimumContract.IShopMinimumPre
     }
 
     private void processData(List<ShopMinimumBean> list) {
+        // 别的分组已经选中过的
         Map<String, String> map = new HashMap<>();
         if (!CommonUtils.isEmpty(mListSelect)) {
             for (String s : mListSelect) {
                 map.put(s, s);
             }
         }
+
+        // 之前选中的
+        List<String> purchaserList = mView.getPurchaserShopList();
+        Map<String, String> mapSelect = new HashMap<>();
+        if (!CommonUtils.isEmpty(purchaserList)) {
+            for (String s : purchaserList) {
+                mapSelect.put(s, s);
+            }
+        }
+
         if (!CommonUtils.isEmpty(list)) {
             for (ShopMinimumBean bean : list) {
                 List<PurchaserShopBean> shopBeans = bean.getPurchaserShops();
@@ -109,6 +121,8 @@ public class ShopMinimumPresenter implements ShopMinimumContract.IShopMinimumPre
                     for (PurchaserShopBean shopBean : shopBeans) {
                         if (map.containsKey(shopBean.getShopID())) {
                             shopBean.setIsActive(ShopMinimumActivity.DISABLE);
+                        } else if (mapSelect.containsKey(shopBean.getShopID())) {
+                            shopBean.setSelect(true);
                         }
                     }
                 }

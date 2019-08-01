@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.deliverymanage.minimum.purchaser.shop;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,10 +24,14 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.delivery.DeliveryPurchaserBean;
 import com.hll_sc_app.bean.delivery.ShopMinimumBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,20 +47,33 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.DELIVERY_MINIMUM_PURCHASER_SHOP, extras = Constant.LOGIN_EXTRA)
 public class ShopMinimumActivity extends BaseLoadActivity implements ShopMinimumContract.IShopMinimumView {
     public static final String DISABLE = "0";
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
+    @BindView(R.id.img_allCheck)
+    ImageView mImgAllCheck;
     @BindView(R.id.recyclerView_city)
     RecyclerView mRecyclerViewCity;
     @BindView(R.id.recyclerView_shop)
     RecyclerView mRecyclerViewShop;
-    @BindView(R.id.img_allCheck)
-    ImageView mImgAllCheck;
-    @BindView(R.id.txt_title)
-    TextView mTxtTitle;
     @Autowired(name = "object0")
     String mPurchaserId;
     @Autowired(name = "object1")
     String mPurchaserName;
+    @Autowired(name = "object2")
+    String mSendAmountId;
+    @Autowired(name = "parcelable")
+    ArrayList<String> mPurchaserShopList;
     private CityListAdapter mCityAdapter;
     private PurchaserShopListAdapter mShopAdapter;
+
+    public static void start(String id, String name, String amountId, List<String> list) {
+        ARouter.getInstance().build(RouterConfig.DELIVERY_MINIMUM_PURCHASER_SHOP)
+            .withString("object0", id)
+            .withString("object1", name)
+            .withString("object2", amountId)
+            .withStringArrayList("parcelable", (ArrayList<String>) list)
+            .navigation();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +105,7 @@ public class ShopMinimumActivity extends BaseLoadActivity implements ShopMinimum
         if (bean != null) {
             unSelectCity();
             bean.setSelect(true);
+            adapter.notifyDataSetChanged();
             mShopAdapter.setNewData(bean.getPurchaserShops());
         }
     }
@@ -173,7 +192,7 @@ public class ShopMinimumActivity extends BaseLoadActivity implements ShopMinimum
         }
     }
 
-    @OnClick({R.id.img_close, R.id.rl_allCheck})
+    @OnClick({R.id.img_close, R.id.rl_allCheck, R.id.txt_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -183,9 +202,39 @@ public class ShopMinimumActivity extends BaseLoadActivity implements ShopMinimum
                 mImgAllCheck.setSelected(!mImgAllCheck.isSelected());
                 selectAllShop(mImgAllCheck.isSelected());
                 break;
+            case R.id.txt_save:
+                toSave();
+                break;
             default:
                 break;
         }
+    }
+
+    private void toSave() {
+        DeliveryPurchaserBean bean = new DeliveryPurchaserBean();
+        bean.setPurchaserID(mPurchaserId);
+        bean.setPurchaserName(mPurchaserName);
+        List<ShopMinimumBean> shopMinimumBeans = mCityAdapter.getData();
+        List<String> shopIds = new ArrayList<>();
+        if (!CommonUtils.isEmpty(shopMinimumBeans)) {
+            for (ShopMinimumBean shopMinimumBean : shopMinimumBeans) {
+                List<PurchaserShopBean> shopBeans = shopMinimumBean.getPurchaserShops();
+                if (!CommonUtils.isEmpty(shopBeans)) {
+                    for (PurchaserShopBean shopBean : shopBeans) {
+                        if (!TextUtils.equals("全部", shopBean.getShopName())
+                            && !TextUtils.equals(shopBean.getIsActive(), DISABLE) && shopBean.isSelect()) {
+                            shopIds.add(shopBean.getShopID());
+                        }
+                    }
+                }
+            }
+        }
+        bean.setPurchaserShopList(shopIds);
+        bean.setPurchaserShopNum(shopIds.size());
+        EventBus.getDefault().post(bean);
+        ARouter.getInstance().build(RouterConfig.DELIVERY_MINIMUM_DETAIL)
+            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            .navigation(this);
     }
 
     @Override
@@ -194,11 +243,23 @@ public class ShopMinimumActivity extends BaseLoadActivity implements ShopMinimum
     }
 
     @Override
+    public String getSendAmountId() {
+        return mSendAmountId;
+    }
+
+    @Override
+    public List<String> getPurchaserShopList() {
+        return mPurchaserShopList;
+    }
+
+    @Override
     public void showPurchaserShopList(List<ShopMinimumBean> list) {
         mCityAdapter.setNewData(list);
         if (!CommonUtils.isEmpty(list)) {
             selectCity(mCityAdapter, 0);
         }
+        checkSelectAllShop();
+        checkSelectAllCity();
     }
 
     class CityListAdapter extends BaseQuickAdapter<ShopMinimumBean, BaseViewHolder> {
