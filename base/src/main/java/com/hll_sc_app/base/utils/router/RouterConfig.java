@@ -7,6 +7,9 @@ package com.hll_sc_app.base.utils.router;
  * @date 2018/12/12
  */
 public class RouterConfig {
+
+    public static final String WEB = "/activity/web";
+
     /**
      * 设置界面
      */
