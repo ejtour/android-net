@@ -145,25 +145,6 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
         return list;
     }
 
-    private void initView() {
-        mData = processData();
-        mTxtTitle.setText(mBean.getProvinceName());
-        mRecyclerViewArea.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
-        mAreaAdapter = new AreaListAdapter();
-        mAreaAdapter.setOnItemClickListener((adapter, view, position) -> selectShopBean(adapter, position));
-        mRecyclerViewArea.setAdapter(mAreaAdapter);
-        mRecyclerViewCity.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
-        mCityAdapter = new CityListAdapter(mData);
-        mCityAdapter.setOnItemClickListener((adapter, view, position) -> selectCityBean(adapter, position));
-        mRecyclerViewCity.setAdapter(mCityAdapter);
-        // 默认选中第一个
-        selectCityBean(mCityAdapter, 0);
-        // 只有一个城市的直接选择地区
-        if (!CommonUtils.isEmpty(mData) && mData.size() == 1) {
-            mRecyclerViewCity.setVisibility(View.GONE);
-        }
-    }
-
     private void selectShopBean(BaseQuickAdapter adapter, int position) {
         AreaBean.ChildBeanX.ChildBean childBean = (AreaBean.ChildBeanX.ChildBean) adapter.getItem(position);
         if (childBean == null) {
@@ -203,19 +184,24 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
         checkSelectAllArea();
     }
 
-    /**
-     * 选中全部的区
-     */
-    private void selectAllArea(boolean select) {
-        List<AreaBean.ChildBeanX.ChildBean> childBeans = mAreaAdapter.getData();
-        if (!CommonUtils.isEmpty(childBeans)) {
-            for (AreaBean.ChildBeanX.ChildBean childBean : childBeans) {
-                if (!TextUtils.equals(childBean.getFlag(), "1")) {
-                    childBean.setFlag(select ? "3" : "2");
-                }
-            }
-            mAreaAdapter.notifyDataSetChanged();
+    private void initView() {
+        mData = processData();
+        mTxtTitle.setText(mBean.getProvinceName());
+        mRecyclerViewArea.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mAreaAdapter = new AreaListAdapter();
+        mAreaAdapter.setOnItemClickListener((adapter, view, position) -> selectShopBean(adapter, position));
+        mRecyclerViewArea.setAdapter(mAreaAdapter);
+        mRecyclerViewCity.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mCityAdapter = new CityListAdapter(mData);
+        mCityAdapter.setOnItemClickListener((adapter, view, position) -> selectCityBean(adapter, position));
+        mRecyclerViewCity.setAdapter(mCityAdapter);
+        // 默认选中第一个
+        selectCityBean(mCityAdapter, 0);
+        // 只有一个城市的直接选择地区
+        if (!CommonUtils.isEmpty(mData) && mData.size() == 1) {
+            mRecyclerViewCity.setVisibility(View.GONE);
         }
+        checkSelectAllCity();
     }
 
     /**
@@ -229,7 +215,8 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
                 List<AreaBean.ChildBeanX.ChildBean> areaList = cityBean.getChild();
                 if (!CommonUtils.isEmpty(areaList)) {
                     for (AreaBean.ChildBeanX.ChildBean areaBean : areaList) {
-                        if (TextUtils.equals(areaBean.getFlag(), "2")) {
+                        if (!TextUtils.equals(areaBean.getName(), STRING_ALL) && TextUtils.equals(areaBean.getFlag(),
+                            "2")) {
                             select = false;
                             break CITY;
                         }
@@ -239,6 +226,21 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
         }
 
         mImgAllCheck.setSelected(select);
+    }
+
+    /**
+     * 选中全部的区
+     */
+    private void selectAllArea(boolean select) {
+        List<AreaBean.ChildBeanX.ChildBean> childBeans = mAreaAdapter.getData();
+        if (!CommonUtils.isEmpty(childBeans)) {
+            for (AreaBean.ChildBeanX.ChildBean childBean : childBeans) {
+                if (!TextUtils.equals(childBean.getFlag(), "1")) {
+                    childBean.setFlag(select ? "3" : "2");
+                }
+            }
+            mAreaAdapter.notifyDataSetChanged();
+        }
     }
 
     /**
