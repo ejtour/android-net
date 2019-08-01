@@ -10,6 +10,8 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.wallet.account.AccountPresenter;
+import com.hll_sc_app.app.wallet.account.IAccountContract;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -35,7 +37,7 @@ import butterknife.ButterKnife;
  */
 
 @Route(path = RouterConfig.WALLET_ACCOUNT_CREATE)
-public class CreateAccountActivity extends BaseLoadActivity implements ICreateAccountContract.ICreateAccountView {
+public class CreateAccountActivity extends BaseLoadActivity implements IAccountContract.IAccountView {
     public static final int REQ_CODE = 0x777;
     @BindView(R.id.wca_title_bar)
     TitleBar mTitleBar;
@@ -43,7 +45,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     ScrollableViewPager mViewPager;
     private CreateNameInputView mNameInputView;
     private CreateInfoInputView mInfoInputView;
-    private ICreateAccountContract.ICreateAccountPresenter mPresenter;
+    private IAccountContract.IAccountPresenter mPresenter;
     private WalletProtocolDialog mProtocolDialog;
     private AuthInfo mAuthInfo = new AuthInfo();
 
@@ -66,23 +68,23 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mNameInputView.setNextClickListener(v -> {
             mInfoInputView.initData(mAuthInfo);
-            mViewPager.setCurrentItem(1);
+            mViewPager.setCurrentItem(1, true);
         });
         mInfoInputView.setConfirmClickListener(this::createAccount);
         mInfoInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
             @Override
             public void getProvinces() {
-                mPresenter.queryAreaList(ICreateAccountContract.AreaType.PROVINCE, "ZP1");
+                mPresenter.queryAreaList(IAccountContract.AreaType.PROVINCE, "ZP1");
             }
 
             @Override
             public void getCitys(AreaInfo areaBean) {
-                mPresenter.queryAreaList(ICreateAccountContract.AreaType.CITY, areaBean.getAreaCode());
+                mPresenter.queryAreaList(IAccountContract.AreaType.CITY, areaBean.getAreaCode());
             }
 
             @Override
             public void getDistributes(AreaInfo areaBean) {
-                mPresenter.queryAreaList(ICreateAccountContract.AreaType.DISTRIBUTE, areaBean.getAreaCode());
+                mPresenter.queryAreaList(IAccountContract.AreaType.DISTRIBUTE, areaBean.getAreaCode());
             }
 
             @Override
@@ -135,7 +137,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     }
 
     private void initData() {
-        mPresenter = CreateAccountPresenter.newInstance();
+        mPresenter = AccountPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -163,7 +165,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     }
 
     private void createAccount(View view) {
-        mPresenter.createAccount(mAuthInfo);
+        mPresenter.commitAuthInfo(mAuthInfo);
     }
 
     private void rejectProtocol(View view) {
@@ -185,7 +187,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     }
 
     @Override
-    public void createSuccess() {
+    public void commitSuccess() {
         setResult(RESULT_OK);
         finish();
     }

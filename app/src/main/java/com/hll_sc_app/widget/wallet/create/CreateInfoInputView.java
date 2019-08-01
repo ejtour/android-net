@@ -2,6 +2,7 @@ package com.hll_sc_app.widget.wallet.create;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
@@ -13,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.wallet.account.create.ICreateAccountContract;
+import com.hll_sc_app.app.wallet.account.IAccountContract;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
@@ -30,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import butterknife.Optional;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -53,14 +55,16 @@ public class CreateInfoInputView extends ConstraintLayout {
     protected EditText mPhone;
     @BindView(R.id.wci_email)
     protected EditText mEmail;
+    @Nullable
     @BindView(R.id.cii_confirm)
     TextView mConfirm;
+    @Nullable
     @BindView(R.id.cii_check_box)
     CheckBox mCheckBox;
     protected AuthInfo mAuthInfo;
     private SingleSelectionDialog mTypeDialog;
     private AreaSelectDialog mAreaSelectDialog;
-    private OnClickListener mConfirmListener;
+    protected OnClickListener mConfirmListener;
 
     public CreateInfoInputView(Context context) {
         this(context, null);
@@ -148,13 +152,13 @@ public class CreateInfoInputView extends ConstraintLayout {
     public void setAreaList(List<AreaInfo> areaInfoList) {
         if (!CommonUtils.isEmpty(areaInfoList)) {
             switch (areaInfoList.get(0).getAreaType()) {
-                case ICreateAccountContract.AreaType.PROVINCE:
+                case IAccountContract.AreaType.PROVINCE:
                     mAreaSelectDialog.setProvinces(areaInfoList);
                     break;
-                case ICreateAccountContract.AreaType.CITY:
+                case IAccountContract.AreaType.CITY:
                     mAreaSelectDialog.setCitys(areaInfoList);
                     break;
-                case ICreateAccountContract.AreaType.DISTRIBUTE:
+                case IAccountContract.AreaType.DISTRIBUTE:
                     mAreaSelectDialog.setDistributes(areaInfoList);
                     break;
                 default:
@@ -163,24 +167,30 @@ public class CreateInfoInputView extends ConstraintLayout {
         }
     }
 
+    @Optional
     @OnClick(R.id.cii_confirm)
     void confirm(View view) {
         if (verifyValidity() && mConfirmListener != null) {
-            mAuthInfo.setBusinessAddress(mDetailAddress.getText().toString());
-            mAuthInfo.setCompanyShortName(mShortName.getText().toString());
-            mAuthInfo.setOperatorName(mContact.getText().toString());
-            mAuthInfo.setOperatorMobile(mPhone.getText().toString());
-            mAuthInfo.setOperatorEmail(mEmail.getText().toString());
+            inflateInfo();
             mConfirmListener.onClick(view);
         }
+    }
+
+    protected void inflateInfo() {
+        mAuthInfo.setBusinessAddress(mDetailAddress.getText().toString());
+        mAuthInfo.setCompanyShortName(mShortName.getText().toString());
+        mAuthInfo.setOperatorName(mContact.getText().toString());
+        mAuthInfo.setOperatorMobile(mPhone.getText().toString());
+        mAuthInfo.setOperatorEmail(mEmail.getText().toString());
     }
 
     protected boolean verifyValidity() {
         return true;
     }
 
+    @Optional
     @OnClick({R.id.cii_wallet_protocol, R.id.cii_platform_protocol})
-    void onViewClicked(View view) {
+    void viewProtocol(View view) {
         String url;
         String title;
         switch (view.getId()) {
@@ -206,6 +216,7 @@ public class CreateInfoInputView extends ConstraintLayout {
         updateConfirmStatus();
     }
 
+    @Optional
     @OnCheckedChanged(R.id.cii_check_box)
     void onCheckedChanged(boolean checked) {
         updateConfirmStatus();
