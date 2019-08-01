@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.widget.SingleSelectionDialog;
@@ -143,14 +144,20 @@ public class CompanyInfoInputView extends ConstraintLayout {
     @OnClick({R.id.cii_wallet_protocol, R.id.cii_platform_protocol})
     public void onViewClicked(View view) {
         String url;
+        String title;
         switch (view.getId()) {
             case R.id.cii_wallet_protocol:
                 url = "http://res.hualala.com/group3/M03/C8/F8/wKgVbVy5nQfeHoVhAASAnoY2yxM407.pdf";
+                title = "\"智慧支付钱包\"授权服务协议";
                 break;
             case R.id.cii_platform_protocol:
                 url = "http://res.hualala.com/group3/M03/C8/BD/wKgVbVy5nNmrbBOnAAK-Z3znjNU181.pdf";
+                title = "开发平台授权协议";
                 break;
+            default:
+                return;
         }
+        WebActivity.start(title, "file:///android_asset/pdf/pdfView.html?" + url);
     }
 
     @OnTextChanged(value = {R.id.cii_name, R.id.cii_short_name, R.id.cii_type,
