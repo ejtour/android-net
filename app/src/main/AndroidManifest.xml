@@ -201,6 +201,9 @@
             android:name=".app.deliverymanage.DeliveryManageActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.deliverymanage.range.DeliveryRangeActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"

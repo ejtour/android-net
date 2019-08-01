@@ -12,6 +12,7 @@ import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
 import com.hll_sc_app.bean.delivery.DeliveryPurchaserBean;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
+import com.hll_sc_app.bean.delivery.ProvinceListResp;
 import com.hll_sc_app.bean.delivery.ShopMinimumBean;
 import com.hll_sc_app.bean.delivery.ShopMinimumSelectBean;
 
@@ -140,6 +141,16 @@ public interface DeliveryManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:103038")
     Observable<BaseResp<List<ProvinceListBean>>> queryDeliveryMinimumArea(@Body BaseMapReq req);
+
+    /**
+     * 配送范围查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100029")
+    Observable<BaseResp<ProvinceListResp>> queryDeliveryRangeArea(@Body BaseMapReq req);
 
     /**
      * 按照采购商设置 起送金额明细查询

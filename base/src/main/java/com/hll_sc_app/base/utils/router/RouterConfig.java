@@ -60,6 +60,10 @@ public class RouterConfig {
      */
     public static final String DELIVERY_MINIMUM_DETAIL = "/activity/delivery/minimum/detail";
     /**
+     * 配送管理-配送范围
+     */
+    public static final String DELIVERY_RANGE = "/activity/delivery/range";
+    /**
      * 配送管理-地区选择
      */
     public static final String DELIVERY_AREA = "/activity/delivery/area";
