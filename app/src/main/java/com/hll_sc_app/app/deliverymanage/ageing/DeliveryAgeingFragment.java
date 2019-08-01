@@ -99,7 +99,7 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
                     mPresenter.delAgeing(bean.getDeliveryTimeID());
                 }
                 dialog.dismiss();
-            }, "我再看看", "立即删除")
+            }, "我再想想", "立即删除")
             .create().show();
     }
 
