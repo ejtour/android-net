@@ -121,6 +121,8 @@ public class WebActivity extends BaseLoadActivity {
             }
         });
         mWebView.setBackgroundColor(0);
+        mWebView.setVerticalScrollBarEnabled(true);
+        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         mWebView.addJavascriptInterface(new JSBridge(this), mBundle.getString(Constants.WEB_JS_NAME, "JSBridge"));
 
         WebSettings settings = mWebView.getSettings();
