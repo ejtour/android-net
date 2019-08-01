@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -46,7 +45,6 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     private CreateInfoInputView mInfoInputView;
     private ICreateAccountContract.ICreateAccountPresenter mPresenter;
     private WalletProtocolDialog mProtocolDialog;
-    private AreaSelectDialog mAreaSelectDialog;
     private AuthInfo mAuthInfo = new AuthInfo();
 
     public static void start(Activity context) {
@@ -61,20 +59,55 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         initView();
         initData();
+        bindListener();
     }
 
-    private void initView() {
+    private void bindListener() {
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
-        mNameInputView = new CreateNameInputView(this);
         mNameInputView.setNextClickListener(v -> {
-            mAuthInfo.setCompanyName(mNameInputView.getCompanyName().toString());
-            mInfoInputView.setCompanyName(mAuthInfo.getCompanyName());
+            mInfoInputView.initData(mAuthInfo);
             mViewPager.setCurrentItem(1);
         });
-        mInfoInputView = new CreateInfoInputView(this);
-        mInfoInputView.setRegionClickListener(this::showAreaDialog);
         mInfoInputView.setConfirmClickListener(this::createAccount);
-        mViewPager.setAdapter(new ViewPagerAdapter(mNameInputView, mInfoInputView));
+        mInfoInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
+            @Override
+            public void getProvinces() {
+                mPresenter.queryAreaList(ICreateAccountContract.AreaType.PROVINCE, "ZP1");
+            }
+
+            @Override
+            public void getCitys(AreaInfo areaBean) {
+                mPresenter.queryAreaList(ICreateAccountContract.AreaType.CITY, areaBean.getAreaCode());
+            }
+
+            @Override
+            public void getDistributes(AreaInfo areaBean) {
+                mPresenter.queryAreaList(ICreateAccountContract.AreaType.DISTRIBUTE, areaBean.getAreaCode());
+            }
+
+            @Override
+            public void selectAreas(AreaInfo... areaBeans) {
+                String address =
+                        areaBeans[0].getAreaName() + "-" + areaBeans[1].getAreaName() + "-" + areaBeans[2].getAreaName();
+                mInfoInputView.setRegion(address);
+                mAuthInfo.setLicenseProvinceCode(areaBeans[0].getAreaCode());
+                mAuthInfo.setLicenseProvinceName(areaBeans[0].getAreaName());
+                mAuthInfo.setLicenseCityCode(areaBeans[1].getAreaCode());
+                mAuthInfo.setLicenseCityName(areaBeans[1].getAreaName());
+                mAuthInfo.setLicenseDistrictCode(areaBeans[2].getAreaCode());
+                mAuthInfo.setLicenseDistrictName(areaBeans[2].getAreaName());
+            }
+
+            @Override
+            public String getName(AreaInfo item) {
+                return item.getAreaName();
+            }
+
+            @Override
+            public String getKey(AreaInfo areaBean) {
+                return areaBean.getAreaCode();
+            }
+        });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -91,6 +124,12 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
 
             }
         });
+    }
+
+    private void initView() {
+        mNameInputView = new CreateNameInputView(this);
+        mInfoInputView = new CreateInfoInputView(this);
+        mViewPager.setAdapter(new ViewPagerAdapter(mNameInputView, mInfoInputView));
         mProtocolDialog = new WalletProtocolDialog(this, this::rejectProtocol);
         mProtocolDialog.show();
     }
@@ -105,31 +144,25 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     public void onBackPressed() {
         if (mViewPager.getCurrentItem() == 1) {
             SuccessDialog.newBuilder(this)
-                .setImageTitle(R.drawable.ic_dialog_failure)
-                .setImageState(R.drawable.ic_dialog_state_failure)
-                .setMessageTitle("确定要离开吗")
-                .setMessage("离开后将不能保存您当前所做的更改")
-                .setCancelable(false)
-                .setButton((dialog, item) -> {
-                    dialog.dismiss();
-                    if (item == 0) {
-                        finish();
-                    }
-                }, "去意已决", "暂不离开")
-                .create()
-                .show();
+                    .setImageTitle(R.drawable.ic_dialog_failure)
+                    .setImageState(R.drawable.ic_dialog_state_failure)
+                    .setMessageTitle("确定要离开吗")
+                    .setMessage("离开后将不能保存您当前所做的更改")
+                    .setCancelable(false)
+                    .setButton((dialog, item) -> {
+                        dialog.dismiss();
+                        if (item == 0) {
+                            finish();
+                        }
+                    }, "去意已决", "暂不离开")
+                    .create()
+                    .show();
             return;
         }
         super.onBackPressed();
     }
 
-    private void showAreaDialog(View view) {
-        initAreaDialog();
-        mAreaSelectDialog.show();
-    }
-
     private void createAccount(View view) {
-        mInfoInputView.updateAuthInfo(mAuthInfo);
         mPresenter.createAccount(mAuthInfo);
     }
 
@@ -138,90 +171,17 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
         finish();
     }
 
-    private void initAreaDialog() {
-        if (mAreaSelectDialog == null) {
-            mAreaSelectDialog = new AreaSelectDialog(this);
-        }
-        if (mAreaSelectDialog.getNetAreaWindowEvent() == null) {
-            mAreaSelectDialog.addNetAreaWindowEvent(new AreaSelectDialog.NetAreaWindowEvent() {
-                @Override
-                public void getProvinces() {
-                    mPresenter.queryAreaList(ICreateAccountContract.AreaType.PROVINCE, "ZP1");
-                }
-
-                @Override
-                public void getCitys(AreaInfo areaBean) {
-                    mPresenter.queryAreaList(ICreateAccountContract.AreaType.CITY, areaBean.getAreaCode());
-                }
-
-                @Override
-                public void getDistributes(AreaInfo areaBean) {
-                    mPresenter.queryAreaList(ICreateAccountContract.AreaType.DISTRIBUTE, areaBean.getAreaCode());
-                }
-
-                @Override
-                public void selectAreas(AreaInfo... areaBeans) {
-                    String address =
-                        areaBeans[0].getAreaName() + "-" + areaBeans[1].getAreaName() + "-" + areaBeans[2].getAreaName();
-                    mInfoInputView.setRegion(address);
-                    mAuthInfo.setLicenseProvinceCode(areaBeans[0].getAreaCode());
-                    mAuthInfo.setLicenseProvinceName(areaBeans[0].getAreaName());
-                    mAuthInfo.setLicenseCityCode(areaBeans[1].getAreaCode());
-                    mAuthInfo.setLicenseCityName(areaBeans[1].getAreaName());
-                    mAuthInfo.setLicenseDistrictCode(areaBeans[2].getAreaCode());
-                    mAuthInfo.setLicenseDistrictName(areaBeans[2].getAreaName());
-                }
-
-                @Override
-                public String getName(AreaInfo item) {
-                    return item.getAreaName();
-                }
-
-                @Override
-                public String getKey(AreaInfo areaBean) {
-                    return areaBean.getAreaCode();
-                }
-            });
-        }
-    }
-
     @Override
     public void handleAuthInfo(AuthInfo info) {
-        if (info == null) return;
-        mAuthInfo = info;
-        mNameInputView.setCompanyName(info.getCompanyName());
-        mInfoInputView.initData(info);
-        if (!TextUtils.isEmpty(info.getLicenseProvinceName())) {
-            String licenseAddress =
-                info.getLicenseProvinceName() + "-" + info.getLicenseCityName() + "-" + info.getLicenseDistrictName();
-            mInfoInputView.setRegion(licenseAddress);
-            initAreaDialog();
-            AreaInfo provinceArea = new AreaInfo(info.getLicenseProvinceCode(), info.getLicenseProvinceName());
-            mAreaSelectDialog.setProvice(provinceArea);
-            AreaInfo cityArea = new AreaInfo(info.getLicenseCityCode(), info.getLicenseCityName());
-            mAreaSelectDialog.setCity(cityArea);
-            AreaInfo distributeArea = new AreaInfo(info.getLicenseDistrictCode(), info.getLicenseDistrictName());
-            mAreaSelectDialog.setDistribute(distributeArea);
+        if (info != null) {
+            mAuthInfo = info;
         }
+        mNameInputView.initData(mAuthInfo);
     }
 
     @Override
     public void handleAreaList(List<AreaInfo> areaInfoList) {
-        if (areaInfoList.size() > 0) {
-            switch (areaInfoList.get(0).getAreaType()) {
-                case ICreateAccountContract.AreaType.PROVINCE:
-                    mAreaSelectDialog.setProvinces(areaInfoList);
-                    break;
-                case ICreateAccountContract.AreaType.CITY:
-                    mAreaSelectDialog.setCitys(areaInfoList);
-                    break;
-                case ICreateAccountContract.AreaType.DISTRIBUTE:
-                    mAreaSelectDialog.setDistributes(areaInfoList);
-                    break;
-                default:
-                    break;
-            }
-        }
+        mInfoInputView.setAreaList(areaInfoList);
     }
 
     @Override

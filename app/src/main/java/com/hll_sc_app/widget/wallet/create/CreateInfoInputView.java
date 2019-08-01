@@ -13,10 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.wallet.account.create.ICreateAccountContract;
 import com.hll_sc_app.app.web.WebActivity;
+import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
+import com.hll_sc_app.widget.wallet.AreaSelectDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,26 +38,28 @@ import butterknife.OnTextChanged;
 
 public class CreateInfoInputView extends ConstraintLayout {
     @BindView(R.id.wci_name)
-    TextView mName;
+    protected TextView mName;
     @BindView(R.id.wci_short_name)
-    EditText mShortName;
+    protected EditText mShortName;
     @BindView(R.id.wci_type)
-    TextView mType;
+    protected TextView mType;
     @BindView(R.id.wci_region)
-    TextView mRegion;
+    protected TextView mRegion;
     @BindView(R.id.wci_detail_address)
-    EditText mDetailAddress;
+    protected EditText mDetailAddress;
     @BindView(R.id.wci_contact)
-    EditText mContact;
+    protected EditText mContact;
     @BindView(R.id.wci_phone)
-    EditText mPhone;
+    protected EditText mPhone;
     @BindView(R.id.wci_email)
-    EditText mEmail;
+    protected EditText mEmail;
     @BindView(R.id.cii_confirm)
     TextView mConfirm;
     @BindView(R.id.cii_check_box)
     CheckBox mCheckBox;
+    protected AuthInfo mAuthInfo;
     private SingleSelectionDialog mTypeDialog;
+    private AreaSelectDialog mAreaSelectDialog;
     private OnClickListener mConfirmListener;
 
     public CreateInfoInputView(Context context) {
@@ -66,36 +72,43 @@ public class CreateInfoInputView extends ConstraintLayout {
 
     public CreateInfoInputView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        View view = View.inflate(context, R.layout.view_wallet_create_info_input, this);
-        ButterKnife.bind(this, view);
         initView();
     }
 
     public void initData(AuthInfo info) {
+        mAuthInfo = info;
         mName.setText(info.getCompanyName());
         mShortName.setText(info.getCompanyShortName());
         mType.setText(info.getUnit());
-        mType.setTag(info.getUnitType());
         mDetailAddress.setText(info.getBusinessAddress());
         mContact.setText(info.getOperatorName());
         mPhone.setText(info.getOperatorMobile());
         mEmail.setText(info.getOperatorEmail());
+        if (!TextUtils.isEmpty(info.getLicenseProvinceName())) {
+            String licenseAddress =
+                    info.getLicenseProvinceName() + "-" + info.getLicenseCityName() + "-" + info.getLicenseDistrictName();
+            mRegion.setText(licenseAddress);
+            AreaInfo provinceArea = new AreaInfo(info.getLicenseProvinceCode(), info.getLicenseProvinceName());
+            mAreaSelectDialog.setProvice(provinceArea);
+            AreaInfo cityArea = new AreaInfo(info.getLicenseCityCode(), info.getLicenseCityName());
+            mAreaSelectDialog.setCity(cityArea);
+            AreaInfo distributeArea = new AreaInfo(info.getLicenseDistrictCode(), info.getLicenseDistrictName());
+            mAreaSelectDialog.setDistribute(distributeArea);
+        }
     }
 
-    private void initView() {
+    protected void initView() {
+        bindView();
         mPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
-    public void setCompanyName(CharSequence text) {
-        mName.setText(text);
+    protected void bindView() {
+        View view = View.inflate(getContext(), R.layout.view_wallet_create_info_input, this);
+        ButterKnife.bind(this, view);
     }
 
     public void setRegion(CharSequence text) {
         mRegion.setText(text);
-    }
-
-    public void setRegionClickListener(OnClickListener listener) {
-        mRegion.setOnClickListener(listener);
     }
 
     public void setConfirmClickListener(OnClickListener listener) {
@@ -113,36 +126,61 @@ public class CreateInfoInputView extends ConstraintLayout {
                     .setTitleText("公司类型")
                     .setOnSelectListener(nameValue -> {
                         mType.setText(nameValue.getName());
-                        mType.setTag(nameValue.getValue());
+                        mAuthInfo.setUnit(nameValue.getName());
+                        mAuthInfo.setUnitType(Integer.parseInt(nameValue.getValue()));
                     })
                     .create();
         }
         mTypeDialog.show();
     }
 
-    public void updateAuthInfo(AuthInfo info) {
-        info.setUnit(mType.getText().toString());
-        info.setUnitType(Integer.parseInt(mType.getTag().toString()));
-        info.setBusinessAddress(mDetailAddress.getText().toString());
-        info.setCompanyShortName(mShortName.getText().toString());
-        info.setOperatorName(mContact.getText().toString());
-        info.setOperatorMobile(mPhone.getText().toString());
-        info.setOperatorMobile(mEmail.getText().toString());
+    @OnClick(R.id.wci_region)
+    public void showAreaDialog(View view) {
+        if (mAreaSelectDialog == null) return;
+        mAreaSelectDialog.show();
+    }
+
+    public void setAreaSelectListener(AreaSelectDialog.NetAreaWindowEvent event) {
+        mAreaSelectDialog = new AreaSelectDialog((Activity) getContext());
+        mAreaSelectDialog.addNetAreaWindowEvent(event);
+    }
+
+    public void setAreaList(List<AreaInfo> areaInfoList) {
+        if (!CommonUtils.isEmpty(areaInfoList)) {
+            switch (areaInfoList.get(0).getAreaType()) {
+                case ICreateAccountContract.AreaType.PROVINCE:
+                    mAreaSelectDialog.setProvinces(areaInfoList);
+                    break;
+                case ICreateAccountContract.AreaType.CITY:
+                    mAreaSelectDialog.setCitys(areaInfoList);
+                    break;
+                case ICreateAccountContract.AreaType.DISTRIBUTE:
+                    mAreaSelectDialog.setDistributes(areaInfoList);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @OnClick(R.id.cii_confirm)
-    public void confirm(View view) {
+    void confirm(View view) {
         if (verifyValidity() && mConfirmListener != null) {
+            mAuthInfo.setBusinessAddress(mDetailAddress.getText().toString());
+            mAuthInfo.setCompanyShortName(mShortName.getText().toString());
+            mAuthInfo.setOperatorName(mContact.getText().toString());
+            mAuthInfo.setOperatorMobile(mPhone.getText().toString());
+            mAuthInfo.setOperatorEmail(mEmail.getText().toString());
             mConfirmListener.onClick(view);
         }
     }
 
-    private boolean verifyValidity() {
+    protected boolean verifyValidity() {
         return true;
     }
 
     @OnClick({R.id.cii_wallet_protocol, R.id.cii_platform_protocol})
-    public void onViewClicked(View view) {
+    void onViewClicked(View view) {
         String url;
         String title;
         switch (view.getId()) {
@@ -169,11 +207,11 @@ public class CreateInfoInputView extends ConstraintLayout {
     }
 
     @OnCheckedChanged(R.id.cii_check_box)
-    public void onCheckedChanged(boolean checked) {
+    void onCheckedChanged(boolean checked) {
         updateConfirmStatus();
     }
 
-    private void updateConfirmStatus() {
+    protected void updateConfirmStatus() {
         mConfirm.setEnabled(!TextUtils.isEmpty(mName.getText())
                 && !TextUtils.isEmpty(mShortName.getText())
                 && !TextUtils.isEmpty(mType.getText())
