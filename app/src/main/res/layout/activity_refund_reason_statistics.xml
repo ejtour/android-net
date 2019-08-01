@@ -139,7 +139,7 @@
                     android:background="@color/color_dddddd" />
 
                 <TextView
-                    android:layout_width="170dp"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="退货原因"
