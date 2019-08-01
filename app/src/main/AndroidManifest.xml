@@ -208,19 +208,19 @@
 
         <activity
             android:name=".app.deliverymanage.minimum.purchaser.PurchaserMinimumActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.minimum.purchaser.shop.ShopMinimumActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.minimum.detail.DeliveryMinimumDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.minimum.area.DeliveryAreaActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.ageing.DeliveryAgeingActivity"
@@ -473,7 +473,11 @@
 
         <activity
             android:name=".app.wallet.account.create.CreateAccountActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.account.auth.AuthAccountActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.wallet.WalletActivity"
@@ -481,7 +485,7 @@
 
         <activity
             android:name=".app.web.WebActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

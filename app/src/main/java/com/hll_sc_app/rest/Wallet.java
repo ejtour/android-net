@@ -157,4 +157,17 @@ public class Wallet {
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
             .subscribe(observer);
     }
+
+    /**
+     * 实名认证
+     *
+     * @param info 待核验信息
+     */
+    public static void authAccount(AuthInfo info,SimpleObserver<Object> observer){
+        WalletService.INSTANCE
+                .authAccount(new BaseReq<>(info))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }

@@ -7,6 +7,7 @@ import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 
+import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
@@ -31,11 +32,19 @@ public interface IAccountContract {
         void handleAreaList(List<AreaInfo> areaInfoList);
 
         void commitSuccess();
+
+        default void showImage(String url){
+
+        }
     }
 
     interface IAccountPresenter extends IPresenter<IAccountView> {
         void queryAreaList(@AreaType int areaType, String areaParentId);
 
         void commitAuthInfo(AuthInfo info);
+
+        default void imageUpload(File file){
+
+        }
     }
 }
