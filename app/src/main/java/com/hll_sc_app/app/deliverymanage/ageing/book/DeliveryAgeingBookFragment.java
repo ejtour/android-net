@@ -2,6 +2,7 @@ package com.hll_sc_app.app.deliverymanage.ageing.book;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,12 +71,20 @@ public class DeliveryAgeingBookFragment extends BaseLazyFragment implements Deli
     public void showDaysSelectWindow() {
         if (mDialog == null) {
             List<NameValue> list = new ArrayList<>();
+            NameValue select = null;
+            String text = mTxtDays.getText().toString();
             for (int i = 1; i < 8; i++) {
-                list.add(new NameValue(i + "天", String.valueOf(i)));
+                String name = i + "天";
+                NameValue nameValue = new NameValue(name, String.valueOf(i));
+                list.add(nameValue);
+                if (TextUtils.equals(name, text)) {
+                    select = nameValue;
+                }
             }
             mDialog = SingleSelectionDialog.newBuilder(requireActivity(),
                 NameValue::getName)
                 .refreshList(list)
+                .select(select)
                 .setTitleText("选择可预订天数")
                 .setOnSelectListener(nameValue -> {
                     mTxtDays.setText(nameValue.getName());
