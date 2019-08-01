@@ -32,22 +32,22 @@ import butterknife.OnTextChanged;
  * @since 2019/7/31
  */
 
-public class CompanyInfoInputView extends ConstraintLayout {
-    @BindView(R.id.cii_name)
+public class CreateInfoInputView extends ConstraintLayout {
+    @BindView(R.id.wci_name)
     TextView mName;
-    @BindView(R.id.cii_short_name)
+    @BindView(R.id.wci_short_name)
     EditText mShortName;
-    @BindView(R.id.cii_type)
+    @BindView(R.id.wci_type)
     TextView mType;
-    @BindView(R.id.cii_region)
+    @BindView(R.id.wci_region)
     TextView mRegion;
-    @BindView(R.id.cii_detail_address)
+    @BindView(R.id.wci_detail_address)
     EditText mDetailAddress;
-    @BindView(R.id.cii_contact)
+    @BindView(R.id.wci_contact)
     EditText mContact;
-    @BindView(R.id.cii_phone)
+    @BindView(R.id.wci_phone)
     EditText mPhone;
-    @BindView(R.id.cii_email)
+    @BindView(R.id.wci_email)
     EditText mEmail;
     @BindView(R.id.cii_confirm)
     TextView mConfirm;
@@ -56,23 +56,19 @@ public class CompanyInfoInputView extends ConstraintLayout {
     private SingleSelectionDialog mTypeDialog;
     private OnClickListener mConfirmListener;
 
-    public CompanyInfoInputView(Context context) {
+    public CreateInfoInputView(Context context) {
         this(context, null);
     }
 
-    public CompanyInfoInputView(Context context, AttributeSet attrs) {
+    public CreateInfoInputView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CompanyInfoInputView(Context context, AttributeSet attrs, int defStyle) {
+    public CreateInfoInputView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        View view = View.inflate(context, R.layout.view_wallet_company_info_input, this);
+        View view = View.inflate(context, R.layout.view_wallet_create_info_input, this);
         ButterKnife.bind(this, view);
         initView();
-    }
-
-    private void initView() {
-        mPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
     public void initData(AuthInfo info) {
@@ -84,6 +80,10 @@ public class CompanyInfoInputView extends ConstraintLayout {
         mContact.setText(info.getOperatorName());
         mPhone.setText(info.getOperatorMobile());
         mEmail.setText(info.getOperatorEmail());
+    }
+
+    private void initView() {
+        mPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
     public void setCompanyName(CharSequence text) {
@@ -102,20 +102,20 @@ public class CompanyInfoInputView extends ConstraintLayout {
         mConfirmListener = listener;
     }
 
-    @OnClick(R.id.cii_type)
+    @OnClick(R.id.wci_type)
     public void selectType() {
         if (mTypeDialog == null) {
             List<NameValue> list = new ArrayList<>();
             list.add(new NameValue("企业", "1"));
             list.add(new NameValue("个体工商户", "2"));
             mTypeDialog = SingleSelectionDialog.newBuilder((Activity) getContext(), NameValue::getName)
-                .refreshList(list)
-                .setTitleText("公司类型")
-                .setOnSelectListener(nameValue -> {
-                    mType.setText(nameValue.getName());
-                    mType.setTag(nameValue.getValue());
-                })
-                .create();
+                    .refreshList(list)
+                    .setTitleText("公司类型")
+                    .setOnSelectListener(nameValue -> {
+                        mType.setText(nameValue.getName());
+                        mType.setTag(nameValue.getValue());
+                    })
+                    .create();
         }
         mTypeDialog.show();
     }
@@ -160,28 +160,28 @@ public class CompanyInfoInputView extends ConstraintLayout {
         WebActivity.start(title, "file:///android_asset/pdf/pdfView.html?" + url);
     }
 
-    @OnTextChanged(value = {R.id.cii_name, R.id.cii_short_name, R.id.cii_type,
-        R.id.cii_region, R.id.cii_detail_address,
-        R.id.cii_contact, R.id.cii_phone, R.id.cii_email},
-        callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    @OnTextChanged(value = {R.id.wci_name, R.id.wci_short_name, R.id.wci_type,
+            R.id.wci_region, R.id.wci_detail_address,
+            R.id.wci_contact, R.id.wci_phone, R.id.wci_email},
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextChanged(Editable s) {
         updateConfirmStatus();
-    }
-
-    private void updateConfirmStatus() {
-        mConfirm.setEnabled(!TextUtils.isEmpty(mName.getText())
-            && !TextUtils.isEmpty(mShortName.getText())
-            && !TextUtils.isEmpty(mType.getText())
-            && !TextUtils.isEmpty(mRegion.getText())
-            && !TextUtils.isEmpty(mDetailAddress.getText())
-            && !TextUtils.isEmpty(mContact.getText())
-            && !TextUtils.isEmpty(mPhone.getText())
-            && !TextUtils.isEmpty(mEmail.getText())
-            && mCheckBox.isChecked());
     }
 
     @OnCheckedChanged(R.id.cii_check_box)
     public void onCheckedChanged(boolean checked) {
         updateConfirmStatus();
+    }
+
+    private void updateConfirmStatus() {
+        mConfirm.setEnabled(!TextUtils.isEmpty(mName.getText())
+                && !TextUtils.isEmpty(mShortName.getText())
+                && !TextUtils.isEmpty(mType.getText())
+                && !TextUtils.isEmpty(mRegion.getText())
+                && !TextUtils.isEmpty(mDetailAddress.getText())
+                && !TextUtils.isEmpty(mContact.getText())
+                && !TextUtils.isEmpty(mPhone.getText())
+                && !TextUtils.isEmpty(mEmail.getText())
+                && mCheckBox.isChecked());
     }
 }

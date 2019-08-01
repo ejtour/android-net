@@ -22,8 +22,8 @@ import com.hll_sc_app.widget.ScrollableViewPager;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.wallet.AreaSelectDialog;
 import com.hll_sc_app.widget.wallet.WalletProtocolDialog;
-import com.hll_sc_app.widget.wallet.create.CompanyInfoInputView;
-import com.hll_sc_app.widget.wallet.create.CompanyNameInputView;
+import com.hll_sc_app.widget.wallet.create.CreateInfoInputView;
+import com.hll_sc_app.widget.wallet.create.CreateNameInputView;
 
 import java.util.List;
 
@@ -42,8 +42,8 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
     TitleBar mTitleBar;
     @BindView(R.id.wca_view_pager)
     ScrollableViewPager mViewPager;
-    private CompanyNameInputView mNameInputView;
-    private CompanyInfoInputView mInfoInputView;
+    private CreateNameInputView mNameInputView;
+    private CreateInfoInputView mInfoInputView;
     private ICreateAccountContract.ICreateAccountPresenter mPresenter;
     private WalletProtocolDialog mProtocolDialog;
     private AreaSelectDialog mAreaSelectDialog;
@@ -65,13 +65,13 @@ public class CreateAccountActivity extends BaseLoadActivity implements ICreateAc
 
     private void initView() {
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
-        mNameInputView = new CompanyNameInputView(this);
+        mNameInputView = new CreateNameInputView(this);
         mNameInputView.setNextClickListener(v -> {
             mAuthInfo.setCompanyName(mNameInputView.getCompanyName().toString());
             mInfoInputView.setCompanyName(mAuthInfo.getCompanyName());
             mViewPager.setCurrentItem(1);
         });
-        mInfoInputView = new CompanyInfoInputView(this);
+        mInfoInputView = new CreateInfoInputView(this);
         mInfoInputView.setRegionClickListener(this::showAreaDialog);
         mInfoInputView.setConfirmClickListener(this::createAccount);
         mViewPager.setAdapter(new ViewPagerAdapter(mNameInputView, mInfoInputView));

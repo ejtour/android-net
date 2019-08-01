@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <include layout="@layout/view_wallet_company_info" />
+
+    <CheckBox
+        android:id="@+id/cii_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:button="@drawable/bg_selector_check_box"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:text="已阅读并同意"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/text_little_size"
+        app:layout_constraintEnd_toStartOf="@id/cii_wallet_protocol"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wci_contact_bg" />
+
+    <TextView
+        android:id="@+id/cii_wallet_protocol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="《“智慧支付钱包”授权服务协议》"
+        android:textAppearance="@style/TextAppearance.City22.Little.Blue"
+        app:layout_constraintBaseline_toBaselineOf="@id/cii_check_box"
+        app:layout_constraintEnd_toStartOf="@id/cii_platform_protocol"
+        app:layout_constraintStart_toEndOf="@id/cii_check_box" />
+
+    <TextView
+        android:id="@+id/cii_platform_protocol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="《开发平台授权协议》"
+        android:textAppearance="@style/TextAppearance.City22.Little.Blue"
+        app:layout_constraintBaseline_toBaselineOf="@id/cii_check_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cii_wallet_protocol" />
+
+    <View
+        android:id="@+id/cii_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/cii_confirm"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:layout_width="200dp"
+        android:enabled="false"
+        android:text="确认提交申请"
+        app:layout_constraintBottom_toBottomOf="@id/cii_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/cii_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/cii_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/cii_bottom_bg" />
+</merge>
