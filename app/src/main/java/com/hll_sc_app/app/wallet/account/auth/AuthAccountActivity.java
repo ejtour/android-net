@@ -14,6 +14,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.account.AccountPresenter;
 import com.hll_sc_app.app.wallet.account.IAccountContract;
 import com.hll_sc_app.app.wallet.account.IInfoInputView;
+import com.hll_sc_app.app.wallet.bank.BankListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -28,6 +29,7 @@ import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.wallet.AreaSelectDialog;
 import com.hll_sc_app.widget.wallet.auth.AuthBaseInputView;
 import com.hll_sc_app.widget.wallet.auth.AuthPersonInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthSettlementInputView;
 import com.zhihu.matisse.Matisse;
 
 import java.io.File;
@@ -52,6 +54,7 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
     private List<IInfoInputView> mInputViews = new ArrayList<>();
     private AuthBaseInputView mBaseInputView;
     private AuthPersonInputView mPersonInputView;
+    private AuthSettlementInputView mSettlementInputView;
     private AuthInfo mAuthInfo = new AuthInfo();
 
     public static void start(Activity context) {
@@ -73,6 +76,7 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mBaseInputView.setCommitListener(this::next);
         mPersonInputView.setCommitListener(this::next);
+        mSettlementInputView.setCommitListener(this::next);
         mBaseInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
             @Override
             public void getProvinces() {
@@ -144,9 +148,11 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
     private void initView() {
         mBaseInputView = new AuthBaseInputView(this);
         mPersonInputView = new AuthPersonInputView(this);
+        mSettlementInputView = new AuthSettlementInputView(this);
         mInputViews.add(mBaseInputView);
         mInputViews.add(mPersonInputView);
-        mViewPager.setAdapter(new ViewPagerAdapter(mBaseInputView, mPersonInputView));
+        mInputViews.add(mSettlementInputView);
+        mViewPager.setAdapter(new ViewPagerAdapter(mBaseInputView, mPersonInputView, mSettlementInputView));
         mTitleBar.setHeaderTitle(mBaseInputView.getTitle());
     }
 
@@ -175,10 +181,14 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
-            List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(new File(list.get(0)));
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            if (requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                List<String> list = Matisse.obtainPathResult(data);
+                if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(new File(list.get(0)));
+            }
+            if (requestCode == BankListActivity.REQ_CODE) {
+                mInputViews.get(mViewPager.getCurrentItem()).setBankData(data.getParcelableExtra(BankListActivity.BANK_KEY));
+            }
         }
     }
 

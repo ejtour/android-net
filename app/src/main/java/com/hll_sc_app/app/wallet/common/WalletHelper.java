@@ -93,4 +93,14 @@ public class WalletHelper {
         }
         return name;
     }
+
+    public static String getBankType(int bankType) {
+        String name = "";
+        if (bankType == 1) {
+            return "对公账户";
+        } else if (bankType == 2) {
+            return "法人账户";
+        }
+        return name;
+    }
 }
