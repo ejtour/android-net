@@ -480,6 +480,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.wallet.bank.BankListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.wallet.WalletActivity"
             android:screenOrientation="portrait" />
 
