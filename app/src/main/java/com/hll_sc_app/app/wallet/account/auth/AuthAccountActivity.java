@@ -27,6 +27,7 @@ import com.hll_sc_app.widget.ScrollableViewPager;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.wallet.AreaSelectDialog;
 import com.hll_sc_app.widget.wallet.auth.AuthBaseInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthPersonInputView;
 import com.zhihu.matisse.Matisse;
 
 import java.io.File;
@@ -50,6 +51,7 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
     private IAccountContract.IAccountPresenter mPresenter;
     private List<IInfoInputView> mInputViews = new ArrayList<>();
     private AuthBaseInputView mBaseInputView;
+    private AuthPersonInputView mPersonInputView;
     private AuthInfo mAuthInfo = new AuthInfo();
 
     public static void start(Activity context) {
@@ -70,6 +72,7 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
     private void bindListener() {
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mBaseInputView.setCommitListener(this::next);
+        mPersonInputView.setCommitListener(this::next);
         mBaseInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
             @Override
             public void getProvinces() {
@@ -140,13 +143,19 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
 
     private void initView() {
         mBaseInputView = new AuthBaseInputView(this);
+        mPersonInputView = new AuthPersonInputView(this);
         mInputViews.add(mBaseInputView);
-        mViewPager.setAdapter(new ViewPagerAdapter(mBaseInputView));
+        mInputViews.add(mPersonInputView);
+        mViewPager.setAdapter(new ViewPagerAdapter(mBaseInputView, mPersonInputView));
         mTitleBar.setHeaderTitle(mBaseInputView.getTitle());
     }
 
     @Override
     public void onBackPressed() {
+        if (mViewPager.getCurrentItem() > 0) {
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
+            return;
+        }
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_failure)
                 .setImageState(R.drawable.ic_dialog_state_failure)

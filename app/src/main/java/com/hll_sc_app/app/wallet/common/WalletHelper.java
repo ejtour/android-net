@@ -38,15 +38,15 @@ public class WalletHelper {
                 .show();
     }
 
-   public static void showDate(Activity activity, DateWindow dateWindow, boolean isStart, String beginDate, String endDate) {
+    public static void showDate(Activity activity, DateWindow dateWindow, boolean isStart, String beginDate, String endDate) {
         boolean isBeginDateEmpty = TextUtils.isEmpty(beginDate) || TextUtils.equals("0", beginDate);
         boolean isEndDateEmpty = TextUtils.isEmpty(endDate) || TextUtils.equals("0", endDate);
         if (!isStart && isBeginDateEmpty) {
-            ToastUtils.showShort(activity,"请先选择起始日期");
+            ToastUtils.showShort(activity, "请先选择起始日期");
             return;
         }
         if (!isStart && TextUtils.equals("99991231", beginDate)) {
-            ToastUtils.showShort(activity,"请先选择起始日期的具体时间");
+            ToastUtils.showShort(activity, "请先选择起始日期的具体时间");
             return;
         }
         if (isStart) {
@@ -67,5 +67,30 @@ public class WalletHelper {
             dateWindow.setCalendar(date);
         }
         dateWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.END, 0, 0);
+    }
+
+    /**
+     * 反显证件类型的解析
+     * 根据cardType显示证件类型文本
+     */
+    public static String transformCardType(int type) {
+        String name = "";
+        switch (type) {
+            case 0:
+                name = "身份证";
+                break;
+            case 2:
+                name = "来往内地通信证";
+                break;
+            case 4:
+                name = "台胞证";
+                break;
+            case 9:
+                name = "护照";
+                break;
+            default:
+                break;
+        }
+        return name;
     }
 }
