@@ -152,6 +152,10 @@ public class Wallet {
      * @param info 待核验信息
      */
     public static void createAccount(AuthInfo info, SimpleObserver<Object> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        info.setGroupID(user.getGroupID());
+        info.setGroupName(user.getGroupName());
+        info.setGroupType(1);
         WalletService.INSTANCE
                 .createAccount(new BaseReq<>(info))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
