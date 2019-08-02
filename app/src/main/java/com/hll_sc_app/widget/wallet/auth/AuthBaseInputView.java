@@ -93,9 +93,14 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
     }
 
     private void deleteImage(View view) {
+        view.setTag("");
+        updateImage(view);
+    }
+
+    private void updateImage(View view) {
         if (view.getId() == R.id.abi_business_license)
-            mAuthInfo.setImgLicense("");
-        else mAuthInfo.setImgBankLicense("");
+            mAuthInfo.setImgLicense(view.getTag().toString());
+        else mAuthInfo.setImgBankLicense(view.getTag().toString());
         updateConfirmStatus();
     }
 
@@ -135,11 +140,9 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
     @Override
     public void setImageUrl(String url) {
         if (mCurUpload != null) {
-            if (mCurUpload.getId() == R.id.abi_business_license)
-                mAuthInfo.setImgLicense(url);
-            else mAuthInfo.setImgBankLicense(url);
             mCurUpload.showImage(url);
-            updateConfirmStatus();
+            mCurUpload.setTag(url);
+            updateImage(mCurUpload);
         }
     }
 
