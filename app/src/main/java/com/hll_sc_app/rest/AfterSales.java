@@ -218,11 +218,11 @@ public class AfterSales {
                         .put("sourceClient", "1")//todo crm的话 这块要改为6
                         .put("target", "2")
                         .put("type", "1")
-                    .put("reason", String.valueOf(afterSalesBean.getRefundReason()))
+                        .put("reason", String.valueOf(afterSalesBean.getRefundReason()))
                         .put("source", "2")
                         .put("sourceBusiness", "2")
                         .put("actionType", "1")
-                        .put("billID", afterSalesBean.getSubBillID())
+                        .put("billID", afterSalesBean.getSubBillNo())
                         .put("complaintExplain", afterSalesBean.getRefundExplain())
                         .put("imgUrls", afterSalesBean.getRefundVoucher())
                         .put("products", JsonUtil.toJson(afterSalesDetailsBeans))

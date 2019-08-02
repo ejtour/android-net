@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,13 +21,16 @@ import com.githang.statusbar.StatusBarCompat;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
@@ -58,7 +62,7 @@ import butterknife.Unbinder;
  * @author zc
  */
 @Route(path = RouterConfig.REFUND_REASON_STATICS)
-public class RefundReasonActivity extends BaseLoadActivity implements IRefundReasonContract.IView {
+public class RefundReasonActivity extends BaseLoadActivity implements IRefundReasonContract.IView, OnChartValueSelectedListener {
 
     @BindView(R.id.txt_filter_deposit)
     TextView mTxtFilterDeposit;
@@ -135,7 +139,7 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
         //画统计图
         mPie.setUsePercentValues(true);
         mPie.getDescription().setEnabled(false);
-        mPie.setExtraOffsets(20, 20, 20, 20);
+        mPie.setExtraOffsets(5, 5, 5, 5);
         mPie.setDragDecelerationFrictionCoef(0.5f);
         mPie.setRotationEnabled(true);
         mPie.animateY(1400, Easing.EaseInOutQuad);
@@ -150,6 +154,7 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
         l.setWordWrapEnabled(true);
         l.setEnabled(true);
 
+        mPie.setOnChartValueSelectedListener(this);
 
     }
 
@@ -277,19 +282,19 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
                 colors.add(ColorTemplate.getHoloBlue());
                 dataSet.setColors(colors);
                 //横线
-                dataSet.setValueLinePart1OffsetPercentage(90f);
-                dataSet.setValueLinePart1Length(1f);
-                dataSet.setValueLinePart2Length(1f);
-                //横线值
-                dataSet.setValueTextSize(11f);
-                dataSet.setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String getPieLabel(float value, PieEntry pieEntry) {
-                        return new DecimalFormat("#.##").format(value) + "%";
-                    }
-                });
-
-                dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+//                dataSet.setValueLinePart1OffsetPercentage(0f);
+//                dataSet.setValueLinePart1Length(0f);
+//                dataSet.setValueLinePart2Length(0f);
+//                //横线值
+//                dataSet.setValueTextSize(0f);
+//                dataSet.setValueFormatter(new ValueFormatter() {
+//                    @Override
+//                    public String getPieLabel(float value, PieEntry pieEntry) {
+//                        return new DecimalFormat("#.##").format(value) + "%";
+//                    }
+//                });
+//                dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+                dataSet.setValueTextSize(0f);
                 PieData data = new PieData(dataSet);
                 mPie.setData(data);
                 mPie.invalidate();
@@ -309,6 +314,21 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
+    }
+
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        PieEntry pData = (PieEntry) e;
+        String toast = pData.getLabel() + ":" + new DecimalFormat("#.##").format(pData.getY() * 100) + "%";
+        Toast mToast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        mToast.setText(toast);
+        mToast.setGravity(Gravity.TOP, 0, UIUtils.dip2px(200));
+        mToast.show();
+    }
+
+    @Override
+    public void onNothingSelected() {
+        //no-op
     }
 
     private class ListAdapter extends BaseQuickAdapter<RefundReasonStaticsResp.RefundReasonBean, BaseViewHolder> {

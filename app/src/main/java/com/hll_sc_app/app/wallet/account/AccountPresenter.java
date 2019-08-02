@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.wallet.account.create;
+package com.hll_sc_app.app.wallet.account;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.wallet.AreaInfo;
@@ -13,14 +13,14 @@ import java.util.List;
  * @since 2019/7/31
  */
 
-public class CreateAccountPresenter implements ICreateAccountContract.ICreateAccountPresenter {
-    private ICreateAccountContract.ICreateAccountView mView;
+public class AccountPresenter implements IAccountContract.IAccountPresenter {
+    protected IAccountContract.IAccountView mView;
 
-    private CreateAccountPresenter() {
+    protected AccountPresenter() {
     }
 
-    public static CreateAccountPresenter newInstance() {
-        return new CreateAccountPresenter();
+    public static AccountPresenter newInstance() {
+        return new AccountPresenter();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CreateAccountPresenter implements ICreateAccountContract.ICreateAcc
     }
 
     @Override
-    public void register(ICreateAccountContract.ICreateAccountView view) {
+    public void register(IAccountContract.IAccountView view) {
         mView = CommonUtils.requireNonNull(view);
     }
 
@@ -49,11 +49,11 @@ public class CreateAccountPresenter implements ICreateAccountContract.ICreateAcc
     }
 
     @Override
-    public void createAccount(AuthInfo info) {
+    public void commitAuthInfo(AuthInfo info) {
         Wallet.createAccount(info, new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
-                mView.createSuccess();
+                mView.commitSuccess();
             }
         });
     }

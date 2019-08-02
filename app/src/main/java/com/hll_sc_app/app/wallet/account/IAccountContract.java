@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.wallet.account.create;
+package com.hll_sc_app.app.wallet.account;
 
 import android.support.annotation.IntDef;
 
@@ -7,6 +7,7 @@ import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 
+import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * @since 2019/7/31
  */
 
-public interface ICreateAccountContract {
+public interface IAccountContract {
     @IntDef({AreaType.PROVINCE, AreaType.CITY, AreaType.DISTRIBUTE})
     @Retention(RetentionPolicy.SOURCE)
     @interface AreaType {
@@ -25,17 +26,25 @@ public interface ICreateAccountContract {
         int DISTRIBUTE = 4;
     }
 
-    interface ICreateAccountView extends ILoadView {
+    interface IAccountView extends ILoadView {
         void handleAuthInfo(AuthInfo info);
 
         void handleAreaList(List<AreaInfo> areaInfoList);
 
-        void createSuccess();
+        void commitSuccess();
+
+        default void showImage(String url){
+
+        }
     }
 
-    interface ICreateAccountPresenter extends IPresenter<ICreateAccountView> {
+    interface IAccountPresenter extends IPresenter<IAccountView> {
         void queryAreaList(@AreaType int areaType, String areaParentId);
 
-        void createAccount(AuthInfo info);
+        void commitAuthInfo(AuthInfo info);
+
+        default void imageUpload(File file){
+
+        }
     }
 }

@@ -1,6 +1,7 @@
-package com.hll_sc_app.app.wallet.account.create;
+package com.hll_sc_app.app.wallet.account.auth;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -12,20 +13,28 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.account.AccountPresenter;
 import com.hll_sc_app.app.wallet.account.IAccountContract;
+import com.hll_sc_app.app.wallet.account.IInfoInputView;
+import com.hll_sc_app.app.wallet.bank.BankListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.adapter.ViewPagerAdapter;
 import com.hll_sc_app.widget.ScrollableViewPager;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.wallet.AreaSelectDialog;
-import com.hll_sc_app.widget.wallet.WalletProtocolDialog;
-import com.hll_sc_app.widget.wallet.create.CreateInfoInputView;
-import com.hll_sc_app.widget.wallet.create.CreateNameInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthBaseInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthBusinessInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthPersonInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthSettlementInputView;
+import com.zhihu.matisse.Matisse;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,24 +42,25 @@ import butterknife.ButterKnife;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
- * @since 2019/7/31
+ * @since 2019/8/1
  */
-
-@Route(path = RouterConfig.WALLET_ACCOUNT_CREATE)
-public class CreateAccountActivity extends BaseLoadActivity implements IAccountContract.IAccountView {
-    public static final int REQ_CODE = 0x777;
+@Route(path = RouterConfig.WALLET_ACCOUNT_AUTH)
+public class AuthAccountActivity extends BaseLoadActivity implements IAccountContract.IAccountView {
+    public static final int REQ_CODE = 0x778;
     @BindView(R.id.wca_title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.wca_view_pager)
     ScrollableViewPager mViewPager;
-    private CreateNameInputView mNameInputView;
-    private CreateInfoInputView mInfoInputView;
     private IAccountContract.IAccountPresenter mPresenter;
-    private WalletProtocolDialog mProtocolDialog;
+    private List<IInfoInputView> mInputViews = new ArrayList<>();
+    private AuthBaseInputView mBaseInputView;
+    private AuthPersonInputView mPersonInputView;
+    private AuthSettlementInputView mSettlementInputView;
+    private AuthBusinessInputView mBusinessInputView;
     private AuthInfo mAuthInfo = new AuthInfo();
 
     public static void start(Activity context) {
-        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_CREATE, context, REQ_CODE);
+        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_AUTH, context, REQ_CODE);
     }
 
     @Override
@@ -66,12 +76,11 @@ public class CreateAccountActivity extends BaseLoadActivity implements IAccountC
 
     private void bindListener() {
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
-        mNameInputView.setNextClickListener(v -> {
-            mInfoInputView.initData(mAuthInfo);
-            mViewPager.setCurrentItem(1, true);
-        });
-        mInfoInputView.setCommitListener(this::createAccount);
-        mInfoInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
+        mBaseInputView.setCommitListener(this::next);
+        mPersonInputView.setCommitListener(this::next);
+        mSettlementInputView.setCommitListener(this::next);
+        mBusinessInputView.setCommitListener(this::commit);
+        mBaseInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
             @Override
             public void getProvinces() {
                 mPresenter.queryAreaList(IAccountContract.AreaType.PROVINCE, "ZP1");
@@ -91,7 +100,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements IAccountC
             public void selectAreas(AreaInfo... areaBeans) {
                 String address =
                         areaBeans[0].getAreaName() + "-" + areaBeans[1].getAreaName() + "-" + areaBeans[2].getAreaName();
-                mInfoInputView.setRegion(address);
+                mBaseInputView.setRegion(address);
                 mAuthInfo.setLicenseProvinceCode(areaBeans[0].getAreaCode());
                 mAuthInfo.setLicenseProvinceName(areaBeans[0].getAreaName());
                 mAuthInfo.setLicenseCityCode(areaBeans[1].getAreaCode());
@@ -118,7 +127,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements IAccountC
 
             @Override
             public void onPageSelected(int position) {
-                mTitleBar.setHeaderTitle(position == 1 ? "开通账号" : "开通铁金库");
+                mTitleBar.setHeaderTitle(mInputViews.get(position).getTitle());
             }
 
             @Override
@@ -128,12 +137,13 @@ public class CreateAccountActivity extends BaseLoadActivity implements IAccountC
         });
     }
 
-    private void initView() {
-        mNameInputView = new CreateNameInputView(this);
-        mInfoInputView = new CreateInfoInputView(this);
-        mViewPager.setAdapter(new ViewPagerAdapter(mNameInputView, mInfoInputView));
-        mProtocolDialog = new WalletProtocolDialog(this, this::rejectProtocol);
-        mProtocolDialog.show();
+    private void next(View view) {
+        mInputViews.get(mViewPager.getCurrentItem() + 1).initData(mAuthInfo);
+        mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
+    }
+
+    private void commit(View view) {
+        mPresenter.commitAuthInfo(mAuthInfo);
     }
 
     private void initData() {
@@ -142,35 +152,53 @@ public class CreateAccountActivity extends BaseLoadActivity implements IAccountC
         mPresenter.start();
     }
 
+    private void initView() {
+        mBaseInputView = new AuthBaseInputView(this);
+        mPersonInputView = new AuthPersonInputView(this);
+        mSettlementInputView = new AuthSettlementInputView(this);
+        mBusinessInputView = new AuthBusinessInputView(this);
+        mInputViews.add(mBaseInputView);
+        mInputViews.add(mPersonInputView);
+        mInputViews.add(mSettlementInputView);
+        mInputViews.add(mBusinessInputView);
+        mViewPager.setAdapter(new ViewPagerAdapter(mBaseInputView, mPersonInputView, mSettlementInputView, mBusinessInputView));
+        mTitleBar.setHeaderTitle(mBaseInputView.getTitle());
+    }
+
     @Override
     public void onBackPressed() {
-        if (mViewPager.getCurrentItem() == 1) {
-            SuccessDialog.newBuilder(this)
-                    .setImageTitle(R.drawable.ic_dialog_failure)
-                    .setImageState(R.drawable.ic_dialog_state_failure)
-                    .setMessageTitle("确定要离开吗")
-                    .setMessage("离开后将不能保存您当前所做的更改")
-                    .setCancelable(false)
-                    .setButton((dialog, item) -> {
-                        dialog.dismiss();
-                        if (item == 0) {
-                            finish();
-                        }
-                    }, "去意已决", "暂不离开")
-                    .create()
-                    .show();
+        if (mViewPager.getCurrentItem() > 0) {
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
             return;
         }
-        super.onBackPressed();
+        SuccessDialog.newBuilder(this)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setMessageTitle("确定要离开吗")
+                .setMessage("离开后将不能保存您当前所做的更改")
+                .setCancelable(false)
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 0) {
+                        finish();
+                    }
+                }, "去意已决", "暂不离开")
+                .create()
+                .show();
     }
 
-    private void createAccount(View view) {
-        mPresenter.commitAuthInfo(mAuthInfo);
-    }
-
-    private void rejectProtocol(View view) {
-        mProtocolDialog.dismiss();
-        finish();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            if (requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                List<String> list = Matisse.obtainPathResult(data);
+                if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(new File(list.get(0)));
+            }
+            if (requestCode == BankListActivity.REQ_CODE) {
+                mInputViews.get(mViewPager.getCurrentItem()).setBankData(data.getParcelableExtra(BankListActivity.BANK_KEY));
+            }
+        }
     }
 
     @Override
@@ -178,16 +206,17 @@ public class CreateAccountActivity extends BaseLoadActivity implements IAccountC
         if (info != null) {
             mAuthInfo = info;
         }
-        mNameInputView.initData(mAuthInfo);
+        mInputViews.get(0).initData(mAuthInfo);
     }
 
     @Override
     public void handleAreaList(List<AreaInfo> areaInfoList) {
-        mInfoInputView.setAreaList(areaInfoList);
+        mBaseInputView.setAreaList(areaInfoList);
     }
 
     @Override
     public void commitSuccess() {
+        showToast("实名认证申请成功，请等待审核");
         setResult(RESULT_OK);
         finish();
     }

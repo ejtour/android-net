@@ -62,7 +62,6 @@ public class WalletProtocolDialog extends BaseDialog {
             return;
         }
         getWindow().setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         getWindow().getAttributes().width = UIUtils.dip2px(335);
         getWindow().getAttributes().height = UIUtils.dip2px(500);
         setCancelable(false);

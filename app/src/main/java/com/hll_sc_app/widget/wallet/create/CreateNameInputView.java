@@ -10,9 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.bean.wallet.AuthInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
@@ -26,6 +28,8 @@ public class CreateNameInputView extends ConstraintLayout {
     EditText mNameEdit;
     @BindView(R.id.cni_next)
     TextView mNext;
+    private AuthInfo mAuthInfo;
+    private OnClickListener mOnNextListener;
 
     public CreateNameInputView(Context context) {
         this(context, null);
@@ -42,7 +46,13 @@ public class CreateNameInputView extends ConstraintLayout {
     }
 
     public void setNextClickListener(OnClickListener listener) {
-        mNext.setOnClickListener(listener);
+        mOnNextListener = listener;
+    }
+
+    @OnClick(R.id.cni_next)
+    public void next(View view) {
+        mAuthInfo.setCompanyName(mNameEdit.getText().toString());
+        if (mOnNextListener != null) mOnNextListener.onClick(view);
     }
 
     @OnTextChanged(R.id.cni_name_edit)
@@ -57,14 +67,11 @@ public class CreateNameInputView extends ConstraintLayout {
         return true;
     }
 
-    public CharSequence getCompanyName() {
-        return mNameEdit.getText();
-    }
-
-    public void setCompanyName(CharSequence text) {
-        if (!TextUtils.isEmpty(text)) {
-            mNameEdit.setText(text);
-            mNameEdit.setSelection(text.length());
+    public void initData(AuthInfo authInfo) {
+        mAuthInfo = authInfo;
+        if (!TextUtils.isEmpty(authInfo.getCompanyName())) {
+            mNameEdit.setText(authInfo.getCompanyName());
+            mNameEdit.setSelection(authInfo.getCompanyName().length());
         }
     }
 }

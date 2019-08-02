@@ -12,6 +12,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
+import com.hll_sc_app.bean.wallet.BankBean;
 import com.hll_sc_app.bean.wallet.RechargeResp;
 import com.hll_sc_app.bean.wallet.WalletStatusResp;
 import com.hll_sc_app.bean.wallet.details.DetailsExportReq;
@@ -137,12 +138,12 @@ public class Wallet {
      */
     public static void queryAreaList(int areaType, String areaParentId, SimpleObserver<List<AreaInfo>> observer) {
         WalletService.INSTANCE
-            .queryAreaList(BaseMapReq.newBuilder()
-                .put("areaType", String.valueOf(areaType))
-                .put("areaParentId", areaParentId).create())
-            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-            .subscribe(observer);
+                .queryAreaList(BaseMapReq.newBuilder()
+                        .put("areaType", String.valueOf(areaType))
+                        .put("areaParentId", areaParentId).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
     }
 
     /**
@@ -152,9 +153,37 @@ public class Wallet {
      */
     public static void createAccount(AuthInfo info, SimpleObserver<Object> observer) {
         WalletService.INSTANCE
-            .createAccount(new BaseReq<>(info))
-            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-            .subscribe(observer);
+                .createAccount(new BaseReq<>(info))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 实名认证
+     *
+     * @param info 待核验信息
+     */
+    public static void authAccount(AuthInfo info, SimpleObserver<Object> observer) {
+        WalletService.INSTANCE
+                .authAccount(new BaseReq<>(info))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取银行列表
+     *
+     * @param pageNum 页数
+     */
+    public static void getBankList(int pageNum, SimpleObserver<List<BankBean>> observer) {
+        WalletService.INSTANCE
+                .getBankList(BaseMapReq.newBuilder()
+                        .put("pageNo", String.valueOf(pageNum))
+                        .put("pageSize", "20").create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
     }
 }
