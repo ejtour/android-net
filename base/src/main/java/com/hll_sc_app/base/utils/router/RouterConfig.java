@@ -28,6 +28,10 @@ public class RouterConfig {
      */
     public static final String DELIVERY_MANAGE = "/activity/deliveryManage";
     /**
+     * 代仓管理
+     */
+    public static final String WAREHOUSE_START = "/activity/warehouse/start";
+    /**
      * 代仓管理-我是货主默认介绍页面
      */
     public static final String WAREHOUSE_INTRODUCE = "/activity/warehouse/introduce";

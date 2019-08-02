@@ -56,6 +56,15 @@ public abstract class BaseDialog extends Dialog {
         }
     }
 
+    public void showWithOutDim() {
+        super.show();
+    }
+
+
+    public void dismissWithOutDim() {
+        super.dismiss();
+    }
+
     private void setWindowAlpha(float alpha) {
         WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
         lp.alpha = alpha;

@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.warehouse.GroupDetail;
 
 import java.util.List;
 
@@ -31,4 +32,14 @@ public interface WarehouseManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101068")
     Observable<BaseResp<List<PurchaserBean>>> queryRecommendWarehouseList(@Body BaseMapReq req);
+
+    /**
+     * 查询集团详情
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:104107")
+    Observable<BaseResp<GroupDetail>> queryGroupDetail(@Body BaseMapReq req);
 }

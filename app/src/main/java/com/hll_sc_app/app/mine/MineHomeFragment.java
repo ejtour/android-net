@@ -195,7 +195,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_MANAGE);
                 break;
             case R.id.txt_warehouse_manage:
-                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INTRODUCE);
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_START);
                 break;
             case R.id.txt_cooperation_purchaser:
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
