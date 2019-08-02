@@ -28,6 +28,7 @@ import com.hll_sc_app.widget.ScrollableViewPager;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.wallet.AreaSelectDialog;
 import com.hll_sc_app.widget.wallet.auth.AuthBaseInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthBusinessInputView;
 import com.hll_sc_app.widget.wallet.auth.AuthPersonInputView;
 import com.hll_sc_app.widget.wallet.auth.AuthSettlementInputView;
 import com.zhihu.matisse.Matisse;
@@ -55,6 +56,7 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
     private AuthBaseInputView mBaseInputView;
     private AuthPersonInputView mPersonInputView;
     private AuthSettlementInputView mSettlementInputView;
+    private AuthBusinessInputView mBusinessInputView;
     private AuthInfo mAuthInfo = new AuthInfo();
 
     public static void start(Activity context) {
@@ -77,6 +79,7 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
         mBaseInputView.setCommitListener(this::next);
         mPersonInputView.setCommitListener(this::next);
         mSettlementInputView.setCommitListener(this::next);
+        mBusinessInputView.setCommitListener(this::commit);
         mBaseInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
             @Override
             public void getProvinces() {
@@ -139,6 +142,10 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
         mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
     }
 
+    private void commit(View view) {
+        mPresenter.commitAuthInfo(mAuthInfo);
+    }
+
     private void initData() {
         mPresenter = AccountPresenter.newInstance();
         mPresenter.register(this);
@@ -149,10 +156,12 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
         mBaseInputView = new AuthBaseInputView(this);
         mPersonInputView = new AuthPersonInputView(this);
         mSettlementInputView = new AuthSettlementInputView(this);
+        mBusinessInputView = new AuthBusinessInputView(this);
         mInputViews.add(mBaseInputView);
         mInputViews.add(mPersonInputView);
         mInputViews.add(mSettlementInputView);
-        mViewPager.setAdapter(new ViewPagerAdapter(mBaseInputView, mPersonInputView, mSettlementInputView));
+        mInputViews.add(mBusinessInputView);
+        mViewPager.setAdapter(new ViewPagerAdapter(mBaseInputView, mPersonInputView, mSettlementInputView, mBusinessInputView));
         mTitleBar.setHeaderTitle(mBaseInputView.getTitle());
     }
 
