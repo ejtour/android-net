@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.bean.wallet.AuthInfo;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +52,12 @@ public class CreateNameInputView extends ConstraintLayout {
 
     @OnClick(R.id.cni_next)
     public void next(View view) {
-        mAuthInfo.setCompanyName(mNameEdit.getText().toString());
+        String companyName = mNameEdit.getText().toString();
+        mAuthInfo.setCompanyName(companyName);
+        if (!companyName.matches("^[^ ]+$")) {
+            ToastUtils.showShort(getContext(), "公司名称不能包括空格");
+            return;
+        }
         if (mOnNextListener != null) mOnNextListener.onClick(view);
     }
 

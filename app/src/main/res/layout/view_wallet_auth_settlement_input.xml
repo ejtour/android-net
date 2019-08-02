@@ -166,6 +166,8 @@
         android:background="@drawable/bg_divider_bottom"
         android:hint="请输入银行账户号"
         android:singleLine="true"
+        android:inputType="number"
+        android:maxLength="30"
         android:textAppearance="@style/TextAppearance.City22.Large"
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintEnd_toEndOf="@id/asi_card_no_bg"

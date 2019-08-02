@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
+import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.ArrayList;
@@ -120,6 +122,13 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
     }
 
     private void updateConsignorVisibility() {
+        if (mAuthInfo.getLpCardType() == 0) {
+            mCardNo.setKeyListener(DigitsKeyListener.getInstance("0123456789X"));
+            mCardNo.setAllCaps(true);
+        } else {
+            mCardNo.setKeyListener(null);
+            mCardNo.setAllCaps(false);
+        }
         mConsignorGroup.setVisibility(mAuthInfo.getLpCardType() == 0 ? GONE : VISIBLE);
     }
 
@@ -144,6 +153,21 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
 
     @Override
     public boolean verifyValidity() {
+        String personName = mPersonName.getText().toString();
+        if (!personName.matches("^[^ ]+$")) {
+            ToastUtils.showShort(getContext(), "法人姓名不能包括空格");
+            return false;
+        }
+        String cardNo = mConsignorCardNo.getText().toString();
+        if (!TextUtils.isEmpty(cardNo) && !cardNo.matches("^[1-9](\\d{14}|(\\d{16}X)|\\d{17})$")) {
+            ToastUtils.showShort(getContext(), "授权联系人身份证号错误，以数字或“X”结尾");
+            return false;
+        }
+        String personCard = mCardNo.getText().toString();
+        if (mAuthInfo.getLpCardType() == 0 && !personCard.matches("^[1-9](\\d{14}|(\\d{16}X)|\\d{17})$")) {
+            ToastUtils.showShort(getContext(), "法人身份证号错误，以数字或“X”结尾");
+            return false;
+        }
         return true;
     }
 
@@ -210,7 +234,7 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
     public void selectStartDate() {
         WalletHelper.showLongValidDateDialog((Activity) getContext(), (dialog, item) -> {
             dialog.dismiss();
-            mAuthInfo.setLicensePeriod("");
+            mAuthInfo.setLpIDCardPeriod("");
             mEndDate.setText("");
             if (item == 0) {
                 mAuthInfo.setLpIDCardPeriodBeginDate(WalletHelper.PERMANENT_DATE);
