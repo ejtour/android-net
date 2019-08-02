@@ -184,26 +184,6 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
         checkSelectAllArea();
     }
 
-    private void initView() {
-        mData = processData();
-        mTxtTitle.setText(mBean.getProvinceName());
-        mRecyclerViewArea.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
-        mAreaAdapter = new AreaListAdapter();
-        mAreaAdapter.setOnItemClickListener((adapter, view, position) -> selectShopBean(adapter, position));
-        mRecyclerViewArea.setAdapter(mAreaAdapter);
-        mRecyclerViewCity.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
-        mCityAdapter = new CityListAdapter(mData);
-        mCityAdapter.setOnItemClickListener((adapter, view, position) -> selectCityBean(adapter, position));
-        mRecyclerViewCity.setAdapter(mCityAdapter);
-        // 默认选中第一个
-        selectCityBean(mCityAdapter, 0);
-        // 只有一个城市的直接选择地区
-        if (!CommonUtils.isEmpty(mData) && mData.size() == 1) {
-            mRecyclerViewCity.setVisibility(View.GONE);
-        }
-        checkSelectAllCity();
-    }
-
     /**
      * 判断是否选中了所有的地区
      */
@@ -226,6 +206,26 @@ public class DeliveryAreaActivity extends BaseLoadActivity {
         }
 
         mImgAllCheck.setSelected(select);
+    }
+
+    private void initView() {
+        mData = processData();
+        mTxtTitle.setText(mBean.getProvinceName());
+        mRecyclerViewArea.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mAreaAdapter = new AreaListAdapter();
+        mAreaAdapter.setOnItemClickListener((adapter, view, position) -> selectShopBean(adapter, position));
+        mRecyclerViewArea.setAdapter(mAreaAdapter);
+        mRecyclerViewCity.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mCityAdapter = new CityListAdapter(mData);
+        mCityAdapter.setOnItemClickListener((adapter, view, position) -> selectCityBean(adapter, position));
+        mRecyclerViewCity.setAdapter(mCityAdapter);
+        // 默认选中第一个
+        selectCityBean(mCityAdapter, 0);
+        // 只有一个城市的直接选择地区
+        if (!CommonUtils.isEmpty(mData) && mData.size() == 1) {
+            mRecyclerViewCity.setVisibility(View.GONE);
+        }
+        checkSelectAllCity();
     }
 
     /**

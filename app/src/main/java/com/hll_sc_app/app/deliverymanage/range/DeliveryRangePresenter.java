@@ -10,6 +10,8 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.delivery.AreaListBean;
+import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.bean.delivery.ProvinceListResp;
@@ -31,6 +33,7 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 public class DeliveryRangePresenter implements DeliveryRangeContract.IDeliveryRangePresenter {
     private DeliveryRangeContract.IDeliveryRangeView mView;
+    private List<AreaBean> mAreaBeans;
 
     static DeliveryRangePresenter newInstance() {
         return new DeliveryRangePresenter();
@@ -101,14 +104,28 @@ public class DeliveryRangePresenter implements DeliveryRangeContract.IDeliveryRa
                 map.put(bean.getProvinceCode(), bean);
             }
         }
-        List<AreaBean> areaBeans = DeliveryAreaActivity.getAreaListWithOutOverSeas(mView.getContext());
-        if (CommonUtils.isEmpty(areaBeans)) {
+        if (CommonUtils.isEmpty(mAreaBeans)) {
+            mAreaBeans = DeliveryAreaActivity.getAreaListWithOutOverSeas(mView.getContext());
+        }
+        if (CommonUtils.isEmpty(mAreaBeans)) {
             return;
         }
         List<ProvinceListBean> provinceListBeans = new ArrayList<>();
-        for (AreaBean bean : areaBeans) {
+        for (AreaBean bean : mAreaBeans) {
             if (!map.isEmpty() && map.containsKey(bean.getCode())) {
-                map.get(bean.getCode()).setProvinceName(bean.getName());
+                ProvinceListBean provinceListBean = map.get(bean.getCode());
+                provinceListBean.setProvinceName(bean.getName());
+                List<CityListBean> seconds = provinceListBean.getCityList();
+                if (!CommonUtils.isEmpty(seconds)) {
+                    for (CityListBean second : seconds) {
+                        List<AreaListBean> thirds = second.getAreaList();
+                        if (!CommonUtils.isEmpty(thirds)) {
+                            for (AreaListBean third : thirds) {
+                                third.setFlag("3");
+                            }
+                        }
+                    }
+                }
             } else {
                 ProvinceListBean provinceListBean = new ProvinceListBean();
                 provinceListBean.setProvinceCode(bean.getCode());

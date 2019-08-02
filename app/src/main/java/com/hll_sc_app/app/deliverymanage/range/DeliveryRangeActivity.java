@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +18,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.GirdSimpleDecoration;
@@ -68,40 +70,55 @@ public class DeliveryRangeActivity extends BaseLoadActivity implements DeliveryR
 
     private void initView() {
         mAreaAdapter = new AreaListAdapter();
-        mAreaAdapter.setOnItemClickListener((adapter, view, position) -> {
-            // TODO:点击监听
-        });
+        mAreaAdapter.setOnItemClickListener((adapter, view, position) ->
+            toSelectArea((ProvinceListBean) adapter.getItem(position)));
         mRecyclerViewArea.addItemDecoration(new GirdSimpleDecoration(4));
         mRecyclerViewArea.setAdapter(mAreaAdapter);
 
         mSelectAdapter = new SelectListAdapter();
-        mSelectAdapter.setOnItemClickListener((adapter, view, position) -> {
-            // TODO:点击监听
-        });
+        View emptyView = LayoutInflater.from(this).inflate(R.layout.view_delivery_range_empty,
+            mRecyclerViewSelect, false);
+        mSelectAdapter.setEmptyView(emptyView);
+        mSelectAdapter.setOnItemClickListener((adapter, view, position) ->
+            toSelectArea((ProvinceListBean) adapter.getItem(position)));
         mRecyclerViewSelect.addItemDecoration(new GirdSimpleDecoration(4));
         mRecyclerViewSelect.setAdapter(mSelectAdapter);
     }
 
+    private void toSelectArea(ProvinceListBean bean) {
+        if (bean != null) {
+            RouterUtil.goToActivity(RouterConfig.DELIVERY_AREA, bean);
+        }
+    }
+
     @Subscribe
     public void onEvent(ProvinceListBean bean) {
-        // 根据地区设置
         if (bean == null) {
             return;
         }
-        List<ProvinceListBean> beans = mAreaAdapter.getData();
-        if (!CommonUtils.isEmpty(beans)) {
-            for (int position = 0; position < beans.size(); position++) {
-                ProvinceListBean provinceListBean = beans.get(position);
-                if (TextUtils.equals(provinceListBean.getProvinceCode(), bean.getProvinceCode())) {
-                    provinceListBean.setCityList(bean.getCityList());
-                    provinceListBean.setOptionalNum(bean.getOptionalNum());
-                    provinceListBean.setSelectedNum(bean.getSelectedNum());
-                    provinceListBean.setSelect(bean.getSelectedNum() != 0);
-                    mAreaAdapter.notifyItemChanged(position);
+        List<ProvinceListBean> provinces = mSelectAdapter.getData();
+        boolean find = false;
+        boolean empty = CommonUtils.isEmpty(provinces);
+        if (!empty) {
+            for (int position = 0, size = provinces.size(); position < size; position++) {
+                ProvinceListBean province = provinces.get(position);
+                if (TextUtils.equals(province.getProvinceCode(), bean.getProvinceCode())) {
+                    find = true;
+                    if (bean.getSelectedNum() == 0) {
+                        mSelectAdapter.remove(position);
+                    } else {
+                        province.setCityList(bean.getCityList());
+                        province.setSelectedNum(bean.getSelectedNum());
+                        mSelectAdapter.notifyItemChanged(position);
+                    }
                     break;
                 }
             }
         }
+        if (empty || !find) {
+            mSelectAdapter.addData(bean);
+        }
+        mPresenter.processAreaData(mSelectAdapter.getData());
     }
 
     @OnClick({R.id.img_close})
