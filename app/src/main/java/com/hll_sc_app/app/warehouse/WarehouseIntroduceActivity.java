@@ -16,6 +16,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -60,7 +61,7 @@ public class WarehouseIntroduceActivity extends BaseLoadActivity implements Base
                 UIUtils.callPhone(this, "tel:010-58301856");
                 break;
             case R.id.txt_recommend:
-//                RouterUtil.goToActivity(RouterConfig.USER_WAREHOUSE_MANAGER_RECOMMEND);
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_RECOMMEND);
                 break;
             default:
                 break;

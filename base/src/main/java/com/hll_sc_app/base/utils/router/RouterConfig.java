@@ -32,6 +32,10 @@ public class RouterConfig {
      */
     public static final String WAREHOUSE_INTRODUCE = "/activity/warehouse/introduce";
     /**
+     * 代仓管理-我是货主默认介绍页面-查看推荐
+     */
+    public static final String WAREHOUSE_RECOMMEND = "/activity/warehouse/recommend";
+    /**
      * 配送管理-配送时效管理
      */
     public static final String DELIVERY_AGEING_MANAGE = "/activity/deliveryManage/ageing";
