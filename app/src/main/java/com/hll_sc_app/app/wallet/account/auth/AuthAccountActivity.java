@@ -14,6 +14,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.account.AccountPresenter;
 import com.hll_sc_app.app.wallet.account.IAccountContract;
 import com.hll_sc_app.app.wallet.account.IInfoInputView;
+import com.hll_sc_app.app.wallet.bank.BankListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -27,6 +28,9 @@ import com.hll_sc_app.widget.ScrollableViewPager;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.wallet.AreaSelectDialog;
 import com.hll_sc_app.widget.wallet.auth.AuthBaseInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthBusinessInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthPersonInputView;
+import com.hll_sc_app.widget.wallet.auth.AuthSettlementInputView;
 import com.zhihu.matisse.Matisse;
 
 import java.io.File;
@@ -50,6 +54,9 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
     private IAccountContract.IAccountPresenter mPresenter;
     private List<IInfoInputView> mInputViews = new ArrayList<>();
     private AuthBaseInputView mBaseInputView;
+    private AuthPersonInputView mPersonInputView;
+    private AuthSettlementInputView mSettlementInputView;
+    private AuthBusinessInputView mBusinessInputView;
     private AuthInfo mAuthInfo = new AuthInfo();
 
     public static void start(Activity context) {
@@ -69,7 +76,10 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
 
     private void bindListener() {
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
-        mBaseInputView.setConfirmClickListener(this::next);
+        mBaseInputView.setCommitListener(this::next);
+        mPersonInputView.setCommitListener(this::next);
+        mSettlementInputView.setCommitListener(this::next);
+        mBusinessInputView.setCommitListener(this::commit);
         mBaseInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
             @Override
             public void getProvinces() {
@@ -132,6 +142,10 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
         mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
     }
 
+    private void commit(View view) {
+        mPresenter.commitAuthInfo(mAuthInfo);
+    }
+
     private void initData() {
         mPresenter = AccountPresenter.newInstance();
         mPresenter.register(this);
@@ -140,13 +154,23 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
 
     private void initView() {
         mBaseInputView = new AuthBaseInputView(this);
+        mPersonInputView = new AuthPersonInputView(this);
+        mSettlementInputView = new AuthSettlementInputView(this);
+        mBusinessInputView = new AuthBusinessInputView(this);
         mInputViews.add(mBaseInputView);
-        mViewPager.setAdapter(new ViewPagerAdapter(mBaseInputView));
+        mInputViews.add(mPersonInputView);
+        mInputViews.add(mSettlementInputView);
+        mInputViews.add(mBusinessInputView);
+        mViewPager.setAdapter(new ViewPagerAdapter(mBaseInputView, mPersonInputView, mSettlementInputView, mBusinessInputView));
         mTitleBar.setHeaderTitle(mBaseInputView.getTitle());
     }
 
     @Override
     public void onBackPressed() {
+        if (mViewPager.getCurrentItem() > 0) {
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
+            return;
+        }
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_failure)
                 .setImageState(R.drawable.ic_dialog_state_failure)
@@ -166,10 +190,14 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null
-                && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
-            List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(new File(list.get(0)));
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            if (requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                List<String> list = Matisse.obtainPathResult(data);
+                if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(new File(list.get(0)));
+            }
+            if (requestCode == BankListActivity.REQ_CODE) {
+                mInputViews.get(mViewPager.getCurrentItem()).setBankData(data.getParcelableExtra(BankListActivity.BANK_KEY));
+            }
         }
     }
 

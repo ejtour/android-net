@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.account.IAccountContract;
+import com.hll_sc_app.app.wallet.account.IInfoInputView;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
@@ -38,7 +39,7 @@ import butterknife.Optional;
  * @since 2019/7/31
  */
 
-public class CreateInfoInputView extends ConstraintLayout {
+public class CreateInfoInputView extends ConstraintLayout implements IInfoInputView {
     @BindView(R.id.wci_name)
     protected TextView mName;
     @BindView(R.id.wci_short_name)
@@ -64,7 +65,7 @@ public class CreateInfoInputView extends ConstraintLayout {
     protected AuthInfo mAuthInfo;
     private SingleSelectionDialog mTypeDialog;
     private AreaSelectDialog mAreaSelectDialog;
-    protected OnClickListener mConfirmListener;
+    protected OnClickListener mCommitListener;
 
     public CreateInfoInputView(Context context) {
         this(context, null);
@@ -101,6 +102,16 @@ public class CreateInfoInputView extends ConstraintLayout {
         }
     }
 
+    @Override
+    public void setImageUrl(String url) {
+        // no-op
+    }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
     protected void initView() {
         bindView();
         mPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -115,8 +126,9 @@ public class CreateInfoInputView extends ConstraintLayout {
         mRegion.setText(text);
     }
 
-    public void setConfirmClickListener(OnClickListener listener) {
-        mConfirmListener = listener;
+    @Override
+    public void setCommitListener(OnClickListener commitListener) {
+        mCommitListener = commitListener;
     }
 
     @OnClick(R.id.wci_type)
@@ -170,13 +182,14 @@ public class CreateInfoInputView extends ConstraintLayout {
     @Optional
     @OnClick(R.id.cii_confirm)
     void confirm(View view) {
-        if (verifyValidity() && mConfirmListener != null) {
+        if (verifyValidity() && mCommitListener != null) {
             inflateInfo();
-            mConfirmListener.onClick(view);
+            mCommitListener.onClick(view);
         }
     }
 
-    protected void inflateInfo() {
+    @Override
+    public void inflateInfo() {
         mAuthInfo.setBusinessAddress(mDetailAddress.getText().toString());
         mAuthInfo.setCompanyShortName(mShortName.getText().toString());
         mAuthInfo.setOperatorName(mContact.getText().toString());
@@ -184,7 +197,8 @@ public class CreateInfoInputView extends ConstraintLayout {
         mAuthInfo.setOperatorEmail(mEmail.getText().toString());
     }
 
-    protected boolean verifyValidity() {
+    @Override
+    public boolean verifyValidity() {
         return true;
     }
 

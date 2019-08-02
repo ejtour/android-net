@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -67,6 +68,8 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
         super.initView();
         mBusinessLicense.setMaxSize(2097152);
         mCreateAccountLicense.setMaxSize(2097152);
+        mBusinessLicense.setOnDeleteListener(this::deleteImage);
+        mCreateAccountLicense.setOnDeleteListener(this::deleteImage);
     }
 
     @Override
@@ -83,18 +86,20 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
         mEndDate.setText(WalletHelper.transformDate(info.getLicensePeriod()));
         mBusinessScope.setText(info.getBusiScope());
         mRegisterAddress.setText(info.getLicenseAddress());
-        if (!TextUtils.isEmpty(info.getImgLicense()))
-            mBusinessLicense.showImage(info.getImgLicense(), v -> {
-                mAuthInfo.setImgLicense("");
-                mBusinessLicense.deleteImage();
-                updateConfirmStatus();
-            });
-        if (!TextUtils.isEmpty(info.getImgBankLicense()))
-            mCreateAccountLicense.showImage(info.getImgBankLicense(), v -> {
-                mAuthInfo.setImgBankLicense("");
-                mCreateAccountLicense.deleteImage();
-                updateConfirmStatus();
-            });
+        mBusinessLicense.showImage(info.getImgLicense());
+        mCreateAccountLicense.showImage(info.getImgBankLicense());
+    }
+
+    private void deleteImage(View view) {
+        view.setTag("");
+        updateImage(view);
+    }
+
+    private void updateImage(View view) {
+        if (view.getId() == R.id.abi_business_license)
+            mAuthInfo.setImgLicense(view.getTag().toString());
+        else mAuthInfo.setImgBankLicense(view.getTag().toString());
+        updateConfirmStatus();
     }
 
     @OnTextChanged(value = {R.id.abi_credit_code, R.id.abi_start_date, R.id.abi_end_date,
@@ -123,25 +128,19 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
     }
 
     @OnTouch({R.id.abi_business_license, R.id.abi_create_account_license})
-    public boolean onTouch(View view) {
-        mCurUpload = (ImgUploadBlock) view;
+    public boolean onTouch(View view, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            mCurUpload = (ImgUploadBlock) view;
+        }
         return false;
     }
 
     @Override
     public void setImageUrl(String url) {
         if (mCurUpload != null) {
-            if (mCurUpload == mBusinessLicense)
-                mAuthInfo.setImgLicense(url);
-            else mAuthInfo.setImgBankLicense(url);
-            mCurUpload.showImage(url, v -> {
-                if (mCurUpload == mBusinessLicense)
-                    mAuthInfo.setImgLicense("");
-                else mAuthInfo.setImgBankLicense("");
-                mCurUpload.deleteImage();
-                updateConfirmStatus();
-            });
-            updateConfirmStatus();
+            mCurUpload.showImage(url);
+            mCurUpload.setTag(url);
+            updateImage(mCurUpload);
         }
     }
 
@@ -162,7 +161,6 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
                 mStartDate.setText("长期有效");
                 mEndDate.setText("长期有效");
             } else showDateWindow(true);
-
         });
     }
 
@@ -179,14 +177,19 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
 
     @OnClick(R.id.abi_next)
     public void confirm(View view) {
-        if (verifyValidity() && mConfirmListener != null) {
+        if (verifyValidity() && mCommitListener != null) {
             inflateInfo();
-            mConfirmListener.onClick(view);
+            mCommitListener.onClick(view);
         }
     }
 
     @Override
-    protected void inflateInfo() {
+    public boolean verifyValidity() {
+        return true;
+    }
+
+    @Override
+    public void inflateInfo() {
         super.inflateInfo();
         mAuthInfo.setLicenseCode(mCreditCode.getText().toString());
         mAuthInfo.setBusiScope(mBusinessScope.getText().toString());
