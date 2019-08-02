@@ -69,7 +69,7 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
 
     private void bindListener() {
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
-        mBaseInputView.setConfirmClickListener(this::next);
+        mBaseInputView.setCommitListener(this::next);
         mBaseInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
             @Override
             public void getProvinces() {

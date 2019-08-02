@@ -70,7 +70,7 @@ public class CreateAccountActivity extends BaseLoadActivity implements IAccountC
             mInfoInputView.initData(mAuthInfo);
             mViewPager.setCurrentItem(1, true);
         });
-        mInfoInputView.setConfirmClickListener(this::createAccount);
+        mInfoInputView.setCommitListener(this::createAccount);
         mInfoInputView.setAreaSelectListener(new AreaSelectDialog.NetAreaWindowEvent() {
             @Override
             public void getProvinces() {
