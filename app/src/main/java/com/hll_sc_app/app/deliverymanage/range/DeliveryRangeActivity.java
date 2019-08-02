@@ -17,8 +17,12 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.delivery.AreaListBean;
+import com.hll_sc_app.bean.delivery.CityListBean;
+import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.GirdSimpleDecoration;
@@ -26,6 +30,7 @@ import com.hll_sc_app.widget.GirdSimpleDecoration;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -96,12 +101,12 @@ public class DeliveryRangeActivity extends BaseLoadActivity implements DeliveryR
         if (bean == null) {
             return;
         }
-        List<ProvinceListBean> provinces = mSelectAdapter.getData();
+        List<ProvinceListBean> provincesBefore = mSelectAdapter.getData();
         boolean find = false;
-        boolean empty = CommonUtils.isEmpty(provinces);
+        boolean empty = CommonUtils.isEmpty(provincesBefore);
         if (!empty) {
-            for (int position = 0, size = provinces.size(); position < size; position++) {
-                ProvinceListBean province = provinces.get(position);
+            for (int position = 0, size = provincesBefore.size(); position < size; position++) {
+                ProvinceListBean province = provincesBefore.get(position);
                 if (TextUtils.equals(province.getProvinceCode(), bean.getProvinceCode())) {
                     find = true;
                     if (bean.getSelectedNum() == 0) {
@@ -119,6 +124,24 @@ public class DeliveryRangeActivity extends BaseLoadActivity implements DeliveryR
             mSelectAdapter.addData(bean);
         }
         mPresenter.processAreaData(mSelectAdapter.getData());
+
+        List<String> codeList = new ArrayList<>();
+        List<CityListBean> cityListBeans = bean.getCityList();
+        if (!CommonUtils.isEmpty(cityListBeans)) {
+            for (CityListBean cityListBean : cityListBeans) {
+                List<AreaListBean> areaListBeans = cityListBean.getAreaList();
+                if (!CommonUtils.isEmpty(areaListBeans)) {
+                    for (AreaListBean areaListBean : areaListBeans) {
+                        codeList.add(areaListBean.getAreaCode());
+                    }
+                }
+            }
+        }
+        DeliveryMinimumReq req = new DeliveryMinimumReq();
+        req.setCodeList(codeList);
+        req.setGroupID(UserConfig.getGroupID());
+        req.setProvinceCode(bean.getProvinceCode());
+        mPresenter.editDeliveryMinimum(req);
     }
 
     @OnClick({R.id.img_close})

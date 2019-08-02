@@ -18,6 +18,24 @@ public class DeliveryMinimumReq {
     private String type;
     private List<String> codeList;
     private List<DeliveryPurchaserBean> purchaserList;
+    private String groupID;
+    private String provinceCode;
+
+    public String getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
+    }
+
+    public String getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
 
     public List<DeliveryPurchaserBean> getPurchaserList() {
         return purchaserList;

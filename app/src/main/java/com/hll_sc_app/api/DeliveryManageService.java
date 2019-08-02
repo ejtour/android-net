@@ -173,6 +173,16 @@ public interface DeliveryManageService {
     Observable<BaseResp<Object>> editDeliveryMinimum(@Body BaseReq<DeliveryMinimumReq> req);
 
     /**
+     * 编辑配送范围
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100030")
+    Observable<BaseResp<Object>> editDeliveryRange(@Body BaseReq<DeliveryMinimumReq> req);
+
+    /**
      * 查询其他分组已经添加的门店
      *
      * @param req req

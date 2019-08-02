@@ -77,7 +77,7 @@ public class DeliveryRangePresenter implements DeliveryRangeContract.IDeliveryRa
     @Override
     public void editDeliveryMinimum(DeliveryMinimumReq bean) {
         DeliveryManageService.INSTANCE
-            .editDeliveryMinimum(new BaseReq<>(bean))
+            .editDeliveryRange(new BaseReq<>(bean))
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -86,6 +86,7 @@ public class DeliveryRangePresenter implements DeliveryRangeContract.IDeliveryRa
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object o) {
+                    mView.showToast("配送范围保存成功");
                 }
 
                 @Override

@@ -47,9 +47,9 @@ public interface DeliveryRangeContract {
         void queryDeliveryRange();
 
         /**
-         * 新增、编辑起送金额
+         * 编辑配送范围
          *
-         * @param bean 起送金额分组
+         * @param bean 配送范围
          */
         void editDeliveryMinimum(DeliveryMinimumReq bean);
 
