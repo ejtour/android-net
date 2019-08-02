@@ -222,7 +222,7 @@ public class AfterSales {
                         .put("source", "2")
                         .put("sourceBusiness", "2")
                         .put("actionType", "1")
-                        .put("billID", afterSalesBean.getSubBillID())
+                        .put("billID", afterSalesBean.getSubBillNo())
                         .put("complaintExplain", afterSalesBean.getRefundExplain())
                         .put("imgUrls", afterSalesBean.getRefundVoucher())
                         .put("products", JsonUtil.toJson(afterSalesDetailsBeans))
