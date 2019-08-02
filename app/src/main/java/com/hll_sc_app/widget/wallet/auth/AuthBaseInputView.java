@@ -86,10 +86,8 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
         mEndDate.setText(WalletHelper.transformDate(info.getLicensePeriod()));
         mBusinessScope.setText(info.getBusiScope());
         mRegisterAddress.setText(info.getLicenseAddress());
-        if (!TextUtils.isEmpty(info.getImgLicense()))
-            mBusinessLicense.showImage(info.getImgLicense());
-        if (!TextUtils.isEmpty(info.getImgBankLicense()))
-            mCreateAccountLicense.showImage(info.getImgBankLicense());
+        mBusinessLicense.showImage(info.getImgLicense());
+        mCreateAccountLicense.showImage(info.getImgBankLicense());
     }
 
     private void deleteImage(View view) {

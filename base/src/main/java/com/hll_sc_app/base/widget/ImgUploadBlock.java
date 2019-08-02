@@ -128,6 +128,7 @@ public class ImgUploadBlock extends RelativeLayout {
     }
 
     public void showImage(String url) {
+        if (TextUtils.isEmpty(url)) return;
         mImgShow.setImgUrl(url);
         mImgShow.setVisibility(VISIBLE);
         mSubTitle.setVisibility(GONE);
