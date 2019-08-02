@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -141,11 +142,16 @@ public class DeliveryRangeActivity extends BaseLoadActivity implements DeliveryR
         }
 
         @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
+            viewHolder.setGone(R.id.txt_selectedNum, false)
+                .setGone(R.id.txt_optionalNum, false);
+            return viewHolder;
+        }
+
+        @Override
         protected void convert(BaseViewHolder helper, ProvinceListBean item) {
-            helper.setText(R.id.txt_provinceName, item.getProvinceName())
-                .setText(R.id.txt_selectedNum, "已选" + item.getSelectedNum())
-                .setText(R.id.txt_optionalNum, "可选" + item.getOptionalNum())
-                .getView(R.id.content).setSelected(item.isSelect());
+            helper.setText(R.id.txt_provinceName, item.getProvinceName());
         }
     }
 }

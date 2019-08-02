@@ -107,12 +107,12 @@ public class DeliveryRangePresenter implements DeliveryRangeContract.IDeliveryRa
         }
         List<ProvinceListBean> provinceListBeans = new ArrayList<>();
         for (AreaBean bean : areaBeans) {
-            ProvinceListBean provinceListBean = new ProvinceListBean();
-            provinceListBean.setProvinceCode(bean.getCode());
-            provinceListBean.setProvinceName(bean.getName());
             if (!map.isEmpty() && map.containsKey(bean.getCode())) {
                 map.get(bean.getCode()).setProvinceName(bean.getName());
             } else {
+                ProvinceListBean provinceListBean = new ProvinceListBean();
+                provinceListBean.setProvinceCode(bean.getCode());
+                provinceListBean.setProvinceName(bean.getName());
                 provinceListBeans.add(provinceListBean);
             }
         }
