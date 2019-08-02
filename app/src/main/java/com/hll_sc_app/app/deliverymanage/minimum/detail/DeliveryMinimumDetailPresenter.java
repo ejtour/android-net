@@ -1,7 +1,7 @@
 package com.hll_sc_app.app.deliverymanage.minimum.detail;
 
 import com.hll_sc_app.api.DeliveryManageService;
-import com.hll_sc_app.app.deliverymanage.minimum.detail.area.DeliveryAreaActivity;
+import com.hll_sc_app.app.deliverymanage.minimum.area.DeliveryAreaActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -13,6 +13,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
+import com.hll_sc_app.bean.delivery.DeliveryPurchaserBean;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -166,5 +167,34 @@ public class DeliveryMinimumDetailPresenter implements DeliveryMinimumDetailCont
     }
 
     private void queryPurchaser(DeliveryMinimumBean bean) {
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        if (bean == null) {
+            builder
+                .put("sendAmountID", "0")
+                .put("settings", "1")
+                .put("supplyID", UserConfig.getGroupID());
+        } else {
+            builder.put("sendAmountID", bean.getSendAmountID())
+                .put("settings", "1")
+                .put("supplyID", bean.getSupplyID());
+        }
+        DeliveryManageService.INSTANCE
+            .queryDeliveryMinimumPurchaser(builder.create())
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<List<DeliveryPurchaserBean>>() {
+                @Override
+                public void onSuccess(List<DeliveryPurchaserBean> list) {
+                    mView.showPurchaserList(list);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
     }
 }

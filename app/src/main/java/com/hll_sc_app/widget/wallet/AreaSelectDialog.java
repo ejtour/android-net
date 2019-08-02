@@ -40,35 +40,6 @@ public class AreaSelectDialog extends BaseDialog {
     private static final int PROVINCE = 2;
     private static final int CITY = 3;
     private static final int DISTRIBUTE = 4;
-
-    /**
-     * 获得的所有省列表数据、市列表数据、区列表数据
-     * Integer 级别
-     */
-    private List<AreaInfo> provincesList = new ArrayList<>();
-    private Map<String, List<AreaInfo>> citysMap = new HashMap<>();
-    private Map<String, List<AreaInfo>> distributsMap = new HashMap<>();
-
-    /**
-     * 当前所选的code码
-     * Integer 级别
-     */
-    private SparseArray<AreaInfo> selectedMap = new SparseArray<>();
-
-    /**
-     * 当前的级别：默认是2 省
-     */
-    private int currentLevel = PROVINCE;
-
-    /**
-     * 组件事件接口 与外界通信
-     */
-    private NetAreaWindowEvent mNetAreaWindowEvent;
-
-    /**
-     * 列表适配器对象
-     */
-    private AreaListAdapter mAreaAdapter;
     @BindView(R.id.txt_area_province)
     TextView mTxtProvince;
     @BindView(R.id.txt_area_city)
@@ -77,9 +48,41 @@ public class AreaSelectDialog extends BaseDialog {
     TextView mTxtDistrict;
     @BindView(R.id.list_view)
     RecyclerView mListView;
+    /**
+     * 获得的所有省列表数据、市列表数据、区列表数据
+     * Integer 级别
+     */
+    private List<AreaInfo> provincesList = new ArrayList<>();
+    private Map<String, List<AreaInfo>> citysMap = new HashMap<>();
+    private Map<String, List<AreaInfo>> distributsMap = new HashMap<>();
+    /**
+     * 当前所选的code码
+     * Integer 级别
+     */
+    private SparseArray<AreaInfo> selectedMap = new SparseArray<>();
+    /**
+     * 当前的级别：默认是2 省
+     */
+    private int currentLevel = PROVINCE;
+    /**
+     * 组件事件接口 与外界通信
+     */
+    private NetAreaWindowEvent mNetAreaWindowEvent;
+    /**
+     * 列表适配器对象
+     */
+    private AreaListAdapter mAreaAdapter;
 
     public AreaSelectDialog(Activity context) {
         super(context);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater) {
+        View view = inflater.inflate(R.layout.base_window_item_select_area, null);
+        ButterKnife.bind(this, view);
+        initView();
+        return view;
     }
 
     @Override
@@ -95,14 +98,6 @@ public class AreaSelectDialog extends BaseDialog {
             window.setAttributes(attributes);
             window.setBackgroundDrawableResource(android.R.color.white);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater) {
-        View view = inflater.inflate(R.layout.base_window_item_select_area, null);
-        ButterKnife.bind(this, view);
-        initView();
-        return view;
     }
 
     private void initView() {
@@ -122,7 +117,8 @@ public class AreaSelectDialog extends BaseDialog {
                 setCurrentTitle();
                 mAreaAdapter.notifyDataSetChanged();
                 dismiss();
-                mNetAreaWindowEvent.selectAreas(selectedMap.get(PROVINCE), selectedMap.get(CITY), selectedMap.get(DISTRIBUTE));
+                mNetAreaWindowEvent.selectAreas(selectedMap.get(PROVINCE), selectedMap.get(CITY),
+                    selectedMap.get(DISTRIBUTE));
             }
         });
         setTitleStyleByLevel();
@@ -432,7 +428,8 @@ public class AreaSelectDialog extends BaseDialog {
             areaName.setText(mNetAreaWindowEvent.getName(item));
             boolean isSelected = false;
             if (getCurrentLevelSelectData() != null) {
-                isSelected = TextUtils.equals(mNetAreaWindowEvent.getKey(item), mNetAreaWindowEvent.getKey(getCurrentLevelSelectData()));
+                isSelected = TextUtils.equals(mNetAreaWindowEvent.getKey(item),
+                    mNetAreaWindowEvent.getKey(getCurrentLevelSelectData()));
             }
             areaName.setSelected(isSelected);
         }

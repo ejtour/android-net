@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+    <!--公司名称 start-->
+    <View
+        android:id="@+id/wci_name_bg"
+        android:layout_width="0dp"
+        android:layout_height="135dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/wci_name_div1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toTopOf="@id/wci_name_div2"
+        app:layout_constraintEnd_toEndOf="@id/wci_name_bg"
+        app:layout_constraintStart_toStartOf="@id/wci_name_bg"
+        app:layout_constraintTop_toTopOf="@id/wci_name_bg" />
+
+    <View
+        android:id="@+id/wci_name_div2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/wci_name_bg"
+        app:layout_constraintEnd_toEndOf="@id/wci_name_bg"
+        app:layout_constraintStart_toStartOf="@id/wci_name_bg"
+        app:layout_constraintTop_toBottomOf="@id/wci_name_div1" />
+
+    <TextView
+        android:id="@+id/wci_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="公司名称"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toTopOf="@id/wci_name_div1"
+        app:layout_constraintStart_toStartOf="@id/wci_name_div1"
+        app:layout_constraintTop_toTopOf="@id/wci_name_bg" />
+
+    <TextView
+        android:id="@+id/wci_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/wci_name_label"
+        app:layout_constraintEnd_toEndOf="@id/wci_name_bg"
+        tools:text="供应商集团名称" />
+
+    <TextView
+        android:id="@+id/wci_short_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="公司简称"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toTopOf="@id/wci_name_div2"
+        app:layout_constraintStart_toStartOf="@id/wci_name_div1"
+        app:layout_constraintTop_toBottomOf="@id/wci_name_div1" />
+
+    <EditText
+        android:id="@+id/wci_short_name"
+        style="@style/WalletInfoEdit"
+        android:hint="或品牌名称，用于支付完成页面展示"
+        android:maxLength="12"
+        app:layout_constraintBottom_toTopOf="@id/wci_name_div2"
+        app:layout_constraintEnd_toEndOf="@id/wci_name_bg"
+        app:layout_constraintStart_toEndOf="@id/wci_short_name_label"
+        app:layout_constraintTop_toBottomOf="@id/wci_name_div1" />
+
+    <TextView
+        android:id="@+id/wci_type_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="公司类型"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/wci_name_bg"
+        app:layout_constraintStart_toStartOf="@id/wci_name_div1"
+        app:layout_constraintTop_toBottomOf="@id/wci_name_div2" />
+
+    <TextView
+        android:id="@+id/wci_type"
+        style="@style/WalletInfoEdit"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="5dp"
+        android:hint="请选择公司类型"
+        app:layout_constraintBottom_toBottomOf="@id/wci_name_bg"
+        app:layout_constraintEnd_toEndOf="@id/wci_name_bg"
+        app:layout_constraintStart_toEndOf="@id/wci_type_label"
+        app:layout_constraintTop_toBottomOf="@id/wci_name_div2" />
+    <!--公司名称 end-->
+
+    <!--公司地址 start-->
+    <View
+        android:id="@+id/wci_address_bg"
+        android:layout_width="0dp"
+        android:layout_height="90dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wci_name_bg" />
+
+    <View
+        android:id="@+id/wci_address_div"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/wci_address_bg"
+        app:layout_constraintEnd_toEndOf="@id/wci_address_bg"
+        app:layout_constraintStart_toStartOf="@id/wci_address_bg"
+        app:layout_constraintTop_toTopOf="@id/wci_address_bg" />
+
+    <TextView
+        android:id="@+id/wci_region_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="所在地区"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toTopOf="@id/wci_address_div"
+        app:layout_constraintStart_toStartOf="@id/wci_address_div"
+        app:layout_constraintTop_toTopOf="@id/wci_address_bg" />
+
+    <TextView
+        android:id="@+id/wci_region"
+        style="@style/WalletInfoEdit"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="5dp"
+        android:hint="请选择经营地区"
+        app:layout_constraintBottom_toTopOf="@id/wci_address_div"
+        app:layout_constraintEnd_toEndOf="@id/wci_name_bg"
+        app:layout_constraintStart_toEndOf="@id/wci_region_label"
+        app:layout_constraintTop_toTopOf="@id/wci_address_bg" />
+
+    <TextView
+        android:id="@+id/wci_detail_address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="详细地址"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/wci_address_bg"
+        app:layout_constraintStart_toStartOf="@id/wci_address_div"
+        app:layout_constraintTop_toBottomOf="@id/wci_address_div" />
+
+    <EditText
+        android:id="@+id/wci_detail_address"
+        style="@style/WalletInfoEdit"
+        android:gravity="right|center_vertical"
+        android:hint="请输入经营详细地址"
+        android:inputType="textPostalAddress"
+        app:layout_constraintBottom_toBottomOf="@id/wci_address_bg"
+        app:layout_constraintEnd_toEndOf="@id/wci_address_bg"
+        app:layout_constraintStart_toEndOf="@id/wci_detail_address_label"
+        app:layout_constraintTop_toBottomOf="@id/wci_address_div" />
+    <!--公司地址 end-->
+
+    <!--业务联系人 start-->
+    <View
+        android:id="@+id/wci_contact_bg"
+        android:layout_width="0dp"
+        android:layout_height="135dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wci_address_bg" />
+
+    <View
+        android:id="@+id/wci_contact_div1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toTopOf="@id/wci_contact_div2"
+        app:layout_constraintEnd_toEndOf="@id/wci_contact_bg"
+        app:layout_constraintStart_toStartOf="@id/wci_contact_bg"
+        app:layout_constraintTop_toTopOf="@id/wci_contact_bg" />
+
+    <View
+        android:id="@+id/wci_contact_div2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/wci_contact_bg"
+        app:layout_constraintEnd_toEndOf="@id/wci_contact_bg"
+        app:layout_constraintStart_toStartOf="@id/wci_contact_bg"
+        app:layout_constraintTop_toBottomOf="@id/wci_contact_div1" />
+
+    <TextView
+        android:id="@+id/wci_contact_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="业务联系人"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toTopOf="@id/wci_contact_div1"
+        app:layout_constraintStart_toStartOf="@id/wci_contact_div1"
+        app:layout_constraintTop_toTopOf="@id/wci_contact_bg" />
+
+    <EditText
+        android:id="@+id/wci_contact"
+        style="@style/WalletInfoEdit"
+        android:hint="请输入业务联系人姓名"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@id/wci_contact_div1"
+        app:layout_constraintEnd_toEndOf="@id/wci_contact_bg"
+        app:layout_constraintStart_toEndOf="@id/wci_contact_label"
+        app:layout_constraintTop_toTopOf="@id/wci_contact_bg" />
+
+    <TextView
+        android:id="@+id/wci_phone_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="业务联系电话"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toTopOf="@id/wci_contact_div2"
+        app:layout_constraintStart_toStartOf="@id/wci_contact_div1"
+        app:layout_constraintTop_toBottomOf="@id/wci_contact_div1" />
+
+    <EditText
+        android:id="@+id/wci_phone"
+        style="@style/WalletInfoEdit"
+        android:hint="请输入业务联系电话"
+        android:inputType="phone"
+        android:maxLength="16"
+        app:layout_constraintBottom_toTopOf="@id/wci_contact_div2"
+        app:layout_constraintEnd_toEndOf="@id/wci_contact_bg"
+        app:layout_constraintStart_toEndOf="@id/wci_phone_label"
+        app:layout_constraintTop_toBottomOf="@id/wci_contact_div1" />
+
+    <TextView
+        android:id="@+id/wci_email_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="业务联系邮箱"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/wci_contact_bg"
+        app:layout_constraintStart_toStartOf="@id/wci_contact_div1"
+        app:layout_constraintTop_toBottomOf="@id/wci_contact_div2" />
+
+    <EditText
+        android:id="@+id/wci_email"
+        style="@style/WalletInfoEdit"
+        android:hint="请输入业务联系电子邮箱"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="@id/wci_contact_bg"
+        app:layout_constraintEnd_toEndOf="@id/wci_contact_bg"
+        app:layout_constraintStart_toEndOf="@id/wci_email_label"
+        app:layout_constraintTop_toBottomOf="@id/wci_contact_div2" />
+    <!--业务联系人 end-->
+</merge>

@@ -59,4 +59,8 @@ public interface WalletService {
     @POST(HttpConfig.URL)
     @Headers("pv:101054")
     Observable<BaseResp<Object>> createAccount(@Body BaseReq<AuthInfo> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101055")
+    Observable<BaseResp<Object>> authAccount(@Body BaseReq<AuthInfo> body);
 }

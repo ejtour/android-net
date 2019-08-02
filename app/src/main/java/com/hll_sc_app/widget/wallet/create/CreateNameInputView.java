@@ -10,9 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.bean.wallet.AuthInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 
@@ -21,28 +23,36 @@ import butterknife.OnTextChanged;
  * @since 2019/7/31
  */
 
-public class CompanyNameInputView extends ConstraintLayout {
+public class CreateNameInputView extends ConstraintLayout {
     @BindView(R.id.cni_name_edit)
     EditText mNameEdit;
     @BindView(R.id.cni_next)
     TextView mNext;
+    private AuthInfo mAuthInfo;
+    private OnClickListener mOnNextListener;
 
-    public CompanyNameInputView(Context context) {
+    public CreateNameInputView(Context context) {
         this(context, null);
     }
 
-    public CompanyNameInputView(Context context, AttributeSet attrs) {
+    public CreateNameInputView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CompanyNameInputView(Context context, AttributeSet attrs, int defStyle) {
+    public CreateNameInputView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        View view = View.inflate(context, R.layout.view_wallet_company_name_input, this);
+        View view = View.inflate(context, R.layout.view_wallet_create_name_input, this);
         ButterKnife.bind(this, view);
     }
 
     public void setNextClickListener(OnClickListener listener) {
-        mNext.setOnClickListener(listener);
+        mOnNextListener = listener;
+    }
+
+    @OnClick(R.id.cni_next)
+    public void next(View view) {
+        mAuthInfo.setCompanyName(mNameEdit.getText().toString());
+        if (mOnNextListener != null) mOnNextListener.onClick(view);
     }
 
     @OnTextChanged(R.id.cni_name_edit)
@@ -57,14 +67,11 @@ public class CompanyNameInputView extends ConstraintLayout {
         return true;
     }
 
-    public CharSequence getCompanyName() {
-        return mNameEdit.getText();
-    }
-
-    public void setCompanyName(CharSequence text) {
-        if (!TextUtils.isEmpty(text)) {
-            mNameEdit.setText(text);
-            mNameEdit.setSelection(text.length());
+    public void initData(AuthInfo authInfo) {
+        mAuthInfo = authInfo;
+        if (!TextUtils.isEmpty(authInfo.getCompanyName())) {
+            mNameEdit.setText(authInfo.getCompanyName());
+            mNameEdit.setSelection(authInfo.getCompanyName().length());
         }
     }
 }

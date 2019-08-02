@@ -98,9 +98,9 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK &&
-                (requestCode == RechargeActivity.REQ_CODE ||
-                        requestCode == WithdrawActivity.REQ_CODE ||
-                        requestCode == CreateAccountActivity.REQ_CODE)) {
+            (requestCode == RechargeActivity.REQ_CODE ||
+                requestCode == WithdrawActivity.REQ_CODE ||
+                requestCode == CreateAccountActivity.REQ_CODE)) {
             mPresenter.start();
         }
     }

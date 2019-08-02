@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
@@ -25,11 +24,11 @@ import butterknife.OnClick;
  */
 
 public class WalletProtocolDialog extends BaseDialog {
-    private WebView mWebView;
     @BindView(R.id.dwp_reject)
     TextView mReject;
     @BindView(R.id.dwp_web_view_container)
     FrameLayout mWebViewContainer;
+    private WebView mWebView;
 
     public WalletProtocolDialog(@NonNull Activity context, View.OnClickListener rejectListener) {
         super(context);
@@ -37,10 +36,10 @@ public class WalletProtocolDialog extends BaseDialog {
         setOnDismissListener(dialog -> release());
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initWindow();
+    private void release() {
+        mWebViewContainer.removeAllViews();
+        mWebView.destroy();
+        mWebView = null;
     }
 
     @Override
@@ -52,9 +51,10 @@ public class WalletProtocolDialog extends BaseDialog {
         return view;
     }
 
-    private void initWebView() {
-        mWebView = new WebView(getContext().getApplicationContext());
-        mWebViewContainer.addView(mWebView);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initWindow();
     }
 
     private void initWindow() {
@@ -62,20 +62,18 @@ public class WalletProtocolDialog extends BaseDialog {
             return;
         }
         getWindow().setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         getWindow().getAttributes().width = UIUtils.dip2px(335);
         getWindow().getAttributes().height = UIUtils.dip2px(500);
         setCancelable(false);
     }
 
+    private void initWebView() {
+        mWebView = new WebView(getContext().getApplicationContext());
+        mWebViewContainer.addView(mWebView);
+    }
+
     @OnClick(R.id.dwp_agree)
     public void agree() {
         dismiss();
-    }
-
-    private void release() {
-        mWebViewContainer.removeAllViews();
-        mWebView.destroy();
-        mWebView = null;
     }
 }

@@ -17,6 +17,15 @@ public class DeliveryMinimumReq {
     private String supplyShopID;
     private String type;
     private List<String> codeList;
+    private List<DeliveryPurchaserBean> purchaserList;
+
+    public List<DeliveryPurchaserBean> getPurchaserList() {
+        return purchaserList;
+    }
+
+    public void setPurchaserList(List<DeliveryPurchaserBean> purchaserList) {
+        this.purchaserList = purchaserList;
+    }
 
     public String getName() {
         return name;

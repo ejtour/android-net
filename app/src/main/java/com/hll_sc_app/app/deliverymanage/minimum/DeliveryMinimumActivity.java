@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.deliverymanage.minimum;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -60,22 +61,10 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
 
     private void initView() {
         mEmptyView = EmptyView.newBuilder(this)
-            .setTipsTitle("您还没有设置起订金额哦").setTips("点击右上角新增添加").create();
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this,
-            R.color.base_color_divider), UIUtils.dip2px(5)));
+            .setTipsTitle("您还没有设置起送金额哦").setTips("点击右上角新增添加").create();
+        mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
         mAdapter = new MinimumListAdapter();
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            DeliveryMinimumBean bean = (DeliveryMinimumBean) adapter.getItem(position);
-            if (bean == null) {
-                return;
-            }
-            int id = view.getId();
-            if (id == R.id.txt_del) {
-                showTipsDialog(bean);
-            } else if (id == R.id.content) {
-                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_DETAIL, bean);
-            }
-        });
+        mAdapter.setOnItemChildClickListener(new OnItemChildClickListener());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
@@ -138,13 +127,29 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
             helper.setText(R.id.txt_settings, TextUtils.equals(item.getSettings(), "0") ? getString(R.string.area) :
                 "采购商")
                 .setBackgroundRes(R.id.txt_settings, TextUtils.equals(item.getSettings(), "0") ?
-                    R.drawable.bg_tag_primary_solid : R.drawable.bg_tag_red_solid)
+                    R.drawable.bg_tag_primary_tine_solid : R.drawable.bg_tag_red_solid)
                 .setText(R.id.txt_divideName, item.getDivideName())
                 .setText(R.id.txt_areaNum, TextUtils.equals(item.getSettings(), "0") ? "包含" + item.getAreaNum() +
                     "地区" : "包含" + item.getAreaNum() + "门店")
                 .setText(R.id.txt_sendPrice,
-                    "¥" + CommonUtils.formatMoney(CommonUtils.getDouble(item.getSendPrice())) + "起")
+                    "¥" + CommonUtils.formatNumber(item.getSendPrice()) + "起")
             ;
+        }
+    }
+
+    private class OnItemChildClickListener implements BaseQuickAdapter.OnItemChildClickListener {
+        @Override
+        public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+            DeliveryMinimumBean bean = (DeliveryMinimumBean) adapter.getItem(position);
+            if (bean == null) {
+                return;
+            }
+            int id = view.getId();
+            if (id == R.id.txt_del) {
+                DeliveryMinimumActivity.this.showTipsDialog(bean);
+            } else if (id == R.id.content) {
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_DETAIL, bean);
+            }
         }
     }
 }

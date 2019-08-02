@@ -36,6 +36,20 @@ import butterknife.ButterKnife;
 @Route(path = RouterConfig.WEB)
 public class WebActivity extends BaseLoadActivity {
 
+    @Autowired(name = "bundle")
+    Bundle mBundle;
+    @BindView(R.id.aw_title_bar)
+    TitleBar mTitleBar;
+    @BindView(R.id.aw_progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.aw_web_view_container)
+    FrameLayout mWebViewContainer;
+    private WebView mWebView;
+
+    public static void start(String title, String url) {
+        start(title, url, null, null, false);
+    }
+
     /**
      * @param title      网页标题
      * @param url        地址
@@ -53,10 +67,6 @@ public class WebActivity extends BaseLoadActivity {
         RouterUtil.goToActivity(RouterConfig.WEB, args);
     }
 
-    public static void start(String title, String url) {
-        start(title, url, null, null, false);
-    }
-
     public static void start(String title, String url, String bridgeName) {
         start(title, url, bridgeName, null, false);
     }
@@ -68,16 +78,6 @@ public class WebActivity extends BaseLoadActivity {
     public static void start(String title, String url, String bridgeName, boolean zoom) {
         start(title, url, bridgeName, null, zoom);
     }
-
-    @Autowired(name = "bundle")
-    Bundle mBundle;
-    @BindView(R.id.aw_title_bar)
-    TitleBar mTitleBar;
-    @BindView(R.id.aw_progress_bar)
-    ProgressBar mProgressBar;
-    @BindView(R.id.aw_web_view_container)
-    FrameLayout mWebViewContainer;
-    private WebView mWebView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -121,6 +121,8 @@ public class WebActivity extends BaseLoadActivity {
             }
         });
         mWebView.setBackgroundColor(0);
+        mWebView.setVerticalScrollBarEnabled(true);
+        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         mWebView.addJavascriptInterface(new JSBridge(this), mBundle.getString(Constants.WEB_JS_NAME, "JSBridge"));
 
         WebSettings settings = mWebView.getSettings();
@@ -138,18 +140,18 @@ public class WebActivity extends BaseLoadActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if (mWebView.canGoBack()) {
-            mWebView.goBack();
-        }
-        super.onBackPressed();
-    }
-
-    @Override
     protected void onDestroy() {
         mWebViewContainer.removeAllViews();
         mWebView.destroy();
         mWebView = null;
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        }
+        super.onBackPressed();
     }
 }

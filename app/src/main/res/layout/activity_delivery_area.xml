@@ -16,11 +16,7 @@
 
         <ImageView
             android:id="@+id/img_close"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:background="@drawable/base_bg_selector_close"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_close"/>
+            style="@style/BtnClose"/>
 
         <TextView
             android:id="@+id/txt_title"
@@ -29,7 +25,7 @@
             android:layout_centerInParent="true"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"
-            tools:text="河北上"/>
+            tools:text="河北省"/>
 
         <TextView
             android:id="@+id/txt_save"
@@ -49,8 +45,7 @@
         android:layout_height="45dp"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingLeft="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,9 +55,10 @@
 
         <ImageView
             android:id="@+id/img_allCheck"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
             android:src="@drawable/bg_selector_check_box_circular"/>
     </RelativeLayout>
 

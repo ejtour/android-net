@@ -9,31 +9,21 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.ILoadView;
-import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+import com.hll_sc_app.rest.Upload;
 import com.zhihu.matisse.Matisse;
 
 import java.io.File;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -99,43 +89,12 @@ public class ImageUploadGroup extends LinearLayout {
     }
 
     public void imageUpload(File imageFile) {
-        RequestBody body = RequestBody.create(MediaType.parse("image/JPEG"), imageFile);
-        MultipartBody.Part photo;
-        try {
-            photo = MultipartBody.Part.createFormData("upload", imageFile.getName(), body);
-        } catch (IllegalArgumentException e) {
-            //因为文件名含有中文 会抛错 进行转码再重新操作
-            String name = URLEncoder.encode(imageFile.getName());
-            photo = MultipartBody.Part.createFormData("upload", name, body);
-        }
-        HttpFactory.createImgUpload(UserService.class)
-                .imageUpload(photo)
-                .compose(ApiScheduler.getObservableScheduler())
-                .doOnSubscribe(disposable -> mView.showLoading())
-                .doFinally(() -> mView.hideLoading())
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        // no-op
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        showUploadedImg(s);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                        mView.showToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        // no-op
-                    }
-                });
+        Upload.imageUpload(imageFile, new SimpleObserver<String>(mView) {
+            @Override
+            public void onSuccess(String s) {
+                showUploadedImg(s);
+            }
+        });
     }
 
     private void showUploadedImg(String url) {

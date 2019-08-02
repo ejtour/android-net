@@ -12,8 +12,10 @@ public class AreaInfo {
     private int areaType;
     private String standardAreaName;
     private String standardAreaCode;
+
     public AreaInfo() {
     }
+
     public AreaInfo(String areaCode, String areaName) {
         this.areaCode = areaCode;
         this.areaName = areaName;

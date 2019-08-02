@@ -141,13 +141,20 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
     private void showBillUpdateSelectWindow() {
         if (mBillUpDateDialog == null) {
             List<String> list = new ArrayList<>();
+            String select = null;
+            String text = mTxtBillUpDateTime.getText().toString();
             DecimalFormat format = new DecimalFormat("00");
             for (int i = 1; i < 24; i++) {
-                list.add(format.format(i) + ":00");
+                String time = format.format(i) + ":00";
+                list.add(time);
+                if (TextUtils.equals(text, time)) {
+                    select = time;
+                }
             }
             mBillUpDateDialog = SingleSelectionDialog.newBuilder(this,
                 (SingleSelectionDialog.WrapperName<String>) s -> s)
                 .refreshList(list)
+                .select(select)
                 .setTitleText("选择截单时间")
                 .setOnSelectListener(s -> mTxtBillUpDateTime.setText(s)).create();
         }
@@ -160,12 +167,19 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
     private void showDayTimeFlagSelectWindow() {
         if (mDayTimeFlagDialog == null) {
             List<NameValue> list = new ArrayList<>();
+            NameValue select = null;
+            String text = mTxtDayTimeFlag.getText().toString();
             for (int i = 0; i < STRINGS.length; i++) {
-                list.add(new NameValue(STRINGS[i], String.valueOf(i)));
+                NameValue nameValue = new NameValue(STRINGS[i], String.valueOf(i));
+                list.add(nameValue);
+                if (TextUtils.equals(text, STRINGS[i])) {
+                    select = nameValue;
+                }
             }
             mDayTimeFlagDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
                 .refreshList(list)
                 .setTitleText("选择最早的配送日期")
+                .select(select)
                 .setOnSelectListener(s -> {
                     mTxtDayTimeFlag.setTag(s.getValue());
                     mTxtDayTimeFlag.setText(s.getName());

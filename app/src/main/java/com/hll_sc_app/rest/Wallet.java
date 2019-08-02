@@ -137,12 +137,12 @@ public class Wallet {
      */
     public static void queryAreaList(int areaType, String areaParentId, SimpleObserver<List<AreaInfo>> observer) {
         WalletService.INSTANCE
-                .queryAreaList(BaseMapReq.newBuilder()
-                        .put("areaType", String.valueOf(areaType))
-                        .put("areaParentId", areaParentId).create())
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
+            .queryAreaList(BaseMapReq.newBuilder()
+                .put("areaType", String.valueOf(areaType))
+                .put("areaParentId", areaParentId).create())
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+            .subscribe(observer);
     }
 
     /**
@@ -152,7 +152,20 @@ public class Wallet {
      */
     public static void createAccount(AuthInfo info, SimpleObserver<Object> observer) {
         WalletService.INSTANCE
-                .createAccount(new BaseReq<>(info))
+            .createAccount(new BaseReq<>(info))
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+            .subscribe(observer);
+    }
+
+    /**
+     * 实名认证
+     *
+     * @param info 待核验信息
+     */
+    public static void authAccount(AuthInfo info,SimpleObserver<Object> observer){
+        WalletService.INSTANCE
+                .authAccount(new BaseReq<>(info))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

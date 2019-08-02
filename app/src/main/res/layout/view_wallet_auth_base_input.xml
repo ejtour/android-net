@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/abi_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/abi_next"
+        style="@style/BtnOrderAction.PrimarySolid"
+        android:layout_width="200dp"
+        android:enabled="false"
+        android:text="下一步"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintBottom_toBottomOf="@id/abi_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/abi_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/abi_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/abi_bottom_bg" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/abi_bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dp_10">
+
+            <include layout="@layout/view_wallet_company_info" />
+
+            <!--公示信息 start-->
+            <View
+                android:id="@+id/abi_publicity_bg"
+                android:layout_width="0dp"
+                android:layout_height="225dp"
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wci_contact_bg" />
+
+            <View
+                android:id="@+id/abi_publicity_div1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div2"
+                app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toStartOf="@id/abi_publicity_bg"
+                app:layout_constraintTop_toTopOf="@id/abi_publicity_bg" />
+
+            <View
+                android:id="@+id/abi_publicity_div2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div3"
+                app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toStartOf="@id/abi_publicity_bg"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div1" />
+
+            <View
+                android:id="@+id/abi_publicity_div3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div4"
+                app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toStartOf="@id/abi_publicity_bg"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div2" />
+
+            <View
+                android:id="@+id/abi_publicity_div4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/abi_publicity_bg"
+                app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toStartOf="@id/abi_publicity_bg"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div3" />
+
+            <TextView
+                android:id="@+id/abi_credit_code_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="统一社会信用代码"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div1"
+                app:layout_constraintStart_toStartOf="@id/abi_publicity_div1"
+                app:layout_constraintTop_toTopOf="@id/abi_publicity_bg" />
+
+            <EditText
+                android:id="@+id/abi_credit_code"
+                style="@style/WalletInfoEdit"
+                android:hint="请输入统一社会信用代码"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div1"
+                app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toEndOf="@id/abi_credit_code_label"
+                app:layout_constraintTop_toTopOf="@id/abi_publicity_bg" />
+
+            <TextView
+                android:id="@+id/abi_start_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="起始日期"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div2"
+                app:layout_constraintStart_toStartOf="@id/abi_publicity_div1"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div1" />
+
+            <TextView
+                android:id="@+id/abi_start_date"
+                style="@style/WalletInfoEdit"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                android:hint="请选择营业执照起始日期"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div2"
+                app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toEndOf="@id/abi_start_date_label"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div1" />
+
+            <TextView
+                android:id="@+id/abi_end_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="起始日期"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div3"
+                app:layout_constraintStart_toStartOf="@id/abi_publicity_div1"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div2" />
+
+            <TextView
+                android:id="@+id/abi_end_date"
+                style="@style/WalletInfoEdit"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                android:hint="请选择营业执照结束日期"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div3"
+                app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toEndOf="@id/abi_end_date_label"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div2" />
+
+            <TextView
+                android:id="@+id/abi_business_scope_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="经营范围"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div4"
+                app:layout_constraintStart_toStartOf="@id/abi_publicity_div1"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div3" />
+
+            <EditText
+                android:id="@+id/abi_business_scope"
+                style="@style/WalletInfoEdit"
+                android:hint="请输入公司经营范围"
+                app:layout_constraintBottom_toTopOf="@id/abi_publicity_div4"
+                app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toEndOf="@id/abi_business_scope_label"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div3" />
+
+            <TextView
+                android:id="@+id/abi_register_address_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册地址"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                app:layout_constraintBottom_toBottomOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toStartOf="@id/abi_publicity_div1"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div4" />
+
+            <EditText
+                android:id="@+id/abi_register_address"
+                style="@style/WalletInfoEdit"
+                android:hint="请输入公司注册地址"
+                app:layout_constraintBottom_toBottomOf="@id/abi_publicity_bg"
+                app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
+                app:layout_constraintStart_toEndOf="@id/abi_register_address_label"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_div4" />
+            <!--公示信息 end-->
+
+            <!--企业证件照 start-->
+            <View
+                android:id="@+id/abi_id_photo_bg"
+                android:layout_width="0dp"
+                android:layout_height="114dp"
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/abi_publicity_bg" />
+
+            <com.hll_sc_app.base.widget.ImgUploadBlock
+                android:id="@+id/abi_business_license"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="@dimen/dp_10"
+                app:base_title="点击上传营业执照"
+                app:layout_constraintBottom_toBottomOf="@id/abi_id_photo_bg"
+                app:layout_constraintEnd_toStartOf="@id/abi_create_account_license"
+                app:layout_constraintStart_toStartOf="@id/abi_id_photo_bg" />
+
+            <com.hll_sc_app.base.widget.ImgUploadBlock
+                android:id="@+id/abi_create_account_license"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                app:base_title="点击上传开户许可证"
+                app:layout_constraintBottom_toBottomOf="@id/abi_id_photo_bg"
+                app:layout_constraintEnd_toEndOf="@id/abi_id_photo_bg"
+                app:layout_constraintStart_toEndOf="@id/abi_business_license" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="企业证件照"
+                android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+                app:layout_constraintBottom_toTopOf="@id/abi_business_license"
+                app:layout_constraintStart_toStartOf="@id/abi_business_license"
+                app:layout_constraintTop_toTopOf="@id/abi_id_photo_bg" />
+
+            <!--企业证件照 end-->
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

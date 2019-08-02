@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="5dp"
-                android:text="第三方物流配送"
+                android:text="第三方物流公司"
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"/>
 
             <TextView

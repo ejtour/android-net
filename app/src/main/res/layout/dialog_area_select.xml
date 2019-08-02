@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:background="@android:color/white">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             tools:background="@android:color/white">
 
     <ImageView
         android:id="@+id/das_close"
@@ -14,7 +14,7 @@
         android:src="@drawable/ic_cancel"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/das_title"
@@ -26,7 +26,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/das_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/das_close" />
+        app:layout_constraintTop_toTopOf="@+id/das_close"/>
 
     <View
         android:id="@+id/das_divider"
@@ -35,7 +35,7 @@
         android:background="@color/color_eeeeee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/das_close" />
+        app:layout_constraintTop_toBottomOf="@+id/das_close"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/das_tab_layout"
@@ -52,7 +52,7 @@
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="省" />
+            android:text="省"/>
     </android.support.design.widget.TabLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -65,5 +65,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/das_tab_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/das_tab_layout"/>
 </android.support.constraint.ConstraintLayout>

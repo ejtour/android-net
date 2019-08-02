@@ -18,6 +18,11 @@ public class ViewPagerAdapter extends PagerAdapter {
         mViews = views;
     }
 
+    @Override
+    public int getCount() {
+        return mViews.length;
+    }
+
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -29,11 +34,6 @@ public class ViewPagerAdapter extends PagerAdapter {
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         // super.destroyItem(container, position, object);
         container.removeView(mViews[position]);
-    }
-
-    @Override
-    public int getCount() {
-        return mViews.length;
     }
 
     @Override
