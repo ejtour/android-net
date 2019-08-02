@@ -240,10 +240,10 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
                 String sDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
                 String tDate = CalendarUtils.format(date, CalendarUtils.FORMAT_YYYY_MM_DD_CHN);
                 if (mIsStartDate) {
-                    mAuthInfo.setLicenseBeginDate(sDate);
+                    mAuthInfo.setLpIDCardPeriodBeginDate(sDate);
                     mStartDate.setText(tDate);
                 } else {
-                    mAuthInfo.setLicensePeriod(sDate);
+                    mAuthInfo.setLpIDCardPeriod(sDate);
                     mEndDate.setText(tDate);
                 }
             });
