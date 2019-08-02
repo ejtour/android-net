@@ -224,6 +224,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 showToast(msg);
             }
         });
+        mImgLicencePhotoUrl.setOnDeleteListener(v -> checkEnable());
     }
 
     private void setAgreement() {
@@ -282,10 +283,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
 
     @Override
     public void uploadSuccess(String url) {
-        mImgLicencePhotoUrl.showImage(url, v -> {
-            mImgLicencePhotoUrl.deleteImage();
-            checkEnable();
-        });
+        mImgLicencePhotoUrl.showImage(url);
         checkEnable();
     }
 
