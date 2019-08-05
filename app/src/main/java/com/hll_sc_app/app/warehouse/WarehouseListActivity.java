@@ -16,7 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.GoodsRelevanceSearch;
+import com.hll_sc_app.app.search.stratery.WarehouseSearch;
 import com.hll_sc_app.app.warehouse.recommend.WarehouseGroupListAdapter;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
@@ -111,7 +111,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, GoodsRelevanceSearch.class.getSimpleName());
+                SearchActivity.start(searchContent, WarehouseSearch.class.getSimpleName());
             }
 
             @Override
