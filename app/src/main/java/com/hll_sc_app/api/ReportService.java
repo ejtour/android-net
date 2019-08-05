@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
+import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
@@ -20,6 +21,9 @@ import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
 import com.hll_sc_app.bean.report.resp.product.OrderDetailTotalResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
+import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
+import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
+import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 
 import java.util.List;
 
@@ -97,4 +101,17 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:101024")
     Observable<BaseResp<List<PurchaserGroupBean>>> queryPurchaser(@Body BaseMapReq body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111009")
+    Observable<BaseResp<SalesManSignResp>> querySalesManSignAchievement(@Body BaseReq<SalesManAchievementReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111003")
+    Observable<BaseResp<SalesManSalesResp>> querySalesManSalesAchievement(@Body BaseReq<SalesManAchievementReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111006")
+    Observable<BaseResp<DeliveryLackGatherResp>> queryDeliveryLackGather(@Body BaseReq<BaseReportReqParam> body);
+
 }

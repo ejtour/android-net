@@ -530,5 +530,20 @@ public class RouterConfig {
      * 我的钱包-提现
      */
     public static final String WALLET_WITHDRAW = "/activity/wallet/withdraw";
+
+    /**
+     * 业务员签约绩效
+     */
+    public static final String REPORT_SALESMAN_SIGN_ACHIEVEMENT="/activity/report/salesman/sign/achievement";
+
+    /**
+     * 业务员销售额绩效
+     */
+    public static final String REPORT_SALESMAN_SALES_ACHIEVEMENT="/activity/report/salesman/sales/achievement";
+
+    /**
+     * 缺货汇总
+     */
+    public static final String REPORT_DELIVERY_LACK_GATHER="/activity/report/delivery/lack/gather";
 }
 

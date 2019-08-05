@@ -217,7 +217,6 @@
         <activity
             android:name=".app.deliverymanage.ageing.detail.period.DeliveryPeriodActivity"
             android:screenOrientation="portrait" />
-        >>>>>>> origin/dev
 
         <activity
             android:name=".app.deliverymanage.deliverytype.DeliveryTypeSetActivity"
@@ -463,6 +462,22 @@
         <activity
             android:name=".app.wallet.WalletActivity"
             android:screenOrientation="portrait" />
+
+        <!--业务员签约绩效-->
+        <activity
+            android:name=".app.report.salesman.sign.SalesManSignAchievementActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--业务员销售额绩效-->
+        <activity
+            android:name=".app.report.salesman.sales.SalesManSalesAchievementActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--缺货汇总-->
+        <activity android:name=".app.report.deliveryLack.DeliveryLackGatherActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

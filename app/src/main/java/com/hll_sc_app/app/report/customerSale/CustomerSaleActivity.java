@@ -196,7 +196,6 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
 
     @OnClick(R.id.date_flag)
     public void onViewClicked() {
-        reportDateArrow.setRotation(180);
         showOptionsWindow(dateFlag);
     }
 
