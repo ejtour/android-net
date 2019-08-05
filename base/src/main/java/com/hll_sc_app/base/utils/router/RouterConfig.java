@@ -36,6 +36,10 @@ public class RouterConfig {
      */
     public static final String WAREHOUSE_ADD = "/activity/warehouse/add";
     /**
+     * 代仓公司-集团详细资料
+     */
+    public static final String WAREHOUSE_DETAILS = "/activity/warehouse/details";
+    /**
      * 代仓管理
      */
     public static final String WAREHOUSE_START = "/activity/warehouse/start";

@@ -1,6 +1,6 @@
 package com.hll_sc_app.app.warehouse.add;
 
-import com.hll_sc_app.api.WarehouseManageService;
+import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -56,7 +56,7 @@ public class WarehouseAddPresenter implements WarehouseAddContract.IWarehouseAdd
             .put("searchParam", mView.getSearchParam())
             .put("groupType", "-1")
             .create();
-        WarehouseManageService.INSTANCE
+        WarehouseService.INSTANCE
             .queryPurchaserList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())

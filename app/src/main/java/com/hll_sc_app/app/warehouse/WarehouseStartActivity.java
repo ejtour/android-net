@@ -10,7 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.api.WarehouseManageService;
+import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -54,7 +54,7 @@ public class WarehouseStartActivity extends BaseLoadActivity {
             .put("groupID", UserConfig.getGroupID())
             .put("groupType", "1")
             .create();
-        WarehouseManageService.INSTANCE
+        WarehouseService.INSTANCE
             .queryGroupDetail(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
@@ -107,11 +107,5 @@ public class WarehouseStartActivity extends BaseLoadActivity {
         if (successDialog.getWindow() != null) {
             successDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4d000000")));
         }
-    }
-
-    @Override
-    protected void onPause() {
-        overridePendingTransition(0, 0);
-        super.onPause();
     }
 }

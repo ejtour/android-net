@@ -6,6 +6,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.warehouse.GroupDetail;
+import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 import com.hll_sc_app.bean.warehouse.WarehouseListResp;
 
 import java.util.List;
@@ -21,8 +22,8 @@ import retrofit2.http.POST;
  * @author zhuyingsong
  * @date 2019-08-02
  */
-public interface WarehouseManageService {
-    WarehouseManageService INSTANCE = HttpFactory.create(WarehouseManageService.class);
+public interface WarehouseService {
+    WarehouseService INSTANCE = HttpFactory.create(WarehouseService.class);
 
     /**
      * 推荐代仓公司
@@ -64,7 +65,6 @@ public interface WarehouseManageService {
     @Headers("pv:101045")
     Observable<BaseResp<WarehouseListResp>> queryWarehouseList(@Body BaseMapReq req);
 
-
     /**
      * 采购商集团搜索
      *
@@ -74,4 +74,15 @@ public interface WarehouseManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101024")
     Observable<BaseResp<List<PurchaserBean>>> queryPurchaserList(@Body BaseMapReq body);
+
+
+    /**
+     * 获取代仓签约详情成功
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101044")
+    Observable<BaseResp<WarehouseDetailResp>> queryCooperationWarehouseDetail(@Body BaseMapReq req);
 }

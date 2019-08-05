@@ -20,6 +20,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
@@ -91,7 +92,7 @@ public class WarehouseAddActivity extends BaseLoadActivity implements WarehouseA
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                // TODO:跳转详情
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getPurchaserID());
             }
         });
         EmptyView emptyView = EmptyView.newBuilder(this)

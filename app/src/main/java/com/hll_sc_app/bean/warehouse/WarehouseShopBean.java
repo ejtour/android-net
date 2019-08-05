@@ -1,4 +1,4 @@
-package com.hll_sc_app.bean.agreementprice.quotation;
+package com.hll_sc_app.bean.warehouse;
 
 /**
  * 代仓门店详情

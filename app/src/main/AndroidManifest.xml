@@ -219,6 +219,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.warehouse.detail.details.WarehouseDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.warehouse.recommend.WarehouseRecommendActivity"
             android:screenOrientation="portrait"/>
 

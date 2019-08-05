@@ -1,6 +1,6 @@
 package com.hll_sc_app.app.warehouse;
 
-import com.hll_sc_app.api.WarehouseManageService;
+import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -58,9 +58,10 @@ public class WarehouseListPresenter implements WarehouseListContract.IWarehouseL
             .put("groupID", UserConfig.getGroupID())
             .put("originator", "1")
             .put("purchaserID", groupId)
+            // 1-解除 2-放弃
             .put("type", "1")
             .create();
-        WarehouseManageService.INSTANCE
+        WarehouseService.INSTANCE
             .delWarehouse(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
@@ -90,7 +91,7 @@ public class WarehouseListPresenter implements WarehouseListContract.IWarehouseL
             .put("pageSize", "20")
             .put("source", "app")
             .create();
-        WarehouseManageService.INSTANCE
+        WarehouseService.INSTANCE
             .queryWarehouseList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
