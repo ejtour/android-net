@@ -63,4 +63,15 @@ public interface WarehouseManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101045")
     Observable<BaseResp<WarehouseListResp>> queryWarehouseList(@Body BaseMapReq req);
+
+
+    /**
+     * 采购商集团搜索
+     *
+     * @param body req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101024")
+    Observable<BaseResp<List<PurchaserBean>>> queryPurchaserList(@Body BaseMapReq body);
 }

@@ -86,6 +86,7 @@ public class WarehouseIntroduceActivity extends BaseLoadActivity implements Base
             return;
         }
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_WAREHOUSE_ADD)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_ADD);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
         }

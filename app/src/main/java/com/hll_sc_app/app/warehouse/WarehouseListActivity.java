@@ -23,6 +23,7 @@ import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
@@ -152,7 +153,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
      * 新增代仓客户
      */
     private void toAdd() {
-
+        RouterUtil.goToActivity(RouterConfig.WAREHOUSE_ADD);
     }
 
     /**
