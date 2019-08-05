@@ -38,6 +38,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
@@ -47,6 +48,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -267,9 +269,9 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
             if (entries.size() > 0) {
                 PieDataSet dataSet = new PieDataSet(entries, "");
                 //颜色
-                ArrayList<Integer> colors = new ArrayList<>();
+                List<Integer> colors = Arrays.asList(ColorStr.CHART_COLOR_ARRAY);
                 //设置
-                for (int c : ColorTemplate.VORDIPLOM_COLORS)
+                /*for (int c : ColorTemplate.VORDIPLOM_COLORS)
                     colors.add(c);
                 for (int c : ColorTemplate.JOYFUL_COLORS)
                     colors.add(c);
@@ -279,7 +281,7 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
                     colors.add(c);
                 for (int c : ColorTemplate.PASTEL_COLORS)
                     colors.add(c);
-                colors.add(ColorTemplate.getHoloBlue());
+                colors.add(ColorTemplate.getHoloBlue());*/
                 dataSet.setColors(colors);
                 //横线
 //                dataSet.setValueLinePart1OffsetPercentage(0f);
