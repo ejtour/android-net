@@ -74,7 +74,7 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="25dp"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:background="@drawable/bg_white_radius_5_solid"
+                    android:background="@drawable/base_bg_white_radius_5_solid"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_sales_volume_label" />
@@ -203,7 +203,7 @@
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:background="@drawable/bg_white_radius_5_solid"
+                    android:background="@drawable/base_bg_white_radius_5_solid"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_summary_bg" />
@@ -391,7 +391,7 @@ fmh_warehouse_delivery_num_label,fmh_warehouse_amount,fmh_warehouse_amount_label
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:background="@drawable/bg_white_radius_5_solid"
+                    android:background="@drawable/base_bg_white_radius_5_solid"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_warehouse_bg" />
@@ -834,7 +834,7 @@ fmh_warehouse_delivery_num_label,fmh_warehouse_amount,fmh_warehouse_amount_label
                     android:layout_marginStart="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:background="@drawable/bg_white_radius_5_solid"
+                    android:background="@drawable/base_bg_white_radius_5_solid"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fmh_order_board_bg" />

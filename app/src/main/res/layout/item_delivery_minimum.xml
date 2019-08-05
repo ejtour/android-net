@@ -10,7 +10,7 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_white_radius_5_solid"
+        android:background="@drawable/base_bg_white_radius_5_solid"
         android:padding="10dp">
 
         <TextView
@@ -19,9 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:background="@drawable/bg_tag_primary_solid"
-            android:paddingLeft="5dp"
+            android:paddingLeft="3dp"
             android:paddingTop="1dp"
-            android:paddingRight="5dp"
+            android:paddingRight="3dp"
             android:paddingBottom="1dp"
             android:textColor="@color/base_white"
             android:textSize="9sp"
@@ -74,8 +74,8 @@
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="解除"
-            android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
+            android:text="删除"
+            android:textAppearance="@style/TextAppearance.City22.Small.White"/>
     </FrameLayout>
 </com.hll_sc_app.base.widget.SwipeItemLayout>
 

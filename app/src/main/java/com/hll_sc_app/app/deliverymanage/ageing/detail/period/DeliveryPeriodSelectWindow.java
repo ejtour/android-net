@@ -26,6 +26,7 @@ import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 public class DeliveryPeriodSelectWindow extends BaseShadowPopupWindow implements View.OnClickListener {
     private String mSelectEnd;
     private List<String> mData;
+    private List<String> mData2;
     private String mSelectStart;
 
     private PayTermTypeAdapter mAdapter;
@@ -48,9 +49,13 @@ public class DeliveryPeriodSelectWindow extends BaseShadowPopupWindow implements
 
     private void initData() {
         mData = new ArrayList<>();
+        mData2 = new ArrayList<>();
         DecimalFormat format = new DecimalFormat("00");
         for (int i = 0; i < 24; i++) {
             mData.add(format.format(i) + ":00");
+        }
+        for (int i = 1; i < 25; i++) {
+            mData2.add(format.format(i) + ":00");
         }
     }
 
@@ -75,7 +80,7 @@ public class DeliveryPeriodSelectWindow extends BaseShadowPopupWindow implements
 
         WheelView pickerEnd = rootView.findViewById(R.id.picker_end);
         pickerEnd.setVisibleItems(5);
-        mAdapterEnd = new PayTermTypeAdapter(mActivity, mData);
+        mAdapterEnd = new PayTermTypeAdapter(mActivity, mData2);
         mSelectEnd = String.valueOf(mAdapterEnd.getItemText(0));
         pickerEnd.setViewAdapter(mAdapterEnd);
         pickerEnd.addScrollingListener(new OnWheelScrollListener() {

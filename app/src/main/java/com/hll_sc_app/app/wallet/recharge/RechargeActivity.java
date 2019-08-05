@@ -8,12 +8,12 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
-import butterknife.Unbinder;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -51,13 +50,13 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
     ClearEditText mEdit;
     @BindView(R.id.awr_next_step)
     TextView mNextStep;
-    @BindView(R.id.awr_web_view)
+    @BindView(R.id.awr_web_view_container)
+    FrameLayout mWebViewContainer;
     WebView mWebView;
     @BindView(R.id.awr_progress_bar)
     ProgressBar mProgressBar;
     private RechargeDialog mDialog;
     private IRechargeContract.IRechargePresenter mPresenter;
-    private Unbinder unbinder;
 
     public static void start(Activity activity, String settleUnitID) {
         Object[] args = {settleUnitID};
@@ -69,7 +68,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
         setContentView(R.layout.activity_wallet_recharge);
-        unbinder = ButterKnife.bind(this);
+        ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         initWebView();
         mPresenter = RechargePresenter.newInstance(mSettleUnitID);
@@ -78,6 +77,8 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
 
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
+        mWebView = new WebView(getApplicationContext());
+        mWebViewContainer.addView(mWebView);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.setWebChromeClient(new WebChromeClient() {
@@ -113,17 +114,16 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
 
     @Override
     protected void onDestroy() {
-        mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
-        ((ViewGroup) mWebView.getParent()).removeView(mWebView);
+        mWebViewContainer.removeAllViews();
         mWebView.destroy();
-        unbinder.unbind();
+        mWebView = null;
         super.onDestroy();
     }
 
     @Override
     public void rechargeSuccess(RechargeResp rechargeResp) {
         mDialog.dismiss();
-        mWebView.setVisibility(View.VISIBLE);
+        mWebViewContainer.setVisibility(View.VISIBLE);
         mWebView.loadData(createWebForm(rechargeResp.getPreRechargeInfo()), "text/html", "UTF-8");
     }
 

@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_COOPERATION_DETAIL_SHOP, OptionType.OPTION_EXPORT_DETAIL_INFO, OptionType.OPTION_REPORT_CURRENT_DATE,
         OptionType.OPTION_REPORT_YES_DATE, OptionType.OPTION_REPORT_CURRENT_WEEK, OptionType.OPTION_REPORT_PRE_WEEK,
         OptionType.OPTION_REPORT_CURRENT_MONTH, OptionType.OPTION_REPORT_PRE_MONTH, OptionType.OPTION_REPORT_CUSTOMER_DEFINE,
-        OptionType.OPTION_REPORT_DETAIL, OptionType.OPTION_AGREEMENT_PRICE_LOG_EXPORT})
+    OptionType.OPTION_REPORT_DETAIL, OptionType.OPTION_AGREEMENT_PRICE_LOG_EXPORT, OptionType.OPTION_WAREHOUSE_ADD})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -51,6 +51,7 @@ public @interface OptionType {
     String OPTION_AGREEMENT_PRICE_LOG_EXPORT = "导出变更日志";
 
     String OPTION_COOPERATION_ADD = "新增合作采购商";
+    String OPTION_WAREHOUSE_ADD = "新签代仓公司";
     String OPTION_COOPERATION_RECEIVE = "我收到的申请";
     String OPTION_COOPERATION_SEND = "我发出的申请";
     String OPTION_COOPERATION_EXPORT = "导出合作采购商";

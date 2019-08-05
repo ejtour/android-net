@@ -7,6 +7,9 @@ package com.hll_sc_app.base.utils.router;
  * @date 2018/12/12
  */
 public class RouterConfig {
+
+    public static final String WEB = "/activity/web";
+
     /**
      * 设置界面
      */
@@ -25,6 +28,18 @@ public class RouterConfig {
      */
     public static final String DELIVERY_MANAGE = "/activity/deliveryManage";
     /**
+     * 代仓管理
+     */
+    public static final String WAREHOUSE_START = "/activity/warehouse/start";
+    /**
+     * 代仓管理-我是货主默认介绍页面
+     */
+    public static final String WAREHOUSE_INTRODUCE = "/activity/warehouse/introduce";
+    /**
+     * 代仓管理-我是货主默认介绍页面-查看推荐
+     */
+    public static final String WAREHOUSE_RECOMMEND = "/activity/warehouse/recommend";
+    /**
      * 配送管理-配送时效管理
      */
     public static final String DELIVERY_AGEING_MANAGE = "/activity/deliveryManage/ageing";
@@ -41,9 +56,29 @@ public class RouterConfig {
      */
     public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";
     /**
-     * 配送管理-起订金额设置
+     * 配送管理-起送金额设置
      */
     public static final String DELIVERY_MINIMUM = "/activity/delivery/minimum";
+    /**
+     * 配送管理-起送金额设置-选择采购商
+     */
+    public static final String DELIVERY_MINIMUM_PURCHASER = "/activity/delivery/minimum/purchaser";
+    /**
+     * 配送管理-起送金额设置-选择采购商门店
+     */
+    public static final String DELIVERY_MINIMUM_PURCHASER_SHOP = "/activity/delivery/minimum/purchaserShop";
+    /**
+     * 配送管理-起送金额设置-详情
+     */
+    public static final String DELIVERY_MINIMUM_DETAIL = "/activity/delivery/minimum/detail";
+    /**
+     * 配送管理-配送范围
+     */
+    public static final String DELIVERY_RANGE = "/activity/delivery/range";
+    /**
+     * 配送管理-地区选择
+     */
+    public static final String DELIVERY_AREA = "/activity/delivery/area";
     /**
      * 配送管理-配送方式设置-选择第三方物流公司
      */
@@ -100,10 +135,6 @@ public class RouterConfig {
      * 修改密码
      */
     public static final String USER_CHANGE = "/activity/user/changePassword";
-    /**
-     * 协议
-     */
-    public static final String WEB_VIEW_PROTOCOL = "/activity/webView/Protocol";
     /**
      * 注册
      */
@@ -545,5 +576,9 @@ public class RouterConfig {
      * 缺货汇总
      */
     public static final String REPORT_DELIVERY_LACK_GATHER="/activity/report/delivery/lack/gather";
+    /*
+     * 我的钱包-银行列表
+     */
+    public static final String WALLET_BANK_LIST = "/activity/wallet/bankList";
 }
 

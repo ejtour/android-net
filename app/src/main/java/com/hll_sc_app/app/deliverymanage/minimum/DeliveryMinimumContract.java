@@ -16,7 +16,7 @@ public interface DeliveryMinimumContract {
 
     interface IDeliveryMinimumView extends ILoadView {
         /**
-         * 展示起订金额列表
+         * 展示起送金额列表
          *
          * @param list 列表数据
          */
@@ -28,5 +28,12 @@ public interface DeliveryMinimumContract {
          * 起送金额列表查询
          */
         void queryDeliveryMinimumList();
+
+        /**
+         * 删除起送金额分组
+         *
+         * @param bean 起送金额分组
+         */
+        void delDeliveryMinimum(DeliveryMinimumBean bean);
     }
 }

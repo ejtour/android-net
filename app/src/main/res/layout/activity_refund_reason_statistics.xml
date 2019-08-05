@@ -28,6 +28,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/base_white"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
@@ -74,13 +75,15 @@
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart_pie"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@color/base_white" />
+        android:layout_height="wrap_content"
+        android:background="@color/base_white"
+        android:minHeight="300dp"/>
+
 
     <LinearLayout
         android:id="@+id/ll_char_empty"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="300dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
@@ -139,7 +142,7 @@
                     android:background="@color/color_dddddd" />
 
                 <TextView
-                    android:layout_width="170dp"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="退货原因"

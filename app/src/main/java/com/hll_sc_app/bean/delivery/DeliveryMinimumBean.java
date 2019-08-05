@@ -1,12 +1,15 @@
 package com.hll_sc_app.bean.delivery;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 起送金额
  *
  * @author zhuyingsong
  * @date 2019-07-30
  */
-public class DeliveryMinimumBean {
+public class DeliveryMinimumBean implements Parcelable {
     /**
      * 设置类型 0-地区 1-采购商
      */
@@ -117,5 +120,57 @@ public class DeliveryMinimumBean {
 
     public void setSendAmountID(String sendAmountID) {
         this.sendAmountID = sendAmountID;
+    }
+
+    public static final Parcelable.Creator<DeliveryMinimumBean> CREATOR =
+        new Parcelable.Creator<DeliveryMinimumBean>() {
+        @Override
+        public DeliveryMinimumBean createFromParcel(Parcel source) {
+            return new DeliveryMinimumBean(source);
+        }
+
+        @Override
+        public DeliveryMinimumBean[] newArray(int size) {
+            return new DeliveryMinimumBean[size];
+        }
+    };
+
+    public DeliveryMinimumBean() {
+    }
+
+    protected DeliveryMinimumBean(Parcel in) {
+        this.settings = in.readString();
+        this.supplyName = in.readString();
+        this.actionTime = in.readString();
+        this.createBy = in.readString();
+        this.sendPrice = in.readString();
+        this.actionBy = in.readString();
+        this.createTime = in.readString();
+        this.supplyShopID = in.readString();
+        this.supplyID = in.readString();
+        this.divideName = in.readString();
+        this.areaNum = in.readString();
+        this.sendAmountID = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.settings);
+        dest.writeString(this.supplyName);
+        dest.writeString(this.actionTime);
+        dest.writeString(this.createBy);
+        dest.writeString(this.sendPrice);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.createTime);
+        dest.writeString(this.supplyShopID);
+        dest.writeString(this.supplyID);
+        dest.writeString(this.divideName);
+        dest.writeString(this.areaNum);
+        dest.writeString(this.sendAmountID);
     }
 }

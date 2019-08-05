@@ -56,8 +56,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginRight="5dp"
-                android:text="分类"
+                android:hint="分类"
+                android:singleLine="true"
                 android:textColor="@drawable/base_text_color_window_check"
+                android:textColorHint="@drawable/base_text_color_window_check"
                 android:textSize="@dimen/base_text_12"/>
 
             <ImageView
@@ -89,8 +91,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginRight="5dp"
-                android:text="行业标签"
+                android:hint="行业标签"
+                android:singleLine="true"
                 android:textColor="@drawable/base_text_color_window_check"
+                android:textColorHint="@drawable/base_text_color_window_check"
                 android:textSize="@dimen/base_text_12"/>
 
             <ImageView

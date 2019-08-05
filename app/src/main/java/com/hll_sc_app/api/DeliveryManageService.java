@@ -8,7 +8,13 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyReq;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
+import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
+import com.hll_sc_app.bean.delivery.DeliveryPurchaserBean;
+import com.hll_sc_app.bean.delivery.ProvinceListBean;
+import com.hll_sc_app.bean.delivery.ProvinceListResp;
+import com.hll_sc_app.bean.delivery.ShopMinimumBean;
+import com.hll_sc_app.bean.delivery.ShopMinimumSelectBean;
 
 import java.util.List;
 
@@ -114,5 +120,85 @@ public interface DeliveryManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:103037")
-    Observable<BaseResp<List<DeliveryMinimumBean>>> queryDeliveryMinimunList(@Body BaseMapReq req);
+    Observable<BaseResp<List<DeliveryMinimumBean>>> queryDeliveryMinimumList(@Body BaseMapReq req);
+
+    /**
+     * 删除起送金额分组
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103040")
+    Observable<BaseResp<Object>> delDeliveryMinimum(@Body BaseMapReq req);
+
+    /**
+     * 起送金额明细查询 新增和修改时用
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103038")
+    Observable<BaseResp<List<ProvinceListBean>>> queryDeliveryMinimumArea(@Body BaseMapReq req);
+
+    /**
+     * 配送范围查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100029")
+    Observable<BaseResp<ProvinceListResp>> queryDeliveryRangeArea(@Body BaseMapReq req);
+
+    /**
+     * 按照采购商设置 起送金额明细查询
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103038")
+    Observable<BaseResp<List<DeliveryPurchaserBean>>> queryDeliveryMinimumPurchaser(@Body BaseMapReq req);
+
+    /**
+     * 新增、编辑起送金额
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103039")
+    Observable<BaseResp<Object>> editDeliveryMinimum(@Body BaseReq<DeliveryMinimumReq> req);
+
+    /**
+     * 编辑配送范围
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100030")
+    Observable<BaseResp<Object>> editDeliveryRange(@Body BaseReq<DeliveryMinimumReq> req);
+
+    /**
+     * 查询其他分组已经添加的门店
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103161")
+    Observable<BaseResp<ShopMinimumSelectBean>> querySelectShop(@Body BaseMapReq req);
+
+    /**
+     * 获取地区门店列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102038")
+    Observable<BaseResp<List<ShopMinimumBean>>> queryAreaShopList(@Body BaseMapReq req);
 }

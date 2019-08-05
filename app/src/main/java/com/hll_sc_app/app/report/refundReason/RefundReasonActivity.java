@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,13 +21,16 @@ import com.githang.statusbar.StatusBarCompat;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
@@ -34,6 +38,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
@@ -43,6 +48,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +64,7 @@ import butterknife.Unbinder;
  * @author zc
  */
 @Route(path = RouterConfig.REFUND_REASON_STATICS)
-public class RefundReasonActivity extends BaseLoadActivity implements IRefundReasonContract.IView {
+public class RefundReasonActivity extends BaseLoadActivity implements IRefundReasonContract.IView, OnChartValueSelectedListener {
 
     @BindView(R.id.txt_filter_deposit)
     TextView mTxtFilterDeposit;
@@ -135,9 +141,9 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
         //画统计图
         mPie.setUsePercentValues(true);
         mPie.getDescription().setEnabled(false);
-        mPie.setExtraOffsets(5, 0, 5, 0);
+        mPie.setExtraOffsets(5, 5, 5, 5);
         mPie.setDragDecelerationFrictionCoef(0.5f);
-        mPie.setRotationEnabled(false);
+        mPie.setRotationEnabled(true);
         mPie.animateY(1400, Easing.EaseInOutQuad);
         //设置饼状图里的文字大小
         mPie.setEntryLabelTextSize(0f);
@@ -145,15 +151,20 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
         mPie.setDrawHoleEnabled(false);
         //设置统计维度显示
         Legend l = mPie.getLegend();
-        l.setEnabled(false);
+        l.setDrawInside(false);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        l.setWordWrapEnabled(true);
+        l.setEnabled(true);
 
+        mPie.setOnChartValueSelectedListener(this);
 
     }
 
     private void initData() {
-        Date date = new Date();
-        Date preDate = CalendarUtils.getDateBeforeMonth(date, 1);
-        setDate(preDate, date);
+        Date currentDate = new Date();
+        Date firstDate = CalendarUtils.getFirstDataInMonth(currentDate);
+        Date lastDate = CalendarUtils.getLastDataInMonth(currentDate);
+        setDate(firstDate, lastDate);
         mPresenter.queryRefundReasonStatics();
     }
 
@@ -207,9 +218,13 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
                     });
                     mDateRangeWindow.setOnDismissListener(() -> mArrowRight.setRotation(0));
                     //设置初始时间范围选择
-                    Calendar end = Calendar.getInstance();
+                    Date currentDate = new Date();
+                    Date firstDate = CalendarUtils.getFirstDataInMonth(currentDate);
+                    Date lastDate = CalendarUtils.getLastDataInMonth(currentDate);
                     Calendar start = Calendar.getInstance();
-                    start.add(Calendar.MONTH, -1);
+                    Calendar end = Calendar.getInstance();
+                    start.setTime(firstDate);
+                    end.setTime(lastDate);
                     mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
                             end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
                 }
@@ -252,11 +267,11 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
                 entries.add(new PieEntry((float) refundReasonBean.getProportion(), refundReasonBean.getRefundReasonDesc()));
             }
             if (entries.size() > 0) {
-                PieDataSet dataSet = new PieDataSet(entries, "Election Results");
+                PieDataSet dataSet = new PieDataSet(entries, "");
                 //颜色
-                ArrayList<Integer> colors = new ArrayList<>();
+                List<Integer> colors = Arrays.asList(ColorStr.CHART_COLOR_ARRAY);
                 //设置
-                for (int c : ColorTemplate.VORDIPLOM_COLORS)
+                /*for (int c : ColorTemplate.VORDIPLOM_COLORS)
                     colors.add(c);
                 for (int c : ColorTemplate.JOYFUL_COLORS)
                     colors.add(c);
@@ -266,22 +281,22 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
                     colors.add(c);
                 for (int c : ColorTemplate.PASTEL_COLORS)
                     colors.add(c);
-                colors.add(ColorTemplate.getHoloBlue());
+                colors.add(ColorTemplate.getHoloBlue());*/
                 dataSet.setColors(colors);
                 //横线
-                dataSet.setValueLinePart1OffsetPercentage(80.f);
-                dataSet.setValueLinePart1Length(0.2f);
-                dataSet.setValueLinePart2Length(0.4f);
-                //横线值
-                dataSet.setValueTextSize(11f);
-                dataSet.setValueFormatter(new ValueFormatter() {
-                    @Override
-                    public String getPieLabel(float value, PieEntry pieEntry) {
-                        return String.format("%s: %s", pieEntry.getLabel(), new DecimalFormat("#.##").format(value)) + "%";
-                    }
-                });
-
-                dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+//                dataSet.setValueLinePart1OffsetPercentage(0f);
+//                dataSet.setValueLinePart1Length(0f);
+//                dataSet.setValueLinePart2Length(0f);
+//                //横线值
+//                dataSet.setValueTextSize(0f);
+//                dataSet.setValueFormatter(new ValueFormatter() {
+//                    @Override
+//                    public String getPieLabel(float value, PieEntry pieEntry) {
+//                        return new DecimalFormat("#.##").format(value) + "%";
+//                    }
+//                });
+//                dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
+                dataSet.setValueTextSize(0f);
                 PieData data = new PieData(dataSet);
                 mPie.setData(data);
                 mPie.invalidate();
@@ -303,6 +318,21 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
         mRefreshLayout.closeHeaderOrFooter();
     }
 
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        PieEntry pData = (PieEntry) e;
+        String toast = pData.getLabel() + ":" + new DecimalFormat("#.##").format(pData.getY() * 100) + "%";
+        Toast mToast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        mToast.setText(toast);
+        mToast.setGravity(Gravity.TOP, 0, UIUtils.dip2px(200));
+        mToast.show();
+    }
+
+    @Override
+    public void onNothingSelected() {
+        //no-op
+    }
+
     private class ListAdapter extends BaseQuickAdapter<RefundReasonStaticsResp.RefundReasonBean, BaseViewHolder> {
         public ListAdapter(@Nullable List<RefundReasonStaticsResp.RefundReasonBean> data) {
             super(R.layout.list_item_refund_reason_statics, data);
@@ -319,7 +349,7 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
             mNumber.setText(String.valueOf(helper.getLayoutPosition() + 1));
             mReason.setText(item.getRefundReasonDesc());
             mMoney.setText(CommonUtils.formatMoney(item.getAmount()));
-            mProportion.setText(String.valueOf(item.getProportion() * 100 + "%"));
+            mProportion.setText(new DecimalFormat("#.##").format(item.getProportion() * 100) + "%");
             mContainer.setBackgroundColor(Color.parseColor(helper.getLayoutPosition() % 2 == 0 ? "#ffffff" : "#FAFAFA"));
 
         }

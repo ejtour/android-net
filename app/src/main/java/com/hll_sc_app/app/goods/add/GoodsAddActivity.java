@@ -315,7 +315,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         }
         mTxtTitle.setText("编辑商品");
         // 主图
-        mImgImgUrl.showImage(mGoodsBean.getImgUrl(), v -> mImgImgUrl.deleteImage());
+        mImgImgUrl.showImage(mGoodsBean.getImgUrl());
         // 辅图
         if (!TextUtils.isEmpty(mGoodsBean.getImgUrlSub())) {
             String[] strings = mGoodsBean.getImgUrlSub().split(",");
@@ -932,7 +932,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     public void uploadSuccess(String url, int requestCode) {
         if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL) {
             // 主图
-            mImgImgUrl.showImage(url, v -> mImgImgUrl.deleteImage());
+            mImgImgUrl.showImage(url);
         } else if (requestCode == ImgUploadBlock.REQUEST_CODE_IMG_URL_SUB) {
             // 辅图
             addImgUrlSub(url);

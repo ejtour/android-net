@@ -14,6 +14,8 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -50,13 +52,35 @@ public class DeliveryMinimumPresenter implements DeliveryMinimumContract.IDelive
             .subscribe(new DeliveryMinimumBaseCallback());
     }
 
+    @Override
+    public void delDeliveryMinimum(DeliveryMinimumBean bean) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("supplyID", bean.getSupplyID())
+            .put("settings", bean.getSettings())
+            .put("sendAmountID", bean.getSendAmountID())
+            .put("supplyShopID", bean.getSupplyShopID())
+            .create();
+        DeliveryManageService.INSTANCE
+            .delDeliveryMinimum(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .flatMap((Function<Object, ObservableSource<List<DeliveryMinimumBean>>>) o -> {
+                mView.showToast("删除起送金额分组成功");
+                return getDeliveryListObservable();
+            })
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new DeliveryMinimumBaseCallback());
+    }
+
 
     private Observable<List<DeliveryMinimumBean>> getDeliveryListObservable() {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("supplyID", UserConfig.getGroupID())
             .create();
         return DeliveryManageService.INSTANCE
-            .queryDeliveryMinimunList(req)
+            .queryDeliveryMinimumList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>());
     }

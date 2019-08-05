@@ -42,7 +42,7 @@ public class ImgUploadBlock extends RelativeLayout {
     public static final int REQUEST_CODE_IMG_URL_SUB = 106;
     public static final int REQUEST_CODE_IMG_URL_DETAIL = 107;
     private static final String[] PERMISSIONS = {Permission.CAMERA, Permission.READ_EXTERNAL_STORAGE,
-        Permission.WRITE_EXTERNAL_STORAGE};
+            Permission.WRITE_EXTERNAL_STORAGE};
     private TextView mTitle;
     private TextView mSubTitle;
     private ImgShowDelBlock mImgShow;
@@ -51,6 +51,7 @@ public class ImgUploadBlock extends RelativeLayout {
      */
     private int maxSize;
     private int mRequestCode = REQUEST_CODE_CHOOSE;
+    private OnClickListener mDeleteListener;
 
     public ImgUploadBlock(Context context) {
         super(context);
@@ -64,24 +65,31 @@ public class ImgUploadBlock extends RelativeLayout {
         mSubTitle = findViewById(R.id.txt_sub_title);
         mImgShow = findViewById(R.id.img_show);
         mImgShow.setVisibility(GONE);
+        mImgShow.setDeleteListener(this::delete);
         setOnClickListener(v -> new RequestPermissionUtils(getContext(), PERMISSIONS, this::selectPhoto).requestPermission());
+    }
+
+    private void delete(View view) {
+        deleteImage();
+        if (mDeleteListener != null)
+            mDeleteListener.onClick(view);
     }
 
     private void selectPhoto() {
         Matisse.from(((Activity) getContext()))
-            .choose(MimeType.ofImage())
-            .theme(R.style.Matisse_Dracula)
-            .countable(false)
-            .addFilter(new MiniSizeFilter(maxSize))
-            .maxSelectable(1)
-            .capture(true)
-            .captureStrategy(new CaptureStrategy(true, ((Activity) getContext()).getApplication().getPackageName() +
-                ".fileprovider"))
-            .gridExpectedSize(UIUtils.dip2px(120))
-            .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-            .thumbnailScale(0.85f)
-            .imageEngine(new Glide4Engine())
-            .forResult(mRequestCode);
+                .choose(MimeType.ofImage())
+                .theme(R.style.Matisse_Dracula)
+                .countable(false)
+                .addFilter(new MiniSizeFilter(maxSize))
+                .maxSelectable(1)
+                .capture(true)
+                .captureStrategy(new CaptureStrategy(true, ((Activity) getContext()).getApplication().getPackageName() +
+                        ".fileprovider"))
+                .gridExpectedSize(UIUtils.dip2px(120))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f)
+                .imageEngine(new Glide4Engine())
+                .forResult(mRequestCode);
     }
 
     public ImgUploadBlock(Context context, @Nullable AttributeSet attrs) {
@@ -119,12 +127,16 @@ public class ImgUploadBlock extends RelativeLayout {
         mRequestCode = requestCode;
     }
 
-    public void showImage(String url, OnClickListener listener) {
+    public void showImage(String url) {
+        if (TextUtils.isEmpty(url)) return;
         mImgShow.setImgUrl(url);
-        mImgShow.setDeleteListener(listener);
         mImgShow.setVisibility(VISIBLE);
         mSubTitle.setVisibility(GONE);
         mTitle.setVisibility(GONE);
+    }
+
+    public void setOnDeleteListener(OnClickListener listener) {
+        mDeleteListener = listener;
     }
 
     public void deleteImage() {
@@ -161,7 +173,7 @@ public class ImgUploadBlock extends RelativeLayout {
             }
             if (maxSize > 0 && (item.size > maxSize)) {
                 return new IncapableCause(IncapableCause.TOAST, "上传图片的大小不能超过%s兆",
-                    String.valueOf(PhotoMetadataUtils.getSizeInMB(maxSize)));
+                        String.valueOf(PhotoMetadataUtils.getSizeInMB(maxSize)));
             }
             return null;
         }

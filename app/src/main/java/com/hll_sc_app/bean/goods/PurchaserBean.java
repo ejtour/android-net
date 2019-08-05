@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,6 +70,10 @@ public class PurchaserBean implements Parcelable {
     private String shopCount;
     private String newShopNum;
     private String mobile;
+    private String groupArea;
+
+    public PurchaserBean() {
+    }
 
     protected PurchaserBean(Parcel in) {
         this.readStatus = in.readString();
@@ -110,16 +113,21 @@ public class PurchaserBean implements Parcelable {
         this.otherLicense = in.readString();
         this.resourceType = in.readString();
         this.status = in.readString();
-        this.shopList = new ArrayList<PurchaserShopBean>();
-        in.readList(this.shopList, PurchaserShopBean.class.getClassLoader());
         this.select = in.readByte() != 0;
+        this.shopList = in.createTypedArrayList(PurchaserShopBean.CREATOR);
         this.logoUrl = in.readString();
         this.shopCount = in.readString();
         this.newShopNum = in.readString();
         this.mobile = in.readString();
+        this.groupArea = in.readString();
     }
 
-    public PurchaserBean() {
+    public String getGroupArea() {
+        return groupArea;
+    }
+
+    public void setGroupArea(String groupArea) {
+        this.groupArea = groupArea;
     }
 
     public String getMobile() {
@@ -458,6 +466,14 @@ public class PurchaserBean implements Parcelable {
         this.shopList = shopList;
     }
 
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -502,19 +518,12 @@ public class PurchaserBean implements Parcelable {
         dest.writeString(this.otherLicense);
         dest.writeString(this.resourceType);
         dest.writeString(this.status);
-        dest.writeList(this.shopList);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
+        dest.writeTypedList(this.shopList);
         dest.writeString(this.logoUrl);
         dest.writeString(this.shopCount);
         dest.writeString(this.newShopNum);
         dest.writeString(this.mobile);
-    }
-
-    public String getLogoUrl() {
-        return logoUrl;
-    }
-
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
+        dest.writeString(this.groupArea);
     }
 }

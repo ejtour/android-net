@@ -51,6 +51,9 @@ public class DeliveryManageActivity extends BaseLoadActivity {
             case R.id.txt_minimum:
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM);
                 break;
+            case R.id.txt_range:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_RANGE);
+                break;
             default:
                 break;
         }
