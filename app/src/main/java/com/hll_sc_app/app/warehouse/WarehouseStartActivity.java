@@ -79,12 +79,12 @@ public class WarehouseStartActivity extends BaseLoadActivity {
     private void dealResult(GroupDetail detail) {
         if (detail != null) {
             if (TextUtils.equals(detail.getIsSelfOperated(), "1")) {
+                // 自营
                 if (TextUtils.equals("0", detail.getWareHourseStatus())) {
                     // 未开通代仓
                     showTipsDialog();
                 } else {
-                    // TODO:已开通跳转到代仓页面
-//                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INTRODUCE, this);
+                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_LIST, this);
                 }
             } else {
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INTRODUCE, this);

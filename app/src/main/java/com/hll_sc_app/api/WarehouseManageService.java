@@ -6,6 +6,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.warehouse.GroupDetail;
+import com.hll_sc_app.bean.warehouse.WarehouseListResp;
 
 import java.util.List;
 
@@ -42,4 +43,24 @@ public interface WarehouseManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:104107")
     Observable<BaseResp<GroupDetail>> queryGroupDetail(@Body BaseMapReq req);
+
+    /**
+     * 解除签约关系或者放弃代仓
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101048")
+    Observable<BaseResp<Object>> delWarehouse(@Body BaseMapReq req);
+
+    /**
+     * 查询签约关系列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101045")
+    Observable<BaseResp<WarehouseListResp>> queryWarehouseList(@Body BaseMapReq req);
 }

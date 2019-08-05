@@ -18,7 +18,7 @@ import com.hll_sc_app.bean.goods.PurchaserBean;
 public class WarehouseGroupListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
     private boolean recommend;
 
-    WarehouseGroupListAdapter() {
+    public WarehouseGroupListAdapter() {
         super(R.layout.list_item_recommend_warehouse);
     }
 
