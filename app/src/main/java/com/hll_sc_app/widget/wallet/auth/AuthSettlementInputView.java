@@ -18,6 +18,7 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.wallet.BankBean;
 import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.ArrayList;
@@ -116,6 +117,10 @@ public class AuthSettlementInputView extends ConstraintLayout implements IInfoIn
 
     @Override
     public boolean verifyValidity() {
+        if (!mPersonName.getText().toString().matches("^[^ ]+$")) {
+            ToastUtils.showShort(getContext(), "开户名不能包括空格");
+            return false;
+        }
         return true;
     }
 

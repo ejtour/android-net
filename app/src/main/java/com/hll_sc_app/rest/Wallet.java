@@ -17,6 +17,7 @@ import com.hll_sc_app.bean.wallet.RechargeResp;
 import com.hll_sc_app.bean.wallet.WalletStatusResp;
 import com.hll_sc_app.bean.wallet.details.DetailsExportReq;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -90,7 +91,7 @@ public class Wallet {
                         .put("terminalIp", UIUtils.getIpAddressString())
                         .put("redirectUrl", "22cityRecharge")
                         .put("settleUnitID", settleUnitID)
-                        .put("transAmount", String.valueOf(money))
+                    .put("transAmount", CommonUtils.formatNumber(money))
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -109,7 +110,7 @@ public class Wallet {
                 .withdraw(BaseMapReq.newBuilder()
                         .put("groupID", user.getGroupID())
                         .put("settleUnitID", settleUnitID)
-                        .put("transAmount", String.valueOf(money))
+                    .put("transAmount", CommonUtils.formatNumber(money))
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -152,6 +153,10 @@ public class Wallet {
      * @param info 待核验信息
      */
     public static void createAccount(AuthInfo info, SimpleObserver<Object> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        info.setGroupID(user.getGroupID());
+        info.setGroupName(user.getGroupName());
+        info.setGroupType(1);
         WalletService.INSTANCE
                 .createAccount(new BaseReq<>(info))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))

@@ -160,7 +160,7 @@
         android:id="@+id/abi_license_photo_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="点击上传许可证"
+        android:text="上传许可证"
         android:textAppearance="@style/TextAppearance.City22.Little.Color666"
         app:layout_constraintBottom_toTopOf="@id/abi_license_photo"
         app:layout_constraintStart_toStartOf="@id/abi_license_photo"

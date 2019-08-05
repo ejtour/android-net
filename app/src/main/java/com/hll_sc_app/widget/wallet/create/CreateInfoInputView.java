@@ -21,6 +21,8 @@ import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.wallet.AreaSelectDialog;
 
@@ -199,6 +201,20 @@ public class CreateInfoInputView extends ConstraintLayout implements IInfoInputV
 
     @Override
     public boolean verifyValidity() {
+        String shortName = mShortName.getText().toString();
+        if (!shortName.matches("^[\\u4e00-\\u9fa5]+$")) {
+            ToastUtils.showShort(getContext(), "公司简称最多12个汉字，不能包含空格、特殊字符");
+            return false;
+        }
+        String contact = mContact.getText().toString();
+        if (!contact.matches("^[\\u4e00-\\u9fa5]+$")) {
+            ToastUtils.showShort(getContext(), "联系人最多10汉字，不可有空格");
+            return false;
+        }
+        if (!Utils.checkEmail(mEmail.getText().toString())) {
+            ToastUtils.showShort(getContext(), "请输入正确的邮箱地址");
+            return false;
+        }
         return true;
     }
 

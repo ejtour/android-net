@@ -17,6 +17,7 @@ import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.wallet.create.CreateInfoInputView;
 
 import butterknife.BindView;
@@ -185,6 +186,14 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
 
     @Override
     public boolean verifyValidity() {
+        if (!super.verifyValidity()) {
+            return false;
+        }
+        String registerAddress = mRegisterAddress.getText().toString();
+        if (!registerAddress.matches("^[A-Za-z0-9\\u4e00-\\u9fa5][A-Za-z0-9\\u4e00-\\u9fa5()+*\\- ]*$")) {
+            ToastUtils.showShort(getContext(), "注册地址只能包含数字字母中文空格与()+*-符号");
+            return false;
+        }
         return true;
     }
 

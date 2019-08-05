@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.wallet;
 
+import android.text.TextUtils;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/7/30
@@ -300,7 +302,7 @@ public class AuthInfo{
     }
 
     public String getLicenseProvinceCode() {
-        return licenseProvinceCode;
+        return delZpPrefix(licenseProvinceCode);
     }
 
     public void setLicenseProvinceCode(String licenseProvinceCode) {
@@ -851,8 +853,9 @@ public class AuthInfo{
         this.companyUrl = companyUrl;
     }
 
-    public String getLicenseDistrictCode() {
-        return licenseDistrictCode;
+    private String delZpPrefix(String source) {
+        if (TextUtils.isEmpty(source)) return source;
+        return source.replaceFirst("ZP", "");
     }
 
     public void setLicenseDistrictCode(String licenseDistrictCode) {
@@ -963,8 +966,8 @@ public class AuthInfo{
         this.comBankName = comBankName;
     }
 
-    public String getLicenseCityCode() {
-        return licenseCityCode;
+    public String getLicenseDistrictCode() {
+        return delZpPrefix(licenseDistrictCode);
     }
 
     public void setLicenseCityCode(String licenseCityCode) {
@@ -977,5 +980,9 @@ public class AuthInfo{
 
     public void setWeixinMPAPPID(String weixinMPAPPID) {
         this.weixinMPAPPID = weixinMPAPPID;
+    }
+
+    public String getLicenseCityCode() {
+        return delZpPrefix(licenseCityCode);
     }
 }

@@ -211,6 +211,7 @@
         style="@style/WalletInfoEdit"
         android:hint="请输入业务联系人姓名"
         android:inputType="textPersonName"
+        android:maxLength="10"
         app:layout_constraintBottom_toTopOf="@id/wci_contact_div1"
         app:layout_constraintEnd_toEndOf="@id/wci_contact_bg"
         app:layout_constraintStart_toEndOf="@id/wci_contact_label"

@@ -8,21 +8,25 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -35,9 +39,11 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Bean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.TitleBar;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -48,6 +54,7 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -88,6 +95,11 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
     private IProductSalesContract.IProductSalesPresenter mPresenter;
     private final ProductSalesParam mParam = new ProductSalesParam();
     private TextView mSaleType;
+    private Toast mToast;
+    private int mX;
+    private int mY;
+    private int mStatusBarHeight = -1;
+    private TextView mToastView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,23 +142,62 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
     private void initChart() {
         mPieChart.setUsePercentValues(true); // 用百分比值
         mPieChart.getDescription().setEnabled(false); // 禁用图表底部描述
-        mPieChart.setDrawHoleEnabled(true); // 允许花中心圆
-        mPieChart.setHoleColor(Color.WHITE); // 设置中心圆颜色
+        mPieChart.setDrawHoleEnabled(false); // 允许花中心圆
+//        mPieChart.setHoleColor(Color.WHITE); // 设置中心圆颜色
         mPieChart.setTransparentCircleColor(Color.WHITE); // 设置透明圆颜色
         mPieChart.setTransparentCircleAlpha(110); // 设置透明圆透明度
         mPieChart.setTransparentCircleRadius(42.6f); // 设置透明圆半径
-        mPieChart.setHoleRadius(42.6f); // 设置中心圆半径
-        mPieChart.setRotationEnabled(false); // 启用旋转
+//        mPieChart.setHoleRadius(42.6f); // 设置中心圆半径
+        mPieChart.setRotationEnabled(true); // 启用旋转
         mPieChart.setHighlightPerTapEnabled(true); // 点击高亮
         mPieChart.setDrawEntryLabels(false); // 禁用饼描述
+        mPieChart.setEntryLabelTextSize(0);
         mPieChart.animateY(1400, Easing.EaseInOutQuad); // 动画展示
         Legend legend = mPieChart.getLegend();
         legend.setTextSize(10);
         legend.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.CENTER);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        legend.setOrientation(Legend.LegendOrientation.VERTICAL);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
+        mPieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                PieEntry pData = (PieEntry) e;
+                String toast = pData.getLabel() + ":" + new DecimalFormat("#.##").format(
+                    pData.getValue() / mPieChart.getData().getYValueSum() * 100) + "%";
+                if (mToast != null) {
+                    mToast.cancel();
+                }
+                mToast = new Toast(getApplicationContext());
+                if (mToastView == null) {
+                    mToastView =
+                        (TextView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_chart_toast,
+                            null);
+                }
+                if (mStatusBarHeight == -1) {
+                    mStatusBarHeight = ViewUtils.getStatusBarHeight(ProductSalesActivity.this);
+                }
+                mToast.setView(mToastView);
+                mToast.setDuration(Toast.LENGTH_SHORT);
+                mToastView.setText(toast);
+                mToast.setGravity(Gravity.TOP | Gravity.LEFT, mX - mToastView.getWidth() / 2,
+                    mY - mStatusBarHeight - mToastView.getHeight() / 2);
+                mToast.show();
+            }
+
+            @Override
+            public void onNothingSelected() {
+                // no-op
+            }
+        });
+    }
+
+    @OnTouch(R.id.rps_pie_chart)
+    public boolean onTouch(MotionEvent event) {
+        mX = (int) event.getRawX();
+        mY = (int) event.getRawY();
+        return false;
     }
 
     private void showStatusBar() {
@@ -166,24 +217,21 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
             mCategoryNum.setText("(0)");
         }
         PieDataSet dataSet = new PieDataSet(entryList, "");
-        dataSet.setSliceSpace(1f); // 设置饼图每个饼之间的间隔
+        dataSet.setSliceSpace(3f); // 设置饼图每个饼之间的间隔
         dataSet.setSelectionShift(7f); // 设置高亮的饼突出大小
-        List<Integer> colorList = Arrays.asList(Color.rgb(133, 165, 255),
-                Color.rgb(186, 230, 55), Color.rgb(255, 77, 79),
-                Color.rgb(255, 245, 102), Color.rgb(255, 173, 210),
-                Color.rgb(133, 165, 255), Color.rgb(255, 197, 61),
-                Color.rgb(92, 219, 211), ColorTemplate.getHoloBlue());
+        List<Integer> colorList = Arrays.asList(ColorStr.CHART_COLOR_ARRAY);
         dataSet.setColors(colorList); // 设置颜色组
-        dataSet.setValueLinePart1Length(0.3f);
+        dataSet.setDrawValues(false);
+        /*dataSet.setValueLinePart1Length(0.3f);
         dataSet.setValueLinePart2Length(0.6f);
-        dataSet.setValueLinePart1OffsetPercentage(75f);
+        dataSet.setValueLinePart1OffsetPercentage(75f);*/
         // dataSet.setUsingSliceColorAsValueLineColor(true); // 将线颜色与饼颜色保持一致
-        dataSet.setValueLineColor(ContextCompat.getColor(this, R.color.color_222222));
+        /*dataSet.setValueLineColor(ContextCompat.getColor(this, R.color.color_222222));
         dataSet.setValueTextColor(ContextCompat.getColor(this, R.color.color_222222));
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-        PieData pieData = new PieData(dataSet);
         pieData.setValueFormatter(new MyFormatter());
-        pieData.setValueTextSize(10);
+        pieData.setValueTextSize(10);*/
+        PieData pieData = new PieData(dataSet);
         mPieChart.setData(pieData);
         mPieChart.highlightValues(null); // 取消高亮
         mPieChart.invalidate();
@@ -235,12 +283,12 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
     }
 
 
-    public class MyFormatter extends PercentFormatter {
+   /* public class MyFormatter extends PercentFormatter {
         @Override
         public String getPieLabel(float value, PieEntry pieEntry) {
             return pieEntry.getLabel() + "：" + getFormattedValue(value);
         }
-    }
+    }*/
 
     @OnClick({R.id.rps_tag_custom, R.id.rps_tag_last_month, R.id.rps_tag_this_month, R.id.rps_tag_this_week})
     public void onViewClicked(TextView view) {

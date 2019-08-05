@@ -205,7 +205,7 @@ public class AuthBusinessInputView extends ConstraintLayout implements IInfoInpu
     public void selectStartDate() {
         WalletHelper.showLongValidDateDialog((Activity) getContext(), (dialog, item) -> {
             dialog.dismiss();
-            mAuthInfo.setLicensePeriod("");
+            mAuthInfo.setBusiPermissionEndDate("");
             mEndDate.setText("");
             if (item == 0) {
                 mAuthInfo.setBusiPermissionBeginDate(WalletHelper.PERMANENT_DATE);
