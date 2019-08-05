@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.warehouse.recommend;
 
 import android.text.TextUtils;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -25,6 +26,13 @@ public class WarehouseGroupListAdapter extends BaseQuickAdapter<PurchaserBean, B
     WarehouseGroupListAdapter(boolean recommend) {
         super(R.layout.list_item_recommend_warehouse);
         this.recommend = recommend;
+    }
+
+    @Override
+    protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+        BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
+        viewHolder.addOnClickListener(R.id.content).addOnClickListener(R.id.txt_del);
+        return viewHolder;
     }
 
     @Override

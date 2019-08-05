@@ -23,7 +23,6 @@ import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
@@ -108,6 +107,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
             })
             .create();
 
+        mSearchView.setBackgroundResource(R.drawable.base_bg_shadow_top_white_bar);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -140,7 +140,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
                 } else if (view.getId() == R.id.content) {
-                    RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL, bean.getPurchaserID());
+                    // TODO:
                 }
             }
         });

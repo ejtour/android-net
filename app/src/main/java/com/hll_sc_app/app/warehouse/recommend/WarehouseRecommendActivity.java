@@ -58,12 +58,6 @@ public class WarehouseRecommendActivity extends BaseLoadActivity implements Ware
         mAdapter.addHeaderView(headerView);
         mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
-            if (bean != null) {
-                // RouterUtil.goToActivity(RouterConfig.USER_WAREHOUSE_MANAGER_DETAIL, bean);
-            }
-        });
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
             if (bean != null) {
