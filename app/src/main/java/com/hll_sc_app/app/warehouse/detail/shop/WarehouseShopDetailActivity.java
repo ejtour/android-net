@@ -59,6 +59,8 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
         mPresenter.register(this);
         mPresenter.queryWarehouseShop();
         showView();
+        mSwitchPay.setOnCheckedChangeListener((buttonView, isChecked)
+            -> mPresenter.editWarehouseShop(isChecked ? "1" : "0"));
     }
 
     private void showView() {

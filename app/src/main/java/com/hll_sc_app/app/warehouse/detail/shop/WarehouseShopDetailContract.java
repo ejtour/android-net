@@ -43,7 +43,9 @@ public interface WarehouseShopDetailContract {
 
         /**
          * 编辑代仓门店
+         *
+         * @param supportPay 1-开启 0-未开启
          */
-        void editWarehouseShop();
+        void editWarehouseShop(String supportPay);
     }
 }

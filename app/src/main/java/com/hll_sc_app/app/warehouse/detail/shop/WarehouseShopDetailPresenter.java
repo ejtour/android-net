@@ -13,6 +13,10 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
+
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
@@ -35,35 +39,58 @@ public class WarehouseShopDetailPresenter implements WarehouseShopDetailContract
 
     @Override
     public void queryWarehouseShop() {
+        getWarehouseShopObservable()
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new ListBaseCallback());
+    }
+
+    private Observable<List<ShopParameterBean>> getWarehouseShopObservable() {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("groupID", UserConfig.getGroupID())
             .put("purchaserID", mView.getPurchaserId())
             .put("shopIds", mView.getShopIds())
             .create();
-        WarehouseService.INSTANCE
+        return WarehouseService.INSTANCE
             .queryWarehouseShop(req)
             .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<ShopParameterBean>>() {
-                @Override
-                public void onSuccess(List<ShopParameterBean> list) {
-                    if (!CommonUtils.isEmpty(list)) {
-                        mView.showDetail(list.get(0));
-                    }
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showToast(e.getMessage());
-                }
-            });
+            .map(new Precondition<>());
     }
 
     @Override
-    public void editWarehouseShop() {
+    public void editWarehouseShop(String supportPay) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("groupID", UserConfig.getGroupID())
+            .put("purchaserID", mView.getPurchaserId())
+            .put("shopId", mView.getShopIds())
+            .put("supportPay", supportPay)
+            .create();
+        WarehouseService.INSTANCE
+            .editWarehouseShop(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .flatMap((Function<Object, ObservableSource<List<ShopParameterBean>>>) o -> {
+                mView.showToast("操作成功");
+                return getWarehouseShopObservable();
+            })
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new ListBaseCallback());
+    }
 
+    private class ListBaseCallback extends BaseCallback<List<ShopParameterBean>> {
+        @Override
+        public void onSuccess(List<ShopParameterBean> list) {
+            if (!CommonUtils.isEmpty(list)) {
+                mView.showDetail(list.get(0));
+            }
+        }
+
+        @Override
+        public void onFailure(UseCaseException e) {
+            mView.showToast(e.getMessage());
+        }
     }
 }
