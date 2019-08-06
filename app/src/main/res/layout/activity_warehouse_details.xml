@@ -174,7 +174,7 @@
 
     </LinearLayout>
 
-    <com.hll_sc_app.app.warehouse.detail.WarehouseButtonView
+    <com.hll_sc_app.app.warehouse.detail.details.WarehouseButtonView
         android:id="@+id/buttonView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

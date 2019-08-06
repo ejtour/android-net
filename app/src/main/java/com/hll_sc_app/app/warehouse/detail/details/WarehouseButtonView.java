@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.warehouse.detail;
+package com.hll_sc_app.app.warehouse.detail.details;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class WarehouseButtonView extends LinearLayout {
     List<View> mButtonList;
 
     private Listener mListener;
-    private CooperationPurchaserDetail mDetail;
+    private PurchaserBean mBean;
 
     public WarehouseButtonView(Context context) {
         super(context);
@@ -109,74 +109,79 @@ public class WarehouseButtonView extends LinearLayout {
     @OnClick({R.id.txt_del, R.id.txt_add, R.id.txt_agree_other, R.id.txt_reject_other, R.id.txt_delete_my0,
         R.id.txt_repeat_my, R.id.txt_delete_my1})
     public void onViewClicked(View view) {
-        if (mListener == null || mDetail == null) {
+        if (mListener == null || mBean == null) {
             return;
         }
         switch (view.getId()) {
             case R.id.txt_del:
+                // 解除合作
+                mListener.del(mBean, "1");
+                break;
             case R.id.txt_delete_my1:
             case R.id.txt_delete_my0:
                 // 我邀请-删除合作
                 // 我邀请
-                // 解除合作
-                mListener.del(mDetail);
+                mListener.del(mBean, "2");
                 break;
             case R.id.txt_add:
-                mListener.add(mDetail);
+                mListener.add(mBean);
                 break;
             case R.id.txt_agree_other:
-                mListener.agree(mDetail);
+                mListener.agree(mBean);
                 break;
             case R.id.txt_reject_other:
-                mListener.reject(mDetail);
+                mListener.refuse(mBean);
                 break;
             case R.id.txt_repeat_my:
-                mListener.repeat(mDetail);
+                mListener.repeat(mBean);
                 break;
             default:
                 break;
         }
     }
 
-    public void setListener(Listener listener, CooperationPurchaserDetail detail) {
+    public void setListener(Listener listener, PurchaserBean detail) {
         this.mListener = listener;
-        this.mDetail = detail;
+        this.mBean = detail;
     }
 
     public interface Listener {
         /**
-         * 解除合作
+         * 添加代仓
          *
          * @param detail detail
          */
-        void del(CooperationPurchaserDetail detail);
+        void add(PurchaserBean detail);
 
         /**
-         * 拒绝合作
+         * 重新验证
          *
          * @param detail detail
          */
-        void reject(CooperationPurchaserDetail detail);
+        void repeat(PurchaserBean detail);
 
         /**
-         * 同意合作
+         * 解除代仓
          *
-         * @param detail detail
+         * @param detail    detail
+         * @param type:1-解除 2-放弃
          */
-        void agree(CooperationPurchaserDetail detail);
+        void del(PurchaserBean detail, String type);
 
         /**
-         * 添加合作
+         * 拒绝代仓
          *
          * @param detail detail
          */
-        void add(CooperationPurchaserDetail detail);
+        void refuse(PurchaserBean detail);
 
         /**
-         * 重新验证合作
+         * 同意代仓
          *
          * @param detail detail
          */
-        void repeat(CooperationPurchaserDetail detail);
+        void agree(PurchaserBean detail);
+
+
     }
 }

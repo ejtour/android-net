@@ -46,14 +46,44 @@ public interface WarehouseService {
     Observable<BaseResp<GroupDetail>> queryGroupDetail(@Body BaseMapReq req);
 
     /**
-     * 解除签约关系或者放弃代仓
+     * 采购商集团搜索
+     *
+     * @param body req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101024")
+    Observable<BaseResp<List<PurchaserBean>>> queryPurchaserList(@Body BaseMapReq body);
+
+    /**
+     * 申请代仓
      *
      * @param req req
      * @return resp
      */
     @POST(HttpConfig.URL)
-    @Headers("pv:101048")
-    Observable<BaseResp<Object>> delWarehouse(@Body BaseMapReq req);
+    @Headers("pv:101042")
+    Observable<BaseResp<Object>> addWarehouse(@Body BaseMapReq req);
+
+    /**
+     * 同意或者拒接签约
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101043")
+    Observable<BaseResp<Object>> agreeOrRefuseWarehouse(@Body BaseMapReq req);
+
+    /**
+     * 获取代仓签约详情成功
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101044")
+    Observable<BaseResp<WarehouseDetailResp>> queryCooperationWarehouseDetail(@Body BaseMapReq req);
 
     /**
      * 查询签约关系列表
@@ -66,23 +96,12 @@ public interface WarehouseService {
     Observable<BaseResp<WarehouseListResp>> queryWarehouseList(@Body BaseMapReq req);
 
     /**
-     * 采购商集团搜索
-     *
-     * @param body req
-     * @return resp
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:101024")
-    Observable<BaseResp<List<PurchaserBean>>> queryPurchaserList(@Body BaseMapReq body);
-
-
-    /**
-     * 获取代仓签约详情成功
+     * 解除签约关系或者放弃代仓
      *
      * @param req req
      * @return resp
      */
     @POST(HttpConfig.URL)
-    @Headers("pv:101044")
-    Observable<BaseResp<WarehouseDetailResp>> queryCooperationWarehouseDetail(@Body BaseMapReq req);
+    @Headers("pv:101048")
+    Observable<BaseResp<Object>> delWarehouse(@Body BaseMapReq req);
 }

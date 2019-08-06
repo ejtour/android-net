@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.warehouse.detail.details;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -54,6 +56,83 @@ public class WarehouseDetailsPresenter implements WarehouseDetailsContract.IWare
                 @Override
                 public void onFailure(UseCaseException e) {
                     mView.showToast(e.getMessage());
+                }
+            });
+    }
+
+    @Override
+    public void addWarehouse(BaseMapReq req) {
+        WarehouseService.INSTANCE
+            .addWarehouse(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object o) {
+                    mView.showToast("已发送申请等待对方同意");
+                    mView.editSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showToast(e.getMessage());
+                }
+            });
+    }
+
+    @Override
+    public void delWarehouse(BaseMapReq req, String type) {
+        WarehouseService.INSTANCE
+            .delWarehouse(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    if (TextUtils.equals(type, "1")) {
+                        mView.showToast("解除签约关系成功");
+                    } else {
+                        mView.showToast("放弃代仓成功");
+                    }
+                    mView.editSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void agreeOrRefuseWarehouse(BaseMapReq req, String type) {
+        WarehouseService.INSTANCE
+            .agreeOrRefuseWarehouse(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    if (TextUtils.equals(type, "agree")) {
+                        mView.showToast("已同意");
+                    } else {
+                        mView.showToast("已拒绝");
+                    }
+                    mView.editSuccess();
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
                 }
             });
     }
