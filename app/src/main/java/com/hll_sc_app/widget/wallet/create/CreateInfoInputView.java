@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -115,11 +114,6 @@ public class CreateInfoInputView extends ConstraintLayout implements IInfoInputV
     }
 
     protected void initView() {
-        bindView();
-        mPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-    }
-
-    protected void bindView() {
         View view = View.inflate(getContext(), R.layout.view_wallet_create_info_input, this);
         ButterKnife.bind(this, view);
     }

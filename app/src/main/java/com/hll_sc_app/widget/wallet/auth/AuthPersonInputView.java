@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
@@ -100,7 +99,6 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
             view.setOnDeleteListener(this::deleteImage);
             view.setMaxSize(2097152);
         });
-        mContact.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
     @Override

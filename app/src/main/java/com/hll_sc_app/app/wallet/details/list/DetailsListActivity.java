@@ -71,7 +71,7 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
      * 过滤按钮
      */
     @BindView(R.id.wdl_filter)
-    ImageView wdlFilter;
+    View wdlFilter;
     private DetailsListAdapter mAdapter;
     private IDetailsListContract.IDetailsListPresenter mPresenter;
     private final WalletDetailsParam mParam = new WalletDetailsParam();

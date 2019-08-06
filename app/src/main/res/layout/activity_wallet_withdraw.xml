@@ -17,23 +17,24 @@
     <View
         android:id="@+id/aww_input_area_bg"
         android:layout_width="0dp"
-        android:layout_height="115dp"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_height="0dp"
         android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/aww_freeze_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aww_title_bar" />
+        app:layout_constraintTop_toTopOf="@id/aww_input_all" />
 
     <TextView
         android:id="@+id/aww_input_all"
         android:layout_width="70dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:gravity="center"
         android:text="全部"
         android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
         app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="@id/aww_input_area_bg"
-        app:layout_constraintTop_toTopOf="@id/aww_input_area_bg" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aww_title_bar" />
 
     <View
         android:id="@+id/aww_divider"
@@ -42,18 +43,19 @@
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
         android:background="@color/color_eeeeee"
-        app:layout_constraintEnd_toEndOf="@id/aww_input_area_bg"
-        app:layout_constraintStart_toStartOf="@id/aww_input_area_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/aww_input_all" />
 
     <TextView
         android:id="@+id/aww_money_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
         android:text="¥"
         android:textAppearance="@style/TextAppearance.City22.Large"
         app:layout_constraintBottom_toBottomOf="@id/aww_input_all"
-        app:layout_constraintStart_toStartOf="@id/aww_divider"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/aww_input_all" />
 
     <EditText
@@ -77,9 +79,9 @@
     <TextView
         android:id="@+id/aww_freeze_tip"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
+        android:gravity="center"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/aww_input_area_bg"
         app:layout_constraintStart_toStartOf="@id/aww_divider"
         app:layout_constraintTop_toBottomOf="@id/aww_divider"
         tools:text="有8,987.00元不可提现" />
@@ -87,12 +89,19 @@
     <TextView
         android:id="@+id/aww_freeze_why"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginLeft="@dimen/dp_10"
+        android:gravity="center"
         android:text="为什么？"
         android:textAppearance="@style/TextAppearance.City22.Little.Blue"
         app:layout_constraintBottom_toBottomOf="@id/aww_freeze_tip"
         app:layout_constraintStart_toEndOf="@id/aww_freeze_tip" />
+
+    <android.support.constraint.Group
+        android:id="@+id/aww_freeze_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="aww_freeze_tip,aww_freeze_why,aww_divider" />
 
     <TextView
         android:id="@+id/aww_warn_prompt"
@@ -109,7 +118,7 @@
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aww_input_area_bg" />
+        app:layout_constraintTop_toBottomOf="@id/aww_freeze_tip" />
 
     <TextView
         android:id="@+id/aww_confirm"
