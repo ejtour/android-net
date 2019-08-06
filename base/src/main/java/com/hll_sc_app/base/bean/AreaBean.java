@@ -61,6 +61,15 @@ public class AreaBean {
         private String name;
         private List<ChildBean> child;
         private String Initial;
+        private boolean select;
+
+        public boolean isSelect() {
+            return select;
+        }
+
+        public void setSelect(boolean select) {
+            this.select = select;
+        }
 
         public String getInitial() {
             return Initial;
@@ -105,6 +114,24 @@ public class AreaBean {
         public static class ChildBean {
             private String code;
             private String name;
+            private String flag = "2";
+            private String divideName;
+
+            public String getDivideName() {
+                return divideName;
+            }
+
+            public void setDivideName(String divideName) {
+                this.divideName = divideName;
+            }
+
+            public String getFlag() {
+                return flag;
+            }
+
+            public void setFlag(String flag) {
+                this.flag = flag;
+            }
 
             public String getCode() {
                 return code;

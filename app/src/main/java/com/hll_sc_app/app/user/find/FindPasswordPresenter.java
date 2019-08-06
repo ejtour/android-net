@@ -29,11 +29,6 @@ public class FindPasswordPresenter implements FindPasswordContract.IFindPresente
     }
 
     @Override
-    public void start() {
-        // no-op
-    }
-
-    @Override
     public void register(FindPasswordContract.IFindView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }

@@ -3,6 +3,7 @@ package com.hll_sc_app.app.cooperation.detail.shopdetail;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
+import com.hll_sc_app.api.DeliveryManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -12,9 +13,9 @@ import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
-import com.hll_sc_app.bean.cooperation.DeliveryPeriodBean;
-import com.hll_sc_app.bean.cooperation.DeliveryPeriodResp;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
+import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -35,10 +36,6 @@ public class CooperationShopDetailPresenter implements CooperationShopDetailCont
 
     static CooperationShopDetailPresenter newInstance() {
         return new CooperationShopDetailPresenter();
-    }
-
-    @Override
-    public void start() {
     }
 
     @Override
@@ -131,7 +128,7 @@ public class CooperationShopDetailPresenter implements CooperationShopDetailCont
             .put("flg", "2")
             .put("groupID", UserConfig.getGroupID())
             .create();
-        CooperationPurchaserService
+        DeliveryManageService
             .INSTANCE
             .queryDeliveryPeriodList(req)
             .compose(ApiScheduler.getObservableScheduler())

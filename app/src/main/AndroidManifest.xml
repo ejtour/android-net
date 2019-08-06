@@ -59,7 +59,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.setting.SettingActivityActivity"
+            android:name=".app.setting.SettingActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -68,11 +68,11 @@
 
         <activity
             android:name=".app.setting.account.unbindmainaccount.UnbindMainAccountActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.account.unbindgroup.UnbindGroupActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.bill.BillSettingActivityActivity"
@@ -97,7 +97,8 @@
 
         <activity
             android:name=".app.agreementprice.AgreementPriceActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".app.agreementprice.search.AgreementPriceSearchActivity"
@@ -169,16 +170,32 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.staffmanage.StaffManageListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.staffmanage.detail.StaffManagerEditActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.staffmanage.detail.permission.RolePermissionActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.staffmanage.detail.role.RoleSelectActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.cooperation.invite.CooperationInviteActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.application.CooperationApplicationActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.application.thirdpart.detail.CooperationThirdPartDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.CooperationDetailActivity"
@@ -202,15 +219,104 @@
 
         <activity
             android:name=".app.setting.priceratio.PriceRatioTemplateActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.DeliveryManageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.WarehouseStartActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentTheme"/>
+
+        <activity
+            android:name=".app.warehouse.WarehouseIntroduceActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.WarehouseListActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.invite.WarehouseInviteActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.add.WarehouseAddActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.detail.details.WarehouseDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.detail.WarehouseDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.detail.shop.WarehouseShopDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.recommend.WarehouseRecommendActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.deliverymanage.range.DeliveryRangeActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.minimum.purchaser.PurchaserMinimumActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.minimum.purchaser.shop.ShopMinimumActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.minimum.detail.DeliveryMinimumDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.minimum.area.DeliveryAreaActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.ageing.DeliveryAgeingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.ageing.detail.DeliveryAgeingDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.ageing.detail.period.DeliveryPeriodActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.deliverytype.DeliveryTypeSetActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.deliverytype.company.DeliveryCompanyActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliverymanage.deliverytype.company.add.DeliveryCompanyAddActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.priceratio.add.PriceRatioTemplateAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.setting.priceratio.PriceRatioTemplateListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.detail.details.CooperationDetailsActivity"
@@ -246,7 +352,7 @@
 
         <activity
             android:name=".app.cooperation.detail.details.basic.CooperationShopListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.cooperation.add.CooperationAddActivity"
@@ -311,15 +417,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.user.register.WebViewProtocolActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".app.order.search.OrderSearchActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" />
-
-        <activity
             android:name=".app.order.deliver.DeliverInfoActivity"
             android:screenOrientation="portrait" />
 
@@ -374,10 +471,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.productSale.ProductAggregationActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".app.report.ReportEntryActivity"
             android:screenOrientation="portrait" />
 
@@ -389,16 +482,94 @@
             android:name=".app.report.orderGoods.OrderGoodsActivity"
             android:screenOrientation="portrait" />
         <!--客户销售汇总-->
-        <activity android:name=".app.report.customerSale.CustomerSaleActivity"
-            android:screenOrientation="portrait"/>
-         <!--客户销售汇总明细-->
-        <activity android:name=".app.report.customerSale.saleDetail.CustomerSalesDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.customerSale.CustomerSaleActivity"
+            android:screenOrientation="portrait" />
+        <!--客户销售汇总明细-->
+        <activity
+            android:name=".app.report.customerSale.saleDetail.CustomerSalesDetailActivity"
+            android:screenOrientation="portrait" />
         <!--客户销售汇总门店明细-->
-        <activity android:name=".app.report.customerSale.shopDetail.CustomerShopDetailActivity"
+        <activity
+            android:name=".app.report.customerSale.shopDetail.CustomerShopDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.productSale.ProductSalesActivity"
+            android:screenOrientation="portrait" />
+        <!--客户销售汇总搜索-->
+        <activity
+            android:name=".app.report.search.ReportSearchActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.search.SearchActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.refundReason.RefundReasonActivity"
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".app.wallet.details.list.DetailsListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.details.show.DetailsShowActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.recharge.RechargeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.withdraw.WithdrawActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.account.my.MyAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.account.create.CreateAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.account.auth.AuthAccountActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.bank.BankListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.wallet.WalletActivity"
+            android:screenOrientation="portrait" />
+
+        <!--业务员签约绩效-->
+        <activity
+            android:name=".app.report.salesman.sign.SalesManSignAchievementActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--业务员销售额绩效-->
+        <activity
+            android:name=".app.report.salesman.sales.SalesManSalesAchievementActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--缺货汇总-->
+        <activity
+            android:name=".app.report.deliveryLack.DeliveryLackGatherActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
+        <activity
+            android:name=".app.web.WebActivity"
             android:screenOrientation="portrait" />
 
         <provider

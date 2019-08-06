@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_main_mine_background" />
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/rps_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@android:color/transparent"
+        app:tb_title="商品销量统计汇总" />
+
+    <ScrollView
+        android:id="@+id/rps_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rps_title_bar">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/rps_tag_custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:paddingLeft="8dp"
+                android:paddingTop="2dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="2dp"
+                android:text="自定义"
+                android:textAppearance="@style/TextAppearance.City22.Little.White"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/rps_tag_last_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="2dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="2dp"
+                android:text="上月"
+                android:textAppearance="@style/TextAppearance.City22.Little.White"
+                app:layout_constraintBaseline_toBaselineOf="@id/rps_tag_custom"
+                app:layout_constraintEnd_toStartOf="@id/rps_tag_custom" />
+
+            <TextView
+                android:id="@+id/rps_tag_this_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="2dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="2dp"
+                android:text="本月"
+                android:textAppearance="@style/TextAppearance.City22.Little.White"
+                app:layout_constraintBaseline_toBaselineOf="@id/rps_tag_custom"
+                app:layout_constraintEnd_toStartOf="@id/rps_tag_last_month" />
+
+            <TextView
+                android:id="@+id/rps_tag_this_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_tag_white_solid"
+                android:paddingLeft="8dp"
+                android:paddingTop="2dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="2dp"
+                android:text="本周"
+                android:textAppearance="@style/TextAppearance.City22.Little.Blue"
+                app:layout_constraintBaseline_toBaselineOf="@id/rps_tag_custom"
+                app:layout_constraintEnd_toStartOf="@id/rps_tag_this_month" />
+
+            <TextView
+                android:id="@+id/rps_statistical_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="统计日期"
+                android:textAppearance="@style/TextAppearance.City22.Small.White"
+                app:layout_constraintBottom_toBottomOf="@id/rps_tag_custom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/rps_tag_custom" />
+
+            <TextView
+                android:id="@+id/rps_date_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@style/TextAppearance.City22.Little.White"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/rps_tag_custom"
+                app:layout_constraintTop_toBottomOf="@id/rps_tag_custom"
+                tools:text="2018/03/13 - 2018/03/16" />
+
+            <View
+                android:id="@+id/rps_summary_bg"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rps_date_range" />
+
+            <View
+                android:id="@+id/rps_div1"
+                android:layout_width="1dp"
+                android:layout_height="42dp"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/rps_summary_bg"
+                app:layout_constraintEnd_toStartOf="@id/rps_div2"
+                app:layout_constraintStart_toStartOf="@id/rps_summary_bg"
+                app:layout_constraintTop_toTopOf="@id/rps_summary_bg" />
+
+            <View
+                android:id="@+id/rps_div2"
+                android:layout_width="1dp"
+                android:layout_height="42dp"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/rps_summary_bg"
+                app:layout_constraintEnd_toEndOf="@id/rps_summary_bg"
+                app:layout_constraintStart_toEndOf="@id/rps_div1"
+                app:layout_constraintTop_toTopOf="@id/rps_summary_bg" />
+
+            <TextView
+                android:id="@+id/rps_sku_num"
+                android:layout_width="0dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="6dp"
+                android:gravity="center"
+                android:lines="1"
+                android:singleLine="true"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/base_text_20"
+                app:autoSizeMaxTextSize="@dimen/base_text_20"
+                app:autoSizeMinTextSize="@dimen/text_middle_size"
+                app:autoSizeTextType="uniform"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toTopOf="@id/rps_sku_num_label"
+                app:layout_constraintEnd_toStartOf="@id/rps_div1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/rps_summary_bg"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="2312" />
+
+            <TextView
+                android:id="@+id/rps_sku_num_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品总数(sku)"
+                android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                app:layout_constraintBottom_toBottomOf="@id/rps_summary_bg"
+                app:layout_constraintEnd_toEndOf="@id/rps_sku_num"
+                app:layout_constraintStart_toStartOf="@id/rps_sku_num"
+                app:layout_constraintTop_toBottomOf="@id/rps_sku_num" />
+
+            <TextView
+                android:id="@+id/rps_sales_num"
+                android:layout_width="0dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="6dp"
+                android:gravity="center"
+                android:lines="1"
+                android:singleLine="true"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/base_text_20"
+                app:autoSizeMaxTextSize="@dimen/base_text_20"
+                app:autoSizeMinTextSize="@dimen/text_middle_size"
+                app:autoSizeTextType="uniform"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toTopOf="@id/rps_sales_num_label"
+                app:layout_constraintEnd_toStartOf="@id/rps_div2"
+                app:layout_constraintStart_toEndOf="@id/rps_div1"
+                app:layout_constraintTop_toTopOf="@id/rps_summary_bg"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="2987" />
+
+            <TextView
+                android:id="@+id/rps_sales_num_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="销售数量"
+                android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                app:layout_constraintBottom_toBottomOf="@id/rps_summary_bg"
+                app:layout_constraintEnd_toEndOf="@id/rps_sales_num"
+                app:layout_constraintStart_toStartOf="@id/rps_sales_num"
+                app:layout_constraintTop_toBottomOf="@id/rps_sales_num" />
+
+            <TextView
+                android:id="@+id/rps_sales_amount"
+                android:layout_width="0dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="6dp"
+                android:gravity="center"
+                android:lines="1"
+                android:textColor="@color/color_222222"
+                android:textSize="@dimen/base_text_20"
+                app:autoSizeMaxTextSize="@dimen/base_text_20"
+                app:autoSizeMinTextSize="@dimen/text_middle_size"
+                app:autoSizeTextType="uniform"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toTopOf="@id/rps_sales_amount_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/rps_div2"
+                app:layout_constraintTop_toTopOf="@id/rps_summary_bg"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="13140.00" />
+
+            <TextView
+                android:id="@+id/rps_sales_amount_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="销售金额(元)"
+                android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                app:layout_constraintBottom_toBottomOf="@id/rps_summary_bg"
+                app:layout_constraintEnd_toEndOf="@id/rps_sales_amount"
+                app:layout_constraintStart_toStartOf="@id/rps_sales_amount"
+                app:layout_constraintTop_toBottomOf="@id/rps_sales_amount" />
+
+            <View
+                android:id="@+id/rps_chart_bg"
+                android:layout_width="0dp"
+                android:layout_height="220dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintEnd_toEndOf="@id/rps_summary_bg"
+                app:layout_constraintStart_toStartOf="@id/rps_summary_bg"
+                app:layout_constraintTop_toBottomOf="@id/rps_summary_bg" />
+
+            <View
+                android:id="@+id/rps_div3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_40"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintEnd_toEndOf="@id/rps_chart_bg"
+                app:layout_constraintStart_toStartOf="@id/rps_chart_bg"
+                app:layout_constraintTop_toTopOf="@id/rps_chart_bg" />
+
+            <TextView
+                android:id="@+id/rps_chart_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分类指数"
+                android:textAppearance="@style/TextAppearance.City22.Small"
+                app:layout_constraintBottom_toTopOf="@id/rps_div3"
+                app:layout_constraintStart_toStartOf="@id/rps_div3"
+                app:layout_constraintTop_toTopOf="@id/rps_chart_bg" />
+
+            <TextView
+                android:id="@+id/rps_category_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="(0)"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                app:layout_constraintBaseline_toBaselineOf="@id/rps_chart_title"
+                app:layout_constraintStart_toEndOf="@id/rps_chart_title" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/rps_pie_chart"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                app:layout_constraintBottom_toBottomOf="@id/rps_chart_bg"
+                app:layout_constraintEnd_toEndOf="@id/rps_div3"
+                app:layout_constraintStart_toStartOf="@id/rps_div3"
+                app:layout_constraintTop_toBottomOf="@id/rps_div3" />
+
+            <View
+                android:id="@+id/rps_excel_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/rps_summary_bg"
+                app:layout_constraintStart_toStartOf="@id/rps_summary_bg"
+                app:layout_constraintTop_toBottomOf="@id/rps_chart_bg" />
+
+            <View
+                android:id="@+id/rps_div4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintEnd_toEndOf="@id/rps_excel_bg"
+                app:layout_constraintStart_toStartOf="@id/rps_excel_bg"
+                app:layout_constraintTop_toTopOf="@id/rps_excel_bg" />
+
+            <TextView
+                android:id="@+id/rps_excel_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品销售TOP10"
+                android:textAppearance="@style/TextAppearance.City22.Small"
+                app:layout_constraintBottom_toTopOf="@id/rps_div4"
+                app:layout_constraintStart_toStartOf="@id/rps_div4"
+                app:layout_constraintTop_toTopOf="@id/rps_excel_bg" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/rps_tab"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/rps_div4"
+                app:layout_constraintEnd_toEndOf="@id/rps_excel_bg"
+                app:layout_constraintTop_toTopOf="@id/rps_excel_bg"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabTextColor="@color/color_999999">
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="销量" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="金额" />
+            </android.support.design.widget.TabLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rps_list_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/rps_excel_bg"
+                app:layout_constraintStart_toStartOf="@id/rps_excel_bg"
+                app:layout_constraintTop_toBottomOf="@id/rps_div4" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</RelativeLayout>

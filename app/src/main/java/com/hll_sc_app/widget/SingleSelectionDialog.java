@@ -53,7 +53,7 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         ButterKnife.bind(this, view);
         mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(getContext(), R.color.color_eeeeee), UIUtils.dip2px(1)));
         mAdapter = new SingleSelectionAdapter();
-        mListView.setAdapter(mAdapter);
+        mAdapter.bindToRecyclerView(mListView);
         return view;
     }
 
@@ -107,6 +107,10 @@ public class SingleSelectionDialog<T> extends BaseDialog {
 
         private void select(T t) {
             mT = t;
+            int position = mData.indexOf(mT);
+            if (position != -1 && getRecyclerView() != null) {
+                getRecyclerView().scrollToPosition(position);
+            }
         }
 
         private SingleSelectionAdapter() {

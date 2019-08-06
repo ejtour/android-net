@@ -53,6 +53,7 @@ public class ProductPresenter implements IProductContract.IProductPresenter {
         req.setName(mView.getName());
         req.setGroupID(UserConfig.getGroupID());
         req.setCategorySubID(mView.getCategorySubId());
+        req.setName(mView.getName());
         BaseReq<GoodsListReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
         GoodsService.INSTANCE.queryGoodsList(baseReq)

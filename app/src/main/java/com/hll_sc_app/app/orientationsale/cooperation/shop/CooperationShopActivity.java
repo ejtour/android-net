@@ -18,7 +18,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -105,7 +106,7 @@ public class CooperationShopActivity extends BaseLoadActivity implements ICooper
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_SEARCH);
+                SearchActivity.start(searchContent, CommonSearch.class.getSimpleName());
             }
 
             @Override
@@ -116,7 +117,7 @@ public class CooperationShopActivity extends BaseLoadActivity implements ICooper
     }
 
     private void toQueryShopList() {
-        mPresenter.queryPurchaserShopList(mOrientationListBean.getPurchaserID().toString());
+        mPresenter.queryPurchaserShopList(mOrientationListBean.getPurchaserID());
     }
 
     private void selectAll(boolean select) {

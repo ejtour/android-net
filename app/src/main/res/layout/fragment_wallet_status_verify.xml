@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="300dp"
+              android:layout_margin="10dp"
+              android:background="@drawable/base_bg_white_radius_5_solid"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/wsv_icon"
+        android:layout_width="187dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_dialog_success" />
+
+    <TextView
+        android:id="@+id/wsv_result_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="您的账号申请已提交至铁金库！"
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
+
+    <TextView
+        android:id="@+id/wsv_result_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:text="审核时间一般为1-3个工作日\n请耐心等待，我们将尽快审核您的相关信息！"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+
+    <TextView
+        android:id="@+id/wsv_btn"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:layout_width="230dp"
+        android:layout_marginTop="10dp"
+        android:text="重新申请"
+        android:visibility="gone" />
+</LinearLayout>

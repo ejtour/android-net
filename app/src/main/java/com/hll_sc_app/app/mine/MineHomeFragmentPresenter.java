@@ -17,10 +17,6 @@ public class MineHomeFragmentPresenter implements MineHomeFragmentContract.IHome
     }
 
     @Override
-    public void start() {
-    }
-
-    @Override
     public void register(MineHomeFragmentContract.IHomeView view) {
 
     }

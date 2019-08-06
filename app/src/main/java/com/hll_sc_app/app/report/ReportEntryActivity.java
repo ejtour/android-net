@@ -49,7 +49,15 @@ public class ReportEntryActivity extends BaseLoadActivity {
         list.add(new ReportItem(ReportIcon.SALES_STATISTICS, ReportLabel.SALES_STATISTICS, RouterConfig.REPORT_PRODUCT_SALES_STATISTICS));
         list.add(new ReportItem(ReportIcon.ORDER_GOODS_DETAILS, ReportLabel.ORDER_GOODS_DETAILS, RouterConfig.REPORT_ORDER_GOODS, true));
         list.add(new ReportItem(ReportIcon.DAILY_SALES_VOLUME, ReportLabel.DAILY_SALES_VOLUME, RouterConfig.REPORT_DAILY_AGGREGATION));
-        list.add(new ReportItem(ReportIcon.CUSTOMER_SALES, ReportLabel.CUSTOMER_SALES, RouterConfig.CUSTOMER_SALE_AGGREGATION));
+        list.add(new ReportItem(ReportIcon.CUSTOMER_SALES, ReportLabel.CUSTOMER_SALES, RouterConfig.CUSTOMER_SALE_AGGREGATION, true));
+        list.add(new ReportItem(ReportIcon.SALES_MAN_SIGN, ReportLabel.SALES_MAN_SIGN_ACHIEVEMENT,
+            RouterConfig.REPORT_SALESMAN_SIGN_ACHIEVEMENT));
+        list.add(new ReportItem(ReportIcon.SALES_PERFORMANCE, ReportLabel.SALES_MAN_SALES_ACHIEVEMENT,
+            RouterConfig.REPORT_SALESMAN_SALES_ACHIEVEMENT));
+        list.add(new ReportItem(ReportIcon.STOCKOUT_DIFFERENCES, ReportLabel.DELIVERY_LACK_GATHER,
+            RouterConfig.REPORT_DELIVERY_LACK_GATHER));
+        list.add(new ReportItem(ReportIcon.REFUND_REASONS, ReportLabel.REFUND_REASONS, RouterConfig.REFUND_REASON_STATICS));
+
         return list;
     }
 }

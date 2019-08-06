@@ -8,14 +8,19 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
+import com.hll_sc_app.bean.aftersales.CommitComplainProductBean;
+import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.bean.aftersales.NegotiationHistoryResp;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -167,7 +172,8 @@ public class AfterSales {
                                         SimpleObserver<MsgWrapper<Object>> observer) {
         AfterSalesActionReq req = new AfterSalesActionReq();
         req.setOrderAction(action);
-        req.setRefundBillIDs(refundBillIDs);
+        if (refundBillIDs.contains(",")) req.setRefundBillIDs(refundBillIDs);
+        else req.setRefundBillID(refundBillIDs);
         req.setRefundBillStatus(refundBillStatus);
         req.setRefundBillType(refundBillType);
         req.setPayType(payType);
@@ -176,7 +182,7 @@ public class AfterSales {
         req.setRefundBillDetailList(list);
         AfterSalesService.INSTANCE
                 .afterSalesAction(new BaseReq<>(req))
-            .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
@@ -196,4 +202,44 @@ public class AfterSales {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+
+    /***
+     * 生成投诉单
+     */
+    public static void generateComplain(AfterSalesBean afterSalesBean, SimpleObserver<GenerateCompainResp> observer) {
+        List<CommitComplainProductBean> afterSalesDetailsBeans = new ArrayList<>();
+        for (AfterSalesDetailsBean bean : afterSalesBean.getDetailList()) {
+            CommitComplainProductBean commitComplainProductBean = new CommitComplainProductBean(bean);
+            afterSalesDetailsBeans.add(commitComplainProductBean);
+        }
+        AfterSalesService.INSTANCE
+                .generateComplain(BaseMapReq.newBuilder()
+                        .put("sourceClient", "1")//todo crm的话 这块要改为6
+                        .put("target", "2")
+                        .put("type", "1")
+                        .put("reason", String.valueOf(afterSalesBean.getRefundReason()))
+                        .put("source", "2")
+                        .put("sourceBusiness", "2")
+                        .put("actionType", "1")
+                        .put("billID", afterSalesBean.getSubBillNo())
+                        .put("complaintExplain", afterSalesBean.getRefundExplain())
+                        .put("imgUrls", afterSalesBean.getRefundVoucher())
+                        .put("products", JsonUtil.toJson(afterSalesDetailsBeans))
+                        .put("purchaserContact", afterSalesBean.getReceiverMobile())
+                        .put("purchaserID", afterSalesBean.getPurchaserID())
+                        .put("purchaserName", afterSalesBean.getPurchaserName())
+                        .put("purchaserShopID", afterSalesBean.getShopID())
+                        .put("purchaserShopName", afterSalesBean.getShopName())
+                        .put("supplyID", afterSalesBean.getGroupID())
+                        .put("supplyName", afterSalesBean.getGroupName())
+                        .put("supplyShopID", afterSalesBean.getSupplyShopID())
+                        .put("supplyShopName", afterSalesBean.getSupplyShopName())
+                        .put("refundBillNo", afterSalesBean.getRefundBillNo())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
 }

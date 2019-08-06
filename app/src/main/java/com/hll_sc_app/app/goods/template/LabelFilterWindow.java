@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.goods.LabelBean;
+import com.hll_sc_app.utils.Tuple;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -63,15 +64,20 @@ class LabelFilterWindow extends BasePopupWindow {
         }
     }
 
-    List<String> getSelectList() {
-        List<String> list = new ArrayList<>();
+    Tuple<List<String>, List<String>> getSelectList() {
+        Tuple<List<String>, List<String>> tuple = new Tuple<>();
+        List<String> listId = new ArrayList<>();
+        List<String> listName = new ArrayList<>();
         if (mFlowLayout != null && mAdapter != null) {
             Set<Integer> set = mFlowLayout.getSelectedList();
             for (Integer integer : set) {
-                list.add(mAdapter.getItem(integer).getLabelID());
+                listName.add(mAdapter.getItem(integer).getLabelName());
+                listId.add(mAdapter.getItem(integer).getLabelID());
             }
         }
-        return list;
+        tuple.setKey1(listName);
+        tuple.setKey2(listId);
+        return tuple;
     }
 
     void setListener(SelectConfirmListener listener) {

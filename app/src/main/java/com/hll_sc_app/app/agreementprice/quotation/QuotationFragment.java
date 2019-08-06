@@ -218,11 +218,10 @@ public class QuotationFragment extends BaseAgreementPriceFragment implements Quo
     public void showQuotationList(QuotationResp resp, boolean append) {
         mAdapter.setEmptyView(mEmptyView);
         List<QuotationBean> list = resp.getRecords();
-        if (list == null) {
-            list = new ArrayList<>();
-        }
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }

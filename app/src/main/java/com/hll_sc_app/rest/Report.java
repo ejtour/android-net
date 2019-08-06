@@ -12,6 +12,8 @@ import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
+import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
+import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.HashMap;
@@ -73,7 +75,7 @@ public class Report {
      * @param pv        查询的pv号
      * @param email     邮箱地址
      */
-    public static void exportReport(HashMap<String, String> reqParams, String pv, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportReport( String reqParams, String pv, String email, SimpleObserver<ExportResp> observer) {
         ReportExportReq req = new ReportExportReq();
         req.setEmail(email);
         req.setIsBindEmail(TextUtils.isEmpty(email) ? 0 : 1);
@@ -102,6 +104,46 @@ public class Report {
                         .put("endDate", endDate)
                         .put("pageNo", String.valueOf(pageNum))
                         .put("pageSize", "20")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询商品销售统计汇总
+     *
+     * @param dateFlag  日期标志 1:本周 2:本月 3:上月 4:自定义
+     * @param startDate 结束日期（yyyyMMdd，dateFlag为4时，此字段不可为空）
+     * @param endDate   开始日期（yyyyMMdd，dateFlag为4时，此字段不可为空）
+     */
+    public static void queryProductSales(int dateFlag, String startDate, String endDate, SimpleObserver<ProductSaleResp> observer) {
+        ReportService.INSTANCE
+                .queryProductSales(BaseMapReq.newBuilder()
+                        .put("dateFlag", String.valueOf(dateFlag))
+                        .put("startDate", startDate)
+                        .put("endDate", endDate)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询商品销售TOP10
+     *
+     * @param dateFlag  日期标志 1:本周 2:本月 3:上月 4:自定义
+     * @param startDate 结束日期（yyyyMMdd，dateFlag为4时，此字段不可为空）
+     * @param endDate   开始日期（yyyyMMdd，dateFlag为4时，此字段不可为空）
+     * @param type      top10类型 1:销量 2: 金额
+     */
+    public static void queryProductSalesTop10(int dateFlag, String startDate, String endDate, int type, SimpleObserver<ProductSaleTop10Resp> observer) {
+        ReportService.INSTANCE
+                .queryProductSalesTop10(BaseMapReq.newBuilder()
+                        .put("dateFlag", String.valueOf(dateFlag))
+                        .put("startDate", startDate)
+                        .put("endDate", endDate)
+                        .put("type", String.valueOf(type))
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

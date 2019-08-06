@@ -19,8 +19,8 @@ import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.cooperation.DeliveryBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.ArrayList;

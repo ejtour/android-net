@@ -16,6 +16,7 @@ import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +118,8 @@ public class GoodsPriceCategoryWindow extends BasePopupWindow {
         if (id == R.id.txt_reset) {
             resetItem();
         } else if (id == R.id.txt_confirm && mListener != null) {
-            mListener.confirm(TextUtils.join(",", getSelectList()));
+            Tuple<List<String>, List<String>> tuple = getSelectList();
+            mListener.confirm(TextUtils.join(",", tuple.getKey1()), TextUtils.join(",", tuple.getKey2()));
             dismiss();
         }
     }
@@ -140,8 +142,9 @@ public class GoodsPriceCategoryWindow extends BasePopupWindow {
      *
      * @return 选中的分类集合
      */
-    private List<String> getSelectList() {
-        List<String> selectList = new ArrayList<>();
+    private Tuple<List<String>, List<String>> getSelectList() {
+        List<String> selectId = new ArrayList<>();
+        List<String> selectName = new ArrayList<>();
         List<CategoryItem> items = mAdapter2.getData();
         if (!CommonUtils.isEmpty(items)) {
             for (CategoryItem item : items) {
@@ -149,11 +152,15 @@ public class GoodsPriceCategoryWindow extends BasePopupWindow {
                     continue;
                 }
                 if (item.isSelected()) {
-                    selectList.add(item.getCategoryID());
+                    selectName.add(item.getCategoryName());
+                    selectId.add(item.getCategoryID());
                 }
             }
         }
-        return selectList;
+        Tuple<List<String>, List<String>> tuple = new Tuple<>();
+        tuple.setKey1(selectId);
+        tuple.setKey2(selectName);
+        return tuple;
     }
 
     interface ConfirmListener {
@@ -161,8 +168,9 @@ public class GoodsPriceCategoryWindow extends BasePopupWindow {
          * 确定
          *
          * @param categoryIds 选中的分类数据
+         * @param names       选中的分类名称
          */
-        void confirm(String categoryIds);
+        void confirm(String categoryIds, String names);
     }
 
     public class CategoryAdapter extends BaseQuickAdapter<CategoryItem, BaseViewHolder> {

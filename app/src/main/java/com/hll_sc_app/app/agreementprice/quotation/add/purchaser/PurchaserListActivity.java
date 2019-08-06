@@ -16,7 +16,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsRelevanceSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -84,7 +85,7 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
     private void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new PurchaserListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             QuotationBean bean = (QuotationBean) adapter.getItem(position);
@@ -98,7 +99,7 @@ public class PurchaserListActivity extends BaseLoadActivity implements Purchaser
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_RELEVANCE);
+                SearchActivity.start(searchContent, GoodsRelevanceSearch.class.getSimpleName());
             }
 
             @Override

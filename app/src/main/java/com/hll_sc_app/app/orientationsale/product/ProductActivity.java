@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -13,18 +14,17 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
-import com.hll_sc_app.app.orientationsale.list.OrientationListAdapter;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.GoodsSearchEvent;
+import com.hll_sc_app.bean.event.SearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
-import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.orientation.OrientationDetailBean;
-import com.hll_sc_app.bean.orientation.OrientationListBean;
 import com.hll_sc_app.bean.orientation.OrientationProductSpecBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -36,6 +36,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         mPresenter.register(this);
         mPresenter.start();
         initView();
+        EventBus.getDefault().register(this);
     }
 
     private void initView() {
@@ -90,7 +92,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_TOP);
+                SearchActivity.start(searchContent, GoodsSearch.class.getSimpleName());
             }
 
             @Override
@@ -237,5 +239,20 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         }
         bean.setSpecs(list);
         return bean;
+    }
+
+    @Subscribe
+    public void onEvent(GoodsSearchEvent event) {
+        String name = event.getName();
+        if (!TextUtils.isEmpty(name)) {
+            mSearchView.showSearchContent(true, name);
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

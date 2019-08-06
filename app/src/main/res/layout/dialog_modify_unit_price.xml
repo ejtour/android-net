@@ -64,7 +64,8 @@
         android:inputType="numberDecimal"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:textAppearance="@style/TextAppearance.City22.Middle.Red"
+        android:textColor="@color/color_ed5655"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintEnd_toEndOf="@+id/mup_product_name"
         app:layout_constraintStart_toStartOf="@+id/mup_product_name"
         app:layout_constraintTop_toBottomOf="@+id/mup_product_spec" />

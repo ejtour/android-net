@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.bean.aftersales.NegotiationHistoryResp;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
 import com.hll_sc_app.bean.export.ExportResp;
@@ -49,4 +50,8 @@ public interface AfterSalesService {
     @POST(HttpConfig.URL)
     @Headers("pv:103053")
     Observable<BaseResp<NegotiationHistoryResp>> getNegotiationHistory(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:110014")
+    Observable<BaseResp<GenerateCompainResp>> generateComplain(@Body BaseMapReq req);
 }

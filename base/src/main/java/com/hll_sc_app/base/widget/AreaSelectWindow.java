@@ -116,17 +116,21 @@ public class AreaSelectWindow extends BaseShadowPopupWindow implements View.OnCl
         mRecyclerView.setAdapter(mProvinceAdapter);
         mProvinceAdapter.setOnItemClickListener((adapter, view, position) -> {
             mSelectProvince = (AreaBean) adapter.getItem(position);
-            adapter.notifyDataSetChanged();
-            mTxtProvince.setText(mSelectProvince.getName());
-            mTxtProvince.setTag(mSelectProvince.getCode());
-            mTxtCity.setText("请选择");
-            mTxtCity.setTag(null);
-            mSelectCity = null;
-            mTxtDistrict.setText("请选择");
-            mTxtDistrict.setTag(null);
-            mSelectDistrict = null;
-            showCityList(mSelectProvince.getChild());
+            selectProvince();
         });
+    }
+
+    private void selectProvince() {
+        mProvinceAdapter.notifyDataSetChanged();
+        mTxtProvince.setText(mSelectProvince.getName());
+        mTxtProvince.setTag(mSelectProvince.getCode());
+        mTxtCity.setText("请选择");
+        mTxtCity.setTag(null);
+        mSelectCity = null;
+        mTxtDistrict.setText("请选择");
+        mTxtDistrict.setTag(null);
+        mSelectDistrict = null;
+        showCityList(mSelectProvince.getChild());
     }
 
     private void showCityList(List<AreaBean.ChildBeanX> list) {
@@ -137,14 +141,18 @@ public class AreaSelectWindow extends BaseShadowPopupWindow implements View.OnCl
         mRecyclerView.setAdapter(mCityAdapter);
         mCityAdapter.setOnItemClickListener((adapter, view, position) -> {
             mSelectCity = (AreaBean.ChildBeanX) adapter.getItem(position);
-            adapter.notifyDataSetChanged();
-            mTxtCity.setText(mSelectCity.getName());
-            mTxtCity.setTag(mSelectCity.getCode());
-            mTxtDistrict.setText("请选择");
-            mTxtDistrict.setTag(null);
-            mSelectDistrict = null;
-            showDistrictList(mSelectCity.getChild());
+            selectCity();
         });
+    }
+
+    private void selectCity() {
+        mCityAdapter.notifyDataSetChanged();
+        mTxtCity.setText(mSelectCity.getName());
+        mTxtCity.setTag(mSelectCity.getCode());
+        mTxtDistrict.setText("请选择");
+        mTxtDistrict.setTag(null);
+        mSelectDistrict = null;
+        showDistrictList(mSelectCity.getChild());
     }
 
     private void showDistrictList(List<AreaBean.ChildBeanX.ChildBean> list) {
@@ -199,6 +207,65 @@ public class AreaSelectWindow extends BaseShadowPopupWindow implements View.OnCl
             }
         } else if (view.getId() == R.id.txt_cancel) {
             dismiss();
+        }
+    }
+
+    /**
+     * 设置选中
+     *
+     * @param provinceCode 省-code
+     * @param cityCode     市-code
+     * @param districtCode 区-code
+     */
+    public void select(String provinceCode, String cityCode, String districtCode) {
+        // 省
+        if (TextUtils.isEmpty(provinceCode)) {
+            return;
+        }
+        List<AreaBean> listProvince = mProvinceAdapter.getData();
+        if (CommonUtils.isEmpty(listProvince)) {
+            return;
+        }
+        for (AreaBean areaBean : listProvince) {
+            if (TextUtils.equals(provinceCode, areaBean.getCode())) {
+                mSelectProvince = areaBean;
+                selectProvince();
+                break;
+            }
+        }
+
+        // 市
+        if (TextUtils.isEmpty(cityCode)) {
+            return;
+        }
+        List<AreaBean.ChildBeanX> listCity = mCityAdapter.getData();
+        if (CommonUtils.isEmpty(listCity)) {
+            return;
+        }
+        for (AreaBean.ChildBeanX city : listCity) {
+            if (TextUtils.equals(cityCode, city.getCode())) {
+                mSelectCity = city;
+                selectCity();
+                break;
+            }
+        }
+
+        // 区
+        if (TextUtils.isEmpty(districtCode)) {
+            return;
+        }
+        List<AreaBean.ChildBeanX.ChildBean> listDistrict = mDistrictAdapter.getData();
+        if (CommonUtils.isEmpty(listDistrict)) {
+            return;
+        }
+        for (AreaBean.ChildBeanX.ChildBean district : listDistrict) {
+            if (TextUtils.equals(districtCode, district.getCode())) {
+                mSelectDistrict = district;
+                mTxtDistrict.setText(mSelectDistrict.getName());
+                mTxtDistrict.setTag(mSelectDistrict.getCode());
+                mDistrictAdapter.notifyDataSetChanged();
+                break;
+            }
         }
     }
 

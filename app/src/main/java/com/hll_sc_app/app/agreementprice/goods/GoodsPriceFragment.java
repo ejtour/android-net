@@ -152,7 +152,8 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
             mPurchaserWindow = new GoodsPriceShopSelectWindow(getActivity(), list);
             mPurchaserWindow.setListener(new GoodsPriceShopSelectWindow.ConfirmListener() {
                 @Override
-                public void confirm(String shopIds) {
+                public void confirm(String shopIds, String shopNames) {
+                    mTxtPurchaser.setText(TextUtils.isEmpty(shopNames) ? "采购商" : shopNames);
                     mTxtPurchaser.setTag(shopIds);
                     mPresenter.queryGoodsPriceList();
                 }
@@ -178,7 +179,8 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
         mImgCategory.setRotation(-180F);
         if (mCategoryWindow == null) {
             mCategoryWindow = new GoodsPriceCategoryWindow(getActivity(), resp);
-            mCategoryWindow.setListener(categoryIds -> {
+            mCategoryWindow.setListener((categoryIds, names) -> {
+                mTxtCategory.setText(TextUtils.isEmpty(names) ? "分类" : names);
                 mTxtCategory.setTag(categoryIds);
                 mPresenter.queryGoodsPriceList();
             });

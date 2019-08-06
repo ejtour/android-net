@@ -19,6 +19,26 @@ public class GoodsListReq {
     private String actionType;
     private String shopProductCategorySubID;
     private String categorySubID;
+    private String isWareHourse;
+    private String cargoOwnerID;
+
+
+    public String getCargoOwnerID() {
+        return cargoOwnerID;
+    }
+
+    public void setCargoOwnerID(String cargoOwnerID) {
+        this.cargoOwnerID = cargoOwnerID;
+    }
+
+    public String getIsWareHourse() {
+        return isWareHourse;
+    }
+
+    public void setIsWareHourse(String isWareHourse) {
+        this.isWareHourse = isWareHourse;
+    }
+
 
     public String getHouseID() {
         return houseID;

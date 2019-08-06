@@ -1,6 +1,8 @@
 package com.hll_sc_app.app.report.customerSale.saleDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -8,21 +10,27 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
+import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
 import com.hll_sc_app.bean.enums.TimeTypeEnum;
 import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesRecords;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
+import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -31,9 +39,10 @@ import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
-import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -54,6 +63,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.CUSTOMER_SALE_DETAILS)
 public class CustomerSalesDetailActivity extends BaseLoadActivity implements BaseQuickAdapter.OnItemClickListener, CustomerSalesDetailContract.ICustomerSalesDetailView {
+    private static final int CUSTOMER_SALE_DETAIL_CODE = 10002;
     private static final String FORMAT_DATE = "yyyy/MM/dd";
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -61,8 +71,6 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_date_name)
     TextView mTxtDateName;
-    @BindView(R.id.searchView)
-    SearchView mSearchView;
     @BindView(R.id.txt_date_name_title)
     TextView dateFlagTextView;
     @BindView(R.id.txt_total)
@@ -87,11 +95,24 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
     SyncHorizontalScrollView syncHorizontalScrollView;
     @BindView(R.id.customer_sale_total_detail)
     SyncHorizontalScrollView footSyncHorizontalScrollView;
+    @BindView(R.id.txt_options)
+    ImageView txtOptions;
+    @BindView(R.id.edt_search)
+    EditText edtSearch;
+    @BindView(R.id.img_clear)
+    ImageView imgClear;
+    @BindView(R.id.report_date_arrow)
+    ImageView reportDateArrow;
     private CustomerSaleListAdapter mAdapter;
     private CustomerSalesDetailPresenter mPresenter;
     private ContextOptionsWindow mOptionsWindow;
+    private ContextOptionsWindow mExportOptionsWindow;
     private EmptyView mEmptyView;
     private CustomerSaleReq params = new CustomerSaleReq();
+    String serverDate = "";
+    String localDate = "";
+    int timeType = TimeTypeEnum.DAY.getCode();
+    int timeFlag = TimeFlagEnum.TODAY.getCode();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +122,17 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
         ButterKnife.bind(this);
         initDefaultTime();
         mPresenter = CustomerSalesDetailPresenter.newInstance();
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryMoreCustomerGatherDetailList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryCustomerGatherDetailList(false);
+            }
+        });
         mAdapter = new CustomerSaleListAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mPresenter.register(this);
@@ -128,19 +160,25 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
 
     }
 
-    @Subscribe
-    public void onEvent(GoodsRelevanceListSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
-        }
-    }
 
-    @OnClick({R.id.img_back})
+    @OnClick({R.id.img_back, R.id.edt_search, R.id.img_clear})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
                 finish();
+                break;
+            case R.id.edt_search:
+                RouterUtil.goToActivity(RouterConfig.CUSTOMER_SALE_SEARCH, this, CUSTOMER_SALE_DETAIL_CODE);
+                break;
+            case R.id.img_clear:
+                edtSearch.setText(null);
+                CustomerSaleReq params = getParams();
+                params.setDate(serverDate);
+                params.setTimeType(timeType);
+                params.setTimeFlag(timeFlag);
+                params.setPurchaserID("");
+                mPresenter.queryCustomerGatherDetailList(true);
+                imgClear.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -149,6 +187,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
 
     @OnClick(R.id.txt_date_name_title)
     public void onViewClicked() {
+        reportDateArrow.setRotation(180);
         showOptionsWindow(dateFlagTextView);
     }
 
@@ -163,9 +202,21 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_MONTH));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
             mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
-            mOptionsWindow.setTriangleViewStyle(14, 0, 0, 0);
         }
+        mOptionsWindow.setOnDismissListener(()->{
+            reportDateArrow.setRotation(0);
+        });
+        reportDateArrow.setRotation(180);
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
+    }
+
+    private void showExportOptionsWindow(View view) {
+        if (mExportOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_REPORT_DETAIL));
+            mExportOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
+        }
+        mExportOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }
 
     @Override
@@ -176,13 +227,18 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
             mAdapter.setNewData(list);
         }
         mAdapter.setEmptyView(mEmptyView);
+        if (null == list || list.size() == 0) {
+            footSyncHorizontalScrollView.setVisibility(View.GONE);
+        } else {
+            footSyncHorizontalScrollView.setVisibility(View.VISIBLE);
+        }
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() - 1 != total);
     }
 
     @Override
     public void showCustomerSaleGatherDatas(CustomerSalesResp customerSalesResp) {
         txtTotal.setText("合计");
-        totalCoopShopNum.setText(String.valueOf(customerSalesResp.getTotalCooperationShopNum()));
+        totalCoopShopNum.setText("");
         totalOrderNum.setText(String.valueOf(customerSalesResp.getTotalOrderNum()));
         totalValidOrderNum.setText(String.valueOf(customerSalesResp.getTotalValidBillNum()));
         totalValidOrderNum.setText(String.valueOf(customerSalesResp.getTotalValidBillNum()));
@@ -195,7 +251,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
 
     @Override
     public String getSearchParam() {
-        return mSearchView.getSearchContent();
+        return "";
     }
 
     @Override
@@ -204,6 +260,11 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
         params.setSortBy(1);
         params.setActionType((byte) 0);
         return params;
+    }
+
+    @OnClick(R.id.txt_options)
+    public void OnExportClick() {
+        showExportOptionsWindow(txtOptions);
     }
 
 
@@ -219,7 +280,16 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
 
     @Override
     public void bindEmail() {
-        Utils.bindEmail(this, email -> mPresenter.exportCustomerSaleDetail(email));
+        Gson gson = new Gson();
+        String reqParams = gson.toJson(params);
+        Utils.bindEmail(this, email -> mPresenter.exportCustomerSaleDetail(email, reqParams));
+    }
+
+    @Override
+    public void export(String email) {
+        Gson gson = new Gson();
+        String reqParams = gson.toJson(params);
+        mPresenter.exportCustomerSaleDetail(email,reqParams);
     }
 
     @Override
@@ -235,10 +305,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
         if (optionsBean == null) {
             return;
         }
-        String serverDate = "";
-        String localDate = "";
-        int timeType = TimeTypeEnum.DAY.getCode();
-        int timeFlag = TimeFlagEnum.TODAY.getCode();
+        boolean isExport = false;
         String dateText = TimeFlagEnum.TODAY.getDesc();
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_DATE)) {
             serverDate = DateUtil.currentTimeHllDT8() + "";
@@ -282,14 +349,26 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CUSTOMER_DEFINE)) {
 
+        } else {
+            //导出
+            isExport = true;
         }
         params.setDate(serverDate);
         params.setTimeType(timeType);
         params.setTimeFlag(timeFlag);
-        mTxtDateName.setText(String.format("%s", localDate));
-        dateFlagTextView.setText(dateText);
-        mPresenter.queryCustomerGatherDetailList(true);
-        mOptionsWindow.dismiss();
+        if (!isExport) {
+            mTxtDateName.setText(String.format("%s", localDate));
+            dateFlagTextView.setText(dateText);
+            mPresenter.queryCustomerGatherDetailList(true);
+        } else {
+            export(null);
+        }
+        if (mOptionsWindow != null) {
+            mOptionsWindow.dismiss();
+        }
+        if (mExportOptionsWindow != null) {
+            mExportOptionsWindow.dismiss();
+        }
     }
 
     class CustomerSaleListAdapter extends BaseQuickAdapter<CustomerSalesRecords, BaseViewHolder> {
@@ -310,7 +389,22 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
                     .setText(R.id.txt_refund_amount, CommonUtils.formatMoney(bean.getRefundAmount()))
                     .setText(R.id.txt_total_amount, CommonUtils.formatMoney(bean.getSubtotalAmount()))
                     .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
-                    R.drawable.bg_price_log_content_gray : R.drawable.bg_price_log_content_white);
+                    R.drawable.bg_price_log_content_white : R.drawable.bg_price_log_content_gray);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CUSTOMER_SALE_DETAIL_CODE && resultCode == RESULT_OK) {
+            PurchaserGroupBean bean = data.getParcelableExtra("result");
+            edtSearch.setText(bean.getPurchaserName());
+            imgClear.setVisibility(View.VISIBLE);
+            CustomerSaleReq params = getParams();
+            params.setDate(serverDate);
+            params.setTimeType(timeType);
+            params.setTimeFlag(timeFlag);
+            params.setPurchaserID(String.valueOf(bean.getPurchaserID()));
+            mPresenter.queryCustomerGatherDetailList(true);
         }
     }
 }

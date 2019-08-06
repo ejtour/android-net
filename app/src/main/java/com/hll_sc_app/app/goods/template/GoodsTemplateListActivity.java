@@ -19,7 +19,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsTemplateSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -32,6 +33,7 @@ import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Tuple;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -162,7 +164,7 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_TEMPLATE);
+                SearchActivity.start(searchContent, GoodsTemplateSearch.class.getSimpleName());
             }
 
             @Override
@@ -243,12 +245,24 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
 
     @Override
     public String getLabelIds() {
-        return mLabelFilterWindow != null ? TextUtils.join(",", mLabelFilterWindow.getSelectList()) : null;
+        String ids = null;
+        if (mLabelFilterWindow != null) {
+            Tuple<List<String>, List<String>> tuple = mLabelFilterWindow.getSelectList();
+            ids = TextUtils.join(",", tuple.getKey2());
+            mTxtLabel.setText(TextUtils.join(",", tuple.getKey1()));
+        }
+        return ids;
     }
 
     @Override
     public String getCategoryThreeIds() {
-        return mCategoryWindow != null ? mCategoryWindow.getCategoryThreeIds() : null;
+        String ids = null;
+        if (mCategoryWindow != null) {
+            Tuple<List<String>, List<String>> tuple = mCategoryWindow.getCategoryThreeIds();
+            ids = TextUtils.join(",", tuple.getKey2());
+            mTxtCategory.setText(TextUtils.join(",", tuple.getKey1()));
+        }
+        return ids;
     }
 
     @Override

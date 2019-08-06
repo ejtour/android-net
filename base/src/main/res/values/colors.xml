@@ -28,7 +28,7 @@
 
     <color name="base_colorPrimary">#5695D2</color>
     <color name="base_colorPrimaryDark">#4283C3</color>
-    <color name="base_colorAccent">#5695D2</color>
+    <color name="base_colorAccent">#805695D2</color>
     <color name="base_text666">#666666</color>
     <color name="base_text999">#999999</color>
     <color name="base_text222">#222222</color>
@@ -36,6 +36,7 @@
     <color name="base_activity_bg">#F3F3F3</color>
     <color name="base_color_divider">#EEEEEE</color>
     <color name="base_press_bg">#0A000000</color>
+    <color name="base_colorF4F5F9">#F4F5F9</color>
 
 
     <color name="base_color_bg_btn_normal">#03a9f4</color>

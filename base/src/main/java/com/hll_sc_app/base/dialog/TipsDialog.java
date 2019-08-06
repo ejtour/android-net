@@ -46,7 +46,7 @@ public class TipsDialog extends BaseDialog {
         Window window = getWindow();
         if (window != null) {
             WindowManager.LayoutParams params = window.getAttributes();
-            params.width = UIUtils.dip2px(275);
+            params.width = UIUtils.getScreenWidth(getContext()) - UIUtils.dip2px(110);
         }
     }
 

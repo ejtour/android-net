@@ -6,6 +6,7 @@ import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesRecords;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -31,12 +32,6 @@ public interface CustomerShopDetailContract {
          * @param customerSalesResp
          */
         void showCustomerShopGatherDatas(CustomerSalesResp customerSalesResp);
-        /**
-         * 获取搜索词
-         *
-         * @return 搜索词
-         */
-        String getSearchParam();
 
         /**
          * 获取参数
@@ -63,6 +58,8 @@ public interface CustomerShopDetailContract {
          * 绑定邮箱
          */
         void bindEmail();
+
+        void export(String email);
     }
 
     interface ICustomerShopDetailPresenter extends IPresenter<ICustomerShopDetailView> {
@@ -83,6 +80,6 @@ public interface CustomerShopDetailContract {
          *
          * @param email 邮箱地址
          */
-        void exportCustomerShopDetail(String email);
+        void exportCustomerShopDetail(String email, String reqParams);
     }
 }

@@ -7,14 +7,110 @@ package com.hll_sc_app.base.utils.router;
  * @date 2018/12/12
  */
 public class RouterConfig {
+
+    public static final String WEB = "/activity/web";
+
     /**
      * 设置界面
      */
     public static final String SETTING = "/activity/setting";
+
+    /**
+     * 通用简单搜索页
+     */
+    public static final String SEARCH = "/activity/search";
     /**
      * 设置界面-价格比例设置
      */
     public static final String SETTING_PRICE_RATIO = "/activity/setting/priceRatio";
+    /**
+     * 配送管理
+     */
+    public static final String DELIVERY_MANAGE = "/activity/deliveryManage";
+    /**
+     * 代仓公司列表
+     */
+    public static final String WAREHOUSE_LIST = "/activity/warehouse/list";
+    /**
+     * 代仓公司-我发出的申请
+     */
+    public static final String WAREHOUSE_INVITE = "/activity/warehouse/invite";
+    /**
+     * 代仓公司-搜索添加
+     */
+    public static final String WAREHOUSE_ADD = "/activity/warehouse/add";
+    /**
+     * 代仓公司-集团详细资料
+     */
+    public static final String WAREHOUSE_DETAILS = "/activity/warehouse/details";
+    /**
+     * 代仓公司-详细资料
+     */
+    public static final String WAREHOUSE_DETAIL = "/activity/warehouse/detail";
+    /**
+     * 代仓公司-门店详细资料
+     */
+    public static final String WAREHOUSE_SHOP_DETAIL = "/activity/warehouse/shop/detail";
+    /**
+     * 代仓管理
+     */
+    public static final String WAREHOUSE_START = "/activity/warehouse/start";
+    /**
+     * 代仓管理-我是货主默认介绍页面
+     */
+    public static final String WAREHOUSE_INTRODUCE = "/activity/warehouse/introduce";
+    /**
+     * 代仓管理-我是货主默认介绍页面-查看推荐
+     */
+    public static final String WAREHOUSE_RECOMMEND = "/activity/warehouse/recommend";
+    /**
+     * 配送管理-配送时效管理
+     */
+    public static final String DELIVERY_AGEING_MANAGE = "/activity/deliveryManage/ageing";
+    /**
+     * 配送管理-配送时效管理-新增、编辑界面
+     */
+    public static final String DELIVERY_AGEING_DETAIL = "/activity/deliveryManage/ageing/detail";
+    /**
+     * 配送管理-配送时效管理-新增、编辑界面-配送时段
+     */
+    public static final String DELIVERY_AGEING_DETAIL_PERIOD = "/activity/deliveryManage/ageing/detail/period";
+    /**
+     * 配送管理-配送方式设置
+     */
+    public static final String DELIVERY_TYPE_SET = "/activity/delivery/type";
+    /**
+     * 配送管理-起送金额设置
+     */
+    public static final String DELIVERY_MINIMUM = "/activity/delivery/minimum";
+    /**
+     * 配送管理-起送金额设置-选择采购商
+     */
+    public static final String DELIVERY_MINIMUM_PURCHASER = "/activity/delivery/minimum/purchaser";
+    /**
+     * 配送管理-起送金额设置-选择采购商门店
+     */
+    public static final String DELIVERY_MINIMUM_PURCHASER_SHOP = "/activity/delivery/minimum/purchaserShop";
+    /**
+     * 配送管理-起送金额设置-详情
+     */
+    public static final String DELIVERY_MINIMUM_DETAIL = "/activity/delivery/minimum/detail";
+    /**
+     * 配送管理-配送范围
+     */
+    public static final String DELIVERY_RANGE = "/activity/delivery/range";
+    /**
+     * 配送管理-地区选择
+     */
+    public static final String DELIVERY_AREA = "/activity/delivery/area";
+    /**
+     * 配送管理-配送方式设置-选择第三方物流公司
+     */
+    public static final String DELIVERY_TYPE_COMPANY = "/activity/delivery/company";
+    /**
+     * 配送管理-配送方式设置-新增第三方物流公司
+     */
+    public static final String DELIVERY_TYPE_COMPANY_ADD = "/activity/delivery/company/add";
     /**
      * 设置界面-价格比例设置-列表-新增界面
      */
@@ -63,10 +159,6 @@ public class RouterConfig {
      * 修改密码
      */
     public static final String USER_CHANGE = "/activity/user/changePassword";
-    /**
-     * 协议
-     */
-    public static final String WEB_VIEW_PROTOCOL = "/activity/webView/Protocol";
     /**
      * 注册
      */
@@ -127,6 +219,22 @@ public class RouterConfig {
      * 合作采购商列表
      */
     public static final String COOPERATION_PURCHASER_LIST = "/activity/cooperationPurchaser/list";
+    /**
+     * 员工列表
+     */
+    public static final String STAFF_LIST = "/activity/staff/list";
+    /**
+     * 员工详情
+     */
+    public static final String STAFF_EDIT = "/activity/staff/detail";
+    /**
+     * 员工详情-岗位权限简介
+     */
+    public static final String STAFF_PERMISSION = "/activity/staff/permission";
+    /**
+     * 员工管理-选择员工岗位
+     */
+    public static final String STAFF_ROLE_SELECT = "/activity/staff/roleSelect";
     /**
      * 合作采购商-我发出的申请
      */
@@ -272,11 +380,6 @@ public class RouterConfig {
      * 我的
      */
     public static final String ROOT_HOME_MINE = "/fragment/home/mine";
-
-    /**
-     * 订单管理-搜索
-     */
-    public static final String ORDER_SEARCH = "/activity/order/search";
 
     /**
      * 订单管理-待发货商品总量
@@ -435,10 +538,95 @@ public class RouterConfig {
     /**
      * 客户销售汇总明细
      */
-    public static final String CUSTOMER_SALE_DETAILS="/activity/customer/sale/detail";
+    public static final String CUSTOMER_SALE_DETAILS = "/activity/customer/sale/detail";
 
     /**
      * 客户销售汇总门店明细
      */
-    public static final String CUSTOMER_SALE_SHOP_DETAILS="/activity/customer/sale/shop/detail";
+    public static final String CUSTOMER_SALE_SHOP_DETAILS = "/activity/customer/sale/shop/detail";
+
+    /**
+     * 退货原因统计
+     */
+    public static final String REFUND_REASON_STATICS = "/activity/report/refundreason";
+
+    /**
+     * 客户销售汇总搜索
+     */
+    public static final String CUSTOMER_SALE_SEARCH = "/activity/customer/sale/search";
+
+    /**
+     * 我的钱包
+     */
+    public static final String WALLET = "/activity/wallet";
+
+    /**
+     * 我的钱包-明细
+     */
+    public static final String WALLET_DETAILS_LIST = "/activity/wallet/details/list";
+
+    /**
+     * 我的钱包-明细展示
+     */
+    public static final String WALLET_DETAILS_SHOW = "/activity/wallet/details/show";
+
+    /**
+     * 我的钱包-开通账户
+     */
+    public static final String WALLET_ACCOUNT_CREATE = "/activity/wallet/account/create";
+
+    /**
+     * 我的钱包-状态-未开通账户
+     */
+    public static final String WALLET_STATUS_NONE = "/fragment/wallet/status/none";
+
+    /**
+     * 我的钱包-状态-正常开通账户
+     */
+    public static final String WALLET_STATUS_NORMAL = "/fragment/wallet/status/normal";
+
+    /**
+     * 我的钱包-状态-账户核验状态
+     */
+    public static final String WALLET_STATUS_VERIFY = "/fragment/wallet/status/verify";
+
+    /**
+     * 我的钱包-企业认证
+     */
+    public static final String WALLET_ACCOUNT_AUTH = "/activity/wallet/account/auth";
+
+    /**
+     * 我的钱包-我的账号
+     */
+    public static final String WALLET_ACCOUNT_MY = "/activity/wallet/account_my";
+
+    /**
+     * 我的钱包-充值
+     */
+    public static final String WALLET_RECHARGE = "/activity/wallet/recharge";
+
+    /**
+     * 我的钱包-提现
+     */
+    public static final String WALLET_WITHDRAW = "/activity/wallet/withdraw";
+
+    /**
+     * 业务员签约绩效
+     */
+    public static final String REPORT_SALESMAN_SIGN_ACHIEVEMENT = "/activity/report/salesman/sign/achievement";
+
+    /**
+     * 业务员销售额绩效
+     */
+    public static final String REPORT_SALESMAN_SALES_ACHIEVEMENT = "/activity/report/salesman/sales/achievement";
+
+    /**
+     * 缺货汇总
+     */
+    public static final String REPORT_DELIVERY_LACK_GATHER = "/activity/report/delivery/lack/gather";
+    /*
+     * 我的钱包-银行列表
+     */
+    public static final String WALLET_BANK_LIST = "/activity/wallet/bankList";
 }
+

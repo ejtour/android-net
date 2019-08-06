@@ -65,6 +65,8 @@ public interface CustomerSalesDetailContract {
          * 绑定邮箱
          */
         void bindEmail();
+
+        void export(String email);
     }
 
     interface ICustomerSaleDetailPresenter extends IPresenter<ICustomerSalesDetailView> {
@@ -85,6 +87,6 @@ public interface CustomerSalesDetailContract {
          *
          * @param email 邮箱地址
          */
-        void exportCustomerSaleDetail(String email);
+        void exportCustomerSaleDetail(String email, String reqParams);
     }
 }

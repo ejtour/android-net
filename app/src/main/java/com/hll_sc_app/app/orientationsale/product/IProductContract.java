@@ -25,7 +25,6 @@ public interface IProductContract {
          *
          * @param list   列表
          * @param append 追加
-         * @param total  总量
          */
         void showList(List<GoodsBean> list, boolean append);
 

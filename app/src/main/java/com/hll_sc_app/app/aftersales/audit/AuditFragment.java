@@ -232,6 +232,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
 
     @Override
     public void showList(List<AfterSalesBean> recordsBeans, boolean isMore) {
+        mRefreshView.setEnableLoadMore(!CommonUtils.isEmpty(recordsBeans) && recordsBeans.size() == 20);
         if (isMore) mAdapter.addData(recordsBeans);
         else {
             if (CommonUtils.isEmpty(recordsBeans)) {// 设置空布局
@@ -390,7 +391,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
 
     @Override
     public void actionViewDetails() {
-        AfterSalesDetailActivity.start(requireActivity(), mCurBean);
+        AfterSalesDetailActivity.start(requireActivity(), mCurBean.getId());
     }
 
     @Override

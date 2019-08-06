@@ -12,7 +12,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
@@ -81,6 +83,8 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
     TriangleView mDateArrow;
     @BindView(R.id.asa_type_arrow)
     TriangleView mTypeArrow;
+    @Autowired(name = "object0")
+    int mDefaultIndex;
     /**
      * 采购商选择弹窗
      */
@@ -99,8 +103,8 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
         return mParam;
     }
 
-    public static void start() {
-        RouterUtil.goToActivity(RouterConfig.AFTER_SALES_AUDIT);
+    public static void start(int defaultIndex) {
+        RouterUtil.goToActivity(RouterConfig.AFTER_SALES_AUDIT, defaultIndex);
     }
 
     @Override
@@ -108,6 +112,7 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_after_sales_audit);
+        ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
         initData();
@@ -138,6 +143,7 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
         mPager.setAdapter(adapter);
         mTab.setViewPager(mPager, titles);
         mHeader.setRightBtnClick(this::showOptionsWindow);
+        mPager.setCurrentItem(mDefaultIndex);
     }
 
     private void showOptionsWindow(View v) {

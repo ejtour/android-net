@@ -59,7 +59,7 @@ public class AfterSalesAuditDialog extends BaseDialog {
         if (getWindow() == null) {
             return;
         }
-        getWindow().setBackgroundDrawableResource(R.drawable.bg_white_radius_5_solid);
+        getWindow().setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
         getWindow().getAttributes().width = UIUtils.getScreenWidth(getContext()) - UIUtils.dip2px(110);
         setCancelable(false);
     }
@@ -84,8 +84,8 @@ public class AfterSalesAuditDialog extends BaseDialog {
     public void select() {
         if (mDialog == null) {
             List<NameValue> list = new ArrayList<>();
-            list.add(new NameValue("货到付款", "1"));
-            list.add(new NameValue("账期支付", "2"));
+            list.add(new NameValue("线下现金", "1"));
+            list.add(new NameValue("账期", "2"));
             mDialog = SingleSelectionDialog.newBuilder((getOwnerActivity()), NameValue::getName)
                     .refreshList(list)
                     .setTitleText("请选择退款方式")

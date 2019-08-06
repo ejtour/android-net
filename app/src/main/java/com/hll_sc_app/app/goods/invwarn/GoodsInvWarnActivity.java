@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,7 +19,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsInvWarnSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -98,7 +98,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_INV_WARN);
+                SearchActivity.start(searchContent, GoodsInvWarnSearch.class.getSimpleName());
             }
 
             @Override
@@ -132,7 +132,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         mEmptyView = EmptyView.newBuilder(this).setTips("还没有商品库存数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new GoodsListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
@@ -146,29 +146,29 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     private void showInputDialog(GoodsBean bean, BaseQuickAdapter adapter, int position) {
         String stockWarnNum = CommonUtils.formatNumber(bean.getStockWarnNum());
         InputDialog.newBuilder(this)
-            .setCancelable(false)
-            .setTextTitle("输入" + bean.getProductName() + "预警值")
-            .setHint("输入预警值")
-            .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
-            .setText(TextUtils.equals(stockWarnNum, "0") ? "" : stockWarnNum)
-            .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
-                if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
-                    s.delete(s.length() - 1, s.length());
-                    showToast("预警值支持7位整数或小数点后两位");
-                }
-            })
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    if (TextUtils.isEmpty(dialog.getInputString())) {
-                        showToast("输入预警值不能为空");
-                        return;
+                .setCancelable(false)
+                .setTextTitle("输入" + bean.getProductName() + "预警值")
+                .setHint("输入预警值")
+                .setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL)
+                .setText(TextUtils.equals(stockWarnNum, "0") ? "" : stockWarnNum)
+                .setTextWatcher((GoodsSpecsAddActivity.CheckTextWatcher) s -> {
+                    if (!GoodsSpecsAddActivity.PRODUCT_PRICE.matcher(s.toString()).find() && s.length() > 1) {
+                        s.delete(s.length() - 1, s.length());
+                        showToast("预警值支持7位整数或小数点后两位");
                     }
-                    bean.setStockWarnNum(CommonUtils.getDouble(dialog.getInputString()));
-                    adapter.notifyItemChanged(position);
-                }
-                dialog.dismiss();
-            }, "取消", "确定")
-            .create().show();
+                })
+                .setButton((dialog, item) -> {
+                    if (item == 1) {
+                        if (TextUtils.isEmpty(dialog.getInputString())) {
+                            showToast("输入预警值不能为空");
+                            return;
+                        }
+                        bean.setStockWarnNum(CommonUtils.getDouble(dialog.getInputString()));
+                        adapter.notifyItemChanged(position);
+                    }
+                    dialog.dismiss();
+                }, "取消", "确定")
+                .create().show();
     }
 
     @Subscribe
@@ -202,7 +202,7 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
             mHouseSelectWindow.refreshList(list);
             mHouseSelectWindow.setListener(this::showSelectHouse);
         }
-        mHouseSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
+        mHouseSelectWindow.showAsDropDownFix(mRlToolbar);
     }
 
     @Override
@@ -274,14 +274,14 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         @Override
         protected void convert(BaseViewHolder helper, GoodsBean item) {
             ((GlideImageView) (helper.setText(R.id.txt_productName, item.getProductName())
-                .setText(R.id.txt_specsSize, "规格：" + getString(item.getSaleSpecNum()))
-                .setText(R.id.txt_standardUnit, "标准单位：" + getString(item.getStandardUnitName()))
-                .setText(R.id.txt_cargoOwnerName, "货主：" + getString(item.getCargoOwnerName()))
-                .setText(R.id.txt_usableStock, "可用库存：" + CommonUtils.formatNumber(item.getUsableStock()))
-                .setText(R.id.txt_stockWarnNum_unit, getString(item.getStandardUnitName()))
-                .setText(R.id.txt_stockWarnNum, CommonUtils.formatNumber(item.getStockWarnNum()))
-                .addOnClickListener(R.id.txt_stockWarnNum)
-                .getView(R.id.img_imgUrl))).setImageURL(item.getImgUrl());
+                    .setText(R.id.txt_specsSize, "规格：" + getString(item.getSaleSpecNum()))
+                    .setText(R.id.txt_standardUnit, "标准单位：" + getString(item.getStandardUnitName()))
+                    .setText(R.id.txt_cargoOwnerName, "货主：" + getString(item.getCargoOwnerName()))
+                    .setText(R.id.txt_usableStock, "可用库存：" + CommonUtils.formatNumber(item.getUsableStock()))
+                    .setText(R.id.txt_stockWarnNum_unit, getString(item.getStandardUnitName()))
+                    .setText(R.id.txt_stockWarnNum, CommonUtils.formatNumber(item.getStockWarnNum()))
+                    .addOnClickListener(R.id.txt_stockWarnNum)
+                    .getView(R.id.img_imgUrl))).setImageURL(item.getImgUrl());
         }
 
         private String getString(String str) {

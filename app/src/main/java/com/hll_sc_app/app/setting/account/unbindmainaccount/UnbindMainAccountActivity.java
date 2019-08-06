@@ -3,6 +3,7 @@ package com.hll_sc_app.app.setting.account.unbindmainaccount;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -10,13 +11,12 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.setting.widget.NoScrollViewPager;
+import com.hll_sc_app.widget.ScrollableViewPager;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.account.UnbindMainAccountReq;
 import com.hll_sc_app.bean.event.LogoutEvent;
-
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,7 +36,7 @@ import butterknife.Unbinder;
 @Route(path = RouterConfig.ACTIVITY_CHANGE_GROUP_PHONE)
 public class UnbindMainAccountActivity extends BaseLoadActivity implements IUnbindMainAccountContract.IView {
     @BindView(R.id.view_pager)
-    NoScrollViewPager mViewPager;
+    ScrollableViewPager mViewPager;
     @BindView(R.id.next_step)
     TextView mNextStep;
     @BindView(R.id.step_two)
@@ -60,7 +60,7 @@ public class UnbindMainAccountActivity extends BaseLoadActivity implements IUnbi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, 0xFFFFFFFF);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         setContentView(R.layout.activity_change_group_phone);
         unbinder = ButterKnife.bind(this);
         mPresent = UnbindMainAccountPresent.newInstance();
@@ -79,7 +79,6 @@ public class UnbindMainAccountActivity extends BaseLoadActivity implements IUnbi
     }
 
     private void initView() {
-        mViewPager.setScroll(false);
         initFragments();
         initViewPager();
     }
@@ -172,13 +171,13 @@ public class UnbindMainAccountActivity extends BaseLoadActivity implements IUnbi
         } else if (curFragmentIndex == 1) {
             mNextStep.setText("下一步");
             mStepTwoTitle.setTextColor(Color.parseColor("#222222"));
-            mLineOne.setBackgroundColor(Color.parseColor("#ED5655"));
+            mLineOne.setBackgroundResource(R.color.base_colorPrimary);
             mStepThreeTitle.setTextColor(Color.parseColor("#999999"));
             mLineTwo.setBackgroundColor(Color.parseColor("#BBBBBB"));
         } else if (curFragmentIndex == 2) {
             mNextStep.setText("完成");
             mStepThreeTitle.setTextColor(Color.parseColor("#222222"));
-            mLineTwo.setBackgroundColor(Color.parseColor("#ED5655"));
+            mLineTwo.setBackgroundResource(R.color.base_colorPrimary);
         }
     }
 

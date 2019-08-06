@@ -1,6 +1,5 @@
 package com.hll_sc_app.bean.report.resp.product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,13 +7,13 @@ import java.util.List;
  */
 public class ProductSaleTop10Resp {
 
-   List<ProductSaleTopDetail> records = new ArrayList<>();
+    private List<ProductSaleTop10Bean> records;
 
-    public List<ProductSaleTopDetail> getRecords() {
+    public List<ProductSaleTop10Bean> getRecords() {
         return records;
     }
 
-    public void setRecords(List<ProductSaleTopDetail> records) {
+    public void setRecords(List<ProductSaleTop10Bean> records) {
         this.records = records;
     }
 }

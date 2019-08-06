@@ -10,7 +10,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -23,7 +22,8 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.invwarn.TopSingleSelectWindow;
 import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsRelevanceSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
@@ -107,7 +107,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_RELEVANCE);
+                SearchActivity.start(searchContent, GoodsRelevanceSearch.class.getSimpleName());
             }
 
             @Override
@@ -129,7 +129,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         mEmptyView = EmptyView.newBuilder(this).setTips("还没有采购商数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new PurchaserListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
@@ -181,7 +181,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
             mResourceTypeSelectWindow.refreshList(mListResource);
             mResourceTypeSelectWindow.setListener(this::showSelectResourceType);
         }
-        mResourceTypeSelectWindow.showAsDropDownFix(mRlToolbar, Gravity.NO_GRAVITY);
+        mResourceTypeSelectWindow.showAsDropDownFix(mRlToolbar);
     }
 
     @Override
@@ -229,12 +229,12 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
         @Override
         protected void convert(BaseViewHolder helper, PurchaserBean item) {
             helper.setText(R.id.txt_purchaserName, item.getPurchaserName())
-                .setText(R.id.txt_linkMan,
-                    "联系人：" + getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getGroupPhone())))
-                .setText(R.id.txt_relationProductNum,
-                    getSpannableString("关联品项：" + CommonUtils.formatNumber(item.getRelationProductNum())))
-                .setText(R.id.txt_unRelationProductNum,
-                    getSpannableString("未关联品项：" + CommonUtils.formatNumber(item.getUnRelationProductNum())));
+                    .setText(R.id.txt_linkMan,
+                            "联系人：" + getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getGroupPhone())))
+                    .setText(R.id.txt_relationProductNum,
+                            getSpannableString("关联品项：" + CommonUtils.formatNumber(item.getRelationProductNum())))
+                    .setText(R.id.txt_unRelationProductNum,
+                            getSpannableString("未关联品项：" + CommonUtils.formatNumber(item.getUnRelationProductNum())));
         }
 
         private String getString(String str) {
@@ -245,7 +245,7 @@ public class GoodsRelevancePurchaserActivity extends BaseLoadActivity implements
             SpannableString spannableString = new SpannableString(str);
             if (str.contains("：")) {
                 spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext,
-                    R.color.base_colorPrimary)), str.indexOf("："), str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        R.color.base_colorPrimary)), str.indexOf("："), str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             return spannableString;
         }

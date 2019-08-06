@@ -60,6 +60,7 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
             .put("endDate", mView.getPriceEndDate())
             .put("categoryID", mView.getCategoryId())
             .put("shopIDs", mView.getShopIds())
+            .put("productName", mView.getSearchParam())
             .create();
         AgreementPriceService.INSTANCE.queryGoodsPriceList(req)
             .compose(ApiScheduler.getObservableScheduler())

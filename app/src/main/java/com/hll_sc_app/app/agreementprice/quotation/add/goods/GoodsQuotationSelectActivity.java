@@ -17,7 +17,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.search.OrderSearchActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsTopSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -107,7 +108,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                OrderSearchActivity.start(searchContent, OrderSearchActivity.FROM_GOODS_TOP);
+                SearchActivity.start(searchContent, GoodsTopSearch.class.getSimpleName());
             }
 
             @Override
@@ -226,7 +227,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
     }
 
     @Override
-    public void showList(List<SkuGoodsBean> list, boolean append, int total) {
+    public void showList(List<SkuGoodsBean> list, boolean append) {
         if (!CommonUtils.isEmpty(list)) {
             for (SkuGoodsBean bean : list) {
                 if (contains(bean)) {
@@ -235,7 +236,9 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
             }
         }
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
         } else {
             mAdapter.setNewData(list);
         }
@@ -245,7 +248,7 @@ public class GoodsQuotationSelectActivity extends BaseLoadActivity implements Go
             mEmptyView.setTips("该分类暂无商品数据");
         }
         mAdapter.setEmptyView(mEmptyView);
-        mRefreshLayout.setEnableLoadMore(total != mAdapter.getItemCount());
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
         showBottomCount();
     }
 

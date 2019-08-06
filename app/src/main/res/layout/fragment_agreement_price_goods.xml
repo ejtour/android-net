@@ -66,6 +66,7 @@
                 android:layout_marginRight="5dp"
                 android:ellipsize="end"
                 android:gravity="center"
+                android:singleLine="true"
                 android:text="分类"
                 android:textColor="@drawable/base_text_color_window_check"
                 android:textSize="@dimen/text_small_size"/>

@@ -315,10 +315,15 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Override
-    public void refreshListData(List<OrderResp> resps) {
-        mAdapter.setNewData(resps);
-        if (CommonUtils.isEmpty(resps))
-            handleEmptyData();
+    public void updateListData(List<OrderResp> resps, boolean append) {
+        mRefreshLayout.setEnableLoadMore(!CommonUtils.isEmpty(resps) && resps.size() == 20);
+        if (append) {
+            mAdapter.addData(resps);
+        } else {
+            mAdapter.setNewData(resps);
+            if (CommonUtils.isEmpty(resps))
+                handleEmptyData();
+        }
         updateBottomBarData();
     }
 
@@ -347,12 +352,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
             mAdapter.setCanCheck();
             mConfirm.setText(String.format("%s(0)", mOrderType.getButtonText()));
         }
-    }
-
-    @Override
-    public void appendListData(List<OrderResp> resps) {
-        mAdapter.addData(resps);
-        updateBottomBarData();
     }
 
     @Override
@@ -585,7 +584,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                 data.add(resp);
             }
         }
-        refreshListData(data);
+        updateListData(data, false);
     }
 
     private void replaceItem(OrderResp resp) {
@@ -595,7 +594,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         if (mOrderType.contain(resp.getSubBillStatus())) mAdapter.replaceData(mCurResp, resp);
         else {
             mAdapter.removeData(mCurResp);
-            if (CommonUtils.isEmpty(mAdapter.getData())) refreshListData(null);
+            if (CommonUtils.isEmpty(mAdapter.getData())) updateListData(null, false);
         }
         updateBottomBarData();
     }

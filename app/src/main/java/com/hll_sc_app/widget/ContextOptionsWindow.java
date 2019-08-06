@@ -3,7 +3,6 @@ package com.hll_sc_app.widget;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -28,10 +27,8 @@ public class ContextOptionsWindow extends BasePopupWindow {
     @BindView(R.id.wco_list)
     RecyclerView mListView;
     private OptionsAdapter mAdapter;
-    @BindView(R.id.triangle_arrow)
-    TriangleView triangleView;
-    @BindView(R.id.select_dialog)
-    LinearLayout linearLayout;
+    @BindView(R.id.wco_arrow)
+    TriangleView mArrow;
 
     public ContextOptionsWindow(Activity context) {
         super(context);
@@ -65,16 +62,18 @@ public class ContextOptionsWindow extends BasePopupWindow {
         return this;
     }
 
-    public void setTriangleViewStyle(int left,int top,int right,int bottom ){
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        LinearLayout.LayoutParams layoutParams = triangleView.getLayoutParams();
-        layoutParams.setMargins(left,top,right,bottom);
-        triangleView.setLayoutParams(layoutParams);
-        if(left>0) {
-            linearLayout.setGravity(Gravity.LEFT);
-        }else if(right>0){
-            linearLayout.setGravity(Gravity.RIGHT);
+    public void showAsDropDownFix(View anchor, int gravity) {
+        showAsDropDownFix(anchor, 0, 0, gravity);
+    }
+
+    public void showAsDropDownFix(View anchor, int xOff, int yOff, int gravity) {
+        if (android.os.Build.VERSION.SDK_INT >= 19) {
+            super.showAsDropDown(anchor, xOff, yOff, gravity);
+        } else {
+            super.showAsDropDown(anchor);
         }
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mArrow.getLayoutParams();
+        params.gravity = gravity;
     }
 
     class OptionsAdapter extends BaseQuickAdapter<OptionsBean, BaseViewHolder> {

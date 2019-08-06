@@ -3,6 +3,7 @@ package com.hll_sc_app.app.aftersales.detail;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.AfterSales;
 
@@ -12,40 +13,24 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
     private IAfterSalesDetailContract.IAfterSalesDetailView mView;
     private String billID;
 
+    private AfterSalesDetailPresenter() {
+    }
+
     static AfterSalesDetailPresenter newInstance(String detailID) {
         AfterSalesDetailPresenter presenter = new AfterSalesDetailPresenter();
         presenter.billID = detailID;
         return presenter;
     }
 
-    private AfterSalesDetailPresenter() {
-    }
-
-    @Override
-    public void getDetail() {
-        AfterSales.requestAfterSalesDetail(
-                billID,
-                new SimpleObserver<List<AfterSalesBean>>(mView) {
-                    @Override
-                    public void onSuccess(List<AfterSalesBean> recordsBeans) {
-                        if (!CommonUtils.isEmpty(recordsBeans)) {
-                            mView.showDetail(recordsBeans.get(0));
-                        } else {
-                            mView.showToast("获取数据失败");
-                        }
-                    }
-                });
-    }
-
     @Override
     public void doAction(int actionType, String payType, int status, int type, String msg) {
         AfterSales.afterSalesAction(actionType, billID, status, type, payType, msg, null,
-            new SimpleObserver<MsgWrapper<Object>>(true, mView) {
-                @Override
-                public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
-                    mView.handleStatusChange();
-                }
-            });
+                new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+                    @Override
+                    public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                        mView.handleStatusChange();
+                    }
+                });
     }
 
     @Override
@@ -59,8 +44,29 @@ public class AfterSalesDetailPresenter implements IAfterSalesDetailContract.IAft
     }
 
     @Override
+    public void genereteComplain(AfterSalesBean data) {
+        AfterSales.generateComplain(data, new SimpleObserver<GenerateCompainResp>(mView) {
+            @Override
+            public void onSuccess(GenerateCompainResp generateCompainResp) {
+                mView.genereteComplainSuccess(generateCompainResp);
+            }
+        });
+    }
+
+    @Override
     public void start() {
-        // no-op
+        AfterSales.requestAfterSalesDetail(
+                billID,
+                new SimpleObserver<List<AfterSalesBean>>(mView) {
+                    @Override
+                    public void onSuccess(List<AfterSalesBean> recordsBeans) {
+                        if (!CommonUtils.isEmpty(recordsBeans)) {
+                            mView.showDetail(recordsBeans.get(0));
+                        } else {
+                            mView.showToast("获取数据失败");
+                        }
+                    }
+                });
     }
 
     @Override

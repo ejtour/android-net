@@ -112,8 +112,10 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
     private void resetCategoryIds() {
         if (mResp != null) {
             List<CustomCategoryBean> list3 = mResp.getList3();
-            for (CustomCategoryBean bean : list3) {
-                bean.setChecked(false);
+            if (!CommonUtils.isEmpty(list3)) {
+                for (CustomCategoryBean bean : list3) {
+                    bean.setChecked(false);
+                }
             }
         }
         mAdapter.notifyDataSetChanged();
@@ -133,9 +135,11 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
         List<String> listSelect = new ArrayList<>();
         if (mResp != null) {
             List<CustomCategoryBean> list3 = mResp.getList3();
-            for (CustomCategoryBean bean : list3) {
-                if (bean.isChecked()) {
-                    listSelect.add(bean.getId());
+            if (!CommonUtils.isEmpty(list3)) {
+                for (CustomCategoryBean bean : list3) {
+                    if (bean.isChecked()) {
+                        listSelect.add(bean.getId());
+                    }
                 }
             }
         }

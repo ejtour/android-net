@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hll_sc_app.base.widget.SwipeItemLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txt_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_tag_primary_solid"
+            android:paddingLeft="3dp"
+            android:paddingTop="1dp"
+            android:paddingRight="3dp"
+            android:paddingBottom="1dp"
+            android:textColor="@color/base_white"
+            android:textSize="9sp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_areaNum"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            tools:text="采购商"/>
+
+        <TextView
+            android:id="@+id/txt_divideName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_settings"
+            app:layout_constraintLeft_toRightOf="@+id/txt_settings"
+            app:layout_constraintTop_toTopOf="@+id/txt_settings"
+            tools:text="大中华区西北部"/>
+
+        <TextView
+            android:id="@+id/txt_areaNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_settings"
+            tools:text="包含18个地区"/>
+
+        <TextView
+            android:id="@+id/txt_sendPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.City22.Small.Red"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_areaNum"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_areaNum"
+            tools:text="¥200.00起"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <FrameLayout
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:background="@color/base_colorPrimary">
+
+        <TextView
+            android:id="@+id/txt_del"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="删除"
+            android:textAppearance="@style/TextAppearance.City22.Small.White"/>
+    </FrameLayout>
+</com.hll_sc_app.base.widget.SwipeItemLayout>
+
+
+
+
+

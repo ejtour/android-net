@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_back"
+            style="@style/BtnClose"/>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="新增员工信息"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_title_center_size"/>
+
+        <TextView
+            android:id="@+id/txt_save"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_selector_close"
+            android:gravity="center"
+            android:text="保存"
+            android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/base_white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_staff_bg"/>
+
+        <com.hll_sc_app.base.utils.glide.GlideImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-65dp"
+            android:background="#80FFFFFF"
+            android:padding="5dp"
+            android:src="@drawable/ic_staff_placeholder"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="员工编号"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+            <EditText
+                android:id="@+id/txt_employeeCode"
+                style="@style/EdtRegister"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="可输入字母+数字，限3位"
+                android:maxLength="3"
+                android:selectAllOnFocus="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="员工姓名"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+            <EditText
+                android:id="@+id/txt_employeeName"
+                style="@style/EdtRegister"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="请输入员工姓名"
+                android:selectAllOnFocus="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号码"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+            <EditText
+                android:id="@+id/txt_loginPhone"
+                style="@style/EdtRegister"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="请输入11位手机号码"
+                android:inputType="number"
+                android:maxLength="11"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登录密码"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+            <EditText
+                android:id="@+id/txt_loginPWD"
+                style="@style/EdtRegister"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="请设置登录密码"
+                android:inputType="textVisiblePassword"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电子邮箱"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+            <EditText
+                android:id="@+id/txt_email"
+                style="@style/EdtRegister"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="请输入电子邮箱地址"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_roles"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="员工岗位"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+            <TextView
+                android:id="@+id/txt_roles"
+                style="@style/EdtRegister"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                android:gravity="right|center_vertical"
+                android:hint="请选择员工岗位"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

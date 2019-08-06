@@ -240,6 +240,7 @@ public class PriceInputDialog extends BaseDialog {
 
         public PriceInputDialog create() {
             final PriceInputDialog dialog = new PriceInputDialog(p.mContext, R.style.BaseDialog);
+            dialog.setType(p.mIsShow);
             dialog.setProductName(p.mProductName);
             dialog.setCostPrice(p.mCostPrice);
             dialog.setTextTitle(p.mTitle);
@@ -248,7 +249,6 @@ public class PriceInputDialog extends BaseDialog {
             dialog.setButton(p.mOnClickListener, p.items);
             dialog.setCancelable(p.mCancelable);
             dialog.setCanceledOnTouchOutside(p.mCancelable);
-            dialog.setType(p.mIsShow);
             dialog.setRecommendPrice(p.mRecommendPrice);
             return dialog;
         }

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaDtoBean;
@@ -33,7 +34,6 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.AreaSelectWindow;
 import com.hll_sc_app.base.widget.IdentifyCodeTextView;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
-import com.hll_sc_app.bean.user.PageParams;
 import com.hll_sc_app.bean.user.RegisterReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
@@ -224,6 +224,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
                 showToast(msg);
             }
         });
+        mImgLicencePhotoUrl.setOnDeleteListener(v -> checkEnable());
     }
 
     private void setAgreement() {
@@ -232,10 +233,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
         spannableString.setSpan(new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                PageParams pageParams = new PageParams();
-                pageParams.setTitle("服务条款");
-                pageParams.setProtocolUrl("file:////android_asset/registerLegal.html");
-                RouterUtil.goToActivity(RouterConfig.WEB_VIEW_PROTOCOL, pageParams);
+                WebActivity.start("服务条款", "file:////android_asset/registerLegal.html");
             }
         }, content.length() - 10, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTxtAgreement.setText(spannableString);
@@ -285,10 +283,7 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
 
     @Override
     public void uploadSuccess(String url) {
-        mImgLicencePhotoUrl.showImage(url, v -> {
-            mImgLicencePhotoUrl.deleteImage();
-            checkEnable();
-        });
+        mImgLicencePhotoUrl.showImage(url);
         checkEnable();
     }
 

@@ -7,8 +7,11 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -18,6 +21,8 @@ import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Tuple;
+import com.hll_sc_app.widget.EmptyView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * 协议价管理-商品-采购商门店筛选
@@ -44,6 +50,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
     TextView mTxtSearchType;
     @BindView(R.id.edt_search_content)
     EditText mEdtSearchContent;
+    @BindView(R.id.img_clear)
+    ImageView mImgClear;
     private ConfirmListener mListener;
     private List<PurchaserBean> mList;
     private PurchaserListAdapter mAdapterPurchaser;
@@ -62,6 +70,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.setBackgroundDrawable(new ColorDrawable(0xbb000000));
+        this.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mEdtSearchContent.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 toSearch();
@@ -85,6 +95,9 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
      * 显示采购商列表
      */
     private void showPurchaserList() {
+        EmptyView emptyView = EmptyView.newBuilder(mActivity)
+            .setImage(R.drawable.ic_search_empty_purchaser)
+            .setTips("没有找到相关的集团噢").create();
         mAdapterPurchaser = new PurchaserListAdapter(mList);
         mAdapterPurchaser.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
@@ -103,7 +116,12 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
             }
         });
         mRecyclerViewPurchaser.setAdapter(mAdapterPurchaser);
+        mAdapterPurchaser.setEmptyView(emptyView);
 
+
+        EmptyView emptyViewShop = EmptyView.newBuilder(mActivity)
+            .setImage(R.drawable.ic_empty_shop_view)
+            .setTips("没有找到相关的门店噢").create();
         mAdapterPurchaserShop = new PurchaserShopListAdapter();
         mAdapterPurchaserShop.setOnItemClickListener((adapter, view, position) -> {
             PurchaserShopBean shopBean = (PurchaserShopBean) adapter.getItem(position);
@@ -119,6 +137,7 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
             adapter.notifyDataSetChanged();
         });
         mRecyclerViewPurchaserShop.setAdapter(mAdapterPurchaserShop);
+        mAdapterPurchaserShop.setEmptyView(emptyViewShop);
     }
 
     private void toSearchGroup(String searchParam) {
@@ -167,9 +186,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
      * @param check true-全选 false-全不选
      */
     private void checkAll(boolean check) {
-        List<PurchaserShopBean> shopBeans = mAdapterPurchaserShop.getData();
-        if (!CommonUtils.isEmpty(shopBeans)) {
-            for (PurchaserShopBean bean : shopBeans) {
+        if (!CommonUtils.isEmpty(mShopList)) {
+            for (PurchaserShopBean bean : mShopList) {
                 if (TextUtils.equals(bean.getShopName(), STRING_SELECT_ALL)) {
                     continue;
                 }
@@ -180,13 +198,12 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
 
     private void checkSelectAll() {
         boolean selectAll = true;
-        List<PurchaserShopBean> shopBeans = mAdapterPurchaserShop.getData();
-        if (!CommonUtils.isEmpty(shopBeans)) {
+        if (!CommonUtils.isEmpty(mShopList)) {
             // 首位是全选的时候需要遍历判断是否要全部选中
-            if (!TextUtils.equals(shopBeans.get(0).getShopName(), STRING_SELECT_ALL)) {
+            if (!TextUtils.equals(mShopList.get(0).getShopName(), STRING_SELECT_ALL)) {
                 return;
             }
-            for (PurchaserShopBean bean : shopBeans) {
+            for (PurchaserShopBean bean : mShopList) {
                 if (TextUtils.equals(bean.getShopName(), STRING_SELECT_ALL)) {
                     continue;
                 }
@@ -196,8 +213,14 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
                 }
             }
             // 设置全部的选中状态
-            shopBeans.get(0).setSelect(selectAll);
+            mShopList.get(0).setSelect(selectAll);
         }
+    }
+
+    @OnTextChanged(R.id.edt_search_content)
+    public void onTextChange(CharSequence s) {
+        mImgClear.setVisibility(!TextUtils.isEmpty(s) ? View.VISIBLE : View.GONE);
+        toSearch();
     }
 
     void showShopList(List<PurchaserShopBean> list) {
@@ -209,20 +232,26 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
         this.mListener = listener;
     }
 
-    @OnClick({R.id.txt_confirm, R.id.txt_reset, R.id.txt_search, R.id.txt_search_type})
+    @OnClick({R.id.txt_confirm, R.id.txt_reset, R.id.txt_search, R.id.txt_search_type, R.id.img_clear})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.txt_reset) {
             resetPurchaserShopList();
             mAdapterPurchaserShop.notifyDataSetChanged();
         } else if (id == R.id.txt_confirm && mListener != null) {
-            mListener.confirm(TextUtils.join(",", getSelectShopIds()));
+            Tuple<List<String>, List<String>> tuple = getSelectShopIds();
+            mListener.confirm(TextUtils.join(",", tuple.getKey1()), TextUtils.join(",", tuple.getKey2()));
             dismiss();
         } else if (id == R.id.txt_search) {
             toSearch();
+        } else if (id == R.id.img_clear) {
+            mEdtSearchContent.setText(null);
         } else if (id == R.id.txt_search_type) {
             String searchType = mTxtSearchType.getText().toString().trim();
             mTxtSearchType.setText(TextUtils.equals(searchType, STRING_GROUP) ? STRING_SHOP : STRING_GROUP);
+            mEdtSearchContent.setText(null);
+            toSearchGroup(null);
+            toSearchShop(null);
         }
     }
 
@@ -230,37 +259,41 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
      * 重置采购商门店列表
      */
     private void resetPurchaserShopList() {
-        List<PurchaserShopBean> list = mAdapterPurchaserShop.getData();
-        if (!CommonUtils.isEmpty(list)) {
-            for (PurchaserShopBean bean : list) {
+        if (!CommonUtils.isEmpty(mShopList)) {
+            for (PurchaserShopBean bean : mShopList) {
                 bean.setSelect(false);
             }
         }
     }
 
-    private List<String> getSelectShopIds() {
-        List<String> list = new ArrayList<>();
-        List<PurchaserShopBean> shopBeans = mAdapterPurchaserShop.getData();
-        if (!CommonUtils.isEmpty(shopBeans)) {
-            for (PurchaserShopBean bean : shopBeans) {
+    private Tuple<List<String>, List<String>> getSelectShopIds() {
+        List<String> selectId = new ArrayList<>();
+        List<String> selectName = new ArrayList<>();
+        if (!CommonUtils.isEmpty(mShopList)) {
+            for (PurchaserShopBean bean : mShopList) {
                 if (TextUtils.equals(bean.getShopName(), STRING_SELECT_ALL)) {
                     continue;
                 }
                 if (bean.isSelect()) {
-                    list.add(bean.getShopID());
+                    selectId.add(bean.getShopID());
+                    selectName.add(bean.getShopName());
                 }
             }
         }
-        return list;
+        Tuple<List<String>, List<String>> tuple = new Tuple<>();
+        tuple.setKey1(selectId);
+        tuple.setKey2(selectName);
+        return tuple;
     }
 
     interface ConfirmListener {
         /**
          * 确定
          *
-         * @param shopIds 门店Id
+         * @param shopIds   门店Id
+         * @param shopNames 门店名称
          */
-        void confirm(String shopIds);
+        void confirm(String shopIds, String shopNames);
 
         /**
          * 查询门店列表

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_days"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="可预订天数"
+                android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+            <TextView
+                android:id="@+id/txt_days"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.City22.Middle"
+                tools:text="7天"/>
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/base_color_divider"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="该参数配置后用户可选的配送日期为最快送达日期的7日（不支持超过7日）\n例如：送达时间的日期为次日，可预订天数为2，则用户可选择的要求到货日期为次日和第三天"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"/>
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+
+
+
+
+

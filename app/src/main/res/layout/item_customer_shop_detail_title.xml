@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
     android:layout_width="match_parent"
     android:layout_height="30dp"
-    android:background="@android:color/white">
+    android:background="@drawable/bg_customer_title">
 
     <View
         android:layout_width="1dp"
@@ -19,7 +18,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        tools:text="采购商名称"/>
+        android:text="采购商名称"/>
 
     <View
         android:layout_width="1dp"
@@ -33,7 +32,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        tools:text="门店名称"/>
+        android:text="门店名称"/>
 
     <View
         android:layout_width="1dp"
@@ -47,7 +46,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        tools:text="订单数"/>
+        android:text="订单数"/>
 
     <View
         android:layout_width="1dp"
@@ -61,7 +60,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        tools:text="有效订单数"/>
+        android:text="有效订单数"/>
 
     <View
         android:layout_width="1dp"
@@ -75,7 +74,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        tools:text="交易金额(元)"/>
+        android:text="交易金额(元)"/>
 
     <View
         android:layout_width="1dp"
@@ -89,7 +88,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        tools:text="单均(元)"/>
+        android:text="单均(元)"/>
 
     <View
         android:layout_width="1dp"
@@ -103,7 +102,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        tools:text="退单数"/>
+        android:text="退单数"/>
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
@@ -116,7 +115,7 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        tools:text="退货金额(元)"/>
+        android:text="退货金额(元)"/>
 
     <View
         android:layout_width="1dp"
@@ -130,5 +129,5 @@
         android:gravity="center"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        tools:text="小计金额(元)"/>
+        android:text="小计金额(元)"/>
 </LinearLayout>

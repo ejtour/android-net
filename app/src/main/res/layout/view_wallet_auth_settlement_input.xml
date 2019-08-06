@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <View
+        android:id="@+id/asi_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/asi_next"
+        style="@style/BtnOrderAction.PrimarySolid"
+        android:layout_width="200dp"
+        android:enabled="false"
+        android:text="下一步"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintBottom_toBottomOf="@id/asi_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/asi_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/asi_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/asi_bottom_bg" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/asi_bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/asi_warn_prompt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:lineSpacingExtra="5dp"
+                android:paddingBottom="5dp"
+                android:text="温馨提示：请填写企业对公帐号，如您注册的企业类型是个体工商户时，还可以绑定法人的个人银行卡账号！"
+                android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--银行信息 start-->
+            <View
+                android:id="@+id/asi_bank_info_bg"
+                android:layout_width="0dp"
+                android:layout_height="135dp"
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/asi_warn_prompt" />
+
+            <View
+                android:id="@+id/asi_bank_info_div1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toTopOf="@id/asi_bank_info_div2"
+                app:layout_constraintEnd_toEndOf="@id/asi_bank_info_bg"
+                app:layout_constraintStart_toStartOf="@id/asi_bank_info_bg"
+                app:layout_constraintTop_toTopOf="@id/asi_bank_info_bg" />
+
+            <View
+                android:id="@+id/asi_bank_info_div2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/asi_bank_info_bg"
+                app:layout_constraintEnd_toEndOf="@id/asi_bank_info_bg"
+                app:layout_constraintStart_toStartOf="@id/asi_bank_info_bg"
+                app:layout_constraintTop_toBottomOf="@id/asi_bank_info_div1" />
+
+            <TextView
+                android:id="@+id/asi_person_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开户名"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                app:layout_constraintBottom_toTopOf="@id/asi_bank_info_div1"
+                app:layout_constraintStart_toStartOf="@id/asi_bank_info_div1"
+                app:layout_constraintTop_toTopOf="@id/asi_bank_info_bg" />
+
+            <EditText
+                android:id="@+id/asi_person_name"
+                style="@style/WalletInfoEdit"
+                android:hint="请输入银行开户名"
+                app:layout_constraintBottom_toTopOf="@id/asi_bank_info_div1"
+                app:layout_constraintEnd_toEndOf="@id/asi_bank_info_bg"
+                app:layout_constraintStart_toEndOf="@id/asi_person_name_label"
+                app:layout_constraintTop_toTopOf="@id/asi_bank_info_bg" />
+
+            <TextView
+                android:id="@+id/asi_bank_name_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开户行"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                app:layout_constraintBottom_toTopOf="@id/asi_bank_info_div2"
+                app:layout_constraintStart_toStartOf="@id/asi_bank_info_div1"
+                app:layout_constraintTop_toBottomOf="@id/asi_bank_info_div1" />
+
+            <TextView
+                android:id="@+id/asi_bank_name"
+                style="@style/WalletInfoEdit"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                android:hint="请选择开户行"
+                app:layout_constraintBottom_toTopOf="@id/asi_bank_info_div2"
+                app:layout_constraintEnd_toEndOf="@id/asi_bank_info_bg"
+                app:layout_constraintStart_toEndOf="@id/asi_bank_name_label"
+                app:layout_constraintTop_toBottomOf="@id/asi_bank_info_div1" />
+
+            <TextView
+                android:id="@+id/asi_account_type_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账户类型"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                app:layout_constraintBottom_toBottomOf="@id/asi_bank_info_bg"
+                app:layout_constraintStart_toStartOf="@id/asi_bank_info_div1"
+                app:layout_constraintTop_toBottomOf="@id/asi_bank_info_div2" />
+
+            <TextView
+                android:id="@+id/asi_account_type"
+                style="@style/WalletInfoEdit"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                android:hint="请选择银行账户类型"
+                app:layout_constraintBottom_toBottomOf="@id/asi_bank_info_bg"
+                app:layout_constraintEnd_toEndOf="@id/asi_bank_info_bg"
+                app:layout_constraintStart_toEndOf="@id/asi_account_type_label"
+                app:layout_constraintTop_toBottomOf="@id/asi_bank_info_div2" />
+            <!--银行信息 end-->
+
+            <!--银行账户号 start-->
+            <View
+                android:id="@+id/asi_card_no_bg"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/asi_bank_info_bg" />
+
+            <TextView
+                android:id="@+id/asi_card_no_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:text="银行账户号"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                app:layout_constraintStart_toStartOf="@id/asi_card_no_bg"
+                app:layout_constraintTop_toTopOf="@id/asi_card_no_bg" />
+
+            <EditText
+                android:id="@+id/asi_card_no"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/bg_divider_bottom"
+                android:hint="请输入银行账户号"
+                android:inputType="number"
+                android:maxLength="30"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Large"
+                android:textColorHint="@color/color_aeaeae"
+                app:layout_constraintEnd_toEndOf="@id/asi_card_no_bg"
+                app:layout_constraintStart_toStartOf="@id/asi_card_no_bg"
+                app:layout_constraintTop_toBottomOf="@id/asi_card_no_label" />
+            <!--银行账户号 start-->
+
+            <!--附件 start-->
+            <View
+                android:id="@+id/asi_attachment_bg"
+                android:layout_width="0dp"
+                android:layout_height="114dp"
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/asi_card_no_bg" />
+
+            <com.hll_sc_app.base.widget.ImgUploadBlock
+                android:id="@+id/asi_attachment"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                app:base_title="点击上传委托收款说明"
+                app:layout_constraintBottom_toBottomOf="@id/asi_attachment_bg"
+                app:layout_constraintEnd_toEndOf="@id/asi_attachment_bg"
+                app:layout_constraintStart_toStartOf="@id/asi_attachment_bg" />
+
+            <TextView
+                android:id="@+id/asi_attachment_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="委托收款说明"
+                android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+                app:layout_constraintBottom_toTopOf="@id/asi_attachment"
+                app:layout_constraintStart_toStartOf="@id/asi_attachment"
+                app:layout_constraintTop_toTopOf="@id/asi_attachment_bg" />
+
+            <android.support.constraint.Group
+                android:id="@+id/asi_attachment_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="asi_attachment_bg,asi_attachment,asi_attachment_label" />
+            <!--附件 end-->
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</merge>

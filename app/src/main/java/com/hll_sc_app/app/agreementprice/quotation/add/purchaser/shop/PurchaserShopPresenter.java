@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.agreementprice.quotation.add.purchaser.shop;
 
 import com.hll_sc_app.api.AgreementPriceService;
+import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -8,8 +9,8 @@ import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
-import com.hll_sc_app.bean.agreementprice.quotation.WarehouseDetailResp;
-import com.hll_sc_app.bean.agreementprice.quotation.WarehouseShopBean;
+import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
+import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -29,11 +30,6 @@ public class PurchaserShopPresenter implements PurchaserShopListContract.IPurcha
 
     static PurchaserShopPresenter newInstance() {
         return new PurchaserShopPresenter();
-    }
-
-    @Override
-    public void start() {
-        // no-op
     }
 
     @Override
@@ -78,7 +74,8 @@ public class PurchaserShopPresenter implements PurchaserShopListContract.IPurcha
             .put("originator", "1")
             .put("purchaserID", purchaserId)
             .create();
-        AgreementPriceService.INSTANCE.queryCooperationWarehouseDetail(req)
+        WarehouseService.INSTANCE
+            .queryCooperationWarehouseDetail(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())

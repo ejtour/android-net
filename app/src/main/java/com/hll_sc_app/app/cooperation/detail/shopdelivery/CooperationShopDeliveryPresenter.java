@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.cooperation.detail.shopdelivery;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
+import com.hll_sc_app.api.DeliveryManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -8,8 +9,8 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.cooperation.DeliveryBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
+import com.hll_sc_app.bean.delivery.DeliveryBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -44,8 +45,7 @@ public class CooperationShopDeliveryPresenter implements CooperationShopDelivery
             .newBuilder()
             .put("groupID", UserConfig.getGroupID())
             .create();
-        CooperationPurchaserService
-            .INSTANCE
+        DeliveryManageService.INSTANCE
             .queryDeliveryList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
