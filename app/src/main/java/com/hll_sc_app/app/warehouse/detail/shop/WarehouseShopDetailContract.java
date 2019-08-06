@@ -1,18 +1,18 @@
-package com.hll_sc_app.app.warehouse.detail;
+package com.hll_sc_app.app.warehouse.detail.shop;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 
 /**
- * 代仓货主详情
+ * 代仓货主门店详情
  *
  * @author zhuyingsong
  * @date 2019/8/5
  */
-public interface WarehouseDetailContract {
+public interface WarehouseShopDetailContract {
 
-    interface IWarehouseDetailView extends ILoadView {
+    interface IWarehouseShopDetailView extends ILoadView {
         /**
          * 展示代仓详情
          *
@@ -21,7 +21,7 @@ public interface WarehouseDetailContract {
         void showDetail(WarehouseDetailResp resp);
     }
 
-    interface IWarehouseDetailPresenter extends IPresenter<IWarehouseDetailView> {
+    interface IWarehouseShopDetailPresenter extends IPresenter<IWarehouseShopDetailView> {
         /**
          * 查询代仓详情
          *

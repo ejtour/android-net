@@ -1,12 +1,15 @@
 package com.hll_sc_app.bean.warehouse;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 代仓门店详情
  *
  * @author zhuyingsong
  * @date 2019-07-09
  */
-public class WarehouseShopBean {
+public class WarehouseShopBean implements Parcelable {
     private String shopArea;
     private String mobile;
     private String shopName;
@@ -78,5 +81,48 @@ public class WarehouseShopBean {
 
     public void setLogoUrl(String logoUrl) {
         this.logoUrl = logoUrl;
+    }
+
+    public static final Parcelable.Creator<WarehouseShopBean> CREATOR = new Parcelable.Creator<WarehouseShopBean>() {
+        @Override
+        public WarehouseShopBean createFromParcel(Parcel source) {
+            return new WarehouseShopBean(source);
+        }
+
+        @Override
+        public WarehouseShopBean[] newArray(int size) {
+            return new WarehouseShopBean[size];
+        }
+    };
+
+    public WarehouseShopBean() {
+    }
+
+    protected WarehouseShopBean(Parcel in) {
+        this.shopArea = in.readString();
+        this.mobile = in.readString();
+        this.shopName = in.readString();
+        this.id = in.readString();
+        this.isActive = in.readString();
+        this.shopAddress = in.readString();
+        this.linkman = in.readString();
+        this.logoUrl = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.shopArea);
+        dest.writeString(this.mobile);
+        dest.writeString(this.shopName);
+        dest.writeString(this.id);
+        dest.writeString(this.isActive);
+        dest.writeString(this.shopAddress);
+        dest.writeString(this.linkman);
+        dest.writeString(this.logoUrl);
     }
 }

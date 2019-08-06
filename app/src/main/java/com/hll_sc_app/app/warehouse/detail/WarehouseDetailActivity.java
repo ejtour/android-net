@@ -40,7 +40,7 @@ import butterknife.OnClick;
  * @date 2019/8/5
  */
 @Route(path = RouterConfig.WAREHOUSE_DETAIL, extras = Constant.LOGIN_EXTRA)
-public class WarehouseDetailActivity extends BaseLoadActivity implements WarehouseDetailContract.ICooperationDetailView {
+public class WarehouseDetailActivity extends BaseLoadActivity implements WarehouseDetailContract.IWarehouseDetailView {
     @Autowired(name = "object0")
     String mGroupId;
     @BindView(R.id.img_logoUrl)
@@ -74,6 +74,12 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
         mAdapter = new ShopListAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            WarehouseShopBean shopBean = (WarehouseShopBean) adapter.getItem(position);
+            if (shopBean != null) {
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHOP_DETAIL, shopBean);
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -109,7 +115,8 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
-            viewHolder.setGone(R.id.txt_newShopNum, false).setGone(R.id.img_select, false);
+            viewHolder.setGone(R.id.txt_newShopNum, false).setGone(R.id.img_select, false)
+                .addOnClickListener(R.id.content);
             return viewHolder;
         }
 

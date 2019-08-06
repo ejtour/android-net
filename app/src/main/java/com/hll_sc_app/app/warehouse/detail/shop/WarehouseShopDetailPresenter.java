@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.warehouse.detail;
+package com.hll_sc_app.app.warehouse.detail.shop;
 
 import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
@@ -14,20 +14,20 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
- * 代仓货主详情
+ * 代仓货主门店详情
  *
  * @author zhuyingsong
  * @date 2019/8/5
  */
-public class WarehouseDetailPresenter implements WarehouseDetailContract.IWarehouseDetailPresenter {
-    private WarehouseDetailContract.IWarehouseDetailView mView;
+public class WarehouseShopDetailPresenter implements WarehouseShopDetailContract.IWarehouseShopDetailPresenter {
+    private WarehouseShopDetailContract.IWarehouseShopDetailView mView;
 
-    static WarehouseDetailPresenter newInstance() {
-        return new WarehouseDetailPresenter();
+    static WarehouseShopDetailPresenter newInstance() {
+        return new WarehouseShopDetailPresenter();
     }
 
     @Override
-    public void register(WarehouseDetailContract.IWarehouseDetailView view) {
+    public void register(WarehouseShopDetailContract.IWarehouseShopDetailView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
