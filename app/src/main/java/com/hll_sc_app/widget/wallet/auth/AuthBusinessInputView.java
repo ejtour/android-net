@@ -205,14 +205,26 @@ public class AuthBusinessInputView extends ConstraintLayout implements IInfoInpu
 
     private void updateLicenseVisibility() {
         mLicenseInfoGroup.setVisibility(mAuthInfo.getIsImgBusiPermission() == 0 ? VISIBLE : GONE);
+        if (mAuthInfo.getIsImgBusiPermission() != 0) {
+            clearOptionalData();
+        }
+    }
+
+    private void clearOptionalData() {
+        mStartDate.setText("");
+        mEndDate.setText("");
+        mAuthInfo.setBusiPermissionBeginDate("");
+        mAuthInfo.setBusiPermissionEndDate("");
+        if (!TextUtils.isEmpty(mLicensePhoto.getImgUrl())) {
+            mLicensePhoto.deleteImage();
+            deleteImage(mLicensePhoto);
+        }
     }
 
     @OnClick(R.id.abi_start_date)
     public void selectStartDate() {
         WalletHelper.showLongValidDateDialog((Activity) getContext(), (dialog, item) -> {
             dialog.dismiss();
-            mAuthInfo.setBusiPermissionEndDate("");
-            mEndDate.setText("");
             if (item == 0) {
                 mAuthInfo.setBusiPermissionBeginDate(WalletHelper.PERMANENT_DATE);
                 mAuthInfo.setBusiPermissionEndDate(WalletHelper.PERMANENT_DATE);

@@ -149,8 +149,6 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
     public void selectStartDate() {
         WalletHelper.showLongValidDateDialog((Activity) getContext(), (dialog, item) -> {
             dialog.dismiss();
-            mAuthInfo.setLicensePeriod("");
-            mEndDate.setText("");
             if (item == 0) {
                 mAuthInfo.setLicenseBeginDate(WalletHelper.PERMANENT_DATE);
                 mAuthInfo.setLicensePeriod(WalletHelper.PERMANENT_DATE);
