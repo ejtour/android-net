@@ -21,6 +21,7 @@ import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.ArrayList;
@@ -153,19 +154,30 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
 
     @Override
     public boolean verifyValidity() {
-        String personName = mPersonName.getText().toString();
-        if (!personName.matches("^[^ ]+$")) {
-            ToastUtils.showShort(getContext(), "法人姓名不能包括空格");
+        if (!mPersonName.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+            ToastUtils.showShort(getContext(), "法人姓名中请勿包含特殊字符");
+            return false;
+        }
+        if (!Utils.checkPhone(mContact.getText().toString())) {
+            ToastUtils.showShort(getContext(), "请输入正确的法人联系电话");
+            return false;
+        }
+        if (mAuthInfo.getLpCardType() != 0 && !mConsignorName.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+            ToastUtils.showShort(getContext(), "授权联系人姓名中请勿包含特殊字符");
             return false;
         }
         String cardNo = mConsignorCardNo.getText().toString();
         if (!TextUtils.isEmpty(cardNo) && !cardNo.matches("^[1-9](\\d{14}|(\\d{16}X)|\\d{17})$")) {
-            ToastUtils.showShort(getContext(), "授权联系人身份证号错误，以数字或“X”结尾");
+            ToastUtils.showShort(getContext(), "请输入正确的授权人身份证号");
             return false;
         }
         String personCard = mCardNo.getText().toString();
         if (mAuthInfo.getLpCardType() == 0 && !personCard.matches("^[1-9](\\d{14}|(\\d{16}X)|\\d{17})$")) {
-            ToastUtils.showShort(getContext(), "法人身份证号错误，以数字或“X”结尾");
+            ToastUtils.showShort(getContext(), "请输入正确的法人身份证号");
+            return false;
+        }
+        if (Integer.parseInt(mAuthInfo.getLpIDCardPeriodBeginDate()) > Integer.parseInt(mAuthInfo.getLpIDCardPeriod())) {
+            ToastUtils.showShort(getContext(), "起始日期不能大于结束日期");
             return false;
         }
         return true;
@@ -175,7 +187,7 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
     public void inflateInfo() {
         mAuthInfo.setLpName(mPersonName.getText().toString());
         mAuthInfo.setLpIDCardNo(mCardNo.getText().toString());
-        mAuthInfo.setLpPhone(mContact.getText().toString());
+        mAuthInfo.setLpPhone(mContact.getText().toString().replaceAll("\\s+",""));
         mAuthInfo.setProxyName(mConsignorName.getText().toString());
         mAuthInfo.setProxyIDCardNo(mConsignorCardNo.getText().toString());
     }

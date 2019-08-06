@@ -46,14 +46,15 @@
         app:layout_constraintStart_toStartOf="@id/wci_name_div1"
         app:layout_constraintTop_toTopOf="@id/wci_name_bg" />
 
-    <TextView
+    <EditText
         android:id="@+id/wci_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dp_10"
+        style="@style/WalletInfoEdit"
+        android:hint="请输入公司名称"
         android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintBaseline_toBaselineOf="@id/wci_name_label"
+        app:layout_constraintBottom_toTopOf="@id/wci_name_div1"
         app:layout_constraintEnd_toEndOf="@id/wci_name_bg"
+        app:layout_constraintStart_toEndOf="@id/wci_name_label"
+        app:layout_constraintTop_toTopOf="@id/wci_name_bg"
         tools:text="供应商集团名称" />
 
     <TextView

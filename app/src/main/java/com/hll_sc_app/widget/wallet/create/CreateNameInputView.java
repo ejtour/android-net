@@ -54,8 +54,12 @@ public class CreateNameInputView extends ConstraintLayout {
     public void next(View view) {
         String companyName = mNameEdit.getText().toString();
         mAuthInfo.setCompanyName(companyName);
-        if (!companyName.matches("^[^ ]+$")) {
-            ToastUtils.showShort(getContext(), "公司名称不能包括空格");
+        if (!companyName.matches("^.{3,80}$")) {
+            ToastUtils.showShort(getContext(), "公司名称仅支持3-80个字符");
+            return;
+        }
+        if (!companyName.matches("^[\\S]+$")) {
+            ToastUtils.showShort(getContext(), "公司名称请勿包含空格");
             return;
         }
         if (mOnNextListener != null) mOnNextListener.onClick(view);

@@ -117,8 +117,12 @@ public class AuthSettlementInputView extends ConstraintLayout implements IInfoIn
 
     @Override
     public boolean verifyValidity() {
-        if (!mPersonName.getText().toString().matches("^[^ ]+$")) {
-            ToastUtils.showShort(getContext(), "开户名不能包括空格");
+        if (!mPersonName.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+            ToastUtils.showShort(getContext(), "开户名中请勿包含特殊字符");
+            return false;
+        }
+        if (!mCardNo.getText().toString().matches("^([1-9])(\\d{15}|\\d{17,18})$")){
+            ToastUtils.showShort(getContext(),"请输入正确的银行账户号");
             return false;
         }
         return true;
