@@ -223,7 +223,7 @@
                 android:id="@+id/api_contact"
                 style="@style/WalletInfoEdit"
                 android:hint="请输入法人联系方式"
-                android:inputType="phone"
+                android:inputType="number"
                 android:maxLength="16"
                 app:layout_constraintBottom_toBottomOf="@id/api_id_card_bg"
                 app:layout_constraintEnd_toEndOf="@id/api_id_card_bg"
