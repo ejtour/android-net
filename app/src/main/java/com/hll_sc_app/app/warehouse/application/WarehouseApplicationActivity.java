@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -19,6 +20,9 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.WarehouseSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -110,13 +114,34 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
         });
         mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
         mAdapter = new WarehouseListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = mAdapter.getItem(position);
-            if (bean != null) {
+            if (bean == null) {
+                return;
+            }
+            int id = view.getId();
+            if (id == R.id.txt_status && TextUtils.equals(bean.getStatus(), "0")) {
+                // 待同意-点击未同意操作
+                agree(bean);
+
+            } else {
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getGroupID(), "signApplication");
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void agree(PurchaserBean bean) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user != null) {
+            BaseMapReq req = BaseMapReq.newBuilder()
+                .put("groupID", user.getGroupID())
+                .put("originator", "1")
+                .put("purchaserID", bean.getGroupID())
+                .put("actionType", "agree")
+                .create();
+            mPresenter.agreeWarehouse(req);
+        }
     }
 
     @Subscribe
@@ -160,6 +185,13 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
 
         WarehouseListAdapter() {
             super(R.layout.item_warehouse_application);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder baseViewHolder = super.onCreateDefViewHolder(parent, viewType);
+            baseViewHolder.addOnClickListener(R.id.txt_status).addOnClickListener(R.id.content);
+            return baseViewHolder;
         }
 
         @Override

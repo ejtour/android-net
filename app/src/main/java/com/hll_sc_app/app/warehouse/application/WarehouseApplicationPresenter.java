@@ -52,6 +52,29 @@ public class WarehouseApplicationPresenter implements WarehouseApplicationContra
         toQueryPurchaserList(false);
     }
 
+    @Override
+    public void agreeWarehouse(BaseMapReq req) {
+        WarehouseService.INSTANCE
+            .agreeOrRefuseWarehouse(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.showToast("已同意");
+                    queryWarehouseList(true);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
     private void toQueryPurchaserList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("actionType", "signApplication")

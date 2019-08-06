@@ -2,6 +2,7 @@ package com.hll_sc_app.app.warehouse.application;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 
 import java.util.List;
@@ -44,5 +45,12 @@ public interface WarehouseApplicationContract {
          * 查询下一页我收到的申请数据列表
          */
         void queryMoreWarehouseList();
+
+        /**
+         * 同意签约
+         *
+         * @param req req
+         */
+        void agreeWarehouse(BaseMapReq req);
     }
 }
