@@ -15,6 +15,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.wallet.details.DetailsRecord;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.DateUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,6 +26,12 @@ import butterknife.ButterKnife;
  */
 @Route(path = RouterConfig.WALLET_DETAILS_SHOW)
 public class DetailsShowActivity extends BaseLoadActivity {
+
+    /**
+     * 金额描述
+     */
+    @BindView(R.id.wds_money_label)
+    TextView mMoneyLabel;
 
     /**
      * 金额
@@ -66,8 +73,21 @@ public class DetailsShowActivity extends BaseLoadActivity {
      */
     @BindView(R.id.wds_content_remark)
     TextView mRemark;
+    /**
+     * 交易余额
+     */
     @BindView(R.id.wds_content_balance)
     TextView mBalance;
+    /**
+     * 交易费用
+     */
+    @BindView(R.id.wds_fee)
+    TextView mFee;
+    /**
+     * 交易时间
+     */
+    @BindView(R.id.wds_time)
+    TextView mTime;
     @Autowired(name = "parcelable", required = true)
     DetailsRecord mDetailsRecord;
 
@@ -97,6 +117,11 @@ public class DetailsShowActivity extends BaseLoadActivity {
         mOrder.setText(mDetailsRecord.getPayOrderKey());
         // 交易类型
         mType.setText(mDetailsRecord.getTransTypeDesc());
+        mMoneyLabel.setText(String.format("%s金额", mDetailsRecord.getTransTypeDesc()));
+        // 交易时间
+        mTime.setText(DateUtil.getReadableTime(mDetailsRecord.getAccountTime()));
+        // 交易费用
+        mFee.setText(String.format("¥%s", mDetailsRecord.getTransSalesCommission()));
         // 业务单号
         mBusinessNo.setText(mDetailsRecord.getBusinessNo());
         // 付款集团

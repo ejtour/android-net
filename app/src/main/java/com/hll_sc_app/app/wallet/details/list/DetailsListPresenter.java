@@ -56,6 +56,7 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
                             array.clear();
                         }
                         mView.setDetailsList(processDetailsList(detailsListResp.getRecords()));
+                        mView.setEnableLoadMore(detailsListResp.getRecords() != null && detailsListResp.getRecords().size() == 20);
                         if (detailsListResp.getPageNo() == 0 || CommonUtils.isEmpty(detailsListResp.getRecords())) {
                             return;
                         }

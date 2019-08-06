@@ -9,10 +9,10 @@
         android:id="@+id/wds_header"
         android:layout_width="0dp"
         android:layout_height="@dimen/title_bar_height"
-        app:tb_title="收支详情"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="收支详情" />
 
     <View
         android:id="@+id/wds_bg"
@@ -51,7 +51,7 @@
         android:id="@+id/wds_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/color_ed5655"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/wds_money_label"
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
@@ -69,6 +69,16 @@
         app:layout_constraintTop_toBottomOf="@+id/wds_divider" />
 
     <TextView
+        android:id="@+id/wds_title_fee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="交易费用"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/wds_divider"
+        app:layout_constraintTop_toBottomOf="@+id/wds_title_type" />
+
+    <TextView
         android:id="@+id/wds_title_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,17 +86,27 @@
         android:text="交易余额"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
-        app:layout_constraintTop_toBottomOf="@+id/wds_title_type" />
+        app:layout_constraintTop_toBottomOf="@+id/wds_title_fee" />
+
+    <TextView
+        android:id="@+id/wds_title_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="交易时间"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/wds_title_water"
+        app:layout_constraintTop_toBottomOf="@+id/wds_title_balance" />
 
     <TextView
         android:id="@+id/wds_title_water"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:text="流水单号"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
-        app:layout_constraintTop_toBottomOf="@+id/wds_title_balance" />
+        app:layout_constraintTop_toBottomOf="@+id/wds_title_time" />
 
     <TextView
         android:id="@+id/wds_title_pay"
@@ -107,16 +127,6 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_pay" />
-
-    <!--<TextView
-        android:id="@+id/wds_time_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="交易时间"
-        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-        app:layout_constraintStart_toStartOf="@+id/wds_account_water_label"
-        app:layout_constraintTop_toBottomOf="@+id/wds_order_label" />-->
 
     <TextView
         android:id="@+id/wds_title_purchaser"
@@ -148,16 +158,6 @@
         app:layout_constraintStart_toStartOf="@+id/wds_divider"
         app:layout_constraintTop_toBottomOf="@+id/wds_title_shop" />
 
-
-    <!--<TextView
-        android:id="@+id/wds_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBaseline_toBaselineOf="@+id/wds_time_label"
-        app:layout_constraintEnd_toEndOf="@+id/wds_divider"
-        tools:text="2018-08-03 11:22:33" />-->
-
     <TextView
         android:id="@+id/wds_content_type"
         android:layout_width="wrap_content"
@@ -168,6 +168,15 @@
         tools:text="收入" />
 
     <TextView
+        android:id="@+id/wds_fee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@id/wds_title_fee"
+        app:layout_constraintEnd_toEndOf="@id/wds_divider"
+        tools:text="¥20.00" />
+
+    <TextView
         android:id="@+id/wds_content_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -175,6 +184,15 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/wds_title_balance"
         app:layout_constraintEnd_toEndOf="@+id/wds_divider"
         tools:text="¥2990.00" />
+
+    <TextView
+        android:id="@+id/wds_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@+id/wds_title_time"
+        app:layout_constraintEnd_toEndOf="@+id/wds_divider"
+        tools:text="2018-08-03 11:22:33" />
 
     <TextView
         android:id="@+id/wds_content_water"

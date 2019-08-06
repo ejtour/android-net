@@ -159,9 +159,9 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     private void showOptionsWindow(View view) {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_day_option, OptionType.OPTION_REPORT_CURRENT_DATE));
-            list.add(new OptionsBean(R.drawable.ic_week_option, OptionType.OPTION_REPORT_CURRENT_WEEK));
-            list.add(new OptionsBean(R.drawable.ic_month_option, OptionType.OPTION_REPORT_CURRENT_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_day_option, OptionType.OPTION_CURRENT_DATE));
+            list.add(new OptionsBean(R.drawable.ic_week_option, OptionType.OPTION_CURRENT_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_month_option, OptionType.OPTION_CURRENT_MONTH));
             mOptionsWindow = new ContextOptionsWindow(requireActivity())
                     .refreshList(list)
                     .setListener(this);
@@ -226,15 +226,15 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
         if (item == null) return;
         mOptionsWindow.dismiss();
         switch (item.getLabel()) {
-            case OptionType.OPTION_REPORT_CURRENT_DATE:
+            case OptionType.OPTION_CURRENT_DATE:
                 if (mDateType == 0) return;
                 mDateType = 0;
                 break;
-            case OptionType.OPTION_REPORT_CURRENT_WEEK:
+            case OptionType.OPTION_CURRENT_WEEK:
                 if (mDateType == 1) return;
                 mDateType = 1;
                 break;
-            case OptionType.OPTION_REPORT_CURRENT_MONTH:
+            case OptionType.OPTION_CURRENT_MONTH:
                 if (mDateType == 2) return;
                 mDateType = 2;
                 break;
