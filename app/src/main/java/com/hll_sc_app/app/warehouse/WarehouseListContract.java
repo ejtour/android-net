@@ -7,7 +7,7 @@ import com.hll_sc_app.bean.goods.PurchaserBean;
 import java.util.List;
 
 /**
- * 代仓公司列表
+ * 代仓客户列表
  *
  * @author zhuyingsong
  * @date 2019/8/5
@@ -16,14 +16,14 @@ public interface WarehouseListContract {
 
     interface IWarehouseListView extends ILoadView {
         /**
-         * 代仓集团名称检索字段
+         * 代仓客户集团名称检索字段
          *
          * @return 搜索词
          */
         String getSearchParam();
 
         /**
-         * 展示代仓集团列表
+         * 展示代仓客户集团列表
          *
          * @param list     list
          * @param append   true-追加

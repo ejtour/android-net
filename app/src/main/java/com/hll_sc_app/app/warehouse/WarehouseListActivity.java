@@ -49,7 +49,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 代仓公司列表
+ * 代仓客户列表
  *
  * @author zhuyingsong
  * @date 2019/8/5
@@ -225,7 +225,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     private void showOptionsWindow(View view) {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_warehouse_add, OptionType.OPTION_WAREHOUSE_ADD));
+            list.add(new OptionsBean(R.drawable.ic_warehouse_add, OptionType.OPTION_WAREHOUSE_CLIENT));
             list.add(new OptionsBean(R.drawable.ic_cooperation_receive, OptionType.OPTION_COOPERATION_RECEIVE));
             list.add(new OptionsBean(R.drawable.ic_cooperation_send, OptionType.OPTION_COOPERATION_SEND));
             mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
@@ -239,7 +239,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
         if (optionsBean == null) {
             return;
         }
-        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_WAREHOUSE_ADD)) {
+        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_WAREHOUSE_CLIENT)) {
             toAdd();
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {

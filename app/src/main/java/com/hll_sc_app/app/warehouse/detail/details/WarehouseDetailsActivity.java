@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -24,13 +25,18 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
+import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.widget.SingleSelectionDialog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 代仓管理-代仓详情
+ * 代仓管理-代仓客户详情
  *
  * @author zhuyingsong
  * @date 2019/8/5
@@ -55,7 +61,12 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
     WarehouseButtonView mButtonView;
     @BindView(R.id.txt_businessModel)
     TextView mTxtBusinessModel;
+    @BindView(R.id.txt_return_audit)
+    TextView mTxtReturnAudit;
+    @BindView(R.id.rl_return_audit)
+    RelativeLayout mRlReturnAudit;
     private WarehouseDetailsPresenter mPresenter;
+    private SingleSelectionDialog mDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,11 +80,38 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mPresenter.queryCooperationWarehouseDetail(mPurchaserId);
     }
 
-    @OnClick({R.id.img_close})
+    @OnClick({R.id.img_close, R.id.rl_return_audit})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
+        } else if (view.getId() == R.id.rl_return_audit) {
+            showReturnAuditWindow();
         }
+    }
+
+    private void showReturnAuditWindow() {
+        if (mDialog == null) {
+            List<NameValue> values = new ArrayList<>();
+            NameValue value0 = new NameValue("代仓公司审核", "0");
+            NameValue value1 = new NameValue("货主审核", "1");
+            values.add(value0);
+            values.add(value1);
+            mDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                .setTitleText("选择退货审核")
+                .select(TextUtils.equals(mTxtReturnAudit.getText(), "代仓公司审核") ? value0 : value1)
+                .setOnSelectListener(bean -> {
+                    mTxtReturnAudit.setText(bean.getName());
+                    BaseMapReq req = BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("purchaserID", mPurchaserId)
+                        .put("returnAudit", bean.getValue())
+                        .create();
+                    mPresenter.editWarehouseParameter(req);
+                })
+                .refreshList(values)
+                .create();
+        }
+        mDialog.show();
     }
 
     @Override
@@ -89,9 +127,11 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
             mTxtGroupArea.setText(purchaserInfo.getGroupArea());
             mTxtLinkman.setText(purchaserInfo.getLinkman());
             mTxtMobile.setText(purchaserInfo.getMobile());
-            mButtonView.showButton(mActionType, resp.getStatus());
             mButtonView.setListener(this, purchaserInfo);
         }
+        mButtonView.showButton(mActionType, resp.getStatus());
+        mRlReturnAudit.setVisibility(TextUtils.equals(resp.getStatus(), "2") ? View.VISIBLE : View.GONE);
+        mTxtReturnAudit.setText(TextUtils.equals(resp.getReturnAudit(), "0") ? "代仓公司审核" : "货主审核");
     }
 
     public static String getBusinessModelString(int businessModel) {

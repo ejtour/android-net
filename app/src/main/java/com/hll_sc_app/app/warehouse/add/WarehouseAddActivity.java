@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 代仓管理-搜索新增
+ * 代仓管理-新签代仓客户
  *
  * @author zhuyingsong
  * @date 2019/8/5

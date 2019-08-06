@@ -14,6 +14,15 @@ public class WarehouseDetailResp {
     private List<WarehouseShopBean> shops;
     private PurchaserBean purchaserInfo;
     private String status;
+    private String returnAudit;
+
+    public String getReturnAudit() {
+        return returnAudit;
+    }
+
+    public void setReturnAudit(String returnAudit) {
+        this.returnAudit = returnAudit;
+    }
 
     public PurchaserBean getPurchaserInfo() {
         return purchaserInfo;
