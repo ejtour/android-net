@@ -98,13 +98,21 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
         PurchaserBean bean = resp.getPurchaserInfo();
         if (bean != null) {
             mTxtGroupName.setText(bean.getGroupName());
-            mTxtLinkman.setText(String.format("联系人：%s", TextUtils.isEmpty(bean.getLinkman()) ? "无" :
-                bean.getLinkman()));
+            mTxtLinkman.setText("");
+            mTxtLinkman.setText(String.format("联系人：%s / %s", getString(bean.getLinkman()),
+                getString(PhoneUtil.formatPhoneNum(bean.getMobile()))));
             mTxtGroupArea.setText(String.format("所在地区：%s", TextUtils.isEmpty(bean.getGroupArea()) ? "无" :
                 bean.getGroupArea()));
         }
         mAdapter.setNewData(resp.getShops());
         mAdapter.setEmptyView(mEmptyView);
+    }
+
+    private String getString(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return "无";
+        }
+        return str;
     }
 
     private static class ShopListAdapter extends BaseQuickAdapter<WarehouseShopBean, BaseViewHolder> {
