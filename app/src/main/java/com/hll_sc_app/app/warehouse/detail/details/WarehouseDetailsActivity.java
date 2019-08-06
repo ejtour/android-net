@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -133,7 +135,12 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
             .put("purchaserID", bean.getGroupID())
             .put("type", type)
             .create();
-        mPresenter.delWarehouse(req, type);
+        if (TextUtils.equals("1", type)) {
+            // 1-解除合作，2-放弃
+            showTipsDialog(req, type);
+        } else {
+            mPresenter.delWarehouse(req, type);
+        }
     }
 
     @Override
@@ -159,6 +166,23 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
                 .put("purchaserID", bean.getGroupID());
         }
         return builder;
+    }
+
+    private void showTipsDialog(BaseMapReq req, String type) {
+        SuccessDialog.newBuilder(this)
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("确认要解除合作嘛")
+            .setMessage("您确认要解除和该公司的\n代仓合作关系嘛")
+            .setCancelable(false)
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    mPresenter.delWarehouse(req, type);
+                }
+                dialog.dismiss();
+            }, "我再看看", "确认解除")
+            .create()
+            .show();
     }
 
     private BaseMapReq.Builder getAddReq(PurchaserBean bean) {
