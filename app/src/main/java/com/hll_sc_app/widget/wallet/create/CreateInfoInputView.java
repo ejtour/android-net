@@ -43,7 +43,7 @@ import butterknife.Optional;
 
 public class CreateInfoInputView extends ConstraintLayout implements IInfoInputView {
     @BindView(R.id.wci_name)
-    protected TextView mName;
+    protected EditText mName;
     @BindView(R.id.wci_short_name)
     protected EditText mShortName;
     @BindView(R.id.wci_type)
@@ -192,23 +192,34 @@ public class CreateInfoInputView extends ConstraintLayout implements IInfoInputV
 
     @Override
     public void inflateInfo() {
+        mAuthInfo.setCompanyName(mName.getText().toString());
         mAuthInfo.setBusinessAddress(mDetailAddress.getText().toString());
         mAuthInfo.setCompanyShortName(mShortName.getText().toString());
         mAuthInfo.setOperatorName(mContact.getText().toString());
-        mAuthInfo.setOperatorMobile(mPhone.getText().toString());
+        mAuthInfo.setOperatorMobile(mPhone.getText().toString().replaceAll("\\s+", ""));
         mAuthInfo.setOperatorEmail(mEmail.getText().toString());
     }
 
     @Override
     public boolean verifyValidity() {
-        String shortName = mShortName.getText().toString();
-        if (!shortName.matches("^[\\u4e00-\\u9fa5]+$")) {
-            ToastUtils.showShort(getContext(), "公司简称最多12个汉字，不能包含空格、特殊字符");
+        if (!mName.getText().toString().matches("^.{3,80}$")) {
+            ToastUtils.showShort(getContext(), "公司名称仅支持3-80个字符");
             return false;
         }
-        String contact = mContact.getText().toString();
-        if (!contact.matches("^[\\u4e00-\\u9fa5]+$")) {
-            ToastUtils.showShort(getContext(), "联系人最多10汉字，不可有空格");
+        if (!mName.getText().toString().matches("^[\\S]+$")) {
+            ToastUtils.showShort(getContext(), "公司名称请勿包含空格");
+            return false;
+        }
+        if (!mShortName.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+            ToastUtils.showShort(getContext(), "公司简称中请勿包含特殊字符");
+            return false;
+        }
+        if (!mContact.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+            ToastUtils.showShort(getContext(), "姓名中请勿包含特殊字符");
+            return false;
+        }
+        if (!Utils.checkPhone(mPhone.getText().toString())) {
+            ToastUtils.showShort(getContext(), "请输入正确的联系电话");
             return false;
         }
         if (!Utils.checkEmail(mEmail.getText().toString())) {

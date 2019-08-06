@@ -189,9 +189,12 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
         if (!super.verifyValidity()) {
             return false;
         }
-        String registerAddress = mRegisterAddress.getText().toString();
-        if (!registerAddress.matches("^[A-Za-z0-9\\u4e00-\\u9fa5][A-Za-z0-9\\u4e00-\\u9fa5()+*\\- ]*$")) {
-            ToastUtils.showShort(getContext(), "注册地址只能包含数字字母中文空格与()+*-符号");
+        if (!mCreditCode.getText().toString().matches("^[^_IOZSVa-z\\W]{2}\\d{6}[^_IOZSVa-z\\W]{10}$")) {
+            ToastUtils.showShort(getContext(), "请输入正确的统一社会信用代码");
+            return false;
+        }
+        if (Integer.parseInt(mAuthInfo.getLicenseBeginDate()) > Integer.parseInt(mAuthInfo.getLicensePeriod())) {
+            ToastUtils.showShort(getContext(), "起始日期不能大于结束日期");
             return false;
         }
         return true;

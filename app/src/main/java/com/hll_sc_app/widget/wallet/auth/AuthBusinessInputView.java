@@ -116,6 +116,11 @@ public class AuthBusinessInputView extends ConstraintLayout implements IInfoInpu
 
     @Override
     public boolean verifyValidity() {
+        if (mAuthInfo.getIsImgBusiPermission() == 0 &&
+                Integer.parseInt(mAuthInfo.getBusiPermissionBeginDate()) > Integer.parseInt(mAuthInfo.getBusiPermissionEndDate())) {
+            ToastUtils.showShort(getContext(), "起始日期不能大于结束日期");
+            return false;
+        }
         return true;
     }
 

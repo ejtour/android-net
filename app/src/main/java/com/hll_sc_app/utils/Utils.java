@@ -2,6 +2,7 @@ package com.hll_sc_app.utils;
 
 import android.app.Activity;
 import android.support.annotation.DrawableRes;
+import android.text.TextUtils;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.widget.ExportDialog;
@@ -32,6 +33,12 @@ public class Utils {
             flag = false;
         }
         return flag;
+    }
+
+    public static boolean checkPhone(String phone){
+        if (TextUtils.isEmpty(phone)) return false;
+        phone = phone.replaceAll("\\s+","");
+        return phone.matches("^((13[0-9])|(14[57])|(15[0-35-9])|(16[6])|(17[0135-8])|(18[0-9])|(19[189]))\\d{8}$");
     }
 
     private static void export(Activity context, String title, @DrawableRes int state, String tip, String action, ExportDialog.OnClickListener listener) {
