@@ -16,7 +16,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
+import com.hll_sc_app.bean.warehouse.ShopParameterBean;
 import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
 import com.kyleduo.switchbutton.SwitchButton;
 
@@ -46,7 +46,7 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
     SwitchButton mSwitchPay;
     @Autowired(name = "parcelable", required = true)
     WarehouseShopBean mShopBean;
-
+    private WarehouseShopDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,8 +55,9 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
         ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
-        WarehouseShopDetailPresenter presenter = WarehouseShopDetailPresenter.newInstance();
-        presenter.register(this);
+        mPresenter = WarehouseShopDetailPresenter.newInstance();
+        mPresenter.register(this);
+        mPresenter.queryWarehouseShop();
         showView();
     }
 
@@ -78,7 +79,17 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
     }
 
     @Override
-    public void showDetail(WarehouseDetailResp resp) {
+    public void showDetail(ShopParameterBean bean) {
+        mSwitchPay.setCheckedNoEvent(!TextUtils.equals(bean.getSupportPay(), "0"));
+    }
 
+    @Override
+    public String getShopIds() {
+        return mShopBean.getId();
+    }
+
+    @Override
+    public String getPurchaserId() {
+        return mShopBean.getPurchaserId();
     }
 }

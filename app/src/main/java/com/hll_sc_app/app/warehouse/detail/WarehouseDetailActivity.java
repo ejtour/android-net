@@ -77,6 +77,7 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             WarehouseShopBean shopBean = (WarehouseShopBean) adapter.getItem(position);
             if (shopBean != null) {
+                shopBean.setPurchaserId(mGroupId);
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHOP_DETAIL, shopBean);
             }
         });

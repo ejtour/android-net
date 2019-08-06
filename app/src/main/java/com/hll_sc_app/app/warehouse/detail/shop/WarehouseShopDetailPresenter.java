@@ -7,9 +7,11 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
+import com.hll_sc_app.bean.warehouse.ShopParameterBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -32,23 +34,25 @@ public class WarehouseShopDetailPresenter implements WarehouseShopDetailContract
     }
 
     @Override
-    public void queryCooperationWarehouseDetail(String purchaserId) {
+    public void queryWarehouseShop() {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", purchaserId)
+            .put("purchaserID", mView.getPurchaserId())
+            .put("shopIds", mView.getShopIds())
             .create();
         WarehouseService.INSTANCE
-            .queryCooperationWarehouseDetail(req)
+            .queryWarehouseShop(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<WarehouseDetailResp>() {
+            .subscribe(new BaseCallback<List<ShopParameterBean>>() {
                 @Override
-                public void onSuccess(WarehouseDetailResp result) {
-                    mView.showDetail(result);
+                public void onSuccess(List<ShopParameterBean> list) {
+                    if (!CommonUtils.isEmpty(list)) {
+                        mView.showDetail(list.get(0));
+                    }
                 }
 
                 @Override
@@ -56,5 +60,10 @@ public class WarehouseShopDetailPresenter implements WarehouseShopDetailContract
                     mView.showToast(e.getMessage());
                 }
             });
+    }
+
+    @Override
+    public void editWarehouseShop() {
+
     }
 }
