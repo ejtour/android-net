@@ -243,6 +243,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
             toAdd();
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INVITE);
         }
         mOptionsWindow.dismiss();
     }
