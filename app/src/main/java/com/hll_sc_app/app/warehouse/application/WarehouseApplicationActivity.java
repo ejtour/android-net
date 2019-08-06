@@ -1,6 +1,7 @@
-package com.hll_sc_app.app.warehouse.invite;
+package com.hll_sc_app.app.warehouse.application;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,13 +45,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 代仓公司-我的申请
+ * 代仓公司-我收到的申请
  *
  * @author zhuyingsong
  * @date 2019/8/5
  */
-@Route(path = RouterConfig.WAREHOUSE_INVITE, extras = Constant.LOGIN_EXTRA)
-public class WarehouseInviteActivity extends BaseLoadActivity implements WarehouseInviteContract.IWarehouseInviteView {
+@Route(path = RouterConfig.WAREHOUSE_APPLICATION, extras = Constant.LOGIN_EXTRA)
+public class WarehouseApplicationActivity extends BaseLoadActivity implements WarehouseApplicationContract.IWarehouseApplicationView {
     @BindView(R.id.searchView)
     SearchView mSearchView;
     @BindView(R.id.recyclerView)
@@ -61,16 +62,16 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
     private EmptyView mEmptyView;
     private EmptyView mSearchEmptyView;
     private WarehouseListAdapter mAdapter;
-    private WarehouseInvitePresenter mPresenter;
+    private WarehouseApplicationPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_warehouse_invite);
+        setContentView(R.layout.activity_warehouse_application);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        mPresenter = WarehouseInvitePresenter.newInstance();
+        mPresenter = WarehouseApplicationPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
         EventBus.getDefault().register(this);
@@ -84,7 +85,7 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
 
     private void initView() {
         mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到申请数据").create();
-        mEmptyView = EmptyView.newBuilder(this).setTips("还没有申请数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("还没有收到申请数据").create();
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -112,7 +113,7 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = mAdapter.getItem(position);
             if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getGroupID(), "myApplication");
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getGroupID(), "signApplication");
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -158,7 +159,7 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
     private static class WarehouseListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
 
         WarehouseListAdapter() {
-            super(R.layout.item_warehouse_invite);
+            super(R.layout.item_warehouse_application);
         }
 
         @Override
@@ -180,17 +181,20 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
             switch (item.getStatus()) {
                 case "0":
                     // 待同意
-                    txtStatus.setTextColor(0xFFF6BB42);
-                    txtStatus.setText("待同意");
+                    txtStatus.setBackgroundResource(R.drawable.bg_button_mid_solid_primary);
+                    txtStatus.setTextColor(0xFFFFFFFF);
+                    txtStatus.setText(R.string.agree);
                     break;
                 case "1":
                     // 未同意
-                    txtStatus.setTextColor(0xFFED5655);
-                    txtStatus.setText("未同意");
+                    txtStatus.setBackground(new ColorDrawable());
+                    txtStatus.setTextColor(0xFF999999);
+                    txtStatus.setText("已拒绝");
                     break;
                 case "2":
                     // 已同意
-                    txtStatus.setTextColor(0xFFAEAEAE);
+                    txtStatus.setBackground(new ColorDrawable());
+                    txtStatus.setTextColor(0xFF999999);
                     txtStatus.setText("已同意");
                     break;
                 default:

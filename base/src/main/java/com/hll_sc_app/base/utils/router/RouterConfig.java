@@ -36,6 +36,10 @@ public class RouterConfig {
      */
     public static final String WAREHOUSE_INVITE = "/activity/warehouse/invite";
     /**
+     * 代仓公司-我收到的申请
+     */
+    public static final String WAREHOUSE_APPLICATION = "/activity/warehouse/application";
+    /**
      * 代仓公司-搜索添加
      */
     public static final String WAREHOUSE_ADD = "/activity/warehouse/add";

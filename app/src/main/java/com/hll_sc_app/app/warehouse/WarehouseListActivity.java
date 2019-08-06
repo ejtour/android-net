@@ -242,6 +242,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_WAREHOUSE_CLIENT)) {
             toAdd();
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_APPLICATION);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
             RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INVITE);
         }
