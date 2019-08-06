@@ -152,7 +152,9 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
             mDatePickerDialog = DatePickerDialog.newBuilder(this)
                     .setBeginTime(begin.getTimeInMillis())
                     .setEndTime(System.currentTimeMillis())
-                    .setToggleStatus(DatePickerDialog.ToggleStatus.DAY)
+                    .setToggleStatus(DatePickerDialog.ToggleStatus.MONTH)
+                    .setShowDay(false)
+                    .setShowEnd(false)
                     .setCallback(this)
                     .create();
         }
@@ -208,5 +210,10 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
     @Override
     public void exportFailure(String msg) {
         Utils.exportFailure(this, msg);
+    }
+
+    @Override
+    public void setEnableLoadMore(boolean enableLoadMore) {
+        wdlRefresh.setEnableLoadMore(enableLoadMore);
     }
 }

@@ -31,6 +31,8 @@ public interface IDetailsListContract {
          * 导出失败
          */
         void exportFailure(String msg);
+
+        void setEnableLoadMore(boolean enableLoadMore);
     }
 
     interface IDetailsListPresenter extends IPresenter<IDetailsListView> {

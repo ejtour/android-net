@@ -130,17 +130,16 @@ public class DatePickerDialog extends BaseDialog implements OnWheelChangedListen
     }
 
     private void updateText() {
-        if (mEndDate.isSelected()) {
-            setSelectEnd(0);
-        } else {
-            setSelectBegin(0);
-        }
+        setSelectEnd(0);
+        setSelectBegin(0);
     }
 
     public interface SelectCallback {
-        default void select(Date time){}
+        default void select(Date time) {
+        }
 
-        default void select(Date beginTime, Date endTime){}
+        default void select(Date beginTime, Date endTime) {
+        }
     }
 
     private DatePickerDialog(@NonNull Activity context) {
