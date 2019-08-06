@@ -15,6 +15,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -61,7 +62,7 @@ public class WarehouseRecommendActivity extends BaseLoadActivity implements Ware
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                // RouterUtil.goToActivity(RouterConfig.USER_WAREHOUSE_MANAGER_DETAIL, bean);
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAIL, bean.getGroupID());
             }
         });
     }

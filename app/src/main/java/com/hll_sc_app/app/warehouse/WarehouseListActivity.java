@@ -141,7 +141,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
                 } else if (view.getId() == R.id.content) {
-                    // TODO:
+                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAIL, bean.getGroupID());
                 }
             }
         });
@@ -243,6 +243,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
             toAdd();
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INVITE);
         }
         mOptionsWindow.dismiss();
     }

@@ -215,11 +215,23 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".app.warehouse.invite.WarehouseInviteActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.warehouse.add.WarehouseAddActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.warehouse.detail.details.WarehouseDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.detail.WarehouseDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.detail.shop.WarehouseShopDetailActivity"
             android:screenOrientation="portrait"/>
 
         <activity

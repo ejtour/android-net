@@ -6,6 +6,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.warehouse.GroupDetail;
+import com.hll_sc_app.bean.warehouse.ShopParameterBean;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 import com.hll_sc_app.bean.warehouse.WarehouseListResp;
 
@@ -104,4 +105,24 @@ public interface WarehouseService {
     @POST(HttpConfig.URL)
     @Headers("pv:101048")
     Observable<BaseResp<Object>> delWarehouse(@Body BaseMapReq req);
+
+    /**
+     * 查询代仓门店
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101102")
+    Observable<BaseResp<List<ShopParameterBean>>> queryWarehouseShop(@Body BaseMapReq req);
+
+    /**
+     * 编辑代仓门店
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101101")
+    Observable<BaseResp<Object>> editWarehouseShop(@Body BaseMapReq req);
 }
