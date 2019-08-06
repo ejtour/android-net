@@ -74,7 +74,7 @@ public class VerifyFragment extends BaseFragment {
             case WalletStatusResp.STATUS_VERIFY_FAIL:
                 mIcon.setImageResource(R.drawable.ic_dialog_failure);
                 mResultTitle.setText("您的账号申请暂未通过！");
-                mResultTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary));
+                mResultTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_ed5655));
                 mResultDesc.setText("您提交的铁金库账号申请资料因\n审核未通过！");
                 mBtn.setVisibility(View.VISIBLE);
                 break;
