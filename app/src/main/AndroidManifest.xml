@@ -220,6 +220,9 @@
         <activity
             android:name=".app.warehouse.application.WarehouseApplicationActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.warehouse.application.WarehouseShopListActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.warehouse.add.WarehouseAddActivity"

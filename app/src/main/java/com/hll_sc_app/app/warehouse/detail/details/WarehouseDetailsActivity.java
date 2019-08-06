@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,13 +24,17 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
+import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
 import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,8 +70,13 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
     TextView mTxtReturnAudit;
     @BindView(R.id.rl_return_audit)
     RelativeLayout mRlReturnAudit;
+    @BindView(R.id.txt_shopsNum)
+    TextView mTxtShopsNum;
+    @BindView(R.id.ll_shopsNum)
+    LinearLayout mLlShopsNum;
     private WarehouseDetailsPresenter mPresenter;
     private SingleSelectionDialog mDialog;
+    private WarehouseDetailResp mResp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,12 +90,18 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mPresenter.queryCooperationWarehouseDetail(mPurchaserId);
     }
 
-    @OnClick({R.id.img_close, R.id.rl_return_audit})
+    @OnClick({R.id.img_close, R.id.rl_return_audit, R.id.ll_shopsNum})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
         } else if (view.getId() == R.id.rl_return_audit) {
             showReturnAuditWindow();
+        } else if (view.getId() == R.id.ll_shopsNum) {
+            List<WarehouseShopBean> shops = mResp.getShops();
+            if (CommonUtils.isEmpty(shops)) {
+                return;
+            }
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_APPLICATION_SHOP, new ArrayList<>(shops));
         }
     }
 
@@ -116,6 +132,7 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
 
     @Override
     public void showDetail(WarehouseDetailResp resp) {
+        mResp = resp;
         if (resp == null) {
             return;
         }
@@ -132,6 +149,11 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mButtonView.showButton(mActionType, resp.getStatus());
         mRlReturnAudit.setVisibility(TextUtils.equals(resp.getStatus(), "2") ? View.VISIBLE : View.GONE);
         mTxtReturnAudit.setText(TextUtils.equals(resp.getReturnAudit(), "0") ? "代仓公司审核" : "货主审核");
+
+        mLlShopsNum.setVisibility(TextUtils.equals(resp.getStatus(), "0") && TextUtils.equals(mActionType,
+            "signApplication") ? View.VISIBLE : View.GONE);
+        mTxtShopsNum.setText(String.format(Locale.getDefault(), "需代仓%d个门店", CommonUtils.isEmpty(mResp.getShops()) ? 0 :
+            mResp.getShops().size()));
     }
 
     public static String getBusinessModelString(int businessModel) {

@@ -115,9 +115,9 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
         return str;
     }
 
-    private static class ShopListAdapter extends BaseQuickAdapter<WarehouseShopBean, BaseViewHolder> {
+    public static class ShopListAdapter extends BaseQuickAdapter<WarehouseShopBean, BaseViewHolder> {
 
-        ShopListAdapter() {
+        public ShopListAdapter() {
             super(R.layout.item_cooperation_purchaser_shop);
         }
 

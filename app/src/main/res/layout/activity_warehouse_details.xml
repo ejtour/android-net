@@ -207,6 +207,36 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_shopsNum"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="代仓门店"
+            android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+        <TextView
+            android:id="@+id/txt_shopsNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="12dp"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"/>
+
+    </LinearLayout>
+
     <com.hll_sc_app.app.warehouse.detail.details.WarehouseButtonView
         android:id="@+id/buttonView"
         android:layout_width="match_parent"
