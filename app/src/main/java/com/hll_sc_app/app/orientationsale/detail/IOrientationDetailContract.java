@@ -7,10 +7,10 @@ import com.hll_sc_app.bean.orientation.OrientationListBean;
 
 import java.util.List;
 
-public interface IOrentationDetailContract {
+public interface IOrientationDetailContract {
 
 
-    interface IOrentationDetailView extends ILoadView {
+    interface IOrientationDetailView extends ILoadView {
         /**
          * 设置view
          */
@@ -30,15 +30,15 @@ public interface IOrentationDetailContract {
         void addSuccess();
         }
 
-    interface IOrentationDetailPresenter extends IPresenter<IOrentationDetailContract.IOrentationDetailView> {
+    interface IOrientationDetailPresenter extends IPresenter<IOrientationDetailContract.IOrientationDetailView> {
         /**
          * 设置定向售卖
          */
-        void setOrentation(List<OrientationDetailBean> list, OrientationListBean bean);
+        void setOrientation(List<OrientationDetailBean> list, OrientationListBean bean);
         /**
          * 获取定向售卖数据
          */
-        void getOrentation();
+        void getOrientation();
         /**
          * 获取集团信息
          */

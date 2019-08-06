@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -18,6 +19,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.RefreshOrientationList;
 import com.hll_sc_app.bean.orientation.OrientationDetailBean;
 import com.hll_sc_app.bean.orientation.OrientationListBean;
@@ -37,9 +39,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 @Route(path = RouterConfig.ORIENTATION_LIST, extras = Constant.LOGIN_EXTRA)
-public class OrientationListActivity extends BaseLoadActivity implements IOrentationListContract.IOrentationListView {
+public class OrientationListActivity extends BaseLoadActivity implements IOrientationListContract.IOrientationListView {
 
-    private IOrentationListContract.IOrentationListPresenter mPresenter;
+    private IOrientationListContract.IOrientationListPresenter mPresenter;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -68,29 +70,37 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrenta
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.getOrentation(null);
+                mPresenter.getOrientation(null);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.getOrentation(1);
+                mPresenter.getOrientation(1);
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_activity_bg)
                 , UIUtils.dip2px(10)));
         mAdapter = new OrientationListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            OrientationListBean bean = mAdapter.getData().get(position);
-            RouterUtil.goToActivity(RouterConfig.ORIENTATION_DETAIL, bean);
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.txt_del) {
+                    mPresenter.delOrientation(mAdapter.getItem(position).getId());
+                } else {
+                    OrientationListBean bean = mAdapter.getData().get(position);
+                    RouterUtil.goToActivity(RouterConfig.ORIENTATION_DETAIL, bean);
+                }
+            }
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有定向售卖商品哦").create();
         mAdapter.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
 
     private void initData() {
-        mPresenter.getOrentation(1);
+        mPresenter.getOrientation(1);
     }
 
     @Override
@@ -104,7 +114,7 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrenta
 
     @Subscribe
     public void onEvent(RefreshOrientationList event) {
-        mPresenter.getOrentation(1);
+        mPresenter.getOrientation(1);
     }
 
     @OnClick({R.id.img_close, R.id.txt_add})
@@ -128,5 +138,11 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrenta
         if(reload) {
             initData();
         }
+    }
+
+    @Override
+    public void delSuccess() {
+        showToast("删除成功");
+        initData();
     }
 }

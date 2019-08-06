@@ -23,12 +23,12 @@ import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
-public class OrientationDetailPresenter implements IOrentationDetailContract.IOrentationDetailPresenter {
+public class OrientationDetailPresenter implements IOrientationDetailContract.IOrientationDetailPresenter {
 
-    private IOrentationDetailContract.IOrentationDetailView mView;
+    private IOrientationDetailContract.IOrientationDetailView mView;
 
     @Override
-    public void setOrentation(List<OrientationDetailBean> list, OrientationListBean bean) {
+    public void setOrientation(List<OrientationDetailBean> list, OrientationListBean bean) {
         BaseReq<OrientationSetReq> baseReq = new BaseReq<>();
         OrientationSetReq req = new OrientationSetReq();
         if(bean.getId() == null || bean.getId().equalsIgnoreCase("")) {
@@ -68,7 +68,7 @@ public class OrientationDetailPresenter implements IOrentationDetailContract.IOr
     }
 
     @Override
-    public void getOrentation() {
+    public void getOrientation() {
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("mainID", mView.getMainID())
                 .create();
@@ -118,7 +118,7 @@ public class OrientationDetailPresenter implements IOrentationDetailContract.IOr
 
 
     @Override
-    public void register(IOrentationDetailContract.IOrentationDetailView view) {
+    public void register(IOrientationDetailContract.IOrientationDetailView view) {
         this.mView = view;
     }
 

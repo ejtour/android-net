@@ -12,14 +12,14 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
-public class OrientationListPresenter implements IOrentationListContract.IOrentationListPresenter {
+public class OrientationListPresenter implements IOrientationListContract.IOrientationListPresenter {
 
-    private IOrentationListContract.IOrentationListView mView;
+    private IOrientationListContract.IOrientationListView mView;
 
     private Integer pageNum = 1;
 
     @Override
-    public void getOrentation(Integer pageNum) {
+    public void getOrientation(Integer pageNum) {
         if(pageNum != null && pageNum != 0) {
             this.pageNum = pageNum;
         }
@@ -48,7 +48,7 @@ public class OrientationListPresenter implements IOrentationListContract.IOrenta
     }
 
     @Override
-    public void register(IOrentationListContract.IOrentationListView view) {
+    public void register(IOrientationListContract.IOrientationListView view) {
         this.mView = view;
     }
 
@@ -56,4 +56,27 @@ public class OrientationListPresenter implements IOrentationListContract.IOrenta
         return new OrientationListPresenter();
     }
 
+    @Override
+    public void delOrientation(String mainID) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("mainID", mainID)
+                .create();
+        GoodsService.INSTANCE.delOrientation(req)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object resp) {
+                        mView.delSuccess();
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+    }
 }

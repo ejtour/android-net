@@ -7,6 +7,7 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rl_orientation_list"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@drawable/base_bg_white_radius_5_solid"
@@ -36,7 +37,7 @@
             tools:text="包含：18 种商品" />
 
         <ImageView
-            android:id="@+id/img_delete"
+            android:id="@+id/img_gray"
             android:layout_width="5dp"
             android:layout_height="10dp"
             android:layout_alignParentRight="true"

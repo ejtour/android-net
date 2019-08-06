@@ -41,7 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 @Route(path = RouterConfig.ORIENTATION_DETAIL, extras = Constant.LOGIN_EXTRA)
-public class OrientationDetailActivity extends BaseLoadActivity implements IOrentationDetailContract.IOrentationDetailView {
+public class OrientationDetailActivity extends BaseLoadActivity implements IOrientationDetailContract.IOrientationDetailView {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -56,7 +56,7 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOren
     @BindView(R.id.txt_change_tip)
     TextView mShopNumView;
 
-    private IOrentationDetailContract.IOrentationDetailPresenter mPresenter;
+    private IOrientationDetailContract.IOrientationDetailPresenter mPresenter;
 
     private OrientationDetailAdapter mAdapter;
     private List<OrientationDetailBean> productList;
@@ -106,7 +106,7 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOren
 
     private void initData() {
         if (mOrientationListBean.getId() != null && mOrientationListBean.getId() != "") {
-            mPresenter.getOrentation();
+            mPresenter.getOrientation();
         }
         if (mOrientationListBean.getPurchaserImgUrl() == null) {
             mPresenter.getGroupInfo(mOrientationListBean.getPurchaserID());
@@ -182,7 +182,7 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOren
     }
 
     private void setOrientation() {
-        mPresenter.setOrentation(productList, mOrientationListBean);
+        mPresenter.setOrientation(productList, mOrientationListBean);
     }
 
     @Subscribe

@@ -398,4 +398,14 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:100078")
     Observable<BaseResp<Object>> setOrientation(@Body BaseReq<OrientationSetReq> req);
+
+    /**
+     * 删除定向售卖分组
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100081")
+    Observable<BaseResp<Object>> delOrientation(@Body BaseMapReq req);
 }
