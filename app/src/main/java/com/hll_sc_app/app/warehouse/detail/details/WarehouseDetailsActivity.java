@@ -51,6 +51,8 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
     String mActionType;
     @BindView(R.id.buttonView)
     WarehouseButtonView mButtonView;
+    @BindView(R.id.txt_businessModel)
+    TextView mTxtBusinessModel;
     private WarehouseDetailsPresenter mPresenter;
 
     @Override
@@ -80,12 +82,25 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         PurchaserBean purchaserInfo = resp.getPurchaserInfo();
         if (purchaserInfo != null) {
             mImgLogoUrl.setImageURL(purchaserInfo.getLogoUrl());
+            mTxtBusinessModel.setText(getBusinessModelString(purchaserInfo.getBusinessModel()));
             mTxtGroupName.setText(purchaserInfo.getGroupName());
             mTxtGroupArea.setText(purchaserInfo.getGroupArea());
             mTxtLinkman.setText(purchaserInfo.getLinkman());
             mTxtMobile.setText(purchaserInfo.getMobile());
             mButtonView.showButton(mActionType, resp.getStatus());
             mButtonView.setListener(this, purchaserInfo);
+        }
+    }
+
+    public static String getBusinessModelString(int businessModel) {
+        if (businessModel == 1) {
+            return "单店";
+        } else if (businessModel == 2) {
+            return "多店";
+        } else if (businessModel == 3) {
+            return "弱连锁";
+        } else {
+            return "";
         }
     }
 
