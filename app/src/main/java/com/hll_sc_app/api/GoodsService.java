@@ -28,6 +28,9 @@ import com.hll_sc_app.bean.goods.SaleUnitNameBean;
 import com.hll_sc_app.bean.goods.SkuCheckResp;
 import com.hll_sc_app.bean.goods.SkuProductsResp;
 import com.hll_sc_app.bean.goods.SpecsStatusReq;
+import com.hll_sc_app.bean.orientation.OrientationDetailRes;
+import com.hll_sc_app.bean.orientation.OrientationListRes;
+import com.hll_sc_app.bean.orientation.OrientationSetReq;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -365,4 +368,34 @@ public interface GoodsService {
     @POST(HttpConfig.URL)
     @Headers("pv:110027")
     Observable<BaseResp<ExportResp>> exportRecord(@Body BaseReq<ExportReq> req);
+
+    /**
+     * 获取定向售卖详情
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100080")
+    Observable<BaseResp<OrientationDetailRes>> getOrientationDetail(@Body BaseMapReq req);
+
+    /**
+     * 获取定向售卖列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100079")
+    Observable<BaseResp<OrientationListRes>> getOrientationList(@Body BaseMapReq req);
+
+    /**
+     * 获取定向售卖列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100078")
+    Observable<BaseResp<Object>> setOrientation(@Body BaseReq<OrientationSetReq> req);
 }

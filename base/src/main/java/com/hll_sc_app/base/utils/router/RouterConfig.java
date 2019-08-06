@@ -80,6 +80,26 @@ public class RouterConfig {
      */
     public static final String REFUND_TIME = "/activity/refundTime";
     /**
+     * 定向售卖列表
+     */
+    public static final String ORIENTATION_LIST = "/activity/orientation/list";
+    /**
+     * 定向售卖详情
+     */
+    public static final String ORIENTATION_DETAIL = "/activity/orientation/detail";
+    /**
+     * 定向售卖合作采购商
+     */
+    public static final String ORIENTATION_COOPERATION_PURCHASER = "/activity/orientation/cooperation/purchaser";
+    /**
+     * 定向售卖合作门店
+     */
+    public static final String ORIENTATION_COOPERATION_SHOP = "/activity/orientation/cooperation/shop";
+    /**
+     * 定向售卖商品
+     */
+    public static final String ORIENTATION_PRODUCT = "/activity/orientation/product";
+    /**
      * 首页
      */
     public static final String ROOT_HOME = "/activity/home/main";

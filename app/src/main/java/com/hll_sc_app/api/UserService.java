@@ -8,6 +8,8 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.account.UnbindGroupReq;
 import com.hll_sc_app.bean.account.UnbindMainAccountReq;
+import com.hll_sc_app.bean.groupInfo.GroupInfoReq;
+import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.bean.refundtime.RefundTimeResp;
 import com.hll_sc_app.bean.refundtime.SetRefundTimeReq;
 import com.hll_sc_app.bean.user.CategoryResp;
@@ -33,6 +35,16 @@ import retrofit2.http.Part;
  */
 public interface UserService {
     UserService INSTANCE = HttpFactory.create(UserService.class);
+
+    /**
+     * 请求集团信息
+     *
+     * @param body 请求
+     * @return observable
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101009")
+    Observable<BaseResp<GroupInfoResp>> getGroupInfo(@Body BaseReq<GroupInfoReq> body);
 
     /**
      * 登录

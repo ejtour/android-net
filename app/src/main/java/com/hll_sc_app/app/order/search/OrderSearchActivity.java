@@ -62,6 +62,7 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     public static final String FROM_GOODS = "FROM_GOODS";
     public static final String FROM_BRAND = "FROM_BRAND";
     public static final String FROM_SEARCH = "FROM_SEARCH";
+    public static final String FROM_ORIENTATION = "FROM_ORIENTATION";
     public static final String FROM_EMPLOYEE = "FROM_EMPLOYEE";
 
     public static final String FROM_COOPERATION_SEARCH = "FROM_COOPERATION_SEARCH";
@@ -166,6 +167,15 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
     }
 
     /**
+     * 定向售卖搜索
+     *
+     * @return true
+     */
+    private boolean isFromOrientation() {
+        return TextUtils.equals(mFrom, FROM_ORIENTATION);
+    }
+
+    /**
      * 搜索员工
      *
      * @return true
@@ -210,6 +220,9 @@ public class OrderSearchActivity extends BaseLoadActivity implements IOrderSearc
             hint = tips;
         } else if (isFromSearch()) {
             tips = "请输入搜索词";
+            hint = tips;
+        } else if (isFromOrientation()) {
+            tips = "您可以通过采购商集团名称、商品名称\n关键字进行搜索";
             hint = tips;
         }
         mSearchEdit.setHint(hint);
