@@ -95,7 +95,7 @@ public class NormalFragment extends BaseFragment {
             case WalletStatusResp.CERTIFY_NOT:
             case WalletStatusResp.CERTIFY_FAIL:
                 mTipGroup.setVisibility(View.VISIBLE);
-                mTipContent.setText("”请完成企业账务主体实名认证，享受更多服务，马上认证");
+                mTipContent.setText("请完成企业账务主体实名认证，享受更多服务，马上认证");
                 break;
             case WalletStatusResp.CERTIFY_ING:
                 mTipGroup.setVisibility(View.VISIBLE);
