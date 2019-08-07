@@ -15,6 +15,17 @@ import java.util.List;
  * @date 2019-07-04
  */
 public class PurchaserBean implements Parcelable {
+    public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {
+        @Override
+        public PurchaserBean createFromParcel(Parcel source) {
+            return new PurchaserBean(source);
+        }
+
+        @Override
+        public PurchaserBean[] newArray(int size) {
+            return new PurchaserBean[size];
+        }
+    };
     private String readStatus;
     private String uniformSocialCreditCode;
     private String unRelationProductNum;
@@ -60,18 +71,12 @@ public class PurchaserBean implements Parcelable {
     private String newShopNum;
     private String mobile;
     private String groupArea;
-    public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {
-        @Override
-        public PurchaserBean createFromParcel(Parcel source) {
-            return new PurchaserBean(source);
-        }
-
-        @Override
-        public PurchaserBean[] newArray(int size) {
-            return new PurchaserBean[size];
-        }
-    };
+    private String shopNum;
+    private String groupNum;
     private int businessModel;
+
+    public PurchaserBean() {
+    }
 
     protected PurchaserBean(Parcel in) {
         this.readStatus = in.readString();
@@ -118,10 +123,25 @@ public class PurchaserBean implements Parcelable {
         this.newShopNum = in.readString();
         this.mobile = in.readString();
         this.groupArea = in.readString();
+        this.shopNum = in.readString();
+        this.groupNum = in.readString();
         this.businessModel = in.readInt();
     }
 
-    public PurchaserBean() {
+    public String getShopNum() {
+        return shopNum;
+    }
+
+    public void setShopNum(String shopNum) {
+        this.shopNum = shopNum;
+    }
+
+    public String getGroupNum() {
+        return groupNum;
+    }
+
+    public void setGroupNum(String groupNum) {
+        this.groupNum = groupNum;
     }
 
     public String getGroupArea() {
@@ -476,17 +496,17 @@ public class PurchaserBean implements Parcelable {
         this.logoUrl = logoUrl;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public int getBusinessModel() {
         return businessModel;
     }
 
     public void setBusinessModel(int businessModel) {
         this.businessModel = businessModel;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -535,6 +555,8 @@ public class PurchaserBean implements Parcelable {
         dest.writeString(this.newShopNum);
         dest.writeString(this.mobile);
         dest.writeString(this.groupArea);
+        dest.writeString(this.shopNum);
+        dest.writeString(this.groupNum);
         dest.writeInt(this.businessModel);
     }
 }

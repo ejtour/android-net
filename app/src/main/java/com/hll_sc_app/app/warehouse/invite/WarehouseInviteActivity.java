@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
+import com.hll_sc_app.bean.event.RefreshWarehouseList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -126,6 +127,11 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
         }
     }
 
+    @Subscribe
+    public void onEvent(RefreshWarehouseList event) {
+        mPresenter.queryWarehouseList(true);
+    }
+
     @Override
     public void hideLoading() {
         super.hideLoading();
@@ -158,14 +164,15 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
     private static class WarehouseListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
 
         WarehouseListAdapter() {
-            super(R.layout.item_cooperation_purchaser_invite);
+            super(R.layout.item_warehouse_invite);
         }
 
         @Override
         protected void convert(BaseViewHolder helper, PurchaserBean item) {
-            helper.setText(R.id.txt_purchaserName, item.getGroupName())
-                .setText(R.id.txt_linkMan,
-                    getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())));
+            helper.setText(R.id.txt_groupName, item.getGroupName())
+                .setText(R.id.txt_linkman, "联系人：" +
+                    getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
+                .setText(R.id.txt_groupArea, "所在地区：" + item.getGroupArea());
             ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getLogoUrl());
             setStatus(helper, item);
         }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
@@ -19,6 +20,7 @@ import com.hll_sc_app.app.warehouse.recommend.WarehouseGroupListAdapter;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.PurchaserBean;
@@ -37,7 +39,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 代仓管理-搜索新增
+ * 代仓管理-新签代仓客户
+ * 我是货主-新签代仓公司
  *
  * @author zhuyingsong
  * @date 2019/8/5
@@ -59,6 +62,7 @@ public class WarehouseAddActivity extends BaseLoadActivity implements WarehouseA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_warehouse_add);
+        ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
@@ -67,6 +71,7 @@ public class WarehouseAddActivity extends BaseLoadActivity implements WarehouseA
     }
 
     private void initView() {
+        mEdtSearch.setHint(isShipper() ? "请输入代仓公司名称" : "请输入客户名称");
         mEdtSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 toSearch();
@@ -78,35 +83,61 @@ public class WarehouseAddActivity extends BaseLoadActivity implements WarehouseA
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryPurchaserList();
+                if (isShipper()) {
+                    mPresenter.queryMoreWarehouseList();
+                } else {
+                    mPresenter.queryMorePurchaserList();
+                }
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryPurchaserList(false);
+                if (isShipper()) {
+                    mPresenter.queryWarehouseList(false);
+                } else {
+                    mPresenter.queryPurchaserList(false);
+                }
             }
         });
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
-        mAdapter = new WarehouseGroupListAdapter(WarehouseGroupListAdapter.TYPE_ADD);
+        if (isShipper()) {
+            mAdapter = new WarehouseGroupListAdapter();
+        } else {
+            mAdapter = new WarehouseGroupListAdapter(WarehouseGroupListAdapter.TYPE_ADD);
+        }
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getPurchaserID());
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, isShipper() ? bean.getGroupID() :
+                    bean.getPurchaserID());
             }
         });
-        EmptyView emptyView = EmptyView.newBuilder(this)
-            .setTips("您可以输入客户名称查找客户")
-            .setImage(R.drawable.ic_search_empty_purchaser)
-            .create();
+        String tips = isShipper() ? "您可以输入代仓公司名称查找代仓公司" : "您可以输入客户名称查找客户";
+        EmptyView emptyView = EmptyView.newBuilder(this).setImage(R.drawable.ic_search_empty_purchaser)
+            .setTips(tips).create();
         mAdapter.setEmptyView(emptyView);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    /**
+     * 我是货主
+     *
+     * @return true-是
+     */
+    private boolean isShipper() {
+        // 如果为非自营的客户则是货主，是自营的客户则是
+        return !UserConfig.isSelfOperated();
     }
 
     private void toSearch() {
         mEdtSearch.clearFocus();
         ViewUtils.clearEditFocus(mEdtSearch);
-        mPresenter.queryPurchaserList(true);
+        if (isShipper()) {
+            mPresenter.queryWarehouseList(true);
+        } else {
+            mPresenter.queryPurchaserList(true);
+        }
     }
 
     @OnClick({R.id.img_back, R.id.img_clear, R.id.txt_search})
@@ -137,6 +168,18 @@ public class WarehouseAddActivity extends BaseLoadActivity implements WarehouseA
             mAdapter.setNewData(list);
         }
         mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
+    }
+
+    @Override
+    public void showWarehouseList(List<PurchaserBean> list, boolean append, int totalNum) {
+        if (append) {
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
+        } else {
+            mAdapter.setNewData(list);
+        }
+        mRefreshLayout.setEnableLoadMore(totalNum != mAdapter.getItemCount());
     }
 
     @Override

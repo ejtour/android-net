@@ -376,14 +376,14 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         @Override
         protected void convert(BaseViewHolder helper, SalesManSalesAchievement bean) {
             helper.setText(R.id.txt_saleman_code, bean.getSalesmanCode())
-                .setText(R.id.txt_saleman_name, bean.getSalesmanName())
-                .setText(R.id.txt_order_num, String.valueOf(bean.getValidOrderNum()))
-                .setText(R.id.txt_trade_amount, CommonUtils.formatNumber(bean.getSalesAmount()))
-                .setText(R.id.txt_settle_order_num, String.valueOf(bean.getSettleBillNum()))
-                .setText(R.id.txt_settle_amount, CommonUtils.formatMoney(bean.getSettleAmount()))
-                .setText(R.id.txt_refund_amount, CommonUtils.formatNumber(bean.getRefundAmount()))
-                .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
-                R.drawable.bg_price_log_content_white : R.drawable.bg_price_log_content_gray);
+                    .setText(R.id.txt_saleman_name, bean.getSalesmanName())
+                    .setText(R.id.txt_order_num, String.valueOf(bean.getValidOrderNum()))
+                    .setText(R.id.txt_trade_amount, CommonUtils.formatNumber(bean.getSalesAmount()))
+                    .setText(R.id.txt_settle_order_num, String.valueOf(bean.getSettleBillNum()))
+                    .setText(R.id.txt_settle_amount, CommonUtils.formatNumber(bean.getSettleAmount()))
+                    .setText(R.id.txt_refund_amount, CommonUtils.formatNumber(bean.getRefundAmount()))
+                    .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
+                    R.drawable.bg_price_log_content_white : R.drawable.bg_price_log_content_gray);
         }
     }
 }

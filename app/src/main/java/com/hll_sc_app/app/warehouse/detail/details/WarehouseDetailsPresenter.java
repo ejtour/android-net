@@ -16,7 +16,7 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
- * 代仓管理-代仓详情
+ * 代仓管理-代仓客户详情
  *
  * @author zhuyingsong
  * @date 2019/8/5
@@ -35,13 +35,22 @@ public class WarehouseDetailsPresenter implements WarehouseDetailsContract.IWare
 
     @Override
     public void queryCooperationWarehouseDetail(String purchaserId) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", purchaserId)
-            .create();
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        if (UserConfig.isSelfOperated()) {
+            // 如果为自营则是代仓公司
+            builder
+                .put("groupID", UserConfig.getGroupID())
+                .put("purchaserID", purchaserId)
+                .put("originator", "1");
+        } else {
+            // 非自营则是货主
+            builder
+                .put("groupID", purchaserId)
+                .put("purchaserID", UserConfig.getGroupID())
+                .put("originator", "0");
+        }
         WarehouseService.INSTANCE
-            .queryCooperationWarehouseDetail(req)
+            .queryCooperationWarehouseDetail(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -133,6 +142,28 @@ public class WarehouseDetailsPresenter implements WarehouseDetailsContract.IWare
                 @Override
                 public void onFailure(UseCaseException e) {
                     mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void editWarehouseParameter(BaseMapReq req) {
+        WarehouseService.INSTANCE
+            .editWarehouseParameter(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object o) {
+                    mView.showToast("操作成功");
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showToast(e.getMessage());
                 }
             });
     }

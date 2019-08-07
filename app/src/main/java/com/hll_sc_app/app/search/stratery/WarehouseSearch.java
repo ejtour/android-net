@@ -2,6 +2,7 @@ package com.hll_sc_app.app.search.stratery;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.ISearchContract;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -21,12 +22,12 @@ public class WarehouseSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEditHint() {
-        return "请输入客户名称";
+        return UserConfig.isSelfOperated() ? "请输入客户名称" : "请输入代仓公司名称";
     }
 
     @Override
     public String getEmptyTip() {
-        return "您可以输入客户名称查找客户";
+        return UserConfig.isSelfOperated() ? "您可以输入客户名称查找客户" : "请输入代仓公司名称查询";
     }
 
     @Override

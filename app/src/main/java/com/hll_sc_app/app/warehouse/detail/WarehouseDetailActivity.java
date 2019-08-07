@@ -20,6 +20,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -95,21 +96,29 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
 
     @Override
     public void showDetail(WarehouseDetailResp resp) {
-        PurchaserBean bean = resp.getPurchaserInfo();
-        if (bean != null) {
-            mTxtGroupName.setText(bean.getGroupName());
-            mTxtLinkman.setText(String.format("联系人：%s", TextUtils.isEmpty(bean.getLinkman()) ? "无" :
-                bean.getLinkman()));
-            mTxtGroupArea.setText(String.format("所在地区：%s", TextUtils.isEmpty(bean.getGroupArea()) ? "无" :
-                bean.getGroupArea()));
+        PurchaserBean info = UserConfig.isSelfOperated() ? resp.getPurchaserInfo() : resp.getGroupInfo();
+        if (info != null) {
+            mTxtGroupName.setText(info.getGroupName());
+            mTxtLinkman.setText("");
+            mTxtLinkman.setText(String.format("联系人：%s / %s", getString(info.getLinkman()),
+                getString(PhoneUtil.formatPhoneNum(info.getMobile()))));
+            mTxtGroupArea.setText(String.format("所在地区：%s", TextUtils.isEmpty(info.getGroupArea()) ? "无" :
+                info.getGroupArea()));
         }
         mAdapter.setNewData(resp.getShops());
         mAdapter.setEmptyView(mEmptyView);
     }
 
-    private static class ShopListAdapter extends BaseQuickAdapter<WarehouseShopBean, BaseViewHolder> {
+    private String getString(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return "无";
+        }
+        return str;
+    }
 
-        ShopListAdapter() {
+    public static class ShopListAdapter extends BaseQuickAdapter<WarehouseShopBean, BaseViewHolder> {
+
+        public ShopListAdapter() {
             super(R.layout.item_cooperation_purchaser_shop);
         }
 

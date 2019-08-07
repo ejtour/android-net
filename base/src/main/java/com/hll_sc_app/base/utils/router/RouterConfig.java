@@ -36,6 +36,14 @@ public class RouterConfig {
      */
     public static final String WAREHOUSE_INVITE = "/activity/warehouse/invite";
     /**
+     * 代仓公司-我收到的申请
+     */
+    public static final String WAREHOUSE_APPLICATION = "/activity/warehouse/application";
+    /**
+     * 代仓公司-我收到的申请-门店
+     */
+    public static final String WAREHOUSE_APPLICATION_SHOP = "/activity/warehouse/application/shops";
+    /**
      * 代仓公司-搜索添加
      */
     public static final String WAREHOUSE_ADD = "/activity/warehouse/add";
@@ -59,6 +67,18 @@ public class RouterConfig {
      * 代仓管理-我是货主默认介绍页面
      */
     public static final String WAREHOUSE_INTRODUCE = "/activity/warehouse/introduce";
+    /**
+     * 代仓管理-我是货主
+     */
+    public static final String WAREHOUSE_SHIPPER = "/activity/warehouse/shipper";
+    /**
+     * 代仓管理-我是货主-门店管理
+     */
+    public static final String WAREHOUSE_SHIPPER_SHOP = "/activity/warehouse/shipper/shop";
+    /**
+     * 代仓管理-我是货主-门店管理-详情
+     */
+    public static final String WAREHOUSE_SHIPPER_SHOP_DETAIL = "/activity/warehouse/shipper/shop/detail";
     /**
      * 代仓管理-我是货主默认介绍页面-查看推荐
      */

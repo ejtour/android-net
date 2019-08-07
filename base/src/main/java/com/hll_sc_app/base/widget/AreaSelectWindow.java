@@ -166,6 +166,7 @@ public class AreaSelectWindow extends BaseShadowPopupWindow implements View.OnCl
             if (mSelectDistrict == null) {
                 return;
             }
+            mDistrictAdapter.notifyDataSetChanged();
             mTxtDistrict.setText(mSelectDistrict.getName());
             mTxtDistrict.setTag(mSelectDistrict.getCode());
             if (mResultListener != null) {

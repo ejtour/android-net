@@ -1,12 +1,12 @@
 package com.hll_sc_app.app.order;
 
 import com.hll_sc_app.app.order.common.OrderType;
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
+import com.hll_sc_app.utils.IExportView;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  */
 interface IOrderManageContract {
 
-    interface IOrderManageView extends ILoadView {
+    interface IOrderManageView extends IExportView {
         /**
          * @return 订单参数
          */
@@ -52,26 +52,6 @@ interface IOrderManageContract {
          * 更新待发货头部信息
          */
         void updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes);
-
-
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
-
-        /**
-         * 导出成功
-         *
-         * @param email 邮箱
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param msg 失败消息
-         */
-        void exportFailure(String msg);
 
         /**
          * 展示物流公司列表

@@ -33,13 +33,22 @@ public class WarehouseDetailPresenter implements WarehouseDetailContract.IWareho
 
     @Override
     public void queryCooperationWarehouseDetail(String purchaserId) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", purchaserId)
-            .create();
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        if (UserConfig.isSelfOperated()) {
+            // 如果为自营则是代仓公司
+            builder
+                .put("groupID", UserConfig.getGroupID())
+                .put("purchaserID", purchaserId)
+                .put("originator", "1");
+        } else {
+            // 非自营则是货主
+            builder
+                .put("groupID", purchaserId)
+                .put("purchaserID", UserConfig.getGroupID())
+                .put("originator", "0");
+        }
         WarehouseService.INSTANCE
-            .queryCooperationWarehouseDetail(req)
+            .queryCooperationWarehouseDetail(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())

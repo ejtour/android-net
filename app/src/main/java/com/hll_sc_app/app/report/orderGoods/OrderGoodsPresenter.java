@@ -3,7 +3,6 @@ package com.hll_sc_app.app.report.orderGoods;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -11,13 +10,13 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
-import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Report;
+import com.hll_sc_app.utils.Utils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -97,22 +96,7 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
             return;
         }
         Report.exportOrderGoodsDetails(mParam.getShopIDs(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
-                new SimpleObserver<ExportResp>(mView) {
-                    @Override
-                    public void onSuccess(ExportResp exportResp) {
-                        if (!TextUtils.isEmpty(exportResp.getEmail()))
-                            mView.exportSuccess(exportResp.getEmail());
-                        else mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                    }
-
-                    @Override
-                    public void onFailure(UseCaseException e) {
-                        if ("00120112037".equals(e.getCode())) mView.bindEmail();
-                        else if ("00120112038".equals(e.getCode()))
-                            mView.exportFailure("当前没有可导出的数据");
-                        else mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                    }
-                });
+                Utils.getExportObserver(mView));
     }
 
     private void bindEmail(String email) {

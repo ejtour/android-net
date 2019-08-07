@@ -61,4 +61,18 @@ public class UserConfig {
         }
         return "";
     }
+
+    /**
+     * 是否自营
+     *
+     * @return true-自营
+     */
+    public static boolean isSelfOperated() {
+        boolean selfOperated = false;
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean != null && TextUtils.equals("true", userBean.getSelfOperated())) {
+            selfOperated = true;
+        }
+        return selfOperated;
+    }
 }
