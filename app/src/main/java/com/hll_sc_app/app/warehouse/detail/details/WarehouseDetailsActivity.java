@@ -153,8 +153,9 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
             View.VISIBLE : View.GONE);
         mTxtReturnAudit.setText(TextUtils.equals(resp.getReturnAudit(), "0") ? "代仓公司审核" : "货主审核");
 
-        mLlShopsNum.setVisibility(TextUtils.equals(resp.getStatus(), "0") && TextUtils.equals(mActionType,
-            "signApplication") ? View.VISIBLE : View.GONE);
+        mLlShopsNum.setVisibility(UserConfig.isSelfOperated()
+            && TextUtils.equals(resp.getStatus(), "0")
+            && TextUtils.equals(mActionType, "signApplication") ? View.VISIBLE : View.GONE);
         mTxtShopsNum.setText(String.format(Locale.getDefault(), "需代仓%d个门店", CommonUtils.isEmpty(mResp.getShops()) ? 0 :
             mResp.getShops().size()));
     }
@@ -241,7 +242,8 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
                 builder
                     .put("originator", "0")
                     .put("groupID", bean.getGroupID())
-                    .put("purchaserID", user.getGroupID());
+                    .put("purchaserID", user.getGroupID())
+                    .put("warehouseType", "1");
             }
         }
         return builder;

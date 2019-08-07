@@ -54,15 +54,21 @@ public class WarehouseListPresenter implements WarehouseListContract.IWarehouseL
 
     @Override
     public void delWarehouseList(String groupId) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", groupId)
-            // 1-解除 2-放弃
-            .put("type", "1")
-            .create();
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        builder.put("type", "1");
+        if (UserConfig.isSelfOperated()) {
+            builder
+                .put("originator", "1")
+                .put("groupID", UserConfig.getGroupID())
+                .put("purchaserID", groupId);
+        } else {
+            builder
+                .put("originator", "0")
+                .put("groupID", groupId)
+                .put("purchaserID", UserConfig.getGroupID());
+        }
         WarehouseService.INSTANCE
-            .delWarehouse(req)
+            .delWarehouse(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
@@ -82,17 +88,24 @@ public class WarehouseListPresenter implements WarehouseListContract.IWarehouseL
     }
 
     private void toQueryWarehouseList(boolean showLoading) {
-        BaseMapReq req = BaseMapReq.newBuilder()
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        builder
             .put("actionType", "formalSigned")
-            .put("groupID", UserConfig.getGroupID())
             .put("name", mView.getSearchParam())
-            .put("originator", "1")
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
-            .put("source", "app")
-            .create();
+            .put("source", "app");
+        if (UserConfig.isSelfOperated()) {
+            builder
+                .put("groupID", UserConfig.getGroupID())
+                .put("originator", "1");
+        } else {
+            builder
+                .put("purchaserID", UserConfig.getGroupID())
+                .put("originator", "0");
+        }
         WarehouseService.INSTANCE
-            .queryWarehouseList(req)
+            .queryWarehouseList(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> {

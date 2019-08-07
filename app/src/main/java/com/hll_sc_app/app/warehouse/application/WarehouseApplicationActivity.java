@@ -143,7 +143,8 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
             builder
                 .put("groupID", bean.getGroupID())
                 .put("originator", "0")
-                .put("purchaserID", UserConfig.getGroupID());
+                .put("purchaserID", UserConfig.getGroupID())
+                .put("warehouseType", "1");
         }
         builder.put("actionType", "agree");
         mPresenter.agreeWarehouse(builder.create());

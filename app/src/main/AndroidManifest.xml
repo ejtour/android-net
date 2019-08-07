@@ -207,6 +207,7 @@
             android:theme="@style/TranslucentTheme"/>
 
         <activity
+            android:launchMode="singleTask"
             android:name=".app.warehouse.WarehouseIntroduceActivity"
             android:screenOrientation="portrait"/>
 
