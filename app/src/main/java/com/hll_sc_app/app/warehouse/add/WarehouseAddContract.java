@@ -24,6 +24,16 @@ public interface WarehouseAddContract {
         void showPurchaserList(List<PurchaserBean> list, boolean append);
 
         /**
+         * 展示代仓公司列表
+         *
+         * @param list     list
+         * @param append   true-追加
+         * @param totalNum 总数
+         */
+        void showWarehouseList(List<PurchaserBean> list, boolean append, int totalNum);
+
+
+        /**
          * 获取搜索词
          *
          * @return 搜索词
@@ -42,6 +52,18 @@ public interface WarehouseAddContract {
         /**
          * 加载更多采购商列表
          */
-        void queryPurchaserList();
+        void queryMorePurchaserList();
+
+        /**
+         * 加载代仓公司列表
+         *
+         * @param showLoading true-显示对话框
+         */
+        void queryWarehouseList(boolean showLoading);
+
+        /**
+         * 加载更多代仓公司列表
+         */
+        void queryMoreWarehouseList();
     }
 }

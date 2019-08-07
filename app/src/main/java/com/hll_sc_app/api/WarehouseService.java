@@ -135,4 +135,14 @@ public interface WarehouseService {
     @POST(HttpConfig.URL)
     @Headers("pv:101111")
     Observable<BaseResp<Object>> editWarehouseParameter(@Body BaseMapReq req);
+
+    /**
+     * 我是货主-新签代仓公司
+     *
+     * @param body req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101050")
+    Observable<BaseResp<WarehouseListResp>> queryShipperWarehouseList(@Body BaseMapReq body);
 }

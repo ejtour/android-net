@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.warehouse.WarehouseListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -42,7 +43,7 @@ public class WarehouseAddPresenter implements WarehouseAddContract.IWarehouseAdd
     }
 
     @Override
-    public void queryPurchaserList() {
+    public void queryMorePurchaserList() {
         mTempPageNum = mPageNum;
         mTempPageNum++;
         toQueryPurchaserList(false);
@@ -72,6 +73,51 @@ public class WarehouseAddPresenter implements WarehouseAddContract.IWarehouseAdd
                 public void onSuccess(List<PurchaserBean> list) {
                     mPageNum = mTempPageNum;
                     mView.showPurchaserList(list, mPageNum != 1);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
+    @Override
+    public void queryWarehouseList(boolean showLoading) {
+        mPageNum = 1;
+        mTempPageNum = mPageNum;
+        toQueryWarehouseList(showLoading);
+    }
+
+    @Override
+    public void queryMoreWarehouseList() {
+        mTempPageNum = mPageNum;
+        mTempPageNum++;
+        toQueryWarehouseList(false);
+    }
+
+    private void toQueryWarehouseList(boolean showLoading) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("pageNo", String.valueOf(mTempPageNum))
+            .put("pageSize", "20")
+            .put("searchParam", mView.getSearchParam())
+            .create();
+        WarehouseService.INSTANCE
+            .queryShipperWarehouseList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> {
+                if (showLoading) {
+                    mView.showLoading();
+                }
+            })
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<WarehouseListResp>() {
+                @Override
+                public void onSuccess(WarehouseListResp resp) {
+                    mPageNum = mTempPageNum;
+                    mView.showWarehouseList(resp.getGroupInfos(), mPageNum != 1, resp.getTotalNum());
                 }
 
                 @Override
