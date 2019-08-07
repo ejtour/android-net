@@ -75,6 +75,9 @@ public class WarehouseButtonView extends LinearLayout {
             mTxtAdd.setVisibility(VISIBLE);
             return;
         }
+        if (TextUtils.isEmpty(status)) {
+            return;
+        }
         switch (status) {
             case "0":
                 if (TextUtils.equals(actionType, TYPE_MY_APPLICATION)) {

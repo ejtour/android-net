@@ -76,17 +76,26 @@ public class WarehouseApplicationPresenter implements WarehouseApplicationContra
     }
 
     private void toQueryPurchaserList(boolean showLoading) {
-        BaseMapReq req = BaseMapReq.newBuilder()
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        builder
             .put("actionType", "signApplication")
-            .put("groupID", UserConfig.getGroupID())
             .put("name", mView.getSearchParam())
-            .put("originator", "1")
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
-            .put("source", "app")
-            .create();
+            .put("source", "app");
+        if (UserConfig.isSelfOperated()) {
+            // 如果为自营则是代仓公司
+            builder
+                .put("groupID", UserConfig.getGroupID())
+                .put("originator", "1");
+        } else {
+            // 非自营则是货主
+            builder
+                .put("purchaserID", UserConfig.getGroupID())
+                .put("originator", "0");
+        }
         WarehouseService.INSTANCE
-            .queryWarehouseList(req)
+            .queryWarehouseList(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> {

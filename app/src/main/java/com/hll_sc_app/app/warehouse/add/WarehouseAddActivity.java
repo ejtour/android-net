@@ -11,7 +11,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
@@ -21,6 +20,7 @@ import com.hll_sc_app.app.warehouse.recommend.WarehouseGroupListAdapter;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.PurchaserBean;
@@ -55,8 +55,6 @@ public class WarehouseAddActivity extends BaseLoadActivity implements WarehouseA
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    @Autowired(name = "object0")
-    String mOriginator;
     private WarehouseAddPresenter mPresenter;
     private WarehouseGroupListAdapter mAdapter;
 
@@ -127,7 +125,8 @@ public class WarehouseAddActivity extends BaseLoadActivity implements WarehouseA
      * @return true-是
      */
     private boolean isShipper() {
-        return TextUtils.equals(mOriginator, "0");
+        // 如果为非自营的客户则是货主，是自营的客户则是
+        return !UserConfig.isSelfOperated();
     }
 
     private void toSearch() {

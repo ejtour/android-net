@@ -14,9 +14,7 @@ import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
@@ -48,12 +46,7 @@ public class WarehouseStartActivity extends BaseLoadActivity {
         StatusBarCompat.setLightStatusBar(getWindow(), true);
         StatusBarCompat.setTranslucent(getWindow(), true);
         ButterKnife.bind(this);
-        UserBean userBean = GreenDaoUtils.getUser();
-        if (userBean == null) {
-            finish();
-            return;
-        }
-        if (TextUtils.equals("1", userBean.getSelfOperated())) {
+        if (UserConfig.isSelfOperated()) {
             getWarehouseOpen();
         } else {
             queryWarehouseList();
