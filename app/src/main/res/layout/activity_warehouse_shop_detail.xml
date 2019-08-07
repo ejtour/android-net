@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            style="@style/BtnClose"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="门店详细资料"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"/>
+
+    </RelativeLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/base_bg_item_white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <com.hll_sc_app.base.utils.glide.GlideImageView
+            android:id="@+id/img_logoUrl"
+            android:layout_width="48dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_shop_placeholder"
+            app:base_placeholder="@drawable/ic_shop_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txt_shopName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="@+id/img_logoUrl"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toRightOf="@+id/img_logoUrl"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
+            tools:text="北京太好吃家常菜"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="联&#160;&#160;系&#160;&#160;人"
+            android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+        <TextView
+            android:id="@+id/txt_linkman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="12dp"
+            android:hint="暂未提供"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+            android:textColorHint="@color/color_666666"
+            tools:text="北京市二十二城采购集团"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="联系方式"
+            android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+        <TextView
+            android:id="@+id/txt_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="12dp"
+            android:hint="暂未提供"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+            android:textColorHint="@color/color_666666"
+            tools:text="北京市二十二城采购集团"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="门店地址"
+            android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+        <TextView
+            android:id="@+id/txt_shopAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="12dp"
+            android:hint="暂未提供"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+            android:textColorHint="@color/color_666666"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="代仓支付设置"
+            android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/switch_pay"
+            android:layout_width="46dp"
+            android:layout_height="26dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:kswBackDrawable="@drawable/switch_track"
+            app:kswThumbDrawable="@drawable/base_thumb"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

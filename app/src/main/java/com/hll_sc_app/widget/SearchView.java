@@ -33,7 +33,7 @@ public class SearchView extends FrameLayout {
     }
 
     private void init(Context context) {
-        setBackgroundResource(R.color.base_white);
+        setBackgroundResource(R.drawable.base_bg_shadow_top_white_bar);
         int padding = UIUtils.dip2px(10);
         setPadding(0, padding, 0, padding);
         View.inflate(context, R.layout.view_search, this);

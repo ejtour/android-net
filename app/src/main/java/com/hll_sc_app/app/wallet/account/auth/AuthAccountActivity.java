@@ -11,7 +11,6 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.wallet.account.AccountPresenter;
 import com.hll_sc_app.app.wallet.account.IAccountContract;
 import com.hll_sc_app.app.wallet.account.IInfoInputView;
 import com.hll_sc_app.app.wallet.bank.BankListActivity;
@@ -147,7 +146,7 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
     }
 
     private void initData() {
-        mPresenter = AccountPresenter.newInstance();
+        mPresenter = AuthAccountPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -174,8 +173,8 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_failure)
                 .setImageState(R.drawable.ic_dialog_state_failure)
-                .setMessageTitle("确定要离开吗")
-                .setMessage("离开后将不能保存您当前所做的更改")
+                .setMessageTitle("确定要离开嘛")
+                .setMessage("您已经更改了部分对应关系，离开将不能保存您的更改")
                 .setCancelable(false)
                 .setButton((dialog, item) -> {
                     dialog.dismiss();
@@ -219,5 +218,10 @@ public class AuthAccountActivity extends BaseLoadActivity implements IAccountCon
         showToast("实名认证申请成功，请等待审核");
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    public void showImage(String url) {
+        mInputViews.get(mViewPager.getCurrentItem()).setImageUrl(url);
     }
 }

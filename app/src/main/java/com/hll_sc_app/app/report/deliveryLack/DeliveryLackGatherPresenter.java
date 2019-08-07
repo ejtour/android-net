@@ -15,8 +15,6 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
-import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
-import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.rest.ReportRest;
@@ -36,9 +34,10 @@ public class DeliveryLackGatherPresenter implements DeliveryLackGatherContract.I
     }
 
 
-    public void start(){
+    public void start() {
         queryDeliveryLackGatherList(true);
     }
+
     @Override
     public void queryDeliveryLackGatherList(boolean showLoading) {
         mPageNum = 1;
@@ -55,11 +54,11 @@ public class DeliveryLackGatherPresenter implements DeliveryLackGatherContract.I
 
     @Override
     public void exportDeliveryLackGather(String email, String reqParams) {
-        if(!TextUtils.isEmpty(email)){
+        if (!TextUtils.isEmpty(email)) {
             bindEmail(email);
             return;
         }
-        Report.exportReport(reqParams,"111006",email,new SimpleObserver<ExportResp>(mView){
+        Report.exportReport(reqParams, "111006", email, new SimpleObserver<ExportResp>(mView) {
             @Override
             public void onSuccess(ExportResp exportResp) {
                 if (!TextUtils.isEmpty(exportResp.getEmail()))
@@ -77,26 +76,27 @@ public class DeliveryLackGatherPresenter implements DeliveryLackGatherContract.I
         });
     }
 
-    @Override
-    public void register(DeliveryLackGatherContract.IDeliveryLackGatherView view) {
-      this.mView = CommonUtils.requireNonNull(view);
-    }
-
     private void toDeliveryLackGathertList(boolean showLoading) {
         BaseReportReqParam params = mView.getReqParams();
         params.setGroupID(UserConfig.getGroupID());
         params.setPageNum(mTempPageNum);
         params.setPageSize(20);
-        ReportRest.queryDeliveryLackGather(params, new SimpleObserver<DeliveryLackGatherResp>(mView,showLoading) {
+        ReportRest.queryDeliveryLackGather(params, new SimpleObserver<DeliveryLackGatherResp>(mView, showLoading) {
             @Override
             public void onSuccess(DeliveryLackGatherResp deliveryLackGatherResp) {
                 mPageNum = mTempPageNum;
-                mView.showDeliveryLackGatherList(deliveryLackGatherResp.getRecords(),mPageNum != 1, deliveryLackGatherResp.getTotalSize());
-                if(deliveryLackGatherResp.getTotalSize()>0){
+                mView.showDeliveryLackGatherList(deliveryLackGatherResp.getRecords(), mPageNum != 1,
+                    deliveryLackGatherResp.getTotalSize());
+                if (deliveryLackGatherResp.getTotalSize() > 0) {
                     mView.showTotalDeliveryGatherDatas(deliveryLackGatherResp);
                 }
             }
         });
+    }
+
+    @Override
+    public void register(DeliveryLackGatherContract.IDeliveryLackGatherView view) {
+        this.mView = CommonUtils.requireNonNull(view);
     }
 
     private void bindEmail(String email) {
@@ -104,9 +104,9 @@ public class DeliveryLackGatherPresenter implements DeliveryLackGatherContract.I
         if (user == null)
             return;
         BaseMapReq req = BaseMapReq.newBuilder()
-                .put("email", email)
-                .put("employeeID", user.getEmployeeID())
-                .create();
+            .put("email", email)
+            .put("employeeID", user.getEmployeeID())
+            .create();
         SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
@@ -116,13 +116,13 @@ public class DeliveryLackGatherPresenter implements DeliveryLackGatherContract.I
                 params.setPageSize(20);
                 Gson gson = new Gson();
                 String reqParams = gson.toJson(params);
-                exportDeliveryLackGather(null,reqParams);
+                exportDeliveryLackGather(null, reqParams);
             }
         };
         UserService.INSTANCE.bindEmail(req)
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(observer);
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(observer);
     }
 
 }

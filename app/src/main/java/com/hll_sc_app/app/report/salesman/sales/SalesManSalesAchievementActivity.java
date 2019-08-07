@@ -96,18 +96,16 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
     EditText edtSearch;
     @BindView(R.id.img_clear)
     ImageView imgClear;
-
-    private ContextOptionsWindow mOptionsWindow;
-    private ContextOptionsWindow mExportOptionsWindow;
     SalesManSalesAchievementPresenter mPresenter;
     SalesManSalesAchievementAdapter mAdapter;
-    private EmptyView mEmptyView;
-
     String startDate = "";
     String endDate = "";
     String localDate = "";
     int timeType = TimeTypeEnum.DAY.getCode();
     int timeFlag = TimeFlagEnum.TODAY.getCode();
+    private ContextOptionsWindow mOptionsWindow;
+    private ContextOptionsWindow mExportOptionsWindow;
+    private EmptyView mEmptyView;
     private SalesManAchievementReq params = new SalesManAchievementReq();
 
     @Override
@@ -141,25 +139,6 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         mPresenter.start();
     }
 
-    private   void showOptionsWindow(View view){
-        if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_DATE));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_YES_DATE));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_WEEK));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_WEEK));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_MONTH));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_MONTH));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
-            mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
-        }
-        mOptionsWindow.setOnDismissListener(()->{
-            reportDateArrow.setRotation(0);
-        });
-        reportDateArrow.setRotation(180);
-        mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
-    }
-
     /**
      * 初始化时间
      */
@@ -170,6 +149,12 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         dateTextView.setText(String.format("%s", date));
         params.setStartDate(date);
         params.setEndDate(date);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -186,7 +171,8 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             endDate = startDate;
             localDate = CalendarUtils.format(new Date(), FORMAT_DATE);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_YES_DATE)) {
-            startDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1), CalendarUtils.FORMAT_LOCAL_DATE);
+            startDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1),
+                CalendarUtils.FORMAT_LOCAL_DATE);
             endDate = startDate;
             localDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1), FORMAT_DATE);
             timeFlag = TimeFlagEnum.YESTERDAY.getCode();
@@ -195,7 +181,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             startDate = DateUtil.getWeekFirstDay(0) + "";
             endDate = DateUtil.getWeekLastDay(0) + "";
             localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
-                    + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.WEEK.getCode();
             timeFlag = TimeFlagEnum.CURRENTWEEK.getCode();
             dateText = TimeFlagEnum.CURRENTWEEK.getDesc();
@@ -203,7 +189,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             startDate = DateUtil.getWeekFirstDay(-1) + "";
             endDate = DateUtil.getWeekLastDay(-1) + "";
             localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
-                    + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.WEEK.getCode();
             timeFlag = TimeFlagEnum.LASTWEEK.getCode();
             dateText = TimeFlagEnum.LASTWEEK.getDesc();
@@ -211,7 +197,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             startDate = DateUtil.getMonthFirstDay(0) + "";
             endDate = DateUtil.getMonthLastDay(0) + "";
             localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
-                    + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.MONTH.getCode();
             timeFlag = TimeFlagEnum.CURRENTMONTH.getCode();
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
@@ -219,7 +205,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             startDate = DateUtil.getMonthFirstDay(-1) + "";
             endDate = DateUtil.getMonthLastDay(-1) + "";
             localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
-                    + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.MONTH.getCode();
             timeFlag = TimeFlagEnum.LASTMONTH.getCode();
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
@@ -255,7 +241,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             edtSearch.setText(name);
             params.setKeyWords(name);
             imgClear.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             params.setKeyWords("");
         }
         mPresenter.querySalesManSalesAchievementList(true);
@@ -287,48 +273,6 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         totalSettleOrderNum.setText(String.valueOf(salesManSalesResp.getTotalSettleBillNum()));
         totalSettleAmount.setText(CommonUtils.formatMoney(salesManSalesResp.getTotalSettleAmount()));
         totalRefundAmount.setText(CommonUtils.formatMoney(salesManSalesResp.getTotalRefundAmount()));
-    }
-
-    private void showExportOptionsWindow(View v) {
-        if (mExportOptionsWindow == null) {
-            mExportOptionsWindow = new ContextOptionsWindow(this)
-                    .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_DETAIL_INFO)))
-                    .setListener((adapter, view, position) -> {
-                        mExportOptionsWindow.dismiss();
-                        export(null);
-                    });
-        }
-        mExportOptionsWindow.showAsDropDownFix(v, Gravity.END);
-    }
-
-    @OnClick({R.id.txt_date_name_title, R.id.img_back, R.id.txt_options,R.id.edt_search,R.id.img_clear})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.txt_date_name_title:
-                showOptionsWindow(textDate);
-                break;
-            case R.id.txt_options:
-                showExportOptionsWindow(exportView);
-            case R.id.edt_search:
-                SearchActivity.start("", SalesManSearch.class.getSimpleName());
-                break;
-            case R.id.img_clear:
-                params.setKeyWords("");
-                edtSearch.setText("");
-                mPresenter.querySalesManSalesAchievementList(true);
-                imgClear.setVisibility(View.GONE);
-            default:
-                break;
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -365,6 +309,62 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         Gson gson = new Gson();
         String reqParams = gson.toJson(params);
         mPresenter.exportSalesManSalesAchievement(email, reqParams);
+    }
+
+    @OnClick({R.id.txt_date_name_title, R.id.img_back, R.id.txt_options, R.id.edt_search, R.id.img_clear})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_back:
+                finish();
+                break;
+            case R.id.txt_date_name_title:
+                showOptionsWindow(textDate);
+                break;
+            case R.id.txt_options:
+                showExportOptionsWindow(exportView);
+            case R.id.edt_search:
+                SearchActivity.start("", SalesManSearch.class.getSimpleName());
+                break;
+            case R.id.img_clear:
+                params.setKeyWords("");
+                edtSearch.setText("");
+                mPresenter.querySalesManSalesAchievementList(true);
+                imgClear.setVisibility(View.GONE);
+            default:
+                break;
+        }
+    }
+
+    private void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_DATE));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_YES_DATE));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
+            mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
+        }
+        mOptionsWindow.setOnDismissListener(() -> {
+            reportDateArrow.setRotation(0);
+        });
+        reportDateArrow.setRotation(180);
+        mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
+    }
+
+    private void showExportOptionsWindow(View v) {
+        if (mExportOptionsWindow == null) {
+            mExportOptionsWindow = new ContextOptionsWindow(this)
+                .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option,
+                    OptionType.OPTION_EXPORT_DETAIL_INFO)))
+                .setListener((adapter, view, position) -> {
+                    mExportOptionsWindow.dismiss();
+                    export(null);
+                });
+        }
+        mExportOptionsWindow.showAsDropDownFix(v, Gravity.END);
     }
 
     class SalesManSalesAchievementAdapter extends BaseQuickAdapter<SalesManSalesAchievement, BaseViewHolder> {

@@ -2,6 +2,7 @@ package com.hll_sc_app.bean.wallet;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -42,6 +43,8 @@ public class WalletStatusResp implements Parcelable {
     private float frozenAmount;
     private String merchantNo;
     private int status;
+    private String openPayFailMsg;
+    private String processFailReason;
 
     public float getBalance() {
         return balance;
@@ -107,6 +110,29 @@ public class WalletStatusResp implements Parcelable {
         this.status = status;
     }
 
+    public String getReason() {
+        return TextUtils.isEmpty(openPayFailMsg) ? processFailReason : openPayFailMsg;
+    }
+
+    public String getOpenPayFailMsg() {
+        return openPayFailMsg;
+    }
+
+    public void setOpenPayFailMsg(String openPayFailMsg) {
+        this.openPayFailMsg = openPayFailMsg;
+    }
+
+    public String getProcessFailReason() {
+        return processFailReason;
+    }
+
+    public void setProcessFailReason(String processFailReason) {
+        this.processFailReason = processFailReason;
+    }
+
+    public WalletStatusResp() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -122,9 +148,8 @@ public class WalletStatusResp implements Parcelable {
         dest.writeFloat(this.frozenAmount);
         dest.writeString(this.merchantNo);
         dest.writeInt(this.status);
-    }
-
-    public WalletStatusResp() {
+        dest.writeString(this.openPayFailMsg);
+        dest.writeString(this.processFailReason);
     }
 
     protected WalletStatusResp(Parcel in) {
@@ -136,9 +161,11 @@ public class WalletStatusResp implements Parcelable {
         this.frozenAmount = in.readFloat();
         this.merchantNo = in.readString();
         this.status = in.readInt();
+        this.openPayFailMsg = in.readString();
+        this.processFailReason = in.readString();
     }
 
-    public static final Parcelable.Creator<WalletStatusResp> CREATOR = new Parcelable.Creator<WalletStatusResp>() {
+    public static final Creator<WalletStatusResp> CREATOR = new Creator<WalletStatusResp>() {
         @Override
         public WalletStatusResp createFromParcel(Parcel source) {
             return new WalletStatusResp(source);

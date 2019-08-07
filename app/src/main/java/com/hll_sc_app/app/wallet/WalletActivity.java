@@ -80,7 +80,7 @@ public class WalletActivity extends BaseLoadActivity implements IWalletContract.
             case WalletStatusResp.STATUS_VERIFYING:
             case WalletStatusResp.STATUS_VERIFY_SUCCESS:
             case WalletStatusResp.STATUS_VERIFY_FAIL:
-                transaction.replace(R.id.aw_container, VerifyFragment.newInstance(resp.getStatus())).commitAllowingStateLoss();
+                transaction.replace(R.id.aw_container, VerifyFragment.newInstance(resp.getStatus(), resp.getReason())).commitAllowingStateLoss();
                 break;
             case WalletStatusResp.STATUS_AUTH_SUCCESS:
                 Fragment fragment = manager.findFragmentById(R.id.aw_container);

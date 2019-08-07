@@ -5,14 +5,12 @@ import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGather;
 import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
-import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
-import com.hll_sc_app.bean.report.salesman.SalesManSignAchievement;
-import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 
 import java.util.List;
 
 /**
  * 业务员签约绩效
+ *
  * @author 初坤
  * @date 2019/7/16
  */
@@ -22,14 +20,15 @@ public interface DeliveryLackGatherContract {
         /**
          * 展示缺货汇总表
          *
-         * @param records   list
-         * @param append true-追加
-         * @param total  indexList
+         * @param records list
+         * @param append  true-追加
+         * @param total   indexList
          */
         void showDeliveryLackGatherList(List<DeliveryLackGather> records, boolean append, int total);
 
         /**
          * 显示汇总数据
+         *
          * @param deliveryLackGatherResp
          */
         void showTotalDeliveryGatherDatas(DeliveryLackGatherResp deliveryLackGatherResp);
@@ -87,6 +86,7 @@ public interface DeliveryLackGatherContract {
 
         /**
          * 导出业务员签约绩效
+         *
          * @param email 邮箱地址
          */
         void exportDeliveryLackGather(String email, String reqParams);

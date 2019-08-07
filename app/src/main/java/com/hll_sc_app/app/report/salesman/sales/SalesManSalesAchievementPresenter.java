@@ -15,7 +15,6 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
-import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.rest.ReportRest;
@@ -35,9 +34,10 @@ public class SalesManSalesAchievementPresenter implements SalesManSalesAchieveme
     }
 
 
-    public void start(){
+    public void start() {
         querySalesManSalesAchievementList(true);
     }
+
     @Override
     public void querySalesManSalesAchievementList(boolean showLoading) {
         mPageNum = 1;
@@ -54,11 +54,11 @@ public class SalesManSalesAchievementPresenter implements SalesManSalesAchieveme
 
     @Override
     public void exportSalesManSalesAchievement(String email, String reqParams) {
-        if(!TextUtils.isEmpty(email)){
+        if (!TextUtils.isEmpty(email)) {
             bindEmail(email);
             return;
         }
-        Report.exportReport(reqParams,"111003",email,new SimpleObserver<ExportResp>(mView){
+        Report.exportReport(reqParams, "111003", email, new SimpleObserver<ExportResp>(mView) {
             @Override
             public void onSuccess(ExportResp exportResp) {
                 if (!TextUtils.isEmpty(exportResp.getEmail()))
@@ -76,26 +76,27 @@ public class SalesManSalesAchievementPresenter implements SalesManSalesAchieveme
         });
     }
 
-    @Override
-    public void register(SalesManSalesAchievementContract.ISalesManSalesAchievementView view) {
-      this.mView = CommonUtils.requireNonNull(view);
-    }
-
     private void toQuerySalesManSalesAchievementList(boolean showLoading) {
         SalesManAchievementReq params = mView.getParams();
         params.setGroupID(UserConfig.getGroupID());
         params.setPageNum(mTempPageNum);
         params.setPageSize(20);
-        ReportRest.querySalesmanSalesAchievement(params, new SimpleObserver<SalesManSalesResp>(mView,showLoading) {
+        ReportRest.querySalesmanSalesAchievement(params, new SimpleObserver<SalesManSalesResp>(mView, showLoading) {
             @Override
             public void onSuccess(SalesManSalesResp salesManSalesResp) {
                 mPageNum = mTempPageNum;
-                mView.showSalesManSalesAchievementList(salesManSalesResp.getRecords(),mPageNum != 1, salesManSalesResp.getTotalSize());
-                if(salesManSalesResp.getTotalSize()>0){
+                mView.showSalesManSalesAchievementList(salesManSalesResp.getRecords(), mPageNum != 1,
+                    salesManSalesResp.getTotalSize());
+                if (salesManSalesResp.getTotalSize() > 0) {
                     mView.showSalesManSalesTotalDatas(salesManSalesResp);
                 }
             }
         });
+    }
+
+    @Override
+    public void register(SalesManSalesAchievementContract.ISalesManSalesAchievementView view) {
+        this.mView = CommonUtils.requireNonNull(view);
     }
 
     private void bindEmail(String email) {
@@ -103,9 +104,9 @@ public class SalesManSalesAchievementPresenter implements SalesManSalesAchieveme
         if (user == null)
             return;
         BaseMapReq req = BaseMapReq.newBuilder()
-                .put("email", email)
-                .put("employeeID", user.getEmployeeID())
-                .create();
+            .put("email", email)
+            .put("employeeID", user.getEmployeeID())
+            .create();
         SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
@@ -115,13 +116,13 @@ public class SalesManSalesAchievementPresenter implements SalesManSalesAchieveme
                 params.setPageSize(20);
                 Gson gson = new Gson();
                 String reqParams = gson.toJson(params);
-                exportSalesManSalesAchievement(null,reqParams);
+                exportSalesManSalesAchievement(null, reqParams);
             }
         };
         UserService.INSTANCE.bindEmail(req)
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(observer);
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(observer);
     }
 
 }

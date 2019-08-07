@@ -5,13 +5,12 @@ import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesAchievement;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
-import com.hll_sc_app.bean.report.salesman.SalesManSignAchievement;
-import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 
 import java.util.List;
 
 /**
  * 业务员销售额绩效
+ *
  * @author 初坤
  * @date 2019/7/16
  */
@@ -21,9 +20,9 @@ public interface SalesManSalesAchievementContract {
         /**
          * 展示业务员销售额绩效
          *
-         * @param records   list
-         * @param append true-追加
-         * @param total  indexList
+         * @param records list
+         * @param append  true-追加
+         * @param total   indexList
          */
         void showSalesManSalesAchievementList(List<SalesManSalesAchievement> records, boolean append, int total);
 
@@ -80,6 +79,7 @@ public interface SalesManSalesAchievementContract {
 
         /**
          * 导出业务员销售额绩效
+         *
          * @param email 邮箱地址
          */
         void exportSalesManSalesAchievement(String email, String reqParams);

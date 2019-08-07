@@ -1,19 +1,17 @@
 package com.hll_sc_app.bean.report.deliveryLack;
 
-import java.util.List;
-
 /**
  * 缺货汇总
  */
 public class DeliveryLackGather {
 
-    private long   date;
+    private long date;
     private double deliveryLackAmount;
-    private int    deliveryLackKindNum;
-    private int    deliveryLackNum;
+    private int deliveryLackKindNum;
+    private int deliveryLackNum;
     private String deliveryLackRate;
-    private int    deliveryLackShopNum;
-    private int    deliveryOrderNum;
+    private int deliveryLackShopNum;
+    private int deliveryOrderNum;
     private double deliveryTradeAmount;
     private double oriReserveTotalAmount;
 

@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.wallet.account.auth.AuthAccountActivity;
 import com.hll_sc_app.app.wallet.details.list.DetailsListActivity;
 import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
 import com.hll_sc_app.app.wallet.withdraw.WithdrawActivity;
@@ -95,7 +96,7 @@ public class NormalFragment extends BaseFragment {
             case WalletStatusResp.CERTIFY_NOT:
             case WalletStatusResp.CERTIFY_FAIL:
                 mTipGroup.setVisibility(View.VISIBLE);
-                mTipContent.setText("”请完成企业账务主体实名认证，享受更多服务，马上认证");
+                mTipContent.setText("请完成企业账务主体实名认证，享受更多服务，马上认证");
                 break;
             case WalletStatusResp.CERTIFY_ING:
                 mTipGroup.setVisibility(View.VISIBLE);
@@ -115,7 +116,7 @@ public class NormalFragment extends BaseFragment {
                 if (mResp.getCertifyStatus() == WalletStatusResp.CERTIFY_ING) {
                     return;
                 }
-                RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_AUTH, mResp);
+                AuthAccountActivity.start(requireActivity());
                 break;
             case R.id.wsn_account_btn:
                 RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_MY);
@@ -141,7 +142,7 @@ public class NormalFragment extends BaseFragment {
                                 .setButton((dialog, item) -> {
                                     dialog.dismiss();
                                     if (item == 1)
-                                        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_AUTH, mResp);
+                                        AuthAccountActivity.start(requireActivity());
                                 }, "继续准备", "马上认证")
                                 .create()
                                 .show();

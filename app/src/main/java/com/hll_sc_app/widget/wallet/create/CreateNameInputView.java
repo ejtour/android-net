@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.citymall.util.ToastUtils;
 
@@ -54,8 +55,12 @@ public class CreateNameInputView extends ConstraintLayout {
     public void next(View view) {
         String companyName = mNameEdit.getText().toString();
         mAuthInfo.setCompanyName(companyName);
-        if (!companyName.matches("^[^ ]+$")) {
-            ToastUtils.showShort(getContext(), "公司名称不能包括空格");
+        if (!companyName.matches("^.{3,80}$")) {
+            ToastUtils.showShort(getContext(), "公司名称仅支持3-80个字符");
+            return;
+        }
+        if (!companyName.matches("^[\\S]+$")) {
+            ToastUtils.showShort(getContext(), "公司名称请勿包含空格");
             return;
         }
         if (mOnNextListener != null) mOnNextListener.onClick(view);
@@ -75,9 +80,14 @@ public class CreateNameInputView extends ConstraintLayout {
 
     public void initData(AuthInfo authInfo) {
         mAuthInfo = authInfo;
+        String groupName = GreenDaoUtils.getUser().getGroupName();
         if (!TextUtils.isEmpty(authInfo.getCompanyName())) {
             mNameEdit.setText(authInfo.getCompanyName());
             mNameEdit.setSelection(authInfo.getCompanyName().length());
+        } else if (!TextUtils.isEmpty(groupName)) {
+            mAuthInfo.setCompanyName(groupName);
+            mNameEdit.setText(groupName);
+            mNameEdit.setSelection(groupName.length());
         }
     }
 }

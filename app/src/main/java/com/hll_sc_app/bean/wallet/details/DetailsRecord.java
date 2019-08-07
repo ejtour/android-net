@@ -69,6 +69,19 @@ public class DetailsRecord implements Parcelable {
      */
     private String transAfterBalance;
 
+    /**
+     * 交易费用
+     */
+    private String transSalesCommission;
+
+    public String getTransSalesCommission() {
+        return transSalesCommission;
+    }
+
+    public void setTransSalesCommission(String transSalesCommission) {
+        this.transSalesCommission = transSalesCommission;
+    }
+
     public String getTransAfterBalance() {
         return transAfterBalance;
     }
@@ -203,6 +216,7 @@ public class DetailsRecord implements Parcelable {
         dest.writeString(this.tradeOrderNo);
         dest.writeString(this.transTypeDesc);
         dest.writeString(this.transAfterBalance);
+        dest.writeString(this.transSalesCommission);
     }
 
     protected DetailsRecord(Parcel in) {
@@ -219,6 +233,7 @@ public class DetailsRecord implements Parcelable {
         this.tradeOrderNo = in.readString();
         this.transTypeDesc = in.readString();
         this.transAfterBalance = in.readString();
+        this.transSalesCommission = in.readString();
     }
 
     public static final Creator<DetailsRecord> CREATOR = new Creator<DetailsRecord>() {

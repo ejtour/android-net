@@ -17,6 +17,7 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
 import java.util.ArrayList;
@@ -116,6 +117,11 @@ public class AuthBusinessInputView extends ConstraintLayout implements IInfoInpu
 
     @Override
     public boolean verifyValidity() {
+        if (mAuthInfo.getIsImgBusiPermission() == 0 &&
+                Integer.parseInt(mAuthInfo.getBusiPermissionBeginDate()) > Integer.parseInt(mAuthInfo.getBusiPermissionEndDate())) {
+            ToastUtils.showShort(getContext(), "起始日期不能大于结束日期");
+            return false;
+        }
         return true;
     }
 
@@ -199,14 +205,26 @@ public class AuthBusinessInputView extends ConstraintLayout implements IInfoInpu
 
     private void updateLicenseVisibility() {
         mLicenseInfoGroup.setVisibility(mAuthInfo.getIsImgBusiPermission() == 0 ? VISIBLE : GONE);
+        if (mAuthInfo.getIsImgBusiPermission() != 0) {
+            clearOptionalData();
+        }
+    }
+
+    private void clearOptionalData() {
+        mStartDate.setText("");
+        mEndDate.setText("");
+        mAuthInfo.setBusiPermissionBeginDate("");
+        mAuthInfo.setBusiPermissionEndDate("");
+        if (!TextUtils.isEmpty(mLicensePhoto.getImgUrl())) {
+            mLicensePhoto.deleteImage();
+            deleteImage(mLicensePhoto);
+        }
     }
 
     @OnClick(R.id.abi_start_date)
     public void selectStartDate() {
         WalletHelper.showLongValidDateDialog((Activity) getContext(), (dialog, item) -> {
             dialog.dismiss();
-            mAuthInfo.setBusiPermissionEndDate("");
-            mEndDate.setText("");
             if (item == 0) {
                 mAuthInfo.setBusiPermissionBeginDate(WalletHelper.PERMANENT_DATE);
                 mAuthInfo.setBusiPermissionEndDate(WalletHelper.PERMANENT_DATE);

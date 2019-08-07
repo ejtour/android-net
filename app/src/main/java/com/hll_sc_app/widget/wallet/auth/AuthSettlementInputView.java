@@ -95,7 +95,16 @@ public class AuthSettlementInputView extends ConstraintLayout implements IInfoIn
             mAttachmentGroup.setVisibility(VISIBLE);
             mAttachmentLabel.setText("业务说明");
             mAttachment.setTitle("点击上传业务说明");
-        } else mAttachmentGroup.setVisibility(GONE);
+        } else {
+            clearOptionalData();
+            mAttachmentGroup.setVisibility(GONE);
+        }
+    }
+
+    private void clearOptionalData() {
+        if (TextUtils.isEmpty(mAttachment.getImgUrl())) return;
+        mAttachment.deleteImage();
+        deleteImage(mAttachment);
     }
 
     @Override
@@ -117,8 +126,12 @@ public class AuthSettlementInputView extends ConstraintLayout implements IInfoIn
 
     @Override
     public boolean verifyValidity() {
-        if (!mPersonName.getText().toString().matches("^[^ ]+$")) {
-            ToastUtils.showShort(getContext(), "开户名不能包括空格");
+        if (!mPersonName.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+            ToastUtils.showShort(getContext(), "开户名中请勿包含特殊字符");
+            return false;
+        }
+        if (!mCardNo.getText().toString().matches("^([1-9])(\\d{15}|\\d{17,18})$")) {
+            ToastUtils.showShort(getContext(), "请输入正确的银行账户号");
             return false;
         }
         return true;
@@ -181,7 +194,7 @@ public class AuthSettlementInputView extends ConstraintLayout implements IInfoIn
             if (selectIndex != -1) cur = list.get(selectIndex);
             mAccountTypeDialog = SingleSelectionDialog
                     .newBuilder((Activity) getContext(), NameValue::getName)
-                    .setTitleText("请选择银行账户类型")
+                    .setTitleText("选择账户类型")
                     .refreshList(list)
                     .setOnSelectListener(nameValue -> {
                         mAuthInfo.setBankPersonType(Integer.valueOf(nameValue.getValue()));

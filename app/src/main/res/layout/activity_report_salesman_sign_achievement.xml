@@ -41,7 +41,8 @@
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                 android:textColor="@color/base_white"
-                android:textColorHint="#FFFFFF" />
+                android:textColorHint="#FFFFFF"/>
+
             <ImageView
                 android:id="@+id/img_clear"
                 android:layout_width="wrap_content"
@@ -77,8 +78,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="19dp">
+            android:layout_marginTop="19dp"
+            android:gravity="center_vertical">
+
             <TextView
                 android:id="@+id/txt_date_name_title"
                 android:layout_width="wrap_content"
@@ -89,12 +91,13 @@
                 android:drawablePadding="5dp"
                 android:text="今日"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
             <ImageView
                 android:id="@+id/report_date_arrow"
                 android:layout_width="7dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_drop"
-                android:layout_marginLeft="3dp"/>
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/ic_arrow_drop"/>
         </LinearLayout>
 
         <TextView
@@ -116,15 +119,15 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginTop="5dp"
+        android:layout_weight="1"
         android:background="@color/base_white">
 
         <com.hll_sc_app.widget.SyncHorizontalScrollView
+            android:id="@+id/salesman_sign_content_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            android:id="@+id/salesman_sign_content_detail"
             android:scrollbars="none">
 
             <RelativeLayout
@@ -146,17 +149,18 @@
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.hll_sc_app.widget.SyncHorizontalScrollView
+        android:id="@+id/salesman_sign_total_detail"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:fillViewport="true"
-        android:scrollbars="none"
-        android:id="@+id/salesman_sign_total_detail">
+        android:scrollbars="none">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_customer_total">
+            android:background="@drawable/bg_customer_total"
+            android:orientation="horizontal">
+
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
@@ -254,6 +258,7 @@
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.City22.Little"
                 tools:text="新增签约客户"/>
+
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"

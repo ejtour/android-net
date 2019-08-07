@@ -51,6 +51,7 @@ import butterknife.OnClick;
 
 /**
  * 缺货汇总
+ *
  * @author 初坤
  * @date 20190723
  */
@@ -89,12 +90,11 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
     TextView totalDeliveryLackRate;
     @BindView(R.id.total_delivery_lack_shopnum)
     TextView totalDeliveryLackShopnum;
+    String startDate = "";
+    String endDate = "";
     private EmptyView mEmptyView;
     private DateRangeWindow mDateRangeWindow;
     private ContextOptionsWindow mExportOptionsWindow;
-
-    String startDate = "";
-    String endDate = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,7 +116,8 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
             }
         });
         mAdapter = new DeliveryLackGatherAdapter();
-        View headView = LayoutInflater.from(this).inflate(R.layout.item_report_delivery_lack_gather_title, recyclerView, false);
+        View headView = LayoutInflater.from(this).inflate(R.layout.item_report_delivery_lack_gather_title,
+            recyclerView, false);
         mAdapter.addHeaderView(headView);
         recyclerView.setAdapter(mAdapter);
         mEmptyView = EmptyView.newBuilder(this).setTipsTitle("当前日期下没有数据").create();
@@ -135,39 +136,15 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
         Date preStartDate = CalendarUtils.getDateBeforeMonth(currentDate, 1);
         String displayStartDate = CalendarUtils.format(preStartDate, FORMAT_DATE);
         String displayEndDate = CalendarUtils.format(currentDate, FORMAT_DATE);
-        startDate = CalendarUtils.format(preStartDate,CalendarUtils.FORMAT_SERVER_DATE);
-        endDate = CalendarUtils.format(currentDate,CalendarUtils.FORMAT_SERVER_DATE);
+        startDate = CalendarUtils.format(preStartDate, CalendarUtils.FORMAT_SERVER_DATE);
+        endDate = CalendarUtils.format(currentDate, CalendarUtils.FORMAT_SERVER_DATE);
         mTxtDateName.setText(String.format("%s-%s", displayStartDate, displayEndDate));
     }
 
-    private void showDateRangeWindow() {
-        if (mDateRangeWindow == null) {
-            mDateRangeWindow = new DateRangeWindow(this);
-            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                if (start == null && end == null) {
-                    mTxtDateName.setText(null);
-                    mTxtDateName.setTag(R.id.date_start, "");
-                    mTxtDateName.setTag(R.id.date_end, "");
-                    mPresenter.queryDeliveryLackGatherList(true);
-                    return;
-                }
-                if (start != null && end != null) {
-                    Calendar calendarStart = Calendar.getInstance();
-                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    String startStr = CalendarUtils.format(calendarStart.getTime(), FORMAT_DATE);
-                    Calendar calendarEnd = Calendar.getInstance();
-                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    String endStr = CalendarUtils.format(calendarEnd.getTime(), FORMAT_DATE);
-                    mTxtDateName.setText(String.format("%s-%s", startStr, endStr));
-                    mTxtDateName.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
-                            CalendarUtils.FORMAT_SERVER_DATE));
-                    mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
-                            CalendarUtils.FORMAT_SERVER_DATE));
-                    mPresenter.queryDeliveryLackGatherList(true);
-                }
-            });
-        }
-        mDateRangeWindow.showAsDropDownFix(mRlSelectDate);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -215,42 +192,8 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
         totalDeliveryLackProduct.setText(String.valueOf(deliveryLackGatherResp.getTotalDeliveryLackKindNum()));
         totalDeliveryLackNum.setText("--");
         totalDeliveryLackAmount.setText(CommonUtils.formatMoney(deliveryLackGatherResp.getTotalDeliveryLackAmount()));
-        totalDeliveryLackRate.setText(new BigDecimal(deliveryLackGatherResp.getTotalDeliveryLackRate()).multiply(new BigDecimal(100)).setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()+"%");
+        totalDeliveryLackRate.setText(new BigDecimal(deliveryLackGatherResp.getTotalDeliveryLackRate()).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "%");
         totalDeliveryLackShopnum.setText(String.valueOf(deliveryLackGatherResp.getTotalDeliveryLackShopNum()));
-    }
-
-    private void showExportOptionsWindow(View v) {
-        if (mExportOptionsWindow == null) {
-            mExportOptionsWindow = new ContextOptionsWindow(this)
-                    .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_DETAIL_INFO)))
-                    .setListener((adapter, view, position) -> {
-                        mExportOptionsWindow.dismiss();
-                        export(null);
-                    });
-        }
-        mExportOptionsWindow.showAsDropDownFix(v, Gravity.END);
-    }
-
-    @OnClick({R.id.txt_date_name, R.id.img_back, R.id.txt_options})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.txt_date_name:
-                showDateRangeWindow();
-                break;
-            case R.id.txt_options:
-                showExportOptionsWindow(textOption);
-            default:
-                break;
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -267,6 +210,15 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
             endDate = (String) mTxtDateName.getTag(R.id.date_end);
         }
         return endDate;
+    }
+
+    @Override
+    public BaseReportReqParam getReqParams() {
+        BaseReportReqParam params = new BaseReportReqParam();
+        params.setStartDate(startDate);
+        params.setEndDate(endDate);
+        params.setGroupID(UserConfig.getGroupID());
+        return params;
     }
 
     @Override
@@ -287,19 +239,69 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
     }
 
     @Override
-    public BaseReportReqParam getReqParams(){
-        BaseReportReqParam params = new BaseReportReqParam();
-        params.setStartDate(startDate);
-        params.setEndDate(endDate);
-        params.setGroupID(UserConfig.getGroupID());
-        return params;
-    }
-
-    @Override
     public void export(String email) {
         Gson gson = new Gson();
         String reqParams = gson.toJson(getReqParams());
         mPresenter.exportDeliveryLackGather(email, reqParams);
+    }
+
+    @OnClick({R.id.txt_date_name, R.id.img_back, R.id.txt_options})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_back:
+                finish();
+                break;
+            case R.id.txt_date_name:
+                showDateRangeWindow();
+                break;
+            case R.id.txt_options:
+                showExportOptionsWindow(textOption);
+            default:
+                break;
+        }
+    }
+
+    private void showDateRangeWindow() {
+        if (mDateRangeWindow == null) {
+            mDateRangeWindow = new DateRangeWindow(this);
+            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
+                if (start == null && end == null) {
+                    mTxtDateName.setText(null);
+                    mTxtDateName.setTag(R.id.date_start, "");
+                    mTxtDateName.setTag(R.id.date_end, "");
+                    mPresenter.queryDeliveryLackGatherList(true);
+                    return;
+                }
+                if (start != null && end != null) {
+                    Calendar calendarStart = Calendar.getInstance();
+                    calendarStart.setTimeInMillis(start.getTimeInMillis());
+                    String startStr = CalendarUtils.format(calendarStart.getTime(), FORMAT_DATE);
+                    Calendar calendarEnd = Calendar.getInstance();
+                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
+                    String endStr = CalendarUtils.format(calendarEnd.getTime(), FORMAT_DATE);
+                    mTxtDateName.setText(String.format("%s-%s", startStr, endStr));
+                    mTxtDateName.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE));
+                    mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE));
+                    mPresenter.queryDeliveryLackGatherList(true);
+                }
+            });
+        }
+        mDateRangeWindow.showAsDropDownFix(mRlSelectDate);
+    }
+
+    private void showExportOptionsWindow(View v) {
+        if (mExportOptionsWindow == null) {
+            mExportOptionsWindow = new ContextOptionsWindow(this)
+                .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option,
+                    OptionType.OPTION_EXPORT_DETAIL_INFO)))
+                .setListener((adapter, view, position) -> {
+                    mExportOptionsWindow.dismiss();
+                    export(null);
+                });
+        }
+        mExportOptionsWindow.showAsDropDownFix(v, Gravity.END);
     }
 
     class DeliveryLackGatherAdapter extends BaseQuickAdapter<DeliveryLackGather, BaseViewHolder> {
@@ -311,15 +313,17 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
         @Override
         protected void convert(BaseViewHolder helper, DeliveryLackGather bean) {
             helper.setText(R.id.txt_delivery_date, String.valueOf(bean.getDate()))
-                    .setText(R.id.txt_delivery_valid_order_num, String.valueOf(bean.getDeliveryOrderNum()))
-                    .setText(R.id.txt_delivery_lack_salesamount, CommonUtils.formatMoney(bean.getDeliveryTradeAmount()))
-                    .setText(R.id.txt_delivery_lack_product, String.valueOf((bean.getDeliveryLackKindNum())))
-                    .setText(R.id.txt_delivery_lack_num, CommonUtils.formatMoney(bean.getDeliveryLackNum()))
-                    .setText(R.id.txt_delivery_lack_amount, CommonUtils.formatMoney(bean.getDeliveryLackAmount()))
-                    .setText(R.id.txt_delivery_rate, new BigDecimal(bean.getDeliveryLackRate()).multiply(new BigDecimal(100)).setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()+"%")
-                    .setText(R.id.txt_delivery_lack_shopnum, String.valueOf(bean.getDeliveryLackShopNum()))
-                    .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
-                    R.drawable.bg_price_log_content_white : R.drawable.bg_price_log_content_gray);
+                .setText(R.id.txt_delivery_valid_order_num, String.valueOf(bean.getDeliveryOrderNum()))
+                .setText(R.id.txt_delivery_lack_salesamount, CommonUtils.formatMoney(bean.getDeliveryTradeAmount()))
+                .setText(R.id.txt_delivery_lack_product, String.valueOf((bean.getDeliveryLackKindNum())))
+                .setText(R.id.txt_delivery_lack_num, CommonUtils.formatMoney(bean.getDeliveryLackNum()))
+                .setText(R.id.txt_delivery_lack_amount, CommonUtils.formatMoney(bean.getDeliveryLackAmount()))
+                .setText(R.id.txt_delivery_rate,
+                    new BigDecimal(bean.getDeliveryLackRate()).multiply(new BigDecimal(100)).setScale(2,
+                        BigDecimal.ROUND_HALF_UP).toPlainString() + "%")
+                .setText(R.id.txt_delivery_lack_shopnum, String.valueOf(bean.getDeliveryLackShopNum()))
+                .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
+                R.drawable.bg_price_log_content_white : R.drawable.bg_price_log_content_gray);
         }
     }
 }

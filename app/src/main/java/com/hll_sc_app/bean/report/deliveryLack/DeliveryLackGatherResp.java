@@ -1,4 +1,5 @@
 package com.hll_sc_app.bean.report.deliveryLack;
+
 import java.util.List;
 
 /**
@@ -6,17 +7,16 @@ import java.util.List;
  */
 public class DeliveryLackGatherResp {
 
-    private double totalDeliveryLackAmount;
-    private int    totalDeliveryLackNum;
-    private String totalDeliveryLackRate;
-    private int    totalDeliveryLackShopNum;
-    private int    totalDeliveryOrderNum;
-    private double totalDeliveryTradeAmount;
-    private int    totalDeliveryLackKindNum;
-    private double totalOriReserveTotalAmount;
-    private int    totalSize;
-
     List<DeliveryLackGather> records;
+    private double totalDeliveryLackAmount;
+    private int totalDeliveryLackNum;
+    private String totalDeliveryLackRate;
+    private int totalDeliveryLackShopNum;
+    private int totalDeliveryOrderNum;
+    private double totalDeliveryTradeAmount;
+    private int totalDeliveryLackKindNum;
+    private double totalOriReserveTotalAmount;
+    private int totalSize;
 
     public double getTotalDeliveryLackAmount() {
         return totalDeliveryLackAmount;

@@ -17,8 +17,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little"
-        android:text="编码"/>
+        android:text="编码"
+        android:textAppearance="@style/TextAppearance.City22.Little"/>
 
     <View
         android:layout_width="1dp"
@@ -31,8 +31,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little"
-        android:text="姓名"/>
+        android:text="姓名"
+        android:textAppearance="@style/TextAppearance.City22.Little"/>
 
     <View
         android:layout_width="1dp"
@@ -45,8 +45,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little"
-        android:text="有效订单数"/>
+        android:text="有效订单数"
+        android:textAppearance="@style/TextAppearance.City22.Little"/>
 
     <View
         android:layout_width="1dp"
@@ -59,8 +59,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little"
-        android:text="销售金额(元)"/>
+        android:text="销售金额(元)"
+        android:textAppearance="@style/TextAppearance.City22.Little"/>
 
     <View
         android:layout_width="1dp"
@@ -73,8 +73,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little"
-        android:text="结算订单数"/>
+        android:text="结算订单数"
+        android:textAppearance="@style/TextAppearance.City22.Little"/>
 
     <View
         android:layout_width="1dp"
@@ -87,8 +87,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little"
-        android:text="结算金额(元)"/>
+        android:text="结算金额(元)"
+        android:textAppearance="@style/TextAppearance.City22.Little"/>
+
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
@@ -100,6 +101,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little"
-        android:text="退货金额(元)"/>
+        android:text="退货金额(元)"
+        android:textAppearance="@style/TextAppearance.City22.Little"/>
 </LinearLayout>

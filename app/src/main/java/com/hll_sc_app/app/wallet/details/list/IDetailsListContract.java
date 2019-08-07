@@ -1,8 +1,8 @@
 package com.hll_sc_app.app.wallet.details.list;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
+import com.hll_sc_app.utils.IExportView;
 
 import java.util.List;
 
@@ -11,26 +11,13 @@ import java.util.List;
  * @since 2019/5/6
  */
 public interface IDetailsListContract {
-    interface IDetailsListView extends ILoadView {
+    interface IDetailsListView extends IExportView {
         /**
          * 设置明细列表
          */
         void setDetailsList(List<DetailsRecordWrapper> wrappers);
 
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
-
-        /**
-         * 导出成功
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         */
-        void exportFailure(String msg);
+        void setEnableLoadMore(boolean enableLoadMore);
     }
 
     interface IDetailsListPresenter extends IPresenter<IDetailsListView> {

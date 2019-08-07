@@ -189,6 +189,7 @@ public class AreaSelectDialog extends BaseDialog {
          * 如果当前没有数据，则调用接口
          */
         if (getCurrentLevelAreaList() == null && mNetAreaWindowEvent != null) {
+            mAreaAdapter.setNewData(null);
             switch (currentLevel) {
                 case PROVINCE:
                     mNetAreaWindowEvent.getProvinces();

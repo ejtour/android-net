@@ -165,13 +165,15 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
             public void onValueSelected(Entry e, Highlight h) {
                 PieEntry pData = (PieEntry) e;
                 String toast = pData.getLabel() + ":" + new DecimalFormat("#.##").format(
-                        pData.getValue() / mPieChart.getData().getYValueSum() * 100) + "%";
+                    pData.getValue() / mPieChart.getData().getYValueSum() * 100) + "%";
                 if (mToast != null) {
                     mToast.cancel();
                 }
                 mToast = new Toast(getApplicationContext());
                 if (mToastView == null) {
-                    mToastView = (TextView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_chart_toast, null);
+                    mToastView =
+                        (TextView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_chart_toast,
+                            null);
                 }
                 if (mStatusBarHeight == -1) {
                     mStatusBarHeight = ViewUtils.getStatusBarHeight(ProductSalesActivity.this);
@@ -179,7 +181,8 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
                 mToast.setView(mToastView);
                 mToast.setDuration(Toast.LENGTH_SHORT);
                 mToastView.setText(toast);
-                mToast.setGravity(Gravity.TOP | Gravity.LEFT, mX - mToastView.getWidth() / 2, mY - mStatusBarHeight - mToastView.getHeight() / 2);
+                mToast.setGravity(Gravity.TOP | Gravity.LEFT, mX - mToastView.getWidth() / 2,
+                    mY - mStatusBarHeight - mToastView.getHeight() / 2);
                 mToast.show();
             }
 

@@ -11,7 +11,6 @@ import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailResp;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationReq;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
-import com.hll_sc_app.bean.agreementprice.quotation.WarehouseDetailResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.GoodsPriceExportReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
@@ -131,14 +130,4 @@ public interface AgreementPriceService {
     @POST(HttpConfig.URL)
     @Headers("pv:101045")
     Observable<BaseResp<GroupInfoResp>> queryCooperationGroupList(@Body BaseMapReq req);
-
-    /**
-     * 获取代仓签约详情成功
-     *
-     * @param req req
-     * @return resp
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:101044")
-    Observable<BaseResp<WarehouseDetailResp>> queryCooperationWarehouseDetail(@Body BaseMapReq req);
 }

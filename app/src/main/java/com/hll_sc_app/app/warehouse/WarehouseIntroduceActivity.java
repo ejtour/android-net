@@ -50,7 +50,8 @@ public class WarehouseIntroduceActivity extends BaseLoadActivity implements Base
 
     @OnClick({R.id.img_back, R.id.img_add, R.id.txt_contact, R.id.txt_recommend})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
+        int i = view.getId();
+        switch (i) {
             case R.id.img_back:
                 finish();
                 break;
@@ -86,8 +87,11 @@ public class WarehouseIntroduceActivity extends BaseLoadActivity implements Base
             return;
         }
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_WAREHOUSE_ADD)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_ADD);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_APPLICATION);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INVITE);
         }
         mOptionsWindow.dismiss();
     }

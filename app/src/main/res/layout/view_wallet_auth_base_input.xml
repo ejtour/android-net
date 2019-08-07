@@ -141,7 +141,7 @@
                 android:id="@+id/abi_end_date_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="起始日期"
+                android:text="结束日期"
                 android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
                 app:layout_constraintBottom_toTopOf="@id/abi_publicity_div3"
                 app:layout_constraintStart_toStartOf="@id/abi_publicity_div1"

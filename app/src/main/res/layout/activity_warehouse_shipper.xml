@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_back"
+            style="@style/BtnClose"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我是货主"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_title_center_size"/>
+
+        <ImageView
+            android:id="@+id/img_add"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="@dimen/title_bar_height"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_options"/>
+    </RelativeLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cons_shipper_goods"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_shipper_goods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shipper_goods"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txt_shipper_goods_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="代仓商品管理"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintBottom_toTopOf="@+id/txt_shipper_goods_tips"
+            app:layout_constraintLeft_toRightOf="@+id/img_shipper_goods"
+            app:layout_constraintTop_toTopOf="@+id/img_shipper_goods"/>
+
+        <TextView
+            android:id="@+id/txt_shipper_goods_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="您可以在这里管理您要代仓的商品"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintBottom_toBottomOf="@+id/img_shipper_goods"
+            app:layout_constraintLeft_toRightOf="@+id/img_shipper_goods"
+            app:layout_constraintTop_toBottomOf="@+id/txt_shipper_goods_title"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cons_shipper_shop"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_shipper_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shipper_shop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txt_shipper_shop_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="代仓采购商门店管理"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintBottom_toTopOf="@+id/txt_shipper_shop_tips"
+            app:layout_constraintLeft_toRightOf="@+id/img_shipper_shop"
+            app:layout_constraintTop_toTopOf="@+id/img_shipper_shop"/>
+
+        <TextView
+            android:id="@+id/txt_shipper_shop_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="您可以在这里管理需要代仓的合作采购商门店"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintBottom_toBottomOf="@+id/img_shipper_shop"
+            app:layout_constraintLeft_toRightOf="@+id/img_shipper_shop"
+            app:layout_constraintTop_toBottomOf="@+id/txt_shipper_shop_title"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cons_shipper_warehouse_company"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_shipper_warehouse_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_shipper_warehouse_company"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txt_shipper_warehouse_company_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="我的代仓公司"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintBottom_toTopOf="@+id/txt_shipper_warehouse_company_tips"
+            app:layout_constraintLeft_toRightOf="@+id/img_shipper_warehouse_company"
+            app:layout_constraintTop_toTopOf="@+id/img_shipper_warehouse_company"/>
+
+        <TextView
+            android:id="@+id/txt_shipper_warehouse_company_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="您可以在这里管理您的代仓公司"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintBottom_toBottomOf="@+id/img_shipper_warehouse_company"
+            app:layout_constraintLeft_toRightOf="@+id/img_shipper_warehouse_company"
+            app:layout_constraintTop_toBottomOf="@+id/txt_shipper_warehouse_company_title"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>

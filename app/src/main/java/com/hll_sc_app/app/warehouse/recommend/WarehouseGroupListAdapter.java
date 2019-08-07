@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.warehouse.recommend;
 
 import android.text.TextUtils;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,10 +17,17 @@ import com.hll_sc_app.bean.goods.PurchaserBean;
  * @date 2019/8/2
  */
 public class WarehouseGroupListAdapter extends BaseQuickAdapter<PurchaserBean, BaseViewHolder> {
+    public static final String TYPE_ADD = "add";
+    private String type;
     private boolean recommend;
 
-    WarehouseGroupListAdapter() {
+    public WarehouseGroupListAdapter() {
         super(R.layout.list_item_recommend_warehouse);
+    }
+
+    public WarehouseGroupListAdapter(String type) {
+        super(R.layout.list_item_recommend_warehouse);
+        this.type = type;
     }
 
     WarehouseGroupListAdapter(boolean recommend) {
@@ -28,9 +36,17 @@ public class WarehouseGroupListAdapter extends BaseQuickAdapter<PurchaserBean, B
     }
 
     @Override
+    protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+        BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
+        viewHolder.addOnClickListener(R.id.content).addOnClickListener(R.id.txt_del);
+        return viewHolder;
+    }
+
+    @Override
     protected void convert(BaseViewHolder helper, PurchaserBean item) {
         ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getLogoUrl());
-        helper.setText(R.id.txt_groupName, item.getGroupName())
+        helper.setText(R.id.txt_groupName, TextUtils.equals(type, TYPE_ADD) ? item.getPurchaserName() :
+            item.getGroupName())
             .setText(R.id.txt_linkman,
                 "联系人：" + getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
             .setText(R.id.txt_groupArea, "所在地区：" + getString(item.getGroupArea()))

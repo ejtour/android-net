@@ -3,6 +3,7 @@ package com.hll_sc_app.app.wallet.withdraw;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -57,6 +58,8 @@ public class WithdrawActivity extends BaseLoadActivity implements IWithdrawContr
     TextView mFreezeTip;
     @BindView(R.id.aww_confirm)
     TextView mConfirm;
+    @BindView(R.id.aww_freeze_group)
+    Group mFreezeGroup;
     private Unbinder unbinder;
     private IWithdrawContract.IWithdrawPresenter mPresenter;
 
@@ -73,12 +76,14 @@ public class WithdrawActivity extends BaseLoadActivity implements IWithdrawContr
     }
 
     private void initView() {
-        String frozenMoney = CommonUtils.formatMoney(walletStatus.getFrozenAmount());
-        String frozenAmount = String.format("有%s元不可提现", frozenMoney);
-        SpannableString spannableString = new SpannableString(frozenAmount);
-        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_666666)),
-                1, frozenMoney.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mFreezeTip.setText(spannableString);
+        if (walletStatus.getFrozenAmount() > 0) {
+            String frozenMoney = CommonUtils.formatMoney(walletStatus.getFrozenAmount());
+            String frozenAmount = String.format("有%s元不可提现", frozenMoney);
+            SpannableString spannableString = new SpannableString(frozenAmount);
+            spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_666666)),
+                    1, frozenMoney.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mFreezeTip.setText(spannableString);
+        } else mFreezeGroup.setVisibility(View.GONE);
         mMoneyEdit.setHint(String.format("可提现金额%s元", CommonUtils.formatMoney(walletStatus.getWithdrawalAmount())));
     }
 

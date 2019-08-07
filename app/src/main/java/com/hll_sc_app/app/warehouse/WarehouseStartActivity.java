@@ -10,7 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.api.WarehouseManageService;
+import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -23,6 +23,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.warehouse.GroupDetail;
+import com.hll_sc_app.bean.warehouse.WarehouseListResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import butterknife.ButterKnife;
@@ -45,7 +46,11 @@ public class WarehouseStartActivity extends BaseLoadActivity {
         StatusBarCompat.setLightStatusBar(getWindow(), true);
         StatusBarCompat.setTranslucent(getWindow(), true);
         ButterKnife.bind(this);
-        getWarehouseOpen();
+        if (UserConfig.isSelfOperated()) {
+            getWarehouseOpen();
+        } else {
+            queryWarehouseList();
+        }
     }
 
     public void getWarehouseOpen() {
@@ -54,7 +59,7 @@ public class WarehouseStartActivity extends BaseLoadActivity {
             .put("groupID", UserConfig.getGroupID())
             .put("groupType", "1")
             .create();
-        WarehouseManageService.INSTANCE
+        WarehouseService.INSTANCE
             .queryGroupDetail(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
@@ -73,18 +78,47 @@ public class WarehouseStartActivity extends BaseLoadActivity {
             });
     }
 
+    public void queryWarehouseList() {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("actionType", "formalSigned")
+            .put("purchaserID", UserConfig.getGroupID())
+            .put("originator", "0")
+            .put("pageNum", "1")
+            .put("pageSize", "20")
+            .put("source", "app")
+            .create();
+        WarehouseService.INSTANCE
+            .queryWarehouseList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
+            .subscribe(new BaseCallback<WarehouseListResp>() {
+                @Override
+                public void onSuccess(WarehouseListResp resp) {
+                    RouterUtil.goToActivity(resp.getTotalNum() > 0 ? RouterConfig.WAREHOUSE_SHIPPER :
+                        RouterConfig.WAREHOUSE_INTRODUCE, WarehouseStartActivity.this);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    finish();
+                    showError(e);
+                }
+            });
+    }
+
     /**
      * 跳转判断
      */
     private void dealResult(GroupDetail detail) {
         if (detail != null) {
             if (TextUtils.equals(detail.getIsSelfOperated(), "1")) {
+                // 自营
                 if (TextUtils.equals("0", detail.getWareHourseStatus())) {
                     // 未开通代仓
                     showTipsDialog();
                 } else {
-                    // TODO:已开通跳转到代仓页面
-//                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INTRODUCE, this);
+                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_LIST, this);
                 }
             } else {
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INTRODUCE, this);
@@ -107,11 +141,5 @@ public class WarehouseStartActivity extends BaseLoadActivity {
         if (successDialog.getWindow() != null) {
             successDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#4d000000")));
         }
-    }
-
-    @Override
-    protected void onPause() {
-        overridePendingTransition(0, 0);
-        super.onPause();
     }
 }

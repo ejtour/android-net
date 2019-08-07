@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.report.salesman.sign;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,17 +19,12 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.OrderSearch;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
 import com.hll_sc_app.bean.enums.TimeTypeEnum;
-import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.event.SalesManSearchEvent;
-import com.hll_sc_app.bean.report.req.CustomerSaleReq;
-import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
 import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSignAchievement;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
@@ -66,7 +60,8 @@ import butterknife.OnClick;
  * @date 20190723
  */
 @Route(path = RouterConfig.REPORT_SALESMAN_SIGN_ACHIEVEMENT)
-public class SalesManSignAchievementActivity extends BaseLoadActivity implements BaseQuickAdapter.OnItemClickListener, SalesManSignAchievementContract.ISalesManSignAchievementView {
+public class SalesManSignAchievementActivity extends BaseLoadActivity implements BaseQuickAdapter.OnItemClickListener
+    , SalesManSignAchievementContract.ISalesManSignAchievementView {
     private static final int SALES_MAN_SIGN_CODE = 20001;
     String FORMAT_DATE = "yyyy/MM/dd";
     @BindView(R.id.txt_date_name_title)
@@ -105,16 +100,15 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
     EditText edtSearch;
     @BindView(R.id.img_clear)
     ImageView imgClear;
-    private ContextOptionsWindow mOptionsWindow;
-    private ContextOptionsWindow mExportOptionsWindow;
     SalesManSignAchievementPresenter mPresenter;
     SalesManSignAchievementAdapter mAdapter;
-    private EmptyView mEmptyView;
-
     String serverDate = "";
     String localDate = "";
     int timeType = TimeTypeEnum.DAY.getCode();
     int timeFlag = TimeFlagEnum.TODAY.getCode();
+    private ContextOptionsWindow mOptionsWindow;
+    private ContextOptionsWindow mExportOptionsWindow;
+    private EmptyView mEmptyView;
     private SalesManAchievementReq params = new SalesManAchievementReq();
 
     @Override
@@ -161,6 +155,12 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         // 选项监听
         OptionsBean optionsBean = (OptionsBean) adapter.getItem(position);
@@ -173,7 +173,8 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
             serverDate = DateUtil.currentTimeHllDT8() + "";
             localDate = CalendarUtils.format(new Date(), FORMAT_DATE);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_YES_DATE)) {
-            serverDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1), CalendarUtils.FORMAT_LOCAL_DATE);
+            serverDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1),
+                CalendarUtils.FORMAT_LOCAL_DATE);
             localDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1), FORMAT_DATE);
             timeFlag = TimeFlagEnum.YESTERDAY.getCode();
             dateText = TimeFlagEnum.YESTERDAY.getDesc();
@@ -181,7 +182,7 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
             serverDate = DateUtil.getWeekFirstDay(0) + "";
             String endDate = DateUtil.getWeekLastDay(0) + "";
             localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
-                    + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.WEEK.getCode();
             timeFlag = TimeFlagEnum.CURRENTWEEK.getCode();
             dateText = TimeFlagEnum.CURRENTWEEK.getDesc();
@@ -189,7 +190,7 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
             serverDate = DateUtil.getWeekFirstDay(-1) + "";
             String endDate = DateUtil.getWeekLastDay(-1) + "";
             localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
-                    + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.WEEK.getCode();
             timeFlag = TimeFlagEnum.LASTWEEK.getCode();
             dateText = TimeFlagEnum.LASTWEEK.getDesc();
@@ -197,7 +198,7 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
             serverDate = DateUtil.getMonthFirstDay(0) + "";
             String endDate = DateUtil.getMonthLastDay(0) + "";
             localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
-                    + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.MONTH.getCode();
             timeFlag = TimeFlagEnum.CURRENTMONTH.getCode();
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
@@ -205,7 +206,7 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
             serverDate = DateUtil.getMonthFirstDay(-1) + "";
             String endDate = DateUtil.getMonthLastDay(-1) + "";
             localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
-                    + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.MONTH.getCode();
             timeFlag = TimeFlagEnum.LASTMONTH.getCode();
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
@@ -262,67 +263,6 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
         totalIncrSignShop.setText(String.valueOf(salesManSignResp.getTotalAddSignShopNum()));
     }
 
-    private void showExportOptionsWindow(View v) {
-        if (mExportOptionsWindow == null) {
-            mExportOptionsWindow = new ContextOptionsWindow(this)
-                    .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_DETAIL_INFO)))
-                    .setListener((adapter, view, position) -> {
-                        mExportOptionsWindow.dismiss();
-                        export(null);
-                    });
-        }
-        mExportOptionsWindow.showAsDropDownFix(v, Gravity.END);
-    }
-
-    @OnClick({R.id.txt_date_name_title, R.id.img_back, R.id.txt_options,R.id.edt_search,R.id.img_clear})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.txt_date_name_title:
-                showOptionsWindow(textDate);
-                break;
-            case R.id.txt_options:
-                showExportOptionsWindow(exportView);
-            case R.id.edt_search:
-                SearchActivity.start("",SalesManSearch.class.getSimpleName());
-                break;
-            case R.id.img_clear:
-                params.setKeyWords("");
-                edtSearch.setText("");
-                mPresenter.querySalesManSignAchievementList(true);
-                imgClear.setVisibility(View.GONE);
-            default:
-                break;
-        }
-    }
-
-    private   void showOptionsWindow(View view){
-        if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_DATE));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_YES_DATE));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_WEEK));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_WEEK));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_MONTH));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_MONTH));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
-            mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
-        }
-        mOptionsWindow.setOnDismissListener(()->{
-            reportDateArrow.setRotation(0);
-        });
-        reportDateArrow.setRotation(180);
-        mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
     @Override
     public String getSearchParam() {
         return null;
@@ -359,6 +299,62 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
         mPresenter.exportSalesManSignAchievement(email, reqParams);
     }
 
+    @OnClick({R.id.txt_date_name_title, R.id.img_back, R.id.txt_options, R.id.edt_search, R.id.img_clear})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.img_back:
+                finish();
+                break;
+            case R.id.txt_date_name_title:
+                showOptionsWindow(textDate);
+                break;
+            case R.id.txt_options:
+                showExportOptionsWindow(exportView);
+            case R.id.edt_search:
+                SearchActivity.start("", SalesManSearch.class.getSimpleName());
+                break;
+            case R.id.img_clear:
+                params.setKeyWords("");
+                edtSearch.setText("");
+                mPresenter.querySalesManSignAchievementList(true);
+                imgClear.setVisibility(View.GONE);
+            default:
+                break;
+        }
+    }
+
+    private void showOptionsWindow(View view) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_DATE));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_YES_DATE));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
+            mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
+        }
+        mOptionsWindow.setOnDismissListener(() -> {
+            reportDateArrow.setRotation(0);
+        });
+        reportDateArrow.setRotation(180);
+        mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
+    }
+
+    private void showExportOptionsWindow(View v) {
+        if (mExportOptionsWindow == null) {
+            mExportOptionsWindow = new ContextOptionsWindow(this)
+                .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option,
+                    OptionType.OPTION_EXPORT_DETAIL_INFO)))
+                .setListener((adapter, view, position) -> {
+                    mExportOptionsWindow.dismiss();
+                    export(null);
+                });
+        }
+        mExportOptionsWindow.showAsDropDownFix(v, Gravity.END);
+    }
+
     @Subscribe
     public void onEvent(SalesManSearchEvent event) {
         String name = event.getSearchWord();
@@ -366,7 +362,7 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
             edtSearch.setText(name);
             params.setKeyWords(name);
             imgClear.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             params.setKeyWords("");
         }
         mPresenter.querySalesManSignAchievementList(true);
@@ -390,7 +386,6 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
                     .setText(R.id.txt_incr_sign_shop, String.valueOf(bean.getAddSignShopNum()))
                     .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
                     R.drawable.bg_price_log_content_white : R.drawable.bg_price_log_content_gray);
-
         }
     }
 }

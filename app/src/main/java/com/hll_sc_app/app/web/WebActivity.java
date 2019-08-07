@@ -1,13 +1,11 @@
 package com.hll_sc_app.app.web;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -21,7 +19,6 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.web.JSBridge;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.TitleBar;
 
@@ -44,7 +41,7 @@ public class WebActivity extends BaseLoadActivity {
     ProgressBar mProgressBar;
     @BindView(R.id.aw_web_view_container)
     FrameLayout mWebViewContainer;
-    private WebView mWebView;
+    private WebViewProxy mProxy;
 
     public static void start(String title, String url) {
         start(title, url, null, null, false);
@@ -94,11 +91,9 @@ public class WebActivity extends BaseLoadActivity {
         initWebView();
     }
 
-    @SuppressLint({"AddJavascriptInterface", "SetJavaScriptEnabled"})
     private void initWebView() {
-        mWebView = new WebView(getApplicationContext());
-        mWebViewContainer.addView(mWebView, 0);
-        mWebView.setWebChromeClient(new WebChromeClient() {
+        mProxy = new WebViewProxy(mBundle, mWebViewContainer);
+        mProxy.initWebView(this, new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -109,8 +104,7 @@ public class WebActivity extends BaseLoadActivity {
                     mProgressBar.setVisibility(View.GONE);
                 }
             }
-        });
-        mWebView.setWebViewClient(new WebViewClient() {
+        }, new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -119,38 +113,20 @@ public class WebActivity extends BaseLoadActivity {
                     view.post(() -> view.loadUrl(String.format("javascript:%s", js)));
                 }
             }
-        });
-        mWebView.setBackgroundColor(0);
-        mWebView.setVerticalScrollBarEnabled(true);
-        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        mWebView.addJavascriptInterface(new JSBridge(this), mBundle.getString(Constants.WEB_JS_NAME, "JSBridge"));
-
-        WebSettings settings = mWebView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setAllowFileAccess(true);
-        settings.setLoadWithOverviewMode(true);
-        settings.setJavaScriptCanOpenWindowsAutomatically(true);
-        settings.setDisplayZoomControls(false);
-        boolean zoom = mBundle.getBoolean(Constants.WEB_ZOOM, false);
-        settings.setSupportZoom(zoom);
-        settings.setBuiltInZoomControls(zoom);
-        settings.setAllowFileAccessFromFileURLs(true);
-        mWebView.loadUrl(mBundle.getString(Constants.WEB_URL));
+        }, "JSBridge");
     }
 
     @Override
     protected void onDestroy() {
-        mWebViewContainer.removeAllViews();
-        mWebView.destroy();
-        mWebView = null;
+        mProxy.destroy();
         super.onDestroy();
     }
 
     @Override
     public void onBackPressed() {
-        if (mWebView.canGoBack()) {
-            mWebView.goBack();
+        if (mProxy.canGoBack()) {
+            mProxy.goBack();
+            return;
         }
         super.onBackPressed();
     }

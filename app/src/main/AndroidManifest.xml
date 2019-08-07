@@ -207,7 +207,42 @@
             android:theme="@style/TranslucentTheme"/>
 
         <activity
+            android:launchMode="singleTask"
             android:name=".app.warehouse.WarehouseIntroduceActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.shipper.ShipperActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.WarehouseListActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.invite.WarehouseInviteActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.warehouse.application.WarehouseApplicationActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.warehouse.application.WarehouseShopListActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.add.WarehouseAddActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.detail.details.WarehouseDetailsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.detail.WarehouseDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.detail.shop.WarehouseShopDetailActivity"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -516,7 +551,8 @@
             />
 
         <!--缺货汇总-->
-        <activity android:name=".app.report.deliveryLack.DeliveryLackGatherActivity"
+        <activity
+            android:name=".app.report.deliveryLack.DeliveryLackGatherActivity"
             android:screenOrientation="portrait"/>
 
         <activity

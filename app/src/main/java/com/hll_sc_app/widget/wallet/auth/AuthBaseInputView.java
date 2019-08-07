@@ -66,17 +66,12 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
 
     @Override
     protected void initView() {
-        super.initView();
+        View view = View.inflate(getContext(), R.layout.view_wallet_auth_base_input, this);
+        ButterKnife.bind(this, view);
         mBusinessLicense.setMaxSize(2097152);
         mCreateAccountLicense.setMaxSize(2097152);
         mBusinessLicense.setOnDeleteListener(this::deleteImage);
         mCreateAccountLicense.setOnDeleteListener(this::deleteImage);
-    }
-
-    @Override
-    protected void bindView() {
-        View view = View.inflate(getContext(), R.layout.view_wallet_auth_base_input, this);
-        ButterKnife.bind(this, view);
     }
 
     @Override
@@ -147,15 +142,13 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
 
     @Override
     public String getTitle() {
-        return "基本信息(1/4)";
+        return "公司信息(1/4)";
     }
 
     @OnClick(R.id.abi_start_date)
     public void selectStartDate() {
         WalletHelper.showLongValidDateDialog((Activity) getContext(), (dialog, item) -> {
             dialog.dismiss();
-            mAuthInfo.setLicensePeriod("");
-            mEndDate.setText("");
             if (item == 0) {
                 mAuthInfo.setLicenseBeginDate(WalletHelper.PERMANENT_DATE);
                 mAuthInfo.setLicensePeriod(WalletHelper.PERMANENT_DATE);
@@ -186,12 +179,15 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
 
     @Override
     public boolean verifyValidity() {
-        if (!super.verifyValidity()){
+        if (!super.verifyValidity()) {
             return false;
         }
-        String registerAddress = mRegisterAddress.getText().toString();
-        if (!registerAddress.matches("^[A-Za-z0-9\\u4e00-\\u9fa5][A-Za-z0-9\\u4e00-\\u9fa5()+*\\- ]*$")) {
-            ToastUtils.showShort(getContext(),"注册地址只能包含数字字母中文空格与()+*-符号");
+        if (!mCreditCode.getText().toString().matches("^[^_IOZSVa-z\\W]{2}\\d{6}[^_IOZSVa-z\\W]{10}$")) {
+            ToastUtils.showShort(getContext(), "请输入正确的统一社会信用代码");
+            return false;
+        }
+        if (Integer.parseInt(mAuthInfo.getLicenseBeginDate()) > Integer.parseInt(mAuthInfo.getLicensePeriod())) {
+            ToastUtils.showShort(getContext(), "起始日期不能大于结束日期");
             return false;
         }
         return true;

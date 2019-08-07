@@ -148,8 +148,8 @@ public class CreateAccountActivity extends BaseLoadActivity implements IAccountC
             SuccessDialog.newBuilder(this)
                     .setImageTitle(R.drawable.ic_dialog_failure)
                     .setImageState(R.drawable.ic_dialog_state_failure)
-                    .setMessageTitle("确定要离开吗")
-                    .setMessage("离开后将不能保存您当前所做的更改")
+                    .setMessageTitle("确定要离开嘛")
+                    .setMessage("您已经更改了部分对应关系，离开将不能保存您的更改")
                     .setCancelable(false)
                     .setButton((dialog, item) -> {
                         dialog.dismiss();

@@ -34,9 +34,10 @@ public class SalesManSignAchievementPresenter implements SalesManSignAchievement
     }
 
 
-    public void start(){
+    public void start() {
         querySalesManSignAchievementList(true);
     }
+
     @Override
     public void querySalesManSignAchievementList(boolean showLoading) {
         mPageNum = 1;
@@ -53,11 +54,11 @@ public class SalesManSignAchievementPresenter implements SalesManSignAchievement
 
     @Override
     public void exportSalesManSignAchievement(String email, String reqParams) {
-        if(!TextUtils.isEmpty(email)){
+        if (!TextUtils.isEmpty(email)) {
             bindEmail(email);
             return;
         }
-        Report.exportReport(reqParams,"111009",email,new SimpleObserver<ExportResp>(mView){
+        Report.exportReport(reqParams, "111009", email, new SimpleObserver<ExportResp>(mView) {
             @Override
             public void onSuccess(ExportResp exportResp) {
                 if (!TextUtils.isEmpty(exportResp.getEmail()))
@@ -75,26 +76,27 @@ public class SalesManSignAchievementPresenter implements SalesManSignAchievement
         });
     }
 
-    @Override
-    public void register(SalesManSignAchievementContract.ISalesManSignAchievementView view) {
-      this.mView = CommonUtils.requireNonNull(view);
-    }
-
     private void toQuerySalesManSignAchievementList(boolean showLoading) {
         SalesManAchievementReq params = mView.getParams();
         params.setGroupID(UserConfig.getGroupID());
         params.setPageNum(mTempPageNum);
         params.setPageSize(20);
-        ReportRest.querySalesmanSignAchievement(params, new SimpleObserver<SalesManSignResp>(mView,showLoading) {
+        ReportRest.querySalesmanSignAchievement(params, new SimpleObserver<SalesManSignResp>(mView, showLoading) {
             @Override
             public void onSuccess(SalesManSignResp salesManSignResp) {
                 mPageNum = mTempPageNum;
-                mView.showSalesManSignAchievementList(salesManSignResp.getRecords(),mPageNum != 1, salesManSignResp.getTotalSize());
-                if(salesManSignResp.getTotalSize()>0){
+                mView.showSalesManSignAchievementList(salesManSignResp.getRecords(), mPageNum != 1,
+                    salesManSignResp.getTotalSize());
+                if (salesManSignResp.getTotalSize() > 0) {
                     mView.showSalesManSignTotalDatas(salesManSignResp);
                 }
             }
         });
+    }
+
+    @Override
+    public void register(SalesManSignAchievementContract.ISalesManSignAchievementView view) {
+        this.mView = CommonUtils.requireNonNull(view);
     }
 
     private void bindEmail(String email) {
@@ -102,9 +104,9 @@ public class SalesManSignAchievementPresenter implements SalesManSignAchievement
         if (user == null)
             return;
         BaseMapReq req = BaseMapReq.newBuilder()
-                .put("email", email)
-                .put("employeeID", user.getEmployeeID())
-                .create();
+            .put("email", email)
+            .put("employeeID", user.getEmployeeID())
+            .create();
         SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
@@ -114,13 +116,13 @@ public class SalesManSignAchievementPresenter implements SalesManSignAchievement
                 params.setPageSize(20);
                 Gson gson = new Gson();
                 String reqParams = gson.toJson(params);
-                exportSalesManSignAchievement(null,reqParams);
+                exportSalesManSignAchievement(null, reqParams);
             }
         };
         UserService.INSTANCE.bindEmail(req)
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(observer);
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(observer);
     }
 
 }

@@ -116,43 +116,49 @@ public class ReportRest {
 
     /**
      * 查询客户签约绩效
+     *
      * @param req
      * @param observer
      */
-    public static  void querySalesmanSignAchievement(SalesManAchievementReq req, SimpleObserver<SalesManSignResp> observer){
+    public static void querySalesmanSignAchievement(SalesManAchievementReq req,
+                                                    SimpleObserver<SalesManSignResp> observer) {
         ReportService.INSTANCE
-                .querySalesManSignAchievement(
-                        new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
+            .querySalesManSignAchievement(
+                new BaseReq<>(req))
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+            .subscribe(observer);
     }
 
     /**
      * 查询客户签约绩效
+     *
      * @param req
      * @param observer
      */
-    public static  void querySalesmanSalesAchievement(SalesManAchievementReq req, SimpleObserver<SalesManSalesResp> observer){
+    public static void querySalesmanSalesAchievement(SalesManAchievementReq req,
+                                                     SimpleObserver<SalesManSalesResp> observer) {
         ReportService.INSTANCE
-                .querySalesManSalesAchievement(
-                        new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
+            .querySalesManSalesAchievement(
+                new BaseReq<>(req))
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+            .subscribe(observer);
     }
 
     /**
      * 查询缺货汇总
+     *
      * @param req
      * @param observer
      */
-    public static  void queryDeliveryLackGather(BaseReportReqParam req, SimpleObserver<DeliveryLackGatherResp> observer){
+    public static void queryDeliveryLackGather(BaseReportReqParam req,
+                                               SimpleObserver<DeliveryLackGatherResp> observer) {
         ReportService.INSTANCE
-                .queryDeliveryLackGather(
-                        new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
+            .queryDeliveryLackGather(
+                new BaseReq<>(req))
+            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+            .subscribe(observer);
     }
 }

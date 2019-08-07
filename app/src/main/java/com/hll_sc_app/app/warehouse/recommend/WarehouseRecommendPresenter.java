@@ -1,6 +1,6 @@
 package com.hll_sc_app.app.warehouse.recommend;
 
-import com.hll_sc_app.api.WarehouseManageService;
+import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -39,7 +39,7 @@ public class WarehouseRecommendPresenter implements WarehouseRecommendContract.I
 
     @Override
     public void getRecommendWarehouse() {
-        WarehouseManageService.INSTANCE
+        WarehouseService.INSTANCE
             .queryRecommendWarehouseList(BaseMapReq.newBuilder().create())
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
