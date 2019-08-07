@@ -45,12 +45,12 @@ public interface ShipperShopDetailContract {
          *
          * @param showLoading true-显示 loading
          */
-        void queryWarehousePurchaserList(boolean showLoading);
+        void queryWarehouseList(boolean showLoading);
 
         /**
          * 查询下一页签约关系列表
          */
-        void queryMoreWarehousePurchaserList();
+        void queryMoreWarehouseList();
 
         /**
          * 代仓编辑合作采购商

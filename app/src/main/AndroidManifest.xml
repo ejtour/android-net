@@ -216,11 +216,15 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".app.warehouse.shipper.shop.WarehouseShipperShopActivity"
+            android:name=".app.warehouse.shipper.shop.ShipperShopManageActivity"
             android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.warehouse.shipper.shop.detail.ShipperShopDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".app.warehouse.shipper.shop.detail.purchaser.ShipperPurchaserSelectActivity"
             android:screenOrientation="portrait"/>
 
         <activity

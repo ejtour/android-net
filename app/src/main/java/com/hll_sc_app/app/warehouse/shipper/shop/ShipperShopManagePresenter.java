@@ -19,13 +19,13 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/8/7
  */
-public class WarehouseShipperShopPresenter implements WarehouseShipperShopContract.IWarehouseShipperShopPresenter {
+public class ShipperShopManagePresenter implements ShipperShopManageContract.IShipperShopManagePresenter {
     private int mPageNum;
     private int mTempPageNum;
-    private WarehouseShipperShopContract.IWarehouseShipperShopView mView;
+    private ShipperShopManageContract.IShipperShopManageView mView;
 
-    static WarehouseShipperShopPresenter newInstance() {
-        return new WarehouseShipperShopPresenter();
+    static ShipperShopManagePresenter newInstance() {
+        return new ShipperShopManagePresenter();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class WarehouseShipperShopPresenter implements WarehouseShipperShopContra
     }
 
     @Override
-    public void register(WarehouseShipperShopContract.IWarehouseShipperShopView view) {
+    public void register(ShipperShopManageContract.IShipperShopManageView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 

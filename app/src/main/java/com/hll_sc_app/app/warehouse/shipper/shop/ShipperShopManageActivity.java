@@ -48,7 +48,7 @@ import butterknife.OnClick;
  * @date 2019/8/7
  */
 @Route(path = RouterConfig.WAREHOUSE_SHIPPER_SHOP, extras = Constant.LOGIN_EXTRA)
-public class WarehouseShipperShopActivity extends BaseLoadActivity implements WarehouseShipperShopContract.IWarehouseShipperShopView {
+public class ShipperShopManageActivity extends BaseLoadActivity implements ShipperShopManageContract.IShipperShopManageView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.searchView)
@@ -59,7 +59,7 @@ public class WarehouseShipperShopActivity extends BaseLoadActivity implements Wa
     private EmptyView mEmptyView;
     private EmptyView mSearchEmptyView;
     private WarehouseListAdapter mAdapter;
-    private WarehouseShipperShopPresenter mPresenter;
+    private ShipperShopManagePresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class WarehouseShipperShopActivity extends BaseLoadActivity implements Wa
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        mPresenter = WarehouseShipperShopPresenter.newInstance();
+        mPresenter = ShipperShopManagePresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
         EventBus.getDefault().register(this);

@@ -35,7 +35,7 @@ public class ShipperShopDetailPresenter implements ShipperShopDetailContract.ISh
 
     @Override
     public void start() {
-        queryWarehousePurchaserList(true);
+        queryWarehouseList(true);
     }
 
     @Override
@@ -44,14 +44,14 @@ public class ShipperShopDetailPresenter implements ShipperShopDetailContract.ISh
     }
 
     @Override
-    public void queryWarehousePurchaserList(boolean showLoading) {
+    public void queryWarehouseList(boolean showLoading) {
         mPageNum = 1;
         mTempPageNum = mPageNum;
         toQueryWarehouseList(showLoading);
     }
 
     @Override
-    public void queryMoreWarehousePurchaserList() {
+    public void queryMoreWarehouseList() {
         mTempPageNum = mPageNum;
         mTempPageNum++;
         toQueryWarehouseList(false);
@@ -77,7 +77,7 @@ public class ShipperShopDetailPresenter implements ShipperShopDetailContract.ISh
                 @Override
                 public void onSuccess(Object resp) {
                     mView.showToast("代仓编辑合作采购商成功");
-                    queryWarehousePurchaserList(true);
+                    queryWarehouseList(true);
                 }
 
                 @Override

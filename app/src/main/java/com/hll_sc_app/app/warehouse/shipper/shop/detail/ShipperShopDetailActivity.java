@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.warehouse.ShipperShopResp;
@@ -92,7 +93,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
 
     private void initView() {
         mTxtTitle.setText(mName);
-        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到采购商门店数据").create();
+        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到需要代仓的采购商门店").create();
         mEmptyView = EmptyView.newBuilder(this)
             .setTipsTitle("您还没有设置需要代仓的采购商门店")
             .setTips("您可以在您的合作采购商中选择需要代仓的门店")
@@ -117,18 +118,18 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
 
             @Override
             public void toSearch(String searchContent) {
-                mPresenter.queryWarehousePurchaserList(true);
+                mPresenter.queryWarehouseList(true);
             }
         });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreWarehousePurchaserList();
+                mPresenter.queryMoreWarehouseList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryWarehousePurchaserList(false);
+                mPresenter.queryWarehouseList(false);
             }
         });
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
@@ -148,6 +149,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
     }
 
     private void toAdd() {
+        RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER, mWarehouseId);
     }
 
     /**
@@ -234,7 +236,8 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
             ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getPurchaserLogo());
             helper.setText(R.id.txt_groupName, item.getPurchaserName())
                 .setText(R.id.txt_groupNum, "当前代仓门店数：" + item.getShopNum())
-                .setGone(R.id.txt_shopNum, false);
+                .setGone(R.id.txt_shopNum, false)
+                .setGone(R.id.img_arrow, false);
         }
     }
 }
