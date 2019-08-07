@@ -32,7 +32,6 @@ public interface WarehouseAddContract {
          */
         void showWarehouseList(List<PurchaserBean> list, boolean append, int totalNum);
 
-
         /**
          * 获取搜索词
          *

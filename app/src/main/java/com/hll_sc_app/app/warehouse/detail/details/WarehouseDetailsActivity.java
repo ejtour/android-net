@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.warehouse.detail.details;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -25,12 +24,15 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.RefreshWarehouseList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +149,8 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
             mButtonView.setListener(this, info);
         }
         mButtonView.showButton(mActionType, resp.getStatus());
-        mRlReturnAudit.setVisibility(TextUtils.equals(resp.getStatus(), "2") ? View.VISIBLE : View.GONE);
+        mRlReturnAudit.setVisibility(UserConfig.isSelfOperated() && TextUtils.equals(resp.getStatus(), "2") ?
+            View.VISIBLE : View.GONE);
         mTxtReturnAudit.setText(TextUtils.equals(resp.getReturnAudit(), "0") ? "代仓公司审核" : "货主审核");
 
         mLlShopsNum.setVisibility(TextUtils.equals(resp.getStatus(), "0") && TextUtils.equals(mActionType,
@@ -170,10 +173,8 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
 
     @Override
     public void editSuccess() {
-        ARouter.getInstance().build(UserConfig.isSelfOperated() ? RouterConfig.WAREHOUSE_LIST :
-            RouterConfig.WAREHOUSE_SHIPPER)
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            .navigation(this);
+        EventBus.getDefault().post(new RefreshWarehouseList());
+        finish();
     }
 
     @Override
@@ -192,17 +193,24 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
 
     @Override
     public void del(PurchaserBean bean, String type) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", bean.getGroupID())
-            .put("type", type)
-            .create();
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        if (UserConfig.isSelfOperated()) {
+            builder
+                .put("originator", "1")
+                .put("groupID", UserConfig.getGroupID())
+                .put("purchaserID", bean.getGroupID());
+        } else {
+            builder
+                .put("originator", "0")
+                .put("groupID", bean.getGroupID())
+                .put("purchaserID", UserConfig.getGroupID());
+        }
+        builder.put("type", type);
         if (TextUtils.equals("1", type)) {
             // 1-解除合作，2-放弃
-            showTipsDialog(req, type);
+            showTipsDialog(builder.create(), type);
         } else {
-            mPresenter.delWarehouse(req, type);
+            mPresenter.delWarehouse(builder.create(), type);
         }
     }
 
@@ -224,9 +232,17 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         BaseMapReq.Builder builder = BaseMapReq.newBuilder();
         UserBean user = GreenDaoUtils.getUser();
         if (user != null) {
-            builder.put("groupID", user.getGroupID())
-                .put("originator", "1")
-                .put("purchaserID", bean.getGroupID());
+            if (UserConfig.isSelfOperated()) {
+                builder
+                    .put("originator", "1")
+                    .put("groupID", user.getGroupID())
+                    .put("purchaserID", bean.getGroupID());
+            } else {
+                builder
+                    .put("originator", "0")
+                    .put("groupID", bean.getGroupID())
+                    .put("purchaserID", user.getGroupID());
+            }
         }
         return builder;
     }
@@ -253,12 +269,14 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         UserBean user = GreenDaoUtils.getUser();
         if (user != null) {
             if (UserConfig.isSelfOperated()) {
+                // 是自营-代仓公司
                 builder.put("groupID", user.getGroupID())
                     .put("groupName", user.getGroupName())
                     .put("originator", "1")
                     .put("purchaserID", bean.getGroupID())
                     .put("purchaserName", bean.getGroupName());
             } else {
+                // 非自营-货主
                 builder
                     .put("groupID", bean.getGroupID())
                     .put("groupName", bean.getGroupName())

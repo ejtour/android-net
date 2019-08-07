@@ -21,15 +21,15 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.WarehouseSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.UserBean;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
+import com.hll_sc_app.bean.event.RefreshWarehouseList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -47,6 +47,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 
 /**
  * 代仓公司-我收到的申请
@@ -132,16 +133,21 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
     }
 
     private void agree(PurchaserBean bean) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (user != null) {
-            BaseMapReq req = BaseMapReq.newBuilder()
-                .put("groupID", user.getGroupID())
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        if (UserConfig.isSelfOperated()) {
+            builder
+                .put("groupID", UserConfig.getGroupID())
                 .put("originator", "1")
-                .put("purchaserID", bean.getGroupID())
-                .put("actionType", "agree")
-                .create();
-            mPresenter.agreeWarehouse(req);
+                .put("purchaserID", bean.getGroupID());
+        } else {
+            builder
+                .put("groupID", bean.getGroupID())
+                .put("originator", "0")
+                .put("purchaserID", UserConfig.getGroupID());
         }
+        builder.put("actionType", "agree");
+        mPresenter.agreeWarehouse(builder.create());
+
     }
 
     @Subscribe
@@ -150,6 +156,11 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
         if (!TextUtils.isEmpty(name)) {
             mSearchView.showSearchContent(true, name);
         }
+    }
+
+    @Subscribe
+    public void onEvent(RefreshWarehouseList event) {
+        mPresenter.queryWarehouseList(true);
     }
 
     @Override

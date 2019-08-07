@@ -63,6 +63,7 @@ public class ShipperActivity extends BaseLoadActivity implements BaseQuickAdapte
             case R.id.cons_shipper_shop:
                 break;
             case R.id.cons_shipper_warehouse_company:
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_LIST);
                 break;
             default:
                 break;

@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
+import com.hll_sc_app.bean.event.RefreshWarehouseList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -124,6 +125,11 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
         if (!TextUtils.isEmpty(name)) {
             mSearchView.showSearchContent(true, name);
         }
+    }
+
+    @Subscribe
+    public void onEvent(RefreshWarehouseList event) {
+        mPresenter.queryWarehouseList(true);
     }
 
     @Override
