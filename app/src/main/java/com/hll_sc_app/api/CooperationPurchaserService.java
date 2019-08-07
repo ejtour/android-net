@@ -14,6 +14,8 @@ import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.shop.SupplierShopBean;
+import com.hll_sc_app.bean.shop.SupplierShopUpdateReq;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 
 import java.util.List;
@@ -193,7 +195,6 @@ public interface CooperationPurchaserService {
     @Headers("pv:103703")
     Observable<BaseResp<Object>> editThirdPartPurchaserDetail(@Body BaseMapReq req);
 
-
     /**
      * 获取合作门店
      *
@@ -203,4 +204,24 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:102046")
     Observable<BaseResp<CooperationShopListReq>> listCooperationShop(@Body BaseMapReq req);
+
+    /**
+     * 获取供应商店铺
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102023")
+    Observable<BaseResp<List<SupplierShopBean>>> listSupplierShop(@Body BaseMapReq req);
+
+    /**
+     * 更新供应商店铺
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102025")
+    Observable<BaseResp<Object>> updateSupplierShop(@Body BaseReq<SupplierShopUpdateReq> req);
 }

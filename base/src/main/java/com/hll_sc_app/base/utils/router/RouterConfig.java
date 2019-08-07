@@ -172,6 +172,10 @@ public class RouterConfig {
      */
     public static final String REFUND_TIME = "/activity/refundTime";
     /**
+     * 供应商店铺
+     */
+    public static final String SUPPLIER_SHOP = "/activity/supplierShop";
+    /**
      * 定向售卖列表
      */
     public static final String ORIENTATION_LIST = "/activity/orientation/list";
