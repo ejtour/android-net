@@ -19,10 +19,10 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/8/7
  */
-public class WarehouseShipperShopPresenter implements WarehouseShipperShopContract.IWarehouseListPresenter {
-    private WarehouseShipperShopContract.IWarehouseListView mView;
+public class WarehouseShipperShopPresenter implements WarehouseShipperShopContract.IWarehouseShipperShopPresenter {
     private int mPageNum;
     private int mTempPageNum;
+    private WarehouseShipperShopContract.IWarehouseShipperShopView mView;
 
     static WarehouseShipperShopPresenter newInstance() {
         return new WarehouseShipperShopPresenter();
@@ -34,7 +34,7 @@ public class WarehouseShipperShopPresenter implements WarehouseShipperShopContra
     }
 
     @Override
-    public void register(WarehouseShipperShopContract.IWarehouseListView view) {
+    public void register(WarehouseShipperShopContract.IWarehouseShipperShopView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
@@ -53,17 +53,17 @@ public class WarehouseShipperShopPresenter implements WarehouseShipperShopContra
     }
 
     private void toQueryWarehouseList(boolean showLoading) {
-        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
-        builder
+        BaseMapReq req = BaseMapReq.newBuilder()
             .put("actionType", "formalSigned")
             .put("name", mView.getSearchParam())
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
             .put("source", "app")
             .put("purchaserID", UserConfig.getGroupID())
-            .put("originator", "0");
+            .put("originator", "0")
+            .create();
         WarehouseService.INSTANCE
-            .queryWarehouseList(builder.create())
+            .queryWarehouseList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> {

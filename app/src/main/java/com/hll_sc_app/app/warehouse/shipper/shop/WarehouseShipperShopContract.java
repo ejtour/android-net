@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface WarehouseShipperShopContract {
 
-    interface IWarehouseListView extends ILoadView {
+    interface IWarehouseShipperShopView extends ILoadView {
         /**
          * 代仓客户集团名称检索字段
          *
@@ -32,7 +32,7 @@ public interface WarehouseShipperShopContract {
         void showWarehouseList(List<PurchaserBean> list, boolean append, int totalNum);
     }
 
-    interface IWarehouseListPresenter extends IPresenter<IWarehouseListView> {
+    interface IWarehouseShipperShopPresenter extends IPresenter<IWarehouseShipperShopView> {
         /**
          * 查询签约关系列表
          *
