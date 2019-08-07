@@ -80,4 +80,8 @@ public abstract class SimpleObserver<T> extends BaseCallback<T> {
             mView.get().showError(e);
         }
     }
+
+    protected ILoadView getView() {
+        return mView.get();
+    }
 }
