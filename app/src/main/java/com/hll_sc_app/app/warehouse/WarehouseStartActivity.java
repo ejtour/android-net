@@ -96,7 +96,7 @@ public class WarehouseStartActivity extends BaseLoadActivity {
                 @Override
                 public void onSuccess(WarehouseListResp resp) {
                     RouterUtil.goToActivity(resp.getTotalNum() > 0 ? RouterConfig.WAREHOUSE_SHIPPER :
-                        RouterConfig.WAREHOUSE_INTRODUCE, this);
+                        RouterConfig.WAREHOUSE_INTRODUCE, WarehouseStartActivity.this);
                 }
 
                 @Override
