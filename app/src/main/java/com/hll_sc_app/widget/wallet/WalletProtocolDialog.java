@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.web.WebViewProxy;
 import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.utils.Constants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,18 +28,12 @@ public class WalletProtocolDialog extends BaseDialog {
     TextView mReject;
     @BindView(R.id.dwp_web_view_container)
     FrameLayout mWebViewContainer;
-    private WebView mWebView;
+    private WebViewProxy mProxy;
 
     public WalletProtocolDialog(@NonNull Activity context, View.OnClickListener rejectListener) {
         super(context);
         mReject.setOnClickListener(rejectListener);
-        setOnDismissListener(dialog -> release());
-    }
-
-    private void release() {
-        mWebViewContainer.removeAllViews();
-        mWebView.destroy();
-        mWebView = null;
+        setOnDismissListener(dialog -> mProxy.destroy());
     }
 
     @Override
@@ -47,7 +41,6 @@ public class WalletProtocolDialog extends BaseDialog {
         View view = inflater.inflate(R.layout.dialog_wallet_protocol, null);
         ButterKnife.bind(this, view);
         initWebView();
-        mWebView.loadUrl("file:///android_asset/walletProtocol.html");
         return view;
     }
 
@@ -68,8 +61,10 @@ public class WalletProtocolDialog extends BaseDialog {
     }
 
     private void initWebView() {
-        mWebView = new WebView(getContext().getApplicationContext());
-        mWebViewContainer.addView(mWebView);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.WEB_URL, "file:///android_asset/walletProtocol.html");
+        mProxy = new WebViewProxy(bundle, mWebViewContainer);
+        mProxy.initWebView();
     }
 
     @OnClick(R.id.dwp_agree)

@@ -22,6 +22,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.web.WebViewProxy;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -52,7 +53,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
     TextView mNextStep;
     @BindView(R.id.awr_web_view_container)
     FrameLayout mWebViewContainer;
-    WebView mWebView;
+    private WebViewProxy mProxy;
     @BindView(R.id.awr_progress_bar)
     ProgressBar mProgressBar;
     private RechargeDialog mDialog;
@@ -75,13 +76,9 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
         mPresenter.register(this);
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
-        mWebView = new WebView(getApplicationContext());
-        mWebViewContainer.addView(mWebView);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.setWebChromeClient(new WebChromeClient() {
+        mProxy = new WebViewProxy(new Bundle(), mWebViewContainer);
+        mProxy.initWebView(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -92,14 +89,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
                     mProgressBar.setVisibility(View.GONE);
                 }
             }
-        });
-        mWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-
+        }, new WebViewClient() {
             @Nullable
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
@@ -114,9 +104,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
 
     @Override
     protected void onDestroy() {
-        mWebViewContainer.removeAllViews();
-        mWebView.destroy();
-        mWebView = null;
+        mProxy.destroy();
         super.onDestroy();
     }
 
@@ -124,7 +112,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
     public void rechargeSuccess(RechargeResp rechargeResp) {
         mDialog.dismiss();
         mWebViewContainer.setVisibility(View.VISIBLE);
-        mWebView.loadData(createWebForm(rechargeResp.getPreRechargeInfo()), "text/html", "UTF-8");
+        mProxy.loadData(createWebForm(rechargeResp.getPreRechargeInfo()), "text/html", "UTF-8");
     }
 
     private String createWebForm(String content) {
