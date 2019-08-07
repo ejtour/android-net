@@ -13,8 +13,17 @@ import java.util.List;
 public class WarehouseDetailResp {
     private List<WarehouseShopBean> shops;
     private PurchaserBean purchaserInfo;
+    private PurchaserBean groupInfo;
     private String status;
     private String returnAudit;
+
+    public PurchaserBean getGroupInfo() {
+        return groupInfo;
+    }
+
+    public void setGroupInfo(PurchaserBean groupInfo) {
+        this.groupInfo = groupInfo;
+    }
 
     public String getReturnAudit() {
         return returnAudit;

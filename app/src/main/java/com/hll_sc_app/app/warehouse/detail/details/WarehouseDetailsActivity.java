@@ -136,15 +136,15 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         if (resp == null) {
             return;
         }
-        PurchaserBean purchaserInfo = resp.getPurchaserInfo();
-        if (purchaserInfo != null) {
-            mImgLogoUrl.setImageURL(purchaserInfo.getLogoUrl());
-            mTxtBusinessModel.setText(getBusinessModelString(purchaserInfo.getBusinessModel()));
-            mTxtGroupName.setText(purchaserInfo.getGroupName());
-            mTxtGroupArea.setText(purchaserInfo.getGroupArea());
-            mTxtLinkman.setText(purchaserInfo.getLinkman());
-            mTxtMobile.setText(purchaserInfo.getMobile());
-            mButtonView.setListener(this, purchaserInfo);
+        PurchaserBean info = UserConfig.isSelfOperated() ? resp.getPurchaserInfo() : resp.getGroupInfo();
+        if (info != null) {
+            mImgLogoUrl.setImageURL(info.getLogoUrl());
+            mTxtBusinessModel.setText(getBusinessModelString(info.getBusinessModel()));
+            mTxtGroupName.setText(info.getGroupName());
+            mTxtGroupArea.setText(info.getGroupArea());
+            mTxtLinkman.setText(info.getLinkman());
+            mTxtMobile.setText(info.getMobile());
+            mButtonView.setListener(this, info);
         }
         mButtonView.showButton(mActionType, resp.getStatus());
         mRlReturnAudit.setVisibility(TextUtils.equals(resp.getStatus(), "2") ? View.VISIBLE : View.GONE);
@@ -170,7 +170,8 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
 
     @Override
     public void editSuccess() {
-        ARouter.getInstance().build(RouterConfig.WAREHOUSE_LIST)
+        ARouter.getInstance().build(UserConfig.isSelfOperated() ? RouterConfig.WAREHOUSE_LIST :
+            RouterConfig.WAREHOUSE_SHIPPER)
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
             .navigation(this);
     }
@@ -251,11 +252,21 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         BaseMapReq.Builder builder = BaseMapReq.newBuilder();
         UserBean user = GreenDaoUtils.getUser();
         if (user != null) {
-            builder.put("groupID", user.getGroupID())
-                .put("groupName", user.getGroupName())
-                .put("originator", "1")
-                .put("purchaserID", bean.getGroupID())
-                .put("purchaserName", bean.getGroupName());
+            if (UserConfig.isSelfOperated()) {
+                builder.put("groupID", user.getGroupID())
+                    .put("groupName", user.getGroupName())
+                    .put("originator", "1")
+                    .put("purchaserID", bean.getGroupID())
+                    .put("purchaserName", bean.getGroupName());
+            } else {
+                builder
+                    .put("groupID", bean.getGroupID())
+                    .put("groupName", bean.getGroupName())
+                    .put("originator", "0")
+                    .put("purchaserID", user.getGroupID())
+                    .put("purchaserName", user.getGroupName())
+                    .put("warehouseType", "1");
+            }
         }
         return builder;
     }

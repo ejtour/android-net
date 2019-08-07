@@ -109,7 +109,8 @@ public class WarehouseAddActivity extends BaseLoadActivity implements WarehouseA
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getPurchaserID());
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, isShipper() ? bean.getGroupID() :
+                    bean.getPurchaserID());
             }
         });
         String tips = isShipper() ? "您可以输入代仓公司名称查找代仓公司" : "您可以输入客户名称查找客户";
