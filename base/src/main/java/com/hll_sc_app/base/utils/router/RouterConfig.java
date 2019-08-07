@@ -68,6 +68,10 @@ public class RouterConfig {
      */
     public static final String WAREHOUSE_INTRODUCE = "/activity/warehouse/introduce";
     /**
+     * 代仓管理-我是货主
+     */
+    public static final String WAREHOUSE_SHIPPER = "/activity/warehouse/shipper";
+    /**
      * 代仓管理-我是货主默认介绍页面-查看推荐
      */
     public static final String WAREHOUSE_RECOMMEND = "/activity/warehouse/recommend";
