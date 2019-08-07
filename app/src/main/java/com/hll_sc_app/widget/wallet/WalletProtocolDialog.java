@@ -56,7 +56,6 @@ public class WalletProtocolDialog extends BaseDialog {
         }
         getWindow().setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
         getWindow().getAttributes().width = UIUtils.dip2px(335);
-        getWindow().getAttributes().height = UIUtils.dip2px(500);
         setCancelable(false);
     }
 
