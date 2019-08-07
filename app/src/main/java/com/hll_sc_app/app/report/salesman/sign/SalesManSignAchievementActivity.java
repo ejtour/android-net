@@ -259,7 +259,7 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
         totalSignShopNum.setText(String.valueOf(salesManSignResp.getTotalSignShopNum()));
         totalIncrIntentCustomer.setText(String.valueOf(salesManSignResp.getTotalAddIntentCustomerNum()));
         totalIncrSignCustomer.setText(String.valueOf(salesManSignResp.getTotalAddSignCustomerNum()));
-        totalIncrSignShop.setText(String.valueOf(salesManSignResp.getTotalSignShopNum()));
+        totalIncrSignShop.setText(String.valueOf(salesManSignResp.getTotalAddSignShopNum()));
     }
 
     private void showExportOptionsWindow(View v) {
@@ -382,14 +382,15 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
         protected void convert(BaseViewHolder helper, SalesManSignAchievement bean) {
             helper.setText(R.id.txt_saleman_code, bean.getSalesmanCode())
                     .setText(R.id.txt_saleman_name, bean.getSalesmanName())
-                    .setText(R.id.txt_intent_customer, CommonUtils.formatNumber(bean.getIntentCustomerNum()))
-                    .setText(R.id.txt_sign_customer, CommonUtils.formatNumber(bean.getSignCustomerNum()))
-                    .setText(R.id.txt_sign_shop, CommonUtils.formatMoney(bean.getSignShopNum()))
-                    .setText(R.id.txt_incr_intent_customer, CommonUtils.formatMoney(bean.getAddIntentCustomerNum()))
-                    .setText(R.id.txt_incr_sign_customer, CommonUtils.formatNumber(bean.getAddSignCustomerNum()))
-                    .setText(R.id.txt_incr_sign_shop, CommonUtils.formatMoney(bean.getAddSignShopNum()))
+                    .setText(R.id.txt_intent_customer, String.valueOf(bean.getIntentCustomerNum()))
+                    .setText(R.id.txt_sign_customer, String.valueOf(bean.getSignCustomerNum()))
+                    .setText(R.id.txt_sign_shop, String.valueOf(bean.getSignShopNum()))
+                    .setText(R.id.txt_incr_intent_customer, String.valueOf(bean.getAddIntentCustomerNum()))
+                    .setText(R.id.txt_incr_sign_customer, String.valueOf(bean.getAddSignCustomerNum()))
+                    .setText(R.id.txt_incr_sign_shop, String.valueOf(bean.getAddSignShopNum()))
                     .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
                     R.drawable.bg_price_log_content_white : R.drawable.bg_price_log_content_gray);
+
         }
     }
 }
