@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="代仓采购商门店管理"
+            android:text="代仓门店管理"
             android:textAppearance="@style/TextAppearance.City22.Middle"
             app:layout_constraintBottom_toTopOf="@+id/txt_shipper_shop_tips"
             app:layout_constraintLeft_toRightOf="@+id/img_shipper_shop"
