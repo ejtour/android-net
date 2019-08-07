@@ -2,9 +2,9 @@ package com.hll_sc_app.app.aftersales.audit;
 
 
 import com.hll_sc_app.app.aftersales.common.IAction;
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.utils.IExportView;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public interface IAuditFragmentContract {
-    interface IAuditFragmentView extends ILoadView, IAction {
+    interface IAuditFragmentView extends IExportView, IAction {
         AuditParam getAuditParam();
 
         Integer getBillStatus();
@@ -24,12 +24,6 @@ public interface IAuditFragmentContract {
         void actionSuccess();
 
         void updateItem(AfterSalesBean bean);
-
-        void exportSuccess(String email);
-
-        void exportFailure(String msg);
-
-        void bindEmail();
     }
 
     interface IAuditFragmentPresenter extends IPresenter<IAuditFragmentView> {
