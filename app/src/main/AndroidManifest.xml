@@ -440,6 +440,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.paymanage.PayManageActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.pricemanage.log.PriceChangeLogActivity"
             android:screenOrientation="portrait" />
 
