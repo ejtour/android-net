@@ -28,7 +28,8 @@ import java.lang.annotation.RetentionPolicy;
     OptionType.OPTION_REPORT_CUSTOMER_DEFINE,
     OptionType.OPTION_REPORT_DETAIL, OptionType.OPTION_AGREEMENT_PRICE_LOG_EXPORT, OptionType.OPTION_WAREHOUSE_ADD,
     OptionType.OPTION_CURRENT_DATE, OptionType.OPTION_CURRENT_WEEK, OptionType.OPTION_CURRENT_MONTH,
-    OptionType.OPTION_WAREHOUSE_CLIENT})
+    OptionType.OPTION_WAREHOUSE_CLIENT,OptionType.OPTION_REPORT_DATE_AGGREGATION,OptionType.OPTION_REPORT_WEEK_AGGREGATION,
+    OptionType.OPTION_REPORT_MONTH_AGGREGATION,OptionType.OPTION_REPORT_YEAR_AGGREGATION})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -78,6 +79,10 @@ public @interface OptionType {
     String OPTION_REPORT_CURRENT_MONTH = "本月  ";
     String OPTION_REPORT_PRE_MONTH = "上月  ";
     String OPTION_REPORT_CUSTOMER_DEFINE = "自定义  ";
+    String OPTION_REPORT_DATE_AGGREGATION = "日汇总  ";
+    String OPTION_REPORT_WEEK_AGGREGATION = "周汇总  ";
+    String OPTION_REPORT_MONTH_AGGREGATION = "月汇总  ";
+    String OPTION_REPORT_YEAR_AGGREGATION = "年汇总  ";
     String OPTION_REPORT_DETAIL = "导出详细信息";
 
     String OPTION_CURRENT_DATE = "今日";
