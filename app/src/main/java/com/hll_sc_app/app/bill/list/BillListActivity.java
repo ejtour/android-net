@@ -6,11 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -19,8 +21,12 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillParam;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
@@ -29,6 +35,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +48,7 @@ import butterknife.OnClick;
  * @since 2019/8/6
  */
 @Route(path = RouterConfig.BILL_LIST)
-public class BillListActivity extends BaseLoadActivity implements IBillListContract.IBillListView {
+public class BillListActivity extends BaseLoadActivity implements IBillListContract.IBillListView, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.abl_title_bar)
     TitleBar mTitleBar;
@@ -68,9 +75,11 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     @BindView(R.id.abl_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
     private EmptyView mEmptyView;
+    private ContextOptionsWindow mOptionsWindow;
     private final BillParam mParam = new BillParam();
     private BillListAdapter mAdapter;
     private IBillListContract.IBillListPresenter mPresenter;
+    private boolean mIsDetailExport;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,13 +95,14 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         Date endDate = new Date();
         mParam.setEndTime(endDate);
         mParam.setStateTime(CalendarUtils.getDateBefore(endDate, 30));
-        mParam.setSettlementStatus(1);
+        mParam.setSettlementStatus(2);
         mPresenter = BillListPresenter.newInstance(mParam);
         mPresenter.register(this);
         mPresenter.start();
     }
 
     private void initView() {
+        mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mAdapter = new BillListAdapter();
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
@@ -107,6 +117,18 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
                 mPresenter.refresh();
             }
         });
+    }
+
+    private void showOptionsWindow(View v) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_BILL));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_BILL_DETAIL));
+            mOptionsWindow = new ContextOptionsWindow(this)
+                    .refreshList(list)
+                    .setListener(this);
+        }
+        mOptionsWindow.showAsDropDownFix(v, Gravity.END);
     }
 
     @OnClick(R.id.abl_purchase_btn)
@@ -145,17 +167,17 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
 
     @Override
     public void bindEmail() {
-
+        Utils.bindEmail(this, this::export);
     }
 
     @Override
     public void exportSuccess(String email) {
-
+        Utils.exportSuccess(this, email);
     }
 
     @Override
     public void exportFailure(String msg) {
-
+        Utils.exportFailure(this, msg);
     }
 
     @Override
@@ -178,5 +200,18 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
             mEmptyView = EmptyView.newBuilder(this).setOnClickListener(mPresenter::start).create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        mOptionsWindow.dismiss();
+        OptionsBean bean = (OptionsBean) adapter.getItem(position);
+        if (bean == null) return;
+        mIsDetailExport = OptionType.OPTION_EXPORT_BILL_DETAIL.equals(bean.getLabel());
+        export(null);
+    }
+
+    private void export(String email) {
+        mPresenter.export(email, mIsDetailExport ? 2 : 1);
     }
 }

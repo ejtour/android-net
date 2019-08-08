@@ -56,7 +56,7 @@ public class Utils {
     }
 
     public static void exportSuccess(Activity context, String email) {
-        export(context, "导出成功", R.drawable.ic_dialog_state_success, "已发送至邮箱\n" + email, "我知道了", null);
+        export(context, "导出成功", R.drawable.ic_dialog_state_success, "已发送至邮箱\n" + email.replaceAll(";", "\n"), "我知道了", null);
     }
 
     public static void exportFailure(Activity context, String tip) {
