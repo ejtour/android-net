@@ -78,7 +78,7 @@ public class RegisterCategoryWindow extends BaseShadowPopupWindow {
         }
     }
 
-    void setListener(ItemSelectListener listener) {
+    public void setListener(ItemSelectListener listener) {
         this.mListener = listener;
     }
 

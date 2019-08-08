@@ -33,6 +33,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -115,7 +116,7 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
 
     @Override
     public void showPhoto(String url) {
-        mImageView.setImageURL(url);
+        mShopBean.setLogoUrl(url);
         mImageView.setImageURL(url);
     }
 
@@ -230,7 +231,6 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
                 mShopBean.setShopCityCode(bean.getShopCityCode());
                 mShopBean.setShopDistrict(bean.getShopDistrict());
                 mShopBean.setShopDistrictCode(bean.getShopDistrictCode());
-                mAreaWindow.select(mShopBean.getShopProvinceCode(), mShopBean.getShopCityCode(), mShopBean.getShopDistrictCode());
             });
         }
         mAreaWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
@@ -244,15 +244,6 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
     public void showCategoryWindow(List<CategoryItem> list) {
         if (mCategoryWindow == null) {
             mCategoryWindow = new RegisterCategoryWindow(this);
-            if (mShopBean.getCategoryIDList() != null && !mShopBean.getCategoryIDList().equalsIgnoreCase("")) {
-                List<CategoryItem> categoryItemList = new ArrayList<>();
-                for (String s : mShopBean.getCategoryIDList().split(",")) {
-                    CategoryItem item = new CategoryItem();
-                    item.setCategoryID(s);
-                    categoryItemList.add(item);
-                }
-                // TODO: 2019/8/7 分类设置初始值 
-            }
 
             mCategoryWindow.setListener(() -> {
                 List<CategoryItem> listSelect = mCategoryWindow.getSelectList();
@@ -264,7 +255,7 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
                     categoryIDs.append(item.getCategoryID());
                     if (i != listSelect.size() - 1) {
                         categoryNames.append(",");
-                        categoryIDs.append(",");
+                        categoryIDs.append("、");
                     }
                 }
                 mCategoryView.setText(categoryNames.toString());
@@ -273,13 +264,17 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
             });
         }
         mCategoryWindow.setList(list);
+        if (mShopBean.getCategoryIDList() != null && !mShopBean.getCategoryIDList().equalsIgnoreCase("")) {
+            List<String> categoryList = Arrays.asList(mShopBean.getCategoryIDList().split(","));
+            mCategoryWindow.setSelectList(categoryList);
+        }
         mCategoryWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE) {
+        if (requestCode == REQUEST_CODE_CHOOSE && data != null) {
             List<String> list = Matisse.obtainPathResult(data);
             if (!CommonUtils.isEmpty(list)) {
                 mPresenter.imageUpload(new File(list.get(0)));

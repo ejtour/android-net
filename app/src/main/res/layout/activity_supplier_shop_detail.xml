@@ -278,7 +278,7 @@
             android:id="@+id/img_imagePath"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_centerInParent="true"RegisterCategoryWindow.
+            android:layout_centerInParent="true"
             android:background="@drawable/bg_shop_icon"
             android:padding="5dp"
             android:src="@drawable/ic_shop_placeholder_camera"/>
