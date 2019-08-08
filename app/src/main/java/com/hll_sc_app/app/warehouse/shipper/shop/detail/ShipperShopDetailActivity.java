@@ -1,41 +1,35 @@
-package com.hll_sc_app.app.warehouse;
+package com.hll_sc_app.app.warehouse.shipper.shop.detail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.WarehouseSearch;
-import com.hll_sc_app.app.warehouse.recommend.WarehouseGroupListAdapter;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
-import com.hll_sc_app.bean.event.CloseShipper;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
-import com.hll_sc_app.bean.event.RefreshWarehouseList;
-import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.window.OptionType;
-import com.hll_sc_app.bean.window.OptionsBean;
+import com.hll_sc_app.bean.warehouse.ShipperShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -46,7 +40,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,14 +47,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 代仓客户列表
+ * 代仓门店管理详情
  *
  * @author zhuyingsong
- * @date 2019/8/5
+ * @date 2019/8/7
  */
-@Route(path = RouterConfig.WAREHOUSE_LIST, extras = Constant.LOGIN_EXTRA)
-public class WarehouseListActivity extends BaseLoadActivity implements WarehouseListContract.IWarehouseListView,
-    BaseQuickAdapter.OnItemClickListener {
+@Route(path = RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL, extras = Constant.LOGIN_EXTRA)
+public class ShipperShopDetailActivity extends BaseLoadActivity implements ShipperShopDetailContract.IShipperShopDetailView {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.searchView)
@@ -70,23 +62,24 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
-    @BindView(R.id.txt_options)
-    ImageView mTxtOptions;
-
+    @Autowired(name = "object0")
+    String mWarehouseId;
+    @Autowired(name = "object1")
+    String mName;
     private EmptyView mEmptyView;
     private EmptyView mSearchEmptyView;
-    private WarehouseListPresenter mPresenter;
-    private WarehouseGroupListAdapter mAdapter;
-    private ContextOptionsWindow mOptionsWindow;
+    private WarehouseListAdapter mAdapter;
+    private ShipperShopDetailPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_warehouse_list);
+        setContentView(R.layout.activity_warehouse_shipper_shop_detail);
+        ARouter.getInstance().inject(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        mPresenter = WarehouseListPresenter.newInstance();
+        mPresenter = ShipperShopDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
         EventBus.getDefault().register(this);
@@ -99,13 +92,12 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     }
 
     private void initView() {
-        mTxtTitle.setText(UserConfig.isSelfOperated() ? "我是代仓公司" : "我的代仓公司");
-        mTxtOptions.setVisibility(UserConfig.isSelfOperated() ? View.VISIBLE : View.GONE);
-        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到代仓公司数据").create();
+        mTxtTitle.setText(mName);
+        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到需要代仓的采购商门店").create();
         mEmptyView = EmptyView.newBuilder(this)
-            .setTipsTitle("恭喜您已成功开启代仓业务！")
-            .setTips("当前还没有代仓业务客户")
-            .setTipsButton("立即添加客户")
+            .setTipsTitle("您还没有设置需要代仓的采购商门店")
+            .setTips("您可以在您的合作采购商中选择需要代仓的门店")
+            .setTipsButton("选择需代仓的采购商门店")
             .setOnClickListener(new EmptyView.OnActionClickListener() {
                 @Override
                 public void retry() {
@@ -118,7 +110,6 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                 }
             })
             .create();
-
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -141,21 +132,15 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                 mPresenter.queryWarehouseList(false);
             }
         });
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
-        mAdapter = new WarehouseGroupListAdapter();
+        mAdapter = new WarehouseListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            PurchaserBean bean = mAdapter.getItem(position);
+            ShipperShopResp.ShopBean bean = mAdapter.getItem(position);
             if (bean != null) {
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
                 } else if (view.getId() == R.id.content) {
-                    if (UserConfig.isSelfOperated()) {
-                        RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAIL, bean.getGroupID());
-                    } else {
-                        RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getGroupID(), "formalSigned");
-                    }
                 }
             }
         });
@@ -163,11 +148,8 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
         mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
     }
 
-    /**
-     * 新增代仓客户
-     */
     private void toAdd() {
-        RouterUtil.goToActivity(RouterConfig.WAREHOUSE_ADD);
+        RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER, mWarehouseId);
     }
 
     /**
@@ -175,18 +157,18 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
      *
      * @param bean 代仓集团
      */
-    private void showDelTipsDialog(PurchaserBean bean) {
+    private void showDelTipsDialog(ShipperShopResp.ShopBean bean) {
         TipsDialog.newBuilder(this)
-            .setTitle("删除合作")
-            .setMessage("确定要删除和【" + bean.getGroupName() + "】的代仓关系嘛？")
+            .setTitle("确定要删除该集团么")
+            .setMessage("删除该集团将附带删除该集团下所有已选需代仓的门店")
             .setButton((dialog, item) -> {
                 if (item == 1) {
-                    mPresenter.delWarehouseList(bean.getGroupID());
+                    mPresenter.editWarehousePurchaser(bean, "delete");
                 } else {
                     SwipeItemLayout.closeAllItems(mRecyclerView);
                 }
                 dialog.dismiss();
-            }, "取消", "确定")
+            }, "我再看看", "确定删除")
             .create().show();
     }
 
@@ -196,11 +178,6 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
         if (!TextUtils.isEmpty(name)) {
             mSearchView.showSearchContent(true, name);
         }
-    }
-
-    @Subscribe
-    public void onEvent(RefreshWarehouseList event) {
-        mPresenter.queryWarehouseList(true);
     }
 
     @Override
@@ -215,12 +192,12 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     }
 
     @Override
-    public void showWarehouseList(List<PurchaserBean> list, boolean append, int totalNum) {
-        if (totalNum == 0 && !UserConfig.isSelfOperated() && !mSearchView.isSearchStatus()) {
-            EventBus.getDefault().post(new CloseShipper());
-            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INTRODUCE, this);
-            return;
-        }
+    public String getWarehouseId() {
+        return mWarehouseId;
+    }
+
+    @Override
+    public void showWarehouseList(List<ShipperShopResp.ShopBean> list, boolean append, int totalNum) {
         if (append) {
             if (!CommonUtils.isEmpty(list)) {
                 mAdapter.addData(list);
@@ -234,48 +211,33 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
 
     @OnClick({R.id.img_close, R.id.txt_options})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
-            case R.id.txt_options:
-                showOptionsWindow(view);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void showOptionsWindow(View view) {
-        if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_warehouse_add, OptionType.OPTION_WAREHOUSE_CLIENT));
-            list.add(new OptionsBean(R.drawable.ic_cooperation_receive, OptionType.OPTION_COOPERATION_RECEIVE));
-            list.add(new OptionsBean(R.drawable.ic_cooperation_send, OptionType.OPTION_COOPERATION_SEND));
-            mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
-        }
-        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
-    }
-
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        OptionsBean optionsBean = (OptionsBean) adapter.getItem(position);
-        if (optionsBean == null) {
-            return;
-        }
-        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_WAREHOUSE_CLIENT)) {
+        if (view.getId() == R.id.img_close) {
+            finish();
+        } else if (view.getId() == R.id.txt_options) {
             toAdd();
-        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
-            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_APPLICATION);
-        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
-            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INVITE);
         }
-        mOptionsWindow.dismiss();
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        mPresenter.start();
+    private class WarehouseListAdapter extends BaseQuickAdapter<ShipperShopResp.ShopBean, BaseViewHolder> {
+
+        WarehouseListAdapter() {
+            super(R.layout.list_item_warehouse_shipper);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
+            viewHolder.addOnClickListener(R.id.content).addOnClickListener(R.id.txt_del);
+            return viewHolder;
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, ShipperShopResp.ShopBean item) {
+            ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getPurchaserLogo());
+            helper.setText(R.id.txt_groupName, item.getPurchaserName())
+                .setText(R.id.txt_groupNum, "当前代仓门店数：" + item.getShopNum())
+                .setGone(R.id.txt_shopNum, false)
+                .setGone(R.id.img_arrow, false);
+        }
     }
 }

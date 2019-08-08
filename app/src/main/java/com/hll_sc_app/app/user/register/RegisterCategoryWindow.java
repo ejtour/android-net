@@ -12,12 +12,16 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.BaseShadowPopupWindow;
 import com.hll_sc_app.bean.user.CategoryItem;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -67,6 +71,12 @@ class RegisterCategoryWindow extends BaseShadowPopupWindow {
         return list;
     }
 
+    public void setSelectList(List<String> selectList) {
+        if (mFlowLayout != null) {
+            mAdapter.setSelectedList(selectList);
+        }
+    }
+
     void setListener(ItemSelectListener listener) {
         this.mListener = listener;
     }
@@ -88,10 +98,30 @@ class RegisterCategoryWindow extends BaseShadowPopupWindow {
 
     private static class FlowAdapter extends TagAdapter<CategoryItem> {
         private LayoutInflater mInflater;
+        private List<CategoryItem> mList;
 
         FlowAdapter(Context context, List<CategoryItem> list) {
             super(list);
+            mList = list;
             mInflater = LayoutInflater.from(context);
+        }
+
+        void setSelectedList(List<String> selectList) {
+            if (CommonUtils.isEmpty(mList) || CommonUtils.isEmpty(selectList)) {
+                return;
+            }
+            Map<String, Integer> map = new HashMap<>();
+            for (int i = 0, size = mList.size(); i < size; i++) {
+                map.put(mList.get(i).getCategoryID(), i);
+            }
+
+            Set<Integer> set = new HashSet<>();
+            for (String s : selectList) {
+                if (map.containsKey(s)) {
+                    set.add(map.get(s));
+                }
+            }
+            setSelectedList(set);
         }
 
         @Override
