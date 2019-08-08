@@ -232,28 +232,28 @@
         <activity
             android:name=".app.warehouse.WarehouseStartActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/TranslucentTheme"/>
+            android:theme="@style/TranslucentTheme" />
 
         <activity
-            android:launchMode="singleTask"
             android:name=".app.warehouse.WarehouseIntroduceActivity"
-            android:screenOrientation="portrait"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.shipper.ShipperActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.shipper.shop.ShipperShopManageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.shipper.shop.detail.ShipperShopDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.shipper.shop.detail.purchaser.ShipperPurchaserSelectActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.shipper.shop.detail.purchasershop.ShipperPurchaserShopSelectActivity"
@@ -261,41 +261,41 @@
 
         <activity
             android:name=".app.warehouse.WarehouseListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.invite.WarehouseInviteActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".app.warehouse.application.WarehouseApplicationActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".app.warehouse.application.WarehouseShopListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.add.WarehouseAddActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.detail.details.WarehouseDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.detail.WarehouseDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.detail.shop.WarehouseShopDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.recommend.WarehouseRecommendActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.range.DeliveryRangeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.deliverymanage.minimum.DeliveryMinimumActivity"
@@ -585,22 +585,24 @@
         <!--业务员签约绩效-->
         <activity
             android:name=".app.report.salesman.sign.SalesManSignAchievementActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <!--业务员销售额绩效-->
         <activity
             android:name=".app.report.salesman.sales.SalesManSalesAchievementActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <!--缺货汇总-->
         <activity
             android:name=".app.report.deliveryLack.DeliveryLackGatherActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.web.WebActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.bill.list.BillListActivity"
             android:screenOrientation="portrait" />
 
         <provider

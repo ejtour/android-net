@@ -108,7 +108,7 @@ public class Bill {
                                    String groupID,
                                    String salesmanID,
                                    String shopIDs,
-                                   String settlementStatus,
+                                   int settlementStatus,
                                    SimpleObserver<ExportResp> observer) {
         BillService.INSTANCE
                 .exportEmail(BaseMapReq.newBuilder()
@@ -121,7 +121,7 @@ public class Bill {
                         .put("groupID", groupID)
                         .put("salesmanID", salesmanID)
                         .put("shopIDs", shopIDs)
-                        .put("settlementStatus", settlementStatus)
+                        .put("settlementStatus", String.valueOf(settlementStatus))
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
