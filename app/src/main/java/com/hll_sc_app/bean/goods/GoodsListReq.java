@@ -39,13 +39,6 @@ public class GoodsListReq {
         this.isWareHourse = isWareHourse;
     }
 
-    public String getCategorySubID() {
-        return categorySubID;
-    }
-
-    public void setCategorySubID(String categorySubID) {
-        this.categorySubID = categorySubID;
-    }
 
     public String getHouseID() {
         return houseID;
@@ -109,5 +102,13 @@ public class GoodsListReq {
 
     public void setActionType(String actionType) {
         this.actionType = actionType;
+    }
+
+    public String getCategorySubID() {
+        return categorySubID;
+    }
+
+    public void setCategorySubID(String categorySubID) {
+        this.categorySubID = categorySubID;
     }
 }

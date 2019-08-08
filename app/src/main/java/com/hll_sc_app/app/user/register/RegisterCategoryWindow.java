@@ -34,13 +34,13 @@ import butterknife.OnClick;
  * @author 朱英松
  * @date 2019/6/6
  */
-class RegisterCategoryWindow extends BaseShadowPopupWindow {
+public class RegisterCategoryWindow extends BaseShadowPopupWindow {
     @BindView(R.id.flowLayout)
     TagFlowLayout mFlowLayout;
     private FlowAdapter mAdapter;
     private ItemSelectListener mListener;
 
-    RegisterCategoryWindow(Activity context) {
+    public RegisterCategoryWindow(Activity context) {
         super(context);
         View view = View.inflate(context, R.layout.window_register_category, null);
         ButterKnife.bind(this, view);
@@ -60,7 +60,7 @@ class RegisterCategoryWindow extends BaseShadowPopupWindow {
         }
     }
 
-    List<CategoryItem> getSelectList() {
+    public List<CategoryItem> getSelectList() {
         List<CategoryItem> list = new ArrayList<>();
         if (mFlowLayout != null && mAdapter != null) {
             Set<Integer> set = mFlowLayout.getSelectedList();
@@ -71,13 +71,14 @@ class RegisterCategoryWindow extends BaseShadowPopupWindow {
         return list;
     }
 
+
     public void setSelectList(List<String> selectList) {
         if (mFlowLayout != null) {
             mAdapter.setSelectedList(selectList);
         }
     }
 
-    void setListener(ItemSelectListener listener) {
+    public void setListener(ItemSelectListener listener) {
         this.mListener = listener;
     }
 
@@ -89,7 +90,7 @@ class RegisterCategoryWindow extends BaseShadowPopupWindow {
         dismiss();
     }
 
-    interface ItemSelectListener {
+    public interface ItemSelectListener {
         /**
          * 确定
          */

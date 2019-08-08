@@ -59,6 +59,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.shop.SupplierShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.setting.SettingActivity"
             android:screenOrientation="portrait" />
 
@@ -138,6 +142,26 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.orientationsale.cooperation.shop.CooperationShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.orientationsale.list.OrientationListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.orientationsale.cooperation.CooperationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.orientationsale.detail.OrientationDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.orientationsale.product.ProductActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.goods.invwarn.GoodsInvWarnActivity"
             android:screenOrientation="portrait" />
 
@@ -191,6 +215,10 @@
 
         <activity
             android:name=".app.cooperation.detail.imgs.BusinessLicenseActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.refundtime.RefundTimeActivity"
             android:screenOrientation="portrait" />
 
         <activity
