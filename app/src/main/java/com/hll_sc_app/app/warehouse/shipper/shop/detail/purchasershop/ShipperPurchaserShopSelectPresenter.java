@@ -58,13 +58,13 @@ public class ShipperPurchaserShopSelectPresenter implements ShipperPurchaserShop
     }
 
     @Override
-    public void editWarehousePurchaser(List<String> list) {
+    public void editWarehousePurchaser(List<String> list, String actionType) {
         ShipperShopResp.PurchaserBean purchaserBean = mView.getPurchaserBean();
         if (CommonUtils.isEmpty(list) || purchaserBean == null) {
             return;
         }
         WarehousePurchaserEditReq req = new WarehousePurchaserEditReq();
-        req.setActionType("insert");
+        req.setActionType(actionType);
         req.setGroupID(UserConfig.getGroupID());
         req.setWarehouseID(purchaserBean.getWarehouseId());
         List<WarehousePurchaserEditReq.PurchaserId> purchaserIds = new ArrayList<>();
@@ -101,12 +101,13 @@ public class ShipperPurchaserShopSelectPresenter implements ShipperPurchaserShop
             return;
         }
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("actionType", "unWarehouse")
+            .put("actionType", purchaserBean.isDetail() ? "warehouse" : "unWarehouse")
             .put("searchParams", mView.getSearchParam())
             .put("pageNo", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
             .put("groupID", UserConfig.getGroupID())
             .put("purchaserID", purchaserBean.getPurchaserID())
+            .put("warehouseID", purchaserBean.getWarehouseId())
             .create();
         WarehouseService.INSTANCE
             .queryWarehousePurchaserShopList(req)

@@ -43,6 +43,11 @@ public class ShipperShopResp {
     }
 
     public static class PurchaserBean implements Parcelable {
+        private String purchaserID;
+        private String shopNum;
+        private String purchaserLogo;
+        private String purchaserName;
+        private String warehouseId;
         public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {
             @Override
             public PurchaserBean createFromParcel(Parcel source) {
@@ -54,14 +59,7 @@ public class ShipperShopResp {
                 return new PurchaserBean[size];
             }
         };
-        private String purchaserID;
-        private String shopNum;
-        private String purchaserLogo;
-        private String purchaserName;
-        private String warehouseId;
-
-        public PurchaserBean() {
-        }
+        private boolean isDetail;
 
         protected PurchaserBean(Parcel in) {
             this.purchaserID = in.readString();
@@ -69,6 +67,10 @@ public class ShipperShopResp {
             this.purchaserLogo = in.readString();
             this.purchaserName = in.readString();
             this.warehouseId = in.readString();
+            this.isDetail = in.readByte() != 0;
+        }
+
+        public PurchaserBean() {
         }
 
         public String getWarehouseId() {
@@ -116,6 +118,14 @@ public class ShipperShopResp {
             return 0;
         }
 
+        public boolean isDetail() {
+            return isDetail;
+        }
+
+        public void setDetail(boolean detail) {
+            isDetail = detail;
+        }
+
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.purchaserID);
@@ -123,6 +133,7 @@ public class ShipperShopResp {
             dest.writeString(this.purchaserLogo);
             dest.writeString(this.purchaserName);
             dest.writeString(this.warehouseId);
+            dest.writeByte(this.isDetail ? (byte) 1 : (byte) 0);
         }
     }
 

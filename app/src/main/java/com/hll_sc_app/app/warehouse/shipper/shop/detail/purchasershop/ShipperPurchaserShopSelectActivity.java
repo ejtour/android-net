@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -40,6 +42,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -65,6 +68,14 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
     RecyclerView mRecyclerView;
     @Autowired(name = "parcelable")
     ShipperShopResp.PurchaserBean mBean;
+    @BindView(R.id.txt_confirm)
+    TextView mTxtConfirm;
+    @BindView(R.id.txt_bottom_cancel)
+    TextView mTxtBottomCancel;
+    @BindView(R.id.txt_bottom_del)
+    TextView mTxtBottomDel;
+    @BindView(R.id.rl_bottom)
+    RelativeLayout mRlBottom;
 
     private EmptyView mEmptyView;
     private ShopListAdapter mAdapter;
@@ -98,6 +109,7 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
     }
 
     private void initView() {
+        mTxtConfirm.setText(isDetail() ? "删除" : "确定");
         mSelectMap = new HashMap<>();
         mTxtTitle.setText(mBean.getPurchaserName());
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -117,6 +129,11 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
             ShipperShopResp.ShopBean bean = (ShipperShopResp.ShopBean) adapter.getItem(position);
             if (bean == null) {
                 return;
+            }
+            if (isDetail()) {
+                if (!isCancelStatus()) {
+                    return;
+                }
             }
             if (TextUtils.equals(STRING_ALL, bean.getShopName())) {
                 selectAll(!bean.isSelect());
@@ -154,6 +171,14 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         mAdapter.notifyDataSetChanged();
     }
 
+    @Subscribe
+    public void onEvent(SearchEvent event) {
+        String name = event.getName();
+        if (!TextUtils.isEmpty(name)) {
+            mSearchView.showSearchContent(true, name);
+        }
+    }
+
     private void addOrRemove(ShipperShopResp.ShopBean bean) {
         if (bean == null) {
             return;
@@ -168,48 +193,24 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         } else {
             mSelectMap.remove(bean.getShopID());
         }
+        showDelCount();
     }
 
-    private void checkSelectAll() {
-        List<ShipperShopResp.ShopBean> shopBeans = mAdapter.getData();
-        if (CommonUtils.isEmpty(shopBeans)) {
-            return;
-        }
-        boolean select = true;
-        for (ShipperShopResp.ShopBean bean : shopBeans) {
-            if (!TextUtils.equals(bean.getShopName(), STRING_ALL)) {
-                if (!bean.isSelect()) {
-                    select = false;
-                    break;
-                }
-            }
-        }
-        ShipperShopResp.ShopBean firstBean = shopBeans.get(0);
-        if (firstBean != null && TextUtils.equals(STRING_ALL, firstBean.getShopName())) {
-            firstBean.setSelect(select);
-            mAdapter.notifyItemChanged(0);
-        }
-    }
-
-    @Subscribe
-    public void onEvent(SearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
-        }
-    }
-
-    @OnClick({R.id.img_close, R.id.txt_confirm})
+    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.txt_bottom_cancel, R.id.txt_bottom_del})
     public void onViewClicked(View view) {
-        if (view.getId() == R.id.img_close) {
+        int id = view.getId();
+        if (id == R.id.img_close) {
             toClose();
-        } else if (view.getId() == R.id.txt_confirm) {
-            List<String> listSelect = getSelectList();
-            if (!CommonUtils.isEmpty(listSelect)) {
-                mPresenter.editWarehousePurchaser(listSelect);
+        } else if (id == R.id.txt_confirm) {
+            if (isDetail()) {
+                toCancel();
             } else {
-                showToast("您还没有选中采购商门店");
+                toConfirm("insert");
             }
+        } else if (id == R.id.txt_bottom_cancel) {
+            toCancel();
+        } else if (id == R.id.txt_bottom_del) {
+            showDelTipsDialog();
         }
     }
 
@@ -218,6 +219,69 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
      */
     private void toClose() {
         finish();
+    }
+
+    /**
+     * 详情页面
+     *
+     * @return true-详情
+     */
+    private boolean isDetail() {
+        return mBean != null && mBean.isDetail();
+    }
+
+    private void toCancel() {
+        if (isCancelStatus()) {
+            mRlBottom.setVisibility(View.GONE);
+            mTxtConfirm.setText("删除");
+        } else {
+            mRlBottom.setVisibility(View.VISIBLE);
+            mTxtConfirm.setText("确定");
+        }
+        mAdapter.notifyDataSetChanged();
+        showDelCount();
+    }
+
+    private void toConfirm(String actionType) {
+        List<String> listSelect = getSelectList();
+        if (!CommonUtils.isEmpty(listSelect)) {
+            mPresenter.editWarehousePurchaser(listSelect, actionType);
+        } else {
+            showToast("您还没有选中采购商门店");
+        }
+    }
+
+    /**
+     * 删除关系提示框
+     */
+    private void showDelTipsDialog() {
+        SuccessDialog.newBuilder(this)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setMessageTitle("确定要删除这些门店么")
+            .setMessage("删除选中的门店将导致这些门店\n不能被代仓公司配送货物")
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    toConfirm("delete");
+                }
+                dialog.dismiss();
+            }, "我再看看", "确定删除")
+            .create().show();
+    }
+
+    /**
+     * 目前处于删除状态
+     *
+     * @return true-删除状态
+     */
+    private boolean isCancelStatus() {
+        return isDetail() && TextUtils.equals(mTxtConfirm.getText(), "确定");
+    }
+
+    private void showDelCount() {
+        if (isDetail()) {
+            mTxtBottomDel.setText(String.format(Locale.getDefault(), "确定删除（%d）", mSelectMap.size()));
+        }
     }
 
     /**
@@ -246,7 +310,7 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         if (append) {
             mAdapter.addData(list);
         } else {
-            if (!CommonUtils.isEmpty(list)) {
+            if (!isDetail() && !CommonUtils.isEmpty(list)) {
                 ShipperShopResp.ShopBean shopBeanAll = new ShipperShopResp.ShopBean();
                 shopBeanAll.setShopName(STRING_ALL);
                 list.add(0, shopBeanAll);
@@ -256,6 +320,27 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         mAdapter.setEmptyView(mEmptyView);
         mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != (total + 1));
         checkSelectAll();
+    }
+
+    private void checkSelectAll() {
+        List<ShipperShopResp.ShopBean> shopBeans = mAdapter.getData();
+        if (CommonUtils.isEmpty(shopBeans)) {
+            return;
+        }
+        boolean select = true;
+        for (ShipperShopResp.ShopBean bean : shopBeans) {
+            if (!TextUtils.equals(bean.getShopName(), STRING_ALL)) {
+                if (!bean.isSelect()) {
+                    select = false;
+                    break;
+                }
+            }
+        }
+        ShipperShopResp.ShopBean firstBean = shopBeans.get(0);
+        if (firstBean != null && TextUtils.equals(STRING_ALL, firstBean.getShopName())) {
+            firstBean.setSelect(select);
+            mAdapter.notifyItemChanged(0);
+        }
     }
 
     @Override
@@ -285,6 +370,10 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         protected void convert(BaseViewHolder helper, ShipperShopResp.ShopBean bean) {
             helper.setText(R.id.txt_shopName, bean.getShopName())
                 .getView(R.id.img_select).setSelected(bean.isSelect());
+            if (isDetail()) {
+                // 删除模式下面展示选中
+                helper.setGone(R.id.img_select, isCancelStatus());
+            }
         }
     }
 }

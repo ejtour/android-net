@@ -60,8 +60,9 @@ public interface ShipperPurchaserShopSelectContract {
         /**
          * 代仓编辑合作采购商
          *
-         * @param list 合作采购商门店
+         * @param list       合作采购商门店
+         * @param actionType insert-新增 delete-删除
          */
-        void editWarehousePurchaser(List<String> list);
+        void editWarehousePurchaser(List<String> list, String actionType);
     }
 }

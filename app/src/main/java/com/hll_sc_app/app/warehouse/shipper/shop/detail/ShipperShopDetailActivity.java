@@ -142,6 +142,9 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
                 } else if (view.getId() == R.id.content) {
+                    bean.setWarehouseId(mWarehouseId);
+                    bean.setDetail(true);
+                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER_SHOP, bean);
                 }
             }
         });
