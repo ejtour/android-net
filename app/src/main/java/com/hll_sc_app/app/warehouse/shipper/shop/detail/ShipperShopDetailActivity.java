@@ -136,7 +136,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
             , UIUtils.dip2px(1)));
         mAdapter = new WarehouseListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            ShipperShopResp.ShopBean bean = mAdapter.getItem(position);
+            ShipperShopResp.PurchaserBean bean = mAdapter.getItem(position);
             if (bean != null) {
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
@@ -157,7 +157,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
      *
      * @param bean 代仓集团
      */
-    private void showDelTipsDialog(ShipperShopResp.ShopBean bean) {
+    private void showDelTipsDialog(ShipperShopResp.PurchaserBean bean) {
         TipsDialog.newBuilder(this)
             .setTitle("确定要删除该集团么")
             .setMessage("删除该集团将附带删除该集团下所有已选需代仓的门店")
@@ -197,7 +197,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
     }
 
     @Override
-    public void showWarehouseList(List<ShipperShopResp.ShopBean> list, boolean append, int totalNum) {
+    public void showWarehouseList(List<ShipperShopResp.PurchaserBean> list, boolean append, int totalNum) {
         if (append) {
             if (!CommonUtils.isEmpty(list)) {
                 mAdapter.addData(list);
@@ -218,7 +218,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
         }
     }
 
-    private class WarehouseListAdapter extends BaseQuickAdapter<ShipperShopResp.ShopBean, BaseViewHolder> {
+    private class WarehouseListAdapter extends BaseQuickAdapter<ShipperShopResp.PurchaserBean, BaseViewHolder> {
 
         WarehouseListAdapter() {
             super(R.layout.list_item_warehouse_shipper);
@@ -232,7 +232,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, ShipperShopResp.ShopBean item) {
+        protected void convert(BaseViewHolder helper, ShipperShopResp.PurchaserBean item) {
             ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getPurchaserLogo());
             helper.setText(R.id.txt_groupName, item.getPurchaserName())
                 .setText(R.id.txt_groupNum, "当前代仓门店数：" + item.getShopNum())

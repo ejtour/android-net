@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.warehouse.shipper.shop.detail.purchaser;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -46,7 +47,7 @@ import butterknife.OnClick;
  * @date 2019/8/7
  */
 @Route(path = RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER, extras = Constant.LOGIN_EXTRA)
-public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements ShipperPurchaserSelectContract.IPurchaserSelectView {
+public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements ShipperPurchaserSelectContract.IPurchaserView {
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.recyclerView)
@@ -79,18 +80,6 @@ public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements 
     }
 
     private void initView() {
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
-        mAdapter = new PurchaserListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ShipperShopResp.ShopBean bean = (ShipperShopResp.ShopBean) adapter.getItem(position);
-            if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER_SHOP, bean);
-            }
-        });
-        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到合作采购商数据").create();
-        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商").create();
-        mRecyclerView.setAdapter(mAdapter);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -113,6 +102,17 @@ public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements 
                 mPresenter.queryPurchaserList(false);
             }
         });
+        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到合作采购商数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商").create();
+        mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mAdapter = new PurchaserListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ShipperShopResp.PurchaserBean purchaserBean = (ShipperShopResp.PurchaserBean) adapter.getItem(position);
+            if (purchaserBean != null) {
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER_SHOP, purchaserBean);
+            }
+        });
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements 
     }
 
     @Override
-    public void showPurchaserList(List<ShipperShopResp.ShopBean> list, boolean append, int totalNum) {
+    public void showPurchaserList(List<ShipperShopResp.PurchaserBean> list, boolean append, int totalNum) {
         if (append) {
             if (!CommonUtils.isEmpty(list)) {
                 mAdapter.addData(list);
@@ -152,14 +152,14 @@ public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements 
         return mSearchView.getSearchContent();
     }
 
-    class PurchaserListAdapter extends BaseQuickAdapter<ShipperShopResp.ShopBean, BaseViewHolder> {
+    class PurchaserListAdapter extends BaseQuickAdapter<ShipperShopResp.PurchaserBean, BaseViewHolder> {
 
         PurchaserListAdapter() {
             super(R.layout.item_purchaser_item);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, ShipperShopResp.ShopBean bean) {
+        protected void convert(BaseViewHolder helper, ShipperShopResp.PurchaserBean bean) {
             helper.setText(R.id.txt_purchaserName, bean.getPurchaserName());
         }
     }

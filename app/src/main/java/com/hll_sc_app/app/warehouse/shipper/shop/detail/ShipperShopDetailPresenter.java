@@ -58,7 +58,7 @@ public class ShipperShopDetailPresenter implements ShipperShopDetailContract.ISh
     }
 
     @Override
-    public void editWarehousePurchaser(ShipperShopResp.ShopBean bean, String actionType) {
+    public void editWarehousePurchaser(ShipperShopResp.PurchaserBean bean, String actionType) {
         WarehousePurchaserEditReq req = new WarehousePurchaserEditReq();
         req.setActionType(actionType);
         req.setGroupID(UserConfig.getGroupID());

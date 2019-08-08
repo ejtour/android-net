@@ -177,5 +177,5 @@ public interface WarehouseService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:102049")
-    Observable<BaseResp<Object>> queryWarehousePurchaserShopList(@Body BaseMapReq req);
+    Observable<BaseResp<ShipperShopResp>> queryWarehousePurchaserShopList(@Body BaseMapReq req);
 }

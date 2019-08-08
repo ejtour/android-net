@@ -36,7 +36,7 @@ public interface ShipperShopDetailContract {
          * @param append   true-追加
          * @param totalNum 总数
          */
-        void showWarehouseList(List<ShipperShopResp.ShopBean> list, boolean append, int totalNum);
+        void showWarehouseList(List<ShipperShopResp.PurchaserBean> list, boolean append, int totalNum);
     }
 
     interface IShipperShopDetailPresenter extends IPresenter<IShipperShopDetailView> {
@@ -58,6 +58,6 @@ public interface ShipperShopDetailContract {
          * @param bean       采购商
          * @param actionType 操作类型
          */
-        void editWarehousePurchaser(ShipperShopResp.ShopBean bean, String actionType);
+        void editWarehousePurchaser(ShipperShopResp.PurchaserBean bean, String actionType);
     }
 }

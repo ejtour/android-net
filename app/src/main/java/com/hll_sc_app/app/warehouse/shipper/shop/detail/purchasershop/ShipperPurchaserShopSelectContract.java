@@ -2,7 +2,7 @@ package com.hll_sc_app.app.warehouse.shipper.shop.detail.purchasershop;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.warehouse.ShipperShopResp;
 
 import java.util.List;
 
@@ -14,13 +14,15 @@ import java.util.List;
  */
 public interface ShipperPurchaserShopSelectContract {
 
-    interface IPurchaserListView extends ILoadView {
+    interface IShopListView extends ILoadView {
         /**
          * 展示合作采购商门店列表
          *
-         * @param list list
+         * @param list   list
+         * @param append true-追加
+         * @param total  总数量
          */
-        void showPurchaserShopList(List<PurchaserShopBean> list);
+        void showShopList(List<ShipperShopResp.ShopBean> list, boolean append, int total);
 
         /**
          * 获取搜索词
@@ -28,21 +30,26 @@ public interface ShipperPurchaserShopSelectContract {
          * @return 搜索词
          */
         String getSearchParam();
+
+        /**
+         * 获取采购商Id
+         *
+         * @return 采购商Id
+         */
+        String getPurchaserId();
     }
 
-    interface IPurchaserListPresenter extends IPresenter<IPurchaserListView> {
+    interface IShopListPresenter extends IPresenter<IShopListView> {
         /**
-         * 查询合作采购商列表
+         * 查询合作采购商门店列表
          *
-         * @param purchaserId 采购商 Id
+         * @param showLoading 展示加载对话框
          */
-        void queryWarehousePurchaserShopList(String purchaserId);
+        void queryShopList(boolean showLoading);
 
         /**
-         * 获取代仓签约详情
-         *
-         * @param purchaserId 代仓集团 Id
+         * 查询更多合作采购商门店列表
          */
-        void queryCooperationWarehouseDetail(String purchaserId);
+        void queryMoreShopList();
     }
 }

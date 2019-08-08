@@ -1,6 +1,8 @@
 package com.hll_sc_app.app.warehouse.shipper.shop.detail.purchasershop;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +23,6 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.event.SearchEvent;
 import com.hll_sc_app.bean.warehouse.ShipperShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -29,12 +30,16 @@ import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +52,7 @@ import butterknife.OnClick;
  * @date 2019/8/8
  */
 @Route(path = RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER_SHOP, extras = Constant.LOGIN_EXTRA)
-public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity implements ShipperPurchaserShopSelectContract.IPurchaserListView {
+public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity implements ShipperPurchaserShopSelectContract.IShopListView {
     public static final String STRING_ALL = "全部";
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
@@ -58,13 +63,12 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @Autowired(name = "parcelable")
-    ShipperShopResp.ShopBean mBean;
+    ShipperShopResp.PurchaserBean mBean;
 
     private EmptyView mEmptyView;
-    private List<PurchaserShopBean> mList;
-    private PurchaserShopListAdapter mAdapter;
+    private ShopListAdapter mAdapter;
     private ShipperPurchaserShopSelectPresenter mPresenter;
-
+    private Map<String, ShipperShopResp.ShopBean> mSelectMap;
 
     @Override
     public void hideLoading() {
@@ -84,7 +88,6 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         mPresenter.register(this);
         mPresenter.start();
         EventBus.getDefault().register(this);
-        toQueryShopList();
     }
 
     @Override
@@ -94,12 +97,23 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
     }
 
     private void initView() {
+        mSelectMap = new HashMap<>();
         mTxtTitle.setText(mBean.getPurchaserName());
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
-        mAdapter = new PurchaserShopListAdapter();
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryMoreShopList();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.queryShopList(false);
+            }
+        });
+        mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mAdapter = new ShopListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            PurchaserShopBean bean = (PurchaserShopBean) adapter.getItem(position);
+            ShipperShopResp.ShopBean bean = (ShipperShopResp.ShopBean) adapter.getItem(position);
             if (bean == null) {
                 return;
             }
@@ -107,7 +121,9 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
                 selectAll(!bean.isSelect());
             } else {
                 bean.setSelect(!bean.isSelect());
+                addOrRemove(bean);
                 checkSelectAll();
+                adapter.notifyItemChanged(position);
             }
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有合作采购商门店数据").create();
@@ -120,34 +136,43 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
 
             @Override
             public void toSearch(String searchContent) {
-                searchShops(searchContent);
+                mPresenter.queryShopList(true);
             }
         });
     }
 
-    private void toQueryShopList() {
-        mPresenter.queryWarehousePurchaserShopList(mBean.getPurchaserID());
-    }
-
     private void selectAll(boolean select) {
-        if (CommonUtils.isEmpty(mList)) {
+        List<ShipperShopResp.ShopBean> shopBeans = mAdapter.getData();
+        if (CommonUtils.isEmpty(shopBeans)) {
             return;
         }
-        for (PurchaserShopBean bean : mList) {
+        for (ShipperShopResp.ShopBean bean : shopBeans) {
             bean.setSelect(select);
+            addOrRemove(bean);
         }
         mAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * 判断是否设置全选
-     */
+    private void addOrRemove(ShipperShopResp.ShopBean bean) {
+        if (bean == null) {
+            return;
+        }
+        if (bean.isSelect()) {
+            if (!mSelectMap.containsKey(bean.getId())) {
+                mSelectMap.put(bean.getId(), bean);
+            }
+        } else {
+            mSelectMap.remove(bean.getId());
+        }
+    }
+
     private void checkSelectAll() {
-        if (CommonUtils.isEmpty(mList)) {
+        List<ShipperShopResp.ShopBean> shopBeans = mAdapter.getData();
+        if (CommonUtils.isEmpty(shopBeans)) {
             return;
         }
         boolean select = true;
-        for (PurchaserShopBean bean : mList) {
+        for (ShipperShopResp.ShopBean bean : shopBeans) {
             if (!TextUtils.equals(bean.getShopName(), STRING_ALL)) {
                 if (!bean.isSelect()) {
                     select = false;
@@ -155,30 +180,11 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
                 }
             }
         }
-        mList.get(0).setSelect(select);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * 本地搜索门店
-     *
-     * @param searchContent 搜索词
-     */
-    private void searchShops(String searchContent) {
-        if (TextUtils.isEmpty(searchContent)) {
-            mAdapter.setNewData(mList);
-            return;
+        ShipperShopResp.ShopBean firstBean = shopBeans.get(0);
+        if (firstBean != null && TextUtils.equals(STRING_ALL, firstBean.getShopName())) {
+            firstBean.setSelect(select);
+            mAdapter.notifyItemChanged(0);
         }
-        List<PurchaserShopBean> listFilter = new ArrayList<>();
-        if (!CommonUtils.isEmpty(mList)) {
-            for (PurchaserShopBean bean : mList) {
-                if (!TextUtils.equals(bean.getShopName(), STRING_ALL)
-                    && bean.getShopName().contains(searchContent)) {
-                    listFilter.add(bean);
-                }
-            }
-        }
-        mAdapter.setNewData(listFilter);
     }
 
     @Subscribe
@@ -194,6 +200,7 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         if (view.getId() == R.id.img_close) {
             toClose();
         } else if (view.getId() == R.id.txt_confirm) {
+            getSelectList();
         }
     }
 
@@ -209,20 +216,8 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
      *
      * @return 选中的门店列表
      */
-    private List<String> getSelectList() {
-        List<String> selectList = new ArrayList<>();
-        if (!CommonUtils.isEmpty(mList)) {
-            for (PurchaserShopBean shopBean : mList) {
-                if (TextUtils.equals(STRING_ALL, shopBean.getShopName())) {
-//                    mBean.setIsAllShop(shopBean.isSelect() ? "1" : "0");
-                    continue;
-                }
-                if (shopBean.isSelect()) {
-                    selectList.add(shopBean.getShopID());
-                }
-            }
-        }
-        return selectList;
+    private List<ShipperShopResp.ShopBean> getSelectList() {
+        return new ArrayList<>(mSelectMap.values());
     }
 
     @Override
@@ -231,21 +226,26 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
     }
 
     @Override
-    public void showPurchaserShopList(List<PurchaserShopBean> list) {
-        mList = list;
+    public void showShopList(List<ShipperShopResp.ShopBean> list, boolean append, int total) {
         if (!CommonUtils.isEmpty(list)) {
-//            String shopId = mBean.getShopIDs();
-//            if (!TextUtils.isEmpty(shopId)) {
-//                for (PurchaserShopBean shopBean : list) {
-//                    if (TextUtils.equals(STRING_ALL, shopBean.getShopName())) {
-//                        continue;
-//                    }
-//                    shopBean.setSelect(shopId.contains(shopBean.getShopID()));
-//                }
-//            }
+            for (ShipperShopResp.ShopBean shopBean : list) {
+                if (mSelectMap.containsKey(shopBean.getId())) {
+                    shopBean.setSelect(true);
+                }
+            }
         }
-        mAdapter.setNewData(list);
+        if (append) {
+            mAdapter.addData(list);
+        } else {
+            if (!CommonUtils.isEmpty(list)) {
+                ShipperShopResp.ShopBean shopBeanAll = new ShipperShopResp.ShopBean();
+                shopBeanAll.setShopName(STRING_ALL);
+                list.add(0, shopBeanAll);
+            }
+            mAdapter.setNewData(list);
+        }
         mAdapter.setEmptyView(mEmptyView);
+        mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != (total + 1));
         checkSelectAll();
     }
 
@@ -254,14 +254,23 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         return mSearchView.getSearchContent();
     }
 
-    class PurchaserShopListAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
+    @Override
+    public String getPurchaserId() {
+        String id = null;
+        if (mBean != null) {
+            id = mBean.getPurchaserID();
+        }
+        return id;
+    }
 
-        PurchaserShopListAdapter() {
+    class ShopListAdapter extends BaseQuickAdapter<ShipperShopResp.ShopBean, BaseViewHolder> {
+
+        ShopListAdapter() {
             super(R.layout.item_purchaser_shop_item);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, PurchaserShopBean bean) {
+        protected void convert(BaseViewHolder helper, ShipperShopResp.ShopBean bean) {
             helper.setText(R.id.txt_shopName, bean.getShopName())
                 .getView(R.id.img_select).setSelected(bean.isSelect());
         }

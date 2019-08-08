@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface ShipperPurchaserSelectContract {
 
-    interface IPurchaserSelectView extends ILoadView {
+    interface IPurchaserView extends ILoadView {
         /**
          * 展示合作采购商列表
          *
@@ -22,7 +22,7 @@ public interface ShipperPurchaserSelectContract {
          * @param append   true-追加
          * @param totalNum 总数
          */
-        void showPurchaserList(List<ShipperShopResp.ShopBean> list, boolean append, int totalNum);
+        void showPurchaserList(List<ShipperShopResp.PurchaserBean> list, boolean append, int totalNum);
 
         /**
          * 获取搜索词
@@ -32,7 +32,7 @@ public interface ShipperPurchaserSelectContract {
         String getSearchParam();
     }
 
-    interface IPurchaserSelectPresenter extends IPresenter<IPurchaserSelectView> {
+    interface IPurchaserPresenter extends IPresenter<IPurchaserView> {
         /**
          * 查询合作采购商集团
          *

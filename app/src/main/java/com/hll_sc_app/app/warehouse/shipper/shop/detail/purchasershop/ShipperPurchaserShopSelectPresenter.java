@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.warehouse.shipper.shop.detail.purchasershop;
 
-import com.hll_sc_app.api.AgreementPriceService;
 import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -8,14 +7,9 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
-import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
-import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
+import com.hll_sc_app.bean.warehouse.ShipperShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -25,91 +19,73 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/8/8
  */
-public class ShipperPurchaserShopSelectPresenter implements ShipperPurchaserShopSelectContract.IPurchaserListPresenter {
-    private ShipperPurchaserShopSelectContract.IPurchaserListView mView;
+public class ShipperPurchaserShopSelectPresenter implements ShipperPurchaserShopSelectContract.IShopListPresenter {
+    private int mPageNum;
+    private int mTempPageNum;
+    private ShipperPurchaserShopSelectContract.IShopListView mView;
 
     static ShipperPurchaserShopSelectPresenter newInstance() {
         return new ShipperPurchaserShopSelectPresenter();
     }
 
     @Override
-    public void register(ShipperPurchaserShopSelectContract.IPurchaserListView view) {
+    public void start() {
+        queryShopList(true);
+    }
+
+    @Override
+    public void register(ShipperPurchaserShopSelectContract.IShopListView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
     @Override
-    public void queryWarehousePurchaserShopList(String purchaserId) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("purchaserID", purchaserId)
-            .put("searchParam", mView.getSearchParam())
-            .create();
-        AgreementPriceService.INSTANCE.queryCooperationPurchaserShopList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<PurchaserShopBean>>() {
-                @Override
-                public void onSuccess(List<PurchaserShopBean> result) {
-                    if (!CommonUtils.isEmpty(result)) {
-                        PurchaserShopBean shopBean = new PurchaserShopBean();
-                        shopBean.setShopName(ShipperPurchaserShopSelectActivity.STRING_ALL);
-                        result.add(0, shopBean);
-                    }
-                    mView.showPurchaserShopList(result);
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showToast(e.getMessage());
-                }
-            });
+    public void queryShopList(boolean showLoading) {
+        mPageNum = 1;
+        mTempPageNum = mPageNum;
+        toQueryShopList(showLoading);
     }
 
     @Override
-    public void queryCooperationWarehouseDetail(String purchaserId) {
+    public void queryMoreShopList() {
+        mTempPageNum = mPageNum;
+        mTempPageNum++;
+        toQueryShopList(false);
+    }
+
+    private void toQueryShopList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
+            .put("actionType", "unWarehouse")
+            .put("searchParams", mView.getSearchParam())
+            .put("pageNo", String.valueOf(mTempPageNum))
+            .put("pageSize", "20")
             .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", purchaserId)
+            .put("purchaserID", mView.getPurchaserId())
             .create();
         WarehouseService.INSTANCE
-            .queryCooperationWarehouseDetail(req)
+            .queryWarehousePurchaserShopList(req)
             .compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
+            .doOnSubscribe(disposable -> {
+                if (showLoading) {
+                    mView.showLoading();
+                }
+            })
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<WarehouseDetailResp>() {
+            .subscribe(new BaseCallback<ShipperShopResp>() {
                 @Override
-                public void onSuccess(WarehouseDetailResp result) {
-                    List<PurchaserShopBean> list = transformPurchaserBean(result.getShops());
-                    if (!CommonUtils.isEmpty(list)) {
-                        PurchaserShopBean shopBean = new PurchaserShopBean();
-                        shopBean.setShopName(ShipperPurchaserShopSelectActivity.STRING_ALL);
-                        list.add(0, shopBean);
+                public void onSuccess(ShipperShopResp resp) {
+                    mPageNum = mTempPageNum;
+                    if (resp.getPageInfo() != null) {
+                        mView.showShopList(resp.getShopList(), mPageNum != 1, resp.getPageInfo()
+                            .getTotal());
                     }
-                    mView.showPurchaserShopList(list);
                 }
 
                 @Override
                 public void onFailure(UseCaseException e) {
-                    mView.showToast(e.getMessage());
+                    mView.showError(e);
                 }
             });
-    }
-
-    private List<PurchaserShopBean> transformPurchaserBean(List<WarehouseShopBean> list) {
-        List<PurchaserShopBean> shopBeans = new ArrayList<>();
-        if (!CommonUtils.isEmpty(list)) {
-            for (WarehouseShopBean bean : list) {
-                PurchaserShopBean shopBean = new PurchaserShopBean();
-                shopBean.setShopName(bean.getShopName());
-                shopBean.setShopID(bean.getId());
-                shopBeans.add(shopBean);
-            }
-        }
-        return shopBeans;
     }
 }

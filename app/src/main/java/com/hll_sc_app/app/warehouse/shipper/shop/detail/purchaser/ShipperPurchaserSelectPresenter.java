@@ -19,10 +19,10 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/8/7
  */
-public class ShipperPurchaserSelectPresenter implements ShipperPurchaserSelectContract.IPurchaserSelectPresenter {
+public class ShipperPurchaserSelectPresenter implements ShipperPurchaserSelectContract.IPurchaserPresenter {
     private int mPageNum;
     private int mTempPageNum;
-    private ShipperPurchaserSelectContract.IPurchaserSelectView mView;
+    private ShipperPurchaserSelectContract.IPurchaserView mView;
 
     static ShipperPurchaserSelectPresenter newInstance() {
         return new ShipperPurchaserSelectPresenter();
@@ -34,7 +34,7 @@ public class ShipperPurchaserSelectPresenter implements ShipperPurchaserSelectCo
     }
 
     @Override
-    public void register(ShipperPurchaserSelectContract.IPurchaserSelectView view) {
+    public void register(ShipperPurchaserSelectContract.IPurchaserView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
@@ -86,5 +86,4 @@ public class ShipperPurchaserSelectPresenter implements ShipperPurchaserSelectCo
                 }
             });
     }
-
 }
