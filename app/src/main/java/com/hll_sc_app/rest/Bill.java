@@ -79,7 +79,7 @@ public class Bill {
      *
      * @param settleBillIDs 所有需要结算的结算单ID
      */
-    public static void billAction(List<Integer> settleBillIDs, SimpleObserver<Object> observer) {
+    public static void billAction(List<String> settleBillIDs, SimpleObserver<Object> observer) {
         BillActionReq req = new BillActionReq();
         req.setSettleBillIDs(settleBillIDs);
         BillService.INSTANCE

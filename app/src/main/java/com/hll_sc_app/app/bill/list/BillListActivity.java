@@ -22,7 +22,9 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.bill.BillBean;
+import com.hll_sc_app.bean.bill.BillListResp;
 import com.hll_sc_app.bean.bill.BillParam;
+import com.hll_sc_app.bean.bill.BillStatus;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.window.NameValue;
@@ -45,11 +47,13 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -83,6 +87,8 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     RecyclerView mListView;
     @BindView(R.id.abl_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.abl_commit)
+    TextView mCommit;
     private EmptyView mEmptyView;
     private ContextOptionsWindow mOptionsWindow;
     private DateRangeWindow mDateRangeWindow;
@@ -93,6 +99,8 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     private IBillListContract.IBillListPresenter mPresenter;
     private boolean mIsDetailExport;
     private List<PurchaserBean> mPurchaserBeans;
+    private BillListResp mResp;
+    private BillBean mCurBean;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -108,7 +116,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         Date endDate = new Date();
         mParam.setEndTime(endDate);
         mParam.setStateTime(CalendarUtils.getDateBefore(endDate, 30));
-        mParam.setSettlementStatus(1);
+        mParam.setSettlementStatus(BillStatus.NOT_SETTLE);
         updateSelectedDate();
         mPresenter = BillListPresenter.newInstance(mParam);
         mPresenter.register(this);
@@ -118,7 +126,10 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
-        mAdapter = new BillListAdapter();
+        mAdapter = new BillListAdapter((buttonView, isChecked) -> {
+            ((BillBean) buttonView.getTag()).setSelected(isChecked);
+            updateBottomBar();
+        });
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -130,6 +141,23 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.refresh();
+            }
+        });
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                mCurBean = mAdapter.getItem(position);
+                if (mCurBean == null) return;
+                switch (view.getId()) {
+                    case R.id.ibl_confirm:
+                        mPresenter.doAction(Collections.singletonList(mCurBean.getId()));
+                        break;
+                    case R.id.ibl_view_detail:
+
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
@@ -144,6 +172,46 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
                     .setListener(this);
         }
         mOptionsWindow.showAsDropDownFix(v, Gravity.END);
+    }
+
+    private void updateBottomBar() {
+        if (mParam.getSettlementStatus() == BillStatus.NOT_SETTLE && !CommonUtils.isEmpty(mAdapter.getData())) {
+            mSelectAll.setVisibility(View.VISIBLE);
+            mCommit.setVisibility(View.VISIBLE);
+            mSumLabel.setVisibility(View.GONE);
+            mAmount.setVisibility(View.GONE);
+            int count = 0;
+            for (BillBean bean : mAdapter.getData()) {
+                if (bean.isSelected()) count++;
+            }
+            mSelectAll.setChecked(count == mAdapter.getData().size());
+            mCommit.setEnabled(count > 0);
+            mCommit.setText(String.format("确认结算(%s)", count));
+        } else {
+            mSelectAll.setVisibility(View.GONE);
+            mCommit.setVisibility(View.GONE);
+            mSumLabel.setVisibility(View.VISIBLE);
+            mAmount.setVisibility(View.VISIBLE);
+            mSumLabel.setText(String.format("%s总计：", mParam.getSettlementStatus() == BillStatus.NOT_SETTLE ? "未结算" : "已结算"));
+            mAmount.setText(String.format("¥%s",
+                    CommonUtils.formatMoney(mParam.getSettlementStatus() == BillStatus.NOT_SETTLE ?
+                            mResp.getTotalNoSettlementAmount() : mResp.getTotalSettlementAmount())));
+        }
+    }
+
+    @OnCheckedChanged(R.id.abl_select_all)
+    public void onCheckChanged(boolean isChecked) {
+        boolean notify = false;
+        for (BillBean bean : mAdapter.getData()) {
+            if (bean.isSelected() != isChecked) {
+                bean.setSelected(isChecked);
+                notify = true;
+            }
+        }
+        if (notify) {
+            mAdapter.notifyDataSetChanged();
+            updateBottomBar();
+        }
     }
 
     @OnClick(R.id.abl_purchaser_btn)
@@ -163,7 +231,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
                     mPresenter.start();
                     if (!CommonUtils.isEmpty(shopNameList)) {
                         mPurchaser.setText(TextUtils.join(",", shopNameList));
-                    } else mPurchaser.setText("全部采购商");
+                    } else mPurchaser.setText("采购商");
                 }
 
                 @Override
@@ -245,10 +313,10 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         mType.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (mTypeWindow == null) {
             List<NameValue> list = new ArrayList<>();
-            NameValue curValue = new NameValue("未结算", "1");
+            NameValue curValue = new NameValue("未结算", String.valueOf(BillStatus.NOT_SETTLE));
             list.add(curValue);
-            list.add(new NameValue("已结算", "2"));
-            list.add(new NameValue("部分结算", "3"));
+            list.add(new NameValue("已结算", String.valueOf(BillStatus.SETTLED)));
+            list.add(new NameValue("部分结算", String.valueOf(BillStatus.PART_SETTLED)));
             mTypeWindow = new SingleSelectionWindow<>(this, NameValue::getName);
             mTypeWindow.refreshList(list);
             mTypeWindow.setSelect(curValue);
@@ -266,7 +334,12 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     @Override
-    public void setBillList(List<BillBean> list, boolean isMore) {
+    public void updateBillListResp(BillListResp resp, boolean isMore) {
+        mResp = resp;
+        setBillList(resp.getRecords(), isMore);
+    }
+
+    private void setBillList(List<BillBean> list, boolean isMore) {
         if (isMore) mAdapter.addData(list);
         else {
             if (CommonUtils.isEmpty(list)) {
@@ -277,11 +350,20 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
             mAdapter.setNewData(list);
         }
         mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
+        updateBottomBar();
     }
 
     @Override
     public void actionSuccess() {
-
+        if (mCurBean == null) {
+            List<BillBean> list = new ArrayList<>();
+            for (BillBean bean : mAdapter.getData()) {
+                if (!bean.isSelected()) list.add(bean);
+            }
+            setBillList(list, false);
+        } else if (mAdapter.getData().size() > 1) {
+            mAdapter.removeData(mCurBean);
+        } else setBillList(null, false);
     }
 
     @Override
@@ -345,5 +427,16 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
 
     private void export(String email) {
         mPresenter.export(email, mIsDetailExport ? 2 : 1);
+    }
+
+    @OnClick(R.id.abl_commit)
+    public void commit() {
+        mCurBean = null;
+        List<String> ids = new ArrayList<>();
+        for (BillBean bean : mAdapter.getData()) {
+            if (bean.isSelected())
+                ids.add(bean.getId());
+        }
+        mPresenter.doAction(ids);
     }
 }
