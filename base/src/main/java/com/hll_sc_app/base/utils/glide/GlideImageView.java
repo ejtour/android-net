@@ -30,6 +30,8 @@ import java.util.List;
 public class GlideImageView extends android.support.v7.widget.AppCompatImageView {
     public static final String DISABLE_IMAGE = "DISABLE_IMAGE";
     public static final String DISABLE_SHOP = "DISABLE_SHOP";
+    public static final String GROUP_BLOCK_UP = "GROUP_BLOCK_UP";
+    public static final String GROUP_LOG_OUT = "GROUP_LOG_OUT";
     /**
      * 是否按宽度等比例显示
      */
@@ -134,9 +136,9 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
      *
      * @param url 商品URL
      */
-    public void setDisableImageUrl(String url) {
+    public void setDisableImageUrl(String url, String type) {
         mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
-        mType = DISABLE_IMAGE;
+        mType = type;
         loadUrl();
     }
 
@@ -153,17 +155,6 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
                 setOptions(GlideApp.with(this).load(myUrl)).into(this);
             }
         }
-    }
-
-    /**
-     * 图片上显示禁用提示
-     *
-     * @param url 商品URL
-     */
-    public void setShopDisableImageUrl(String url) {
-        mUrl = TextUtils.isEmpty(url) ? "" : url.trim();
-        mType = DISABLE_SHOP;
-        loadUrl();
     }
 
     @Override

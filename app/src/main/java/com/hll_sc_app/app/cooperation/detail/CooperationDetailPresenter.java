@@ -85,6 +85,7 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
             .put("pageNo", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
             .put("originator", "1")
+            .put("ignoreGroupActive", "1")
             .put("groupID", UserConfig.getGroupID())
             .put("purchaserID", mView.getPurchaserId())
             .create();

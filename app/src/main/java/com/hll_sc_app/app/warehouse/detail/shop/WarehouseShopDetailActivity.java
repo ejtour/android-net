@@ -65,7 +65,7 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
 
     private void showView() {
         if (TextUtils.equals(mShopBean.getIsActive(), "0")) {
-            mImgLogoUrl.setShopDisableImageUrl(mShopBean.getLogoUrl());
+            mImgLogoUrl.setDisableImageUrl(mShopBean.getLogoUrl(), GlideImageView.DISABLE_SHOP);
         } else {
             mImgLogoUrl.setImageURL(mShopBean.getLogoUrl());
         }

@@ -138,7 +138,7 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
                 .setText(R.id.txt_shopAddress, "地址：" + getString(item.getShopAddress()));
             GlideImageView imageView = helper.getView(R.id.img_imagePath);
             if (TextUtils.equals(item.getIsActive(), "0")) {
-                imageView.setShopDisableImageUrl(item.getLogoUrl());
+                imageView.setDisableImageUrl(item.getLogoUrl(), GlideImageView.DISABLE_SHOP);
             } else {
                 imageView.setImageURL(item.getLogoUrl());
             }
