@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.warehouse.shipper.shop.detail.purchasershop;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -157,12 +158,15 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         if (bean == null) {
             return;
         }
+        if (TextUtils.equals(bean.getShopName(), STRING_ALL)) {
+            return;
+        }
         if (bean.isSelect()) {
-            if (!mSelectMap.containsKey(bean.getId())) {
-                mSelectMap.put(bean.getId(), bean);
+            if (!mSelectMap.containsKey(bean.getShopID())) {
+                mSelectMap.put(bean.getShopID(), bean);
             }
         } else {
-            mSelectMap.remove(bean.getId());
+            mSelectMap.remove(bean.getShopID());
         }
     }
 
@@ -200,7 +204,12 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
         if (view.getId() == R.id.img_close) {
             toClose();
         } else if (view.getId() == R.id.txt_confirm) {
-            getSelectList();
+            List<String> listSelect = getSelectList();
+            if (!CommonUtils.isEmpty(listSelect)) {
+                mPresenter.editWarehousePurchaser(listSelect);
+            } else {
+                showToast("您还没有选中采购商门店");
+            }
         }
     }
 
@@ -216,8 +225,8 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
      *
      * @return 选中的门店列表
      */
-    private List<ShipperShopResp.ShopBean> getSelectList() {
-        return new ArrayList<>(mSelectMap.values());
+    private List<String> getSelectList() {
+        return new ArrayList<>(mSelectMap.keySet());
     }
 
     @Override
@@ -229,7 +238,7 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
     public void showShopList(List<ShipperShopResp.ShopBean> list, boolean append, int total) {
         if (!CommonUtils.isEmpty(list)) {
             for (ShipperShopResp.ShopBean shopBean : list) {
-                if (mSelectMap.containsKey(shopBean.getId())) {
+                if (mSelectMap.containsKey(shopBean.getShopID())) {
                     shopBean.setSelect(true);
                 }
             }
@@ -255,12 +264,15 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
     }
 
     @Override
-    public String getPurchaserId() {
-        String id = null;
-        if (mBean != null) {
-            id = mBean.getPurchaserID();
-        }
-        return id;
+    public ShipperShopResp.PurchaserBean getPurchaserBean() {
+        return mBean;
+    }
+
+    @Override
+    public void editSuccess() {
+        ARouter.getInstance().build(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL)
+            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            .navigation(this);
     }
 
     class ShopListAdapter extends BaseQuickAdapter<ShipperShopResp.ShopBean, BaseViewHolder> {

@@ -49,9 +49,18 @@ public class WarehousePurchaserEditReq {
     public static class PurchaserId {
 
         private String purchaserID;
+        private List<String> shopIDs;
 
         public PurchaserId(String purchaserID) {
             this.purchaserID = purchaserID;
+        }
+
+        public List<String> getShopIDs() {
+            return shopIDs;
+        }
+
+        public void setShopIDs(List<String> shopIDs) {
+            this.shopIDs = shopIDs;
         }
 
         public String getPurchaserID() {

@@ -32,11 +32,16 @@ public interface ShipperPurchaserShopSelectContract {
         String getSearchParam();
 
         /**
-         * 获取采购商Id
+         * 获取采购商
          *
-         * @return 采购商Id
+         * @return 采购商
          */
-        String getPurchaserId();
+        ShipperShopResp.PurchaserBean getPurchaserBean();
+
+        /**
+         * 编辑成功
+         */
+        void editSuccess();
     }
 
     interface IShopListPresenter extends IPresenter<IShopListView> {
@@ -51,5 +56,12 @@ public interface ShipperPurchaserShopSelectContract {
          * 查询更多合作采购商门店列表
          */
         void queryMoreShopList();
+
+        /**
+         * 代仓编辑合作采购商
+         *
+         * @param list 合作采购商门店
+         */
+        void editWarehousePurchaser(List<String> list);
     }
 }

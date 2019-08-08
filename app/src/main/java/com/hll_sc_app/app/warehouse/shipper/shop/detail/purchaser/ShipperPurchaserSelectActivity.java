@@ -9,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
@@ -54,6 +56,8 @@ public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements 
     RecyclerView mRecyclerView;
     @BindView(R.id.searchView)
     SearchView mSearchView;
+    @Autowired(name = "object0")
+    String mWarehouseId;
 
     private EmptyView mEmptyView;
     private EmptyView mSearchEmptyView;
@@ -65,6 +69,7 @@ public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quotation_add_purchaser);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
+        ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
         mPresenter = ShipperPurchaserSelectPresenter.newInstance();
@@ -109,6 +114,7 @@ public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             ShipperShopResp.PurchaserBean purchaserBean = (ShipperShopResp.PurchaserBean) adapter.getItem(position);
             if (purchaserBean != null) {
+                purchaserBean.setWarehouseId(mWarehouseId);
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER_SHOP, purchaserBean);
             }
         });

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.warehouse.shipper.shop.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -216,6 +217,13 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
         } else if (view.getId() == R.id.txt_options) {
             toAdd();
         }
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresenter.start();
     }
 
     private class WarehouseListAdapter extends BaseQuickAdapter<ShipperShopResp.PurchaserBean, BaseViewHolder> {

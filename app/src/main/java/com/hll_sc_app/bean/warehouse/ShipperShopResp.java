@@ -43,11 +43,6 @@ public class ShipperShopResp {
     }
 
     public static class PurchaserBean implements Parcelable {
-        private String purchaserID;
-        private String shopNum;
-        private String purchaserLogo;
-        private String purchaserName;
-
         public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {
             @Override
             public PurchaserBean createFromParcel(Parcel source) {
@@ -59,6 +54,30 @@ public class ShipperShopResp {
                 return new PurchaserBean[size];
             }
         };
+        private String purchaserID;
+        private String shopNum;
+        private String purchaserLogo;
+        private String purchaserName;
+        private String warehouseId;
+
+        public PurchaserBean() {
+        }
+
+        protected PurchaserBean(Parcel in) {
+            this.purchaserID = in.readString();
+            this.shopNum = in.readString();
+            this.purchaserLogo = in.readString();
+            this.purchaserName = in.readString();
+            this.warehouseId = in.readString();
+        }
+
+        public String getWarehouseId() {
+            return warehouseId;
+        }
+
+        public void setWarehouseId(String warehouseId) {
+            this.warehouseId = warehouseId;
+        }
 
         public String getPurchaserID() {
             return purchaserID;
@@ -92,16 +111,6 @@ public class ShipperShopResp {
             this.purchaserName = purchaserName;
         }
 
-        public PurchaserBean() {
-        }
-
-        protected PurchaserBean(Parcel in) {
-            this.purchaserID = in.readString();
-            this.shopNum = in.readString();
-            this.purchaserLogo = in.readString();
-            this.purchaserName = in.readString();
-        }
-
         @Override
         public int describeContents() {
             return 0;
@@ -113,6 +122,7 @@ public class ShipperShopResp {
             dest.writeString(this.shopNum);
             dest.writeString(this.purchaserLogo);
             dest.writeString(this.purchaserName);
+            dest.writeString(this.warehouseId);
         }
     }
 
@@ -129,7 +139,7 @@ public class ShipperShopResp {
             }
         };
         private String shopName;
-        private String id;
+        private String shopID;
         private boolean select;
 
         public ShopBean() {
@@ -137,16 +147,8 @@ public class ShipperShopResp {
 
         protected ShopBean(Parcel in) {
             this.shopName = in.readString();
-            this.id = in.readString();
+            this.shopID = in.readString();
             this.select = in.readByte() != 0;
-        }
-
-        public boolean isSelect() {
-            return select;
-        }
-
-        public void setSelect(boolean select) {
-            this.select = select;
         }
 
         public String getShopName() {
@@ -157,12 +159,20 @@ public class ShipperShopResp {
             this.shopName = shopName;
         }
 
-        public String getId() {
-            return id;
+        public String getShopID() {
+            return shopID;
         }
 
-        public void setId(String id) {
-            this.id = id;
+        public void setShopID(String shopID) {
+            this.shopID = shopID;
+        }
+
+        public boolean isSelect() {
+            return select;
+        }
+
+        public void setSelect(boolean select) {
+            this.select = select;
         }
 
         @Override
@@ -173,7 +183,7 @@ public class ShipperShopResp {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.shopName);
-            dest.writeString(this.id);
+            dest.writeString(this.shopID);
             dest.writeByte(this.select ? (byte) 1 : (byte) 0);
         }
     }

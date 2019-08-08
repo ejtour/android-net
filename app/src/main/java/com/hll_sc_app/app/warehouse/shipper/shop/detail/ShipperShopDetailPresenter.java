@@ -122,4 +122,5 @@ public class ShipperShopDetailPresenter implements ShipperShopDetailContract.ISh
                 }
             });
     }
+
 }
