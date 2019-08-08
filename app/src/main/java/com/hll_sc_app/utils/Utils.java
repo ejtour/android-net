@@ -9,6 +9,7 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.widget.ExportDialog;
 
 import java.util.regex.Matcher;
