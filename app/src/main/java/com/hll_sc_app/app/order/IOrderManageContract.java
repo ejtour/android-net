@@ -6,7 +6,7 @@ import com.hll_sc_app.bean.order.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
-import com.hll_sc_app.utils.IExportView;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 

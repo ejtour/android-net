@@ -2,7 +2,7 @@ package com.hll_sc_app.app.order.details;
 
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.OrderResp;
-import com.hll_sc_app.utils.IExportView;
+import com.hll_sc_app.impl.IExportView;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>

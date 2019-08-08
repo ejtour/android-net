@@ -113,7 +113,7 @@ public class Bill {
         BillService.INSTANCE
                 .exportEmail(BaseMapReq.newBuilder()
                         .put("sign", String.valueOf(sign))
-                        .put("flag", TextUtils.isEmpty(salesmanID) ? "1" : "3") // 标识必传：1-供应商，2-采购商，3-销售CRM
+                        .put("flag", TextUtils.isEmpty(salesmanID) ? "2" : "3") // 1-采购商导出 2-供应商导出 3-销售CRM导出
                         .put("email", email)
                         .put("isBindEmail", TextUtils.isEmpty(email) ? "" : "1")
                         .put("startTime", startTime)

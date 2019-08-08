@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/base_white"
-        app:layout_constraintBottom_toBottomOf="@+id/abl_purchase_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,10 +38,10 @@
         android:layout_width="1dp"
         android:layout_height="18dp"
         android:background="@color/color_dddddd"
-        app:layout_constraintBottom_toBottomOf="@+id/abl_purchase_btn"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser_btn"
         app:layout_constraintEnd_toStartOf="@+id/abl_line2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/abl_purchase_btn" />
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
 
     <View
         android:id="@+id/abl_line2"
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toTopOf="@+id/abl_line1" />
 
     <View
-        android:id="@+id/abl_purchase_btn"
+        android:id="@+id/abl_purchaser_btn"
         android:layout_width="0dp"
         android:layout_height="45dp"
         app:layout_constraintEnd_toStartOf="@+id/abl_line1"
@@ -62,26 +62,30 @@
         app:layout_constraintTop_toBottomOf="@+id/abl_divider" />
 
     <TextView
-        android:id="@+id/abl_purchase"
+        android:id="@+id/abl_purchaser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="全部采购商"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBottom_toBottomOf="@+id/abl_purchase_btn"
-        app:layout_constraintEnd_toStartOf="@+id/abl_purchase_arrow"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser_btn"
+        app:layout_constraintEnd_toStartOf="@+id/abl_purchaser_arrow"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@+id/abl_purchase_btn"
-        app:layout_constraintTop_toTopOf="@+id/abl_purchase_btn" />
+        app:layout_constraintStart_toStartOf="@+id/abl_purchaser_btn"
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
 
     <com.hll_sc_app.widget.TriangleView
-        android:id="@+id/abl_purchase_arrow"
+        android:id="@+id/abl_purchaser_arrow"
         android:layout_width="8dp"
         android:layout_height="4dp"
-        android:layout_marginLeft="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/abl_purchase"
-        app:layout_constraintEnd_toEndOf="@+id/abl_purchase_btn"
-        app:layout_constraintStart_toEndOf="@+id/abl_purchase"
-        app:layout_constraintTop_toTopOf="@+id/abl_purchase"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser"
+        app:layout_constraintEnd_toEndOf="@+id/abl_purchaser_btn"
+        app:layout_constraintStart_toEndOf="@+id/abl_purchaser"
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser"
         app:trv_color="@color/color_dddddd"
         app:trv_direction="bottom" />
 
@@ -91,14 +95,19 @@
         android:layout_height="45dp"
         app:layout_constraintEnd_toStartOf="@+id/abl_line2"
         app:layout_constraintStart_toEndOf="@+id/abl_line1"
-        app:layout_constraintTop_toTopOf="@+id/abl_purchase_btn" />
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
 
     <TextView
         android:id="@+id/abl_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:text="按日期筛选"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="@+id/abl_date_btn"
         app:layout_constraintEnd_toStartOf="@+id/abl_date_arrow"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -109,7 +118,6 @@
         android:id="@+id/abl_date_arrow"
         android:layout_width="8dp"
         android:layout_height="4dp"
-        android:layout_marginLeft="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/abl_date"
         app:layout_constraintEnd_toEndOf="@+id/abl_date_btn"
         app:layout_constraintStart_toEndOf="@+id/abl_date"
@@ -123,12 +131,14 @@
         android:layout_height="45dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/abl_line2"
-        app:layout_constraintTop_toTopOf="@+id/abl_purchase_btn" />
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
 
     <TextView
         android:id="@+id/abl_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:text="未结算"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintBottom_toBottomOf="@+id/abl_date_btn"
@@ -141,7 +151,6 @@
         android:id="@+id/abl_type_arrow"
         android:layout_width="8dp"
         android:layout_height="4dp"
-        android:layout_marginLeft="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/abl_type"
         app:layout_constraintEnd_toEndOf="@+id/abl_type_btn"
         app:layout_constraintStart_toEndOf="@+id/abl_type"

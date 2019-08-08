@@ -1,11 +1,16 @@
 package com.hll_sc_app.app.bill.list;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.bill.BillListResp;
 import com.hll_sc_app.bean.bill.BillParam;
+import com.hll_sc_app.bean.common.PurchaserBean;
+import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Bill;
+import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.utils.Utils;
 
 import java.util.List;
@@ -51,6 +56,27 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
     @Override
     public void loadMore() {
         getBillList(false);
+    }
+
+    @Override
+    public void getPurchaserList(String searchWords) {
+        Common.queryPurchaserList("statusment", searchWords, new SimpleObserver<List<PurchaserBean>>(mView) {
+            @Override
+            public void onSuccess(List<PurchaserBean> purchaserBeans) {
+                mView.refreshPurchaserList(purchaserBeans);
+            }
+        });
+    }
+
+    @Override
+    public void getShopList(String purchaseID, String searchWords) {
+        if (TextUtils.isEmpty(purchaseID)) return;
+        Common.queryPurchaserShopList(purchaseID, "statusment", searchWords, new SimpleObserver<List<PurchaserShopBean>>(mView) {
+            @Override
+            public void onSuccess(List<PurchaserShopBean> purchaserShopBeans) {
+                mView.refreshShopList(purchaserShopBeans);
+            }
+        });
     }
 
     private void getBillList(boolean showLoading) {

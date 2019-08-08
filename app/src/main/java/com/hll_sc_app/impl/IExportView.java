@@ -1,4 +1,4 @@
-package com.hll_sc_app.utils;
+package com.hll_sc_app.impl;
 
 import com.hll_sc_app.base.ILoadView;
 

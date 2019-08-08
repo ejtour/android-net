@@ -4,7 +4,7 @@ package com.hll_sc_app.app.aftersales.audit;
 import com.hll_sc_app.app.aftersales.common.IAction;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
-import com.hll_sc_app.utils.IExportView;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
