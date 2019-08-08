@@ -30,7 +30,7 @@
             app:srlEnableLastTime="false"
             app:srlTextSizeTitle="@dimen/text_small_size" />
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:id="@+id/fmh_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -999,13 +999,23 @@ fmh_warehouse_delivery_num_label,fmh_warehouse_amount,fmh_warehouse_amount_label
                     app:layout_constraintTop_toTopOf="@id/fmh_entry_purchaser" />
 
             </android.support.constraint.ConstraintLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <View
+        android:id="@+id/fmh_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/fmh_message_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/fmh_message_icon"
         android:layout_width="0dp"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/title_bar_height"
         android:background="@drawable/base_bg_selector_close"
         android:scaleType="centerInside"
         android:src="@drawable/ic_mine_title_message"
@@ -1050,4 +1060,5 @@ fmh_warehouse_delivery_num_label,fmh_warehouse_amount,fmh_warehouse_amount_label
         app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="@id/fmh_top_tag"
         app:layout_constraintTop_toTopOf="@id/fmh_top_tag" />
+
 </android.support.constraint.ConstraintLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
+import android.support.v4.widget.NestedScrollView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
@@ -42,6 +43,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -101,6 +103,12 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     TextView mWarehouseIn;
     @BindView(R.id.fmh_finance)
     TextView mFinance;
+    @BindView(R.id.fmh_title_bar)
+    View mTitleBar;
+    @BindView(R.id.fmh_scroll_view)
+    NestedScrollView mScrollView;
+    @BindDimen(R.dimen.title_bar_height)
+    int mTitleBarHeight;
     @IMainHomeContract.DateType
     private int mDateType = IMainHomeContract.DateType.TYPE_DAY;
     private IMainHomeContract.IMainHomePresenter mPresenter;
@@ -129,6 +137,22 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     private void initView() {
         showStatusBar();
+        mTitleBar.getBackground().mutate().setAlpha(0);
+        mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            int alpha = 0;
+
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (mTitleBar == null) return;
+                if (scrollY <= mTitleBarHeight) {
+                    alpha = (int) (255 * (float) scrollY / mTitleBarHeight);
+                    mTitleBar.getBackground().mutate().setAlpha(alpha);
+                } else if (alpha < 255) {
+                    alpha = 255;
+                    mTitleBar.getBackground().mutate().setAlpha(alpha);
+                }
+            }
+        });
         mRefreshView.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
