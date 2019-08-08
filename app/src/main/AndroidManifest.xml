@@ -244,6 +244,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.warehouse.shipper.ShipperWarehouseGoodsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".app.warehouse.shipper.shop.ShipperShopManageActivity"
             android:screenOrientation="portrait" />
 

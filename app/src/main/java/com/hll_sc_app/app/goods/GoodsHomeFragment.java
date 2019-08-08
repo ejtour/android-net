@@ -21,9 +21,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.MainActivity;
 import com.hll_sc_app.app.goods.list.GoodsListFragment;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
+import com.hll_sc_app.app.warehouse.shipper.ShipperWarehouseGoodsActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -56,7 +58,7 @@ import butterknife.Unbinder;
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS)
 public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener,
-        GoodsHomeContract.IGoodsHomeView {
+    GoodsHomeContract.IGoodsHomeView {
     static final String[] STR_TITLE = {"普通商品", "组合商品", "押金商品", "代仓商品"};
     static final String[] STR_ACTION_TYPE = {"normalProduct", "bundlingGoods", "depositProduct", "warehouse"};
     @BindView(R.id.space)
@@ -74,6 +76,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     RadioGroup mRadioGroup;
     @BindView(R.id.searchView)
     SearchView mSearchView;
+    @BindView(R.id.img_close)
+    ImageView mImgClose;
     private GoodsListFragmentPager mFragmentAdapter;
     private ContextOptionsWindow mOptionsWindow;
     private GoodsHomePresenter mPresenter;
@@ -123,6 +127,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     }
 
     private void initView() {
+        mImgClose.setVisibility((getActivity() instanceof MainActivity) ? View.GONE : View.VISIBLE);
         mFragmentAdapter = new GoodsListFragmentPager(getChildFragmentManager(), STR_ACTION_TYPE, STR_TITLE);
         mViewPager.setAdapter(mFragmentAdapter);
         mViewPager.setOffscreenPageLimit(2);
@@ -169,9 +174,20 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         return mSearchView.getSearchContent();
     }
 
-    @OnClick({R.id.img_add})
+    @OnClick({R.id.img_add, R.id.img_close})
     public void onViewClicked(View view) {
-        showOptionsWindow(mImgAdd);
+        switch (view.getId()) {
+            case R.id.img_add:
+                showOptionsWindow(mImgAdd);
+                break;
+            case R.id.img_close:
+                if (getActivity() != null && getActivity() instanceof ShipperWarehouseGoodsActivity) {
+                    getActivity().finish();
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private void showOptionsWindow(View view) {

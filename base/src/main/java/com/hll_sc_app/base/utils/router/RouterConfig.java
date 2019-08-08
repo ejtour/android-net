@@ -72,6 +72,10 @@ public class RouterConfig {
      */
     public static final String WAREHOUSE_SHIPPER = "/activity/warehouse/shipper";
     /**
+     * 代仓管理-我是货主-商品管理
+     */
+    public static final String WAREHOUSE_SHIPPER_GOODS = "/activity/warehouse/shipper/goods";
+    /**
      * 代仓管理-我是货主-门店管理
      */
     public static final String WAREHOUSE_SHIPPER_SHOP = "/activity/warehouse/shipper/shop";

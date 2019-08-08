@@ -75,6 +75,7 @@ public class ShipperActivity extends BaseLoadActivity implements BaseQuickAdapte
                 showAddWindow();
                 break;
             case R.id.cons_shipper_goods:
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_GOODS);
                 break;
             case R.id.cons_shipper_shop:
                 RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP);
