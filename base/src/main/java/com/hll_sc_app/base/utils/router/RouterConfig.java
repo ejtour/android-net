@@ -662,5 +662,15 @@ public class RouterConfig {
      * 我的钱包-银行列表
      */
     public static final String WALLET_BANK_LIST = "/activity/wallet/bankList";
+
+    /**
+     * 对账单列表
+     */
+    public static final String BILL_LIST = "/activity/bill/list";
+
+    /**
+     * 对账单详情
+     */
+    public static final String STATEMENT_DETAIL = "/activity/bill/detail";
 }
 
