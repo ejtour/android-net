@@ -85,6 +85,11 @@ public class RouterConfig {
     public static final String WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER = "/activity/warehouse/shipper/shop/detail" +
         "/purchaser";
     /**
+     * 代仓管理-我是货主-门店管理-详情-选择合作采购商-选择门店
+     */
+    public static final String WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER_SHOP = "/activity/warehouse/shipper/shop" +
+        "/detail/purchaser/shop";
+    /**
      * 代仓管理-我是货主默认介绍页面-查看推荐
      */
     public static final String WAREHOUSE_RECOMMEND = "/activity/warehouse/recommend";

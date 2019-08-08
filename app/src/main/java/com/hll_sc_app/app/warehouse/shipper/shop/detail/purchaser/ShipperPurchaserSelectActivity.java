@@ -19,6 +19,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.warehouse.ShipperShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -84,6 +85,7 @@ public class ShipperPurchaserSelectActivity extends BaseLoadActivity implements 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             ShipperShopResp.ShopBean bean = (ShipperShopResp.ShopBean) adapter.getItem(position);
             if (bean != null) {
+                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER_SHOP, bean);
             }
         });
         mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到合作采购商数据").create();
