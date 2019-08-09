@@ -195,7 +195,8 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
             mSumLabel.setText(String.format("%s总计：", mParam.getSettlementStatus() == BillStatus.NOT_SETTLE ? "未结算" : "已结算"));
             mAmount.setText(String.format("¥%s",
                     CommonUtils.formatMoney(mParam.getSettlementStatus() == BillStatus.NOT_SETTLE ?
-                            mResp.getTotalNoSettlementAmount() : mResp.getTotalSettlementAmount())));
+                            mAdapter.getData().size() == 0 ? 0 : mResp.getTotalNoSettlementAmount() :
+                            mResp.getTotalSettlementAmount())));
         }
     }
 
