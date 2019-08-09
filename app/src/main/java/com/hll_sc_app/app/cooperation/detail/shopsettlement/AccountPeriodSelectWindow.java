@@ -36,7 +36,7 @@ public class AccountPeriodSelectWindow extends BaseShadowPopupWindow implements 
     private Map<String, List<Integer>> mMap;
     private DateSelectListener mSelectListener;
 
-    AccountPeriodSelectWindow(Activity context) {
+    public AccountPeriodSelectWindow(Activity context) {
         super(context);
         initMap();
         View rootView = View.inflate(context, R.layout.window_type_term_select, null);
@@ -114,7 +114,7 @@ public class AccountPeriodSelectWindow extends BaseShadowPopupWindow implements 
         rootView.findViewById(R.id.txt_confirm).setOnClickListener(this);
     }
 
-    void setSelectListener(DateSelectListener selectListener) {
+    public void setSelectListener(DateSelectListener selectListener) {
         this.mSelectListener = selectListener;
     }
 

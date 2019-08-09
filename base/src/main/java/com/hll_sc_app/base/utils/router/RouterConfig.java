@@ -64,6 +64,18 @@ public class RouterConfig {
      */
     public static final String WAREHOUSE_START = "/activity/warehouse/start";
     /**
+     * 支付管理
+     */
+    public static final String PAY_MANAGE = "/activity/payManage";
+    /**
+     * 支付管理-账期
+     */
+    public static final String PAY_MANAGE_ACCOUNT = "/activity/payManage/account";
+    /**
+     * 支付管理-支付方式选择
+     */
+    public static final String PAY_MANAGE_METHOD = "/activity/payManage/method";
+    /**
      * 代仓管理-我是货主默认介绍页面
      */
     public static final String WAREHOUSE_INTRODUCE = "/activity/warehouse/introduce";

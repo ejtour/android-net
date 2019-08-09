@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/base_bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="支付管理"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="在线支付"
+                android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+            <TextView
+                android:id="@+id/txt_Online"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableRight="@drawable/ic_arrow_blue"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="前往注册"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
+                android:visibility="gone"/>
+
+            <com.kyleduo.switchbutton.SwitchButton
+                android:id="@+id/switch_3"
+                android:layout_width="35dp"
+                android:layout_height="21dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                app:kswBackDrawable="@drawable/switch_track"
+                app:kswThumbDrawable="@drawable/base_thumb"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/color_fafafa"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/txt_payOnline_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:text="在线支付设置"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"/>
+
+                <TextView
+                    android:id="@+id/txt_payOnline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/txt_payOnline_title"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical|right"
+                    android:hint="点击设置"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    android:textColorHint="@color/color_aeaeae"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="货到付款"
+                android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+            <com.kyleduo.switchbutton.SwitchButton
+                android:id="@+id/switch_1"
+                android:layout_width="35dp"
+                android:layout_height="21dp"
+                android:layout_alignParentRight="true"
+                app:kswBackDrawable="@drawable/switch_track"
+                app:kswThumbDrawable="@drawable/base_thumb"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/base_bg_shadow_top_white_bar"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@color/color_fafafa"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/txt_payCash_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:text="货到付款设置"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"/>
+
+                <TextView
+                    android:id="@+id/txt_payCash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/txt_payCash_title"
+                    android:drawableRight="@drawable/ic_arrow_gray"
+                    android:drawablePadding="5dp"
+                    android:gravity="center_vertical|right"
+                    android:hint="点击设置"
+                    android:singleLine="true"
+                    android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                    android:textColorHint="@color/color_aeaeae"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/base_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账期支付"
+            android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/switch_2"
+            android:layout_width="35dp"
+            android:layout_height="21dp"
+            android:layout_alignParentRight="true"
+            app:kswBackDrawable="@drawable/switch_track"
+            app:kswThumbDrawable="@drawable/base_thumb"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/color_fafafa"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/txt_payTermType_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:text="默认账期日"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666"/>
+
+            <TextView
+                android:id="@+id/txt_payTermType"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/txt_payTermType_title"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical|right"
+                android:hint="点击设置"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                android:textColorHint="@color/color_aeaeae"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/base_white"
+        android:lineSpacingExtra="5dp"
+        android:padding="10dp"
+        android:text="注意事项：\n \n*只有合作采购商才可以使用账期支付，合作采购商需要使用账期支付时，需要联系供应商并在合作采购商管理中设置该支付方式。 \n \n *启用在线支付时，您需要先开通爱农支付账号；如您已有爱农支付账号，则需要先进行授权才能开启在线支付。 \n \n * 启用在线支付时，您需要承担在线支付产生的手续费，相关的手续费用会直接在您的交易金额中扣除。  \n \n *若您的店铺允许非合作采购商下单，则采购商会根据您启用的货到付款或在线支付方式其中的一种进行支付，未启用的支付方式用户不能选择。"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"/>
+
+</LinearLayout>
