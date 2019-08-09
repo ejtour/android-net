@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:layout_marginBottom="5dp"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            style="@style/BtnClose"/>
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"
+            tools:text="在线支付设置"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_9"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/rl_title"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_pay_type_9"
+            android:drawablePadding="10dp"
+            android:text="刷卡"
+            android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+        <ImageView
+            android:id="@+id/img_9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bg_pay_selector_check_box"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_10"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/rl_9"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_pay_type_10"
+            android:drawablePadding="10dp"
+            android:text="现金"
+            android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+        <ImageView
+            android:id="@+id/img_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bg_pay_selector_check_box"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/rl_10"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_pay_type_1"
+            android:drawablePadding="10dp"
+            android:text="支付宝扫码支付"
+            android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+        <ImageView
+            android:id="@+id/img_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bg_pay_selector_check_box"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/rl_1"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_pay_type_2"
+            android:drawablePadding="10dp"
+            android:text="微信扫码支付"
+            android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+        <ImageView
+            android:id="@+id/img_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bg_pay_selector_check_box"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_3"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/rl_2"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_pay_type_3"
+            android:drawablePadding="10dp"
+            android:text="支付宝支付"
+            android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+        <ImageView
+            android:id="@+id/img_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bg_pay_selector_check_box"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_4"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/rl_3"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_pay_type_4"
+            android:drawablePadding="10dp"
+            android:text="微信支付"
+            android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+        <ImageView
+            android:id="@+id/img_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bg_pay_selector_check_box"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_13"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/rl_4"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_pay_type_13"
+            android:drawablePadding="10dp"
+            android:text="银行卡快捷支付"
+            android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+        <ImageView
+            android:id="@+id/img_13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bg_pay_selector_check_box"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_14"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/rl_13"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_pay_type_14"
+            android:drawablePadding="10dp"
+            android:text="余额支付"
+            android:textAppearance="@style/TextAppearance.City22.Middle"/>
+
+        <ImageView
+            android:id="@+id/img_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/bg_pay_selector_check_box"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/base_bg_shadow_bottom_white_bar">
+
+        <TextView
+            android:id="@+id/txt_save"
+            style="@style/BtnOrderAction.PrimarySolid"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="保存"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

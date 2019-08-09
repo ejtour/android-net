@@ -110,7 +110,7 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
         mPresenter.start();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_Online, R.id.ll_2})
+    @OnClick({R.id.img_close, R.id.txt_Online, R.id.ll_2, R.id.ll_1})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.img_close) {
@@ -119,6 +119,8 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
             RouterUtil.goToActivity(RouterConfig.WALLET);
         } else if (id == R.id.ll_2) {
             PayManageAccountActivity.start(mBean.getPayTermType(), mBean.getPayTerm(), mBean.getSettleDate());
+        } else if (id == R.id.ll_1) {
+            RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_METHOD, false, mBean.getCodPayMethod());
         }
     }
 
