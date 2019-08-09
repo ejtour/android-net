@@ -21,6 +21,7 @@ import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettl
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -67,6 +68,8 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
     TextView mTxtPayOnline;
     @BindView(R.id.txt_payCash)
     TextView mTxtPayCash;
+    @BindView(R.id.txt_Online)
+    TextView mTxtOnline;
 
     private SettlementBean mBean;
     private PayManagePresenter mPresenter;
@@ -106,21 +109,40 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
         mPresenter.start();
     }
 
-    @OnClick({R.id.img_close})
+    @OnClick({R.id.img_close, R.id.txt_Online})
     public void onViewClicked(View view) {
-        finish();
+        int id = view.getId();
+        if (id == R.id.img_close) {
+            finish();
+        } else if (id == R.id.txt_Online) {
+            RouterUtil.goToActivity(RouterConfig.WALLET);
+        }
     }
 
     @Override
     public void showPayList(SettlementBean bean) {
         this.mBean = bean;
+        showButton(bean);
+    }
+
+    private void showButton(SettlementBean bean) {
         mSwitchOnline.setCheckedNoEvent(false);
         mSwitchCash.setCheckedNoEvent(false);
         mSwitchAccount.setCheckedNoEvent(false);
         ButterKnife.apply(mViews, (view, index) -> view.setVisibility(View.GONE));
+        if (bean == null) {
+            return;
+        }
         mSwitchCash.setCheckedNoEvent(TextUtils.equals("1", bean.getCashPayment()));
         mSwitchAccount.setCheckedNoEvent(TextUtils.equals("1", bean.getAccountPayment()));
-        mSwitchOnline.setCheckedNoEvent(TextUtils.equals("1", bean.getOnlinePayment()));
+        if (TextUtils.equals(bean.getOnlinePayment(), "-1")) {
+            mTxtOnline.setVisibility(View.VISIBLE);
+            mSwitchOnline.setVisibility(View.GONE);
+        } else {
+            mTxtOnline.setVisibility(View.GONE);
+            mSwitchOnline.setVisibility(View.VISIBLE);
+            mSwitchOnline.setCheckedNoEvent(TextUtils.equals("1", bean.getOnlinePayment()));
+        }
         showOnlinePayment(bean.getOnlinePayMethod());
         showCashPayment(bean.getCodPayMethod());
         showAccountPayment(bean);
@@ -203,6 +225,11 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
     }
 
     @Override
+    public void showPayList() {
+        showButton(mBean);
+    }
+
+    @Override
     public void editSuccess() {
         showToast("支付方式修改成功");
         mPresenter.start();
@@ -215,5 +242,15 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
             showToast("在线支付、货到付款至少保留一个支付方式");
             return;
         }
+        String payType = null;
+        int i = buttonView.getId();
+        if (i == R.id.switch_1) {
+            payType = "1";
+        } else if (i == R.id.switch_2) {
+            payType = "2";
+        } else if (i == R.id.switch_3) {
+            payType = "3";
+        }
+        mPresenter.editSettlement(payType, buttonView.isChecked() ? "1" : "0");
     }
 }

@@ -12,6 +12,8 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -47,24 +49,25 @@ public class PayManagePresenter implements PayManageContract.IDeliveryTypeSetPre
     }
 
     @Override
-    public void editDeliveryType(String actionType, String deliveryWay) {
-//        BaseMapReq req = BaseMapReq.newBuilder()
-//            .put("actionType", actionType)
-//            .put("deliveryWay", deliveryWay)
-//            .put("groupID", UserConfig.getGroupID())
-//            .create();
-//        DeliveryManageService.INSTANCE
-//            .editDeliveryType(req)
-//            .compose(ApiScheduler.getObservableScheduler())
-//            .map(new Precondition<>())
-//            .flatMap((Function<Object, ObservableSource<DeliveryBean>>) o -> {
-//                mView.showToast("配送方式修改成功");
-//                return getSettlementListObservable();
-//            })
-//            .doOnSubscribe(disposable -> mView.showLoading())
-//            .doFinally(() -> mView.hideLoading())
-//            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-//            .subscribe(new DeliveryBeanBaseCallback());
+    public void editSettlement(String payType, String status) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("actionType", "1")
+            .put("payType", payType)
+            .put("status", status)
+            .put("supplierID", UserConfig.getGroupID())
+            .create();
+        CooperationPurchaserService.INSTANCE
+            .editSettlement(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .flatMap((Function<Object, ObservableSource<SettlementBean>>) o -> {
+                mView.showToast("支付方式修改成功");
+                return getSettlementListObservable();
+            })
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new SettlementBeanBaseCallback());
     }
 
     private Observable<SettlementBean> getSettlementListObservable() {
@@ -86,6 +89,8 @@ public class PayManagePresenter implements PayManageContract.IDeliveryTypeSetPre
         @Override
         public void onFailure(UseCaseException e) {
             mView.showError(e);
+            // 失败处理
+            mView.showPayList();
         }
     }
 }

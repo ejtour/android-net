@@ -21,6 +21,11 @@ public interface PayManageContract {
         void showPayList(SettlementBean bean);
 
         /**
+         * 展示选中的支付方式
+         */
+        void showPayList();
+
+        /**
          * 修改成功
          */
         void editSuccess();
@@ -35,9 +40,9 @@ public interface PayManageContract {
         /**
          * 修改配送方式
          *
-         * @param actionType  操作类型（insert-添加配送方式，delete-删除配送方式
-         * @param deliveryWay 配送方式 1-自有物流配送 2-上门自提 3-第三方配送公司
+         * @param payType 支付方式	0-在线支付,1-货到付款,2-账期支付
+         * @param status  开启状态 0-停用,1-启用
          */
-        void editDeliveryType(String actionType, String deliveryWay);
+        void editSettlement(String payType, String status);
     }
 }

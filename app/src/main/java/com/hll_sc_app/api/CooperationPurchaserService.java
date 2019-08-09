@@ -114,6 +114,16 @@ public interface CooperationPurchaserService {
     @Headers("pv:101038")
     Observable<BaseResp<SettlementBean>> querySettlementList(@Body BaseMapReq req);
 
+    /**
+     * 修改支付方式
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101039")
+    Observable<BaseResp<SettlementBean>> editSettlement(@Body BaseMapReq req);
+
 
     /**
      * 修改合作关系支付相关设置
