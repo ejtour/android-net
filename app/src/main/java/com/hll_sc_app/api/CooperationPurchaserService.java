@@ -122,7 +122,7 @@ public interface CooperationPurchaserService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:101039")
-    Observable<BaseResp<SettlementBean>> editSettlement(@Body BaseMapReq req);
+    Observable<BaseResp<Object>> editSettlement(@Body BaseMapReq req);
 
 
     /**

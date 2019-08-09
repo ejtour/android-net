@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
+import com.hll_sc_app.app.paymanage.account.PayManageAccountActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -109,13 +110,15 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
         mPresenter.start();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_Online})
+    @OnClick({R.id.img_close, R.id.txt_Online, R.id.ll_2})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.img_close) {
             finish();
         } else if (id == R.id.txt_Online) {
             RouterUtil.goToActivity(RouterConfig.WALLET);
+        } else if (id == R.id.ll_2) {
+            PayManageAccountActivity.start(mBean.getPayTermType(), mBean.getPayTerm(), mBean.getSettleDate());
         }
     }
 
