@@ -2,7 +2,7 @@ package com.hll_sc_app.app.paymanage;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.delivery.DeliveryBean;
+import com.hll_sc_app.bean.cooperation.SettlementBean;
 
 /**
  * 支付管理
@@ -14,11 +14,11 @@ public interface PayManageContract {
 
     interface IDeliveryTypeSetView extends ILoadView {
         /**
-         * 展示选中的配送方式
+         * 展示选中的支付方式
          *
-         * @param bean 配送方式
+         * @param bean 支付方式
          */
-        void showDeliveryList(DeliveryBean bean);
+        void showPayList(SettlementBean bean);
 
         /**
          * 修改成功
@@ -28,9 +28,9 @@ public interface PayManageContract {
 
     interface IDeliveryTypeSetPresenter extends IPresenter<IDeliveryTypeSetView> {
         /**
-         * 查询配送方式
+         * 查询支付方式
          */
-        void queryDeliveryList();
+        void querySettlementList();
 
         /**
          * 修改配送方式

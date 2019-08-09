@@ -92,7 +92,7 @@
                 <TextView
                     android:id="@+id/txt_payOnline"
                     android:layout_width="wrap_content"
-                    android:layout_height="18dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/txt_payOnline_title"
@@ -118,7 +118,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@drawable/base_bg_shadow_top_white_bar"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
@@ -170,7 +169,7 @@
                 <TextView
                     android:id="@+id/txt_payCash"
                     android:layout_width="wrap_content"
-                    android:layout_height="18dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/txt_payCash_title"
@@ -242,7 +241,7 @@
             <TextView
                 android:id="@+id/txt_payTermType"
                 android:layout_width="wrap_content"
-                android:layout_height="18dp"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/txt_payTermType_title"
