@@ -8,13 +8,13 @@ import java.util.List;
  */
 
 public class BillActionReq {
-    private List<Integer> settleBillIDs;
+    private List<String> settleBillIDs;
 
-    public List<Integer> getSettleBillIDs() {
+    public List<String> getSettleBillIDs() {
         return settleBillIDs;
     }
 
-    public void setSettleBillIDs(List<Integer> settleBillIDs) {
+    public void setSettleBillIDs(List<String> settleBillIDs) {
         this.settleBillIDs = settleBillIDs;
     }
 }

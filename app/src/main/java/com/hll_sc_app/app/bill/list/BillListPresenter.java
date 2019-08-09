@@ -38,7 +38,7 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
     }
 
     @Override
-    public void doAction(List<Integer> ids) {
+    public void doAction(List<String> ids) {
         Bill.billAction(ids, new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
@@ -90,7 +90,7 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
                 new SimpleObserver<BillListResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(BillListResp billListResp) {
-                        mView.setBillList(billListResp.getRecords(), mPageNum > 1);
+                        mView.updateBillListResp(billListResp, mPageNum > 1);
                         if (CommonUtils.isEmpty(billListResp.getRecords())) return;
                         mPageNum++;
                     }

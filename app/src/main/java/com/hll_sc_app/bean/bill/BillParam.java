@@ -39,11 +39,12 @@ public class BillParam {
         this.endTime = endTime;
     }
 
+    @BillStatus
     public int getSettlementStatus() {
         return settlementStatus;
     }
 
-    public void setSettlementStatus(int settlementStatus) {
+    public void setSettlementStatus(@BillStatus int settlementStatus) {
         this.settlementStatus = settlementStatus;
     }
 

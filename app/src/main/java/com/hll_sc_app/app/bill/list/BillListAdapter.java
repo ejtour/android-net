@@ -1,6 +1,8 @@
 package com.hll_sc_app.app.bill.list;
 
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -11,6 +13,8 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 
+import java.util.List;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/8/7
@@ -18,16 +22,19 @@ import com.hll_sc_app.utils.Constants;
 
 public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> {
     private static final String[] WEEK_ARRAY = {"每周日", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六"};
+    private final CompoundButton.OnCheckedChangeListener mListener;
 
-    BillListAdapter() {
+    BillListAdapter(CompoundButton.OnCheckedChangeListener listener) {
         super(R.layout.item_bill_list);
+        mListener = listener;
     }
 
     @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
         helper.addOnClickListener(R.id.ibl_confirm)
-                .addOnClickListener(R.id.ibl_view_detail);
+                .addOnClickListener(R.id.ibl_view_detail)
+                .setOnCheckedChangeListener(R.id.ibl_check_box, mListener);
         return helper;
     }
 
@@ -46,7 +53,7 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
         int payDate = Integer.parseInt(flag.substring(2));
         if ("1".equals(payFlag)) builder.append("周结,").append(WEEK_ARRAY[payDate]);
         else if ("2".equals(payFlag)) builder.append("月结,每月").append(payDate).append("号");
-
+        helper.getView(R.id.ibl_check_box).setTag(item);
         ((GlideImageView) helper.setText(R.id.ibl_shop_name, item.getShopName())
                 .setText(R.id.ibl_group_name, item.getGroupName())
                 .setText(R.id.ibl_time, CalendarUtils.getDateFormatString(item.getBillCreateTime(),
@@ -58,5 +65,32 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
                 .setGone(R.id.ibl_confirm, item.getSettlementStatus() == 1)
                 .setGone(R.id.ibl_check_box, item.getSettlementStatus() == 1)
                 .getView(R.id.ibl_icon)).setImageURL(item.getGroupLogoUrl());
+    }
+
+    @Override
+    public void setNewData(@Nullable List<BillBean> data) {
+        preProcess(data);
+        super.setNewData(data);
+    }
+
+    private void preProcess(@Nullable List<BillBean> data) {
+        if (!CommonUtils.isEmpty(mData) && !CommonUtils.isEmpty(data)) {
+            for (BillBean resp : data) {
+                for (BillBean BillBean : mData) {
+                    if (resp.getId().equals(BillBean.getId())) {
+                        resp.setSelected(BillBean.isSelected());
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    private int getItemPosition(BillBean item) {
+        return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
+    }
+    
+    void removeData(BillBean data) {
+        remove(getItemPosition(data));
     }
 }

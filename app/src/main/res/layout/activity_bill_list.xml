@@ -69,7 +69,7 @@
         android:layout_marginRight="5dp"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="全部采购商"
+        android:text="采购商"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser_btn"
@@ -82,6 +82,7 @@
         android:id="@+id/abl_purchaser_arrow"
         android:layout_width="8dp"
         android:layout_height="4dp"
+        android:layout_marginRight="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser"
         app:layout_constraintEnd_toEndOf="@+id/abl_purchaser_btn"
         app:layout_constraintStart_toEndOf="@+id/abl_purchaser"
@@ -118,6 +119,7 @@
         android:id="@+id/abl_date_arrow"
         android:layout_width="8dp"
         android:layout_height="4dp"
+        android:layout_marginRight="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/abl_date"
         app:layout_constraintEnd_toEndOf="@+id/abl_date_btn"
         app:layout_constraintStart_toEndOf="@+id/abl_date"
@@ -151,6 +153,7 @@
         android:id="@+id/abl_type_arrow"
         android:layout_width="8dp"
         android:layout_height="4dp"
+        android:layout_marginRight="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/abl_type"
         app:layout_constraintEnd_toEndOf="@+id/abl_type_btn"
         app:layout_constraintStart_toEndOf="@+id/abl_type"
@@ -183,6 +186,7 @@
         app:layout_constraintTop_toTopOf="@id/abl_bottom_bg" />
 
     <TextView
+        android:id="@+id/abl_commit"
         style="@style/BtnOrderAction.PrimarySolid"
         android:enabled="false"
         android:text="确认结算(0)"
@@ -207,6 +211,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintBottom_toBottomOf="@id/abl_bottom_bg"
         app:layout_constraintEnd_toEndOf="@id/abl_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/abl_bottom_bg"

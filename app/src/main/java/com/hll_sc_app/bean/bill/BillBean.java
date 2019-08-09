@@ -37,6 +37,7 @@ public class BillBean {
     private String pdfUrl;
     private double totalRefundAmount;
     private String paymentSettleDay;
+    private boolean isSelected;
     private List<BillDetailsBean> records;
 
     public String getActionTime() {
@@ -277,5 +278,13 @@ public class BillBean {
 
     public void setRecords(List<BillDetailsBean> records) {
         this.records = records;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
