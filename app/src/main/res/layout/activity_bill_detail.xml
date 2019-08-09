@@ -30,15 +30,6 @@
         app:layout_constraintEnd_toEndOf="@id/abd_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/abd_bottom_bg" />
 
-    <TextView
-        android:id="@+id/abd_view_pdf"
-        style="@style/BtnAfterSalesAction.PrimaryStroke"
-        android:text="查看PDF"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/abd_bottom_bg"
-        app:layout_constraintEnd_toStartOf="@id/abd_action_btn"
-        app:layout_constraintTop_toTopOf="@id/abd_bottom_bg" />
-
     <android.support.constraint.Group
         android:id="@+id/abd_action_group"
         android:layout_width="wrap_content"

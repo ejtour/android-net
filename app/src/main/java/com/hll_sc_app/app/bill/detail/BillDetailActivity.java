@@ -100,11 +100,6 @@ public class BillDetailActivity extends BaseLoadActivity implements IBillDetailC
         mPresenter.doAction();
     }
 
-    /*@OnClick(R.id.abd_view_pdf)
-    public void viewPdf() {
-        WebActivity.start("对账单PDF", "file:///android_asset/minified/web/viewer.html?file=http://res.hualala.com/" + mCurBean.getPdfUrl());
-    }*/
-
     @Override
     public void updateData(BillBean bean) {
         mCurBean = bean;
