@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@android:color/white"
+    tools:paddingBottom="@dimen/dp_10"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/bdh_icon"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp_10"
+        app:base_RoundingRadius="2"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_shop_placeholder" />
+
+    <TextView
+        android:id="@+id/bdh_shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="2dp"
+        android:maxWidth="200dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintStart_toEndOf="@id/bdh_icon"
+        app:layout_constraintTop_toTopOf="@id/bdh_icon"
+        tools:text="采购商门店名称" />
+
+    <TextView
+        android:id="@+id/bdh_warehouse_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="代仓"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/bdh_shop_name"
+        app:layout_constraintEnd_toStartOf="@+id/bdh_status"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/bdh_shop_name"
+        app:layout_constraintTop_toTopOf="@+id/bdh_shop_name" />
+
+    <TextView
+        android:id="@+id/bdh_group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/bdh_icon"
+        app:layout_constraintStart_toStartOf="@id/bdh_shop_name"
+        tools:text="采购商集团名称" />
+
+    <TextView
+        android:id="@+id/bdh_bill_cycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintStart_toStartOf="@id/bdh_shop_name"
+        app:layout_constraintTop_toBottomOf="@id/bdh_group_name"
+        tools:text="账单周期：2019/01/01 - 2019/01/30" />
+
+    <TextView
+        android:id="@+id/bdh_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/bdh_shop_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bdh_shop_name"
+        tools:text="未结算" />
+
+    <TextView
+        android:id="@+id/bdh_bill_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/bdh_group_name"
+        app:layout_constraintEnd_toEndOf="@id/bdh_status"
+        tools:text="账单日：2019/01/30" />
+
+    <TextView
+        android:id="@+id/bdh_settlement_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/bdh_bill_cycle"
+        app:layout_constraintEnd_toEndOf="@id/bdh_status"
+        tools:text="结算日：2019/02/04" />
+
+    <View
+        android:id="@+id/bdh_data_bg"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/bg_express_info_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bdh_bill_cycle" />
+
+    <View
+        android:id="@+id/bdh_line1"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/bdh_data_bg"
+        app:layout_constraintEnd_toStartOf="@id/bdh_line2"
+        app:layout_constraintStart_toStartOf="@id/bdh_data_bg"
+        app:layout_constraintTop_toTopOf="@id/bdh_data_bg" />
+
+    <View
+        android:id="@+id/bdh_line2"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/bdh_data_bg"
+        app:layout_constraintEnd_toEndOf="@id/bdh_data_bg"
+        app:layout_constraintStart_toEndOf="@id/bdh_line1"
+        app:layout_constraintTop_toTopOf="@id/bdh_data_bg" />
+
+    <TextView
+        android:id="@+id/bdh_total_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/bdh_line1"
+        app:layout_constraintStart_toStartOf="@id/bdh_data_bg"
+        app:layout_constraintTop_toTopOf="@id/bdh_data_bg"
+        tools:text="¥182,333.00" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="应收金额"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/bdh_total_amount"
+        app:layout_constraintStart_toStartOf="@id/bdh_total_amount"
+        app:layout_constraintTop_toBottomOf="@id/bdh_total_amount" />
+
+    <TextView
+        android:id="@+id/bdh_income"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/bdh_line2"
+        app:layout_constraintStart_toEndOf="@id/bdh_line1"
+        app:layout_constraintTop_toTopOf="@id/bdh_data_bg"
+        tools:text="¥182,666.00" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="收入"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/bdh_income"
+        app:layout_constraintStart_toStartOf="@id/bdh_income"
+        app:layout_constraintTop_toBottomOf="@id/bdh_income" />
+
+    <TextView
+        android:id="@+id/bdh_refund"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="@id/bdh_data_bg"
+        app:layout_constraintStart_toEndOf="@id/bdh_line2"
+        app:layout_constraintTop_toTopOf="@id/bdh_data_bg"
+        tools:text="¥333.00" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="退款"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/bdh_refund"
+        app:layout_constraintStart_toStartOf="@id/bdh_refund"
+        app:layout_constraintTop_toBottomOf="@id/bdh_refund" />
+</merge>

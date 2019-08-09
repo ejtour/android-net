@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/abd_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="对账单详情" />
+
+    <View
+        android:id="@+id/abd_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/abd_action_btn"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:text="确认结算"
+        app:layout_constraintBottom_toBottomOf="@id/abd_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/abd_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/abd_bottom_bg" />
+
+    <TextView
+        android:id="@+id/abd_view_pdf"
+        style="@style/BtnAfterSalesAction.PrimaryStroke"
+        android:text="查看PDF"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/abd_bottom_bg"
+        app:layout_constraintEnd_toStartOf="@id/abd_action_btn"
+        app:layout_constraintTop_toTopOf="@id/abd_bottom_bg" />
+
+    <android.support.constraint.Group
+        android:id="@+id/abd_action_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="abd_bottom_bg,abd_action_btn" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/abd_list_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/abd_bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/abd_title_bar" />
+</android.support.constraint.ConstraintLayout>

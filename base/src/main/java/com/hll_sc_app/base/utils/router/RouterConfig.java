@@ -675,6 +675,6 @@ public class RouterConfig {
     /**
      * 对账单详情
      */
-    public static final String STATEMENT_DETAIL = "/activity/bill/detail";
+    public static final String BILL_DETAIL = "/activity/bill/detail";
 }
 

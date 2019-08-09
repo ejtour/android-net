@@ -9,9 +9,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.bill.BillBean;
-import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.bean.bill.BillStatus;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 
 import java.util.List;
 
@@ -43,8 +43,8 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
         StringBuilder builder = new StringBuilder();
         if (item.getIsConfirm() == 1) builder.append("未确认/");
         else if (item.getIsConfirm() == 2) builder.append("已确认/");
-        if (item.getSettlementStatus() == 1) builder.append("未结算");
-        else if (item.getSettlementStatus() == 2) builder.append("已结算");
+        if (item.getSettlementStatus() == BillStatus.NOT_SETTLE) builder.append("未结算");
+        else if (item.getSettlementStatus() == BillStatus.SETTLED) builder.append("已结算");
         String status = builder.toString();
 
         builder.delete(0, status.length());
@@ -56,15 +56,14 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
         helper.getView(R.id.ibl_check_box).setTag(item);
         ((GlideImageView) helper.setText(R.id.ibl_shop_name, item.getShopName())
                 .setText(R.id.ibl_group_name, item.getGroupName())
-                .setText(R.id.ibl_time, CalendarUtils.getDateFormatString(item.getBillCreateTime(),
-                        Constants.UNSIGNED_YYYY_MM_DD, "yy/MM/dd"))
+                .setText(R.id.ibl_time, DateUtil.getReadableTime(item.getBillCreateTime(), "yy/MM/dd"))
                 .setText(R.id.ibl_status, status)
                 .setText(R.id.ibl_bill_date, builder)
                 .setText(R.id.ibl_bill_num, CommonUtils.formatNumber(item.getBillNum()))
                 .setText(R.id.ibl_bill_amount, String.format("¥%s", CommonUtils.formatMoney(item.getTotalAmount())))
-                .setGone(R.id.ibl_confirm, item.getSettlementStatus() == 1)
+                .setGone(R.id.ibl_confirm, item.getSettlementStatus() == BillStatus.NOT_SETTLE)
                 .setGone(R.id.ibl_warehouse_tag, item.getBillStatementFlag() == 1)
-                .setGone(R.id.ibl_check_box, item.getSettlementStatus() == 1)
+                .setGone(R.id.ibl_check_box, item.getSettlementStatus() == BillStatus.NOT_SETTLE)
                 .getView(R.id.ibl_icon)).setImageURL(item.getGroupLogoUrl());
     }
 

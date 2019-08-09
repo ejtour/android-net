@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.bill.list;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.bill.detail.BillDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -143,21 +145,18 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
                 mPresenter.refresh();
             }
         });
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                mCurBean = mAdapter.getItem(position);
-                if (mCurBean == null) return;
-                switch (view.getId()) {
-                    case R.id.ibl_confirm:
-                        mPresenter.doAction(Collections.singletonList(mCurBean.getId()));
-                        break;
-                    case R.id.ibl_view_detail:
-
-                        break;
-                    default:
-                        break;
-                }
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mCurBean = mAdapter.getItem(position);
+            if (mCurBean == null) return;
+            switch (view.getId()) {
+                case R.id.ibl_confirm:
+                    mPresenter.doAction(Collections.singletonList(mCurBean.getId()));
+                    break;
+                case R.id.ibl_view_detail:
+                    BillDetailActivity.start(this, mCurBean);
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -407,6 +406,14 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         if (e.getLevel() == UseCaseException.Level.NET) {
             initEmptyView();
             mEmptyView.setNetError();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == BillDetailActivity.REQ_CODE) {
+            actionSuccess();
         }
     }
 

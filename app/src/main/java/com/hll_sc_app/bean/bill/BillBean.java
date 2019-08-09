@@ -1,5 +1,9 @@
 package com.hll_sc_app.bean.bill;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +11,7 @@ import java.util.List;
  * @since 2019/8/6
  */
 
-public class BillBean {
+public class BillBean implements Parcelable {
     private String actionTime;
     private String shopName;
     private int billNum;
@@ -296,4 +300,96 @@ public class BillBean {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.actionTime);
+        dest.writeString(this.shopName);
+        dest.writeInt(this.billNum);
+        dest.writeInt(this.billStatementFlag);
+        dest.writeString(this.billCreateTime);
+        dest.writeString(this.supplyShopName);
+        dest.writeString(this.createby);
+        dest.writeString(this.groupLogoUrl);
+        dest.writeString(this.purchaserID);
+        dest.writeInt(this.isConfirm);
+        dest.writeString(this.paymentDay);
+        dest.writeInt(this.settlementStatus);
+        dest.writeInt(this.action);
+        dest.writeString(this.id);
+        dest.writeString(this.startPaymentDay);
+        dest.writeString(this.endPaymentDay);
+        dest.writeString(this.billStatementNo);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.supplyShopID);
+        dest.writeString(this.groupID);
+        dest.writeString(this.purchaserName);
+        dest.writeString(this.accountDayFlag);
+        dest.writeDouble(this.totalAmount);
+        dest.writeString(this.groupName);
+        dest.writeString(this.createTime);
+        dest.writeString(this.shopID);
+        dest.writeDouble(this.totalIncomeAmount);
+        dest.writeString(this.pdfUrl);
+        dest.writeDouble(this.totalRefundAmount);
+        dest.writeString(this.paymentSettleDay);
+        dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
+        dest.writeList(this.records);
+    }
+
+    public BillBean() {
+    }
+
+    protected BillBean(Parcel in) {
+        this.actionTime = in.readString();
+        this.shopName = in.readString();
+        this.billNum = in.readInt();
+        this.billStatementFlag = in.readInt();
+        this.billCreateTime = in.readString();
+        this.supplyShopName = in.readString();
+        this.createby = in.readString();
+        this.groupLogoUrl = in.readString();
+        this.purchaserID = in.readString();
+        this.isConfirm = in.readInt();
+        this.paymentDay = in.readString();
+        this.settlementStatus = in.readInt();
+        this.action = in.readInt();
+        this.id = in.readString();
+        this.startPaymentDay = in.readString();
+        this.endPaymentDay = in.readString();
+        this.billStatementNo = in.readString();
+        this.actionBy = in.readString();
+        this.supplyShopID = in.readString();
+        this.groupID = in.readString();
+        this.purchaserName = in.readString();
+        this.accountDayFlag = in.readString();
+        this.totalAmount = in.readDouble();
+        this.groupName = in.readString();
+        this.createTime = in.readString();
+        this.shopID = in.readString();
+        this.totalIncomeAmount = in.readDouble();
+        this.pdfUrl = in.readString();
+        this.totalRefundAmount = in.readDouble();
+        this.paymentSettleDay = in.readString();
+        this.isSelected = in.readByte() != 0;
+        this.records = new ArrayList<BillDetailsBean>();
+        in.readList(this.records, BillDetailsBean.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<BillBean> CREATOR = new Parcelable.Creator<BillBean>() {
+        @Override
+        public BillBean createFromParcel(Parcel source) {
+            return new BillBean(source);
+        }
+
+        @Override
+        public BillBean[] newArray(int size) {
+            return new BillBean[size];
+        }
+    };
 }

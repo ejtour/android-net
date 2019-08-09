@@ -609,6 +609,9 @@
             android:name=".app.bill.list.BillListActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".app.bill.detail.BillDetailActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
