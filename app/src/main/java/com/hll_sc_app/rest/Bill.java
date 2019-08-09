@@ -7,6 +7,7 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.bill.BillActionReq;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillListResp;
@@ -29,7 +30,6 @@ public class Bill {
      * @param pageNum          页码
      * @param startTime        开始时间 yyyyMMdd
      * @param endTime          结束时间 yyyyMMdd
-     * @param salesmanID       销售员ID 销售CRM必传
      * @param groupID          供应商ID 供应商与销售CRM必传
      * @param shopIDs          采购商店铺ID 多个用逗号连接
      * @param settlementStatus 结算状态 1-未结算 2-已结算,3-部分已结算
@@ -37,11 +37,11 @@ public class Bill {
     public static void getBillList(int pageNum,
                                    String startTime,
                                    String endTime,
-                                   String salesmanID,
                                    String groupID,
                                    String shopIDs,
                                    int settlementStatus,
                                    SimpleObserver<BillListResp> observer) {
+        String salesmanID = UserConfig.getSalesmanID();
         BillService.INSTANCE
                 .getBillList(BaseMapReq.newBuilder()
                         .put("flg", TextUtils.isEmpty(salesmanID) ? "1" : "3") // 标识必传：1-供应商，2-采购商，3-销售CRM
@@ -49,6 +49,7 @@ public class Bill {
                         .put("endTime", endTime)
                         .put("groupID", groupID)
                         .put("shopIDs", shopIDs)
+                        .put("salesmanID", salesmanID)
                         .put("settlementStatus", String.valueOf(settlementStatus))
                         .put("pageSize", "20")
                         .put("pageNum", String.valueOf(pageNum))
@@ -97,7 +98,6 @@ public class Bill {
      * @param startTime        开始时间 yyyyMMdd
      * @param endTime          结束时间 yyyyMMdd
      * @param groupID          供应商ID
-     * @param salesmanID       销售员ID
      * @param shopIDs          门店ID采购商店铺ID 多个用逗号连接
      * @param settlementStatus 订单结算状态 1-未结算 2-已结算
      */
@@ -106,10 +106,10 @@ public class Bill {
                                    String startTime,
                                    String endTime,
                                    String groupID,
-                                   String salesmanID,
                                    String shopIDs,
                                    int settlementStatus,
                                    SimpleObserver<ExportResp> observer) {
+        String salesmanID = UserConfig.getSalesmanID();
         BillService.INSTANCE
                 .exportEmail(BaseMapReq.newBuilder()
                         .put("sign", String.valueOf(sign))
