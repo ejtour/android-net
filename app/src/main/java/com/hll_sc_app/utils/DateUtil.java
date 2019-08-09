@@ -38,6 +38,13 @@ public class DateUtil {
      * String -> Date -> String
      */
     public static String getReadableTime(String dateString) {
+        return getReadableTime(dateString, null);
+    }
+
+    /**
+     * String -> Date -> String
+     */
+    public static String getReadableTime(String dateString, String format) {
         if (TextUtils.isEmpty(dateString)) return "";
         String[] array = null;
         if (dateString.length() <= 4)
@@ -56,138 +63,152 @@ public class DateUtil {
             array = new String[]{Constants.UNSIGNED_YYYY_MM_DD_HH_MM_SS_SSS, Constants.SIGNED_YYYY_MM_DD_HH_MM_SS_SSS};
         if (array == null)
             throw new IllegalArgumentException("The length of dateString can't greater than 17");
-        return CalendarUtils.getDateFormatString(dateString, array[0], array[1]);
+        return CalendarUtils.getDateFormatString(dateString, array[0], TextUtils.isEmpty(format) ? array[1] : format);
     }
-
 
     /**
      * 获取周日时间
+     *
      * @param week 本周 0 上周 -1 下周 1 以此类推
      * @return
      * @throws ParseException
      */
-    public static Long getWeekLastDay(int week,Long date){
+    public static Long getWeekLastDay(int week, Long date) {
         SimpleDateFormat sdf = new SimpleDateFormat(Constants.UNSIGNED_YYYY_MM_DD);
         Calendar calendar = new GregorianCalendar();
-        try{
+        try {
             calendar.setTime(sdf.parse(date.toString()));
-        }catch(Exception e){}
-        if(calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY){
-            calendar.add(Calendar.WEEK_OF_YEAR,1);
+        } catch (Exception e) {
         }
-        if(week != 0){
-            calendar.add(Calendar.WEEK_OF_YEAR,week);
+        if (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+            calendar.add(Calendar.WEEK_OF_YEAR, 1);
         }
-        calendar.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
+        if (week != 0) {
+            calendar.add(Calendar.WEEK_OF_YEAR, week);
+        }
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
         SimpleDateFormat fmt = new SimpleDateFormat(Constants.UNSIGNED_YYYY_MM_DD);
         return Long.parseLong(fmt.format(calendar.getTime()));
     }
 
     /**
      * 获取周一时间
+     *
      * @param week 本周 0 上周 -1 下周 1 以此类推
      * @return
      * @throws ParseException
      */
-    public static Long getWeekFirstDay(int week,Long date){
+    public static Long getWeekFirstDay(int week, Long date) {
         SimpleDateFormat sdf = new SimpleDateFormat(Constants.UNSIGNED_YYYY_MM_DD);
         Calendar calendar = new GregorianCalendar();
-        try{
+        try {
             calendar.setTime(sdf.parse(date.toString()));
-        }catch(Exception e){}
-        if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
-            calendar.add(Calendar.DAY_OF_YEAR,-1);
+        } catch (Exception e) {
         }
-        if(week != 0){
-            calendar.add(Calendar.WEEK_OF_YEAR,week);
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
         }
-        calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+        if (week != 0) {
+            calendar.add(Calendar.WEEK_OF_YEAR, week);
+        }
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         SimpleDateFormat fmt = new SimpleDateFormat(Constants.UNSIGNED_YYYY_MM_DD);
         return Long.parseLong(fmt.format(calendar.getTime()));
     }
 
     /**
      * 获取月第一天时间
+     *
      * @param month 本月 0 上月  -1 下月  1 以此类推
      * @return
      * @throws ParseException
      */
 
-    public static Long getMonthFirstDay(int month,Long date){
+    public static Long getMonthFirstDay(int month, Long date) {
         SimpleDateFormat sdf = new SimpleDateFormat(Constants.UNSIGNED_YYYY_MM_DD);
         Calendar calendar = new GregorianCalendar();
-        try{
+        try {
             calendar.setTime(sdf.parse(date.toString()));
-        }catch(Exception e){}
-        if(month != 0){
-            calendar.add(Calendar.MONTH,month);
+        } catch (Exception e) {
         }
-        calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        if (month != 0) {
+            calendar.add(Calendar.MONTH, month);
+        }
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         SimpleDateFormat fmt = new SimpleDateFormat(Constants.UNSIGNED_YYYY_MM_DD);
         return Long.parseLong(fmt.format(calendar.getTime()));
     }
 
     /**
      * 获取月第一天时间
+     *
      * @param month 本月 0 上月  -1 下月  1 以此类推
      * @return
      * @throws ParseException
      */
 
-    public static Long getMonthLastDay(int month,Long date){
+    public static Long getMonthLastDay(int month, Long date) {
         SimpleDateFormat sdf = new SimpleDateFormat(Constants.UNSIGNED_YYYY_MM_DD);
         Calendar calendar = new GregorianCalendar();
-        try{
+        try {
             calendar.setTime(sdf.parse(date.toString()));
-        }catch(Exception e){}
-        if(month != 0){
-            calendar.add(Calendar.MONTH,month);
+        } catch (Exception e) {
         }
-        calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        if (month != 0) {
+            calendar.add(Calendar.MONTH, month);
+        }
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         SimpleDateFormat fmt = new SimpleDateFormat(Constants.UNSIGNED_YYYY_MM_DD);
         return Long.parseLong(fmt.format(calendar.getTime()));
     }
 
-    /**cd
+    /**
+     * cd
      * 获取月第一天时间
+     *
      * @param month 本月 0 上月  -1 下月  1 以此类推
      * @return
      */
 
-    public static Long getMonthFirstDay(int month){
-        return getMonthFirstDay(month,currentTimeHllDT8());
+    public static Long getMonthFirstDay(int month) {
+        return getMonthFirstDay(month, currentTimeHllDT8());
 
     }
 
     /**
      * 获取月最后一天时间
+     *
      * @param month 本月 0 上月  -1 下月  1 以此类推
      * @return
      */
 
-    public static Long getMonthLastDay(int month){
-        return getMonthLastDay(month,currentTimeHllDT8());
+    public static Long getMonthLastDay(int month) {
+        return getMonthLastDay(month, currentTimeHllDT8());
     }
+
     /**
      * 获取周一时间
+     *
      * @param week 本周 0 上周 -1 下周 1 以此类推
      * @return
      */
-    public static Long getWeekFirstDay(int week){
-        return getWeekFirstDay(week,currentTimeHllDT8());
+    public static Long getWeekFirstDay(int week) {
+        return getWeekFirstDay(week, currentTimeHllDT8());
     }
 
     /**
      * 获取周日时间
+     *
      * @param week 本周 0 上周 -1 下周 1 以此类推
      * @return
      */
-    public static Long getWeekLastDay(int week){
-        return getWeekLastDay(week,currentTimeHllDT8());
+    public static Long getWeekLastDay(int week) {
+        return getWeekLastDay(week, currentTimeHllDT8());
     }
 
     /**
      * 返回当前时间的哗啦啦时间戳,格式yyyyMMdd
+     *
      * @return
      */
     public static Long currentTimeHllDT8() {
