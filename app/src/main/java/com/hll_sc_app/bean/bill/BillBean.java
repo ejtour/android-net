@@ -11,6 +11,7 @@ public class BillBean {
     private String actionTime;
     private String shopName;
     private int billNum;
+    private int billStatementFlag;
     private String billCreateTime;
     private String supplyShopName;
     private String createby;
@@ -62,6 +63,14 @@ public class BillBean {
 
     public void setBillNum(int billNum) {
         this.billNum = billNum;
+    }
+
+    public int getBillStatementFlag() {
+        return billStatementFlag;
+    }
+
+    public void setBillStatementFlag(int billStatementFlag) {
+        this.billStatementFlag = billStatementFlag;
     }
 
     public String getBillCreateTime() {

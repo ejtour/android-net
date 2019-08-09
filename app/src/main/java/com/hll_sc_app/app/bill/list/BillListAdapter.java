@@ -51,8 +51,8 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
         String flag = item.getAccountDayFlag();
         String payFlag = flag.substring(0, 1);
         int payDate = Integer.parseInt(flag.substring(2));
-        if ("1".equals(payFlag)) builder.append("周结,").append(WEEK_ARRAY[payDate]);
-        else if ("2".equals(payFlag)) builder.append("月结,每月").append(payDate).append("号");
+        if ("1".equals(payFlag)) builder.append("周结，").append(WEEK_ARRAY[payDate]);
+        else if ("2".equals(payFlag)) builder.append("月结，每月").append(payDate).append("号");
         helper.getView(R.id.ibl_check_box).setTag(item);
         ((GlideImageView) helper.setText(R.id.ibl_shop_name, item.getShopName())
                 .setText(R.id.ibl_group_name, item.getGroupName())
@@ -63,6 +63,7 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
                 .setText(R.id.ibl_bill_num, CommonUtils.formatNumber(item.getBillNum()))
                 .setText(R.id.ibl_bill_amount, String.format("¥%s", CommonUtils.formatMoney(item.getTotalAmount())))
                 .setGone(R.id.ibl_confirm, item.getSettlementStatus() == 1)
+                .setGone(R.id.ibl_warehouse_tag, item.getBillStatementFlag() == 1)
                 .setGone(R.id.ibl_check_box, item.getSettlementStatus() == 1)
                 .getView(R.id.ibl_icon)).setImageURL(item.getGroupLogoUrl());
     }
@@ -85,11 +86,11 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
             }
         }
     }
-    
+
     private int getItemPosition(BillBean item) {
         return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
     }
-    
+
     void removeData(BillBean data) {
         remove(getItemPosition(data));
     }
