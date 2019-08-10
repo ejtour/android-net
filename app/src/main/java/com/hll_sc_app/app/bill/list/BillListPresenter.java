@@ -2,6 +2,7 @@ package com.hll_sc_app.app.bill.list;
 
 import android.text.TextUtils;
 
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.bill.BillListResp;
@@ -39,9 +40,9 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
 
     @Override
     public void doAction(List<String> ids) {
-        Bill.billAction(ids, new SimpleObserver<Object>(mView) {
+        Bill.billAction(ids, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
-            public void onSuccess(Object o) {
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                 mView.actionSuccess();
             }
         });

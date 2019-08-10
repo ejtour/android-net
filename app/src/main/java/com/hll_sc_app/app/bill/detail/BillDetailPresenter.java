@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.bill.detail;
 
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -42,9 +43,9 @@ public class BillDetailPresenter implements IBillDetailContract.IBillDetailPrese
 
     @Override
     public void doAction() {
-        Bill.billAction(Collections.singletonList(mID), new SimpleObserver<Object>(mView) {
+        Bill.billAction(Collections.singletonList(mID), new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
-            public void onSuccess(Object o) {
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                 mView.actionSuccess();
             }
         });

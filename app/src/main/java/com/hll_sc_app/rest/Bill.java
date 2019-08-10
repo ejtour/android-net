@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.BillService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -80,12 +81,12 @@ public class Bill {
      *
      * @param settleBillIDs 所有需要结算的结算单ID
      */
-    public static void billAction(List<String> settleBillIDs, SimpleObserver<Object> observer) {
+    public static void billAction(List<String> settleBillIDs, SimpleObserver<MsgWrapper<Object>> observer) {
         BillActionReq req = new BillActionReq();
         req.setSettleBillIDs(settleBillIDs);
         BillService.INSTANCE
                 .billAction(new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
