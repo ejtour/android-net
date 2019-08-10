@@ -64,19 +64,6 @@ public class Wallet {
     }
 
     /**
-     * 导出钱包明细列表
-     *
-     * @param req 明细请求
-     */
-    public static void exportWalletDetailsList(ExportReq req, SimpleObserver<ExportResp> observer) {
-        WalletService.INSTANCE
-                .exportWalletDetailsList(new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    /**
      * 充值
      *
      * @param money        金额

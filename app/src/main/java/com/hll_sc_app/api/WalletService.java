@@ -38,10 +38,6 @@ public interface WalletService {
     Observable<BaseResp<DetailsListResp>> getWalletDetailsList(@Body BaseMapReq body);
 
     @POST(HttpConfig.URL)
-    @Headers("pv:103142")
-    Observable<BaseResp<ExportResp>> exportWalletDetailsList(@Body BaseReq<ExportReq> body);
-
-    @POST(HttpConfig.URL)
     @Headers("pv:103076")
     Observable<BaseResp<RechargeResp>> recharge(@Body BaseMapReq body);
 

@@ -13,6 +13,7 @@ import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
 import com.hll_sc_app.bean.wallet.details.WalletDetailsParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Wallet;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
@@ -136,7 +137,7 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
         financialParams.setEndTime(mParam.getFormatEndTime());
         financialParams.setGroupID(userBean.getGroupID());
         financialParams.setSettleUnitID(mParam.getSettleUnitID());
-        Wallet.exportWalletDetailsList(req, Utils.getExportObserver(mView));
+        Common.exportExcel(req, Utils.getExportObserver(mView));
     }
 
     @Override
