@@ -3,6 +3,7 @@ package com.hll_sc_app.app.invoice.entry;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.invoice.InvoiceBean;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 
 public interface IInvoiceContract {
-    interface IInvoiceView extends ILoadView {
+    interface IInvoiceView extends IExportView {
         void setListData(List<InvoiceBean> list, boolean isMore);
     }
 
@@ -20,5 +21,7 @@ public interface IInvoiceContract {
         void loadMore();
 
         void refresh();
+
+        void export(String email);
     }
 }

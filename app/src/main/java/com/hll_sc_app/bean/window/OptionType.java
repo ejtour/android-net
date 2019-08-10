@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_COOPERATION_DETAIL_DRIVER, OptionType.OPTION_COOPERATION_DETAIL_DELIVERY,
         OptionType.OPTION_ALL, OptionType.OPTION_NOT_CONTAIN_DEPOSIT,
         OptionType.OPTION_COOPERATION_DETAIL_SHOP, OptionType.OPTION_EXPORT_DETAIL_INFO,
-        OptionType.OPTION_REPORT_CURRENT_DATE,
+        OptionType.OPTION_REPORT_CURRENT_DATE, OptionType.OPTION_EXPORT_INVOICE,
         OptionType.OPTION_REPORT_YES_DATE, OptionType.OPTION_REPORT_CURRENT_WEEK, OptionType.OPTION_REPORT_PRE_WEEK,
         OptionType.OPTION_REPORT_CURRENT_MONTH, OptionType.OPTION_REPORT_PRE_MONTH,
         OptionType.OPTION_REPORT_CUSTOMER_DEFINE,
@@ -96,4 +96,6 @@ public @interface OptionType {
     String OPTION_EXPORT_BILL = "导出对账单";
     String OPTION_EXPORT_BILL_DETAIL = "导出明细对账单";
     String OPTION_BATCH_SETTLEMENT = "批量结算";
+
+    String OPTION_EXPORT_INVOICE = "导出开票记录";
 }

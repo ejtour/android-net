@@ -25,6 +25,7 @@ import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -141,6 +142,9 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
                 setForceLoad(true);
                 lazyLoad();
                 break;
+            case InvoiceEvent.EXPORT:
+                if (isFragmentVisible()) mPresenter.export(null);
+                break;
         }
     }
 
@@ -186,5 +190,20 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
             mEmptyView = EmptyView.newBuilder(requireActivity()).setOnClickListener(this::initData).create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(requireActivity(), mPresenter::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(requireActivity(), email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(requireActivity(), msg);
     }
 }

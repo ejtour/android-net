@@ -1,10 +1,17 @@
 package com.hll_sc_app.app.invoice.entry;
 
+import android.text.TextUtils;
+
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.invoice.InvoiceListResp;
 import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Invoice;
+import com.hll_sc_app.utils.Utils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -33,6 +40,25 @@ public class InvoicePresenter implements IInvoiceContract.IInvoicePresenter {
     public void refresh() {
         mPageNum = 1;
         requestInvoiceList(false);
+    }
+
+    @Override
+    public void export(String email) {
+        UserBean user = GreenDaoUtils.getUser();
+        ExportReq exportReq = new ExportReq();
+        exportReq.setEmail(email);
+        exportReq.setIsBindEmail(!TextUtils.isEmpty(email) ? "1" : null);
+        exportReq.setTypeCode("invoice");
+        exportReq.setUserID(user.getEmployeeID());
+        ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
+        ExportReq.ParamsBean.InvoiceParams invoiceParams = new ExportReq.ParamsBean.InvoiceParams();
+        invoiceParams.setEndTime(mParam.getFormatEndTime());
+        invoiceParams.setStartTime(mParam.getFormatStartTime());
+        invoiceParams.setGroupID(user.getGroupID());
+        invoiceParams.setInvoiceStatus(mStatus);
+        bean.setInvoice(invoiceParams);
+        exportReq.setParams(bean);
+        Common.exportExcel(exportReq, Utils.getExportObserver(mView));
     }
 
     private void requestInvoiceList(boolean showLoading) {

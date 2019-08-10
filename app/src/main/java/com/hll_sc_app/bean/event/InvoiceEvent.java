@@ -7,6 +7,7 @@ package com.hll_sc_app.bean.event;
 
 public class InvoiceEvent extends BaseEvent {
     public static final String RELOAD_LIST = "reload_list";
+    public static final String EXPORT = "export";
 
     public InvoiceEvent(String msg) {
         this(msg, null);
@@ -16,6 +17,7 @@ public class InvoiceEvent extends BaseEvent {
         super(msg, b);
         switch (msg) {
             case RELOAD_LIST:
+            case EXPORT:
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported type");

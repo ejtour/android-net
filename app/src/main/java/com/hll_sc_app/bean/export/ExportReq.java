@@ -39,6 +39,7 @@ public class ExportReq {
      * 税率（taxRate）
      * 商品价格（product_price）
      * 财务明细 (fnancialDetail)
+     * 发票业务 (invoice)
      */
     private String typeCode;
     /**
@@ -116,6 +117,19 @@ public class ExportReq {
          * 财务明细导出
          */
         private FinancialParams fnancialDetail;
+
+        /**
+         * 发票业务导出
+         */
+        private InvoiceParams invoice;
+
+        public InvoiceParams getInvoice() {
+            return invoice;
+        }
+
+        public void setInvoice(InvoiceParams invoice) {
+            this.invoice = invoice;
+        }
 
         public FinancialParams getFnancialDetail() {
             return fnancialDetail;
@@ -277,6 +291,45 @@ public class ExportReq {
 
             public void setSettleUnitID(String settleUnitID) {
                 this.settleUnitID = settleUnitID;
+            }
+        }
+
+        public static class InvoiceParams {
+            private String startTime;
+            private String endTime;
+            private String groupID;
+            private int invoiceStatus;
+
+            public String getStartTime() {
+                return startTime;
+            }
+
+            public void setStartTime(String startTime) {
+                this.startTime = startTime;
+            }
+
+            public String getEndTime() {
+                return endTime;
+            }
+
+            public void setEndTime(String endTime) {
+                this.endTime = endTime;
+            }
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public int getInvoiceStatus() {
+                return invoiceStatus;
+            }
+
+            public void setInvoiceStatus(int invoiceStatus) {
+                this.invoiceStatus = invoiceStatus;
             }
         }
     }
