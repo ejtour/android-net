@@ -6,7 +6,7 @@ import android.util.SparseArray;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.wallet.details.DetailsExportReq;
+import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.hll_sc_app.bean.wallet.details.DetailsRecord;
 import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
@@ -123,16 +123,13 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
     public void export(String email) {
         UserBean userBean = GreenDaoUtils.getUser();
         if (userBean == null) return;
-        DetailsExportReq req = new DetailsExportReq();
-        req.setActionType(2);
+        ExportReq req = new ExportReq();
         req.setEmail(email);
         req.setTypeCode("fnancialDetail");
         req.setUserID(userBean.getEmployeeID());
-        if (!TextUtils.isEmpty(email)) {
-            req.setIsBindEmail(1);
-        }
-        DetailsExportReq.FinancialParams financialParams = new DetailsExportReq.FinancialParams();
-        DetailsExportReq.Params params = new DetailsExportReq.Params();
+        if (!TextUtils.isEmpty(email)) req.setIsBindEmail("1");
+        ExportReq.ParamsBean.FinancialParams financialParams = new ExportReq.ParamsBean.FinancialParams();
+        ExportReq.ParamsBean params = new ExportReq.ParamsBean();
         params.setFnancialDetail(financialParams);
         req.setParams(params);
         financialParams.setBeginTime(mParam.getFormatBeginTime());
