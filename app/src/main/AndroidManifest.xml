@@ -245,7 +245,7 @@
 
         <activity
             android:name=".app.warehouse.shipper.ShipperWarehouseGoodsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.shipper.shop.ShipperShopManageActivity"
@@ -261,7 +261,7 @@
 
         <activity
             android:name=".app.warehouse.shipper.shop.detail.purchasershop.ShipperPurchaserShopSelectActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.WarehouseListActivity"
@@ -441,15 +441,15 @@
 
         <activity
             android:name=".app.paymanage.PayManageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.paymanage.method.PayManageMethodActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.paymanage.account.PayManageAccountActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.pricemanage.log.PriceChangeLogActivity"
@@ -621,7 +621,12 @@
             android:name=".app.bill.list.BillListActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".app.bill.detail.BillDetailActivity"
+        <activity
+            android:name=".app.bill.detail.BillDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.entry.InvoiceEntryActivity"
             android:screenOrientation="portrait" />
 
         <provider
