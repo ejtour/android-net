@@ -19,10 +19,12 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.InvoiceEvent;
 import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.DatePickerDialog;
 import com.hll_sc_app.widget.TitleBar;
@@ -94,15 +96,14 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
 
     @OnClick(R.id.are_commit)
     public void commit() {
-        showToast("新增发票待添加");
+        RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_SHOP);
     }
 
     void filterDate() {
         if (mDatePickerDialog == null) {
-            Calendar begin = Calendar.getInstance();
-            begin.add(Calendar.YEAR, -3);
+            Date begin = DateUtil.parse("20170101");
             mDatePickerDialog = DatePickerDialog.newBuilder(this)
-                    .setBeginTime(begin.getTimeInMillis())
+                    .setBeginTime(begin.getTime())
                     .setEndTime(System.currentTimeMillis())
                     .setTitle("按时间筛选")
                     .setCancelable(false)

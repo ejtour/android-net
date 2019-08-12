@@ -18,24 +18,24 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/8/9
  */
-public class PayManageMethodPresenter implements PayManageMethodContract.IAccountPresenter {
-    private PayManageMethodContract.IAccountView mView;
+public class PayMethodManagePresenter implements PayMethodManageContract.IMethodPresenter {
+    private PayMethodManageContract.IMethodView mView;
 
-    static PayManageMethodPresenter newInstance() {
-        return new PayManageMethodPresenter();
+    static PayMethodManagePresenter newInstance() {
+        return new PayMethodManagePresenter();
     }
 
     @Override
-    public void register(PayManageMethodContract.IAccountView view) {
+    public void register(PayMethodManageContract.IMethodView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
     @Override
-    public void editSettlementMethod(String payType, String payMethod) {
+    public void editPayMethod(String payType, String payMethod) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("payMethod", payMethod)
             .put("payType", payType)
-            .put("supplierID", UserConfig.getGroupID())
+            .put("supplyID", UserConfig.getGroupID())
             .create();
         CooperationPurchaserService.INSTANCE
             .editSettlementMethod(req)

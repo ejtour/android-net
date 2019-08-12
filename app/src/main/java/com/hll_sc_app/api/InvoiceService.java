@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.invoice.InvoiceListResp;
+import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -22,4 +23,8 @@ public interface InvoiceService {
     @POST(HttpConfig.URL)
     @Headers("pv:103134")
     Observable<BaseResp<InvoiceListResp>> getInvoiceList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103147")
+    Observable<BaseResp<InvoiceOrderResp>> getRelevanceOrderList(@Body BaseMapReq req);
 }

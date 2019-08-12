@@ -18,13 +18,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
-import com.hll_sc_app.app.paymanage.account.PayManageAccountActivity;
+import com.hll_sc_app.app.paymanage.account.PayAccountManageActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.delivery.DeliveryCompanyBean;
+import com.hll_sc_app.bean.paymanage.PayBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.kyleduo.switchbutton.SwitchButton;
 
@@ -47,7 +48,7 @@ import butterknife.OnClick;
  * @date 2019/8/8
  */
 @Route(path = RouterConfig.PAY_MANAGE, extras = Constant.LOGIN_EXTRA)
-public class PayManageActivity extends BaseLoadActivity implements PayManageContract.IDeliveryTypeSetView,
+public class PayManageActivity extends BaseLoadActivity implements PayManageContract.IPayManageView,
     CompoundButton.OnCheckedChangeListener {
     @BindView(R.id.ll_1)
     LinearLayout mLlCash;
@@ -73,6 +74,7 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
     TextView mTxtOnline;
 
     private SettlementBean mBean;
+    private List<PayBean> mData;
     private PayManagePresenter mPresenter;
 
     @Override
@@ -107,10 +109,10 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mPresenter.start();
+        mPresenter.querySettlementList();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_Online, R.id.ll_2, R.id.ll_1})
+    @OnClick({R.id.img_close, R.id.txt_Online, R.id.ll_2, R.id.ll_1, R.id.ll_3})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.img_close) {
@@ -118,10 +120,63 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
         } else if (id == R.id.txt_Online) {
             RouterUtil.goToActivity(RouterConfig.WALLET);
         } else if (id == R.id.ll_2) {
-            PayManageAccountActivity.start(mBean.getPayTermType(), mBean.getPayTerm(), mBean.getSettleDate());
+            // 账期支付
+            PayAccountManageActivity.start(mBean.getPayTermType(), mBean.getPayTerm(), mBean.getSettleDate());
         } else if (id == R.id.ll_1) {
-            RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_METHOD, false, mBean.getCodPayMethod());
+            // 货到付款
+            RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_METHOD, getCodPayList());
+        } else if (id == R.id.ll_3) {
+            // 在线支付
+            RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_METHOD, getOnlinePayList());
         }
+    }
+
+    private ArrayList<PayBean> getCodPayList() {
+        ArrayList<PayBean> arrayList = new ArrayList<>();
+        if (!CommonUtils.isEmpty(mData)) {
+            for (PayBean bean : mData) {
+                if (TextUtils.equals("2", bean.getPayType())) {
+                    // 货到付款
+                    if (!TextUtils.isEmpty(mBean.getCodPayMethod()) && mBean.getCodPayMethod().contains(bean.getId())) {
+                        bean.setSelect(true);
+                    } else {
+                        bean.setSelect(false);
+                    }
+                    if (!isOnlineOpen()) {
+                        if (!TextUtils.equals("9", bean.getId()) && !TextUtils.equals("10", bean.getId())) {
+                            bean.setEnable(false);
+                        } else {
+                            bean.setEnable(true);
+                        }
+                    } else {
+                        bean.setEnable(true);
+                    }
+                    arrayList.add(bean);
+                }
+            }
+        }
+        return arrayList;
+    }
+
+    private ArrayList<PayBean> getOnlinePayList() {
+        ArrayList<PayBean> arrayList = new ArrayList<>();
+        if (!CommonUtils.isEmpty(mData)) {
+            for (PayBean bean : mData) {
+                if (TextUtils.equals("1", bean.getPayType())) {
+                    arrayList.add(bean);
+                }
+            }
+        }
+        return arrayList;
+    }
+
+    /**
+     * 在线支付是否开通
+     *
+     * @return true-已开通
+     */
+    private boolean isOnlineOpen() {
+        return mTxtOnline.getVisibility() == View.GONE;
     }
 
     @Override
@@ -190,19 +245,25 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
         SpannableString spannableString = new SpannableString(method.replaceAll(",", " "));
         String[] strings = method.split(",");
         int preLength = 0;
+        // 1-6 在线支付付款方式
+        // 7-14 货到付款付款方式
         for (String string : strings) {
             int resourceId = 0;
             switch (string) {
                 case "1":
+                case "7":
                     resourceId = R.drawable.ic_pay_type_1;
                     break;
                 case "2":
+                case "8":
                     resourceId = R.drawable.ic_pay_type_2;
                     break;
                 case "3":
+                case "11":
                     resourceId = R.drawable.ic_pay_type_3;
                     break;
                 case "4":
+                case "12":
                     resourceId = R.drawable.ic_pay_type_4;
                     break;
                 case "9":
@@ -211,9 +272,11 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
                 case "10":
                     resourceId = R.drawable.ic_pay_type_10;
                     break;
+                case "5":
                 case "13":
                     resourceId = R.drawable.ic_pay_type_13;
                     break;
+                case "6":
                 case "14":
                     resourceId = R.drawable.ic_pay_type_14;
                     break;
@@ -238,6 +301,11 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
     public void editSuccess() {
         showToast("支付方式修改成功");
         mPresenter.start();
+    }
+
+    @Override
+    public void setDefaultPayMethod(List<PayBean> list) {
+        mData = list;
     }
 
     @Override

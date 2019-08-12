@@ -57,6 +57,28 @@ public class CooperationThirdPartPresenter implements CooperationThirdPartContra
         toQueryThirdPartList(false);
     }
 
+    @Override
+    public void editCooperationThirdPartStatus(BaseMapReq req) {
+        CooperationPurchaserService.INSTANCE.editThirdPartPurchaserDetail(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new BaseCallback<Object>() {
+                @Override
+                public void onSuccess(Object resp) {
+                    mView.showToast("修改成功");
+                    queryCooperationThirdPartList(true);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mView.showError(e);
+                }
+            });
+    }
+
 
     private void toQueryThirdPartList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()

@@ -9,7 +9,7 @@ import com.hll_sc_app.base.IPresenter;
  * @author zhuyingsong
  * @date 2019/8/9
  */
-public interface PayManageAccountContract {
+public interface PayAccountManageContract {
 
     interface IAccountView extends ILoadView {
         /**
@@ -20,12 +20,12 @@ public interface PayManageAccountContract {
 
     interface IAccountPresenter extends IPresenter<IAccountView> {
         /**
-         * 修改支付方式
+         * 修改账期支付方式
          *
          * @param payTermType 账期支付方式;0-未设置,1-按周,2-按月
          * @param payTerm     账期支付具体日期
          * @param settleDate  结算日
          */
-        void editSettlement(String payTermType, String payTerm, String settleDate);
+        void editAccount(String payTermType, String payTerm, String settleDate);
     }
 }

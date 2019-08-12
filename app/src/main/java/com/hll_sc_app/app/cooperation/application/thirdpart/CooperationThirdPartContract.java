@@ -2,6 +2,7 @@ package com.hll_sc_app.app.cooperation.application.thirdpart;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
 
 import java.util.List;
@@ -44,5 +45,12 @@ interface CooperationThirdPartContract {
          * 加载更多第三方申请数据列表
          */
         void queryMoreThirdPartList();
+
+        /**
+         * 采购商申请状态变更
+         *
+         * @param req 请求参数
+         */
+        void editCooperationThirdPartStatus(BaseMapReq req);
     }
 }

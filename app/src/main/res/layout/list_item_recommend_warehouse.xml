@@ -89,7 +89,7 @@
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="删除"
+            android:text="解除"
             android:textAppearance="@style/TextAppearance.City22.Small.White"/>
     </FrameLayout>
 </com.hll_sc_app.base.widget.SwipeItemLayout>

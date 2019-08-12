@@ -9,22 +9,22 @@ import com.hll_sc_app.base.IPresenter;
  * @author zhuyingsong
  * @date 2019/8/9
  */
-public interface PayManageMethodContract {
+public interface PayMethodManageContract {
 
-    interface IAccountView extends ILoadView {
+    interface IMethodView extends ILoadView {
         /**
          * 修改成功
          */
         void editSuccess();
     }
 
-    interface IAccountPresenter extends IPresenter<IAccountView> {
+    interface IMethodPresenter extends IPresenter<IMethodView> {
         /**
          * 修改支付方式
          *
          * @param payType   1.在线支付2.货到付款
          * @param payMethod 支付方式列表
          */
-        void editSettlementMethod(String payType, String payMethod);
+        void editPayMethod(String payType, String payMethod);
     }
 }

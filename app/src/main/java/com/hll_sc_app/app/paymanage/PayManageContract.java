@@ -3,6 +3,9 @@ package com.hll_sc_app.app.paymanage;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
+import com.hll_sc_app.bean.paymanage.PayBean;
+
+import java.util.List;
 
 /**
  * 支付管理
@@ -12,7 +15,7 @@ import com.hll_sc_app.bean.cooperation.SettlementBean;
  */
 public interface PayManageContract {
 
-    interface IDeliveryTypeSetView extends ILoadView {
+    interface IPayManageView extends ILoadView {
         /**
          * 展示选中的支付方式
          *
@@ -29,9 +32,16 @@ public interface PayManageContract {
          * 修改成功
          */
         void editSuccess();
+
+        /**
+         * 设置默认支付方式
+         *
+         * @param list 默认支付方式列表
+         */
+        void setDefaultPayMethod(List<PayBean> list);
     }
 
-    interface IDeliveryTypeSetPresenter extends IPresenter<IDeliveryTypeSetView> {
+    interface IPayManagePresenter extends IPresenter<IPayManageView> {
         /**
          * 查询支付方式
          */
@@ -44,5 +54,10 @@ public interface PayManageContract {
          * @param status  开启状态 0-停用,1-启用
          */
         void editSettlement(String payType, String status);
+
+        /**
+         * 查询默认支付方式列表
+         */
+        void querySettlementMethodList();
     }
 }
