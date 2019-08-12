@@ -374,6 +374,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                 break;
             case R.id.txt_options:
                 showExportOptionsWindow(exportView);
+                break;
             case R.id.edt_search:
                 SearchActivity.start("", SalesManSearch.class.getSimpleName());
                 break;
@@ -382,6 +383,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                 edtSearch.setText("");
                 mPresenter.querySalesManSalesAchievementList(true);
                 imgClear.setVisibility(View.GONE);
+                break;
             default:
                 break;
         }
