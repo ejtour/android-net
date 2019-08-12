@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingTop="15dp"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingBottom="15dp">
+
+    <TextView
+        android:id="@+id/iso_order_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="订单号：31093721323" />
+
+    <TextView
+        android:id="@+id/iso_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iso_order_no"
+        tools:text="2019/03/02 12:33:22" />
+
+    <TextView
+        android:id="@+id/iso_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/iso_order_no"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="¥500.00" />
+
+    <TextView
+        android:id="@+id/iso_pay_method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/iso_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="在线支付(微信支付)" />
+</android.support.constraint.ConstraintLayout>

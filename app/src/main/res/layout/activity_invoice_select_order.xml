@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/iso_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="选择关联订单" />
+
+    <TextView
+        android:id="@+id/iso_filter_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="按日期筛选"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iso_title_bar" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/iso_arrow"
+        android:layout_width="8dp"
+        android:layout_height="6dp"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="@id/iso_filter_btn"
+        app:layout_constraintEnd_toEndOf="@id/iso_filter_btn"
+        app:layout_constraintTop_toTopOf="@id/iso_filter_btn"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <TextView
+        android:id="@+id/iso_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:drawableLeft="@drawable/ic_date"
+        android:drawablePadding="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintBottom_toBottomOf="@id/iso_filter_btn"
+        app:layout_constraintEnd_toStartOf="@id/iso_arrow"
+        app:layout_constraintTop_toTopOf="@id/iso_filter_btn"
+        tools:text="2018/08/09 - 2018/09/09" />
+
+    <View
+        android:id="@+id/iso_data_bg"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iso_filter_btn" />
+
+    <TextView
+        android:id="@+id/iso_total_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="2.5dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="¥0.00"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toTopOf="@id/iso_total_amount_label"
+        app:layout_constraintEnd_toStartOf="@id/iso_order_amount"
+        app:layout_constraintStart_toStartOf="@id/iso_data_bg"
+        app:layout_constraintTop_toTopOf="@id/iso_data_bg"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="¥18,345.98" />
+
+    <TextView
+        android:id="@+id/iso_order_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginRight="2.5dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="¥0.00"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/iso_total_amount"
+        app:layout_constraintEnd_toStartOf="@id/iso_refund_amount"
+        app:layout_constraintStart_toEndOf="@id/iso_total_amount"
+        tools:text="¥19,345.98" />
+
+    <TextView
+        android:id="@+id/iso_refund_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="¥0.00"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/iso_total_amount"
+        app:layout_constraintEnd_toEndOf="@id/iso_data_bg"
+        app:layout_constraintStart_toEndOf="@id/iso_order_amount"
+        tools:text="¥10,000.00" />
+
+    <TextView
+        android:id="@+id/iso_total_amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="可开票金额"
+        android:textAppearance="@style/TextAppearance.City22.Small.Red"
+        app:layout_constraintBottom_toBottomOf="@id/iso_data_bg"
+        app:layout_constraintEnd_toEndOf="@id/iso_total_amount"
+        app:layout_constraintStart_toStartOf="@id/iso_total_amount"
+        app:layout_constraintTop_toBottomOf="@id/iso_total_amount" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="订单金额"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/iso_total_amount_label"
+        app:layout_constraintEnd_toEndOf="@id/iso_order_amount"
+        app:layout_constraintStart_toStartOf="@id/iso_order_amount" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="退款金额"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/iso_total_amount_label"
+        app:layout_constraintEnd_toEndOf="@id/iso_refund_amount"
+        app:layout_constraintStart_toStartOf="@id/iso_refund_amount" />
+
+    <TextView
+        android:id="@+id/iso_bottom_amount"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:text="开票总额：¥0"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="开票总额：¥18,345.98" />
+
+    <TextView
+        android:id="@+id/iso_next"
+        style="@style/BtnOrderAction.PrimarySolid"
+        android:text="下一步"
+        app:layout_constraintBottom_toBottomOf="@id/iso_bottom_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iso_bottom_amount" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/iso_refresh_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/iso_bottom_amount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iso_data_bg">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/iso_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="5dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <android.support.constraint.Group
+        android:id="@+id/iso_bottom_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="iso_bottom_amount,iso_next" />
+</android.support.constraint.ConstraintLayout>
