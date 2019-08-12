@@ -596,6 +596,11 @@ public class RouterConfig {
     /**
      * 营销中心菜单主页
      */
-    public static final String ACTIVITY_MARKETING_SETTING_MENU = "activity/marketing/setting/menu";
+    public static final String ACTIVITY_MARKETING_SETTING_MENU = "/activity/marketing/setting/menu";
+
+    /**
+     * 营销中心商品营销列表
+     */
+    public static final String ACTIVITY_MARKETING_PRODUCT_LIST = "/activity/marketing/product/list";
 }
 

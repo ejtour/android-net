@@ -537,7 +537,10 @@
         <activity
             android:name=".app.marketingsetting.MarketingSettingMenuActivity"
             android:screenOrientation="portrait" />
-
+        <!--商品营销列表-->
+        <activity
+            android:name=".app.marketingsetting.product.ProductMarketingListActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
