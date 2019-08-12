@@ -220,11 +220,4 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/wsn_tip_content"
         app:layout_constraintTop_toTopOf="@id/wsn_tip_content" />
-
-    <android.support.constraint.Group
-        android:id="@+id/wsn_tip_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="wsn_tip_bg,wsn_tip_content,wsn_tip_arrow" />
 </android.support.constraint.ConstraintLayout>

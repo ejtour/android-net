@@ -55,8 +55,12 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
     private ISearchContract.ISearchStrategy mStrategy;
     private ObservableEmitter<String> mEmitter;
 
-    public static void start(String... strings) {
-        RouterUtil.goToActivity(RouterConfig.SEARCH, (Object[]) strings);
+    /**
+     * @param searchWords 搜索词
+     * @param key         搜索MAP中对应的键值
+     */
+    public static void start(String searchWords, String key) {
+        RouterUtil.goToActivity(RouterConfig.SEARCH, searchWords, key);
     }
 
     @Override
