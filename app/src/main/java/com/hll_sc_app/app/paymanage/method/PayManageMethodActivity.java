@@ -1,9 +1,11 @@
 package com.hll_sc_app.app.paymanage.method;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,52 +15,43 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.paymanage.PayBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.SimpleDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 支付管理-设置账期日
+ * 支付管理-货到付款设置or在线支付设置
  *
  * @author zhuyingsong
  * @date 2019/8/9
  */
 @Route(path = RouterConfig.PAY_MANAGE_METHOD, extras = Constant.LOGIN_EXTRA)
 public class PayManageMethodActivity extends BaseLoadActivity implements PayManageMethodContract.IAccountView {
-    @Autowired(name = "object0", required = true)
-    boolean mIsOnline;
-    @Autowired(name = "object1", required = true)
-    boolean mIsOpen;
-    @Autowired(name = "object2", required = true)
-    String mMethod;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
-    @BindView(R.id.img_9)
-    ImageView mImg9;
-    @BindView(R.id.img_10)
-    ImageView mImg10;
-    @BindViews({R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_9, R.id.img_10, R.id.img_13, R.id.img_14})
-    List<ImageView> mViews;
-    @BindViews({R.id.rl_1, R.id.rl_2, R.id.rl_3, R.id.rl_4, R.id.rl_9, R.id.rl_10, R.id.rl_13, R.id.rl_14})
-    List<RelativeLayout> mRlViews;
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+    @Autowired(name = "parcelable")
+    ArrayList<PayBean> mPayList;
+    @BindView(R.id.rl_bottom)
+    RelativeLayout mRlBottom;
     private PayManageMethodPresenter mPresenter;
-
-    public static void start(String payTermType, String payTerm, String settleDate) {
-        RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_ACCOUNT, payTermType, payTerm, settleDate);
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,41 +62,60 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
         ButterKnife.bind(this);
         mPresenter = PayManageMethodPresenter.newInstance();
         mPresenter.register(this);
-        showView();
+        initView();
     }
 
-    private void showView() {
-        mTxtTitle.setText(mIsOnline ? "在线支付设置" : "货到付款设置");
-        // 设置监听
-        ButterKnife.apply(mRlViews, (view, index) -> view.setOnClickListener(v -> {
-            ImageView img = mViews.get(index);
-            img.setSelected(!img.isSelected());
-            if (!checkSelect()) {
-                img.setSelected(true);
-                showToast("至少有一种结算方式噢");
-            }
-        }));
-
-        if (mIsOnline) {
-
+    private void initView() {
+        if (isOnline()) {
+            mRlBottom.setVisibility(View.GONE);
+            mTxtTitle.setText("在线支付设置");
         } else {
-            ButterKnife.apply(mViews, (view, index) -> {
-                if (view != mImg9 && view != mImg10) {
-                    view.setEnabled(false);
-                }
-            });
-            mImg9.setSelected(mMethod.contains("9"));
-            mImg10.setSelected(mMethod.contains("10"));
+            mRlBottom.setVisibility(View.VISIBLE);
+            mTxtTitle.setText("货到付款设置");
+        }
+        mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        PayListAdapter payAdapter = new PayListAdapter(mPayList);
+        payAdapter.setOnItemChildClickListener((adapter, view, position) -> clickItem(adapter, position));
+        mRecyclerView.setAdapter(payAdapter);
+    }
+
+    /**
+     * 在线支付设置 or 货到付款设置
+     *
+     * @return true-在线支付设置
+     */
+    private boolean isOnline() {
+        boolean isOnline = false;
+        if (!CommonUtils.isEmpty(mPayList)) {
+            isOnline = TextUtils.equals("1", mPayList.get(0).getPayType());
+        }
+        return isOnline;
+    }
+
+    private void clickItem(BaseQuickAdapter adapter, int position) {
+        PayBean payBean = (PayBean) adapter.getItem(position);
+        if (payBean != null && !payBean.isDisable()) {
+            payBean.setSelect(!payBean.isSelect());
+            if (!checkSelect()) {
+                payBean.setSelect(true);
+                showToast("至少有一种结算方式噢");
+            } else {
+                adapter.notifyItemChanged(position);
+            }
         }
     }
 
+    /**
+     * 至少有一种结算方式
+     *
+     * @return false-无结算方式
+     */
     private boolean checkSelect() {
         boolean select = false;
-        if (!CommonUtils.isEmpty(mViews)) {
-            for (ImageView img : mViews) {
-                if (img.isEnabled() && img.isSelected()) {
+        if (!CommonUtils.isEmpty(mPayList)) {
+            for (PayBean payBean : mPayList) {
+                if (payBean.isSelect()) {
                     select = true;
-                    break;
                 }
             }
         }
@@ -124,13 +136,16 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
         }
     }
 
+    /**
+     * 保存
+     */
     private void toSave() {
-        String payType = mIsOnline ? "1" : "2";
+        String payType = isOnline() ? "1" : "2";
         List<String> selectList = new ArrayList<>();
-        if (!CommonUtils.isEmpty(mViews)) {
-            for (ImageView imageView : mViews) {
-                if (imageView.isSelected()) {
-                    selectList.add(String.valueOf(imageView.getTag()));
+        if (!CommonUtils.isEmpty(mPayList)) {
+            for (PayBean bean : mPayList) {
+                if (!bean.isDisable() && bean.isSelect()) {
+                    selectList.add(String.valueOf(bean.getId()));
                 }
             }
         }
@@ -144,5 +159,27 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
             .setProvider(new LoginInterceptor())
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
             .navigation(this);
+    }
+
+    private class PayListAdapter extends BaseQuickAdapter<PayBean, BaseViewHolder> {
+
+        PayListAdapter(@Nullable List<PayBean> data) {
+            super(R.layout.item_pay_manage, data);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, PayBean item) {
+            helper
+                .setText(R.id.img_imgPath, item.getImgPath())
+                .setText(R.id.txt_payMethodName, item.getPayMethodName())
+                .setGone(R.id.img_select, TextUtils.equals(item.getPayType(), "2"));
+            ImageView imgSelect = helper.getView(R.id.img_select);
+            if (item.isDisable()) {
+                imgSelect.setEnabled(false);
+            } else {
+                imgSelect.setEnabled(true);
+                imgSelect.setSelected(item.isSelect());
+            }
+        }
     }
 }
