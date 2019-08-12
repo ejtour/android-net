@@ -295,6 +295,12 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
     }
 
     @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
+    }
+
+    @Override
     public void showSalesManSalesAchievementList(List<SalesManSalesAchievement> records, boolean append, int total) {
         if (append) {
             mAdapter.addData(records);
@@ -314,7 +320,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
     @Override
     public void showSalesManSalesTotalDatas(SalesManSalesResp salesManSalesResp) {
         txtTotal.setText("合计");
-        totalTxt.setText("--");
+        totalTxt.setText(String.valueOf(salesManSalesResp.getTotalSize()));
         totalValidOrderNum.setText(String.valueOf(salesManSalesResp.getTotalValidBillNum()));
         totalTradeAmount.setText(CommonUtils.formatMoney(salesManSalesResp.getTotalSalesAmount()));
         totalSettleOrderNum.setText(String.valueOf(salesManSalesResp.getTotalSettleBillNum()));
@@ -322,10 +328,6 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         totalRefundAmount.setText(CommonUtils.formatMoney(salesManSalesResp.getTotalRefundAmount()));
     }
 
-    @Override
-    public String getSearchParam() {
-        return null;
-    }
 
     @Override
     public SalesManAchievementReq getParams() {

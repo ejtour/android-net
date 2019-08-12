@@ -1,13 +1,17 @@
 package com.hll_sc_app.rest;
 
 import com.hll_sc_app.api.CommonService;
+import com.hll_sc_app.api.WalletService;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
+import com.hll_sc_app.bean.export.ExportReq;
+import com.hll_sc_app.bean.export.ExportResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -67,6 +71,19 @@ public class Common {
                         .put("groupID", UserConfig.getGroupID())
                         .put("date", String.valueOf(date))
                         .put("version", "1").create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 通用表格导出
+     *
+     * @param req 明细请求
+     */
+    public static void exportExcel(ExportReq req, SimpleObserver<ExportResp> observer) {
+        CommonService.INSTANCE
+                .exportExcel(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

@@ -298,18 +298,13 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
     @Override
     public void showSalesManSignTotalDatas(SalesManSignResp salesManSignResp) {
         txtTotal.setText("合计");
-        totalTxt.setText("--");
+        totalTxt.setText(String.valueOf(salesManSignResp.getTotalSize()));
         totalIntentCustomerNum.setText(String.valueOf(salesManSignResp.getTotalIntentCustomerNum()));
         totalSignCustomerNum.setText(String.valueOf(salesManSignResp.getTotalSignCustomerNum()));
         totalSignShopNum.setText(String.valueOf(salesManSignResp.getTotalSignShopNum()));
         totalIncrIntentCustomer.setText(String.valueOf(salesManSignResp.getTotalAddIntentCustomerNum()));
         totalIncrSignCustomer.setText(String.valueOf(salesManSignResp.getTotalAddSignCustomerNum()));
         totalIncrSignShop.setText(String.valueOf(salesManSignResp.getTotalAddSignShopNum()));
-    }
-
-    @Override
-    public String getSearchParam() {
-        return null;
     }
 
     @Override
@@ -327,6 +322,12 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
     @Override
     public void exportFailure(String tip) {
         Utils.exportFailure(this, tip);
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
     }
 
     @Override

@@ -127,7 +127,9 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private void initView() {
-        mTitleBar.setRightBtnClick(this::showOptionsWindow);
+        mTitleBar.setRightBtnClick(v -> {
+            if (!toggleBatch(View.GONE)) showOptionsWindow(v);
+        });
         mAdapter = new BillListAdapter((buttonView, isChecked) -> {
             ((BillBean) buttonView.getTag()).setSelected(isChecked);
             updateBottomBar();
@@ -163,22 +165,24 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
 
     private void showOptionsWindow(View v) {
         if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_BILL));
-            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_BILL_DETAIL));
             mOptionsWindow = new ContextOptionsWindow(this)
-                    .refreshList(list)
                     .setListener(this);
         }
+        List<OptionsBean> list = new ArrayList<>();
+        list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_BILL));
+        list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_BILL_DETAIL));
+        if (canBatch())
+            list.add(new OptionsBean(R.drawable.ic_batch_option, OptionType.OPTION_BATCH_SETTLEMENT));
+        mOptionsWindow.refreshList(list);
         mOptionsWindow.showAsDropDownFix(v, Gravity.END);
     }
 
+    private boolean canBatch() {
+        return mParam.getSettlementStatus() == BillStatus.NOT_SETTLE && !CommonUtils.isEmpty(mAdapter.getData());
+    }
+
     private void updateBottomBar() {
-        if (mParam.getSettlementStatus() == BillStatus.NOT_SETTLE && !CommonUtils.isEmpty(mAdapter.getData())) {
-            mSelectAll.setVisibility(View.VISIBLE);
-            mCommit.setVisibility(View.VISIBLE);
-            mSumLabel.setVisibility(View.GONE);
-            mAmount.setVisibility(View.GONE);
+        if (canBatch() && mCommit.getVisibility() == View.VISIBLE) {
             int count = 0;
             for (BillBean bean : mAdapter.getData()) {
                 if (bean.isSelected()) count++;
@@ -187,16 +191,35 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
             mCommit.setEnabled(count > 0);
             mCommit.setText(String.format("确认结算(%s)", count));
         } else {
-            mSelectAll.setVisibility(View.GONE);
-            mCommit.setVisibility(View.GONE);
-            mSumLabel.setVisibility(View.VISIBLE);
-            mAmount.setVisibility(View.VISIBLE);
+            toggleBatch(View.GONE);
             mSumLabel.setText(String.format("%s总计：", mParam.getSettlementStatus() == BillStatus.NOT_SETTLE ? "未结算" : "已结算"));
             mAmount.setText(String.format("¥%s",
                     CommonUtils.formatMoney(mParam.getSettlementStatus() == BillStatus.NOT_SETTLE ?
                             mAdapter.getData().size() == 0 ? 0 : mResp.getTotalNoSettlementAmount() :
                             mResp.getTotalSettlementAmount())));
         }
+    }
+
+    private boolean toggleBatch(int visibility) {
+        if (mSelectAll.getVisibility() == visibility) return false;
+        if (visibility == View.VISIBLE) {
+            mTitleBar.setRightText("完成");
+            mSelectAll.setVisibility(View.VISIBLE);
+            mCommit.setVisibility(View.VISIBLE);
+            mSumLabel.setVisibility(View.GONE);
+            mAmount.setVisibility(View.GONE);
+        } else if (mAmount.getVisibility() != View.VISIBLE) {
+            mSelectAll.setChecked(false);
+            mCommit.setEnabled(false);
+            mCommit.setText("确认结算(0)");
+            mTitleBar.setRightButtonImg(R.drawable.ic_options);
+            mSelectAll.setVisibility(View.GONE);
+            mCommit.setVisibility(View.GONE);
+            mSumLabel.setVisibility(View.VISIBLE);
+            mAmount.setVisibility(View.VISIBLE);
+        }
+        mAdapter.setBatch(mSelectAll.getVisibility() == View.VISIBLE);
+        return true;
     }
 
     @OnCheckedChanged(R.id.abl_select_all)
@@ -429,6 +452,10 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         mOptionsWindow.dismiss();
         OptionsBean bean = (OptionsBean) adapter.getItem(position);
         if (bean == null) return;
+        if (OptionType.OPTION_BATCH_SETTLEMENT.equals(bean.getLabel())) {
+            toggleBatch(View.VISIBLE);
+            return;
+        }
         mIsDetailExport = OptionType.OPTION_EXPORT_BILL_DETAIL.equals(bean.getLabel());
         export(null);
     }

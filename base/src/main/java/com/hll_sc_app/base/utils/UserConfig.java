@@ -39,9 +39,9 @@ public class UserConfig {
     public static void reLogin() {
         clearToken();
         ARouter.getInstance().build(RouterConfig.USER_LOGIN)
-            .setProvider(new LoginInterceptor())
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
-            .navigation();
+                .setProvider(new LoginInterceptor())
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+                .navigation();
     }
 
     /**
@@ -74,5 +74,16 @@ public class UserConfig {
             selfOperated = true;
         }
         return selfOperated;
+    }
+
+    /**
+     * @return 如果是销售，返回销售员ID，否则返回空字符串
+     */
+    public static String getSalesmanID() {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user != null && "1".equals(user.getAuthType())) {
+            return user.getEmployeeID();
+        }
+        return "";
     }
 }

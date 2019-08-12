@@ -1,12 +1,15 @@
 package com.hll_sc_app.api;
 
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
+import com.hll_sc_app.bean.export.ExportReq;
+import com.hll_sc_app.bean.export.ExportResp;
 
 import java.util.List;
 
@@ -34,4 +37,8 @@ public interface CommonService {
     @POST(HttpConfig.URL)
     @Headers("pv:111063")
     Observable<BaseResp<SalesVolumeResp>> querySalesVolume(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103142")
+    Observable<BaseResp<ExportResp>> exportExcel(@Body BaseReq<ExportReq> body);
 }

@@ -23,6 +23,7 @@ import java.util.List;
 public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> {
     private static final String[] WEEK_ARRAY = {"每周日", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六"};
     private final CompoundButton.OnCheckedChangeListener mListener;
+    private boolean mIsBatch;
 
     BillListAdapter(CompoundButton.OnCheckedChangeListener listener) {
         super(R.layout.item_bill_list);
@@ -61,9 +62,11 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
                 .setText(R.id.ibl_bill_date, builder)
                 .setText(R.id.ibl_bill_num, CommonUtils.formatNumber(item.getBillNum()))
                 .setText(R.id.ibl_bill_amount, String.format("¥%s", CommonUtils.formatMoney(item.getTotalAmount())))
-                .setGone(R.id.ibl_confirm, item.getSettlementStatus() == BillStatus.NOT_SETTLE)
+                .setGone(R.id.ibl_confirm, !mIsBatch && item.getSettlementStatus() == BillStatus.NOT_SETTLE)
                 .setGone(R.id.ibl_warehouse_tag, item.getBillStatementFlag() == 1)
-                .setGone(R.id.ibl_check_box, item.getSettlementStatus() == BillStatus.NOT_SETTLE)
+                .setGone(R.id.ibl_check_box, mIsBatch)
+                .setGone(R.id.ibl_view_detail, !mIsBatch)
+                .setChecked(R.id.ibl_check_box, item.isSelected())
                 .getView(R.id.ibl_icon)).setImageURL(item.getGroupLogoUrl());
     }
 
@@ -84,6 +87,11 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
                 }
             }
         }
+    }
+
+    void setBatch(boolean isBatch) {
+        mIsBatch = isBatch;
+        notifyDataSetChanged();
     }
 
     private int getItemPosition(BillBean item) {

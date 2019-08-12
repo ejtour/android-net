@@ -2,6 +2,7 @@ package com.hll_sc_app.app.bill.list;
 
 import android.text.TextUtils;
 
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.bill.BillListResp;
@@ -34,14 +35,14 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
     @Override
     public void export(String email, int sign) {
         Bill.exportEmail(sign, email, mParam.getFormatStartTime(), mParam.getFormatEndTime(), UserConfig.getGroupID(),
-                null, mParam.getShopIDs(), mParam.getSettlementStatus(), Utils.getExportObserver(mView));
+                mParam.getShopIDs(), mParam.getSettlementStatus(), Utils.getExportObserver(mView));
     }
 
     @Override
     public void doAction(List<String> ids) {
-        Bill.billAction(ids, new SimpleObserver<Object>(mView) {
+        Bill.billAction(ids, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
-            public void onSuccess(Object o) {
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                 mView.actionSuccess();
             }
         });
@@ -83,7 +84,6 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
         Bill.getBillList(mPageNum,
                 mParam.getFormatStartTime(),
                 mParam.getFormatEndTime(),
-                null,
                 UserConfig.getGroupID(),
                 mParam.getShopIDs(),
                 mParam.getSettlementStatus(),
