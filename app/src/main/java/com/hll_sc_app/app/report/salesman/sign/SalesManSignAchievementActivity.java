@@ -298,7 +298,7 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
     @Override
     public void showSalesManSignTotalDatas(SalesManSignResp salesManSignResp) {
         txtTotal.setText("合计");
-        totalTxt.setText("--");
+        totalTxt.setText(String.valueOf(salesManSignResp.getTotalSize()));
         totalIntentCustomerNum.setText(String.valueOf(salesManSignResp.getTotalIntentCustomerNum()));
         totalSignCustomerNum.setText(String.valueOf(salesManSignResp.getTotalSignCustomerNum()));
         totalSignShopNum.setText(String.valueOf(salesManSignResp.getTotalSignShopNum()));

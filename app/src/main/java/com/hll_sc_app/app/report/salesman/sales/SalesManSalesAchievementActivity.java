@@ -314,7 +314,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
     @Override
     public void showSalesManSalesTotalDatas(SalesManSalesResp salesManSalesResp) {
         txtTotal.setText("合计");
-        totalTxt.setText("--");
+        totalTxt.setText(String.valueOf(salesManSalesResp.getTotalSize()));
         totalValidOrderNum.setText(String.valueOf(salesManSalesResp.getTotalValidBillNum()));
         totalTradeAmount.setText(CommonUtils.formatMoney(salesManSalesResp.getTotalSalesAmount()));
         totalSettleOrderNum.setText(String.valueOf(salesManSalesResp.getTotalSettleBillNum()));
