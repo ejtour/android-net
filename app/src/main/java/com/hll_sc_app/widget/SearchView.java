@@ -1,6 +1,7 @@
 package com.hll_sc_app.widget;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,9 @@ public class SearchView extends FrameLayout {
     private ImageView mImgSearchClear;
     private ImageView mImgSearchTitle;
     private ContentClickListener mListener;
+    private Context mContext;
+
+    private boolean isLeftModal = false;
 
     public SearchView(@NonNull Context context) {
         super(context);
@@ -33,6 +37,7 @@ public class SearchView extends FrameLayout {
     }
 
     private void init(Context context) {
+        mContext = context;
         setBackgroundResource(R.color.base_white);
         int padding = UIUtils.dip2px(10);
         setPadding(0, padding, 0, padding);
@@ -71,7 +76,9 @@ public class SearchView extends FrameLayout {
         } else {
             mImgSearchClear.setVisibility(View.GONE);
             mTxtSearchContent.setText(content);
-            params.weight = 0;
+            if (!isLeftModal) {
+                params.weight = 0;
+            }
         }
         if (mListener != null) {
             mListener.toSearch(getSearchContent());
@@ -101,6 +108,25 @@ public class SearchView extends FrameLayout {
 
     public boolean isSearchStatus() {
         return mImgSearchClear.getVisibility() == View.VISIBLE;
+    }
+
+
+    /**
+     * 设置搜索栏内背景色
+     *
+     * @param id
+     */
+    public void setSearchBackgroundColor(@DrawableRes int id) {
+        mLlContent.setBackground(ContextCompat.getDrawable(mContext, id));
+    }
+
+    /**
+     * 设置搜索文字的位置靠左
+     */
+    public void setSearchTextLeft() {
+        isLeftModal = true;
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mTxtSearchContent.getLayoutParams();
+        params.weight = 1;
     }
 
     public interface ContentClickListener {
