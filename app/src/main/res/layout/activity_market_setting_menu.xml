@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/asa_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_rightVisibility="false"
+        app:tb_title="营销中心" />
+
+    <RelativeLayout
+        android:id="@+id/ll_product"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/base_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_division_label"
+            android:drawablePadding="10dp"
+            android:text="商品促销"
+            android:textColor="@color/base_text222"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_little_right_arrow" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_eeeeee" />
+
+    <RelativeLayout
+        android:id="@+id/ll_order"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/base_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_order_book"
+            android:drawablePadding="10dp"
+            android:text="订单促销"
+            android:textColor="@color/base_text222"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_little_right_arrow" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_eeeeee" />
+
+    <RelativeLayout
+        android:id="@+id/ll_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/base_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_coupon"
+            android:drawablePadding="10dp"
+            android:text="优惠券"
+            android:textColor="@color/base_text222"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:layout_width="5dp"
+            android:layout_height="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_little_right_arrow" />
+    </RelativeLayout>
+</LinearLayout>
