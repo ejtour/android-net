@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -28,6 +29,7 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.DatePickerDialog;
+import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -73,6 +75,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     @Autowired(name = "object0")
     String mShopID;
     private DatePickerDialog mDatePickerDialog;
+    private SelectOrderAdapter mAdapter;
+    private EmptyView mEmptyView;
     private final InvoiceParam mParam = new InvoiceParam();
     private ISelectOrderContract.ISelectOrderPresenter mPresenter;
 
@@ -101,6 +105,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0, Color.WHITE);
         mListView.addItemDecoration(decor);
+        mAdapter = new SelectOrderAdapter();
+        mListView.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -173,6 +179,17 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
             mBottomAmount.setText(processBottomAmount(resp.getInvoinceAmount()));
         }
         mBottomGroup.getParent().requestLayout();
+        if (isMore) {
+            mAdapter.addData(resp.getList());
+        } else {
+            if (CommonUtils.isEmpty(resp.getList())) {
+                initEmptyView();
+                mEmptyView.reset();
+                mEmptyView.setTips("暂无发票列表");
+            }
+            mAdapter.setNewData(resp.getList());
+        }
+        mRefreshLayout.setEnableLoadMore(resp.getList() != null && resp.getList().size() == 20);
     }
 
     private SpannableString processBottomAmount(double amount) {
@@ -181,5 +198,22 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_ed5655)),
                 source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;
+    }
+
+    @Override
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        if (e.getLevel() == UseCaseException.Level.NET) {
+            initEmptyView();
+            mEmptyView.setNetError();
+        }
+    }
+
+    private void initEmptyView() {
+        if (mEmptyView == null) {
+            mEmptyView = EmptyView.newBuilder(this)
+                    .setOnClickListener(mPresenter::start).create();
+            mAdapter.setEmptyView(mEmptyView);
+        }
     }
 }
