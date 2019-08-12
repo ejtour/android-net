@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@android:color/white"
+    android:padding="@dimen/dp_10">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/iss_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:base_placeholder="@drawable/ic_shop_placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_shop_placeholder" />
+
+    <TextView
+        android:id="@+id/iss_shop_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iss_image"
+        app:layout_constraintTop_toTopOf="@id/iss_image"
+        tools:text="我是采购商的门店名称" />
+
+    <TextView
+        android:id="@+id/iss_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="联系人：张经理／130 9876 5432"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/iss_image"
+        app:layout_constraintStart_toStartOf="@id/iss_shop_name" />
+
+    <TextView
+        android:id="@+id/iss_group_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:singleLine="true"
+        android:text="我是采购商的集团名称"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toTopOf="@id/iss_contact"
+        app:layout_constraintEnd_toEndOf="@id/iss_shop_name"
+        app:layout_constraintStart_toStartOf="@id/iss_shop_name" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
