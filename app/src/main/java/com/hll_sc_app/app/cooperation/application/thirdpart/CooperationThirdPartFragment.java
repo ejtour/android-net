@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.cooperation.application.thirdpart;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +17,11 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.BaseCooperationApplicationFragment;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
@@ -111,14 +116,35 @@ public class CooperationThirdPartFragment extends BaseCooperationApplicationFrag
             lazyLoad();
         }).create();
         mAdapter = new ThirdPartListAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             ThirdPartyPurchaserBean bean = (ThirdPartyPurchaserBean) adapter.getItem(position);
-            if (bean != null) {
+            if (bean == null) {
+                return;
+            }
+            int id = view.getId();
+            if (id == R.id.txt_status && TextUtils.equals(bean.getStatus(), "0")) {
+                toAgree(bean);
+            } else if (id == R.id.content) {
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_APPLICATION_THIRD_PART_DETAIL,
                     bean.getId());
             }
         });
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void toAgree(ThirdPartyPurchaserBean bean) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+            // 1-同意 2-拒绝 3-解除
+            .put("flag", "1")
+            .put("id", bean.getId())
+            .put("plateSupplierID", UserConfig.getGroupID())
+            .put("actionBy", userBean.getEmployeeName())
+            .create();
+        mPresenter.editCooperationThirdPartStatus(req);
     }
 
     @Override
@@ -173,6 +199,13 @@ public class CooperationThirdPartFragment extends BaseCooperationApplicationFrag
         }
 
         @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
+            viewHolder.addOnClickListener(R.id.txt_status).addOnClickListener(R.id.content);
+            return viewHolder;
+        }
+
+        @Override
         protected void convert(BaseViewHolder helper, ThirdPartyPurchaserBean item) {
             helper
                 .setGone(R.id.img_readStatus, TextUtils.equals(item.getReadStatus(), "0"))
@@ -186,16 +219,19 @@ public class CooperationThirdPartFragment extends BaseCooperationApplicationFrag
             switch (item.getStatus()) {
                 case "0":
                     // 待同意
-                    txtStatus.setTextColor(0xFFF6BB42);
-                    txtStatus.setText("待同意");
+                    txtStatus.setBackgroundResource(R.drawable.bg_button_mid_solid_primary);
+                    txtStatus.setTextColor(0xFFFFFFFF);
+                    txtStatus.setText(R.string.agree);
                     break;
                 case "1":
                     // 未同意
+                    txtStatus.setBackground(new ColorDrawable());
                     txtStatus.setTextColor(0xFFED5655);
                     txtStatus.setText("未同意");
                     break;
                 case "2":
                     // 已同意
+                    txtStatus.setBackground(new ColorDrawable());
                     txtStatus.setTextColor(0xFFAEAEAE);
                     txtStatus.setText("已同意");
                     break;
