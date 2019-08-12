@@ -629,6 +629,10 @@
             android:name=".app.invoice.entry.InvoiceEntryActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.invoice.select.shop.SelectShopActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

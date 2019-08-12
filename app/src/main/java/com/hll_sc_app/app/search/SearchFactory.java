@@ -12,6 +12,7 @@ import com.hll_sc_app.app.search.stratery.GoodsTemplateSearch;
 import com.hll_sc_app.app.search.stratery.GoodsTopSearch;
 import com.hll_sc_app.app.search.stratery.OrderSearch;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
+import com.hll_sc_app.app.search.stratery.ShopSearch;
 import com.hll_sc_app.app.search.stratery.WarehouseSearch;
 
 import java.util.HashMap;
@@ -38,6 +39,7 @@ class SearchFactory {
         ITEM_MAP.put(OrderSearch.class.getSimpleName(), OrderSearch.class);
         ITEM_MAP.put(WarehouseSearch.class.getSimpleName(), WarehouseSearch.class);
         ITEM_MAP.put(SalesManSearch.class.getSimpleName(), SalesManSearch.class);
+        ITEM_MAP.put(ShopSearch.class.getSimpleName(), ShopSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {
