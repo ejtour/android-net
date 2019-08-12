@@ -24,6 +24,7 @@ import com.hll_sc_app.bean.event.InvoiceEvent;
 import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.DatePickerDialog;
 import com.hll_sc_app.widget.TitleBar;
@@ -100,10 +101,9 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
 
     void filterDate() {
         if (mDatePickerDialog == null) {
-            Calendar begin = Calendar.getInstance();
-            begin.add(Calendar.YEAR, -3);
+            Date begin = DateUtil.parse("20170101");
             mDatePickerDialog = DatePickerDialog.newBuilder(this)
-                    .setBeginTime(begin.getTimeInMillis())
+                    .setBeginTime(begin.getTime())
                     .setEndTime(System.currentTimeMillis())
                     .setTitle("按时间筛选")
                     .setCancelable(false)

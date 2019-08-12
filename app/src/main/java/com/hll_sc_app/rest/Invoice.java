@@ -4,10 +4,13 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.api.InvoiceService;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.invoice.InvoiceListResp;
+import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -39,6 +42,31 @@ public class Invoice {
                         .put("pageSize", "20")
                         .put("userID", salesmanID)
                         .put("groupID", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取关联订单列表
+     *
+     * @param startTime 开始时间 yyyyMMdd
+     * @param endTime   结束时间 yyyyMMdd
+     * @param shopID    店铺id
+     */
+    public static void getRelevanceOrderList(int pageNum, String startTime, String endTime, String shopID, SimpleObserver<InvoiceOrderResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        InvoiceService.INSTANCE
+                .getRelevanceOrderList(BaseMapReq.newBuilder()
+                        .put("subBillDateStart", startTime)
+                        .put("subBillDateEnd", endTime)
+                        .put("groupID", user.getGroupID())
+                        .put("shopID", shopID)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("statstFlag","1")
+                        .put("salesmanID", user.getEmployeeID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

@@ -2,26 +2,36 @@ package com.hll_sc_app.app.invoice.select.order;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
 import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.DatePickerDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -36,7 +46,14 @@ import butterknife.OnClick;
  */
 
 @Route(path = RouterConfig.INVOICE_SELECT_ORDER)
-public class SelectOrderActivity extends BaseLoadActivity {
+public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrderContract.ISelectOrderView {
+    /**
+     * @param shopID 门店id
+     */
+    public static void start(String shopID) {
+        RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_ORDER, shopID);
+    }
+
     @BindView(R.id.iso_date)
     TextView mDate;
     @BindView(R.id.iso_total_amount)
@@ -53,16 +70,11 @@ public class SelectOrderActivity extends BaseLoadActivity {
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.iso_bottom_group)
     Group mBottomGroup;
+    @Autowired(name = "object0")
+    String mShopID;
     private DatePickerDialog mDatePickerDialog;
-
-    /**
-     * @param shopID 门店id
-     */
-    public static void start(String shopID) {
-        RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_ORDER, shopID);
-    }
-
     private final InvoiceParam mParam = new InvoiceParam();
+    private ISelectOrderContract.ISelectOrderPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +82,7 @@ public class SelectOrderActivity extends BaseLoadActivity {
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_invoice_select_order);
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
         initData();
     }
@@ -79,12 +92,26 @@ public class SelectOrderActivity extends BaseLoadActivity {
         mParam.setStartTime(CalendarUtils.getDateBefore(endDate, 31));
         mParam.setEndTime(CalendarUtils.getDateBefore(endDate, 1));
         updateDateText();
+        mPresenter = SelectOrderPresenter.newInstance(mParam, mShopID);
+        mPresenter.register(this);
+        mPresenter.start();
     }
 
     private void initView() {
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0, Color.WHITE);
         mListView.addItemDecoration(decor);
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.loadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.refresh();
+            }
+        });
     }
 
     private void updateDateText() {
@@ -121,10 +148,38 @@ public class SelectOrderActivity extends BaseLoadActivity {
                             mParam.setStartTime(beginTime);
                             mParam.setEndTime(endTime);
                             updateDateText();
+                            mPresenter.start();
                         }
                     })
                     .create();
         }
         mDatePickerDialog.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        mRefreshLayout.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
+    @Override
+    public void updateOrderData(InvoiceOrderResp resp, boolean isMore) {
+        mTotalAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getInvoinceAmount())));
+        mOrderAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getOrderAmount())));
+        mRefundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getRefundAmount())));
+        if (resp.getInvoinceAmount() == 0) mBottomGroup.setVisibility(View.GONE);
+        else {
+            mBottomGroup.setVisibility(View.VISIBLE);
+            mBottomAmount.setText(processBottomAmount(resp.getInvoinceAmount()));
+        }
+        mBottomGroup.getParent().requestLayout();
+    }
+
+    private SpannableString processBottomAmount(double amount) {
+        String source = String.format("开票总金额：¥%s", CommonUtils.formatMoney(amount));
+        SpannableString ss = new SpannableString(source);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_ed5655)),
+                source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return ss;
     }
 }
