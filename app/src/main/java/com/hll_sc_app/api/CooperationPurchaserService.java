@@ -14,6 +14,7 @@ import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.paymanage.PayResp;
 import com.hll_sc_app.bean.shop.SupplierShopBean;
 import com.hll_sc_app.bean.shop.SupplierShopUpdateReq;
 import com.hll_sc_app.bean.staff.EmployeeBean;
@@ -133,6 +134,16 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101090")
     Observable<BaseResp<Object>> editSettlementMethod(@Body BaseMapReq req);
+
+    /**
+     * 查询默认支付方式列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101088")
+    Observable<BaseResp<PayResp>> querySettlementMethodList(@Body BaseMapReq req);
 
 
     /**

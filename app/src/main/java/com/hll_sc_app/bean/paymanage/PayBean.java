@@ -24,7 +24,7 @@ public class PayBean implements Parcelable {
     private String imgPath;
     private String id;
     private boolean select;
-    private boolean disable;
+    private boolean enable;
 
     public PayBean() {
     }
@@ -35,15 +35,15 @@ public class PayBean implements Parcelable {
         this.imgPath = in.readString();
         this.id = in.readString();
         this.select = in.readByte() != 0;
-        this.disable = in.readByte() != 0;
+        this.enable = in.readByte() != 0;
     }
 
-    public boolean isDisable() {
-        return disable;
+    public boolean isEnable() {
+        return enable;
     }
 
-    public void setDisable(boolean disable) {
-        this.disable = disable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public boolean isSelect() {
@@ -98,6 +98,6 @@ public class PayBean implements Parcelable {
         dest.writeString(this.imgPath);
         dest.writeString(this.id);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.disable ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.enable ? (byte) 1 : (byte) 0);
     }
 }

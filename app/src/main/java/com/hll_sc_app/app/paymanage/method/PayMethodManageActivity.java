@@ -22,6 +22,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.paymanage.PayBean;
@@ -42,16 +43,16 @@ import butterknife.OnClick;
  * @date 2019/8/9
  */
 @Route(path = RouterConfig.PAY_MANAGE_METHOD, extras = Constant.LOGIN_EXTRA)
-public class PayManageMethodActivity extends BaseLoadActivity implements PayManageMethodContract.IAccountView {
+public class PayMethodManageActivity extends BaseLoadActivity implements PayMethodManageContract.IMethodView {
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-    @Autowired(name = "parcelable")
-    ArrayList<PayBean> mPayList;
     @BindView(R.id.rl_bottom)
     RelativeLayout mRlBottom;
-    private PayManageMethodPresenter mPresenter;
+    @Autowired(name = "parcelable")
+    ArrayList<PayBean> mPayList;
+    private PayMethodManagePresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        mPresenter = PayManageMethodPresenter.newInstance();
+        mPresenter = PayMethodManagePresenter.newInstance();
         mPresenter.register(this);
         initView();
     }
@@ -75,7 +76,7 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
         }
         mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
         PayListAdapter payAdapter = new PayListAdapter(mPayList);
-        payAdapter.setOnItemChildClickListener((adapter, view, position) -> clickItem(adapter, position));
+        payAdapter.setOnItemClickListener((adapter, view, position) -> clickItem(adapter, position));
         mRecyclerView.setAdapter(payAdapter);
     }
 
@@ -94,7 +95,7 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
 
     private void clickItem(BaseQuickAdapter adapter, int position) {
         PayBean payBean = (PayBean) adapter.getItem(position);
-        if (payBean != null && !payBean.isDisable()) {
+        if (payBean != null && payBean.isEnable()) {
             payBean.setSelect(!payBean.isSelect());
             if (!checkSelect()) {
                 payBean.setSelect(true);
@@ -114,7 +115,7 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
         boolean select = false;
         if (!CommonUtils.isEmpty(mPayList)) {
             for (PayBean payBean : mPayList) {
-                if (payBean.isSelect()) {
+                if (payBean.isSelect() && payBean.isEnable()) {
                     select = true;
                 }
             }
@@ -144,12 +145,12 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
         List<String> selectList = new ArrayList<>();
         if (!CommonUtils.isEmpty(mPayList)) {
             for (PayBean bean : mPayList) {
-                if (!bean.isDisable() && bean.isSelect()) {
+                if (bean.isEnable() && bean.isSelect()) {
                     selectList.add(String.valueOf(bean.getId()));
                 }
             }
         }
-        mPresenter.editSettlementMethod(payType, TextUtils.join(",", selectList));
+        mPresenter.editPayMethod(payType, TextUtils.join(",", selectList));
     }
 
     @Override
@@ -170,11 +171,12 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
         @Override
         protected void convert(BaseViewHolder helper, PayBean item) {
             helper
-                .setText(R.id.img_imgPath, item.getImgPath())
                 .setText(R.id.txt_payMethodName, item.getPayMethodName())
                 .setGone(R.id.img_select, TextUtils.equals(item.getPayType(), "2"));
+            GlideImageView imageView = helper.getView(R.id.img_imgPath);
+            imageView.setImageURL(item.getImgPath());
             ImageView imgSelect = helper.getView(R.id.img_select);
-            if (item.isDisable()) {
+            if (!item.isEnable()) {
                 imgSelect.setEnabled(false);
             } else {
                 imgSelect.setEnabled(true);

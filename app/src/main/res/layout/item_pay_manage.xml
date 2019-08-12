@@ -10,10 +10,10 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-    <ImageView
+    <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/img_imgPath"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
         android:layout_alignParentLeft="true"
         tools:src="@drawable/ic_pay_type_9"/>
 

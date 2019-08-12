@@ -8,6 +8,7 @@ import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
+import com.hll_sc_app.bean.paymanage.PayResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -23,8 +24,8 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/8/8
  */
-public class PayManagePresenter implements PayManageContract.IDeliveryTypeSetPresenter {
-    private PayManageContract.IDeliveryTypeSetView mView;
+public class PayManagePresenter implements PayManageContract.IPayManagePresenter {
+    private PayManageContract.IPayManageView mView;
 
     static PayManagePresenter newInstance() {
         return new PayManagePresenter();
@@ -32,12 +33,28 @@ public class PayManagePresenter implements PayManageContract.IDeliveryTypeSetPre
 
     @Override
     public void start() {
-        querySettlementList();
+        querySettlementMethodList();
     }
 
     @Override
-    public void register(PayManageContract.IDeliveryTypeSetView view) {
+    public void register(PayManageContract.IPayManageView view) {
         this.mView = CommonUtils.checkNotNull(view);
+    }
+
+    @Override
+    public void querySettlementMethodList() {
+        CooperationPurchaserService.INSTANCE
+            .querySettlementMethodList(BaseMapReq.newBuilder().create())
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .flatMap((Function<PayResp, ObservableSource<SettlementBean>>) o -> {
+                mView.setDefaultPayMethod(o.getRecords());
+                return getSettlementListObservable();
+            })
+            .doOnSubscribe(disposable -> mView.showLoading())
+            .doFinally(() -> mView.hideLoading())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+            .subscribe(new SettlementBeanBaseCallback());
     }
 
     @Override

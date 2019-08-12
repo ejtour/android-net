@@ -18,20 +18,20 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @author zhuyingsong
  * @date 2019/8/9
  */
-public class PayManageAccountPresenter implements PayManageAccountContract.IAccountPresenter {
-    private PayManageAccountContract.IAccountView mView;
+public class PayAccountManagePresenter implements PayAccountManageContract.IAccountPresenter {
+    private PayAccountManageContract.IAccountView mView;
 
-    static PayManageAccountPresenter newInstance() {
-        return new PayManageAccountPresenter();
+    static PayAccountManagePresenter newInstance() {
+        return new PayAccountManagePresenter();
     }
 
     @Override
-    public void register(PayManageAccountContract.IAccountView view) {
+    public void register(PayAccountManageContract.IAccountView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
     @Override
-    public void editSettlement(String payTermType, String payTerm, String settleDate) {
+    public void editAccount(String payTermType, String payTerm, String settleDate) {
         BaseMapReq req = BaseMapReq.newBuilder()
             .put("actionType", "2")
             .put("payTermType", payTermType)

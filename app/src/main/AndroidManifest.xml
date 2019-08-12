@@ -444,11 +444,11 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.paymanage.method.PayManageMethodActivity"
+            android:name=".app.paymanage.method.PayMethodManageActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.paymanage.account.PayManageAccountActivity"
+            android:name=".app.paymanage.account.PayAccountManageActivity"
             android:screenOrientation="portrait" />
 
         <activity

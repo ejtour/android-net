@@ -23,7 +23,6 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import butterknife.BindView;
@@ -37,9 +36,7 @@ import butterknife.OnClick;
  * @date 2019/8/9
  */
 @Route(path = RouterConfig.PAY_MANAGE_ACCOUNT, extras = Constant.LOGIN_EXTRA)
-public class PayManageAccountActivity extends BaseLoadActivity implements PayManageAccountContract.IAccountView {
-    @Autowired(name = "parcelable", required = true)
-    ShopSettlementReq mReq;
+public class PayAccountManageActivity extends BaseLoadActivity implements PayAccountManageContract.IAccountView {
     @BindView(R.id.txt_accountPeriod)
     TextView mTxtAccountPeriod;
     @BindView(R.id.txt_settleDate)
@@ -50,7 +47,7 @@ public class PayManageAccountActivity extends BaseLoadActivity implements PayMan
     String mPayTerm;
     @Autowired(name = "object2")
     String mSettleDate;
-    private PayManageAccountPresenter mPresenter;
+    private PayAccountManagePresenter mPresenter;
 
     public static void start(String payTermType, String payTerm, String settleDate) {
         RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_ACCOUNT, payTermType, payTerm, settleDate);
@@ -63,7 +60,7 @@ public class PayManageAccountActivity extends BaseLoadActivity implements PayMan
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        mPresenter = PayManageAccountPresenter.newInstance();
+        mPresenter = PayAccountManagePresenter.newInstance();
         mPresenter.register(this);
         showAccountView();
     }
@@ -126,7 +123,7 @@ public class PayManageAccountActivity extends BaseLoadActivity implements PayMan
         if (mTxtSettleDate.getTag() != null) {
             settleDate = String.valueOf(mTxtSettleDate.getTag());
         }
-        mPresenter.editSettlement(payTermType, payTerm, settleDate);
+        mPresenter.editAccount(payTermType, payTerm, settleDate);
     }
 
     private void showAccountPeriodWindow() {
