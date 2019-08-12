@@ -21,7 +21,6 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.RefreshOrientationList;
-import com.hll_sc_app.bean.orientation.OrientationDetailBean;
 import com.hll_sc_app.bean.orientation.OrientationListBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -41,12 +40,11 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.ORIENTATION_LIST, extras = Constant.LOGIN_EXTRA)
 public class OrientationListActivity extends BaseLoadActivity implements IOrientationListContract.IOrientationListView {
 
-    private IOrientationListContract.IOrientationListPresenter mPresenter;
-
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    private IOrientationListContract.IOrientationListPresenter mPresenter;
     private OrientationListAdapter mAdapter;
 
     private View mEmptyView;
@@ -66,6 +64,12 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
         EventBus.getDefault().register(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void initView() {
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -80,7 +84,7 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_activity_bg)
-                , UIUtils.dip2px(10)));
+            , UIUtils.dip2px(10)));
         mAdapter = new OrientationListAdapter();
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -105,11 +109,17 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
 
     @Override
     public void setView(List<OrientationListBean> list, Integer pageNum) {
-        if(pageNum != 1) {
+        if (pageNum != 1) {
             mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
         }
+    }
+
+    @Override
+    public void delSuccess() {
+        showToast("删除成功");
+        initData();
     }
 
     @Subscribe
@@ -135,14 +145,8 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         boolean reload = intent.getBooleanExtra("reload", false);
-        if(reload) {
+        if (reload) {
             initData();
         }
-    }
-
-    @Override
-    public void delSuccess() {
-        showToast("删除成功");
-        initData();
     }
 }

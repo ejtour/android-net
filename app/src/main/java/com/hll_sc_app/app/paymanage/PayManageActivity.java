@@ -120,7 +120,7 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
         } else if (id == R.id.ll_2) {
             PayManageAccountActivity.start(mBean.getPayTermType(), mBean.getPayTerm(), mBean.getSettleDate());
         } else if (id == R.id.ll_1) {
-            RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_METHOD, false, mBean.getCodPayMethod());
+            RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_METHOD, false, false, mBean.getCodPayMethod());
         }
     }
 
@@ -190,19 +190,25 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
         SpannableString spannableString = new SpannableString(method.replaceAll(",", " "));
         String[] strings = method.split(",");
         int preLength = 0;
+        // 1-6 在线支付付款方式
+        // 7-14 货到付款付款方式
         for (String string : strings) {
             int resourceId = 0;
             switch (string) {
                 case "1":
+                case "7":
                     resourceId = R.drawable.ic_pay_type_1;
                     break;
                 case "2":
+                case "8":
                     resourceId = R.drawable.ic_pay_type_2;
                     break;
                 case "3":
+                case "11":
                     resourceId = R.drawable.ic_pay_type_3;
                     break;
                 case "4":
+                case "12":
                     resourceId = R.drawable.ic_pay_type_4;
                     break;
                 case "9":
@@ -211,9 +217,11 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
                 case "10":
                     resourceId = R.drawable.ic_pay_type_10;
                     break;
+                case "5":
                 case "13":
                     resourceId = R.drawable.ic_pay_type_13;
                     break;
+                case "6":
                 case "14":
                     resourceId = R.drawable.ic_pay_type_14;
                     break;

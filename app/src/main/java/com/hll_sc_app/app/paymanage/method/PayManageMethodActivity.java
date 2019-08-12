@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,6 +22,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,44 +41,15 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
     @Autowired(name = "object0", required = true)
     boolean mIsOnline;
     @Autowired(name = "object1", required = true)
+    boolean mIsOpen;
+    @Autowired(name = "object2", required = true)
     String mMethod;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
-    @BindView(R.id.rl_title)
-    RelativeLayout mRlTitle;
-    @BindView(R.id.img_1)
-    ImageView mImg1;
-    @BindView(R.id.rl_1)
-    RelativeLayout mRl1;
-    @BindView(R.id.img_2)
-    ImageView mImg2;
-    @BindView(R.id.rl_2)
-    RelativeLayout mRl2;
-    @BindView(R.id.img_3)
-    ImageView mImg3;
-    @BindView(R.id.rl_3)
-    RelativeLayout mRl3;
-    @BindView(R.id.img_4)
-    ImageView mImg4;
-    @BindView(R.id.rl_4)
-    RelativeLayout mRl4;
     @BindView(R.id.img_9)
     ImageView mImg9;
-    @BindView(R.id.rl_9)
-    RelativeLayout mRl9;
     @BindView(R.id.img_10)
     ImageView mImg10;
-    @BindView(R.id.rl_10)
-    RelativeLayout mRl10;
-    @BindView(R.id.img_13)
-    ImageView mImg13;
-    @BindView(R.id.rl_13)
-    RelativeLayout mRl13;
-    @BindView(R.id.img_14)
-    ImageView mImg14;
-    @BindView(R.id.rl_14)
-    RelativeLayout mRl14;
-
     @BindViews({R.id.img_1, R.id.img_2, R.id.img_3, R.id.img_4, R.id.img_9, R.id.img_10, R.id.img_13, R.id.img_14})
     List<ImageView> mViews;
     @BindViews({R.id.rl_1, R.id.rl_2, R.id.rl_3, R.id.rl_4, R.id.rl_9, R.id.rl_10, R.id.rl_13, R.id.rl_14})
@@ -114,7 +87,6 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
         if (mIsOnline) {
 
         } else {
-            mRl3.setVisibility(View.GONE);
             ButterKnife.apply(mViews, (view, index) -> {
                 if (view != mImg9 && view != mImg10) {
                     view.setEnabled(false);
@@ -136,9 +108,7 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
             }
         }
         return select;
-
     }
-
 
     @OnClick({R.id.img_close, R.id.txt_save})
     public void onViewClicked(View view) {
@@ -156,9 +126,16 @@ public class PayManageMethodActivity extends BaseLoadActivity implements PayMana
 
     private void toSave() {
         String payType = mIsOnline ? "1" : "2";
-        String payMethod = "";
+        List<String> selectList = new ArrayList<>();
+        if (!CommonUtils.isEmpty(mViews)) {
+            for (ImageView imageView : mViews) {
+                if (imageView.isSelected()) {
+                    selectList.add(String.valueOf(imageView.getTag()));
+                }
+            }
+        }
+        mPresenter.editSettlementMethod(payType, TextUtils.join(",", selectList));
     }
-
 
     @Override
     public void editSuccess() {
