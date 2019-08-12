@@ -28,12 +28,6 @@ public interface SalesManSignAchievementContract {
 
         void showSalesManSignTotalDatas(SalesManSignResp salesManSignResp);
 
-        /**
-         * 获取搜索词
-         *
-         * @return 搜索词
-         */
-        String getSearchParam();
 
         /**
          * 获取参数

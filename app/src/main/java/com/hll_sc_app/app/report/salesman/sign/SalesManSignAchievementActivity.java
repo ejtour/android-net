@@ -308,11 +308,6 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
     }
 
     @Override
-    public String getSearchParam() {
-        return null;
-    }
-
-    @Override
     public SalesManAchievementReq getParams() {
         params.setTimeType(1);
         params.setTimeFlag(0);
@@ -327,6 +322,12 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
     @Override
     public void exportFailure(String tip) {
         Utils.exportFailure(this, tip);
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
     }
 
     @Override
