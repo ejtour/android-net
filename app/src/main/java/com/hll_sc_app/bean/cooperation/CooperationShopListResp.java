@@ -4,7 +4,7 @@ import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 
 import java.util.List;
 
-public class CooperationShopListReq {
+public class CooperationShopListResp {
     private List<PurchaserShopBean> shopList;
 
     public List<PurchaserShopBean> getShopList() {
