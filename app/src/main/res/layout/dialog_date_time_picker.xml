@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp"
+    tools:background="@android:color/white">
+
+
+    <ImageView
+        android:id="@+id/wdf_close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/wdf_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="活动开始时间"
+        android:textColor="@color/color_030303"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintBottom_toBottomOf="@+id/wdf_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/wdf_close" />
+
+    <TextView
+        android:id="@+id/wdf_ok"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="确认"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toBottomOf="@+id/wdf_close"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/wdf_close" />
+
+    <View
+        android:id="@+id/wdf_begin_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wdf_close" />
+
+    <TextView
+        android:id="@+id/txt_date_select"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:text="选择日期"
+        android:textColor="@drawable/color_date_picker_text"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintEnd_toStartOf="@+id/txt_time_select"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wdf_begin_divider" />
+
+    <View
+        android:id="@+id/view_date_divider"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/base_colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/wdf_begin_divider_2"
+        app:layout_constraintEnd_toEndOf="@id/txt_date_select"
+        app:layout_constraintStart_toStartOf="@id/txt_date_select" />
+
+
+    <TextView
+        android:id="@+id/txt_time_select"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:text="选择时间"
+        android:textColor="@drawable/color_date_picker_text"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_date_select"
+        app:layout_constraintTop_toBottomOf="@+id/wdf_begin_divider" />
+
+
+    <View
+        android:id="@+id/wdf_begin_divider_2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_date_select" />
+
+    <android.support.constraint.Group
+        android:id="@+id/wiker_group_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="wdf_hour,wdf_minute" />
+
+    <android.support.constraint.Group
+        android:id="@+id/wiker_group_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="wdf_year,wdf_month,wdf_day" />
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/wdf_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:minHeight="225dp"
+        app:layout_constraintEnd_toStartOf="@+id/wdf_month"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_date_select" />
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/wdf_month"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/wdf_year"
+        app:layout_constraintEnd_toStartOf="@+id/wdf_day"
+        app:layout_constraintStart_toEndOf="@+id/wdf_year"
+        app:layout_constraintTop_toTopOf="@+id/wdf_year"
+        app:layout_goneMarginRight="30dp" />
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/wdf_day"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/wdf_year"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/wdf_month"
+        app:layout_constraintTop_toTopOf="@+id/wdf_year"
+        app:layout_goneMarginRight="30dp" />
+
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/wdf_hour"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="75dp"
+        android:layout_marginTop="20dp"
+        android:minHeight="225dp"
+        app:layout_constraintEnd_toStartOf="@+id/wdf_minute"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_date_select" />
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/wdf_minute"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="75dp"
+        app:layout_constraintBottom_toBottomOf="@+id/wdf_hour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/wdf_hour"
+        app:layout_constraintTop_toTopOf="@+id/wdf_hour"
+        app:layout_goneMarginRight="30dp" />
+
+
+</android.support.constraint.ConstraintLayout>
