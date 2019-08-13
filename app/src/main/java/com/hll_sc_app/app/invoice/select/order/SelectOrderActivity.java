@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.invoice.input.InvoiceInputActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -50,10 +51,11 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.INVOICE_SELECT_ORDER)
 public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrderContract.ISelectOrderView {
     /**
-     * @param shopID 门店id
+     * @param shopID    门店id
+     * @param shopPhone 门店联系电话
      */
-    public static void start(String shopID) {
-        RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_ORDER, shopID);
+    public static void start(String shopID, String shopPhone) {
+        RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_ORDER, shopID, shopPhone);
     }
 
     @BindView(R.id.iso_date)
@@ -74,6 +76,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     Group mBottomGroup;
     @Autowired(name = "object0")
     String mShopID;
+    @Autowired(name = "object1")
+    String mShopPhone;
     private DatePickerDialog mDatePickerDialog;
     private SelectOrderAdapter mAdapter;
     private EmptyView mEmptyView;
@@ -132,7 +136,7 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
                 filterDate();
                 break;
             case R.id.iso_next:
-                showToast("下一步待添加");
+                InvoiceInputActivity.start((double) mBottomAmount.getTag(), mShopPhone);
                 break;
         }
     }
@@ -177,6 +181,7 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         else {
             mBottomGroup.setVisibility(View.VISIBLE);
             mBottomAmount.setText(processBottomAmount(resp.getInvoinceAmount()));
+            mBottomAmount.setTag(resp.getInvoinceAmount());
         }
         mBottomGroup.getParent().requestLayout();
         if (isMore) {
