@@ -42,6 +42,7 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
     TextView mTxtSet;
     @BindView(R.id.txt_title)
     TextView mTitleView;
+    private List<NameValue> values;
     /**
      * 当前等级 0-普通等级 1-vip等级
      */
@@ -89,8 +90,8 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
     }
 
     private void showDeliveryPeriodWindow(RefundTimeBean timeBean, int position) {
-        List<NameValue> values = new ArrayList<>();
         if (mDialog == null) {
+            values = new ArrayList<>();
             values.add(new NameValue("不可退货", "0"));
             values.add(new NameValue("1天", "1"));
             values.add(new NameValue("2天", "2"));
@@ -110,6 +111,19 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
                     })
                     .refreshList(values)
                     .create();
+        }
+        NameValue nameValue = null;
+        RefundTimeBean refundTimeBean = mAdapter.getItem(position);
+        if(refundTimeBean.getNum() != null) {
+            for (NameValue value : values) {
+                if(refundTimeBean.getNum().toString().equalsIgnoreCase(value.getValue())) {
+                    nameValue = value;
+                    break;
+                }
+            }
+        }
+        if(nameValue != null) {
+            mDialog.selectItem(nameValue);
         }
         mDialog.show();
     }
