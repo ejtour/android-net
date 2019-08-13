@@ -182,6 +182,10 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     }
 
     private void setOrientation() {
+        if(productList == null || productList.size() == 0) {
+            showToast("商品不能为空");
+            return;
+        }
         mPresenter.setOrientation(productList, mOrientationListBean);
     }
 

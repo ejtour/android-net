@@ -40,8 +40,10 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
     TextView mVip;
     @BindView(R.id.txt_set)
     TextView mTxtSet;
+    @BindView(R.id.txt_title)
+    TextView mTitleView;
     /**
-     *当前等级 0-普通等级 1-vip等级
+     * 当前等级 0-普通等级 1-vip等级
      */
     @Autowired(name = "object0", required = true)
     int level;
@@ -69,9 +71,10 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
         status = 0;
         //vip界面隐藏vip按钮
         mVip.setVisibility(level == 1 ? View.GONE : View.VISIBLE);
+        mTitleView.setText(level == 1 ? "VIP客户退货时效设置" : "退货时效设置");
         mEmptyView = EmptyView.newBuilder(this).setTips("没有配送时效数据").create();
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new RefundTimeAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             RefundTimeBean bean = mAdapter.getItem(position);
@@ -86,8 +89,8 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
     }
 
     private void showDeliveryPeriodWindow(RefundTimeBean timeBean, int position) {
+        List<NameValue> values = new ArrayList<>();
         if (mDialog == null) {
-            List<NameValue> values = new ArrayList<>();
             values.add(new NameValue("不可退货", "0"));
             values.add(new NameValue("1天", "1"));
             values.add(new NameValue("2天", "2"));
@@ -98,14 +101,15 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
             values.add(new NameValue("7天", "7"));
             values.add(new NameValue("15天", "15"));
             values.add(new NameValue("30天", "30"));
+
             mDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
-                .setTitleText("选择时效")
-                .setOnSelectListener(bean -> {
-                    timeBean.setNum(CommonUtils.getInt(bean.getValue()));
-                    mAdapter.notifyItemChanged(position);
-                })
-                .refreshList(values)
-                .create();
+                    .setTitleText("选择时效")
+                    .setOnSelectListener(bean -> {
+                        timeBean.setNum(CommonUtils.getInt(bean.getValue()));
+                        mAdapter.notifyItemChanged(position);
+                    })
+                    .refreshList(values)
+                    .create();
         }
         mDialog.show();
     }
