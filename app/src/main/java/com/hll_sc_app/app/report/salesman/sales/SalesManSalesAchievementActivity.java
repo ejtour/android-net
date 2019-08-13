@@ -24,6 +24,7 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.DateWeekWindow;
 import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.base.widget.DateYearMonthWindow;
 import com.hll_sc_app.base.widget.DateYearWindow;
@@ -125,6 +126,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
 
     DateYearMonthWindow dateYearMonthWindow;
     DateWindow  dateWindow;
+    DateWeekWindow weekWindow;
     DateYearWindow dateYearWindow;
 
     @Override
@@ -412,6 +414,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
     //点击自定义事件
     private void showCustomerDate(TextView dateText){
         if(isClickCustomer){
+            timeFlag = TimeFlagEnum.CUSTOMDEFINE.getCode();
             if(isClickCustomerDateAggregation==0){
                 dateWindow =dateWindow==null? new DateWindow(this):dateWindow;
                 dateWindow.setSelectListener(date -> {
@@ -423,7 +426,18 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                 dateWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDateAggregation==1){
                 //周的
-                timeType = TimeTypeEnum.WEEK.getCode();
+                weekWindow = weekWindow==null? new DateWeekWindow(this):weekWindow;
+                weekWindow.setCalendar(new Date());
+                weekWindow.setSelectListener(date->{
+                    startDate =  CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
+                    startDate = DateUtil.getWeekFirstDay(0,Long.valueOf(startDate))+"";
+                    endDate = DateUtil.getWeekLastDay(0,Long.valueOf(startDate))+"";
+                    localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
+                            + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                    timeType = TimeTypeEnum.WEEK.getCode();
+                    setDateSelect(dateText);
+                });
+                weekWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDateAggregation==2){
                 //月
                 dateYearMonthWindow =dateYearMonthWindow==null? new DateYearMonthWindow(this):dateYearMonthWindow;

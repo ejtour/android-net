@@ -23,6 +23,7 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.DateWeekWindow;
 import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.base.widget.DateYearMonthWindow;
 import com.hll_sc_app.base.widget.DateYearWindow;
@@ -127,6 +128,7 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
 
     DateYearMonthWindow dateYearMonthWindow;
     DateWindow dateWindow;
+    DateWeekWindow weekWindow;
     DateYearWindow dateYearWindow;
 
     @Override
@@ -407,7 +409,18 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
                 dateWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDateAggregation==1){
                 //周的
-                timeType = TimeTypeEnum.WEEK.getCode();
+                weekWindow = weekWindow==null? new DateWeekWindow(this):weekWindow;
+                weekWindow.setCalendar(new Date());
+                weekWindow.setSelectListener(date->{
+                    serverDate =  CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
+                    serverDate = DateUtil.getWeekFirstDay(0,Long.valueOf(serverDate))+"";
+                    String endDate = DateUtil.getWeekLastDay(0,Long.valueOf(serverDate))+"";
+                    localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
+                            + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                    timeType = TimeTypeEnum.WEEK.getCode();
+                    setDateSelect(dateText);
+                });
+                weekWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDateAggregation==2){
                 //月
                 dateYearMonthWindow =dateYearMonthWindow==null? new DateYearMonthWindow(this):dateYearMonthWindow;
