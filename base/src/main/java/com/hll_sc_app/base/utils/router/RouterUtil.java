@@ -79,6 +79,8 @@ public class RouterUtil {
             postcard.withFloat(key, (Float) value);
         } else if ("Long".equals(type)) {
             postcard.withLong(key, (Long) value);
+        } else if ("Double".equals(type)) {
+            postcard.withDouble(key, (Double) value);
         }
     }
 

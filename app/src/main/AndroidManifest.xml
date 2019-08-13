@@ -639,6 +639,11 @@
             android:name=".app.invoice.select.order.SelectOrderActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.invoice.input.InvoiceInputActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
