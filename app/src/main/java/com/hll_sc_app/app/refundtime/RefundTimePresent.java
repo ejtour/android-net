@@ -38,27 +38,30 @@ public class RefundTimePresent implements IRefundTimeContract.IPresent {
     @Override
     public void listRefundTime(Integer level) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("customerLevel", level.toString())
-            .put("groupID", UserConfig.getGroupID())
-            .create();
+                .put("customerLevel", level.toString())
+                .put("groupID", UserConfig.getGroupID())
+                .create();
         UserService.INSTANCE.listRefundTime(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<RefundTimeResp>() {
-                @Override
-                public void onSuccess(RefundTimeResp resp) {
-                    resp.setLevel(level);
-                    mView.show(resp);
-                }
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<RefundTimeResp>() {
+                    @Override
+                    public void onSuccess(RefundTimeResp resp) {
+                        resp.setLevel(level);
+                        mView.show(resp);
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if (e != null && e.getCode() != null && e.getCode().equalsIgnoreCase("00120113140")) {
+                            e.setMsg("您还没有设置VIP客户呢 请先前往合作采购商中选择设置");
+                        }
+                        mView.showError(e);
+                    }
+                });
     }
 
     @Override
