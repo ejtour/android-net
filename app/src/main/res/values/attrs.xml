@@ -32,4 +32,11 @@
     <declare-styleable name="AfterSalesActionBar">
         <attr name="sab_item" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="CouponRuleSelectView">
+        <attr name="modal" format="enum">
+            <enum name="edit" value="0" />
+            <enum name="check" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

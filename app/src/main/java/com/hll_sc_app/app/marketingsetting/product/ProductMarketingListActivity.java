@@ -16,6 +16,7 @@ import com.hll_sc_app.app.marketingsetting.adapter.MarketingListAdapter;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.event.MarketingSearchEvent;
 import com.hll_sc_app.bean.marketingsetting.MarketingListResp;
@@ -218,7 +219,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    @OnClick({R.id.txt_filter_status_true, R.id.txt_filter_date_true, R.id.img_close})
+    @OnClick({R.id.txt_filter_status_true, R.id.txt_filter_date_true, R.id.img_close, R.id.txt_add})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_filter_status_true:
@@ -252,6 +253,9 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
                 break;
             case R.id.img_close:
                 finish();
+                break;
+            case R.id.txt_add:
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST_ADD);
                 break;
             default:
                 break;

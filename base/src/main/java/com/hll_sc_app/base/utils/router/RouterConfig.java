@@ -602,5 +602,13 @@ public class RouterConfig {
      * 营销中心商品营销列表
      */
     public static final String ACTIVITY_MARKETING_PRODUCT_LIST = "/activity/marketing/product/list";
+
+    /**
+     * 营销中心商品营销列表-新增
+     */
+    public static final String ACTIVITY_MARKETING_PRODUCT_LIST_ADD = "/activity/marketing/product/list/add";
+
+
+
 }
 

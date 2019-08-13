@@ -541,6 +541,10 @@
         <activity
             android:name=".app.marketingsetting.product.ProductMarketingListActivity"
             android:screenOrientation="portrait" />
+        <!--营销中心新增-->
+        <activity
+            android:name=".app.marketingsetting.product.add.ProductMarketingAddActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

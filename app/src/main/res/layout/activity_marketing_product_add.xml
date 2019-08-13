@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_rightText="完成"
+        app:tb_rightVisibility="true"
+        app:tb_title="新增商品促销" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view_back_1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/base_white"
+                app:layout_constraintBottom_toBottomOf="@id/txt_time_end"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_theme"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="促销主题"
+                android:textColor="@color/base_text666"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintStart_toStartOf="@id/view_back_1"
+                app:layout_constraintTop_toTopOf="@id/view_back_1" />
+
+            <EditText
+                android:id="@+id/edit_theme"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:hint="最多可输入20个字"
+                android:textColor="@color/base_text666"
+                android:textColorHint="@color/color_aeaeae"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintEnd_toEndOf="@id/view_back_1"
+                app:layout_constraintStart_toEndOf="@id/txt_theme"
+                app:layout_constraintTop_toTopOf="@id/view_back_1" />
+
+            <View
+                android:id="@+id/view_divider_1"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/txt_theme"
+                app:layout_constraintTop_toBottomOf="@id/txt_theme" />
+
+
+            <TextView
+                android:id="@+id/txt_time_start"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:text="开始时间"
+                android:textColor="@color/base_text666"
+                app:layout_constraintStart_toStartOf="@id/txt_theme"
+                app:layout_constraintTop_toBottomOf="@id/view_divider_1" />
+
+            <TextView
+                android:id="@+id/txt_time_start_select"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:drawableRight="@drawable/ic_little_right_arrow"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical|right"
+                android:hint="请选择活动开始时间"
+                android:textColor="@color/base_text666"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintEnd_toEndOf="@id/edit_theme"
+                app:layout_constraintStart_toEndOf="@id/txt_time_start"
+                app:layout_constraintTop_toBottomOf="@id/view_divider_1" />
+
+            <View
+                android:id="@+id/view_divider_2"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/txt_theme"
+                app:layout_constraintTop_toBottomOf="@id/txt_time_start" />
+
+
+            <TextView
+                android:id="@+id/txt_time_end"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:text="结束时间"
+                android:textColor="@color/base_text666"
+                app:layout_constraintStart_toStartOf="@id/txt_theme"
+                app:layout_constraintTop_toBottomOf="@id/view_divider_2" />
+
+            <TextView
+                android:id="@+id/txt_time_end_select"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:drawableRight="@drawable/ic_little_right_arrow"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical|right"
+                android:hint="请选择活动结束时间"
+                android:textColor="@color/base_text666"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintEnd_toEndOf="@id/edit_theme"
+                app:layout_constraintStart_toEndOf="@id/txt_time_end"
+                app:layout_constraintTop_toBottomOf="@id/view_divider_2" />
+
+            <View
+                android:id="@+id/view_back_2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/base_white"
+                app:layout_constraintBottom_toBottomOf="@id/txt_empty_word"
+                app:layout_constraintTop_toBottomOf="@id/view_back_1" />
+
+            <TextView
+                android:id="@+id/txt_title_product"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:text="活动商品"
+                android:textColor="@color/base_text666"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintStart_toStartOf="@id/view_back_2"
+                app:layout_constraintTop_toTopOf="@id/view_back_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:text="+ 新增活动商品"
+                android:textColor="#5695D2"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintRight_toRightOf="@id/view_back_2"
+                app:layout_constraintTop_toTopOf="@id/view_back_2" />
+
+            <View
+                android:id="@+id/view_divider_3"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/txt_title_product"
+                app:layout_constraintEnd_toEndOf="@id/edit_theme"
+                app:layout_constraintStart_toStartOf="@id/txt_theme" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_marketing_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/view_divider_3" />
+
+            <TextView
+                android:id="@+id/txt_empty_word"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="点击新增活动商品选择参加活动的商品"
+                android:textColor="@color/color_aeaeae"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintTop_toBottomOf="@id/view_divider_3" />
+
+            <View
+                android:id="@+id/view_back_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/base_white"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_rule_select"
+                app:layout_constraintTop_toBottomOf="@id/view_back_2" />
+
+            <TextView
+                android:id="@+id/txt_ladder"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:text="阶梯促销"
+                android:textColor="@color/base_text666"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintStart_toStartOf="@id/txt_theme"
+                app:layout_constraintTop_toTopOf="@id/view_back_3" />
+
+            <Switch
+                android:id="@+id/switch_ladder"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_marginRight="@dimen/dp_10"
+                app:layout_constraintRight_toRightOf="@id/view_back_3"
+                app:layout_constraintTop_toTopOf="@id/view_back_3" />
+
+            <View
+                android:id="@+id/view_divider_4"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/txt_theme"
+                app:layout_constraintTop_toBottomOf="@id/txt_ladder" />
+
+            <TextView
+                android:id="@+id/txt_market_rule"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:text="促销规则"
+                android:textColor="@color/base_text666"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintStart_toStartOf="@id/txt_theme"
+                app:layout_constraintTop_toTopOf="@id/view_divider_4" />
+
+            <TextView
+                android:id="@+id/txt_rule_select"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:drawableRight="@drawable/ic_little_right_arrow"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:hint="请选择促销规则"
+                android:textColor="@color/base_text666"
+                android:textSize="@dimen/base_text_13"
+                app:layout_constraintEnd_toEndOf="@id/edit_theme"
+                app:layout_constraintTop_toBottomOf="@id/view_divider_4" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_rule_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/base_white"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/view_back_3">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list_rule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <com.hll_sc_app.app.marketingsetting.view.CouponRuleSelectView
+                    android:id="@+id/view_coupon_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    android:visibility="visible"
+                    app:modal="edit" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_back_4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/base_white"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_area_select"
+                app:layout_constraintTop_toBottomOf="@+id/ll_rule_select" />
+
+            <TextView
+                android:id="@+id/txt_area"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:text="活动区域"
+                android:textColor="@color/base_text666"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="@id/txt_theme"
+                app:layout_constraintTop_toTopOf="@id/view_back_4" />
+
+            <TextView
+                android:id="@+id/txt_area_select"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:drawableRight="@drawable/ic_little_right_arrow"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:hint="请选择活动区域"
+                android:textColor="@color/base_text666"
+                android:textColorHint="@color/color_aeaeae"
+                android:textSize="13sp"
+                app:layout_constraintRight_toRightOf="@id/edit_theme"
+                app:layout_constraintTop_toTopOf="@id/view_back_4" />
+
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
