@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.salesman.sales;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,9 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.DateWindow;
+import com.hll_sc_app.base.widget.DateYearMonthWindow;
+import com.hll_sc_app.base.widget.DateYearWindow;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
 import com.hll_sc_app.bean.enums.TimeTypeEnum;
 import com.hll_sc_app.bean.event.SalesManSearchEvent;
@@ -116,6 +120,12 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
     private EmptyView mEmptyView;
     private SalesManAchievementReq params = new SalesManAchievementReq();
     boolean isClickCustomer = false;
+    //0 - 日统计  1 - 周统计 2 - 月统计 3 - 年统计
+    int isClickCustomerDateAggregation = 0;
+
+    DateYearMonthWindow dateYearMonthWindow;
+    DateWindow  dateWindow;
+    DateYearWindow dateYearWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -153,11 +163,11 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
      */
     private void initDefaultTime() {
         Date currentDate = new Date();
-        String date = CalendarUtils.format(currentDate, CalendarUtils.FORMAT_LOCAL_DATE);
-        date = CalendarUtils.getDateFormatString(date, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+        String dateStr = CalendarUtils.format(currentDate, CalendarUtils.FORMAT_LOCAL_DATE);
+        String date = CalendarUtils.getDateFormatString(dateStr, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
         dateTextView.setText(String.format("%s", date));
-        params.setStartDate(date);
-        params.setEndDate(date);
+        params.setStartDate(dateStr);
+        params.setEndDate(dateStr);
     }
 
     @Override
@@ -174,6 +184,8 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             return;
         }
         boolean isExport = false;
+        // -1 代表没点击 日 周 月 年 汇总
+        isClickCustomerDateAggregation = -1;
         String dateText = TimeFlagEnum.TODAY.getDesc();
         String dateCustomerText=OptionType.OPTION_REPORT_DATE_AGGREGATION;
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_DATE)) {
@@ -235,6 +247,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             localDate = CalendarUtils.format(new Date(), FORMAT_DATE);
             dateText = TimeFlagEnum.CUSTOMDEFINE.getDesc();
             dateCustomerText = OptionType.OPTION_REPORT_DATE_AGGREGATION;
+            isClickCustomerDateAggregation = 0;
             if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_WEEK_AGGREGATION)){
                 startDate = DateUtil.getWeekFirstDay(0) + "";
                 endDate = DateUtil.getWeekLastDay(0) + "";
@@ -242,17 +255,21 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                         + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
                 timeType = TimeTypeEnum.WEEK.getCode();
                 dateCustomerText = OptionType.OPTION_REPORT_WEEK_AGGREGATION;
+                isClickCustomerDateAggregation = 1;
             }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_MONTH_AGGREGATION)){
                 startDate = DateUtil.getMonthFirstDay(0) + "";
-                endDate = DateUtil.getWeekLastDay(0)+"";
+                endDate = DateUtil.getMonthLastDay(0)+"";
                 localDate = startDate.substring(0,4)+"年"+"-"+startDate.substring(4,6)+"月";
                 timeType = TimeTypeEnum.MONTH.getCode();
                 dateCustomerText = OptionType.OPTION_REPORT_MONTH_AGGREGATION;
+                isClickCustomerDateAggregation = 2;
             }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_YEAR_AGGREGATION)){
                 startDate = (DateUtil.currentTimeHllDT8()+"").substring(0,4)+"0101";
+                endDate = startDate.substring(0,4)+"1231";
                 localDate = startDate.substring(0,4)+"年";
                 timeType = TimeTypeEnum.YEAR.getCode();
-                dateCustomerText = OptionType.OPTION_REPORT_MONTH_AGGREGATION;
+                dateCustomerText = OptionType.OPTION_REPORT_YEAR_AGGREGATION;
+                isClickCustomerDateAggregation = 3;
             }
         } else {
             //导出
@@ -360,7 +377,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         mPresenter.exportSalesManSalesAchievement(email, reqParams);
     }
 
-    @OnClick({R.id.txt_date_name_title, R.id.img_back, R.id.txt_options, R.id.edt_search, R.id.img_clear,R.id.date_customer})
+    @OnClick({R.id.txt_date_name_title, R.id.img_back, R.id.txt_options, R.id.edt_search, R.id.img_clear,R.id.date_customer,R.id.txt_date_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -384,10 +401,71 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                 mPresenter.querySalesManSalesAchievementList(true);
                 imgClear.setVisibility(View.GONE);
                 break;
+            case R.id.txt_date_name:
+                showCustomerDate(dateTextView);
+                break;
             default:
                 break;
         }
     }
+
+    //点击自定义事件
+    private void showCustomerDate(TextView dateText){
+        if(isClickCustomer){
+            if(isClickCustomerDateAggregation==0){
+                dateWindow =dateWindow==null? new DateWindow(this):dateWindow;
+                dateWindow.setSelectListener(date -> {
+                    startDate = endDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
+                    localDate = CalendarUtils.format(date, FORMAT_DATE);
+                    timeType = TimeTypeEnum.DAY.getCode();
+                    setDateSelect(dateText);
+                });
+                dateWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
+            }else if(isClickCustomerDateAggregation==1){
+                //周的
+                timeType = TimeTypeEnum.WEEK.getCode();
+            }else if(isClickCustomerDateAggregation==2){
+                //月
+                dateYearMonthWindow =dateYearMonthWindow==null? new DateYearMonthWindow(this):dateYearMonthWindow;
+                dateYearMonthWindow.setCalendar(new Date());
+                dateYearMonthWindow.setSelectListener(date -> {
+                    startDate = DateUtil.getMonthFirstDay(0, Long.valueOf(CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE)))+"";
+                    endDate = String.valueOf(DateUtil.getMonthLastDay(0, Long.valueOf(startDate)));
+                    localDate = startDate.substring(0,4)+"年"+"-"+startDate.substring(4,6)+"月";
+                    timeType = TimeTypeEnum.MONTH.getCode();
+                    setDateSelect(dateText);
+                });
+                dateYearMonthWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
+            }else if(isClickCustomerDateAggregation==3){
+                //年的
+                dateYearWindow = dateYearWindow==null? new DateYearWindow(this):dateYearWindow;
+                dateYearWindow.setCalendar(new Date());
+                dateYearWindow.setSelectListener(date -> {
+                    startDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE).substring(0,4)+"0101";
+                    endDate = startDate.substring(0,4)+"1231";
+                    localDate = startDate.substring(0,4)+"年";
+                    timeType = TimeTypeEnum.YEAR.getCode();
+                    setDateSelect(dateText);
+                });
+                dateYearWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
+            }
+        }
+
+    }
+
+    /**
+     * 设置自定义的时间参数
+     * @param dateText
+     */
+    private void setDateSelect(TextView dateText){
+        dateText.setText(localDate);
+        params.setTimeType(timeType);
+        params.setTimeFlag(timeFlag);
+        params.setStartDate(startDate);
+        params.setEndDate(endDate);
+        mPresenter.querySalesManSalesAchievementList(true);
+    }
+
 
     private void showOptionsWindow(View view) {
         if (mOptionsWindow == null) {

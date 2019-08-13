@@ -601,11 +601,13 @@
         <!--业务员签约绩效-->
         <activity
             android:name=".app.report.salesman.sign.SalesManSignAchievementActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
 
         <!--业务员销售额绩效-->
         <activity
             android:name=".app.report.salesman.sales.SalesManSalesAchievementActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
 
         <!--缺货汇总-->
