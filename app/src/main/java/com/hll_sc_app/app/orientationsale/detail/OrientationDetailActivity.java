@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.orientationsale.list.OrientationListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -104,6 +105,9 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         mCooperationNameView.setText(mOrientationListBean.getPurchaserName());
         mImageView.setImageURL(mOrientationListBean.getPurchaserImgUrl());
         mShopNumView.setText("已选择" + mOrientationListBean.getPurchaserShopIDs().split(",").length + "个门店");
+        if(OrientationListActivity.getOrientationDetailBeans() != null && OrientationListActivity.getOrientationDetailBeans().size() != 0) {
+            productList = OrientationListActivity.getOrientationDetailBeans();
+        }
     }
 
     private void initData() {
@@ -112,6 +116,9 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         }
         if (mOrientationListBean.getPurchaserImgUrl() == null) {
             mPresenter.getGroupInfo(mOrientationListBean.getPurchaserID());
+        }
+        if(productList != null && productList.size() != 0) {
+            setView(productList);
         }
     }
 
@@ -178,8 +185,14 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     }
 
     private void setCooperation() {
-        mOrientationListBean.setFrom(1);
-        RouterUtil.goToActivity(RouterConfig.ORIENTATION_COOPERATION_PURCHASER, mOrientationListBean);
+        if (mOrientationListBean.getFrom() != null && mOrientationListBean.getFrom() == 0) {
+            //来源是新增
+            OrientationListActivity.setOrientationDetailBeans(productList);
+            finish();
+        } else {
+            mOrientationListBean.setFrom(1);
+            RouterUtil.goToActivity(RouterConfig.ORIENTATION_COOPERATION_PURCHASER, mOrientationListBean);
+        }
     }
 
     private void setOrientation() {

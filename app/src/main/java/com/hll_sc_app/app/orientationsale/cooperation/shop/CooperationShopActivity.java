@@ -228,7 +228,7 @@ public class CooperationShopActivity extends BaseLoadActivity implements ICooper
                 .setCancelable(false)
                 .setButton((dialog, item) -> {
                     if (item == 0) {
-                        RouterUtil.goToActivity(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD_PURCHASER, this);
+                        finish();
                     }
                     dialog.dismiss();
                 }, "确认离开", "我再想想").create().show();

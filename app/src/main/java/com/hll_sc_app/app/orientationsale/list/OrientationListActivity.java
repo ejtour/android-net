@@ -21,7 +21,9 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.RefreshOrientationList;
+import com.hll_sc_app.bean.orientation.OrientationDetailBean;
 import com.hll_sc_app.bean.orientation.OrientationListBean;
+import com.hll_sc_app.bean.orientation.OrientationProductSpecBean;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -31,6 +33,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +51,8 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
     private OrientationListAdapter mAdapter;
 
     private View mEmptyView;
+
+    private static List<OrientationDetailBean> sOrientationDetailBeans;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -155,4 +160,19 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
     }
+
+    public static List<OrientationDetailBean> getOrientationDetailBeans() {
+        return sOrientationDetailBeans;
+    }
+
+    public static void setOrientationDetailBeans(List<OrientationDetailBean> orientationDetailBeans) {
+        sOrientationDetailBeans = orientationDetailBeans;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sOrientationDetailBeans = null;
+    }
+
 }

@@ -12,7 +12,7 @@ public class OrientationListBean implements Parcelable {
     private String purchaserID;
     private String purchaserName;
     private String purchaserImgUrl;
-    private Integer from = 0;//0-来自新增 1-来自修改
+    private Integer from;//0-来自新增 1-来自修改
 
     public void setPurchaserImgUrl(String purchaserImgUrl) {
         this.purchaserImgUrl = purchaserImgUrl;
