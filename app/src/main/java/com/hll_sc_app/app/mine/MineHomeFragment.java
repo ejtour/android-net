@@ -214,7 +214,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY);
                 break;
             case R.id.txt_return_time:
-                RouterUtil.goToActivity(RouterConfig.REFUND_TIME, 0);
+                RouterUtil.goToActivity(RouterConfig.REFUND_TIME);
                 break;
             case R.id.txt_directional_selling:
                 RouterUtil.goToActivity(RouterConfig.ORIENTATION_LIST);

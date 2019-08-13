@@ -97,7 +97,7 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
                 }
             }
         });
-        mEmptyView = EmptyView.newBuilder(this).setTips("您还没有定向售卖商品哦").create();
+        mEmptyView = EmptyView.newBuilder(this).setTipsTitle("您还没有定向售卖商品哦").setTips("点击右上角新增添加").create();
         mAdapter.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
@@ -148,5 +148,11 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
         if (reload) {
             initData();
         }
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
     }
 }

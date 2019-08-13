@@ -27,7 +27,7 @@ public class RefundTimePresent implements IRefundTimeContract.IPresent {
 
     @Override
     public void start() {
-        listRefundTime();
+
     }
 
     @Override
@@ -36,9 +36,9 @@ public class RefundTimePresent implements IRefundTimeContract.IPresent {
     }
 
     @Override
-    public void listRefundTime() {
+    public void listRefundTime(Integer level) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("customerLevel", mView.getLevel().toString())
+            .put("customerLevel", level.toString())
             .put("groupID", UserConfig.getGroupID())
             .create();
         UserService.INSTANCE.listRefundTime(req)
@@ -50,7 +50,8 @@ public class RefundTimePresent implements IRefundTimeContract.IPresent {
             .subscribe(new BaseCallback<RefundTimeResp>() {
                 @Override
                 public void onSuccess(RefundTimeResp resp) {
-                    mView.show(resp.getRecords());
+                    resp.setLevel(level);
+                    mView.show(resp);
                 }
 
                 @Override
