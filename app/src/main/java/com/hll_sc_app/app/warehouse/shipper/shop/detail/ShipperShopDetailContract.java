@@ -36,7 +36,7 @@ public interface ShipperShopDetailContract {
          * @param append   true-追加
          * @param totalNum 总数
          */
-        void showWarehouseList(List<ShipperShopResp.ShopBean> list, boolean append, int totalNum);
+        void showWarehouseList(List<ShipperShopResp.PurchaserBean> list, boolean append, int totalNum);
     }
 
     interface IShipperShopDetailPresenter extends IPresenter<IShipperShopDetailView> {
@@ -45,12 +45,12 @@ public interface ShipperShopDetailContract {
          *
          * @param showLoading true-显示 loading
          */
-        void queryWarehousePurchaserList(boolean showLoading);
+        void queryWarehouseList(boolean showLoading);
 
         /**
          * 查询下一页签约关系列表
          */
-        void queryMoreWarehousePurchaserList();
+        void queryMoreWarehouseList();
 
         /**
          * 代仓编辑合作采购商
@@ -58,6 +58,6 @@ public interface ShipperShopDetailContract {
          * @param bean       采购商
          * @param actionType 操作类型
          */
-        void editWarehousePurchaser(ShipperShopResp.ShopBean bean, String actionType);
+        void editWarehousePurchaser(ShipperShopResp.PurchaserBean bean, String actionType);
     }
 }

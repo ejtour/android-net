@@ -73,6 +73,10 @@ public class PurchaserBean implements Parcelable {
     private String groupArea;
     private String shopNum;
     private String groupNum;
+    /**
+     * 0-正常 1-禁用 2-注销
+     */
+    private String groupActiveLabel;
     private int businessModel;
 
     public PurchaserBean() {
@@ -125,7 +129,16 @@ public class PurchaserBean implements Parcelable {
         this.groupArea = in.readString();
         this.shopNum = in.readString();
         this.groupNum = in.readString();
+        this.groupActiveLabel = in.readString();
         this.businessModel = in.readInt();
+    }
+
+    public String getGroupActiveLabel() {
+        return groupActiveLabel;
+    }
+
+    public void setGroupActiveLabel(String groupActiveLabel) {
+        this.groupActiveLabel = groupActiveLabel;
     }
 
     public String getShopNum() {
@@ -557,6 +570,7 @@ public class PurchaserBean implements Parcelable {
         dest.writeString(this.groupArea);
         dest.writeString(this.shopNum);
         dest.writeString(this.groupNum);
+        dest.writeString(this.groupActiveLabel);
         dest.writeInt(this.businessModel);
     }
 }

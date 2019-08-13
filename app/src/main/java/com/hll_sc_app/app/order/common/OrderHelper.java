@@ -40,7 +40,6 @@ public class OrderHelper {
         return PAYMENT_WAYS[way - 1];
     }
 
-
     public static CharSequence handleExtraInfo(OrderResp resp) {
         String source = null;
         switch (resp.getSubBillStatus()) {

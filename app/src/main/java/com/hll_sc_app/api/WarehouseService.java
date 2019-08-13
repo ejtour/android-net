@@ -168,4 +168,14 @@ public interface WarehouseService {
     @POST(HttpConfig.URL)
     @Headers("pv:102048")
     Observable<BaseResp<Object>> editWarehousePurchaser(@Body BaseReq<WarehousePurchaserEditReq> body);
+
+    /**
+     * 代仓查询合作关系店铺列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102049")
+    Observable<BaseResp<ShipperShopResp>> queryWarehousePurchaserShopList(@Body BaseMapReq req);
 }

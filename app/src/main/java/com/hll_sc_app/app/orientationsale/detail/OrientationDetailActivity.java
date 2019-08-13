@@ -17,7 +17,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -55,14 +54,11 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     RelativeLayout mAddProductView;
     @BindView(R.id.txt_change_tip)
     TextView mShopNumView;
-
-    private IOrientationDetailContract.IOrientationDetailPresenter mPresenter;
-
-    private OrientationDetailAdapter mAdapter;
-    private List<OrientationDetailBean> productList;
-
     @Autowired(name = "parcelable")
     OrientationListBean mOrientationListBean;
+    private IOrientationDetailContract.IOrientationDetailPresenter mPresenter;
+    private OrientationDetailAdapter mAdapter;
+    private List<OrientationDetailBean> productList;
     private View mEmptyView;
 
     @Override
@@ -80,11 +76,17 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         EventBus.getDefault().register(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void initView() {
         mAddProductView.setVisibility(View.GONE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-                , UIUtils.dip2px(1)));
+            , UIUtils.dip2px(1)));
         mAdapter = new OrientationDetailAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (view.getId() == R.id.img_delete) {
@@ -140,15 +142,14 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     public void addSuccess() {
         showToast("设置成功");
         ARouter.getInstance()
-                .build(RouterConfig.ORIENTATION_LIST)
-                .withBoolean("reload", true)
-                .withBoolean("item", true)
-                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                .setProvider(new LoginInterceptor())
-                .navigation(this);
+            .build(RouterConfig.ORIENTATION_LIST)
+            .withBoolean("reload", true)
+            .withBoolean("item", true)
+            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            .setProvider(new LoginInterceptor())
+            .navigation(this);
         finish();
     }
-
 
     private void addProduct() {
         List<OrientationDetailBean> data = mAdapter.getData();
@@ -189,6 +190,7 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         mPresenter.setOrientation(productList, mOrientationListBean);
     }
 
+
     @Subscribe
     public void onEvent(List<OrientationDetailBean> event) {
         // 商品列表
@@ -201,12 +203,12 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         boolean reload = intent.getBooleanExtra("reload", false);
-        if(reload) {
+        if (reload) {
             initData();
         }
         Parcelable parcelable = intent.getParcelableExtra("parcelable");
-        if(parcelable != null) {
-            this.mOrientationListBean = (OrientationListBean)parcelable;
+        if (parcelable != null) {
+            this.mOrientationListBean = (OrientationListBean) parcelable;
             mPresenter.getGroupInfo(mOrientationListBean.getPurchaserID());
             mImageView.setImageURL(mOrientationListBean.getPurchaserImgUrl());
             mCooperationNameView.setText(mOrientationListBean.getPurchaserName());

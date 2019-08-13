@@ -21,6 +21,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseLoadActivity {
     RadioButton mOrderBtn;
     private int mOldFragmentTag;
     private Fragment mOldFragment;
+    private long mExitTime;
 
     private MainHomeFragment mMainFragment;
     private OrderHomeFragment mOrderFragment;
@@ -179,6 +181,16 @@ public class MainActivity extends BaseLoadActivity {
             if (intent.getBooleanExtra("item", false))
                 EventBus.getDefault().post(new OrderEvent(OrderEvent.RELOAD_ITEM));
             else EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtils.showShort(this, "再按一次退出APP");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
         }
     }
 }

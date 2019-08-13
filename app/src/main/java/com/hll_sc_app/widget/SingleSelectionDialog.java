@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
 
@@ -86,6 +87,18 @@ public class SingleSelectionDialog<T> extends BaseDialog {
 
     private void select(T t) {
         mAdapter.select(t);
+    }
+
+    public void selectItem(T t) {
+        select(t);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    public void selectPosition(int position) {
+        if (CommonUtils.isEmpty(mAdapter.getData()) || position < 0 || position >= mAdapter.getData().size())
+            return;
+        select(mAdapter.getItem(position));
+        mAdapter.notifyDataSetChanged();
     }
 
     public interface OnSelectListener<T> {

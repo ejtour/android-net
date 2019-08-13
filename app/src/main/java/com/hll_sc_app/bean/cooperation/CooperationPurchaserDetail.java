@@ -14,6 +14,18 @@ import java.util.List;
  * @date 2019-07-17
  */
 public class CooperationPurchaserDetail implements Parcelable {
+    public static final Parcelable.Creator<CooperationPurchaserDetail> CREATOR =
+        new Parcelable.Creator<CooperationPurchaserDetail>() {
+            @Override
+            public CooperationPurchaserDetail createFromParcel(Parcel source) {
+                return new CooperationPurchaserDetail(source);
+            }
+
+            @Override
+            public CooperationPurchaserDetail[] newArray(int size) {
+                return new CooperationPurchaserDetail[size];
+            }
+        };
     private String defaultAccountPeriod;
     private String agreeTime;
     private String businessModel;
@@ -51,9 +63,65 @@ public class CooperationPurchaserDetail implements Parcelable {
     private String groupDistrict;
     private String resourceType;
     private String status;
+    /**
+     * 0-正常 1-禁用 2-注销
+     */
+    private String groupActiveLabel;
     private List<PurchaserShopBean> shopDetailList;
     private List<OtherLicensesBean> otherLicenses;
 
+    public CooperationPurchaserDetail() {
+    }
+
+    protected CooperationPurchaserDetail(Parcel in) {
+        this.defaultAccountPeriod = in.readString();
+        this.agreeTime = in.readString();
+        this.businessModel = in.readString();
+        this.defaultDeliveryWay = in.readString();
+        this.entityIDNo = in.readString();
+        this.businessEntity = in.readString();
+        this.defaultSettleDate = in.readString();
+        this.groupMail = in.readString();
+        this.businessNo = in.readString();
+        this.licencePhotoUrl = in.readString();
+        this.purchaserID = in.readString();
+        this.defaultAccountPeriodType = in.readString();
+        this.defaultDeliveryPeriod = in.readString();
+        this.groupCity = in.readString();
+        this.startTime = in.readString();
+        this.fax = in.readString();
+        this.reply = in.readString();
+        this.verification = in.readString();
+        this.isCertified = in.readString();
+        this.groupID = in.readString();
+        this.mobile = in.readString();
+        this.licenseName = in.readString();
+        this.customerLevel = in.readString();
+        this.linkman = in.readString();
+        this.logoUrl = in.readString();
+        this.actionType = in.readString();
+        this.maintainLevel = in.readString();
+        this.groupProvince = in.readString();
+        this.frontImg = in.readString();
+        this.groupAddress = in.readString();
+        this.shopCount = in.readString();
+        this.name = in.readString();
+        this.defaultSettlementWay = in.readString();
+        this.endTime = in.readString();
+        this.groupDistrict = in.readString();
+        this.resourceType = in.readString();
+        this.status = in.readString();
+        this.shopDetailList = in.createTypedArrayList(PurchaserShopBean.CREATOR);
+        this.otherLicenses = in.createTypedArrayList(OtherLicensesBean.CREATOR);
+    }
+
+    public String getGroupActiveLabel() {
+        return groupActiveLabel;
+    }
+
+    public void setGroupActiveLabel(String groupActiveLabel) {
+        this.groupActiveLabel = groupActiveLabel;
+    }
 
     public String getDefaultAccountPeriod() {
         return defaultAccountPeriod;
@@ -365,64 +433,6 @@ public class CooperationPurchaserDetail implements Parcelable {
 
     public void setOtherLicenses(List<OtherLicensesBean> otherLicenses) {
         this.otherLicenses = otherLicenses;
-    }
-
-    public static final Parcelable.Creator<CooperationPurchaserDetail> CREATOR =
-        new Parcelable.Creator<CooperationPurchaserDetail>() {
-        @Override
-        public CooperationPurchaserDetail createFromParcel(Parcel source) {
-            return new CooperationPurchaserDetail(source);
-        }
-
-        @Override
-        public CooperationPurchaserDetail[] newArray(int size) {
-            return new CooperationPurchaserDetail[size];
-        }
-    };
-
-    public CooperationPurchaserDetail() {
-    }
-
-    protected CooperationPurchaserDetail(Parcel in) {
-        this.defaultAccountPeriod = in.readString();
-        this.agreeTime = in.readString();
-        this.businessModel = in.readString();
-        this.defaultDeliveryWay = in.readString();
-        this.entityIDNo = in.readString();
-        this.businessEntity = in.readString();
-        this.defaultSettleDate = in.readString();
-        this.groupMail = in.readString();
-        this.businessNo = in.readString();
-        this.licencePhotoUrl = in.readString();
-        this.purchaserID = in.readString();
-        this.defaultAccountPeriodType = in.readString();
-        this.defaultDeliveryPeriod = in.readString();
-        this.groupCity = in.readString();
-        this.startTime = in.readString();
-        this.fax = in.readString();
-        this.reply = in.readString();
-        this.verification = in.readString();
-        this.isCertified = in.readString();
-        this.groupID = in.readString();
-        this.mobile = in.readString();
-        this.licenseName = in.readString();
-        this.customerLevel = in.readString();
-        this.linkman = in.readString();
-        this.logoUrl = in.readString();
-        this.actionType = in.readString();
-        this.maintainLevel = in.readString();
-        this.groupProvince = in.readString();
-        this.frontImg = in.readString();
-        this.groupAddress = in.readString();
-        this.shopCount = in.readString();
-        this.name = in.readString();
-        this.defaultSettlementWay = in.readString();
-        this.endTime = in.readString();
-        this.groupDistrict = in.readString();
-        this.resourceType = in.readString();
-        this.status = in.readString();
-        this.shopDetailList = in.createTypedArrayList(PurchaserShopBean.CREATOR);
-        this.otherLicenses = in.createTypedArrayList(OtherLicensesBean.CREATOR);
     }
 
     @Override

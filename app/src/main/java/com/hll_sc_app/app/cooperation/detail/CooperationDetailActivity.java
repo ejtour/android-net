@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.cooperation.detail;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -209,7 +210,18 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     public void showPurchaserDetail(CooperationPurchaserDetail resp, boolean append) {
         if (!append) {
             mDetail = resp;
-            mImgLogoUrl.setImageURL(resp.getLogoUrl());
+            if (TextUtils.equals(resp.getGroupActiveLabel(), "1")) {
+                // 禁用
+                mImgLogoUrl.setDisableImageUrl(resp.getLogoUrl(), GlideImageView.GROUP_BLOCK_UP);
+                mTxtName.setTextColor(Color.parseColor("#999999"));
+            } else if (TextUtils.equals(resp.getGroupActiveLabel(), "2")) {
+                // 注销
+                mImgLogoUrl.setDisableImageUrl(resp.getLogoUrl(), GlideImageView.GROUP_LOG_OUT);
+                mTxtName.setTextColor(Color.parseColor("#999999"));
+            } else {
+                mImgLogoUrl.setImageURL(resp.getLogoUrl());
+                mTxtName.setTextColor(Color.parseColor("#222222"));
+            }
             mTxtName.setText(resp.getName());
             mTxtDefaultDeliveryWay.setText(String.format("默认配送方式：%s", getDeliveryWay(resp.getDefaultDeliveryWay())));
             mTxtDefaultSettlementWay.setText(String.format("默认结算方式：%s",
@@ -398,7 +410,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 .getView(R.id.img_select).setSelected(mSelectMap != null && mSelectMap.containsKey(item.getShopID()));
             GlideImageView imageView = helper.getView(R.id.img_imagePath);
             if (TextUtils.equals(item.getIsActive(), "0")) {
-                imageView.setShopDisableImageUrl(item.getImagePath());
+                imageView.setDisableImageUrl(item.getImagePath(), GlideImageView.DISABLE_SHOP);
             } else {
                 imageView.setImageURL(item.getImagePath());
             }

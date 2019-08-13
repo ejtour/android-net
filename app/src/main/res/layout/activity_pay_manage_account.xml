@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_close"
+            style="@style/BtnClose"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="账期支付设置"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"/>
+
+        <TextView
+            android:id="@+id/txt_save"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_13"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_accountPeriod"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/txt_accountPeriod_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="账单日"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+        <TextView
+            android:id="@+id/txt_accountPeriod"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/txt_accountPeriod_title"
+            android:background="@null"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical|right"
+            android:hint="请选择账单日"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+            android:textColorHint="@color/color_aeaeae"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_settleDate"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:paddingLeft="20dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/txt_settleDate_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="结算日"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+
+        <TextView
+            android:id="@+id/txt_settleDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/txt_settleDate_title"
+            android:gravity="center_vertical|right"
+            android:singleLine="true"
+            android:text="对账单产生后0日"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+            android:textColorHint="@color/color_aeaeae"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:background="@color/color_fafafa"
+        android:gravity="center_vertical|right"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="点击可修改结算日"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="9sp"/>
+
+</LinearLayout>

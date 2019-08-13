@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.warehouse.shipper.shop.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.warehouse.ShipperShopResp;
@@ -92,7 +94,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
 
     private void initView() {
         mTxtTitle.setText(mName);
-        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到采购商门店数据").create();
+        mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到需要代仓的采购商门店").create();
         mEmptyView = EmptyView.newBuilder(this)
             .setTipsTitle("您还没有设置需要代仓的采购商门店")
             .setTips("您可以在您的合作采购商中选择需要代仓的门店")
@@ -117,29 +119,32 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
 
             @Override
             public void toSearch(String searchContent) {
-                mPresenter.queryWarehousePurchaserList(true);
+                mPresenter.queryWarehouseList(true);
             }
         });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreWarehousePurchaserList();
+                mPresenter.queryMoreWarehouseList();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryWarehousePurchaserList(false);
+                mPresenter.queryWarehouseList(false);
             }
         });
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
         mAdapter = new WarehouseListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            ShipperShopResp.ShopBean bean = mAdapter.getItem(position);
+            ShipperShopResp.PurchaserBean bean = mAdapter.getItem(position);
             if (bean != null) {
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
                 } else if (view.getId() == R.id.content) {
+                    bean.setWarehouseId(mWarehouseId);
+                    bean.setDetail(true);
+                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER_SHOP, bean);
                 }
             }
         });
@@ -148,6 +153,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
     }
 
     private void toAdd() {
+        RouterUtil.goToActivity(RouterConfig.WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER, mWarehouseId);
     }
 
     /**
@@ -155,7 +161,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
      *
      * @param bean 代仓集团
      */
-    private void showDelTipsDialog(ShipperShopResp.ShopBean bean) {
+    private void showDelTipsDialog(ShipperShopResp.PurchaserBean bean) {
         TipsDialog.newBuilder(this)
             .setTitle("确定要删除该集团么")
             .setMessage("删除该集团将附带删除该集团下所有已选需代仓的门店")
@@ -195,7 +201,7 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
     }
 
     @Override
-    public void showWarehouseList(List<ShipperShopResp.ShopBean> list, boolean append, int totalNum) {
+    public void showWarehouseList(List<ShipperShopResp.PurchaserBean> list, boolean append, int totalNum) {
         if (append) {
             if (!CommonUtils.isEmpty(list)) {
                 mAdapter.addData(list);
@@ -216,7 +222,14 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
         }
     }
 
-    private class WarehouseListAdapter extends BaseQuickAdapter<ShipperShopResp.ShopBean, BaseViewHolder> {
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresenter.start();
+    }
+
+    private class WarehouseListAdapter extends BaseQuickAdapter<ShipperShopResp.PurchaserBean, BaseViewHolder> {
 
         WarehouseListAdapter() {
             super(R.layout.list_item_warehouse_shipper);
@@ -230,11 +243,12 @@ public class ShipperShopDetailActivity extends BaseLoadActivity implements Shipp
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, ShipperShopResp.ShopBean item) {
+        protected void convert(BaseViewHolder helper, ShipperShopResp.PurchaserBean item) {
             ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getPurchaserLogo());
             helper.setText(R.id.txt_groupName, item.getPurchaserName())
                 .setText(R.id.txt_groupNum, "当前代仓门店数：" + item.getShopNum())
-                .setGone(R.id.txt_shopNum, false);
+                .setGone(R.id.txt_shopNum, false)
+                .setGone(R.id.img_arrow, false);
         }
     }
 }

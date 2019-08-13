@@ -1,10 +1,9 @@
 package com.hll_sc_app.app.report.orderGoods;
 
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.common.PurchaserBean;
-import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
-import com.hll_sc_app.utils.IExportView;
+import com.hll_sc_app.impl.IExportView;
+import com.hll_sc_app.impl.IPurchaserContract;
 
 import java.util.List;
 
@@ -14,19 +13,11 @@ import java.util.List;
  */
 
 public interface IOrderGoodsContract {
-    interface IOrderGoodsView extends IExportView {
+    interface IOrderGoodsView extends IExportView, IPurchaserContract.IPurchaserView {
         void showList(List<OrderGoodsBean> list, boolean append);
-
-        void refreshPurchaserList(List<PurchaserBean> list);
-
-        void refreshShopList(List<PurchaserShopBean> list);
     }
 
-    interface IOrderGoodsPresenter extends IPresenter<IOrderGoodsView> {
-        void getPurchaserList(String searchWords);
-
-        void getShopList(String purchaseID, String searchWords);
-
+    interface IOrderGoodsPresenter extends IPresenter<IOrderGoodsView>, IPurchaserContract.IPurchaserPresenter {
         void getOrderGoods(boolean showLoading);
 
         void reload();

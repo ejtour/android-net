@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="175dp"
+    android:background="@android:color/white">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/ibl_icon"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp_10"
+        app:base_RoundingRadius="2"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_shop_placeholder" />
+
+    <TextView
+        android:id="@+id/ibl_shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="2dp"
+        android:maxWidth="200dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@id/ibl_icon"
+        app:layout_constraintTop_toTopOf="@id/ibl_icon"
+        tools:text="采购商门店名称" />
+
+    <TextView
+        android:id="@+id/ibl_warehouse_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="代仓"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ibl_shop_name"
+        app:layout_constraintEnd_toStartOf="@+id/ibl_status"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/ibl_shop_name"
+        app:layout_constraintTop_toTopOf="@+id/ibl_shop_name" />
+
+    <TextView
+        android:id="@+id/ibl_group_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="1dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/ibl_icon"
+        app:layout_constraintEnd_toStartOf="@id/ibl_time"
+        app:layout_constraintStart_toStartOf="@id/ibl_shop_name"
+        tools:text="采购商集团名称" />
+
+    <TextView
+        android:id="@+id/ibl_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/ibl_shop_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ibl_shop_name"
+        tools:text="未结算" />
+
+    <TextView
+        android:id="@+id/ibl_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/ibl_group_name"
+        app:layout_constraintEnd_toEndOf="@id/ibl_status"
+        tools:text="08/06/12" />
+
+    <View
+        android:id="@+id/ibl_data_bg"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/bg_express_info_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ibl_icon" />
+
+    <View
+        android:id="@+id/ibl_line1"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ibl_data_bg"
+        app:layout_constraintEnd_toStartOf="@id/ibl_line2"
+        app:layout_constraintStart_toStartOf="@id/ibl_data_bg"
+        app:layout_constraintTop_toTopOf="@id/ibl_data_bg" />
+
+    <View
+        android:id="@+id/ibl_line2"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ibl_data_bg"
+        app:layout_constraintEnd_toEndOf="@id/ibl_data_bg"
+        app:layout_constraintStart_toEndOf="@id/ibl_line1"
+        app:layout_constraintTop_toTopOf="@id/ibl_data_bg" />
+
+    <TextView
+        android:id="@+id/ibl_bill_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/ibl_line1"
+        app:layout_constraintStart_toStartOf="@id/ibl_data_bg"
+        app:layout_constraintTop_toTopOf="@id/ibl_data_bg"
+        tools:text="按周，每周一" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="账期日"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/ibl_bill_date"
+        app:layout_constraintStart_toStartOf="@id/ibl_bill_date"
+        app:layout_constraintTop_toBottomOf="@id/ibl_bill_date" />
+
+    <TextView
+        android:id="@+id/ibl_bill_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/ibl_line2"
+        app:layout_constraintStart_toEndOf="@id/ibl_line1"
+        app:layout_constraintTop_toTopOf="@id/ibl_data_bg"
+        tools:text="400" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="账期日"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/ibl_bill_num"
+        app:layout_constraintStart_toStartOf="@id/ibl_bill_num"
+        app:layout_constraintTop_toBottomOf="@id/ibl_bill_num" />
+
+    <TextView
+        android:id="@+id/ibl_bill_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="@id/ibl_data_bg"
+        app:layout_constraintStart_toEndOf="@id/ibl_line2"
+        app:layout_constraintTop_toTopOf="@id/ibl_data_bg"
+        tools:text="¥182,333.00" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="本期金额"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/ibl_bill_amount"
+        app:layout_constraintStart_toStartOf="@id/ibl_bill_amount"
+        app:layout_constraintTop_toBottomOf="@id/ibl_bill_amount" />
+
+    <CheckBox
+        android:id="@+id/ibl_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:button="@drawable/bg_selector_check_box"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="点击选择该对账单"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ibl_data_bg"
+        app:layout_constraintTop_toBottomOf="@id/ibl_data_bg" />
+
+    <TextView
+        android:id="@+id/ibl_confirm"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:layout_height="25dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:minWidth="80dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="确认结算"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ibl_data_bg" />
+
+    <TextView
+        android:id="@+id/ibl_view_detail"
+        style="@style/BtnAfterSalesAction.PrimaryStroke"
+        android:layout_height="25dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:minWidth="80dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="查看详情"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibl_confirm"
+        app:layout_constraintTop_toBottomOf="@id/ibl_data_bg" />
+</android.support.constraint.ConstraintLayout>

@@ -30,7 +30,7 @@ public class GoodsListAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder
                 .setTextColor(R.id.txt_productName, ContextCompat.getColor(mContext, R.color.color_aeaeae))
                 .setTextColor(R.id.txt_productCode, ContextCompat.getColor(mContext, R.color.color_aeaeae))
                 .setTextColor(R.id.txt_specsSize, ContextCompat.getColor(mContext, R.color.color_aeaeae))
-                .getView(R.id.img_imgUrl)).setDisableImageUrl(item.getImgUrl());
+                .getView(R.id.img_imgUrl)).setDisableImageUrl(item.getImgUrl(), GlideImageView.DISABLE_IMAGE);
         } else {
             ((GlideImageView) helper
                 .setGone(R.id.txt_disableTips, false)

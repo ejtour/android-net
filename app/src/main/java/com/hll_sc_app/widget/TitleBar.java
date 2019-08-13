@@ -133,11 +133,8 @@ public class TitleBar extends ConstraintLayout {
      * 设置右侧的按钮触发函数
      */
     public void setRightBtnClick(OnClickListener listener) {
-        if (mRightImage.getVisibility() == View.VISIBLE) {
-            mRightImage.setOnClickListener(listener);
-        } else if (mRightText.getVisibility() == View.VISIBLE) {
-            mRightText.setOnClickListener(listener);
-        }
+        mRightImage.setOnClickListener(listener);
+        mRightText.setOnClickListener(listener);
     }
 
     /**

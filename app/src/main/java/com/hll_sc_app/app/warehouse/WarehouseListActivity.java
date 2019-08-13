@@ -99,7 +99,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     }
 
     private void initView() {
-        mTxtTitle.setText(UserConfig.isSelfOperated() ? "我是代仓公司" : "我的代仓公司");
+        mTxtTitle.setText(UserConfig.isSelfOperated() ? "我是代仓公司" : "代仓公司");
         mTxtOptions.setVisibility(UserConfig.isSelfOperated() ? View.VISIBLE : View.GONE);
         mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到代仓公司数据").create();
         mEmptyView = EmptyView.newBuilder(this)
@@ -177,8 +177,8 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
      */
     private void showDelTipsDialog(PurchaserBean bean) {
         TipsDialog.newBuilder(this)
-            .setTitle("删除合作")
-            .setMessage("确定要删除和【" + bean.getGroupName() + "】的代仓关系嘛？")
+            .setTitle("解除合作")
+            .setMessage("确定要解除和【" + bean.getGroupName() + "】的代仓关系嘛？")
             .setButton((dialog, item) -> {
                 if (item == 1) {
                     mPresenter.delWarehouseList(bean.getGroupID());

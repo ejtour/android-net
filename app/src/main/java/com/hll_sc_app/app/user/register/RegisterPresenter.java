@@ -14,6 +14,8 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.regex.Pattern;
 
 import io.reactivex.Observable;
@@ -116,7 +118,12 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
 
     public static Observable<String> getUploadImgObservable(File file) {
         RequestBody body = RequestBody.create(MediaType.parse("image/JPEG"), file);
-        MultipartBody.Part photo = MultipartBody.Part.createFormData("upload", file.getName(), body);
+        MultipartBody.Part photo = null;
+        try {
+            photo = MultipartBody.Part.createFormData("upload", URLEncoder.encode(file.getName(), "utf-8"), body);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return HttpFactory.createImgUpload(UserService.class)
             .imageUpload(photo)
             .compose(ApiScheduler.getObservableScheduler());
