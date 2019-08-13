@@ -67,7 +67,7 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
     }
 
     private void initView() {
-        if(mResp == null) {
+        if (mResp == null) {
             mResp = new RefundTimeResp();
             mResp.setLevel(0);
         }
@@ -89,7 +89,7 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
         });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
-        if(mResp.getRecords() == null || mResp.getRecords().size() == 0) {
+        if (mResp.getRecords() == null || mResp.getRecords().size() == 0) {
             mPresenter.listRefundTime(mResp.getLevel());
         } else {
             mAdapter.setNewData(mResp.getRecords());
@@ -98,39 +98,37 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
     }
 
     private void showDeliveryPeriodWindow(RefundTimeBean timeBean, int position) {
-        if (mDialog == null) {
-            values = new ArrayList<>();
-            values.add(new NameValue("不可退货", "0"));
-            values.add(new NameValue("1天", "1"));
-            values.add(new NameValue("2天", "2"));
-            values.add(new NameValue("3天", "3"));
-            values.add(new NameValue("4天", "4"));
-            values.add(new NameValue("5天", "5"));
-            values.add(new NameValue("6天", "6"));
-            values.add(new NameValue("7天", "7"));
-            values.add(new NameValue("15天", "15"));
-            values.add(new NameValue("30天", "30"));
+        values = new ArrayList<>();
+        values.add(new NameValue("不可退货", "0"));
+        values.add(new NameValue("1天", "1"));
+        values.add(new NameValue("2天", "2"));
+        values.add(new NameValue("3天", "3"));
+        values.add(new NameValue("4天", "4"));
+        values.add(new NameValue("5天", "5"));
+        values.add(new NameValue("6天", "6"));
+        values.add(new NameValue("7天", "7"));
+        values.add(new NameValue("15天", "15"));
+        values.add(new NameValue("30天", "30"));
 
-            mDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
-                    .setTitleText("选择时效")
-                    .setOnSelectListener(bean -> {
-                        timeBean.setNum(CommonUtils.getInt(bean.getValue()));
-                        mAdapter.notifyItemChanged(position);
-                    })
-                    .refreshList(values)
-                    .create();
-        }
+        mDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                .setTitleText("选择时效")
+                .setOnSelectListener(bean -> {
+                    timeBean.setNum(CommonUtils.getInt(bean.getValue()));
+                    mAdapter.notifyItemChanged(position);
+                })
+                .refreshList(values)
+                .create();
         NameValue nameValue = null;
         RefundTimeBean refundTimeBean = mAdapter.getItem(position);
-        if(refundTimeBean.getNum() != null) {
+        if (refundTimeBean.getNum() != null) {
             for (NameValue value : values) {
-                if(refundTimeBean.getNum().toString().equalsIgnoreCase(value.getValue())) {
+                if (refundTimeBean.getNum().toString().equalsIgnoreCase(value.getValue())) {
                     nameValue = value;
                     break;
                 }
             }
         }
-        if(nameValue != null) {
+        if (nameValue != null) {
             mDialog.selectItem(nameValue);
         }
         mDialog.show();
@@ -149,7 +147,7 @@ public class RefundTimeActivity extends BaseLoadActivity implements IRefundTimeC
     @Override
     public void show(RefundTimeResp resp) {
         mResp.setRecords(resp.getRecords());
-        if(resp.getLevel() == 0) {
+        if (resp.getLevel() == 0) {
             mAdapter.setNewData(resp.getRecords());
             mAdapter.setEmptyView(mEmptyView);
         } else {
