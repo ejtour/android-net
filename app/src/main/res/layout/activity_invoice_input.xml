@@ -45,8 +45,8 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:animateLayoutChanges="true"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
             <View
                 android:id="@+id/aii_base_info_bg"
@@ -160,7 +160,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aii_radio_group" />
 
-            <TextView
+            <EditText
                 android:id="@+id/aii_invoice_title"
                 style="@style/InvoiceInfoEdit"
                 android:hint="请输入企业名称"
@@ -185,7 +185,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aii_invoice_title_label" />
 
-            <TextView
+            <EditText
                 android:id="@+id/aii_identifier"
                 style="@style/InvoiceInfoEdit"
                 android:hint="请输入纳税人识别号"
@@ -217,7 +217,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aii_identifier_label" />
 
-            <TextView
+            <EditText
                 android:id="@+id/aii_account"
                 style="@style/InvoiceInfoEdit"
                 android:hint="请输入账号"
@@ -242,7 +242,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aii_account_label" />
 
-            <TextView
+            <EditText
                 android:id="@+id/aii_bank"
                 style="@style/InvoiceInfoEdit"
                 android:hint="请输入账号开户行"
@@ -267,7 +267,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aii_bank_label" />
 
-            <TextView
+            <EditText
                 android:id="@+id/aii_address"
                 style="@style/InvoiceInfoEdit"
                 android:hint="请输入地址"
