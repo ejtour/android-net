@@ -13,7 +13,8 @@ import java.lang.annotation.RetentionPolicy;
         ReportLabel.CUSTOMER_SALES, ReportLabel.SIGNING_PERFORMANCE, ReportLabel.SALES_PERFORMANCE,
         ReportLabel.STOCKOUT_DIFFERENCES, ReportLabel.RECEIVE_DIFFERENCE, ReportLabel.STOCKOUT_PRODUCTS_DETAILS,
     ReportLabel.RECEIVE_DIFFERENCE_DETAILS, ReportLabel.STOCKOUT_STATISTICS, ReportLabel.REFUND_REASONS,
-    ReportLabel.SALES_MAN_SIGN_ACHIEVEMENT, ReportLabel.SALES_MAN_SALES_ACHIEVEMENT, ReportLabel.DELIVERY_LACK_GATHER})
+    ReportLabel.SALES_MAN_SIGN_ACHIEVEMENT, ReportLabel.SALES_MAN_SALES_ACHIEVEMENT, ReportLabel.DELIVERY_LACK_GATHER,
+    ReportLabel.CUSTOMER_LACK_AGGREGATION})
 @Retention(RetentionPolicy.SOURCE)
 public @interface ReportLabel {
     String SALES_STATISTICS = "商品销量统计汇总";
@@ -31,4 +32,5 @@ public @interface ReportLabel {
     String SALES_MAN_SIGN_ACHIEVEMENT = "业务员签约绩效";
     String SALES_MAN_SALES_ACHIEVEMENT = "业务员销售额绩效";
     String DELIVERY_LACK_GATHER = "缺货差异汇总";
+    String CUSTOMER_LACK_AGGREGATION="客户缺货统计表";
 }

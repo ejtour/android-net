@@ -3,6 +3,7 @@ package com.hll_sc_app.app.search;
 import com.hll_sc_app.app.search.stratery.BrandSearch;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.CooperationSearch;
+import com.hll_sc_app.app.search.stratery.CustomerLackSearch;
 import com.hll_sc_app.app.search.stratery.EmployeeSearch;
 import com.hll_sc_app.app.search.stratery.GoodsInvWarnSearch;
 import com.hll_sc_app.app.search.stratery.GoodsRelevanceListSearch;
@@ -39,6 +40,7 @@ class SearchFactory {
         ITEM_MAP.put(OrderSearch.class.getSimpleName(), OrderSearch.class);
         ITEM_MAP.put(WarehouseSearch.class.getSimpleName(), WarehouseSearch.class);
         ITEM_MAP.put(SalesManSearch.class.getSimpleName(), SalesManSearch.class);
+        ITEM_MAP.put(CustomerLackSearch.class.getSimpleName(), CustomerLackSearch.class);
         ITEM_MAP.put(ShopSearch.class.getSimpleName(), ShopSearch.class);
     }
 
