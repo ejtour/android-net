@@ -327,8 +327,6 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
 
     @Override
     public SalesManAchievementReq getParams() {
-        params.setTimeType(1);
-        params.setTimeFlag(0);
         return params;
     }
 

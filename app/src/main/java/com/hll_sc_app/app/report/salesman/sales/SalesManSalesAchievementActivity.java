@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.report.salesman.sales;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -60,7 +59,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 业务员签约绩效明细
+ * 业务员销售绩效明细
  *
  * @author 初坤
  * @date 20190723
@@ -111,8 +110,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
 
     SalesManSalesAchievementPresenter mPresenter;
     SalesManSalesAchievementAdapter mAdapter;
-    String startDate = "";
-    String endDate = "";
+    String serverDate = "";
     String localDate = "";
     int timeType = TimeTypeEnum.DAY.getCode();
     int timeFlag = TimeFlagEnum.TODAY.getCode();
@@ -168,8 +166,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         String dateStr = CalendarUtils.format(currentDate, CalendarUtils.FORMAT_LOCAL_DATE);
         String date = CalendarUtils.getDateFormatString(dateStr, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
         dateTextView.setText(String.format("%s", date));
-        params.setStartDate(dateStr);
-        params.setEndDate(dateStr);
+        params.setDate(dateStr);
     }
 
     @Override
@@ -191,49 +188,47 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         String dateText = TimeFlagEnum.TODAY.getDesc();
         String dateCustomerText=OptionType.OPTION_REPORT_DATE_AGGREGATION;
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_DATE)) {
-            startDate = DateUtil.currentTimeHllDT8() + "";
-            endDate = startDate;
+            serverDate = DateUtil.currentTimeHllDT8() + "";
             localDate = CalendarUtils.format(new Date(), FORMAT_DATE);
             isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_YES_DATE)) {
-            startDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1),
+            serverDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1),
                 CalendarUtils.FORMAT_LOCAL_DATE);
-            endDate = startDate;
             localDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1), FORMAT_DATE);
             timeFlag = TimeFlagEnum.YESTERDAY.getCode();
             dateText = TimeFlagEnum.YESTERDAY.getDesc();
             isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_WEEK)) {
-            startDate = DateUtil.getWeekFirstDay(0) + "";
-            endDate = DateUtil.getWeekLastDay(0) + "";
-            localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
+            serverDate = DateUtil.getWeekFirstDay(0) + "";
+            String endDate = DateUtil.getWeekLastDay(0) + "";
+            localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
                 + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.WEEK.getCode();
             timeFlag = TimeFlagEnum.CURRENTWEEK.getCode();
             dateText = TimeFlagEnum.CURRENTWEEK.getDesc();
             isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_PRE_WEEK)) {
-            startDate = DateUtil.getWeekFirstDay(-1) + "";
-            endDate = DateUtil.getWeekLastDay(-1) + "";
-            localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
+            serverDate = DateUtil.getWeekFirstDay(-1) + "";
+            String endDate = DateUtil.getWeekLastDay(-1) + "";
+            localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
                 + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.WEEK.getCode();
             timeFlag = TimeFlagEnum.LASTWEEK.getCode();
             dateText = TimeFlagEnum.LASTWEEK.getDesc();
             isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_MONTH)) {
-            startDate = DateUtil.getMonthFirstDay(0) + "";
-            endDate = DateUtil.getMonthLastDay(0) + "";
-            localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
+            serverDate = DateUtil.getMonthFirstDay(0) + "";
+            String endDate = DateUtil.getMonthLastDay(0) + "";
+            localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
                 + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.MONTH.getCode();
             timeFlag = TimeFlagEnum.CURRENTMONTH.getCode();
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
             isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_PRE_MONTH)) {
-            startDate = DateUtil.getMonthFirstDay(-1) + "";
-            endDate = DateUtil.getMonthLastDay(-1) + "";
-            localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
+            serverDate = DateUtil.getMonthFirstDay(-1) + "";
+            String endDate = DateUtil.getMonthLastDay(-1) + "";
+            localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
                 + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
             timeType = TimeTypeEnum.MONTH.getCode();
             timeFlag = TimeFlagEnum.LASTMONTH.getCode();
@@ -244,31 +239,30 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             linearLayout.setVisibility(View.VISIBLE);
             timeFlag = TimeFlagEnum.CUSTOMDEFINE.getCode();
             timeType = TimeTypeEnum.DAY.getCode();
-            startDate = DateUtil.currentTimeHllDT8() + "";
-            endDate =startDate;
+            serverDate = DateUtil.currentTimeHllDT8() + "";
             localDate = CalendarUtils.format(new Date(), FORMAT_DATE);
             dateText = TimeFlagEnum.CUSTOMDEFINE.getDesc();
             dateCustomerText = OptionType.OPTION_REPORT_DATE_AGGREGATION;
             isClickCustomerDateAggregation = 0;
             if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_WEEK_AGGREGATION)){
-                startDate = DateUtil.getWeekFirstDay(0) + "";
-                endDate = DateUtil.getWeekLastDay(0) + "";
-                localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
+                serverDate = DateUtil.getWeekFirstDay(0) + "";
+                String endDate = DateUtil.getWeekLastDay(0) + "";
+                localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
                         + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
                 timeType = TimeTypeEnum.WEEK.getCode();
                 dateCustomerText = OptionType.OPTION_REPORT_WEEK_AGGREGATION;
                 isClickCustomerDateAggregation = 1;
             }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_MONTH_AGGREGATION)){
-                startDate = DateUtil.getMonthFirstDay(0) + "";
-                endDate = DateUtil.getMonthLastDay(0)+"";
-                localDate = startDate.substring(0,4)+"年"+"-"+startDate.substring(4,6)+"月";
+                serverDate = DateUtil.getMonthFirstDay(0) + "";
+                String endDate = DateUtil.getMonthLastDay(0)+"";
+                localDate = serverDate.substring(0,4)+"年"+"-"+ serverDate.substring(4,6)+"月";
                 timeType = TimeTypeEnum.MONTH.getCode();
                 dateCustomerText = OptionType.OPTION_REPORT_MONTH_AGGREGATION;
                 isClickCustomerDateAggregation = 2;
             }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_YEAR_AGGREGATION)){
-                startDate = (DateUtil.currentTimeHllDT8()+"").substring(0,4)+"0101";
-                endDate = startDate.substring(0,4)+"1231";
-                localDate = startDate.substring(0,4)+"年";
+                serverDate = (DateUtil.currentTimeHllDT8()+"").substring(0,4)+"0101";
+                String endDate = serverDate.substring(0,4)+"1231";
+                localDate = serverDate.substring(0,4)+"年";
                 timeType = TimeTypeEnum.YEAR.getCode();
                 dateCustomerText = OptionType.OPTION_REPORT_YEAR_AGGREGATION;
                 isClickCustomerDateAggregation = 3;
@@ -280,8 +274,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         if(!isClickCustomer){
             linearLayout.setVisibility(View.GONE);
         }
-        params.setStartDate(startDate);
-        params.setEndDate(endDate);
+        params.setDate(serverDate);
         params.setTimeType(timeType);
         params.setTimeFlag(timeFlag);
         if (!isExport) {
@@ -350,8 +343,6 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
 
     @Override
     public SalesManAchievementReq getParams() {
-        params.setTimeType(1);
-        params.setTimeFlag(0);
         return params;
     }
 
@@ -418,7 +409,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
             if(isClickCustomerDateAggregation==0){
                 dateWindow =dateWindow==null? new DateWindow(this):dateWindow;
                 dateWindow.setSelectListener(date -> {
-                    startDate = endDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
+                    serverDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
                     localDate = CalendarUtils.format(date, FORMAT_DATE);
                     timeType = TimeTypeEnum.DAY.getCode();
                     setDateSelect(dateText);
@@ -429,10 +420,10 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                 weekWindow = weekWindow==null? new DateWeekWindow(this):weekWindow;
                 weekWindow.setCalendar(new Date());
                 weekWindow.setSelectListener(date->{
-                    startDate =  CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
-                    startDate = DateUtil.getWeekFirstDay(0,Long.valueOf(startDate))+"";
-                    endDate = DateUtil.getWeekLastDay(0,Long.valueOf(startDate))+"";
-                    localDate = CalendarUtils.getDateFormatString(startDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
+                    serverDate =  CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
+                    serverDate = DateUtil.getWeekFirstDay(0,Long.valueOf(serverDate))+"";
+                    String endDate = DateUtil.getWeekLastDay(0,Long.valueOf(serverDate))+"";
+                    localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
                             + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
                     timeType = TimeTypeEnum.WEEK.getCode();
                     setDateSelect(dateText);
@@ -443,9 +434,8 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                 dateYearMonthWindow =dateYearMonthWindow==null? new DateYearMonthWindow(this):dateYearMonthWindow;
                 dateYearMonthWindow.setCalendar(new Date());
                 dateYearMonthWindow.setSelectListener(date -> {
-                    startDate = DateUtil.getMonthFirstDay(0, Long.valueOf(CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE)))+"";
-                    endDate = String.valueOf(DateUtil.getMonthLastDay(0, Long.valueOf(startDate)));
-                    localDate = startDate.substring(0,4)+"年"+"-"+startDate.substring(4,6)+"月";
+                    serverDate = DateUtil.getMonthFirstDay(0, Long.valueOf(CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE)))+"";
+                    localDate = serverDate.substring(0,4)+"年"+"-"+ serverDate.substring(4,6)+"月";
                     timeType = TimeTypeEnum.MONTH.getCode();
                     setDateSelect(dateText);
                 });
@@ -455,9 +445,8 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                 dateYearWindow = dateYearWindow==null? new DateYearWindow(this):dateYearWindow;
                 dateYearWindow.setCalendar(new Date());
                 dateYearWindow.setSelectListener(date -> {
-                    startDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE).substring(0,4)+"0101";
-                    endDate = startDate.substring(0,4)+"1231";
-                    localDate = startDate.substring(0,4)+"年";
+                    serverDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE).substring(0,4)+"0101";
+                    localDate = serverDate.substring(0,4)+"年";
                     timeType = TimeTypeEnum.YEAR.getCode();
                     setDateSelect(dateText);
                 });
@@ -475,8 +464,7 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
         dateText.setText(localDate);
         params.setTimeType(timeType);
         params.setTimeFlag(timeFlag);
-        params.setStartDate(startDate);
-        params.setEndDate(endDate);
+        params.setDate(serverDate);
         mPresenter.querySalesManSalesAchievementList(true);
     }
 
