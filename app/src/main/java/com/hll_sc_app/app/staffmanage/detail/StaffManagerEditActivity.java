@@ -151,14 +151,14 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
     }
 
     private void toSave() {
-        if (TextUtils.isEmpty(mTxtEmployeeCode.getText().toString().trim())) {
-            showToast("请填写员工编号,字母+数字组合必须3位");
-            return;
-        }
-        if (!checkEmployeeCode(mTxtEmployeeCode.getText().toString().trim())) {
-            showToast("员工编号字母+数字组合必须3位");
-            return;
-        }
+//        if (TextUtils.isEmpty(mTxtEmployeeCode.getText().toString().trim())) {
+//            showToast("请填写员工编号,字母+数字组合必须3位");
+//            return;
+//        }
+//        if (!checkEmployeeCode(mTxtEmployeeCode.getText().toString().trim())) {
+//            showToast("员工编号字母+数字组合必须3位");
+//            return;
+//        }
         if (TextUtils.isEmpty(mTxtEmployeeName.getText().toString().trim())) {
             showToast("员工姓名不能为空");
             return;
@@ -175,14 +175,18 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             showToast("登录密码不能为空");
             return;
         }
-        if (TextUtils.isEmpty(mTxtEmail.getText().toString().trim())) {
-            showToast("邮箱不能为空");
+        if (mTxtRoles.getTag() == null) {
+            showToast("员工职位不能为空");
             return;
         }
-        if (!Utils.checkEmail(mTxtEmail.getText().toString().trim())) {
-            showToast("邮箱格式不正确");
-            return;
-        }
+//        if (TextUtils.isEmpty(mTxtEmail.getText().toString().trim())) {
+//            showToast("邮箱不能为空");
+//            return;
+//        }
+//        if (!Utils.checkEmail(mTxtEmail.getText().toString().trim())) {
+//            showToast("邮箱格式不正确");
+//            return;
+//        }
         if (isAdd()) {
             EmployeeBean bean = new EmployeeBean();
             bean.setEmail(mTxtEmail.getText().toString().trim());
