@@ -218,17 +218,4 @@ public class DateUtil {
         return Long.valueOf(formatDate);
 
     }
-
-    /**
-     * 根据周，获取时间
-     * @param year
-     * @param week
-     * @return
-     */
-    public static Calendar toWeekCalendar(int year, int week) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.WEEK_OF_YEAR, week-1);
-        return calendar;
-    }
 }
