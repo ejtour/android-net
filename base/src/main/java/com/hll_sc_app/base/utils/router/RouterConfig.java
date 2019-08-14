@@ -608,7 +608,10 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_MARKETING_PRODUCT_LIST_ADD = "/activity/marketing/product/list/add";
 
-
+    /**
+     * 营销中心-选择商品
+     */
+    public static final String ACTIVITY_MARKETING_SELECT_PRODUCT= "/activity/marketing/select/product";
 
 }
 
