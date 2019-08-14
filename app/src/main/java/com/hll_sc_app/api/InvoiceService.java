@@ -1,10 +1,14 @@
 package com.hll_sc_app.api;
 
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceListResp;
+import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
+import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
 
 import io.reactivex.Observable;
@@ -27,4 +31,12 @@ public interface InvoiceService {
     @POST(HttpConfig.URL)
     @Headers("pv:103147")
     Observable<BaseResp<InvoiceOrderResp>> getRelevanceOrderList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103136")
+    Observable<BaseResp<InvoiceHistoryResp>> getInvoiceHistory(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103133")
+    Observable<BaseResp<InvoiceMakeResp>> makeInvoice(@Body BaseReq<InvoiceMakeReq> body);
 }
