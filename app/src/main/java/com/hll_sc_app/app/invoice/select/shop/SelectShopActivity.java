@@ -83,7 +83,7 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserShopBean item = mAdapter.getItem(position);
             if (item == null) return;
-            SelectOrderActivity.start(item.getShopID(), item.getShopPhone());
+            SelectOrderActivity.start(item);
         });
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));

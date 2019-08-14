@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.invoice;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -7,7 +10,7 @@ import java.util.List;
  * @since 2019/8/14
  */
 
-public class InvoiceMakeReq {
+public class InvoiceMakeReq implements Parcelable {
     /**
      * 账号
      */
@@ -83,13 +86,13 @@ public class InvoiceMakeReq {
     /**
      * 退款订单ID列表
      */
-    private List<Integer> refundBillIDList;
+    private List<String> refundBillIDList;
     /**
      * 纳税人识别号
      */
     private String taxpayerNum;
     /**
-     * 	联系电话
+     * 联系电话
      */
     private String telephone;
     /**
@@ -245,11 +248,11 @@ public class InvoiceMakeReq {
         this.receiver = receiver;
     }
 
-    public List<Integer> getRefundBillIDList() {
+    public List<String> getRefundBillIDList() {
         return refundBillIDList;
     }
 
-    public void setRefundBillIDList(List<Integer> refundBillIDList) {
+    public void setRefundBillIDList(List<String> refundBillIDList) {
         this.refundBillIDList = refundBillIDList;
     }
 
@@ -284,4 +287,77 @@ public class InvoiceMakeReq {
     public void setUserID(String userID) {
         this.userID = userID;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.account);
+        dest.writeString(this.address);
+        dest.writeStringList(this.billIDList);
+        dest.writeString(this.groupID);
+        dest.writeString(this.imagePath);
+        dest.writeString(this.invoiceNO);
+        dest.writeDouble(this.invoicePrice);
+        dest.writeDouble(this.orderAmount);
+        dest.writeDouble(this.refundAmount);
+        dest.writeString(this.invoiceTitle);
+        dest.writeInt(this.invoiceType);
+        dest.writeString(this.note);
+        dest.writeString(this.openBank);
+        dest.writeString(this.purchaserID);
+        dest.writeString(this.purchaserName);
+        dest.writeString(this.purchaserShopID);
+        dest.writeString(this.purchaserShopName);
+        dest.writeString(this.receiver);
+        dest.writeStringList(this.refundBillIDList);
+        dest.writeString(this.taxpayerNum);
+        dest.writeString(this.telephone);
+        dest.writeInt(this.titleType);
+        dest.writeString(this.userID);
+    }
+
+    public InvoiceMakeReq() {
+    }
+
+    protected InvoiceMakeReq(Parcel in) {
+        this.account = in.readString();
+        this.address = in.readString();
+        this.billIDList = in.createStringArrayList();
+        this.groupID = in.readString();
+        this.imagePath = in.readString();
+        this.invoiceNO = in.readString();
+        this.invoicePrice = in.readDouble();
+        this.orderAmount = in.readDouble();
+        this.refundAmount = in.readDouble();
+        this.invoiceTitle = in.readString();
+        this.invoiceType = in.readInt();
+        this.note = in.readString();
+        this.openBank = in.readString();
+        this.purchaserID = in.readString();
+        this.purchaserName = in.readString();
+        this.purchaserShopID = in.readString();
+        this.purchaserShopName = in.readString();
+        this.receiver = in.readString();
+        this.refundBillIDList = in.createStringArrayList();
+        this.taxpayerNum = in.readString();
+        this.telephone = in.readString();
+        this.titleType = in.readInt();
+        this.userID = in.readString();
+    }
+
+    public static final Parcelable.Creator<InvoiceMakeReq> CREATOR = new Parcelable.Creator<InvoiceMakeReq>() {
+        @Override
+        public InvoiceMakeReq createFromParcel(Parcel source) {
+            return new InvoiceMakeReq(source);
+        }
+
+        @Override
+        public InvoiceMakeReq[] newArray(int size) {
+            return new InvoiceMakeReq[size];
+        }
+    };
 }
