@@ -35,6 +35,9 @@ public class SalesManSignAchievementPresenter implements SalesManSignAchievement
 
 
     public void start() {
+        SalesManAchievementReq params = mView.getParams();
+        params.setTimeType(1);
+        params.setTimeFlag(0);
         querySalesManSignAchievementList(true);
     }
 
