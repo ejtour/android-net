@@ -23,6 +23,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.invoice.detail.InvoiceDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
@@ -55,6 +56,7 @@ import butterknife.OnTextChanged;
 public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup.OnCheckedChangeListener, IInvoiceInputContract.IInvoiceInputView, BaseQuickAdapter.OnItemClickListener {
 
     private InvoiceHistoryResp mHistoryResp;
+    private InvoiceMakeResp mMakeResp;
 
     /**
      * @param req 发票请求参数
@@ -228,6 +230,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
 
     @Override
     public void makeSuccess(InvoiceMakeResp resp) {
+        mMakeResp = resp;
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_good)
                 .setImageState(R.drawable.ic_dialog_state_success)
@@ -241,7 +244,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
                         callback = new NavCallback() {
                             @Override
                             public void onArrival(Postcard postcard) {
-                                showToast("发票详情待添加");
+                                InvoiceDetailActivity.start(InvoiceInputActivity.this, mMakeResp.getId());
                             }
                         };
                     }

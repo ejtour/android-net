@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.invoice.detail.InvoiceDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -98,7 +99,11 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
             updateDate();
         } else mFilterGroup.setVisibility(View.GONE);
         mAdapter = new InvoiceAdapter();
-        mAdapter.setOnItemClickListener((adapter, view, position) -> showToast("发票详情待添加"));
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            InvoiceBean item = mAdapter.getItem(position);
+            if (item == null) return;
+            InvoiceDetailActivity.start(requireActivity(), item.getId());
+        });
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

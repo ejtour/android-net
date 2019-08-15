@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/aid_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="开票详情" />
+
+    <View
+        android:id="@+id/aid_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/aid_confirm"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:layout_marginRight="@dimen/dp_10"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="确认信息无误，确认开票"
+        app:layout_constraintBottom_toBottomOf="@id/aid_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/aid_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/aid_bottom_bg" />
+
+    <TextView
+        android:id="@+id/aid_reject"
+        style="@style/BtnAfterSalesAction.PrimaryStroke"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="信息有误，驳回"
+        app:layout_constraintBottom_toBottomOf="@id/aid_bottom_bg"
+        app:layout_constraintEnd_toStartOf="@id/aid_confirm"
+        app:layout_constraintTop_toTopOf="@id/aid_bottom_bg" />
+
+    <android.support.constraint.Group
+        android:id="@+id/aid_bottom_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="aid_bottom_bg,aid_confirm,aid_reject" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/aid_bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_title_bar">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/aid_tips"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="2dp"
+                android:text="开票申请已提交至供应商，请等待供应商处理"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/aid_base_info_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aid_remark"
+                app:layout_constraintEnd_toEndOf="@id/aid_invoice_type"
+                app:layout_constraintStart_toStartOf="@id/aid_invoice_type_label"
+                app:layout_constraintTop_toTopOf="@id/aid_invoice_type_label" />
+
+            <TextView
+                android:id="@+id/aid_invoice_type_label"
+                style="@style/InvoiceInfoLabel"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="发票类型"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_tips" />
+
+            <TextView
+                android:id="@+id/aid_invoice_type"
+                style="@style/InvoiceInfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_invoice_type_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_invoice_type_label"
+                app:layout_constraintTop_toTopOf="@id/aid_invoice_type_label"
+                tools:text="普通发票" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_invoice_type_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_invoice_type"
+                app:layout_constraintStart_toStartOf="@id/aid_invoice_type_label" />
+
+            <TextView
+                android:id="@+id/aid_invoice_amount_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="发票金额"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_invoice_type_label" />
+
+            <TextView
+                android:id="@+id/aid_invoice_amount"
+                style="@style/InvoiceInfoEdit"
+                android:textColor="@color/color_ed5655"
+                app:layout_constraintBottom_toBottomOf="@id/aid_invoice_amount_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_invoice_amount_label"
+                app:layout_constraintTop_toTopOf="@id/aid_invoice_amount_label"
+
+                tools:text="¥9,300.00" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_invoice_amount_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_invoice_amount"
+                app:layout_constraintStart_toStartOf="@id/aid_invoice_amount_label" />
+
+            <TextView
+                android:id="@+id/aid_invoice_title_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="发票抬头"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_invoice_amount_label" />
+
+            <TextView
+                android:id="@+id/aid_invoice_title"
+                style="@style/InvoiceInfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_invoice_title_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_invoice_title_label"
+                app:layout_constraintTop_toTopOf="@id/aid_invoice_title_label"
+                tools:text="个人" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_invoice_title_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_invoice_title"
+                app:layout_constraintStart_toStartOf="@id/aid_invoice_title_label" />
+
+            <TextView
+                android:id="@+id/aid_account_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="账号"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_invoice_title_label" />
+
+            <TextView
+                android:id="@+id/aid_account"
+                style="@style/InvoiceInfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_account_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_account_label"
+                app:layout_constraintTop_toTopOf="@id/aid_account_label"
+                tools:text="61239821983359432" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_account_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_account"
+                app:layout_constraintStart_toStartOf="@id/aid_account_label" />
+
+            <TextView
+                android:id="@+id/aid_bank_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="开户行"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_account_label" />
+
+            <TextView
+                android:id="@+id/aid_bank"
+                style="@style/InvoiceInfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_bank_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_bank_label"
+                app:layout_constraintTop_toTopOf="@id/aid_bank_label"
+                tools:text="北京市西直门分行" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_bank_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_bank"
+                app:layout_constraintStart_toStartOf="@id/aid_bank_label" />
+
+            <TextView
+                android:id="@+id/aid_address_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="地址"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_bank_label" />
+
+            <TextView
+                android:id="@+id/aid_address"
+                style="@style/InvoiceInfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_address_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_address_label"
+                app:layout_constraintTop_toTopOf="@id/aid_address_label"
+                tools:text="北京市西直门外大街" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_address_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_address"
+                app:layout_constraintStart_toStartOf="@id/aid_address_label" />
+
+            <TextView
+                android:id="@+id/aid_recipient_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="收件人"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_address_label" />
+
+            <TextView
+                android:id="@+id/aid_recipient"
+                style="@style/InvoiceInfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_recipient_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_recipient_label"
+                app:layout_constraintTop_toTopOf="@id/aid_recipient_label"
+                tools:text="销售大萌" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_recipient_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_recipient"
+                app:layout_constraintStart_toStartOf="@id/aid_recipient_label" />
+
+            <TextView
+                android:id="@+id/aid_phone_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="联系电话"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_recipient_label" />
+
+            <TextView
+                android:id="@+id/aid_phone"
+                style="@style/InvoiceInfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_phone_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_phone_label"
+                app:layout_constraintTop_toTopOf="@id/aid_phone_label"
+                tools:text="19809876543" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_phone_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_phone"
+                app:layout_constraintStart_toStartOf="@id/aid_phone_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_recipient_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_recipient"
+                app:layout_constraintStart_toStartOf="@id/aid_recipient_label" />
+
+            <TextView
+                android:id="@+id/aid_remark_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="备注"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_phone_label" />
+
+            <TextView
+                android:id="@+id/aid_remark"
+                style="@style/InvoiceInfoEdit"
+                android:layout_height="wrap_content"
+                android:hint="无"
+                android:minHeight="45dp"
+                android:padding="@dimen/dp_10"
+                android:singleLine="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_remark_label"
+                app:layout_constraintTop_toTopOf="@id/aid_remark_label" />
+
+            <TextView
+                android:id="@+id/aid_relevance_order"
+                style="@style/InvoiceInfoEdit"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                tools:text="包含 4 张订单"
+                app:layout_constraintBottom_toBottomOf="@id/aid_relevance_order_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/aid_relevance_order_label"
+                app:layout_constraintTop_toTopOf="@id/aid_relevance_order_label" />
+
+            <TextView
+                android:id="@+id/aid_relevance_order_label"
+                style="@style/InvoiceInfoLabel"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="关联订单"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_base_info_bg" />
+
+            <View
+                android:id="@+id/aid_extra_info_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aid_extra_info"
+                app:layout_constraintEnd_toEndOf="@id/aid_extra_info_label"
+                app:layout_constraintStart_toStartOf="@id/aid_extra_info_label"
+                app:layout_constraintTop_toTopOf="@id/aid_extra_info_label" />
+
+            <TextView
+                android:id="@+id/aid_extra_info_label"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_margin="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:text="发票号码"
+                android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_relevance_order_label" />
+
+            <EditText
+                android:id="@+id/aid_extra_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/bg_invoice_extra_edit"
+                android:lineSpacingExtra="5dp"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingBottom="20dp"
+                android:textAppearance="@style/TextAppearance.City22.Middle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_extra_info_label"
+                tools:text="52353252335；523252347457；525323523535；5352352347457；" />
+
+            <View
+                android:id="@+id/aid_invoice_license_bg"
+                android:layout_width="0dp"
+                android:layout_height="114dp"
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_extra_info_bg" />
+
+            <com.hll_sc_app.base.widget.ImgUploadBlock
+                android:id="@+id/aid_invoice_license"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_margin="@dimen/dp_10"
+                app:base_title="点击上传发票凭证"
+                app:layout_constraintBottom_toBottomOf="@id/aid_invoice_license_bg"
+                app:layout_constraintEnd_toEndOf="@id/aid_invoice_license_bg"
+                app:layout_constraintStart_toStartOf="@id/aid_invoice_license_bg" />
+
+            <TextView
+                android:id="@+id/aid_invoice_license_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发票凭证"
+                android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+                app:layout_constraintBottom_toTopOf="@id/aid_invoice_license"
+                app:layout_constraintStart_toStartOf="@id/aid_invoice_license"
+                app:layout_constraintTop_toTopOf="@id/aid_invoice_license_bg" />
+
+            <View
+                android:id="@+id/aid_records_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aid_list_view"
+                app:layout_constraintEnd_toEndOf="@id/aid_add_records"
+                app:layout_constraintStart_toStartOf="@id/aid_add_records"
+                app:layout_constraintTop_toTopOf="@id/aid_add_records" />
+
+            <TextView
+                android:id="@+id/aid_records_label"
+                style="@style/InvoiceInfoLabel"
+                android:layout_margin="@dimen/dp_10"
+                android:text="回款记录"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_invoice_license_bg" />
+
+            <TextView
+                android:id="@+id/aid_add_records"
+                style="@style/InvoiceInfoEdit"
+                android:text="+ 新增回款记录"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@id/aid_records_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/aid_records_label"
+                app:layout_constraintTop_toTopOf="@id/aid_records_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_records_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_add_records"
+                app:layout_constraintStart_toStartOf="@id/aid_add_records" />
+
+            <TextView
+                android:id="@+id/aid_add_btn"
+                android:layout_width="0dp"
+                android:layout_height="58dp"
+                android:gravity="center"
+                android:text="点击新增，添加回款记录"
+                android:textColor="@color/color_aeaeae"
+                android:textSize="@dimen/text_middle_size"
+                app:layout_constraintEnd_toEndOf="@id/aid_add_records"
+                app:layout_constraintStart_toStartOf="@id/aid_add_records"
+                app:layout_constraintTop_toBottomOf="@id/aid_add_records" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/aid_list_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="58dp"
+                app:layout_constraintEnd_toEndOf="@id/aid_add_records"
+                app:layout_constraintStart_toStartOf="@id/aid_add_records"
+                app:layout_constraintTop_toBottomOf="@id/aid_add_records" />
+
+            <android.support.constraint.Group
+                android:id="@+id/aid_extra_info_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="aid_extra_info_bg,aid_extra_info,aid_extra_info_label" />
+
+            <android.support.constraint.Group
+                android:id="@+id/aid_invoice_license_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="aid_invoice_license,aid_invoice_license_bg,aid_invoice_license_label" />
+
+            <android.support.constraint.Group
+                android:id="@+id/aid_records_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="aid_records_bg,aid_records_label,
+aid_add_records,aid_add_btn,aid_list_view" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
