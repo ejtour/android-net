@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -59,6 +60,8 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
     RecyclerView mProductRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.txt_select)
+    TextView mSelectView;
 
     private ProductAdapter mProductAdapter;
     private ProductCategoryAdapter mCategoryAdapter;
@@ -131,6 +134,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
                 mProductList.add(bean);
             }
             goodsBean.setSelect(goodsBean.isSelect() ? false : true);
+            mSelectView.setText("已选：" + mProductList.size());
             adapter.notifyItemChanged(position);
         });
         mProductEmptyView = EmptyView.newBuilder(this).setTips("该分类暂无商品").create();
@@ -160,7 +164,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         mCategoryEmptyView = EmptyView.newBuilder(this).setTips("暂无分类").create();
         mCategoryAdapter.setEmptyView(mCategoryEmptyView);
         mCategoryRecyclerView.setAdapter(mCategoryAdapter);
-
+        mSelectView.setText("已选：" + mProductList.size());
         mPresenter.queryCategory();
     }
 

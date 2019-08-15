@@ -210,6 +210,9 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         productList = event;
         mAdapter.setNewData(productList);
         mAdapter.notifyDataSetChanged();
+        if (productList != null && productList.size() != 0) {
+            mAddProductView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
