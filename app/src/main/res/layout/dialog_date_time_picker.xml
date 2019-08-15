@@ -58,7 +58,6 @@
         android:gravity="center"
         android:text="选择日期"
         android:textColor="@drawable/color_date_picker_text"
-        android:textIsSelectable="true"
         android:textSize="@dimen/text_middle_size"
         app:layout_constraintEnd_toStartOf="@+id/txt_time_select"
         app:layout_constraintStart_toStartOf="parent"

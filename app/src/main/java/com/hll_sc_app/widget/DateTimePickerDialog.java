@@ -117,6 +117,7 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
     @Override
     public void show() {
         super.show();
+        mTxtDateTitle.setSelected(true);
         ButterKnife.apply(mWheelViews, (view, index) -> {
             view.removeChangingListener(this);
         });
