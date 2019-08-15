@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -50,6 +51,8 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
     ImageView mImgAllCheck;
     @Autowired(name = "parcelable", required = true)
     ArrayList<DeliveryCompanyBean> mList;
+    @BindView(R.id.fl_bottom)
+    RelativeLayout mFlBottom;
     private CompanyListAdapter mAdapter;
     private DeliveryCompanyPresenter mPresenter;
 
@@ -87,6 +90,7 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("暂无第三方物流公司数据").create());
         checkAllSelect();
+        showBottom();
     }
 
     private void checkAllSelect() {
@@ -103,10 +107,15 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
         mImgAllCheck.setSelected(select);
     }
 
+    private void showBottom() {
+        mFlBottom.setVisibility(CommonUtils.isEmpty(mList) ? View.GONE : View.VISIBLE);
+    }
+
     @Subscribe
     public void onEvent(ArrayList<DeliveryCompanyBean> list) {
         mList = list;
         mAdapter.setNewData(mList);
+        showBottom();
     }
 
     @OnClick({R.id.img_back, R.id.txt_add, R.id.img_allCheck, R.id.txt_allCheck, R.id.txt_commit})
