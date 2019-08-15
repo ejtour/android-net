@@ -47,6 +47,7 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.ORDER_INSPECTION)
 public class OrderInspectionActivity extends BaseLoadActivity implements IOrderInspectionContract.IOrderInspectionView {
     public static final int REQ_CODE = 0x233;
+    private Integer mInspectionMode;
 
     public static void start(Activity context, OrderResp resp) {
         RouterUtil.goToActivity(RouterConfig.ORDER_INSPECTION, context, REQ_CODE, resp);
@@ -83,6 +84,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
     private void initData() {
         mPresenter = OrderInspectionPresenter.newInstance();
         mPresenter.register(this);
+        mPresenter.start();
     }
 
     private void initView() {
@@ -123,6 +125,11 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
     }
 
     @Override
+    public void gotInspectionMode(Integer result) {
+        mInspectionMode = result;
+    }
+
+    @Override
     public void onBackPressed() {
         if (hasChanged) { // 如果有状态修改，进行回调
             setResult(RESULT_OK);
@@ -139,17 +146,29 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
                 SuccessDialog.newBuilder(this)
                         .setImageTitle(R.drawable.ic_dialog_failure)
                         .setImageState(R.drawable.ic_dialog_state_failure)
-                        .setMessageTitle("确定要修改验货吗？")
-                        .setMessage("您已经修改了部分验货数量\n确认后按照验货数量计算订单金额")
+                        .setMessageTitle("确认要修改验货数量么")
+                        .setMessage("您已经修改了部分商品的验货数量\n确认修改将按照验货数量计算订单金额")
                         .setButton((dialog, item) -> {
                             dialog.dismiss();
                             if (item == 1) {
                                 sendReq();
                             }
                         }, "取消修改", "确认提交").create().show();
-            } else {
-                sendReq();
-            }
+            } else if (mInspectionMode == null) {
+                mPresenter.start();
+            } else if (mInspectionMode == 2) {
+                SuccessDialog.newBuilder(this)
+                        .setImageTitle(R.drawable.ic_dialog_failure)
+                        .setImageState(R.drawable.ic_dialog_state_failure)
+                        .setMessageTitle("请确认验货数量是否无误")
+                        .setMessage("请您确认当前验货数量是否无误\n然后再确认验货")
+                        .setButton((dialog, item) -> {
+                            dialog.dismiss();
+                            if (item == 1) {
+                                sendReq();
+                            }
+                        }, "我再看看", "确认无误").create().show();
+            } else sendReq();
         }
     }
 
