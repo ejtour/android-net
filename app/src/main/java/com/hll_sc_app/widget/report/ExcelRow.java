@@ -50,6 +50,7 @@ public class ExcelRow extends LinearLayout {
             LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(10);
+            textView.setSingleLine(true);
             textView.setPadding(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0);
             textView.setTextColor(ContextCompat.getColor(getContext(), R.color.color_222222));
             addView(textView, layoutParams);
