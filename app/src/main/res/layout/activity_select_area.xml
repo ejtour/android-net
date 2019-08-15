@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/asa_header"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tb_title="选择区域" />
+
+    <RelativeLayout
+        android:id="@+id/rl_allCheck"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/asa_header"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全国"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+        <ImageView
+            android:id="@+id/img_allCheck"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:src="@drawable/bg_selector_check_box_circular" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_allCheck"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_province"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_city"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/base_bg_shadow_bottom_white_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/txt_select_count"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/base_text666"
+            android:textSize="13sp"
+            tools:text="已选：1个省，16个市" />
+
+        <TextView
+            android:id="@+id/txt_save"
+            style="@style/BtnOrderAction.PrimarySolid"
+            android:layout_width="100dp"
+            android:text="选好了" />
+    </LinearLayout>
+</RelativeLayout>
