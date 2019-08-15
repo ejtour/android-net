@@ -24,6 +24,9 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
+import com.hll_sc_app.bean.invoice.InvoiceOrderBean;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
 import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -36,8 +39,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,12 +55,22 @@ import butterknife.OnClick;
 
 @Route(path = RouterConfig.INVOICE_SELECT_ORDER)
 public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrderContract.ISelectOrderView {
+
+    private InvoiceOrderResp mInvoiceOrderResp;
+
     /**
-     * @param shopID    门店id
-     * @param shopPhone 门店联系电话
+     * @param bean 门店实体类
      */
-    public static void start(String shopID, String shopPhone) {
-        RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_ORDER, shopID, shopPhone);
+    public static void start(PurchaserShopBean bean) {
+        InvoiceMakeReq req = new InvoiceMakeReq();
+        req.setTelephone(bean.getShopPhone());
+        req.setPurchaserShopID(bean.getShopID());
+        req.setPurchaserShopName(bean.getShopName());
+        req.setPurchaserName(bean.getPurchaserName());
+        req.setPurchaserID(bean.getPurchaserID());
+        req.setReceiver(bean.getSalesmanName());
+        req.setImagePath(bean.getImagePath());
+        RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_ORDER, req);
     }
 
     @BindView(R.id.iso_date)
@@ -74,10 +89,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.iso_bottom_group)
     Group mBottomGroup;
-    @Autowired(name = "object0")
-    String mShopID;
-    @Autowired(name = "object1")
-    String mShopPhone;
+    @Autowired(name = "parcelable")
+    InvoiceMakeReq mMakeReq;
     private DatePickerDialog mDatePickerDialog;
     private SelectOrderAdapter mAdapter;
     private EmptyView mEmptyView;
@@ -100,7 +113,7 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         mParam.setStartTime(CalendarUtils.getDateBefore(endDate, 31));
         mParam.setEndTime(CalendarUtils.getDateBefore(endDate, 1));
         updateDateText();
-        mPresenter = SelectOrderPresenter.newInstance(mParam, mShopID);
+        mPresenter = SelectOrderPresenter.newInstance(mParam, mMakeReq.getPurchaserShopID());
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -136,7 +149,21 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
                 filterDate();
                 break;
             case R.id.iso_next:
-                InvoiceInputActivity.start((double) mBottomAmount.getTag(), mShopPhone);
+                if (mInvoiceOrderResp == null) return;
+                mMakeReq.setInvoicePrice(mInvoiceOrderResp.getInvoinceAmount());
+                mMakeReq.setOrderAmount(mInvoiceOrderResp.getOrderAmount());
+                mMakeReq.setRefundAmount(mInvoiceOrderResp.getRefundAmount());
+                List<String> orderList = new ArrayList<>();
+                List<String> refundList = new ArrayList<>();
+                for (InvoiceOrderBean bean : mInvoiceOrderResp.getList()) {
+                    if (bean.getBillType() == 1) orderList.add(bean.getBillID());
+                    else refundList.add(bean.getBillID());
+                }
+                if (!CommonUtils.isEmpty(orderList))
+                    mMakeReq.setBillIDList(orderList);
+                if (!CommonUtils.isEmpty(refundList))
+                    mMakeReq.setRefundBillIDList(refundList);
+                InvoiceInputActivity.start(mMakeReq);
                 break;
         }
     }
@@ -174,6 +201,7 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
 
     @Override
     public void updateOrderData(InvoiceOrderResp resp, boolean isMore) {
+        mInvoiceOrderResp = resp;
         mTotalAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getInvoinceAmount())));
         mOrderAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getOrderAmount())));
         mRefundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getRefundAmount())));

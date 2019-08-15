@@ -7,6 +7,8 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
+import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
+import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
 import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
@@ -113,5 +115,9 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111006")
     Observable<BaseResp<DeliveryLackGatherResp>> queryDeliveryLackGather(@Body BaseReq<BaseReportReqParam> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111053")
+    Observable<BaseResp<CustomerLackResp>> queryCustomerLack(@Body BaseReq<CustomerLackReq> body);
 
 }

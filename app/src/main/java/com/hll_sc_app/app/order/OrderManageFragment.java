@@ -356,7 +356,15 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     @Override
     public void statusChanged() {
-        EventBus.getDefault().post(new OrderEvent(OrderEvent.REMOVE_SELECTED));
+        boolean reload = false;
+        if (!CommonUtils.isEmpty(mAdapter.getData()))
+            for (OrderResp resp : mAdapter.getData()) {
+                if (resp.getShipperType() == 2 && mOrderType == OrderType.PENDING_RECEIVE) {
+                    reload = true;
+                    break;
+                }
+            }
+        EventBus.getDefault().post(new OrderEvent(reload ? OrderEvent.REFRESH_LIST : OrderEvent.REMOVE_SELECTED));
     }
 
     @Override

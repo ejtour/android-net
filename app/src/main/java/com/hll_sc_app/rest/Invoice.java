@@ -4,12 +4,16 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.api.InvoiceService;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceListResp;
+import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
+import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -65,9 +69,38 @@ public class Invoice {
                         .put("shopID", shopID)
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
-                        .put("statstFlag","1")
+                        .put("statstFlag", "1")
                         .put("salesmanID", user.getEmployeeID())
                         .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取发票填写历史
+     *
+     * @param titleType 发票抬头类型(1-企业,2-个人/事业单位)
+     */
+    public static void getInvoiceHistory(int titleType, SimpleObserver<InvoiceHistoryResp> observer) {
+        InvoiceService.INSTANCE
+                .getInvoiceHistory(BaseMapReq.newBuilder()
+                        .put("pageSize", "3")
+                        .put("pageNum", "1")
+                        .put("titleType", String.valueOf(titleType))
+                        .put("userID", GreenDaoUtils.getUser().getEmployeeID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 开发票
+     */
+    public static void makeInvoice(InvoiceMakeReq req, SimpleObserver<InvoiceMakeResp> observer) {
+        InvoiceService.INSTANCE
+                .makeInvoice(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

@@ -718,5 +718,15 @@ public class RouterConfig {
      * 发票管理-填写发票信息
      */
     public static final String INVOICE_INPUT = "/activity/invoice/input";
+
+    /**
+     * 客户缺货汇总
+     */
+    public static final String REPORT_CUSTOMER_LACK_SUMMARY = "/activity/customer/lack/summary";
+
+    /**
+     * 客户缺货明细
+     */
+    public static final String REPORT_CUSTOMER_LACK_DETAIL = "/activity/customer/lack/detail";
 }
 

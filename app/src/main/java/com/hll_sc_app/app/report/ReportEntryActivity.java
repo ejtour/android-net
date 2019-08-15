@@ -56,6 +56,7 @@ public class ReportEntryActivity extends BaseLoadActivity {
             RouterConfig.REPORT_SALESMAN_SALES_ACHIEVEMENT));
         list.add(new ReportItem(ReportIcon.STOCKOUT_DIFFERENCES, ReportLabel.DELIVERY_LACK_GATHER,
             RouterConfig.REPORT_DELIVERY_LACK_GATHER));
+        list.add(new ReportItem(ReportIcon.STOCKOUT_STATISTICS,ReportLabel.CUSTOMER_LACK_AGGREGATION,RouterConfig.REPORT_CUSTOMER_LACK_SUMMARY));
         list.add(new ReportItem(ReportIcon.REFUND_REASONS, ReportLabel.REFUND_REASONS, RouterConfig.REFUND_REASON_STATICS));
 
         return list;

@@ -644,6 +644,14 @@
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
 
+        <!--缺货汇总表-->
+        <activity android:name=".app.report.customerLack.CustomerLackSummaryActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--缺货明细-->
+        <activity android:name=".app.report.customerLack.detail.CustomerLackDetailActivity"
+            android:screenOrientation="portrait"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

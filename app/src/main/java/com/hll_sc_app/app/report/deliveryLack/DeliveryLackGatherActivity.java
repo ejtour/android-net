@@ -189,8 +189,8 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
         txtTotal.setText("合计");
         totalValidOrderNum.setText(String.valueOf(deliveryLackGatherResp.getTotalDeliveryOrderNum()));
         totalTradeAmount.setText(CommonUtils.formatMoney(deliveryLackGatherResp.getTotalDeliveryTradeAmount()));
-        totalDeliveryLackProduct.setText(String.valueOf(deliveryLackGatherResp.getTotalDeliveryLackKindNum()));
-        totalDeliveryLackNum.setText("--");
+        totalDeliveryLackProduct.setText("--");
+        totalDeliveryLackNum.setText(String.valueOf(deliveryLackGatherResp.getTotalDeliveryLackNum()));
         totalDeliveryLackAmount.setText(CommonUtils.formatMoney(deliveryLackGatherResp.getTotalDeliveryLackAmount()));
         totalDeliveryLackRate.setText(new BigDecimal(deliveryLackGatherResp.getTotalDeliveryLackRate()).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "%");
         totalDeliveryLackShopnum.setText(String.valueOf(deliveryLackGatherResp.getTotalDeliveryLackShopNum()));
@@ -284,6 +284,8 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
                         CalendarUtils.FORMAT_SERVER_DATE));
                     mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
                         CalendarUtils.FORMAT_SERVER_DATE));
+                    startDate = CalendarUtils.getDateFormatString(startStr,FORMAT_DATE,CalendarUtils.FORMAT_SERVER_DATE);
+                    endDate = CalendarUtils.getDateFormatString(endStr,FORMAT_DATE,CalendarUtils.FORMAT_SERVER_DATE);
                     mPresenter.queryDeliveryLackGatherList(true);
                 }
             });

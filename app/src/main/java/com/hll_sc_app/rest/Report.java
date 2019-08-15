@@ -8,6 +8,8 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
+import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
@@ -145,6 +147,18 @@ public class Report {
                         .put("endDate", endDate)
                         .put("type", String.valueOf(type))
                         .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 客户缺货统计表
+     * @param requestParams  查询参数
+     */
+    public static void queryCustomerLack(CustomerLackReq requestParams, SimpleObserver<CustomerLackResp> observer) {
+        ReportService.INSTANCE
+                .queryCustomerLack(new BaseReq<>(requestParams))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

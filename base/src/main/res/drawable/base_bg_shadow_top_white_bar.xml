@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@color/base_white"/>
+    </item>
     <item android:gravity="bottom">
         <shape>
             <size android:height="1dp"/>
@@ -9,8 +12,5 @@
                 android:startColor="@color/base_white"/>
 
         </shape>
-    </item>
-    <item android:bottom="1dp">
-        <color android:color="@color/base_white"/>
     </item>
 </layer-list>
