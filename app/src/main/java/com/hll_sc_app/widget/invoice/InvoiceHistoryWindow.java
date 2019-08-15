@@ -24,22 +24,19 @@ import butterknife.ButterKnife;
  */
 
 public class InvoiceHistoryWindow extends BasePopupWindow {
-    @BindView(R.id.wih_list_view)
-    RecyclerView mListView;
     private InvoiceHistoryAdapter mAdapter;
 
     public InvoiceHistoryWindow(Activity activity, BaseQuickAdapter.OnItemClickListener listener) {
         super(activity);
-        View view = View.inflate(activity, R.layout.window_invoice_history, null);
-        ButterKnife.bind(this, view);
-        setContentView(view);
-        setWidth(UIUtils.getScreenWidth(activity) - UIUtils.dip2px(40));
+        RecyclerView listView = (RecyclerView) View.inflate(activity, R.layout.window_invoice_history, null);
+        setContentView(listView);
+        setWidth(UIUtils.getScreenWidth(activity) - UIUtils.dip2px(36));
         setHeight(UIUtils.dip2px(170));
         setFocusable(true);
-        setBackgroundDrawable(ContextCompat.getDrawable(activity, R.drawable.bg_white_radius_3_solid));
+        setBackgroundDrawable(ContextCompat.getDrawable(activity, R.drawable.bg_invoice_history_window));
         mAdapter = new InvoiceHistoryAdapter();
         mAdapter.setOnItemClickListener(listener);
-        mListView.setAdapter(mAdapter);
+        listView.setAdapter(mAdapter);
     }
 
     public InvoiceHistoryWindow setList(List<InvoiceHistoryBean> list) {
