@@ -1,6 +1,8 @@
 package com.hll_sc_app.app.marketingsetting.selectarea;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,14 +51,22 @@ import butterknife.OnClick;
 public class SelectAreaActivity extends AppCompatActivity {
     public static final int ALL_CITYS_NUM = 354;
     public static final String CITY_ALL_CODE_PREX = "000";
+    /**
+     * 将mSelectIDMap所选的数据平铺 以市级为key 存储省市信息
+     */
+    public static final String SELECT_FLAT_DATA = "result_flat";
 
     /**
-     * 存储已选择的 key:省id，value：set 市id
+     * 存储已选择的 key:省id，value：set 市 id
      */
     @Autowired(name = "selected", required = true)
     HashMap<String, Set<String>> mSelectIDMap;
+    /*头部文字*/
     @Autowired(name = "title", required = true)
     String title;
+    /*result的名称变量*/
+    @Autowired(name = "resultname", required = true)
+    String resultname;
     @BindView(R.id.asa_header)
     TitleBar mTitlBar;
     @BindView(R.id.img_allCheck)
@@ -67,18 +77,46 @@ public class SelectAreaActivity extends AppCompatActivity {
     RecyclerView mRecyclerViewCitiy;
     @BindView(R.id.txt_select_count)
     TextView mTextSelectCount;
+
     private ProvinceAdapter mProvinceAdapter;
     private CityAdapter mCityAdapter;
-
     private ArrayList<AreaBean> mAreaDataList;
+
+    /**
+     * 已选择的市级信息
+     * key:市级id，value:省级id,省级名称,市级名称
+     */
+    private HashMap<String, String> mSelectedCityDataMap;
 
     private int currentProvinceIndex = 0;
 
-    public static void start(String title, HashMap<String, Set<String>> selectIdMap) {
+    public static void start(Activity activity, int requestCode, String resultname, String title, HashMap<String, Set<String>> selectIdMap) {
         ARouter.getInstance().build(RouterConfig.ACTIVITY_SELECT_AREA_PROVINCE_CITY)
                 .withString("title", title)
+                .withString("resultname", resultname)
                 .withSerializable("selected", selectIdMap)
-                .setProvider(new LoginInterceptor()).navigation();
+                .setProvider(new LoginInterceptor())
+                .navigation(activity, requestCode);
+    }
+
+    /**
+     * 获取城市数据（不包含海外数据）
+     *
+     * @param context 上下文
+     * @return 城市数据
+     */
+    public static ArrayList<AreaBean> getAreaListWithOutOverSeas(Context context) {
+        ArrayList<AreaBean> areaBeans = null;
+        String json = FileManager.getAssetsData("productarea.json", context);
+        if (!TextUtils.isEmpty(json)) {
+            areaBeans = new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
+            }.getType());
+            if (!CommonUtils.isEmpty(areaBeans)) {
+                // 去掉海外的城市
+                areaBeans.remove(areaBeans.size() - 1);
+            }
+        }
+        return areaBeans;
     }
 
     @Override
@@ -117,26 +155,6 @@ public class SelectAreaActivity extends AppCompatActivity {
     }
 
     /**
-     * 获取城市数据（不包含海外数据）
-     *
-     * @param context 上下文
-     * @return 城市数据
-     */
-    public static ArrayList<AreaBean> getAreaListWithOutOverSeas(Context context) {
-        ArrayList<AreaBean> areaBeans = null;
-        String json = FileManager.getAssetsData("productarea.json", context);
-        if (!TextUtils.isEmpty(json)) {
-            areaBeans = new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
-            }.getType());
-            if (!CommonUtils.isEmpty(areaBeans)) {
-                // 去掉海外的城市
-                areaBeans.remove(areaBeans.size() - 1);
-            }
-        }
-        return areaBeans;
-    }
-
-    /**
      * 点击省
      *
      * @param adapter
@@ -149,7 +167,7 @@ public class SelectAreaActivity extends AppCompatActivity {
         }
         currentProvinceIndex = position;
         adapter.notifyDataSetChanged();
-        mCityAdapter.setNewData(getCurrentCityBeans());
+        mCityAdapter.setNewData(getCurrentCityBeans(true));
     }
 
 
@@ -175,6 +193,7 @@ public class SelectAreaActivity extends AppCompatActivity {
             } else {
                 mSelectIDMap.get(getCurrentProvinceCode()).addAll(getCurrentProvinceAllCityCodes());
             }
+            addCurrentProvinceAllCity(!preSelect);
         } else {//点击市级
             if (preSelect) {
                 mSelectIDMap.get(getCurrentProvinceCode()).remove(cityBean.getCode());
@@ -185,6 +204,7 @@ public class SelectAreaActivity extends AppCompatActivity {
             } else {
                 mSelectIDMap.get(getCurrentProvinceCode()).add(cityBean.getCode());
             }
+            addSelectedCityData(!preSelect, cityBean);
         }
         mCityAdapter.notifyDataSetChanged();
         updateSelectCount();
@@ -195,24 +215,18 @@ public class SelectAreaActivity extends AppCompatActivity {
      *
      * @return
      */
-    List<AreaBean.ChildBeanX> getCurrentCityBeans() {
+    List<AreaBean.ChildBeanX> getCurrentCityBeans(boolean isHasAll) {
         AreaBean.ChildBeanX allCityBean = new AreaBean.ChildBeanX();
-        AreaBean.ChildBeanX firstCityBean = mAreaDataList.get(currentProvinceIndex).getChild().get(0);
-        if (!TextUtils.equals(firstCityBean.getCode(), CITY_ALL_CODE_PREX)) {
+        List<AreaBean.ChildBeanX> currentCityBeans = mAreaDataList.get(currentProvinceIndex).getChild();
+        AreaBean.ChildBeanX firstCityBean = currentCityBeans.get(0);
+        if (isHasAll && !TextUtils.equals(firstCityBean.getCode(), CITY_ALL_CODE_PREX)) {//防止重复添加
             allCityBean.setCode(CITY_ALL_CODE_PREX);
             allCityBean.setName("全部");
-            mAreaDataList.get(currentProvinceIndex).getChild().add(0, allCityBean);
+            currentCityBeans.add(0, allCityBean);
+        } else if (!isHasAll && TextUtils.equals(firstCityBean.getCode(), CITY_ALL_CODE_PREX)) {//不传出"全部"
+            return currentCityBeans.subList(1, currentCityBeans.size());
         }
         return mAreaDataList.get(currentProvinceIndex).getChild();
-    }
-
-    /**
-     * 返回当前选择的省的code码
-     *
-     * @return
-     */
-    private String getCurrentProvinceCode() {
-        return mAreaDataList.get(currentProvinceIndex).getCode();
     }
 
     /**
@@ -232,18 +246,14 @@ public class SelectAreaActivity extends AppCompatActivity {
     }
 
     /**
-     * 计算下方提示字段内容
+     * 同步数据mSelectedCityDataMap
+     *
+     * @param isSelect
      */
-    private void updateSelectCount() {
-        int provinceNum = mSelectIDMap.size();
-        int citysNum = 0;
-        Iterator<Set<String>> iterator = mSelectIDMap.values().iterator();
-        while (iterator.hasNext()) {
-            citysNum += iterator.next().size();
+    private void addCurrentProvinceAllCity(boolean isSelect) {
+        for (AreaBean.ChildBeanX cityBean : getCurrentCityBeans(false)) {
+            addSelectedCityData(isSelect, cityBean);
         }
-        mTextSelectCount.setText(String.format("已选：%s个省，%s个市", provinceNum, citysNum));
-
-        mImgAllCheck.setSelected(citysNum == ALL_CITYS_NUM);
     }
 
     @OnClick({R.id.txt_save, R.id.rl_allCheck})
@@ -262,6 +272,10 @@ public class SelectAreaActivity extends AppCompatActivity {
     }
 
     private void toSave() {
+        Intent intent = new Intent();
+        intent.putExtra(resultname, mSelectIDMap);
+        intent.putExtra(SELECT_FLAT_DATA, mSelectedCityDataMap);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -270,12 +284,14 @@ public class SelectAreaActivity extends AppCompatActivity {
      */
     private void selectAllProvinces(boolean select) {
         mSelectIDMap.clear();
+        mSelectedCityDataMap.clear();
         if (select) {
             for (AreaBean province : mAreaDataList) {
                 HashSet<String> cityCodes = new HashSet<>();
                 for (AreaBean.ChildBeanX cityBean : province.getChild()) {
                     if (!cityBean.getCode().equals(CITY_ALL_CODE_PREX)) {
                         cityCodes.add(cityBean.getCode());
+                        addSelectedCityData(true, cityBean);
                     }
                 }
                 mSelectIDMap.put(province.getCode(), cityCodes);
@@ -283,6 +299,57 @@ public class SelectAreaActivity extends AppCompatActivity {
         }
         mProvinceAdapter.notifyDataSetChanged();
         mCityAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 计算下方提示字段内容
+     */
+    private void updateSelectCount() {
+        int provinceNum = mSelectIDMap.size();
+        int citysNum = 0;
+        Iterator<Set<String>> iterator = mSelectIDMap.values().iterator();
+        while (iterator.hasNext()) {
+            citysNum += iterator.next().size();
+        }
+        mTextSelectCount.setText(String.format("已选：%s个省，%s个市", provinceNum, citysNum));
+
+        mImgAllCheck.setSelected(citysNum == ALL_CITYS_NUM);
+    }
+
+    /**
+     * 同步选择数据 mSelectedCityDataMap
+     *
+     * @param isSelect
+     * @param currentCityBean
+     */
+    private void addSelectedCityData(boolean isSelect, AreaBean.ChildBeanX currentCityBean) {
+        if (mSelectedCityDataMap == null) {
+            mSelectedCityDataMap = new HashMap<>();
+        }
+        if (isSelect) {
+            String value = String.format("%s,%s,%s", getCurrentProvinceCode(), getCurrentProvinceName(), currentCityBean.getName());
+            mSelectedCityDataMap.put(currentCityBean.getCode(), value);
+        } else {
+            mSelectedCityDataMap.remove(currentCityBean.getCode());
+        }
+    }
+
+    /**
+     * 返回当前选择的省的code码
+     *
+     * @return
+     */
+    private String getCurrentProvinceCode() {
+        return mAreaDataList.get(currentProvinceIndex).getCode();
+    }
+
+    /**
+     * 得到当前省的名称
+     *
+     * @return
+     */
+    private String getCurrentProvinceName() {
+        return mAreaDataList.get(currentProvinceIndex).getName();
     }
 
     class ProvinceAdapter extends BaseQuickAdapter<AreaBean, BaseViewHolder> {
@@ -309,9 +376,7 @@ public class SelectAreaActivity extends AppCompatActivity {
                         .setBackgroundColor(R.id.txt_categoryName, 0xFFFFFFFF);
             }
         }
-
     }
-
 
     class CityAdapter extends BaseQuickAdapter<AreaBean.ChildBeanX, BaseViewHolder> {
         public CityAdapter(@Nullable List<AreaBean.ChildBeanX> data) {
@@ -334,7 +399,7 @@ public class SelectAreaActivity extends AppCompatActivity {
                     .setTextColor(R.id.txt_name, Color.parseColor(isSelected ? "#5695D2" : "#666666"));
             helper.getView(R.id.img_select).setSelected(isSelected);
 
+
         }
     }
-
 }
