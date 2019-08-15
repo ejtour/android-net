@@ -611,7 +611,12 @@ public class RouterConfig {
     /**
      * 营销中心-选择商品
      */
-    public static final String ACTIVITY_MARKETING_SELECT_PRODUCT= "/activity/marketing/select/product";
+    public static final String ACTIVITY_MARKETING_SELECT_PRODUCT = "/activity/marketing/select/product";
+
+    /**
+     * 选择区域
+     */
+    public static final String ACTIVITY_SELECT_AREA_PROVINCE_CITY = "/activity/select/area/province/city";
 
 }
 

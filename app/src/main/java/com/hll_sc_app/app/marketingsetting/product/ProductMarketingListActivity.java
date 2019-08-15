@@ -15,10 +15,11 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingListAdapter;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.event.MarketingSearchEvent;
+import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.marketingsetting.MarketingListResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingStatusBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -43,7 +44,7 @@ import butterknife.Unbinder;
 /**
  * 商品促销列表
  */
-@Route(path = RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST)
+@Route(path = RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST, extras = Constant.LOGIN_EXTRA)
 public class ProductMarketingListActivity extends BaseLoadActivity implements IProductMarketingContract.IView {
     private final String FORMAT_DATE = "yyyyMMdd";
     @BindView(R.id.search_view)
@@ -263,8 +264,13 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     }
 
     @Subscribe()
-    public void onEvent(MarketingSearchEvent event) {
+    public void onEvent(MarketingEvent event) {
         // 商品属性列表展示
-        mSearchView.showSearchContent(true, event.getSearchText());
+        if (!TextUtils.isEmpty(event.getSearchText())) {
+            mSearchView.showSearchContent(true, event.getSearchText());
+        } else if (event.isRefreshProductList()) {
+            mPresent.refreshList();
+        }
     }
+
 }
