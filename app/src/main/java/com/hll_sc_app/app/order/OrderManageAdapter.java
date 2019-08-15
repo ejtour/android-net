@@ -93,7 +93,7 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
             for (OrderResp resp : data) {
                 for (OrderResp orderResp : mData) {
                     if (resp.getSubBillNo().equals(orderResp.getSubBillNo())) {
-                        resp.setSelected(orderResp.isSelected());
+                        resp.setSelected(orderResp.isSelected() && resp.isCanSelect(mGroupID));
                         break;
                     }
                 }

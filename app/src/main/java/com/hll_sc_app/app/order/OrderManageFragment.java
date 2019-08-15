@@ -364,11 +364,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                     break;
                 }
             }
-        if (reload)
-            for (OrderResp resp : mAdapter.getData()) {
-                if (resp.isSelected())
-                    resp.setSelected(false);
-            }
         EventBus.getDefault().post(new OrderEvent(reload ? OrderEvent.REFRESH_LIST : OrderEvent.REMOVE_SELECTED));
     }
 
