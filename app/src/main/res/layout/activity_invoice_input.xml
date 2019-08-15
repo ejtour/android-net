@@ -281,7 +281,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/base_bg_white_radius_5_solid"
-                app:layout_constraintBottom_toBottomOf="@id/aii_remark_label"
+                app:layout_constraintBottom_toBottomOf="@id/aii_remark"
                 app:layout_constraintEnd_toEndOf="@id/aii_recipient"
                 app:layout_constraintStart_toStartOf="@id/aii_recipient_label"
                 app:layout_constraintTop_toTopOf="@id/aii_recipient_label" />
@@ -349,8 +349,11 @@
             <EditText
                 android:id="@+id/aii_remark"
                 style="@style/InvoiceInfoEdit"
+                android:layout_height="wrap_content"
                 android:hint="可备注开票区间、开票金额"
-                app:layout_constraintBottom_toBottomOf="@id/aii_remark_label"
+                android:minHeight="45dp"
+                android:padding="@dimen/dp_10"
+                android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/aii_remark_label"
                 app:layout_constraintTop_toTopOf="@id/aii_remark_label" />
