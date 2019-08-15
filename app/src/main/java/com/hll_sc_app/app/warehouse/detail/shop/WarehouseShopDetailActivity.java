@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -15,7 +14,6 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.warehouse.ShopParameterBean;
@@ -48,8 +46,6 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
     SwitchButton mSwitchPay;
     @Autowired(name = "parcelable", required = true)
     WarehouseShopBean mShopBean;
-    @BindView(R.id.rl_pay)
-    RelativeLayout mRlPay;
     private WarehouseShopDetailPresenter mPresenter;
 
     @Override
@@ -63,13 +59,8 @@ public class WarehouseShopDetailActivity extends BaseLoadActivity implements War
         mPresenter.register(this);
         mPresenter.queryWarehouseShop();
         showView();
-        if (UserConfig.isSelfOperated()) {
-            mRlPay.setVisibility(View.VISIBLE);
             mSwitchPay.setOnCheckedChangeListener((buttonView, isChecked)
                 -> mPresenter.editWarehouseShop(isChecked ? "1" : "0"));
-        } else {
-            mRlPay.setVisibility(View.GONE);
-        }
     }
 
     private void showView() {
