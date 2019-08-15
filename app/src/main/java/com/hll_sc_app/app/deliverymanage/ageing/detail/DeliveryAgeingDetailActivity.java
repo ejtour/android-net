@@ -29,6 +29,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +46,8 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
     public static final String[] STRINGS = {"当天", "次日", "第三天", "第四天", "第五天", "第六天", "第七天"};
     @Autowired(name = "parcelable")
     DeliveryPeriodBean mBean;
+    @Autowired(name = "object0")
+    int mPosition;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
     @BindView(R.id.txt_billUpDateTime)
@@ -53,6 +56,8 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
     TextView mTxtDayTimeFlag;
     @BindView(R.id.txt_arrivalTime)
     TextView mTxtArrivalTime;
+    @BindView(R.id.txt_ageing_title)
+    TextView mTxtAgeingTitle;
     private DeliveryAgeingDetailPresenter mPresenter;
     private SingleSelectionDialog mBillUpDateDialog;
     private SingleSelectionDialog mDayTimeFlagDialog;
@@ -80,10 +85,13 @@ public class DeliveryAgeingDetailActivity extends BaseLoadActivity implements De
     private void initView() {
         mTxtTitle.setText(isAdd() ? "新增配送时效" : "编辑配送时效");
         if (mBean != null) {
+            mTxtAgeingTitle.setText(String.format(Locale.getDefault(), "时效管理%d", mBean.getPosition()));
             mTxtBillUpDateTime.setText(mBean.getBillUpDateTime());
             mTxtDayTimeFlag.setText(getDayTimeFlag(mBean.getDayTimeFlag()));
             mTxtDayTimeFlag.setTag(String.valueOf(mBean.getDayTimeFlag()));
             showArrivalTime(mBean.getArrivalStartTime(), mBean.getArrivalEndTime());
+        } else {
+            mTxtAgeingTitle.setText(String.format(Locale.getDefault(), "时效管理%d", mPosition));
         }
     }
 

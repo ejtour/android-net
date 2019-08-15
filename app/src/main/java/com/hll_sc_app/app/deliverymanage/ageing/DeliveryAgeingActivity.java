@@ -95,12 +95,21 @@ public class DeliveryAgeingActivity extends BaseLoadActivity {
                 finish();
                 break;
             case R.id.txt_add:
-                RouterUtil.goToActivity(RouterConfig.DELIVERY_AGEING_DETAIL);
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_AGEING_DETAIL, (getDeliveryAgeingCount() + 1));
                 break;
             default:
                 break;
 
         }
+    }
+
+    private int getDeliveryAgeingCount() {
+        int position = 0;
+        if (!CommonUtils.isEmpty(mListFragment)) {
+            DeliveryAgeingFragment lazyFragment = (DeliveryAgeingFragment) mListFragment.get(0);
+            position = lazyFragment.getItemCount();
+        }
+        return position;
     }
 
     class FragmentListAdapter extends FragmentPagerAdapter {
