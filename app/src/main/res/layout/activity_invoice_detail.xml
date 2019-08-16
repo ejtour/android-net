@@ -52,7 +52,7 @@
         android:visibility="gone"
         app:constraint_referenced_ids="aid_bottom_bg,aid_confirm,aid_reject" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/aid_bottom_bg"
@@ -459,23 +459,12 @@
                 app:layout_constraintEnd_toEndOf="@id/aid_add_records"
                 app:layout_constraintStart_toStartOf="@id/aid_add_records" />
 
-            <TextView
-                android:id="@+id/aid_add_btn"
-                android:layout_width="0dp"
-                android:layout_height="58dp"
-                android:gravity="center"
-                android:text="点击新增，添加回款记录"
-                android:textColor="@color/color_aeaeae"
-                android:textSize="@dimen/text_middle_size"
-                app:layout_constraintEnd_toEndOf="@id/aid_add_records"
-                app:layout_constraintStart_toStartOf="@id/aid_add_records"
-                app:layout_constraintTop_toBottomOf="@id/aid_add_records" />
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/aid_list_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:minHeight="58dp"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="@id/aid_add_records"
                 app:layout_constraintStart_toStartOf="@id/aid_add_records"
                 app:layout_constraintTop_toBottomOf="@id/aid_add_records" />
@@ -499,8 +488,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:constraint_referenced_ids="aid_records_bg,aid_records_label,
-aid_add_records,aid_add_btn,aid_list_view" />
+                app:constraint_referenced_ids="aid_records_bg,aid_records_label,aid_add_records,aid_list_view" />
         </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.constraint.ConstraintLayout>

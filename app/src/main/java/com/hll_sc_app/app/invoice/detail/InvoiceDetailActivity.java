@@ -7,13 +7,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.TextKeyListener;
 import android.text.style.RelativeSizeSpan;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,13 +26,17 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.invoice.InvoiceBean;
+import com.hll_sc_app.bean.invoice.ReturnRecordBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.RemarkDialog;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.zhihu.matisse.Matisse;
 
@@ -88,8 +95,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     EditText mExtraInfo;
     @BindView(R.id.aid_invoice_license)
     ImgUploadBlock mInvoiceLicense;
-    @BindView(R.id.aid_add_btn)
-    TextView mAddBtn;
+    private TextView mAddBtn;
     @BindView(R.id.aid_list_view)
     RecyclerView mListView;
     @BindView(R.id.aid_extra_info_group)
@@ -101,6 +107,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     @Autowired(name = "object0")
     String mID;
     private IInvoiceDetailContract.IInvoiceDetailPresenter mPresenter;
+    private ReturnRecordAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,6 +122,53 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::toggleEdit);
+        mListView.setLayoutManager(new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        mAdapter = new ReturnRecordAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            ReturnRecordBean item = mAdapter.getItem(position);
+            if (item == null) return;
+            switch (view.getId()) {
+                case R.id.irr_edit:
+                    showToast("编辑回款记录待添加");
+                    break;
+                case R.id.irr_confirm:
+                    settleConfirm(item.getId());
+                    break;
+            }
+        });
+        createAddBtn();
+        mAdapter.setEmptyView(mAddBtn);
+        mListView.setAdapter(mAdapter);
+        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
+        decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0);
+        mListView.addItemDecoration(decor);
+    }
+
+    private void createAddBtn() {
+        mAddBtn = new TextView(this);
+        mAddBtn.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(58)));
+        mAddBtn.setGravity(Gravity.CENTER);
+        mAddBtn.setText("点击新增，添加回款记录");
+        mAddBtn.setTextColor(ContextCompat.getColor(this, R.color.color_aeaeae));
+        mAddBtn.setTextSize(13);
+        mAddBtn.setOnClickListener(this::addRecord);
+    }
+
+    private void settleConfirm(String id) {
+        SuccessDialog.newBuilder(this)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setMessageTitle("确认将关联订单结算么")
+                .setMessage("确认后将根据回款金额处理未结算订单 完成后回款记录将不允许再编辑")
+                .setButton((dialog, item) -> {
+                    if (item == 1) mPresenter.settle(id);
+                }, "我再看看", "确认结算")
+                .create().show();
     }
 
     private void initData() {
@@ -149,7 +203,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
                 .show();
     }
 
-    @OnClick({R.id.aid_add_records, R.id.aid_add_btn})
+    @OnClick({R.id.aid_add_records})
     public void addRecord(View view) {
         showToast("新增回款记录待添加");
     }
@@ -185,7 +239,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
                 mTitleBar.setRightBtnVisible(true);
                 mTitleBar.setTag(false);
                 mRecordsGroup.setVisibility(View.VISIBLE);
-                mAddBtn.setVisibility(CommonUtils.isEmpty(bean.getReturnRecordList()) ? View.VISIBLE : View.GONE);
+                mAdapter.setNewData(bean.getReturnRecordList());
             }
             if (!TextUtils.isEmpty(bean.getInvoiceVoucher())) {
                 mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
