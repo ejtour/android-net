@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/dp_10">
 
-            <TextView
+            <com.hll_sc_app.widget.AlignTextView
                 android:id="@+id/aid_tips"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
