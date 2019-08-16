@@ -169,8 +169,9 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
 
     @Override
     public void setListData(List<InvoiceBean> list, boolean isMore) {
-        if (isMore) mAdapter.addData(list);
-        else {
+        if (isMore) {
+            if (!CommonUtils.isEmpty(list)) mAdapter.addData(list);
+        } else {
             mAdapter.setNewData(list);
             if (CommonUtils.isEmpty(list)) {
                 initEmptyView();

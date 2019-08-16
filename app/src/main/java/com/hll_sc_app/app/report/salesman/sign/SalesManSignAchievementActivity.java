@@ -299,7 +299,8 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
     @Override
     public void showSalesManSignAchievementList(List<SalesManSignAchievement> records, boolean append, int total) {
         if (append) {
-            mAdapter.addData(records);
+            if (!CommonUtils.isEmpty(records))
+                mAdapter.addData(records);
         } else {
             mAdapter.setNewData(records);
         }

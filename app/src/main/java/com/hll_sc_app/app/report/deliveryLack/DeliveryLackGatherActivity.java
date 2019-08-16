@@ -170,7 +170,8 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
     @Override
     public void showDeliveryLackGatherList(List<DeliveryLackGather> records, boolean append, int total) {
         if (append) {
-            mAdapter.addData(records);
+            if (!CommonUtils.isEmpty(records))
+                mAdapter.addData(records);
         } else {
             mAdapter.setNewData(records);
         }

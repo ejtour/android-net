@@ -120,8 +120,10 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
 
     @Override
     public void setListData(List<PurchaserShopBean> beans, boolean isMore) {
-        if (isMore) mAdapter.addData(beans);
-        else {
+        if (isMore) {
+            if (!CommonUtils.isEmpty(beans))
+                mAdapter.addData(beans);
+        } else {
             mAdapter.setNewData(beans);
             if (CommonUtils.isEmpty(beans)) {
                 initEmptyView();

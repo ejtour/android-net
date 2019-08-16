@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.ProductBrandBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -127,7 +128,8 @@ public class ProductBrandAddActivity extends BaseLoadActivity implements Product
     @Override
     public void showProductBrandList(List<ProductBrandBean> list, boolean append, int total) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
         }

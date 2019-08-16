@@ -25,6 +25,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.orientation.OrientationListBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -128,7 +129,8 @@ public class CooperationActivity extends BaseLoadActivity implements ICooperatio
     @Override
     public void showPurchaserList(List<OrientationListBean> list, boolean append, int total) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
         }

@@ -265,7 +265,8 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
     public void setListData(List<TransferBean> beans, boolean append) {
         mRefreshLayout.setEnableLoadMore(!CommonUtils.isEmpty(beans) && beans.size() == 20);
         if (append) {
-            mAdapter.addData(beans);
+            if (!CommonUtils.isEmpty(beans))
+                mAdapter.addData(beans);
             return;
         }
         mAdapter.setNewData(beans);

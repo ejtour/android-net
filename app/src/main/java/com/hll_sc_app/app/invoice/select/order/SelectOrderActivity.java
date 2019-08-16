@@ -212,7 +212,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         mNext.setEnabled(resp.getInvoinceAmount() != 0);
         mNext.setText(String.format("下一步(%s)", resp.getTotal()));
         if (isMore) {
-            mAdapter.addData(resp.getList());
+            if (!CommonUtils.isEmpty(resp.getList()))
+                mAdapter.addData(resp.getList());
         } else {
             if (CommonUtils.isEmpty(resp.getList())) {
                 initEmptyView();

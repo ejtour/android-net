@@ -22,13 +22,13 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.GoodsSearchEvent;
-import com.hll_sc_app.bean.event.SearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.orientation.OrientationDetailBean;
 import com.hll_sc_app.bean.orientation.OrientationProductSpecBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -187,7 +187,8 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
             }
         }
         if (append) {
-            mProductAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mProductAdapter.addData(list);
         } else {
             mProductAdapter.setNewData(list);
         }

@@ -174,7 +174,8 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     @Override
     public void showDailyAggregationList(DateSaleAmountResp dateSaleAmountResp, boolean append, int total) {
         if (append) {
-            mAdapter.addData(dateSaleAmountResp.getRecords());
+            if (!CommonUtils.isEmpty(dateSaleAmountResp.getRecords()))
+                mAdapter.addData(dateSaleAmountResp.getRecords());
         } else {
             mAdapter.setNewData(dateSaleAmountResp.getRecords());
         }

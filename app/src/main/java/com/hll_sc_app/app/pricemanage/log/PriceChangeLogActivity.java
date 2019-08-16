@@ -221,7 +221,8 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
     @Override
     public void showPriceLogList(List<PriceLogBean> list, boolean append, int total) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
         }

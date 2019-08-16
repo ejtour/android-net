@@ -318,7 +318,8 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     public void updateListData(List<OrderResp> resps, boolean append) {
         mRefreshLayout.setEnableLoadMore(!CommonUtils.isEmpty(resps) && resps.size() == 20);
         if (append) {
-            mAdapter.addData(resps);
+            if (!CommonUtils.isEmpty(resps))
+                mAdapter.addData(resps);
         } else {
             mAdapter.setNewData(resps);
             if (CommonUtils.isEmpty(resps))

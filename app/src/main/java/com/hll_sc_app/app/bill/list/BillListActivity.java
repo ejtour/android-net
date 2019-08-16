@@ -363,8 +363,10 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private void setBillList(List<BillBean> list, boolean isMore) {
-        if (isMore) mAdapter.addData(list);
-        else {
+        if (isMore) {
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
+        } else {
             if (CommonUtils.isEmpty(list)) {
                 initEmptyView();
                 mEmptyView.reset();
