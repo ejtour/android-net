@@ -140,7 +140,7 @@ public class Invoice {
                                 double invoicePrice,
                                 String invoiceVoucher,
                                 String rejectReason,
-                                SimpleObserver<MsgWrapper<InvoiceMakeResp>> observer) {
+                                SimpleObserver<MsgWrapper<Object>> observer) {
         InvoiceService.INSTANCE
                 .doAction(BaseMapReq.newBuilder()
                         .put("actionType", actionType == 1 ? "invoice" : "reject")
@@ -149,6 +149,7 @@ public class Invoice {
                         .put("invoicePrice", CommonUtils.formatNumber(invoicePrice))
                         .put("invoiceVoucher", invoiceVoucher)
                         .put("rejectReason", rejectReason)
+                        .put("userID",GreenDaoUtils.getUser().getEmployeeID())
                         .create())
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

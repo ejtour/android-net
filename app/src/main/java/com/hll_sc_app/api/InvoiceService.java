@@ -48,7 +48,7 @@ public interface InvoiceService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103135")
-    Observable<BaseResp<InvoiceMakeResp>> doAction(@Body BaseMapReq req);
+    Observable<BaseResp<Object>> doAction(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103150")

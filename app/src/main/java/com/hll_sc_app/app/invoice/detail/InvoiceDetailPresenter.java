@@ -32,9 +32,9 @@ public class InvoiceDetailPresenter implements IInvoiceDetailContract.IInvoiceDe
     public void doAction(int action, String invoiceNO, double invoicePrice, String invoiceVoucher, String rejectReason) {
         Invoice.doAction(action, mID,
                 invoiceNO, invoicePrice, invoiceVoucher,
-                rejectReason, new SimpleObserver<MsgWrapper<InvoiceMakeResp>>(true, mView) {
+                rejectReason, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
                     @Override
-                    public void onSuccess(MsgWrapper<InvoiceMakeResp> resp) {
+                    public void onSuccess(MsgWrapper<Object> resp) {
                         mView.actionSuccess();
                     }
                 });
