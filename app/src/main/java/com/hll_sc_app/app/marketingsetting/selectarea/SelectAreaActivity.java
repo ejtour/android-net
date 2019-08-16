@@ -88,6 +88,26 @@ public class SelectAreaActivity extends AppCompatActivity {
                 .navigation(activity, requestCode);
     }
 
+    /**
+     * 获取城市数据（不包含海外数据）
+     *
+     * @param context 上下文
+     * @return 城市数据
+     */
+    public static ArrayList<AreaBean> getAreaListWithOutOverSeas(Context context) {
+        ArrayList<AreaBean> areaBeans = null;
+        String json = FileManager.getAssetsData("productarea.json", context);
+        if (!TextUtils.isEmpty(json)) {
+            areaBeans = new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
+            }.getType());
+            if (!CommonUtils.isEmpty(areaBeans)) {
+                // 去掉海外的城市
+                areaBeans.remove(areaBeans.size() - 1);
+            }
+        }
+        return areaBeans;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,26 +141,6 @@ public class SelectAreaActivity extends AppCompatActivity {
         selectProvinceBean(mProvinceAdapter, 0);
         //更新底部的显示以及同步全国数据
         updateSelectCount();
-    }
-
-    /**
-     * 获取城市数据（不包含海外数据）
-     *
-     * @param context 上下文
-     * @return 城市数据
-     */
-    public static ArrayList<AreaBean> getAreaListWithOutOverSeas(Context context) {
-        ArrayList<AreaBean> areaBeans = null;
-        String json = FileManager.getAssetsData("productarea.json", context);
-        if (!TextUtils.isEmpty(json)) {
-            areaBeans = new Gson().fromJson(json, new TypeToken<ArrayList<AreaBean>>() {
-            }.getType());
-            if (!CommonUtils.isEmpty(areaBeans)) {
-                // 去掉海外的城市
-                areaBeans.remove(areaBeans.size() - 1);
-            }
-        }
-        return areaBeans;
     }
 
     /**
@@ -187,6 +187,8 @@ public class SelectAreaActivity extends AppCompatActivity {
                     mSelectCitysMap.remove(getCurrentProvinceCode());
                 }
             } else {
+                cityBean.setpCode(getCurrentProvinceCode());
+                cityBean.setpName(getCurrentProvinceName());
                 mSelectCitysMap.get(getCurrentProvinceCode()).add(cityBean);
             }
         }
@@ -241,16 +243,6 @@ public class SelectAreaActivity extends AppCompatActivity {
     }
 
     /**
-     * 计算下方提示字段内容
-     */
-    private void updateSelectCount() {
-        int provinceNum = mSelectCitysMap.size();
-        int citysNum = getSelectAreaNum();
-        mTextSelectCount.setText(String.format("已选：%s个省，%s个市", provinceNum, citysNum));
-        mImgAllCheck.setSelected(citysNum == ALL_CITYS_NUM);
-    }
-
-    /**
      * 得到当前省
      *
      * @return
@@ -267,19 +259,6 @@ public class SelectAreaActivity extends AppCompatActivity {
     private String getCurrentProvinceName() {
         return getCurrentProvince().getName();
     }
-
-    /**
-     * 得到所选的城市的总个数
-     */
-    private int getSelectAreaNum() {
-        int citysNum = 0;
-        Iterator<ArrayList<AreaBean.ChildBeanX>> iterator = mSelectCitysMap.values().iterator();
-        while (iterator.hasNext()) {
-            citysNum += iterator.next().size();
-        }
-        return citysNum;
-    }
-
 
     @OnClick({R.id.txt_save, R.id.rl_allCheck})
     public void onViewClicked(View view) {
@@ -323,6 +302,28 @@ public class SelectAreaActivity extends AppCompatActivity {
         }
         mProvinceAdapter.notifyDataSetChanged();
         mCityAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 计算下方提示字段内容
+     */
+    private void updateSelectCount() {
+        int provinceNum = mSelectCitysMap.size();
+        int citysNum = getSelectAreaNum();
+        mTextSelectCount.setText(String.format("已选：%s个省，%s个市", provinceNum, citysNum));
+        mImgAllCheck.setSelected(citysNum == ALL_CITYS_NUM);
+    }
+
+    /**
+     * 得到所选的城市的总个数
+     */
+    private int getSelectAreaNum() {
+        int citysNum = 0;
+        Iterator<ArrayList<AreaBean.ChildBeanX>> iterator = mSelectCitysMap.values().iterator();
+        while (iterator.hasNext()) {
+            citysNum += iterator.next().size();
+        }
+        return citysNum;
     }
 
     class ProvinceAdapter extends BaseQuickAdapter<AreaBean, BaseViewHolder> {
