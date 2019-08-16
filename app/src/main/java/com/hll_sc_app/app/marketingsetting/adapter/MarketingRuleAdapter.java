@@ -14,9 +14,9 @@ import com.hll_sc_app.bean.marketingsetting.RuleListBean;
 
 import java.util.List;
 
-import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_MJ;
-import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_MZ;
-import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_ZJ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MJ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MZ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZJ;
 
 
 public class MarketingRuleAdapter extends BaseQuickAdapter<RuleListBean, BaseViewHolder> {

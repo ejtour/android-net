@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingListAdapter;
+import com.hll_sc_app.app.marketingsetting.product.check.ProductMarketingCheckActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -128,6 +129,11 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     private void initList() {
         mList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mListAdapter = new MarketingListAdapter(null);
+        mListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.txt_check_detail) {
+                ProductMarketingCheckActivity.start(mListAdapter.getItem(position).getId());
+            }
+        });
         mList.setAdapter(mListAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

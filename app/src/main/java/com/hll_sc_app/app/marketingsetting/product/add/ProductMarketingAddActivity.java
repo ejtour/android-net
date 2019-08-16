@@ -56,11 +56,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_DZ;
-import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_MJ;
-import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_MZ;
-import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_ZJ;
-import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_ZQ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_DZ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MJ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MZ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZJ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZQ;
 import static com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity.ALL_CITYS_NUM;
 
 /**

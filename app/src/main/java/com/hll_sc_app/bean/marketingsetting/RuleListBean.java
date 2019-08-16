@@ -4,6 +4,7 @@ import java.util.List;
 
 public class RuleListBean {
 
+
     private String actionTime;
     private String actionBy;
     private String ruleCondition;
@@ -18,6 +19,33 @@ public class RuleListBean {
     private String id;
     private String discountID;
     private List<GiveBean> giveList;
+    private String giveTarget;
+    private String couponValue;
+    private int giveType;
+
+    public String getGiveTarget() {
+        return giveTarget;
+    }
+
+    public void setGiveTarget(String giveTarget) {
+        this.giveTarget = giveTarget;
+    }
+
+    public String getCouponValue() {
+        return couponValue;
+    }
+
+    public void setCouponValue(String couponValue) {
+        this.couponValue = couponValue;
+    }
+
+    public int getGiveType() {
+        return giveType;
+    }
+
+    public void setGiveType(int giveType) {
+        this.giveType = giveType;
+    }
 
     public List<GiveBean> getGiveList() {
         return giveList;

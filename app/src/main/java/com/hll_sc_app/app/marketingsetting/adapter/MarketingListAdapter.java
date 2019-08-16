@@ -2,6 +2,7 @@ package com.hll_sc_app.app.marketingsetting.adapter;
 
 import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -17,6 +18,13 @@ import java.util.List;
 public class MarketingListAdapter extends BaseQuickAdapter<MarketingListResp.MarketingBean, BaseViewHolder> {
     public MarketingListAdapter(@Nullable List<MarketingListResp.MarketingBean> data) {
         super(R.layout.list_item_marketing, data);
+    }
+
+    @Override
+    protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+        BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
+        holder.addOnClickListener(R.id.txt_check_detail);
+        return holder;
     }
 
     @Override
