@@ -69,9 +69,10 @@ public class BillDetailHeader extends ConstraintLayout {
         else if (data.getIsConfirm() == 2) builder.append("已确认/");
         if (data.getSettlementStatus() == BillStatus.NOT_SETTLE) builder.append("未结算");
         else if (data.getSettlementStatus() == BillStatus.SETTLED) builder.append("已结算");
+        else builder.append("部分结算");
         mIcon.setImageURL(data.getGroupLogoUrl());
         mShopName.setText(data.getShopName());
-        mGroupName.setText(data.getGroupName());
+        mGroupName.setText(data.getPurchaserName());
         mStatus.setText(builder);
         mWarehouseTag.setVisibility(data.getBillStatementFlag() == 1 ? VISIBLE : GONE);
         mBillDate.setText(String.format("账期日：%s", convertDate(data.getBillCreateTime())));
