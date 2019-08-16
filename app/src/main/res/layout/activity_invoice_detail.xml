@@ -12,6 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightText="编辑"
         app:tb_title="开票详情" />
 
     <View
@@ -335,11 +336,11 @@
                 android:background="@drawable/base_bg_white_radius_5_solid"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="5dp"
-                tools:text="包含 4 张订单"
                 app:layout_constraintBottom_toBottomOf="@id/aid_relevance_order_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/aid_relevance_order_label"
-                app:layout_constraintTop_toTopOf="@id/aid_relevance_order_label" />
+                app:layout_constraintTop_toTopOf="@id/aid_relevance_order_label"
+                tools:text="包含 4 张订单" />
 
             <TextView
                 android:id="@+id/aid_relevance_order_label"
@@ -384,6 +385,7 @@
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingTop="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
+                android:hint="请填写发票号，多个号码请用逗号隔开"
                 android:paddingBottom="20dp"
                 android:textAppearance="@style/TextAppearance.City22.Middle"
                 app:layout_constraintEnd_toEndOf="parent"
