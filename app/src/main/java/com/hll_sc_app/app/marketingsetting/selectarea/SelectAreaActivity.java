@@ -34,10 +34,8 @@ import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,16 +49,12 @@ import butterknife.OnClick;
 public class SelectAreaActivity extends AppCompatActivity {
     public static final int ALL_CITYS_NUM = 354;
     public static final String CITY_ALL_CODE_PREX = "000";
-    /**
-     * 将mSelectIDMap所选的数据平铺 以市级为key 存储省市信息
-     */
-    public static final String SELECT_FLAT_DATA = "result_flat";
 
     /**
-     * 存储已选择的 key:省id，value：set 市 id
+     * 存储已选择的 key:省id，value：市级
      */
     @Autowired(name = "selected", required = true)
-    HashMap<String, Set<String>> mSelectIDMap;
+    HashMap<String, ArrayList<AreaBean.ChildBeanX>> mSelectCitysMap;
     /*头部文字*/
     @Autowired(name = "title", required = true)
     String title;
@@ -82,21 +76,51 @@ public class SelectAreaActivity extends AppCompatActivity {
     private CityAdapter mCityAdapter;
     private ArrayList<AreaBean> mAreaDataList;
 
-    /**
-     * 已选择的市级信息
-     * key:市级id，value:省级id,省级名称,市级名称
-     */
-    private HashMap<String, String> mSelectedCityDataMap;
 
     private int currentProvinceIndex = 0;
 
-    public static void start(Activity activity, int requestCode, String resultname, String title, HashMap<String, Set<String>> selectIdMap) {
+    public static void start(Activity activity, int requestCode, String resultname, String title, HashMap<String, ArrayList<AreaBean.ChildBeanX>> selectMap) {
         ARouter.getInstance().build(RouterConfig.ACTIVITY_SELECT_AREA_PROVINCE_CITY)
                 .withString("title", title)
                 .withString("resultname", resultname)
-                .withSerializable("selected", selectIdMap)
+                .withSerializable("selected", selectMap)
                 .setProvider(new LoginInterceptor())
                 .navigation(activity, requestCode);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_select_area);
+        ARouter.getInstance().inject(this);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
+        ButterKnife.bind(this);
+        initData();
+        initView();
+    }
+
+    private void initData() {
+        if (mSelectCitysMap == null) {
+            mSelectCitysMap = new HashMap<>();
+        }
+    }
+
+    private void initView() {
+        mAreaDataList = getAreaListWithOutOverSeas(this);
+        mTitlBar.setHeaderTitle(title);
+        mRecyclerViewProvince.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mProvinceAdapter = new ProvinceAdapter(mAreaDataList);
+        mProvinceAdapter.setOnItemClickListener((adapter, view, position) -> selectProvinceBean(adapter, position));
+        mRecyclerViewProvince.setAdapter(mProvinceAdapter);
+        mRecyclerViewCitiy.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
+        mCityAdapter = new CityAdapter(null);
+        mCityAdapter.setOnItemClickListener((adapter, view, position) -> selectCityBean(adapter, view, position));
+        mRecyclerViewCitiy.setAdapter(mCityAdapter);
+
+        // 默认选中第一个
+        selectProvinceBean(mProvinceAdapter, 0);
+        //更新底部的显示以及同步全国数据
+        updateSelectCount();
     }
 
     /**
@@ -119,41 +143,6 @@ public class SelectAreaActivity extends AppCompatActivity {
         return areaBeans;
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_area);
-        ARouter.getInstance().inject(this);
-        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
-        ButterKnife.bind(this);
-        initData();
-        initView();
-    }
-
-    private void initData() {
-        if (mSelectIDMap == null) {
-            mSelectIDMap = new HashMap<>();
-        }
-    }
-
-    private void initView() {
-        mAreaDataList = getAreaListWithOutOverSeas(this);
-        mTitlBar.setHeaderTitle(title);
-        mRecyclerViewProvince.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
-        mProvinceAdapter = new ProvinceAdapter(mAreaDataList);
-        mProvinceAdapter.setOnItemClickListener((adapter, view, position) -> selectProvinceBean(adapter, position));
-        mRecyclerViewProvince.setAdapter(mProvinceAdapter);
-        mRecyclerViewCitiy.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
-        mCityAdapter = new CityAdapter(null);
-        mCityAdapter.setOnItemClickListener((adapter, view, position) -> selectCityBean(adapter, view, position));
-        mRecyclerViewCitiy.setAdapter(mCityAdapter);
-
-        // 默认选中第一个
-        selectProvinceBean(mProvinceAdapter, 0);
-
-
-    }
-
     /**
      * 点击省
      *
@@ -170,7 +159,6 @@ public class SelectAreaActivity extends AppCompatActivity {
         mCityAdapter.setNewData(getCurrentCityBeans(true));
     }
 
-
     /**
      * 点击市
      *
@@ -181,30 +169,26 @@ public class SelectAreaActivity extends AppCompatActivity {
     private void selectCityBean(BaseQuickAdapter adapter, View view, int position) {
         AreaBean.ChildBeanX cityBean = (AreaBean.ChildBeanX) adapter.getItem(position);
         //当前省下没有选过，则为空
-        if (mSelectIDMap.get(getCurrentProvinceCode()) == null) {
-            mSelectIDMap.put(getCurrentProvinceCode(), new HashSet<>());
+        if (mSelectCitysMap.get(getCurrentProvinceCode()) == null) {
+            mSelectCitysMap.put(getCurrentProvinceCode(), new ArrayList<>());
         }
         //之前的状态是否已经被勾选
         boolean preSelect = view.findViewById(R.id.img_select).isSelected();
-        //点击市级的全部
+        //点击市级的"全部"
         if (cityBean.getCode().equals(CITY_ALL_CODE_PREX)) {
-            if (preSelect) {
-                mSelectIDMap.remove(getCurrentProvinceCode());
-            } else {
-                mSelectIDMap.get(getCurrentProvinceCode()).addAll(getCurrentProvinceAllCityCodes());
+            mSelectCitysMap.remove(getCurrentProvinceCode());
+            if (!preSelect) {
+                mSelectCitysMap.put(getCurrentProvinceCode(), getCurrentProvinceAllCity());
             }
-            addCurrentProvinceAllCity(!preSelect);
         } else {//点击市级
             if (preSelect) {
-                mSelectIDMap.get(getCurrentProvinceCode()).remove(cityBean.getCode());
-                if (mSelectIDMap.get(getCurrentProvinceCode()).size() == 0) {
-                    mSelectIDMap.remove(getCurrentProvinceCode());
+                mSelectCitysMap.get(getCurrentProvinceCode()).remove(cityBean);
+                if (mSelectCitysMap.get(getCurrentProvinceCode()).size() == 0) {
+                    mSelectCitysMap.remove(getCurrentProvinceCode());
                 }
-                mImgAllCheck.setSelected(false);
             } else {
-                mSelectIDMap.get(getCurrentProvinceCode()).add(cityBean.getCode());
+                mSelectCitysMap.get(getCurrentProvinceCode()).add(cityBean);
             }
-            addSelectedCityData(!preSelect, cityBean);
         }
         mCityAdapter.notifyDataSetChanged();
         updateSelectCount();
@@ -230,31 +214,72 @@ public class SelectAreaActivity extends AppCompatActivity {
     }
 
     /**
+     * 返回当前选择的省的code码
+     *
+     * @return
+     */
+    private String getCurrentProvinceCode() {
+        return getCurrentProvince().getCode();
+    }
+
+    /**
      * 返回当前省市下的所有区的code码
      * 去掉"全部"的code码
      *
      * @return
      */
-    List<String> getCurrentProvinceAllCityCodes() {
-        List<String> cityCodes = new ArrayList<>();
-        for (AreaBean.ChildBeanX cityBean : mAreaDataList.get(currentProvinceIndex).getChild()) {
+    ArrayList<AreaBean.ChildBeanX> getCurrentProvinceAllCity() {
+        ArrayList<AreaBean.ChildBeanX> cityCodes = new ArrayList<>();
+        for (AreaBean.ChildBeanX cityBean : getCurrentProvince().getChild()) {
             if (!cityBean.getCode().equals(CITY_ALL_CODE_PREX)) {
-                cityCodes.add(cityBean.getCode());
+                cityBean.setpCode(getCurrentProvinceCode());
+                cityBean.setpName(getCurrentProvinceName());
+                cityCodes.add(cityBean);
             }
         }
         return cityCodes;
     }
 
     /**
-     * 同步数据mSelectedCityDataMap
-     *
-     * @param isSelect
+     * 计算下方提示字段内容
      */
-    private void addCurrentProvinceAllCity(boolean isSelect) {
-        for (AreaBean.ChildBeanX cityBean : getCurrentCityBeans(false)) {
-            addSelectedCityData(isSelect, cityBean);
-        }
+    private void updateSelectCount() {
+        int provinceNum = mSelectCitysMap.size();
+        int citysNum = getSelectAreaNum();
+        mTextSelectCount.setText(String.format("已选：%s个省，%s个市", provinceNum, citysNum));
+        mImgAllCheck.setSelected(citysNum == ALL_CITYS_NUM);
     }
+
+    /**
+     * 得到当前省
+     *
+     * @return
+     */
+    private AreaBean getCurrentProvince() {
+        return mAreaDataList.get(currentProvinceIndex);
+    }
+
+    /**
+     * 得到当前省的名称
+     *
+     * @return
+     */
+    private String getCurrentProvinceName() {
+        return getCurrentProvince().getName();
+    }
+
+    /**
+     * 得到所选的城市的总个数
+     */
+    private int getSelectAreaNum() {
+        int citysNum = 0;
+        Iterator<ArrayList<AreaBean.ChildBeanX>> iterator = mSelectCitysMap.values().iterator();
+        while (iterator.hasNext()) {
+            citysNum += iterator.next().size();
+        }
+        return citysNum;
+    }
+
 
     @OnClick({R.id.txt_save, R.id.rl_allCheck})
     public void onViewClicked(View view) {
@@ -273,8 +298,7 @@ public class SelectAreaActivity extends AppCompatActivity {
 
     private void toSave() {
         Intent intent = new Intent();
-        intent.putExtra(resultname, mSelectIDMap);
-        intent.putExtra(SELECT_FLAT_DATA, mSelectedCityDataMap);
+        intent.putExtra(resultname, mSelectCitysMap);
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -283,73 +307,22 @@ public class SelectAreaActivity extends AppCompatActivity {
      * 选中/取消 全国
      */
     private void selectAllProvinces(boolean select) {
-        mSelectIDMap.clear();
-        mSelectedCityDataMap.clear();
+        mSelectCitysMap.clear();
         if (select) {
             for (AreaBean province : mAreaDataList) {
-                HashSet<String> cityCodes = new HashSet<>();
+                ArrayList<AreaBean.ChildBeanX> cityCodes = new ArrayList<>();
                 for (AreaBean.ChildBeanX cityBean : province.getChild()) {
                     if (!cityBean.getCode().equals(CITY_ALL_CODE_PREX)) {
-                        cityCodes.add(cityBean.getCode());
-                        addSelectedCityData(true, cityBean);
+                        cityBean.setpName(province.getName());
+                        cityBean.setpCode(province.getCode());
+                        cityCodes.add(cityBean);
                     }
                 }
-                mSelectIDMap.put(province.getCode(), cityCodes);
+                mSelectCitysMap.put(province.getCode(), cityCodes);
             }
         }
         mProvinceAdapter.notifyDataSetChanged();
         mCityAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * 计算下方提示字段内容
-     */
-    private void updateSelectCount() {
-        int provinceNum = mSelectIDMap.size();
-        int citysNum = 0;
-        Iterator<Set<String>> iterator = mSelectIDMap.values().iterator();
-        while (iterator.hasNext()) {
-            citysNum += iterator.next().size();
-        }
-        mTextSelectCount.setText(String.format("已选：%s个省，%s个市", provinceNum, citysNum));
-
-        mImgAllCheck.setSelected(citysNum == ALL_CITYS_NUM);
-    }
-
-    /**
-     * 同步选择数据 mSelectedCityDataMap
-     *
-     * @param isSelect
-     * @param currentCityBean
-     */
-    private void addSelectedCityData(boolean isSelect, AreaBean.ChildBeanX currentCityBean) {
-        if (mSelectedCityDataMap == null) {
-            mSelectedCityDataMap = new HashMap<>();
-        }
-        if (isSelect) {
-            String value = String.format("%s,%s,%s", getCurrentProvinceCode(), getCurrentProvinceName(), currentCityBean.getName());
-            mSelectedCityDataMap.put(currentCityBean.getCode(), value);
-        } else {
-            mSelectedCityDataMap.remove(currentCityBean.getCode());
-        }
-    }
-
-    /**
-     * 返回当前选择的省的code码
-     *
-     * @return
-     */
-    private String getCurrentProvinceCode() {
-        return mAreaDataList.get(currentProvinceIndex).getCode();
-    }
-
-    /**
-     * 得到当前省的名称
-     *
-     * @return
-     */
-    private String getCurrentProvinceName() {
-        return mAreaDataList.get(currentProvinceIndex).getName();
     }
 
     class ProvinceAdapter extends BaseQuickAdapter<AreaBean, BaseViewHolder> {
@@ -367,7 +340,7 @@ public class SelectAreaActivity extends AppCompatActivity {
                 helper.setBackgroundColor(R.id.txt_categoryName, 0xFFF3F3F3)
                         .setTextColor(R.id.txt_categoryName, Color.parseColor("#5695D2"));
             }//已勾选
-            else if (mSelectIDMap.containsKey(item.getCode())) {
+            else if (mSelectCitysMap.containsKey(item.getCode())) {
                 helper.setTextColor(R.id.txt_categoryName, Color.parseColor("#5695D2"))
                         .setBackgroundColor(R.id.txt_categoryName, 0xFFFFFFFF);
             } else {
@@ -386,20 +359,18 @@ public class SelectAreaActivity extends AppCompatActivity {
         @Override
         protected void convert(BaseViewHolder helper, AreaBean.ChildBeanX item) {
             boolean isSelected;
-            if (mSelectIDMap.get(getCurrentProvinceCode()) == null) {
+            if (mSelectCitysMap.get(getCurrentProvinceCode()) == null) {
                 isSelected = false;
             } else {
                 if (helper.getLayoutPosition() == 0) {//市级的"全部"按钮
-                    isSelected = mSelectIDMap.get(getCurrentProvinceCode()).size() + 1 == getData().size();
+                    isSelected = mSelectCitysMap.get(getCurrentProvinceCode()).size() + 1 == getData().size();
                 } else {
-                    isSelected = mSelectIDMap.get(getCurrentProvinceCode()).contains(item.getCode());
+                    isSelected = mSelectCitysMap.get(getCurrentProvinceCode()).contains(item);
                 }
             }
             helper.setText(R.id.txt_name, item.getName())
                     .setTextColor(R.id.txt_name, Color.parseColor(isSelected ? "#5695D2" : "#666666"));
             helper.getView(R.id.img_select).setSelected(isSelected);
-
-
         }
     }
 }

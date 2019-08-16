@@ -3,7 +3,8 @@ package com.hll_sc_app.base.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
+import com.hll_sc_app.base.utils.UIUtils;
+
 import java.util.List;
 
 /**
@@ -13,12 +14,35 @@ import java.util.List;
  * @date 2018/87
  */
 public class AreaBean implements Parcelable {
+    public static final Creator<AreaBean> CREATOR = new Creator<AreaBean>() {
+        @Override
+        public AreaBean createFromParcel(Parcel source) {
+            return new AreaBean(source);
+        }
+
+        @Override
+        public AreaBean[] newArray(int size) {
+            return new AreaBean[size];
+        }
+    };
     private int areaNumQueryByProince;
     private int cityNumQueryByProince;
     private String code;
     private String name;
     private List<ChildBeanX> child;
     private boolean select;
+
+    public AreaBean() {
+    }
+
+    protected AreaBean(Parcel in) {
+        this.areaNumQueryByProince = in.readInt();
+        this.cityNumQueryByProince = in.readInt();
+        this.code = in.readString();
+        this.name = in.readString();
+        this.child = in.createTypedArrayList(ChildBeanX.CREATOR);
+        this.select = in.readByte() != 0;
+    }
 
     public boolean isSelect() {
         return select;
@@ -68,14 +92,50 @@ public class AreaBean implements Parcelable {
         this.child = child;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.areaNumQueryByProince);
+        dest.writeInt(this.cityNumQueryByProince);
+        dest.writeString(this.code);
+        dest.writeString(this.name);
+        dest.writeTypedList(this.child);
+        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
+    }
+
     public static class ChildBeanX implements Parcelable {
         private int areaNumQueryByCity;
+        private String pName;
+        private String pCode;
         private String code;
         private String name;
         private List<ChildBean> child;
         private String Initial;
         private boolean select;
         private String flag = "2";
+
+        public ChildBeanX() {
+        }
+
+        public String getpName() {
+            return pName;
+        }
+
+        public void setpName(String pName) {
+            this.pName = pName;
+        }
+
+        public String getpCode() {
+            return pCode;
+        }
+
+        public void setpCode(String pCode) {
+            this.pCode = pCode;
+        }
 
         public String getFlag() {
 
@@ -134,11 +194,49 @@ public class AreaBean implements Parcelable {
             this.child = child;
         }
 
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null || getClass() != obj.getClass()) {
+                return false;
+            }
+            final ChildBeanX other = (ChildBeanX) obj;
+            return UIUtils.equals(this.code, other.code);
+        }
+
         public static class ChildBean implements Parcelable {
+            public static final Creator<ChildBean> CREATOR = new Creator<ChildBean>() {
+                @Override
+                public ChildBean createFromParcel(Parcel source) {
+                    return new ChildBean(source);
+                }
+
+                @Override
+                public ChildBean[] newArray(int size) {
+                    return new ChildBean[size];
+                }
+            };
             private String code;
             private String name;
             private String flag = "2";
             private String divideName;
+
+            public ChildBean() {
+            }
+
+            protected ChildBean(Parcel in) {
+                this.code = in.readString();
+                this.name = in.readString();
+                this.flag = in.readString();
+                this.divideName = in.readString();
+            }
 
             public String getDivideName() {
                 return divideName;
@@ -172,9 +270,6 @@ public class AreaBean implements Parcelable {
                 this.name = name;
             }
 
-            public ChildBean() {
-            }
-
             @Override
             public int describeContents() {
                 return 0;
@@ -187,28 +282,6 @@ public class AreaBean implements Parcelable {
                 dest.writeString(this.flag);
                 dest.writeString(this.divideName);
             }
-
-            protected ChildBean(Parcel in) {
-                this.code = in.readString();
-                this.name = in.readString();
-                this.flag = in.readString();
-                this.divideName = in.readString();
-            }
-
-            public static final Creator<ChildBean> CREATOR = new Creator<ChildBean>() {
-                @Override
-                public ChildBean createFromParcel(Parcel source) {
-                    return new ChildBean(source);
-                }
-
-                @Override
-                public ChildBean[] newArray(int size) {
-                    return new ChildBean[size];
-                }
-            };
-        }
-
-        public ChildBeanX() {
         }
 
         @Override
@@ -219,6 +292,8 @@ public class AreaBean implements Parcelable {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(this.areaNumQueryByCity);
+            dest.writeString(this.pName);
+            dest.writeString(this.pCode);
             dest.writeString(this.code);
             dest.writeString(this.name);
             dest.writeTypedList(this.child);
@@ -229,6 +304,8 @@ public class AreaBean implements Parcelable {
 
         protected ChildBeanX(Parcel in) {
             this.areaNumQueryByCity = in.readInt();
+            this.pName = in.readString();
+            this.pCode = in.readString();
             this.code = in.readString();
             this.name = in.readString();
             this.child = in.createTypedArrayList(ChildBean.CREATOR);
@@ -249,43 +326,4 @@ public class AreaBean implements Parcelable {
             }
         };
     }
-
-    public AreaBean() {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.areaNumQueryByProince);
-        dest.writeInt(this.cityNumQueryByProince);
-        dest.writeString(this.code);
-        dest.writeString(this.name);
-        dest.writeTypedList(this.child);
-        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
-    }
-
-    protected AreaBean(Parcel in) {
-        this.areaNumQueryByProince = in.readInt();
-        this.cityNumQueryByProince = in.readInt();
-        this.code = in.readString();
-        this.name = in.readString();
-        this.child = in.createTypedArrayList(ChildBeanX.CREATOR);
-        this.select = in.readByte() != 0;
-    }
-
-    public static final Creator<AreaBean> CREATOR = new Creator<AreaBean>() {
-        @Override
-        public AreaBean createFromParcel(Parcel source) {
-            return new AreaBean(source);
-        }
-
-        @Override
-        public AreaBean[] newArray(int size) {
-            return new AreaBean[size];
-        }
-    };
 }
