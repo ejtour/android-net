@@ -555,6 +555,12 @@
         <activity
             android:name=".app.marketingsetting.selectarea.SelectAreaActivity"
             android:screenOrientation="portrait" />
+
+        <!--营销中心-商品选择优惠券-->
+        <activity
+            android:name=".app.marketingsetting.product.selectcoupon.CouponSelectListActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

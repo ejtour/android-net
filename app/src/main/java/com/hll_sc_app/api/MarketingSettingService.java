@@ -5,6 +5,8 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.marketingsetting.CouponListBean;
+import com.hll_sc_app.bean.marketingsetting.CouponListReq;
 import com.hll_sc_app.bean.marketingsetting.MarketingListResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingProductAddReq;
 import com.hll_sc_app.bean.marketingsetting.MarketingProductAddResp;
@@ -51,4 +53,9 @@ public interface MarketingSettingService {
     @POST(HttpConfig.URL)
     @Headers("pv:112001")
     Observable<BaseResp<MarketingProductAddResp>> addProductMarketing(@Body BaseReq<MarketingProductAddReq> req);
+
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:112013")
+    Observable<BaseResp<List<CouponListBean>>> getCounponList(@Body BaseReq<CouponListReq> req);
 }

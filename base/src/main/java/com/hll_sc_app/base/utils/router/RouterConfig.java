@@ -618,5 +618,10 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_SELECT_AREA_PROVINCE_CITY = "/activity/select/area/province/city";
 
+    /**
+     * 选择优惠券
+     */
+    public static final String ACTIVITY_SELECT_COUPON_LIST = "/activity/select/coupon/list";
+
 }
 

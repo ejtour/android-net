@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.marketingsetting;
 
+import java.util.List;
+
 public class RuleListBean {
 
     private String actionTime;
@@ -15,6 +17,15 @@ public class RuleListBean {
     private String ruleName;
     private String id;
     private String discountID;
+    private List<GiveBean> giveList;
+
+    public List<GiveBean> getGiveList() {
+        return giveList;
+    }
+
+    public void setGiveList(List<GiveBean> giveList) {
+        this.giveList = giveList;
+    }
 
     public String getActionTime() {
         return actionTime;

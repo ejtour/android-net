@@ -36,6 +36,8 @@ public class CouponRuleSelectView extends LinearLayout {
     private ImageView mArrow;
     private int mModal;
 
+    private SelectListener mListener;
+
     public CouponRuleSelectView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CouponRuleSelectView);
@@ -50,6 +52,11 @@ public class CouponRuleSelectView extends LinearLayout {
         View view = View.inflate(context, R.layout.view_coupon_rule_select, constraintLayout);
         bindView(view);
         initModal();
+        mTextCouponSelect.setOnClickListener(v -> {
+            if (this.mListener != null) {
+                this.mListener.select();
+            }
+        });
         addView(view);
 
     }
@@ -103,7 +110,38 @@ public class CouponRuleSelectView extends LinearLayout {
         }
     }
 
+    /**
+     * String[订单数满值，赠券个数]
+     *
+     * @return
+     */
     public String[] getValue() {
-        return new String[]{mEdtMinNum.getText().toString(), mTextCouponSelect.getText().toString(), mEdtCouponNum.getText().toString()};
+        return new String[]{mEdtMinNum.getText().toString(), mEdtCouponNum.getText().toString()};
+    }
+
+    /**
+     * 是否三项都填写了
+     *
+     * @return
+     */
+    public boolean isInputComplete() {
+        return mEdtMinNum.getText().toString().trim().length() != 0 &&
+                mEdtCouponNum.getText().toString().trim().length() != 0 &&
+                mTextCouponSelect.getText().toString().trim().length() != 0;
+    }
+
+    public void setSelectListener(SelectListener selectListener) {
+        this.mListener = selectListener;
+    }
+
+    public void setCouponName(String name) {
+        mTextCouponSelect.setText(name);
+    }
+
+    /**
+     * 点击赠券的事件
+     */
+    public interface SelectListener {
+        void select();
     }
 }
