@@ -31,7 +31,6 @@ import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
@@ -78,7 +77,7 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
         boolean notCrm = TextUtils.isEmpty(UserConfig.getSalesmanID());
         mTitleBar.setRightBtnVisible(notCrm);
-        String[] titles = {"已提交", "已开票", "被驳回"};
+        String[] titles = {notCrm ? "未开票" : "已提交", "已开票", "被驳回"};
         mViewPager.setAdapter(new EntryAdapter());
         mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mViewPager, titles);
