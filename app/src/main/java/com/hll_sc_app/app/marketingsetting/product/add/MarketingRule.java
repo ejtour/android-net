@@ -10,8 +10,8 @@ public enum MarketingRule {
     RULE_ZJ("4", "直降"),
     RULE_MZ("1", "买赠"),
     RULE_ZQ("5", "赠券"),
-    RULE_MJ("2", "满减"),
-    RULE_DZ("3", "打折");
+    RULE_MJ("6", "满减"),
+    RULE_DZ("7", "打折");
 
     private String key;
     private String value;

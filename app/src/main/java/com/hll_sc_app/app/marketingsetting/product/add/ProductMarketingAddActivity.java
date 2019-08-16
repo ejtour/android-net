@@ -21,6 +21,7 @@ import com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity;
 import com.hll_sc_app.app.marketingsetting.selectproduct.ProductSelectActivity;
 import com.hll_sc_app.app.marketingsetting.view.CouponRuleSelectView;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -45,7 +46,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +58,6 @@ import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE
 import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_ZJ;
 import static com.hll_sc_app.app.marketingsetting.product.add.MarketingRule.RULE_ZQ;
 import static com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity.ALL_CITYS_NUM;
-import static com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity.SELECT_FLAT_DATA;
 
 /**
  * 商品促销列表
@@ -101,6 +100,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     TextView mTxtAreaSelect;
     @BindView(R.id.switch_ladder)
     Switch mSwitchLadder;
+    @BindView(R.id.edt_rule_dz)
+    EditText mEdtRuleDZ;
     private Unbinder unbinder;
     private DateTimePickerDialog.Builder mDateTimeDialogBuilder;
     private SingleSelectionDialog mSingleRuleDilog;
@@ -123,14 +124,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
      *
      * @param savedInstanceState
      */
-    private HashMap selectedAreaMap = new HashMap<String, Set<String>>();
-
-
-    /**
-     * 已选择的市级信息
-     * key:市级id，value:省级id,省级名称,市级名称
-     */
-    private HashMap<String, String> mSelectedCityDataMap;
+    private HashMap<String, ArrayList<AreaBean.ChildBeanX>> selectedAreaMap = new HashMap<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -368,22 +362,21 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             case REQUEST_SELECT_AREA:
                 if (resultCode == RESULT_OK) {
                     selectedAreaMap = (HashMap) data.getSerializableExtra(REQUEST_SELECT_AREA_NAME);
-                    mSelectedCityDataMap = (HashMap) data.getSerializableExtra(SELECT_FLAT_DATA);
-
                     int provinceNum = selectedAreaMap.size();
-                    int citysNum = mSelectedCityDataMap.size();
-//                    Iterator<Set<String>> iterator = selectedAreaMap.values().iterator();
-//                    while (iterator.hasNext()) {
-//                        citysNum += iterator.next().size();
-//                    }
-                    mTxtAreaSelect.setText(String.format("%s个省，%s个市", provinceNum, citysNum));
-                    mTxtAreaSelect.setTag(citysNum);
+                    int citysNum = 0;
+                    Iterator<ArrayList<AreaBean.ChildBeanX>> iterator = selectedAreaMap.values().iterator();
+                    while (iterator.hasNext()) {
+                        citysNum += iterator.next().size();
+                    }
+                    mTxtAreaSelect.setText(citysNum == ALL_CITYS_NUM ? "全国" : String.format("%s个省，%s个市", provinceNum, citysNum));
+                    mTxtAreaSelect.setTag(citysNum == ALL_CITYS_NUM);
                 }
                 break;
             default:
                 break;
         }
     }
+
 
     @Override
     public void addSuccess() {
@@ -444,10 +437,20 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     @Override
     public List<RuleListBean> getRuleList() {
-        if (mMarketingRuleAdapter == null) {
-            return null;
+        //如果是打折
+        if (getRuleType() == Integer.parseInt(RULE_DZ.getKey())) {
+            List<RuleListBean> ruleListBeans = new ArrayList<>();
+            RuleListBean bean = new RuleListBean();
+            bean.setRuleCondition("0");
+            bean.setRuleDiscountValue(mEdtRuleDZ.getText().toString());
+            ruleListBeans.add(bean);
+            return ruleListBeans;
+        } else {
+            if (mMarketingRuleAdapter == null) {
+                return null;
+            }
+            return mMarketingRuleAdapter.getData();
         }
-        return mMarketingRuleAdapter.getData();
     }
 
     @Override
@@ -456,23 +459,23 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             return null;
         }
         List<AreaListBean> areaListBeans = new ArrayList<>();
-        Iterator cityIterator = mSelectedCityDataMap.keySet().iterator();
+        Iterator<ArrayList<AreaBean.ChildBeanX>> cityIterator = selectedAreaMap.values().iterator();
         while (cityIterator.hasNext()) {
-            String cityCode = cityIterator.next().toString();
-            String[] data = mSelectedCityDataMap.get(cityCode).split(",");
-            AreaListBean areaListBean = new AreaListBean();
-            areaListBean.setCityCode(cityCode);
-            areaListBean.setProvinceCode(data[0]);
-            areaListBean.setProvinceName(data[1]);
-            areaListBean.setCityName(data[2]);
-            areaListBeans.add(areaListBean);
+            for (AreaBean.ChildBeanX cityBean : cityIterator.next()) {
+                AreaListBean areaListBean = new AreaListBean();
+                areaListBean.setCityCode(cityBean.getCode());
+                areaListBean.setProvinceCode(cityBean.getpCode());
+                areaListBean.setProvinceName(cityBean.getpName());
+                areaListBean.setCityName(cityBean.getName());
+                areaListBeans.add(areaListBean);
+            }
         }
-        return areaListBeans;
+        return areaListBeans.size() == ALL_CITYS_NUM ? null : areaListBeans;
     }
 
     @Override
     public int getAreaScope() {
-        return ALL_CITYS_NUM == (int) mTxtAreaSelect.getTag() ? 1 : 2;
+        return (boolean) mTxtAreaSelect.getTag() ? 1 : 2;
     }
 
     @Override
