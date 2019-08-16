@@ -12,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tb_title="选择关联订单" />
+        app:tb_title="开票订单" />
 
     <TextView
         android:id="@+id/iso_filter_btn"
