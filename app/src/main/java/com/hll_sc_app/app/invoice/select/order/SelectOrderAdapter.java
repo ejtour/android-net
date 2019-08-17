@@ -34,10 +34,15 @@ public class SelectOrderAdapter extends BaseQuickAdapter<InvoiceOrderBean, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, InvoiceOrderBean item) {
-        String payMethod = null;
         String type = OrderHelper.getPayType(item.getPayType());
-        if (!TextUtils.isEmpty(type))
-            payMethod = String.format("%s(%s)", type, OrderHelper.getPaymentWay(item.getPaymentWay()));
+        StringBuilder payMethod = new StringBuilder();
+        if (!TextUtils.isEmpty(type)) {
+            payMethod.append(type);
+            String paymentWay = OrderHelper.getPaymentWay(item.getPaymentWay());
+            if (!TextUtils.isEmpty(paymentWay)) {
+                payMethod.append("(").append(paymentWay).append(")");
+            }
+        }
         String orderNo;
         if (item.getBillType() == 1) orderNo = "订单号：" + item.getBillNo();
         else orderNo = "退款单号：" + item.getBillNo();

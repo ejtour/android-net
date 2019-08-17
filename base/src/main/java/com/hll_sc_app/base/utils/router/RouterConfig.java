@@ -720,6 +720,11 @@ public class RouterConfig {
     public static final String INVOICE_INPUT = "/activity/invoice/input";
 
     /**
+     * 发票管理-填写发票信息-回款记录
+     */
+    public static final String INVOICE_RETURN_RECORD = "/activity/invoice/returnRecord";
+
+    /**
      * 客户缺货汇总
      */
     public static final String REPORT_CUSTOMER_LACK_SUMMARY = "/activity/customer/lack/summary";

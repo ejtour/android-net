@@ -17,8 +17,6 @@ public interface IInvoiceDetailContract {
 
         void actionSuccess();
 
-        void settleSuccess();
-
         void showImage(String url);
     }
 

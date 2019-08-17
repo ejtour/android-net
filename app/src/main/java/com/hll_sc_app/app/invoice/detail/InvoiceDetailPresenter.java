@@ -44,7 +44,7 @@ public class InvoiceDetailPresenter implements IInvoiceDetailContract.IInvoiceDe
         Invoice.settle(id, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
             public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
-                mView.settleSuccess();
+                start();
             }
         });
     }

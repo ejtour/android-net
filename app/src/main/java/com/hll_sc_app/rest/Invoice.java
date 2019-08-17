@@ -181,21 +181,22 @@ public class Invoice {
      * @param returnMoney   回款金额
      * @param returnPayType 回款方式1现金、2银行转账、3支票、4其它
      */
-    public static void updateReturnRecord(int action, String id, String invoiceID, String returnDate, double returnMoney, String returnPayType, SimpleObserver<ReturnRecordResp> observer) {
+    public static void updateReturnRecord(int action, String id, String invoiceID,
+                                          String returnDate, String returnMoney, String returnPayType,
+                                          SimpleObserver<MsgWrapper<ReturnRecordResp>> observer) {
         InvoiceService.INSTANCE
                 .updateReturnRecord(BaseMapReq.newBuilder()
                         .put("action", String.valueOf(action))
                         .put("id", id)
                         .put("invoiceID", invoiceID)
                         .put("returnDate", returnDate)
-                        .put("returnMoney", CommonUtils.formatMoney(returnMoney))
-                        .put("returnPayType", returnPayType)
+                        .put("returnMoney", returnMoney)
+                        .put("returnPayType", String.valueOf(returnPayType))
                         .create())
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
-
 
     /**
      * 修改发票信息

@@ -26,6 +26,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.invoice.detail.order.RelevanceOrderActivity;
+import com.hll_sc_app.app.invoice.detail.record.ReturnRecordActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -136,7 +137,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
             if (item == null) return;
             switch (view.getId()) {
                 case R.id.irr_edit:
-                    showToast("编辑回款记录待添加");
+                    ReturnRecordActivity.start(this, item);
                     break;
                 case R.id.irr_confirm:
                     settleConfirm(item.getId());
@@ -169,6 +170,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
                 .setMessageTitle("确认将关联订单结算么")
                 .setMessage("确认后将根据回款金额处理未结算订单 完成后回款记录将不允许再编辑")
                 .setButton((dialog, item) -> {
+                    dialog.dismiss();
                     if (item == 1) mPresenter.settle(id);
                 }, "我再看看", "确认结算")
                 .create().show();
@@ -208,7 +210,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     @OnClick({R.id.aid_add_records})
     public void addRecord(View view) {
-        showToast("新增回款记录待添加");
+        ReturnRecordActivity.start(this, mID);
     }
 
     @Override
@@ -319,9 +321,13 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && data != null && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
-            List<String> list = Matisse.obtainPathResult(data);
-            if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(new File(list.get(0)));
+        if (resultCode == Activity.RESULT_OK) {
+            if (data != null && requestCode == ImgUploadBlock.REQUEST_CODE_CHOOSE) {
+                List<String> list = Matisse.obtainPathResult(data);
+                if (!CommonUtils.isEmpty(list)) mPresenter.imageUpload(new File(list.get(0)));
+            } else if (requestCode == ReturnRecordActivity.REQ_CODE) {
+                mPresenter.start();
+            }
         }
     }
 
@@ -342,11 +348,6 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     public void onBackPressed() {
         if (mHasChanged) setResult(RESULT_OK);
         super.onBackPressed();
-    }
-
-    @Override
-    public void settleSuccess() {
-
     }
 
     @Override
