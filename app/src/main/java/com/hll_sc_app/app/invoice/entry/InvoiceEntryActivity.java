@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.invoice.entry;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
@@ -16,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.invoice.detail.InvoiceDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -65,6 +67,14 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
         ButterKnife.bind(this);
         initView();
         initData();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == InvoiceDetailActivity.REQ_CODE) {
+            EventBus.getDefault().post(new InvoiceEvent(InvoiceEvent.REMOVE_ITEM));
+        }
     }
 
     private void initData() {

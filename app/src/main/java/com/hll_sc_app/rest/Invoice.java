@@ -149,7 +149,7 @@ public class Invoice {
                         .put("invoicePrice", CommonUtils.formatNumber(invoicePrice))
                         .put("invoiceVoucher", invoiceVoucher)
                         .put("rejectReason", rejectReason)
-                        .put("userID",GreenDaoUtils.getUser().getEmployeeID())
+                        .put("userID", GreenDaoUtils.getUser().getEmployeeID())
                         .create())
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -192,6 +192,27 @@ public class Invoice {
                         .put("returnPayType", returnPayType)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+
+    /**
+     * 修改发票信息
+     *
+     * @param id             发票id
+     * @param invoiceNO      发票号
+     * @param invoiceVoucher 发票凭证
+     */
+    public static void modifyInvoiceInfo(String id, String invoiceNO, String invoiceVoucher, SimpleObserver<MsgWrapper<Object>> observer) {
+        InvoiceService.INSTANCE
+                .modifyInvoiceInfo(BaseMapReq.newBuilder()
+                        .put("id", id)
+                        .put("invoiceNO", invoiceNO)
+                        .put("invoiceVoucher", invoiceVoucher, true)
+                        .put("userID", GreenDaoUtils.getUser().getEmployeeID())
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

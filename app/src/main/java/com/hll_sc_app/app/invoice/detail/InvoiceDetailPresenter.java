@@ -3,7 +3,6 @@ package com.hll_sc_app.app.invoice.detail;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.invoice.InvoiceBean;
-import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Invoice;
 import com.hll_sc_app.rest.Upload;
@@ -56,6 +55,16 @@ public class InvoiceDetailPresenter implements IInvoiceDetailContract.IInvoiceDe
             @Override
             public void onSuccess(String s) {
                 mView.showImage(s);
+            }
+        });
+    }
+
+    @Override
+    public void modifyInvoiceInfo(String invoiceNO, String invoiceVoucher) {
+        Invoice.modifyInvoiceInfo(mID, invoiceNO, invoiceVoucher, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
+            @Override
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                start();
             }
         });
     }

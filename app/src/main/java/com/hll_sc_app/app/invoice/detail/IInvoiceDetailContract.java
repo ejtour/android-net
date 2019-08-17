@@ -28,5 +28,7 @@ public interface IInvoiceDetailContract {
         void settle(String id);
 
         void imageUpload(File file);
+
+        void modifyInvoiceInfo(String invoiceNO, String invoiceVoucher);
     }
 }

@@ -39,4 +39,12 @@ public class InvoiceAdapter extends BaseQuickAdapter<InvoiceBean, BaseViewHolder
         ss.setSpan(new RelativeSizeSpan(1.3f), 2, source.indexOf("."), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;
     }
+
+    private int getItemPosition(InvoiceBean item) {
+        return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
+    }
+
+    void removeData(InvoiceBean data) {
+        remove(getItemPosition(data));
+    }
 }

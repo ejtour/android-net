@@ -66,6 +66,7 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
     private InvoiceParam mParam;
     private EmptyView mEmptyView;
     private IInvoiceContract.IInvoicePresenter mPresenter;
+    private InvoiceBean mCurBean;
 
     public static InvoiceFragment newInstance(InvoiceParam param, int invoiceStatus) {
         Bundle args = new Bundle();
@@ -100,9 +101,9 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
         } else mFilterGroup.setVisibility(View.GONE);
         mAdapter = new InvoiceAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            InvoiceBean item = mAdapter.getItem(position);
-            if (item == null) return;
-            InvoiceDetailActivity.start(requireActivity(), item.getId());
+            mCurBean = mAdapter.getItem(position);
+            if (mCurBean == null) return;
+            InvoiceDetailActivity.start(requireActivity(), mCurBean.getId());
         });
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
@@ -149,6 +150,15 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
                 break;
             case InvoiceEvent.EXPORT:
                 if (isFragmentVisible()) mPresenter.export(null);
+                break;
+            case InvoiceEvent.REMOVE_ITEM:
+                if (mInvoiceStatus == 1 && mCurBean != null) {
+                    if (mAdapter.getData().size() > 1) {
+                        mAdapter.removeData(mCurBean);
+                    } else {
+                        setListData(null, false);
+                    }
+                } else setForceLoad(true);
                 break;
         }
     }

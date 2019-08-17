@@ -108,6 +108,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     String mID;
     private IInvoiceDetailContract.IInvoiceDetailPresenter mPresenter;
     private ReturnRecordAdapter mAdapter;
+    private boolean mHasChanged;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -211,6 +212,50 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     @Override
     public void updateData(InvoiceBean bean) {
         boolean crm = !TextUtils.isEmpty(UserConfig.getSalesmanID());
+        updateBaseInfo(bean, crm);
+        reset();
+        if (bean.getInvoiceStatus() == 3) { // 已驳回
+            updateRejectData(bean, crm);
+        } else if (bean.getInvoiceStatus() == 2) { // 已开票
+            updateMadeInvoiceData(bean, crm);
+        } else { // 已提交/未开票
+            updateNotInvoiceData(crm);
+        }
+        mRemark.getParent().requestLayout();
+        mTitleBar.getParent().requestLayout();
+    }
+
+    private void updateNotInvoiceData(boolean crm) {
+        if (crm) {
+            mTips.setText("开票申请已提交至供应商，请等待供应商处理");
+        } else {
+            mInvoiceLicense.setEditable(true);
+            mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
+            mBottomGroup.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void updateMadeInvoiceData(InvoiceBean bean, boolean crm) {
+        if (crm) {
+            mTips.setText("供应商已开具发票，请查收");
+        } else {
+            mTitleBar.setRightBtnVisible(true);
+            mTitleBar.setTag(false);
+            mRecordsGroup.setVisibility(View.VISIBLE);
+            mAdapter.setNewData(bean.getReturnRecordList());
+        }
+        if (!TextUtils.isEmpty(bean.getInvoiceVoucher())) {
+            mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
+            mInvoiceLicense.showImage(bean.getInvoiceVoucher());
+        }
+        mExtraInfoLabel.setText("发票号码");
+        if (!TextUtils.isEmpty(bean.getInvoiceNO())) {
+            mExtraInfoGroup.setVisibility(View.VISIBLE);
+            mExtraInfo.setText(bean.getInvoiceNO());
+        }
+    }
+
+    private void updateBaseInfo(InvoiceBean bean, boolean crm) {
         mInvoiceType.setText(bean.getInvoiceType() == 1 ? "普通发票" : "专用发票");
         mInvoiceAmount.setText(processMoney(bean.getInvoicePrice()));
         mInvoiceAmount.setTag(bean.getInvoicePrice());
@@ -222,45 +267,17 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         mPhone.setText(bean.getTelephone());
         mRemark.setText(bean.getNote());
         mRelevanceOrder.setText(String.format("包含 %s 张订单", bean.getBillTotal()));
-        reset();
         mTips.setVisibility(crm ? View.VISIBLE : View.GONE);
-        if (bean.getInvoiceStatus() == 3) { // 已驳回
-            mExtraInfoLabel.setText("驳回原因");
-            if (crm) {
-                mTips.setText(String.format("开票申请被驳回%s", TextUtils.isEmpty(bean.getRejectReason()) ? "" : "：" + bean.getRejectReason()));
-            } else if (!TextUtils.isEmpty(bean.getRejectReason())) {
-                mExtraInfoGroup.setVisibility(View.VISIBLE);
-                mExtraInfo.setText(bean.getRejectReason());
-            }
-        } else if (bean.getInvoiceStatus() == 2) { // 已开票
-            if (crm) {
-                mTips.setText("供应商已开具发票，请查收");
-            } else {
-                mTitleBar.setRightBtnVisible(true);
-                mTitleBar.setTag(false);
-                mRecordsGroup.setVisibility(View.VISIBLE);
-                mAdapter.setNewData(bean.getReturnRecordList());
-            }
-            if (!TextUtils.isEmpty(bean.getInvoiceVoucher())) {
-                mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
-                mInvoiceLicense.showImage(bean.getInvoiceVoucher());
-            }
-            mExtraInfoLabel.setText("发票号码");
-            if (!TextUtils.isEmpty(bean.getInvoiceNO())) {
-                mExtraInfoGroup.setVisibility(View.VISIBLE);
-                mExtraInfo.setText(bean.getInvoiceNO());
-            }
-        } else {
-            if (crm) {
-                mTips.setText("开票申请已提交至供应商，请等待供应商处理");
-            } else {
-                mInvoiceLicense.setEditable(true);
-                mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
-                mBottomGroup.setVisibility(View.VISIBLE);
-            }
+    }
+
+    private void updateRejectData(InvoiceBean bean, boolean crm) {
+        mExtraInfoLabel.setText("驳回原因");
+        if (crm) {
+            mTips.setText(String.format("开票申请被驳回%s", TextUtils.isEmpty(bean.getRejectReason()) ? "" : "：" + bean.getRejectReason()));
+        } else if (!TextUtils.isEmpty(bean.getRejectReason())) {
+            mExtraInfoGroup.setVisibility(View.VISIBLE);
+            mExtraInfo.setText(bean.getRejectReason());
         }
-        mRemark.getParent().requestLayout();
-        mTitleBar.getParent().requestLayout();
     }
 
     private void reset() {
@@ -285,12 +302,12 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
                 mInvoiceLicenseGroup.setVisibility(View.GONE);
             if (TextUtils.isEmpty(mExtraInfo.getText()))
                 mExtraInfoGroup.setVisibility(View.GONE);
-            showToast("发票信息修改待添加");
+            mPresenter.modifyInvoiceInfo(mExtraInfo.getText().toString(), mInvoiceLicense.getImgUrl());
         } else {
             mExtraInfoGroup.setVisibility(View.VISIBLE);
             mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
             mInvoiceLicense.setEditable(true);
-            mTitleBar.setRightText("完成");
+            mTitleBar.setRightText("确认");
             mExtraInfo.setKeyListener(TextKeyListener.getInstance());
             mTitleBar.setTag(true);
         }
@@ -315,7 +332,14 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     @Override
     public void actionSuccess() {
+        mHasChanged = true;
         mPresenter.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mHasChanged) setResult(RESULT_OK);
+        super.onBackPressed();
     }
 
     @Override
