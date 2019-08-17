@@ -19,7 +19,7 @@ import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 
 /**
- * 日期选择只选择年份
+ * 日期区间选择
  *
  * @author 朱英松
  * @date 2017/11/3
