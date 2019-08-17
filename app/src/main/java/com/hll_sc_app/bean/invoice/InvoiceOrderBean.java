@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.invoice;
 
+import android.text.TextUtils;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/8/12
@@ -7,6 +9,8 @@ package com.hll_sc_app.bean.invoice;
 
 public class InvoiceOrderBean {
     private double billAmount;
+    private double invoicePrice;
+    private String invoiceID;
     private String billCreateTime;
     private String billID;
     private String billNo;
@@ -14,12 +18,32 @@ public class InvoiceOrderBean {
     private int payType;
     private int paymentWay;
 
+    public double getAmount() {
+        return TextUtils.isEmpty(invoiceID) ? billAmount : invoicePrice;
+    }
+
     public double getBillAmount() {
         return billAmount;
     }
 
     public void setBillAmount(double billAmount) {
         this.billAmount = billAmount;
+    }
+
+    public double getInvoicePrice() {
+        return invoicePrice;
+    }
+
+    public void setInvoicePrice(double invoicePrice) {
+        this.invoicePrice = invoicePrice;
+    }
+
+    public String getInvoiceID() {
+        return invoiceID;
+    }
+
+    public void setInvoiceID(String invoiceID) {
+        this.invoiceID = invoiceID;
     }
 
     public String getBillCreateTime() {

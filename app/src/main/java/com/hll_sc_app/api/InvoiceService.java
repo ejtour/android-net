@@ -61,4 +61,8 @@ public interface InvoiceService {
     @POST(HttpConfig.URL)
     @Headers("pv:103153")
     Observable<BaseResp<Object>> modifyInvoiceInfo(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103141")
+    Observable<BaseResp<InvoiceOrderResp>> reqRelevanceOrderList(@Body BaseMapReq req);
 }

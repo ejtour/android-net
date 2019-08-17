@@ -658,6 +658,10 @@
             android:name=".app.invoice.detail.InvoiceDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.invoice.detail.order.RelevanceOrderActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

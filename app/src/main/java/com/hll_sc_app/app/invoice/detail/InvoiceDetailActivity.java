@@ -25,6 +25,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.invoice.detail.order.RelevanceOrderActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -148,6 +149,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0);
         mListView.addItemDecoration(decor);
+        mInvoiceAmount.setTag(0);
     }
 
     private void createAddBtn() {
@@ -354,6 +356,6 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     @OnClick(R.id.aid_relevance_order)
     public void viewRelevanceOrder() {
-        showToast("查看关联订单待添加");
+        RelevanceOrderActivity.start(mID, (double) mInvoiceAmount.getTag());
     }
 }

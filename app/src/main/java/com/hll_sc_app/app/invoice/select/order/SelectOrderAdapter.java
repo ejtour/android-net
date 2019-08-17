@@ -28,7 +28,7 @@ import com.hll_sc_app.utils.DateUtil;
  */
 
 public class SelectOrderAdapter extends BaseQuickAdapter<InvoiceOrderBean, BaseViewHolder> {
-    SelectOrderAdapter() {
+    public SelectOrderAdapter() {
         super(R.layout.item_invoice_select_order);
     }
 
@@ -41,7 +41,7 @@ public class SelectOrderAdapter extends BaseQuickAdapter<InvoiceOrderBean, BaseV
         String orderNo;
         if (item.getBillType() == 1) orderNo = "订单号：" + item.getBillNo();
         else orderNo = "退款单号：" + item.getBillNo();
-        TextView no = helper.setText(R.id.iso_amount, "¥" + item.getBillAmount())
+        TextView no = helper.setText(R.id.iso_amount, "¥" + item.getAmount())
                 .setText(R.id.iso_time, DateUtil.getReadableTime(item.getBillCreateTime()))
                 .setText(R.id.iso_pay_method, payMethod)
                 .setText(R.id.iso_order_no, processOrderNo(orderNo, item.getBillNo()))

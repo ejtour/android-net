@@ -216,4 +216,21 @@ public class Invoice {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+    /**
+     * 获取发票对应的关联订单列表
+     *
+     * @param id
+     */
+    public static void reqRelevanceOrderList(String id, int pageNum, SimpleObserver<InvoiceOrderResp> observer) {
+        InvoiceService.INSTANCE
+                .reqRelevanceOrderList(BaseMapReq.newBuilder()
+                        .put("invoiceID", id)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }
