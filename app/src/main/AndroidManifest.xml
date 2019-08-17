@@ -565,6 +565,10 @@
         <activity
             android:name=".app.marketingsetting.product.check.ProductMarketingCheckActivity"
             android:screenOrientation="portrait" />
+        <!--活动商品列表-->
+        <activity
+            android:name=".app.marketingsetting.product.check.SelectProductListActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

@@ -354,7 +354,7 @@
                 android:layout_height="45dp"
                 android:drawableRight="@drawable/ic_little_right_arrow"
                 android:drawablePadding="10dp"
-                android:gravity="center_vertical"
+                android:gravity="center_vertical|right"
                 android:hint="请选择活动区域"
                 android:textColor="@color/base_text666"
                 android:textColorHint="@color/color_aeaeae"

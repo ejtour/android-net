@@ -6,17 +6,23 @@ import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingProductAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingRuleAdapter;
+import com.hll_sc_app.app.marketingsetting.product.MarketingRule;
+import com.hll_sc_app.app.marketingsetting.product.check.ProductMarketingCheckActivity;
 import com.hll_sc_app.app.marketingsetting.product.selectcoupon.CouponSelectListActivity;
 import com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity;
 import com.hll_sc_app.app.marketingsetting.selectproduct.ProductSelectActivity;
@@ -26,11 +32,14 @@ import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.marketingsetting.AreaListBean;
 import com.hll_sc_app.bean.marketingsetting.CouponListBean;
 import com.hll_sc_app.bean.marketingsetting.GiveBean;
+import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
+import com.hll_sc_app.bean.marketingsetting.MarketingProductAddResp;
 import com.hll_sc_app.bean.marketingsetting.RuleListBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -64,7 +73,7 @@ import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZQ;
 import static com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity.ALL_CITYS_NUM;
 
 /**
- * 商品促销列表
+ * 新增商品促销
  */
 @Route(path = RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST_ADD, extras = Constant.LOGIN_EXTRA)
 public class ProductMarketingAddActivity extends BaseLoadActivity implements IProductMarketingAddContract.IView {
@@ -77,6 +86,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     private static final String TIME_FORMATE_SHOW = "yyyy/MM/dd HH:mm";
     private static final String TIME_FORMATE = "yyyyMMddHHmm";
 
+    @Autowired(name = "parcelable")
+    MarketingDetailCheckResp mDetail;
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.edit_theme)
@@ -132,15 +143,21 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
      */
     private HashMap<String, ArrayList<AreaBean.ChildBeanX>> selectedAreaMap = new HashMap<>();
 
+    public static void start(MarketingDetailCheckResp detailCheckResp) {
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST_ADD, detailCheckResp);
+
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marketing_product_add);
         unbinder = ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         EventBus.getDefault().register(this);
         initView();
+        setInitValue();
     }
-
 
     @Override
     protected void onDestroy() {
@@ -194,6 +211,65 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         mCouponRuleSelectView.setSelectListener(() -> {
             CouponSelectListActivity.start(this, REQUEST_SELECT_COUPON, mSelectCoupon);
         });
+
+        /*打折输入格式监听*/
+        mEdtRuleDZ.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String content = s.toString();
+                if (content.indexOf(".") > -1 && content.length() - content.indexOf(".") > 2) {
+                    mEdtRuleDZ.setText(s.subSequence(0, s.length() - 1));
+                    mEdtRuleDZ.setSelection(s.length() - 1);
+                    showToast("折扣仅允许小数点后一位");
+                }
+            }
+        });
+    }
+
+    /**
+     * 编辑模式 需要设置页面的初始值
+     */
+    private void setInitValue() {
+        if (mDetail == null) {
+            return;
+        }
+        //促销主题
+        mEditTheme.setText(mDetail.getDiscountName());
+        //开始结束时间
+        mTxtStartTime.setText(CalendarUtils.getDateFormatString(mDetail.getDiscountStartTime(), TIME_FORMATE, TIME_FORMATE_SHOW));
+        mTxtEndTime.setText(CalendarUtils.getDateFormatString(mDetail.getDiscountEndTime(), TIME_FORMATE, TIME_FORMATE_SHOW));
+        mTxtStartTime.setTag(CalendarUtils.parse(mDetail.getDiscountStartTime(), TIME_FORMATE));
+        mTxtEndTime.setTag(CalendarUtils.parse(mDetail.getDiscountEndTime(), TIME_FORMATE));
+        //活动商品
+        mMarketingProductAdpater.setNewData(mDetail.getProductList());
+        mEmptyWord.setVisibility(View.GONE);
+        //是否阶梯促销
+        mSwitchLadder.setChecked(false);
+        //促销规则
+        mRuleSelect.setText(mDetail.getRuleTypeName());
+        MarketingRule rule = MarketingRule.getRuleEnum(mDetail.getDiscountRuleType());
+        mRuleSelect.setTag(new NameValue(rule.getValue(), rule.getKey()));
+
+        //活动内容
+
+
+        //活动地区
+        mTxtAreaSelect.setText(mDetail.getAreaDesc());
+        if (mDetail.getAreaScope() == 1) {//全国
+
+        } else {
+            selectedAreaMap = transformFlatAreaToMap(mDetail.getAreaList());
+        }
     }
 
     /**
@@ -220,6 +296,36 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     }
 
     /**
+     * 将铺平的地理数据转为map结构
+     */
+    public static HashMap<String, ArrayList<AreaBean.ChildBeanX>> transformFlatAreaToMap(List<AreaListBean> areaListBeans) {
+        HashMap<String, ArrayList<AreaBean.ChildBeanX>> flatMap = new HashMap<>();
+        if (areaListBeans == null || areaListBeans.size() == 0) {
+            return null;
+        }
+        for (AreaListBean areaListBean : areaListBeans) {
+            if (flatMap.containsKey(areaListBean.getProvinceCode())) {
+                AreaBean.ChildBeanX cityBean = new AreaBean.ChildBeanX();
+                cityBean.setCode(areaListBean.getCityCode());
+                cityBean.setName(areaListBean.getCityName());
+                cityBean.setpName(areaListBean.getProvinceName());
+                cityBean.setpCode(areaListBean.getProvinceCode());
+                flatMap.get(areaListBean.getProvinceCode()).add(cityBean);
+            } else {
+                ArrayList<AreaBean.ChildBeanX> cityBeans = new ArrayList<>();
+                AreaBean.ChildBeanX cityBean = new AreaBean.ChildBeanX();
+                cityBean.setCode(areaListBean.getCityCode());
+                cityBean.setName(areaListBean.getCityName());
+                cityBean.setpName(areaListBean.getProvinceName());
+                cityBean.setpCode(areaListBean.getProvinceCode());
+                cityBeans.add(cityBean);
+                flatMap.put(areaListBean.getProvinceCode(), cityBeans);
+            }
+        }
+        return flatMap;
+    }
+
+    /**
      * 校验输入
      *
      * @return
@@ -237,8 +343,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         } else if (TextUtils.isEmpty(getEndTime())) {
             showToast("请选择结束时间");
             return false;
-        } else if (getAreaList().size() == 0) {
-            showToast("请选择活动区域女");
+        } else if (mTxtAreaSelect.getText().toString().length() == 0) {
+            showToast("请选择活动区域");
             return false;
         } else if (mMarketingProductAdpater.getData().size() == 0) {
             showToast("请选择活动商品");
@@ -328,6 +434,9 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                             .refreshList(getRules())
                             .setTitleText("选择类型")
                             .select((NameValue) mRuleSelect.getTag())
+                            .selectEqualListener((t, m) -> {
+                                return TextUtils.equals(t.getValue(), m.getValue());
+                            })
                             .setOnSelectListener(bean -> {
                                 mRuleSelect.setText(bean.getName());
                                 mRuleSelect.setTag(bean);
@@ -403,7 +512,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     private void initRuleListAdapter(int ruleType) {
         if (mMarketingRuleAdapter == null) {
-            mMarketingRuleAdapter = new MarketingRuleAdapter(null);
+            mMarketingRuleAdapter = new MarketingRuleAdapter(null, true);
             mListRule.setAdapter(mMarketingRuleAdapter);
             mMarketingRuleAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 adapter.remove(position);
@@ -447,7 +556,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     }
 
     @Override
-    public void addSuccess() {
+    public void addSuccess(MarketingProductAddResp resp) {
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_success)
                 .setImageState(R.drawable.ic_dialog_state_success)
@@ -455,15 +564,14 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 .setMessage("活动将会在设定时间开始\n" +
                         "如发觉活动有异常可进行作废操作")
                 .setButton((dialog, item) -> {
+                    MarketingEvent event = new MarketingEvent();
+                    event.setRefreshProductList(true);
+                    EventBus.getDefault().post(event);
                     dialog.dismiss();
                     if (item == 1) {
-                        //todo 查看详情-zc
-                    } else {
-                        MarketingEvent event = new MarketingEvent();
-                        event.setRefreshProductList(true);
-                        EventBus.getDefault().post(event);
-                        finish();
+                        ProductMarketingCheckActivity.start(resp.getId());
                     }
+                    finish();
                 }, "返回列表", "查看详情")
                 .create().show();
     }
@@ -572,5 +680,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     public int getCustomerScope() {
         return 1;
     }
+
 
 }

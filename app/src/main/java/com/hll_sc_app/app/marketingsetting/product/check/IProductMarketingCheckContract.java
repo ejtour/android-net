@@ -11,9 +11,13 @@ public interface IProductMarketingCheckContract {
         String getDiscountId();
 
         void showDetai(MarketingDetailCheckResp resp);
+
+        void changeMarketingStatusSuccess();
     }
 
     interface IPresenter extends com.hll_sc_app.base.IPresenter<IView> {
         void getMarketingDetail();
+
+        void changeMarketingStatus();
     }
 }

@@ -42,7 +42,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -64,7 +63,6 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     RecyclerView mRecyclerViewProduct;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-    HashMap<String, ArrayList<SkuGoodsBean>> mSelectMap;
     @Autowired(name = "parcelable")
     ArrayList<SkuGoodsBean> mSkuList;
     @Autowired(name = "origin")
@@ -97,12 +95,12 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         ButterKnife.bind(this);
         initView();
         EventBus.getDefault().register(this);
-        mSelectMap = new HashMap<>();
-        if (!CommonUtils.isEmpty(mSkuList)) {
-            for (SkuGoodsBean bean : mSkuList) {
-                add(bean);
-            }
-        }
+//        mSelectMap = new HashMap<>();
+//        if (!CommonUtils.isEmpty(mSkuList)) {
+//            for (SkuGoodsBean bean : mSkuList) {
+//                add(bean);
+//            }
+//        }
         mPresenter = ProductSelectPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
@@ -179,34 +177,23 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         });
     }
 
-    private void add(SkuGoodsBean bean) {
-        ArrayList<SkuGoodsBean> beans = mSelectMap.get(bean.getCategorySubID());
-        if (beans == null) {
-            beans = new ArrayList<>();
-        }
-        bean.setSelected(true);
-        beans.add(bean);
-        mSelectMap.put(bean.getCategorySubID(), beans);
-    }
-
     private void remove(SkuGoodsBean goodsBean) {
-        List<SkuGoodsBean> goodsBeans = mSelectMap.get(goodsBean.getCategorySubID());
-        if (!CommonUtils.isEmpty(goodsBeans)) {
-            goodsBean.setSelected(false);
-            goodsBeans.remove(goodsBean);
-        }
+        goodsBean.setSelected(false);
+        mSkuList.remove(goodsBean);
     }
 
     /**
      * 显示底部已选数量
      */
     private void showBottomCount() {
-        int count = 0;
-        Collection<ArrayList<SkuGoodsBean>> lists = mSelectMap.values();
-        for (ArrayList<SkuGoodsBean> list : lists) {
-            count += list.size();
+        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", mSkuList.size()));
+    }
+
+    private void add(SkuGoodsBean bean) {
+        if (!mSkuList.contains(bean)) {
+            bean.setSelected(true);
+            mSkuList.add(bean);
         }
-        mTxtCheckNum.setText(String.format(Locale.getDefault(), "已选：%d", count));
     }
 
     @Subscribe
@@ -270,12 +257,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
      * @return true-添加过
      */
     private boolean contains(SkuGoodsBean bean) {
-        boolean contains = false;
-        List<SkuGoodsBean> goodsBeans = mSelectMap.get(bean.getCategorySubID());
-        if (!CommonUtils.isEmpty(goodsBeans)) {
-            contains = goodsBeans.contains(bean);
-        }
-        return contains;
+        return mSkuList.contains(bean);
     }
 
     @Override
@@ -318,12 +300,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     }
 
     private void toAdd() {
-        List<SkuGoodsBean> listAll = new ArrayList<>();
-        Collection<ArrayList<SkuGoodsBean>> lists = mSelectMap.values();
-        for (ArrayList<SkuGoodsBean> list : lists) {
-            listAll.addAll(list);
-        }
-        EventBus.getDefault().post(listAll);
+        EventBus.getDefault().post(mSkuList);
         finish();
     }
 

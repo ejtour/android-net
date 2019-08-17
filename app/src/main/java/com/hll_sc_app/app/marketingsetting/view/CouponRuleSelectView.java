@@ -11,6 +11,7 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.marketingsetting.GiveBean;
 import com.hll_sc_app.utils.ColorStr;
 
 /**
@@ -86,27 +88,11 @@ public class CouponRuleSelectView extends LinearLayout {
                 mEdtCouponNum.setEnabled(false);
                 mEdtMinNum.setEnabled(false);
                 mArrow.setVisibility(GONE);
+                mTextCouponSelect.setGravity(Gravity.CENTER | Gravity.CENTER_VERTICAL);
                 mTextCouponSelect.setTextColor(Color.parseColor("#5695D2"));
                 break;
             default:
                 break;
-        }
-    }
-
-    public void initValue(String minNum, String couponName, String couponNum) {
-        mEdtCouponNum.setText(couponNum);
-        mEdtMinNum.setText(minNum);
-        if (mModal == CHECK) {
-            SpannableString ss = new SpannableString(couponName);
-            ss.setSpan(new UnderlineSpan() {
-                @Override
-                public void updateDrawState(@NonNull TextPaint ds) {
-                    super.updateDrawState(ds);
-                    ds.setColor(Color.parseColor(ColorStr.COLOR_5695D2)); // 下划线
-                }
-            }, 0, couponName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        } else {
-            mTextCouponSelect.setText(couponName);
         }
     }
 
@@ -134,8 +120,43 @@ public class CouponRuleSelectView extends LinearLayout {
         this.mListener = selectListener;
     }
 
-    public void setCouponName(String name) {
-        mTextCouponSelect.setText(name);
+    /**
+     * 设置值
+     *
+     * @param ruleCondition
+     * @param giveBean
+     */
+    public void setData(String ruleCondition, GiveBean giveBean) {
+        setData(ruleCondition, giveBean.getGiveTargetName(), giveBean.getGiveCount());
+    }
+
+    /**
+     * 设置值
+     *
+     * @param minNum
+     * @param couponName
+     * @param couponNum
+     */
+    public void setData(String minNum, String couponName, String couponNum) {
+        mEdtCouponNum.setText(couponNum);
+        mEdtMinNum.setText(minNum);
+        setCouponName(couponName);
+    }
+
+    public void setCouponName(String couponName) {
+        if (mModal == CHECK) {
+            SpannableString ss = new SpannableString(couponName);
+            ss.setSpan(new UnderlineSpan() {
+                @Override
+                public void updateDrawState(@NonNull TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setColor(Color.parseColor(ColorStr.COLOR_5695D2)); // 下划线
+                }
+            }, 0, couponName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mTextCouponSelect.setText(ss);
+        } else {
+            mTextCouponSelect.setText(couponName);
+        }
     }
 
     /**

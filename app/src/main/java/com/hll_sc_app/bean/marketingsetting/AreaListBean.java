@@ -1,6 +1,9 @@
 package com.hll_sc_app.bean.marketingsetting;
 
-public class AreaListBean {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class AreaListBean implements Parcelable {
     private String actionTime;
     private String createBy;
     private String cityName;
@@ -109,4 +112,55 @@ public class AreaListBean {
     public void setDiscountID(String discountID) {
         this.discountID = discountID;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.actionTime);
+        dest.writeString(this.createBy);
+        dest.writeString(this.cityName);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.createTime);
+        dest.writeString(this.cityCode);
+        dest.writeString(this.provinceCode);
+        dest.writeString(this.odmId);
+        dest.writeInt(this.action);
+        dest.writeString(this.id);
+        dest.writeString(this.provinceName);
+        dest.writeString(this.discountID);
+    }
+
+    public AreaListBean() {
+    }
+
+    protected AreaListBean(Parcel in) {
+        this.actionTime = in.readString();
+        this.createBy = in.readString();
+        this.cityName = in.readString();
+        this.actionBy = in.readString();
+        this.createTime = in.readString();
+        this.cityCode = in.readString();
+        this.provinceCode = in.readString();
+        this.odmId = in.readString();
+        this.action = in.readInt();
+        this.id = in.readString();
+        this.provinceName = in.readString();
+        this.discountID = in.readString();
+    }
+
+    public static final Parcelable.Creator<AreaListBean> CREATOR = new Parcelable.Creator<AreaListBean>() {
+        @Override
+        public AreaListBean createFromParcel(Parcel source) {
+            return new AreaListBean(source);
+        }
+
+        @Override
+        public AreaListBean[] newArray(int size) {
+            return new AreaListBean[size];
+        }
+    };
 }

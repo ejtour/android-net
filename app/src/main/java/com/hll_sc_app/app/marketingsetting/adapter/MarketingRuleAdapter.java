@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
@@ -22,9 +23,11 @@ import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZJ;
 public class MarketingRuleAdapter extends BaseQuickAdapter<RuleListBean, BaseViewHolder> {
 
     private int mRuleType;
+    private boolean mIEdit;
 
-    public MarketingRuleAdapter(@Nullable List<RuleListBean> data) {
+    public MarketingRuleAdapter(@Nullable List<RuleListBean> data, boolean isEdit) {
         super(R.layout.list_item_marketing_rule, data);
+        mIEdit = isEdit;
     }
 
     /**
@@ -79,7 +82,12 @@ public class MarketingRuleAdapter extends BaseQuickAdapter<RuleListBean, BaseVie
                 }
             }
         });
-        viewHolder.addOnClickListener(R.id.img_delete);
+        if (mIEdit) {
+            viewHolder.addOnClickListener(R.id.img_delete);
+        }
+        viewHolder.getView(R.id.edt_condition).setEnabled(mIEdit);
+        viewHolder.getView(R.id.edt_value).setEnabled(mIEdit);
+        viewHolder.getView(R.id.img_delete).setVisibility(mIEdit ? View.VISIBLE : View.GONE);
         return viewHolder;
     }
 

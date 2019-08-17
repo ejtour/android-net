@@ -4,6 +4,7 @@ import com.hll_sc_app.api.MarketingSettingService;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.marketingsetting.ChangeMarketingStatusReq;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckReq;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
 
@@ -24,7 +25,6 @@ public class ProductMarketingCheckPresenter implements IProductMarketingCheckCon
     public void register(IProductMarketingCheckContract.IView view) {
         mView = view;
     }
-
 
     @Override
     public void getMarketingDetail() {
@@ -50,6 +50,35 @@ public class ProductMarketingCheckPresenter implements IProductMarketingCheckCon
         baseReq.setData(req);
         MarketingSettingService.INSTANCE
                 .getMarketingDetail(baseReq)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .subscribe(observer);
+
+    }
+
+    @Override
+    public void changeMarketingStatus() {
+        ChangeMarketingStatusReq req = new ChangeMarketingStatusReq();
+        req.setDiscountStatus("4");
+        req.setId(mView.getDiscountId());
+        changeMarketingStatus(req, new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                mView.changeMarketingStatusSuccess();
+            }
+        });
+
+    }
+
+    /**
+     * 查询数据
+     *
+     * @return
+     */
+    public static void changeMarketingStatus(ChangeMarketingStatusReq req, SimpleObserver<Object> observer) {
+        BaseReq<ChangeMarketingStatusReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        MarketingSettingService.INSTANCE
+                .changeMarketingStatus(baseReq)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .subscribe(observer);
 

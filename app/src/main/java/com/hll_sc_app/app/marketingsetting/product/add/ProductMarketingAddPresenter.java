@@ -54,7 +54,7 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
         productAddRespObservable(addReq, new SimpleObserver<MarketingProductAddResp>(mView) {
             @Override
             public void onSuccess(MarketingProductAddResp marketingProductAddResp) {
-                mView.addSuccess();
+                mView.addSuccess(marketingProductAddResp);
             }
         });
     }

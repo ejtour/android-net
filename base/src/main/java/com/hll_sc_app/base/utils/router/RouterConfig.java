@@ -628,5 +628,10 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_MARKETING_PRODUCT_DETAIL = "/activity/marketing/product/detail";
 
+    /**
+     * 商品营销显示所有选择的活动商品列表页
+     */
+    public static final String ACTIVITY_MARKETING_SELECT_PRODUCT_LIST = "/activity/marketing/select/product/list";
+
 }
 

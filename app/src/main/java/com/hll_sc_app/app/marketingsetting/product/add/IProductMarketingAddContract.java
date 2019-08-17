@@ -3,6 +3,7 @@ package com.hll_sc_app.app.marketingsetting.product.add;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.marketingsetting.AreaListBean;
+import com.hll_sc_app.bean.marketingsetting.MarketingProductAddResp;
 import com.hll_sc_app.bean.marketingsetting.RuleListBean;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface IProductMarketingAddContract {
         /**
          * 新增成功
          */
-        void addSuccess();
+        void addSuccess(MarketingProductAddResp marketingProductAddResp);
 
         /**
          * 获取主题

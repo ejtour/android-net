@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.search;
 
 import com.hll_sc_app.app.marketingsetting.product.MarketingProductSearch;
+import com.hll_sc_app.app.marketingsetting.product.check.SelectProductListActivity;
 import com.hll_sc_app.app.search.stratery.BrandSearch;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.CooperationSearch;
@@ -40,6 +41,7 @@ class SearchFactory {
         ITEM_MAP.put(WarehouseSearch.class.getSimpleName(), WarehouseSearch.class);
         ITEM_MAP.put(SalesManSearch.class.getSimpleName(), SalesManSearch.class);
         ITEM_MAP.put(MarketingProductSearch.class.getSimpleName(), MarketingProductSearch.class);
+        ITEM_MAP.put(SelectProductListActivity.MarketingSelectProductSearch.class.getSimpleName(), SelectProductListActivity.MarketingSelectProductSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {

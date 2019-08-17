@@ -271,6 +271,9 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
 
     @Subscribe()
     public void onEvent(MarketingEvent event) {
+        if (event.getTarget() != MarketingEvent.Target.MARKETING_PRODUCT_LIST) {
+            return;
+        }
         // 商品属性列表展示
         if (!TextUtils.isEmpty(event.getSearchText())) {
             mSearchView.showSearchContent(true, event.getSearchText());

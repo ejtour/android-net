@@ -11,7 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -53,25 +56,31 @@ public class SelectAreaActivity extends AppCompatActivity {
     /**
      * 存储已选择的 key:省id，value：市级
      */
-    @Autowired(name = "selected", required = true)
+    @Autowired(name = "selected")
     HashMap<String, ArrayList<AreaBean.ChildBeanX>> mSelectCitysMap;
     /*头部文字*/
     @Autowired(name = "title", required = true)
     String title;
     /*result的名称变量*/
-    @Autowired(name = "resultname", required = true)
+    @Autowired(name = "resultname")
     String resultname;
+    /*查看传进来的所有数据*/
+    @Autowired(name = "areaData")
+    ArrayList<AreaBean> mAreaData;
     @BindView(R.id.asa_header)
     TitleBar mTitlBar;
     @BindView(R.id.img_allCheck)
     ImageView mImgAllCheck;
+    @BindView(R.id.ll_button_bottom)
+    LinearLayout mButtonLayout;
     @BindView(R.id.recyclerView_province)
     RecyclerView mRecyclerViewProvince;
     @BindView(R.id.recyclerView_city)
     RecyclerView mRecyclerViewCitiy;
     @BindView(R.id.txt_select_count)
     TextView mTextSelectCount;
-
+    @BindView(R.id.rl_allCheck)
+    RelativeLayout mAllCheck;
     private ProvinceAdapter mProvinceAdapter;
     private CityAdapter mCityAdapter;
     private ArrayList<AreaBean> mAreaDataList;
@@ -79,6 +88,15 @@ public class SelectAreaActivity extends AppCompatActivity {
 
     private int currentProvinceIndex = 0;
 
+    /**
+     * 选择区域 数据来自本地json文件
+     *
+     * @param activity
+     * @param requestCode
+     * @param resultname
+     * @param title
+     * @param selectMap
+     */
     public static void start(Activity activity, int requestCode, String resultname, String title, HashMap<String, ArrayList<AreaBean.ChildBeanX>> selectMap) {
         ARouter.getInstance().build(RouterConfig.ACTIVITY_SELECT_AREA_PROVINCE_CITY)
                 .withString("title", title)
@@ -86,6 +104,20 @@ public class SelectAreaActivity extends AppCompatActivity {
                 .withSerializable("selected", selectMap)
                 .setProvider(new LoginInterceptor())
                 .navigation(activity, requestCode);
+    }
+
+    /**
+     * 显示地区，传入所有数据
+     *
+     * @param title
+     * @param areaBeans
+     */
+    public static void start(String title, ArrayList<AreaBean> areaBeans) {
+        ARouter.getInstance().build(RouterConfig.ACTIVITY_SELECT_AREA_PROVINCE_CITY)
+                .withString("title", title)
+                .withSerializable("areaData", areaBeans)
+                .setProvider(new LoginInterceptor())
+                .navigation();
     }
 
     /**
@@ -126,7 +158,7 @@ public class SelectAreaActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mAreaDataList = getAreaListWithOutOverSeas(this);
+        mAreaDataList = isSelectModal() ? getAreaListWithOutOverSeas(this) : mAreaData;
         mTitlBar.setHeaderTitle(title);
         mRecyclerViewProvince.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
         mProvinceAdapter = new ProvinceAdapter(mAreaDataList);
@@ -136,11 +168,15 @@ public class SelectAreaActivity extends AppCompatActivity {
         mCityAdapter = new CityAdapter(null);
         mCityAdapter.setOnItemClickListener((adapter, view, position) -> selectCityBean(adapter, view, position));
         mRecyclerViewCitiy.setAdapter(mCityAdapter);
-
         // 默认选中第一个
         selectProvinceBean(mProvinceAdapter, 0);
-        //更新底部的显示以及同步全国数据
-        updateSelectCount();
+        if (isSelectModal()) {
+            mAllCheck.setVisibility(View.VISIBLE);
+            mButtonLayout.setVisibility(View.VISIBLE);
+            //更新底部的显示以及同步全国数据
+            updateSelectCount();
+        }
+
     }
 
     /**
@@ -156,7 +192,16 @@ public class SelectAreaActivity extends AppCompatActivity {
         }
         currentProvinceIndex = position;
         adapter.notifyDataSetChanged();
-        mCityAdapter.setNewData(getCurrentCityBeans(true));
+        mCityAdapter.setNewData(getCurrentCityBeans(isSelectModal()));
+    }
+
+    /**
+     * 是否是可选择模式
+     *
+     * @return
+     */
+    private boolean isSelectModal() {
+        return mAreaData == null;
     }
 
     /**
@@ -167,6 +212,9 @@ public class SelectAreaActivity extends AppCompatActivity {
      * @param position
      */
     private void selectCityBean(BaseQuickAdapter adapter, View view, int position) {
+        if (!isSelectModal()) {
+            return;
+        }
         AreaBean.ChildBeanX cityBean = (AreaBean.ChildBeanX) adapter.getItem(position);
         //当前省下没有选过，则为空
         if (mSelectCitysMap.get(getCurrentProvinceCode()) == null) {
@@ -355,6 +403,13 @@ public class SelectAreaActivity extends AppCompatActivity {
     class CityAdapter extends BaseQuickAdapter<AreaBean.ChildBeanX, BaseViewHolder> {
         public CityAdapter(@Nullable List<AreaBean.ChildBeanX> data) {
             super(R.layout.item_delivery_area, data);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
+            holder.setVisible(R.id.img_select, isSelectModal());
+            return holder;
         }
 
         @Override

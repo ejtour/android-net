@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.marketingsetting.ChangeMarketingStatusReq;
 import com.hll_sc_app.bean.marketingsetting.CouponListBean;
 import com.hll_sc_app.bean.marketingsetting.CouponListReq;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckReq;
@@ -76,5 +77,16 @@ public interface MarketingSettingService {
     @POST(HttpConfig.URL)
     @Headers("pv:112004")
     Observable<BaseResp<MarketingDetailCheckResp>> getMarketingDetail(@Body BaseReq<MarketingDetailCheckReq> req);
+
+    /**
+     * 改变活动状态
+     *
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:112005")
+    Observable<BaseResp<Object>> changeMarketingStatus(@Body BaseReq<ChangeMarketingStatusReq> req);
+
 
 }

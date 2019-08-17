@@ -1,10 +1,25 @@
 package com.hll_sc_app.bean.marketingsetting;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MarketingDetailCheckResp {
+public class MarketingDetailCheckResp implements Parcelable {
+    public static final Creator<MarketingDetailCheckResp> CREATOR = new Creator<MarketingDetailCheckResp>() {
+        @Override
+        public MarketingDetailCheckResp createFromParcel(Parcel source) {
+            return new MarketingDetailCheckResp(source);
+        }
+
+        @Override
+        public MarketingDetailCheckResp[] newArray(int size) {
+            return new MarketingDetailCheckResp[size];
+        }
+    };
     private String actionTime;
     private int areaScope;
     private int discountRuleType;
@@ -37,6 +52,47 @@ public class MarketingDetailCheckResp {
     private List<AreaListBean> areaList;
     private List<Integer> opList;
     private List<SkuGoodsBean> productList;
+
+    public MarketingDetailCheckResp() {
+    }
+
+    protected MarketingDetailCheckResp(Parcel in) {
+        this.actionTime = in.readString();
+        this.areaScope = in.readInt();
+        this.discountRuleType = in.readInt();
+        this.couponCount = in.readString();
+        this.productCount = in.readString();
+        this.discountName = in.readString();
+        this.discountEndTime = in.readString();
+        this.discountStage = in.readInt();
+        this.discountStartTime = in.readString();
+        this.areaDesc = in.readString();
+        this.discountStatus = in.readInt();
+        this.action = in.readInt();
+        this.discountType = in.readInt();
+        this.id = in.readString();
+        this.useCount = in.readString();
+        this.customerScope = in.readInt();
+        this.discountStatusName = in.readString();
+        this.actionBy = in.readString();
+        this.ruleTypeName = in.readString();
+        this.groupID = in.readString();
+        this.unUseCount = in.readString();
+        this.sendCount = in.readString();
+        this.customerDesc = in.readString();
+        this.createBy = in.readString();
+        this.validityType = in.readString();
+        this.createTime = in.readString();
+        this.invalidCount = in.readString();
+        this.odmId = in.readString();
+        this.ruleList = new ArrayList<RuleListBean>();
+        in.readList(this.ruleList, RuleListBean.class.getClassLoader());
+        this.areaList = new ArrayList<AreaListBean>();
+        in.readList(this.areaList, AreaListBean.class.getClassLoader());
+        this.opList = new ArrayList<Integer>();
+        in.readList(this.opList, Integer.class.getClassLoader());
+        this.productList = in.createTypedArrayList(SkuGoodsBean.CREATOR);
+    }
 
     public String getActionTime() {
         return actionTime;
@@ -294,4 +350,44 @@ public class MarketingDetailCheckResp {
         this.productList = productList;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.actionTime);
+        dest.writeInt(this.areaScope);
+        dest.writeInt(this.discountRuleType);
+        dest.writeString(this.couponCount);
+        dest.writeString(this.productCount);
+        dest.writeString(this.discountName);
+        dest.writeString(this.discountEndTime);
+        dest.writeInt(this.discountStage);
+        dest.writeString(this.discountStartTime);
+        dest.writeString(this.areaDesc);
+        dest.writeInt(this.discountStatus);
+        dest.writeInt(this.action);
+        dest.writeInt(this.discountType);
+        dest.writeString(this.id);
+        dest.writeString(this.useCount);
+        dest.writeInt(this.customerScope);
+        dest.writeString(this.discountStatusName);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.ruleTypeName);
+        dest.writeString(this.groupID);
+        dest.writeString(this.unUseCount);
+        dest.writeString(this.sendCount);
+        dest.writeString(this.customerDesc);
+        dest.writeString(this.createBy);
+        dest.writeString(this.validityType);
+        dest.writeString(this.createTime);
+        dest.writeString(this.invalidCount);
+        dest.writeString(this.odmId);
+        dest.writeList(this.ruleList);
+        dest.writeList(this.areaList);
+        dest.writeList(this.opList);
+        dest.writeTypedList(this.productList);
+    }
 }

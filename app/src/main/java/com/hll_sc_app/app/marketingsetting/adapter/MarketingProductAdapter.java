@@ -4,6 +4,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
@@ -24,9 +25,20 @@ public class MarketingProductAdapter extends BaseQuickAdapter<SkuGoodsBean, Base
     private @Modal
     int isEdit;
 
+    private int itemCount;
+
     public MarketingProductAdapter(@Nullable List<SkuGoodsBean> data, @Modal int isEdit) {
         super(R.layout.list_item_marketing_product, data);
         this.isEdit = isEdit;
+    }
+
+    @Override
+    public int getItemCount() {
+        return itemCount != 0 ? itemCount : super.getItemCount();
+    }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
     }
 
     @Override
@@ -54,23 +66,44 @@ public class MarketingProductAdapter extends BaseQuickAdapter<SkuGoodsBean, Base
                 }
             });
         }
+
+        switch (isEdit) {
+            case Modal.EDIT:
+                holder.addOnClickListener(R.id.img_delete);
+                holder.getView(R.id.img_delete).setVisibility(View.VISIBLE);
+                holder.getView(R.id.group_edt_promote).setVisibility(View.VISIBLE);
+                holder.getView(R.id.group_promote_show).setVisibility(View.GONE);
+                break;
+            case Modal.SHOW:
+                holder.getView(R.id.img_delete).setVisibility(View.GONE);
+                holder.getView(R.id.group_edt_promote).setVisibility(View.GONE);
+                holder.getView(R.id.group_promote_show).setVisibility(View.VISIBLE);
+                break;
+            case Modal.HIDE:
+                holder.getView(R.id.img_delete).setVisibility(View.GONE);
+                holder.getView(R.id.group_edt_promote).setVisibility(View.GONE);
+                holder.getView(R.id.group_promote_show).setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+
         return holder;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
-        helper.setVisible(R.id.img_delete, isEdit == Modal.EDIT)
-                .setVisible(R.id.group_edt_promote, isEdit != Modal.HIDE)
-                .setText(R.id.edt_promote_num, item.getPromoteNum())
+        helper.setText(R.id.edt_promote_num, item.getPromoteNum())
                 .setText(R.id.txt_product_name, item.getProductName())
                 .setText(R.id.txt_spec_content, item.getSpecContent())
                 .setText(R.id.txt_product_code, "编码：" + item.getProductCode())
-                .setText(R.id.txt_product_price, "¥" + item.getProductPrice());
+                .setText(R.id.txt_product_price, "¥" + item.getProductPrice())
+                .setText(R.id.txt_promote_num_content_show, item.getPromoteNum());
+
 
         GlideImageView productImage = helper.getView(R.id.img_product);
         productImage.setImageURL(item.getImgUrl());
-        helper.addOnClickListener(R.id.img_delete);
-        helper.getView(R.id.group_edt_promote).setEnabled(isEdit == Modal.EDIT);
+
 
     }
 
