@@ -30,13 +30,14 @@ import butterknife.OnClick;
  */
 
 public class SingleSelectionDialog<T> extends BaseDialog {
+    private final WrapperName<T> mWrapperName;
     @BindView(R.id.dss_title)
     TextView mTitle;
     @BindView(R.id.dss_list_view)
     RecyclerView mListView;
-    private final WrapperName<T> mWrapperName;
     private SingleSelectionAdapter mAdapter;
     private OnSelectListener<T> mListener;
+    private SelectEqualListener<T> mSelectEqualListener;
 
     private SingleSelectionDialog(@NonNull Activity context, WrapperName<T> wrapperName) {
         super(context);
@@ -88,6 +89,15 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         mAdapter.select(t);
     }
 
+    private void setSelectEqual(SelectEqualListener listener) {
+        this.mSelectEqualListener = listener;
+    }
+
+    @OnClick(R.id.dss_close)
+    public void onViewClicked() {
+        dismiss();
+    }
+
     public interface OnSelectListener<T> {
         void onSelectItem(T t);
     }
@@ -96,43 +106,8 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         String getName(T t);
     }
 
-    @OnClick(R.id.dss_close)
-    public void onViewClicked() {
-        dismiss();
-    }
-
-    class SingleSelectionAdapter extends BaseQuickAdapter<T, BaseViewHolder> {
-
-        private T mT;
-
-        private void select(T t) {
-            mT = t;
-            int position = mData.indexOf(mT);
-            if (position != -1 && getRecyclerView() != null) {
-                getRecyclerView().scrollToPosition(position);
-            }
-        }
-
-        private SingleSelectionAdapter() {
-            super(R.layout.item_single_selection);
-            setOnItemClickListener((adapter, view, position) -> {
-                dismiss();
-                if (mListener == null) {
-                    return;
-                }
-                mT = getItem(position);
-                mListener.onSelectItem(mT);
-                notifyDataSetChanged();
-            });
-        }
-
-        @Override
-        protected void convert(BaseViewHolder helper, T item) {
-            TextView label = helper.getView(R.id.iss_label);
-            label.setText(mWrapperName.getName(item));
-            label.setSelected(mT == item);
-            helper.setGone(R.id.iss_check, mT == item);
-        }
+    public interface SelectEqualListener<T> {
+        boolean equal(T t, T m);
     }
 
     public static class Builder<T> {
@@ -162,8 +137,51 @@ public class SingleSelectionDialog<T> extends BaseDialog {
             return this;
         }
 
+        public Builder<T> selectEqualListener(SelectEqualListener<T> listener) {
+            mDialog.setSelectEqual(listener);
+            return this;
+        }
+
         public SingleSelectionDialog create() {
             return mDialog;
+        }
+    }
+
+    class SingleSelectionAdapter extends BaseQuickAdapter<T, BaseViewHolder> {
+
+        private T mT;
+
+        private SingleSelectionAdapter() {
+            super(R.layout.item_single_selection);
+            setOnItemClickListener((adapter, view, position) -> {
+                dismiss();
+                if (mListener == null) {
+                    return;
+                }
+                mT = getItem(position);
+                mListener.onSelectItem(mT);
+                notifyDataSetChanged();
+            });
+        }
+
+        private void select(T t) {
+            mT = t;
+            int position = mData.indexOf(mT);
+            if (position != -1 && getRecyclerView() != null) {
+                getRecyclerView().scrollToPosition(position);
+            }
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, T item) {
+            TextView label = helper.getView(R.id.iss_label);
+            label.setText(mWrapperName.getName(item));
+            if (mSelectEqualListener != null) {
+                label.setSelected(mSelectEqualListener.equal(mT, item));
+            } else {
+                label.setSelected(mT == item);
+            }
+            helper.setGone(R.id.iss_check, mT == item);
         }
     }
 }
