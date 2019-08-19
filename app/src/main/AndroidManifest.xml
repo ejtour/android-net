@@ -666,6 +666,10 @@
             android:name=".app.invoice.detail.record.ReturnRecordActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.helpcenter.HelpCenterActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
