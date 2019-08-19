@@ -15,13 +15,16 @@
         <item name="android:textColor">@color/color_ed5655</item>
     </style>
 
-
     <style name="TextAppearance.City22.Large.Blue">
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="TextAppearance.City22.Middle">
         <item name="android:textSize">@dimen/text_middle_size</item>
+    </style>
+
+    <style name="TextAppearance.City22.Middle.Color333">
+        <item name="android:textColor">@color/color_333333</item>
     </style>
 
     <style name="TextAppearance.City22.Middle.Color666">
@@ -64,6 +67,10 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="TextAppearance.City22.Small.Color333">
+        <item name="android:textColor">@color/color_333333</item>
+    </style>
+
     <style name="TextAppearance.City22.Small.Color666">
         <item name="android:textColor">@color/color_666666</item>
     </style>
@@ -94,6 +101,10 @@
 
     <style name="TextAppearance.City22.Little.Primary">
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.City22.Little.Color333">
+        <item name="android:textColor">@color/color_333333</item>
     </style>
 
     <style name="TextAppearance.City22.Little.Color666">

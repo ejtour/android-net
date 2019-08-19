@@ -236,6 +236,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 break;
             case R.id.txt_invoice_manage:
                 RouterUtil.goToActivity(RouterConfig.INVOICE_ENTRY);
+                break;
             case R.id.ll_help:
             case R.id.img_help:
                 String params = Base64.encodeToString(JsonUtil.toJson(new HelpCenterJsParams()).getBytes(), Base64.DEFAULT);

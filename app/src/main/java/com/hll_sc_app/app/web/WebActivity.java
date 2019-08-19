@@ -88,6 +88,7 @@ public class WebActivity extends BaseLoadActivity {
 
     private void initView() {
         mTitleBar.setHeaderTitle(mBundle.getString(Constants.WEB_TITLE));
+        mTitleBar.setLeftBtnClick(v -> onBackPressed());
         initWebView();
     }
 
