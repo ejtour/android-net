@@ -241,7 +241,6 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             case R.id.img_help:
                 String params = Base64.encodeToString(JsonUtil.toJson(new HelpCenterJsParams()).getBytes(), Base64.DEFAULT);
                 WebActivity.start("帮助中心", HttpConfig.getHelpCenterHost() + "/?sourceData=" + params);
-//                RouterUtil.goToActivity(RouterConfig.ACTIVITY_HELP_CENTER);
             default:
                 break;
         }
