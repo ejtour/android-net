@@ -16,11 +16,6 @@ public class RouterConfig {
     public static final String SETTING = "/activity/setting";
 
     /**
-     * 帮助中心界面
-     */
-    public static final String ACTIVITY_HELP_CENTER = "/activity/help";
-
-    /**
      * 通用简单搜索页
      */
     public static final String SEARCH = "/activity/search";
