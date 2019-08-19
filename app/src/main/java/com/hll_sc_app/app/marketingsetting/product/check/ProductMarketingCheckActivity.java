@@ -1,6 +1,8 @@
 package com.hll_sc_app.app.marketingsetting.product.check;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -151,7 +153,6 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         showActivityProducts(resp);
         showRuleList(resp);
         showArea(resp);
-
         showBottomButton(resp);
     }
 
@@ -259,21 +260,22 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
      * 设置头部的状态 颜色 背景 文字
      */
     private void setMarketingStatus(MarketingDetailCheckResp resp) {
+        GradientDrawable gradientDrawable = (GradientDrawable)mStatus.getBackground();
         switch (resp.getDiscountStatus()) {
             case STATUS_ACTIVE_NOT:
-                mStatus.setBackgroundColor(Color.parseColor("#FFF1B8"));
+                gradientDrawable.setColor(getResources().getColor(R.color.color_FFF1B8));
                 mStatus.setTextColor(Color.parseColor("#F6BB42"));
                 break;
             case STATUS_ACTIVE_ING:
-                mStatus.setBackgroundColor(Color.parseColor("#E6FED1"));
+                gradientDrawable.setColor(getResources().getColor(R.color.color_E6FED1));
                 mStatus.setTextColor(Color.parseColor("#52C41A"));
                 break;
             case STATUS_ACTIVE_LOSE:
-                mStatus.setBackgroundColor(Color.parseColor("#EEEEEE"));
+                gradientDrawable.setColor(getResources().getColor(R.color.color_eeeeee));
                 mStatus.setTextColor(Color.parseColor("#999999"));
                 break;
             case STATUS_ACTIVE_INVALIDATE:
-                mStatus.setBackgroundColor(Color.parseColor("#EEEEEE"));
+                gradientDrawable.setColor(getResources().getColor(R.color.color_eeeeee));
                 mStatus.setTextColor(Color.parseColor("#999999"));
                 break;
             default:

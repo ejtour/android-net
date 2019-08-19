@@ -33,4 +33,10 @@
     <color name="color_faad14">#faad14</color>
     <color name="color_fffbe6">#fffbe6</color>
     <color name="color_f6bb42">#f6bb42</color>
+
+
+    <!--促销状态背景色-->
+    <color name="color_FFF1B8">#FFF1B8</color>
+    <color name="color_E6FED1">#E6FED1</color>
+    <color name="color_EEEEEE">#EEEEEE</color>
 </resources>
