@@ -738,5 +738,30 @@ public class RouterConfig {
      * 客户缺货明细
      */
     public static final String REPORT_CUSTOMER_LACK_DETAIL = "/activity/customer/lack/detail";
+
+    /**
+     * CRM-首页
+     */
+    public static final String CRM_HOME = "/fragment/crm/home";
+
+    /**
+     * CRM-订单
+     */
+    public static final String CRM_ORDER = "/fragment/crm/order";
+
+    /**
+     * CRM-客户
+     */
+    public static final String CRM_CUSTOMER = "/fragment/crm/customer";
+
+    /**
+     * CRM-日报
+     */
+    public static final String CRM_DAILY = "/fragment/crm/daily";
+
+    /**
+     * CRM-我的
+     */
+    public static final String CRM_MINE = "/fragment/crm/mine";
 }
 

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="cart_input_watcher" type="id"/>
-    <item name="date_start" type="id"/>
-    <item name="date_end" type="id"/>
+    <item name="cart_input_watcher" type="id" />
+    <item name="date_start" type="id" />
+    <item name="date_end" type="id" />
+    <item name="supplier_home" type="id" />
+    <item name="supplier_order" type="id" />
+    <item name="supplier_goods" type="id" />
+    <item name="supplier_mine" type="id" />
+    <item name="crm_home" type="id" />
+    <item name="crm_order" type="id" />
+    <item name="crm_customer" type="id" />
+    <item name="crm_daily" type="id" />
+    <item name="crm_mine" type="id" />
 </resources>
