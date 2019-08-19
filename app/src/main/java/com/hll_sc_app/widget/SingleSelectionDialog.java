@@ -176,7 +176,7 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         protected void convert(BaseViewHolder helper, T item) {
             TextView label = helper.getView(R.id.iss_label);
             label.setText(mWrapperName.getName(item));
-            if (mSelectEqualListener != null) {
+            if (mSelectEqualListener != null && mT != null) {
                 label.setSelected(mSelectEqualListener.equal(mT, item));
             } else {
                 label.setSelected(mT == item);

@@ -36,6 +36,7 @@ import com.hll_sc_app.bean.marketingsetting.RuleListBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -120,6 +121,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         setContentView(R.layout.activity_marketing_detail_product);
         unbinder = ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
+        EventBus.getDefault().register(this);
         mPresenter = ProductMarketingCheckPresenter.newInstance();
         mPresenter.register(this);
         initView();
@@ -130,6 +132,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -148,6 +151,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         showActivityProducts(resp);
         showRuleList(resp);
         showArea(resp);
+
         showBottomButton(resp);
     }
 
@@ -172,10 +176,12 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
      */
     private void showActivityProducts(MarketingDetailCheckResp resp) {
         MarketingProductAdapter marketingProductAdapter = new MarketingProductAdapter(null, MarketingProductAdapter.Modal.SHOW);
-        marketingProductAdapter.setItemCount(3);
+        if (resp.getProductList().size() > 3) {
+            marketingProductAdapter.setItemCount(3);
+        }
         marketingProductAdapter.setNewData(resp.getProductList());
         mActivityProductList.setAdapter(marketingProductAdapter);
-        mCheckProduct.setVisibility(resp.getProductList().size() > 2 ? View.VISIBLE : View.GONE);
+        mCheckProduct.setVisibility(resp.getProductList().size() > 3 ? View.VISIBLE : View.GONE);
         mCheckProduct.setOnClickListener(v -> {
             SelectProductListActivity.start(resp.getProductList());
         });
@@ -342,4 +348,16 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
                 break;
         }
     }
+
+
+    @Subscribe
+    public void onEvent(MarketingEvent event) {
+        if (event.getTarget() != MarketingEvent.Target.MARKETING_PRODUCT_DETAIL) {
+            return;
+        }
+        if (event.isRefreshProductDetail()) {
+            mPresenter.getMarketingDetail();
+        }
+    }
+
 }

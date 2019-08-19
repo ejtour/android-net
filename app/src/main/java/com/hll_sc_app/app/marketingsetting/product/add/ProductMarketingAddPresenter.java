@@ -92,4 +92,47 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
 
     }
 
+    @Override
+    public void modifyMarketingProduct() {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        MarketingProductAddReq addReq = new MarketingProductAddReq();
+        addReq.setId(mView.getId());
+        addReq.setGroupID(userBean.getGroupID());
+        addReq.setAreaList(mView.getAreaList());
+        addReq.setAreaScope(mView.getAreaScope());
+        addReq.setDiscountName(mView.getMarketingTheme());
+        addReq.setDiscountStartTime(mView.getStartTime());
+        addReq.setDiscountEndTime(mView.getEndTime());
+        addReq.setProductList(processProductBean(mView.getProducts()));
+        addReq.setRuleList(mView.getRuleList());
+        addReq.setDiscountType(2);
+        addReq.setCustomerScope(mView.getCustomerScope());
+        addReq.setDiscountStage(mView.getDiscountStage());
+        addReq.setDiscountRuleType(mView.getRuleType());
+
+        productModifyRespObservable(addReq, new SimpleObserver<MarketingProductAddResp>(mView) {
+            @Override
+            public void onSuccess(MarketingProductAddResp marketingProductAddResp) {
+                mView.modifySuccess(marketingProductAddResp);
+            }
+        });
+    }
+
+    /**
+     * 新增促销
+     *
+     * @return
+     */
+    public static void productModifyRespObservable(MarketingProductAddReq req, SimpleObserver<MarketingProductAddResp> observer) {
+        BaseReq<MarketingProductAddReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        MarketingSettingService.INSTANCE
+                .modifyMarketingDetail(baseReq)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .subscribe(observer);
+
+    }
 }

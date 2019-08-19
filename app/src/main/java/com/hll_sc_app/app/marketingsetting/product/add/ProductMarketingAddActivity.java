@@ -31,6 +31,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.MarketingEvent;
@@ -243,6 +244,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         if (mDetail == null) {
             return;
         }
+        //更改标题
+        mTitleBar.setHeaderTitle("编辑商品促销");
         //促销主题
         mEditTheme.setText(mDetail.getDiscountName());
         //开始结束时间
@@ -261,15 +264,30 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         mRuleSelect.setTag(new NameValue(rule.getValue(), rule.getKey()));
 
         //活动内容
-
+        toggleRuleType(mDetail.getDiscountRuleType() + "", false);
+        if (TextUtils.equals(mDetail.getDiscountRuleType() + "", MarketingRule.RULE_ZQ.getKey())) {
+            RuleListBean ruleBean = mDetail.getRuleList().get(0);
+            List<GiveBean> giveBeans = JsonUtil.parseJsonList(ruleBean.getGiveTarget(), GiveBean.class);
+            mCouponRuleSelectView.setData(ruleBean.getRuleCondition() + "", giveBeans.get(0));
+            mSelectCoupon = new CouponListBean();
+            mSelectCoupon.setDiscountID(giveBeans.get(0).getGiveTargetID());
+            mSelectCoupon.setDiscountName(giveBeans.get(0).getGiveTargetName());
+        } else if (TextUtils.equals(mDetail.getDiscountRuleType() + "", MarketingRule.RULE_DZ.getKey())) {
+            RuleListBean ruleBean = mDetail.getRuleList().get(0);
+            mEdtRuleDZ.setText(ruleBean.getRuleDiscountValue());
+        } else {
+            mMarketingRuleAdapter.setNewData(mDetail.getRuleList());
+            mSwitchLadder.setChecked(mDetail.getRuleList().size() > 1);
+        }
 
         //活动地区
         mTxtAreaSelect.setText(mDetail.getAreaDesc());
         if (mDetail.getAreaScope() == 1) {//全国
-
+            selectedAreaMap = transformAreaBeanToMap(SelectAreaActivity.getAreaListWithOutOverSeas(this));
         } else {
             selectedAreaMap = transformFlatAreaToMap(mDetail.getAreaList());
         }
+        mTxtAreaSelect.setTag(mDetail.getAreaScope() == 1);
     }
 
     /**
@@ -291,8 +309,64 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
      */
     private void onSave() {
         if (checkInput()) {
-            mPresenter.addMarketingProduct();
+            if (mDetail == null) {
+                mPresenter.addMarketingProduct();
+            } else {
+                mPresenter.modifyMarketingProduct();
+            }
         }
+    }
+
+    private void toggleRuleType(String ruleType, boolean isInitData) {
+        if (TextUtils.equals(ruleType, RULE_ZJ.getKey())) {
+            mCouponRuleSelectView.setVisibility(View.GONE);
+            mRuleDZLayout.setVisibility(View.GONE);
+            mListRule.setVisibility(View.VISIBLE);
+            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
+            mGroupLadder.setVisibility(View.VISIBLE);
+            initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
+        } else if (TextUtils.equals(ruleType, RULE_MZ.getKey())) {
+            mCouponRuleSelectView.setVisibility(View.GONE);
+            mRuleDZLayout.setVisibility(View.GONE);
+            mListRule.setVisibility(View.VISIBLE);
+            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
+            mGroupLadder.setVisibility(View.VISIBLE);
+            initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
+        } else if (TextUtils.equals(ruleType, RULE_ZQ.getKey())) {
+            mCouponRuleSelectView.setVisibility(View.VISIBLE);
+            mRuleDZLayout.setVisibility(View.GONE);
+            mListRule.setVisibility(View.GONE);
+            mRuleAdd.setVisibility(View.GONE);
+            mGroupLadder.setVisibility(View.VISIBLE);
+        } else if (TextUtils.equals(ruleType, RULE_MJ.getKey())) {
+            mCouponRuleSelectView.setVisibility(View.GONE);
+            mRuleDZLayout.setVisibility(View.GONE);
+            mListRule.setVisibility(View.VISIBLE);
+            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
+            mGroupLadder.setVisibility(View.VISIBLE);
+            initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
+        } else if (TextUtils.equals(ruleType, RULE_DZ.getKey())) {
+            mCouponRuleSelectView.setVisibility(View.GONE);
+            mRuleDZLayout.setVisibility(View.VISIBLE);
+            mListRule.setVisibility(View.GONE);
+            mRuleAdd.setVisibility(View.GONE);
+            mGroupLadder.setVisibility(View.GONE);
+
+        }
+    }
+
+    /**
+     * 将数组形式的地理数据转为map结构
+     */
+    public static HashMap<String, ArrayList<AreaBean.ChildBeanX>> transformAreaBeanToMap(List<AreaBean> areaBeans) {
+        HashMap<String, ArrayList<AreaBean.ChildBeanX>> flatMap = new HashMap<>();
+        if (areaBeans == null || areaBeans.size() == 0) {
+            return null;
+        }
+        for (AreaBean areaBean : areaBeans) {
+            flatMap.put(areaBean.getCode(), (ArrayList<AreaBean.ChildBeanX>) areaBean.getChild());
+        }
+        return flatMap;
     }
 
     /**
@@ -374,6 +448,24 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         return true;
     }
 
+    private void initRuleListAdapter(int ruleType, boolean isInitData) {
+        if (mMarketingRuleAdapter == null) {
+            mMarketingRuleAdapter = new MarketingRuleAdapter(null, true);
+            mListRule.setAdapter(mMarketingRuleAdapter);
+            mMarketingRuleAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                adapter.remove(position);
+            });
+        }
+        mMarketingRuleAdapter.setRultType(ruleType);
+        mMarketingRuleAdapter.setNewData(null);
+
+        if (isInitData) {
+            RuleListBean ruleListBean = new RuleListBean();
+            mMarketingRuleAdapter.addData(ruleListBean);
+            mMarketingRuleAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Subscribe
     public void onEvent(List<SkuGoodsBean> skuGoodsBeans) {
         if (CommonUtils.isEmpty(skuGoodsBeans)) {
@@ -440,7 +532,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                             .setOnSelectListener(bean -> {
                                 mRuleSelect.setText(bean.getName());
                                 mRuleSelect.setTag(bean);
-                                toggleRuleType(bean);
+                                toggleRuleType(bean.getValue(), true);
                             }).create();
                 }
                 mSingleRuleDilog.show();
@@ -464,66 +556,11 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     private List<NameValue> getRules() {
         List<NameValue> statusBeans = new ArrayList<>();
         statusBeans.add(new NameValue(RULE_ZJ.getValue(), RULE_ZJ.getKey()));
-        statusBeans.add(new NameValue(RULE_MZ.getValue(), RULE_MZ.getKey()));
+//        statusBeans.add(new NameValue(RULE_MZ.getValue(), RULE_MZ.getKey()));
         statusBeans.add(new NameValue(RULE_ZQ.getValue(), RULE_ZQ.getKey()));
         statusBeans.add(new NameValue(RULE_MJ.getValue(), RULE_MJ.getKey()));
         statusBeans.add(new NameValue(RULE_DZ.getValue(), RULE_DZ.getKey()));
         return statusBeans;
-    }
-
-    private void toggleRuleType(NameValue nameValue) {
-        String name = nameValue.getName();
-        if (TextUtils.equals(name, RULE_ZJ.getValue())) {
-            mCouponRuleSelectView.setVisibility(View.GONE);
-            mRuleDZLayout.setVisibility(View.GONE);
-            mListRule.setVisibility(View.VISIBLE);
-            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
-            mGroupLadder.setVisibility(View.VISIBLE);
-            initRuleListAdapter(Integer.parseInt(nameValue.getValue()));
-        } else if (TextUtils.equals(name, RULE_MZ.getValue())) {
-            mCouponRuleSelectView.setVisibility(View.GONE);
-            mRuleDZLayout.setVisibility(View.GONE);
-            mListRule.setVisibility(View.VISIBLE);
-            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
-            mGroupLadder.setVisibility(View.VISIBLE);
-            initRuleListAdapter(Integer.parseInt(nameValue.getValue()));
-        } else if (TextUtils.equals(name, RULE_ZQ.getValue())) {
-            mCouponRuleSelectView.setVisibility(View.VISIBLE);
-            mRuleDZLayout.setVisibility(View.GONE);
-            mListRule.setVisibility(View.GONE);
-            mRuleAdd.setVisibility(View.GONE);
-            mGroupLadder.setVisibility(View.VISIBLE);
-        } else if (TextUtils.equals(name, RULE_MJ.getValue())) {
-            mCouponRuleSelectView.setVisibility(View.GONE);
-            mRuleDZLayout.setVisibility(View.GONE);
-            mListRule.setVisibility(View.VISIBLE);
-            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
-            mGroupLadder.setVisibility(View.VISIBLE);
-            initRuleListAdapter(Integer.parseInt(nameValue.getValue()));
-        } else if (TextUtils.equals(name, RULE_DZ.getValue())) {
-            mCouponRuleSelectView.setVisibility(View.GONE);
-            mRuleDZLayout.setVisibility(View.VISIBLE);
-            mListRule.setVisibility(View.GONE);
-            mRuleAdd.setVisibility(View.GONE);
-            mGroupLadder.setVisibility(View.GONE);
-
-        }
-    }
-
-    private void initRuleListAdapter(int ruleType) {
-        if (mMarketingRuleAdapter == null) {
-            mMarketingRuleAdapter = new MarketingRuleAdapter(null, true);
-            mListRule.setAdapter(mMarketingRuleAdapter);
-            mMarketingRuleAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-                adapter.remove(position);
-            });
-
-        }
-        RuleListBean ruleListBean = new RuleListBean();
-        mMarketingRuleAdapter.setRultType(ruleType);
-        mMarketingRuleAdapter.setNewData(null);
-        mMarketingRuleAdapter.addData(ruleListBean);
-        mMarketingRuleAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -565,6 +602,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                         "如发觉活动有异常可进行作废操作")
                 .setButton((dialog, item) -> {
                     MarketingEvent event = new MarketingEvent();
+                    event.setTarget(MarketingEvent.Target.MARKETING_PRODUCT_LIST);
                     event.setRefreshProductList(true);
                     EventBus.getDefault().post(event);
                     dialog.dismiss();
@@ -574,6 +612,16 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                     finish();
                 }, "返回列表", "查看详情")
                 .create().show();
+    }
+
+    @Override
+    public void modifySuccess(MarketingProductAddResp marketingProductAddResp) {
+        showToast("编辑商品促销信息成功");
+        MarketingEvent event = new MarketingEvent();
+        event.setTarget(MarketingEvent.Target.MARKETING_PRODUCT_DETAIL);
+        event.setRefreshProductDetail(true);
+        EventBus.getDefault().post(event);
+        finish();
     }
 
     @Override
@@ -681,5 +729,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         return 1;
     }
 
-
+    @Override
+    public String getId() {
+        return mDetail != null ? mDetail.getId() : null;
+    }
 }

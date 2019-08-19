@@ -88,5 +88,15 @@ public interface MarketingSettingService {
     @Headers("pv:112005")
     Observable<BaseResp<Object>> changeMarketingStatus(@Body BaseReq<ChangeMarketingStatusReq> req);
 
+    /**
+     * 修改商品促销
+     *
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:112002")
+    Observable<BaseResp<MarketingProductAddResp>> modifyMarketingDetail(@Body BaseReq<MarketingProductAddReq> req);
+
 
 }

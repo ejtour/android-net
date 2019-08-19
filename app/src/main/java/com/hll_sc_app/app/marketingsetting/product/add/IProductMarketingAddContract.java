@@ -18,6 +18,10 @@ public interface IProductMarketingAddContract {
         void addSuccess(MarketingProductAddResp marketingProductAddResp);
 
         /**
+         * 编辑成功
+         */
+        void modifySuccess(MarketingProductAddResp marketingProductAddResp);
+        /**
          * 获取主题
          *
          * @return
@@ -77,6 +81,12 @@ public interface IProductMarketingAddContract {
          * 客户范围
          */
         int getCustomerScope();
+
+        /**
+         * 返回修改的id
+         * @return
+         */
+        String getId();
     }
 
 
@@ -86,5 +96,10 @@ public interface IProductMarketingAddContract {
          * 新增商品营销
          */
         void addMarketingProduct();
+
+        /**
+         * 编辑商品促销
+         */
+        void modifyMarketingProduct();
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
  */
 public class MarketingProductAddReq {
 
+    private String id;
     private int discountType;
     private String discountName;
     private int customerScope;
@@ -19,6 +20,14 @@ public class MarketingProductAddReq {
     private List<AddProductBean> productList;
     private List<AreaListBean> areaList;
     private List<RuleListBean> ruleList;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getDiscountType() {
         return discountType;
