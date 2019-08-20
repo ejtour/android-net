@@ -21,6 +21,7 @@ import com.hll_sc_app.bean.home.ManagementShopResp;
 import com.hll_sc_app.bean.home.StatisticResp;
 import com.hll_sc_app.bean.home.TrendBean;
 import com.hll_sc_app.bean.home.VisitResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -216,7 +217,25 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
 
     @Override
     public void updateHomeStatistic(StatisticResp resp) {
-
+        mTodayAmount.setText(CommonUtils.formatMoney(resp.getAmount()));
+        mTodayShopNum.setText(String.valueOf(resp.getShopNum()));
+        mTodayOrderNum.setText(String.valueOf(resp.getBillNum()));
+        mSettlementShop.setText(String.valueOf(resp.getSettlementShopNum()));
+        mSettlementOrder.setText(String.valueOf(resp.getSettlementBillNum()));
+        mSettlementAmount.setText(CommonUtils.formatMoney(resp.getSettlementAmount()));
+        mExpireShop.setText(String.valueOf(resp.getSettlementDateShopNum()));
+        mExpireOrder.setText(String.valueOf(resp.getSettlementDateBillNum()));
+        mExpireAmount.setText(CommonUtils.formatMoney(resp.getSettlementDateUnsettleAmount()));
+        mCustomerService.setText(String.valueOf(resp.getCustomServicedRefundNum()));
+        mDriver.setText(String.valueOf(resp.getDrivedRefundNum()));
+        mWarehouseReceive.setText(String.valueOf(resp.getWareHousedRefundNum()));
+        mFinance.setText(String.valueOf(resp.getFinanceReviewRefundNum()));
+        if (resp.isWareHouse()) {
+            mWarehouseGroup.setVisibility(View.VISIBLE);
+            mWarehouseShop.setText(String.valueOf(resp.getWareHouseShopNum()));
+            mWarehouseOrder.setText(String.valueOf(resp.getWareHouseBillNum()));
+            mWarehouseAmount.setText(CommonUtils.formatMoney(resp.getWareHouseDeliveryGoodsAmount()));
+        } else mWarehouseGroup.setVisibility(View.GONE);
     }
 
     @Override
@@ -226,11 +245,16 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
 
     @Override
     public void updateVisitPlan(VisitResp resp) {
-
+        mVisited.setText(String.valueOf(resp.getActiveVisitPlanCount()));
+        mValidVisit.setText(String.valueOf(resp.getActiveVisitRecordCount()));
+        mRemainVisit.setText(String.valueOf(resp.getVisitRecordCount()));
+        mPendingVisit.setText(String.valueOf(resp.getVisitPlanCount()));
     }
 
     @Override
     public void updateManagementShop(ManagementShopResp resp) {
-
+        mManagementShop.setText(String.valueOf(resp.getShopNum()));
+        mAddedMonth.setText(String.valueOf(resp.getShopNumIncr()));
+        mWillFall.setText(String.valueOf(resp.getShopNumLost()));
     }
 }

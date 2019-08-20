@@ -24,6 +24,10 @@ public class StatisticResp {
     private int settlementShopNum;
     private double needSettlementAmount;
     private int settlementDateShopNum;
+    private int wareHouseBillNum;
+    private double wareHouseDeliveryGoodsAmount;
+    private int wareHouseShopNum;
+    private boolean wareHouse;
     private List<TrendBean> orders;
 
     public double getAmount() {
@@ -152,6 +156,38 @@ public class StatisticResp {
 
     public void setSettlementDateShopNum(int settlementDateShopNum) {
         this.settlementDateShopNum = settlementDateShopNum;
+    }
+
+    public int getWareHouseBillNum() {
+        return wareHouseBillNum;
+    }
+
+    public void setWareHouseBillNum(int wareHouseBillNum) {
+        this.wareHouseBillNum = wareHouseBillNum;
+    }
+
+    public double getWareHouseDeliveryGoodsAmount() {
+        return wareHouseDeliveryGoodsAmount;
+    }
+
+    public void setWareHouseDeliveryGoodsAmount(double wareHouseDeliveryGoodsAmount) {
+        this.wareHouseDeliveryGoodsAmount = wareHouseDeliveryGoodsAmount;
+    }
+
+    public int getWareHouseShopNum() {
+        return wareHouseShopNum;
+    }
+
+    public void setWareHouseShopNum(int wareHouseShopNum) {
+        this.wareHouseShopNum = wareHouseShopNum;
+    }
+
+    public boolean isWareHouse() {
+        return wareHouse;
+    }
+
+    public void setWareHouse(boolean wareHouse) {
+        this.wareHouse = wareHouse;
     }
 
     public List<TrendBean> getOrders() {
