@@ -10,13 +10,13 @@ public class InvoiceHelper {
     public static String getReturnType(int type) {
         switch (type) {
             case 1:
-                return "现金";
+                return "现金回款";
             case 2:
-                return "银行转账";
+                return "银行转账回款";
             case 3:
-                return "支票";
+                return "支票回款";
             default:
-                return "其他";
+                return "其他回款";
         }
     }
 }

@@ -165,7 +165,6 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             updateVisibility();
         } else {
             mIdentifierGroup.setVisibility(View.GONE);
-            mIdentifier.setText("");
             mPresenter.reqInvoiceHistory(2);
             mInvoiceTitle.setHint("请输入抬头名称");
         }
@@ -198,7 +197,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mMakeReq.setInvoiceTitle(mInvoiceTitle.getText().toString());
             mMakeReq.setNote(mRemark.getText().toString());
             mMakeReq.setOpenBank(mBank.getText().toString());
-            mMakeReq.setTaxpayerNum(mIdentifier.getText().toString());
+            mMakeReq.setTaxpayerNum(mIdentifierGroup.getVisibility() == View.GONE ? "" : mIdentifier.getText().toString());
             mMakeReq.setTelephone(mPhone.getText().toString());
             mMakeReq.setTitleType(mIdentifierGroup.getVisibility() == View.GONE ? 1 : 2);
             mMakeReq.setUserID(user.getEmployeeID());

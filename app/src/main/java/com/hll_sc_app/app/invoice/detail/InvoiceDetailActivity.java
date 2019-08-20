@@ -309,7 +309,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
             mExtraInfoGroup.setVisibility(View.VISIBLE);
             mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
             mInvoiceLicense.setEditable(true);
-            mTitleBar.setRightText("确认");
+            mTitleBar.setRightText("确定");
             mExtraInfo.setKeyListener(TextKeyListener.getInstance());
             mTitleBar.setTag(true);
         }
