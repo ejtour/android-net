@@ -326,7 +326,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private void updateSelectedDate() {
-        mDate.setText(String.format("%s-%s",
+        mDate.setText(String.format("%s - %s",
                 CalendarUtils.format(mParam.getStateTime(), Constants.SLASH_YYYY_MM_DD),
                 CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
     }

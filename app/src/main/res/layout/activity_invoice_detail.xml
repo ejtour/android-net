@@ -324,6 +324,7 @@
                 android:layout_height="wrap_content"
                 android:hint="无"
                 android:minHeight="45dp"
+                android:layout_marginLeft="30dp"
                 android:padding="@dimen/dp_10"
                 android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -340,7 +341,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/aid_relevance_order_label"
                 app:layout_constraintTop_toTopOf="@id/aid_relevance_order_label"
-                tools:text="包含 4 张订单" />
+                tools:text="包含 4 个订单" />
 
             <TextView
                 android:id="@+id/aid_relevance_order_label"

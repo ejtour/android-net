@@ -149,7 +149,11 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
                 lazyLoad();
                 break;
             case InvoiceEvent.EXPORT:
-                if (isFragmentVisible()) mPresenter.export(null);
+                if (isFragmentVisible()) {
+                    if (!CommonUtils.isEmpty(mAdapter.getData()))
+                        mPresenter.export(null);
+                    else showToast("没有开票记录可导出");
+                }
                 break;
             case InvoiceEvent.REMOVE_ITEM:
                 if (mInvoiceStatus == 1 && mCurBean != null) {

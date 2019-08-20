@@ -140,7 +140,7 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     }
 
     private void updateDateText() {
-        mDate.setText(String.format("%s-%s", CalendarUtils.format(mParam.getStartTime(), Constants.SLASH_YYYY_MM_DD),
+        mDate.setText(String.format("%s - %s", CalendarUtils.format(mParam.getStartTime(), Constants.SLASH_YYYY_MM_DD),
                 CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
     }
 

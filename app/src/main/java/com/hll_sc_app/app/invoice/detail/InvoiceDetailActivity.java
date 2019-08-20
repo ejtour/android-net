@@ -198,7 +198,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     @OnClick(R.id.aid_reject)
     public void reject() {
         RemarkDialog.newBuilder(this)
-                .setHint("请填写驳回原因(最多可输入50字)")
+                .setHint("请填写驳回原因（最多可输入50字）")
                 .setMaxLength(50)
                 .setButtons("容我再想想", "确认驳回", (dialog, positive, content) -> {
                     dialog.dismiss();
@@ -253,10 +253,8 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
             mInvoiceLicense.showImage(bean.getInvoiceVoucher());
         }
         mExtraInfoLabel.setText("发票号码");
-        if (!TextUtils.isEmpty(bean.getInvoiceNO())) {
-            mExtraInfoGroup.setVisibility(View.VISIBLE);
-            mExtraInfo.setText(bean.getInvoiceNO());
-        }
+        mExtraInfoGroup.setVisibility(View.VISIBLE);
+        mExtraInfo.setText(!TextUtils.isEmpty(bean.getInvoiceNO()) ? bean.getInvoiceNO() : "无");
     }
 
     private void updateBaseInfo(InvoiceBean bean, boolean crm) {
@@ -270,7 +268,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         mRecipient.setText(bean.getReceiver());
         mPhone.setText(bean.getTelephone());
         mRemark.setText(bean.getNote());
-        mRelevanceOrder.setText(String.format("包含 %s 张订单", bean.getBillTotal()));
+        mRelevanceOrder.setText(String.format("包含 %s 个订单", bean.getBillTotal()));
         mTips.setVisibility(crm ? View.VISIBLE : View.GONE);
     }
 

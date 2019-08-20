@@ -131,6 +131,7 @@
                     android:layout_height="match_parent"
                     android:checked="true"
                     android:padding="@dimen/dp_10"
+                    android:button="@drawable/bg_selector_radio_button"
                     android:text="企业"
                     android:textSize="@dimen/text_middle_size" />
 
@@ -139,6 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="50dp"
+                    android:button="@drawable/bg_selector_radio_button"
                     android:padding="@dimen/dp_10"
                     android:text="个人/事业单位"
                     android:textSize="@dimen/text_middle_size" />
@@ -351,6 +353,7 @@
                 style="@style/InvoiceInfoEdit"
                 android:layout_height="wrap_content"
                 android:hint="可备注开票区间、开票金额"
+                android:layout_marginLeft="30dp"
                 android:minHeight="45dp"
                 android:padding="@dimen/dp_10"
                 android:singleLine="false"

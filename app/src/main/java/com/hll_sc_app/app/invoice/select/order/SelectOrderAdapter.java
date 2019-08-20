@@ -40,7 +40,7 @@ public class SelectOrderAdapter extends BaseQuickAdapter<InvoiceOrderBean, BaseV
             payMethod.append(type);
             String paymentWay = OrderHelper.getPaymentWay(item.getPaymentWay());
             if (!TextUtils.isEmpty(paymentWay)) {
-                payMethod.append("(").append(paymentWay).append(")");
+                payMethod.append("（").append(paymentWay).append("）");
             }
         }
         String orderNo;
