@@ -17,11 +17,17 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.home.ManagementShopResp;
+import com.hll_sc_app.bean.home.StatisticResp;
+import com.hll_sc_app.bean.home.TrendBean;
+import com.hll_sc_app.bean.home.VisitResp;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+
+import java.util.List;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -35,7 +41,7 @@ import butterknife.Unbinder;
  */
 
 @Route(path = RouterConfig.CRM_HOME)
-public class CrmHomeFragment extends BaseLoadFragment {
+public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContract.ICrmHomeView {
     @BindView(R.id.fch_top_bg)
     ImageView mTopBg;
     @BindView(R.id.fch_today_amount)
@@ -99,6 +105,7 @@ public class CrmHomeFragment extends BaseLoadFragment {
     @BindDimen(R.dimen.title_bar_height)
     int mTitleBarHeight;
     Unbinder unbinder;
+    private ICrmHomeContract.ICrmHomePresenter mPresenter;
 
     @Nullable
     @Override
@@ -106,7 +113,14 @@ public class CrmHomeFragment extends BaseLoadFragment {
         View view = inflater.inflate(R.layout.fragment_crm_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         initView();
+        initData();
         return view;
+    }
+
+    private void initData() {
+        mPresenter = CrmHomePresenter.newInstance();
+        mPresenter.register(this);
+        mPresenter.start();
     }
 
     private void initView() {
@@ -137,7 +151,7 @@ public class CrmHomeFragment extends BaseLoadFragment {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//                mPresenter.querySalesVolume(false);
+                mPresenter.refresh();
             }
         });
     }
@@ -156,6 +170,7 @@ public class CrmHomeFragment extends BaseLoadFragment {
 
     @OnClick({R.id.fch_pending_visit_btn, R.id.fch_remain_visit_btn, R.id.fch_visited_btn, R.id.fch_valid_visit_btn})
     public void visit(View view) {
+        showToast("拜访待添加");
         switch (view.getId()) {
             case R.id.fch_pending_visit_btn:
                 break;
@@ -170,6 +185,7 @@ public class CrmHomeFragment extends BaseLoadFragment {
 
     @OnClick({R.id.fch_customer_service_btn, R.id.fch_driver_btn, R.id.fch_warehouse_btn, R.id.fch_finance_btn})
     public void afterSales(View view) {
+        showToast("售后待添加");
         switch (view.getId()) {
             case R.id.fch_customer_service_btn:
                 break;
@@ -182,12 +198,39 @@ public class CrmHomeFragment extends BaseLoadFragment {
         }
     }
 
+    @Override
+    public void hideLoading() {
+        mRefreshView.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
     @OnClick(R.id.fch_management_btn)
     public void shopManagement() {
-
+        showToast("门店管理待添加");
     }
 
     @OnClick(R.id.fch_summary_bg)
     public void orderManagement() {
+        showToast("订单管理待添加");
+    }
+
+    @Override
+    public void updateHomeStatistic(StatisticResp resp) {
+
+    }
+
+    @Override
+    public void updateTrend(List<TrendBean> list) {
+
+    }
+
+    @Override
+    public void updateVisitPlan(VisitResp resp) {
+
+    }
+
+    @Override
+    public void updateManagementShop(ManagementShopResp resp) {
+
     }
 }
