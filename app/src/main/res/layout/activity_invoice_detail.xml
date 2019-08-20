@@ -198,11 +198,45 @@
                 app:layout_constraintStart_toStartOf="@id/aid_account_label" />
 
             <TextView
+                android:id="@+id/aid_identifier_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="纳税人识别号"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_account_label" />
+
+            <TextView
+                android:id="@+id/aid_identifier"
+                style="@style/InvoiceInfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_identifier_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_identifier_label"
+                app:layout_constraintTop_toTopOf="@id/aid_identifier_label"
+                tools:text="321632613215" />
+
+            <View
+                android:id="@+id/aid_identifier_div"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_identifier_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_identifier"
+                app:layout_constraintStart_toStartOf="@id/aid_identifier_label" />
+
+            <android.support.constraint.Group
+                android:id="@+id/aid_identifier_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="aid_identifier_label,aid_identifier,aid_identifier_div" />
+
+            <TextView
                 android:id="@+id/aid_bank_label"
                 style="@style/InvoiceInfoLabel"
                 android:text="开户行"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aid_account_label" />
+                app:layout_constraintTop_toBottomOf="@id/aid_identifier_label" />
 
             <TextView
                 android:id="@+id/aid_bank"
@@ -322,9 +356,9 @@
                 android:id="@+id/aid_remark"
                 style="@style/InvoiceInfoEdit"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
                 android:hint="无"
                 android:minHeight="45dp"
-                android:layout_marginLeft="30dp"
                 android:padding="@dimen/dp_10"
                 android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -382,11 +416,11 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/bg_invoice_extra_edit"
+                android:hint="请填写发票号，多个号码请用逗号隔开"
                 android:lineSpacingExtra="5dp"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingTop="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
-                android:hint="请填写发票号，多个号码请用逗号隔开"
                 android:paddingBottom="20dp"
                 android:textAppearance="@style/TextAppearance.City22.Middle"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -97,6 +97,8 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     EditText mExtraInfo;
     @BindView(R.id.aid_invoice_license)
     ImgUploadBlock mInvoiceLicense;
+    @BindView(R.id.aid_identifier)
+    TextView mIdentifier;
     private TextView mAddBtn;
     @BindView(R.id.aid_list_view)
     RecyclerView mListView;
@@ -106,6 +108,8 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     Group mInvoiceLicenseGroup;
     @BindView(R.id.aid_records_group)
     Group mRecordsGroup;
+    @BindView(R.id.aid_identifier_group)
+    Group mIdentifierGroup;
     @Autowired(name = "object0")
     String mID;
     private IInvoiceDetailContract.IInvoiceDetailPresenter mPresenter;
@@ -270,6 +274,8 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         mRemark.setText(bean.getNote());
         mRelevanceOrder.setText(String.format("包含 %s 个订单", bean.getBillTotal()));
         mTips.setVisibility(crm ? View.VISIBLE : View.GONE);
+        mIdentifierGroup.setVisibility(bean.getTitleType() == 1 ? View.VISIBLE : View.GONE);
+        mIdentifier.setText(bean.getTaxpayerNum());
     }
 
     private void updateRejectData(InvoiceBean bean, boolean crm) {
