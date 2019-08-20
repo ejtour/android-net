@@ -6,8 +6,7 @@ import android.os.Parcelable;
 /**
  * 选择优惠券列表
  */
-public class CouponListBean implements Parcelable {
-
+public class SelectCouponListBean implements Parcelable {
 
     private String discountName;
     private int couponCondition;
@@ -69,10 +68,10 @@ public class CouponListBean implements Parcelable {
         dest.writeDouble(this.couponValue);
     }
 
-    public CouponListBean() {
+    public SelectCouponListBean() {
     }
 
-    protected CouponListBean(Parcel in) {
+    protected SelectCouponListBean(Parcel in) {
         this.discountName = in.readString();
         this.couponCondition = in.readInt();
         this.couponConditionValue = in.readInt();
@@ -80,15 +79,15 @@ public class CouponListBean implements Parcelable {
         this.couponValue = in.readDouble();
     }
 
-    public static final Creator<CouponListBean> CREATOR = new Creator<CouponListBean>() {
+    public static final Creator<SelectCouponListBean> CREATOR = new Creator<SelectCouponListBean>() {
         @Override
-        public CouponListBean createFromParcel(Parcel source) {
-            return new CouponListBean(source);
+        public SelectCouponListBean createFromParcel(Parcel source) {
+            return new SelectCouponListBean(source);
         }
 
         @Override
-        public CouponListBean[] newArray(int size) {
-            return new CouponListBean[size];
+        public SelectCouponListBean[] newArray(int size) {
+            return new SelectCouponListBean[size];
         }
     };
 }

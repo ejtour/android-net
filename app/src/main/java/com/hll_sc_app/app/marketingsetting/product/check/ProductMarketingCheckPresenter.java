@@ -74,7 +74,7 @@ public class ProductMarketingCheckPresenter implements IProductMarketingCheckCon
      *
      * @return
      */
-    public static void changeMarketingStatus(ChangeMarketingStatusReq req, SimpleObserver<Object> observer) {
+    static  public void changeMarketingStatus(ChangeMarketingStatusReq req, SimpleObserver<Object> observer) {
         BaseReq<ChangeMarketingStatusReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
         MarketingSettingService.INSTANCE

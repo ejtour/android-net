@@ -47,6 +47,7 @@ public class MarketingSettingMenuActivity extends AppCompatActivity {
             case R.id.ll_order:
                 break;
             case R.id.ll_coupon:
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_COUPON_LIST);
                 break;
             default:
                 break;

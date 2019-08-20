@@ -633,5 +633,10 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_MARKETING_SELECT_PRODUCT_LIST = "/activity/marketing/select/product/list";
 
+    /**
+     * 营销优惠券列表
+     */
+    public static final String ACTIVITY_MARKETING_COUPON_LIST = "/activity/marketing/coupon/list";
+
 }
 

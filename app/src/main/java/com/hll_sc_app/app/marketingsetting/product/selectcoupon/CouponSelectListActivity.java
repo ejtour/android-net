@@ -19,7 +19,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.marketingsetting.CouponListBean;
+import com.hll_sc_app.bean.marketingsetting.SelectCouponListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 
@@ -39,14 +39,14 @@ public class CouponSelectListActivity extends BaseLoadActivity implements ICoupo
     @BindView(R.id.recyclerView)
     RecyclerView mList;
     @Autowired(name = "parcelable")
-    CouponListBean mSelectBean;
+    SelectCouponListBean mSelectBean;
     private Unbinder unbinder;
 
     private CouponAdapter mAdapter;
 
     private ICouponSelectListContract.IPresenter mPresenter;
 
-    public static void start(Activity activity, int requestCode, CouponListBean selectBean) {
+    public static void start(Activity activity, int requestCode, SelectCouponListBean selectBean) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_SELECT_COUPON_LIST, activity, requestCode, selectBean);
     }
 
@@ -80,7 +80,7 @@ public class CouponSelectListActivity extends BaseLoadActivity implements ICoupo
 
 
     @Override
-    public void showList(List<CouponListBean> couponListBeans) {
+    public void showList(List<SelectCouponListBean> couponListBeans) {
         if (couponListBeans.size() == 0) {
             mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("您还没有可选择的优惠券").create());
         }
@@ -88,7 +88,7 @@ public class CouponSelectListActivity extends BaseLoadActivity implements ICoupo
 
     }
 
-    private String transformCouponCondition(CouponListBean bean) {
+    private String transformCouponCondition(SelectCouponListBean bean) {
         switch (bean.getCouponCondition()) {
             case 0:
                 return "无使用限制";
@@ -99,13 +99,13 @@ public class CouponSelectListActivity extends BaseLoadActivity implements ICoupo
         }
     }
 
-    public class CouponAdapter extends BaseQuickAdapter<CouponListBean, BaseViewHolder> {
-        public CouponAdapter(@Nullable List<CouponListBean> data) {
+    public class CouponAdapter extends BaseQuickAdapter<SelectCouponListBean, BaseViewHolder> {
+        public CouponAdapter(@Nullable List<SelectCouponListBean> data) {
             super(R.layout.list_item_select_coupon, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, CouponListBean item) {
+        protected void convert(BaseViewHolder helper, SelectCouponListBean item) {
             boolean isSelected = false;
             helper.setText(R.id.txt_name, item.getDiscountName())
                     .setText(R.id.txt_rule, transformCouponCondition(item))

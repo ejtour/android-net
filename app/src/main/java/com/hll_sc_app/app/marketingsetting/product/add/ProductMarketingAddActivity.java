@@ -37,7 +37,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.marketingsetting.AreaListBean;
-import com.hll_sc_app.bean.marketingsetting.CouponListBean;
+import com.hll_sc_app.bean.marketingsetting.SelectCouponListBean;
 import com.hll_sc_app.bean.marketingsetting.GiveBean;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingProductAddResp;
@@ -124,7 +124,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     private SingleSelectionDialog mSingleRuleDilog;
     private MarketingRuleAdapter mMarketingRuleAdapter;
     private ProductMarketingAddPresenter mPresenter;
-    private CouponListBean mSelectCoupon;
+    private SelectCouponListBean mSelectCoupon;
     /**
      * 选择的时间
      */
@@ -269,7 +269,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             RuleListBean ruleBean = mDetail.getRuleList().get(0);
             List<GiveBean> giveBeans = JsonUtil.parseJsonList(ruleBean.getGiveTarget(), GiveBean.class);
             mCouponRuleSelectView.setData(ruleBean.getRuleCondition() + "", giveBeans.get(0));
-            mSelectCoupon = new CouponListBean();
+            mSelectCoupon = new SelectCouponListBean();
             mSelectCoupon.setDiscountID(giveBeans.get(0).getGiveTargetID());
             mSelectCoupon.setDiscountName(giveBeans.get(0).getGiveTargetName());
         } else if (TextUtils.equals(mDetail.getDiscountRuleType() + "", MarketingRule.RULE_DZ.getKey())) {

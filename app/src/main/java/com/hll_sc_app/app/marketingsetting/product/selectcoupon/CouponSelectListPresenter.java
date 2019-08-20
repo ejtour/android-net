@@ -6,7 +6,7 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.marketingsetting.CouponListBean;
+import com.hll_sc_app.bean.marketingsetting.SelectCouponListBean;
 import com.hll_sc_app.bean.marketingsetting.CouponListReq;
 
 import java.util.List;
@@ -33,20 +33,20 @@ public class CouponSelectListPresenter implements ICouponSelectListContract.IPre
         CouponListReq req = new CouponListReq();
         req.setGroupID(userBean.getGroupID());
         req.setDiscountType(3);
-        getCounponListObservable(req, new SimpleObserver<List<CouponListBean>>(mView) {
+        getCounponListObservable(req, new SimpleObserver<List<SelectCouponListBean>>(mView) {
             @Override
-            public void onSuccess(List<CouponListBean> couponListBeans) {
+            public void onSuccess(List<SelectCouponListBean> couponListBeans) {
                 mView.showList(couponListBeans);
             }
         });
 
     }
 
-    public static void getCounponListObservable(CouponListReq req, SimpleObserver<List<CouponListBean>> observer) {
+    public static void getCounponListObservable(CouponListReq req, SimpleObserver<List<SelectCouponListBean>> observer) {
         BaseReq<CouponListReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
         MarketingSettingService.INSTANCE
-                .getCounponList(baseReq)
+                .getSelectCounponList(baseReq)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .subscribe(observer);
     }

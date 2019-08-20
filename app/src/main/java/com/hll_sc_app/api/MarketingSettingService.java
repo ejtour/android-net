@@ -6,7 +6,8 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.marketingsetting.ChangeMarketingStatusReq;
-import com.hll_sc_app.bean.marketingsetting.CouponListBean;
+import com.hll_sc_app.bean.marketingsetting.CouponListResp;
+import com.hll_sc_app.bean.marketingsetting.SelectCouponListBean;
 import com.hll_sc_app.bean.marketingsetting.CouponListReq;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckReq;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
@@ -59,14 +60,14 @@ public interface MarketingSettingService {
 
 
     /**
-     * 获取优惠券列表
+     * 获取商品里的优惠券列表
      *
      * @param req
      * @return
      */
     @POST(HttpConfig.URL)
     @Headers("pv:112013")
-    Observable<BaseResp<List<CouponListBean>>> getCounponList(@Body BaseReq<CouponListReq> req);
+    Observable<BaseResp<List<SelectCouponListBean>>> getSelectCounponList(@Body BaseReq<CouponListReq> req);
 
     /**
      * 获取优惠详情
@@ -97,6 +98,16 @@ public interface MarketingSettingService {
     @POST(HttpConfig.URL)
     @Headers("pv:112002")
     Observable<BaseResp<MarketingProductAddResp>> modifyMarketingDetail(@Body BaseReq<MarketingProductAddReq> req);
+
+
+    /**
+     * 优惠券列表
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:112003")
+    Observable<BaseResp<CouponListResp>> getCouponList(@Body BaseReq<CouponListReq> req);
 
 
 }
