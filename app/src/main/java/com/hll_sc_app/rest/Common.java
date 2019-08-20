@@ -8,7 +8,6 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
-import com.hll_sc_app.bean.common.SalesVolumeResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
@@ -60,21 +59,6 @@ public class Common {
                 .subscribe(observer);
     }
 
-    /**
-     * 首页查询销售额
-     *
-     * @param date 标识：0-日,1-周,2-月
-     */
-    public static void querySalesVolume(int date, SimpleObserver<SalesVolumeResp> observer) {
-        CommonService.INSTANCE
-                .querySalesVolume(BaseMapReq.newBuilder()
-                        .put("groupID", UserConfig.getGroupID())
-                        .put("date", String.valueOf(date))
-                        .put("version", "1").create())
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
 
     /**
      * 通用表格导出
