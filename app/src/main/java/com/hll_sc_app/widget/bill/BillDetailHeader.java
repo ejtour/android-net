@@ -12,6 +12,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillStatus;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 
@@ -78,9 +79,9 @@ public class BillDetailHeader extends ConstraintLayout {
         mBillDate.setText(String.format("账单日：%s", convertDate(data.getBillCreateTime())));
         mSettlementDate.setText(String.format("结算日：%s", convertDate(data.getPaymentSettleDay())));
         mBillCycle.setText(String.format("账单周期：%s - %s", convertDate(data.getStartPaymentDay()), convertDate(data.getEndPaymentDay())));
-        mTotalAmount.setText(String.format("¥%s", data.getTotalAmount()));
-        mIncome.setText(String.format("¥%s", data.getTotalIncomeAmount()));
-        mRefund.setText(String.format("¥%s", data.getTotalRefundAmount()));
+        mTotalAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
+        mIncome.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalIncomeAmount())));
+        mRefund.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalRefundAmount())));
     }
 
     private String convertDate(String time) {
