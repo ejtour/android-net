@@ -218,7 +218,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
             if (CommonUtils.isEmpty(resp.getList())) {
                 initEmptyView();
                 mEmptyView.reset();
-                mEmptyView.setTips("当前筛选条件下暂未找到相关订单");
+                mEmptyView.setTipsTitle("当前筛选条件下暂未找到相关订单");
+                mEmptyView.setTips("换个条件再试试吧");
             }
             mAdapter.setNewData(resp.getList());
         }
