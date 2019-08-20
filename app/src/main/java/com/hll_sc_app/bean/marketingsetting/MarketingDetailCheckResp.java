@@ -9,18 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MarketingDetailCheckResp implements Parcelable {
-    public static final Creator<MarketingDetailCheckResp> CREATOR = new Creator<MarketingDetailCheckResp>() {
-        @Override
-        public MarketingDetailCheckResp createFromParcel(Parcel source) {
-            return new MarketingDetailCheckResp(source);
-        }
-
-        @Override
-        public MarketingDetailCheckResp[] newArray(int size) {
-            return new MarketingDetailCheckResp[size];
-        }
-    };
     private String actionTime;
+    private String couponValue;
     private int areaScope;
     private int discountRuleType;
     private String couponCount;
@@ -44,54 +34,42 @@ public class MarketingDetailCheckResp implements Parcelable {
     private String sendCount;
     private String customerDesc;
     private String createBy;
+    private String couponCondition;
     private String validityType;
+    private String validityDays;
     private String createTime;
+
+    public String getCouponCondition() {
+        return couponCondition;
+    }
+
+    public void setCouponCondition(String couponCondition) {
+        this.couponCondition = couponCondition;
+    }
+
+    public String getValidityDays() {
+        return validityDays;
+    }
+
+    public void setValidityDays(String validityDays) {
+        this.validityDays = validityDays;
+    }
+
     private String invalidCount;
     private String odmId;
     private List<RuleListBean> ruleList;
     private List<AreaListBean> areaList;
     private List<Integer> opList;
     private List<SkuGoodsBean> productList;
-
     public MarketingDetailCheckResp() {
     }
 
-    protected MarketingDetailCheckResp(Parcel in) {
-        this.actionTime = in.readString();
-        this.areaScope = in.readInt();
-        this.discountRuleType = in.readInt();
-        this.couponCount = in.readString();
-        this.productCount = in.readString();
-        this.discountName = in.readString();
-        this.discountEndTime = in.readString();
-        this.discountStage = in.readInt();
-        this.discountStartTime = in.readString();
-        this.areaDesc = in.readString();
-        this.discountStatus = in.readInt();
-        this.action = in.readInt();
-        this.discountType = in.readInt();
-        this.id = in.readString();
-        this.useCount = in.readString();
-        this.customerScope = in.readInt();
-        this.discountStatusName = in.readString();
-        this.actionBy = in.readString();
-        this.ruleTypeName = in.readString();
-        this.groupID = in.readString();
-        this.unUseCount = in.readString();
-        this.sendCount = in.readString();
-        this.customerDesc = in.readString();
-        this.createBy = in.readString();
-        this.validityType = in.readString();
-        this.createTime = in.readString();
-        this.invalidCount = in.readString();
-        this.odmId = in.readString();
-        this.ruleList = new ArrayList<RuleListBean>();
-        in.readList(this.ruleList, RuleListBean.class.getClassLoader());
-        this.areaList = new ArrayList<AreaListBean>();
-        in.readList(this.areaList, AreaListBean.class.getClassLoader());
-        this.opList = new ArrayList<Integer>();
-        in.readList(this.opList, Integer.class.getClassLoader());
-        this.productList = in.createTypedArrayList(SkuGoodsBean.CREATOR);
+    public String getCouponValue() {
+        return couponValue;
+    }
+
+    public void setCouponValue(String couponValue) {
+        this.couponValue = couponValue;
     }
 
     public String getActionTime() {
@@ -358,6 +336,7 @@ public class MarketingDetailCheckResp implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.actionTime);
+        dest.writeString(this.couponValue);
         dest.writeInt(this.areaScope);
         dest.writeInt(this.discountRuleType);
         dest.writeString(this.couponCount);
@@ -381,13 +360,66 @@ public class MarketingDetailCheckResp implements Parcelable {
         dest.writeString(this.sendCount);
         dest.writeString(this.customerDesc);
         dest.writeString(this.createBy);
+        dest.writeString(this.couponCondition);
         dest.writeString(this.validityType);
+        dest.writeString(this.validityDays);
         dest.writeString(this.createTime);
         dest.writeString(this.invalidCount);
         dest.writeString(this.odmId);
-        dest.writeList(this.ruleList);
-        dest.writeList(this.areaList);
+        dest.writeTypedList(this.ruleList);
+        dest.writeTypedList(this.areaList);
         dest.writeList(this.opList);
         dest.writeTypedList(this.productList);
     }
+
+    protected MarketingDetailCheckResp(Parcel in) {
+        this.actionTime = in.readString();
+        this.couponValue = in.readString();
+        this.areaScope = in.readInt();
+        this.discountRuleType = in.readInt();
+        this.couponCount = in.readString();
+        this.productCount = in.readString();
+        this.discountName = in.readString();
+        this.discountEndTime = in.readString();
+        this.discountStage = in.readInt();
+        this.discountStartTime = in.readString();
+        this.areaDesc = in.readString();
+        this.discountStatus = in.readInt();
+        this.action = in.readInt();
+        this.discountType = in.readInt();
+        this.id = in.readString();
+        this.useCount = in.readString();
+        this.customerScope = in.readInt();
+        this.discountStatusName = in.readString();
+        this.actionBy = in.readString();
+        this.ruleTypeName = in.readString();
+        this.groupID = in.readString();
+        this.unUseCount = in.readString();
+        this.sendCount = in.readString();
+        this.customerDesc = in.readString();
+        this.createBy = in.readString();
+        this.couponCondition = in.readString();
+        this.validityType = in.readString();
+        this.validityDays = in.readString();
+        this.createTime = in.readString();
+        this.invalidCount = in.readString();
+        this.odmId = in.readString();
+        this.ruleList = in.createTypedArrayList(RuleListBean.CREATOR);
+        this.areaList = in.createTypedArrayList(AreaListBean.CREATOR);
+        this.opList = new ArrayList<Integer>();
+        in.readList(this.opList, Integer.class.getClassLoader());
+        this.productList = in.createTypedArrayList(SkuGoodsBean.CREATOR);
+    }
+
+    public static final Creator<MarketingDetailCheckResp> CREATOR = new Creator<MarketingDetailCheckResp>() {
+        @Override
+        public MarketingDetailCheckResp createFromParcel(Parcel source) {
+            return new MarketingDetailCheckResp(source);
+        }
+
+        @Override
+        public MarketingDetailCheckResp[] newArray(int size) {
+            return new MarketingDetailCheckResp[size];
+        }
+    };
 }

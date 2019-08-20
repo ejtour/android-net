@@ -320,7 +320,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         showToast("作废成功");
         MarketingEvent event = new MarketingEvent();
         event.setTarget(MarketingEvent.Target.MARKETING_PRODUCT_LIST);
-        event.setRefreshProductList(true);
+        event.setRefresh(true);
         EventBus.getDefault().post(event);
         finish();
     }
@@ -357,7 +357,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         if (event.getTarget() != MarketingEvent.Target.MARKETING_PRODUCT_DETAIL) {
             return;
         }
-        if (event.isRefreshProductDetail()) {
+        if (event.isRefresh()) {
             mPresenter.getMarketingDetail();
         }
     }

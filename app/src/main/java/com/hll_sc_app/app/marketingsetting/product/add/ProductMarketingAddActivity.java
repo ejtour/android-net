@@ -603,7 +603,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 .setButton((dialog, item) -> {
                     MarketingEvent event = new MarketingEvent();
                     event.setTarget(MarketingEvent.Target.MARKETING_PRODUCT_LIST);
-                    event.setRefreshProductList(true);
+                    event.setRefresh(true);
                     EventBus.getDefault().post(event);
                     dialog.dismiss();
                     if (item == 1) {
@@ -619,7 +619,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         showToast("编辑商品促销信息成功");
         MarketingEvent event = new MarketingEvent();
         event.setTarget(MarketingEvent.Target.MARKETING_PRODUCT_DETAIL);
-        event.setRefreshProductDetail(true);
+        event.setRefresh(true);
         EventBus.getDefault().post(event);
         finish();
     }

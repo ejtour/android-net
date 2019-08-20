@@ -9,10 +9,14 @@ public class MarketingProductAddReq {
 
     private String id;
     private int discountType;
+    private int couponType;
+    private int validityType;
     private String discountName;
     private int customerScope;
+    private int couponCondition;
     private String discountStartTime;
     private String discountEndTime;
+    private String validityDays;
     private int discountStage;
     private int discountRuleType;
     private int areaScope;
@@ -20,6 +24,38 @@ public class MarketingProductAddReq {
     private List<AddProductBean> productList;
     private List<AreaListBean> areaList;
     private List<RuleListBean> ruleList;
+
+    public String getValidityDays() {
+        return validityDays;
+    }
+
+    public void setValidityDays(String validityDays) {
+        this.validityDays = validityDays;
+    }
+
+    public int getCouponCondition() {
+        return couponCondition;
+    }
+
+    public void setCouponCondition(int couponCondition) {
+        this.couponCondition = couponCondition;
+    }
+
+    public int getValidityType() {
+        return validityType;
+    }
+
+    public void setValidityType(int validityType) {
+        this.validityType = validityType;
+    }
+
+    public int getCouponType() {
+        return couponType;
+    }
+
+    public void setCouponType(int couponType) {
+        this.couponType = couponType;
+    }
 
     public String getId() {
         return id;

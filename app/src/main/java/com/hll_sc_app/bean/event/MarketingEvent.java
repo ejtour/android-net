@@ -11,15 +11,14 @@ import java.lang.annotation.RetentionPolicy;
 public class MarketingEvent {
     private int target;
     private String searchText;
-    private boolean isRefreshProductList;
-    private boolean isRefreshProductDetail;
+    private boolean isRefresh;
 
-    public boolean isRefreshProductDetail() {
-        return isRefreshProductDetail;
+    public boolean isRefresh() {
+        return isRefresh;
     }
 
-    public void setRefreshProductDetail(boolean refreshProductDetail) {
-        isRefreshProductDetail = refreshProductDetail;
+    public void setRefresh(boolean refresh) {
+        isRefresh = refresh;
     }
 
     public int getTarget() {
@@ -38,15 +37,9 @@ public class MarketingEvent {
         this.searchText = searchText;
     }
 
-    public boolean isRefreshProductList() {
-        return isRefreshProductList;
-    }
 
-    public void setRefreshProductList(boolean refreshProductList) {
-        isRefreshProductList = refreshProductList;
-    }
 
-    @IntDef({Target.MARKETING_PRODUCT_LIST, Target.MARKETING_SELECT_PRODUCT_LIST, Target.MARKETING_PRODUCT_DETAIL})
+    @IntDef({Target.MARKETING_PRODUCT_LIST, Target.MARKETING_SELECT_PRODUCT_LIST, Target.MARKETING_PRODUCT_DETAIL, Target.MARKETING_COUPON_LIST})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Target {
         /**
@@ -62,5 +55,10 @@ public class MarketingEvent {
          * 商品促销详情
          */
         int MARKETING_PRODUCT_DETAIL = 2;
+
+        /**
+         * 优惠券列表
+         */
+        int MARKETING_COUPON_LIST = 3;
     }
 }

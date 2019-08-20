@@ -277,7 +277,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
         // 商品属性列表展示
         if (!TextUtils.isEmpty(event.getSearchText())) {
             mSearchView.showSearchContent(true, event.getSearchText());
-        } else if (event.isRefreshProductList()) {
+        } else if (event.isRefresh()) {
             mPresent.refreshList();
         }
     }
