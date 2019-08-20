@@ -163,12 +163,12 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mIdentifierGroup.setVisibility(View.VISIBLE);
             mPresenter.reqInvoiceHistory(1);
             mInvoiceTitle.setHint("请输入企业名称");
-            updateVisibility();
         } else {
             mIdentifierGroup.setVisibility(View.GONE);
             mPresenter.reqInvoiceHistory(2);
             mInvoiceTitle.setHint("请输入抬头名称");
         }
+        updateVisibility();
     }
 
     @OnTextChanged(value = {R.id.aii_invoice_title, R.id.aii_identifier,
@@ -200,14 +200,14 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mMakeReq.setOpenBank(mBank.getText().toString());
             mMakeReq.setTaxpayerNum(mIdentifierGroup.getVisibility() == View.GONE ? "" : mIdentifier.getText().toString());
             mMakeReq.setTelephone(mPhone.getText().toString());
-            mMakeReq.setTitleType(mIdentifierGroup.getVisibility() == View.GONE ? 1 : 2);
+            mMakeReq.setTitleType(mIdentifierGroup.getVisibility() == View.GONE ? 2 : 1);
             mMakeReq.setUserID(user.getEmployeeID());
             mPresenter.makeInvoice(mMakeReq);
         }
     }
 
     private boolean verifyValidity() {
-        if (!mIdentifier.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+        if (mIdentifierGroup.getVisibility() == View.VISIBLE && !mIdentifier.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
             showToast("纳税人识别号请勿包含特殊字符");
             return false;
         }
@@ -262,7 +262,6 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
                     callback = new NavCallback() {
                         @Override
                         public void onArrival(Postcard postcard) {
-                            EventBus.getDefault().post(new InvoiceEvent(InvoiceEvent.RELOAD_LIST));
                             if (item != 0)
                                 InvoiceDetailActivity.start(InvoiceInputActivity.this, mMakeResp.getId());
                         }

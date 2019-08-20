@@ -87,11 +87,17 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
         boolean notCrm = TextUtils.isEmpty(UserConfig.getSalesmanID());
         mTitleBar.setRightBtnVisible(notCrm);
-        String[] titles = {notCrm ? "未开票" : "已提交", "已开票", "被驳回"};
+        String[] titles = {notCrm ? "未开票" : "已提交", "已开票", notCrm ? "已驳回" : "被驳回"};
         mViewPager.setAdapter(new EntryAdapter());
         mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mViewPager, titles);
         mCommitGroup.setVisibility(notCrm ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        EventBus.getDefault().post(new InvoiceEvent(InvoiceEvent.RELOAD_LIST));
     }
 
     private void showOptionsWindow(View v) {
