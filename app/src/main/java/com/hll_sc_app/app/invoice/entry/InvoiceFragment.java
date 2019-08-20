@@ -26,7 +26,9 @@ import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.DatePickerDialog;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -37,6 +39,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,17 +66,17 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
     private Unbinder unbinder;
     @Autowired(name = "object")
     int mInvoiceStatus;
-    private InvoiceParam mParam;
+    private final InvoiceParam mParam = new InvoiceParam();
     private EmptyView mEmptyView;
     private IInvoiceContract.IInvoicePresenter mPresenter;
     private InvoiceBean mCurBean;
+    private DatePickerDialog mDatePickerDialog;
 
-    public static InvoiceFragment newInstance(InvoiceParam param, int invoiceStatus) {
+    public static InvoiceFragment newInstance(int invoiceStatus) {
         Bundle args = new Bundle();
         args.putInt("object", invoiceStatus);
         InvoiceFragment fragment = new InvoiceFragment();
         fragment.setArguments(args);
-        fragment.mParam = param;
         return fragment;
     }
 
@@ -82,6 +85,9 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
         mPresenter = InvoicePresenter.newInstance(mInvoiceStatus, mParam);
+        Date date = new Date();
+        mParam.setStartTime(date);
+        mParam.setEndTime(date);
         mPresenter.register(this);
     }
 
@@ -125,7 +131,6 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
         mPresenter.start();
     }
 
-
     @Override
     public void onDestroyView() {
         EventBus.getDefault().unregister(this);
@@ -137,14 +142,31 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
 
     @OnClick(R.id.fi_filter_btn)
     public void selectDate() {
-        ((InvoiceEntryActivity) requireActivity()).filterDate();
+        if (mDatePickerDialog == null) {
+            Date begin = DateUtil.parse("20170101");
+            mDatePickerDialog = DatePickerDialog.newBuilder(requireActivity())
+                    .setBeginTime(begin.getTime())
+                    .setEndTime(System.currentTimeMillis())
+                    .setTitle("按时间筛选")
+                    .setCancelable(false)
+                    .setCallback(new DatePickerDialog.SelectCallback() {
+                        @Override
+                        public void select(Date beginTime, Date endTime) {
+                            mParam.setStartTime(beginTime);
+                            mParam.setEndTime(endTime);
+                            updateDate();
+                            mPresenter.start();
+                        }
+                    })
+                    .create();
+        }
+        mDatePickerDialog.show();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleInvoiceEvent(InvoiceEvent event) {
         switch (event.getMessage()) {
             case InvoiceEvent.RELOAD_LIST:
-                updateDate();
                 setForceLoad(true);
                 lazyLoad();
                 break;
@@ -168,11 +190,9 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
     }
 
     private void updateDate() {
-        if (mFilterGroup.getVisibility() == View.VISIBLE) {
-            mDate.setText(String.format("%s-%s",
-                    CalendarUtils.format(mParam.getStartTime(), Constants.SLASH_YYYY_MM_DD),
-                    CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
-        }
+        mDate.setText(String.format("%s - %s",
+                CalendarUtils.format(mParam.getStartTime(), Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
     }
 
     @Override
