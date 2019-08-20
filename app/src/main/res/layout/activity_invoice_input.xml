@@ -223,6 +223,7 @@
                 android:id="@+id/aii_account"
                 style="@style/InvoiceInfoEdit"
                 android:hint="请输入账号"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="@id/aii_account_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/aii_account_label"
