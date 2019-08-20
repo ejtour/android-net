@@ -103,6 +103,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     private List<PurchaserBean> mPurchaserBeans;
     private BillListResp mResp;
     private BillBean mCurBean;
+    private boolean mNotifyList = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,7 +188,9 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
             for (BillBean bean : mAdapter.getData()) {
                 if (bean.isSelected()) count++;
             }
+            mNotifyList = false;
             mSelectAll.setChecked(count == mAdapter.getData().size());
+            mNotifyList = true;
             mCommit.setEnabled(count > 0);
             mCommit.setText(String.format("确认结算(%s)", count));
         } else {
@@ -205,6 +208,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         if (mSelectAll.getVisibility() == visibility) return false;
         if (visibility == View.VISIBLE) {
             mTitleBar.setRightText("完成");
+            mTitleBar.setHeaderTitle("批量结算对账单");
             mSelectAll.setVisibility(View.VISIBLE);
             mCommit.setVisibility(View.VISIBLE);
             mSumLabel.setVisibility(View.GONE);
@@ -214,6 +218,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
             mCommit.setEnabled(false);
             mCommit.setText("确认结算(0)");
             mTitleBar.setRightButtonImg(R.drawable.ic_options);
+            mTitleBar.setHeaderTitle("对账单");
             mSelectAll.setVisibility(View.GONE);
             mCommit.setVisibility(View.GONE);
             mSumLabel.setVisibility(View.VISIBLE);
@@ -225,6 +230,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
 
     @OnCheckedChanged(R.id.abl_select_all)
     public void onCheckChanged(boolean isChecked) {
+        if (!mNotifyList) return;
         boolean notify = false;
         for (BillBean bean : mAdapter.getData()) {
             if (bean.isSelected() != isChecked) {

@@ -11,6 +11,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillStatus;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
         helper.getView(R.id.ibl_check_box).setTag(item);
         ((GlideImageView) helper.setText(R.id.ibl_shop_name, item.getShopName())
                 .setText(R.id.ibl_group_name, item.getPurchaserName())
-                .setText(R.id.ibl_time, DateUtil.getReadableTime(item.getBillCreateTime(), "yy/MM/dd"))
+                .setText(R.id.ibl_time, DateUtil.getReadableTime(item.getBillCreateTime(), Constants.SLASH_YYYY_MM_DD))
                 .setText(R.id.ibl_status, status)
                 .setText(R.id.ibl_bill_date, builder)
                 .setText(R.id.ibl_bill_num, CommonUtils.formatNumber(item.getBillNum()))

@@ -75,7 +75,7 @@ public class BillDetailHeader extends ConstraintLayout {
         mGroupName.setText(data.getPurchaserName());
         mStatus.setText(builder);
         mWarehouseTag.setVisibility(data.getBillStatementFlag() == 1 ? VISIBLE : GONE);
-        mBillDate.setText(String.format("账期日：%s", convertDate(data.getBillCreateTime())));
+        mBillDate.setText(String.format("账单日：%s", convertDate(data.getBillCreateTime())));
         mSettlementDate.setText(String.format("结算日：%s", convertDate(data.getPaymentSettleDay())));
         mBillCycle.setText(String.format("账单周期：%s - %s", convertDate(data.getStartPaymentDay()), convertDate(data.getEndPaymentDay())));
         mTotalAmount.setText(String.format("¥%s", data.getTotalAmount()));
