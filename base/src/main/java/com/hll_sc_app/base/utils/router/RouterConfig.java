@@ -647,5 +647,10 @@ public class RouterConfig {
      * 营销优惠券-查看
      */
     public static final String ACTIVITY_MARKETING_COUPON_CHECK= "/activity/marketing/coupon/check";
+
+    /**
+     * 营销优惠券-优惠券使用详情
+     */
+    public static final String ACTIVITY_MARKETING_COUPON_USE_DETAIL_LIST= "/activity/marketing/coupon/use/detail/list";
 }
 

@@ -584,6 +584,11 @@
         <activity
             android:name=".app.marketingsetting.coupon.check.MarketingCouponCheckActivity"
             android:screenOrientation="portrait" />
+
+        <!--优惠券使用详情页-->
+        <activity
+            android:name=".app.marketingsetting.coupon.usedetail.UseDetailActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

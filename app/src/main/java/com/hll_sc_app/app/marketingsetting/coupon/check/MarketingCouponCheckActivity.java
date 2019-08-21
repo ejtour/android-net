@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.marketingsetting.coupon.usedetail.UseDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -43,6 +44,8 @@ public class MarketingCouponCheckActivity extends BaseLoadActivity implements IM
     @BindView(R.id.txt_content_time)
     TextView mTime;
 
+    private MarketingDetailCheckResp resp;
+
     private Unbinder unbinder;
     private IMarketingCouponCheckContract.IPresent mpresent;
 
@@ -72,7 +75,7 @@ public class MarketingCouponCheckActivity extends BaseLoadActivity implements IM
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_content_detail:
-                //todo 使用详情-zc
+                UseDetailActivity.start(getDiscountID(), resp.getUnUseCount(),resp.getUseCount(),resp.getInvalidCount());
                 break;
             default:
                 break;
@@ -81,12 +84,13 @@ public class MarketingCouponCheckActivity extends BaseLoadActivity implements IM
 
     @Override
     public void showDetail(MarketingDetailCheckResp resp) {
+        this.resp = resp;
         mName.setText(resp.getDiscountName());
         mValue.setText(resp.getCouponValue());
         if (TextUtils.equals(resp.getValidityType(), "1")) {
             mTimeSpan.setText(String.format("领券起%s日有效", resp.getValidityDays()));
         } else {
-            mTimeSpan.setText(CalendarUtils.getDateFormatString(resp.getDiscountStartTime(),"yyyyMMddHHmm", FORMAT_TIME_SPAN_OUT) + "~" + CalendarUtils.getDateFormatString(resp.getDiscountEndTime(), "yyyyMMddHHmm", FORMAT_TIME_SPAN_OUT));
+            mTimeSpan.setText(CalendarUtils.getDateFormatString(resp.getDiscountStartTime(), "yyyyMMddHHmm", FORMAT_TIME_SPAN_OUT) + "~" + CalendarUtils.getDateFormatString(resp.getDiscountEndTime(), "yyyyMMddHHmm", FORMAT_TIME_SPAN_OUT));
         }
 
         if (TextUtils.equals(resp.getCouponCondition(), "0")) {

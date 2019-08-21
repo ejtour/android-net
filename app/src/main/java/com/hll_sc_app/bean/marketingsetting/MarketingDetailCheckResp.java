@@ -24,13 +24,13 @@ public class MarketingDetailCheckResp implements Parcelable {
     private int action;
     private int discountType;
     private String id;
-    private String useCount;
+    private int useCount;
     private int customerScope;
     private String discountStatusName;
     private String actionBy;
     private String ruleTypeName;
     private String groupID;
-    private String unUseCount;
+    private int unUseCount;
     private String sendCount;
     private String customerDesc;
     private String createBy;
@@ -55,7 +55,7 @@ public class MarketingDetailCheckResp implements Parcelable {
         this.validityDays = validityDays;
     }
 
-    private String invalidCount;
+    private int invalidCount;
     private String odmId;
     private List<RuleListBean> ruleList;
     private List<AreaListBean> areaList;
@@ -184,11 +184,11 @@ public class MarketingDetailCheckResp implements Parcelable {
         this.id = id;
     }
 
-    public String getUseCount() {
+    public int getUseCount() {
         return useCount;
     }
 
-    public void setUseCount(String useCount) {
+    public void setUseCount(int useCount) {
         this.useCount = useCount;
     }
 
@@ -232,11 +232,11 @@ public class MarketingDetailCheckResp implements Parcelable {
         this.groupID = groupID;
     }
 
-    public String getUnUseCount() {
+    public int getUnUseCount() {
         return unUseCount;
     }
 
-    public void setUnUseCount(String unUseCount) {
+    public void setUnUseCount(int unUseCount) {
         this.unUseCount = unUseCount;
     }
 
@@ -280,11 +280,11 @@ public class MarketingDetailCheckResp implements Parcelable {
         this.createTime = createTime;
     }
 
-    public String getInvalidCount() {
+    public int getInvalidCount() {
         return invalidCount;
     }
 
-    public void setInvalidCount(String invalidCount) {
+    public void setInvalidCount(int invalidCount) {
         this.invalidCount = invalidCount;
     }
 
@@ -350,13 +350,13 @@ public class MarketingDetailCheckResp implements Parcelable {
         dest.writeInt(this.action);
         dest.writeInt(this.discountType);
         dest.writeString(this.id);
-        dest.writeString(this.useCount);
+        dest.writeInt(this.useCount);
         dest.writeInt(this.customerScope);
         dest.writeString(this.discountStatusName);
         dest.writeString(this.actionBy);
         dest.writeString(this.ruleTypeName);
         dest.writeString(this.groupID);
-        dest.writeString(this.unUseCount);
+        dest.writeInt(this.unUseCount);
         dest.writeString(this.sendCount);
         dest.writeString(this.customerDesc);
         dest.writeString(this.createBy);
@@ -364,7 +364,7 @@ public class MarketingDetailCheckResp implements Parcelable {
         dest.writeString(this.validityType);
         dest.writeString(this.validityDays);
         dest.writeString(this.createTime);
-        dest.writeString(this.invalidCount);
+        dest.writeInt(this.invalidCount);
         dest.writeString(this.odmId);
         dest.writeTypedList(this.ruleList);
         dest.writeTypedList(this.areaList);
@@ -388,13 +388,13 @@ public class MarketingDetailCheckResp implements Parcelable {
         this.action = in.readInt();
         this.discountType = in.readInt();
         this.id = in.readString();
-        this.useCount = in.readString();
+        this.useCount = in.readInt();
         this.customerScope = in.readInt();
         this.discountStatusName = in.readString();
         this.actionBy = in.readString();
         this.ruleTypeName = in.readString();
         this.groupID = in.readString();
-        this.unUseCount = in.readString();
+        this.unUseCount = in.readInt();
         this.sendCount = in.readString();
         this.customerDesc = in.readString();
         this.createBy = in.readString();
@@ -402,7 +402,7 @@ public class MarketingDetailCheckResp implements Parcelable {
         this.validityType = in.readString();
         this.validityDays = in.readString();
         this.createTime = in.readString();
-        this.invalidCount = in.readString();
+        this.invalidCount = in.readInt();
         this.odmId = in.readString();
         this.ruleList = in.createTypedArrayList(RuleListBean.CREATOR);
         this.areaList = in.createTypedArrayList(AreaListBean.CREATOR);
