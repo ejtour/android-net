@@ -245,9 +245,9 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
 
     @Override
     public void updateVisitPlan(VisitResp resp) {
-        mVisited.setText(String.valueOf(resp.getActiveVisitPlanCount()));
+        mVisited.setText(String.valueOf(resp.getVisitRecordCount()));
         mValidVisit.setText(String.valueOf(resp.getActiveVisitRecordCount()));
-        mRemainVisit.setText(String.valueOf(resp.getVisitRecordCount()));
+        mRemainVisit.setText(String.valueOf(Math.max(resp.getVisitPlanCount() - resp.getActiveVisitPlanCount(), 0)));
         mPendingVisit.setText(String.valueOf(resp.getVisitPlanCount()));
     }
 
