@@ -6,7 +6,7 @@ package com.hll_sc_app.bean.home;
  */
 public class TrendBean {
     private String date;
-    private double amount;
+    private float amount;
     private int billNum;
 
     public String getDate() {
@@ -17,11 +17,11 @@ public class TrendBean {
         this.date = date;
     }
 
-    public double getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
