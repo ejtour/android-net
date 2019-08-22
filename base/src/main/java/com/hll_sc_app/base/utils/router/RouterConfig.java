@@ -728,5 +728,30 @@ public class RouterConfig {
      * 客户缺货明细
      */
     public static final String REPORT_CUSTOMER_LACK_DETAIL = "/activity/customer/lack/detail";
+
+    /**
+     * 收货差异汇总
+     */
+    public static final String REPORT_INSPECT_LACK_LIST = "/activity/inspect/lack/list";
+
+    /**
+     * 收货差异明细
+     */
+    public static final String REPORT_INSPECT_LACK_DETAIL = "/activity/inspect/lack/detail";
+
+    /**
+     * 代仓商品明细
+     */
+    public static final String REPORT_WAREHOUSE_PRODUCT_DETAIL = "/activity/warehouse/product/detail";
+
+    /**
+     * 配送及时率汇总数据
+     */
+    public static final String REPORT_DELIVERY_TIME_AGGREGATION = "/activity/delivery/time/aggregation";
+
+    /**
+     * 配送及时率详情
+     */
+    public static final String REPORT_DELIVERY_TIME_DETAIL = "/activity/delivery/time/detail";
 }
 
