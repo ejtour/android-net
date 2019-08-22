@@ -21,8 +21,10 @@ import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -183,7 +185,8 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
                     if (!CommonUtils.isEmpty(mCurBean.getShopList()))
                         for (PurchaserShopBean bean : mCurBean.getShopList()) {
                             if (bean.isSelected()) {
-                                shopList.add(bean.getShopName());
+                                if (shopList.size() < 4) // 门店名列表最多存三个
+                                    shopList.add(bean.getShopName());
                                 if (mIsMulti) {
                                     if (!TextUtils.isEmpty(bean.getShopID())) {
                                         shopIDList.add(bean.getShopID());
