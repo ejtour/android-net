@@ -191,19 +191,6 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
         mTrendChart.setPinchZoom(false);
         mTrendChart.setExtraOffsets(14, 0, 14, 8);
 
-        MarkerView marker = new MarkerView(requireContext(), R.layout.view_chart_toast) {
-            @Override
-            public void refreshContent(Entry e, Highlight highlight) {
-                ((TextView) getChildAt(0)).setText(String.valueOf(e.getY()));
-                super.refreshContent(e, highlight);
-            }
-
-            @Override
-            public MPPointF getOffset() {
-                return new MPPointF(-(getWidth() >> 1), -getHeight());
-            }
-        };
-        marker.setChartView(mTrendChart);
         mTrendChart.setMarker(new TrendMarker(requireContext(), mTrendChart));
 
         XAxis xAxis = mTrendChart.getXAxis();
