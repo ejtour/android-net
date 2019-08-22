@@ -21,10 +21,8 @@ import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -109,12 +107,11 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
             mCurBean = mPurchaserAdapter.getItem(position);
             if (mCurBean == null) return;
             if (mPurchaserAdapter.select(position)) {
-//                if (position == 0 && STRING_ALL.equals(mCurBean.getPurchaserName()))
-//                    mCallback.onSelect(null, null);
                 if (CommonUtils.isEmpty(mCurBean.getShopList())) {
                     mShopAdapter.setNewData(mCurBean.getShopList());
                     if (!TextUtils.isEmpty(mCurBean.getPurchaserID()))
-                        mCallback.loadPurchaserShop(mCurBean.getPurchaserID(), mSearchEdit.getText().toString().trim());
+                        mCallback.loadPurchaserShop(mCurBean.getPurchaserID(), isGroup() ?
+                                "" : mSearchEdit.getText().toString().trim());
                 } else mShopAdapter.setNewData(mCurBean.getShopList());
             }
         });
@@ -123,8 +120,6 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
             if (mCurShopBean == null) return;
             if (mIsMulti) mShopAdapter.toggle(position);
             else mShopAdapter.select(position);
-//            else if (item != null)
-//                mCallback.onSelect(mCurBean.getPurchaserID(), item.getShopID());
         });
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mRightList.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -156,9 +151,14 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
 
     private void preProcess(List<PurchaserBean> list) {
         if (mCurBean != null && !CommonUtils.isEmpty(list)) {
+            PurchaserBean temp = mCurBean;
+            mCurBean = null;
             for (PurchaserBean bean : list) {
-                if (bean.isSelected())
-                    bean.setSelected(bean.getPurchaserID().equals(mCurBean.getPurchaserID()));
+                if (bean.getPurchaserID().equals(temp.getPurchaserID())) {
+                    bean.setSelected(true);
+                    mShopAdapter.setNewData(temp.getShopList());
+                    mCurBean = bean;
+                } else bean.setSelected(false);
             }
         }
     }
@@ -226,6 +226,9 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
         mSearchEdit.setTag(tag);
         if (!mCallback.search(tag, isGroup() ? 0 : 1, mCurBean == null ? null : mCurBean.getPurchaserID()))
             localProcessData();
+        else {
+            mShopAdapter.setNewData(null);
+        }
     }
 
     private boolean isGroup() {
