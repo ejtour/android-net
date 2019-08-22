@@ -8,6 +8,8 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.marketingsetting.ChangeMarketingStatusReq;
 import com.hll_sc_app.bean.marketingsetting.CouponListReq;
 import com.hll_sc_app.bean.marketingsetting.CouponListResp;
+import com.hll_sc_app.bean.marketingsetting.CouponSendReq;
+import com.hll_sc_app.bean.marketingsetting.CouponSendResultBean;
 import com.hll_sc_app.bean.marketingsetting.CouponUseDetailListReq;
 import com.hll_sc_app.bean.marketingsetting.CouponUseDetailListResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckReq;
@@ -122,5 +124,16 @@ public interface MarketingSettingService {
     @POST(HttpConfig.URL)
     @Headers("pv:112014")
     Observable<BaseResp<CouponUseDetailListResp>> getCouponUseDetailList(@Body BaseReq<CouponUseDetailListReq> req);
+
+    /**
+     * 发放优惠券
+     *
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:112009")
+    Observable<BaseResp<List<CouponSendResultBean>>> sendCoupon(@Body BaseReq<CouponSendReq> req);
+
 
 }

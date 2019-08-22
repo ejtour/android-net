@@ -14,6 +14,8 @@ import com.hll_sc_app.app.search.stratery.GoodsTemplateSearch;
 import com.hll_sc_app.app.search.stratery.GoodsTopSearch;
 import com.hll_sc_app.app.search.stratery.OrderSearch;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
+import com.hll_sc_app.app.search.stratery.SelectGroupSearch;
+import com.hll_sc_app.app.search.stratery.SelectShopSearch;
 import com.hll_sc_app.app.search.stratery.WarehouseSearch;
 
 import java.util.HashMap;
@@ -42,6 +44,8 @@ class SearchFactory {
         ITEM_MAP.put(SalesManSearch.class.getSimpleName(), SalesManSearch.class);
         ITEM_MAP.put(MarketingProductSearch.class.getSimpleName(), MarketingProductSearch.class);
         ITEM_MAP.put(SelectProductListActivity.MarketingSelectProductSearch.class.getSimpleName(), SelectProductListActivity.MarketingSelectProductSearch.class);
+        ITEM_MAP.put(SelectGroupSearch.class.getSimpleName(), SelectGroupSearch.class);
+        ITEM_MAP.put(SelectShopSearch.class.getSimpleName(), SelectShopSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {

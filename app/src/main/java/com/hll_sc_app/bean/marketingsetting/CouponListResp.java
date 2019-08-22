@@ -1,5 +1,9 @@
 package com.hll_sc_app.bean.marketingsetting;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +30,7 @@ public class CouponListResp {
         this.list = list;
     }
 
-    public static class CouponBean {
+    public static class CouponBean  implements Parcelable {
         /**
          * 未开始
          */
@@ -93,6 +97,7 @@ public class CouponListResp {
         private String couponConditionValue;
         private String sendCount;
         private String customerDesc;
+        private String validityDays;
         private String couponValue;
         private String createBy;
         private int validityType;
@@ -100,6 +105,14 @@ public class CouponListResp {
         private String invalidCount;
         private String odmId;
         private List<Integer> opList;
+
+        public String getValidityDays() {
+            return validityDays;
+        }
+
+        public void setValidityDays(String validityDays) {
+            this.validityDays = validityDays;
+        }
 
         public String getActionTime() {
             return actionTime;
@@ -364,5 +377,101 @@ public class CouponListResp {
         public void setOpList(List<Integer> opList) {
             this.opList = opList;
         }
+
+        public CouponBean() {
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.actionTime);
+            dest.writeInt(this.areaScope);
+            dest.writeInt(this.discountRuleType);
+            dest.writeString(this.couponCount);
+            dest.writeString(this.discountName);
+            dest.writeString(this.discountEndTime);
+            dest.writeInt(this.couponType);
+            dest.writeInt(this.discountStage);
+            dest.writeString(this.discountStartTime);
+            dest.writeString(this.areaDesc);
+            dest.writeInt(this.discountStatus);
+            dest.writeString(this.couponBatch);
+            dest.writeInt(this.action);
+            dest.writeInt(this.discountType);
+            dest.writeString(this.id);
+            dest.writeString(this.useCount);
+            dest.writeString(this.customerScope);
+            dest.writeString(this.discountStatusName);
+            dest.writeString(this.actionBy);
+            dest.writeString(this.ruleTypeName);
+            dest.writeInt(this.couponCondition);
+            dest.writeString(this.groupID);
+            dest.writeString(this.unUseCount);
+            dest.writeString(this.couponConditionValue);
+            dest.writeString(this.sendCount);
+            dest.writeString(this.customerDesc);
+            dest.writeString(this.validityDays);
+            dest.writeString(this.couponValue);
+            dest.writeString(this.createBy);
+            dest.writeInt(this.validityType);
+            dest.writeString(this.createTime);
+            dest.writeString(this.invalidCount);
+            dest.writeString(this.odmId);
+            dest.writeList(this.opList);
+        }
+
+        protected CouponBean(Parcel in) {
+            this.actionTime = in.readString();
+            this.areaScope = in.readInt();
+            this.discountRuleType = in.readInt();
+            this.couponCount = in.readString();
+            this.discountName = in.readString();
+            this.discountEndTime = in.readString();
+            this.couponType = in.readInt();
+            this.discountStage = in.readInt();
+            this.discountStartTime = in.readString();
+            this.areaDesc = in.readString();
+            this.discountStatus = in.readInt();
+            this.couponBatch = in.readString();
+            this.action = in.readInt();
+            this.discountType = in.readInt();
+            this.id = in.readString();
+            this.useCount = in.readString();
+            this.customerScope = in.readString();
+            this.discountStatusName = in.readString();
+            this.actionBy = in.readString();
+            this.ruleTypeName = in.readString();
+            this.couponCondition = in.readInt();
+            this.groupID = in.readString();
+            this.unUseCount = in.readString();
+            this.couponConditionValue = in.readString();
+            this.sendCount = in.readString();
+            this.customerDesc = in.readString();
+            this.validityDays = in.readString();
+            this.couponValue = in.readString();
+            this.createBy = in.readString();
+            this.validityType = in.readInt();
+            this.createTime = in.readString();
+            this.invalidCount = in.readString();
+            this.odmId = in.readString();
+            this.opList = new ArrayList<Integer>();
+            in.readList(this.opList, Integer.class.getClassLoader());
+        }
+
+        public static final Creator<CouponBean> CREATOR = new Creator<CouponBean>() {
+            @Override
+            public CouponBean createFromParcel(Parcel source) {
+                return new CouponBean(source);
+            }
+
+            @Override
+            public CouponBean[] newArray(int size) {
+                return new CouponBean[size];
+            }
+        };
     }
 }

@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.CouponListAdapter;
 import com.hll_sc_app.app.marketingsetting.coupon.check.MarketingCouponCheckActivity;
+import com.hll_sc_app.app.marketingsetting.coupon.send.SendCouponActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -107,7 +108,7 @@ public class MarketingCouponActivity extends BaseLoadActivity implements IMarket
                 case R.id.txt_start:
                     mPresent.changeCouponStatus(currentItem.getId(), STATUS_PROMOTION);
                 case R.id.txt_send:
-                    //todo 发放 -zc
+                    SendCouponActivity.start(currentItem);
                     break;
                 default:
                     break;

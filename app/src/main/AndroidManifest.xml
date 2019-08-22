@@ -589,6 +589,21 @@
         <activity
             android:name=".app.marketingsetting.coupon.usedetail.UseDetailActivity"
             android:screenOrientation="portrait" />
+
+        <!--优惠券-选择客户-->
+        <activity
+            android:name=".app.marketingsetting.coupon.selectshops.SelectGroupsActivity"
+            android:screenOrientation="portrait" />
+        <!--选择门店-->
+        <activity
+            android:name=".app.marketingsetting.coupon.selectshops.SelectShopsActivity"
+            android:screenOrientation="portrait" />
+        <!--优惠券-分发页面-->
+        <activity
+            android:name=".app.marketingsetting.coupon.send.SendCouponActivity"
+            android:screenOrientation="portrait" />
+
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

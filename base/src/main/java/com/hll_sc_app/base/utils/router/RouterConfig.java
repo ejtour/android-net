@@ -641,16 +641,27 @@ public class RouterConfig {
     /**
      * 营销优惠券-新增
      */
-    public static final String ACTIVITY_MARKETING_COUPON_ADD= "/activity/marketing/coupon/add";
+    public static final String ACTIVITY_MARKETING_COUPON_ADD = "/activity/marketing/coupon/add";
 
     /**
      * 营销优惠券-查看
      */
-    public static final String ACTIVITY_MARKETING_COUPON_CHECK= "/activity/marketing/coupon/check";
+    public static final String ACTIVITY_MARKETING_COUPON_CHECK = "/activity/marketing/coupon/check";
 
     /**
      * 营销优惠券-优惠券使用详情
      */
-    public static final String ACTIVITY_MARKETING_COUPON_USE_DETAIL_LIST= "/activity/marketing/coupon/use/detail/list";
+    public static final String ACTIVITY_MARKETING_COUPON_USE_DETAIL_LIST = "/activity/marketing/coupon/use/detail/list";
+
+    /**
+     * 营销优惠券-优惠券分发页面
+     */
+    public static final String ACTIVITY_MARKETING_COUPON_SEND = "/activity/marketing/coupon/send";
+
+    /*营销优惠券-选择客户-集团*/
+    public static final String ACTIVITY_MARKETING_COUPON_SELECT_GROUPS = "/activity/marketing/coupon/select/groups";
+    /*营销优惠券-选择客户-门店*/
+    public static final String ACTIVITY_MARKETING_COUPON_SELECT_SHOPS = "/activity/marketing/coupon/select/shops";
+
 }
 
