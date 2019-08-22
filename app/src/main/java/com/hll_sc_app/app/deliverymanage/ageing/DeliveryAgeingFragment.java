@@ -51,6 +51,14 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
         lazyLoad();
     }
 
+    public int getItemCount() {
+        int position = 0;
+        if (mAdapter != null && mAdapter.getEmptyViewCount() == 0) {
+            position = mAdapter.getItemCount();
+        }
+        return position;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +83,7 @@ public class DeliveryAgeingFragment extends BaseLazyFragment implements Delivery
             if (view.getId() == R.id.img_close) {
                 showTipsDialog(bean);
             } else {
+                bean.setPosition(position + 1);
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_AGEING_DETAIL, bean);
             }
         });

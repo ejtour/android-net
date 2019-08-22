@@ -103,6 +103,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     private List<PurchaserBean> mPurchaserBeans;
     private BillListResp mResp;
     private BillBean mCurBean;
+    private boolean mNotifyList = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -178,7 +179,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private boolean canBatch() {
-        return mParam.getSettlementStatus() == BillStatus.NOT_SETTLE && !CommonUtils.isEmpty(mAdapter.getData());
+        return mParam.getSettlementStatus() != BillStatus.SETTLED && !CommonUtils.isEmpty(mAdapter.getData());
     }
 
     private void updateBottomBar() {
@@ -187,32 +188,35 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
             for (BillBean bean : mAdapter.getData()) {
                 if (bean.isSelected()) count++;
             }
-            mSelectAll.setChecked(count == mAdapter.getData().size());
+            toggleCheckedWithoutNotify(count == mAdapter.getData().size());
             mCommit.setEnabled(count > 0);
             mCommit.setText(String.format("确认结算(%s)", count));
-        } else {
-            toggleBatch(View.GONE);
-            mSumLabel.setText(String.format("%s总计：", mParam.getSettlementStatus() == BillStatus.NOT_SETTLE ? "未结算" : "已结算"));
-            mAmount.setText(String.format("¥%s",
-                    CommonUtils.formatMoney(mParam.getSettlementStatus() == BillStatus.NOT_SETTLE ?
-                            mAdapter.getData().size() == 0 ? 0 : mResp.getTotalNoSettlementAmount() :
-                            mResp.getTotalSettlementAmount())));
-        }
+        } else toggleBatch(View.GONE);
+        mSumLabel.setText(String.format("%s总计：", mParam.getSettlementStatus() == BillStatus.NOT_SETTLE ? "未结算" :
+                mParam.getSettlementStatus() == BillStatus.SETTLED ? "已结算" : "剩余未结算"));
+        mAmount.setText(String.format("¥%s",
+                CommonUtils.formatMoney(mParam.getSettlementStatus() == BillStatus.SETTLED ? mResp.getTotalSettlementAmount() :
+                        mResp.getTotalNoSettlementAmount())));
     }
 
     private boolean toggleBatch(int visibility) {
         if (mSelectAll.getVisibility() == visibility) return false;
         if (visibility == View.VISIBLE) {
             mTitleBar.setRightText("完成");
+            mTitleBar.setHeaderTitle("批量结算对账单");
             mSelectAll.setVisibility(View.VISIBLE);
             mCommit.setVisibility(View.VISIBLE);
             mSumLabel.setVisibility(View.GONE);
             mAmount.setVisibility(View.GONE);
         } else if (mAmount.getVisibility() != View.VISIBLE) {
-            mSelectAll.setChecked(false);
+            toggleCheckedWithoutNotify(false);
+            for (BillBean bean : mAdapter.getData()) {
+                bean.setSelected(false);
+            }
             mCommit.setEnabled(false);
             mCommit.setText("确认结算(0)");
             mTitleBar.setRightButtonImg(R.drawable.ic_options);
+            mTitleBar.setHeaderTitle("对账单");
             mSelectAll.setVisibility(View.GONE);
             mCommit.setVisibility(View.GONE);
             mSumLabel.setVisibility(View.VISIBLE);
@@ -222,19 +226,20 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         return true;
     }
 
+    private void toggleCheckedWithoutNotify(boolean isChecked) {
+        mNotifyList = false;
+        mSelectAll.setChecked(isChecked);
+        mNotifyList = true;
+    }
+
     @OnCheckedChanged(R.id.abl_select_all)
     public void onCheckChanged(boolean isChecked) {
-        boolean notify = false;
+        if (!mNotifyList) return;
         for (BillBean bean : mAdapter.getData()) {
-            if (bean.isSelected() != isChecked) {
-                bean.setSelected(isChecked);
-                notify = true;
-            }
+            bean.setSelected(isChecked);
         }
-        if (notify) {
-            mAdapter.notifyDataSetChanged();
-            updateBottomBar();
-        }
+        mAdapter.notifyDataSetChanged();
+        updateBottomBar();
     }
 
     @OnClick(R.id.abl_purchaser_btn)
@@ -325,7 +330,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private void updateSelectedDate() {
-        mDate.setText(String.format("%s-%s",
+        mDate.setText(String.format("%s - %s",
                 CalendarUtils.format(mParam.getStateTime(), Constants.SLASH_YYYY_MM_DD),
                 CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
     }
@@ -363,8 +368,10 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private void setBillList(List<BillBean> list, boolean isMore) {
-        if (isMore) mAdapter.addData(list);
-        else {
+        if (isMore) {
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
+        } else {
             if (CommonUtils.isEmpty(list)) {
                 initEmptyView();
                 mEmptyView.reset();
@@ -374,19 +381,6 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         }
         mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
         updateBottomBar();
-    }
-
-    @Override
-    public void actionSuccess() {
-        if (mCurBean == null) {
-            List<BillBean> list = new ArrayList<>();
-            for (BillBean bean : mAdapter.getData()) {
-                if (!bean.isSelected()) list.add(bean);
-            }
-            setBillList(list, false);
-        } else if (mAdapter.getData().size() > 1) {
-            mAdapter.removeData(mCurBean);
-        } else setBillList(null, false);
     }
 
     @Override
@@ -436,7 +430,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == BillDetailActivity.REQ_CODE) {
-            actionSuccess();
+            mPresenter.start();
         }
     }
 

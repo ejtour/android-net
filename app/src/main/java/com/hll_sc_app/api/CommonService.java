@@ -7,7 +7,6 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
-import com.hll_sc_app.bean.common.SalesVolumeResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
@@ -34,10 +33,6 @@ public interface CommonService {
     @POST(HttpConfig.URL)
     @Headers("pv:102017")
     Observable<BaseResp<List<PurchaserShopBean>>> queryPurchaserShopList(@Body BaseMapReq req);
-
-    @POST(HttpConfig.URL)
-    @Headers("pv:111063")
-    Observable<BaseResp<SalesVolumeResp>> querySalesVolume(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103142")

@@ -7,6 +7,7 @@ package com.hll_sc_app.bean.event;
 
 public class InvoiceEvent extends BaseEvent {
     public static final String RELOAD_LIST = "reload_list";
+    public static final String REMOVE_ITEM = "remove_item";
     public static final String EXPORT = "export";
 
     public InvoiceEvent(String msg) {
@@ -18,6 +19,7 @@ public class InvoiceEvent extends BaseEvent {
         switch (msg) {
             case RELOAD_LIST:
             case EXPORT:
+            case REMOVE_ITEM:
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported type");

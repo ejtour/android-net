@@ -19,6 +19,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.wallet.BankBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -106,8 +107,10 @@ public class BankListActivity extends BaseLoadActivity implements IBankListContr
 
     @Override
     public void setBankList(List<BankBean> list, boolean append) {
-        if (append) mAdapter.addData(list);
-        else mAdapter.setNewData(list);
+        if (append) {
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
+        } else mAdapter.setNewData(list);
         mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
     }
 }

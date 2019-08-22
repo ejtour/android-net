@@ -16,8 +16,6 @@ import java.util.List;
 public interface IBillListContract {
     interface IBillListView extends IExportView, IPurchaserContract.IPurchaserView {
         void updateBillListResp(BillListResp resp, boolean isMore);
-
-        void actionSuccess();
     }
 
     interface IBillListPresenter extends IPresenter<IBillListView>, IPurchaserContract.IPurchaserPresenter {

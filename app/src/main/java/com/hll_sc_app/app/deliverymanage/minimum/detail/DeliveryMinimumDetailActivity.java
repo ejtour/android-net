@@ -142,7 +142,8 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
         mPurchaserAdapter.setOnItemClickListener((adapter, view, position) -> {
             DeliveryPurchaserBean bean = (DeliveryPurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                ShopMinimumActivity.start(bean.getPurchaserID(), bean.getPurchaserName(), mBean.getSendAmountID(),
+                ShopMinimumActivity.start(bean.getPurchaserID(), bean.getPurchaserName(), mBean != null ?
+                        mBean.getSendAmountID() : "",
                     bean.getPurchaserShopList());
             }
         });

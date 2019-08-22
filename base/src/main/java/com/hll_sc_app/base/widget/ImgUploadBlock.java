@@ -115,6 +115,10 @@ public class ImgUploadBlock extends RelativeLayout {
         mSubTitle.setVisibility(TextUtils.isEmpty(subTitle) ? GONE : VISIBLE);
     }
 
+    public void setEditable(boolean editable) {
+        mImgShow.showDel(editable);
+    }
+
     public void setIconResId(int resId) {
         Drawable drawable = ContextCompat.getDrawable(getContext(), resId);
         if (drawable != null) {

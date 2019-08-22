@@ -154,7 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
-        android:text="账期日"
+        android:text="订单数量"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintEnd_toEndOf="@id/ibl_bill_num"
         app:layout_constraintStart_toStartOf="@id/ibl_bill_num"

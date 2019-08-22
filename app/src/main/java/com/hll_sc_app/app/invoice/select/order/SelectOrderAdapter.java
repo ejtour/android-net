@@ -19,6 +19,7 @@ import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.bean.invoice.InvoiceOrderBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.utils.DateUtil;
 
@@ -28,20 +29,25 @@ import com.hll_sc_app.utils.DateUtil;
  */
 
 public class SelectOrderAdapter extends BaseQuickAdapter<InvoiceOrderBean, BaseViewHolder> {
-    SelectOrderAdapter() {
+    public SelectOrderAdapter() {
         super(R.layout.item_invoice_select_order);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, InvoiceOrderBean item) {
-        String payMethod = null;
         String type = OrderHelper.getPayType(item.getPayType());
-        if (!TextUtils.isEmpty(type))
-            payMethod = String.format("%s(%s)", type, OrderHelper.getPaymentWay(item.getPaymentWay()));
+        StringBuilder payMethod = new StringBuilder();
+        if (!TextUtils.isEmpty(type)) {
+            payMethod.append(type);
+            String paymentWay = OrderHelper.getPaymentWay(item.getPaymentWay());
+            if (!TextUtils.isEmpty(paymentWay)) {
+                payMethod.append("（").append(paymentWay).append("）");
+            }
+        }
         String orderNo;
         if (item.getBillType() == 1) orderNo = "订单号：" + item.getBillNo();
         else orderNo = "退款单号：" + item.getBillNo();
-        TextView no = helper.setText(R.id.iso_amount, "¥" + item.getBillAmount())
+        TextView no = helper.setText(R.id.iso_amount, String.format("¥%s", CommonUtils.formatMoney(item.getAmount())))
                 .setText(R.id.iso_time, DateUtil.getReadableTime(item.getBillCreateTime()))
                 .setText(R.id.iso_pay_method, payMethod)
                 .setText(R.id.iso_order_no, processOrderNo(orderNo, item.getBillNo()))

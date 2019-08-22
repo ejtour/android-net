@@ -23,7 +23,14 @@ public class BaseMapReq {
     }
 
     private void put(String key, String value) {
-        if (!TextUtils.isEmpty(value)) data.put(key, value);
+        put(key, value, false);
+    }
+
+    private void put(String key, String value, boolean nullable) {
+        if (nullable) {
+            if (value == null) value = "";
+            data.put(key, value);
+        } else if (!TextUtils.isEmpty(value)) data.put(key, value);
     }
 
     private String get(String key) {
@@ -39,6 +46,11 @@ public class BaseMapReq {
 
         public Builder put(String key, String value) {
             mReq.put(key, value);
+            return this;
+        }
+
+        public Builder put(String key, String value, boolean nullable) {
+            mReq.put(key, value, nullable);
             return this;
         }
 

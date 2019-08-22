@@ -87,6 +87,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     RecyclerView mListView;
     @BindView(R.id.iso_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.iso_next)
+    TextView mNext;
     @BindView(R.id.iso_bottom_group)
     Group mBottomGroup;
     @Autowired(name = "parcelable")
@@ -138,7 +140,7 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     }
 
     private void updateDateText() {
-        mDate.setText(String.format("%s-%s", CalendarUtils.format(mParam.getStartTime(), Constants.SLASH_YYYY_MM_DD),
+        mDate.setText(String.format("%s - %s", CalendarUtils.format(mParam.getStartTime(), Constants.SLASH_YYYY_MM_DD),
                 CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
     }
 
@@ -205,28 +207,29 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         mTotalAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getInvoinceAmount())));
         mOrderAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getOrderAmount())));
         mRefundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(resp.getRefundAmount())));
-        if (resp.getInvoinceAmount() == 0) mBottomGroup.setVisibility(View.GONE);
-        else {
-            mBottomGroup.setVisibility(View.VISIBLE);
-            mBottomAmount.setText(processBottomAmount(resp.getInvoinceAmount()));
-            mBottomAmount.setTag(resp.getInvoinceAmount());
-        }
-        mBottomGroup.getParent().requestLayout();
+        mBottomAmount.setText(processBottomAmount(resp.getInvoinceAmount()));
+        mBottomAmount.setTag(resp.getInvoinceAmount());
+        mNext.setEnabled(resp.getInvoinceAmount() != 0);
+        mNext.setText(String.format("下一步(%s)", resp.getTotal()));
         if (isMore) {
-            mAdapter.addData(resp.getList());
+            if (!CommonUtils.isEmpty(resp.getList()))
+                mAdapter.addData(resp.getList());
         } else {
             if (CommonUtils.isEmpty(resp.getList())) {
                 initEmptyView();
                 mEmptyView.reset();
-                mEmptyView.setTips("暂无发票列表");
+                mEmptyView.setTipsTitle("当前筛选条件下暂未找到相关订单");
+                mEmptyView.setTips("换个条件再试试吧");
             }
             mAdapter.setNewData(resp.getList());
         }
         mRefreshLayout.setEnableLoadMore(resp.getList() != null && resp.getList().size() == 20);
+        mBottomGroup.setVisibility(View.VISIBLE);
+        mBottomGroup.getParent().requestLayout();
     }
 
     private SpannableString processBottomAmount(double amount) {
-        String source = String.format("开票总金额：¥%s", CommonUtils.formatMoney(amount));
+        String source = String.format("开票总额：¥%s", CommonUtils.formatMoney(amount));
         SpannableString ss = new SpannableString(source);
         ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_ed5655)),
                 source.indexOf("¥"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

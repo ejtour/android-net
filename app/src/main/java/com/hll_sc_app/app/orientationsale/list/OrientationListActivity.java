@@ -23,7 +23,7 @@ import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.RefreshOrientationList;
 import com.hll_sc_app.bean.orientation.OrientationDetailBean;
 import com.hll_sc_app.bean.orientation.OrientationListBean;
-import com.hll_sc_app.bean.orientation.OrientationProductSpecBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -115,7 +115,8 @@ public class OrientationListActivity extends BaseLoadActivity implements IOrient
     @Override
     public void setView(List<OrientationListBean> list, Integer pageNum) {
         if (pageNum != 1) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
         }

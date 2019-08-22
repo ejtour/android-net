@@ -131,6 +131,7 @@
                     android:layout_height="match_parent"
                     android:checked="true"
                     android:padding="@dimen/dp_10"
+                    android:button="@drawable/bg_selector_radio_button"
                     android:text="企业"
                     android:textSize="@dimen/text_middle_size" />
 
@@ -139,6 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="50dp"
+                    android:button="@drawable/bg_selector_radio_button"
                     android:padding="@dimen/dp_10"
                     android:text="个人/事业单位"
                     android:textSize="@dimen/text_middle_size" />
@@ -221,6 +223,7 @@
                 android:id="@+id/aii_account"
                 style="@style/InvoiceInfoEdit"
                 android:hint="请输入账号"
+                android:inputType="number"
                 app:layout_constraintBottom_toBottomOf="@id/aii_account_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/aii_account_label"
@@ -281,7 +284,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/base_bg_white_radius_5_solid"
-                app:layout_constraintBottom_toBottomOf="@id/aii_remark_label"
+                app:layout_constraintBottom_toBottomOf="@id/aii_remark"
                 app:layout_constraintEnd_toEndOf="@id/aii_recipient"
                 app:layout_constraintStart_toStartOf="@id/aii_recipient_label"
                 app:layout_constraintTop_toTopOf="@id/aii_recipient_label" />
@@ -349,8 +352,12 @@
             <EditText
                 android:id="@+id/aii_remark"
                 style="@style/InvoiceInfoEdit"
+                android:layout_height="wrap_content"
                 android:hint="可备注开票区间、开票金额"
-                app:layout_constraintBottom_toBottomOf="@id/aii_remark_label"
+                android:layout_marginLeft="30dp"
+                android:minHeight="45dp"
+                android:padding="@dimen/dp_10"
+                android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/aii_remark_label"
                 app:layout_constraintTop_toTopOf="@id/aii_remark_label" />

@@ -158,6 +158,12 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
                         listStatus1.add(bean);
                     }
                 }
+                if (CommonUtils.isEmpty(listStatus1)) {
+                    // 去选择第三方物流公司
+                    RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_COMPANY, new ArrayList<DeliveryCompanyBean>());
+                    return;
+                }
+
                 StringBuilder stringBuilder = new StringBuilder();
                 int all = listStatus1.size();
                 if (!CommonUtils.isEmpty(listStatus1)) {
@@ -175,6 +181,9 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 mTxtDeliveryName.setText(spannableString);
+            } else {
+                // 去选择第三方物流公司
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_COMPANY, new ArrayList<DeliveryCompanyBean>());
             }
         } else {
             mLlDeliveryName.setVisibility(View.GONE);

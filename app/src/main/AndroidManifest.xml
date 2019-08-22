@@ -601,14 +601,14 @@
         <!--业务员签约绩效-->
         <activity
             android:name=".app.report.salesman.sign.SalesManSignAchievementActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <!--业务员销售额绩效-->
         <activity
             android:name=".app.report.salesman.sales.SalesManSalesAchievementActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <!--缺货汇总-->
         <activity
@@ -641,16 +641,30 @@
 
         <activity
             android:name=".app.invoice.input.InvoiceInputActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <!--缺货汇总表-->
-        <activity android:name=".app.report.customerLack.CustomerLackSummaryActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.customerLack.CustomerLackSummaryActivity"
+            android:screenOrientation="portrait" />
 
         <!--缺货明细-->
-        <activity android:name=".app.report.customerLack.detail.CustomerLackDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.customerLack.detail.CustomerLackDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.detail.InvoiceDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.detail.order.RelevanceOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.detail.record.ReturnRecordActivity"
+            android:screenOrientation="portrait" />
 
         <!--收货差异汇总-->
         <activity android:name=".app.report.inspectLack.InspectLackActivity"

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.invoice.entry;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
@@ -16,24 +17,20 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.invoice.detail.InvoiceDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.InvoiceEvent;
-import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
-import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.ContextOptionsWindow;
-import com.hll_sc_app.widget.DatePickerDialog;
 import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,8 +51,6 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
     SlidingTabLayout mTabLayout;
     @BindView(R.id.are_view_pager)
     ViewPager mViewPager;
-    private final InvoiceParam mParam = new InvoiceParam();
-    private DatePickerDialog mDatePickerDialog;
     private ContextOptionsWindow mOptionsWindow;
 
     @Override
@@ -65,24 +60,31 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
         setContentView(R.layout.activity_invoice_entry);
         ButterKnife.bind(this);
         initView();
-        initData();
     }
 
-    private void initData() {
-        Date date = new Date();
-        mParam.setStartTime(date);
-        mParam.setEndTime(date);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == InvoiceDetailActivity.REQ_CODE) {
+            EventBus.getDefault().post(new InvoiceEvent(InvoiceEvent.REMOVE_ITEM));
+        }
     }
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
         boolean notCrm = TextUtils.isEmpty(UserConfig.getSalesmanID());
         mTitleBar.setRightBtnVisible(notCrm);
-        String[] titles = {"已提交", "已开票", "被驳回"};
+        String[] titles = {notCrm ? "未开票" : "已提交", "已开票", notCrm ? "已驳回" : "被驳回"};
         mViewPager.setAdapter(new EntryAdapter());
         mViewPager.setOffscreenPageLimit(2);
         mTabLayout.setViewPager(mViewPager, titles);
         mCommitGroup.setVisibility(notCrm ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        EventBus.getDefault().post(new InvoiceEvent(InvoiceEvent.RELOAD_LIST));
     }
 
     private void showOptionsWindow(View v) {
@@ -97,27 +99,6 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
     @OnClick(R.id.are_commit)
     public void commit() {
         RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_SHOP);
-    }
-
-    void filterDate() {
-        if (mDatePickerDialog == null) {
-            Date begin = DateUtil.parse("20170101");
-            mDatePickerDialog = DatePickerDialog.newBuilder(this)
-                    .setBeginTime(begin.getTime())
-                    .setEndTime(System.currentTimeMillis())
-                    .setTitle("按时间筛选")
-                    .setCancelable(false)
-                    .setCallback(new DatePickerDialog.SelectCallback() {
-                        @Override
-                        public void select(Date beginTime, Date endTime) {
-                            mParam.setStartTime(beginTime);
-                            mParam.setEndTime(endTime);
-                            EventBus.getDefault().post(new InvoiceEvent(InvoiceEvent.RELOAD_LIST));
-                        }
-                    })
-                    .create();
-        }
-        mDatePickerDialog.show();
     }
 
     @Override
@@ -136,7 +117,7 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
 
         @Override
         public Fragment getItem(int position) {
-            return InvoiceFragment.newInstance(mParam, position + 1);
+            return InvoiceFragment.newInstance(position + 1);
         }
 
         @Override

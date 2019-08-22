@@ -43,7 +43,7 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
         Bill.billAction(ids, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
             public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
-                mView.actionSuccess();
+                start();
             }
         });
     }

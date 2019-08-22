@@ -200,7 +200,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
-        android:text="未结算总计："
+        android:text="总计："
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintBottom_toBottomOf="@id/abl_bottom_bg"
         app:layout_constraintStart_toStartOf="@id/abl_bottom_bg"
@@ -215,6 +215,7 @@
         app:layout_constraintBottom_toBottomOf="@id/abl_bottom_bg"
         app:layout_constraintEnd_toEndOf="@id/abl_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/abl_bottom_bg"
+        android:text="¥0.00"
         tools:text="¥2,176,333.40" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

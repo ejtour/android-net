@@ -11,7 +11,9 @@ public class InvoiceOrderResp {
     private double invoinceAmount;
     private double orderAmount;
     private double refundAmount;
+    private int total;
     private List<InvoiceOrderBean> list;
+    private List<InvoiceOrderBean> records;
 
     public double getInvoinceAmount() {
         return invoinceAmount;
@@ -37,11 +39,23 @@ public class InvoiceOrderResp {
         this.refundAmount = refundAmount;
     }
 
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
     public List<InvoiceOrderBean> getList() {
-        return list;
+        return list == null ? records : list;
     }
 
     public void setList(List<InvoiceOrderBean> list) {
         this.list = list;
+    }
+
+    public void setRecords(List<InvoiceOrderBean> records) {
+        this.records = records;
     }
 }

@@ -12,6 +12,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillStatus;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 
@@ -69,17 +70,18 @@ public class BillDetailHeader extends ConstraintLayout {
         else if (data.getIsConfirm() == 2) builder.append("已确认/");
         if (data.getSettlementStatus() == BillStatus.NOT_SETTLE) builder.append("未结算");
         else if (data.getSettlementStatus() == BillStatus.SETTLED) builder.append("已结算");
+        else builder.append("部分结算");
         mIcon.setImageURL(data.getGroupLogoUrl());
         mShopName.setText(data.getShopName());
-        mGroupName.setText(data.getGroupName());
+        mGroupName.setText(data.getPurchaserName());
         mStatus.setText(builder);
         mWarehouseTag.setVisibility(data.getBillStatementFlag() == 1 ? VISIBLE : GONE);
-        mBillDate.setText(String.format("账期日：%s", convertDate(data.getBillCreateTime())));
+        mBillDate.setText(String.format("账单日：%s", convertDate(data.getBillCreateTime())));
         mSettlementDate.setText(String.format("结算日：%s", convertDate(data.getPaymentSettleDay())));
         mBillCycle.setText(String.format("账单周期：%s - %s", convertDate(data.getStartPaymentDay()), convertDate(data.getEndPaymentDay())));
-        mTotalAmount.setText(String.format("¥%s", data.getTotalAmount()));
-        mIncome.setText(String.format("¥%s", data.getTotalIncomeAmount()));
-        mRefund.setText(String.format("¥%s", data.getTotalRefundAmount()));
+        mTotalAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
+        mIncome.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalIncomeAmount())));
+        mRefund.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalRefundAmount())));
     }
 
     private String convertDate(String time) {

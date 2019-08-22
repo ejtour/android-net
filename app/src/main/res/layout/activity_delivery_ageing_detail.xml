@@ -41,11 +41,22 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/txt_ageing_title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_fafafa"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        tools:text="时效管理1"/>
+
     <RelativeLayout
         android:id="@+id/rl_billUpDateTime"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="10dp"
+
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:orientation="horizontal"
         android:paddingLeft="10dp"

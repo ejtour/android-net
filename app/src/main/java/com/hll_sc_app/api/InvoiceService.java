@@ -5,11 +5,13 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.invoice.InvoiceBean;
 import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceListResp;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
+import com.hll_sc_app.bean.invoice.ReturnRecordResp;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -39,4 +41,28 @@ public interface InvoiceService {
     @POST(HttpConfig.URL)
     @Headers("pv:103133")
     Observable<BaseResp<InvoiceMakeResp>> makeInvoice(@Body BaseReq<InvoiceMakeReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103138")
+    Observable<BaseResp<InvoiceBean>> getInvoiceDetail(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103135")
+    Observable<BaseResp<Object>> doAction(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103150")
+    Observable<BaseResp<Object>> settle(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103148")
+    Observable<BaseResp<ReturnRecordResp>> updateReturnRecord(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103153")
+    Observable<BaseResp<Object>> modifyInvoiceInfo(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103141")
+    Observable<BaseResp<InvoiceOrderResp>> reqRelevanceOrderList(@Body BaseMapReq req);
 }

@@ -720,6 +720,11 @@ public class RouterConfig {
     public static final String INVOICE_INPUT = "/activity/invoice/input";
 
     /**
+     * 发票管理-填写发票信息-回款记录
+     */
+    public static final String INVOICE_RETURN_RECORD = "/activity/invoice/returnRecord";
+
+    /**
      * 客户缺货汇总
      */
     public static final String REPORT_CUSTOMER_LACK_SUMMARY = "/activity/customer/lack/summary";
@@ -753,5 +758,30 @@ public class RouterConfig {
      * 配送及时率详情
      */
     public static final String REPORT_DELIVERY_TIME_DETAIL = "/activity/delivery/time/detail";
+
+    /**
+     * CRM-首页
+     */
+    public static final String CRM_HOME = "/fragment/crm/home";
+
+    /**
+     * CRM-订单
+     */
+    public static final String CRM_ORDER = "/fragment/crm/order";
+
+    /**
+     * CRM-客户
+     */
+    public static final String CRM_CUSTOMER = "/fragment/crm/customer";
+
+    /**
+     * CRM-日报
+     */
+    public static final String CRM_DAILY = "/fragment/crm/daily";
+
+    /**
+     * CRM-我的
+     */
+    public static final String CRM_MINE = "/fragment/crm/mine";
 }
 

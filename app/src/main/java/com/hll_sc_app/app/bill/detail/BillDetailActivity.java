@@ -115,7 +115,7 @@ public class BillDetailActivity extends BaseLoadActivity implements IBillDetailC
     private void updateData() {
         mHeader.setData(mCurBean);
         mAdapter.setNewData(mCurBean.getRecords());
-        mActionGroup.setVisibility(mCurBean.getSettlementStatus() == BillStatus.NOT_SETTLE ? View.VISIBLE : View.GONE);
+        mActionGroup.setVisibility(mCurBean.getSettlementStatus() == BillStatus.SETTLED ? View.GONE : View.VISIBLE);
         ((ViewGroup) mActionGroup.getParent()).requestLayout();
     }
 }

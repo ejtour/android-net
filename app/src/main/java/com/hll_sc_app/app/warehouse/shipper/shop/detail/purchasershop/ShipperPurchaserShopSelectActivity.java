@@ -308,7 +308,8 @@ public class ShipperPurchaserShopSelectActivity extends BaseLoadActivity impleme
             }
         }
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
         } else {
             if (!isDetail() && !CommonUtils.isEmpty(list)) {
                 ShipperShopResp.ShopBean shopBeanAll = new ShipperShopResp.ShopBean();

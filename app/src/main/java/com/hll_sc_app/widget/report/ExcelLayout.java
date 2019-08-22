@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -87,7 +88,8 @@ public class ExcelLayout extends LinearLayout {
 
     public void setData(List<List<CharSequence>> list, boolean append) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
         }

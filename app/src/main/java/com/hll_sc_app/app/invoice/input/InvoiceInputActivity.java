@@ -23,6 +23,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.invoice.detail.InvoiceDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
@@ -30,14 +31,18 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.InvoiceEvent;
 import com.hll_sc_app.bean.invoice.InvoiceHistoryBean;
 import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.invoice.InvoiceHistoryWindow;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +60,7 @@ import butterknife.OnTextChanged;
 public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup.OnCheckedChangeListener, IInvoiceInputContract.IInvoiceInputView, BaseQuickAdapter.OnItemClickListener {
 
     private InvoiceHistoryResp mHistoryResp;
+    private InvoiceMakeResp mMakeResp;
 
     /**
      * @param req 发票请求参数
@@ -157,13 +163,12 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mIdentifierGroup.setVisibility(View.VISIBLE);
             mPresenter.reqInvoiceHistory(1);
             mInvoiceTitle.setHint("请输入企业名称");
-            updateVisibility();
         } else {
             mIdentifierGroup.setVisibility(View.GONE);
-            mIdentifier.setText("");
             mPresenter.reqInvoiceHistory(2);
             mInvoiceTitle.setHint("请输入抬头名称");
         }
+        updateVisibility();
     }
 
     @OnTextChanged(value = {R.id.aii_invoice_title, R.id.aii_identifier,
@@ -193,15 +198,31 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mMakeReq.setInvoiceTitle(mInvoiceTitle.getText().toString());
             mMakeReq.setNote(mRemark.getText().toString());
             mMakeReq.setOpenBank(mBank.getText().toString());
-            mMakeReq.setTaxpayerNum(mIdentifier.getText().toString());
+            mMakeReq.setTaxpayerNum(mIdentifierGroup.getVisibility() == View.GONE ? "" : mIdentifier.getText().toString());
             mMakeReq.setTelephone(mPhone.getText().toString());
-            mMakeReq.setTitleType(mIdentifierGroup.getVisibility() == View.GONE ? 1 : 2);
+            mMakeReq.setTitleType(mIdentifierGroup.getVisibility() == View.GONE ? 2 : 1);
             mMakeReq.setUserID(user.getEmployeeID());
             mPresenter.makeInvoice(mMakeReq);
         }
     }
 
     private boolean verifyValidity() {
+        if (mIdentifierGroup.getVisibility() == View.VISIBLE && !mIdentifier.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+            showToast("纳税人识别号请勿包含特殊字符");
+            return false;
+        }
+        if (!mInvoiceTitle.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+            showToast("发票抬头请勿包含特殊字符");
+            return false;
+        }
+        if (!mBank.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+            showToast("开户行请勿包含特殊字符");
+            return false;
+        }
+        if (!Utils.checkPhone(mPhone.getText().toString())) {
+            showToast("请输入正确的联系电话");
+            return false;
+        }
         return true;
     }
 
@@ -228,6 +249,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
 
     @Override
     public void makeSuccess(InvoiceMakeResp resp) {
+        mMakeResp = resp;
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_good)
                 .setImageState(R.drawable.ic_dialog_state_success)
@@ -237,14 +259,13 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
                 .setButton((dialog, item) -> {
                     dialog.dismiss();
                     NavCallback callback = null;
-                    if (item != 0) {
-                        callback = new NavCallback() {
-                            @Override
-                            public void onArrival(Postcard postcard) {
-                                showToast("发票详情待添加");
-                            }
-                        };
-                    }
+                    callback = new NavCallback() {
+                        @Override
+                        public void onArrival(Postcard postcard) {
+                            if (item != 0)
+                                InvoiceDetailActivity.start(InvoiceInputActivity.this, mMakeResp.getId());
+                        }
+                    };
                     ARouter.getInstance().build(RouterConfig.INVOICE_ENTRY)
                             .setProvider(new LoginInterceptor())
                             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)

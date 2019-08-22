@@ -23,6 +23,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -173,7 +174,8 @@ public class GoodsRelevanceListFragment extends BaseGoodsRelevanceFragment imple
     @Override
     public void showGoodsList(List<TransferDetailBean> list, boolean append, int total) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
         }
