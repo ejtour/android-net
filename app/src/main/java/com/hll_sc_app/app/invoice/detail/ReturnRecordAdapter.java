@@ -35,8 +35,8 @@ public class ReturnRecordAdapter extends BaseQuickAdapter<ReturnRecordBean, Base
                 .setText(R.id.irr_time, String.format("回款时间：%s", DateUtil.getReadableTime(item.getReturnDate(), Constants.SLASH_YYYY_MM_DD)))
                 .setText(R.id.irr_money, String.format("¥%s", CommonUtils.formatMoney(item.getReturnMoney())))
                 .setGone(R.id.irr_edit, item.getSettlementStatus() == 1)
-                .setGone(R.id.irr_line, item.getSettlementStatus() == 1)
-                .setGone(R.id.irr_confirm, item.getSettlementStatus() == 1)
+                .setGone(R.id.irr_line, false)
+                .setGone(R.id.irr_confirm, false)
                 .setGone(R.id.irr_done, item.getSettlementStatus() == 2);
     }
 }
