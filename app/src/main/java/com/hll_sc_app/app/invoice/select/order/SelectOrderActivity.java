@@ -59,17 +59,20 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     private InvoiceOrderResp mInvoiceOrderResp;
 
     /**
-     * @param bean 门店实体类
+     * @param list 选择的门店列表
      */
-    public static void start(PurchaserShopBean bean) {
+    public static void start(List<PurchaserShopBean> list) {
+        PurchaserShopBean firstShop = list.get(0);
         InvoiceMakeReq req = new InvoiceMakeReq();
-        req.setTelephone(bean.getShopPhone());
-        req.setPurchaserShopID(bean.getShopID());
-        req.setPurchaserShopName(bean.getShopName());
-        req.setPurchaserName(bean.getPurchaserName());
-        req.setPurchaserID(bean.getPurchaserID());
-        req.setReceiver(bean.getSalesmanName());
-        req.setImagePath(bean.getImagePath());
+        req.setTelephone(firstShop.getSalesmanPhone());
+        req.setReceiver(firstShop.getSalesmanName());
+        List<String> shopIDList = new ArrayList<>();
+        for (PurchaserShopBean bean : list) {
+            shopIDList.add(bean.getShopID());
+        }
+        req.setShopIDList(shopIDList);
+        req.setPurchaserName(firstShop.getPurchaserName());
+        req.setPurchaserID(firstShop.getPurchaserID());
         RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_ORDER, req);
     }
 
@@ -115,7 +118,7 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         mParam.setStartTime(CalendarUtils.getDateBefore(endDate, 31));
         mParam.setEndTime(CalendarUtils.getDateBefore(endDate, 1));
         updateDateText();
-        mPresenter = SelectOrderPresenter.newInstance(mParam, mMakeReq.getPurchaserShopID());
+        mPresenter = SelectOrderPresenter.newInstance(mParam, mMakeReq.getShopIDList());
         mPresenter.register(this);
         mPresenter.start();
     }

@@ -28,10 +28,6 @@ public class InvoiceMakeReq implements Parcelable {
      */
     private String groupID;
     /**
-     * 门店logo地址
-     */
-    private String imagePath;
-    /**
      * 发票号
      */
     private String invoiceNO;
@@ -74,11 +70,7 @@ public class InvoiceMakeReq implements Parcelable {
     /**
      * 采购商门店ID
      */
-    private String purchaserShopID;
-    /**
-     * 采购商店铺名称
-     */
-    private String purchaserShopName;
+    private List<String> shopIDList;
     /**
      * 收件人
      */
@@ -134,14 +126,6 @@ public class InvoiceMakeReq implements Parcelable {
 
     public void setGroupID(String groupID) {
         this.groupID = groupID;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
     }
 
     public String getInvoiceNO() {
@@ -224,20 +208,12 @@ public class InvoiceMakeReq implements Parcelable {
         this.purchaserName = purchaserName;
     }
 
-    public String getPurchaserShopID() {
-        return purchaserShopID;
+    public List<String> getShopIDList() {
+        return shopIDList;
     }
 
-    public void setPurchaserShopID(String purchaserShopID) {
-        this.purchaserShopID = purchaserShopID;
-    }
-
-    public String getPurchaserShopName() {
-        return purchaserShopName;
-    }
-
-    public void setPurchaserShopName(String purchaserShopName) {
-        this.purchaserShopName = purchaserShopName;
+    public void setShopIDList(List<String> shopIDList) {
+        this.shopIDList = shopIDList;
     }
 
     public String getReceiver() {
@@ -299,7 +275,6 @@ public class InvoiceMakeReq implements Parcelable {
         dest.writeString(this.address);
         dest.writeStringList(this.billIDList);
         dest.writeString(this.groupID);
-        dest.writeString(this.imagePath);
         dest.writeString(this.invoiceNO);
         dest.writeDouble(this.invoicePrice);
         dest.writeDouble(this.orderAmount);
@@ -310,8 +285,7 @@ public class InvoiceMakeReq implements Parcelable {
         dest.writeString(this.openBank);
         dest.writeString(this.purchaserID);
         dest.writeString(this.purchaserName);
-        dest.writeString(this.purchaserShopID);
-        dest.writeString(this.purchaserShopName);
+        dest.writeStringList(this.shopIDList);
         dest.writeString(this.receiver);
         dest.writeStringList(this.refundBillIDList);
         dest.writeString(this.taxpayerNum);
@@ -328,7 +302,6 @@ public class InvoiceMakeReq implements Parcelable {
         this.address = in.readString();
         this.billIDList = in.createStringArrayList();
         this.groupID = in.readString();
-        this.imagePath = in.readString();
         this.invoiceNO = in.readString();
         this.invoicePrice = in.readDouble();
         this.orderAmount = in.readDouble();
@@ -339,8 +312,7 @@ public class InvoiceMakeReq implements Parcelable {
         this.openBank = in.readString();
         this.purchaserID = in.readString();
         this.purchaserName = in.readString();
-        this.purchaserShopID = in.readString();
-        this.purchaserShopName = in.readString();
+        this.shopIDList = in.createStringArrayList();
         this.receiver = in.readString();
         this.refundBillIDList = in.createStringArrayList();
         this.taxpayerNum = in.readString();

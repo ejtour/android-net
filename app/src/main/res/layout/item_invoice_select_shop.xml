@@ -4,19 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:background="@android:color/white"
-    android:padding="@dimen/dp_10">
+    android:background="@android:color/white">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/iss_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="35dp"
         app:base_placeholder="@drawable/ic_shop_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_shop_placeholder" />
+
+    <ImageView
+        android:id="@+id/iss_check_box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iss_image"
+        app:layout_constraintTop_toTopOf="@id/iss_image"
+        app:layout_constraintBottom_toBottomOf="@id/iss_image"
+        app:layout_constraintDimensionRatio="1"
+        android:scaleType="centerInside"
+        android:src="@drawable/bg_selector_check_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"/>
 
     <TextView
         android:id="@+id/iss_shop_name"

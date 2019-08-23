@@ -51,6 +51,7 @@ public class PurchaserShopBean implements Parcelable {
     private String deliveryPeriod;
     private String driverID;
     private String salesmanName;
+    private String salesmanPhone;
 
     public String getSalesmanName() {
         return salesmanName;
@@ -58,6 +59,14 @@ public class PurchaserShopBean implements Parcelable {
 
     public void setSalesmanName(String salesmanName) {
         this.salesmanName = salesmanName;
+    }
+
+    public String getSalesmanPhone() {
+        return salesmanPhone;
+    }
+
+    public void setSalesmanPhone(String salesmanPhone) {
+        this.salesmanPhone = salesmanPhone;
     }
 
     public String getAccountPeriodType() {
@@ -387,6 +396,7 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeString(this.deliveryPeriod);
         dest.writeString(this.driverID);
         dest.writeString(this.salesmanName);
+        dest.writeString(this.salesmanPhone);
         dest.writeTypedList(this.cooperationSource);
     }
 
@@ -426,6 +436,7 @@ public class PurchaserShopBean implements Parcelable {
         this.deliveryPeriod = in.readString();
         this.driverID = in.readString();
         this.salesmanName = in.readString();
+        this.salesmanPhone = in.readString();
         this.cooperationSource = in.createTypedArrayList(CooperationSourceBean.CREATOR);
     }
 
