@@ -18,6 +18,7 @@ import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.bean.invoice.InvoiceOrderReq;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
+import com.hll_sc_app.bean.invoice.InvoiceShopResp;
 import com.hll_sc_app.bean.invoice.ReturnRecordResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -222,11 +223,30 @@ public class Invoice {
     /**
      * 获取发票对应的关联订单列表
      *
-     * @param id
+     * @param id      发票ID
+     * @param pageNum 页码
      */
     public static void reqRelevanceOrderList(String id, int pageNum, SimpleObserver<InvoiceOrderResp> observer) {
         InvoiceService.INSTANCE
                 .reqRelevanceOrderList(BaseMapReq.newBuilder()
+                        .put("invoiceID", id)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取发票对应的关联门店列表
+     *
+     * @param id      发票ID
+     * @param pageNum 页码
+     */
+    public static void reqRelevanceShopList(String id, int pageNum, SimpleObserver<InvoiceShopResp> observer) {
+        InvoiceService.INSTANCE
+                .reqRelevanceShopList(BaseMapReq.newBuilder()
                         .put("invoiceID", id)
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")

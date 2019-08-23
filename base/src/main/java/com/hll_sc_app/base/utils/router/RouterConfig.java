@@ -705,6 +705,11 @@ public class RouterConfig {
     public static final String INVOICE_DETAIL_ORDER = "/activity/invoice/detail/order";
 
     /**
+     * 发票管理-发票详情-关联门店
+     */
+    public static final String INVOICE_DETAIL_SHOP = "/activity/invoice/detail/shop";
+
+    /**
      * 发票管理-选择开票门店
      */
     public static final String INVOICE_SELECT_SHOP = "/activity/invoice/select/shop";

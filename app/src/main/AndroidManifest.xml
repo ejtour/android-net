@@ -663,27 +663,36 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.invoice.detail.shop.RelevanceShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.invoice.detail.record.ReturnRecordActivity"
             android:screenOrientation="portrait" />
 
         <!--收货差异汇总-->
-        <activity android:name=".app.report.inspectLack.InspectLackActivity"
-             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.inspectLack.InspectLackActivity"
+            android:screenOrientation="portrait" />
 
         <!--收货差异明细-->
-        <activity android:name=".app.report.inspectLack.detail.InspectLackDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.inspectLack.detail.InspectLackDetailActivity"
+            android:screenOrientation="portrait" />
 
         <!--代仓缺货商品明细-->
-        <activity android:name=".app.report.warehouse.WareHouseProductDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.warehouse.WareHouseProductDetailActivity"
+            android:screenOrientation="portrait" />
 
         <!--配送及时率汇总-->
-        <activity android:name=".app.report.deliveryTime.DeliveryTimeAggregationActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.deliveryTime.DeliveryTimeAggregationActivity"
+            android:screenOrientation="portrait" />
         <!--配送及时率明细-->
-        <activity android:name=".app.report.deliveryTime.detail.DeliveryTimeDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.deliveryTime.detail.DeliveryTimeDetailActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

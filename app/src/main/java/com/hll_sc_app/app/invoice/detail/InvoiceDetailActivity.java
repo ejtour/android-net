@@ -28,6 +28,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.invoice.detail.order.RelevanceOrderActivity;
 import com.hll_sc_app.app.invoice.detail.record.ReturnRecordActivity;
+import com.hll_sc_app.app.invoice.detail.shop.RelevanceShopActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -383,6 +384,6 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     @OnClick(R.id.aid_relevance_shop)
     public void onViewClicked() {
-        showToast("跳转门店待添加");
+        RelevanceShopActivity.start(mID);
     }
 }
