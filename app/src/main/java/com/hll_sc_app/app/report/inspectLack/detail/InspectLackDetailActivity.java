@@ -84,7 +84,7 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_inspect_lack);
+        setContentView(R.layout.activity_report_inspect_lack_detail);
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
@@ -240,7 +240,7 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
             array[7] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[7]));
             row.updateItemData(array);
             row.updateRowDate("合计", "--", "--", "--", "--", "--",
-                    CommonUtils.formatMoney(Double.parseDouble(inspectLackDetailResp.getTotalInspectionLackAmount())), CommonUtils.formatNumber(new BigDecimal(inspectLackDetailResp.getTotalInspectionLackRate()).multiply(BigDecimal.valueOf(100)).toPlainString()) + "%");
+                    CommonUtils.formatMoney(Double.parseDouble(inspectLackDetailResp.getTotalInspectionLackAmount())), inspectLackDetailResp.getTotalInspectionLackRate());
             row.setBackgroundResource(R.drawable.bg_excel_header);
         }
         return row;
@@ -307,7 +307,7 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
         list.add(CommonUtils.formatNumber(item.getInspectionNum())); //收货差异商品数
         list.add(CommonUtils.formatNumber(item.getInspectionLackNum())); // 收货差异量
         list.add(CommonUtils.formatMoney(Double.parseDouble(item.getInspectionLackAmount()))); // 收货差异金额
-        list.add(CommonUtils.formatNumber(new BigDecimal(item.getInspectionLackRate()).multiply(BigDecimal.valueOf(100)).toPlainString())+"%");//收货差异率
+        list.add(item.getInspectionLackRate());//收货差异率
         return list;
     }
 }
