@@ -812,18 +812,37 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     android:drawablePadding="6dp"
                     android:gravity="center_vertical"
                     android:padding="14dp"
-                    android:text="待退货处理"
+                    android:text="近七日订单趋势图"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
                     app:layout_constraintStart_toStartOf="@id/fch_trend_bg"
                     app:layout_constraintTop_toTopOf="@id/fch_trend_bg" />
 
+                <TextView
+                    android:id="@+id/fch_trend_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:text="交易金额（元）"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintStart_toStartOf="@id/fch_trend_bg"
+                    app:layout_constraintTop_toBottomOf="@id/fch_trend_label" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="14dp"
+                    android:text="订单量"
+                    android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+                    app:layout_constraintBaseline_toBaselineOf="@id/fch_trend_amount"
+                    app:layout_constraintEnd_toEndOf="@id/fch_trend_bg" />
+
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/fch_trend_chart"
                     android:layout_width="0dp"
-                    android:layout_height="224dp"
+                    android:layout_height="300dp"
                     app:layout_constraintEnd_toEndOf="@id/fch_trend_bg"
                     app:layout_constraintStart_toStartOf="@id/fch_trend_bg"
-                    app:layout_constraintTop_toBottomOf="@id/fch_trend_label" />
+                    app:layout_constraintTop_toBottomOf="@id/fch_trend_amount" />
 
                 <View
                     android:id="@+id/fch_management_bg"

@@ -1,10 +1,12 @@
 package com.hll_sc_app.app.crm.home;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,17 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.MarkerView;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -21,14 +34,20 @@ import com.hll_sc_app.bean.home.ManagementShopResp;
 import com.hll_sc_app.bean.home.StatisticResp;
 import com.hll_sc_app.bean.home.TrendBean;
 import com.hll_sc_app.bean.home.VisitResp;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.widget.home.TrendMarker;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindDimen;
 import butterknife.BindView;
@@ -43,6 +62,7 @@ import butterknife.Unbinder;
 
 @Route(path = RouterConfig.CRM_HOME)
 public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContract.ICrmHomeView {
+    private final SimpleDateFormat FORMAT = new SimpleDateFormat("MM.dd", Locale.getDefault());
     @BindView(R.id.fch_top_bg)
     ImageView mTopBg;
     @BindView(R.id.fch_today_amount)
@@ -155,6 +175,48 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
                 mPresenter.refresh();
             }
         });
+        initChart();
+    }
+
+    private void initChart() {
+        Legend legend = mTrendChart.getLegend();
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setYOffset(10);
+
+        mTrendChart.getDescription().setEnabled(false);
+        mTrendChart.setNoDataText("无数据");
+        mTrendChart.setScaleEnabled(false);
+        mTrendChart.setPinchZoom(false);
+        mTrendChart.setExtraOffsets(14, 0, 14, 8);
+
+        mTrendChart.setMarker(new TrendMarker(requireContext(), mTrendChart));
+
+        XAxis xAxis = mTrendChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return FORMAT.format(CalendarUtils.getDateBefore(new Date(),
+                        (int) (mTrendChart.getXAxis().getAxisMaximum() - value)));
+            }
+        });
+        xAxis.setDrawGridLines(false);
+        xAxis.setSpaceMax(0.25f);
+
+        YAxis axisLeft = mTrendChart.getAxisLeft();
+        axisLeft.setDrawAxisLine(false);
+        axisLeft.setLabelCount(7, true);
+        axisLeft.setGranularity(0.1f);
+        axisLeft.setAxisMinimum(0);
+
+        YAxis axisRight = mTrendChart.getAxisRight();
+        axisRight.setDrawAxisLine(false);
+        axisRight.setLabelCount(8, true);
+        axisLeft.setGranularity(1f);
+        axisRight.setAxisMinimum(0);
     }
 
     private void showStatusBar() {
@@ -240,7 +302,49 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
 
     @Override
     public void updateTrend(List<TrendBean> list) {
-
+        List<Entry> amountList = new ArrayList<>();
+        List<Entry> billNumList = new ArrayList<>();
+        if (!CommonUtils.isEmpty(list)) {
+            for (int i = 0; i < list.size(); i++) {
+                TrendBean trendBean = list.get(i);
+                amountList.add(new Entry(i, trendBean.getAmount(), trendBean.getDate()));
+                billNumList.add(new Entry(i, trendBean.getBillNum(), trendBean.getDate()));
+            }
+        }
+        LineDataSet amountSet, billNumSet;
+        if (mTrendChart.getData() != null && mTrendChart.getData().getDataSetCount() == 2) {
+            amountSet = (LineDataSet) mTrendChart.getData().getDataSetByIndex(0);
+            amountSet.setValues(amountList);
+            amountSet.notifyDataSetChanged();
+            billNumSet = (LineDataSet) mTrendChart.getData().getDataSetByIndex(1);
+            billNumSet.setValues(billNumList);
+            billNumSet.notifyDataSetChanged();
+            mTrendChart.getData().notifyDataChanged();
+            mTrendChart.notifyDataSetChanged();
+        } else {
+            amountSet = new LineDataSet(amountList, "交易金额");
+            amountSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+            int amountColor = ContextCompat.getColor(requireContext(), R.color.color_5aaaf1);
+            amountSet.setColor(amountColor);
+            amountSet.setFillColor(amountColor);
+            amountSet.setCircleColor(amountColor);
+            billNumSet = new LineDataSet(billNumList, "订单量");
+            billNumSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+            int billNumColor = ContextCompat.getColor(requireContext(), R.color.color_f6874f);
+            billNumSet.setColor(billNumColor);
+            billNumSet.setFillColor(billNumColor);
+            billNumSet.setCircleColor(billNumColor);
+            LineData lineData = new LineData(amountSet, billNumSet);
+            for (ILineDataSet lineDataSet : lineData.getDataSets()) {
+                LineDataSet dataSet = (LineDataSet) lineDataSet;
+                dataSet.setDrawCircleHole(false);
+                dataSet.setDrawValues(false);
+                dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+                dataSet.setDrawFilled(true);
+            }
+            mTrendChart.setData(lineData);
+            mTrendChart.invalidate();
+        }
     }
 
     @Override
