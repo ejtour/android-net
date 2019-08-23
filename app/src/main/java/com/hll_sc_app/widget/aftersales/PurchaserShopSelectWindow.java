@@ -316,6 +316,9 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
                 list.addAll(data);
             }
             super.setNewData(list);
+            if (mCurBean != null) {
+                mLeftList.scrollToPosition(mPurchaserAdapter.getData().indexOf(mCurBean));
+            }
         }
 
         @Override
