@@ -298,7 +298,7 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
                 serverDate = (DateUtil.currentTimeHllDT8()+"").substring(0,4)+"0101";
                 localDate = serverDate.substring(0,4)+"年";
                 timeType = TimeTypeEnum.YEAR.getCode();
-                dateCustomerText = OptionType.OPTION_REPORT_MONTH_AGGREGATION;
+                dateCustomerText = OptionType.OPTION_REPORT_YEAR_AGGREGATION;
             }
         }
         if(!isClickCustomer){
