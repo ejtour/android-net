@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -31,7 +32,6 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.InvoiceEvent;
 import com.hll_sc_app.bean.invoice.InvoiceHistoryBean;
 import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
@@ -41,8 +41,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.invoice.InvoiceHistoryWindow;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +122,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     }
 
     private void initView() {
-        mInvoiceAmount.setText(processMoney());
+        mInvoiceAmount.setText(CommonUtils.formatNumber(mMakeReq.getInvoicePrice()));
         mRecipient.setText(mMakeReq.getReceiver());
         mPhone.setText(mMakeReq.getTelephone());
     }
@@ -177,6 +175,25 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         updateVisibility();
     }
 
+    @OnTextChanged(value = R.id.aii_invoice_amount, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void textChanged(Editable s) {
+        if (!s.toString().startsWith("¥")) {
+            s.insert(0, "¥");
+        }
+        String substring = s.toString().substring(1);
+        if (substring.contains("¥")) { // 避免出现多个金钱符号
+            substring = substring.replaceAll("¥", "");
+            s.delete(1, s.length());
+            s.insert(1, substring);
+        }
+        if (s.toString().substring(1).startsWith("."))
+            s.insert(1, "0");
+        if (!CommonUtils.checkMoenyNum(s.toString().substring(1)) && s.length() > 2) {
+            s.delete(s.length() - 1, s.length());
+        }
+        mMakeReq.setInvoicePrice(CommonUtils.getDouble(s.toString()));
+    }
+
     private void updateVisibility() {
         mConfirm.setEnabled(!TextUtils.isEmpty(mInvoiceTitle.getText())
                 && !TextUtils.isEmpty(mAccount.getText())
@@ -184,6 +201,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
                 && !TextUtils.isEmpty(mAddress.getText())
                 && !TextUtils.isEmpty(mRecipient.getText())
                 && !TextUtils.isEmpty(mPhone.getText())
+                && mMakeReq.getInvoicePrice() > 0
                 && (mIdentifierGroup.getVisibility() == View.GONE || !TextUtils.isEmpty(mIdentifier.getText()))
         );
     }
