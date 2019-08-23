@@ -81,12 +81,6 @@ public class InvoiceEntryActivity extends BaseLoadActivity implements BaseQuickA
         mCommitGroup.setVisibility(notCrm ? View.GONE : View.VISIBLE);
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        EventBus.getDefault().post(new InvoiceEvent(InvoiceEvent.RELOAD_LIST));
-    }
-
     private void showOptionsWindow(View v) {
         if (mOptionsWindow == null) {
             mOptionsWindow = new ContextOptionsWindow(this)

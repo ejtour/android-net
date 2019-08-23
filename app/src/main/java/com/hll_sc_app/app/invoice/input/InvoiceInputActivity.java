@@ -32,6 +32,7 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.InvoiceEvent;
 import com.hll_sc_app.bean.invoice.InvoiceHistoryBean;
 import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
@@ -41,6 +42,8 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.invoice.InvoiceHistoryWindow;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -280,13 +283,14 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
                     callback = new NavCallback() {
                         @Override
                         public void onArrival(Postcard postcard) {
+                            EventBus.getDefault().post(new InvoiceEvent(InvoiceEvent.RELOAD_LIST));
                             if (item != 0)
                                 InvoiceDetailActivity.start(InvoiceInputActivity.this, mMakeResp.getId());
                         }
                     };
                     ARouter.getInstance().build(RouterConfig.INVOICE_ENTRY)
                             .setProvider(new LoginInterceptor())
-                            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK)
+                            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
                             .navigation(this, callback);
                 }, "返回列表", "查看记录")
                 .create()
