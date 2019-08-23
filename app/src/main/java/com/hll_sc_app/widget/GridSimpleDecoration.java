@@ -1,6 +1,7 @@
 package com.hll_sc_app.widget;
 
 import android.graphics.Rect;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -13,11 +14,11 @@ import com.hll_sc_app.base.utils.UIUtils;
  * @date 2019/7/30
  */
 
-public class GirdSimpleDecoration extends RecyclerView.ItemDecoration {
+public class GridSimpleDecoration extends RecyclerView.ItemDecoration {
     private int mSpace;
     private int mCount;
 
-    public GirdSimpleDecoration(int count) {
+    public GridSimpleDecoration(int count) {
         this.mCount = count;
         this.mSpace = UIUtils.dip2px(10);
     }
