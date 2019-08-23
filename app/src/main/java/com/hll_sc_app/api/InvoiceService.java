@@ -12,6 +12,7 @@ import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.bean.invoice.InvoiceOrderReq;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
+import com.hll_sc_app.bean.invoice.InvoiceShopResp;
 import com.hll_sc_app.bean.invoice.ReturnRecordResp;
 
 import io.reactivex.Observable;
@@ -66,4 +67,8 @@ public interface InvoiceService {
     @POST(HttpConfig.URL)
     @Headers("pv:103141")
     Observable<BaseResp<InvoiceOrderResp>> reqRelevanceOrderList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103165")
+    Observable<BaseResp<InvoiceShopResp>> reqRelevanceShopList(@Body BaseMapReq req);
 }
