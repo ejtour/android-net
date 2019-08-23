@@ -199,6 +199,8 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
 
     @Override
     public WareHouseLackProductReq getRequestParams(){
+        //代仓维度
+        mParam.setBillCategory(2);
         return mParam;
     }
 
