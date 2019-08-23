@@ -11,15 +11,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/dp_10"
+        app:base_placeholder="@drawable/ic_shop_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:base_placeholder="@drawable/ic_shop_placeholder"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_shop_placeholder" />
 
     <TextView
-        android:id="@+id/ii_shop_name"
+        android:id="@+id/ii_group_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_10"
@@ -29,10 +29,10 @@
         app:layout_constraintEnd_toStartOf="@id/ii_tag"
         app:layout_constraintStart_toEndOf="@id/ii_icon"
         app:layout_constraintTop_toTopOf="@id/ii_icon"
-        tools:text="我是采购商的门店名称" />
+        tools:text="我是采购商的集团名称" />
 
     <TextView
-        android:id="@+id/ii_group_name"
+        android:id="@+id/ii_shop_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -40,9 +40,9 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/ii_shop_name"
-        app:layout_constraintTop_toBottomOf="@id/ii_shop_name"
-        tools:text="我是采购商的集团名称" />
+        app:layout_constraintStart_toStartOf="@id/ii_group_name"
+        app:layout_constraintTop_toBottomOf="@id/ii_group_name"
+        tools:text="我是采购商的门店名称" />
 
     <TextView
         android:id="@+id/ii_tag"
@@ -53,7 +53,7 @@
         android:gravity="center"
         android:textAppearance="@style/TextAppearance.City22.Little.Blue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ii_shop_name"
+        app:layout_constraintTop_toTopOf="@id/ii_group_name"
         tools:text="普通发票" />
 
     <TextView
@@ -63,7 +63,7 @@
         android:text="发票金额："
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/ii_icon"
-        app:layout_constraintStart_toStartOf="@id/ii_shop_name" />
+        app:layout_constraintStart_toStartOf="@id/ii_group_name" />
 
     <TextView
         android:id="@+id/ii_money"

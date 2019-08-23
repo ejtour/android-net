@@ -45,6 +45,8 @@ public class InvoiceBean {
     private String odmId;
     private String account;
 
+    private int shopTotal;
+
     private String invoiceVoucher;
     private List<ReturnRecordBean> returnRecordList;
 
@@ -352,5 +354,13 @@ public class InvoiceBean {
 
     public void setRejectReason(String rejectReason) {
         this.rejectReason = rejectReason;
+    }
+
+    public int getShopTotal() {
+        return shopTotal;
+    }
+
+    public void setShopTotal(int shopTotal) {
+        this.shopTotal = shopTotal;
     }
 }

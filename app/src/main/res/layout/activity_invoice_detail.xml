@@ -120,7 +120,7 @@
             <TextView
                 android:id="@+id/aid_invoice_amount_label"
                 style="@style/InvoiceInfoLabel"
-                android:text="发票金额"
+                android:text="申请开票金额"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aid_invoice_type_label" />
 
@@ -286,7 +286,7 @@
             <TextView
                 android:id="@+id/aid_recipient_label"
                 style="@style/InvoiceInfoLabel"
-                android:text="收件人"
+                android:text="申请人"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aid_address_label" />
 
@@ -365,10 +365,47 @@
                 app:layout_constraintStart_toEndOf="@id/aid_remark_label"
                 app:layout_constraintTop_toTopOf="@id/aid_remark_label" />
 
+            <View
+                android:id="@+id/aid_shop_order_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aid_relevance_order"
+                app:layout_constraintEnd_toEndOf="@id/aid_relevance_shop"
+                app:layout_constraintStart_toStartOf="@id/aid_relevance_shop_label"
+                app:layout_constraintTop_toBottomOf="@id/aid_base_info_bg" />
+
+            <TextView
+                android:id="@+id/aid_relevance_shop_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="关联门店"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/aid_shop_order_bg" />
+
+            <TextView
+                android:id="@+id/aid_relevance_shop"
+                style="@style/InvoiceInfoEdit"
+                android:drawablePadding="5dp"
+                app:layout_constraintBottom_toBottomOf="@id/aid_relevance_shop_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aid_relevance_shop_label"
+                app:layout_constraintTop_toTopOf="@id/aid_relevance_shop_label"
+                tools:text="包含 8 个门店" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_relevance_shop_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_relevance_shop"
+                app:layout_constraintStart_toStartOf="@id/aid_relevance_shop_label" />
+
             <TextView
                 android:id="@+id/aid_relevance_order"
                 style="@style/InvoiceInfoEdit"
-                android:background="@drawable/base_bg_white_radius_5_solid"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="5dp"
                 app:layout_constraintBottom_toBottomOf="@id/aid_relevance_order_label"
@@ -381,10 +418,9 @@
                 android:id="@+id/aid_relevance_order_label"
                 style="@style/InvoiceInfoLabel"
                 android:layout_width="0dp"
-                android:layout_marginTop="@dimen/dp_10"
                 android:text="关联订单"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aid_base_info_bg" />
+                app:layout_constraintTop_toBottomOf="@id/aid_relevance_shop_label" />
 
             <View
                 android:id="@+id/aid_extra_info_bg"
