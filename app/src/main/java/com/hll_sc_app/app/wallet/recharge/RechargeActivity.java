@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.wallet.recharge;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -139,7 +138,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
     @OnTextChanged(value = R.id.awr_edit, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextChanged(Editable s) {
         if (s.toString().startsWith(".")) s.insert(0, "0");
-        if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1)
+        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1)
             s.delete(s.length() - 1, s.length());
         mNextStep.setEnabled(!TextUtils.isEmpty(s) && Double.parseDouble(s.toString()) > 0);
     }

@@ -191,7 +191,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         }
         if (s.toString().substring(1).startsWith("."))
             s.insert(1, "0");
-        if (!CommonUtils.checkMoenyNum(s.toString().substring(1)) && s.length() > 2) {
+        if (!CommonUtils.checkMoneyNum(s.toString().substring(1)) && s.length() > 2) {
             s.delete(s.length() - 1, s.length());
         }
         mMakeReq.setInvoicePrice(CommonUtils.getDouble(s.toString()));

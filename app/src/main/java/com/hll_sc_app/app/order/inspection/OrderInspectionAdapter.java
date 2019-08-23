@@ -60,7 +60,7 @@ public class OrderInspectionAdapter extends BaseQuickAdapter<OrderDetailBean, Ba
                 if (bean == null) return;
                 if (s.toString().startsWith("."))
                     s.insert(0, "0");
-                if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1) {
+                if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
                     s.delete(s.length() - 1, s.length());
                 }
                 bean.setInspectionNum(Double.parseDouble(TextUtils.isEmpty(s.toString()) ? "0" : s.toString()));

@@ -89,7 +89,7 @@ public class ModifyUnitPriceDialog extends BaseDialog {
     public void afterTextChanged(Editable s) {
         if (s.toString().startsWith("."))
             s.insert(0, "0");
-        if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1) {
+        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
             s.delete(s.length() - 1, s.length());
         }
     }
