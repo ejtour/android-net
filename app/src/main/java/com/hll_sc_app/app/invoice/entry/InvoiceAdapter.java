@@ -25,7 +25,8 @@ public class InvoiceAdapter extends BaseQuickAdapter<InvoiceBean, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, InvoiceBean item) {
-        ((GlideImageView) helper.setText(R.id.ii_shop_name, item.getPurchaserShopName())
+        ((GlideImageView) helper.setText(R.id.ii_shop_name, item.getShopTotal() > 1 ?
+                String.format("包含：%s个门店", item.getShopTotal()) : item.getPurchaserShopName())
                 .setText(R.id.ii_group_name, item.getPurchaserName())
                 .setText(R.id.ii_money, processMoney(item.getInvoicePrice()))
                 .setText(R.id.ii_tag, item.getInvoiceType() == 2 ? "专用发票" : "普通发票")

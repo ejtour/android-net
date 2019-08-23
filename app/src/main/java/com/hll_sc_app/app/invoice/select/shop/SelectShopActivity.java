@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
@@ -32,10 +33,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -50,6 +53,10 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
     RecyclerView mListView;
     @BindView(R.id.iss_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.iss_selected_count)
+    TextView mSelectedCount;
+    @BindView(R.id.iss_commit)
+    TextView mCommit;
     private ISelectShopContract.ISelectShopPresenter mPresenter;
     private String mSearchWords;
     private SelectShopAdapter mAdapter;
@@ -83,7 +90,9 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserShopBean item = mAdapter.getItem(position);
             if (item == null) return;
-            SelectOrderActivity.start(item);
+            item.setSelect(!item.isSelect());
+            mAdapter.notifyDataSetChanged();
+            updateBottomBar();
         });
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
@@ -112,6 +121,18 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
         });
     }
 
+    private void updateBottomBar() {
+        int count = 0;
+        List<PurchaserShopBean> list = mAdapter.getData();
+        for (PurchaserShopBean bean : list) {
+            if (bean.isSelect()) {
+                count++;
+            }
+        }
+        mCommit.setEnabled(count > 0);
+        mSelectedCount.setText(String.format("已选：%s", count));
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleSearchEvent(SearchEvent event) {
         if (TextUtils.isEmpty(event.getName())) return;
@@ -130,6 +151,7 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
                 mEmptyView.reset();
                 mEmptyView.setTips("暂无门店列表");
             }
+            updateBottomBar();
         }
         mRefreshLayout.setEnableLoadMore(beans != null && beans.size() == 20);
     }
@@ -160,5 +182,22 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
                     .setOnClickListener(mPresenter::start).create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    @OnClick(R.id.iss_commit)
+    public void commit() {
+        List<PurchaserShopBean> list = new ArrayList<>();
+        List<PurchaserShopBean> data = mAdapter.getData();
+        for (PurchaserShopBean bean : data) {
+            if (bean.isSelect()) list.add(bean);
+        }
+        String groupID = list.get(0).getPurchaserID();
+        for (PurchaserShopBean bean : list) {
+            if (!groupID.equals(bean.getPurchaserID())) {
+                showToast("只有同集团门店才可合并开票");
+                return;
+            }
+        }
+        SelectOrderActivity.start(list);
     }
 }

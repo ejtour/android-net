@@ -89,19 +89,32 @@
             <TextView
                 android:id="@+id/aii_invoice_amount_label"
                 style="@style/InvoiceInfoLabel"
-                android:text="发票金额"
+                android:text="申请开票金额"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aii_invoice_type_label" />
 
-            <TextView
+            <EditText
                 android:id="@+id/aii_invoice_amount"
                 style="@style/InvoiceInfoEdit"
                 android:textColor="@color/color_ed5655"
+                android:inputType="numberDecimal"
+                android:digits="¥0123456789."
                 app:layout_constraintBottom_toBottomOf="@id/aii_invoice_amount_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/aii_invoice_amount_label"
                 app:layout_constraintTop_toTopOf="@id/aii_invoice_amount_label"
-                tools:text="¥ 9,300.00" />
+                tools:text="¥ 9300.00" />
+
+            <TextView
+                android:id="@+id/aii_amount_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="如发票金额有误，可修改为与客户对账确认后需开票金额"
+                android:textColor="@color/color_aeaeae"
+                android:textSize="@dimen/text_little_size"
+                app:layout_constraintEnd_toEndOf="@id/aii_base_info_bg"
+                app:layout_constraintTop_toBottomOf="@id/aii_base_info_bg" />
 
             <View
                 android:id="@+id/aii_company_bg"
@@ -123,15 +136,15 @@
                 android:paddingRight="@dimen/dp_10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aii_base_info_bg">
+                app:layout_constraintTop_toBottomOf="@id/aii_amount_tip">
 
                 <RadioButton
                     android:id="@+id/aii_type_company"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:button="@drawable/bg_selector_radio_button"
                     android:checked="true"
                     android:padding="@dimen/dp_10"
-                    android:button="@drawable/bg_selector_radio_button"
                     android:text="企业"
                     android:textSize="@dimen/text_middle_size" />
 
@@ -353,8 +366,8 @@
                 android:id="@+id/aii_remark"
                 style="@style/InvoiceInfoEdit"
                 android:layout_height="wrap_content"
-                android:hint="可备注开票区间、开票金额"
                 android:layout_marginLeft="30dp"
+                android:hint="可备注开票区间、开票金额"
                 android:minHeight="45dp"
                 android:padding="@dimen/dp_10"
                 android:singleLine="false"

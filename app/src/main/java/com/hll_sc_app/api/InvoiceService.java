@@ -10,6 +10,7 @@ import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceListResp;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
+import com.hll_sc_app.bean.invoice.InvoiceOrderReq;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
 import com.hll_sc_app.bean.invoice.ReturnRecordResp;
 
@@ -32,7 +33,7 @@ public interface InvoiceService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:103147")
-    Observable<BaseResp<InvoiceOrderResp>> getRelevanceOrderList(@Body BaseMapReq req);
+    Observable<BaseResp<InvoiceOrderResp>> getRelevanceOrderList(@Body BaseReq<InvoiceOrderReq> body);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103136")

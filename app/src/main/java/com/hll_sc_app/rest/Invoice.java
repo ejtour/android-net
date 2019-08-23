@@ -16,10 +16,13 @@ import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceListResp;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
+import com.hll_sc_app.bean.invoice.InvoiceOrderReq;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
 import com.hll_sc_app.bean.invoice.ReturnRecordResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -59,23 +62,21 @@ public class Invoice {
     /**
      * 获取关联订单列表
      *
-     * @param startTime 开始时间 yyyyMMdd
-     * @param endTime   结束时间 yyyyMMdd
-     * @param shopID    店铺id
+     * @param startTime  开始时间 yyyyMMdd
+     * @param endTime    结束时间 yyyyMMdd
+     * @param shopIDList 店铺id列表
      */
-    public static void getRelevanceOrderList(int pageNum, String startTime, String endTime, String shopID, SimpleObserver<InvoiceOrderResp> observer) {
+    public static void getRelevanceOrderList(int pageNum, String startTime, String endTime, List<String> shopIDList, SimpleObserver<InvoiceOrderResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
+        InvoiceOrderReq req = new InvoiceOrderReq();
+        req.setGroupID(user.getGroupID());
+        req.setPageNum(pageNum);
+        req.setSalesmanID(user.getEmployeeID());
+        req.setShopIDList(shopIDList);
+        req.setSubBillDateStart(startTime);
+        req.setSubBillDateEnd(endTime);
         InvoiceService.INSTANCE
-                .getRelevanceOrderList(BaseMapReq.newBuilder()
-                        .put("subBillDateStart", startTime)
-                        .put("subBillDateEnd", endTime)
-                        .put("groupID", user.getGroupID())
-                        .put("shopID", shopID)
-                        .put("pageNum", String.valueOf(pageNum))
-                        .put("pageSize", "20")
-                        .put("statstFlag", "1")
-                        .put("salesmanID", user.getEmployeeID())
-                        .create())
+                .getRelevanceOrderList(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

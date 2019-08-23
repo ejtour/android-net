@@ -2,6 +2,7 @@ package com.hll_sc_app.app.invoice.detail;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,6 +46,7 @@ import com.zhihu.matisse.Matisse;
 import java.io.File;
 import java.util.List;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -89,6 +91,8 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     TextView mPhone;
     @BindView(R.id.aid_remark)
     TextView mRemark;
+    @BindView(R.id.aid_relevance_shop)
+    TextView mRelevanceShop;
     @BindView(R.id.aid_relevance_order)
     TextView mRelevanceOrder;
     @BindView(R.id.aid_extra_info_label)
@@ -110,6 +114,8 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     Group mRecordsGroup;
     @BindView(R.id.aid_identifier_group)
     Group mIdentifierGroup;
+    @BindDrawable(R.drawable.ic_arrow_gray)
+    Drawable mArrow;
     @Autowired(name = "object0")
     String mID;
     private IInvoiceDetailContract.IInvoiceDetailPresenter mPresenter;
@@ -155,6 +161,8 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0);
         mListView.addItemDecoration(decor);
         mInvoiceAmount.setTag(0);
+        mRelevanceShop.setClickable(false);
+        mArrow.setBounds(0, 0, mArrow.getIntrinsicWidth(), mArrow.getIntrinsicHeight());
     }
 
     private void createAddBtn() {
@@ -273,6 +281,15 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         mPhone.setText(bean.getTelephone());
         mRemark.setText(bean.getNote());
         mRelevanceOrder.setText(String.format("包含 %s 个订单", bean.getBillTotal()));
+        if (bean.getShopTotal() > 1) {
+            mRelevanceShop.setClickable(true);
+            mRelevanceShop.setText(String.format("包含 %s 个门店", bean.getShopTotal()));
+            mRelevanceShop.setCompoundDrawables(null, null, mArrow, null);
+        } else {
+            mRelevanceShop.setClickable(false);
+            mRelevanceShop.setText(bean.getPurchaserShopName());
+            mRelevanceShop.setCompoundDrawables(null, null, null, null);
+        }
         mTips.setVisibility(crm ? View.VISIBLE : View.GONE);
         mIdentifierGroup.setVisibility(bean.getTitleType() == 1 ? View.VISIBLE : View.GONE);
         mIdentifier.setText(bean.getTaxpayerNum());
@@ -362,5 +379,10 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     @OnClick(R.id.aid_relevance_order)
     public void viewRelevanceOrder() {
         RelevanceOrderActivity.start(mID, (double) mInvoiceAmount.getTag());
+    }
+
+    @OnClick(R.id.aid_relevance_shop)
+    public void onViewClicked() {
+        showToast("跳转门店待添加");
     }
 }
