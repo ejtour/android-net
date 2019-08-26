@@ -135,7 +135,7 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_AREA, bean);
             }
         });
-        mRecyclerViewArea.addItemDecoration(new GridSimpleDecoration(4));
+        mRecyclerViewArea.addItemDecoration(new GridSimpleDecoration());
         mRecyclerViewArea.setAdapter(mAreaAdapter);
 
         mPurchaserAdapter = new PurchaserListAdapter();

@@ -16,22 +16,28 @@ import com.hll_sc_app.base.utils.UIUtils;
 
 public class GridSimpleDecoration extends RecyclerView.ItemDecoration {
     private int mSpace;
-    private int mCount;
 
-    public GridSimpleDecoration(int count) {
-        this.mCount = count;
-        this.mSpace = UIUtils.dip2px(10);
+    public GridSimpleDecoration(int space) {
+        this.mSpace = space;
+    }
+
+    public GridSimpleDecoration() {
+        this(UIUtils.dip2px(10));
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        if (parent.getAdapter() == null) {
+        if (parent.getAdapter() == null || !(parent.getLayoutManager() instanceof GridLayoutManager)) {
             return;
         }
-        outRect.left = mSpace;
-        outRect.bottom = mSpace;
-        if (parent.getChildLayoutPosition(view) % mCount == 0) {
-            outRect.left = 0;
-        }
+        int spanCount = ((GridLayoutManager) parent.getLayoutManager()).getSpanCount();
+        int remain = parent.getAdapter().getItemCount() % spanCount;
+        int lastLineCount = remain == 0 ? spanCount : remain;
+        outRect.bottom = parent.getChildLayoutPosition(view) >= parent.getAdapter().getItemCount() - lastLineCount // 如果是最后一行
+                ? 0
+                : mSpace;
+        outRect.left = parent.getChildLayoutPosition(view) % spanCount == 0 // 如果是第一列
+                ? 0
+                : mSpace;
     }
 }
