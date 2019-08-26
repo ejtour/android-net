@@ -855,5 +855,15 @@ public class RouterConfig {
      * CRM-我的
      */
     public static final String CRM_MINE = "/fragment/crm/mine";
+
+    /**
+     * 查看验货单-列表
+     */
+    public static final String INSPECTION_LIST = "/activity/inspection/list";
+
+    /**
+     * 查看验货单-详情
+     */
+    public static final String INSPECTION_DETAIL = "/activity/inspection/detail";
 }
 
