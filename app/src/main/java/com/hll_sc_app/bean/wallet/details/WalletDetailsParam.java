@@ -13,6 +13,7 @@ public class WalletDetailsParam {
     private Date beginTime;
     private Date endTime;
     private String settleUnitID;
+    private String transType;
     private boolean isFilter;
     private boolean isRange;
 
@@ -62,5 +63,13 @@ public class WalletDetailsParam {
 
     public void setRange(boolean range) {
         isRange = range;
+    }
+
+    public String getTransType() {
+        return transType;
+    }
+
+    public void setTransType(String transType) {
+        this.transType = transType;
     }
 }

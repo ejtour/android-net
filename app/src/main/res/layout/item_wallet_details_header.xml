@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="47dp"
     android:background="#fafafa"
-    android:gravity="center_vertical"
-    android:paddingLeft="@dimen/dp_10"
-    android:paddingRight="@dimen/dp_10"
-    android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-    tools:text="8月份" />
+    android:layout_height="45dp">
+
+    <TextView
+        android:id="@+id/wdh_date_filter"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_time_filter"
+        android:drawablePadding="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        tools:text="8月份" />
+
+    <TextView
+        android:id="@+id/wdh_type_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:drawableLeft="@drawable/ic_filter"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:text="筛选"
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
+</LinearLayout>
