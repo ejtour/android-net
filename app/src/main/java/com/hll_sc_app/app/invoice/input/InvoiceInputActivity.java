@@ -10,8 +10,8 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
-import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -257,10 +257,11 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         } else {
             if (mHistoryWindow == null) {
                 mHistoryWindow = new InvoiceHistoryWindow(this, this);
+                mHistoryWindow.setOnDismissListener(() -> getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE));
             }
-            int[] location = new int[2];
-            view.getLocationOnScreen(location);
-            mHistoryWindow.setList(mHistoryResp.getRecords()).showAtLocation(view, Gravity.CENTER_HORIZONTAL, 0, 0);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+            mHistoryWindow.setList(mHistoryResp.getRecords())
+                    .showAsDropDownFix(view);
         }
     }
 
