@@ -110,7 +110,7 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
             switch (view.getId()) {
                 case R.id.txt_group_select:
                     currentGroupIndex = position;
-                    boolean isDefaultAll = mSelectMap.get(purchaserBean.getPurchaserID()).getShopIDList() == null;
+                    boolean isDefaultAll = mSelectMap.get(purchaserBean.getPurchaserID()) != null && mSelectMap.get(purchaserBean.getPurchaserID()).getShopIDList() == null;
                     SelectShopsActivity.start(purchaserBean.getPurchaserID(), getSelectShops(purchaserBean), isDefaultAll);
                     break;
                 case R.id.checkbox:
