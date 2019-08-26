@@ -119,6 +119,8 @@ public class ThumbnailView extends LinearLayout {
                     image.setPlaceholder(getResources().getDrawable(R.drawable.ic_placeholder));
                     image.setRadius(2);
                     image.setImageURL(item.getImgUrl());
+                    image.isPreview(mPreviewEnabel);
+                    image.setUrls(urls);
                     this.addView(image, layoutParams);
                 }
             }
