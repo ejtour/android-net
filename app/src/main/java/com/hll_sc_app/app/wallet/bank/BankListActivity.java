@@ -19,7 +19,9 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.wallet.BankBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TitleBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -47,9 +49,11 @@ public class BankListActivity extends BaseLoadActivity implements IBankListContr
         RouterUtil.goToActivity(RouterConfig.WALLET_BANK_LIST, context, REQ_CODE, args);
     }
 
-    @BindView(R.id.srl_list)
+    @BindView(R.id.srl_title_bar)
+    TitleBar mTitleBar;
+    @BindView(R.id.srl_list_view)
     RecyclerView mListView;
-    @BindView(R.id.srl_refresh)
+    @BindView(R.id.srl_refresh_view)
     SmartRefreshLayout mRefreshView;
     @Autowired(name = "object0")
     String mBankNo;
@@ -60,7 +64,7 @@ public class BankListActivity extends BaseLoadActivity implements IBankListContr
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        setContentView(R.layout.activity_wallet_bank_list);
+        setContentView(R.layout.activity_simple_refresh_list);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
@@ -74,6 +78,7 @@ public class BankListActivity extends BaseLoadActivity implements IBankListContr
     }
 
     private void initView() {
+        mTitleBar.setHeaderTitle("选择开户行");
         mAdapter = new BankListAdapter(mBankNo);
         mListView.setAdapter(mAdapter);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
@@ -106,8 +111,10 @@ public class BankListActivity extends BaseLoadActivity implements IBankListContr
 
     @Override
     public void setBankList(List<BankBean> list, boolean append) {
-        if (append) mAdapter.addData(list);
-        else mAdapter.setNewData(list);
+        if (append) {
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
+        } else mAdapter.setNewData(list);
         mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
     }
 }

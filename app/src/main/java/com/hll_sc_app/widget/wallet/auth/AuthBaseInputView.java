@@ -66,17 +66,12 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
 
     @Override
     protected void initView() {
-        super.initView();
+        View view = View.inflate(getContext(), R.layout.view_wallet_auth_base_input, this);
+        ButterKnife.bind(this, view);
         mBusinessLicense.setMaxSize(2097152);
         mCreateAccountLicense.setMaxSize(2097152);
         mBusinessLicense.setOnDeleteListener(this::deleteImage);
         mCreateAccountLicense.setOnDeleteListener(this::deleteImage);
-    }
-
-    @Override
-    protected void bindView() {
-        View view = View.inflate(getContext(), R.layout.view_wallet_auth_base_input, this);
-        ButterKnife.bind(this, view);
     }
 
     @Override
@@ -147,15 +142,13 @@ public class AuthBaseInputView extends CreateInfoInputView implements IInfoInput
 
     @Override
     public String getTitle() {
-        return "基本信息(1/4)";
+        return "公司信息(1/4)";
     }
 
     @OnClick(R.id.abi_start_date)
     public void selectStartDate() {
         WalletHelper.showLongValidDateDialog((Activity) getContext(), (dialog, item) -> {
             dialog.dismiss();
-            mAuthInfo.setLicensePeriod("");
-            mEndDate.setText("");
             if (item == 0) {
                 mAuthInfo.setLicenseBeginDate(WalletHelper.PERMANENT_DATE);
                 mAuthInfo.setLicensePeriod(WalletHelper.PERMANENT_DATE);

@@ -1,10 +1,8 @@
 package com.hll_sc_app.app.order.details;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.OrderResp;
-
-import java.util.List;
+import com.hll_sc_app.impl.IExportView;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -12,29 +10,10 @@ import java.util.List;
  */
 
 public interface IOrderDetailContract {
-    interface IOrderDetailView extends ILoadView {
+    interface IOrderDetailView extends IExportView {
         void updateOrderData(OrderResp resp);
 
         void handleStatusChanged();
-
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
-
-        /**
-         * 导出成功
-         *
-         * @param email 邮箱
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param msg 失败消息
-         */
-        void exportFailure(String msg);
     }
 
     interface IOrderDetailPresenter extends IPresenter<IOrderDetailView> {

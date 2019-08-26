@@ -88,7 +88,6 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     }
 
     private void initView() {
-        mSearchView.setBackgroundResource(R.drawable.base_bg_shadow_top_white_bar);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {

@@ -3,7 +3,6 @@ package com.hll_sc_app.app.wallet.status;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -18,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.wallet.account.auth.AuthAccountActivity;
 import com.hll_sc_app.app.wallet.details.list.DetailsListActivity;
 import com.hll_sc_app.app.wallet.recharge.RechargeActivity;
 import com.hll_sc_app.app.wallet.withdraw.WithdrawActivity;
@@ -29,7 +29,10 @@ import com.hll_sc_app.bean.wallet.WalletStatusResp;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.EasingTextView;
 
+import java.util.List;
+
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -52,8 +55,8 @@ public class NormalFragment extends BaseFragment {
     EasingTextView mWithdrawAmount;
     @BindView(R.id.wsn_freeze_amount)
     EasingTextView mFreezeAmount;
-    @BindView(R.id.wsn_tip_group)
-    Group mTipGroup;
+    @BindViews({R.id.wsn_tip_bg, R.id.wsn_tip_content, R.id.wsn_tip_arrow})
+    List<View> mTipGroup;
     @BindView(R.id.wsn_tip_content)
     TextView mTipContent;
     @BindView(R.id.wsn_tip_arrow)
@@ -94,16 +97,16 @@ public class NormalFragment extends BaseFragment {
         switch (mResp.getCertifyStatus()) {
             case WalletStatusResp.CERTIFY_NOT:
             case WalletStatusResp.CERTIFY_FAIL:
-                mTipGroup.setVisibility(View.VISIBLE);
-                mTipContent.setText("”请完成企业账务主体实名认证，享受更多服务，马上认证");
+                ButterKnife.apply(mTipGroup, (view, index) -> view.setVisibility(View.VISIBLE));
+                mTipContent.setText("请完成企业账务主体实名认证，享受更多服务，马上认证");
                 break;
             case WalletStatusResp.CERTIFY_ING:
-                mTipGroup.setVisibility(View.VISIBLE);
+                ButterKnife.apply(mTipGroup, (view, index) -> view.setVisibility(View.VISIBLE));
                 mTipContent.setText("企业实名认证正在审核中，请耐心等待");
                 mTipArrow.setVisibility(View.GONE);
                 break;
             default:
-                mTipGroup.setVisibility(View.GONE);
+                ButterKnife.apply(mTipGroup, (view, index) -> view.setVisibility(View.GONE));
                 break;
         }
     }
@@ -115,7 +118,7 @@ public class NormalFragment extends BaseFragment {
                 if (mResp.getCertifyStatus() == WalletStatusResp.CERTIFY_ING) {
                     return;
                 }
-                RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_AUTH, mResp);
+                AuthAccountActivity.start(requireActivity());
                 break;
             case R.id.wsn_account_btn:
                 RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_MY);
@@ -141,7 +144,7 @@ public class NormalFragment extends BaseFragment {
                                 .setButton((dialog, item) -> {
                                     dialog.dismiss();
                                     if (item == 1)
-                                        RouterUtil.goToActivity(RouterConfig.WALLET_ACCOUNT_AUTH, mResp);
+                                        AuthAccountActivity.start(requireActivity());
                                 }, "继续准备", "马上认证")
                                 .create()
                                 .show();

@@ -36,7 +36,7 @@ import com.hll_sc_app.bean.delivery.DeliveryPurchaserBean;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.widget.GirdSimpleDecoration;
+import com.hll_sc_app.widget.GridSimpleDecoration;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
@@ -135,14 +135,15 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_AREA, bean);
             }
         });
-        mRecyclerViewArea.addItemDecoration(new GirdSimpleDecoration(4));
+        mRecyclerViewArea.addItemDecoration(new GridSimpleDecoration(4));
         mRecyclerViewArea.setAdapter(mAreaAdapter);
 
         mPurchaserAdapter = new PurchaserListAdapter();
         mPurchaserAdapter.setOnItemClickListener((adapter, view, position) -> {
             DeliveryPurchaserBean bean = (DeliveryPurchaserBean) adapter.getItem(position);
             if (bean != null) {
-                ShopMinimumActivity.start(bean.getPurchaserID(), bean.getPurchaserName(), mBean.getSendAmountID(),
+                ShopMinimumActivity.start(bean.getPurchaserID(), bean.getPurchaserName(), mBean != null ?
+                        mBean.getSendAmountID() : "",
                     bean.getPurchaserShopList());
             }
         });

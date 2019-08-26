@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +14,7 @@
         android:background="@drawable/ic_main_mine_background"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
-        app:layout_collapseMode="parallax"/>
+        app:layout_collapseMode="parallax" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -30,7 +29,7 @@
             android:layout_height="wrap_content"
             app:srlAccentColor="@android:color/white"
             app:srlEnableLastTime="false"
-            app:srlTextSizeTitle="@dimen/sp_12"/>
+            app:srlTextSizeTitle="@dimen/sp_12" />
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/scrollView"
@@ -64,7 +63,7 @@
                         android:background="@drawable/bg_mine_logo"
                         android:padding="5dp"
                         app:base_circle="true"
-                        app:base_placeholder="@drawable/ic_mine_head_default"/>
+                        app:base_placeholder="@drawable/ic_mine_head_default" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -84,7 +83,7 @@
                             android:textColor="@color/base_white"
                             android:textSize="16sp"
                             android:visibility="gone"
-                            tools:text="二十二城的第五食堂"/>
+                            tools:text="二十二城的第五食堂" />
 
                         <TextView
                             android:id="@+id/txt_purchaserUserName"
@@ -101,7 +100,7 @@
                             android:textColor="@color/base_white"
                             android:textSize="12sp"
                             android:visibility="gone"
-                            tools:text="食堂厨师章"/>
+                            tools:text="食堂厨师章" />
 
                         <TextView
                             android:id="@+id/login"
@@ -112,7 +111,7 @@
                             android:gravity="center_vertical"
                             android:text=" 登录 / 注册"
                             android:textColor="@color/base_white"
-                            android:textSize="@dimen/sp_16"/>
+                            android:textSize="@dimen/sp_16" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -133,14 +132,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="14dp"
                         android:text="常用工具"
-                        android:textAppearance="@style/TextAppearance.City22.Middle"/>
+                        android:textAppearance="@style/TextAppearance.City22.Middle" />
 
                     <View
                         android:id="@+id/border1"
                         android:layout_width="wrap_content"
                         android:layout_height="0.8dp"
                         android:layout_below="@+id/card_title1"
-                        android:background="@color/base_color_divider"/>
+                        android:background="@color/base_color_divider" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -153,25 +152,25 @@
                             android:id="@+id/txt_wallet"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_wallet"
-                            android:text="我的钱包"/>
+                            android:text="我的钱包" />
 
                         <TextView
                             android:id="@+id/txt_agreement_price"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_agreement_price"
-                            android:text="协议价管理"/>
+                            android:text="协议价管理" />
 
                         <TextView
                             android:id="@+id/txt_warehouse_manage"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_warehouse_manage"
-                            android:text="代仓管理"/>
+                            android:text="代仓管理" />
 
                         <TextView
                             android:id="@+id/txt_cooperation_purchaser"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_cooperation_purchaser"
-                            android:text="合作采购商"/>
+                            android:text="合作采购商" />
 
                     </LinearLayout>
                 </RelativeLayout>
@@ -195,25 +194,25 @@
                             android:id="@+id/txt_return_audit"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_return_audit"
-                            android:text="退货审核"/>
+                            android:text="退货审核" />
 
                         <TextView
                             android:id="@+id/txt_price_setting"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_price_setting"
-                            android:text="售价管理"/>
+                            android:text="售价管理" />
 
                         <TextView
                             android:id="@+id/txt_marketing_settings"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_marketing_settings"
-                            android:text="营销设置"/>
+                            android:text="营销设置" />
 
                         <TextView
                             android:id="@+id/txt_payment_settings"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_payment_settings"
-                            android:text="支付设置"/>
+                            android:text="支付设置" />
 
                     </LinearLayout>
 
@@ -229,25 +228,25 @@
                             android:id="@+id/txt_return_time"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_return_time"
-                            android:text="退货时效"/>
+                            android:text="退货时效" />
 
                         <TextView
                             android:id="@+id/txt_directional_selling"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_directional_selling"
-                            android:text="定向售卖"/>
+                            android:text="定向售卖" />
 
                         <TextView
                             android:id="@+id/txt_delivery_manage"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_distribution_manage"
-                            android:text="配送管理"/>
+                            android:text="配送管理" />
 
                         <TextView
                             android:id="@+id/txt_inventory_manage"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_inventory_manage"
-                            android:text="库存管理"/>
+                            android:text="库存管理" />
 
                     </LinearLayout>
 
@@ -272,25 +271,25 @@
                             android:id="@+id/txt_store_manage"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_store_manage"
-                            android:text="店铺管理"/>
+                            android:text="店铺管理" />
 
                         <TextView
                             android:id="@+id/txt_staff_manage"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_staff_manage"
-                            android:text="员工管理"/>
+                            android:text="员工管理" />
 
                         <TextView
                             android:id="@+id/txt_invoice_manage"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_invoice_manage"
-                            android:text="发票管理"/>
+                            android:text="发票管理" />
 
                         <TextView
                             android:id="@+id/txt_complaint_manage"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_complaint_manage"
-                            android:text="投诉管理"/>
+                            android:text="投诉管理" />
 
                     </LinearLayout>
 
@@ -306,25 +305,25 @@
                             android:id="@+id/txt_new_product_demand"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_new_product_demand"
-                            android:text="新品需求"/>
+                            android:text="新品需求" />
 
                         <TextView
                             android:id="@+id/txt_product_special_demand"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_product_special_demand"
-                            android:text="商品特殊需求"/>
+                            android:text="商品特殊需求" />
 
                         <TextView
                             android:id="@+id/txt_account_statement"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_account_statement"
-                            android:text="对账单"/>
+                            android:text="对账单" />
 
                         <TextView
                             android:id="@+id/txt_report_center"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_report_center"
-                            android:text="报表中心"/>
+                            android:text="报表中心" />
 
                     </LinearLayout>
 
@@ -349,25 +348,25 @@
                             android:id="@+id/txt_wechat_mall"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_wechat_mall"
-                            android:text="微信商城"/>
+                            android:text="微信商城" />
 
                         <TextView
                             android:id="@+id/txt_transaction_record"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_transaction_record"
-                            android:text="交易记录"/>
+                            android:text="交易记录" />
 
                         <TextView
                             android:id="@+id/txt_check_inspection"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_check_inspection"
-                            android:text="查看验货单"/>
+                            android:text="查看验货单" />
 
                         <TextView
                             android:id="@+id/txt_customer_purchase_template"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_customer_purchase_template"
-                            android:text="客户采购模版"/>
+                            android:text="客户采购模版" />
 
                     </LinearLayout>
 
@@ -383,19 +382,95 @@
                             android:id="@+id/txt_market_price"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_market_price"
-                            android:text="市场价格"/>
+                            android:text="市场价格" />
 
                         <TextView
                             style="@style/MineButton"
                             android:layout_weight="3"
                             android:drawableTop="@drawable/ic_mine_product_special_demand"
-                            android:visibility="invisible"/>
+                            android:visibility="invisible" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/bg_main_mine_card"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_mine_feedback" />
+                        <!--后面会有小红点-->
+                        <TextView
+                            android:id="@+id/txt_main_feedback"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="反馈投诉"
+                            android:textColor="@color/base_text666"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_arrow_gray" />
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/border6"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/color_eeeeee" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_help"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_mine_helpcenter" />
+
+                        <TextView
+                            android:id="@+id/txt_main_help"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="帮助中心"
+                            android:textColor="@color/base_text666"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_arrow_gray" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
+
         </android.support.v4.widget.NestedScrollView>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
@@ -410,7 +485,7 @@
         <View
             android:id="@+id/view_status_bar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -422,7 +497,7 @@
                 android:layout_height="@dimen/title_bar_height"
                 android:background="@drawable/bg_selector_close"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_mine_title_setting"/>
+                android:src="@drawable/ic_mine_title_setting" />
 
             <TextView
                 android:id="@+id/txt_title"
@@ -431,7 +506,7 @@
                 android:layout_centerInParent="true"
                 android:text="我的"
                 android:textColor="@color/base_white"
-                android:textSize="@dimen/base_title_center_size"/>
+                android:textSize="@dimen/base_title_center_size" />
 
             <ImageView
                 android:id="@+id/img_help"
@@ -440,7 +515,7 @@
                 android:layout_toLeftOf="@+id/img_message"
                 android:background="@drawable/bg_selector_close"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_mine_question"/>
+                android:src="@drawable/ic_mine_question" />
 
             <ImageView
                 android:id="@+id/img_message"
@@ -449,7 +524,7 @@
                 android:layout_alignParentRight="true"
                 android:background="@drawable/bg_selector_close"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_mine_title_message"/>
+                android:src="@drawable/ic_mine_title_message" />
 
             <TextView
                 android:id="@+id/txt_messageCount"
@@ -460,7 +535,7 @@
                 android:layout_marginRight="5dp"
                 android:visibility="gone"
                 tools:text="9"
-                tools:visibility="visible"/>
+                tools:visibility="visible" />
 
         </RelativeLayout>
 

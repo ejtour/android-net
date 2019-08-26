@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,13 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
+import com.hll_sc_app.app.helpcenter.HelpCenterJsParams;
+import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.http.HttpConfig;
+import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -177,7 +182,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
 
     @OnClick({R.id.txt_wallet, R.id.txt_agreement_price, R.id.txt_warehouse_manage, R.id.txt_cooperation_purchaser,
             R.id.txt_return_audit, R.id.img_setting, R.id.txt_price_setting, R.id.txt_report_center,
-            R.id.txt_staff_manage, R.id.txt_delivery_manage, R.id.txt_marketing_settings})
+            R.id.txt_staff_manage, R.id.txt_delivery_manage, R.id.txt_return_time, R.id.txt_directional_selling,
+            R.id.txt_store_manage, R.id.txt_account_statement, R.id.txt_payment_settings, R.id.txt_invoice_manage,
+            R.id.img_help, R.id.ll_help})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -215,6 +222,28 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             case R.id.txt_marketing_settings:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_SETTING_MENU);
                 break;
+            case R.id.txt_return_time:
+                RouterUtil.goToActivity(RouterConfig.REFUND_TIME);
+                break;
+            case R.id.txt_directional_selling:
+                RouterUtil.goToActivity(RouterConfig.ORIENTATION_LIST);
+                break;
+            case R.id.txt_store_manage:
+                RouterUtil.goToActivity(RouterConfig.SUPPLIER_SHOP);
+                break;
+            case R.id.txt_account_statement:
+                RouterUtil.goToActivity(RouterConfig.BILL_LIST);
+                break;
+            case R.id.txt_payment_settings:
+                RouterUtil.goToActivity(RouterConfig.PAY_MANAGE);
+                break;
+            case R.id.txt_invoice_manage:
+                RouterUtil.goToActivity(RouterConfig.INVOICE_ENTRY);
+                break;
+            case R.id.ll_help:
+            case R.id.img_help:
+                String params = Base64.encodeToString(JsonUtil.toJson(new HelpCenterJsParams()).getBytes(), Base64.DEFAULT);
+                WebActivity.start("帮助中心", HttpConfig.getHelpCenterHost() + "/?sourceData=" + params);
             default:
                 break;
         }

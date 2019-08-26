@@ -59,6 +59,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.shop.SupplierShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.setting.SettingActivity"
             android:screenOrientation="portrait" />
 
@@ -138,6 +142,26 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.orientationsale.cooperation.shop.CooperationShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.orientationsale.list.OrientationListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.orientationsale.cooperation.CooperationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.orientationsale.detail.OrientationDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.orientationsale.product.ProductActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.goods.invwarn.GoodsInvWarnActivity"
             android:screenOrientation="portrait" />
 
@@ -194,6 +218,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.refundtime.RefundTimeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.setting.priceratio.PriceRatioTemplateActivity"
             android:screenOrientation="portrait" />
 
@@ -208,10 +236,45 @@
 
         <activity
             android:name=".app.warehouse.WarehouseIntroduceActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.shipper.ShipperActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.shipper.ShipperWarehouseGoodsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.shipper.shop.ShipperShopManageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.shipper.shop.detail.ShipperShopDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.shipper.shop.detail.purchaser.ShipperPurchaserSelectActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.shipper.shop.detail.purchasershop.ShipperPurchaserShopSelectActivity"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.warehouse.WarehouseListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.invite.WarehouseInviteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.warehouse.application.WarehouseApplicationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.warehouse.application.WarehouseShopListActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -220,6 +283,14 @@
 
         <activity
             android:name=".app.warehouse.detail.details.WarehouseDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.detail.WarehouseDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.warehouse.detail.shop.WarehouseShopDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -366,6 +437,18 @@
 
         <activity
             android:name=".app.pricemanage.PriceManageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.paymanage.PayManageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.paymanage.method.PayMethodManageActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.paymanage.account.PayAccountManageActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -518,12 +601,14 @@
         <!--业务员签约绩效-->
         <activity
             android:name=".app.report.salesman.sign.SalesManSignAchievementActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <!--业务员销售额绩效-->
         <activity
             android:name=".app.report.salesman.sales.SalesManSalesAchievementActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <!--缺货汇总-->
         <activity
@@ -603,6 +688,81 @@
             android:name=".app.marketingsetting.coupon.send.SendCouponActivity"
             android:screenOrientation="portrait" />
 
+
+        <activity
+            android:name=".app.bill.list.BillListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.bill.detail.BillDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.entry.InvoiceEntryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.select.shop.SelectShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.select.order.SelectOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.input.InvoiceInputActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
+        <!--缺货汇总表-->
+        <activity
+            android:name=".app.report.customerLack.CustomerLackSummaryActivity"
+            android:screenOrientation="portrait" />
+
+        <!--缺货明细-->
+        <activity
+            android:name=".app.report.customerLack.detail.CustomerLackDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.detail.InvoiceDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.detail.order.RelevanceOrderActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.detail.shop.RelevanceShopActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.invoice.detail.record.ReturnRecordActivity"
+            android:screenOrientation="portrait" />
+
+        <!--收货差异汇总-->
+        <activity
+            android:name=".app.report.inspectLack.InspectLackActivity"
+            android:screenOrientation="portrait" />
+
+        <!--收货差异明细-->
+        <activity
+            android:name=".app.report.inspectLack.detail.InspectLackDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!--代仓缺货商品明细-->
+        <activity
+            android:name=".app.report.warehouse.WareHouseProductDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!--配送及时率汇总-->
+        <activity
+            android:name=".app.report.deliveryTime.DeliveryTimeAggregationActivity"
+            android:screenOrientation="portrait" />
+        <!--配送及时率明细-->
+        <activity
+            android:name=".app.report.deliveryTime.detail.DeliveryTimeDetailActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -3,6 +3,7 @@ package com.hll_sc_app.widget.report;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -50,6 +51,8 @@ public class ExcelRow extends LinearLayout {
             LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
             textView.setGravity(Gravity.CENTER);
             textView.setTextSize(10);
+            textView.setSingleLine(true);
+            textView.setEllipsize(TextUtils.TruncateAt.END);
             textView.setPadding(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0);
             textView.setTextColor(ContextCompat.getColor(getContext(), R.color.color_222222));
             addView(textView, layoutParams);

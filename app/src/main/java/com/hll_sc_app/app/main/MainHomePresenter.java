@@ -4,6 +4,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.SalesVolumeResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
+import com.hll_sc_app.rest.Home;
 
 /**
  * 首页Fragment
@@ -33,7 +34,7 @@ public class MainHomePresenter implements IMainHomeContract.IMainHomePresenter {
 
     @Override
     public void querySalesVolume(boolean showLoading) {
-        Common.querySalesVolume(mView.getDateType(), new SimpleObserver<SalesVolumeResp>(mView, showLoading) {
+        Home.querySalesVolume(mView.getDateType(), new SimpleObserver<SalesVolumeResp>(mView, showLoading) {
             @Override
             public void onSuccess(SalesVolumeResp resp) {
                 mView.updateSalesVolume(resp);

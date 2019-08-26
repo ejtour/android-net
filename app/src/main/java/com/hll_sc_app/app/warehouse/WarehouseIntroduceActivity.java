@@ -89,7 +89,9 @@ public class WarehouseIntroduceActivity extends BaseLoadActivity implements Base
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_WAREHOUSE_ADD)) {
             RouterUtil.goToActivity(RouterConfig.WAREHOUSE_ADD);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_APPLICATION);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INVITE);
         }
         mOptionsWindow.dismiss();
     }

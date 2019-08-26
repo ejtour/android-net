@@ -138,7 +138,7 @@ public class WithdrawActivity extends BaseLoadActivity implements IWithdrawContr
     @OnTextChanged(value = R.id.aww_money_edit, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextChanged(Editable s) {
         if (s.toString().startsWith(".")) s.insert(0, "0");
-        if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1)
+        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1)
             s.delete(s.length() - 1, s.length());
         if (TextUtils.isEmpty(s)) mConfirm.setEnabled(false);
         else {

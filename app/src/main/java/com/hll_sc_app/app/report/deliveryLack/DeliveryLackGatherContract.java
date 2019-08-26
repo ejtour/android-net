@@ -85,7 +85,7 @@ public interface DeliveryLackGatherContract {
         void queryMoreDeliveryLackGatherList();
 
         /**
-         * 导出业务员签约绩效
+         * 导出
          *
          * @param email 邮箱地址
          */

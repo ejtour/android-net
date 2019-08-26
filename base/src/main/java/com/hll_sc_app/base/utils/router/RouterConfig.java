@@ -32,6 +32,18 @@ public class RouterConfig {
      */
     public static final String WAREHOUSE_LIST = "/activity/warehouse/list";
     /**
+     * 代仓公司-我发出的申请
+     */
+    public static final String WAREHOUSE_INVITE = "/activity/warehouse/invite";
+    /**
+     * 代仓公司-我收到的申请
+     */
+    public static final String WAREHOUSE_APPLICATION = "/activity/warehouse/application";
+    /**
+     * 代仓公司-我收到的申请-门店
+     */
+    public static final String WAREHOUSE_APPLICATION_SHOP = "/activity/warehouse/application/shops";
+    /**
      * 代仓公司-搜索添加
      */
     public static final String WAREHOUSE_ADD = "/activity/warehouse/add";
@@ -40,13 +52,59 @@ public class RouterConfig {
      */
     public static final String WAREHOUSE_DETAILS = "/activity/warehouse/details";
     /**
+     * 代仓公司-详细资料
+     */
+    public static final String WAREHOUSE_DETAIL = "/activity/warehouse/detail";
+    /**
+     * 代仓公司-门店详细资料
+     */
+    public static final String WAREHOUSE_SHOP_DETAIL = "/activity/warehouse/shop/detail";
+    /**
      * 代仓管理
      */
     public static final String WAREHOUSE_START = "/activity/warehouse/start";
     /**
+     * 支付管理
+     */
+    public static final String PAY_MANAGE = "/activity/payManage";
+    /**
+     * 支付管理-账期
+     */
+    public static final String PAY_MANAGE_ACCOUNT = "/activity/payManage/account";
+    /**
+     * 支付管理-支付方式选择
+     */
+    public static final String PAY_MANAGE_METHOD = "/activity/payManage/method";
+    /**
      * 代仓管理-我是货主默认介绍页面
      */
     public static final String WAREHOUSE_INTRODUCE = "/activity/warehouse/introduce";
+    /**
+     * 代仓管理-我是货主
+     */
+    public static final String WAREHOUSE_SHIPPER = "/activity/warehouse/shipper";
+    /**
+     * 代仓管理-我是货主-商品管理
+     */
+    public static final String WAREHOUSE_SHIPPER_GOODS = "/activity/warehouse/shipper/goods";
+    /**
+     * 代仓管理-我是货主-门店管理
+     */
+    public static final String WAREHOUSE_SHIPPER_SHOP = "/activity/warehouse/shipper/shop";
+    /**
+     * 代仓管理-我是货主-门店管理-详情
+     */
+    public static final String WAREHOUSE_SHIPPER_SHOP_DETAIL = "/activity/warehouse/shipper/shop/detail";
+    /**
+     * 代仓管理-我是货主-门店管理-详情-选择合作采购商
+     */
+    public static final String WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER = "/activity/warehouse/shipper/shop/detail" +
+            "/purchaser";
+    /**
+     * 代仓管理-我是货主-门店管理-详情-选择合作采购商-选择门店
+     */
+    public static final String WAREHOUSE_SHIPPER_SHOP_DETAIL_PURCHASER_SHOP = "/activity/warehouse/shipper/shop" +
+            "/detail/purchaser/shop";
     /**
      * 代仓管理-我是货主默认介绍页面-查看推荐
      */
@@ -155,6 +213,34 @@ public class RouterConfig {
      * 注册-完善资料
      */
     public static final String USER_REGISTER_COMPLEMENT = "/activity/user/register/complement";
+    /**
+     * 退货时效
+     */
+    public static final String REFUND_TIME = "/activity/refundTime";
+    /**
+     * 供应商店铺
+     */
+    public static final String SUPPLIER_SHOP = "/activity/supplierShop";
+    /**
+     * 定向售卖列表
+     */
+    public static final String ORIENTATION_LIST = "/activity/orientation/list";
+    /**
+     * 定向售卖详情
+     */
+    public static final String ORIENTATION_DETAIL = "/activity/orientation/detail";
+    /**
+     * 定向售卖合作采购商
+     */
+    public static final String ORIENTATION_COOPERATION_PURCHASER = "/activity/orientation/cooperation/purchaser";
+    /**
+     * 定向售卖合作门店
+     */
+    public static final String ORIENTATION_COOPERATION_SHOP = "/activity/orientation/cooperation/shop";
+    /**
+     * 定向售卖商品
+     */
+    public static final String ORIENTATION_PRODUCT = "/activity/orientation/product";
     /**
      * 首页
      */
@@ -663,5 +749,111 @@ public class RouterConfig {
     /*营销优惠券-选择客户-门店*/
     public static final String ACTIVITY_MARKETING_COUPON_SELECT_SHOPS = "/activity/marketing/coupon/select/shops";
 
+    public static final String BILL_LIST = "/activity/bill/list";
+
+    /**
+     * 对账单详情
+     */
+    public static final String BILL_DETAIL = "/activity/bill/detail";
+
+    /**
+     * 发票管理-入口
+     */
+    public static final String INVOICE_ENTRY = "/activity/invoice/entry";
+
+    /**
+     * 发票管理-发票详情
+     */
+    public static final String INVOICE_DETAIL = "/activity/invoice/detail";
+
+    /**
+     * 发票管理-发票详情-关联订单
+     */
+    public static final String INVOICE_DETAIL_ORDER = "/activity/invoice/detail/order";
+
+    /**
+     * 发票管理-发票详情-关联门店
+     */
+    public static final String INVOICE_DETAIL_SHOP = "/activity/invoice/detail/shop";
+
+    /**
+     * 发票管理-选择开票门店
+     */
+    public static final String INVOICE_SELECT_SHOP = "/activity/invoice/select/shop";
+
+    /**
+     * 发票管理-选择关联订单
+     */
+    public static final String INVOICE_SELECT_ORDER = "/activity/invoice/select/order";
+
+    /**
+     * 发票管理-填写发票信息
+     */
+    public static final String INVOICE_INPUT = "/activity/invoice/input";
+
+    /**
+     * 发票管理-填写发票信息-回款记录
+     */
+    public static final String INVOICE_RETURN_RECORD = "/activity/invoice/returnRecord";
+
+    /**
+     * 客户缺货汇总
+     */
+    public static final String REPORT_CUSTOMER_LACK_SUMMARY = "/activity/customer/lack/summary";
+
+    /**
+     * 客户缺货明细
+     */
+    public static final String REPORT_CUSTOMER_LACK_DETAIL = "/activity/customer/lack/detail";
+
+    /**
+     * 收货差异汇总
+     */
+    public static final String REPORT_INSPECT_LACK_LIST = "/activity/inspect/lack/list";
+
+    /**
+     * 收货差异明细
+     */
+    public static final String REPORT_INSPECT_LACK_DETAIL = "/activity/inspect/lack/detail";
+
+    /**
+     * 代仓商品明细
+     */
+    public static final String REPORT_WAREHOUSE_PRODUCT_DETAIL = "/activity/warehouse/product/detail";
+
+    /**
+     * 配送及时率汇总数据
+     */
+    public static final String REPORT_DELIVERY_TIME_AGGREGATION = "/activity/delivery/time/aggregation";
+
+    /**
+     * 配送及时率详情
+     */
+    public static final String REPORT_DELIVERY_TIME_DETAIL = "/activity/delivery/time/detail";
+
+    /**
+     * CRM-首页
+     */
+    public static final String CRM_HOME = "/fragment/crm/home";
+
+    /**
+     * CRM-订单
+     */
+    public static final String CRM_ORDER = "/fragment/crm/order";
+
+    /**
+     * CRM-客户
+     */
+    public static final String CRM_CUSTOMER = "/fragment/crm/customer";
+
+    /**
+     * CRM-日报
+     */
+    public static final String CRM_DAILY = "/fragment/crm/daily";
+
+    /**
+     * CRM-我的
+     */
+    public static final String CRM_MINE = "/fragment/crm/mine";
 }
 

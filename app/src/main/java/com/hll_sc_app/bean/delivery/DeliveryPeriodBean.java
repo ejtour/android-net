@@ -31,6 +31,28 @@ public class DeliveryPeriodBean implements Parcelable {
      */
     private int dayTimeFlag;
 
+    public static final Creator<DeliveryPeriodBean> CREATOR = new Creator<DeliveryPeriodBean>() {
+        @Override
+        public DeliveryPeriodBean createFromParcel(Parcel source) {
+            return new DeliveryPeriodBean(source);
+        }
+
+        @Override
+        public DeliveryPeriodBean[] newArray(int size) {
+            return new DeliveryPeriodBean[size];
+        }
+    };
+    private int position;
+
+    protected DeliveryPeriodBean(Parcel in) {
+        this.arrivalEndTime = in.readString();
+        this.arrivalStartTime = in.readString();
+        this.deliveryTimeID = in.readString();
+        this.billUpDateTime = in.readString();
+        this.dayTimeFlag = in.readInt();
+        this.position = in.readInt();
+    }
+
     public int getDayTimeFlag() {
         return dayTimeFlag;
     }
@@ -71,32 +93,20 @@ public class DeliveryPeriodBean implements Parcelable {
         this.deliveryTimeID = deliveryTimeID;
     }
 
-    public static final Parcelable.Creator<DeliveryPeriodBean> CREATOR = new Parcelable.Creator<DeliveryPeriodBean>() {
-        @Override
-        public DeliveryPeriodBean createFromParcel(Parcel source) {
-            return new DeliveryPeriodBean(source);
-        }
-
-        @Override
-        public DeliveryPeriodBean[] newArray(int size) {
-            return new DeliveryPeriodBean[size];
-        }
-    };
-
     public DeliveryPeriodBean() {
-    }
-
-    protected DeliveryPeriodBean(Parcel in) {
-        this.arrivalEndTime = in.readString();
-        this.arrivalStartTime = in.readString();
-        this.deliveryTimeID = in.readString();
-        this.billUpDateTime = in.readString();
-        this.dayTimeFlag = in.readInt();
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
@@ -106,5 +116,6 @@ public class DeliveryPeriodBean implements Parcelable {
         dest.writeString(this.deliveryTimeID);
         dest.writeString(this.billUpDateTime);
         dest.writeInt(this.dayTimeFlag);
+        dest.writeInt(this.position);
     }
 }

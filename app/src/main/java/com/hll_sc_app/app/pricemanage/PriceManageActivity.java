@@ -205,7 +205,8 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     @Override
     public void showPriceManageList(List<SkuGoodsBean> list, boolean append, int total) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
         }

@@ -5,6 +5,7 @@ import com.hll_sc_app.app.marketingsetting.product.check.SelectProductListActivi
 import com.hll_sc_app.app.search.stratery.BrandSearch;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.CooperationSearch;
+import com.hll_sc_app.app.search.stratery.CustomerLackSearch;
 import com.hll_sc_app.app.search.stratery.EmployeeSearch;
 import com.hll_sc_app.app.search.stratery.GoodsInvWarnSearch;
 import com.hll_sc_app.app.search.stratery.GoodsRelevanceListSearch;
@@ -12,10 +13,12 @@ import com.hll_sc_app.app.search.stratery.GoodsRelevanceSearch;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.app.search.stratery.GoodsTemplateSearch;
 import com.hll_sc_app.app.search.stratery.GoodsTopSearch;
+import com.hll_sc_app.app.search.stratery.InspectLackDetailSearch;
 import com.hll_sc_app.app.search.stratery.OrderSearch;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.app.search.stratery.SelectGroupSearch;
 import com.hll_sc_app.app.search.stratery.SelectShopSearch;
+import com.hll_sc_app.app.search.stratery.ShopSearch;
 import com.hll_sc_app.app.search.stratery.WarehouseSearch;
 
 import java.util.HashMap;
@@ -46,6 +49,9 @@ class SearchFactory {
         ITEM_MAP.put(SelectProductListActivity.MarketingSelectProductSearch.class.getSimpleName(), SelectProductListActivity.MarketingSelectProductSearch.class);
         ITEM_MAP.put(SelectGroupSearch.class.getSimpleName(), SelectGroupSearch.class);
         ITEM_MAP.put(SelectShopSearch.class.getSimpleName(), SelectShopSearch.class);
+        ITEM_MAP.put(CustomerLackSearch.class.getSimpleName(), CustomerLackSearch.class);
+        ITEM_MAP.put(InspectLackDetailSearch.class.getSimpleName(), InspectLackDetailSearch.class);
+        ITEM_MAP.put(ShopSearch.class.getSimpleName(), ShopSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {

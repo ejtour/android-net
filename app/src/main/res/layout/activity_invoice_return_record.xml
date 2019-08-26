@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/irr_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_rightText="确定"
+        app:tb_rightVisibility="true"
+        app:tb_title="新增回款记录" />
+
+    <TextView
+        android:id="@+id/irr_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/irr_title_bar"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="回款时间"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+    <TextView
+        android:id="@+id/irr_time"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/irr_time_label"
+        android:layout_alignBottom="@id/irr_time_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/irr_time_label"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical|right"
+        android:hint="请选择回款时间"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/irr_time_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/irr_type_label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/irr_time_label"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="回款方式"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+    <TextView
+        android:id="@+id/irr_type"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/irr_type_label"
+        android:layout_alignBottom="@id/irr_type_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/irr_type_label"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="5dp"
+        android:gravity="center_vertical|right"
+        android:hint="请选择回款方式"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/irr_type_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/irr_money_label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/irr_type_label"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:text="回款金额"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+    <EditText
+        android:id="@+id/irr_money"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/irr_money_label"
+        android:layout_alignBottom="@id/irr_money_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/irr_money_label"
+        android:background="@android:color/white"
+        android:gravity="center_vertical|right"
+        android:hint="请输入回款金额"
+        android:inputType="numberDecimal"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
+
+</RelativeLayout>

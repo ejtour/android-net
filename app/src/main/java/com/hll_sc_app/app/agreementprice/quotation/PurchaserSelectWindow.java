@@ -47,7 +47,7 @@ public class PurchaserSelectWindow extends BasePopupWindow {
     private PurchaserListAdapter mAdapter;
     private SelectConfirmListener mListener;
 
-    PurchaserSelectWindow(Activity context, List<PurchaserBean> list) {
+    public PurchaserSelectWindow(Activity context, List<PurchaserBean> list) {
         super(context);
         this.mList = list;
         View view = View.inflate(context, R.layout.window_purchaser_select, null);

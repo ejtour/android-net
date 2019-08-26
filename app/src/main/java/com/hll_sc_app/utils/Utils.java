@@ -5,6 +5,11 @@ import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.ILoadView;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.widget.ExportDialog;
 
 import java.util.regex.Matcher;
@@ -35,9 +40,9 @@ public class Utils {
         return flag;
     }
 
-    public static boolean checkPhone(String phone){
+    public static boolean checkPhone(String phone) {
         if (TextUtils.isEmpty(phone)) return false;
-        phone = phone.replaceAll("\\s+","");
+        phone = phone.replaceAll("\\s+", "");
         return phone.matches("^((13[0-9])|(14[57])|(15[0-35-9])|(16[6])|(17[0135-8])|(18[0-9])|(19[189]))\\d{8}$");
     }
 
@@ -52,7 +57,7 @@ public class Utils {
     }
 
     public static void exportSuccess(Activity context, String email) {
-        export(context, "导出成功", R.drawable.ic_dialog_state_success, "已发送至邮箱\n" + email, "我知道了", null);
+        export(context, "导出成功", R.drawable.ic_dialog_state_success, "已发送至邮箱\n" + email.replaceAll(";", "\n"), "我知道了", null);
     }
 
     public static void exportFailure(Activity context, String tip) {
@@ -61,5 +66,28 @@ public class Utils {
 
     public static void bindEmail(Activity context, ExportDialog.OnClickListener listener) {
         export(context, "您还没绑定邮箱", R.drawable.ic_dialog_state_failure, null, "绑定并导出", listener);
+    }
+
+    public static SimpleObserver<ExportResp> getExportObserver(IExportView export) {
+        return new SimpleObserver<ExportResp>(export) {
+            @Override
+            public void onSuccess(ExportResp resp) {
+                ILoadView view = getView();
+                if (!(view instanceof IExportView)) return;
+                if (!TextUtils.isEmpty(resp.getEmail()))
+                    ((IExportView) view).exportSuccess(resp.getEmail());
+                else ((IExportView) view).exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+            }
+
+            @Override
+            public void onFailure(UseCaseException e) {
+                ILoadView view = getView();
+                if (!(view instanceof IExportView)) return;
+                if ("00120112037".equals(e.getCode())) ((IExportView) view).bindEmail();
+                else if ("00120112038".equals(e.getCode()))
+                    ((IExportView) view).exportFailure("当前没有可导出的数据");
+                else ((IExportView) view).exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+            }
+        };
     }
 }

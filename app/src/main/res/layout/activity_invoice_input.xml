@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/aii_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="填写发票信息" />
+
+    <View
+        android:id="@+id/aii_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/aii_confirm"
+        style="@style/BtnOrderAction.PrimarySolid"
+        android:layout_width="200dp"
+        android:enabled="false"
+        android:text="确认信息无误，提交开票"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintBottom_toBottomOf="@id/aii_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/aii_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/aii_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/aii_bottom_bg" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/aii_bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aii_title_bar">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <View
+                android:id="@+id/aii_base_info_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aii_invoice_amount_label"
+                app:layout_constraintEnd_toEndOf="@id/aii_invoice_type"
+                app:layout_constraintStart_toStartOf="@id/aii_invoice_type_label"
+                app:layout_constraintTop_toTopOf="@id/aii_invoice_type_label" />
+
+            <TextView
+                android:id="@+id/aii_invoice_type_label"
+                style="@style/InvoiceInfoLabel"
+                android:layout_margin="@dimen/dp_10"
+                android:text="发票类型"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/aii_invoice_type"
+                style="@style/InvoiceInfoEdit"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                android:text="普通发票"
+                app:layout_constraintBottom_toBottomOf="@id/aii_invoice_type_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_invoice_type_label"
+                app:layout_constraintTop_toTopOf="@id/aii_invoice_type_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aii_invoice_type_label"
+                app:layout_constraintEnd_toEndOf="@id/aii_invoice_type"
+                app:layout_constraintStart_toStartOf="@id/aii_invoice_type_label" />
+
+            <TextView
+                android:id="@+id/aii_invoice_amount_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="申请开票金额"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_invoice_type_label" />
+
+            <EditText
+                android:id="@+id/aii_invoice_amount"
+                style="@style/InvoiceInfoEdit"
+                android:textColor="@color/color_ed5655"
+                android:inputType="numberDecimal"
+                android:digits="¥0123456789."
+                app:layout_constraintBottom_toBottomOf="@id/aii_invoice_amount_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_invoice_amount_label"
+                app:layout_constraintTop_toTopOf="@id/aii_invoice_amount_label"
+                tools:text="¥ 9300.00" />
+
+            <TextView
+                android:id="@+id/aii_amount_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="如发票金额有误，可修改为与客户对账确认后需开票金额"
+                android:textColor="@color/color_aeaeae"
+                android:textSize="@dimen/text_little_size"
+                app:layout_constraintEnd_toEndOf="@id/aii_base_info_bg"
+                app:layout_constraintTop_toBottomOf="@id/aii_base_info_bg" />
+
+            <View
+                android:id="@+id/aii_company_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aii_address_label"
+                app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
+                app:layout_constraintStart_toStartOf="@id/aii_radio_group"
+                app:layout_constraintTop_toTopOf="@id/aii_radio_group" />
+
+            <RadioGroup
+                android:id="@+id/aii_radio_group"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_margin="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_amount_tip">
+
+                <RadioButton
+                    android:id="@+id/aii_type_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/bg_selector_radio_button"
+                    android:checked="true"
+                    android:padding="@dimen/dp_10"
+                    android:text="企业"
+                    android:textSize="@dimen/text_middle_size" />
+
+                <RadioButton
+                    android:id="@+id/aii_type_personal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="50dp"
+                    android:button="@drawable/bg_selector_radio_button"
+                    android:padding="@dimen/dp_10"
+                    android:text="个人/事业单位"
+                    android:textSize="@dimen/text_middle_size" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aii_radio_group"
+                app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
+                app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
+
+            <TextView
+                android:id="@+id/aii_invoice_title_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="发票抬头"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_radio_group" />
+
+            <EditText
+                android:id="@+id/aii_invoice_title"
+                style="@style/InvoiceInfoEdit"
+                android:hint="请输入企业名称"
+                app:layout_constraintBottom_toBottomOf="@id/aii_invoice_title_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_invoice_title_label"
+                app:layout_constraintTop_toTopOf="@id/aii_invoice_title_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aii_invoice_title_label"
+                app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
+                app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
+
+            <TextView
+                android:id="@+id/aii_identifier_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="纳税人识别号"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_invoice_title_label" />
+
+            <EditText
+                android:id="@+id/aii_identifier"
+                style="@style/InvoiceInfoEdit"
+                android:hint="请输入纳税人识别号"
+                app:layout_constraintBottom_toBottomOf="@id/aii_identifier_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_identifier_label"
+                app:layout_constraintTop_toTopOf="@id/aii_identifier_label" />
+
+            <View
+                android:id="@+id/aii_identifier_div"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aii_identifier_label"
+                app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
+                app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
+
+            <android.support.constraint.Group
+                android:id="@+id/aii_identifier_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="aii_identifier_label,aii_identifier,aii_identifier_div" />
+
+            <TextView
+                android:id="@+id/aii_account_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="账号"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_identifier_label" />
+
+            <EditText
+                android:id="@+id/aii_account"
+                style="@style/InvoiceInfoEdit"
+                android:hint="请输入账号"
+                android:inputType="number"
+                app:layout_constraintBottom_toBottomOf="@id/aii_account_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_account_label"
+                app:layout_constraintTop_toTopOf="@id/aii_account_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aii_account_label"
+                app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
+                app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
+
+            <TextView
+                android:id="@+id/aii_bank_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="开户行"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_account_label" />
+
+            <EditText
+                android:id="@+id/aii_bank"
+                style="@style/InvoiceInfoEdit"
+                android:hint="请输入账号开户行"
+                app:layout_constraintBottom_toBottomOf="@id/aii_bank_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_bank_label"
+                app:layout_constraintTop_toTopOf="@id/aii_bank_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aii_bank_label"
+                app:layout_constraintEnd_toEndOf="@id/aii_radio_group"
+                app:layout_constraintStart_toStartOf="@id/aii_radio_group" />
+
+            <TextView
+                android:id="@+id/aii_address_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="地址"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_bank_label" />
+
+            <EditText
+                android:id="@+id/aii_address"
+                style="@style/InvoiceInfoEdit"
+                android:hint="请输入地址"
+                android:inputType="textPostalAddress"
+                app:layout_constraintBottom_toBottomOf="@id/aii_address_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_address_label"
+                app:layout_constraintTop_toTopOf="@id/aii_address_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aii_remark"
+                app:layout_constraintEnd_toEndOf="@id/aii_recipient"
+                app:layout_constraintStart_toStartOf="@id/aii_recipient_label"
+                app:layout_constraintTop_toTopOf="@id/aii_recipient_label" />
+
+            <TextView
+                android:id="@+id/aii_recipient_label"
+                style="@style/InvoiceInfoLabel"
+                android:layout_margin="@dimen/dp_10"
+                android:text="收件人"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_company_bg" />
+
+            <TextView
+                android:id="@+id/aii_recipient"
+                style="@style/InvoiceInfoEdit"
+                android:hint="请输入收件人姓名"
+                app:layout_constraintBottom_toBottomOf="@id/aii_recipient_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_recipient_label"
+                app:layout_constraintTop_toTopOf="@id/aii_recipient_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aii_recipient_label"
+                app:layout_constraintEnd_toEndOf="@id/aii_recipient"
+                app:layout_constraintStart_toStartOf="@id/aii_recipient_label" />
+
+            <TextView
+                android:id="@+id/aii_phone_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="联系电话"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_recipient_label" />
+
+            <EditText
+                android:id="@+id/aii_phone"
+                style="@style/InvoiceInfoEdit"
+                android:hint="请输入联系电话"
+                android:inputType="number"
+                android:maxLength="16"
+                app:layout_constraintBottom_toBottomOf="@id/aii_phone_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_phone_label"
+                app:layout_constraintTop_toTopOf="@id/aii_phone_label" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aii_phone_label"
+                app:layout_constraintEnd_toEndOf="@id/aii_phone"
+                app:layout_constraintStart_toStartOf="@id/aii_phone_label" />
+
+            <TextView
+                android:id="@+id/aii_remark_label"
+                style="@style/InvoiceInfoLabel"
+                android:text="备注"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aii_phone_label" />
+
+            <EditText
+                android:id="@+id/aii_remark"
+                style="@style/InvoiceInfoEdit"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:hint="可备注开票区间、开票金额"
+                android:minHeight="45dp"
+                android:padding="@dimen/dp_10"
+                android:singleLine="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/aii_remark_label"
+                app:layout_constraintTop_toTopOf="@id/aii_remark_label" />
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

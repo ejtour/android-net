@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/abl_top_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/base_white"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/abl_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightVisibility="true"
+        app:tb_title="对账单" />
+
+    <View
+        android:id="@+id/abl_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/abl_title_bar" />
+
+    <View
+        android:id="@+id/abl_line1"
+        android:layout_width="1dp"
+        android:layout_height="18dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser_btn"
+        app:layout_constraintEnd_toStartOf="@+id/abl_line2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
+
+    <View
+        android:id="@+id/abl_line2"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_line1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/abl_line1"
+        app:layout_constraintTop_toTopOf="@+id/abl_line1" />
+
+    <View
+        android:id="@+id/abl_purchaser_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toStartOf="@+id/abl_line1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/abl_divider" />
+
+    <TextView
+        android:id="@+id/abl_purchaser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="采购商"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser_btn"
+        app:layout_constraintEnd_toStartOf="@+id/abl_purchaser_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/abl_purchaser_btn"
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/abl_purchaser_arrow"
+        android:layout_width="8dp"
+        android:layout_height="4dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_purchaser"
+        app:layout_constraintEnd_toEndOf="@+id/abl_purchaser_btn"
+        app:layout_constraintStart_toEndOf="@+id/abl_purchaser"
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <View
+        android:id="@+id/abl_date_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toStartOf="@+id/abl_line2"
+        app:layout_constraintStart_toEndOf="@+id/abl_line1"
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
+
+    <TextView
+        android:id="@+id/abl_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="按日期筛选"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_date_btn"
+        app:layout_constraintEnd_toStartOf="@+id/abl_date_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/abl_date_btn"
+        app:layout_constraintTop_toTopOf="@+id/abl_date_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/abl_date_arrow"
+        android:layout_width="8dp"
+        android:layout_height="4dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_date"
+        app:layout_constraintEnd_toEndOf="@+id/abl_date_btn"
+        app:layout_constraintStart_toEndOf="@+id/abl_date"
+        app:layout_constraintTop_toTopOf="@+id/abl_date"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <View
+        android:id="@+id/abl_type_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/abl_line2"
+        app:layout_constraintTop_toTopOf="@+id/abl_purchaser_btn" />
+
+    <TextView
+        android:id="@+id/abl_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="未结算"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_date_btn"
+        app:layout_constraintEnd_toStartOf="@+id/abl_type_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/abl_type_btn"
+        app:layout_constraintTop_toTopOf="@+id/abl_date_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/abl_type_arrow"
+        android:layout_width="8dp"
+        android:layout_height="4dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/abl_type"
+        app:layout_constraintEnd_toEndOf="@+id/abl_type_btn"
+        app:layout_constraintStart_toEndOf="@+id/abl_type"
+        app:layout_constraintTop_toTopOf="@+id/abl_type"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <View
+        android:id="@+id/abl_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_white_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/abl_select_all"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:button="@drawable/bg_selector_check_box"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="全选"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/text_small_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/abl_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/abl_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/abl_bottom_bg" />
+
+    <TextView
+        android:id="@+id/abl_commit"
+        style="@style/BtnOrderAction.PrimarySolid"
+        android:enabled="false"
+        android:text="确认结算(0)"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/abl_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/abl_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/abl_bottom_bg" />
+
+    <TextView
+        android:id="@+id/abl_sum_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="总计："
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toBottomOf="@id/abl_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/abl_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/abl_bottom_bg" />
+
+    <TextView
+        android:id="@+id/abl_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toBottomOf="@id/abl_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/abl_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/abl_bottom_bg"
+        android:text="¥0.00"
+        tools:text="¥2,176,333.40" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/abl_refresh_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/abl_bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/abl_top_bg">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/abl_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="5dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</android.support.constraint.ConstraintLayout>

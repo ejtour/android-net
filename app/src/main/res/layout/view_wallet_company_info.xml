@@ -232,7 +232,7 @@
         android:id="@+id/wci_phone"
         style="@style/WalletInfoEdit"
         android:hint="请输入业务联系电话"
-        android:inputType="phone"
+        android:inputType="number"
         android:maxLength="16"
         app:layout_constraintBottom_toTopOf="@id/wci_contact_div2"
         app:layout_constraintEnd_toEndOf="@id/wci_contact_bg"

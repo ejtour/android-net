@@ -211,6 +211,10 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 .setCallback(new DatePickerDialog.SelectCallback() {
                     @Override
                     public void select(Date beginTime, Date endTime) {
+                        if (CalendarUtils.getDateBefore(endTime, 31).getTime() > beginTime.getTime()) {
+                            showToast("目前仅支持查找31天跨度的订单");
+                            return;
+                        }
                         mOrderParam.cancelTimeInterval();
                         switch (type) {
                             case OptionType.OPTION_FILTER_CREATE:

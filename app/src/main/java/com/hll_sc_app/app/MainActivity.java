@@ -1,26 +1,29 @@
 package com.hll_sc_app.app;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.RadioButton;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.goods.GoodsHomeFragment;
-import com.hll_sc_app.app.main.MainHomeFragment;
-import com.hll_sc_app.app.mine.MineHomeFragment;
-import com.hll_sc_app.app.order.OrderHomeFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.base.widget.TipRadioButton;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -42,15 +45,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseLoadActivity {
     @BindView(R.id.group_type)
     RadioGroup mGroupType;
-    @BindView(R.id.rbtn_order)
-    RadioButton mOrderBtn;
     private int mOldFragmentTag;
-    private Fragment mOldFragment;
-
-    private MainHomeFragment mMainFragment;
-    private OrderHomeFragment mOrderFragment;
-    private GoodsHomeFragment mGoodsFragment;
-    private MineHomeFragment mMineFragment;
+    private long mExitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +55,43 @@ public class MainActivity extends BaseLoadActivity {
         StatusBarCompat.setTranslucent(getWindow(), true);
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
-        mGroupType.setOnCheckedChangeListener(new TypeOnCheckedChangeListener());
-        setCurrentTab(PageType.HOME);
+        initView();
+    }
+
+    private void initView() {
+        mGroupType.setOnCheckedChangeListener((group, checkedId) -> setCurrentTab(checkedId));
+        if (TextUtils.isEmpty(UserConfig.getSalesmanID())) {
+            addRatioButton(PageType.SUPPLIER_HOME, "首页", getResources().getDrawable(R.drawable.bg_main_button_home));
+            addRatioButton(PageType.SUPPLIER_ORDER, "订单管理", getResources().getDrawable(R.drawable.bg_main_button_order));
+            addRatioButton(PageType.SUPPLIER_GOODS, "商品管理", getResources().getDrawable(R.drawable.bg_main_button_goods));
+            addRatioButton(PageType.SUPPLIER_MINE, "我的", getResources().getDrawable(R.drawable.bg_main_button_mine));
+            mGroupType.check(PageType.SUPPLIER_HOME);
+        } else {
+            addRatioButton(PageType.CRM_HOME, "首页", getResources().getDrawable(R.drawable.bg_main_button_home));
+            addRatioButton(PageType.CRM_ORDER, "订单", getResources().getDrawable(R.drawable.bg_main_button_order));
+            addRatioButton(PageType.CRM_CUSTOMER, "客户", getResources().getDrawable(R.drawable.bg_main_button_customer));
+            addRatioButton(PageType.CRM_DAILY, "日报", getResources().getDrawable(R.drawable.bg_main_button_daily));
+            addRatioButton(PageType.CRM_MINE, "我的", getResources().getDrawable(R.drawable.bg_main_button_mine));
+            mGroupType.check(PageType.CRM_HOME);
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    private void addRatioButton(@PageType int page, String name, Drawable res) {
+        RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(0, RadioGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.weight = 1;
+        TipRadioButton radioButton = new TipRadioButton(this);
+        radioButton.setButtonDrawable(null);
+        radioButton.setCompoundDrawablePadding(UIUtils.dip2px(3));
+        radioButton.setGravity(Gravity.CENTER);
+        radioButton.setPadding(0, UIUtils.dip2px(8), 0, UIUtils.dip2px(3));
+        radioButton.setText(name);
+        radioButton.setId(page);
+        radioButton.setTextSize(10);
+        radioButton.setTextColor(ContextCompat.getColorStateList(this, R.drawable.bg_main_button_text));
+        res.setBounds(0, 0, res.getIntrinsicWidth(), res.getIntrinsicHeight());
+        radioButton.setCompoundDrawables(null, res, null, null);
+        mGroupType.addView(radioButton, layoutParams);
     }
 
     @Override
@@ -72,7 +103,7 @@ public class MainActivity extends BaseLoadActivity {
     @Subscribe(priority = 2, threadMode = ThreadMode.MAIN)
     public void handleOrderEvent(OrderEvent event) {
         if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
-            mOrderBtn.setChecked(true);
+            mGroupType.check(PageType.SUPPLIER_ORDER);
         }
     }
 
@@ -87,89 +118,63 @@ public class MainActivity extends BaseLoadActivity {
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(tag));
-        if (mOldFragment != null) {
-            transaction.hide(mOldFragment);
+        if (mOldFragmentTag != 0) {
+            transaction.hide(getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag)));
         }
         if (currentFragment == null) {
             switch (tag) {
-                case PageType.HOME:
-                    mMainFragment = (MainHomeFragment) RouterUtil.getFragment(RouterConfig.ROOT_HOME_MAIN);
-                    currentFragment = mMainFragment;
+                case PageType.SUPPLIER_HOME:
+                    currentFragment = RouterUtil.getFragment(RouterConfig.ROOT_HOME_MAIN);
                     break;
-                case PageType.ORDER:
-                    mOrderFragment = (OrderHomeFragment) RouterUtil.getFragment(RouterConfig.ROOT_HOME_ORDER);
-                    currentFragment = mOrderFragment;
+                case PageType.SUPPLIER_ORDER:
+                case PageType.CRM_ORDER:
+                    currentFragment = RouterUtil.getFragment(RouterConfig.ROOT_HOME_ORDER);
                     break;
-                case PageType.GOODS:
-                    mGoodsFragment = (GoodsHomeFragment) RouterUtil.getFragment(RouterConfig.ROOT_HOME_GOODS);
-                    currentFragment = mGoodsFragment;
+                case PageType.SUPPLIER_GOODS:
+                    currentFragment = RouterUtil.getFragment(RouterConfig.ROOT_HOME_GOODS);
                     break;
-                case PageType.MINE:
-                    mMineFragment = (MineHomeFragment) RouterUtil.getFragment(RouterConfig.ROOT_HOME_MINE);
-                    currentFragment = mMineFragment;
+                case PageType.SUPPLIER_MINE:
+                case PageType.CRM_MINE:
+                    currentFragment = RouterUtil.getFragment(RouterConfig.ROOT_HOME_MINE);
+                    break;
+                case PageType.CRM_HOME:
+                    currentFragment = RouterUtil.getFragment(RouterConfig.CRM_HOME);
+                    break;
+                case PageType.CRM_CUSTOMER:
+                    currentFragment = RouterUtil.getFragment(RouterConfig.CRM_CUSTOMER);
+                    break;
+                case PageType.CRM_DAILY:
+                    currentFragment = RouterUtil.getFragment(RouterConfig.CRM_DAILY);
                     break;
                 default:
                     break;
             }
             if (currentFragment != null) {
-                transaction.add(R.id.flayout_container, currentFragment, String.valueOf(tag));
+                transaction.add(R.id.slice_container, currentFragment, String.valueOf(tag));
             }
         } else {
             transaction.show(currentFragment);
         }
         mOldFragmentTag = tag;
-        mOldFragment = currentFragment;
         transaction.commitAllowingStateLoss();
     }
 
     /**
      * Fragment 页面类型
      */
-    @IntDef({PageType.HOME, PageType.ORDER, PageType.GOODS, PageType.MINE})
+    @IntDef({PageType.SUPPLIER_HOME, PageType.SUPPLIER_ORDER, PageType.SUPPLIER_GOODS, PageType.SUPPLIER_MINE,
+            PageType.CRM_HOME, PageType.CRM_ORDER, PageType.CRM_CUSTOMER, PageType.CRM_DAILY, PageType.CRM_MINE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface PageType {
-        /**
-         * 首页
-         */
-        int HOME = 1;
-        /**
-         * 订单
-         */
-        int ORDER = 2;
-        /**
-         * 商品
-         */
-        int GOODS = 3;
-        /**
-         * 我的
-         */
-        int MINE = 4;
-    }
-
-    private class TypeOnCheckedChangeListener implements RadioGroup.OnCheckedChangeListener {
-        @Override
-        public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-            switch (checkedId) {
-                case R.id.rbtn_home:
-                    // 首页
-                    setCurrentTab(PageType.HOME);
-                    break;
-                case R.id.rbtn_order:
-                    // 分类
-                    setCurrentTab(PageType.ORDER);
-                    break;
-                case R.id.rbtn_product:
-                    // 购物车
-                    setCurrentTab(PageType.GOODS);
-                    break;
-                case R.id.rbtn_mine:
-                    // 我的
-                    setCurrentTab(PageType.MINE);
-                    break;
-                default:
-                    break;
-            }
-        }
+        int SUPPLIER_HOME = R.id.supplier_home;
+        int SUPPLIER_ORDER = R.id.supplier_order;
+        int SUPPLIER_GOODS = R.id.supplier_goods;
+        int SUPPLIER_MINE = R.id.supplier_mine;
+        int CRM_HOME = R.id.crm_home;
+        int CRM_ORDER = R.id.crm_order;
+        int CRM_CUSTOMER = R.id.crm_customer;
+        int CRM_DAILY = R.id.crm_daily;
+        int CRM_MINE = R.id.crm_mine;
     }
 
     @Override
@@ -179,6 +184,16 @@ public class MainActivity extends BaseLoadActivity {
             if (intent.getBooleanExtra("item", false))
                 EventBus.getDefault().post(new OrderEvent(OrderEvent.RELOAD_ITEM));
             else EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtils.showShort(this, "再按一次退出APP");
+            mExitTime = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
         }
     }
 }

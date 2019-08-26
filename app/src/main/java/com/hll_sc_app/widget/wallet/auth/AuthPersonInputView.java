@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
-import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.util.AttributeSet;
@@ -100,7 +100,6 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
             view.setOnDeleteListener(this::deleteImage);
             view.setMaxSize(2097152);
         });
-        mContact.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
     @Override
@@ -124,13 +123,39 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
 
     private void updateConsignorVisibility() {
         if (mAuthInfo.getLpCardType() == 0) {
-            mCardNo.setKeyListener(DigitsKeyListener.getInstance("0123456789X"));
-            mCardNo.setAllCaps(true);
+            mCardNo.setKeyListener(DigitsKeyListener.getInstance("1234567890xX"));
+            mCardNo.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
+            clearOptionalData();
         } else {
-            mCardNo.setKeyListener(null);
-            mCardNo.setAllCaps(false);
+            mCardNo.setKeyListener(DigitsKeyListener.getInstance("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"));
+            mCardNo.setFilters(new InputFilter[]{new InputFilter.LengthFilter(80)});
         }
         mConsignorGroup.setVisibility(mAuthInfo.getLpCardType() == 0 ? GONE : VISIBLE);
+    }
+
+    private void clearOptionalData() {
+        String cardNo = mCardNo.getText().toString();
+        if (!TextUtils.isEmpty(cardNo)) {
+            String result = cardNo.replaceAll("[^0-9xX]", "");
+            mCardNo.setText(result);
+            mCardNo.setSelection(result.length());
+        }
+        mConsignorName.setText("");
+        mAuthInfo.setProxyName("");
+        mConsignorCardNo.setText("");
+        mAuthInfo.setProxyIDCardNo("");
+        if (!TextUtils.isEmpty(mConsignorCardFront.getImgUrl())) {
+            mConsignorCardFront.deleteImage();
+            deleteImage(mConsignorCardFront);
+        }
+        if (!TextUtils.isEmpty(mConsignorCardBehind.getImgUrl())) {
+            mConsignorCardBehind.deleteImage();
+            deleteImage(mConsignorCardBehind);
+        }
+        if (!TextUtils.isEmpty(mConsignorPhoto.getImgUrl())) {
+            mConsignorPhoto.deleteImage();
+            deleteImage(mConsignorPhoto);
+        }
     }
 
     @Override
@@ -166,13 +191,11 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
             ToastUtils.showShort(getContext(), "授权联系人姓名中请勿包含特殊字符");
             return false;
         }
-        String cardNo = mConsignorCardNo.getText().toString();
-        if (!TextUtils.isEmpty(cardNo) && !cardNo.matches("^[1-9](\\d{14}|(\\d{16}X)|\\d{17})$")) {
+        if (mAuthInfo.getLpCardType() != 0 && !mConsignorCardNo.getText().toString().toUpperCase().matches("^[1-9](\\d{14}|(\\d{16}X)|\\d{17})$")) {
             ToastUtils.showShort(getContext(), "请输入正确的授权人身份证号");
             return false;
         }
-        String personCard = mCardNo.getText().toString();
-        if (mAuthInfo.getLpCardType() == 0 && !personCard.matches("^[1-9](\\d{14}|(\\d{16}X)|\\d{17})$")) {
+        if (mAuthInfo.getLpCardType() == 0 && !mCardNo.getText().toString().toUpperCase().matches("^[1-9](\\d{14}|(\\d{16}X)|\\d{17})$")) {
             ToastUtils.showShort(getContext(), "请输入正确的法人身份证号");
             return false;
         }
@@ -186,8 +209,8 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
     @Override
     public void inflateInfo() {
         mAuthInfo.setLpName(mPersonName.getText().toString());
-        mAuthInfo.setLpIDCardNo(mCardNo.getText().toString());
-        mAuthInfo.setLpPhone(mContact.getText().toString().replaceAll("\\s+",""));
+        mAuthInfo.setLpIDCardNo(mCardNo.getText().toString().toUpperCase());
+        mAuthInfo.setLpPhone(mContact.getText().toString().replaceAll("\\s+", ""));
         mAuthInfo.setProxyName(mConsignorName.getText().toString());
         mAuthInfo.setProxyIDCardNo(mConsignorCardNo.getText().toString());
     }
@@ -205,7 +228,7 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
         if (mCardTypeDialog == null) {
             List<NameValue> list = new ArrayList<>();
             list.add(new NameValue("身份证", String.valueOf(0)));
-            list.add(new NameValue("来往内地通信证", String.valueOf(2)));
+            list.add(new NameValue("来往内地通行证", String.valueOf(2)));
             list.add(new NameValue("台胞证", String.valueOf(4)));
             list.add(new NameValue("护照", String.valueOf(9)));
             int selectIndex = getSelectIndex(mAuthInfo.getLpCardType());
@@ -246,8 +269,6 @@ public class AuthPersonInputView extends ConstraintLayout implements IInfoInputV
     public void selectStartDate() {
         WalletHelper.showLongValidDateDialog((Activity) getContext(), (dialog, item) -> {
             dialog.dismiss();
-            mAuthInfo.setLpIDCardPeriod("");
-            mEndDate.setText("");
             if (item == 0) {
                 mAuthInfo.setLpIDCardPeriodBeginDate(WalletHelper.PERMANENT_DATE);
                 mAuthInfo.setLpIDCardPeriod(WalletHelper.PERMANENT_DATE);

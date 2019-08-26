@@ -3,20 +3,20 @@ package com.hll_sc_app.app.wallet.details.list;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
-import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.wallet.details.DetailsExportReq;
+import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.hll_sc_app.bean.wallet.details.DetailsRecord;
 import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
 import com.hll_sc_app.bean.wallet.details.WalletDetailsParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Wallet;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -124,43 +124,20 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
     public void export(String email) {
         UserBean userBean = GreenDaoUtils.getUser();
         if (userBean == null) return;
-        DetailsExportReq req = new DetailsExportReq();
-        req.setActionType(2);
+        ExportReq req = new ExportReq();
         req.setEmail(email);
         req.setTypeCode("fnancialDetail");
         req.setUserID(userBean.getEmployeeID());
-        if (!TextUtils.isEmpty(email)) {
-            req.setIsBindEmail(1);
-        }
-        DetailsExportReq.FinancialParams financialParams = new DetailsExportReq.FinancialParams();
-        DetailsExportReq.Params params = new DetailsExportReq.Params();
+        if (!TextUtils.isEmpty(email)) req.setIsBindEmail("1");
+        ExportReq.ParamsBean.FinancialParams financialParams = new ExportReq.ParamsBean.FinancialParams();
+        ExportReq.ParamsBean params = new ExportReq.ParamsBean();
         params.setFnancialDetail(financialParams);
         req.setParams(params);
         financialParams.setBeginTime(mParam.getFormatBeginTime());
         financialParams.setEndTime(mParam.getFormatEndTime());
         financialParams.setGroupID(userBean.getGroupID());
         financialParams.setSettleUnitID(mParam.getSettleUnitID());
-        Wallet.exportWalletDetailsList(req, new SimpleObserver<ExportResp>(mView) {
-            @Override
-            public void onSuccess(ExportResp exportResp) {
-                if (!TextUtils.isEmpty(exportResp.getEmail())) {
-                    mView.exportSuccess(exportResp.getEmail());
-                } else {
-                    mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                }
-            }
-
-            @Override
-            public void onFailure(UseCaseException e) {
-                if ("00120112037".equals(e.getCode())) {
-                    mView.bindEmail();
-                } else if ("00120112038".equals(e.getCode())) {
-                    mView.exportFailure("当前没有可导出的数据");
-                } else {
-                    mView.exportFailure(e.getMessage());
-                }
-            }
-        });
+        Common.exportExcel(req, Utils.getExportObserver(mView));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.cooperation;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -122,9 +123,9 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         mEmptyView = EmptyView.newBuilder(this).setTips("还没有合作采购商数据").create();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-                , UIUtils.dip2px(1)));
+            , UIUtils.dip2px(1)));
         View headView = LayoutInflater.from(this).inflate(R.layout.view_cooperation_purchaser_list_title,
-                mRecyclerView, false);
+            mRecyclerView, false);
         mTxtGroupTotal = headView.findViewById(R.id.txt_groupTotal);
         mTxtShopTotal = headView.findViewById(R.id.txt_shopTotal);
         mAdapter = new PurchaserListAdapter();
@@ -150,17 +151,17 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
      */
     private void showDelTipsDialog(PurchaserBean bean) {
         TipsDialog.newBuilder(this)
-                .setTitle("解除合作")
-                .setMessage("确定要解除合作采购商【" + bean.getPurchaserName() + "】嘛？")
-                .setButton((dialog, item) -> {
-                    if (item == 1) {
-                        mPresenter.delCooperationPurchaser(bean.getPurchaserID());
-                    } else {
-                        SwipeItemLayout.closeAllItems(mRecyclerView);
-                    }
-                    dialog.dismiss();
-                }, "取消", "确定")
-                .create().show();
+            .setTitle("解除合作")
+            .setMessage("确定要解除合作采购商【" + bean.getPurchaserName() + "】嘛？")
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    mPresenter.delCooperationPurchaser(bean.getPurchaserID());
+                } else {
+                    SwipeItemLayout.closeAllItems(mRecyclerView);
+                }
+                dialog.dismiss();
+            }, "取消", "确定")
+            .create().show();
     }
 
     @Subscribe
@@ -292,12 +293,24 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         @Override
         protected void convert(BaseViewHolder helper, PurchaserBean item) {
             helper.setText(R.id.txt_purchaserName, item.getPurchaserName())
-                    .setText(R.id.txt_linkMan,
-                            getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
-                    .setText(R.id.txt_shopCount, getShopCountString(item))
-                    .setGone(R.id.txt_shopCount, !mAdd)
-                    .setGone(R.id.txt_newShopNum, CommonUtils.getDouble(item.getNewShopNum()) != 0);
-            ((GlideImageView) helper.getView(R.id.img_logoUrl)).setImageURL(item.getLogoUrl());
+                .setText(R.id.txt_linkMan,
+                    getString(item.getLinkman()) + " / " + getString(PhoneUtil.formatPhoneNum(item.getMobile())))
+                .setText(R.id.txt_shopCount, getShopCountString(item))
+                .setGone(R.id.txt_shopCount, !mAdd)
+                .setGone(R.id.txt_newShopNum, CommonUtils.getDouble(item.getNewShopNum()) != 0);
+            GlideImageView imageView = helper.getView(R.id.img_logoUrl);
+            if (TextUtils.equals(item.getGroupActiveLabel(), "1")) {
+                // 禁用
+                imageView.setDisableImageUrl(item.getLogoUrl(), GlideImageView.GROUP_BLOCK_UP);
+                helper.setTextColor(R.id.txt_purchaserName, Color.parseColor("#999999"));
+            } else if (TextUtils.equals(item.getGroupActiveLabel(), "2")) {
+                // 注销
+                imageView.setDisableImageUrl(item.getLogoUrl(), GlideImageView.GROUP_LOG_OUT);
+                helper.setTextColor(R.id.txt_purchaserName, Color.parseColor("#999999"));
+            } else {
+                imageView.setImageURL(item.getLogoUrl());
+                helper.setTextColor(R.id.txt_purchaserName, Color.parseColor("#222222"));
+            }
         }
 
         private String getString(String str) {

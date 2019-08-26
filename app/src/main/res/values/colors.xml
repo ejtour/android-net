@@ -15,6 +15,7 @@
     <color name="color_ed5655">#ED5655</color>
     <color name="color_307ac1">#307AC1</color>
     <color name="color_222222">#222222</color>
+    <color name="color_333333">#333333</color>
     <color name="color_666666">#666666</color>
     <color name="color_999999">#999999</color>
     <color name="color_dddddd">#dddddd</color>
@@ -30,13 +31,20 @@
     <color name="color_d8d8d8">#d8d8d8</color>
     <color name="color_7ab9f7">#7ab9f7</color>
     <color name="color_f33030">#f33030</color>
+    <color name="color_de5c5c">#de5c5c</color>
+    <color name="color_ffffff">#ffffff</color>
     <color name="color_faad14">#faad14</color>
     <color name="color_fffbe6">#fffbe6</color>
     <color name="color_f6bb42">#f6bb42</color>
 
-
     <!--促销状态背景色-->
+    <color name="color_7ed321">#7ed321</color>
+    <color name="color_5aaaf1">#5aaaf1</color>
+    <color name="color_f6874f">#f6874f</color>
+
     <color name="color_FFF1B8">#FFF1B8</color>
     <color name="color_E6FED1">#E6FED1</color>
     <color name="color_EEEEEE">#EEEEEE</color>
+    <color name="color_e8f5fe">#e8f5fe</color>
+
 </resources>

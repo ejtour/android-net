@@ -174,31 +174,66 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rl_return_audit"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:text="退货审核"
             android:textAppearance="@style/TextAppearance.City22.Small"/>
 
         <TextView
+            android:id="@+id/txt_return_audit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:drawablePadding="5dp"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+            tools:text="货主审核"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_shopsNum"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:text="代仓门店"
+            android:textAppearance="@style/TextAppearance.City22.Small"/>
+
+        <TextView
+            android:id="@+id/txt_shopsNum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="12dp"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-            tools:text="北京市二十二城采购集团"/>
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"/>
 
     </LinearLayout>
 

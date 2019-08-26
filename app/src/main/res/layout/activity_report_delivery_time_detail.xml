@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/base_colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_back"
+            style="@style/BtnClose"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_18"
+            android:layout_centerInParent="true"
+            android:text="配送及时率详情"/>
+
+        <ImageView
+            android:id="@+id/txt_options"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bg_selector_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_options"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_select_date"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/txt_date_name_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="按日期筛选"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="19dp">
+            <TextView
+                android:id="@+id/txt_date_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/ic_date"
+                android:drawablePadding="5dp"
+                android:gravity="right"
+                android:hint="请选择日期"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+                android:textColorHint="@color/color_aeaeae"/>
+            <ImageView
+                android:id="@+id/report_delivery_time_arrow"
+                android:src="@drawable/ic_arrow_drop"
+                android:layout_width="7dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.hll_sc_app.widget.report.ExcelLayout
+        android:id="@+id/ogd_excel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ogd_hor_div" />
+
+    <com.hll_sc_app.widget.SyncHorizontalScrollView
+        android:id="@+id/delivery_lack_total"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_customer_total"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/base_white"/>
+
+            <TextView
+                android:id="@+id/txt_total"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="合计"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_dddddd"/>
+
+            <TextView
+                android:id="@+id/total_valid_order_num"
+                android:layout_width="79dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="发货单量"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_dddddd"/>
+
+            <TextView
+                android:id="@+id/total_on_time_order_num"
+                android:layout_width="59dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="单量"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_dddddd"/>
+
+            <TextView
+                android:id="@+id/total_on_time_order_rate"
+                android:layout_width="59dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="占比"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_dddddd"/>
+
+            <TextView
+                android:id="@+id/total_with15_order_num"
+                android:layout_width="59dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="单量"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_dddddd"/>
+
+            <TextView
+                android:id="@+id/total_with15_order_rate"
+                android:layout_width="59dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="占比"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_dddddd"/>
+
+            <TextView
+                android:id="@+id/total_with30_order_num"
+                android:layout_width="59dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="单量"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_dddddd"/>
+
+            <TextView
+                android:id="@+id/total_with30_order_rate"
+                android:layout_width="59dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="占比"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_dddddd"/>
+
+            <TextView
+                android:id="@+id/total_beyond30_order_num"
+                android:layout_width="59dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="单量"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/color_dddddd"/>
+
+            <TextView
+                android:id="@+id/total_beyond30_order_rate"
+                android:layout_width="59dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.City22.Little"
+                tools:text="占比"/>
+
+        </LinearLayout>
+    </com.hll_sc_app.widget.SyncHorizontalScrollView>
+
+</LinearLayout>

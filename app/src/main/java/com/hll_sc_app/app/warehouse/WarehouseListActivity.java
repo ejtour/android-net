@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,10 +24,13 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
+import com.hll_sc_app.bean.event.CloseShipper;
 import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
+import com.hll_sc_app.bean.event.RefreshWarehouseList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -49,7 +54,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 代仓公司列表
+ * 代仓客户列表
  *
  * @author zhuyingsong
  * @date 2019/8/5
@@ -63,6 +68,10 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     SearchView mSearchView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
+    @BindView(R.id.txt_options)
+    ImageView mTxtOptions;
 
     private EmptyView mEmptyView;
     private EmptyView mSearchEmptyView;
@@ -90,6 +99,8 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     }
 
     private void initView() {
+        mTxtTitle.setText(UserConfig.isSelfOperated() ? "我是代仓公司" : "代仓公司");
+        mTxtOptions.setVisibility(UserConfig.isSelfOperated() ? View.VISIBLE : View.GONE);
         mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到代仓公司数据").create();
         mEmptyView = EmptyView.newBuilder(this)
             .setTipsTitle("恭喜您已成功开启代仓业务！")
@@ -108,7 +119,6 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
             })
             .create();
 
-        mSearchView.setBackgroundResource(R.drawable.base_bg_shadow_top_white_bar);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -141,7 +151,11 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
                 } else if (view.getId() == R.id.content) {
-                    // TODO:
+                    if (UserConfig.isSelfOperated()) {
+                        RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAIL, bean.getGroupID());
+                    } else {
+                        RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getGroupID(), "formalSigned");
+                    }
                 }
             }
         });
@@ -163,8 +177,8 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
      */
     private void showDelTipsDialog(PurchaserBean bean) {
         TipsDialog.newBuilder(this)
-            .setTitle("删除合作")
-            .setMessage("确定要删除和【" + bean.getGroupName() + "】的代仓关系嘛？")
+            .setTitle("解除合作")
+            .setMessage("确定要解除和【" + bean.getGroupName() + "】的代仓关系嘛？")
             .setButton((dialog, item) -> {
                 if (item == 1) {
                     mPresenter.delWarehouseList(bean.getGroupID());
@@ -184,6 +198,11 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
         }
     }
 
+    @Subscribe
+    public void onEvent(RefreshWarehouseList event) {
+        mPresenter.queryWarehouseList(true);
+    }
+
     @Override
     public void hideLoading() {
         super.hideLoading();
@@ -197,6 +216,11 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
 
     @Override
     public void showWarehouseList(List<PurchaserBean> list, boolean append, int totalNum) {
+        if (totalNum == 0 && !UserConfig.isSelfOperated() && !mSearchView.isSearchStatus()) {
+            EventBus.getDefault().post(new CloseShipper());
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INTRODUCE, this);
+            return;
+        }
         if (append) {
             if (!CommonUtils.isEmpty(list)) {
                 mAdapter.addData(list);
@@ -225,7 +249,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     private void showOptionsWindow(View view) {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_warehouse_add, OptionType.OPTION_WAREHOUSE_ADD));
+            list.add(new OptionsBean(R.drawable.ic_warehouse_add, OptionType.OPTION_WAREHOUSE_CLIENT));
             list.add(new OptionsBean(R.drawable.ic_cooperation_receive, OptionType.OPTION_COOPERATION_RECEIVE));
             list.add(new OptionsBean(R.drawable.ic_cooperation_send, OptionType.OPTION_COOPERATION_SEND));
             mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
@@ -239,10 +263,12 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
         if (optionsBean == null) {
             return;
         }
-        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_WAREHOUSE_ADD)) {
+        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_WAREHOUSE_CLIENT)) {
             toAdd();
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_RECEIVE)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_APPLICATION);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_COOPERATION_SEND)) {
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_INVITE);
         }
         mOptionsWindow.dismiss();
     }

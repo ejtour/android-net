@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/are_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightVisibility="true"
+        app:tb_title="发票中心" />
+
+    <View
+        android:id="@+id/are_bottom_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/are_commit"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:minWidth="230dp"
+        android:text="新建开票申请"
+        app:layout_constraintBottom_toBottomOf="@id/are_bottom_bar"
+        app:layout_constraintEnd_toEndOf="@id/are_bottom_bar"
+        app:layout_constraintStart_toStartOf="@id/are_bottom_bar"
+        app:layout_constraintTop_toTopOf="@id/are_bottom_bar" />
+
+    <android.support.constraint.Group
+        android:id="@+id/are_commit_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="are_bottom_bar,are_commit" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/are_tab_layout"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/bg_divider_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/are_title_bar"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_indicator_corner_radius="2dp"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_width="65dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/color_999999"
+        app:tl_textsize="@dimen/text_middle_size" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/are_view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/are_bottom_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/are_tab_layout" />
+
+</android.support.constraint.ConstraintLayout>

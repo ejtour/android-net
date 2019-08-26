@@ -21,8 +21,8 @@ import com.hll_sc_app.base.utils.UIUtils;
  * @date 2019/7/17
  */
 public class ShopDisableDrawable extends Drawable {
-    private static final String DISABLE_TEXT = "门店已停用";
     private static final int TEXT_SIZE = UIUtils.dip2px(9);
+    private static final int ROUND_CORNER = UIUtils.dip2px(10);
     private static final int HORIZON_PADDING = UIUtils.dip2px(6);
     private static final int VERTICAL_PADDING = UIUtils.dip2px(3);
 
@@ -33,8 +33,10 @@ public class ShopDisableDrawable extends Drawable {
     private RectF mRect;
     private int mSourceWidth;
     private int mSourceHeight;
+    private String mTipsText;
 
-    public ShopDisableDrawable(Bitmap source) {
+    public ShopDisableDrawable(Bitmap source, String text) {
+        this.mTipsText = text;
         this.mSource = source;
         mSourceWidth = mSource.getWidth();
         mSourceHeight = mSource.getHeight();
@@ -48,26 +50,26 @@ public class ShopDisableDrawable extends Drawable {
         mPaint.setTextAlign(Paint.Align.CENTER);
         Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
         float textHeight = (-fontMetrics.ascent + fontMetrics.descent + fontMetrics.leading);
-        float textWidth = mPaint.measureText(DISABLE_TEXT);
+        float textWidth = mPaint.measureText(mTipsText);
 
         mBgPaint = new Paint();
+        mBgPaint.setAntiAlias(true);
         mBgPaint.setStyle(Paint.Style.FILL);
         mBgPaint.setColor(0x66000000);
-
         mRect = new RectF();
-        mRect.left = 0;
-        mRect.top = mSourceHeight - textHeight - 2 * VERTICAL_PADDING;
-        mRect.right = mSourceHeight;
-        mRect.bottom = mSourceWidth;
+        mRect.left = (float) mSourceWidth / 2 - textWidth / 2 - HORIZON_PADDING;
+        mRect.top = (float) mSourceHeight / 2 - textHeight / 2 - VERTICAL_PADDING;
+        mRect.right = mRect.left + textWidth + 2 * HORIZON_PADDING;
+        mRect.bottom = mRect.top + textHeight + 2 * VERTICAL_PADDING;
     }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
         canvas.drawBitmap(mSource, null, getBounds(), null);
         canvas.drawBitmap(mBgBitmap, null, getBounds(), null);
-        canvas.drawRect(mRect, mBgPaint);
-        canvas.drawText(DISABLE_TEXT, (float) mSourceWidth / 2,
-            (float) mSourceHeight - (mRect.bottom - mRect.top) / 2 + (-mPaint.ascent() - mPaint.descent()) / 2, mPaint);
+        canvas.drawRoundRect(mRect, ROUND_CORNER, ROUND_CORNER, mBgPaint);
+        canvas.drawText(mTipsText, (float) mSourceWidth / 2,
+            (float) mSourceHeight / 2 + (-mPaint.ascent() - mPaint.descent()) / 2, mPaint);
     }
 
     @Override

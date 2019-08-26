@@ -16,6 +16,8 @@ public interface IOrderInspectionContract {
          * 验货成功
          */
         void confirmSuccess(OrderInspectionResp result);
+
+        void gotInspectionMode(Integer result);
     }
 
     interface IOrderInspectionPresenter extends IPresenter<IOrderInspectionView> {

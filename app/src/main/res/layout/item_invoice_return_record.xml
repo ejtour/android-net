@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="85dp">
+
+    <TextView
+        android:id="@+id/irr_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toTopOf="@id/irr_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="现金回款" />
+
+    <TextView
+        android:id="@+id/irr_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/irr_type"
+        app:layout_constraintTop_toBottomOf="@id/irr_type"
+        tools:text="回款时间：2019/02/03" />
+
+    <TextView
+        android:id="@+id/irr_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="¥0.00"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/irr_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="¥587.00" />
+
+    <TextView
+        android:id="@+id/irr_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="已经确认结算"
+        android:textColor="@color/color_7ed321"
+        android:textSize="@dimen/text_small_size"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@id/irr_time"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/irr_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:text="确认结算"
+        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
+        app:layout_constraintBaseline_toBaselineOf="@id/irr_time"
+        app:layout_constraintEnd_toStartOf="@id/irr_done" />
+
+    <View
+        android:id="@+id/irr_line"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/irr_time"
+        app:layout_constraintEnd_toStartOf="@id/irr_confirm"
+        app:layout_constraintTop_toTopOf="@id/irr_time" />
+
+    <TextView
+        android:id="@+id/irr_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:text="编辑"
+        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
+        app:layout_constraintBaseline_toBaselineOf="@id/irr_time"
+        app:layout_constraintEnd_toStartOf="@id/irr_line" />
+</android.support.constraint.ConstraintLayout>

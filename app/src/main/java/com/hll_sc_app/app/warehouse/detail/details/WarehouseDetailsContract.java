@@ -6,7 +6,7 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
 
 /**
- * 代仓管理-代仓详情
+ * 代仓管理-代仓客户详情
  *
  * @author zhuyingsong
  * @date 2019/8/5
@@ -15,7 +15,7 @@ public interface WarehouseDetailsContract {
 
     interface IWarehouseDetailsView extends ILoadView {
         /**
-         * 展示代仓详情
+         * 展示代仓客户详情
          *
          * @param resp 代仓详情数据
          */
@@ -29,7 +29,7 @@ public interface WarehouseDetailsContract {
 
     interface IWarehouseDetailsPresenter extends IPresenter<IWarehouseDetailsView> {
         /**
-         * 查询代仓详情
+         * 查询代仓客户详情
          *
          * @param purchaserId 签约关系主键id
          */
@@ -57,5 +57,12 @@ public interface WarehouseDetailsContract {
          * @param type agree-同意合作 refuse-拒绝合作
          */
         void agreeOrRefuseWarehouse(BaseMapReq req, String type);
+
+        /**
+         * 编辑代仓客户退货审核参数
+         *
+         * @param req req
+         */
+        void editWarehouseParameter(BaseMapReq req);
     }
 }

@@ -1,10 +1,12 @@
 package com.hll_sc_app.app.warehouse.detail.details;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -15,20 +17,33 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.RefreshWarehouseList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.warehouse.WarehouseDetailResp;
+import com.hll_sc_app.bean.warehouse.WarehouseShopBean;
+import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.SingleSelectionDialog;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 代仓管理-代仓详情
+ * 代仓管理-代仓客户详情
  *
  * @author zhuyingsong
  * @date 2019/8/5
@@ -53,7 +68,17 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
     WarehouseButtonView mButtonView;
     @BindView(R.id.txt_businessModel)
     TextView mTxtBusinessModel;
+    @BindView(R.id.txt_return_audit)
+    TextView mTxtReturnAudit;
+    @BindView(R.id.rl_return_audit)
+    RelativeLayout mRlReturnAudit;
+    @BindView(R.id.txt_shopsNum)
+    TextView mTxtShopsNum;
+    @BindView(R.id.ll_shopsNum)
+    LinearLayout mLlShopsNum;
     private WarehouseDetailsPresenter mPresenter;
+    private SingleSelectionDialog mDialog;
+    private WarehouseDetailResp mResp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,29 +92,72 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         mPresenter.queryCooperationWarehouseDetail(mPurchaserId);
     }
 
-    @OnClick({R.id.img_close})
+    @OnClick({R.id.img_close, R.id.rl_return_audit, R.id.ll_shopsNum})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
+        } else if (view.getId() == R.id.rl_return_audit) {
+            showReturnAuditWindow();
+        } else if (view.getId() == R.id.ll_shopsNum) {
+            List<WarehouseShopBean> shops = mResp.getShops();
+            if (CommonUtils.isEmpty(shops)) {
+                return;
+            }
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_APPLICATION_SHOP, new ArrayList<>(shops));
         }
+    }
+
+    private void showReturnAuditWindow() {
+        if (mDialog == null) {
+            List<NameValue> values = new ArrayList<>();
+            NameValue value0 = new NameValue("代仓公司审核", "0");
+            NameValue value1 = new NameValue("货主审核", "1");
+            values.add(value0);
+            values.add(value1);
+            mDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                .setTitleText("选择退货审核")
+                .select(TextUtils.equals(mTxtReturnAudit.getText(), "代仓公司审核") ? value0 : value1)
+                .setOnSelectListener(bean -> {
+                    mTxtReturnAudit.setText(bean.getName());
+                    BaseMapReq req = BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("purchaserID", mPurchaserId)
+                        .put("returnAudit", bean.getValue())
+                        .create();
+                    mPresenter.editWarehouseParameter(req);
+                })
+                .refreshList(values)
+                .create();
+        }
+        mDialog.show();
     }
 
     @Override
     public void showDetail(WarehouseDetailResp resp) {
+        mResp = resp;
         if (resp == null) {
             return;
         }
-        PurchaserBean purchaserInfo = resp.getPurchaserInfo();
-        if (purchaserInfo != null) {
-            mImgLogoUrl.setImageURL(purchaserInfo.getLogoUrl());
-            mTxtBusinessModel.setText(getBusinessModelString(purchaserInfo.getBusinessModel()));
-            mTxtGroupName.setText(purchaserInfo.getGroupName());
-            mTxtGroupArea.setText(purchaserInfo.getGroupArea());
-            mTxtLinkman.setText(purchaserInfo.getLinkman());
-            mTxtMobile.setText(purchaserInfo.getMobile());
-            mButtonView.showButton(mActionType, resp.getStatus());
-            mButtonView.setListener(this, purchaserInfo);
+        PurchaserBean info = UserConfig.isSelfOperated() ? resp.getPurchaserInfo() : resp.getGroupInfo();
+        if (info != null) {
+            mImgLogoUrl.setImageURL(info.getLogoUrl());
+            mTxtBusinessModel.setText(getBusinessModelString(info.getBusinessModel()));
+            mTxtGroupName.setText(info.getGroupName());
+            mTxtGroupArea.setText(info.getGroupArea());
+            mTxtLinkman.setText(info.getLinkman());
+            mTxtMobile.setText(info.getMobile());
+            mButtonView.setListener(this, info);
         }
+        mButtonView.showButton(mActionType, resp.getStatus());
+        mRlReturnAudit.setVisibility(UserConfig.isSelfOperated() && TextUtils.equals(resp.getStatus(), "2") ?
+            View.VISIBLE : View.GONE);
+        mTxtReturnAudit.setText(TextUtils.equals(resp.getReturnAudit(), "0") ? "代仓公司审核" : "货主审核");
+
+        mLlShopsNum.setVisibility(UserConfig.isSelfOperated()
+            && TextUtils.equals(resp.getStatus(), "0")
+            && TextUtils.equals(mActionType, "signApplication") ? View.VISIBLE : View.GONE);
+        mTxtShopsNum.setText(String.format(Locale.getDefault(), "需代仓%d个门店", CommonUtils.isEmpty(mResp.getShops()) ? 0 :
+            mResp.getShops().size()));
     }
 
     public static String getBusinessModelString(int businessModel) {
@@ -106,9 +174,8 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
 
     @Override
     public void editSuccess() {
-        ARouter.getInstance().build(RouterConfig.WAREHOUSE_LIST)
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            .navigation(this);
+        EventBus.getDefault().post(new RefreshWarehouseList());
+        finish();
     }
 
     @Override
@@ -127,13 +194,25 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
 
     @Override
     public void del(PurchaserBean bean, String type) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("originator", "1")
-            .put("purchaserID", bean.getGroupID())
-            .put("type", type)
-            .create();
-        mPresenter.delWarehouse(req, type);
+        BaseMapReq.Builder builder = BaseMapReq.newBuilder();
+        if (UserConfig.isSelfOperated()) {
+            builder
+                .put("originator", "1")
+                .put("groupID", UserConfig.getGroupID())
+                .put("purchaserID", bean.getGroupID());
+        } else {
+            builder
+                .put("originator", "0")
+                .put("groupID", bean.getGroupID())
+                .put("purchaserID", UserConfig.getGroupID());
+        }
+        builder.put("type", type);
+        if (TextUtils.equals("1", type)) {
+            // 1-解除合作，2-放弃
+            showTipsDialog(builder.create(), type);
+        } else {
+            mPresenter.delWarehouse(builder.create(), type);
+        }
     }
 
     @Override
@@ -154,22 +233,60 @@ public class WarehouseDetailsActivity extends BaseLoadActivity implements Wareho
         BaseMapReq.Builder builder = BaseMapReq.newBuilder();
         UserBean user = GreenDaoUtils.getUser();
         if (user != null) {
-            builder.put("groupID", user.getGroupID())
-                .put("originator", "1")
-                .put("purchaserID", bean.getGroupID());
+            if (UserConfig.isSelfOperated()) {
+                builder
+                    .put("originator", "1")
+                    .put("groupID", user.getGroupID())
+                    .put("purchaserID", bean.getGroupID());
+            } else {
+                builder
+                    .put("originator", "0")
+                    .put("groupID", bean.getGroupID())
+                    .put("purchaserID", user.getGroupID())
+                    .put("warehouseType", "1");
+            }
         }
         return builder;
+    }
+
+    private void showTipsDialog(BaseMapReq req, String type) {
+        SuccessDialog.newBuilder(this)
+            .setImageTitle(R.drawable.ic_dialog_failure)
+            .setImageState(R.drawable.ic_dialog_state_failure)
+            .setMessageTitle("确认要解除合作嘛")
+            .setMessage("您确认要解除和该公司的\n代仓合作关系嘛")
+            .setCancelable(false)
+            .setButton((dialog, item) -> {
+                if (item == 1) {
+                    mPresenter.delWarehouse(req, type);
+                }
+                dialog.dismiss();
+            }, "我再看看", "确认解除")
+            .create()
+            .show();
     }
 
     private BaseMapReq.Builder getAddReq(PurchaserBean bean) {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder();
         UserBean user = GreenDaoUtils.getUser();
         if (user != null) {
-            builder.put("groupID", user.getGroupID())
-                .put("groupName", user.getGroupName())
-                .put("originator", "1")
-                .put("purchaserID", bean.getGroupID())
-                .put("purchaserName", bean.getGroupName());
+            if (UserConfig.isSelfOperated()) {
+                // 是自营-代仓公司
+                builder.put("groupID", user.getGroupID())
+                    .put("groupName", user.getGroupName())
+                    .put("originator", "1")
+                    .put("purchaserID", bean.getGroupID())
+                    .put("purchaserName", bean.getGroupName());
+            } else {
+                // 非自营-货主
+                builder
+                    .put("groupID", bean.getGroupID())
+                    .put("groupName", bean.getGroupName())
+                    .put("originator", "0")
+                    .put("purchaserID", user.getGroupID())
+                    .put("purchaserName", user.getGroupName())
+                    .put("warehouseType", "1");
+            }
         }
         return builder;
     }

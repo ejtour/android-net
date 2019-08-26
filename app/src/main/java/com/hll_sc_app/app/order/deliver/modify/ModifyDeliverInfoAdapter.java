@@ -53,7 +53,7 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
                 if (item != null) {
                     if (s.toString().startsWith("."))
                         s.insert(0, "0");
-                    if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1) {
+                    if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
                         s.delete(s.length() - 1, s.length());
                     }
                     item.setAdjustmentNum(TextUtils.isEmpty(s.toString()) ? 0 : Double.parseDouble(s.toString()));

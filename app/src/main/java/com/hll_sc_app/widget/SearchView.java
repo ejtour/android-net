@@ -31,14 +31,23 @@ public class SearchView extends FrameLayout {
 
     private boolean isLeftModal = false;
 
-    public SearchView(@NonNull Context context) {
-        super(context);
+    public SearchView(Context context) {
+        this(context, null);
+    }
+
+    public SearchView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public SearchView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
         init(context);
     }
 
     private void init(Context context) {
         mContext = context;
-        setBackgroundResource(R.color.base_white);
+        if (getBackground() == null)
+            setBackgroundResource(R.drawable.base_bg_shadow_top_white_bar);
         int padding = UIUtils.dip2px(10);
         setPadding(0, padding, 0, padding);
         View.inflate(context, R.layout.view_search, this);
@@ -83,11 +92,6 @@ public class SearchView extends FrameLayout {
         if (mListener != null) {
             mListener.toSearch(getSearchContent());
         }
-    }
-
-    public SearchView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
     }
 
     public LinearLayout getContentView() {

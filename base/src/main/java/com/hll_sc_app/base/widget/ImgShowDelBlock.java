@@ -22,6 +22,7 @@ public class ImgShowDelBlock extends RelativeLayout {
     private GlideImageView mImgShow;
     private ImageView mImgDel;
     private String mUrl;
+    private boolean mShowDel = true;
 
     public ImgShowDelBlock(Context context) {
         super(context);
@@ -51,7 +52,7 @@ public class ImgShowDelBlock extends RelativeLayout {
             mImgDel.setVisibility(View.GONE);
         } else {
             mImgShow.setVisibility(View.VISIBLE);
-            mImgDel.setVisibility(View.VISIBLE);
+            if (mShowDel) mImgDel.setVisibility(View.VISIBLE);
             mImgShow.isPreview(true);
             mImgShow.setImageURL(url);
         }
@@ -71,6 +72,7 @@ public class ImgShowDelBlock extends RelativeLayout {
      * @param isShow true
      */
     public void showDel(boolean isShow) {
+        mShowDel = isShow;
         if (mImgDel != null) {
             mImgDel.setVisibility(isShow ? View.VISIBLE : View.GONE);
         }

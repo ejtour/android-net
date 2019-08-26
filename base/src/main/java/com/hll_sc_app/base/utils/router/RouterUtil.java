@@ -67,6 +67,7 @@ public class RouterUtil {
      * @param key      key
      */
     private static void getPostcard(Postcard postcard, String key, Object value) {
+        if (value == null) return;
         String type = value.getClass().getSimpleName();
         if ("String".equals(type)) {
             postcard.withString(key, (String) value);
@@ -78,6 +79,8 @@ public class RouterUtil {
             postcard.withFloat(key, (Float) value);
         } else if ("Long".equals(type)) {
             postcard.withLong(key, (Long) value);
+        } else if ("Double".equals(type)) {
+            postcard.withDouble(key, (Double) value);
         }
     }
 

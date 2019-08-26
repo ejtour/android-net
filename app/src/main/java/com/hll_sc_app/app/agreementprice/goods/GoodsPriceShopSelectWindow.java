@@ -96,8 +96,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
      */
     private void showPurchaserList() {
         EmptyView emptyView = EmptyView.newBuilder(mActivity)
-            .setImage(R.drawable.ic_search_empty_purchaser)
-            .setTips("没有找到相关的集团噢").create();
+                .setImage(R.drawable.ic_search_empty_purchaser)
+                .setTips("没有找到相关的集团噢").create();
         mAdapterPurchaser = new PurchaserListAdapter(mList);
         mAdapterPurchaser.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = (PurchaserBean) adapter.getItem(position);
@@ -120,8 +120,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
 
 
         EmptyView emptyViewShop = EmptyView.newBuilder(mActivity)
-            .setImage(R.drawable.ic_empty_shop_view)
-            .setTips("没有找到相关的门店噢").create();
+                .setImage(R.drawable.ic_empty_shop_view)
+                .setTips("没有找到相关的门店噢").create();
         mAdapterPurchaserShop = new PurchaserShopListAdapter();
         mAdapterPurchaserShop.setOnItemClickListener((adapter, view, position) -> {
             PurchaserShopBean shopBean = (PurchaserShopBean) adapter.getItem(position);
@@ -276,7 +276,8 @@ public class GoodsPriceShopSelectWindow extends BasePopupWindow {
                 }
                 if (bean.isSelect()) {
                     selectId.add(bean.getShopID());
-                    selectName.add(bean.getShopName());
+                    if (selectName.size() < 4) // 门店名列表最多存三个
+                        selectName.add(bean.getShopName());
                 }
             }
         }

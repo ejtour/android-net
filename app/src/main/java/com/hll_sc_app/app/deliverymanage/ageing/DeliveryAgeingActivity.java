@@ -31,10 +31,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 员工管理-选择员工岗位
+ * 配送时效管理-配送时效
  *
- * @author zhuyingsong
- * @date 2019/7/25
+ * @author 朱英松
+ * @date 2019/7/29
  */
 @Route(path = RouterConfig.DELIVERY_AGEING_MANAGE, extras = Constant.LOGIN_EXTRA)
 public class DeliveryAgeingActivity extends BaseLoadActivity {
@@ -95,12 +95,21 @@ public class DeliveryAgeingActivity extends BaseLoadActivity {
                 finish();
                 break;
             case R.id.txt_add:
-                RouterUtil.goToActivity(RouterConfig.DELIVERY_AGEING_DETAIL);
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_AGEING_DETAIL, (getDeliveryAgeingCount() + 1));
                 break;
             default:
                 break;
 
         }
+    }
+
+    private int getDeliveryAgeingCount() {
+        int position = 0;
+        if (!CommonUtils.isEmpty(mListFragment)) {
+            DeliveryAgeingFragment lazyFragment = (DeliveryAgeingFragment) mListFragment.get(0);
+            position = lazyFragment.getItemCount();
+        }
+        return position;
     }
 
     class FragmentListAdapter extends FragmentPagerAdapter {

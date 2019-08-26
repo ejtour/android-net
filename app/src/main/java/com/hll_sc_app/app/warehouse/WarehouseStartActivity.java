@@ -23,6 +23,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.warehouse.GroupDetail;
+import com.hll_sc_app.bean.warehouse.WarehouseListResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import butterknife.ButterKnife;
@@ -45,7 +46,11 @@ public class WarehouseStartActivity extends BaseLoadActivity {
         StatusBarCompat.setLightStatusBar(getWindow(), true);
         StatusBarCompat.setTranslucent(getWindow(), true);
         ButterKnife.bind(this);
-        getWarehouseOpen();
+        if (UserConfig.isSelfOperated()) {
+            getWarehouseOpen();
+        } else {
+            queryWarehouseList();
+        }
     }
 
     public void getWarehouseOpen() {
@@ -63,6 +68,35 @@ public class WarehouseStartActivity extends BaseLoadActivity {
                 @Override
                 public void onSuccess(GroupDetail result) {
                     dealResult(result);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    finish();
+                    showError(e);
+                }
+            });
+    }
+
+    public void queryWarehouseList() {
+        BaseMapReq req = BaseMapReq.newBuilder()
+            .put("actionType", "formalSigned")
+            .put("purchaserID", UserConfig.getGroupID())
+            .put("originator", "0")
+            .put("pageNum", "1")
+            .put("pageSize", "20")
+            .put("source", "app")
+            .create();
+        WarehouseService.INSTANCE
+            .queryWarehouseList(req)
+            .compose(ApiScheduler.getObservableScheduler())
+            .map(new Precondition<>())
+            .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
+            .subscribe(new BaseCallback<WarehouseListResp>() {
+                @Override
+                public void onSuccess(WarehouseListResp resp) {
+                    RouterUtil.goToActivity(resp.getTotalNum() > 0 ? RouterConfig.WAREHOUSE_SHIPPER :
+                        RouterConfig.WAREHOUSE_INTRODUCE, WarehouseStartActivity.this);
                 }
 
                 @Override

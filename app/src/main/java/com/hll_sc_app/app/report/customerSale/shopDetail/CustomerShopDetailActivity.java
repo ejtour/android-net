@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -111,6 +112,12 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     ImageView imgClear;
     @BindView(R.id.report_date_arrow)
     ImageView reportDateArrow;
+    @BindView(R.id.report_date_customer_arrow)
+    ImageView reportCustomerDateArrow;
+    @BindView(R.id.date_customer)
+    TextView dateCustomer;
+    @BindView(R.id.date_customer_display)
+    LinearLayout linearLayout;
 
     private CustomerShopListAdapter mAdapter;
     private CustomerShopDetailPresenter mPresenter;
@@ -122,6 +129,8 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     int timeType = TimeTypeEnum.DAY.getCode();
     int timeFlag = TimeFlagEnum.TODAY.getCode();
     private CustomerSaleReq params = new CustomerSaleReq();
+
+    boolean isClickCustomer = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -168,7 +177,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         mTxtDateName.setText(String.format("%s", displayDate));
     }
 
-    @OnClick({R.id.img_back, R.id.edt_search, R.id.img_clear})
+    @OnClick({R.id.img_back, R.id.edt_search, R.id.img_clear,R.id.txt_date_name_title,R.id.date_customer})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -187,20 +196,23 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
                 mPresenter.queryCustomerShopDetailList(true);
                 imgClear.setVisibility(View.GONE);
                 break;
+            case R.id.txt_date_name_title:
+                showOptionsWindow(dateFlagTextView);
+                break;
+            case R.id.date_customer:
+                showOptionsWindow(dateCustomer);
+                break;
             default:
                 break;
         }
     }
 
-    @OnClick(R.id.txt_date_name_title)
-    public void onViewClicked() {
-        reportDateArrow.setRotation(180);
-        showOptionsWindow(dateFlagTextView);
-    }
-
     private void showOptionsWindow(View view) {
         if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
+            mOptionsWindow = new ContextOptionsWindow(this).setListener(this);
+        }
+        List<OptionsBean> list = new ArrayList<>();
+        if(view.getId()==R.id.txt_date_name_title){
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_DATE));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_YES_DATE));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_WEEK));
@@ -208,12 +220,21 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_MONTH));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_MONTH));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
-            mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
+            mOptionsWindow.setOnDismissListener(()->{
+                reportDateArrow.setRotation(0);
+            });
+            reportDateArrow.setRotation(180);
+        }else {
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_DATE_AGGREGATION));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_WEEK_AGGREGATION));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_MONTH_AGGREGATION));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_YEAR_AGGREGATION));
+            mOptionsWindow.setOnDismissListener(()->{
+                reportCustomerDateArrow.setRotation(0);
+            });
+            reportCustomerDateArrow.setRotation(180);
         }
-        mOptionsWindow.setOnDismissListener(()->{
-            reportDateArrow.setRotation(0);
-        });
-        reportDateArrow.setRotation(180);
+        mOptionsWindow.refreshList(list);
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }
 
@@ -230,7 +251,8 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     @Override
     public void showCustomerShopDetailList(List<CustomerSalesRecords> list, boolean append, int total) {
         if (append) {
-            mAdapter.addData(list);
+            if (!CommonUtils.isEmpty(list))
+                mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
         }
@@ -310,14 +332,17 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         }
         boolean isExport = false;
         String dateText = TimeFlagEnum.TODAY.getDesc();
+        String dateCustomerText=OptionType.OPTION_REPORT_DATE_AGGREGATION;
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_DATE)) {
             serverDate = DateUtil.currentTimeHllDT8() + "";
             localDate = CalendarUtils.format(new Date(), FORMAT_DATE);
+            isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_YES_DATE)) {
             serverDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1), CalendarUtils.FORMAT_LOCAL_DATE);
             localDate = CalendarUtils.format(CalendarUtils.getDateBefore(new Date(), 1), FORMAT_DATE);
             timeFlag = TimeFlagEnum.YESTERDAY.getCode();
             dateText = TimeFlagEnum.YESTERDAY.getDesc();
+            isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_WEEK)) {
             serverDate = DateUtil.getWeekFirstDay(0) + "";
             String endDate = DateUtil.getWeekLastDay(0) + "";
@@ -326,6 +351,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             timeType = TimeTypeEnum.WEEK.getCode();
             timeFlag = TimeFlagEnum.CURRENTWEEK.getCode();
             dateText = TimeFlagEnum.CURRENTWEEK.getDesc();
+            isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_PRE_WEEK)) {
             serverDate = DateUtil.getWeekFirstDay(-1) + "";
             String endDate = DateUtil.getWeekLastDay(-1) + "";
@@ -334,6 +360,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             timeType = TimeTypeEnum.WEEK.getCode();
             timeFlag = TimeFlagEnum.LASTWEEK.getCode();
             dateText = TimeFlagEnum.LASTWEEK.getDesc();
+            isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_MONTH)) {
             serverDate = DateUtil.getMonthFirstDay(0) + "";
             String endDate = DateUtil.getMonthLastDay(0) + "";
@@ -342,6 +369,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             timeType = TimeTypeEnum.MONTH.getCode();
             timeFlag = TimeFlagEnum.CURRENTMONTH.getCode();
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
+            isClickCustomer = false;
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_PRE_MONTH)) {
             serverDate = DateUtil.getMonthFirstDay(-1) + "";
             String endDate = DateUtil.getMonthLastDay(-1) + "";
@@ -350,11 +378,40 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             timeType = TimeTypeEnum.MONTH.getCode();
             timeFlag = TimeFlagEnum.LASTMONTH.getCode();
             dateText = TimeFlagEnum.CURRENTMONTH.getDesc();
-        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CUSTOMER_DEFINE)) {
-
+            isClickCustomer = false;
+        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CUSTOMER_DEFINE) || isClickCustomer) {
+            isClickCustomer = true;
+            linearLayout.setVisibility(View.VISIBLE);
+            timeFlag = TimeFlagEnum.CUSTOMDEFINE.getCode();
+            timeType = TimeTypeEnum.DAY.getCode();
+            serverDate = DateUtil.currentTimeHllDT8() + "";
+            localDate = CalendarUtils.format(new Date(), FORMAT_DATE);
+            dateText = TimeFlagEnum.CUSTOMDEFINE.getDesc();
+            dateCustomerText = OptionType.OPTION_REPORT_DATE_AGGREGATION;
+            if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_WEEK_AGGREGATION)){
+                serverDate = DateUtil.getWeekFirstDay(0) + "";
+                String endDate = DateUtil.getWeekLastDay(0) + "";
+                localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
+                        + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
+                timeType = TimeTypeEnum.WEEK.getCode();
+                dateCustomerText = OptionType.OPTION_REPORT_WEEK_AGGREGATION;
+            }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_MONTH_AGGREGATION)){
+                serverDate = DateUtil.getMonthFirstDay(0) + "";
+                localDate = serverDate.substring(0,4)+"年"+"-"+serverDate.substring(4,6)+"月";
+                timeType = TimeTypeEnum.MONTH.getCode();
+                dateCustomerText = OptionType.OPTION_REPORT_MONTH_AGGREGATION;
+            }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_YEAR_AGGREGATION)){
+                serverDate = (DateUtil.currentTimeHllDT8()+"").substring(0,4)+"0101";
+                localDate = serverDate.substring(0,4)+"年";
+                timeType = TimeTypeEnum.YEAR.getCode();
+                dateCustomerText = OptionType.OPTION_REPORT_MONTH_AGGREGATION;
+            }
         } else {
             //导出
             isExport = true;
+        }
+        if(!isClickCustomer){
+            linearLayout.setVisibility(View.GONE);
         }
         params.setDate(serverDate);
         params.setTimeType(timeType);
@@ -362,6 +419,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         if (!isExport) {
             mTxtDateName.setText(String.format("%s", localDate));
             dateFlagTextView.setText(dateText);
+            dateCustomer.setText(dateCustomerText);
             mPresenter.queryCustomerShopDetailList(true);
         } else {
             export(null);

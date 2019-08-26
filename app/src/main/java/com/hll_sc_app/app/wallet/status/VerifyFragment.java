@@ -31,8 +31,8 @@ import butterknife.Unbinder;
  */
 @Route(path = RouterConfig.WALLET_STATUS_VERIFY)
 public class VerifyFragment extends BaseFragment {
-    public static VerifyFragment newInstance(int status) {
-        return (VerifyFragment) RouterUtil.getFragment(RouterConfig.WALLET_STATUS_VERIFY, status);
+    public static VerifyFragment newInstance(int status, String reason) {
+        return (VerifyFragment) RouterUtil.getFragment(RouterConfig.WALLET_STATUS_VERIFY, status, reason);
     }
 
     @BindView(R.id.wsv_icon)
@@ -45,6 +45,8 @@ public class VerifyFragment extends BaseFragment {
     TextView mBtn;
     @Autowired(name = "object0", required = true)
     int mStatus;
+    @Autowired(name = "object1")
+    String mReason;
     private Unbinder unbinder;
 
     @Nullable
@@ -75,7 +77,7 @@ public class VerifyFragment extends BaseFragment {
                 mIcon.setImageResource(R.drawable.ic_dialog_failure);
                 mResultTitle.setText("您的账号申请暂未通过！");
                 mResultTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_ed5655));
-                mResultDesc.setText("您提交的铁金库账号申请资料因\n审核未通过！");
+                mResultDesc.setText(String.format("您提交的铁金库账号申请资料因%s\n审核未通过！", mReason));
                 mBtn.setVisibility(View.VISIBLE);
                 break;
             default:

@@ -5,7 +5,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
@@ -77,7 +76,7 @@ public class InventoryCheckAdapter extends BaseQuickAdapter<InventoryBean, BaseV
                 if (item != null) {
                     if (s.toString().startsWith("."))
                         s.insert(0, "0");
-                    if (!CommonUtils.checkMoenyNum(s.toString()) && s.length() > 1)
+                    if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1)
                         s.delete(s.length() - 1, s.length());
                     if (!TextUtils.isEmpty(s.toString()) && Double.parseDouble(s.toString()) > item.getStockNum()) {
                         s.clear();

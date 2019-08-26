@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@android:color/white">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/ii_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp_10"
+        app:base_placeholder="@drawable/ic_shop_placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_shop_placeholder" />
+
+    <TextView
+        android:id="@+id/ii_group_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toStartOf="@id/ii_tag"
+        app:layout_constraintStart_toEndOf="@id/ii_icon"
+        app:layout_constraintTop_toTopOf="@id/ii_icon"
+        tools:text="我是采购商的集团名称" />
+
+    <TextView
+        android:id="@+id/ii_shop_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ii_group_name"
+        app:layout_constraintTop_toBottomOf="@id/ii_group_name"
+        tools:text="我是采购商的门店名称" />
+
+    <TextView
+        android:id="@+id/ii_tag"
+        android:layout_width="50dp"
+        android:layout_height="16dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_invoice_tag"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Little.Blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ii_group_name"
+        tools:text="普通发票" />
+
+    <TextView
+        android:id="@+id/ii_money_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="发票金额："
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/ii_icon"
+        app:layout_constraintStart_toStartOf="@id/ii_group_name" />
+
+    <TextView
+        android:id="@+id/ii_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥ 9,300.00"
+        android:textAppearance="@style/TextAppearance.City22.Little.Red"
+        app:layout_constraintBottom_toBottomOf="@id/ii_money_label"
+        app:layout_constraintStart_toEndOf="@id/ii_money_label"
+        app:layout_constraintTop_toTopOf="@id/ii_money_label" />
+
+    <TextView
+        android:id="@+id/ii_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/ii_money_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="2018/03/15 10:22" />
+</android.support.constraint.ConstraintLayout>

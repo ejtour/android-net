@@ -18,10 +18,11 @@
             style="@style/BtnClose"/>
 
         <TextView
+            android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="代仓公司"
+            android:text="我是代仓公司"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"/>
 

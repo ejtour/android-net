@@ -5,9 +5,17 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
+import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
+import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
 import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
+import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
+import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
+import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
+import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
+import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
@@ -24,6 +32,9 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
+import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 
 import java.util.List;
 
@@ -113,5 +124,29 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111006")
     Observable<BaseResp<DeliveryLackGatherResp>> queryDeliveryLackGather(@Body BaseReq<BaseReportReqParam> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111053")
+    Observable<BaseResp<CustomerLackResp>> queryCustomerLack(@Body BaseReq<CustomerLackReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111007")
+    Observable<BaseResp<InspectLackResp>> queryInspectLack(@Body BaseReq<BaseReportReqParam> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111013")
+    Observable<BaseResp<InspectLackDetailResp>> queryInspectLackDetail(@Body BaseReq<InspectLackDetailReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111012")
+    Observable<BaseResp<WareHouseLackProductResp>> queryWareHouseProductLackDetail(@Body BaseReq<WareHouseLackProductReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101049")
+    Observable<BaseResp<List<WareHouseShipperBean>>> queryWareHouseShipperList(@Body BaseReq<WareHouseShipperReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111008")
+    Observable<BaseResp<DeliveryTimeResp>> queryDeliveryTimeContent(@Body BaseReq<DeliveryTimeReq> body);
 
 }
