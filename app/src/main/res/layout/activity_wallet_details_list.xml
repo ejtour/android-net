@@ -45,23 +45,41 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/wdl_refresh"
         app:layout_constraintEnd_toEndOf="@+id/wdl_refresh"
+        app:layout_constraintHeight_percent="0.8"
         app:layout_constraintStart_toStartOf="@+id/wdl_refresh"
-        app:layout_constraintTop_toTopOf="@+id/wdl_refresh" />
+        app:layout_constraintTop_toTopOf="@+id/wdl_refresh"
+        app:layout_constraintVertical_bias="1" />
 
-    <FrameLayout
-        android:id="@+id/wdl_filter"
+    <LinearLayout
+        android:id="@+id/wdl_filter_container"
         android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:visibility="gone"
+        android:layout_height="45dp"
         app:layout_constraintEnd_toEndOf="@+id/wdl_header"
         app:layout_constraintStart_toStartOf="@+id/wdl_header"
         app:layout_constraintTop_toBottomOf="@+id/wdl_header">
 
-        <ImageView
-            android:layout_width="33dp"
-            android:layout_height="47dp"
-            android:layout_gravity="right|center_vertical"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_time_filter" />
-    </FrameLayout>
+        <TextView
+            android:id="@+id/wdl_date_filter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:id="@+id/wdl_type_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:alpha="0"
+            android:drawableLeft="@drawable/ic_filter"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_10"
+            android:text="筛选"
+            android:textAppearance="@style/TextAppearance.City22.Middle" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

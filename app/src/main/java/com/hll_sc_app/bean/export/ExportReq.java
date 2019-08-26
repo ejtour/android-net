@@ -260,6 +260,7 @@ public class ExportReq {
             private String endTime;
             private String groupID;
             private String settleUnitID;
+            private String transType;
 
             public String getBeginTime() {
                 return beginTime;
@@ -291,6 +292,14 @@ public class ExportReq {
 
             public void setSettleUnitID(String settleUnitID) {
                 this.settleUnitID = settleUnitID;
+            }
+
+            public String getTransType() {
+                return transType;
+            }
+
+            public void setTransType(String transType) {
+                this.transType = transType;
             }
         }
 

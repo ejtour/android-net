@@ -48,8 +48,9 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
     }
 
     private void getDetailsList(boolean showLoading) {
-        Wallet.getWalletDetailsList(pageNum, mParam.getFormatBeginTime(), mParam.getFormatEndTime()
-                , mParam.getSettleUnitID(), new SimpleObserver<DetailsListResp>(mView, showLoading) {
+        Wallet.getWalletDetailsList(pageNum, mParam.getFormatBeginTime(), mParam.getFormatEndTime(),
+                mParam.getSettleUnitID(), mParam.getTransType(),
+                new SimpleObserver<DetailsListResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(DetailsListResp detailsListResp) {
                         if (pageNum == 1) { // 第一页时清空列表
@@ -94,6 +95,8 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
             }
             DetailsRecordWrapper wrapper = new DetailsRecordWrapper(true, header);
             wrappers.add(wrapper);
+        } else if (array.size() == 0) {
+            wrappers.add(new DetailsRecordWrapper(true, CalendarUtils.format(mParam.getEndTime(), Constants.SIGNED_YYYY_MM)));
         }
         // SparseArray 中的 key 默认会升序排列
         for (int i = array.size() - 1; i >= 0; i--) {
@@ -137,6 +140,7 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
         financialParams.setEndTime(mParam.getFormatEndTime());
         financialParams.setGroupID(userBean.getGroupID());
         financialParams.setSettleUnitID(mParam.getSettleUnitID());
+        financialParams.setTransType(mParam.getTransType());
         Common.exportExcel(req, Utils.getExportObserver(mView));
     }
 
