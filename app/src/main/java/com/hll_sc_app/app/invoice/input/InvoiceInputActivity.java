@@ -169,13 +169,13 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mPresenter.reqInvoiceHistory(2);
             mInvoiceTitle.setHint("请输入抬头名称");
         }
-        updateVisibility();
+        updateEnable();
     }
 
     @OnTextChanged(value = {R.id.aii_invoice_title, R.id.aii_identifier,
             R.id.aii_account, R.id.aii_bank, R.id.aii_address, R.id.aii_recipient, R.id.aii_phone}, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged() {
-        updateVisibility();
+        updateEnable();
     }
 
     @OnTextChanged(value = R.id.aii_invoice_amount, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -195,9 +195,10 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             s.delete(s.length() - 1, s.length());
         }
         mMakeReq.setInvoicePrice(CommonUtils.getDouble(s.toString()));
+        updateEnable();
     }
 
-    private void updateVisibility() {
+    private void updateEnable() {
         mConfirm.setEnabled(!TextUtils.isEmpty(mInvoiceTitle.getText())
                 && !TextUtils.isEmpty(mAccount.getText())
                 && !TextUtils.isEmpty(mBank.getText())
