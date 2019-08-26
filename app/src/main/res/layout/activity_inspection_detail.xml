@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/aid_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="验货单详情" />
+
+    <View
+        android:id="@+id/aid_info_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/aid_time_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_title_bar" />
+
+    <TextView
+        android:id="@+id/aid_group_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:text="采购商集团"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/aid_info_bg" />
+
+    <TextView
+        android:id="@+id/aid_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/aid_group_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/aid_group_label"
+        tools:text="北京华天饮食管理有限公司" />
+
+    <TextView
+        android:id="@+id/aid_shop_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="采购商门店"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_group_label" />
+
+    <TextView
+        android:id="@+id/aid_shop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/aid_shop_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/aid_group"
+        tools:text="庆丰包子西直门店" />
+
+    <TextView
+        android:id="@+id/aid_contact_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="联系人"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_shop_label" />
+
+    <TextView
+        android:id="@+id/aid_contact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/aid_contact_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/aid_group"
+        tools:text="和大胜/130 9876 5432" />
+
+    <TextView
+        android:id="@+id/aid_address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="门店地址"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_contact_label" />
+
+    <TextView
+        android:id="@+id/aid_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/aid_address_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/aid_group"
+        tools:text="北京市西直门西环广场28号" />
+
+    <View
+        android:id="@+id/aid_div"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_address_label" />
+
+    <TextView
+        android:id="@+id/aid_salesman_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:text="业务员"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_div" />
+
+    <TextView
+        android:id="@+id/aid_salesman"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/aid_salesman_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/aid_group"
+        tools:text="李智谷/132 8472 2292" />
+
+    <TextView
+        android:id="@+id/aid_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:paddingBottom="15dp"
+        android:text="上传时间"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_salesman_label" />
+
+    <TextView
+        android:id="@+id/aid_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBaseline_toBaselineOf="@id/aid_time_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/aid_group"
+        tools:text="2019/05/25 14:32" />
+
+    <View
+        android:id="@+id/aid_pic_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/aid_pic_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_info_bg" />
+
+    <TextView
+        android:id="@+id/aid_pic_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:text="验货单"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/aid_pic_bg" />
+
+    <TextView
+        android:id="@+id/aid_pic_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="点击查看验货单"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="@dimen/text_little_size"
+        app:layout_constraintBaseline_toBaselineOf="@id/aid_pic_label"
+        app:layout_constraintStart_toEndOf="@id/aid_pic_label" />
+
+    <com.hll_sc_app.widget.ThumbnailView
+        android:id="@+id/aid_pic_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@android:color/transparent"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        app:ctv_margin="@dimen/dp_10"
+        app:ctv_padding="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_pic_label"
+        tools:layout_height="93dp" />
+
+    <View
+        android:id="@+id/aid_remark_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/aid_remark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aid_pic_bg" />
+
+    <TextView
+        android:id="@+id/aid_remark_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:text="备注信息"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/aid_remark_bg" />
+
+    <TextView
+        android:id="@+id/aid_remark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:gravity="right|center_vertical"
+        android:hint="无"
+        android:paddingBottom="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/aid_group"
+        app:layout_constraintTop_toTopOf="@id/aid_remark_label" />
+</android.support.constraint.ConstraintLayout>
