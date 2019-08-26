@@ -49,7 +49,7 @@ import butterknife.OnClick;
  */
 
 @Route(path = RouterConfig.INSPECTION_LIST)
-public class InspectionListActivity extends BaseLoadActivity implements IInspectionListContact.IInspectionListView {
+public class InspectionListActivity extends BaseLoadActivity implements IInspectionListContract.IInspectionListView {
 
     @BindView(R.id.rog_title_bar)
     TitleBar mTitleBar;
@@ -68,7 +68,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     private DateRangeWindow mDateRangeWindow;
     private PurchaserShopSelectWindow mSelectionWindow;
     private List<PurchaserBean> mPurchaserBeans;
-    private IInspectionListContact.IInspectionListPresenter mPresenter;
+    private IInspectionListContract.IInspectionListPresenter mPresenter;
     private final OrderGoodsParam mParam = new OrderGoodsParam();
     private InspectionListAdapter mAdapter;
     private EmptyView mEmptyView;

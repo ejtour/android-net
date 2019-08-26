@@ -12,7 +12,7 @@ import java.util.List;
  * @since 2019/8/26
  */
 
-public interface IInspectionListContact {
+public interface IInspectionListContract {
     interface IInspectionListView extends ILoadView, IPurchaserContract.IPurchaserView {
         void showList(List<InspectionBean> list, boolean append);
     }

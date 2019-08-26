@@ -18,9 +18,9 @@ import java.util.List;
  * @since 2019/8/26
  */
 
-public class InspectionListPresenter implements IInspectionListContact.IInspectionListPresenter {
+public class InspectionListPresenter implements IInspectionListContract.IInspectionListPresenter {
     private OrderGoodsParam mParam;
-    private IInspectionListContact.IInspectionListView mView;
+    private IInspectionListContract.IInspectionListView mView;
     private int mPageNum;
 
     public static InspectionListPresenter newInstance(OrderGoodsParam param) {
@@ -69,7 +69,7 @@ public class InspectionListPresenter implements IInspectionListContact.IInspecti
     }
 
     @Override
-    public void register(IInspectionListContact.IInspectionListView view) {
+    public void register(IInspectionListContract.IInspectionListView view) {
         mView = CommonUtils.requireNonNull(view);
     }
 
