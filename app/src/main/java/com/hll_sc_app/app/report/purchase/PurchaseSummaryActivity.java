@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.purchase;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -11,14 +12,18 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
+import com.hll_sc_app.widget.report.PurchaseSummaryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.Calendar;
@@ -47,6 +52,8 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     private IPurchaseSummaryContract.IPurchaseSummaryPresenter mPresenter;
     private final InvoiceParam mParam = new InvoiceParam();
     private DateRangeWindow mDateRangeWindow;
+    private PurchaseSummaryAdapter mAdapter;
+    private PurchaseSummaryHeader mHeader;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +66,11 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     }
 
     private void initView() {
-
+        mAdapter = new PurchaseSummaryAdapter();
+        mHeader = new PurchaseSummaryHeader(this);
+        mAdapter.setHeaderView(mHeader);
+        mListView.setAdapter(mAdapter);
+        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
     }
 
     private void initData() {
@@ -115,7 +126,21 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     }
 
     @Override
-    public void setList(PurchaseSummaryResp resp) {
+    public void hideLoading() {
+        mRefreshLayout.closeHeaderOrFooter();
+        super.hideLoading();
+    }
 
+    @Override
+    public void setList(PurchaseSummaryResp resp, boolean append) {
+        mHeader.setData(resp);
+        if (append) {
+            if (!CommonUtils.isEmpty(resp.getRecords())) {
+                mAdapter.addData(resp.getRecords());
+            }
+        } else {
+            mAdapter.setNewData(resp.getRecords());
+        }
+        mRefreshLayout.setEnableLoadMore(resp.getRecords() != null && resp.getRecords().size() == 20);
     }
 }

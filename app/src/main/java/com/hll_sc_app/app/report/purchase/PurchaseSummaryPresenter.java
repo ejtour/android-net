@@ -29,7 +29,7 @@ public class PurchaseSummaryPresenter implements IPurchaseSummaryContract.IPurch
                 mPageNum, new SimpleObserver<PurchaseSummaryResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(PurchaseSummaryResp purchaseSummaryResp) {
-                        mView.setList(purchaseSummaryResp);
+                        mView.setList(purchaseSummaryResp, mPageNum > 1);
                         if (CommonUtils.isEmpty(purchaseSummaryResp.getRecords())) return;
                         mPageNum++;
                     }

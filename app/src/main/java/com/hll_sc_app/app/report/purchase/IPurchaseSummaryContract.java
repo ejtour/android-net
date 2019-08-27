@@ -11,7 +11,7 @@ import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
 
 public interface IPurchaseSummaryContract {
     interface IPurchaseSummaryView extends ILoadView {
-        void setList(PurchaseSummaryResp resp);
+        void setList(PurchaseSummaryResp resp, boolean append);
     }
 
     interface IPurchaseSummaryPresenter extends IPresenter<IPurchaseSummaryView> {
