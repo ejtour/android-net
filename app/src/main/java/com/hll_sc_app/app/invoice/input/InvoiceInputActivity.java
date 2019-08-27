@@ -142,7 +142,6 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
                     .setOnSelectListener(nameValue -> {
                         mInvoiceType.setText(nameValue.getName());
                         mMakeReq.setInvoiceType(Integer.valueOf(nameValue.getValue()));
-                        updateVisibility();
                     })
                     .select(cur)
                     .create();
@@ -155,17 +154,13 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         if (checkedId == R.id.aii_type_company) {
             mMakeReq.setTitleType(1);
             mInvoiceTitle.setHint("请输入企业名称");
+            mIdentifierGroup.setVisibility(View.VISIBLE);
         } else {
             mMakeReq.setTitleType(2);
             mInvoiceTitle.setHint("请输入抬头名称");
+            mIdentifierGroup.setVisibility(View.GONE);
         }
         mPresenter.reqInvoiceHistory(mMakeReq.getTitleType());
-        updateVisibility();
-    }
-
-    private void updateVisibility() {
-        mIdentifierGroup.setVisibility(mMakeReq.getInvoiceType() == 2 || mMakeReq.getTitleType() == 1 // 专用发票或企业开发票
-                ? View.VISIBLE : View.GONE);
         updateEnable();
     }
 
