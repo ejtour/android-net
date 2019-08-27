@@ -601,6 +601,16 @@ public class RouterConfig {
     public static final String REFUND_REASON_STATICS = "/activity/report/refundreason";
 
     /**
+     * 采购汇总统计
+     */
+    public static final String REPORT_PURCHASE_STATISTIC = "/activity/report/purchaseSummary";
+
+    /**
+     * 生产汇总统计
+     */
+    public static final String REPORT_PRODUCE_STATISTIC = "/activity/report/produceSummary";
+
+    /**
      * 客户销售汇总搜索
      */
     public static final String CUSTOMER_SALE_SEARCH = "/activity/customer/sale/search";
