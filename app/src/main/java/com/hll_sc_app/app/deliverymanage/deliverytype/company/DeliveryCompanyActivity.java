@@ -71,13 +71,39 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        //当页面销毁时，需要判断是否有勾选，没有勾选则需触发上一页面关闭第三方物流配送
+        if (!isHasLastOneSelect()) {
+            ARouter.getInstance().build(RouterConfig.DELIVERY_TYPE_SET)
+                    .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    .withBoolean("isHasSelect", false)
+                    .navigation(this);
+        }
         EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    /**
+     * 是否至少有一个被勾选
+     *
+     * @return
+     */
+    private boolean isHasLastOneSelect() {
+        List<DeliveryCompanyBean> list = mAdapter.getData();
+        boolean select = false;
+        if (!CommonUtils.isEmpty(list)) {
+            for (DeliveryCompanyBean bean : list) {
+                if (TextUtils.equals(bean.getStatus(), "1")) {
+                    select = true;
+                    break;
+                }
+            }
+        }
+        return select;
     }
 
     private void initView() {
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new CompanyListAdapter(mList);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             DeliveryCompanyBean bean = (DeliveryCompanyBean) adapter.getItem(position);
@@ -168,8 +194,8 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
     public void editSuccess() {
         showToast("修改三方配送公司状态成功");
         ARouter.getInstance().build(RouterConfig.DELIVERY_TYPE_SET)
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            .navigation(this);
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                .navigation(this);
     }
 
     class CompanyListAdapter extends BaseQuickAdapter<DeliveryCompanyBean, BaseViewHolder> {
@@ -181,7 +207,8 @@ public class DeliveryCompanyActivity extends BaseLoadActivity implements Deliver
         @Override
         protected void convert(BaseViewHolder helper, DeliveryCompanyBean item) {
             helper.setText(R.id.txt_deliveryCompanyName, item.getDeliveryCompanyName())
-                .getView(R.id.img_status).setSelected(TextUtils.equals(item.getStatus(), "1"));
+                    .getView(R.id.img_status).setSelected(TextUtils.equals(item.getStatus(), "1"));
         }
     }
+
 }
