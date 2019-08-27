@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -70,6 +72,8 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
     SearchView mSearchView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.ll_save)
+    LinearLayout mLlSave;
     private GoodsListAdapter mAdapter;
     private GoodsInvWarnPresenter mPresenter;
     private TopSingleSelectWindow<HouseBean> mHouseSelectWindow;
@@ -242,13 +246,30 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
         }
         mAdapter.setEmptyView(mEmptyView);
         if (total != 0) {
+            mLlSave.setVisibility(View.VISIBLE);
             mRefreshLayout.setEnableLoadMore(mAdapter.getItemCount() != total);
         } else {
+            mLlSave.setVisibility(View.GONE);
             mRefreshLayout.setEnableLoadMore(list != null && list.size() == GoodsListReq.PAGE_SIZE);
         }
     }
 
-    @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_house})
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String tip) {
+        Utils.exportFailure(this, tip);
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, email -> mPresenter.export(email));
+    }
+
+    @OnClick({R.id.img_close, R.id.txt_save, R.id.ll_house, R.id.txt_export})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -259,6 +280,9 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
                 break;
             case R.id.ll_house:
                 mPresenter.queryHouseList(true);
+                break;
+            case R.id.txt_export:
+                mPresenter.export(null);
                 break;
             default:
                 break;
@@ -288,4 +312,5 @@ public class GoodsInvWarnActivity extends BaseLoadActivity implements GoodsInvWa
             return TextUtils.isEmpty(str) ? "无" : str;
         }
     }
+
 }

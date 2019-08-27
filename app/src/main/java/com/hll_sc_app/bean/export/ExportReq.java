@@ -40,6 +40,7 @@ public class ExportReq {
      * 商品价格（product_price）
      * 财务明细 (fnancialDetail)
      * 发票业务 (invoice)
+     * 代仓预警值（stock_warn_num）
      */
     private String typeCode;
     /**
@@ -122,6 +123,19 @@ public class ExportReq {
          * 发票业务导出
          */
         private InvoiceParams invoice;
+
+        /**
+         * 代仓库存预警
+         */
+        private StockWarnNum stockWarnNum;
+
+        public StockWarnNum getStockWarnNum() {
+            return stockWarnNum;
+        }
+
+        public void setStockWarnNum(StockWarnNum stockWarnNum) {
+            this.stockWarnNum = stockWarnNum;
+        }
 
         public InvoiceParams getInvoice() {
             return invoice;
@@ -339,6 +353,36 @@ public class ExportReq {
 
             public void setInvoiceStatus(int invoiceStatus) {
                 this.invoiceStatus = invoiceStatus;
+            }
+        }
+
+        public static class StockWarnNum {
+            private String cargoOwnerID;
+            private String groupID;
+            private String houseID;
+
+            public String getCargoOwnerID() {
+                return cargoOwnerID;
+            }
+
+            public void setCargoOwnerID(String cargoOwnerID) {
+                this.cargoOwnerID = cargoOwnerID;
+            }
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getHouseID() {
+                return houseID;
+            }
+
+            public void setHouseID(String houseID) {
+                this.houseID = houseID;
             }
         }
     }
