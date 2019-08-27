@@ -221,8 +221,8 @@ public class PriceManagePresenter implements PriceManageContract.IPriceManagePre
                 .subscribe(new BaseCallback<ExportResp>() {
                     @Override
                     public void onSuccess(ExportResp resp) {
-                        if (!TextUtils.isEmpty(email)) {
-                            Utils.exportSuccess((Activity) mView, email);
+                        if (!TextUtils.isEmpty(resp.getEmail())) {
+                            Utils.exportSuccess((Activity) mView, resp.getEmail());
                         } else {
                             Utils.exportFailure((Activity) mView, "噢，服务器暂时开了小差\n攻城狮正在全力抢修");
                         }
