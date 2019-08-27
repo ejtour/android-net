@@ -16,13 +16,13 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goods.relevance.goods.GoodsRelevanceListActivity;
-import com.hll_sc_app.app.order.transfer.inventory.InventoryCheckActivity;
+import com.hll_sc_app.app.order.transfer.check.CommodityCheckActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
-import com.hll_sc_app.bean.order.transfer.InventoryBean;
+import com.hll_sc_app.bean.order.transfer.OrderResultResp;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -31,8 +31,6 @@ import com.hll_sc_app.widget.order.OrderDetailHeader;
 import com.hll_sc_app.widget.order.TransferDetailFooter;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,8 +108,8 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
     }
 
     @Override
-    public void inventoryShortage(ArrayList<InventoryBean> list) {
-        InventoryCheckActivity.start(this, list);
+    public void inventoryShortage(OrderResultResp resp) {
+        CommodityCheckActivity.start(this, resp);
     }
 
     @Override
@@ -143,7 +141,7 @@ public class TransferDetailActivity extends BaseLoadActivity implements ITransfe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK)
-            if (requestCode == InventoryCheckActivity.REQ_KEY)
+            if (requestCode == CommodityCheckActivity.REQ_KEY)
                 mPresenter.start();
             else if (requestCode == GoodsRelevanceListActivity.REQ_KEY && data != null)
                 updateOrderData(data.getParcelableExtra(GoodsRelevanceListActivity.TRANSFER_KEY));

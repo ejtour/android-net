@@ -498,7 +498,7 @@
             android:theme="@style/TranslucentTheme" />
 
         <activity
-            android:name=".app.order.transfer.inventory.InventoryCheckActivity"
+            android:name=".app.order.transfer.check.CommodityCheckActivity"
             android:screenOrientation="portrait" />
 
         <activity

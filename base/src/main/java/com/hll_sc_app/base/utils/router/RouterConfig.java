@@ -469,7 +469,7 @@ public class RouterConfig {
     /**
      * 订单库存检查
      */
-    public static final String ORDER_INVENTORY_CHECK = "/activity/order/inventory/check";
+    public static final String ORDER_COMMODITY_CHECK = "/activity/order/commodity/check";
 
     /**
      * 提交成功

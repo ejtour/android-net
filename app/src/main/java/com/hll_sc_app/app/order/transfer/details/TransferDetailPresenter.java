@@ -27,10 +27,10 @@ public class TransferDetailPresenter implements ITransferDetailContract.ITransfe
         Order.mallOrder(Collections.singletonList(mID), new SimpleObserver<OrderResultResp>(mView) {
             @Override
             public void onSuccess(OrderResultResp resp) {
-                if (CommonUtils.isEmpty(resp.getRecords())) {
+                if (CommonUtils.isEmpty(resp.getRecords()) && CommonUtils.isEmpty(resp.getShelfFlowRecords())) {
                     mView.handleStatusChanged();
                 } else {
-                    mView.inventoryShortage(new ArrayList<>(resp.getRecords()));
+                    mView.inventoryShortage(resp);
                 }
             }
         });
