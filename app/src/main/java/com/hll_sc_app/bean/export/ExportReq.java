@@ -41,6 +41,7 @@ public class ExportReq {
      * 财务明细 (fnancialDetail)
      * 发票业务 (invoice)
      * 代仓预警值（stock_warn_num）
+     * 售价管理 (sell_price)
      */
     private String typeCode;
     /**
@@ -128,6 +129,21 @@ public class ExportReq {
          * 代仓库存预警
          */
         private StockWarnNum stockWarnNum;
+
+        /**
+         * 售价管理导出
+         *
+         * @return
+         */
+        private SellPrice sellPrice;
+
+        public SellPrice getSellPrice() {
+            return sellPrice;
+        }
+
+        public void setSellPrice(SellPrice sellPrice) {
+            this.sellPrice = sellPrice;
+        }
 
         public StockWarnNum getStockWarnNum() {
             return stockWarnNum;
@@ -385,5 +401,56 @@ public class ExportReq {
                 this.houseID = houseID;
             }
         }
+
+
+        public static class SellPrice {
+            private String groupID;
+            private String name;
+            private String productStatus;
+            private String shopProductCategoryThreeIds;
+            private String isWareHourse ;
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getProductStatus() {
+                return productStatus;
+            }
+
+            public void setProductStatus(String productStatus) {
+                this.productStatus = productStatus;
+            }
+
+            public String getShopProductCategoryThreeIds() {
+                return shopProductCategoryThreeIds;
+            }
+
+            public void setShopProductCategoryThreeIds(String shopProductCategoryThreeIds) {
+                this.shopProductCategoryThreeIds = shopProductCategoryThreeIds;
+            }
+
+            public String getIsWareHourse() {
+                return isWareHourse;
+            }
+
+            public void setIsWareHourse(String isWareHourse) {
+                this.isWareHourse = isWareHourse;
+            }
+        }
     }
+
+
 }
