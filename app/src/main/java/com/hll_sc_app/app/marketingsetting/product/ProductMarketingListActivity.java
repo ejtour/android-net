@@ -226,7 +226,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    @OnClick({R.id.txt_filter_status_true, R.id.txt_filter_date_true, R.id.img_close, R.id.txt_add})
+    @OnClick({R.id.txt_filter_status_true, R.id.txt_filter_date_true, R.id.img_close, R.id.txt_add,R.id.btn_add,})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_filter_status_true:
@@ -261,6 +261,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
             case R.id.img_close:
                 finish();
                 break;
+            case R.id.btn_add:
             case R.id.txt_add:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST_ADD);
                 break;
