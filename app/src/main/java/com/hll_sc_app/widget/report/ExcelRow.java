@@ -122,7 +122,12 @@ public class ExcelRow extends LinearLayout {
             CharSequence text = contentArray[i];
             if (text instanceof SpannableString) {
                 mTextViewList.get(i).setMovementMethod(LinkMovementMethod.getInstance());
+                mTextViewList.get(i).setSingleLine(false);
+            }else {
+                mTextViewList.get(i).setMovementMethod(null);
+                mTextViewList.get(i).setSingleLine(true);
             }
+            mTextViewList.get(i).setTag(getTag());
             mTextViewList.get(i).setText(text);
         }
     }
