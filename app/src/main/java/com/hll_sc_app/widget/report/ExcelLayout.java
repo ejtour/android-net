@@ -122,6 +122,7 @@ public class ExcelLayout extends LinearLayout {
         @Override
         protected void convert(BaseViewHolder helper, List<CharSequence> item) {
             ExcelRow itemView = (ExcelRow) helper.itemView;
+            itemView.setTag(helper.getAdapterPosition());
             itemView.setBackgroundResource(helper.getAdapterPosition() % 2 == 0 ? android.R.color.white : R.color.color_fafafa);
             itemView.updateRowDate(item.toArray(new CharSequence[]{}));
         }

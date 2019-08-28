@@ -3,7 +3,9 @@ package com.hll_sc_app.widget.report;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -117,7 +119,11 @@ public class ExcelRow extends LinearLayout {
     public void updateRowDate(CharSequence... contentArray) {
         if (contentArray.length == 0 || contentArray.length != mTextViewList.size()) return;
         for (int i = 0; i < contentArray.length; i++) {
-            mTextViewList.get(i).setText(contentArray[i]);
+            CharSequence text = contentArray[i];
+            if (text instanceof SpannableString) {
+                mTextViewList.get(i).setMovementMethod(LinkMovementMethod.getInstance());
+            }
+            mTextViewList.get(i).setText(text);
         }
     }
 }
