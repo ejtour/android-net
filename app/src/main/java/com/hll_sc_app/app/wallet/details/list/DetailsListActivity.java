@@ -171,8 +171,8 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
     public void select(Date time) {
         mParam.setFilter(true);
         mParam.setRange(false);
-        mParam.setStartDate(CalendarUtils.getFirstDataInMonth(time));
-        mParam.setEndDate(CalendarUtils.getLastDataInMonth(time));
+        mParam.setStartDate(CalendarUtils.getFirstDateInMonth(time));
+        mParam.setEndDate(CalendarUtils.getLastDateInMonth(time));
         mPresenter.start();
     }
 

@@ -85,7 +85,7 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     private void initData() {
         Date endDate = new Date();
         mParam.setEndDate(endDate);
-        mParam.setStartDate(CalendarUtils.getFirstDataInMonth(endDate));
+        mParam.setStartDate(CalendarUtils.getFirstDateInMonth(endDate));
         updateDateText();
         mPresenter = PurchaseSummaryPresenter.newInstance(mParam);
         mPresenter.register(this);

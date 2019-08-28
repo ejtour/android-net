@@ -161,8 +161,8 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
 
     private void initData() {
         Date currentDate = new Date();
-        Date firstDate = CalendarUtils.getFirstDataInMonth(currentDate);
-        Date lastDate = CalendarUtils.getLastDataInMonth(currentDate);
+        Date firstDate = CalendarUtils.getFirstDateInMonth(currentDate);
+        Date lastDate = CalendarUtils.getLastDateInMonth(currentDate);
         setDate(firstDate, lastDate);
         mPresenter.queryRefundReasonStatics();
     }
@@ -218,8 +218,8 @@ public class RefundReasonActivity extends BaseLoadActivity implements IRefundRea
                     mDateRangeWindow.setOnDismissListener(() -> mArrowRight.setRotation(0));
                     //设置初始时间范围选择
                     Date currentDate = new Date();
-                    Date firstDate = CalendarUtils.getFirstDataInMonth(currentDate);
-                    Date lastDate = CalendarUtils.getLastDataInMonth(currentDate);
+                    Date firstDate = CalendarUtils.getFirstDateInMonth(currentDate);
+                    Date lastDate = CalendarUtils.getLastDateInMonth(currentDate);
                     Calendar start = Calendar.getInstance();
                     Calendar end = Calendar.getInstance();
                     start.setTime(firstDate);
