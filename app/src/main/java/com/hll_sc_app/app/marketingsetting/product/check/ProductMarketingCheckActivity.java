@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.marketingsetting.product.check;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +18,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingProductAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingRuleAdapter;
+import com.hll_sc_app.app.marketingsetting.coupon.check.MarketingCouponCheckActivity;
 import com.hll_sc_app.app.marketingsetting.product.MarketingRule;
 import com.hll_sc_app.app.marketingsetting.product.add.ProductMarketingAddActivity;
 import com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity;
@@ -200,6 +200,9 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
             RuleListBean ruleBean = resp.getRuleList().get(0);
             List<GiveBean> giveBeans = JsonUtil.parseJsonList(ruleBean.getGiveTarget(), GiveBean.class);
             mCouponRuleSelectView.setData(ruleBean.getRuleCondition() + "", giveBeans.get(0));
+            mCouponRuleSelectView.setSelectListener(() -> {
+                MarketingCouponCheckActivity.start(ruleBean.getDiscountID());
+            });
         } else if (TextUtils.equals(resp.getDiscountRuleType() + "", MarketingRule.RULE_DZ.getKey())) {
             mllRuleDz.setVisibility(View.VISIBLE);
             RuleListBean ruleBean = resp.getRuleList().get(0);
@@ -211,7 +214,6 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
             mRuleList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             mRuleList.setAdapter(ruleAdapter);
         }
-
     }
 
     /**
@@ -261,7 +263,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
      * 设置头部的状态 颜色 背景 文字
      */
     private void setMarketingStatus(MarketingDetailCheckResp resp) {
-        GradientDrawable gradientDrawable = (GradientDrawable)mStatus.getBackground();
+        GradientDrawable gradientDrawable = (GradientDrawable) mStatus.getBackground();
         switch (resp.getDiscountStatus()) {
             case STATUS_ACTIVE_NOT:
                 gradientDrawable.setColor(getResources().getColor(R.color.color_FFF1B8));
