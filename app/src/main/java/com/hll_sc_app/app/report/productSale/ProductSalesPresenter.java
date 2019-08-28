@@ -1,7 +1,7 @@
 package com.hll_sc_app.app.report.productSale;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.report.product.ProductSalesParam;
+import com.hll_sc_app.bean.filter.ProductSalesParam;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.citymall.util.CommonUtils;

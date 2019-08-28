@@ -6,7 +6,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.inspection.InspectionResp;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsParam;
+import com.hll_sc_app.bean.filter.DateShopParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Inspection;
@@ -19,11 +19,11 @@ import java.util.List;
  */
 
 public class InspectionListPresenter implements IInspectionListContract.IInspectionListPresenter {
-    private OrderGoodsParam mParam;
+    private DateShopParam mParam;
     private IInspectionListContract.IInspectionListView mView;
     private int mPageNum;
 
-    public static InspectionListPresenter newInstance(OrderGoodsParam param) {
+    public static InspectionListPresenter newInstance(DateShopParam param) {
         InspectionListPresenter presenter = new InspectionListPresenter();
         presenter.mParam = param;
         return presenter;

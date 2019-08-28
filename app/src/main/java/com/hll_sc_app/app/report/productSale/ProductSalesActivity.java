@@ -32,7 +32,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.product.ProductSalesParam;
+import com.hll_sc_app.bean.filter.ProductSalesParam;
 import com.hll_sc_app.bean.report.resp.product.ProductCategory;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Bean;
@@ -165,15 +165,15 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
             public void onValueSelected(Entry e, Highlight h) {
                 PieEntry pData = (PieEntry) e;
                 String toast = pData.getLabel() + ":" + new DecimalFormat("#.##").format(
-                    pData.getValue() / mPieChart.getData().getYValueSum() * 100) + "%";
+                        pData.getValue() / mPieChart.getData().getYValueSum() * 100) + "%";
                 if (mToast != null) {
                     mToast.cancel();
                 }
                 mToast = new Toast(getApplicationContext());
                 if (mToastView == null) {
                     mToastView =
-                        (TextView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_chart_toast,
-                            null);
+                            (TextView) LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_chart_toast,
+                                    null);
                 }
                 if (mStatusBarHeight == -1) {
                     mStatusBarHeight = ViewUtils.getStatusBarHeight(ProductSalesActivity.this);
@@ -182,7 +182,7 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
                 mToast.setDuration(Toast.LENGTH_SHORT);
                 mToastView.setText(toast);
                 mToast.setGravity(Gravity.TOP | Gravity.LEFT, mX - mToastView.getWidth() / 2,
-                    mY - mStatusBarHeight - mToastView.getHeight() / 2);
+                        mY - mStatusBarHeight - mToastView.getHeight() / 2);
                 mToast.show();
             }
 
@@ -243,13 +243,13 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
             updateSelectedDate(CalendarUtils.getDateBefore(endTime, 29), endTime);
             mDateRangeWindow = new DateRangeWindow(this);
             mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                String oldBegin = mParam.getFormatStartDate();
-                String oldEnd = mParam.getFormatEndDate();
+                String beginTemp = mParam.getFormatStartDate();
+                String endTemp = mParam.getFormatEndDate();
+                boolean reload = false;
                 if (start == null && end == null) {
                     Date endDate = new Date();
                     updateSelectedDate(CalendarUtils.getDateBefore(endDate, 29), endDate);
-                    mPresenter.start();
-                    return;
+                    reload = beginTemp != null || endTemp != null;
                 }
                 if (start != null && end != null) {
                     Calendar calendarStart = Calendar.getInstance();
@@ -257,12 +257,10 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
                     Calendar calendarEnd = Calendar.getInstance();
                     calendarEnd.setTimeInMillis(end.getTimeInMillis());
                     updateSelectedDate(calendarStart.getTime(), calendarEnd.getTime());
-                    if ((oldBegin == null && oldEnd == null) ||
-                            !mParam.getFormatStartDate().equals(oldBegin) ||
-                            !mParam.getFormatEndDate().equals(oldEnd)) {
-                        mPresenter.start();
-                    }
+                    reload = !mParam.getFormatStartDate().equals(beginTemp) ||
+                            !mParam.getFormatEndDate().equals(endTemp);
                 }
+                if (reload) mPresenter.start();
             });
             Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
             start.setTime(mParam.getStartDate());

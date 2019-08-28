@@ -27,10 +27,10 @@ import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
 import com.hll_sc_app.bean.event.AfterSalesEvent;
+import com.hll_sc_app.bean.filter.AuditParam;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SingleSelectionWindow;
 import com.hll_sc_app.widget.TitleBar;
@@ -262,32 +262,26 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
             mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                String beginTemp = mParam.getStartTime();
-                String endTemp = mParam.getEndTime();
+                String beginTemp = mParam.getFormatStartDate();
+                String endTemp = mParam.getFormatEndDate();
+                boolean reload = false;
                 if (start == null && end == null) {
-                    mParam.setStartTime(null);
-                    mParam.setEndTime(null);
-                    mDate.setText("申请退换货日期");
-                    if (beginTemp != null && endTemp != null) {
-                        EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REFRESH_LIST));
-                    }
-                    return;
+                    mParam.setStartDate(null);
+                    mParam.setEndDate(null);
+                    reload = beginTemp != null || endTemp != null;
                 }
                 if (start != null && end != null) {
                     Calendar calendarStart = Calendar.getInstance();
                     calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    String startStr = CalendarUtils.format(calendarStart.getTime(), CalendarUtils.FORMAT_DATE_TIME);
                     Calendar calendarEnd = Calendar.getInstance();
                     calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    String endStr = CalendarUtils.format(calendarEnd.getTime(), CalendarUtils.FORMAT_DATE_TIME);
-                    mParam.setStartTime(CalendarUtils.toLocalDate(calendarStart.getTime()));
-                    mParam.setEndTime(CalendarUtils.toLocalDate(calendarEnd.getTime()));
-                    mDate.setText(String.format("%s~%s", startStr, endStr));
-                    if ((beginTemp == null && endTemp == null) ||
-                            !mParam.getStartTime().equals(beginTemp) ||
-                            !mParam.getEndTime().equals(endTemp)) {
-                        EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REFRESH_LIST));
-                    }
+                    mParam.setStartDate(calendarStart.getTime());
+                    mParam.setEndDate(calendarEnd.getTime());
+                    reload = !mParam.getFormatStartDate().equals(beginTemp) ||
+                            !mParam.getFormatEndDate().equals(endTemp);
+                }
+                if (reload) {
+                    EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REFRESH_LIST));
                 }
             });
             mDateRangeWindow.setOnDismissListener(() -> {

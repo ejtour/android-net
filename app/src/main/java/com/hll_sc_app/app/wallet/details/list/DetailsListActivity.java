@@ -18,8 +18,8 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.filter.WalletDetailsParam;
 import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
-import com.hll_sc_app.bean.wallet.details.WalletDetailsParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
@@ -118,8 +118,8 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
 
     private void initData() {
         Date curTime = new Date();
-        mParam.setEndTime(curTime);
-        mParam.setBeginTime(CalendarUtils.getDateBefore(curTime, 89));
+        mParam.setEndDate(curTime);
+        mParam.setStartDate(CalendarUtils.getDateBefore(curTime, 89));
         mParam.setSettleUnitID(settleUnitID);
         mPresenter = DetailsListPresenter.newInstance(mParam);
         mPresenter.register(this);
@@ -171,13 +171,8 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
     public void select(Date time) {
         mParam.setFilter(true);
         mParam.setRange(false);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(time);
-        calendar.set(Calendar.DATE, 1);
-        mParam.setBeginTime(calendar.getTime());
-        calendar.add(Calendar.MONTH, 1);
-        calendar.add(Calendar.DATE, -1);
-        mParam.setEndTime(calendar.getTime());
+        mParam.setStartDate(CalendarUtils.getFirstDataInMonth(time));
+        mParam.setEndDate(CalendarUtils.getLastDataInMonth(time));
         mPresenter.start();
     }
 
@@ -185,8 +180,8 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
     public void select(Date beginTime, Date endTime) {
         mParam.setFilter(true);
         mParam.setRange(true);
-        mParam.setBeginTime(beginTime);
-        mParam.setEndTime(endTime);
+        mParam.setStartDate(beginTime);
+        mParam.setEndDate(endTime);
         mPresenter.start();
     }
 

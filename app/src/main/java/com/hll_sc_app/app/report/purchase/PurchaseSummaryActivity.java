@@ -15,7 +15,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.invoice.InvoiceParam;
+import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -50,7 +50,7 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     @BindView(R.id.rps_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
     private IPurchaseSummaryContract.IPurchaseSummaryPresenter mPresenter;
-    private final InvoiceParam mParam = new InvoiceParam();
+    private final DateParam mParam = new DateParam();
     private DateRangeWindow mDateRangeWindow;
     private PurchaseSummaryAdapter mAdapter;
     private PurchaseSummaryHeader mHeader;
@@ -75,8 +75,8 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
 
     private void initData() {
         Date endDate = new Date();
-        mParam.setEndTime(endDate);
-        mParam.setStartTime(CalendarUtils.getFirstDataInMonth(endDate));
+        mParam.setEndDate(endDate);
+        mParam.setStartDate(CalendarUtils.getFirstDataInMonth(endDate));
         updateDateText();
         mPresenter = PurchaseSummaryPresenter.newInstance(mParam);
         mPresenter.register(this);
@@ -84,8 +84,8 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     }
 
     private void updateDateText() {
-        mDate.setText(String.format("%s - %s", CalendarUtils.format(mParam.getStartTime(), Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
+        mDate.setText(String.format("%s - %s", mParam.getFormatStartDate(Constants.SLASH_YYYY_MM_DD),
+                mParam.getFormatEndDate(Constants.SLASH_YYYY_MM_DD)));
     }
 
     @OnClick(R.id.rps_filter_btn)
@@ -96,17 +96,17 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
             mDateRangeWindow = new DateRangeWindow(this);
             mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
                 if (start == null || end == null) return;
-                String oldStart = mParam.getFormatStartTime();
-                String oldEnd = mParam.getFormatEndTime();
+                String oldStart = mParam.getFormatStartDate();
+                String oldEnd = mParam.getFormatEndDate();
 
                 Calendar calendarStart = Calendar.getInstance();
                 calendarStart.setTimeInMillis(start.getTimeInMillis());
                 Calendar calendarEnd = Calendar.getInstance();
                 calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                mParam.setStartTime(calendarStart.getTime());
-                mParam.setEndTime(calendarEnd.getTime());
+                mParam.setStartDate(calendarStart.getTime());
+                mParam.setEndDate(calendarEnd.getTime());
 
-                if (!mParam.getFormatStartTime().equals(oldStart) || !mParam.getFormatEndTime().equals(oldEnd)) {
+                if (!mParam.getFormatStartDate().equals(oldStart) || !mParam.getFormatEndDate().equals(oldEnd)) {
                     updateDateText();
                     mPresenter.start();
                 }
@@ -117,8 +117,8 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
             });
             mDateRangeWindow.setReset(false);
             Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-            start.setTime(mParam.getStartTime());
-            end.setTime(mParam.getEndTime());
+            start.setTime(mParam.getStartDate());
+            end.setTime(mParam.getEndDate());
             mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
                     end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }

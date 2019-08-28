@@ -1,4 +1,4 @@
-package com.hll_sc_app.bean.order;
+package com.hll_sc_app.bean.filter;
 
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
