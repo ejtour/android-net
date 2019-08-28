@@ -19,6 +19,7 @@ import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
 import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundedProductReq;
@@ -160,6 +161,18 @@ public interface ReportService {
     @Headers("pv:111008")
     Observable<BaseResp<DeliveryTimeResp>> queryDeliveryTimeContent(@Body BaseReq<DeliveryTimeReq> body);
 
+    @POST(HttpConfig.URL)
+    @Headers("pv:111038")
+    Observable<BaseResp<PurchaseSummaryResp>> queryPurchaseSummary(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111028")
+    Observable<BaseResp<Object>> recordPurchaseInfo(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111031")
+    Observable<BaseResp<ProduceSummaryResp>> queryProduceSummary(@Body BaseMapReq req);
+
     /**
      * 退款合计
      * @param body
@@ -216,11 +229,4 @@ public interface ReportService {
     @Headers("pv:111022")
     Observable<BaseResp<RefundedProductResp>> queryRefundProductDetail(@Body BaseReq<RefundedProductReq> body);
 
-    @POST(HttpConfig.URL)
-    @Headers("pv:111038")
-    Observable<BaseResp<PurchaseSummaryResp>> queryPurchaseSummary(@Body BaseMapReq req);
-
-    @POST(HttpConfig.URL)
-    @Headers("pv:111028")
-    Observable<BaseResp<Object>> recordPurchaseInfo(@Body BaseMapReq req);
 }

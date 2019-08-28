@@ -23,6 +23,7 @@ import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
 import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundedProductReq;
@@ -292,6 +293,17 @@ public class Report {
                         .put("currentDay", CalendarUtils.toLocalDate(new Date()))
                         .create())
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询生产汇总
+     */
+    public static void queryProduceSummary(BaseMapReq req, SimpleObserver<ProduceSummaryResp> observer) {
+        ReportService.INSTANCE
+                .queryProduceSummary(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

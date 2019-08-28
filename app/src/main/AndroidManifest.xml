@@ -805,6 +805,7 @@
         <activity
             android:name=".app.report.purchase.input.PurchaseInputActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".app.report.produce.ProduceSummaryActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
