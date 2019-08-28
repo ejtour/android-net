@@ -11,7 +11,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsParam;
+import com.hll_sc_app.bean.filter.DateShopParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
@@ -29,11 +29,11 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 
 public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPresenter {
-    private OrderGoodsParam mParam;
+    private DateShopParam mParam;
     private IOrderGoodsContract.IOrderGoodsView mView;
     private int mPageNum;
 
-    public static OrderGoodsPresenter newInstance(OrderGoodsParam param) {
+    public static OrderGoodsPresenter newInstance(DateShopParam param) {
         OrderGoodsPresenter presenter = new OrderGoodsPresenter();
         presenter.mParam = param;
         return presenter;

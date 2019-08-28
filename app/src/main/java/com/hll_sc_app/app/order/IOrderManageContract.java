@@ -2,7 +2,7 @@ package com.hll_sc_app.app.order;
 
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.order.OrderParam;
+import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;

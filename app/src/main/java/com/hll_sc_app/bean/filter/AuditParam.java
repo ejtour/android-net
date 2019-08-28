@@ -1,32 +1,14 @@
-package com.hll_sc_app.app.aftersales.audit;
+package com.hll_sc_app.bean.filter;
 
 /**
  * @author <a href="mailto:xzx8023@vip.qq.com">Vixb</a>
  * @since 2019/7/8
  */
 
-public class AuditParam {
+public class AuditParam extends DateParam {
     private String purchaserID;
     private String purchaserShopID;
     private int sourceType;
-    private String startTime;
-    private String endTime;
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
 
     public String getPurchaserID() {
         return purchaserID;
@@ -51,4 +33,5 @@ public class AuditParam {
     public void setSourceType(int sourceType) {
         this.sourceType = sourceType;
     }
+
 }

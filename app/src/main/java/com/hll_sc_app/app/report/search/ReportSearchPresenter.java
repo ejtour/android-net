@@ -1,13 +1,8 @@
 package com.hll_sc_app.app.report.search;
 
-import com.hll_sc_app.app.report.dailySale.DailyAggregationPresenter;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.report.product.ProductSalesParam;
 import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
-import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
-import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.rest.ReportRest;
 
 import java.util.List;

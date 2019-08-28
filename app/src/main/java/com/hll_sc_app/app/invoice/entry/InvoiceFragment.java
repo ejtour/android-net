@@ -21,9 +21,8 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.event.InvoiceEvent;
+import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.bean.invoice.InvoiceBean;
-import com.hll_sc_app.bean.invoice.InvoiceParam;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
@@ -66,7 +65,7 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
     private Unbinder unbinder;
     @Autowired(name = "object")
     int mInvoiceStatus;
-    private final InvoiceParam mParam = new InvoiceParam();
+    private final DateParam mParam = new DateParam();
     private EmptyView mEmptyView;
     private IInvoiceContract.IInvoicePresenter mPresenter;
     private InvoiceBean mCurBean;
@@ -86,8 +85,8 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
         ARouter.getInstance().inject(this);
         mPresenter = InvoicePresenter.newInstance(mInvoiceStatus, mParam);
         Date date = new Date();
-        mParam.setStartTime(date);
-        mParam.setEndTime(date);
+        mParam.setStartDate(date);
+        mParam.setEndDate(date);
         mPresenter.register(this);
     }
 
@@ -152,8 +151,8 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
                     .setCallback(new DatePickerDialog.SelectCallback() {
                         @Override
                         public void select(Date beginTime, Date endTime) {
-                            mParam.setStartTime(beginTime);
-                            mParam.setEndTime(endTime);
+                            mParam.setStartDate(beginTime);
+                            mParam.setEndDate(endTime);
                             updateDate();
                             mPresenter.start();
                         }
@@ -191,8 +190,8 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
 
     private void updateDate() {
         mDate.setText(String.format("%s - %s",
-                CalendarUtils.format(mParam.getStartTime(), Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
+                mParam.getFormatStartDate(Constants.SLASH_YYYY_MM_DD),
+                mParam.getFormatEndDate(Constants.SLASH_YYYY_MM_DD)));
     }
 
     @Override

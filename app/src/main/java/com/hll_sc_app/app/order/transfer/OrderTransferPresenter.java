@@ -3,7 +3,7 @@ package com.hll_sc_app.app.order.transfer;
 import android.text.TextUtils;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.order.OrderParam;
+import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
 import com.hll_sc_app.bean.order.transfer.TransferResp;
 import com.hll_sc_app.citymall.util.CommonUtils;

@@ -7,7 +7,7 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.invoice.InvoiceListResp;
-import com.hll_sc_app.bean.invoice.InvoiceParam;
+import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Invoice;
@@ -21,10 +21,10 @@ import com.hll_sc_app.utils.Utils;
 public class InvoicePresenter implements IInvoiceContract.IInvoicePresenter {
     private int mStatus;
     private int mPageNum;
-    private InvoiceParam mParam;
+    private DateParam mParam;
     private IInvoiceContract.IInvoiceView mView;
 
-    public static InvoicePresenter newInstance(int status, InvoiceParam param) {
+    public static InvoicePresenter newInstance(int status, DateParam param) {
         InvoicePresenter presenter = new InvoicePresenter();
         presenter.mStatus = status;
         presenter.mParam = param;
@@ -52,8 +52,8 @@ public class InvoicePresenter implements IInvoiceContract.IInvoicePresenter {
         exportReq.setUserID(user.getEmployeeID());
         ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
         ExportReq.ParamsBean.InvoiceParams invoiceParams = new ExportReq.ParamsBean.InvoiceParams();
-        invoiceParams.setEndTime(mParam.getFormatEndTime());
-        invoiceParams.setStartTime(mParam.getFormatStartTime());
+        invoiceParams.setEndTime(mParam.getFormatEndDate());
+        invoiceParams.setStartTime(mParam.getFormatStartDate());
         invoiceParams.setGroupID(user.getGroupID());
         invoiceParams.setInvoiceStatus(mStatus);
         bean.setInvoice(invoiceParams);
@@ -63,7 +63,7 @@ public class InvoicePresenter implements IInvoiceContract.IInvoicePresenter {
 
     private void requestInvoiceList(boolean showLoading) {
         Invoice.getInvoiceList(mStatus, mPageNum,
-                mParam.getFormatStartTime(), mParam.getFormatEndTime(),
+                mParam.getFormatStartDate(), mParam.getFormatEndDate(),
                 new SimpleObserver<InvoiceListResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(InvoiceListResp invoiceListResp) {

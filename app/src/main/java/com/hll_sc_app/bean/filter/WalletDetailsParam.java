@@ -1,44 +1,21 @@
-package com.hll_sc_app.bean.wallet.details;
+package com.hll_sc_app.bean.filter;
 
 import com.hll_sc_app.citymall.util.CalendarUtils;
-
-import java.util.Date;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/7/27
  */
 
-public class WalletDetailsParam {
-    private Date beginTime;
-    private Date endTime;
+public class WalletDetailsParam extends DateParam {
     private String settleUnitID;
     private String transType;
     private boolean isFilter;
     private boolean isRange;
 
-    public String getFormatBeginTime() {
-        return beginTime == null ? null : CalendarUtils.toLocalDate(beginTime);
-    }
-
-    public String getFormatEndTime() {
-        return endTime == null ? null : CalendarUtils.toLocalDate(CalendarUtils.getDateAfter(endTime, 1));
-    }
-
-    public Date getBeginTime() {
-        return beginTime;
-    }
-
-    public void setBeginTime(Date beginTime) {
-        this.beginTime = beginTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    @Override
+    public String getFormatEndDate() {
+        return getEndDate() == null ? null : CalendarUtils.toLocalDate(CalendarUtils.getDateAfter(getEndDate(), 1));
     }
 
     public String getSettleUnitID() {

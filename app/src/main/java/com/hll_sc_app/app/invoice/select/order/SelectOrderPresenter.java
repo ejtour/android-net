@@ -2,7 +2,7 @@ package com.hll_sc_app.app.invoice.select.order;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
-import com.hll_sc_app.bean.invoice.InvoiceParam;
+import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Invoice;
 
@@ -17,9 +17,9 @@ public class SelectOrderPresenter implements ISelectOrderContract.ISelectOrderPr
     private List<String> mShopIDList;
     private ISelectOrderContract.ISelectOrderView mView;
     private int mPageNum;
-    private InvoiceParam mParam;
+    private DateParam mParam;
 
-    public static SelectOrderPresenter newInstance(InvoiceParam param, List<String> shopIDList) {
+    public static SelectOrderPresenter newInstance(DateParam param, List<String> shopIDList) {
         SelectOrderPresenter presenter = new SelectOrderPresenter();
         presenter.mParam = param;
         presenter.mShopIDList = shopIDList;
@@ -42,8 +42,8 @@ public class SelectOrderPresenter implements ISelectOrderContract.ISelectOrderPr
 
     private void reqList(boolean showLoading) {
         Invoice.getRelevanceOrderList(mPageNum,
-                mParam.getFormatStartTime(),
-                mParam.getFormatEndTime(),
+                mParam.getFormatStartDate(),
+                mParam.getFormatEndDate(),
                 mShopIDList,
                 new SimpleObserver<InvoiceOrderResp>(mView, showLoading) {
                     @Override

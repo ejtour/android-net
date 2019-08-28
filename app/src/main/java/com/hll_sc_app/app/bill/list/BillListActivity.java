@@ -25,10 +25,10 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.bill.BillBean;
 import com.hll_sc_app.bean.bill.BillListResp;
-import com.hll_sc_app.bean.bill.BillParam;
 import com.hll_sc_app.bean.bill.BillStatus;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
+import com.hll_sc_app.bean.filter.BillParam;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -117,8 +117,8 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
 
     private void initData() {
         Date endDate = new Date();
-        mParam.setEndTime(endDate);
-        mParam.setStateTime(CalendarUtils.getDateBefore(endDate, 30));
+        mParam.setEndDate(endDate);
+        mParam.setStartDate(CalendarUtils.getDateBefore(endDate, 30));
         mParam.setSettlementStatus(BillStatus.NOT_SETTLE);
         updateSelectedDate();
         mPresenter = BillListPresenter.newInstance(mParam);
@@ -289,30 +289,20 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
             mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                String oldBegin = mParam.getFormatStartTime();
-                String oldEnd = mParam.getFormatEndTime();
-                if (start == null && end == null) {
-                    mParam.setStateTime(null);
-                    mParam.setEndTime(null);
-                    mDate.setText("按日期筛选");
-                    if (oldBegin != null && oldEnd != null) {
-                        mPresenter.start();
-                    }
-                    return;
-                }
-                if (start != null && end != null) {
-                    Calendar calendarStart = Calendar.getInstance();
-                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    Calendar calendarEnd = Calendar.getInstance();
-                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    mParam.setStateTime(calendarStart.getTime());
-                    mParam.setEndTime(calendarEnd.getTime());
+                if (start == null || end == null) return;
+                String oldStart = mParam.getFormatStartDate();
+                String oldEnd = mParam.getFormatEndDate();
+
+                Calendar calendarStart = Calendar.getInstance();
+                calendarStart.setTimeInMillis(start.getTimeInMillis());
+                Calendar calendarEnd = Calendar.getInstance();
+                calendarEnd.setTimeInMillis(end.getTimeInMillis());
+                mParam.setStartDate(calendarStart.getTime());
+                mParam.setEndDate(calendarEnd.getTime());
+
+                if (!mParam.getFormatStartDate().equals(oldStart) || !mParam.getFormatEndDate().equals(oldEnd)) {
                     updateSelectedDate();
-                    if ((oldBegin == null && oldEnd == null) ||
-                            !mParam.getFormatStartTime().equals(oldBegin) ||
-                            !mParam.getFormatEndTime().equals(oldEnd)) {
-                        mPresenter.start();
-                    }
+                    mPresenter.start();
                 }
             });
             mDateRangeWindow.setOnDismissListener(() -> {
@@ -321,8 +311,8 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
             });
             mDateRangeWindow.setReset(false);
             Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-            start.setTime(mParam.getStateTime());
-            end.setTime(mParam.getEndTime());
+            start.setTime(mParam.getStartDate());
+            end.setTime(mParam.getEndDate());
             mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
                     end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }
@@ -330,9 +320,8 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private void updateSelectedDate() {
-        mDate.setText(String.format("%s - %s",
-                CalendarUtils.format(mParam.getStateTime(), Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
+        mDate.setText(String.format("%s - %s", mParam.getFormatStartDate(Constants.SLASH_YYYY_MM_DD),
+                mParam.getFormatEndDate(Constants.SLASH_YYYY_MM_DD)));
     }
 
     @OnClick(R.id.abl_type_btn)

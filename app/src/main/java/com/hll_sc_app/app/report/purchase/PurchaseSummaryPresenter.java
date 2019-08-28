@@ -1,7 +1,7 @@
 package com.hll_sc_app.app.report.purchase;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.invoice.InvoiceParam;
+import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
@@ -14,18 +14,18 @@ import com.hll_sc_app.rest.Report;
 public class PurchaseSummaryPresenter implements IPurchaseSummaryContract.IPurchaseSummaryPresenter {
     private int mPageNum;
     private IPurchaseSummaryContract.IPurchaseSummaryView mView;
-    private InvoiceParam mParam;
+    private DateParam mParam;
 
-    public static PurchaseSummaryPresenter newInstance(InvoiceParam param) {
+    public static PurchaseSummaryPresenter newInstance(DateParam param) {
         return new PurchaseSummaryPresenter(param);
     }
 
-    private PurchaseSummaryPresenter(InvoiceParam param) {
+    private PurchaseSummaryPresenter(DateParam param) {
         mParam = param;
     }
 
     private void load(boolean showLoading) {
-        Report.queryPurchaseSummary(mParam.getFormatStartTime(), mParam.getFormatEndTime(),
+        Report.queryPurchaseSummary(mParam.getFormatStartDate(), mParam.getFormatEndDate(),
                 mPageNum, new SimpleObserver<PurchaseSummaryResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(PurchaseSummaryResp purchaseSummaryResp) {

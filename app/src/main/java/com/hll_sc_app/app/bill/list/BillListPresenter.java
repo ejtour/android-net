@@ -6,7 +6,7 @@ import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.bill.BillListResp;
-import com.hll_sc_app.bean.bill.BillParam;
+import com.hll_sc_app.bean.filter.BillParam;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -34,7 +34,7 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
 
     @Override
     public void export(String email, int sign) {
-        Bill.exportEmail(sign, email, mParam.getFormatStartTime(), mParam.getFormatEndTime(), UserConfig.getGroupID(),
+        Bill.exportEmail(sign, email, mParam.getFormatStartDate(), mParam.getFormatEndDate(), UserConfig.getGroupID(),
                 mParam.getShopIDs(), mParam.getSettlementStatus(), Utils.getExportObserver(mView));
     }
 
@@ -82,8 +82,8 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
 
     private void getBillList(boolean showLoading) {
         Bill.getBillList(mPageNum,
-                mParam.getFormatStartTime(),
-                mParam.getFormatEndTime(),
+                mParam.getFormatStartDate(),
+                mParam.getFormatEndDate(),
                 UserConfig.getGroupID(),
                 mParam.getShopIDs(),
                 mParam.getSettlementStatus(),

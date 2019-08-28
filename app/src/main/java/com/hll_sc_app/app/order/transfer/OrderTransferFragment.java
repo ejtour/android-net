@@ -25,7 +25,7 @@ import com.hll_sc_app.app.order.transfer.details.TransferDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.bean.event.OrderEvent;
-import com.hll_sc_app.bean.order.OrderParam;
+import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -52,7 +52,6 @@ import butterknife.Unbinder;
  */
 
 public class OrderTransferFragment extends BaseLazyFragment implements IOrderTransferContract.IOrderTransferView {
-    private static final String ORDER_TYPE_KEY = "order_type";
     /**
      * 过滤头前导文本
      */

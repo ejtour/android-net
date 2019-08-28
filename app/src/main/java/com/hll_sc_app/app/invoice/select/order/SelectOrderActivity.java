@@ -25,10 +25,10 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceOrderBean;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
-import com.hll_sc_app.bean.invoice.InvoiceParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
@@ -99,7 +99,7 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     private DatePickerDialog mDatePickerDialog;
     private SelectOrderAdapter mAdapter;
     private EmptyView mEmptyView;
-    private final InvoiceParam mParam = new InvoiceParam();
+    private final DateParam mParam = new DateParam();
     private ISelectOrderContract.ISelectOrderPresenter mPresenter;
 
     @Override
@@ -115,8 +115,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
 
     private void initData() {
         Date endDate = new Date();
-        mParam.setStartTime(CalendarUtils.getDateBefore(endDate, 31));
-        mParam.setEndTime(CalendarUtils.getDateBefore(endDate, 1));
+        mParam.setStartDate(CalendarUtils.getDateBefore(endDate, 31));
+        mParam.setEndDate(CalendarUtils.getDateBefore(endDate, 1));
         updateDateText();
         mPresenter = SelectOrderPresenter.newInstance(mParam, mMakeReq.getShopIDList());
         mPresenter.register(this);
@@ -143,8 +143,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     }
 
     private void updateDateText() {
-        mDate.setText(String.format("%s - %s", CalendarUtils.format(mParam.getStartTime(), Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(mParam.getEndTime(), Constants.SLASH_YYYY_MM_DD)));
+        mDate.setText(String.format("%s - %s", mParam.getFormatStartDate(Constants.SLASH_YYYY_MM_DD),
+                mParam.getFormatEndDate(Constants.SLASH_YYYY_MM_DD)));
     }
 
     @OnClick({R.id.iso_filter_btn, R.id.iso_next})
@@ -180,15 +180,15 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
             mDatePickerDialog = DatePickerDialog.newBuilder(this)
                     .setBeginTime(begin.getTimeInMillis())
                     .setEndTime(CalendarUtils.getDateBefore(new Date(), 1).getTime())
-                    .setSelectBeginTime(mParam.getStartTime().getTime())
-                    .setSelectEndTime(mParam.getEndTime().getTime())
+                    .setSelectBeginTime(mParam.getStartDate().getTime())
+                    .setSelectEndTime(mParam.getEndDate().getTime())
                     .setTitle("按时间筛选")
                     .setCancelable(false)
                     .setCallback(new DatePickerDialog.SelectCallback() {
                         @Override
                         public void select(Date beginTime, Date endTime) {
-                            mParam.setStartTime(beginTime);
-                            mParam.setEndTime(endTime);
+                            mParam.setStartDate(beginTime);
+                            mParam.setEndDate(endTime);
                             updateDateText();
                             mPresenter.start();
                         }
