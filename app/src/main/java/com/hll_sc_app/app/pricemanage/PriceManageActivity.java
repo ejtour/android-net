@@ -211,7 +211,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_PRICE_MANAGE_LOG));
-            list.add(new OptionsBean(R.drawable.ic_import_option, OptionType.OPTION_CHECK_PRICE_MANAGE_CHANGE_LOG));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_import, OptionType.OPTION_CHECK_PRICE_MANAGE_CHANGE_LOG));
             mOptionsWindow = new ContextOptionsWindow(this).setListener((adapter, view, position) -> {
                 switch (position) {
                     case 0:
