@@ -498,7 +498,7 @@
             android:theme="@style/TranslucentTheme" />
 
         <activity
-            android:name=".app.order.transfer.inventory.InventoryCheckActivity"
+            android:name=".app.order.transfer.check.CommodityCheckActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -762,6 +762,18 @@
         <!--配送及时率明细-->
         <activity
             android:name=".app.report.deliveryTime.detail.DeliveryTimeDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.inspection.list.InspectionListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.inspection.detail.InspectionDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.purchase.PurchaseSummaryActivity"
             android:screenOrientation="portrait" />
 
         <provider

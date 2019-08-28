@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.order.transfer.inventory;
+package com.hll_sc_app.app.order.transfer.check;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
@@ -12,14 +12,14 @@ import java.util.List;
  * @since 2019/7/4
  */
 
-public class InventoryCheckPresenter implements IInventoryCheckContract.IInventoryCheckPresenter {
-    private IInventoryCheckContract.IInventoryCheckView mView;
+public class CommodityCheckPresenter implements ICommodityCheckContract.ICommodityCheckPresenter {
+    private ICommodityCheckContract.ICommodityCheckView mView;
 
-    private InventoryCheckPresenter() {
+    private CommodityCheckPresenter() {
     }
 
-    public static InventoryCheckPresenter newInstance() {
-        return new InventoryCheckPresenter();
+    public static CommodityCheckPresenter newInstance() {
+        return new CommodityCheckPresenter();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class InventoryCheckPresenter implements IInventoryCheckContract.IInvento
     }
 
     @Override
-    public void register(IInventoryCheckContract.IInventoryCheckView view) {
+    public void register(ICommodityCheckContract.ICommodityCheckView view) {
         mView = CommonUtils.requireNonNull(view);
     }
 }

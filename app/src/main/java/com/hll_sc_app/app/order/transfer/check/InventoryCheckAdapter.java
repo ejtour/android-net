@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.order.transfer.inventory;
+package com.hll_sc_app.app.order.transfer.check;
 
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 public class InventoryCheckAdapter extends BaseQuickAdapter<InventoryBean, BaseViewHolder> {
-    public InventoryCheckAdapter(@Nullable List<InventoryBean> data) {
+    InventoryCheckAdapter(@Nullable List<InventoryBean> data) {
         super(R.layout.item_inventory_check, data);
         setOnItemChildClickListener((adapter, view, position) -> {
             InventoryBean item = getItem(position);

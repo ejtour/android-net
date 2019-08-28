@@ -256,18 +256,22 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         if (crm) {
             mTips.setText("供应商已开具发票，请查收");
         } else {
-            mTitleBar.setRightBtnVisible(true);
-            mTitleBar.setTag(false);
+            if (!isInEditMode()) {
+                mTitleBar.setRightBtnVisible(true);
+                mTitleBar.setTag(false);
+            }
             mRecordsGroup.setVisibility(View.VISIBLE);
             mAdapter.setNewData(bean.getReturnRecordList());
         }
-        if (!TextUtils.isEmpty(bean.getInvoiceVoucher())) {
+        if (!TextUtils.isEmpty(bean.getInvoiceVoucher()) && !isInEditMode()) {
             mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
             mInvoiceLicense.showImage(bean.getInvoiceVoucher());
         }
-        mExtraInfoLabel.setText("发票号码");
-        mExtraInfoGroup.setVisibility(View.VISIBLE);
-        mExtraInfo.setText(!TextUtils.isEmpty(bean.getInvoiceNO()) ? bean.getInvoiceNO() : "无");
+        if (!isInEditMode()) {
+            mExtraInfoLabel.setText("发票号码");
+            mExtraInfoGroup.setVisibility(View.VISIBLE);
+            mExtraInfo.setText(!TextUtils.isEmpty(bean.getInvoiceNO()) ? bean.getInvoiceNO() : "无");
+        }
     }
 
     private void updateBaseInfo(InvoiceBean bean, boolean crm) {
@@ -308,13 +312,19 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     private void reset() {
         mBottomGroup.setVisibility(View.GONE);
-        mInvoiceLicenseGroup.setVisibility(View.GONE);
         mRecordsGroup.setVisibility(View.GONE);
-        mExtraInfoGroup.setVisibility(View.GONE);
-        mTitleBar.setRightBtnVisible(false);
-        mInvoiceLicense.setEditable(false);
-        mExtraInfo.setKeyListener(null);
-        mTitleBar.setTag(null);
+        if (!isInEditMode()) {
+            mInvoiceLicense.setEditable(false);
+            mInvoiceLicenseGroup.setVisibility(View.GONE);
+            mExtraInfoGroup.setVisibility(View.GONE);
+            mExtraInfo.setKeyListener(null);
+            mTitleBar.setRightBtnVisible(false);
+            mTitleBar.setTag(null);
+        }
+    }
+
+    private boolean isInEditMode() {
+        return mTitleBar.getTag() != null && (boolean) mTitleBar.getTag();
     }
 
     private void toggleEdit(View view) {

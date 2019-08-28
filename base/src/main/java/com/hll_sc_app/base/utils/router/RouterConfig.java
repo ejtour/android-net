@@ -469,7 +469,7 @@ public class RouterConfig {
     /**
      * 订单库存检查
      */
-    public static final String ORDER_INVENTORY_CHECK = "/activity/order/inventory/check";
+    public static final String ORDER_COMMODITY_CHECK = "/activity/order/commodity/check";
 
     /**
      * 提交成功
@@ -599,6 +599,16 @@ public class RouterConfig {
      * 退货原因统计
      */
     public static final String REFUND_REASON_STATICS = "/activity/report/refundreason";
+
+    /**
+     * 采购汇总统计
+     */
+    public static final String REPORT_PURCHASE_STATISTIC = "/activity/report/purchaseSummary";
+
+    /**
+     * 生产汇总统计
+     */
+    public static final String REPORT_PRODUCE_STATISTIC = "/activity/report/produceSummary";
 
     /**
      * 客户销售汇总搜索
@@ -855,5 +865,15 @@ public class RouterConfig {
      * CRM-我的
      */
     public static final String CRM_MINE = "/fragment/crm/mine";
+
+    /**
+     * 查看验货单-列表
+     */
+    public static final String INSPECTION_LIST = "/activity/inspection/list";
+
+    /**
+     * 查看验货单-详情
+     */
+    public static final String INSPECTION_DETAIL = "/activity/inspection/detail";
 }
 

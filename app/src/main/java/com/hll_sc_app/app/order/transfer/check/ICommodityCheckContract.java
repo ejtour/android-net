@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.order.transfer.inventory;
+package com.hll_sc_app.app.order.transfer.check;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
@@ -11,12 +11,12 @@ import java.util.List;
  * @since 2019/7/4
  */
 
-public interface IInventoryCheckContract {
-    interface IInventoryCheckView extends ILoadView {
+public interface ICommodityCheckContract {
+    interface ICommodityCheckView extends ILoadView {
         void commitSuccess();
     }
 
-    interface IInventoryCheckPresenter extends IPresenter<IInventoryCheckView> {
+    interface ICommodityCheckPresenter extends IPresenter<ICommodityCheckView> {
         void commitCheck(List<InventoryCheckReq.InventoryCheckBean> checkBeanList);
     }
 }

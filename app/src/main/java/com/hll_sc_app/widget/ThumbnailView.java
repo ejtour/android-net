@@ -16,7 +16,6 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +24,7 @@ public class ThumbnailView extends LinearLayout {
 
     private int thumbnailSize;
     private int picPadding;
+    private boolean mPreviewEnabel;
 
     public ThumbnailView(Context context) {
         this(context, null);
@@ -47,7 +47,9 @@ public class ThumbnailView extends LinearLayout {
         thumbnailSize = (UIUtils.getScreenWidth(getContext()) - space) / 5;
         // 水平布局
         setOrientation(LinearLayout.HORIZONTAL);
-        setBackgroundColor(Color.rgb(250, 250, 250));
+        if (getBackground() == null) {
+            setBackgroundColor(Color.rgb(250, 250, 250));
+        }
     }
 
     public void setOrderDetailListData(List<OrderDetailBean> list) {
@@ -67,6 +69,10 @@ public class ThumbnailView extends LinearLayout {
         setData(beans);
     }
 
+    public void enablePreview(boolean enable) {
+        mPreviewEnabel = enable;
+    }
+
     public void setData(List<ThumbnailBean> list) {
         // 清空
         this.removeAllViews();
@@ -75,6 +81,10 @@ public class ThumbnailView extends LinearLayout {
         if (!CommonUtils.isEmpty(list)) {
             // 图片容器
             int max = Math.min(list.size(), 5);
+            List<String> urls = new ArrayList<>();
+            for (int i = 0; i < max; i++) {
+                urls.add(list.get(i).getImgUrl());
+            }
             for (int i = 0; i < max; i++) {
                 ThumbnailBean item = list.get(i);
                 LayoutParams layoutParams = new LayoutParams(thumbnailSize, thumbnailSize);
@@ -87,7 +97,8 @@ public class ThumbnailView extends LinearLayout {
                     image.setPlaceholder(getResources().getDrawable(R.drawable.ic_placeholder));
                     image.setRadius(2);
                     image.setImageURL(item.getImgUrl());
-
+                    image.isPreview(mPreviewEnabel);
+                    image.setUrls(urls);
                     wrapper.addView(image, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
                     // 设置文本
                     TextView textView = new TextView(getContext());
@@ -108,6 +119,8 @@ public class ThumbnailView extends LinearLayout {
                     image.setPlaceholder(getResources().getDrawable(R.drawable.ic_placeholder));
                     image.setRadius(2);
                     image.setImageURL(item.getImgUrl());
+                    image.isPreview(mPreviewEnabel);
+                    image.setUrls(urls);
                     this.addView(image, layoutParams);
                 }
             }

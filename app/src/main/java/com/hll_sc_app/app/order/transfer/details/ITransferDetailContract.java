@@ -3,6 +3,7 @@ package com.hll_sc_app.app.order.transfer.details;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.order.transfer.InventoryBean;
+import com.hll_sc_app.bean.order.transfer.OrderResultResp;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public interface ITransferDetailContract {
         /**
          * 库存不足
          */
-        void inventoryShortage(ArrayList<InventoryBean> list);
+        void inventoryShortage(OrderResultResp resp);
     }
 
     interface ITransferDetailPresenter extends IPresenter<ITransferDetailView>{
