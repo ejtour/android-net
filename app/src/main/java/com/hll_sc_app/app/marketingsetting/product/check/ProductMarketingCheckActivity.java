@@ -201,7 +201,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
             List<GiveBean> giveBeans = JsonUtil.parseJsonList(ruleBean.getGiveTarget(), GiveBean.class);
             mCouponRuleSelectView.setData(ruleBean.getRuleCondition() + "", giveBeans.get(0));
             mCouponRuleSelectView.setSelectListener(() -> {
-                MarketingCouponCheckActivity.start(ruleBean.getDiscountID());
+                MarketingCouponCheckActivity.start(giveBeans.get(0).getGiveTargetID());
             });
         } else if (TextUtils.equals(resp.getDiscountRuleType() + "", MarketingRule.RULE_DZ.getKey())) {
             mllRuleDz.setVisibility(View.VISIBLE);
