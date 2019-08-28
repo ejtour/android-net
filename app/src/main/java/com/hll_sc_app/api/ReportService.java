@@ -19,6 +19,16 @@ import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
+import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
+import com.hll_sc_app.bean.report.refund.RefundedProductReq;
+import com.hll_sc_app.bean.report.refund.RefundedProductResp;
+import com.hll_sc_app.bean.report.refund.RefundedReq;
+import com.hll_sc_app.bean.report.refund.RefundedResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.req.ProductDetailReq;
@@ -149,4 +159,59 @@ public interface ReportService {
     @Headers("pv:111008")
     Observable<BaseResp<DeliveryTimeResp>> queryDeliveryTimeContent(@Body BaseReq<DeliveryTimeReq> body);
 
+    /**
+     * 退款合计
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111010")
+    Observable<BaseResp<WaitRefundTotalResp>> queryRefundTotal(@Body BaseMapReq body);
+
+    /**
+     * 待退货退款 集团列表查询
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111014")
+    Observable<BaseResp<WaitRefundCustomerResp>> queryRefundCustomerList(@Body BaseReq<WaitRefundReq> body);
+
+
+    /**
+     * 待退货 商品列表查询
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111015")
+    Observable<BaseResp<WaitRefundProductResp>> queryRefundProductList(@Body BaseReq<WaitRefundReq> body);
+
+    /**
+     * 退货明细
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111021")
+    Observable<BaseResp<RefundedResp>> queryRefundedDetail(@Body BaseReq<RefundedReq> body);
+
+    /**
+     * 已退商品客户列表统计
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111020")
+    Observable<BaseResp<RefundedCustomerResp>> queryRefundedCustomerDetail(@Body BaseReq<RefundedCustomerReq> body);
+
+
+    /**
+     * 退货商品统计
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111022")
+    Observable<BaseResp<RefundedProductResp>> queryRefundProductDetail(@Body BaseReq<RefundedProductReq> body);
 }

@@ -15,7 +15,8 @@ import java.lang.annotation.RetentionPolicy;
     ReportLabel.RECEIVE_DIFFERENCE_DETAILS, ReportLabel.STOCKOUT_STATISTICS, ReportLabel.REFUND_REASONS,
     ReportLabel.SALES_MAN_SIGN_ACHIEVEMENT, ReportLabel.SALES_MAN_SALES_ACHIEVEMENT, ReportLabel.DELIVERY_LACK_GATHER,
     ReportLabel.CUSTOMER_LACK_AGGREGATION,ReportLabel.INSPECT_LACK_AGGREGATION,ReportLabel.INSPECT_LACK_DETAIL,
-        ReportLabel.WAREHOUSE_PRODUCT_DETAIL,ReportLabel.DELIVERY_TIME_AGGREGATION})
+        ReportLabel.WAREHOUSE_PRODUCT_DETAIL,ReportLabel.DELIVERY_TIME_AGGREGATION,ReportLabel.WAIT_FOR_REFUND,
+        ReportLabel.REFUNDED,ReportLabel.REFUNDED_CUSTOMER_PRODUCT})
 @Retention(RetentionPolicy.SOURCE)
 public @interface ReportLabel {
     String SALES_STATISTICS = "商品销量统计汇总";
@@ -38,4 +39,7 @@ public @interface ReportLabel {
     String INSPECT_LACK_DETAIL="收货差异商品明细表";
     String WAREHOUSE_PRODUCT_DETAIL="代仓商品缺货明细";
     String DELIVERY_TIME_AGGREGATION="配送及时率统计";
+    String WAIT_FOR_REFUND = "待退货统计表";
+    String REFUNDED = "退货统计表";
+    String REFUNDED_CUSTOMER_PRODUCT = "退货客户与商品统计表";
 }

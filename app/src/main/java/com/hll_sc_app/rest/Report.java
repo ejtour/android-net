@@ -7,6 +7,7 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
@@ -19,6 +20,16 @@ import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
+import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
+import com.hll_sc_app.bean.report.refund.RefundedProductReq;
+import com.hll_sc_app.bean.report.refund.RefundedProductResp;
+import com.hll_sc_app.bean.report.refund.RefundedReq;
+import com.hll_sc_app.bean.report.refund.RefundedResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
@@ -28,7 +39,6 @@ import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
-import java.util.HashMap;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -243,5 +253,77 @@ public class Report {
                      .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                      .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                      .subscribe(observer);
+    }
+
+    /**
+     * 退款合计
+     * @param flag
+     * @param observer
+     */
+    public static void queryRefundTotal(int flag, SimpleObserver<WaitRefundTotalResp> observer){
+        ReportService.INSTANCE.queryRefundTotal(BaseMapReq.newBuilder().put("flag",flag+"").put("groupID", UserConfig.getGroupID()).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 待退货退款 集团列表查询
+     * @param waitRefundReq
+     * @param observer
+     */
+    public static void queryWaitRefundCustomerList(WaitRefundReq waitRefundReq, SimpleObserver<WaitRefundCustomerResp> observer){
+        ReportService.INSTANCE.queryRefundCustomerList(new BaseReq<>(waitRefundReq))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 待退货 商品列表查询
+     * @param waitRefundReq
+     * @param observer
+     */
+    public static void queryWaitRefundProductList(WaitRefundReq waitRefundReq, SimpleObserver<WaitRefundProductResp> observer){
+        ReportService.INSTANCE.queryRefundProductList(new BaseReq<>(waitRefundReq))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 退货明细
+     * @param req
+     * @param observer
+     */
+    public static void queryRefundedDetail(RefundedReq req, SimpleObserver<RefundedResp> observer){
+        ReportService.INSTANCE.queryRefundedDetail(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 退货 商品列表查询
+     * @param req
+     * @param observer
+     */
+    public static void queryRefundedProductList(RefundedProductReq req, SimpleObserver<RefundedProductResp> observer){
+        ReportService.INSTANCE.queryRefundProductDetail(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 退货客户明细
+     * @param req
+     * @param observer
+     */
+    public static void queryRefundedCustomerList(RefundedCustomerReq req, SimpleObserver<RefundedCustomerResp> observer){
+        ReportService.INSTANCE.queryRefundedCustomerDetail(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
     }
 }

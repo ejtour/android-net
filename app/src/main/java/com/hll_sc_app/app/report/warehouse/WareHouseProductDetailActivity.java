@@ -374,7 +374,7 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
         list.add(CommonUtils.formatNumber(item.getDeliveryNum())); // 发货量
         list.add(CommonUtils.formatNumber(item.getDeliveryLackNum()));//缺货量
         list.add(CommonUtils.formatMoney(Double.parseDouble(item.getDeliveryLackAmount()))); // 缺货金额
-        list.add(CommonUtils.formatNumber(item.getDeliveryLackRate()));//缺货率
+        list.add(item.getDeliveryLackRate());//缺货率
         return list;
     }
 }

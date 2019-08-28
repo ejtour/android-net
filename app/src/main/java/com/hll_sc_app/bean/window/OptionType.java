@@ -31,7 +31,8 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_WAREHOUSE_CLIENT, OptionType.OPTION_REPORT_DATE_AGGREGATION, OptionType.OPTION_REPORT_WEEK_AGGREGATION,
         OptionType.OPTION_REPORT_MONTH_AGGREGATION, OptionType.OPTION_REPORT_YEAR_AGGREGATION,
         OptionType.OPTION_EXPORT_BILL, OptionType.OPTION_EXPORT_BILL_DETAIL, OptionType.OPTION_BATCH_SETTLEMENT,
-        OptionType.OPTION_REPORT_PRE_SEVEN_DATE,OptionType.OPTION_REPORT_PRE_THIRTY_DATE,OptionType.OPTION_REPORT_PRE_NINETY_DATE})
+        OptionType.OPTION_REPORT_PRE_SEVEN_DATE,OptionType.OPTION_REPORT_PRE_THIRTY_DATE,OptionType.OPTION_REPORT_PRE_NINETY_DATE,
+        OptionType.OPTION_NOT_DEPOSIT})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -103,4 +104,6 @@ public @interface OptionType {
     String OPTION_REPORT_PRE_SEVEN_DATE="近7日  ";
     String OPTION_REPORT_PRE_THIRTY_DATE="近30日  ";
     String OPTION_REPORT_PRE_NINETY_DATE="近90日  ";
+
+    String OPTION_NOT_DEPOSIT = "不包含押金商品";
 }

@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.deliveryTime.detail;
+package com.hll_sc_app.app.report.refund.refundcollect.detail;
 
 import android.text.TextUtils;
 
@@ -12,8 +12,10 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
+import com.hll_sc_app.bean.report.refund.RefundedReq;
+import com.hll_sc_app.bean.report.refund.RefundedResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -21,61 +23,75 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
- * @author chukun
- * @since 2019/8/15
+ *
+ * 退货明细
+ * @author 初坤
+ * @date 2019/7/20
  */
+public class RefundedDetailPresenter implements RefundedDetailContract.IWaitRefundCustomerDetailPresenter {
 
-public class DeliveryTimeDetailPresenter implements IDeliveryTimeDetailContract.IDeliveryTimeDetailPresenter {
-
+    private RefundedDetailContract.IRefundedDetailView mView;
     private int mPageNum;
-    private IDeliveryTimeDetailContract.IDeliveryTimeDetailView mView;
+    private int mTempPageNum;
 
-    public static DeliveryTimeDetailPresenter newInstance() {
-        DeliveryTimeDetailPresenter presenter = new DeliveryTimeDetailPresenter();
-        return presenter;
+    static RefundedDetailPresenter newInstance() {
+        return new RefundedDetailPresenter();
     }
 
     @Override
     public void start() {
         mPageNum = 1;
-        queryList(true);
+        mTempPageNum = mPageNum;
+        queryRefundedDetail(true);
     }
 
-    private void queryList(boolean showLoading) {
-        DeliveryTimeReq params = mView.getRequestParams();
-        params.setGroupID(UserConfig.getGroupID());
-        params.setPageNum(mPageNum);
-        params.setPageSize(20);
-        Report.queryDeliveryTimeContent(params, new SimpleObserver<DeliveryTimeResp>(mView, showLoading) {
-                    @Override
-                    public void onSuccess(DeliveryTimeResp deliveryTimeResp) {
-                        boolean isNotEmpty = !CommonUtils.isEmpty(deliveryTimeResp.getRecords());
-                        mView.setDeliveryTimeDetailList(deliveryTimeResp, mPageNum > 1 && isNotEmpty);
-                        if (isNotEmpty) {
-                            mPageNum++;
-                        }
-                    }
-                });
+
+
+    @Override
+    public void register(RefundedDetailContract.IRefundedDetailView view) {
+        this.mView = CommonUtils.checkNotNull(view);
     }
 
     @Override
-    public void loadDeliveryTimeDetailList() {
-        mPageNum = 1;
-        queryList(false);
+    public void queryRefundedDetail(boolean showLoading) {
+        toQueryRefundedDetail(showLoading);
     }
 
     @Override
-    public void loadMore() {
-        queryList(false);
+    public void loadMoreRefundedDetail(){
+        mTempPageNum = mPageNum;
+        mTempPageNum++;
+        toQueryRefundedDetail(true);
+    }
+
+    private void toQueryRefundedDetail(boolean showLoading) {
+        RefundedReq requestParams = mView.getRequestParams();
+        requestParams.setGroupID(UserConfig.getGroupID());
+        requestParams.setPageNum(mTempPageNum);
+        requestParams.setPageSize(20);
+        Report.queryRefundedDetail(requestParams, new SimpleObserver<RefundedResp>(mView,showLoading) {
+            @Override
+            public void onSuccess(RefundedResp refundedResp) {
+                boolean isNotEmpty = !CommonUtils.isEmpty(refundedResp.getGroupVoList());
+                mView.showRefundedDetail(refundedResp,mPageNum>1 && isNotEmpty);
+                if (isNotEmpty) {
+                    mPageNum = mTempPageNum;
+                }
+            }
+            @Override
+            public void onFailure(UseCaseException e) {
+                mView.showError(e);
+            }
+        });
     }
 
     @Override
-    public void exportDeliveryTimeDetail(String email, String reqParams) {
+    public void exportRefundedDetail(String email, String reqParams) {
         if (!TextUtils.isEmpty(email)) {
             bindEmail(email);
             return;
         }
-        Report.exportReport(reqParams, "111008", email, new SimpleObserver<ExportResp>(mView) {
+        Report.exportReport(reqParams, "111021", email, new SimpleObserver<ExportResp>(mView) {
             @Override
             public void onSuccess(ExportResp exportResp) {
                 if (!TextUtils.isEmpty(exportResp.getEmail()))
@@ -93,11 +109,6 @@ public class DeliveryTimeDetailPresenter implements IDeliveryTimeDetailContract.
         });
     }
 
-    @Override
-    public void register(IDeliveryTimeDetailContract.IDeliveryTimeDetailView view) {
-        mView = CommonUtils.requireNonNull(view);
-    }
-
     private void bindEmail(String email) {
         UserBean user = GreenDaoUtils.getUser();
         if (user == null)
@@ -109,13 +120,13 @@ public class DeliveryTimeDetailPresenter implements IDeliveryTimeDetailContract.
         SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
-                DeliveryTimeReq params = mView.getRequestParams();
+                RefundedReq params = mView.getRequestParams();
                 params.setGroupID(UserConfig.getGroupID());
                 params.setPageNum(mPageNum);
                 params.setPageSize(20);
                 Gson gson = new Gson();
                 String reqParams = gson.toJson(params);
-                exportDeliveryTimeDetail(null, reqParams);
+                exportRefundedDetail(null, reqParams);
             }
         };
         UserService.INSTANCE.bindEmail(req)
@@ -123,4 +134,5 @@ public class DeliveryTimeDetailPresenter implements IDeliveryTimeDetailContract.
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
                 .subscribe(observer);
     }
+
 }

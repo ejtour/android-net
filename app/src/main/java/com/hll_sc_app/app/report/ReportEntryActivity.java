@@ -61,6 +61,9 @@ public class ReportEntryActivity extends BaseLoadActivity {
         list.add(new ReportItem(ReportIcon.PRODUCTS_DETAILS,ReportLabel.INSPECT_LACK_DETAIL,RouterConfig.REPORT_INSPECT_LACK_DETAIL));
         list.add(new ReportItem(ReportIcon.STOCKOUT_STATISTICS,ReportLabel.WAREHOUSE_PRODUCT_DETAIL,RouterConfig.REPORT_WAREHOUSE_PRODUCT_DETAIL));
         list.add(new ReportItem(ReportIcon.RECEIVE_DIFFERENCE_DETAILS,ReportLabel.DELIVERY_TIME_AGGREGATION,RouterConfig.REPORT_DELIVERY_TIME_AGGREGATION));
+        list.add(new ReportItem(ReportIcon.WAIT_REFUND,ReportLabel.WAIT_FOR_REFUND,RouterConfig.REPORT_WAIT_REFUND_TOTAL));
+        list.add(new ReportItem(ReportIcon.REFUNDED,ReportLabel.REFUNDED,RouterConfig.REPORT_REFUNDED_COLLECT));
+        list.add(new ReportItem(ReportIcon.REFUNDED_CUSTOMER_PRODUCT,ReportLabel.REFUNDED_CUSTOMER_PRODUCT,RouterConfig.REPORT_REFUNDED_CUSTOMER_PRODUCT_TOTAL));
         list.add(new ReportItem(ReportIcon.REFUND_REASONS, ReportLabel.REFUND_REASONS, RouterConfig.REFUND_REASON_STATICS));
 
         return list;

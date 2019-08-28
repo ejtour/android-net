@@ -316,7 +316,7 @@ public class DeliveryTimeDetailActivity extends BaseLoadActivity implements IDel
         }else{
             mExcel.setData(new ArrayList<>(), append);
             mExcel.setFooterView(generatorFooter(deliveryTimeResp, append));
-            mExcel.setHeaderView(generateHeader(append));
+            generateHeader(append);
         }
 
     }

@@ -788,5 +788,45 @@ public class RouterConfig {
      * CRM-我的
      */
     public static final String CRM_MINE = "/fragment/crm/mine";
+
+    /**
+     * 待退合计
+     */
+    public static final String REPORT_WAIT_REFUND_TOTAL="/activity/report/refund/wait";
+
+    /**
+     * 待退客户明细
+     */
+    public static final String REPORT_WAIT_REFUND_CUSTOMER_DETAIL="/activity/report/refund/wait/customer/detail";
+
+    /**
+     * 待退商品明细
+     */
+    public static final String REPORT_WAIT_REFUND_PRODUCT_DETAIL="/activity/report/refund/wait/product/detail";
+
+    /**
+     * 退货统计
+     */
+    public static final String REPORT_REFUNDED_COLLECT = "/activity/report/refund/refundcollect";
+
+    /**
+     * 退货统计明细
+     */
+    public static final String REPORT_REFUNDED_COLLECT_DETAIL = "/activity/report/refund/refundcollect/detail";
+
+    /**
+     * 退货客户，商品汇总
+     */
+    public static final String REPORT_REFUNDED_CUSTOMER_PRODUCT_TOTAL = "/activity/report/refund/customerProduct";
+
+    /**
+     * 退货客户明细
+     */
+    public static final String REPORT_REFUNDED_CUSTOMER_DETAIL = "/activity/report/refund/customerProduct/customer/detail";
+
+    /**
+     * 退货商品明细
+     */
+    public static final String REPORT_REFUNDED_PRODUCT_DETAIL = "/activity/report/refund/customerProduct/product/detail";
 }
 
