@@ -52,6 +52,51 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_productStatusTitle"/>
 
+    <TextView
+        android:id="@+id/txt_product_props"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
+        android:text="商品属性"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color222"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_productStatus4"/>
+
+    <TextView
+        android:id="@+id/txt_product_self"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_register_category"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="自营商品"
+        android:textColor="@drawable/bg_register_category_text"
+        android:textSize="@dimen/base_text_12"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/txt_productStatus5"
+        app:layout_constraintTop_toBottomOf="@+id/txt_product_props"/>
+
+    <TextView
+        android:id="@+id/txt_product_warehouse"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/bg_register_category"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="代仓商品"
+        android:textColor="@drawable/bg_register_category_text"
+        android:textSize="@dimen/base_text_12"
+        app:layout_constraintLeft_toRightOf="@+id/txt_productStatus4"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_product_self"/>
+
     <View
         android:id="@+id/view_divider"
         android:layout_width="match_parent"
@@ -62,7 +107,7 @@
         android:background="@color/base_color_divider"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_productStatus5"/>
+        app:layout_constraintTop_toBottomOf="@+id/txt_product_self"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

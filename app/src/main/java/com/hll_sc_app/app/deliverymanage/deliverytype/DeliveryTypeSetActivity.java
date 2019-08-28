@@ -48,7 +48,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.DELIVERY_TYPE_SET, extras = Constant.LOGIN_EXTRA)
 public class DeliveryTypeSetActivity extends BaseLoadActivity implements DeliveryTypeSetContract.IDeliveryTypeSetView,
-    CompoundButton.OnCheckedChangeListener {
+        CompoundButton.OnCheckedChangeListener {
     public static final int INT_MAX = 6;
     @BindView(R.id.switch_1)
     SwitchButton mSwitch1;
@@ -96,7 +96,12 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mPresenter.start();
+        boolean isHasSelect = intent.getBooleanExtra("isHasSelect", true);
+        if (!isHasSelect) {//如果一个都没选，则请求关闭第三方物流配送
+            mSwitch3.setChecked(false);
+        } else {
+            mPresenter.start();
+        }
     }
 
     @OnClick({R.id.img_close, R.id.ll_delivery_name})
@@ -107,7 +112,7 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
                 break;
             case R.id.ll_delivery_name:
                 RouterUtil.goToActivity(RouterConfig.DELIVERY_TYPE_COMPANY,
-                    new ArrayList<>(mBean.getDeliveryCompanyList()));
+                        new ArrayList<>(mBean.getDeliveryCompanyList()));
                 break;
             default:
                 break;
@@ -178,7 +183,7 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
                 int width = UIUtils.dip2px(18);
                 for (int i = 0, size = all > INT_MAX ? INT_MAX : all; i < size; i++) {
                     spannableString.setSpan(new CustomReplacementSpan(width), 2 * i, 2 * i + 1,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 mTxtDeliveryName.setText(spannableString);
             } else {
@@ -243,7 +248,7 @@ public class DeliveryTypeSetActivity extends BaseLoadActivity implements Deliver
             float textWidth = paint.measureText(String.valueOf(text.subSequence(start, end)));
             float baseLine = Math.abs(paint.ascent() + paint.descent()) / 2;
             canvas.drawText(text, start, end, (float) (x + width * 0.5 - textWidth / 2),
-                (float) (((top + width) * 0.5) + baseLine), paint);
+                    (float) (((top + width) * 0.5) + baseLine), paint);
         }
     }
 }

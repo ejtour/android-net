@@ -3,6 +3,7 @@ package com.hll_sc_app.app.aftersales.audit;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.bean.filter.AuditParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.AfterSales;
 import com.hll_sc_app.utils.Utils;
@@ -35,8 +36,8 @@ public class AuditFragmentPresenter implements IAuditFragmentContract.IAuditFrag
 
     private void requestList(boolean showLoading) {
         AuditParam param = mView.getAuditParam();
-        AfterSales.requestAfterSalesList(param.getStartTime(),
-                param.getEndTime(),
+        AfterSales.requestAfterSalesList(param.getFormatStartDate(),
+                param.getFormatEndDate(),
                 mView.getBillStatus(),
                 param.getPurchaserShopID(),
                 param.getPurchaserID(),
@@ -72,8 +73,8 @@ public class AuditFragmentPresenter implements IAuditFragmentContract.IAuditFrag
     @Override
     public void exportOrder(String email) {
         AuditParam param = mView.getAuditParam();
-        AfterSales.exportAfterSalesOrder(param.getStartTime(),
-                param.getEndTime(),
+        AfterSales.exportAfterSalesOrder(param.getFormatStartDate(),
+                param.getFormatEndDate(),
                 mView.getBillStatus(),
                 param.getPurchaserShopID(),
                 param.getPurchaserID(),

@@ -10,7 +10,7 @@ import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.hll_sc_app.bean.wallet.details.DetailsRecord;
 import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
-import com.hll_sc_app.bean.wallet.details.WalletDetailsParam;
+import com.hll_sc_app.bean.filter.WalletDetailsParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
@@ -48,8 +48,9 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
     }
 
     private void getDetailsList(boolean showLoading) {
-        Wallet.getWalletDetailsList(pageNum, mParam.getFormatBeginTime(), mParam.getFormatEndTime()
-                , mParam.getSettleUnitID(), new SimpleObserver<DetailsListResp>(mView, showLoading) {
+        Wallet.getWalletDetailsList(pageNum, mParam.getFormatStartDate(), mParam.getFormatEndDate(),
+                mParam.getSettleUnitID(), mParam.getTransType(),
+                new SimpleObserver<DetailsListResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(DetailsListResp detailsListResp) {
                         if (pageNum == 1) { // 第一页时清空列表
@@ -87,13 +88,15 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
         if (mParam.isFilter()) {
             String header;
             if (mParam.isRange()) {
-                header = CalendarUtils.format(mParam.getBeginTime(), Constants.SIGNED_YYYY_MM_DD) + " - " +
-                        CalendarUtils.format(mParam.getEndTime(), Constants.SIGNED_YYYY_MM_DD);
+                header = mParam.getFormatStartDate(Constants.SIGNED_YYYY_MM_DD) + " - " +
+                        mParam.getFormatEndDate(Constants.SIGNED_YYYY_MM_DD);
             } else {
-                header = CalendarUtils.format(mParam.getBeginTime(), Constants.SIGNED_YYYY_MM);
+                header = mParam.getFormatStartDate(Constants.SIGNED_YYYY_MM);
             }
             DetailsRecordWrapper wrapper = new DetailsRecordWrapper(true, header);
             wrappers.add(wrapper);
+        } else if (array.size() == 0) {
+            wrappers.add(new DetailsRecordWrapper(true, mParam.getFormatEndDate(Constants.SIGNED_YYYY_MM)));
         }
         // SparseArray 中的 key 默认会升序排列
         for (int i = array.size() - 1; i >= 0; i--) {
@@ -133,10 +136,11 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
         ExportReq.ParamsBean params = new ExportReq.ParamsBean();
         params.setFnancialDetail(financialParams);
         req.setParams(params);
-        financialParams.setBeginTime(mParam.getFormatBeginTime());
-        financialParams.setEndTime(mParam.getFormatEndTime());
+        financialParams.setBeginTime(mParam.getFormatStartDate());
+        financialParams.setEndTime(mParam.getFormatEndDate());
         financialParams.setGroupID(userBean.getGroupID());
         financialParams.setSettleUnitID(mParam.getSettleUnitID());
+        financialParams.setTransType(mParam.getTransType());
         Common.exportExcel(req, Utils.getExportObserver(mView));
     }
 

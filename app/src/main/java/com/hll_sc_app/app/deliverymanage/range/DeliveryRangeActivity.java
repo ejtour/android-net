@@ -25,6 +25,7 @@ import com.hll_sc_app.bean.delivery.CityListBean;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumReq;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.widget.GridSimpleDecoration;
 
 import org.greenrobot.eventbus.EventBus;
@@ -77,7 +78,7 @@ public class DeliveryRangeActivity extends BaseLoadActivity implements DeliveryR
         mAreaAdapter = new AreaListAdapter();
         mAreaAdapter.setOnItemClickListener((adapter, view, position) ->
             toSelectArea((ProvinceListBean) adapter.getItem(position)));
-        mRecyclerViewArea.addItemDecoration(new GridSimpleDecoration(4));
+        mRecyclerViewArea.addItemDecoration(new GridSimpleDecoration());
         mRecyclerViewArea.setAdapter(mAreaAdapter);
 
         mSelectAdapter = new SelectListAdapter();
@@ -86,7 +87,7 @@ public class DeliveryRangeActivity extends BaseLoadActivity implements DeliveryR
         mSelectAdapter.setEmptyView(emptyView);
         mSelectAdapter.setOnItemClickListener((adapter, view, position) ->
             toSelectArea((ProvinceListBean) adapter.getItem(position)));
-        mRecyclerViewSelect.addItemDecoration(new GridSimpleDecoration(4));
+        mRecyclerViewSelect.addItemDecoration(new GridSimpleDecoration());
         mRecyclerViewSelect.setAdapter(mSelectAdapter);
     }
 

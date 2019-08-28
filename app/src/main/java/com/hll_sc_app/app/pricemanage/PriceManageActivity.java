@@ -36,14 +36,18 @@ import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -75,6 +79,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     private PriceManageListAdapter mAdapter;
     private PriceManageFilterWindow mFilterWindow;
     private TopSingleSelectWindow<RatioTemplateBean> mRatioTemplateWindow;
+    private ContextOptionsWindow mOptionsWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,7 +101,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
             return true;
         });
         mEdtSearch.addTextChangedListener((GoodsSpecsAddActivity.CheckTextWatcher) s
-            -> mImgClear.setVisibility(TextUtils.isEmpty(s) ? View.GONE : View.VISIBLE));
+                -> mImgClear.setVisibility(TextUtils.isEmpty(s) ? View.GONE : View.VISIBLE));
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -109,7 +114,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
             }
         });
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new PriceManageListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             SkuGoodsBean bean = (SkuGoodsBean) adapter.getItem(position);
@@ -139,12 +144,12 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
             if (!CommonUtils.isEmpty(listBeans)) {
                 for (CategoryRatioListBean categoryRatioListBean : listBeans) {
                     if (TextUtils.equals(categoryRatioListBean.getShopProductCategoryThreeID(),
-                        bean.getShopProductCategoryThreeID())) {
+                            bean.getShopProductCategoryThreeID())) {
                         isShow = true;
                         double ratio = CommonUtils.addDouble(CommonUtils.getDouble(categoryRatioListBean.getRatio()),
-                            100).doubleValue();
+                                100).doubleValue();
                         double result =
-                            CommonUtils.mulDouble(ratio, CommonUtils.getDouble(bean.getCostPrice())).doubleValue();
+                                CommonUtils.mulDouble(ratio, CommonUtils.getDouble(bean.getCostPrice())).doubleValue();
                         recommendPrice = CommonUtils.formatNumber(CommonUtils.divDouble(result, 100).doubleValue());
                         break;
                     }
@@ -153,32 +158,32 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
         }
 
         PriceInputDialog.newBuilder(this)
-            .showRecommend(isShow)
-            .setCostPrice(CommonUtils.formatNumber(bean.getCostPrice()))
-            .setRecommendPrice(recommendPrice)
-            .setTitle(isProductPrice ? "修改售价" : "修改成本")
-            .setProductName(bean.getProductName())
-            .setSpecContent(bean.getSpecContent())
-            .setPrice(CommonUtils.formatNumber(isProductPrice ? bean.getProductPrice() : bean.getCostPrice()))
-            .setButton((dialog, item) -> {
-                if (item == 1) {
-                    String editPrice = dialog.getInputString();
-                    if (TextUtils.isEmpty(editPrice)) {
-                        showToast("请输入修改的价格");
-                        return;
+                .showRecommend(isShow)
+                .setCostPrice(CommonUtils.formatNumber(bean.getCostPrice()))
+                .setRecommendPrice(recommendPrice)
+                .setTitle(isProductPrice ? "修改售价" : "修改成本")
+                .setProductName(bean.getProductName())
+                .setSpecContent(bean.getSpecContent())
+                .setPrice(CommonUtils.formatNumber(isProductPrice ? bean.getProductPrice() : bean.getCostPrice()))
+                .setButton((dialog, item) -> {
+                    if (item == 1) {
+                        String editPrice = dialog.getInputString();
+                        if (TextUtils.isEmpty(editPrice)) {
+                            showToast("请输入修改的价格");
+                            return;
+                        }
+                        if (isProductPrice) {
+                            mPresenter.updateProductPrice(bean, editPrice);
+                        } else {
+                            mPresenter.updateCostPrice(bean, editPrice);
+                        }
                     }
-                    if (isProductPrice) {
-                        mPresenter.updateProductPrice(bean, editPrice);
-                    } else {
-                        mPresenter.updateCostPrice(bean, editPrice);
-                    }
-                }
-                dialog.dismiss();
-            }, "容我想想", "确认修改")
-            .create().show();
+                    dialog.dismiss();
+                }, "容我想想", "确认修改")
+                .create().show();
     }
 
-    @OnClick({R.id.img_back, R.id.img_clear, R.id.txt_log, R.id.txt_filter, R.id.rl_select_ratio})
+    @OnClick({R.id.img_menu, R.id.img_back, R.id.img_clear, R.id.txt_filter, R.id.rl_select_ratio})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -188,18 +193,40 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
                 mEdtSearch.setText(null);
                 toSearch();
                 break;
-            case R.id.txt_log:
-                RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE_LOG);
-                break;
             case R.id.txt_filter:
                 mPresenter.queryCustomCategory();
                 break;
             case R.id.rl_select_ratio:
                 mPresenter.queryRatioTemplateList();
                 break;
+            case R.id.img_menu:
+                showMenu(view);
+                break;
             default:
                 break;
         }
+    }
+
+    private void showMenu(View target) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_PRICE_MANAGE_LOG));
+            list.add(new OptionsBean(R.drawable.ic_goods_option_import, OptionType.OPTION_CHECK_PRICE_MANAGE_CHANGE_LOG));
+            mOptionsWindow = new ContextOptionsWindow(this).setListener((adapter, view, position) -> {
+                switch (position) {
+                    case 0:
+                        mPresenter.export(null);
+                        break;
+                    case 1:
+                        RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE_LOG);
+                        break;
+                    default:
+                        break;
+                }
+                mOptionsWindow.dismiss();
+            }).refreshList(list);
+        }
+        mOptionsWindow.showAsDropDownFix(target, Gravity.END);
     }
 
     @Override
@@ -270,6 +297,15 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     }
 
     @Override
+    public int getIsWareHourse() {
+        int isWareHourse = -1;
+        if (mFilterWindow != null) {
+            isWareHourse = mFilterWindow.getIsWareHourse();
+        }
+        return isWareHourse;
+    }
+
+    @Override
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
@@ -285,28 +321,28 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
             viewHolder.addOnClickListener(R.id.txt_edt_productPrice)
-                .addOnClickListener(R.id.txt_edt_costPrice);
+                    .addOnClickListener(R.id.txt_edt_costPrice);
             return viewHolder;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, SkuGoodsBean bean) {
             helper.setText(R.id.txt_productName, bean.getProductName())
-                .setText(R.id.txt_specContent, bean.getSpecContent())
-                .setText(R.id.txt_costPrice, getPrice("成本：", CommonUtils.formatNumber(bean.getCostPrice()),
-                    bean.getSaleUnitName()))
-                .setText(R.id.txt_productPrice, getPrice("售价：", CommonUtils.formatNumber(bean.getProductPrice()),
-                    bean.getSaleUnitName()))
-                .setGone(R.id.txt_edt_costPrice, TextUtils.equals(bean.getCostPriceModifyFlag(), "0"));
+                    .setText(R.id.txt_specContent, bean.getSpecContent())
+                    .setText(R.id.txt_costPrice, getPrice("成本：", CommonUtils.formatNumber(bean.getCostPrice()),
+                            bean.getSaleUnitName()))
+                    .setText(R.id.txt_productPrice, getPrice("售价：", CommonUtils.formatNumber(bean.getProductPrice()),
+                            bean.getSaleUnitName()))
+                    .setGone(R.id.txt_edt_costPrice, TextUtils.equals(bean.getCostPriceModifyFlag(), "0"));
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(bean.getImgUrl());
         }
 
         private SpannableString getPrice(String title, String price, String unit) {
             SpannableString spannableString = new SpannableString(title + "¥" + price + "/" + unit);
             spannableString.setSpan(new ForegroundColorSpan(0xFFED5655), title.length(), spannableString.length(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannableString.setSpan(new RelativeSizeSpan(1.2f), spannableString.toString().indexOf("¥") + 1,
-                spannableString.toString().indexOf("/"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    spannableString.toString().indexOf("/"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             return spannableString;
         }
     }

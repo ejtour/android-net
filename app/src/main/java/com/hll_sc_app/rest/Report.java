@@ -5,6 +5,9 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -30,6 +33,7 @@ import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
+import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
@@ -37,8 +41,9 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-
+import java.util.Date;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -98,8 +103,8 @@ public class Report {
      * @param pv        查询的pv号
      * @param email     邮箱地址
      */
-    public static void exportReport( String reqParams, String pv, String email, SimpleObserver<ExportResp> observer) {
-        ReportExportReq req = new ReportExportReq();
+    public static <T> void exportReport(T reqParams, String pv, String email, SimpleObserver<ExportResp> observer) {
+        ReportExportReq<T> req = new ReportExportReq<T>();
         req.setEmail(email);
         req.setIsBindEmail(TextUtils.isEmpty(email) ? 0 : 1);
         req.setPv(pv);
@@ -175,7 +180,8 @@ public class Report {
 
     /**
      * 客户缺货统计表
-     * @param requestParams  查询参数
+     *
+     * @param requestParams 查询参数
      */
     public static void queryCustomerLack(CustomerLackReq requestParams, SimpleObserver<CustomerLackResp> observer) {
         ReportService.INSTANCE
@@ -187,10 +193,11 @@ public class Report {
 
     /**
      * 收货差异汇总
+     *
      * @param params
      * @param observer
      */
-    public static void queryInspectLack(BaseReportReqParam params, SimpleObserver<InspectLackResp> observer){
+    public static void queryInspectLack(BaseReportReqParam params, SimpleObserver<InspectLackResp> observer) {
         ReportService.INSTANCE
                 .queryInspectLack(new BaseReq<>(params))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -200,10 +207,11 @@ public class Report {
 
     /**
      * 收货差异明细
+     *
      * @param params
      * @param observer
      */
-    public static void queryInspectLackDetail(InspectLackDetailReq params, SimpleObserver<InspectLackDetailResp> observer){
+    public static void queryInspectLackDetail(InspectLackDetailReq params, SimpleObserver<InspectLackDetailResp> observer) {
         ReportService.INSTANCE
                 .queryInspectLackDetail(new BaseReq<>(params))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -213,10 +221,11 @@ public class Report {
 
     /**
      * 收货差异明细
+     *
      * @param params
      * @param observer
      */
-    public static void queryWareHouseProductLackDetail(WareHouseLackProductReq params, SimpleObserver<WareHouseLackProductResp> observer){
+    public static void queryWareHouseProductLackDetail(WareHouseLackProductReq params, SimpleObserver<WareHouseLackProductResp> observer) {
         ReportService.INSTANCE
                 .queryWareHouseProductLackDetail(new BaseReq<>(params))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -226,12 +235,13 @@ public class Report {
 
     /**
      * 代仓货主列表
+     *
      * @param groupID
      * @param actionType
      * @param searchWord
      * @param observer
      */
-    public static void queryWareHouseShipperList(String groupID,int actionType, String searchWord, SimpleObserver<List<WareHouseShipperBean>> observer){
+    public static void queryWareHouseShipperList(String groupID, int actionType, String searchWord, SimpleObserver<List<WareHouseShipperBean>> observer) {
         WareHouseShipperReq params = new WareHouseShipperReq();
         params.setGroupID(groupID);
         params.setActionType(actionType);
@@ -245,14 +255,45 @@ public class Report {
 
     /**
      * 配送及时率查询
+     *
      * @param deliveryTimeReq
      * @param observer
      */
-    public static void queryDeliveryTimeContent(DeliveryTimeReq deliveryTimeReq, SimpleObserver<DeliveryTimeResp> observer){
+    public static void queryDeliveryTimeContent(DeliveryTimeReq deliveryTimeReq, SimpleObserver<DeliveryTimeResp> observer) {
         ReportService.INSTANCE.queryDeliveryTimeContent(new BaseReq<>(deliveryTimeReq))
-                     .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                     .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                     .subscribe(observer);
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询采购汇总
+     */
+    public static void queryPurchaseSummary(BaseMapReq req, SimpleObserver<PurchaseSummaryResp> observer) {
+        ReportService.INSTANCE
+                .queryPurchaseSummary(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 录入采购信息
+     *
+     * @param builder 采购信息请求
+     */
+    public static void recordPurchaseInfo(BaseMapReq.Builder builder, SimpleObserver<MsgWrapper<Object>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        ReportService
+                .INSTANCE
+                .recordPurchaseInfo(builder
+                        .put("groupID", user.getGroupID())
+                        .put("enterEmp", user.getEmployeeName())
+                        .put("currentDay", CalendarUtils.toLocalDate(new Date()))
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
     }
 
     /**

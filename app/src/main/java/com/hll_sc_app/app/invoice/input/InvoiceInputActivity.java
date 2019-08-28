@@ -6,12 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.RelativeSizeSpan;
-import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -68,6 +65,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
      */
     public static void start(InvoiceMakeReq req) {
         req.setInvoiceType(1);
+        req.setTitleType(1);
         RouterUtil.goToActivity(RouterConfig.INVOICE_INPUT, req);
     }
 
@@ -130,13 +128,6 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         mPhone.setText(mMakeReq.getTelephone());
     }
 
-    private SpannableString processMoney() {
-        String source = String.format("¥%s", CommonUtils.formatMoney(mMakeReq.getInvoicePrice()));
-        SpannableString ss = new SpannableString(source);
-        ss.setSpan(new RelativeSizeSpan(1.23f), 1, source.indexOf("."), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return ss;
-    }
-
     @OnClick(R.id.aii_invoice_type)
     public void selectType() {
         if (mTypeDialog == null) {
@@ -161,14 +152,15 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if (checkedId == R.id.aii_type_company) {
-            mIdentifierGroup.setVisibility(View.VISIBLE);
-            mPresenter.reqInvoiceHistory(1);
+            mMakeReq.setTitleType(1);
             mInvoiceTitle.setHint("请输入企业名称");
+            mIdentifierGroup.setVisibility(View.VISIBLE);
         } else {
-            mIdentifierGroup.setVisibility(View.GONE);
-            mPresenter.reqInvoiceHistory(2);
+            mMakeReq.setTitleType(2);
             mInvoiceTitle.setHint("请输入抬头名称");
+            mIdentifierGroup.setVisibility(View.GONE);
         }
+        mPresenter.reqInvoiceHistory(mMakeReq.getTitleType());
         updateEnable();
     }
 
@@ -200,13 +192,13 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
 
     private void updateEnable() {
         mConfirm.setEnabled(!TextUtils.isEmpty(mInvoiceTitle.getText())
-                && !TextUtils.isEmpty(mAccount.getText())
-                && !TextUtils.isEmpty(mBank.getText())
-                && !TextUtils.isEmpty(mAddress.getText())
                 && !TextUtils.isEmpty(mRecipient.getText())
                 && !TextUtils.isEmpty(mPhone.getText())
                 && mMakeReq.getInvoicePrice() > 0
                 && (mIdentifierGroup.getVisibility() == View.GONE || !TextUtils.isEmpty(mIdentifier.getText()))
+                && (mMakeReq.getInvoiceType() == 1 || (!TextUtils.isEmpty(mAccount.getText())
+                && !TextUtils.isEmpty(mBank.getText())
+                && !TextUtils.isEmpty(mAddress.getText())))
         );
     }
 
@@ -222,7 +214,6 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mMakeReq.setOpenBank(mBank.getText().toString());
             mMakeReq.setTaxpayerNum(mIdentifierGroup.getVisibility() == View.GONE ? "" : mIdentifier.getText().toString());
             mMakeReq.setTelephone(mPhone.getText().toString());
-            mMakeReq.setTitleType(mIdentifierGroup.getVisibility() == View.GONE ? 2 : 1);
             mMakeReq.setUserID(user.getEmployeeID());
             mPresenter.makeInvoice(mMakeReq);
         }
@@ -237,7 +228,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             showToast("发票抬头请勿包含特殊字符");
             return false;
         }
-        if (!mBank.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
+        if (!TextUtils.isEmpty(mBank.getText()) && !mBank.getText().toString().matches("^[\\u4e00-\\u9fa5a-zA-Z0-9]+$")) {
             showToast("开户行请勿包含特殊字符");
             return false;
         }
@@ -257,10 +248,11 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         } else {
             if (mHistoryWindow == null) {
                 mHistoryWindow = new InvoiceHistoryWindow(this, this);
+                mHistoryWindow.setOnDismissListener(() -> getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE));
             }
-            int[] location = new int[2];
-            view.getLocationOnScreen(location);
-            mHistoryWindow.setList(mHistoryResp.getRecords()).showAtLocation(view, Gravity.CENTER_HORIZONTAL, 0, 0);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+            mHistoryWindow.setList(mHistoryResp.getRecords())
+                    .showAsDropDownFix(view);
         }
     }
 

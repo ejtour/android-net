@@ -40,6 +40,8 @@ public class ExportReq {
      * 商品价格（product_price）
      * 财务明细 (fnancialDetail)
      * 发票业务 (invoice)
+     * 代仓预警值（stock_warn_num）
+     * 售价管理 (sell_price)
      */
     private String typeCode;
     /**
@@ -122,6 +124,34 @@ public class ExportReq {
          * 发票业务导出
          */
         private InvoiceParams invoice;
+
+        /**
+         * 代仓库存预警
+         */
+        private StockWarnNum stockWarnNum;
+
+        /**
+         * 售价管理导出
+         *
+         * @return
+         */
+        private SellPrice sellPrice;
+
+        public SellPrice getSellPrice() {
+            return sellPrice;
+        }
+
+        public void setSellPrice(SellPrice sellPrice) {
+            this.sellPrice = sellPrice;
+        }
+
+        public StockWarnNum getStockWarnNum() {
+            return stockWarnNum;
+        }
+
+        public void setStockWarnNum(StockWarnNum stockWarnNum) {
+            this.stockWarnNum = stockWarnNum;
+        }
 
         public InvoiceParams getInvoice() {
             return invoice;
@@ -260,6 +290,7 @@ public class ExportReq {
             private String endTime;
             private String groupID;
             private String settleUnitID;
+            private String transType;
 
             public String getBeginTime() {
                 return beginTime;
@@ -291,6 +322,14 @@ public class ExportReq {
 
             public void setSettleUnitID(String settleUnitID) {
                 this.settleUnitID = settleUnitID;
+            }
+
+            public String getTransType() {
+                return transType;
+            }
+
+            public void setTransType(String transType) {
+                this.transType = transType;
             }
         }
 
@@ -332,5 +371,86 @@ public class ExportReq {
                 this.invoiceStatus = invoiceStatus;
             }
         }
+
+        public static class StockWarnNum {
+            private String cargoOwnerID;
+            private String groupID;
+            private String houseID;
+
+            public String getCargoOwnerID() {
+                return cargoOwnerID;
+            }
+
+            public void setCargoOwnerID(String cargoOwnerID) {
+                this.cargoOwnerID = cargoOwnerID;
+            }
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getHouseID() {
+                return houseID;
+            }
+
+            public void setHouseID(String houseID) {
+                this.houseID = houseID;
+            }
+        }
+
+
+        public static class SellPrice {
+            private String groupID;
+            private String name;
+            private String productStatus;
+            private String shopProductCategoryThreeIds;
+            private String isWareHourse ;
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getProductStatus() {
+                return productStatus;
+            }
+
+            public void setProductStatus(String productStatus) {
+                this.productStatus = productStatus;
+            }
+
+            public String getShopProductCategoryThreeIds() {
+                return shopProductCategoryThreeIds;
+            }
+
+            public void setShopProductCategoryThreeIds(String shopProductCategoryThreeIds) {
+                this.shopProductCategoryThreeIds = shopProductCategoryThreeIds;
+            }
+
+            public String getIsWareHourse() {
+                return isWareHourse;
+            }
+
+            public void setIsWareHourse(String isWareHourse) {
+                this.isWareHourse = isWareHourse;
+            }
+        }
     }
+
+
 }

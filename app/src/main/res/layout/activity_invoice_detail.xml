@@ -181,6 +181,7 @@
             <TextView
                 android:id="@+id/aid_account"
                 style="@style/InvoiceInfoEdit"
+                android:hint="无"
                 app:layout_constraintBottom_toBottomOf="@id/aid_account_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/aid_account_label"
@@ -241,6 +242,7 @@
             <TextView
                 android:id="@+id/aid_bank"
                 style="@style/InvoiceInfoEdit"
+                android:hint="无"
                 app:layout_constraintBottom_toBottomOf="@id/aid_bank_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/aid_bank_label"
@@ -266,6 +268,7 @@
 
             <TextView
                 android:id="@+id/aid_address"
+                android:hint="无"
                 style="@style/InvoiceInfoEdit"
                 app:layout_constraintBottom_toBottomOf="@id/aid_address_label"
                 app:layout_constraintEnd_toEndOf="parent"

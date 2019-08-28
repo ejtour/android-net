@@ -455,7 +455,7 @@ public class DatePickerDialog extends BaseDialog implements OnWheelChangedListen
         }
     }
 
-    class WheelAdapter extends AbstractWheelTextAdapter {
+    static class WheelAdapter extends AbstractWheelTextAdapter {
         /**
          * 默认的最小值
          */
@@ -515,7 +515,7 @@ public class DatePickerDialog extends BaseDialog implements OnWheelChangedListen
          * @param minValue 最小值
          * @param maxValue 最大值
          */
-        private void setRange(int minValue, int maxValue) {
+        void setRange(int minValue, int maxValue) {
             if (minValue > maxValue) {
                 throw new IllegalArgumentException("minValue > maxValue");
             }

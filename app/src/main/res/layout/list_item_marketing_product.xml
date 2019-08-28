@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/base_white"
+    android:paddingTop="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10">
+
+    <ImageView
+        android:id="@+id/img_delete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:src="@drawable/ic_spec_delete"
+        app:layout_constraintBottom_toBottomOf="@id/img_product"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/img_product"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@id/img_delete"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/base_text222"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/img_product"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="这里显示商品名称" />
+
+    <TextView
+        android:id="@+id/txt_spec_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_product"
+        app:layout_constraintStart_toStartOf="@id/txt_product_name"
+        tools:text="这里显示商品规格" />
+
+    <TextView
+        android:id="@+id/txt_product_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textColor="@color/color_999999"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txt_product_name"
+        tools:text="编码：239017321332" />
+
+    <TextView
+        android:id="@+id/txt_product_old_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:textColor="#999999"
+        android:textSize="10sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/txt_product_price"
+        app:layout_constraintEnd_toStartOf="@id/txt_product_price"
+        tools:text="¥12.00" />
+
+    <TextView
+        android:id="@+id/txt_product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#DE5C5C"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_product"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="¥12.00" />
+
+    <TextView
+        android:id="@+id/txt_promote_num_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="促销量"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/txt_spec_content"
+        app:layout_constraintTop_toBottomOf="@id/txt_spec_content" />
+
+    <TextView
+        android:id="@+id/txt_promote_num_content_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txt_promote_num_show"
+        tools:text="3000" />
+
+    <View
+        android:id="@+id/view_divider_1"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/base_color_divider"
+        app:layout_constraintEnd_toEndOf="@id/txt_product_price"
+        app:layout_constraintStart_toStartOf="@id/img_product"
+        app:layout_constraintTop_toBottomOf="@+id/txt_promote_num_show" />
+
+    <TextView
+        android:id="@+id/txt_promote_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="促销量"
+        android:textColor="@color/color_999999"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/img_product"
+        app:layout_constraintTop_toBottomOf="@id/view_divider_1" />
+
+    <EditText
+        android:id="@+id/edt_promote_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="right"
+        android:hint="请输入促销量"
+        android:inputType="number"
+        android:textColor="@color/base_text222"
+        android:textColorHint="@color/base_text_hint"
+        android:textSize="@dimen/base_text_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txt_promote_num" />
+
+    <View
+        android:id="@+id/view_divider_2"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/base_color_divider"
+        app:layout_constraintEnd_toEndOf="@id/txt_product_price"
+        app:layout_constraintStart_toStartOf="@id/img_delete"
+        app:layout_constraintTop_toBottomOf="@+id/txt_promote_num" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_edt_promote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="txt_promote_num,edt_promote_num,view_divider_2" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_promote_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="txt_promote_num_show,txt_promote_num_content_show" />
+</android.support.constraint.ConstraintLayout>

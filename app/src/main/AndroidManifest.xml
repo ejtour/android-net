@@ -498,7 +498,7 @@
             android:theme="@style/TranslucentTheme" />
 
         <activity
-            android:name=".app.order.transfer.inventory.InventoryCheckActivity"
+            android:name=".app.order.transfer.check.CommodityCheckActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -618,6 +618,76 @@
         <activity
             android:name=".app.web.WebActivity"
             android:screenOrientation="portrait" />
+        <!--营销中心入口-->
+        <activity
+            android:name=".app.marketingsetting.MarketingSettingMenuActivity"
+            android:screenOrientation="portrait" />
+        <!--商品营销列表-->
+        <activity
+            android:name=".app.marketingsetting.product.ProductMarketingListActivity"
+            android:screenOrientation="portrait" />
+        <!--营销中心新增-->
+        <activity
+            android:name=".app.marketingsetting.product.add.ProductMarketingAddActivity"
+            android:screenOrientation="portrait" />
+
+        <!--营销中心-选择商品-->
+        <activity
+            android:name=".app.marketingsetting.selectproduct.ProductSelectActivity"
+            android:screenOrientation="portrait" />
+
+        <!--营销中心-选择区域-->
+        <activity
+            android:name=".app.marketingsetting.selectarea.SelectAreaActivity"
+            android:screenOrientation="portrait" />
+
+        <!--营销中心-商品选择优惠券-->
+        <activity
+            android:name=".app.marketingsetting.product.selectcoupon.CouponSelectListActivity"
+            android:screenOrientation="portrait" />
+
+        <!--商品营销详情-->
+        <activity
+            android:name=".app.marketingsetting.product.check.ProductMarketingCheckActivity"
+            android:screenOrientation="portrait" />
+        <!--活动商品列表-->
+        <activity
+            android:name=".app.marketingsetting.product.check.SelectProductListActivity"
+            android:screenOrientation="portrait" />
+
+        <!--营销优惠券-->
+        <activity
+            android:name=".app.marketingsetting.coupon.MarketingCouponActivity"
+            android:screenOrientation="portrait" />
+
+        <!--营销优惠券新增-->
+        <activity
+            android:name=".app.marketingsetting.coupon.add.MarketingCouponAddActivity"
+            android:screenOrientation="portrait" />
+
+        <!--营销优惠查看-->
+        <activity
+            android:name=".app.marketingsetting.coupon.check.MarketingCouponCheckActivity"
+            android:screenOrientation="portrait" />
+
+        <!--优惠券使用详情页-->
+        <activity
+            android:name=".app.marketingsetting.coupon.usedetail.UseDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!--优惠券-选择客户-->
+        <activity
+            android:name=".app.marketingsetting.coupon.selectshops.SelectGroupsActivity"
+            android:screenOrientation="portrait" />
+        <!--选择门店-->
+        <activity
+            android:name=".app.marketingsetting.coupon.selectshops.SelectShopsActivity"
+            android:screenOrientation="portrait" />
+        <!--优惠券-分发页面-->
+        <activity
+            android:name=".app.marketingsetting.coupon.send.SendCouponActivity"
+            android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".app.bill.list.BillListActivity"
@@ -720,6 +790,21 @@
         <!--退款商品明细-->
         <activity android:name=".app.report.refund.customerProduct.product.RefundedProductDetailActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.inspection.list.InspectionListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.inspection.detail.InspectionDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.purchase.PurchaseSummaryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.purchase.input.PurchaseInputActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

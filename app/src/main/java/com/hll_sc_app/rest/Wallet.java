@@ -9,8 +9,6 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.export.ExportReq;
-import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.wallet.AreaInfo;
 import com.hll_sc_app.bean.wallet.AuthInfo;
 import com.hll_sc_app.bean.wallet.BankBean;
@@ -49,15 +47,23 @@ public class Wallet {
      * @param beginTime    开始时间 yyyyMMdd
      * @param endTime      结束时间 yyyyMMdd
      * @param settleUnitID 结算主体id
+     * @param transType    交易类型
      */
-    public static void getWalletDetailsList(int pageNum, String beginTime, String endTime, String settleUnitID, SimpleObserver<DetailsListResp> observer) {
+    public static void getWalletDetailsList(int pageNum,
+                                            String beginTime,
+                                            String endTime,
+                                            String settleUnitID,
+                                            String transType,
+                                            SimpleObserver<DetailsListResp> observer) {
         WalletService.INSTANCE
                 .getWalletDetailsList(BaseMapReq.newBuilder()
                         .put("pageNo", String.valueOf(pageNum))
                         .put("pageSize", "20")
                         .put("beginTime", beginTime)
                         .put("endTime", endTime)
-                        .put("settleUnitID", settleUnitID).create())
+                        .put("settleUnitID", settleUnitID)
+                        .put("transType", transType)
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

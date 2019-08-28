@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import com.hll_sc_app.base.utils.UIUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import java.util.List;
  * @date 2019-06-20
  */
 public class SkuGoodsBean implements Parcelable {
-    public static final Parcelable.Creator<SkuGoodsBean> CREATOR = new Parcelable.Creator<SkuGoodsBean>() {
+    public static final Creator<SkuGoodsBean> CREATOR = new Creator<SkuGoodsBean>() {
         @Override
         public SkuGoodsBean createFromParcel(Parcel source) {
             return new SkuGoodsBean(source);
@@ -76,6 +75,7 @@ public class SkuGoodsBean implements Parcelable {
     private String costPrice;
     private String productStatus;
     private String convertRatio;
+    private String promoteNum;
     /**
      * 是否可修改成本价(0-可修改,1-不可修改)
      */
@@ -94,6 +94,7 @@ public class SkuGoodsBean implements Parcelable {
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
     private boolean selected;
+    private String discountPrice;
 
     public SkuGoodsBean() {
     }
@@ -148,22 +149,39 @@ public class SkuGoodsBean implements Parcelable {
         this.costPrice = in.readString();
         this.productStatus = in.readString();
         this.convertRatio = in.readString();
+        this.promoteNum = in.readString();
         this.costPriceModifyFlag = in.readString();
         this.isSupplierWarehouse = in.readString();
         this.imgUrl = in.readString();
         this.productNameKeyword = in.readString();
         this.productCode = in.readString();
+        this.depositNum = in.readString();
         this.categorySubID = in.readString();
         this.placeCityCode = in.readString();
         this.createTime = in.readString();
         this.guaranteePeriod = in.readString();
         this.placeProvinceCode = in.readString();
         this.resourceType = in.readString();
-        this.supplierShops = new ArrayList<SupplierShopsBean>();
-        in.readList(this.supplierShops, SupplierShopsBean.class.getClassLoader());
-        this.nicknames = new ArrayList<NicknamesBean>();
-        in.readList(this.nicknames, NicknamesBean.class.getClassLoader());
+        this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
+        this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
         this.selected = in.readByte() != 0;
+        this.discountPrice = in.readString();
+    }
+
+    public String getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(String discountPrice) {
+        this.discountPrice = discountPrice;
+    }
+
+    public String getPromoteNum() {
+        return promoteNum;
+    }
+
+    public void setPromoteNum(String promoteNum) {
+        this.promoteNum = promoteNum;
     }
 
     public String getDepositNum() {
@@ -679,6 +697,33 @@ public class SkuGoodsBean implements Parcelable {
     }
 
     @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[]{specID, productID, placeProvince, specStatus, productName, productAttr,
+                assistUnitStatus,
+                offShelfTime, appointSellType, productNameSuggest, bundlingGoodsType, productBrief, isWareHourse,
+                shopProductCategorySubID, action, isDecimalBuy, depositProductType, purchaserIsVisible, orgName,
+                cargoOwnerID, standardUnitName, groupID, nextDayDelivery, onShelfTime, stockCheckType, buyMinNum, brandId
+                , producer, productPrice, skuCode, saleUnitName, priceIsVisible, standardUnitStatus, actionTime,
+                saleUnitID, categoryThreeID, shopProductCategoryID, ration, placeCity, cargoOwnerName,
+                shopProductCategoryThreeID, categoryID, productType, specContent, supplierName, actionBy, costPrice,
+                productStatus, convertRatio, costPriceModifyFlag, isSupplierWarehouse, imgUrl, productNameKeyword,
+                productCode, depositNum, categorySubID, placeCityCode, createTime, guaranteePeriod, placeProvinceCode,
+                resourceType, supplierShops, nicknames, selected});
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final SkuGoodsBean other = (SkuGoodsBean) obj;
+        return UIUtils.equals(this.specID, other.specID);
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -734,47 +779,22 @@ public class SkuGoodsBean implements Parcelable {
         dest.writeString(this.costPrice);
         dest.writeString(this.productStatus);
         dest.writeString(this.convertRatio);
+        dest.writeString(this.promoteNum);
         dest.writeString(this.costPriceModifyFlag);
         dest.writeString(this.isSupplierWarehouse);
         dest.writeString(this.imgUrl);
         dest.writeString(this.productNameKeyword);
         dest.writeString(this.productCode);
+        dest.writeString(this.depositNum);
         dest.writeString(this.categorySubID);
         dest.writeString(this.placeCityCode);
         dest.writeString(this.createTime);
         dest.writeString(this.guaranteePeriod);
         dest.writeString(this.placeProvinceCode);
         dest.writeString(this.resourceType);
-        dest.writeList(this.supplierShops);
-        dest.writeList(this.nicknames);
+        dest.writeTypedList(this.supplierShops);
+        dest.writeTypedList(this.nicknames);
         dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
-    }
-
-
-    @Override
-    public int hashCode() {
-        return Arrays.hashCode(new Object[]{specID, productID, placeProvince, specStatus, productName, productAttr,
-            assistUnitStatus,
-            offShelfTime, appointSellType, productNameSuggest, bundlingGoodsType, productBrief, isWareHourse,
-            shopProductCategorySubID, action, isDecimalBuy, depositProductType, purchaserIsVisible, orgName,
-            cargoOwnerID, standardUnitName, groupID, nextDayDelivery, onShelfTime, stockCheckType, buyMinNum, brandId
-            , producer, productPrice, skuCode, saleUnitName, priceIsVisible, standardUnitStatus, actionTime,
-            saleUnitID, categoryThreeID, shopProductCategoryID, ration, placeCity, cargoOwnerName,
-            shopProductCategoryThreeID, categoryID, productType, specContent, supplierName, actionBy, costPrice,
-            productStatus, convertRatio, costPriceModifyFlag, isSupplierWarehouse, imgUrl, productNameKeyword,
-            productCode, depositNum, categorySubID, placeCityCode, createTime, guaranteePeriod, placeProvinceCode,
-            resourceType, supplierShops, nicknames, selected});
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final SkuGoodsBean other = (SkuGoodsBean) obj;
-        return UIUtils.equals(this.specID, other.specID);
+        dest.writeString(this.discountPrice);
     }
 }

@@ -38,6 +38,10 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
     TextView mTxtProductStatus4;
     @BindView(R.id.txt_productStatus5)
     TextView mTxtProductStatus5;
+    @BindView(R.id.txt_product_self)
+    TextView mTxtProductSelf;
+    @BindView(R.id.txt_product_warehouse)
+    TextView mTxtProductWarehouse;
     private ConfirmListener mListener;
     private CustomCategoryResp mResp;
     private CategoryListAdapter mAdapter;
@@ -83,12 +87,14 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
         this.mListener = listener;
     }
 
-    @OnClick({R.id.txt_reset, R.id.txt_confirm, R.id.txt_productStatus4, R.id.txt_productStatus5})
+    @OnClick({R.id.txt_reset, R.id.txt_confirm, R.id.txt_productStatus4, R.id.txt_productStatus5, R.id.txt_product_self, R.id.txt_product_warehouse})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_reset:
                 mTxtProductStatus4.setSelected(false);
                 mTxtProductStatus5.setSelected(false);
+                mTxtProductWarehouse.setSelected(false);
+                mTxtProductSelf.setSelected(false);
                 resetCategoryIds();
                 break;
             case R.id.txt_confirm:
@@ -102,6 +108,14 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
             case R.id.txt_productStatus5:
                 mTxtProductStatus5.setSelected(!mTxtProductStatus5.isSelected());
                 mTxtProductStatus4.setSelected(false);
+                break;
+            case R.id.txt_product_self:
+                mTxtProductSelf.setSelected(!mTxtProductSelf.isSelected());
+                mTxtProductWarehouse.setSelected(false);
+                break;
+            case R.id.txt_product_warehouse:
+                mTxtProductWarehouse.setSelected(!mTxtProductWarehouse.isSelected());
+                mTxtProductSelf.setSelected(false);
                 break;
             default:
                 dismiss();
@@ -129,6 +143,16 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
             productStatus = "5";
         }
         return productStatus;
+    }
+
+    public int getIsWareHourse() {
+        if (mTxtProductSelf.isSelected()) {
+            return 0;
+        } else if (mTxtProductWarehouse.isSelected()) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
     String getCategoryIds() {
@@ -180,8 +204,8 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
         protected void convert(BaseViewHolder helper, CustomCategoryBean item) {
             List<CustomCategoryBean> list3 = getListItem(item.getId(), mResp.getList3());
             helper.setText(R.id.txt_categoryName, item.getCategoryName())
-                .setText(R.id.txt_open, item.isChecked() ? "收起" : "展开")
-                .setGone(R.id.txt_open, list3.size() > 2);
+                    .setText(R.id.txt_open, item.isChecked() ? "收起" : "展开")
+                    .setGone(R.id.txt_open, list3.size() > 2);
             RecyclerView recyclerView = helper.getView(R.id.recyclerView);
             CategoryThreeListAdapter adapter = (CategoryThreeListAdapter) recyclerView.getAdapter();
             adapter.setOpen(item.isChecked());
@@ -204,7 +228,7 @@ public class PriceManageFilterWindow extends BaseShadowPopupWindow {
         @Override
         protected void convert(BaseViewHolder helper, CustomCategoryBean item) {
             helper.setText(R.id.txt_name, item.getCategoryName())
-                .getView(R.id.txt_name).setSelected(item.isChecked());
+                    .getView(R.id.txt_name).setSelected(item.isChecked());
         }
 
         void setOpen(boolean open) {

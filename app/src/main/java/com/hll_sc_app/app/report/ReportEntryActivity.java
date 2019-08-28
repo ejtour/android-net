@@ -51,9 +51,9 @@ public class ReportEntryActivity extends BaseLoadActivity {
         list.add(new ReportItem(ReportIcon.DAILY_SALES_VOLUME, ReportLabel.DAILY_SALES_VOLUME, RouterConfig.REPORT_DAILY_AGGREGATION));
         list.add(new ReportItem(ReportIcon.CUSTOMER_SALES, ReportLabel.CUSTOMER_SALES, RouterConfig.CUSTOMER_SALE_AGGREGATION, true));
         list.add(new ReportItem(ReportIcon.SALES_MAN_SIGN, ReportLabel.SALES_MAN_SIGN_ACHIEVEMENT,
-            RouterConfig.REPORT_SALESMAN_SIGN_ACHIEVEMENT));
+                RouterConfig.REPORT_SALESMAN_SIGN_ACHIEVEMENT));
         list.add(new ReportItem(ReportIcon.SALES_PERFORMANCE, ReportLabel.SALES_MAN_SALES_ACHIEVEMENT,
-            RouterConfig.REPORT_SALESMAN_SALES_ACHIEVEMENT));
+                RouterConfig.REPORT_SALESMAN_SALES_ACHIEVEMENT));
         list.add(new ReportItem(ReportIcon.STOCKOUT_DIFFERENCES, ReportLabel.DELIVERY_LACK_GATHER,
             RouterConfig.REPORT_DELIVERY_LACK_GATHER));
         list.add(new ReportItem(ReportIcon.STOCKOUT_STATISTICS,ReportLabel.CUSTOMER_LACK_AGGREGATION,RouterConfig.REPORT_CUSTOMER_LACK_SUMMARY));
@@ -65,7 +65,8 @@ public class ReportEntryActivity extends BaseLoadActivity {
         list.add(new ReportItem(ReportIcon.REFUNDED,ReportLabel.REFUNDED,RouterConfig.REPORT_REFUNDED_COLLECT));
         list.add(new ReportItem(ReportIcon.REFUNDED_CUSTOMER_PRODUCT,ReportLabel.REFUNDED_CUSTOMER_PRODUCT,RouterConfig.REPORT_REFUNDED_CUSTOMER_PRODUCT_TOTAL));
         list.add(new ReportItem(ReportIcon.REFUND_REASONS, ReportLabel.REFUND_REASONS, RouterConfig.REFUND_REASON_STATICS));
-
+        list.add(new ReportItem(ReportIcon.PURCHASE_STATISTIC, ReportLabel.PURCHASE_STATISTIC, RouterConfig.REPORT_PURCHASE_STATISTIC));
+        list.add(new ReportItem(ReportIcon.PRODUCE_STATISTIC, ReportLabel.PRODUCE_STATISTIC, RouterConfig.REPORT_PRODUCE_STATISTIC, true));
         return list;
     }
 }

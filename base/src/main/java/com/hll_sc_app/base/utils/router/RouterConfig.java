@@ -469,7 +469,7 @@ public class RouterConfig {
     /**
      * 订单库存检查
      */
-    public static final String ORDER_INVENTORY_CHECK = "/activity/order/inventory/check";
+    public static final String ORDER_COMMODITY_CHECK = "/activity/order/commodity/check";
 
     /**
      * 提交成功
@@ -601,6 +601,21 @@ public class RouterConfig {
     public static final String REFUND_REASON_STATICS = "/activity/report/refundreason";
 
     /**
+     * 采购汇总统计
+     */
+    public static final String REPORT_PURCHASE_STATISTIC = "/activity/report/purchaseSummary";
+
+    /**
+     * 录入采购信息
+     */
+    public static final String REPORT_PURCHASE_INPUT = "/activity/report/purchase/input";
+
+    /**
+     * 生产汇总统计
+     */
+    public static final String REPORT_PRODUCE_STATISTIC = "/activity/report/produceSummary";
+
+    /**
      * 客户销售汇总搜索
      */
     public static final String CUSTOMER_SALE_SEARCH = "/activity/customer/sale/search";
@@ -680,8 +695,75 @@ public class RouterConfig {
     public static final String WALLET_BANK_LIST = "/activity/wallet/bankList";
 
     /**
-     * 对账单列表
+     * 营销中心菜单主页
      */
+    public static final String ACTIVITY_MARKETING_SETTING_MENU = "/activity/marketing/setting/menu";
+
+    /**
+     * 营销中心商品营销列表
+     */
+    public static final String ACTIVITY_MARKETING_PRODUCT_LIST = "/activity/marketing/product/list";
+
+    /**
+     * 营销中心商品营销列表-新增
+     */
+    public static final String ACTIVITY_MARKETING_PRODUCT_LIST_ADD = "/activity/marketing/product/list/add";
+
+    /**
+     * 营销中心-选择商品
+     */
+    public static final String ACTIVITY_MARKETING_SELECT_PRODUCT = "/activity/marketing/select/product";
+
+    /**
+     * 选择区域
+     */
+    public static final String ACTIVITY_SELECT_AREA_PROVINCE_CITY = "/activity/select/area/province/city";
+
+    /**
+     * 选择优惠券
+     */
+    public static final String ACTIVITY_SELECT_COUPON_LIST = "/activity/select/coupon/list";
+
+    /**
+     * 商品营销详情
+     */
+    public static final String ACTIVITY_MARKETING_PRODUCT_DETAIL = "/activity/marketing/product/detail";
+
+    /**
+     * 商品营销显示所有选择的活动商品列表页
+     */
+    public static final String ACTIVITY_MARKETING_SELECT_PRODUCT_LIST = "/activity/marketing/select/product/list";
+
+    /**
+     * 营销优惠券列表
+     */
+    public static final String ACTIVITY_MARKETING_COUPON_LIST = "/activity/marketing/coupon/list";
+
+    /**
+     * 营销优惠券-新增
+     */
+    public static final String ACTIVITY_MARKETING_COUPON_ADD = "/activity/marketing/coupon/add";
+
+    /**
+     * 营销优惠券-查看
+     */
+    public static final String ACTIVITY_MARKETING_COUPON_CHECK = "/activity/marketing/coupon/check";
+
+    /**
+     * 营销优惠券-优惠券使用详情
+     */
+    public static final String ACTIVITY_MARKETING_COUPON_USE_DETAIL_LIST = "/activity/marketing/coupon/use/detail/list";
+
+    /**
+     * 营销优惠券-优惠券分发页面
+     */
+    public static final String ACTIVITY_MARKETING_COUPON_SEND = "/activity/marketing/coupon/send";
+
+    /*营销优惠券-选择客户-集团*/
+    public static final String ACTIVITY_MARKETING_COUPON_SELECT_GROUPS = "/activity/marketing/coupon/select/groups";
+    /*营销优惠券-选择客户-门店*/
+    public static final String ACTIVITY_MARKETING_COUPON_SELECT_SHOPS = "/activity/marketing/coupon/select/shops";
+
     public static final String BILL_LIST = "/activity/bill/list";
 
     /**
@@ -790,6 +872,7 @@ public class RouterConfig {
     public static final String CRM_MINE = "/fragment/crm/mine";
 
     /**
+<<<<<<< HEAD
      * 待退合计
      */
     public static final String REPORT_WAIT_REFUND_TOTAL="/activity/report/refund/wait";
@@ -828,5 +911,14 @@ public class RouterConfig {
      * 退货商品明细
      */
     public static final String REPORT_REFUNDED_PRODUCT_DETAIL = "/activity/report/refund/customerProduct/product/detail";
+    /**
+     * 查看验货单-列表
+     */
+    public static final String INSPECTION_LIST = "/activity/inspection/list";
+
+    /**
+     * 查看验货单-详情
+     */
+    public static final String INSPECTION_DETAIL = "/activity/inspection/detail";
 }
 

@@ -37,6 +37,10 @@ public class BaseMapReq {
         return data.get(key);
     }
 
+    public LinkedHashMap<String, String> getData() {
+        return data;
+    }
+
     public static class Builder {
         private BaseMapReq mReq;
 

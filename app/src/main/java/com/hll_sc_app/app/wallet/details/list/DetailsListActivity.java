@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -15,18 +14,21 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.details.show.DetailsShowActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.filter.WalletDetailsParam;
 import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
-import com.hll_sc_app.bean.wallet.details.WalletDetailsParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.DatePickerDialog;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.StickyItemDecoration;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.wallet.TradeTypeWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -47,11 +49,6 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.WALLET_DETAILS_LIST)
 public class DetailsListActivity extends BaseLoadActivity implements IDetailsListContract.IDetailsListView, DatePickerDialog.SelectCallback {
 
-    @BindView(R.id.wdl_refresh)
-    SmartRefreshLayout wdlRefresh;
-    private DatePickerDialog mDatePickerDialog;
-    private StickyItemDecoration mStickyItemDecoration;
-
     /**
      * @param settleUnitID 结算主体 id
      */
@@ -62,16 +59,18 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
     @Autowired(name = "object0", required = true)
     String settleUnitID;
     @BindView(R.id.wdl_list)
-    RecyclerView wdlList;
+    RecyclerView mListView;
     @BindView(R.id.wdl_header)
     TitleBar mTitleBar;
     @BindView(R.id.wdl_empty)
     EmptyView mEmptyView;
-    /**
-     * 过滤按钮
-     */
-    @BindView(R.id.wdl_filter)
-    View wdlFilter;
+    @BindView(R.id.wdl_filter_container)
+    View mFilterContainer;
+    @BindView(R.id.wdl_refresh)
+    SmartRefreshLayout mRefreshLayout;
+    private DatePickerDialog mDatePickerDialog;
+    private TradeTypeWindow mTradeTypeWindow;
+    private StickyItemDecoration mStickyItemDecoration;
     private DetailsListAdapter mAdapter;
     private IDetailsListContract.IDetailsListPresenter mPresenter;
     private final WalletDetailsParam mParam = new WalletDetailsParam();
@@ -98,7 +97,7 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
                 DetailsShowActivity.start(item.t);
             }
         });
-        wdlRefresh.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.loadMore();
@@ -114,38 +113,34 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
     @Override
     public void hideLoading() {
         super.hideLoading();
-        wdlRefresh.closeHeaderOrFooter();
+        mRefreshLayout.closeHeaderOrFooter();
     }
 
     private void initData() {
         Date curTime = new Date();
-        mParam.setEndTime(curTime);
-        mParam.setBeginTime(CalendarUtils.getDateBefore(curTime, 89));
+        mParam.setEndDate(curTime);
+        mParam.setStartDate(CalendarUtils.getDateBefore(curTime, 89));
         mParam.setSettleUnitID(settleUnitID);
         mPresenter = DetailsListPresenter.newInstance(mParam);
         mPresenter.register(this);
         mPresenter.start();
+        mEmptyView.setOnActionClickListener(mPresenter::start);
     }
 
     private void initView() {
         // 分割线
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(10), 0, 0, 0);
-        wdlList.addItemDecoration(decor);
+        mListView.addItemDecoration(decor);
         // 粘性头部
         mStickyItemDecoration = new StickyItemDecoration();
-        wdlList.addItemDecoration(mStickyItemDecoration);
+        mListView.addItemDecoration(mStickyItemDecoration);
         mAdapter = new DetailsListAdapter();
-        wdlList.setAdapter(mAdapter);
-
-        // 空布局
-        mEmptyView.setTips("先去充个值试试?");
-        mEmptyView.setTipsTitle("暂时还没有任何记录噢");
-        mEmptyView.setTipsButton(null);
+        mListView.setAdapter(mAdapter);
     }
 
-    @OnClick(R.id.wdl_filter)
-    public void filter() {
+    @OnClick(R.id.wdl_date_filter)
+    public void filterDate() {
         if (mDatePickerDialog == null) {
             Calendar begin = Calendar.getInstance();
             begin.add(Calendar.YEAR, -3);
@@ -161,17 +156,23 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
         mDatePickerDialog.show();
     }
 
+    @OnClick(R.id.wdl_type_filter)
+    public void filterType() {
+        if (mTradeTypeWindow == null) {
+            mTradeTypeWindow = new TradeTypeWindow(this, value -> {
+                mParam.setTransType(value);
+                mPresenter.start();
+            });
+        }
+        mTradeTypeWindow.showAsDropDownFix(mFilterContainer);
+    }
+
     @Override
     public void select(Date time) {
         mParam.setFilter(true);
         mParam.setRange(false);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(time);
-        calendar.set(Calendar.DATE, 1);
-        mParam.setBeginTime(calendar.getTime());
-        calendar.add(Calendar.MONTH, 1);
-        calendar.add(Calendar.DATE, -1);
-        mParam.setEndTime(calendar.getTime());
+        mParam.setStartDate(CalendarUtils.getFirstDateInMonth(time));
+        mParam.setEndDate(CalendarUtils.getLastDateInMonth(time));
         mPresenter.start();
     }
 
@@ -179,8 +180,8 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
     public void select(Date beginTime, Date endTime) {
         mParam.setFilter(true);
         mParam.setRange(true);
-        mParam.setBeginTime(beginTime);
-        mParam.setEndTime(endTime);
+        mParam.setStartDate(beginTime);
+        mParam.setEndDate(endTime);
         mPresenter.start();
     }
 
@@ -189,11 +190,23 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
         mAdapter.setNewData(wrappers);
         mStickyItemDecoration.notifyChanged();
         if (wrappers.size() <= 1) {
+            mEmptyView.reset();
+            mEmptyView.setTips("先去充个值试试?");
+            mEmptyView.setTipsTitle("暂时还没有任何记录噢");
             mEmptyView.setVisibility(View.VISIBLE);
-            wdlFilter.setVisibility(wrappers.size() == 1 ? View.VISIBLE : View.GONE);
+            mFilterContainer.setVisibility(wrappers.size() == 1 ? View.VISIBLE : View.GONE);
         } else {
             mEmptyView.setVisibility(View.GONE);
-            wdlFilter.setVisibility(View.VISIBLE);
+            mFilterContainer.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        if (e.getLevel() == UseCaseException.Level.NET && CommonUtils.isEmpty(mAdapter.getData())) {
+            mEmptyView.setNetError();
+            mEmptyView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -214,6 +227,6 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
 
     @Override
     public void setEnableLoadMore(boolean enableLoadMore) {
-        wdlRefresh.setEnableLoadMore(enableLoadMore);
+        mRefreshLayout.setEnableLoadMore(enableLoadMore);
     }
 }

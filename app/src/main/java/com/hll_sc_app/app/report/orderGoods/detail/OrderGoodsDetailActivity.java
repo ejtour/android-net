@@ -17,10 +17,9 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailParam;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.report.ExcelLayout;
@@ -99,9 +98,8 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrder
         mProductNum.setText(CommonUtils.formatNum(bean.getSkuNum()));
         mInspectionNum.setText(CommonUtils.formatNum(bean.getInspectionNum()));
         mAmount.setText(String.format("¥%s", CommonUtils.formatMoney(bean.getInspectionAmount())));
-        mTime.setText(String.format("%s - %s",
-                CalendarUtils.format(mParam.getStartDate(), Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(mParam.getEndDate(), Constants.SLASH_YYYY_MM_DD)));
+        mTime.setText(String.format("%s - %s", mParam.getFormatStartDate(Constants.SLASH_YYYY_MM_DD),
+                mParam.getFormatEndDate(Constants.SLASH_YYYY_MM_DD)));
         mExcel.setHeaderView(generateHeader());
         mExcel.setColumnDataList(generateColumnData());
         mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

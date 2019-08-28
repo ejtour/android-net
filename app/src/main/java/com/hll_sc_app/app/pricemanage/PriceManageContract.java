@@ -60,6 +60,12 @@ public interface PriceManageContract {
          * @return 商品分类
          */
         String getProductCategoryIds();
+
+        /**
+         * 获取过滤商品属性：自营代仓
+         * @return
+         */
+        int getIsWareHourse();
     }
 
     interface IPriceManagePresenter extends IPresenter<IPriceManageView> {
@@ -100,5 +106,11 @@ public interface PriceManageContract {
          * 查询自定义分类
          */
         void queryCustomCategory();
+
+        /**
+         * 导出邮箱
+         * @param email
+         */
+        void export(String email);
     }
 }

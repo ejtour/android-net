@@ -57,6 +57,26 @@ public interface GoodsInvWarnContract {
          * @param total  indexList
          */
         void showGoodsInvList(List<GoodsBean> list, boolean append, int total);
+        /**
+         * 导出成功
+         *
+         * @param email 邮箱地址
+         */
+        void exportSuccess(String email);
+
+        /**
+         * 导出失败
+         *
+         * @param tip 失败提示
+         */
+        void exportFailure(String tip);
+
+        /**
+         * 绑定邮箱
+         */
+        void bindEmail();
+
+
     }
 
     interface IGoodsInvWarnPresenter extends IPresenter<IGoodsInvWarnView> {
@@ -97,5 +117,11 @@ public interface GoodsInvWarnContract {
          * @param list list
          */
         void setGoodsInvWarnValue(List<GoodsBean> list);
+
+        /**
+         * 导出
+         * @param email
+         */
+        void export(String email);
     }
 }

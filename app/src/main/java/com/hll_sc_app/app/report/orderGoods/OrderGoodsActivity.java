@@ -21,8 +21,8 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
+import com.hll_sc_app.bean.filter.DateShopParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsParam;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -73,7 +73,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     private PurchaserShopSelectWindow mSelectionWindow;
     private List<PurchaserBean> mPurchaserBeans;
     private IOrderGoodsContract.IOrderGoodsPresenter mPresenter;
-    private final OrderGoodsParam mParam = new OrderGoodsParam();
+    private final DateShopParam mParam = new DateShopParam();
     private OrderGoodsAdapter mAdapter;
 
     @Override
@@ -98,8 +98,8 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
 
     private void updateSelectedDate() {
         mDate.setText(String.format("%s - %s",
-                CalendarUtils.format(mParam.getStartDate(), Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(mParam.getEndDate(), Constants.SLASH_YYYY_MM_DD)));
+                mParam.getFormatStartDate(Constants.SLASH_YYYY_MM_DD),
+                mParam.getFormatEndDate(Constants.SLASH_YYYY_MM_DD)));
     }
 
     private void initView() {
@@ -206,30 +206,20 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
             mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                String oldBegin = mParam.getFormatStartDate();
+                if (start == null || end == null) return;
+                String oldStart = mParam.getFormatStartDate();
                 String oldEnd = mParam.getFormatEndDate();
-                if (start == null && end == null) {
-                    mParam.setStartDate(null);
-                    mParam.setEndDate(null);
-                    mDate.setText("按日期筛选");
-                    if (oldBegin != null && oldEnd != null) {
-                        mPresenter.reload();
-                    }
-                    return;
-                }
-                if (start != null && end != null) {
-                    Calendar calendarStart = Calendar.getInstance();
-                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    Calendar calendarEnd = Calendar.getInstance();
-                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    mParam.setStartDate(calendarStart.getTime());
-                    mParam.setEndDate(calendarEnd.getTime());
+
+                Calendar calendarStart = Calendar.getInstance();
+                calendarStart.setTimeInMillis(start.getTimeInMillis());
+                Calendar calendarEnd = Calendar.getInstance();
+                calendarEnd.setTimeInMillis(end.getTimeInMillis());
+                mParam.setStartDate(calendarStart.getTime());
+                mParam.setEndDate(calendarEnd.getTime());
+
+                if (!mParam.getFormatStartDate().equals(oldStart) || !mParam.getFormatEndDate().equals(oldEnd)) {
                     updateSelectedDate();
-                    if ((oldBegin == null && oldEnd == null) ||
-                            !mParam.getFormatStartDate().equals(oldBegin) ||
-                            !mParam.getFormatEndDate().equals(oldEnd)) {
-                        mPresenter.reload();
-                    }
+                    mPresenter.reload();
                 }
             });
             mDateRangeWindow.setOnDismissListener(() -> {
