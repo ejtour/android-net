@@ -7,7 +7,6 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
@@ -89,8 +88,8 @@ public class Report {
      * @param pv        查询的pv号
      * @param email     邮箱地址
      */
-    public static void exportReport(String reqParams, String pv, String email, SimpleObserver<ExportResp> observer) {
-        ReportExportReq req = new ReportExportReq();
+    public static <T> void exportReport(T reqParams, String pv, String email, SimpleObserver<ExportResp> observer) {
+        ReportExportReq<T> req = new ReportExportReq<T>();
         req.setEmail(email);
         req.setIsBindEmail(TextUtils.isEmpty(email) ? 0 : 1);
         req.setPv(pv);
@@ -254,20 +253,10 @@ public class Report {
 
     /**
      * 查询采购汇总
-     *
-     * @param startDate 开始时间
-     * @param endDate   结束时间
-     * @param pageNum   页码
      */
-    public static void queryPurchaseSummary(String startDate, String endDate, int pageNum, SimpleObserver<PurchaseSummaryResp> observer) {
+    public static void queryPurchaseSummary(BaseMapReq req, SimpleObserver<PurchaseSummaryResp> observer) {
         ReportService.INSTANCE
-                .queryPurchaseSummary(BaseMapReq.newBuilder()
-                        .put("startDate", startDate)
-                        .put("endDate", endDate)
-                        .put("pageNum", String.valueOf(pageNum))
-                        .put("pageSize", "20")
-                        .put("groupID", UserConfig.getGroupID())
-                        .create())
+                .queryPurchaseSummary(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

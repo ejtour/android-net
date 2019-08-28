@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,17 +18,23 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 import com.hll_sc_app.widget.report.PurchaseSummaryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +59,7 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     private IPurchaseSummaryContract.IPurchaseSummaryPresenter mPresenter;
     private final DateParam mParam = new DateParam();
     private DateRangeWindow mDateRangeWindow;
+    private ContextOptionsWindow mOptionsWindow;
     private PurchaseSummaryAdapter mAdapter;
     private PurchaseSummaryHeader mHeader;
 
@@ -66,6 +74,7 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     }
 
     private void initView() {
+        mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mAdapter = new PurchaseSummaryAdapter();
         mHeader = new PurchaseSummaryHeader(this);
         mAdapter.setHeaderView(mHeader);
@@ -81,6 +90,32 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
         mPresenter = PurchaseSummaryPresenter.newInstance(mParam);
         mPresenter.register(this);
         mPresenter.start();
+    }
+
+    private void showOptionsWindow(View v) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_SUMMARY_TABLE));
+            list.add(new OptionsBean(R.drawable.ic_import_option, OptionType.OPTION_RECORD_PURCHASE_LOGISTICS));
+            list.add(new OptionsBean(R.drawable.ic_import_option, OptionType.OPTION_RECORD_PURCHASE_AMOUNT));
+            mOptionsWindow = new ContextOptionsWindow(this)
+                    .refreshList(list)
+                    .setListener((adapter, view, position) -> {
+                        mOptionsWindow.dismiss();
+                        OptionsBean bean = (OptionsBean) adapter.getItem(position);
+                        if (bean == null) return;
+                        switch (bean.getLabel()) {
+                            case OptionType.OPTION_EXPORT_SUMMARY_TABLE:
+                                mPresenter.export(null);
+                                break;
+                            case OptionType.OPTION_RECORD_PURCHASE_LOGISTICS:
+                                break;
+                            case OptionType.OPTION_RECORD_PURCHASE_AMOUNT:
+                                break;
+                        }
+                    });
+        }
+        mOptionsWindow.showAsDropDownFix(v, Gravity.END);
     }
 
     private void updateDateText() {
@@ -142,5 +177,20 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
             mAdapter.setNewData(resp.getRecords());
         }
         mRefreshLayout.setEnableLoadMore(resp.getRecords() != null && resp.getRecords().size() == 20);
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresenter::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 }
