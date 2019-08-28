@@ -99,7 +99,7 @@ public class MarketingCouponCheckActivity extends BaseLoadActivity implements IM
             mCondition.setText(String.format("满%s元可使用", resp.getRuleList().get(0).getRuleCondition()));
         }
         mPerson.setText(resp.getCreateBy());
-        mTime.setText(CalendarUtils.getDateFormatString(resp.getCreateTime(), "yyyyMMddHHmm", FORMAT_TIME_OUT));
+        mTime.setText(CalendarUtils.getDateFormatString(resp.getCreateTime(), "yyyyMMddHHmmss", FORMAT_TIME_OUT));
 
     }
 
