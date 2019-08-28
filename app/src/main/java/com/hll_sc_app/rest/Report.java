@@ -5,6 +5,9 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
@@ -27,8 +30,10 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -258,6 +263,25 @@ public class Report {
         ReportService.INSTANCE
                 .queryPurchaseSummary(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 录入采购信息
+     *
+     * @param builder 采购信息请求
+     */
+    public static void recordPurchaseInfo(BaseMapReq.Builder builder, SimpleObserver<MsgWrapper<Object>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        ReportService
+                .INSTANCE
+                .recordPurchaseInfo(builder
+                        .put("groupID", user.getGroupID())
+                        .put("enterEmp", user.getEmployeeName())
+                        .put("currentDay", CalendarUtils.toLocalDate(new Date()))
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

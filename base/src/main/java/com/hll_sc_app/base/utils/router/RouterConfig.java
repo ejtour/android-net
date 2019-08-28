@@ -606,6 +606,11 @@ public class RouterConfig {
     public static final String REPORT_PURCHASE_STATISTIC = "/activity/report/purchaseSummary";
 
     /**
+     * 录入采购信息
+     */
+    public static final String REPORT_PURCHASE_INPUT = "/activity/report/purchase/input";
+
+    /**
      * 生产汇总统计
      */
     public static final String REPORT_PRODUCE_STATISTIC = "/activity/report/produceSummary";

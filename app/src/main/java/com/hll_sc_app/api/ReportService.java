@@ -153,4 +153,8 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111038")
     Observable<BaseResp<PurchaseSummaryResp>> queryPurchaseSummary(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111028")
+    Observable<BaseResp<Object>> recordPurchaseInfo(@Body BaseMapReq req);
 }
