@@ -1,17 +1,15 @@
 package com.hll_sc_app.bean.report.req;
 
-import java.util.HashMap;
-
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/7/22
  */
 
-public class ReportExportReq {
+public class ReportExportReq<T> {
     private String pv;
     private String email;
     private int isBindEmail;
-    private String reqParams;
+    private T reqParams;
 
     public String getPv() {
         return pv;
@@ -37,11 +35,11 @@ public class ReportExportReq {
         this.isBindEmail = isBindEmail;
     }
 
-    public String getReqParams() {
+    public T getReqParams() {
         return reqParams;
     }
 
-    public void setReqParams(String reqParams) {
+    public void setReqParams(T reqParams) {
         this.reqParams = reqParams;
     }
 }

@@ -1,8 +1,8 @@
 package com.hll_sc_app.app.report.purchase;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
+import com.hll_sc_app.impl.IExportView;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -10,7 +10,7 @@ import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
  */
 
 public interface IPurchaseSummaryContract {
-    interface IPurchaseSummaryView extends ILoadView {
+    interface IPurchaseSummaryView extends IExportView {
         void setList(PurchaseSummaryResp resp, boolean append);
     }
 
@@ -18,5 +18,7 @@ public interface IPurchaseSummaryContract {
         void refresh();
 
         void loadMore();
+
+        void export(String email);
     }
 }
