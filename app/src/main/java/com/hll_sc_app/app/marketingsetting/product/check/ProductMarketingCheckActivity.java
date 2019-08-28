@@ -108,7 +108,8 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
     LinearLayout mllButtonBottom;
     @BindView(R.id.txt_delete)
     TextView mTxtDelete;
-
+    @BindView(R.id.txt_edt)
+    TextView mTxtEdit;
     private Unbinder unbinder;
     private IProductMarketingCheckContract.IPresenter mPresenter;
     private MarketingDetailCheckResp mDetail;
@@ -241,7 +242,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         if (resp.getDiscountStatus() == STATUS_ACTIVE_ING || resp.getDiscountStatus() == STATUS_ACTIVE_NOT) {
             mllButtonBottom.setVisibility(View.VISIBLE);
             if (resp.getDiscountStatus() == STATUS_ACTIVE_ING) {
-                mTxtDelete.setVisibility(View.GONE);
+                mTxtEdit.setVisibility(View.GONE);
             }
         }
     }
