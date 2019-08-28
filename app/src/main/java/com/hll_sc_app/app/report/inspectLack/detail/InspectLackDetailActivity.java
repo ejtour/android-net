@@ -84,6 +84,7 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         setContentView(R.layout.activity_report_inspect_lack_detail);
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
@@ -95,8 +96,13 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
     private void initData() {
         mPresenter = InspectLackDetailPresenter.newInstance();
         mPresenter.register(this);
-        EventBus.getDefault().register(this);
         mPresenter.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     private void initView() {
