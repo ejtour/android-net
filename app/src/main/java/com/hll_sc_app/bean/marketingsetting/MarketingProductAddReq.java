@@ -166,6 +166,7 @@ public class MarketingProductAddReq {
         private String productID;
         private String promoteNum;
         private String specID;
+        
 
         public String getProductID() {
             return productID;

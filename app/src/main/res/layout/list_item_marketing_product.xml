@@ -51,12 +51,23 @@
         android:id="@+id/txt_product_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:textColor="@color/color_999999"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/txt_product_name"
         tools:text="编码：239017321332" />
 
+    <TextView
+        android:id="@+id/txt_product_old_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:textColor="#999999"
+        android:textSize="10sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/txt_product_price"
+        app:layout_constraintEnd_toStartOf="@id/txt_product_price"
+        tools:text="¥12.00" />
 
     <TextView
         android:id="@+id/txt_product_price"

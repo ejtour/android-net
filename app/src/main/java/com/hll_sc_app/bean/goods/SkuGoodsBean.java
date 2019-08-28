@@ -94,6 +94,7 @@ public class SkuGoodsBean implements Parcelable {
     private List<SupplierShopsBean> supplierShops;
     private List<NicknamesBean> nicknames;
     private boolean selected;
+    private String discountPrice;
 
     public SkuGoodsBean() {
     }
@@ -164,6 +165,15 @@ public class SkuGoodsBean implements Parcelable {
         this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
         this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
         this.selected = in.readByte() != 0;
+        this.discountPrice = in.readString();
+    }
+
+    public String getDiscountPrice() {
+        return discountPrice;
+    }
+
+    public void setDiscountPrice(String discountPrice) {
+        this.discountPrice = discountPrice;
     }
 
     public String getPromoteNum() {
@@ -785,5 +795,6 @@ public class SkuGoodsBean implements Parcelable {
         dest.writeTypedList(this.supplierShops);
         dest.writeTypedList(this.nicknames);
         dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
+        dest.writeString(this.discountPrice);
     }
 }

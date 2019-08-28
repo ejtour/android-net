@@ -37,11 +37,11 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.marketingsetting.AreaListBean;
-import com.hll_sc_app.bean.marketingsetting.SelectCouponListBean;
 import com.hll_sc_app.bean.marketingsetting.GiveBean;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingProductAddResp;
 import com.hll_sc_app.bean.marketingsetting.RuleListBean;
+import com.hll_sc_app.bean.marketingsetting.SelectCouponListBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -173,6 +173,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         mPresenter.register(this);
         /*活动商品列表*/
         mMarketingProductList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        /*默认是普通编辑模式*/
         mMarketingProductAdpater = new MarketingProductAdapter(null, MarketingProductAdapter.Modal.EDIT);
         mMarketingProductList.setAdapter(mMarketingProductAdpater);
         mMarketingProductAdpater.setOnItemChildClickListener((adapter, view, position) -> {
@@ -228,13 +229,29 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             @Override
             public void afterTextChanged(Editable s) {
                 String content = s.toString();
-                if (content.indexOf(".") > -1 && content.length() - content.indexOf(".") > 2) {
+                if (TextUtils.equals(content, ".")) {
+                    mEdtRuleDZ.setText("");
+                    return;
+                } else if (content.indexOf(".") > -1 && content.length() - content.indexOf(".") > 2) {
                     mEdtRuleDZ.setText(s.subSequence(0, s.length() - 1));
                     mEdtRuleDZ.setSelection(s.length() - 1);
                     showToast("折扣仅允许小数点后一位");
+                    return;
                 }
+                /*更新商品打折后的价格*/
+                boolean isEmpty = TextUtils.isEmpty(content);
+                for (SkuGoodsBean skuGoodsBean : mMarketingProductAdpater.getData()) {
+                    if (isEmpty) {
+                        skuGoodsBean.setDiscountPrice("");
+                    } else {
+                        skuGoodsBean.setDiscountPrice(CommonUtils.mulStringPercentage(content, skuGoodsBean.getProductPrice(),10).toString());
+                    }
+                }
+                mMarketingProductAdpater.notifyDataSetChanged();
             }
         });
+
+
     }
 
     /**
@@ -273,6 +290,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             mSelectCoupon.setDiscountID(giveBeans.get(0).getGiveTargetID());
             mSelectCoupon.setDiscountName(giveBeans.get(0).getGiveTargetName());
         } else if (TextUtils.equals(mDetail.getDiscountRuleType() + "", MarketingRule.RULE_DZ.getKey())) {
+            mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT_DZ);
             RuleListBean ruleBean = mDetail.getRuleList().get(0);
             mEdtRuleDZ.setText(ruleBean.getRuleDiscountValue());
         } else {
@@ -325,6 +343,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
             mGroupLadder.setVisibility(View.VISIBLE);
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
+            mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_MZ.getKey())) {
             mCouponRuleSelectView.setVisibility(View.GONE);
             mRuleDZLayout.setVisibility(View.GONE);
@@ -332,12 +351,14 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
             mGroupLadder.setVisibility(View.VISIBLE);
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
+            mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_ZQ.getKey())) {
             mCouponRuleSelectView.setVisibility(View.VISIBLE);
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.GONE);
             mRuleAdd.setVisibility(View.GONE);
             mGroupLadder.setVisibility(View.VISIBLE);
+            mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_MJ.getKey())) {
             mCouponRuleSelectView.setVisibility(View.GONE);
             mRuleDZLayout.setVisibility(View.GONE);
@@ -345,13 +366,14 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
             mGroupLadder.setVisibility(View.VISIBLE);
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
+            mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_DZ.getKey())) {
             mCouponRuleSelectView.setVisibility(View.GONE);
             mRuleDZLayout.setVisibility(View.VISIBLE);
             mListRule.setVisibility(View.GONE);
             mRuleAdd.setVisibility(View.GONE);
             mGroupLadder.setVisibility(View.GONE);
-
+            mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT_DZ);
         }
     }
 
@@ -472,6 +494,12 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             mEmptyWord.setVisibility(View.VISIBLE);
         } else {
             mEmptyWord.setVisibility(View.GONE);
+            /*如果是打折的。需要将商品重新计算价格*/
+            if (mMarketingProductAdpater.getModal() == MarketingProductAdapter.Modal.EDIT_DZ) {
+                for (SkuGoodsBean skuGoodsBean : skuGoodsBeans) {
+                    skuGoodsBean.setDiscountPrice(CommonUtils.mulStringPercentage(mEdtRuleDZ.getText().toString(), skuGoodsBean.getProductPrice(),10).toString());
+                }
+            }
             mMarketingProductAdpater.setNewData(skuGoodsBeans);
         }
     }

@@ -178,6 +178,9 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
      */
     private void showActivityProducts(MarketingDetailCheckResp resp) {
         MarketingProductAdapter marketingProductAdapter = new MarketingProductAdapter(null, MarketingProductAdapter.Modal.SHOW);
+        if (TextUtils.equals(MarketingRule.RULE_DZ.getKey(), resp.getDiscountRuleType() + "")) {
+            marketingProductAdapter.setModal(MarketingProductAdapter.Modal.SHOW_DZ);
+        }
         if (resp.getProductList().size() > 3) {
             marketingProductAdapter.setItemCount(3);
         }
