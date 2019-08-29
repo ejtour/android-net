@@ -1,5 +1,10 @@
 package com.hll_sc_app.bean.report.produce;
 
+import com.hll_sc_app.citymall.util.CommonUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/8/28
@@ -16,6 +21,23 @@ public class ProduceTotal {
     private String weightEfficiency;
     private String packageEfficiency;
     private String amountEfficiency;
+
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add("合计"); // 日期
+        list.add("- -"); // 操作
+        list.add(String.valueOf(standardSortNum)); // 标品分拣人数
+        list.add(CommonUtils.formatNumber(standardSortHours)); // 标品分拣工时
+        list.add(String.valueOf(vegetablesSortNum)); // 蔬果分拣人数
+        list.add(CommonUtils.formatNumber(vegetablesSortHours)); // 蔬果分拣工时
+        list.add(String.valueOf(vegetablesPackNum)); // 蔬果打包人数
+        list.add(CommonUtils.formatNumber(vegetablesPackHours)); // 蔬果打包工时
+        list.add(CommonUtils.formatMoney(totalCost)); //生产费用(元)
+        list.add(weightEfficiency); // 称重人效
+        list.add(packageEfficiency); // 包裹人效
+        list.add(amountEfficiency); // 金额人效
+        return list;
+    }
 
     public int getStandardSortNum() {
         return standardSortNum;

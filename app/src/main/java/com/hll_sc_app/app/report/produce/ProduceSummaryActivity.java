@@ -16,7 +16,6 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.filter.DateParam;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceBean;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -26,6 +25,7 @@ import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
+import com.hll_sc_app.widget.report.ExcelFooter;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -59,6 +59,7 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
     private ContextOptionsWindow mOptionsWindow;
     private final DateParam mParam = new DateParam();
     private DateRangeWindow mDateRangeWindow;
+    private ExcelFooter mFooter;
     private IProduceSummaryContract.IProduceSummaryPresenter mPresenter;
 
     @Override
@@ -73,8 +74,12 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
+        mFooter = new ExcelFooter(this);
+        mFooter.updateChildView(COLUMN_NUM);
+        mFooter.updateItemData(generateColumnData());
         mExcelLayout.setHeaderView(View.inflate(this, R.layout.view_report_produce_summary_header, null));
         mExcelLayout.setColumnDataList(generateColumnData());
+        mExcelLayout.setFooterView(mFooter);
         mExcelLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -130,7 +135,7 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
         ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
         array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]));
         array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]));
-        array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL|Gravity.RIGHT);
+        array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         array[3] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[3]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         array[4] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[4]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         array[5] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[5]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
@@ -193,6 +198,8 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
 
     @Override
     public void setData(ProduceSummaryResp resp, boolean append) {
+        CharSequence[] array = {};
+        mFooter.updateRowDate(resp.getTotal().convertToRowData().toArray(array));
         mExcelLayout.setEnableLoadMore(!CommonUtils.isEmpty(resp.getList()) && resp.getList().size() == 20);
         List<List<CharSequence>> list = new ArrayList<>();
         if (!CommonUtils.isEmpty(resp.getList())) {
