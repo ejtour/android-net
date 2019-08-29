@@ -1,7 +1,5 @@
 package com.hll_sc_app.app.report.produce.manhour;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,9 +19,11 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
+import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.utils.adapter.ViewPagerAdapter;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.report.ManHourFooter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,8 +45,10 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
     SlidingTabLayout mTabLayout;
     @BindView(R.id.acc_view_pager)
     ViewPager mViewPager;
-    private ManHourCostAdapter mCostAdapter;
-    private ManHourShiftAdapter mShiftAdapter;
+    private BaseManHourAdapter mCostAdapter;
+    private ManHourFooter mCostFooter;
+    private BaseManHourAdapter mShiftAdapter;
+    private ManHourFooter mShiftFooter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,17 +67,46 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
     private void initView() {
         mTitleBar.setHeaderTitle("设置工时费");
         mTitleBar.setRightText("保存");
+
         RecyclerView costList = createListView();
         mCostAdapter = new ManHourCostAdapter();
         costList.setAdapter(mCostAdapter);
         mCostAdapter.setOnItemChildClickListener(this);
+        mCostFooter = new ManHourFooter(this);
+        mCostFooter.setOnClickListener(this::addCost);
+        mCostFooter.setText("工时模块可以向左滑动删除", "+ 添加工时费");
+        mCostAdapter.setFooterView(mCostFooter);
+
         RecyclerView shiftList = createListView();
         mShiftAdapter = new ManHourShiftAdapter();
         shiftList.setAdapter(mShiftAdapter);
         mShiftAdapter.setOnItemChildClickListener(this);
+        mShiftFooter = new ManHourFooter(this);
+        mShiftFooter.setOnClickListener(this::addShift);
+        mShiftFooter.setText("班次可以向左滑动删除", "+ 添加班次");
+        mShiftAdapter.setFooterView(mShiftFooter);
+
         mViewPager.setAdapter(new ViewPagerAdapter(costList, shiftList));
         String[] titles = {"工时费", "班次"};
         mTabLayout.setViewPager(mViewPager, titles);
+    }
+
+    private void addCost(View view) {
+        mCostAdapter.addData(new ManHourBean());
+        updateCostAddable();
+    }
+
+    private void updateCostAddable() {
+        mCostFooter.setAddable(mCostAdapter.getData().size() < 5);
+    }
+
+    private void addShift(View view) {
+        mShiftAdapter.addData(new ManHourBean());
+        updateShiftAddable();
+    }
+
+    private void updateShiftAddable() {
+        mShiftFooter.setAddable(mShiftAdapter.getData().size() < 5);
     }
 
     private RecyclerView createListView() {
@@ -90,6 +121,12 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
+        if (adapter instanceof ManHourCostAdapter) {
+            mCostAdapter.remove(position);
+            updateCostAddable();
+        } else if (adapter instanceof ManHourShiftAdapter) {
+            mShiftAdapter.remove(position);
+            updateShiftAddable();
+        }
     }
 }

@@ -1,40 +1,33 @@
 package com.hll_sc_app.app.report.produce.manhour;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
-import com.hll_sc_app.bean.report.purchase.ManHourReq;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/8/29
  */
 
-public class ManHourShiftAdapter extends BaseQuickAdapter<ManHourBean, BaseViewHolder> {
+public class ManHourShiftAdapter extends BaseManHourAdapter {
     ManHourShiftAdapter() {
-        super(R.layout.item_report_man_hour_shift, Collections.singletonList(new ManHourBean()));
+        super(R.layout.item_report_man_hour_shift);
     }
 
-    List<ManHourReq.ManHourReqBean> getReqParams() {
-        String groupID = UserConfig.getGroupID();
-        List<ManHourReq.ManHourReqBean> list = new ArrayList<>();
-        for (ManHourBean bean : getData()) {
-            ManHourReq.ManHourReqBean reqBean = new ManHourReq.ManHourReqBean();
-            reqBean.setGroupID(groupID);
-            reqBean.setParams(Collections.singletonList(new ManHourReq.ManHourReqParam("2", bean.getValue())));
-        }
-        return list;
+    @Override
+    String getParamKey() {
+        return "2";
+    }
+
+    @Override
+    boolean emptyValue(ManHourBean bean) {
+        return TextUtils.isEmpty(bean.getValue());
     }
 
     @Override
@@ -64,6 +57,7 @@ public class ManHourShiftAdapter extends BaseQuickAdapter<ManHourBean, BaseViewH
 
     @Override
     protected void convert(BaseViewHolder helper, ManHourBean item) {
+        super.convert(helper, item);
         helper.setText(R.id.mhs_shift, item.getValue());
     }
 }

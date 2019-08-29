@@ -6,38 +6,29 @@ import android.text.TextWatcher;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
-import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/8/29
  */
 
-public class ManHourCostAdapter extends BaseQuickAdapter<ManHourBean, BaseViewHolder> {
+public class ManHourCostAdapter extends BaseManHourAdapter {
     ManHourCostAdapter() {
-        super(R.layout.item_report_man_hour_cost, Collections.singletonList(new ManHourBean()));
+        super(R.layout.item_report_man_hour_cost);
     }
 
-    List<ManHourReq.ManHourReqBean> getReqParams() {
-        String groupID = UserConfig.getGroupID();
-        List<ManHourReq.ManHourReqBean> list = new ArrayList<>();
-        for (ManHourBean bean : getData()) {
-            ManHourReq.ManHourReqBean reqBean = new ManHourReq.ManHourReqBean();
-            reqBean.setCoopGroupName(bean.getCoopGroupName());
-            reqBean.setGroupID(groupID);
-            reqBean.setParams(Collections.singletonList(new ManHourReq.ManHourReqParam("1", bean.getValue())));
-        }
-        return list;
+    @Override
+    String getParamKey() {
+        return "1";
+    }
+
+    @Override
+    boolean emptyValue(ManHourBean bean) {
+        return TextUtils.isEmpty(bean.getValue()) && TextUtils.isEmpty(bean.getCoopGroupName());
     }
 
     @Override
@@ -63,7 +54,7 @@ public class ManHourCostAdapter extends BaseQuickAdapter<ManHourBean, BaseViewHo
                 if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
                     s.delete(s.length() - 1, s.length());
                 }
-                item.setValue(TextUtils.isEmpty(s.toString()) ? "0" : s.toString());
+                item.setValue(s.toString());
             }
         });
 
@@ -92,7 +83,9 @@ public class ManHourCostAdapter extends BaseQuickAdapter<ManHourBean, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, ManHourBean item) {
+        super.convert(helper, item);
         helper.setText(R.id.mhc_co_company, item.getCoopGroupName())
-                .setText(R.id.mhc_man_hour_cost, CommonUtils.formatNumber(item.getValue()));
+                .setText(R.id.mhc_man_hour_cost, TextUtils.isEmpty(item.getValue())
+                        ? "" : CommonUtils.formatNumber(item.getValue()));
     }
 }
