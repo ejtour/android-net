@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.produce.manhour.ManHourSettingActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -142,7 +143,7 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
     }
 
     private void setManHourCost() {
-        showToast("设置工时费");
+        ManHourSettingActivity.start();
     }
 
     private void recordProduceData() {

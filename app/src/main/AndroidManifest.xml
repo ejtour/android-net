@@ -765,31 +765,39 @@
             android:screenOrientation="portrait" />
 
         <!--待退统计-->
-        <activity android:name=".app.report.refund.wait.WaitRefundTotalInfoActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.refund.wait.WaitRefundTotalInfoActivity"
+            android:screenOrientation="portrait" />
         <!--待退商品统计明细-->
-        <activity android:name=".app.report.refund.wait.product.WaitRefundProductDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.refund.wait.product.WaitRefundProductDetailActivity"
+            android:screenOrientation="portrait" />
         <!--待退客户明细统计-->
-        <activity android:name=".app.report.refund.wait.customer.WaitRefundCustomertDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.refund.wait.customer.WaitRefundCustomertDetailActivity"
+            android:screenOrientation="portrait" />
 
         <!--退货统计-->
-        <activity android:name=".app.report.refund.refundcollect.RefundCollectTotalInfoActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.refund.refundcollect.RefundCollectTotalInfoActivity"
+            android:screenOrientation="portrait" />
         <!--退货明细-->
-        <activity android:name=".app.report.refund.refundcollect.detail.RefundedDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.refund.refundcollect.detail.RefundedDetailActivity"
+            android:screenOrientation="portrait" />
 
         <!--退货客户商品汇总-->
-        <activity android:name=".app.report.refund.customerProduct.RefundedCustomerAndProductTotalInfoActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.refund.customerProduct.RefundedCustomerAndProductTotalInfoActivity"
+            android:screenOrientation="portrait" />
         <!--退货客户明细-->
-        <activity android:name=".app.report.refund.customerProduct.customer.RefundedCustomertDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.refund.customerProduct.customer.RefundedCustomertDetailActivity"
+            android:screenOrientation="portrait" />
         <!--退款商品明细-->
-        <activity android:name=".app.report.refund.customerProduct.product.RefundedProductDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.refund.customerProduct.product.RefundedProductDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".app.inspection.list.InspectionListActivity"
             android:screenOrientation="portrait" />
@@ -805,7 +813,14 @@
         <activity
             android:name=".app.report.purchase.input.PurchaseInputActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".app.report.produce.ProduceSummaryActivity" />
+
+        <activity
+            android:name=".app.report.produce.ProduceSummaryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.produce.manhour.ManHourSettingActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

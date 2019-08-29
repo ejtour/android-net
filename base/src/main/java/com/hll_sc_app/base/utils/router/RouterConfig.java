@@ -616,6 +616,11 @@ public class RouterConfig {
     public static final String REPORT_PRODUCE_STATISTIC = "/activity/report/produceSummary";
 
     /**
+     * 生产汇总统计-设置工时费
+     */
+    public static final String REPORT_PRODUCE_MAN_HOUR = "/activity/report/produce/manHour";
+
+    /**
      * 客户销售汇总搜索
      */
     public static final String CUSTOMER_SALE_SEARCH = "/activity/customer/sale/search";
@@ -764,6 +769,9 @@ public class RouterConfig {
     /*营销优惠券-选择客户-门店*/
     public static final String ACTIVITY_MARKETING_COUPON_SELECT_SHOPS = "/activity/marketing/coupon/select/shops";
 
+    /**
+     * 对账单列表
+     */
     public static final String BILL_LIST = "/activity/bill/list";
 
     /**
@@ -872,20 +880,19 @@ public class RouterConfig {
     public static final String CRM_MINE = "/fragment/crm/mine";
 
     /**
-<<<<<<< HEAD
      * 待退合计
      */
-    public static final String REPORT_WAIT_REFUND_TOTAL="/activity/report/refund/wait";
+    public static final String REPORT_WAIT_REFUND_TOTAL = "/activity/report/refund/wait";
 
     /**
      * 待退客户明细
      */
-    public static final String REPORT_WAIT_REFUND_CUSTOMER_DETAIL="/activity/report/refund/wait/customer/detail";
+    public static final String REPORT_WAIT_REFUND_CUSTOMER_DETAIL = "/activity/report/refund/wait/customer/detail";
 
     /**
      * 待退商品明细
      */
-    public static final String REPORT_WAIT_REFUND_PRODUCT_DETAIL="/activity/report/refund/wait/product/detail";
+    public static final String REPORT_WAIT_REFUND_PRODUCT_DETAIL = "/activity/report/refund/wait/product/detail";
 
     /**
      * 退货统计

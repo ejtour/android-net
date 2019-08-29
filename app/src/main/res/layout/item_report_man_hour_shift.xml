@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hll_sc_app.base.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <TextView
+            style="@style/InvoiceInfoLabel"
+            android:layout_marginLeft="0dp"
+            android:text="班次" />
+
+        <EditText
+            android:id="@+id/mhs_shift"
+            style="@style/InvoiceInfoEdit"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginRight="0dp"
+            android:hint="请填写班次名称，如：早班" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/mhs_del"
+        android:layout_width="70dp"
+        android:layout_height="45dp"
+        android:background="@color/color_ed5655"
+        android:gravity="center"
+        android:text="删除"
+        android:textAppearance="@style/TextAppearance.City22.Small.White" />
+</com.hll_sc_app.base.widget.SwipeItemLayout>
