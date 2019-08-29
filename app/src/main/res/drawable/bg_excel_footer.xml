@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/base_bg_shadow_bottom_bar" />
+    <item android:gravity="center_vertical|left">
+        <shape>
+            <size
+                android:width="1dp"
+                android:height="12dp" />
+            <solid android:color="@color/color_dddddd" />
+        </shape>
+    </item>
+    <item android:gravity="center_vertical|right">
+        <shape>
+            <size
+                android:width="1dp"
+                android:height="12dp" />
+            <solid android:color="@color/color_dddddd" />
+        </shape>
+    </item>
+</layer-list>

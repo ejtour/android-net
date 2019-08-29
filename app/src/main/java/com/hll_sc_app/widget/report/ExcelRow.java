@@ -38,7 +38,11 @@ public class ExcelRow extends LinearLayout {
 
     public ExcelRow(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(30)));
+        initView();
+    }
+
+    protected void initView() {
+        setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, UIUtils.dip2px(30)));
     }
 
     /**
@@ -59,12 +63,20 @@ public class ExcelRow extends LinearLayout {
             textView.setTextColor(ContextCompat.getColor(getContext(), R.color.color_222222));
             addView(textView, layoutParams);
             if (i < num - 1) {
-                View div = new View(getContext());
-                LayoutParams divParams = new LayoutParams(UIUtils.dip2px(1), LayoutParams.MATCH_PARENT);
-                div.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_dddddd));
-                addView(div, divParams);
+                addDivider();
             }
         }
+    }
+
+    protected void addDivider() {
+        View div = new View(getContext());
+        LayoutParams divParams = new LayoutParams(UIUtils.dip2px(1), getDivHeight());
+        div.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_dddddd));
+        addView(div, divParams);
+    }
+
+    protected int getDivHeight() {
+        return LayoutParams.MATCH_PARENT;
     }
 
     public static class ColumnData {

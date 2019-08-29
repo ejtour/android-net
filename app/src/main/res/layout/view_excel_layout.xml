@@ -17,6 +17,7 @@
         android:id="@+id/vel_refresh_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="-1dp"
         android:layout_weight="1">
 
         <com.hll_sc_app.widget.SyncHorizontalScrollView
@@ -43,5 +44,6 @@
         android:id="@+id/vel_scroll_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-1dp"
         android:scrollbars="none" />
 </merge>
