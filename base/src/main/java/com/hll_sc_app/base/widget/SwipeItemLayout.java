@@ -55,6 +55,20 @@ public class SwipeItemLayout extends ViewGroup {
         mScrollRunnable = new ScrollRunnable(context);
     }
 
+    @Override
+    public void onViewAdded(View child) {
+        super.onViewAdded(child);
+        if (getChildCount() > 2 || getChildCount() == 1 && !(child instanceof ViewGroup)) {
+            throw new RuntimeException("SwipeItemLayout的子视图不符合规定");
+        }
+        if (getChildCount() == 2 && !(child instanceof ViewGroup)) {
+            FrameLayout container = new FrameLayout(getContext());
+            removeView(child);
+            container.addView(child);
+            addView(container, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        }
+    }
+
     public static void closeAllItems(RecyclerView recyclerView) {
         for (int i = 0; i < recyclerView.getChildCount(); i++) {
             View child = recyclerView.getChildAt(i);
@@ -267,14 +281,9 @@ public class SwipeItemLayout extends ViewGroup {
         mMainView = (ViewGroup) childView;
 
         childView = getChildAt(1);
-        if (childView instanceof ViewGroup) {
-            mSideView = (ViewGroup) childView;
-        } else {
-            mSideView = new FrameLayout(getContext());
-            removeView(childView);
-            mSideView.addView(childView);
-            addView(mSideView, new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        }
+        if (!(childView instanceof ViewGroup))
+            return false;
+        mSideView = (ViewGroup) childView;
         return true;
     }
 
