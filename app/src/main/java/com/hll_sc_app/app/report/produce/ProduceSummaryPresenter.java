@@ -68,8 +68,8 @@ public class ProduceSummaryPresenter implements IProduceSummaryContract.IProduce
     }
 
     @Override
-    public void export(String email) {
-        Report.exportReport(getReqParam().create().getData(), "111031", email, Utils.getExportObserver(mView));
+    public void export(boolean detail, String email) {
+        Report.exportReport(getReqParam().create().getData(), detail ? "111073" : "111031", email, Utils.getExportObserver(mView));
     }
 
     @Override

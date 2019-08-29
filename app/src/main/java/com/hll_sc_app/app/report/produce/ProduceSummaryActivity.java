@@ -18,6 +18,8 @@ import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.bean.report.produce.ProduceBean;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
@@ -61,6 +63,7 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
     private DateRangeWindow mDateRangeWindow;
     private ExcelFooter mFooter;
     private IProduceSummaryContract.IProduceSummaryPresenter mPresenter;
+    private boolean mExportDetail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,9 +79,10 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mFooter = new ExcelFooter(this);
         mFooter.updateChildView(COLUMN_NUM);
-        mFooter.updateItemData(generateColumnData());
+        ExcelRow.ColumnData[] dataArray = generateColumnData();
+        mFooter.updateItemData(dataArray);
         mExcelLayout.setHeaderView(View.inflate(this, R.layout.view_report_produce_summary_header, null));
-        mExcelLayout.setColumnDataList(generateColumnData());
+        mExcelLayout.setColumnDataList(dataArray);
         mExcelLayout.setFooterView(mFooter);
         mExcelLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -104,11 +108,12 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
     }
 
     private void showOptionsWindow(View v) {
-        /*if (mOptionsWindow == null) {
+        if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_SUMMARY_TABLE));
-            list.add(new OptionsBean(R.drawable.ic_import_option, OptionType.OPTION_RECORD_PURCHASE_LOGISTICS));
-            list.add(new OptionsBean(R.drawable.ic_import_option, OptionType.OPTION_RECORD_PURCHASE_AMOUNT));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_DETAILS_TABLE));
+            list.add(new OptionsBean(R.drawable.ic_setting_option, OptionType.OPTION_SET_MAN_HOUR_COST));
+            list.add(new OptionsBean(R.drawable.ic_import_option, OptionType.OPTION_RECORD_PRODUCE_DATA));
             mOptionsWindow = new ContextOptionsWindow(this)
                     .refreshList(list)
                     .setListener((adapter, view, position) -> {
@@ -117,18 +122,31 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
                         if (bean == null) return;
                         switch (bean.getLabel()) {
                             case OptionType.OPTION_EXPORT_SUMMARY_TABLE:
-                                mPresenter.export(null);
+                                mExportDetail = false;
+                                mPresenter.export(false, null);
                                 break;
-                            case OptionType.OPTION_RECORD_PURCHASE_LOGISTICS:
-                                recordLogistics();
+                            case OptionType.OPTION_EXPORT_DETAILS_TABLE:
+                                mExportDetail = true;
+                                mPresenter.export(true, null);
                                 break;
-                            case OptionType.OPTION_RECORD_PURCHASE_AMOUNT:
-                                recordAmount();
+                            case OptionType.OPTION_SET_MAN_HOUR_COST:
+                                setManHourCost();
+                                break;
+                            case OptionType.OPTION_RECORD_PRODUCE_DATA:
+                                recordProduceData();
                                 break;
                         }
                     });
         }
-        mOptionsWindow.showAsDropDownFix(v, Gravity.END);*/
+        mOptionsWindow.showAsDropDownFix(v, Gravity.END);
+    }
+
+    private void setManHourCost() {
+        showToast("设置工时费");
+    }
+
+    private void recordProduceData() {
+        showToast("录入生产数据");
     }
 
     private ExcelRow.ColumnData[] generateColumnData() {
@@ -212,7 +230,7 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
 
     @Override
     public void bindEmail() {
-        Utils.bindEmail(this, mPresenter::export);
+        Utils.bindEmail(this, email -> mPresenter.export(mExportDetail, email));
     }
 
     @Override

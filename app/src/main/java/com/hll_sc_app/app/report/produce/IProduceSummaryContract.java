@@ -19,6 +19,6 @@ public interface IProduceSummaryContract {
 
         void loadMore();
 
-        void export(String email);
+        void export(boolean detail, String email);
     }
 }
