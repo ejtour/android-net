@@ -1,11 +1,15 @@
 package com.hll_sc_app.app.report.produce.manhour;
 
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 
@@ -23,6 +27,8 @@ public abstract class BaseManHourAdapter extends BaseQuickAdapter<ManHourBean, B
         super(layoutResId);
         addData(new ManHourBean());
     }
+
+    private int mOldWidth;
 
     List<ManHourReq.ManHourReqBean> getReqParams() {
         String groupID = UserConfig.getGroupID();
@@ -46,6 +52,32 @@ public abstract class BaseManHourAdapter extends BaseQuickAdapter<ManHourBean, B
 
     @Override
     protected void convert(BaseViewHolder helper, ManHourBean item) {
+        SwipeItemLayout itemView = (SwipeItemLayout) helper.itemView;
+        View del = ((ViewGroup) itemView.getChildAt(1)).getChildAt(0);
+        ViewGroup.LayoutParams params = del.getLayoutParams();
+        if (mOldWidth == 0) mOldWidth = params.width;
+        if (mData.size() == 1 && params.width != 0) {
+            params.width = 0;
+            del.setLayoutParams(params);
+        } else if (mData.size() != 1 && params.width != mOldWidth) {
+            params.width = mOldWidth;
+            del.setLayoutParams(params);
+        }
+    }
 
+    @Override
+    public void addData(@NonNull ManHourBean data) {
+        if (mData.size() == 1) {
+            mData.add(data);
+            notifyDataSetChanged();
+        } else super.addData(data);
+    }
+
+    @Override
+    public void remove(int position) {
+        if (mData.size() == 2) {
+            mData.remove(position);
+            notifyDataSetChanged();
+        } else super.remove(position);
     }
 }
