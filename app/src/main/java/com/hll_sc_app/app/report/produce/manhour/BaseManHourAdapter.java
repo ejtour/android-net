@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.report.produce.manhour;
 
 import android.support.annotation.LayoutRes;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -27,9 +28,9 @@ public abstract class BaseManHourAdapter extends BaseQuickAdapter<ManHourBean, B
         String groupID = UserConfig.getGroupID();
         List<ManHourReq.ManHourReqBean> list = new ArrayList<>();
         for (ManHourBean bean : getData()) {
-            if (emptyValue(bean)) continue;
+            if (TextUtils.isEmpty(bean.getValue())) continue;
             ManHourReq.ManHourReqBean reqBean = new ManHourReq.ManHourReqBean();
-            reqBean.setCoopGroupName(bean.getCoopGroupName());
+            reqBean.setCoopGroupName(setGroupName() ? bean.getCoopGroupName() : null);
             reqBean.setGroupID(groupID);
             reqBean.setParams(Collections.singletonList(new ManHourReq.ManHourReqParam(getParamKey(), bean.getValue())));
             list.add(reqBean);
@@ -37,9 +38,11 @@ public abstract class BaseManHourAdapter extends BaseQuickAdapter<ManHourBean, B
         return list;
     }
 
-    abstract String getParamKey();
+    boolean setGroupName() {
+        return false;
+    }
 
-    abstract boolean emptyValue(ManHourBean bean);
+    abstract String getParamKey();
 
     @Override
     protected void convert(BaseViewHolder helper, ManHourBean item) {

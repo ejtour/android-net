@@ -26,11 +26,6 @@ public class ManHourShiftAdapter extends BaseManHourAdapter {
     }
 
     @Override
-    boolean emptyValue(ManHourBean bean) {
-        return TextUtils.isEmpty(bean.getValue());
-    }
-
-    @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
         ((EditText) helper.getView(R.id.mhs_shift)).addTextChangedListener(new TextWatcher() {

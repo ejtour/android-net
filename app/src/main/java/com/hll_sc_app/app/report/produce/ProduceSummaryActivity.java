@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.produce;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -143,7 +144,15 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
     }
 
     private void setManHourCost() {
-        ManHourSettingActivity.start();
+        ManHourSettingActivity.start(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ManHourSettingActivity.REQ_CODE && resultCode == RESULT_OK) {
+            mPresenter.start();
+        }
     }
 
     private void recordProduceData() {

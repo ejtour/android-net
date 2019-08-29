@@ -22,13 +22,13 @@ public class ManHourCostAdapter extends BaseManHourAdapter {
     }
 
     @Override
-    String getParamKey() {
-        return "1";
+    boolean setGroupName() {
+        return true;
     }
 
     @Override
-    boolean emptyValue(ManHourBean bean) {
-        return TextUtils.isEmpty(bean.getValue()) && TextUtils.isEmpty(bean.getCoopGroupName());
+    String getParamKey() {
+        return "1";
     }
 
     @Override

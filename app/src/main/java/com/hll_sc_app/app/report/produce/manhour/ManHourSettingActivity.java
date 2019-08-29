@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.produce.manhour;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,10 +21,15 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
+import com.hll_sc_app.bean.report.purchase.ManHourReq;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.adapter.ViewPagerAdapter;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ManHourFooter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,9 +40,11 @@ import butterknife.ButterKnife;
  */
 
 @Route(path = RouterConfig.REPORT_PRODUCE_MAN_HOUR)
-public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuickAdapter.OnItemChildClickListener {
-    public static void start() {
-        RouterUtil.goToActivity(RouterConfig.REPORT_PRODUCE_MAN_HOUR);
+public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuickAdapter.OnItemChildClickListener, IManHourSettingContract.IManHourSettingView {
+    public static final int REQ_CODE = 0x911;
+
+    public static void start(Activity activity) {
+        RouterUtil.goToActivity(RouterConfig.REPORT_PRODUCE_MAN_HOUR, activity, REQ_CODE);
     }
 
     @BindView(R.id.acc_title_bar)
@@ -49,6 +57,7 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
     private ManHourFooter mCostFooter;
     private BaseManHourAdapter mShiftAdapter;
     private ManHourFooter mShiftFooter;
+    private IManHourSettingContract.IManHourSettingPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,12 +70,15 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
     }
 
     private void initData() {
-
+        mPresenter = ManHourSettingPresenter.newInstance();
+        mPresenter.register(this);
+        mPresenter.start();
     }
 
     private void initView() {
         mTitleBar.setHeaderTitle("设置工时费");
         mTitleBar.setRightText("保存");
+        mTitleBar.setRightBtnClick(this::save);
 
         RecyclerView costList = createListView();
         mCostAdapter = new ManHourCostAdapter();
@@ -89,6 +101,15 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
         mViewPager.setAdapter(new ViewPagerAdapter(costList, shiftList));
         String[] titles = {"工时费", "班次"};
         mTabLayout.setViewPager(mViewPager, titles);
+    }
+
+    private void save(View view) {
+        ManHourReq req = new ManHourReq();
+        List<ManHourReq.ManHourReqBean> list = new ArrayList<>();
+        req.setRecords(list);
+        list.addAll(mCostAdapter.getReqParams());
+        list.addAll(mShiftAdapter.getReqParams());
+        mPresenter.save(req);
     }
 
     private void addCost(View view) {
@@ -128,5 +149,18 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
             mShiftAdapter.remove(position);
             updateShiftAddable();
         }
+    }
+
+    @Override
+    public void setData(List<ManHourBean> beans, boolean cost) {
+        if (CommonUtils.isEmpty(beans)) return;
+        if (cost) mCostAdapter.setNewData(beans);
+        else mShiftAdapter.setNewData(beans);
+    }
+
+    @Override
+    public void saveSuccess() {
+        setResult(RESULT_OK);
+        finish();
     }
 }

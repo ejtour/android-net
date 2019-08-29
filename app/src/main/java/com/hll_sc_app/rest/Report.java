@@ -409,10 +409,10 @@ public class Report {
     /**
      * 保存工时费与班次信息
      */
-    public static void saveManHour(ManHourReq req, SimpleObserver<Object> observer) {
+    public static void saveManHour(ManHourReq req, SimpleObserver<MsgWrapper<Object>> observer) {
         ReportService.INSTANCE
                 .saveManHour(new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
