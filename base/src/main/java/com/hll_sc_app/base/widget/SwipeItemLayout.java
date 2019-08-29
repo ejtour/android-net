@@ -12,6 +12,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.Interpolator;
+import android.widget.FrameLayout;
 import android.widget.Scroller;
 
 /**
@@ -266,9 +267,14 @@ public class SwipeItemLayout extends ViewGroup {
         mMainView = (ViewGroup) childView;
 
         childView = getChildAt(1);
-        if (!(childView instanceof ViewGroup))
-            return false;
-        mSideView = (ViewGroup) childView;
+        if (childView instanceof ViewGroup) {
+            mSideView = (ViewGroup) childView;
+        } else {
+            mSideView = new FrameLayout(getContext());
+            removeView(childView);
+            mSideView.addView(childView);
+            addView(mSideView, new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        }
         return true;
     }
 
