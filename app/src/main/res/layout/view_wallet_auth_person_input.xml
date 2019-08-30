@@ -118,7 +118,7 @@
 
             <EditText
                 android:id="@+id/api_person_name"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:hint="请输入法人姓名"
                 android:maxLength="10"
                 app:layout_constraintBottom_toTopOf="@id/api_id_card_div1"
@@ -138,7 +138,7 @@
 
             <TextView
                 android:id="@+id/api_card_type"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="5dp"
                 android:hint="请选择法人证件类型"
@@ -159,7 +159,7 @@
 
             <EditText
                 android:id="@+id/api_card_no"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:hint="请输入法人证件编号"
                 android:inputType="number"
                 android:maxLength="80"
@@ -180,7 +180,7 @@
 
             <TextView
                 android:id="@+id/api_start_date"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="5dp"
                 android:hint="请选择法人证件起始日期"
@@ -201,7 +201,7 @@
 
             <TextView
                 android:id="@+id/api_end_date"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="5dp"
                 android:hint="请选择法人证件结束日期"
@@ -222,7 +222,7 @@
 
             <EditText
                 android:id="@+id/api_contact"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:hint="请输入法人联系方式"
                 android:inputType="number"
                 android:maxLength="16"
@@ -312,7 +312,7 @@
 
             <EditText
                 android:id="@+id/api_consignor_name"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:hint="请输入授权联系人姓名"
                 app:layout_constraintBottom_toTopOf="@id/api_consignor_info_div"
                 app:layout_constraintEnd_toEndOf="@id/api_consignor_info_bg"
@@ -331,7 +331,7 @@
 
             <EditText
                 android:id="@+id/api_consignor_card_no"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:digits="1234567890Xx"
                 android:hint="请输入授权联系人身份证号"
                 android:inputType="number"

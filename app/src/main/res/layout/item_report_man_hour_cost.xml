@@ -11,8 +11,7 @@
 
         <TextView
             android:id="@+id/mhc_co_company_label"
-            style="@style/InvoiceInfoLabel"
-            android:paddingLeft="0dp"
+            style="@style/InfoLabel"
             android:text="合作公司"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +19,7 @@
 
         <EditText
             android:id="@+id/mhc_co_company"
-            style="@style/InvoiceInfoEdit"
-            android:layout_marginRight="0dp"
+            style="@style/InfoEdit"
             android:hint="请输入公司名称"
             android:maxLength="30"
             app:layout_constraintBottom_toBottomOf="@id/mhc_co_company_label"
@@ -40,8 +38,7 @@
 
         <TextView
             android:id="@+id/mhc_man_hour_cost_label"
-            style="@style/InvoiceInfoLabel"
-            android:paddingLeft="0dp"
+            style="@style/InfoLabel"
             android:text="生产工时费"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,8 +68,7 @@
 
         <EditText
             android:id="@+id/mhc_man_hour_cost"
-            style="@style/InvoiceInfoEdit"
-            android:layout_marginRight="0dp"
+            style="@style/InfoEdit"
             android:hint="请输入金额"
             android:inputType="numberDecimal"
             app:layout_constraintBottom_toBottomOf="@id/mhc_man_hour_cost_label"

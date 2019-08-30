@@ -109,7 +109,7 @@
 
             <EditText
                 android:id="@+id/abi_credit_code"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:hint="请输入统一社会信用代码"
                 app:layout_constraintBottom_toTopOf="@id/abi_publicity_div1"
                 app:layout_constraintEnd_toEndOf="@id/abi_publicity_bg"
@@ -128,7 +128,7 @@
 
             <TextView
                 android:id="@+id/abi_start_date"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="5dp"
                 android:hint="请选择营业执照起始日期"
@@ -149,7 +149,7 @@
 
             <TextView
                 android:id="@+id/abi_end_date"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="5dp"
                 android:hint="请选择营业执照结束日期"
@@ -170,7 +170,7 @@
 
             <EditText
                 android:id="@+id/abi_business_scope"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:hint="请输入公司经营范围"
                 android:maxLength="150"
                 app:layout_constraintBottom_toTopOf="@id/abi_publicity_div4"
@@ -190,7 +190,7 @@
 
             <EditText
                 android:id="@+id/abi_register_address"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:hint="请输入公司注册地址"
                 android:maxLength="50"
                 app:layout_constraintBottom_toBottomOf="@id/abi_publicity_bg"

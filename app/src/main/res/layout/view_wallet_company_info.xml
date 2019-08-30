@@ -48,7 +48,7 @@
 
     <EditText
         android:id="@+id/wci_name"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:hint="请输入公司名称"
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintBottom_toTopOf="@id/wci_name_div1"
@@ -69,7 +69,7 @@
 
     <EditText
         android:id="@+id/wci_short_name"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:hint="或品牌名称，用于支付完成页面展示"
         android:maxLength="12"
         app:layout_constraintBottom_toTopOf="@id/wci_name_div2"
@@ -89,7 +89,7 @@
 
     <TextView
         android:id="@+id/wci_type"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
         android:drawablePadding="5dp"
         android:hint="请选择公司类型"
@@ -133,7 +133,7 @@
 
     <TextView
         android:id="@+id/wci_region"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
         android:drawablePadding="5dp"
         android:hint="请选择经营地区"
@@ -154,7 +154,7 @@
 
     <EditText
         android:id="@+id/wci_detail_address"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:gravity="right|center_vertical"
         android:hint="请输入经营详细地址"
         android:inputType="textPostalAddress"
@@ -209,7 +209,7 @@
 
     <EditText
         android:id="@+id/wci_contact"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:hint="请输入业务联系人姓名"
         android:inputType="textPersonName"
         android:maxLength="10"
@@ -230,7 +230,7 @@
 
     <EditText
         android:id="@+id/wci_phone"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:hint="请输入业务联系电话"
         android:inputType="number"
         android:maxLength="16"
@@ -251,7 +251,7 @@
 
     <EditText
         android:id="@+id/wci_email"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:hint="请输入业务联系电子邮箱"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="@id/wci_contact_bg"
