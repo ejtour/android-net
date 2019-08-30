@@ -11,6 +11,7 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
@@ -23,6 +24,8 @@ import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
+import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
@@ -412,6 +415,36 @@ public class Report {
     public static void saveManHour(ManHourReq req, SimpleObserver<MsgWrapper<Object>> observer) {
         ReportService.INSTANCE
                 .saveManHour(new BaseReq<>(req))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 生产汇总明细查询
+     *
+     * @param classes 班次
+     * @param date    时间 yyyyMMdd
+     * @param opType  0: 查看明细数据 1:修改明细数据
+     */
+    public static void queryProduceDetails(String classes, String date, int opType, SimpleObserver<SingleListResp<ProduceDetailBean>> observer) {
+        ReportService.INSTANCE
+                .queryProduceDetails(BaseMapReq.newBuilder()
+                        .put("classes", classes)
+                        .put("date", date)
+                        .put("opType", String.valueOf(opType))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 录入生产数据
+     */
+    public static void recordProduceInfo(ProduceInputReq req, SimpleObserver<MsgWrapper<Object>> observer) {
+        ReportService.INSTANCE
+                .recordProduceInfo(new BaseReq<>(req))
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

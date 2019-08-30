@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
@@ -19,6 +20,8 @@ import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
+import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
@@ -171,10 +174,6 @@ public interface ReportService {
     @Headers("pv:111028")
     Observable<BaseResp<Object>> recordPurchaseInfo(@Body BaseMapReq req);
 
-    @POST(HttpConfig.URL)
-    @Headers("pv:111031")
-    Observable<BaseResp<ProduceSummaryResp>> queryProduceSummary(@Body BaseMapReq req);
-
     /**
      * 退款合计
      *
@@ -236,6 +235,18 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111022")
     Observable<BaseResp<RefundedProductResp>> queryRefundProductDetail(@Body BaseReq<RefundedProductReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111031")
+    Observable<BaseResp<ProduceSummaryResp>> queryProduceSummary(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111073")
+    Observable<BaseResp<SingleListResp<ProduceDetailBean>>> queryProduceDetails(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111076")
+    Observable<BaseResp<Object>> recordProduceInfo(@Body BaseReq<ProduceInputReq> body);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111034")
