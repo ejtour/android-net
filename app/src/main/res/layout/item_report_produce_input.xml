@@ -14,6 +14,7 @@
             android:id="@+id/rpi_company_name"
             style="@style/InfoLabel"
             android:layout_height="0dp"
+            android:hint="请选择合作公司并录入相关数据"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

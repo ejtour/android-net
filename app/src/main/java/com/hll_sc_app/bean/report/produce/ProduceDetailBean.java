@@ -5,9 +5,11 @@ package com.hll_sc_app.bean.report.produce;
  * @since 2019/8/30
  */
 
-public class ProduceDetailBean extends ProduceReqBean {
+public class ProduceDetailBean extends ProduceBean {
     private String classes;
     private String inputPer;
+    private String coopGroupName;
+    private String hoursFee;
 
     public String getClasses() {
         return classes;
@@ -23,5 +25,21 @@ public class ProduceDetailBean extends ProduceReqBean {
 
     public void setInputPer(String inputPer) {
         this.inputPer = inputPer;
+    }
+
+    public String getCoopGroupName() {
+        return coopGroupName;
+    }
+
+    public void setCoopGroupName(String coopGroupName) {
+        this.coopGroupName = coopGroupName;
+    }
+
+    public String getHoursFee() {
+        return hoursFee;
+    }
+
+    public void setHoursFee(String hoursFee) {
+        this.hoursFee = hoursFee;
     }
 }

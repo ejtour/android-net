@@ -25,6 +25,7 @@
         app:layout_constraintTop_toTopOf="@id/pih_date_label" />
 
     <TextView
+        android:id="@+id/pih_date"
         style="@style/InfoEdit"
         app:layout_constraintBottom_toBottomOf="@id/pih_date_label"
         app:layout_constraintEnd_toStartOf="@id/pih_div"

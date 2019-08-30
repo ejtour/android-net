@@ -16,7 +16,7 @@ public class ProduceInputReq {
     private int flag;
     private String groupID;
     private String inputPer;
-    private List<ProduceReqBean> records;
+    private List<ProduceDetailBean> records;
 
     public String getClasses() {
         return classes;
@@ -58,11 +58,11 @@ public class ProduceInputReq {
         this.inputPer = inputPer;
     }
 
-    public List<ProduceReqBean> getRecords() {
+    public List<ProduceDetailBean> getRecords() {
         return records;
     }
 
-    public void setRecords(List<ProduceReqBean> records) {
+    public void setRecords(List<ProduceDetailBean> records) {
         this.records = records;
     }
 }

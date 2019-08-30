@@ -822,6 +822,11 @@
             android:name=".app.report.produce.manhour.ManHourSettingActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.report.produce.input.ProduceInputActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
