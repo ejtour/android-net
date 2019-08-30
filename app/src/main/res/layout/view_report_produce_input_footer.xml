@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@android:color/white"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/pif_add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/base_activity_bg"
+        android:gravity="right"
+        android:padding="@dimen/dp_10"
+        android:text="+ 添加生产数据"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pif_total_label"
+        style="@style/InfoLabel"
+        android:text="生产费用合计"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pif_add" />
+
+    <TextView
+        android:id="@+id/pif_total_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" *"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Red"
+        app:layout_constraintBottom_toBottomOf="@id/pif_total_label"
+        app:layout_constraintStart_toEndOf="@id/pif_total_label"
+        app:layout_constraintTop_toTopOf="@id/pif_total_label" />
+
+    <TextView
+        android:id="@+id/pif_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/dp_10"
+        android:text="元"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/pif_total_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pif_total_label" />
+
+    <TextView
+        android:id="@+id/pif_total"
+        style="@style/InfoEdit"
+        android:hint="0.00"
+        app:layout_constraintBottom_toBottomOf="@id/pif_total_label"
+        app:layout_constraintEnd_toStartOf="@id/pif_unit"
+        app:layout_constraintStart_toEndOf="@id/pif_total_star"
+        app:layout_constraintTop_toTopOf="@id/pif_total_label" />
+</merge>

@@ -147,6 +147,7 @@
     </style>
 
     <style name="InfoEdit">
+        <item name="android:drawablePadding">5dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:background">@null</item>

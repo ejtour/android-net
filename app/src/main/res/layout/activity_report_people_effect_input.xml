@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/pei_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightText="保存"
+        app:tb_rightVisibility="true"
+        app:tb_title="录入人效" />
+
+    <TextView
+        android:id="@+id/pei_weigh_label"
+        style="@style/InfoLabel"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@android:color/white"
+        android:text="称重重量"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pei_title_bar" />
+
+    <TextView
+        android:id="@+id/pei_weigh_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp_10"
+        android:text="斤"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/pei_weigh_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pei_weigh_label" />
+
+    <EditText
+        android:id="@+id/pei_weigh"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="请输入称重重量"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@id/pei_weigh_label"
+        app:layout_constraintEnd_toStartOf="@id/pei_weigh_unit"
+        app:layout_constraintStart_toEndOf="@id/pei_weigh_label"
+        app:layout_constraintTop_toTopOf="@id/pei_weigh_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/pei_weigh_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/pei_package_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="包裹数量"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pei_weigh_label" />
+
+    <TextView
+        android:id="@+id/pei_package_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp_10"
+        android:text="个"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/pei_package_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pei_package_label" />
+
+    <EditText
+        android:id="@+id/pei_package"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="请输入包裹数量"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@id/pei_package_label"
+        app:layout_constraintEnd_toStartOf="@id/pei_package_unit"
+        app:layout_constraintStart_toEndOf="@id/pei_package_label"
+        app:layout_constraintTop_toTopOf="@id/pei_package_label" />
+
+    <View
+        android:id="@+id/pei_effect_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        app:layout_constraintBottom_toBottomOf="@id/pei_amount_effect_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pei_package_label" />
+
+    <TextView
+        android:id="@+id/pei_effect_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:text="* 人效数据由生产数据和生产人员个数计算得出。"
+        android:textColor="@color/color_f5a623"
+        android:textSize="@dimen/text_little_size"
+        app:layout_constraintStart_toStartOf="@id/pei_effect_bg"
+        app:layout_constraintTop_toTopOf="@id/pei_effect_bg" />
+
+    <TextView
+        android:id="@+id/pei_weigh_effect_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:text="称重人效："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/pei_effect_bg"
+        app:layout_constraintTop_toBottomOf="@id/pei_effect_tip" />
+
+    <TextView
+        android:id="@+id/pei_weigh_effect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="— — 斤/人"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@id/pei_weigh_effect_label"
+        app:layout_constraintEnd_toEndOf="@id/pei_effect_bg" />
+
+    <TextView
+        android:id="@+id/pei_package_effect_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="包裹人效："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/pei_effect_bg"
+        app:layout_constraintTop_toBottomOf="@id/pei_weigh_effect_label" />
+
+    <TextView
+        android:id="@+id/pei_package_effect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="— — 个/人"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@id/pei_package_effect_label"
+        app:layout_constraintEnd_toEndOf="@id/pei_effect_bg" />
+
+    <TextView
+        android:id="@+id/pei_amount_effect_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:paddingBottom="15dp"
+        android:text="金额人效："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/pei_effect_bg"
+        app:layout_constraintTop_toBottomOf="@id/pei_package_effect_label" />
+
+    <TextView
+        android:id="@+id/pei_amount_effect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="— — 元/人"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@id/pei_amount_effect_label"
+        app:layout_constraintEnd_toEndOf="@id/pei_effect_bg" />
+</android.support.constraint.ConstraintLayout>

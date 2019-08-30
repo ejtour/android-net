@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@android:color/white"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/pih_date_label"
+        style="@style/InfoLabel"
+        android:text="录入日期"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/pih_div"
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/pih_date_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pih_date_label" />
+
+    <TextView
+        style="@style/InfoEdit"
+        app:layout_constraintBottom_toBottomOf="@id/pih_date_label"
+        app:layout_constraintEnd_toStartOf="@id/pih_div"
+        app:layout_constraintStart_toEndOf="@id/pih_date_label"
+        app:layout_constraintTop_toTopOf="@id/pih_date_label"
+        tools:text="2019/01/01" />
+
+    <TextView
+        android:id="@+id/pih_person_label"
+        style="@style/InfoLabel"
+        android:text="录入人员"
+        app:layout_constraintStart_toEndOf="@id/pih_div"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pih_person"
+        style="@style/InfoEdit"
+        app:layout_constraintBottom_toBottomOf="@id/pih_person_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pih_person_label"
+        app:layout_constraintTop_toTopOf="@id/pih_person_label"
+        tools:text="王大锤" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/pih_date_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/pih_shift_label"
+        style="@style/InfoLabel"
+        android:text="选择班次"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pih_date_label" />
+
+    <TextView
+        android:id="@+id/pih_shift"
+        style="@style/InfoEdit"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/pih_shift_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pih_shift_label"
+        app:layout_constraintTop_toTopOf="@id/pih_shift_label"
+        tools:text="早班" />
+</merge>
