@@ -1,7 +1,5 @@
 package com.hll_sc_app.bean.export;
 
-import android.text.TextUtils;
-
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -10,23 +8,14 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ExportResp {
-    @SerializedName(value = "Email", alternate = {"groupMail"})
-    private String mockEmail;
+    @SerializedName(value = "Email", alternate = {"groupMail", "email"})
     private String email;
 
     public String getEmail() {
-        return TextUtils.isEmpty(mockEmail) ? email : mockEmail;
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getMockEmail() {
-        return mockEmail;
-    }
-
-    public void setMockEmail(String mockEmail) {
-        this.mockEmail = mockEmail;
     }
 }
