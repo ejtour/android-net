@@ -24,5 +24,7 @@ public interface IProduceInputContract {
 
     interface IProduceInputPresenter extends IPresenter<IProduceInputView> {
         void save(ProduceInputReq req);
+
+        void reqShiftList();
     }
 }

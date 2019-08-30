@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.produce.input.detail.ProduceInputDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -119,7 +120,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
                     mAdapter.remove(position);
                     break;
                 case R.id.rpi_company_name:
-                    showToast("录入具体数据待添加");
+                    ProduceInputDetailActivity.start(this, mCurBean);
                     break;
             }
         });
@@ -145,7 +146,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
 
     private void selectShift(View view) {
         if (CommonUtils.isEmpty(mBeanList)) {
-            mPresenter.start();
+            mPresenter.reqShiftList();
             return;
         }
         showDialog();
@@ -172,10 +173,6 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     @Override
     public void setShiftData(List<ManHourBean> beanList) {
         mBeanList = beanList;
-        if (!CommonUtils.isEmpty(beanList)) {
-            mReq.setClasses(beanList.get(0).getValue());
-            mHeader.setShift(mReq.getClasses());
-        }
     }
 
     @Override
@@ -194,8 +191,8 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) {
-            mAdapter.replace(mCurBean, data.getParcelableExtra(""));
+        if (requestCode == ProduceInputDetailActivity.REQ_CODE && resultCode == RESULT_OK && data != null) {
+            mAdapter.replace(mCurBean, data.getParcelableExtra("parcelable"));
             updateAmount();
         }
     }

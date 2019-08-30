@@ -23,17 +23,17 @@ import java.util.List;
  */
 
 public class ProduceBean {
-    private String date;
-    private int standardSortNum;
-    private double standardSortHours;
-    private int vegetablesSortNum;
-    private double vegetablesSortHours;
-    private int vegetablesPackNum;
-    private double vegetablesPackHours;
-    private double totalCost;
-    private String weightEfficiency;
-    private String packageEfficiency;
-    private String amountEfficiency;
+    protected String date;
+    protected int standardSortNum;
+    protected double standardSortHours;
+    protected int vegetablesSortNum;
+    protected double vegetablesSortHours;
+    protected int vegetablesPackNum;
+    protected double vegetablesPackHours;
+    protected double totalCost;
+    protected String weightEfficiency;
+    protected String packageEfficiency;
+    protected String amountEfficiency;
 
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();

@@ -41,13 +41,19 @@ public class ProduceInputPresenter implements IProduceInputContract.IProduceInpu
     }
 
     @Override
+    public void reqShiftList() {
+        if (mClasses == null) {
+            Report.queryManHour(2, new SimpleObserver<List<ManHourBean>>(mView) {
+                @Override
+                public void onSuccess(List<ManHourBean> manHourBeans) {
+                    mView.setShiftData(manHourBeans);
+                }
+            });
+        }
+    }
+
+    @Override
     public void start() {
-        Report.queryManHour(2, new SimpleObserver<List<ManHourBean>>(mView) {
-            @Override
-            public void onSuccess(List<ManHourBean> manHourBeans) {
-                mView.setShiftData(manHourBeans);
-            }
-        });
         if (mClasses != null) {
             Report.queryProduceDetails(mClasses, mDate, 1, new SimpleObserver<SingleListResp<ProduceDetailBean>>(mView) {
                 @Override
@@ -57,6 +63,7 @@ public class ProduceInputPresenter implements IProduceInputContract.IProduceInpu
                 }
             });
         }
+        reqShiftList();
     }
 
     @Override
