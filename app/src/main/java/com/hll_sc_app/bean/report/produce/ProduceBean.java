@@ -9,6 +9,7 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 
 import com.hll_sc_app.app.report.produce.details.ProduceDetailsActivity;
+import com.hll_sc_app.app.report.produce.input.maneffect.PeopleEffectInputActivity;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.impl.IStringArrayGenerator;
@@ -75,7 +76,7 @@ public class ProduceBean implements IStringArrayGenerator {
         ss.setSpan(new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                ToastUtils.showShort(widget.getContext(), "position = " + widget.getTag() + " 录入跳转待添加");
+                PeopleEffectInputActivity.start();
             }
 
             @Override

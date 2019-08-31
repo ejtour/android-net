@@ -835,6 +835,10 @@
             android:name=".app.report.produce.details.ProduceDetailsActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.report.produce.input.maneffect.PeopleEffectInputActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

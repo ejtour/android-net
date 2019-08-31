@@ -636,6 +636,11 @@ public class RouterConfig {
     public static final String REPORT_PRODUCE_INPUT_DETAIL = "/activity/produce/input/detail";
 
     /**
+     * 生产汇总统计-录入人效
+     */
+    public static final String REPORT_PRODUCE_INPUT_PEOPLE = "/activity/produce/input/people";
+
+    /**
      * 客户销售汇总搜索
      */
     public static final String CUSTOMER_SALE_SEARCH = "/activity/customer/sale/search";
