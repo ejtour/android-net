@@ -242,7 +242,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:111073")
-    Observable<BaseResp<SingleListResp<ProduceDetailBean>>> queryProduceDetails(@Body BaseMapReq req);
+    Observable<BaseResp<List<ProduceDetailBean>>> queryProduceDetails(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111076")

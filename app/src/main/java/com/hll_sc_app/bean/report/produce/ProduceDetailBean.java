@@ -1,7 +1,22 @@
 package com.hll_sc_app.bean.report.produce;
 
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.style.ClickableSpan;
+import android.view.View;
+
+import com.hll_sc_app.app.report.produce.input.ProduceInputActivity;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.ColorStr;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -13,6 +28,41 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
     private String inputPer;
     private String coopGroupName;
     private String hoursFee;
+
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(createText()); // 操作
+        list.add(classes); // 班次
+        list.add(String.valueOf(standardSortNum)); // 标品分拣人数
+        list.add(CommonUtils.formatNumber(standardSortHours)); // 标品分拣工时
+        list.add(String.valueOf(vegetablesSortNum)); // 蔬果分拣人数
+        list.add(CommonUtils.formatNumber(vegetablesSortHours)); // 蔬果分拣工时
+        list.add(String.valueOf(vegetablesPackNum)); // 蔬果打包人数
+        list.add(CommonUtils.formatNumber(vegetablesPackHours)); // 蔬果打包工时
+        list.add(CommonUtils.formatMoney(totalCost)); // 费用合计(元)
+        return list;
+    }
+
+    private SpannableString createText() {
+        SpannableString ss = new SpannableString("修改");
+        ss.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                if (widget.getTag() instanceof ProduceDetailBean) {
+                    ProduceDetailBean bean = (ProduceDetailBean) widget.getTag();
+                    ProduceInputActivity.start(((Activity) widget.getContext()), bean.classes, bean.getDate());
+                }
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setColor(Color.parseColor(ColorStr.COLOR_5695D2));
+                ds.setUnderlineText(false);
+            }
+        }, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return ss;
+    }
 
     public String getClasses() {
         return classes;

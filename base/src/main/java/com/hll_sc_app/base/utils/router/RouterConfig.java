@@ -616,6 +616,11 @@ public class RouterConfig {
     public static final String REPORT_PRODUCE_STATISTIC = "/activity/report/produceSummary";
 
     /**
+     * 生产汇总统计-查看明细
+     */
+    public static final String REPORT_PRODUCE_DETAILS = "/activity/report/produce/details";
+
+    /**
      * 生产汇总统计-设置工时费
      */
     public static final String REPORT_PRODUCE_MAN_HOUR = "/activity/report/produce/manHour";

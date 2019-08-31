@@ -427,11 +427,12 @@ public class Report {
      * @param date    时间 yyyyMMdd
      * @param opType  0: 查看明细数据 1:修改明细数据
      */
-    public static void queryProduceDetails(String classes, String date, int opType, SimpleObserver<SingleListResp<ProduceDetailBean>> observer) {
+    public static void queryProduceDetails(String classes, String date, int opType, SimpleObserver<List<ProduceDetailBean>> observer) {
         ReportService.INSTANCE
                 .queryProduceDetails(BaseMapReq.newBuilder()
                         .put("classes", classes)
                         .put("date", date)
+                        .put("groupID", UserConfig.getGroupID())
                         .put("opType", String.valueOf(opType))
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))

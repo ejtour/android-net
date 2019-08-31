@@ -55,11 +55,11 @@ public class ProduceInputPresenter implements IProduceInputContract.IProduceInpu
     @Override
     public void start() {
         if (mClasses != null) {
-            Report.queryProduceDetails(mClasses, mDate, 1, new SimpleObserver<SingleListResp<ProduceDetailBean>>(mView) {
+            Report.queryProduceDetails(mClasses, mDate, 1, new SimpleObserver<List<ProduceDetailBean>>(mView) {
                 @Override
-                public void onSuccess(SingleListResp<ProduceDetailBean> produceDetailBeanSingleListResp) {
+                public void onSuccess(List<ProduceDetailBean> beanList) {
 
-                    mView.setData(produceDetailBeanSingleListResp.getRecords());
+                    mView.setData(beanList);
                 }
             });
         }

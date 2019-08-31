@@ -8,6 +8,7 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
+import com.hll_sc_app.app.report.produce.details.ProduceDetailsActivity;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.impl.IStringArrayGenerator;
@@ -23,18 +24,18 @@ import java.util.List;
  * @since 2019/8/28
  */
 
-public class ProduceBean {
-    protected String date;
-    protected int standardSortNum;
-    protected double standardSortHours;
-    protected int vegetablesSortNum;
-    protected double vegetablesSortHours;
-    protected int vegetablesPackNum;
-    protected double vegetablesPackHours;
-    protected double totalCost;
-    protected String weightEfficiency;
-    protected String packageEfficiency;
-    protected String amountEfficiency;
+public class ProduceBean implements IStringArrayGenerator {
+    String date;
+    int standardSortNum;
+    double standardSortHours;
+    int vegetablesSortNum;
+    double vegetablesSortHours;
+    int vegetablesPackNum;
+    double vegetablesPackHours;
+    double totalCost;
+    String weightEfficiency;
+    String packageEfficiency;
+    String amountEfficiency;
 
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
@@ -58,7 +59,9 @@ public class ProduceBean {
         ss.setSpan(new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                ToastUtils.showShort(widget.getContext(), "position = " + widget.getTag() + " 明细跳转待添加");
+                if (widget.getTag() instanceof ProduceBean) {
+                    ProduceDetailsActivity.start(((ProduceBean) widget.getTag()).getDate());
+                }
             }
 
             @Override
