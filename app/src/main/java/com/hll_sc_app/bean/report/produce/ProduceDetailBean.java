@@ -27,7 +27,7 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
     private String classes;
     private String inputPer;
     private String coopGroupName;
-    private String hoursFee;
+    private double hoursFee;
 
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
@@ -88,11 +88,11 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
         this.coopGroupName = coopGroupName;
     }
 
-    public String getHoursFee() {
+    public double getHoursFee() {
         return hoursFee;
     }
 
-    public void setHoursFee(String hoursFee) {
+    public void setHoursFee(double hoursFee) {
         this.hoursFee = hoursFee;
     }
 
@@ -107,7 +107,7 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
         dest.writeString(this.classes);
         dest.writeString(this.inputPer);
         dest.writeString(this.coopGroupName);
-        dest.writeString(this.hoursFee);
+        dest.writeDouble(this.hoursFee);
         dest.writeString(this.date);
         dest.writeInt(this.standardSortNum);
         dest.writeDouble(this.standardSortHours);
@@ -128,7 +128,7 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
         this.classes = in.readString();
         this.inputPer = in.readString();
         this.coopGroupName = in.readString();
-        this.hoursFee = in.readString();
+        this.hoursFee = in.readDouble();
         this.date = in.readString();
         this.standardSortNum = in.readInt();
         this.standardSortHours = in.readDouble();
@@ -153,4 +153,12 @@ public class ProduceDetailBean extends ProduceBean implements Parcelable {
             return new ProduceDetailBean[size];
         }
     };
+
+    public void generateTotalCost() {
+        this.totalCost = CommonUtils.addDouble(
+                CommonUtils.mulDouble(hoursFee, CommonUtils.mulDouble(standardSortNum, standardSortHours).doubleValue(), 4).doubleValue(),
+                CommonUtils.mulDouble(hoursFee, CommonUtils.mulDouble(vegetablesSortNum, vegetablesSortHours).doubleValue(), 4).doubleValue(),
+                CommonUtils.mulDouble(hoursFee, CommonUtils.mulDouble(vegetablesPackNum, vegetablesPackHours).doubleValue(), 4).doubleValue())
+                .doubleValue();
+    }
 }

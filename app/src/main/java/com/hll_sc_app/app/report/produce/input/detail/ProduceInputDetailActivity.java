@@ -94,8 +94,7 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
         mBean.setVegetablesSortHours(string2Double(mVegetablePickTime.getText()));
         mBean.setVegetablesPackNum(string2Int(mVegetablePackNum.getText()));
         mBean.setVegetablesPackHours(string2Double(mVegetablePackTime.getText()));
-        showToast("生产费用计算待添加");
-        mBean.setTotalCost(Math.random() * 150 + 50);
+        mBean.generateTotalCost();
         Intent intent = new Intent();
         intent.putExtra("parcelable", mBean);
         setResult(RESULT_OK, intent);
@@ -126,6 +125,7 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
                     .refreshList(mBeanList)
                     .setOnSelectListener(manHourBean -> {
                         mBean.setCoopGroupName(manHourBean.getCoopGroupName());
+                        mBean.setHoursFee(TextUtils.isEmpty(manHourBean.getValue()) ? 0 : Double.parseDouble(manHourBean.getValue()));
                         mCompany.setText(manHourBean.getCoopGroupName());
                     })
                     .create();
