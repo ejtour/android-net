@@ -1,6 +1,8 @@
 package com.hll_sc_app.bean.report.produce;
 
 import android.graphics.Color;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -11,7 +13,6 @@ import android.view.View;
 import com.hll_sc_app.app.report.produce.details.ProduceDetailsActivity;
 import com.hll_sc_app.app.report.produce.input.maneffect.PeopleEffectInputActivity;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.impl.IStringArrayGenerator;
 import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.utils.Constants;
@@ -25,7 +26,7 @@ import java.util.List;
  * @since 2019/8/28
  */
 
-public class ProduceBean implements IStringArrayGenerator {
+public class ProduceBean implements IStringArrayGenerator, Parcelable {
     String date;
     int standardSortNum;
     double standardSortHours;
@@ -76,7 +77,8 @@ public class ProduceBean implements IStringArrayGenerator {
         ss.setSpan(new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                PeopleEffectInputActivity.start();
+                if (widget.getTag() instanceof ProduceBean)
+                    PeopleEffectInputActivity.start((ProduceBean) widget.getTag());
             }
 
             @Override
@@ -176,4 +178,53 @@ public class ProduceBean implements IStringArrayGenerator {
     public void setAmountEfficiency(String amountEfficiency) {
         this.amountEfficiency = amountEfficiency;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.date);
+        dest.writeInt(this.standardSortNum);
+        dest.writeDouble(this.standardSortHours);
+        dest.writeInt(this.vegetablesSortNum);
+        dest.writeDouble(this.vegetablesSortHours);
+        dest.writeInt(this.vegetablesPackNum);
+        dest.writeDouble(this.vegetablesPackHours);
+        dest.writeDouble(this.totalCost);
+        dest.writeString(this.weightEfficiency);
+        dest.writeString(this.packageEfficiency);
+        dest.writeString(this.amountEfficiency);
+    }
+
+    public ProduceBean() {
+    }
+
+    protected ProduceBean(Parcel in) {
+        this.date = in.readString();
+        this.standardSortNum = in.readInt();
+        this.standardSortHours = in.readDouble();
+        this.vegetablesSortNum = in.readInt();
+        this.vegetablesSortHours = in.readDouble();
+        this.vegetablesPackNum = in.readInt();
+        this.vegetablesPackHours = in.readDouble();
+        this.totalCost = in.readDouble();
+        this.weightEfficiency = in.readString();
+        this.packageEfficiency = in.readString();
+        this.amountEfficiency = in.readString();
+    }
+
+    public static final Parcelable.Creator<ProduceBean> CREATOR = new Parcelable.Creator<ProduceBean>() {
+        @Override
+        public ProduceBean createFromParcel(Parcel source) {
+            return new ProduceBean(source);
+        }
+
+        @Override
+        public ProduceBean[] newArray(int size) {
+            return new ProduceBean[size];
+        }
+    };
 }
