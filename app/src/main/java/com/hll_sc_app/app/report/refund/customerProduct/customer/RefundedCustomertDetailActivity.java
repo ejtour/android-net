@@ -20,12 +20,8 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerItem;
 import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
 import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundCustomerItem;
-import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -52,6 +48,7 @@ import butterknife.OnClick;
 
 /**
  * 退货客户明细统计
+ *
  * @author 初坤
  * @date 20190720
  */
@@ -312,34 +309,15 @@ public class RefundedCustomertDetailActivity extends BaseLoadActivity implements
     @Override
     public void showRefundedCustomerDetail(RefundedCustomerResp refundCustomerResp, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(refundCustomerResp.getGroupVoList()) && refundCustomerResp.getGroupVoList().size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
         if (!CommonUtils.isEmpty(refundCustomerResp.getGroupVoList())) {
-            for (RefundedCustomerItem bean : refundCustomerResp.getGroupVoList()) {
-                list.add(convertToRowData(bean));
-            }
-            mExcel.setData(list, append);
+            mExcel.setData(refundCustomerResp.getGroupVoList(), append);
             mExcel.setHeaderView(generateHeader(true));
-            mExcel.setFooterView(generatorFooter(refundCustomerResp,true));
-        }else{
+            mExcel.setFooterView(generatorFooter(refundCustomerResp, true));
+        } else {
             mExcel.setData(new ArrayList<>(), append);
             generateHeader(append);
-            mExcel.setFooterView(generatorFooter(refundCustomerResp,append));
+            mExcel.setFooterView(generatorFooter(refundCustomerResp, append));
         }
-
-    }
-
-    private List<CharSequence> convertToRowData(RefundedCustomerItem item){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(item.getPurchaserName());// 采购商集团
-        list.add(item.getShopName()); // 采购商门店
-        list.add(item.getRefundBillNum()); // 退单数
-        list.add(item.getRefundProductNum()+""); //退货商品数
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getCashAmount()))); // 现金
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getBankCardAmount()))); //银行卡
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getOnLineAmount()))); //线上
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getAccountAmount()))); //账期
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getSubRefundAmount()))); //小计
-        return list;
     }
 
     @Override

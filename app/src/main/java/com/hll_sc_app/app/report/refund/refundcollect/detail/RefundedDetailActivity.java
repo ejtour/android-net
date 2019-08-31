@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,17 +16,11 @@ import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.refund.RefundedItem;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
 import com.hll_sc_app.bean.report.refund.RefundedResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundCustomerItem;
-import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -36,7 +29,6 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
-import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -311,36 +303,15 @@ public class RefundedDetailActivity extends BaseLoadActivity implements Refunded
     @Override
     public void showRefundedDetail(RefundedResp refundedResp, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(refundedResp.getGroupVoList()) && refundedResp.getGroupVoList().size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
         if (!CommonUtils.isEmpty(refundedResp.getGroupVoList())) {
-            for (RefundedItem bean : refundedResp.getGroupVoList()) {
-                list.add(convertToRowData(bean));
-            }
-            mExcel.setData(list, append);
+            mExcel.setData(refundedResp.getGroupVoList(), append);
             mExcel.setHeaderView(generateHeader(true));
-            mExcel.setFooterView(generatorFooter(refundedResp,true));
-        }else{
+            mExcel.setFooterView(generatorFooter(refundedResp, true));
+        } else {
             mExcel.setData(new ArrayList<>(), append);
             generateHeader(append);
-            mExcel.setFooterView(generatorFooter(refundedResp,append));
+            mExcel.setFooterView(generatorFooter(refundedResp, append));
         }
-
-    }
-
-    private List<CharSequence> convertToRowData(RefundedItem item){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(CalendarUtils.getDateFormatString(item.getRefundBillDate()+"",CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD));// 日期
-        list.add(item.getRefundBillNum()+""); // 退单数
-        list.add(item.getRefundGroupNum()+"/"+item.getRefundShopNum()); // 退货客户数
-        list.add(item.getRefundProductNum()+""); //退货商品数
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getCashAmount()))); // 现金
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getBankCardAmount()))); //银行卡
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getOnLineAmount()))); //线上
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getAccountAmount()))); //账期
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getSubRefundAmount()))); //小计
-        list.add(item.getBillNum()+"");//小计
-        list.add(item.getRefundProportion());//退货占比
-        return list;
     }
 
     @Override

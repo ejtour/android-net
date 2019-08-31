@@ -20,10 +20,6 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerItem;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
-import com.hll_sc_app.bean.report.refund.RefundedProductItem;
 import com.hll_sc_app.bean.report.refund.RefundedProductReq;
 import com.hll_sc_app.bean.report.refund.RefundedProductResp;
 import com.hll_sc_app.bean.window.OptionType;
@@ -52,6 +48,7 @@ import butterknife.OnClick;
 
 /**
  * 退货客户明细统计
+ *
  * @author 初坤
  * @date 20190720
  */
@@ -312,31 +309,15 @@ public class RefundedProductDetailActivity extends BaseLoadActivity implements R
     @Override
     public void showRefundedProductDetail(RefundedProductResp refundedProductResp, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(refundedProductResp.getRecords()) && refundedProductResp.getRecords().size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
         if (!CommonUtils.isEmpty(refundedProductResp.getRecords())) {
-            for (RefundedProductItem bean : refundedProductResp.getRecords()) {
-                list.add(convertToRowData(bean));
-            }
-            mExcel.setData(list, append);
+            mExcel.setData(refundedProductResp.getRecords(), append);
             mExcel.setHeaderView(generateHeader(true));
-            mExcel.setFooterView(generatorFooter(refundedProductResp,true));
-        }else{
+            mExcel.setFooterView(generatorFooter(refundedProductResp, true));
+        } else {
             mExcel.setData(new ArrayList<>(), append);
             generateHeader(append);
-            mExcel.setFooterView(generatorFooter(refundedProductResp,append));
+            mExcel.setFooterView(generatorFooter(refundedProductResp, append));
         }
-
-    }
-
-    private List<CharSequence> convertToRowData(RefundedProductItem item){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(item.getProductCode());// 商品编号
-        list.add(item.getProductName()); // 商品名称
-        list.add(item.getProductSpec()); // 规格
-        list.add(item.getRefundUnit()+""); //单位
-        list.add(item.getRefundProductNum()); // 数量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getRefundAmount()))); //退款金额
-        return list;
     }
 
     @Override

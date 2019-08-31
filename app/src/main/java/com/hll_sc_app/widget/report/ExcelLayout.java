@@ -12,10 +12,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -82,31 +84,31 @@ public class ExcelLayout extends LinearLayout {
         mColumnDataArray = columnDataArray;
     }
 
-    public void closeHeaderOrFooter(){
+    public void closeHeaderOrFooter() {
         mRefreshView.closeHeaderOrFooter();
     }
 
-    public void setData(List<List<CharSequence>> list, boolean append) {
+    public void setData(List<? extends IStringArrayGenerator> list, boolean append) {
         if (append) {
             if (!CommonUtils.isEmpty(list))
                 mAdapter.addData(list);
         } else {
-            mAdapter.setNewData(list);
+            mAdapter.setNewData(CommonUtils.isEmpty(list) ? new ArrayList<>() : new ArrayList<>(list));
         }
     }
 
-    public void setEnableLoadMore(boolean loadMore){
+    public void setEnableLoadMore(boolean loadMore) {
         mRefreshView.setEnableLoadMore(loadMore);
     }
 
-    public class StringArrayAdapter extends BaseQuickAdapter<List<CharSequence>, BaseViewHolder> {
+    public class StringArrayAdapter extends BaseQuickAdapter<IStringArrayGenerator, BaseViewHolder> {
 
         StringArrayAdapter() {
             super(null);
         }
 
         @Override
-        public void setNewData(@Nullable List<List<CharSequence>> data) {
+        public void setNewData(@Nullable List<IStringArrayGenerator> data) {
             if (mColumnDataArray == null) return;
             super.setNewData(data);
         }
@@ -120,11 +122,12 @@ public class ExcelLayout extends LinearLayout {
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, List<CharSequence> item) {
+        protected void convert(BaseViewHolder helper, IStringArrayGenerator item) {
             ExcelRow itemView = (ExcelRow) helper.itemView;
-            itemView.setTag(helper.getAdapterPosition());
+            itemView.setTag(item);
             itemView.setBackgroundResource(helper.getAdapterPosition() % 2 == 0 ? android.R.color.white : R.color.color_fafafa);
-            itemView.updateRowDate(item.toArray(new CharSequence[]{}));
+            CharSequence[] array = {};
+            itemView.updateRowDate(item.convertToRowData().toArray(array));
         }
     }
 }

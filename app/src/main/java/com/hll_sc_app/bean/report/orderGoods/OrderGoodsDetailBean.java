@@ -3,6 +3,7 @@ package com.hll_sc_app.bean.report.orderGoods;
 import android.text.TextUtils;
 
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * @since 2019/7/23
  */
 
-public class OrderGoodsDetailBean {
+public class OrderGoodsDetailBean implements IStringArrayGenerator {
 
     private double inspectionNum;
     private double inspectionAmount;

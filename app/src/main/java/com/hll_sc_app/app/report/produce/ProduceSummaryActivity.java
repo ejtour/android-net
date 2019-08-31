@@ -19,7 +19,6 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.filter.DateParam;
-import com.hll_sc_app.bean.report.produce.ProduceBean;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -231,13 +230,7 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
         CharSequence[] array = {};
         mFooter.updateRowDate(resp.getTotal().convertToRowData().toArray(array));
         mExcelLayout.setEnableLoadMore(!CommonUtils.isEmpty(resp.getList()) && resp.getList().size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
-        if (!CommonUtils.isEmpty(resp.getList())) {
-            for (ProduceBean bean : resp.getList()) {
-                list.add(bean.convertToRowData());
-            }
-        }
-        mExcelLayout.setData(list, append);
+        mExcelLayout.setData(resp.getList(), append);
     }
 
     @Override

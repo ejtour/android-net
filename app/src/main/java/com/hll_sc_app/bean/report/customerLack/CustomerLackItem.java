@@ -1,6 +1,12 @@
 package com.hll_sc_app.bean.report.customerLack;
 
-public class CustomerLackItem {
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CustomerLackItem implements IStringArrayGenerator {
 
     private String deliveryAmount;
     private String deliveryLackAmount;
@@ -12,6 +18,19 @@ public class CustomerLackItem {
     private String productName;
     private String specUnit;
 
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(getProductName()); // 商品名称
+        list.add(getSpecUnit()); // 商品规格
+        list.add(getOriReserveNum()); // 订货量
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getOriReserveAmount()))); // 订货金额
+        list.add(getDeliveryNum()); //发货量
+        list.add(getDeliveryNum()); // 缺货量
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getDeliveryLackAmount()))); // 缺货金额
+        list.add(getDeliveryLackRate());
+        return list;
+    }
 
     public String getDeliveryAmount() {
         return deliveryAmount;

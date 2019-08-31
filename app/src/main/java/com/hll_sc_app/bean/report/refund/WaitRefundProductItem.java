@@ -1,6 +1,12 @@
 package com.hll_sc_app.bean.report.refund;
 
-public class WaitRefundProductItem {
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class WaitRefundProductItem implements IStringArrayGenerator {
 
     /**
      * 商品编码
@@ -34,6 +40,18 @@ public class WaitRefundProductItem {
      * 单位
      */
     private String refundUnit;
+
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(getProductCode());// 商品编码
+        list.add(getProductName()); // 商品名称
+        list.add(getProductSpec()); // 规格
+        list.add(getRefundUnit()); //单位
+        list.add(getRefundNum()); // 数量
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getRefundAmount()))); //金额
+        return list;
+    }
 
     public String getProductCode() {
         return productCode;

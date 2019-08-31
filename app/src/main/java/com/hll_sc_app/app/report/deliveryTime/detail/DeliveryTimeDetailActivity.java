@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,26 +14,17 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.sdk.android.ams.common.util.StringUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
-import com.hll_sc_app.bean.event.SalesManSearchEvent;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeItem;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailItem;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -47,14 +37,10 @@ import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -305,37 +291,15 @@ public class DeliveryTimeDetailActivity extends BaseLoadActivity implements IDel
     @Override
     public void setDeliveryTimeDetailList(DeliveryTimeResp deliveryTimeResp, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(deliveryTimeResp.getRecords()) && deliveryTimeResp.getRecords().size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
         if (!CommonUtils.isEmpty(deliveryTimeResp.getRecords())) {
-            for (DeliveryTimeItem bean : deliveryTimeResp.getRecords()) {
-                list.add(convertToRowData(bean));
-            }
-            mExcel.setData(list, append);
-            mExcel.setFooterView(generatorFooter(deliveryTimeResp,true));
+            mExcel.setData(deliveryTimeResp.getRecords(), append);
+            mExcel.setFooterView(generatorFooter(deliveryTimeResp, true));
             mExcel.setHeaderView(generateHeader(true));
-        }else{
+        } else {
             mExcel.setData(new ArrayList<>(), append);
             mExcel.setFooterView(generatorFooter(deliveryTimeResp, append));
             generateHeader(append);
         }
-
-    }
-
-    private List<CharSequence> convertToRowData(DeliveryTimeItem item){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(CalendarUtils.getDateFormatString(item.getDate()+"",CalendarUtils.FORMAT_LOCAL_DATE,Constants.SLASH_YYYY_MM_DD)); // 时间
-        list.add(CommonUtils.formatNumber(item.getExecuteOrderNum())); // 要求到货单量
-        list.add(CommonUtils.formatNumber(item.getDeliveryOrderNum())); // 发货单量
-        list.add(CommonUtils.formatNumber(item.getInspectionOrderNum())); // 签收单量
-        list.add(CommonUtils.formatNumber(item.getOnTimeInspectionNum())); //按要求时间配送单量
-        list.add(CommonUtils.formatNumber(item.getOnTimeInspectionRate().equals("-2")?"": new BigDecimal(item.getOnTimeInspectionRate()).multiply(new BigDecimal(100)).setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()+"%")); // 按要求时间配送单量占比
-        list.add(CommonUtils.formatNumber(item.getWithin15MinInspectionNum())); //差异15分钟内配送单量
-        list.add(CommonUtils.formatNumber(item.getWithin15MinInspectionRate().equals("-2")?"": new BigDecimal(item.getWithin15MinInspectionRate()).multiply(new BigDecimal(100)).setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()+"%")); // 差异15分钟内配送单量占比
-        list.add(CommonUtils.formatNumber(item.getWithin30MinInspectionNum())); //差异30分钟内配送单量
-        list.add(CommonUtils.formatNumber(item.getWithin30MinInspectionRate().equals("-2")?"": new BigDecimal(item.getWithin30MinInspectionRate()).multiply(new BigDecimal(100)).setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()+"%")); // 差异30分钟内配送单量占比
-        list.add(CommonUtils.formatNumber(item.getBeyond30MinInspectionNum())); //差异30分钟以上配送单量
-        list.add(CommonUtils.formatNumber(item.getBeyond30MinInspectionRate().equals("-2")?"": new BigDecimal(item.getBeyond30MinInspectionRate()).multiply(new BigDecimal(100)).setScale(2,BigDecimal.ROUND_HALF_UP).toPlainString()+"%")); // 差异30分钟以上配送单量占比
-        return list;
     }
 
     @Override

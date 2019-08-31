@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
@@ -42,8 +43,10 @@ import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,6 +54,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -240,9 +244,9 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
         return row;
     }
 
-    private View generatorFooter(InspectLackDetailResp inspectLackDetailResp, boolean isDisplay){
+    private View generatorFooter(InspectLackDetailResp inspectLackDetailResp, boolean isDisplay) {
         ExcelRow row = new ExcelRow(this);
-        if(isDisplay) {
+        if (isDisplay) {
             row.updateChildView(COLUMN_NUM);
             ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
             array[0] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[0]));
@@ -318,19 +322,17 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
     @Override
     public void setWareHouseProductDetailList(WareHouseLackProductResp wareHouseLackProductResp, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(wareHouseLackProductResp.getRecords()) && wareHouseLackProductResp.getRecords().size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
         AtomicInteger atomicInteger = new AtomicInteger(0);
         if (!CommonUtils.isEmpty(wareHouseLackProductResp.getRecords())) {
             for (WareHouseLackProductItem bean : wareHouseLackProductResp.getRecords()) {
-                list.add(convertToRowData(bean,atomicInteger));
+                bean.setIndex(atomicInteger.incrementAndGet());
             }
-            mExcel.setData(list, append);
+            mExcel.setData(wareHouseLackProductResp.getRecords(), append);
             mExcel.setHeaderView(generateHeader(true));
-        }else{
+        } else {
             mExcel.setData(new ArrayList<>(), append);
             mExcel.setHeaderView(generateHeader(append));
         }
-
     }
 
     @Override
@@ -360,21 +362,5 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
             shipperID = (String) mPurchaser.getTag();
         }
         return shipperID;
-    }
-
-    private List<CharSequence> convertToRowData(WareHouseLackProductItem item,AtomicInteger atomicInteger){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(atomicInteger.incrementAndGet()+"");
-        list.add(item.getProductCode()); // 商品编码
-        list.add(item.getProductName()); // 商品名称
-        list.add(item.getSpecUnit()); // 规格
-        list.add(item.getShipperName()); // 货主
-        list.add(CommonUtils.formatNumber(item.getOriReserveNum())); //订货量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getOriReserveAmount()))); // 订货金额
-        list.add(CommonUtils.formatNumber(item.getDeliveryNum())); // 发货量
-        list.add(CommonUtils.formatNumber(item.getDeliveryLackNum()));//缺货量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getDeliveryLackAmount()))); // 缺货金额
-        list.add(item.getDeliveryLackRate());//缺货率
-        return list;
     }
 }

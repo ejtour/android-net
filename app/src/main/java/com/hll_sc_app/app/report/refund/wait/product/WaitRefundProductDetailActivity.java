@@ -16,7 +16,6 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.report.refund.WaitRefundProductItem;
 import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.window.OptionType;
@@ -32,7 +31,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +38,7 @@ import butterknife.OnClick;
 
 /**
  * 待退统计
+ *
  * @author 初坤
  * @date 20190720
  */
@@ -213,31 +212,14 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
     @Override
     public void showRefundProductDetail(WaitRefundProductResp refundProductResp, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(refundProductResp.getRecords()) && refundProductResp.getRecords().size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
         if (!CommonUtils.isEmpty(refundProductResp.getRecords())) {
-            for (WaitRefundProductItem bean : refundProductResp.getRecords()) {
-                list.add(convertToRowData(bean));
-            }
-            mExcel.setData(list, append);
+            mExcel.setData(refundProductResp.getRecords(), append);
             mExcel.setHeaderView(generateHeader(true));
-            mExcel.setFooterView(generatorFooter(refundProductResp,true));
-        }else{
+            mExcel.setFooterView(generatorFooter(refundProductResp, true));
+        } else {
             mExcel.setData(new ArrayList<>(), append);
             mExcel.setHeaderView(generateHeader(append));
-            mExcel.setFooterView(generatorFooter(refundProductResp,append));
+            mExcel.setFooterView(generatorFooter(refundProductResp, append));
         }
-
     }
-
-    private List<CharSequence> convertToRowData(WaitRefundProductItem item){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(item.getProductCode());// 商品编码
-        list.add(item.getProductName()); // 商品名称
-        list.add(item.getProductSpec()); // 规格
-        list.add(item.getRefundUnit()); //单位
-        list.add(item.getRefundNum()); // 数量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getRefundAmount()))); //金额
-        return list;
-    }
-
 }

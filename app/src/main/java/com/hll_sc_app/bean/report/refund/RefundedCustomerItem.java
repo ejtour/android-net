@@ -1,6 +1,12 @@
 package com.hll_sc_app.bean.report.refund;
 
-public class RefundedCustomerItem {
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RefundedCustomerItem implements IStringArrayGenerator {
 
     /**
      * 账期金额
@@ -47,6 +53,21 @@ public class RefundedCustomerItem {
      * 小计金额
      */
     private String subRefundAmount;
+
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(getPurchaserName());// 采购商集团
+        list.add(getShopName()); // 采购商门店
+        list.add(getRefundBillNum()); // 退单数
+        list.add(getRefundProductNum() + ""); //退货商品数
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getCashAmount()))); // 现金
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getBankCardAmount()))); //银行卡
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getOnLineAmount()))); //线上
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getAccountAmount()))); //账期
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getSubRefundAmount()))); //小计
+        return list;
+    }
 
     public String getAccountAmount() {
         return accountAmount;

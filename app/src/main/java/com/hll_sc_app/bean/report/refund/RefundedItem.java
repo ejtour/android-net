@@ -1,6 +1,14 @@
 package com.hll_sc_app.bean.report.refund;
 
-public class RefundedItem {
+import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+import com.hll_sc_app.utils.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RefundedItem implements IStringArrayGenerator {
 
     /**
      * 账期金额
@@ -54,6 +62,23 @@ public class RefundedItem {
      * 订货金额
      */
     private String  totalBillAmount;
+
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(CalendarUtils.getDateFormatString(getRefundBillDate() + "", CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD));// 日期
+        list.add(getRefundBillNum() + ""); // 退单数
+        list.add(getRefundGroupNum() + "/" + getRefundShopNum()); // 退货客户数
+        list.add(getRefundProductNum() + ""); //退货商品数
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getCashAmount()))); // 现金
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getBankCardAmount()))); //银行卡
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getOnLineAmount()))); //线上
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getAccountAmount()))); //账期
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getSubRefundAmount()))); //小计
+        list.add(getBillNum() + "");//小计
+        list.add(getRefundProportion());//退货占比
+        return list;
+    }
 
     public String getAccountAmount() {
         return accountAmount;

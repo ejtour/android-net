@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
 import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;

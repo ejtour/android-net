@@ -1,6 +1,15 @@
 package com.hll_sc_app.bean.report.deliveryTime;
 
-public class DeliveryTimeItem {
+import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+import com.hll_sc_app.utils.Constants;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DeliveryTimeItem implements IStringArrayGenerator {
 
     private long   beyond30MinInspectionNum;
     private String beyond30MinInspectionRate;
@@ -14,6 +23,24 @@ public class DeliveryTimeItem {
     private String within15MinInspectionRate;
     private long   within30MinInspectionNum;
     private String within30MinInspectionRate;
+
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(CalendarUtils.getDateFormatString(getDate() + "", CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD)); // 时间
+        list.add(CommonUtils.formatNumber(getExecuteOrderNum())); // 要求到货单量
+        list.add(CommonUtils.formatNumber(getDeliveryOrderNum())); // 发货单量
+        list.add(CommonUtils.formatNumber(getInspectionOrderNum())); // 签收单量
+        list.add(CommonUtils.formatNumber(getOnTimeInspectionNum())); //按要求时间配送单量
+        list.add(CommonUtils.formatNumber(getOnTimeInspectionRate().equals("-2") ? "" : new BigDecimal(getOnTimeInspectionRate()).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "%")); // 按要求时间配送单量占比
+        list.add(CommonUtils.formatNumber(getWithin15MinInspectionNum())); //差异15分钟内配送单量
+        list.add(CommonUtils.formatNumber(getWithin15MinInspectionRate().equals("-2") ? "" : new BigDecimal(getWithin15MinInspectionRate()).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "%")); // 差异15分钟内配送单量占比
+        list.add(CommonUtils.formatNumber(getWithin30MinInspectionNum())); //差异30分钟内配送单量
+        list.add(CommonUtils.formatNumber(getWithin30MinInspectionRate().equals("-2") ? "" : new BigDecimal(getWithin30MinInspectionRate()).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "%")); // 差异30分钟内配送单量占比
+        list.add(CommonUtils.formatNumber(getBeyond30MinInspectionNum())); //差异30分钟以上配送单量
+        list.add(CommonUtils.formatNumber(getBeyond30MinInspectionRate().equals("-2") ? "" : new BigDecimal(getBeyond30MinInspectionRate()).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "%")); // 差异30分钟以上配送单量占比
+        return list;
+    }
 
 
     public long getBeyond30MinInspectionNum() {

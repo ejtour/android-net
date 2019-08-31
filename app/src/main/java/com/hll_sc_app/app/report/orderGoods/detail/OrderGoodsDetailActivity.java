@@ -17,9 +17,9 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
+import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.report.ExcelLayout;
@@ -27,7 +27,6 @@ import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -153,12 +152,6 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrder
     @Override
     public void setList(List<OrderGoodsDetailBean> beans, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(beans) && beans.size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
-        if (!CommonUtils.isEmpty(beans)) {
-            for (OrderGoodsDetailBean bean : beans) {
-                list.add(bean.convertToRowData());
-            }
-        }
-        mExcel.setData(list, append);
+        mExcel.setData(beans, append);
     }
 }
