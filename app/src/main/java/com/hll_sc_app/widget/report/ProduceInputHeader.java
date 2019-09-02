@@ -57,4 +57,8 @@ public class ProduceInputHeader extends ConstraintLayout {
     public void setShift(CharSequence s) {
         mShift.setText(s);
     }
+
+    public void setShiftColor(int color) {
+        mShift.setTextColor(color);
+    }
 }

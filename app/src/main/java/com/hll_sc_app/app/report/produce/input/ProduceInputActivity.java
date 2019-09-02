@@ -34,6 +34,7 @@ import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ProduceInputFooter;
 import com.hll_sc_app.widget.report.ProduceInputHeader;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -154,8 +155,16 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     }
 
     private void selectShift(View view) {
-        if (CommonUtils.isEmpty(mBeanList)) {
+        if (mBeanList == null) {
+            if (mClasses != null) {
+                showToast("不支持修改班次信息噢~");
+                return;
+            }
             mPresenter.reqShiftList();
+            return;
+        }
+        if (mBeanList.size() == 0) {
+            showToast("暂未设置班次信息");
             return;
         }
         showDialog();
@@ -181,7 +190,14 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
 
     @Override
     public void setShiftData(List<ManHourBean> beanList) {
-        mBeanList = beanList;
+        if (CommonUtils.isEmpty(beanList)) {
+            mBeanList = new ArrayList<>();
+            mHeader.setShift("暂未设置班次信息");
+            mHeader.setShiftColor(ContextCompat.getColor(this, R.color.color_999999));
+        } else {
+            mBeanList = beanList;
+            mHeader.setShiftColor(ContextCompat.getColor(this, R.color.color_222222));
+        }
     }
 
     @Override
