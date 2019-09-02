@@ -51,27 +51,29 @@ public class Utils {
     /**
      * 将输入的数字格式化成8位整数，2位小数
      *
-     * @param symbol 是否显示金钱符号，如果显示需要指定 digits 属性并在其中包含 "¥"
+     * @param symbol 是否显示金钱符号，如果显示，需要控制输入框可输入金钱符号 "¥"，可通过指定 digits 属性来控制
      */
     public static void processMoney(Editable s, boolean symbol) {
-        if (symbol) {
-            if (!s.toString().startsWith("¥")) s.insert(0, "¥");
-            String substring = s.toString().substring(1);
-            if (substring.contains("¥")) { // 避免出现多个金钱符号
-                substring = substring.replaceAll("¥", "");
-                s.delete(1, s.length());
-                s.insert(1, substring);
-            }
+        if (s.length() == 0) {
+            if (symbol) s.append("¥");
+            return;
         }
+        String process = s.toString();
         if (symbol) {
-            if (s.toString().substring(1).startsWith(".")) s.insert(1, "0");
-            if (!CommonUtils.checkMoneyNum(s.toString().substring(1)) && s.toString().substring(1).length() > 1)
-                s.delete(s.length() - 1, s.length());
-        } else {
-            if (s.toString().startsWith(".")) s.insert(0, "0");
-            if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1)
-                s.delete(s.length() - 1, s.length());
+            if (!process.startsWith("¥"))
+                process = s.insert(0, "¥").toString().substring(1);
+            else process = s.toString().substring(1);
+            if (process.contains("¥"))
+                process = s.delete(1, s.length())
+                        .append(process.replaceAll("¥", ""))
+                        .toString().substring(1);
         }
+        if (process.startsWith(".")) {
+            if (symbol) process = s.insert(1, "0").toString().substring(1);
+            else process = s.insert(0, "0").toString();
+        }
+        if (!CommonUtils.checkMoneyNum(process) && process.length() > 1)
+            s.delete(s.length() - 1, s.length());
     }
 
     private static void export(Activity context, String title, @DrawableRes int state, String tip, String action, ExportDialog.OnClickListener listener) {
