@@ -86,6 +86,17 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::save);
+        mCompany.setText(mBean.getCoopGroupName());
+        mStandardPickNum.setText(num2String(mBean.getStandardSortNum()));
+        mStandardPickTime.setText(num2String(mBean.getStandardSortHours()));
+        mVegetablePickNum.setText(num2String(mBean.getVegetablesSortNum()));
+        mVegetablePickTime.setText(num2String(mBean.getVegetablesSortHours()));
+        mVegetablePackNum.setText(num2String(mBean.getVegetablesPackNum()));
+        mVegetablePackTime.setText(num2String(mBean.getVegetablesPackHours()));
+    }
+
+    private String num2String(Number num) {
+        return num.doubleValue() == 0 ? "" : String.valueOf(num);
     }
 
     private void save(View view) {

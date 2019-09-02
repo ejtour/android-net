@@ -48,11 +48,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/pif_total_label" />
 
-    <EditText
+    <TextView
         android:id="@+id/pif_total"
         style="@style/InfoEdit"
         android:hint="0.00"
-        android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@id/pif_total_label"
         app:layout_constraintEnd_toStartOf="@id/pif_unit"
         app:layout_constraintStart_toEndOf="@id/pif_total_star"

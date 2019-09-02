@@ -27,7 +27,7 @@ public class ProduceInputFooter extends ConstraintLayout {
     @BindView(R.id.pif_add)
     TextView mAdd;
     @BindView(R.id.pif_total)
-    EditText mTotal;
+    TextView mTotal;
 
     public ProduceInputFooter(Context context) {
         this(context, null);
@@ -47,10 +47,6 @@ public class ProduceInputFooter extends ConstraintLayout {
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         mAdd.setOnClickListener(l);
-    }
-
-    public void addTextChangedListener(TextWatcher watcher) {
-        mTotal.addTextChangedListener(watcher);
     }
 
     public void setAmount(CharSequence s) {

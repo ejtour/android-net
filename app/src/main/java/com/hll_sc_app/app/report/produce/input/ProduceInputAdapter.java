@@ -13,6 +13,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IChangeListener;
 import com.hll_sc_app.utils.Utils;
 
 /**
@@ -21,9 +22,10 @@ import com.hll_sc_app.utils.Utils;
  */
 
 public class ProduceInputAdapter extends BaseQuickAdapter<ProduceDetailBean, BaseViewHolder> {
-
-    ProduceInputAdapter() {
+    private final IChangeListener mListener;
+    ProduceInputAdapter(IChangeListener listener) {
         super(R.layout.item_report_produce_input);
+        mListener = listener;
         addData(new ProduceDetailBean());
     }
 
@@ -51,6 +53,7 @@ public class ProduceInputAdapter extends BaseQuickAdapter<ProduceDetailBean, Bas
                 if (item == null) return;
                 Utils.processMoney(s, true);
                 item.setTotalCost(CommonUtils.getDouble(s.toString()));
+                mListener.onChanged();
             }
         });
         return helper;
