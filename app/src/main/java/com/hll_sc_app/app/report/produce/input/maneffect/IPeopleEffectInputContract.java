@@ -14,6 +14,6 @@ public interface IPeopleEffectInputContract {
     }
 
     interface IPeopleEffectInputPresenter extends IPresenter<IPeopleEffectInputView>{
-        void save();
+        void save(String packageNum, String weighNum);
     }
 }

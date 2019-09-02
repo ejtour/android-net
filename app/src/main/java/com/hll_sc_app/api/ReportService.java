@@ -255,4 +255,8 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111065")
     Observable<BaseResp<Object>> saveManHour(@Body BaseReq<ManHourReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111094")
+    Observable<BaseResp<Object>> recordPeopleEffect(@Body BaseMapReq req);
 }

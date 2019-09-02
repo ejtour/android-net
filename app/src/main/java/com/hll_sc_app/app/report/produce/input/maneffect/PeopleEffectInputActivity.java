@@ -19,6 +19,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.produce.ProduceBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.NumberUtils;
 import com.hll_sc_app.widget.TitleBar;
 
 import butterknife.BindView;
@@ -71,16 +72,16 @@ public class PeopleEffectInputActivity extends BaseLoadActivity implements IPeop
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::save);
-        mAmountEffect.setText(String.format("%s 元/人", mBean.getAmountEfficiency()));
+        mAmountEffect.setText(String.format("%s 元/人", NumberUtils.isNumeric(mBean.getAmountEfficiency()) ? mBean.getAmountEfficiency() : "0.00"));
     }
 
     private void save(View view) {
-        showToast("保存待添加");
+        mPresenter.save(mPackage.getText().toString(), mWeigh.getText().toString());
     }
 
     @OnTextChanged(R.id.pei_package)
     public void onTextChanged(CharSequence s) {
-        mPackageEffect.setText(String.format("%s 个/人",
+        mPackageEffect.setText(String.format("%s 个/人", mTotalNum == 0 ? 0 :
                 CommonUtils.divDouble(TextUtils.isEmpty(s) ? 0 : Double.parseDouble(s.toString()),
                         mTotalNum)));
     }
@@ -92,7 +93,7 @@ public class PeopleEffectInputActivity extends BaseLoadActivity implements IPeop
         if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
             s.delete(s.length() - 1, s.length());
         }
-        mWeighEffect.setText(String.format("%s 斤/人",
+        mWeighEffect.setText(String.format("%s 斤/人", mTotalNum == 0 ? 0 :
                 CommonUtils.divDouble(TextUtils.isEmpty(s) ? 0 : Double.parseDouble(s.toString()),
                         mTotalNum, 2)));
     }

@@ -1,7 +1,10 @@
 package com.hll_sc_app.app.report.produce.input.maneffect;
 
+import com.hll_sc_app.base.bean.MsgWrapper;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.report.produce.ProduceBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Report;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -21,8 +24,13 @@ public class PeopleEffectInputPresenter implements IPeopleEffectInputContract.IP
     }
 
     @Override
-    public void save() {
-
+    public void save(String packageNum, String weighNum) {
+        Report.recordPeopleEffect(mBean.getDate(), packageNum, weighNum, new SimpleObserver<MsgWrapper<Object>>(mView) {
+            @Override
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                mView.saveSuccess();
+            }
+        });
     }
 
     @Override

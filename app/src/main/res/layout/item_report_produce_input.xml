@@ -23,10 +23,11 @@
         <EditText
             android:id="@+id/rpi_money"
             style="@style/InfoEdit"
+            android:digits="¥0123456789."
             android:inputType="numberDecimal"
             android:drawableRight="@drawable/ic_arrow_gray"
             android:drawablePadding="5dp"
-            android:hint="¥0.00"
+            android:text="¥0.00"
             app:layout_constraintBottom_toBottomOf="@id/rpi_company_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/rpi_company_name"

@@ -227,8 +227,10 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
 
     @Override
     public void setData(ProduceSummaryResp resp, boolean append) {
-        CharSequence[] array = {};
-        mFooter.updateRowDate(resp.getTotal().convertToRowData().toArray(array));
+        if (resp.getTotal() != null) {
+            CharSequence[] array = {};
+            mFooter.updateRowDate(resp.getTotal().convertToRowData().toArray(array));
+        }
         mExcelLayout.setEnableLoadMore(!CommonUtils.isEmpty(resp.getList()) && resp.getList().size() == 20);
         mExcelLayout.setData(resp.getList(), append);
     }

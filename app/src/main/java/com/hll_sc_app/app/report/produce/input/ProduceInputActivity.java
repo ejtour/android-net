@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -27,6 +29,7 @@ import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
@@ -110,8 +113,25 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         mHeader.setOnClickListener(this::selectShift);
         mFooter = new ProduceInputFooter(this);
         mFooter.setOnClickListener(this::addData);
+        mFooter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Utils.processMoney(s, false);
+            }
+        });
+
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
-        mAdapter = new ProduceInputAdapter(this::updateAmount);
+        mAdapter = new ProduceInputAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             mCurBean = mAdapter.getItem(position);
             if (mCurBean == null) return;
@@ -185,7 +205,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         for (ProduceDetailBean bean : mAdapter.getData()) {
             total = CommonUtils.addDouble(total, bean.getTotalCost()).doubleValue();
         }
-        mFooter.setAmount(CommonUtils.formatMoney(total));
+        mFooter.setAmount(CommonUtils.formatNumber(total));
     }
 
     @Override

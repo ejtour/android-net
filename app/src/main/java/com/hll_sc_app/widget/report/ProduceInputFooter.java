@@ -4,14 +4,19 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -22,7 +27,7 @@ public class ProduceInputFooter extends ConstraintLayout {
     @BindView(R.id.pif_add)
     TextView mAdd;
     @BindView(R.id.pif_total)
-    TextView mTotal;
+    EditText mTotal;
 
     public ProduceInputFooter(Context context) {
         this(context, null);
@@ -42,6 +47,10 @@ public class ProduceInputFooter extends ConstraintLayout {
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         mAdd.setOnClickListener(l);
+    }
+
+    public void addTextChangedListener(TextWatcher watcher) {
+        mTotal.addTextChangedListener(watcher);
     }
 
     public void setAmount(CharSequence s) {

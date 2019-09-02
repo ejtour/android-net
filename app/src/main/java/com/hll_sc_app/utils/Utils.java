@@ -2,6 +2,7 @@ package com.hll_sc_app.utils;
 
 import android.app.Activity;
 import android.support.annotation.DrawableRes;
+import android.text.Editable;
 import android.text.TextUtils;
 
 import com.hll_sc_app.R;
@@ -9,6 +10,7 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.widget.ExportDialog;
 
@@ -44,6 +46,37 @@ public class Utils {
         if (TextUtils.isEmpty(phone)) return false;
         phone = phone.replaceAll("\\s+", "");
         return phone.matches("^((13[0-9])|(14[57])|(15[0-35-9])|(16[6])|(17[0135-8])|(18[0-9])|(19[189]))\\d{8}$");
+    }
+
+    /**
+     * 将输入的数字格式化成8位整数，2位小数
+     *
+     * @param symbol 是否显示金钱符号，如果显示需要指定在 digits 属性中包含 "¥"
+     */
+    public static void processMoney(Editable s, boolean symbol) {
+        int beginPos = 0;
+        if (symbol) {
+            if (!s.toString().startsWith("¥")) {
+                s.insert(0, "¥");
+            }
+            beginPos = 1;
+            String substring = s.toString().substring(beginPos);
+            if (substring.contains("¥")) { // 避免出现多个金钱符号
+                substring = substring.replaceAll("¥", "");
+                s.delete(beginPos, s.length());
+                s.insert(beginPos, substring);
+            }
+        }
+        if (beginPos == 0 ?
+                s.toString().startsWith(".") :
+                s.toString().substring(beginPos).startsWith("."))
+            s.insert(beginPos, "0");
+        if (!CommonUtils.checkMoneyNum(beginPos == 0 ?
+                s.toString() :
+                s.toString().substring(beginPos))
+                && s.length() > 1 + beginPos) {
+            s.delete(s.length() - 1, s.length());
+        }
     }
 
     private static void export(Activity context, String title, @DrawableRes int state, String tip, String action, ExportDialog.OnClickListener listener) {

@@ -2,7 +2,6 @@ package com.hll_sc_app.app.report.produce.input;
 
 import android.support.annotation.NonNull;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.impl.IChangeListener;
+import com.hll_sc_app.utils.Utils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -23,11 +22,8 @@ import com.hll_sc_app.impl.IChangeListener;
 
 public class ProduceInputAdapter extends BaseQuickAdapter<ProduceDetailBean, BaseViewHolder> {
 
-    private final IChangeListener mListener;
-
-    ProduceInputAdapter(IChangeListener listener) {
+    ProduceInputAdapter() {
         super(R.layout.item_report_produce_input);
-        mListener = listener;
         addData(new ProduceDetailBean());
     }
 
@@ -53,13 +49,8 @@ public class ProduceInputAdapter extends BaseQuickAdapter<ProduceDetailBean, Bas
             public void afterTextChanged(Editable s) {
                 ProduceDetailBean item = getItem(helper.getAdapterPosition() - getHeaderLayoutCount());
                 if (item == null) return;
-                if (s.toString().startsWith("."))
-                    s.insert(0, "0");
-                if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
-                    s.delete(s.length() - 1, s.length());
-                }
-                item.setTotalCost(Double.parseDouble(TextUtils.isEmpty(s.toString()) ? "0" : s.toString()));
-                mListener.onChanged();
+                Utils.processMoney(s, true);
+                item.setTotalCost(CommonUtils.getDouble(s.toString()));
             }
         });
         return helper;
@@ -79,7 +70,7 @@ public class ProduceInputAdapter extends BaseQuickAdapter<ProduceDetailBean, Bas
             del.setLayoutParams(params);
         }
         helper.setText(R.id.rpi_company_name, item.getCoopGroupName())
-                .setText(R.id.rpi_money, 0 == item.getTotalCost() ? "" : CommonUtils.formatNumber(item.getTotalCost()));
+                .setText(R.id.rpi_money, CommonUtils.formatNumber(item.getTotalCost()));
     }
 
     @Override

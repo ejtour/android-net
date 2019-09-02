@@ -11,7 +11,6 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
@@ -446,6 +445,26 @@ public class Report {
     public static void recordProduceInfo(ProduceInputReq req, SimpleObserver<MsgWrapper<Object>> observer) {
         ReportService.INSTANCE
                 .recordProduceInfo(new BaseReq<>(req))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 录入人效
+     *
+     * @param date                  日期
+     * @param deliveryPackageQty    包裹数量
+     * @param orderQtyPackageWeight 称重数量
+     */
+    public static void recordPeopleEffect(String date, String deliveryPackageQty, String orderQtyPackageWeight, SimpleObserver<MsgWrapper<Object>> observer) {
+        ReportService.INSTANCE
+                .recordPeopleEffect(BaseMapReq.newBuilder()
+                        .put("date", date)
+                        .put("deliveryPackageQty", deliveryPackageQty)
+                        .put("orderQtyPackageWeight", orderQtyPackageWeight)
+                        .put("groupID", UserConfig.getGroupID())
+                        .create())
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
