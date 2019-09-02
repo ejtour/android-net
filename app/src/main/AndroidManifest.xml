@@ -824,8 +824,7 @@
 
         <activity
             android:name=".app.report.produce.input.ProduceInputActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.report.produce.input.detail.ProduceInputDetailActivity"
