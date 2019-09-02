@@ -15,6 +15,7 @@ import com.hll_sc_app.bean.order.transfer.InventoryBean;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,10 +75,7 @@ public class InventoryCheckAdapter extends BaseQuickAdapter<InventoryBean, BaseV
             public void afterTextChanged(Editable s) {
                 InventoryBean item = getItem(helper.getAdapterPosition());
                 if (item != null) {
-                    if (s.toString().startsWith("."))
-                        s.insert(0, "0");
-                    if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1)
-                        s.delete(s.length() - 1, s.length());
+                    Utils.processMoney(s, false);
                     if (!TextUtils.isEmpty(s.toString()) && Double.parseDouble(s.toString()) > item.getStockNum()) {
                         s.clear();
                         ToastUtils.showShort(helper.itemView.getContext(), "不可超过该商品最大的库存");

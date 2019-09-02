@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 
@@ -136,11 +137,7 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
     @OnTextChanged(value = {R.id.pid_vegetable_pick_time, R.id.pid_standard_pick_time, R.id.pid_vegetable_pack_time},
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void afterTextChanged(Editable s) {
-        if (s.toString().startsWith("."))
-            s.insert(0, "0");
-        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
-            s.delete(s.length() - 1, s.length());
-        }
+        Utils.processMoney(s, false);
     }
 
     @Override

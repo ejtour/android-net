@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -49,11 +50,7 @@ public class ManHourCostAdapter extends BaseManHourAdapter {
             public void afterTextChanged(Editable s) {
                 ManHourBean item = getItem(helper.getAdapterPosition());
                 if (item == null) return;
-                if (s.toString().startsWith("."))
-                    s.insert(0, "0");
-                if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
-                    s.delete(s.length() - 1, s.length());
-                }
+                Utils.processMoney(s, false);
                 item.setValue(s.toString());
             }
         });

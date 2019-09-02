@@ -27,7 +27,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ClearEditText;
 import com.hll_sc_app.bean.wallet.RechargeResp;
-import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.wallet.RechargeDialog;
 
 import butterknife.BindView;
@@ -137,9 +137,7 @@ public class RechargeActivity extends BaseLoadActivity implements IRechargeContr
 
     @OnTextChanged(value = R.id.awr_edit, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextChanged(Editable s) {
-        if (s.toString().startsWith(".")) s.insert(0, "0");
-        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1)
-            s.delete(s.length() - 1, s.length());
+        Utils.processMoney(s, false);
         mNextStep.setEnabled(!TextUtils.isEmpty(s) && Double.parseDouble(s.toString()) > 0);
     }
 

@@ -16,6 +16,7 @@ import com.hll_sc_app.base.dialog.BaseDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,11 +88,7 @@ public class ModifyUnitPriceDialog extends BaseDialog {
 
     @OnTextChanged(value = R.id.mup_edit_new_price, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable s) {
-        if (s.toString().startsWith("."))
-            s.insert(0, "0");
-        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
-            s.delete(s.length() - 1, s.length());
-        }
+        Utils.processMoney(s, false);
     }
 
     @OnClick(R.id.mup_cancel)

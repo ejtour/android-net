@@ -15,6 +15,7 @@ import com.hll_sc_app.bean.order.detail.OrderDepositBean;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.order.OrderInspectionDepositList;
 
 import java.util.ArrayList;
@@ -58,11 +59,7 @@ public class OrderInspectionAdapter extends BaseQuickAdapter<OrderDetailBean, Ba
             public void afterTextChanged(Editable s) {
                 OrderDetailBean bean = getItem(holder.getAdapterPosition());
                 if (bean == null) return;
-                if (s.toString().startsWith("."))
-                    s.insert(0, "0");
-                if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
-                    s.delete(s.length() - 1, s.length());
-                }
+                Utils.processMoney(s, false);
                 bean.setInspectionNum(Double.parseDouble(TextUtils.isEmpty(s.toString()) ? "0" : s.toString()));
             }
         });

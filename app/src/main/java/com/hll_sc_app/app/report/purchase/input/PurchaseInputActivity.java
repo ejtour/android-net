@@ -23,6 +23,7 @@ import com.hll_sc_app.bean.report.purchase.PurchaseBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.TitleBar;
 
 import java.util.Date;
@@ -121,11 +122,7 @@ public class PurchaseInputActivity extends BaseLoadActivity implements IPurchase
 
     @OnTextChanged(value = R.id.rpi_fee, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable s) {
-        if (s.toString().startsWith("."))
-            s.insert(0, "0");
-        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
-            s.delete(s.length() - 1, s.length());
-        }
+        Utils.processMoney(s, false);
     }
 
     @Override

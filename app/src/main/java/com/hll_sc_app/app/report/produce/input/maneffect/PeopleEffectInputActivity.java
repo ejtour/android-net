@@ -20,6 +20,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.produce.ProduceBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.NumberUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.TitleBar;
 
 import butterknife.BindView;
@@ -88,11 +89,7 @@ public class PeopleEffectInputActivity extends BaseLoadActivity implements IPeop
 
     @OnTextChanged(value = R.id.pei_weigh, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable s) {
-        if (s.toString().startsWith("."))
-            s.insert(0, "0");
-        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
-            s.delete(s.length() - 1, s.length());
-        }
+        Utils.processMoney(s, false);
         mWeighEffect.setText(String.format("%s 斤/人", mTotalNum == 0 ? 0 :
                 CommonUtils.divDouble(TextUtils.isEmpty(s) ? 0 : Double.parseDouble(s.toString()),
                         mTotalNum, 2)));

@@ -15,6 +15,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,9 +87,7 @@ public class GoodsOperationAdapter extends BaseQuickAdapter<AfterSalesDetailsBea
                 AfterSalesDetailsBean bean = getItem(helper.getAdapterPosition());
                 if (bean == null) return;
                 if (mDecimal) {
-                    if (s.toString().startsWith(".")) s.insert(0, "0");
-                    if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1)
-                        s.delete(s.length() - 1, s.length());
+                    Utils.processMoney(s, false);
                 }
                 double num = Double.parseDouble(TextUtils.isEmpty(s.toString()) ? "0" : s.toString());
                 if (isDriver) bean.setRefundNum(num);

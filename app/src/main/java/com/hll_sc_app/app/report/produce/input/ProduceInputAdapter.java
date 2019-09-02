@@ -70,7 +70,7 @@ public class ProduceInputAdapter extends BaseQuickAdapter<ProduceDetailBean, Bas
             del.setLayoutParams(params);
         }
         helper.setText(R.id.rpi_company_name, item.getCoopGroupName())
-                .setText(R.id.rpi_money, CommonUtils.formatNumber(item.getTotalCost()));
+                .setText(R.id.rpi_money, item.getTotalCost() == 0 ? "0.00" : CommonUtils.formatNumber(item.getTotalCost()));
     }
 
     @Override
