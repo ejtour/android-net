@@ -7,10 +7,10 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.export.ExportReq;
+import com.hll_sc_app.bean.filter.WalletDetailsParam;
 import com.hll_sc_app.bean.wallet.details.DetailsListResp;
 import com.hll_sc_app.bean.wallet.details.DetailsRecord;
 import com.hll_sc_app.bean.wallet.details.DetailsRecordWrapper;
-import com.hll_sc_app.bean.filter.WalletDetailsParam;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
@@ -56,7 +56,7 @@ public class DetailsListPresenter implements IDetailsListContract.IDetailsListPr
                         if (pageNum == 1) { // 第一页时清空列表
                             array.clear();
                         }
-                        mView.setDetailsList(processDetailsList(detailsListResp.getRecords()));
+                        mView.setDetailsList(processDetailsList(detailsListResp.getRecords()), pageNum == 1);
                         mView.setEnableLoadMore(detailsListResp.getRecords() != null && detailsListResp.getRecords().size() == 20);
                         if (detailsListResp.getPageNo() == 0 || CommonUtils.isEmpty(detailsListResp.getRecords())) {
                             return;

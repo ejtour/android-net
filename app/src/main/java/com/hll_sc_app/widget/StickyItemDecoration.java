@@ -217,7 +217,10 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration {
      * 粘性头部数据更新
      */
     public void notifyChanged() {
-        if (mAdapter == null || mViewHolder == null || mAdapter.getItemCount() == 0) return;
-        mAdapter.onBindViewHolder(mViewHolder, mBindDataPosition);
+        if (mAdapter == null || mViewHolder == null || mAdapter.getItemCount() == 0 || mLayoutManager == null)
+            return;
+        mBindDataPosition = -1;
+        mLayoutManager.scrollToPosition(0);
+        mStickyPositionList.clear();
     }
 }
