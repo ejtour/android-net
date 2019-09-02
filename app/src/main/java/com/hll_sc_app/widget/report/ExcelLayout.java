@@ -70,8 +70,7 @@ public class ExcelLayout extends RelativeLayout {
         mAdapter = new StringArrayAdapter();
         mListView.setAdapter(mAdapter);
         mEmptyView = EmptyView.newBuilder(((Activity) getContext())).setImage(R.drawable.ic_char_empty).setTips("当前日期下没有统计数据噢").create();
-        Drawable background = getBackground();
-        mEmptyView.setBackground(background == null ? new ColorDrawable(Color.WHITE) : background);
+        mEmptyView.setBackgroundColor(Color.WHITE);
         mEmptyView.setOnTouchListener((v, event) -> true);
         addView(mEmptyView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     }
