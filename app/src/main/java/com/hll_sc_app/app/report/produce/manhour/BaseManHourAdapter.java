@@ -34,7 +34,7 @@ public abstract class BaseManHourAdapter extends BaseQuickAdapter<ManHourBean, B
         String groupID = UserConfig.getGroupID();
         List<ManHourReq.ManHourReqBean> list = new ArrayList<>();
         for (ManHourBean bean : getData()) {
-            if (TextUtils.isEmpty(bean.getValue())) continue;
+            if (emptyValue(bean)) continue;
             ManHourReq.ManHourReqBean reqBean = new ManHourReq.ManHourReqBean();
             reqBean.setCoopGroupName(setGroupName() ? bean.getCoopGroupName() : null);
             reqBean.setGroupID(groupID);
@@ -42,6 +42,10 @@ public abstract class BaseManHourAdapter extends BaseQuickAdapter<ManHourBean, B
             list.add(reqBean);
         }
         return list;
+    }
+
+    boolean emptyValue(ManHourBean bean) {
+        return TextUtils.isEmpty(bean.getValue());
     }
 
     boolean setGroupName() {

@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.R;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Utils;
 
 /**
@@ -25,6 +27,17 @@ public class ManHourCostAdapter extends BaseManHourAdapter {
     @Override
     boolean setGroupName() {
         return true;
+    }
+
+    @Override
+    boolean emptyValue(ManHourBean bean) {
+        boolean emptyGroup = TextUtils.isEmpty(bean.getCoopGroupName());
+        if (emptyGroup)
+            ToastUtils.showShort(MyApplication.getInstance(), "请输入合作公司名称");
+        boolean emptyCost = super.emptyValue(bean);
+        if (emptyCost)
+            ToastUtils.showShort(MyApplication.getInstance(), "请输入生产工时费");
+        return emptyGroup || emptyCost;
     }
 
     @Override

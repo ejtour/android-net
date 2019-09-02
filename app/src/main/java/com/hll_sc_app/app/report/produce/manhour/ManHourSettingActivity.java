@@ -107,7 +107,9 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
         ManHourReq req = new ManHourReq();
         List<ManHourReq.ManHourReqBean> list = new ArrayList<>();
         req.setRecords(list);
-        list.addAll(mCostAdapter.getReqParams());
+        List<ManHourReq.ManHourReqBean> reqParams = mCostAdapter.getReqParams();
+        list.addAll(reqParams);
+        if (mCostAdapter.getData().size() != reqParams.size()) return;
         list.addAll(mShiftAdapter.getReqParams());
         mPresenter.save(req);
     }

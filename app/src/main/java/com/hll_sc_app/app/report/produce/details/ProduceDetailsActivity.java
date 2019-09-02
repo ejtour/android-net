@@ -99,6 +99,12 @@ public class ProduceDetailsActivity extends BaseLoadActivity implements IProduce
     }
 
     @Override
+    public void hideLoading() {
+        mExcel.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
+    @Override
     public void setData(List<ProduceDetailBean> beans) {
         mExcel.setData(beans, false);
     }

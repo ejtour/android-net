@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -108,6 +109,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         mListView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
         mHeader = new ProduceInputHeader(this);
         mHeader.setOnClickListener(this::selectShift);
+        mHeader.setShift(mClasses);
         mFooter = new ProduceInputFooter(this);
         mFooter.setOnClickListener(this::addData);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
@@ -140,7 +142,14 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         UserBean user = GreenDaoUtils.getUser();
         mReq.setGroupID(user.getGroupID());
         mReq.setInputPer(user.getEmployeeName());
-        mReq.setRecords(mAdapter.getData());
+        List<ProduceDetailBean> data = mAdapter.getData();
+        for (ProduceDetailBean bean : data) {
+            if (TextUtils.isEmpty(bean.getCoopGroupName())) {
+                showToast("请选择合作公司");
+                return;
+            }
+        }
+        mReq.setRecords(data);
         mPresenter.save(mReq);
     }
 
