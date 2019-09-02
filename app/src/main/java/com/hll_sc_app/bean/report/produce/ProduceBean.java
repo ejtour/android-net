@@ -1,5 +1,6 @@
 package com.hll_sc_app.bean.report.produce;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -62,7 +63,7 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
             @Override
             public void onClick(@NonNull View widget) {
                 if (widget.getTag() instanceof ProduceBean) {
-                    ProduceDetailsActivity.start(((ProduceBean) widget.getTag()).getDate());
+                    ProduceDetailsActivity.start((Activity) widget.getContext(), ((ProduceBean) widget.getTag()).getDate());
                 }
             }
 
@@ -78,7 +79,7 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
             @Override
             public void onClick(@NonNull View widget) {
                 if (widget.getTag() instanceof ProduceBean)
-                    PeopleEffectInputActivity.start((ProduceBean) widget.getTag());
+                    PeopleEffectInputActivity.start((Activity) widget.getContext(), (ProduceBean) widget.getTag());
             }
 
             @Override

@@ -25,7 +25,7 @@ public class PeopleEffectInputPresenter implements IPeopleEffectInputContract.IP
 
     @Override
     public void save(String packageNum, String weighNum) {
-        Report.recordPeopleEffect(mBean.getDate(), packageNum, weighNum, new SimpleObserver<MsgWrapper<Object>>(mView) {
+        Report.recordPeopleEffect(mBean.getDate(), packageNum, weighNum, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
             public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                 mView.saveSuccess();

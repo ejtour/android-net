@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.produce.input.maneffect;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -33,8 +34,10 @@ import butterknife.OnTextChanged;
  */
 @Route(path = RouterConfig.REPORT_PRODUCE_INPUT_PEOPLE)
 public class PeopleEffectInputActivity extends BaseLoadActivity implements IPeopleEffectInputContract.IPeopleEffectInputView {
-    public static void start(ProduceBean bean) {
-        RouterUtil.goToActivity(RouterConfig.REPORT_PRODUCE_INPUT_PEOPLE, bean);
+    public static final int REQ_CODE = 0x826;
+
+    public static void start(Activity activity, ProduceBean bean) {
+        RouterUtil.goToActivity(RouterConfig.REPORT_PRODUCE_INPUT_PEOPLE, activity, REQ_CODE, bean);
     }
 
     @BindView(R.id.pei_title_bar)
@@ -84,7 +87,7 @@ public class PeopleEffectInputActivity extends BaseLoadActivity implements IPeop
     public void onTextChanged(CharSequence s) {
         mPackageEffect.setText(String.format("%s 个/人", mTotalNum == 0 ? 0 :
                 CommonUtils.divDouble(TextUtils.isEmpty(s) ? 0 : Double.parseDouble(s.toString()),
-                        mTotalNum)));
+                        mTotalNum, 2)));
     }
 
     @OnTextChanged(value = R.id.pei_weigh, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)

@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.produce.details.ProduceDetailsActivity;
 import com.hll_sc_app.app.report.produce.input.ProduceInputActivity;
+import com.hll_sc_app.app.report.produce.input.maneffect.PeopleEffectInputActivity;
 import com.hll_sc_app.app.report.produce.manhour.ManHourSettingActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -150,7 +152,10 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ManHourSettingActivity.REQ_CODE || requestCode == ProduceInputActivity.REQ_CODE
+        if (requestCode == ManHourSettingActivity.REQ_CODE
+                || requestCode == ProduceInputActivity.REQ_CODE
+                || requestCode == PeopleEffectInputActivity.REQ_CODE
+                || requestCode == ProduceDetailsActivity.REQ_CODE
                 && resultCode == RESULT_OK) {
             mPresenter.start();
         }

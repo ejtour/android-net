@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.report.produce.details;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,11 +14,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.produce.input.ProduceInputActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
+import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,18 +40,23 @@ import butterknife.ButterKnife;
 public class ProduceDetailsActivity extends BaseLoadActivity implements IProduceDetailsContract.IProduceDetailsView {
     private static final int COLUMN_NUM = 9;
     private static final int[] WIDTH_ARRAY = {60, 60, 60, 60, 60, 60, 60, 60, 100};
+    public static final int REQ_CODE = 0x762;
 
     /**
      * @param date 日期
      */
-    public static void start(String date) {
-        RouterUtil.goToActivity(RouterConfig.REPORT_PRODUCE_DETAILS, date);
+    public static void start(Activity activity, String date) {
+        Object[] args = {date};
+        RouterUtil.goToActivity(RouterConfig.REPORT_PRODUCE_DETAILS, activity, REQ_CODE, args);
     }
 
+    @BindView(R.id.rpd_title_bar)
+    TitleBar mTitleBar;
     @BindView(R.id.rpd_excel)
     ExcelLayout mExcel;
     @Autowired(name = "object0")
     String mDate;
+    private boolean mHasChanged;
     private IProduceDetailsContract.IProduceDetailsPresenter mPresenter;
 
     @Override
@@ -61,13 +70,30 @@ public class ProduceDetailsActivity extends BaseLoadActivity implements IProduce
         initData();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ProduceInputActivity.REQ_CODE && resultCode == RESULT_OK) {
+            mHasChanged = true;
+            mPresenter.start();
+        }
+    }
+
     private void initData() {
         mPresenter = ProduceDetailsPresenter.newInstance(mDate);
         mPresenter.register(this);
         mPresenter.start();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mHasChanged)
+            setResult(RESULT_OK);
+        super.onBackPressed();
+    }
+
     private void initView() {
+        mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mExcel.setEnableLoadMore(false);
         mExcel.setColumnDataList(generateColumnData());
         mExcel.setHeaderView(View.inflate(this, R.layout.view_report_produce_detail_header, null));
