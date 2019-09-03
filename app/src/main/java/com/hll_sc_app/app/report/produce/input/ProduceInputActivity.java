@@ -79,6 +79,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     private ProduceDetailBean mCurBean;
     private SingleSelectionDialog mDialog;
     private ProduceInputReq mReq;
+    private double mAmount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,6 +141,10 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
     }
 
     private void save(View view) {
+        if (mAmount == 0) {
+            showToast("请录入生产数据");
+            return;
+        }
         UserBean user = GreenDaoUtils.getUser();
         mReq.setGroupID(user.getGroupID());
         mReq.setInputPer(user.getEmployeeName());
@@ -210,6 +215,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         for (ProduceDetailBean bean : mAdapter.getData()) {
             total = CommonUtils.addDouble(total, bean.getTotalCost()).doubleValue();
         }
+        mAmount = total;
         mFooter.setAmount(CommonUtils.formatMoney(total));
     }
 

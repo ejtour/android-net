@@ -21,6 +21,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.produce.ProduceBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.NumberUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.TitleBar;
 
@@ -76,10 +77,22 @@ public class PeopleEffectInputActivity extends BaseLoadActivity implements IPeop
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::save);
+        mWeigh.setText(mBean.getOrderQtyPackageWeight() == 0 ? "" : CommonUtils.formatNumber(mBean.getOrderQtyPackageWeight()));
+        mPackage.setText(mBean.getDeliveryPackageQty() == 0 ? "" : String.valueOf(mBean.getDeliveryPackageQty()));
         mAmountEffect.setText(String.format("%s 元/人", NumberUtils.isNumeric(mBean.getAmountEfficiency()) ? mBean.getAmountEfficiency() : "0.00"));
+        mWeighEffect.setText(String.format("%s 斤/人", NumberUtils.isNumeric(mBean.getWeightEfficiency()) ? mBean.getWeightEfficiency() : "0.00"));
+        mPackageEffect.setText(String.format("%s 个/人", NumberUtils.isNumeric(mBean.getPackageEfficiency()) ? mBean.getPackageEfficiency() : "0.00"));
     }
 
     private void save(View view) {
+        if (TextUtils.isEmpty(mPackage.getText())) {
+            ToastUtils.showShort(this, mPackage.getHint().toString());
+            return;
+        }
+        if (TextUtils.isEmpty(mWeigh.getText())) {
+            ToastUtils.showShort(this, mWeigh.getHint().toString());
+            return;
+        }
         mPresenter.save(mPackage.getText().toString(), mWeigh.getText().toString());
     }
 

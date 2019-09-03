@@ -39,6 +39,8 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
     String weightEfficiency;
     String packageEfficiency;
     String amountEfficiency;
+    private int deliveryPackageQty;
+    private double orderQtyPackageWeight;
 
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
@@ -180,6 +182,22 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
         this.amountEfficiency = amountEfficiency;
     }
 
+    public int getDeliveryPackageQty() {
+        return deliveryPackageQty;
+    }
+
+    public void setDeliveryPackageQty(int deliveryPackageQty) {
+        this.deliveryPackageQty = deliveryPackageQty;
+    }
+
+    public double getOrderQtyPackageWeight() {
+        return orderQtyPackageWeight;
+    }
+
+    public void setOrderQtyPackageWeight(double orderQtyPackageWeight) {
+        this.orderQtyPackageWeight = orderQtyPackageWeight;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -198,6 +216,8 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
         dest.writeString(this.weightEfficiency);
         dest.writeString(this.packageEfficiency);
         dest.writeString(this.amountEfficiency);
+        dest.writeInt(this.deliveryPackageQty);
+        dest.writeDouble(this.orderQtyPackageWeight);
     }
 
     public ProduceBean() {
@@ -215,6 +235,8 @@ public class ProduceBean implements IStringArrayGenerator, Parcelable {
         this.weightEfficiency = in.readString();
         this.packageEfficiency = in.readString();
         this.amountEfficiency = in.readString();
+        this.deliveryPackageQty = in.readInt();
+        this.orderQtyPackageWeight = in.readDouble();
     }
 
     public static final Parcelable.Creator<ProduceBean> CREATOR = new Parcelable.Creator<ProduceBean>() {
