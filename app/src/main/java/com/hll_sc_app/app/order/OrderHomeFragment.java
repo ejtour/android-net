@@ -212,7 +212,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                     @Override
                     public void select(Date beginTime, Date endTime) {
                         if (CalendarUtils.getDateBefore(endTime, 31).getTime() > beginTime.getTime()) {
-                            showToast("目前仅支持查找31天跨度的订单");
+                            showToast("开始日期至结束日期限制选择31天以内");
                             return;
                         }
                         mOrderParam.cancelTimeInterval();
