@@ -110,7 +110,8 @@ public class PurchaserSelectWindow extends BasePopupWindow {
         }
         List<PurchaserBean> listFilter = new ArrayList<>();
         for (PurchaserBean purchaserBean : mList) {
-            if (purchaserBean.getPurchaserName().contains(searchContent)) {
+            if (purchaserBean.getPurchaserName() != null
+                    && purchaserBean.getPurchaserName().contains(searchContent)) {
                 listFilter.add(purchaserBean);
             }
         }
