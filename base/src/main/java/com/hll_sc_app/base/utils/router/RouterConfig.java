@@ -789,9 +789,6 @@ public class RouterConfig {
     /*营销优惠券-选择客户-门店*/
     public static final String ACTIVITY_MARKETING_COUPON_SELECT_SHOPS = "/activity/marketing/coupon/select/shops";
 
-    /**
-     * 对账单列表
-     */
     public static final String BILL_LIST = "/activity/bill/list";
 
     /**
@@ -900,6 +897,7 @@ public class RouterConfig {
     public static final String CRM_MINE = "/fragment/crm/mine";
 
     /**
+     *
      * 待退合计
      */
     public static final String REPORT_WAIT_REFUND_TOTAL = "/activity/report/refund/wait";
@@ -947,5 +945,34 @@ public class RouterConfig {
      * 查看验货单-详情
      */
     public static final String INSPECTION_DETAIL = "/activity/inspection/detail";
+
+    /**
+     * 客户流失率明细
+     */
+    public static final String REPORT_CUSTOMER_LOSS_DETAIL = "/activity/report/loss/customer/loss";
+
+    /**
+     * 门店流失率明细
+     */
+    public static final String REPORT_SHOP_LOSS_DETAIL = "/activity/report/loss/shop/loss";
+
+    /**
+     * 代仓发货统计
+     */
+    public static final String REPORT_WAREHOUSE_DELIVERY = "/activity/report/warehouse/delivery";
+
+    /**
+     * 代仓服务费
+     */
+    public static final String REPORT_WAREHOUSE_SERVICE_FEE = "/activity/report/warehouse/serviceFee";
+
+    /**
+     * 报表退货搜索
+     */
+    public static final String REPORT_REFUNDED_SEARCH = "/activity/report/refund/search";
+
+    public static final String REPORT_REFUND_SEARCH_FRAGMENT = "/activity/report/refund/search/fragment";
+
+
 }
 

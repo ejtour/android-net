@@ -15,6 +15,7 @@ import com.hll_sc_app.app.search.stratery.GoodsTemplateSearch;
 import com.hll_sc_app.app.search.stratery.GoodsTopSearch;
 import com.hll_sc_app.app.search.stratery.InspectLackDetailSearch;
 import com.hll_sc_app.app.search.stratery.OrderSearch;
+import com.hll_sc_app.app.search.stratery.RefundSearch;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.app.search.stratery.SelectGroupSearch;
 import com.hll_sc_app.app.search.stratery.SelectShopSearch;
@@ -45,6 +46,7 @@ class SearchFactory {
         ITEM_MAP.put(OrderSearch.class.getSimpleName(), OrderSearch.class);
         ITEM_MAP.put(WarehouseSearch.class.getSimpleName(), WarehouseSearch.class);
         ITEM_MAP.put(SalesManSearch.class.getSimpleName(), SalesManSearch.class);
+        ITEM_MAP.put(RefundSearch.class.getSimpleName(),RefundSearch.class);
         ITEM_MAP.put(MarketingProductSearch.class.getSimpleName(), MarketingProductSearch.class);
         ITEM_MAP.put(SelectProductListActivity.MarketingSelectProductSearch.class.getSimpleName(), SelectProductListActivity.MarketingSelectProductSearch.class);
         ITEM_MAP.put(SelectGroupSearch.class.getSimpleName(), SelectGroupSearch.class);

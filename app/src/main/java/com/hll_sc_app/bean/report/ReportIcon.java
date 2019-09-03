@@ -16,7 +16,8 @@ import java.lang.annotation.RetentionPolicy;
         ReportIcon.STOCKOUT_DIFFERENCES, ReportIcon.RECEIVE_DIFFERENCE, ReportIcon.PRODUCTS_DETAILS,
     ReportIcon.RECEIVE_DIFFERENCE_DETAILS, ReportIcon.STOCKOUT_STATISTICS, ReportIcon.REFUND_REASONS,
     ReportIcon.SALES_MAN_SIGN,ReportIcon.WAIT_REFUND,ReportIcon.REFUNDED,ReportIcon.REFUNDED_CUSTOMER_PRODUCT,
-    ReportIcon.PURCHASE_STATISTIC, ReportIcon.PRODUCE_STATISTIC})
+    ReportIcon.PURCHASE_STATISTIC, ReportIcon.PRODUCE_STATISTIC,ReportIcon.REPORT_GROUP_LOSS,ReportIcon.REPORT_SHOP_LOSS,
+   ReportIcon.REPORT_WAREHOUSE_PRODUCT,ReportIcon.REPORT_WAREHOUSE_DELIVERY,ReportIcon.REPORT_WAREHOUSE_SERVICE_FEE})
 @Retention(RetentionPolicy.SOURCE)
 public @interface ReportIcon {
     int SALES_STATISTICS = R.drawable.ic_report_sales_statistics; // 商品销量统计汇总
@@ -37,4 +38,9 @@ public @interface ReportIcon {
     int REFUNDED_CUSTOMER_PRODUCT = R.drawable.ic_report_refunded_customer_product;
     int PURCHASE_STATISTIC = R.drawable.ic_report_purchase_statistic; // 采购汇总统计
     int PRODUCE_STATISTIC = R.drawable.ic_report_produce_statistic; // 生产汇总统计
+    int REPORT_GROUP_LOSS = R.drawable.ic_report_group_loss; //集团流失明细
+    int REPORT_SHOP_LOSS = R.drawable.ic_report_shop_loss; //门店流失明细
+    int REPORT_WAREHOUSE_PRODUCT = R.drawable.ic_report_warehouse_product;//代仓商品缺货明细
+    int REPORT_WAREHOUSE_DELIVERY = R.drawable.ic_report_warehouse_delivery;//代仓发货统计
+    int REPORT_WAREHOUSE_SERVICE_FEE = R.drawable.ic_report_warehouse_service_fee;//代仓服务费
 }

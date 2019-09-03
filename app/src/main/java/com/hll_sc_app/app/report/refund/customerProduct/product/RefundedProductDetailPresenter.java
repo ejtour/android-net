@@ -72,11 +72,8 @@ public class RefundedProductDetailPresenter implements RefundedProductDetailCont
         Report.queryRefundedProductList(requestParams, new SimpleObserver<RefundedProductResp>(mView,showLoading) {
             @Override
             public void onSuccess(RefundedProductResp refundedProductResp) {
-                boolean isNotEmpty = !CommonUtils.isEmpty(refundedProductResp.getRecords());
-                mView.showRefundedProductDetail(refundedProductResp,mPageNum>1 && isNotEmpty);
-                if (isNotEmpty) {
-                    mPageNum = mTempPageNum;
-                }
+                mPageNum = mTempPageNum;
+                mView.showRefundedProductDetail(refundedProductResp,mPageNum>1);
             }
             @Override
             public void onFailure(UseCaseException e) {

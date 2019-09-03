@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.warehouse;
+package com.hll_sc_app.app.report.warehouse.serviceFee;
 
 import android.text.TextUtils;
 
@@ -15,13 +15,16 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
+import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
+import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -31,13 +34,13 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @since 2019/8/15
  */
 
-public class WareHouseProductDetailPresenter implements IWareHouseProductDetailContract.IWareHouseProductDetailPresenter {
+public class WareHouseServiceFeePresenter implements IWareHouseServiceFeeContract.IWareHouseServiceFeePresenter {
 
     private int mPageNum;
-    private IWareHouseProductDetailContract.IWareHouseProductDetailView mView;
+    private IWareHouseServiceFeeContract.IWareHouseServiceFeeView mView;
 
-    public static WareHouseProductDetailPresenter newInstance() {
-        WareHouseProductDetailPresenter presenter = new WareHouseProductDetailPresenter();
+    public static WareHouseServiceFeePresenter newInstance() {
+        WareHouseServiceFeePresenter presenter = new WareHouseServiceFeePresenter();
         return presenter;
     }
 
@@ -67,16 +70,18 @@ public class WareHouseProductDetailPresenter implements IWareHouseProductDetailC
     }
 
     private void queryList(boolean showLoading) {
-        WareHouseLackProductReq params = mView.getRequestParams();
+        WareHouseServiceFeeReq params = mView.getRequestParams();
         params.setGroupID(UserConfig.getGroupID());
-        params.setShipperID(mView.getShipperID());
-        params.setPageNum(mPageNum);
+        if(!StringUtil.isEmpty(mView.getShipperID())) {
+            params.setShipperID(Long.valueOf(mView.getShipperID()));
+        }
+        params.setPageNo(mPageNum);
         params.setPageSize(20);
-        Report.queryWareHouseProductLackDetail(params, new SimpleObserver<WareHouseLackProductResp>(mView, showLoading) {
+        Report.queryWareHouseServiceFee(params, new SimpleObserver<WareHouseServiceFeeResp>(mView, showLoading) {
                     @Override
-                    public void onSuccess(WareHouseLackProductResp wareHouseLackProductResp) {
-                        mView.setWareHouseProductDetailList(wareHouseLackProductResp, mPageNum > 1);
-                        if (!CommonUtils.isEmpty(wareHouseLackProductResp.getRecords())) {
+                    public void onSuccess(WareHouseServiceFeeResp wareHouseServiceFeeResp) {
+                        mView.setWareHouseDeliveryServiceFeeList(wareHouseServiceFeeResp, mPageNum > 1);
+                        if (!CommonUtils.isEmpty(wareHouseServiceFeeResp.getDataSource())) {
                             mPageNum++;
                         }
                     }
@@ -84,7 +89,7 @@ public class WareHouseProductDetailPresenter implements IWareHouseProductDetailC
     }
 
     @Override
-    public void loadWareHouseProductDetailList() {
+    public void loadWareHouseServiceFeeList() {
         mPageNum = 1;
         queryList(false);
     }
@@ -100,12 +105,12 @@ public class WareHouseProductDetailPresenter implements IWareHouseProductDetailC
     }
 
     @Override
-    public void exportWareHouseProductDetail(String email, String reqParams) {
+    public void exportWareHouseServiceFeeList(String email, String reqParams) {
         if (!TextUtils.isEmpty(email)) {
             bindEmail(email);
             return;
         }
-        Report.exportReport(reqParams, "111012", email, new SimpleObserver<ExportResp>(mView) {
+        Report.exportReport(reqParams, "111093", email, new SimpleObserver<ExportResp>(mView) {
             @Override
             public void onSuccess(ExportResp exportResp) {
                 if (!TextUtils.isEmpty(exportResp.getEmail()))
@@ -124,7 +129,7 @@ public class WareHouseProductDetailPresenter implements IWareHouseProductDetailC
     }
 
     @Override
-    public void register(IWareHouseProductDetailContract.IWareHouseProductDetailView view) {
+    public void register(IWareHouseServiceFeeContract.IWareHouseServiceFeeView view) {
         mView = CommonUtils.requireNonNull(view);
     }
 
@@ -139,14 +144,13 @@ public class WareHouseProductDetailPresenter implements IWareHouseProductDetailC
         SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
-                WareHouseLackProductReq params = mView.getRequestParams();
+                WareHouseServiceFeeReq params = mView.getRequestParams();
                 params.setGroupID(UserConfig.getGroupID());
-                params.setPageNum(mPageNum);
+                params.setPageNo(mPageNum);
                 params.setPageSize(20);
-                params.setOrder(0);
                 Gson gson = new Gson();
                 String reqParams = gson.toJson(params);
-                exportWareHouseProductDetail(null, reqParams);
+                exportWareHouseServiceFeeList(null, reqParams);
             }
         };
         UserService.INSTANCE.bindEmail(req)

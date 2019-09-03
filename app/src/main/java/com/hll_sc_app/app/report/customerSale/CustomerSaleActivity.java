@@ -35,6 +35,8 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -393,7 +395,12 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
         mPresenter.queryCustomerSaleGather(true);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CUSTOMER_SALE_CODE && resultCode == RESULT_OK) {

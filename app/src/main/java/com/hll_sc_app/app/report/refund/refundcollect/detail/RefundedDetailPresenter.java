@@ -72,11 +72,8 @@ public class RefundedDetailPresenter implements RefundedDetailContract.IWaitRefu
         Report.queryRefundedDetail(requestParams, new SimpleObserver<RefundedResp>(mView,showLoading) {
             @Override
             public void onSuccess(RefundedResp refundedResp) {
-                boolean isNotEmpty = !CommonUtils.isEmpty(refundedResp.getGroupVoList());
-                mView.showRefundedDetail(refundedResp,mPageNum>1 && isNotEmpty);
-                if (isNotEmpty) {
-                    mPageNum = mTempPageNum;
-                }
+                mPageNum = mTempPageNum;
+                mView.showRefundedDetail(refundedResp,mPageNum>1);
             }
             @Override
             public void onFailure(UseCaseException e) {

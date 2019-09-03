@@ -16,10 +16,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.RefundSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
+import com.hll_sc_app.bean.event.RefundSearchEvent;
 import com.hll_sc_app.bean.report.refund.RefundedProductReq;
 import com.hll_sc_app.bean.report.refund.RefundedProductResp;
 import com.hll_sc_app.bean.window.OptionType;
@@ -35,6 +38,9 @@ import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,6 +93,7 @@ public class RefundedProductDetailActivity extends BaseLoadActivity implements R
         setContentView(R.layout.activity_report_refunded_product_detail);
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        EventBus.getDefault().register(this);
         initView();
         initData();
     }
@@ -149,7 +156,7 @@ public class RefundedProductDetailActivity extends BaseLoadActivity implements R
         super.hideLoading();
     }
 
-    @OnClick({R.id.rog_title_bar,R.id.img_clear,R.id.txt_filter_flag,R.id.txt_date_name})
+    @OnClick({R.id.rog_title_bar,R.id.img_clear,R.id.txt_filter_flag,R.id.txt_date_name,R.id.edt_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_clear:
@@ -165,6 +172,10 @@ public class RefundedProductDetailActivity extends BaseLoadActivity implements R
                 break;
             case R.id.txt_date_name:
                 showDateRangeWindow();
+                break;
+            case R.id.edt_search:
+                SearchActivity.start("", RefundSearch.class.getSimpleName());
+                break;
             default:
                 break;
         }
@@ -343,5 +354,24 @@ public class RefundedProductDetailActivity extends BaseLoadActivity implements R
         depositTextView.setText(text);
         mPresenter.queryRefundedProductDetail(true);
         mOptionsWindow.dismiss();
+    }
+
+    @Subscribe
+    public void onEvent(RefundSearchEvent event) {
+        String name = event.getSearchWord();
+        if (!TextUtils.isEmpty(name)) {
+            edtSearch.setText(name);
+            mParam.setProductName(name);
+            imgClear.setVisibility(View.VISIBLE);
+        } else {
+            mParam.setProductName("");
+        }
+        mPresenter.queryRefundedProductDetail(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -42,6 +42,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -162,6 +164,12 @@ public class CustomerLackSummaryActivity extends BaseLoadActivity implements ICu
                 showDateRangeWindow(view);
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

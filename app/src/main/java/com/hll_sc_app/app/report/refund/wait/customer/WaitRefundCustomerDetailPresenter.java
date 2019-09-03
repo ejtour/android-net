@@ -70,11 +70,8 @@ public class WaitRefundCustomerDetailPresenter implements WaitRefundCustomerDeta
         Report.queryWaitRefundCustomerList(requestParams, new SimpleObserver<WaitRefundCustomerResp>(mView,showLoading) {
             @Override
             public void onSuccess(WaitRefundCustomerResp refundCustomerResp) {
-                boolean isNotEmpty = !CommonUtils.isEmpty(refundCustomerResp.getGroupVoList());
-                mView.showRefundCustomerDetail(refundCustomerResp,mPageNum>1 && isNotEmpty);
-                if (isNotEmpty) {
-                    mPageNum = mTempPageNum;
-                }
+                mPageNum = mTempPageNum;
+                mView.showRefundCustomerDetail(refundCustomerResp,mPageNum>1);
             }
             @Override
             public void onFailure(UseCaseException e) {

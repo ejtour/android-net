@@ -34,6 +34,8 @@ import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -337,5 +339,11 @@ public class RefundedDetailActivity extends BaseLoadActivity implements Refunded
         textFilterView.setText(text);
         mPresenter.queryRefundedDetail(true);
         mOptionsWindow.dismiss();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

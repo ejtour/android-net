@@ -1,25 +1,27 @@
-package com.hll_sc_app.app.report.warehouse;
+package com.hll_sc_app.app.report.warehouse.serviceFee;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
+import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
 
 import java.util.List;
 
 /**
+ * 代仓发货统计
  * @author chukun
  * @since 2019/8/15
  */
 
-public interface IWareHouseProductDetailContract {
-    interface IWareHouseProductDetailView extends ILoadView {
+public interface IWareHouseServiceFeeContract {
+    interface IWareHouseServiceFeeView extends ILoadView {
 
 
-        void setWareHouseProductDetailList(WareHouseLackProductResp wareHouseLackProductResp, boolean append);
+        void setWareHouseDeliveryServiceFeeList(WareHouseServiceFeeResp wareHouseServiceFeeResp, boolean append);
 
-        WareHouseLackProductReq getRequestParams();
+        WareHouseServiceFeeReq getRequestParams();
 
         /**
          * 导出成功
@@ -53,9 +55,9 @@ public interface IWareHouseProductDetailContract {
         String getShipperID();
     }
 
-    interface IWareHouseProductDetailPresenter extends IPresenter<IWareHouseProductDetailContract.IWareHouseProductDetailView> {
+    interface IWareHouseServiceFeePresenter extends IPresenter<IWareHouseServiceFeeContract.IWareHouseServiceFeeView> {
 
-        void loadWareHouseProductDetailList();
+        void loadWareHouseServiceFeeList();
 
         void loadMore();
 
@@ -66,6 +68,6 @@ public interface IWareHouseProductDetailContract {
          *
          * @param email 邮箱地址
          */
-        void exportWareHouseProductDetail(String email, String reqParams);
+        void exportWareHouseServiceFeeList(String email, String reqParams);
     }
 }

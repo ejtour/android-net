@@ -17,7 +17,8 @@ import java.lang.annotation.RetentionPolicy;
     ReportLabel.CUSTOMER_LACK_AGGREGATION,ReportLabel.INSPECT_LACK_AGGREGATION,ReportLabel.INSPECT_LACK_DETAIL,
     ReportLabel.WAREHOUSE_PRODUCT_DETAIL,ReportLabel.DELIVERY_TIME_AGGREGATION,ReportLabel.WAIT_FOR_REFUND,
     ReportLabel.REFUNDED,ReportLabel.REFUNDED_CUSTOMER_PRODUCT, ReportLabel.PURCHASE_STATISTIC,
-    ReportLabel.PRODUCE_STATISTIC})
+    ReportLabel.PRODUCE_STATISTIC,ReportLabel.REPORT_GROUP_LOSS,ReportLabel.REPORT_SHOP_LOSS,
+    ReportLabel.WAREHOUSE_DELIVERY,ReportLabel.WAREHOUSE_SERVICE_FEE})
 @Retention(RetentionPolicy.SOURCE)
 public @interface ReportLabel {
     String SALES_STATISTICS = "商品销量统计汇总";
@@ -39,10 +40,14 @@ public @interface ReportLabel {
     String INSPECT_LACK_AGGREGATION="收货差异汇总";
     String INSPECT_LACK_DETAIL="收货差异商品明细表";
     String WAREHOUSE_PRODUCT_DETAIL="代仓商品缺货明细";
+    String WAREHOUSE_DELIVERY = "代仓发货统计";
+    String WAREHOUSE_SERVICE_FEE = "代仓服务费统计";
     String DELIVERY_TIME_AGGREGATION="配送及时率统计";
     String WAIT_FOR_REFUND = "待退货统计表";
     String REFUNDED = "退货统计表";
     String REFUNDED_CUSTOMER_PRODUCT = "退货客户与商品统计表";
     String PURCHASE_STATISTIC = "采购汇总统计";
     String PRODUCE_STATISTIC = "生产汇总统计";
+    String REPORT_GROUP_LOSS = "客户流失率统计";
+    String REPORT_SHOP_LOSS = "流失门店明细表";
 }

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.refund.wait.customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,18 +17,26 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
+import com.hll_sc_app.bean.report.req.CustomerSaleReq;
+import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
+import com.hll_sc_app.bean.report.search.SearchResultItem;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,7 +53,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.REPORT_WAIT_REFUND_CUSTOMER_DETAIL)
 public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implements WaitRefundCustomerDetailContract.IWaitRefundCustomerDetailView {
-
+    private static final int WAIT_REFUND_CUSTOMERT_CODE = 11001;
     private static final int COLUMN_NUM = 9;
     private static final int[] WIDTH_ARRAY = {150,120,80, 80, 60, 60,60,60,60};
     @BindView(R.id.ogd_excel)
@@ -99,7 +108,7 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
         super.hideLoading();
     }
 
-    @OnClick({R.id.rog_title_bar,R.id.img_clear})
+    @OnClick({R.id.rog_title_bar,R.id.img_clear,R.id.edt_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_clear:
@@ -111,6 +120,8 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
             case R.id.rog_title_bar:
                showExportOptionsWindow(mTitleBar);
                 break;
+            case R.id.edt_search:
+                RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_SEARCH, this, WAIT_REFUND_CUSTOMERT_CODE);
             default:
                 break;
         }
@@ -222,4 +233,27 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
             mExcel.setFooterView(generatorFooter(refundCustomerResp, append));
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == WAIT_REFUND_CUSTOMERT_CODE && resultCode == RESULT_OK) {
+            SearchResultItem bean = data.getParcelableExtra("result");
+            edtSearch.setText(bean.getName());
+            imgClear.setVisibility(View.VISIBLE);
+            WaitRefundReq requestParams = getRequestParams();
+            if(bean.getType()==0) {
+                requestParams.setPurchaserID(bean.getShopMallId());
+            }else{
+                requestParams.setShopID(bean.getShopMallId());
+            }
+            mPresenter.queryRefundCustomerDetail(true);
+        }
+    }
+
 }
