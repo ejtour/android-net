@@ -30,6 +30,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 /**
@@ -84,6 +85,8 @@ public class PurchaseInputActivity extends BaseLoadActivity implements IPurchase
             mTitleBar.setHeaderTitle("录入采购物流");
             mNumLabel.setText("采购车辆数");
             mFeeLabel.setText("采购物流费用");
+            mNum.setHint("请输入采购车辆数");
+            mFee.setHint("请输入采购物流费用");
             if (!TextUtils.isEmpty(mBean.getId())) { // 编辑
                 mTitleBar.setHeaderTitle("修改采购物流");
                 mNum.setText(String.valueOf(mBean.getCarNums()));
@@ -94,6 +97,8 @@ public class PurchaseInputActivity extends BaseLoadActivity implements IPurchase
             mTitleBar.setHeaderTitle("录入采购金额");
             mNumLabel.setText("采购人数");
             mFeeLabel.setText("采购金额");
+            mNum.setHint("请输入采购人数");
+            mFee.setHint("请输入采购金额");
             if (!TextUtils.isEmpty(mBean.getId())) { // 编辑
                 mTitleBar.setHeaderTitle("修改采购金额");
                 mNum.setText(String.valueOf(mBean.getPurchaserNum()));
@@ -129,5 +134,17 @@ public class PurchaseInputActivity extends BaseLoadActivity implements IPurchase
     public void saveSuccess() {
         setResult(RESULT_OK);
         finish();
+    }
+
+    @OnClick({R.id.rpi_date, R.id.rpi_user})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rpi_date:
+                showToast("录入日期不可修改");
+                break;
+            case R.id.rpi_user:
+                showToast("录入人员不可修改");
+                break;
+        }
     }
 }
