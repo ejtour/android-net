@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.order.transfer.check;
 
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -24,9 +25,9 @@ public class CommodityCheckPresenter implements ICommodityCheckContract.ICommodi
 
     @Override
     public void commitCheck(List<InventoryCheckReq.InventoryCheckBean> checkBeanList) {
-        Order.commitInventoryCheck(checkBeanList, new SimpleObserver<Object>(mView) {
+        Order.commitInventoryCheck(checkBeanList, new SimpleObserver<MsgWrapper<Object>>(true, mView) {
             @Override
-            public void onSuccess(Object o) {
+            public void onSuccess(MsgWrapper<Object> o) {
                 mView.commitSuccess();
             }
         });

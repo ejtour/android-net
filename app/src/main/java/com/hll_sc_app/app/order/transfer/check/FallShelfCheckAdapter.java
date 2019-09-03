@@ -25,9 +25,8 @@ public class FallShelfCheckAdapter extends BaseQuickAdapter<InventoryBean, BaseV
             if (item == null)
                 return;
             if (view.getId() == R.id.fsc_cancel_btn) {
-                if (item.getFlag() == 3)
-                    return;
-                item.setFlag(3);
+                if (item.getFlag() == 3) item.setFlag(0);
+                else item.setFlag(3);
             }
             notifyItemChanged(position);
         });
@@ -37,7 +36,8 @@ public class FallShelfCheckAdapter extends BaseQuickAdapter<InventoryBean, BaseV
         // 构造请求列表
         List<InventoryCheckReq.InventoryCheckBean> reqList = new ArrayList<>();
         for (InventoryBean bean : getData()) {
-            reqList.add(new InventoryCheckReq.InventoryCheckBean(bean.getFlag(), bean.getGoodsNum(), bean.getId()));
+            if (bean.getFlag() == 3)
+                reqList.add(new InventoryCheckReq.InventoryCheckBean(bean.getFlag(), bean.getGoodsNum(), bean.getId()));
         }
         return reqList;
     }
