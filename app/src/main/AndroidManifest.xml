@@ -798,8 +798,10 @@
         <activity
             android:name=".app.report.refund.customerProduct.product.RefundedProductDetailActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.inspection.list.InspectionListActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <activity

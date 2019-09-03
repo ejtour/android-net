@@ -2,8 +2,8 @@ package com.hll_sc_app.app.inspection.list;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.inspection.InspectionBean;
-import com.hll_sc_app.impl.IPurchaserContract;
 
 import java.util.List;
 
@@ -13,15 +13,19 @@ import java.util.List;
  */
 
 public interface IInspectionListContract {
-    interface IInspectionListView extends ILoadView, IPurchaserContract.IPurchaserView {
+    interface IInspectionListView extends ILoadView {
         void showList(List<InspectionBean> list, boolean append);
+
+        void cachePurchaserList(List<PurchaserBean> list);
     }
 
-    interface IInspectionListPresenter extends IPresenter<IInspectionListView>, IPurchaserContract.IPurchaserPresenter {
+    interface IInspectionListPresenter extends IPresenter<IInspectionListView> {
         void reload();
 
         void loadMore();
 
         void refresh();
+
+        void getPurchaserList();
     }
 }

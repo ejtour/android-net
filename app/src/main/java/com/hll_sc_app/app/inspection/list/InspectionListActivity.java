@@ -13,15 +13,15 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.agreementprice.quotation.PurchaserSelectWindow;
 import com.hll_sc_app.app.inspection.detail.InspectionDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.common.PurchaserBean;
-import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.filter.DateShopParam;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.inspection.InspectionBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -30,7 +30,6 @@ import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
-import com.hll_sc_app.widget.aftersales.PurchaserShopSelectWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -66,7 +65,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     @BindView(R.id.rog_refresh_view)
     SmartRefreshLayout mRefreshView;
     private DateRangeWindow mDateRangeWindow;
-    private PurchaserShopSelectWindow mSelectionWindow;
+    private PurchaserSelectWindow mPurchaserWindow;
     private List<PurchaserBean> mPurchaserBeans;
     private IInspectionListContract.IInspectionListPresenter mPresenter;
     private final DateShopParam mParam = new DateShopParam();
@@ -102,6 +101,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     private void initView() {
         mTitleBar.setRightBtnVisible(false);
         mTitleBar.setHeaderTitle("查看验货单");
+        mPurchaser.setText("采购商");
         mAdapter = new InspectionListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             InspectionBean item = mAdapter.getItem(position);
@@ -128,7 +128,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
         switch (view.getId()) {
             case R.id.rog_purchaser_btn:
                 if (mPurchaserBeans == null) {
-                    mPresenter.getPurchaserList("");
+                    mPresenter.getPurchaserList();
                     return;
                 }
                 showPurchaserWindow(view);
@@ -162,6 +162,11 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     }
 
     @Override
+    public void cachePurchaserList(List<PurchaserBean> list) {
+        mPurchaserBeans = list;
+    }
+
+    @Override
     public void showError(UseCaseException e) {
         super.showError(e);
         if (e.getLevel() == UseCaseException.Level.NET) {
@@ -176,19 +181,6 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
                     .setOnClickListener(mPresenter::start).create();
             mAdapter.setEmptyView(mEmptyView);
         }
-    }
-
-    @Override
-    public void refreshPurchaserList(List<PurchaserBean> list) {
-        mPurchaserBeans = list;
-        if (mSelectionWindow != null && mSelectionWindow.isShowing()) {
-            mSelectionWindow.setLeftList(list);
-        }
-    }
-
-    @Override
-    public void refreshShopList(List<PurchaserShopBean> list) {
-        mSelectionWindow.setRightList(list);
     }
 
     private void showDateRangeWindow(View view) {
@@ -228,37 +220,27 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     }
 
     private void showPurchaserWindow(View view) {
+        if (mPurchaserBeans == null) {
+            mPresenter.getPurchaserList();
+        }
         mPurchaserArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
         mPurchaser.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        if (mSelectionWindow == null) {
-            mSelectionWindow = PurchaserShopSelectWindow.create(this, new PurchaserShopSelectWindow.PurchaserShopSelectCallback() {
-                @Override
-                public void onSelect(String purchaserID, String shopID, List<String> shopNameList) {
-                    mSelectionWindow.dismiss();
-                    mParam.setShopIDs(shopID);
-                    mPresenter.reload();
-                    if (!CommonUtils.isEmpty(shopNameList)) {
-                        mPurchaser.setText(TextUtils.join(",", shopNameList));
-                    } else mPurchaser.setText("全部采购商");
+        if (mPurchaserWindow == null) {
+            mPurchaserWindow = new PurchaserSelectWindow(this, mPurchaserBeans);
+            mPurchaserWindow.setListener(bean -> {
+                if (TextUtils.equals(bean.getPurchaserName(), "全部")) {
+                    mPurchaser.setText("采购商");
+                } else {
+                    mPurchaser.setText(bean.getPurchaserName());
                 }
-
-                @Override
-                public boolean search(String searchWords, int flag, String purchaserID) {
-                    if (flag == 0) mPresenter.getPurchaserList(searchWords);
-                    else mPresenter.getShopList(purchaserID, searchWords);
-                    return true;
-                }
-
-                @Override
-                public void loadPurchaserShop(String purchaserID, String searchWords) {
-                    mPresenter.getShopList(purchaserID, searchWords);
-                }
-            }).setMulti(true).setLeftList(mPurchaserBeans).setRightList(null);
-            mSelectionWindow.setOnDismissListener(() -> {
+                mParam.setShopIDs(bean.getPurchaserID());
+                mPresenter.reload();
+            });
+            mPurchaserWindow.setOnDismissListener(() -> {
                 mPurchaserArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
                 mPurchaser.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
             });
         }
-        mSelectionWindow.showAsDropDownFix(view);
+        mPurchaserWindow.showAsDropDownFix(view);
     }
 }

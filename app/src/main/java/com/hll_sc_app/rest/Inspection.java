@@ -23,9 +23,9 @@ public class Inspection {
      * @param pageNum   页码
      * @param startTime 开始时间 yyyyMMdd
      * @param endTime   结束时间 yyyyMMdd
-     * @param shopIDs   门店id组，以半角逗号分隔
+     * @param purchaserID  采购书集团ID
      */
-    public static void getInspectionList(int pageNum, String startTime, String endTime, String shopIDs, SimpleObserver<InspectionResp> observer) {
+    public static void getInspectionList(int pageNum, String startTime, String endTime, String purchaserID, SimpleObserver<InspectionResp> observer) {
         InspectionService.INSTANCE
                 .getInspectionList(BaseMapReq.newBuilder()
                         .put("pageNum", String.valueOf(pageNum))
@@ -33,7 +33,7 @@ public class Inspection {
                         .put("startTime", startTime)
                         .put("endTime", endTime)
                         .put("groupID", UserConfig.getGroupID())
-                        .put("shopIDs", shopIDs)
+                        .put("purchaserID", purchaserID)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
