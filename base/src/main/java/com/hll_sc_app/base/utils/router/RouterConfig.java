@@ -606,9 +606,39 @@ public class RouterConfig {
     public static final String REPORT_PURCHASE_STATISTIC = "/activity/report/purchaseSummary";
 
     /**
+     * 录入采购信息
+     */
+    public static final String REPORT_PURCHASE_INPUT = "/activity/report/purchase/input";
+
+    /**
      * 生产汇总统计
      */
     public static final String REPORT_PRODUCE_STATISTIC = "/activity/report/produceSummary";
+
+    /**
+     * 生产汇总统计-查看明细
+     */
+    public static final String REPORT_PRODUCE_DETAILS = "/activity/report/produce/details";
+
+    /**
+     * 生产汇总统计-设置工时费
+     */
+    public static final String REPORT_PRODUCE_MAN_HOUR = "/activity/report/produce/manHour";
+
+    /**
+     * 生产汇总统计-录入生产数据
+     */
+    public static final String REPORT_PRODUCE_INPUT = "/activity/produce/input";
+
+    /**
+     * 生产汇总统计-录入具体数据
+     */
+    public static final String REPORT_PRODUCE_INPUT_DETAIL = "/activity/produce/input/detail";
+
+    /**
+     * 生产汇总统计-录入人效
+     */
+    public static final String REPORT_PRODUCE_INPUT_PEOPLE = "/activity/produce/input/people";
 
     /**
      * 客户销售汇总搜索
@@ -759,6 +789,9 @@ public class RouterConfig {
     /*营销优惠券-选择客户-门店*/
     public static final String ACTIVITY_MARKETING_COUPON_SELECT_SHOPS = "/activity/marketing/coupon/select/shops";
 
+    /**
+     * 对账单列表
+     */
     public static final String BILL_LIST = "/activity/bill/list";
 
     /**
@@ -866,6 +899,45 @@ public class RouterConfig {
      */
     public static final String CRM_MINE = "/fragment/crm/mine";
 
+    /**
+     * 待退合计
+     */
+    public static final String REPORT_WAIT_REFUND_TOTAL = "/activity/report/refund/wait";
+
+    /**
+     * 待退客户明细
+     */
+    public static final String REPORT_WAIT_REFUND_CUSTOMER_DETAIL = "/activity/report/refund/wait/customer/detail";
+
+    /**
+     * 待退商品明细
+     */
+    public static final String REPORT_WAIT_REFUND_PRODUCT_DETAIL = "/activity/report/refund/wait/product/detail";
+
+    /**
+     * 退货统计
+     */
+    public static final String REPORT_REFUNDED_COLLECT = "/activity/report/refund/refundcollect";
+
+    /**
+     * 退货统计明细
+     */
+    public static final String REPORT_REFUNDED_COLLECT_DETAIL = "/activity/report/refund/refundcollect/detail";
+
+    /**
+     * 退货客户，商品汇总
+     */
+    public static final String REPORT_REFUNDED_CUSTOMER_PRODUCT_TOTAL = "/activity/report/refund/customerProduct";
+
+    /**
+     * 退货客户明细
+     */
+    public static final String REPORT_REFUNDED_CUSTOMER_DETAIL = "/activity/report/refund/customerProduct/customer/detail";
+
+    /**
+     * 退货商品明细
+     */
+    public static final String REPORT_REFUNDED_PRODUCT_DETAIL = "/activity/report/refund/customerProduct/product/detail";
     /**
      * 查看验货单-列表
      */

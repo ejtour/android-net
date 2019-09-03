@@ -12,6 +12,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.Interpolator;
+import android.widget.FrameLayout;
 import android.widget.Scroller;
 
 /**
@@ -52,6 +53,20 @@ public class SwipeItemLayout extends ViewGroup {
         mIsLaidOut = false;
 
         mScrollRunnable = new ScrollRunnable(context);
+    }
+
+    @Override
+    public void onViewAdded(View child) {
+        super.onViewAdded(child);
+        if (getChildCount() > 2 || getChildCount() == 1 && !(child instanceof ViewGroup)) {
+            throw new RuntimeException("SwipeItemLayout的子视图不符合规定");
+        }
+        if (getChildCount() == 2 && !(child instanceof ViewGroup)) {
+            FrameLayout container = new FrameLayout(getContext());
+            removeView(child);
+            container.addView(child);
+            addView(container, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        }
     }
 
     public static void closeAllItems(RecyclerView recyclerView) {

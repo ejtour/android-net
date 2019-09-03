@@ -186,9 +186,9 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
     }
 
     @Override
-    public void setDetailsList(List<DetailsRecordWrapper> wrappers) {
+    public void setDetailsList(List<DetailsRecordWrapper> wrappers, boolean refresh) {
+        if (refresh) mStickyItemDecoration.notifyChanged();
         mAdapter.setNewData(wrappers);
-        mStickyItemDecoration.notifyChanged();
         if (wrappers.size() <= 1) {
             mEmptyView.reset();
             mEmptyView.setTips("先去充个值试试?");

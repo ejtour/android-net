@@ -67,6 +67,25 @@ public class TransferDetailBean implements Parcelable {
     private String plateSupplierName;
     private String resourceType;
 
+    private double purchaseNum;
+    private String purchaseUnit;
+
+    public double getPurchaseNum() {
+        return purchaseNum;
+    }
+
+    public void setPurchaseNum(double purchaseNum) {
+        this.purchaseNum = purchaseNum;
+    }
+
+    public String getPurchaseUnit() {
+        return purchaseUnit;
+    }
+
+    public void setPurchaseUnit(String purchaseUnit) {
+        this.purchaseUnit = purchaseUnit;
+    }
+
     public String getSaleUnitName() {
         return saleUnitName;
     }
@@ -507,6 +526,9 @@ public class TransferDetailBean implements Parcelable {
         this.resourceType = resourceType;
     }
 
+    public TransferDetailBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -569,9 +591,8 @@ public class TransferDetailBean implements Parcelable {
         dest.writeString(this.erpShopID);
         dest.writeString(this.plateSupplierName);
         dest.writeString(this.resourceType);
-    }
-
-    public TransferDetailBean() {
+        dest.writeDouble(this.purchaseNum);
+        dest.writeString(this.purchaseUnit);
     }
 
     protected TransferDetailBean(Parcel in) {
@@ -630,9 +651,11 @@ public class TransferDetailBean implements Parcelable {
         this.erpShopID = in.readString();
         this.plateSupplierName = in.readString();
         this.resourceType = in.readString();
+        this.purchaseNum = in.readDouble();
+        this.purchaseUnit = in.readString();
     }
 
-    public static final Parcelable.Creator<TransferDetailBean> CREATOR = new Parcelable.Creator<TransferDetailBean>() {
+    public static final Creator<TransferDetailBean> CREATOR = new Creator<TransferDetailBean>() {
         @Override
         public TransferDetailBean createFromParcel(Parcel source) {
             return new TransferDetailBean(source);

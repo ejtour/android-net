@@ -14,8 +14,9 @@ import java.lang.annotation.RetentionPolicy;
 @IntDef({ReportIcon.SALES_STATISTICS, ReportIcon.ORDER_GOODS_DETAILS, ReportIcon.DAILY_SALES_VOLUME,
         ReportIcon.CUSTOMER_SALES, ReportIcon.SIGNING_PERFORMANCE, ReportIcon.SALES_PERFORMANCE,
         ReportIcon.STOCKOUT_DIFFERENCES, ReportIcon.RECEIVE_DIFFERENCE, ReportIcon.PRODUCTS_DETAILS,
-        ReportIcon.RECEIVE_DIFFERENCE_DETAILS, ReportIcon.STOCKOUT_STATISTICS, ReportIcon.REFUND_REASONS,
-        ReportIcon.SALES_MAN_SIGN, ReportIcon.PURCHASE_STATISTIC, ReportIcon.PRODUCE_STATISTIC})
+    ReportIcon.RECEIVE_DIFFERENCE_DETAILS, ReportIcon.STOCKOUT_STATISTICS, ReportIcon.REFUND_REASONS,
+    ReportIcon.SALES_MAN_SIGN,ReportIcon.WAIT_REFUND,ReportIcon.REFUNDED,ReportIcon.REFUNDED_CUSTOMER_PRODUCT,
+    ReportIcon.PURCHASE_STATISTIC, ReportIcon.PRODUCE_STATISTIC})
 @Retention(RetentionPolicy.SOURCE)
 public @interface ReportIcon {
     int SALES_STATISTICS = R.drawable.ic_report_sales_statistics; // 商品销量统计汇总
@@ -31,6 +32,9 @@ public @interface ReportIcon {
     int STOCKOUT_STATISTICS = R.drawable.ic_report_stockout_statistics;
     int REFUND_REASONS = R.drawable.ic_board_question_blue;
     int SALES_MAN_SIGN = R.drawable.ic_salesman_sign;
+    int WAIT_REFUND = R.drawable.ic_wait_refund;
+    int REFUNDED = R.drawable.ic_report_refunded;
+    int REFUNDED_CUSTOMER_PRODUCT = R.drawable.ic_report_refunded_customer_product;
     int PURCHASE_STATISTIC = R.drawable.ic_report_purchase_statistic; // 采购汇总统计
     int PRODUCE_STATISTIC = R.drawable.ic_report_produce_statistic; // 生产汇总统计
 }

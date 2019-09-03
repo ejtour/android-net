@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/pid_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_rightText="保存"
+        app:tb_rightVisibility="true"
+        app:tb_title="录入具体数据" />
+
+    <TextView
+        android:id="@+id/pid_company_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/pid_title_bar"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@android:color/white"
+        android:text="选择合作公司" />
+
+    <TextView
+        android:id="@+id/pid_company"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/pid_company_label"
+        android:layout_alignBottom="@id/pid_company_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/pid_company_label"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:hint="请选择合作公司" />
+
+    <TextView
+        android:id="@+id/pid_standard_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pid_company_label"
+        android:padding="@dimen/dp_10"
+        android:text="标品分拣"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+
+    <TextView
+        android:id="@+id/pid_standard_pick_num_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/pid_standard_pick"
+        android:background="@android:color/white"
+        android:text="标品分拣人数" />
+
+    <TextView
+        android:id="@+id/pid_standard_pick_num_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/pid_standard_pick_num_label"
+        android:layout_alignBottom="@id/pid_standard_pick_num_label"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp_10"
+        android:text="人"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+    <EditText
+        android:id="@+id/pid_standard_pick_num"
+        style="@style/InfoEdit"
+        android:inputType="number"
+        android:layout_alignTop="@id/pid_standard_pick_num_label"
+        android:layout_alignBottom="@id/pid_standard_pick_num_label"
+        android:layout_toLeftOf="@id/pid_standard_pick_num_unit"
+        android:layout_toRightOf="@id/pid_standard_pick_num_label"
+        android:background="@android:color/white"
+        android:hint="请输入标品分拣人数" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/pid_standard_pick_num_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/pid_standard_pick_time_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/pid_standard_pick_num_label"
+        android:background="@android:color/white"
+        android:text="标品分拣工时" />
+
+    <TextView
+        android:id="@+id/pid_standard_pick_time_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/pid_standard_pick_time_label"
+        android:layout_alignBottom="@id/pid_standard_pick_time_label"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp_10"
+        android:text="时"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+    <EditText
+        android:id="@+id/pid_standard_pick_time"
+        style="@style/InfoEdit"
+        android:inputType="numberDecimal"
+        android:layout_alignTop="@id/pid_standard_pick_time_label"
+        android:layout_alignBottom="@id/pid_standard_pick_time_label"
+        android:layout_toLeftOf="@id/pid_standard_pick_time_unit"
+        android:layout_toRightOf="@id/pid_standard_pick_time_label"
+        android:background="@android:color/white"
+        android:hint="请输入标品分拣工时" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pid_standard_pick_time_label"
+        android:padding="@dimen/dp_10"
+        android:text="蔬果分拣"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pick_num_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/pid_vegetable_pick"
+        android:background="@android:color/white"
+        android:text="蔬果分拣人数" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pick_num_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/pid_vegetable_pick_num_label"
+        android:layout_alignBottom="@id/pid_vegetable_pick_num_label"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp_10"
+        android:text="人"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+    <EditText
+        android:id="@+id/pid_vegetable_pick_num"
+        style="@style/InfoEdit"
+        android:inputType="number"
+        android:layout_alignTop="@id/pid_vegetable_pick_num_label"
+        android:layout_alignBottom="@id/pid_vegetable_pick_num_label"
+        android:layout_toLeftOf="@id/pid_vegetable_pick_num_unit"
+        android:layout_toRightOf="@id/pid_vegetable_pick_num_label"
+        android:background="@android:color/white"
+        android:hint="请输入蔬果分拣人数" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/pid_vegetable_pick_num_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pick_time_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/pid_vegetable_pick_num_label"
+        android:background="@android:color/white"
+        android:text="蔬果分拣工时" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pick_time_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/pid_vegetable_pick_time_label"
+        android:layout_alignBottom="@id/pid_vegetable_pick_time_label"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp_10"
+        android:text="时"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+    <EditText
+        android:id="@+id/pid_vegetable_pick_time"
+        style="@style/InfoEdit"
+        android:inputType="numberDecimal"
+        android:layout_alignTop="@id/pid_vegetable_pick_time_label"
+        android:layout_alignBottom="@id/pid_vegetable_pick_time_label"
+        android:layout_toLeftOf="@id/pid_vegetable_pick_time_unit"
+        android:layout_toRightOf="@id/pid_vegetable_pick_time_label"
+        android:background="@android:color/white"
+        android:hint="请输入蔬果分拣工时" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pid_vegetable_pick_time_label"
+        android:padding="@dimen/dp_10"
+        android:text="蔬果打包"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pack_num_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/pid_vegetable_pack"
+        android:background="@android:color/white"
+        android:text="蔬果打包人数" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pack_num_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/pid_vegetable_pack_num_label"
+        android:layout_alignBottom="@id/pid_vegetable_pack_num_label"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp_10"
+        android:text="人"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+    <EditText
+        android:id="@+id/pid_vegetable_pack_num"
+        style="@style/InfoEdit"
+        android:inputType="number"
+        android:layout_alignTop="@id/pid_vegetable_pack_num_label"
+        android:layout_alignBottom="@id/pid_vegetable_pack_num_label"
+        android:layout_toLeftOf="@id/pid_vegetable_pack_num_unit"
+        android:layout_toRightOf="@id/pid_vegetable_pack_num_label"
+        android:background="@android:color/white"
+        android:hint="请输入蔬果打包人数" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/pid_vegetable_pack_num_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pack_time_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/pid_vegetable_pack_num_label"
+        android:background="@android:color/white"
+        android:text="蔬果打包工时" />
+
+    <TextView
+        android:id="@+id/pid_vegetable_pack_time_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/pid_vegetable_pack_time_label"
+        android:layout_alignBottom="@id/pid_vegetable_pack_time_label"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp_10"
+        android:text="时"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+    <EditText
+        android:id="@+id/pid_vegetable_pack_time"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/pid_vegetable_pack_time_label"
+        android:layout_alignBottom="@id/pid_vegetable_pack_time_label"
+        android:inputType="numberDecimal"
+        android:layout_toLeftOf="@id/pid_vegetable_pack_time_unit"
+        android:layout_toRightOf="@id/pid_vegetable_pack_time_label"
+        android:background="@android:color/white"
+        android:hint="请输入蔬果打包工时" />
+</RelativeLayout>

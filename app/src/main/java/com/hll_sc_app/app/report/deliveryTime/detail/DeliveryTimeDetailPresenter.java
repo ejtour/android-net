@@ -49,8 +49,9 @@ public class DeliveryTimeDetailPresenter implements IDeliveryTimeDetailContract.
         Report.queryDeliveryTimeContent(params, new SimpleObserver<DeliveryTimeResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(DeliveryTimeResp deliveryTimeResp) {
-                        mView.setDeliveryTimeDetailList(deliveryTimeResp, mPageNum > 1);
-                        if (!CommonUtils.isEmpty(deliveryTimeResp.getRecords())) {
+                        boolean isNotEmpty = !CommonUtils.isEmpty(deliveryTimeResp.getRecords());
+                        mView.setDeliveryTimeDetailList(deliveryTimeResp, mPageNum > 1 && isNotEmpty);
+                        if (isNotEmpty) {
                             mPageNum++;
                         }
                     }

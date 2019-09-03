@@ -3,7 +3,9 @@ package com.hll_sc_app.widget.report;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -36,7 +38,11 @@ public class ExcelRow extends LinearLayout {
 
     public ExcelRow(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(30)));
+        initView();
+    }
+
+    protected void initView() {
+        setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, UIUtils.dip2px(30)));
     }
 
     /**
@@ -57,12 +63,20 @@ public class ExcelRow extends LinearLayout {
             textView.setTextColor(ContextCompat.getColor(getContext(), R.color.color_222222));
             addView(textView, layoutParams);
             if (i < num - 1) {
-                View div = new View(getContext());
-                LayoutParams divParams = new LayoutParams(UIUtils.dip2px(1), LayoutParams.MATCH_PARENT);
-                div.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_dddddd));
-                addView(div, divParams);
+                addDivider();
             }
         }
+    }
+
+    protected void addDivider() {
+        View div = new View(getContext());
+        LayoutParams divParams = new LayoutParams(UIUtils.dip2px(1), getDivHeight());
+        div.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_dddddd));
+        addView(div, divParams);
+    }
+
+    protected int getDivHeight() {
+        return LayoutParams.MATCH_PARENT;
     }
 
     public static class ColumnData {
@@ -117,7 +131,16 @@ public class ExcelRow extends LinearLayout {
     public void updateRowDate(CharSequence... contentArray) {
         if (contentArray.length == 0 || contentArray.length != mTextViewList.size()) return;
         for (int i = 0; i < contentArray.length; i++) {
-            mTextViewList.get(i).setText(contentArray[i]);
+            CharSequence text = contentArray[i];
+            if (text instanceof SpannableString) {
+                mTextViewList.get(i).setMovementMethod(LinkMovementMethod.getInstance());
+                mTextViewList.get(i).setSingleLine(false);
+            }else {
+                mTextViewList.get(i).setMovementMethod(null);
+                mTextViewList.get(i).setSingleLine(true);
+            }
+            mTextViewList.get(i).setTag(getTag());
+            mTextViewList.get(i).setText(text);
         }
     }
 }

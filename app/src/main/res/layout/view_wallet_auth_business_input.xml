@@ -2,9 +2,9 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="android.support.constraint.ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
 
     <View
         android:id="@+id/abi_bottom_bg"
@@ -32,34 +32,34 @@
         android:id="@+id/abi_license_info_bg"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid"
         app:layout_constraintBottom_toBottomOf="@id/abi_end_date_label"
-        app:layout_constraintEnd_toEndOf="@id/abi_license_judgment"
-        app:layout_constraintStart_toStartOf="@id/abi_license_judgment_label"
-        app:layout_constraintTop_toTopOf="@id/abi_license_judgment_label" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/abi_license_judgment_label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
         android:gravity="center"
         android:paddingLeft="@dimen/dp_10"
         android:text="是否有相关许可证"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/abi_license_info_bg"
+        app:layout_constraintTop_toTopOf="@id/abi_license_info_bg" />
 
     <TextView
         android:id="@+id/abi_license_judgment"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
         android:drawablePadding="5dp"
         android:hint="请选择是否有相关许可证"
-        android:paddingRight="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="@id/abi_license_judgment_label"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/abi_license_info_bg"
         app:layout_constraintStart_toEndOf="@id/abi_license_judgment_label"
         app:layout_constraintTop_toTopOf="@id/abi_license_judgment_label" />
 
@@ -77,23 +77,21 @@
         android:id="@+id/abi_start_date_label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center"
         android:paddingLeft="@dimen/dp_10"
         android:text="起始日期"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/abi_license_info_bg"
         app:layout_constraintTop_toBottomOf="@id/abi_license_judgment_label" />
 
     <TextView
         android:id="@+id/abi_start_date"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
         android:drawablePadding="5dp"
         android:hint="请选择许可证的起始日期"
-        android:paddingRight="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="@id/abi_start_date_label"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/abi_license_info_bg"
         app:layout_constraintStart_toEndOf="@id/abi_start_date_label"
         app:layout_constraintTop_toTopOf="@id/abi_start_date_label" />
 
@@ -111,23 +109,21 @@
         android:id="@+id/abi_end_date_label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginLeft="@dimen/dp_10"
         android:gravity="center"
         android:paddingLeft="@dimen/dp_10"
         android:text="结束日期"
         android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/abi_license_info_bg"
         app:layout_constraintTop_toBottomOf="@id/abi_start_date_label" />
 
     <TextView
         android:id="@+id/abi_end_date"
-        style="@style/WalletInfoEdit"
+        style="@style/InfoEdit"
         android:drawableRight="@drawable/ic_arrow_gray"
         android:drawablePadding="5dp"
         android:hint="请选择许可证的结束日期"
-        android:paddingRight="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="@id/abi_end_date_label"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/abi_license_info_bg"
         app:layout_constraintStart_toEndOf="@id/abi_end_date_label"
         app:layout_constraintTop_toTopOf="@id/abi_end_date_label" />
     <!--许可证信息 end-->

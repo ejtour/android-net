@@ -26,6 +26,7 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 
@@ -156,9 +157,7 @@ public class ReturnRecordActivity extends BaseLoadActivity implements IReturnRec
 
     @OnTextChanged(value = R.id.irr_money, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable s) {
-        if (s.toString().startsWith(".")) s.insert(0, "0");
-        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1)
-            s.delete(s.length() - 1, s.length());
+        Utils.processMoney(s, false);
     }
 
     @Override

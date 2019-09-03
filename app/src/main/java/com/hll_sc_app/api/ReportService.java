@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
@@ -19,7 +20,22 @@ import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
+import com.hll_sc_app.bean.report.produce.ProduceInputReq;
+import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
+import com.hll_sc_app.bean.report.purchase.ManHourBean;
+import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
+import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
+import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
+import com.hll_sc_app.bean.report.refund.RefundedProductReq;
+import com.hll_sc_app.bean.report.refund.RefundedProductResp;
+import com.hll_sc_app.bean.report.refund.RefundedReq;
+import com.hll_sc_app.bean.report.refund.RefundedResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundReq;
+import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.req.ProductDetailReq;
@@ -153,4 +169,94 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111038")
     Observable<BaseResp<PurchaseSummaryResp>> queryPurchaseSummary(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111028")
+    Observable<BaseResp<Object>> recordPurchaseInfo(@Body BaseMapReq req);
+
+    /**
+     * 退款合计
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111010")
+    Observable<BaseResp<WaitRefundTotalResp>> queryRefundTotal(@Body BaseMapReq body);
+
+    /**
+     * 待退货退款 集团列表查询
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111014")
+    Observable<BaseResp<WaitRefundCustomerResp>> queryRefundCustomerList(@Body BaseReq<WaitRefundReq> body);
+
+
+    /**
+     * 待退货 商品列表查询
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111015")
+    Observable<BaseResp<WaitRefundProductResp>> queryRefundProductList(@Body BaseReq<WaitRefundReq> body);
+
+    /**
+     * 退货明细
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111021")
+    Observable<BaseResp<RefundedResp>> queryRefundedDetail(@Body BaseReq<RefundedReq> body);
+
+    /**
+     * 已退商品客户列表统计
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111020")
+    Observable<BaseResp<RefundedCustomerResp>> queryRefundedCustomerDetail(@Body BaseReq<RefundedCustomerReq> body);
+
+
+    /**
+     * 退货商品统计
+     *
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111022")
+    Observable<BaseResp<RefundedProductResp>> queryRefundProductDetail(@Body BaseReq<RefundedProductReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111031")
+    Observable<BaseResp<ProduceSummaryResp>> queryProduceSummary(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111073")
+    Observable<BaseResp<List<ProduceDetailBean>>> queryProduceDetails(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111076")
+    Observable<BaseResp<Object>> recordProduceInfo(@Body BaseReq<ProduceInputReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111034")
+    Observable<BaseResp<List<ManHourBean>>> queryManHour(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111065")
+    Observable<BaseResp<Object>> saveManHour(@Body BaseReq<ManHourReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111094")
+    Observable<BaseResp<Object>> recordPeopleEffect(@Body BaseMapReq req);
 }

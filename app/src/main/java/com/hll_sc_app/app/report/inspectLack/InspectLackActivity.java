@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
@@ -20,7 +19,6 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.inspectLack.InspectLackItem;
 import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.window.OptionType;
@@ -40,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -264,33 +261,14 @@ public class InspectLackActivity extends BaseLoadActivity implements IInspectLac
     @Override
     public void setInspectList(InspectLackResp inspectLackResp, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(inspectLackResp.getRecords()) && inspectLackResp.getRecords().size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
         if (!CommonUtils.isEmpty(inspectLackResp.getRecords())) {
-            for (InspectLackItem bean : inspectLackResp.getRecords()) {
-                list.add(convertToRowData(bean));
-            }
-            mExcel.setData(list, append);
-            mExcel.setFooterView(generatorFooter(inspectLackResp,true));
+            mExcel.setData(inspectLackResp.getRecords(), append);
+            mExcel.setFooterView(generatorFooter(inspectLackResp, true));
             mExcel.setHeaderView(generateHeader(true));
-        }else{
+        } else {
             mExcel.setData(new ArrayList<>(), append);
             mExcel.setFooterView(generatorFooter(inspectLackResp, append));
             mExcel.setHeaderView(generateHeader(append));
-
         }
-
-    }
-
-    private List<CharSequence> convertToRowData(InspectLackItem item){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(CalendarUtils.getDateFormatString(item.getDate()+"", CalendarUtils.FORMAT_LOCAL_DATE,Constants.SLASH_YYYY_MM_DD)); // 日期
-        list.add(item.getInspectionOrderNum()); // 收货单数
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getInspectionTotalAmount()))); // 收货金额
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getOriDeliveryTradeAmount()))); // 原发货金额
-        list.add(item.getInspectionLackKindNum()); //收货差异商品数
-        list.add(CommonUtils.formatNumber(item.getInspectionLackNum())); // 收货差异量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getInspectionLackAmount()))); // 收货差异金额
-        list.add(CommonUtils.formatNumber(new BigDecimal(item.getInspectionLackRate()).multiply(BigDecimal.valueOf(100)).toPlainString())+"%");//收货差异率
-        return list;
     }
 }

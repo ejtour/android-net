@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -24,15 +23,9 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateWindow;
-import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.enums.TimeTypeEnum;
 import com.hll_sc_app.bean.event.SalesManSearchEvent;
-import com.hll_sc_app.bean.report.inspectLack.InspectLackItem;
-import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailItem;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
-import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -48,12 +41,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -288,32 +279,14 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
     @Override
     public void setInspectDetailList(InspectLackDetailResp inspectLackDetailResp, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(inspectLackDetailResp.getRecords()) && inspectLackDetailResp.getRecords().size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
         if (!CommonUtils.isEmpty(inspectLackDetailResp.getRecords())) {
-            for (InspectLackDetailItem bean : inspectLackDetailResp.getRecords()) {
-                list.add(convertToRowData(bean));
-            }
-            mExcel.setData(list, append);
-            mExcel.setFooterView(generatorFooter(inspectLackDetailResp,true));
+            mExcel.setData(inspectLackDetailResp.getRecords(), append);
+            mExcel.setFooterView(generatorFooter(inspectLackDetailResp, true));
             mExcel.setHeaderView(generateHeader(true));
-        }else{
+        } else {
             mExcel.setData(new ArrayList<>(), append);
             mExcel.setFooterView(generatorFooter(inspectLackDetailResp, append));
             mExcel.setHeaderView(generateHeader(append));
         }
-
-    }
-
-    private List<CharSequence> convertToRowData(InspectLackDetailItem item){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(item.getProductName()); // 商品名称
-        list.add(item.getSpecUnit()); // 规格
-        list.add(CommonUtils.formatNumber(item.getOriDeliveryNum())); // 发货量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getOriDeliveryAmount()))); // 原发货金额
-        list.add(CommonUtils.formatNumber(item.getInspectionNum())); //收货差异商品数
-        list.add(CommonUtils.formatNumber(item.getInspectionLackNum())); // 收货差异量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getInspectionLackAmount()))); // 收货差异金额
-        list.add(item.getInspectionLackRate());//收货差异率
-        return list;
     }
 }

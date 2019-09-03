@@ -27,6 +27,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.wallet.WalletStatusResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -137,9 +138,7 @@ public class WithdrawActivity extends BaseLoadActivity implements IWithdrawContr
 
     @OnTextChanged(value = R.id.aww_money_edit, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void onTextChanged(Editable s) {
-        if (s.toString().startsWith(".")) s.insert(0, "0");
-        if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1)
-            s.delete(s.length() - 1, s.length());
+        Utils.processMoney(s, false);
         if (TextUtils.isEmpty(s)) mConfirm.setEnabled(false);
         else {
             float curValue = Float.parseFloat(s.toString());

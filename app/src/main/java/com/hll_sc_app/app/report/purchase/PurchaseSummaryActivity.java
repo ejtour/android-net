@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.purchase;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,11 +13,13 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.purchase.input.PurchaseInputActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.filter.DateParam;
+import com.hll_sc_app.bean.report.purchase.PurchaseBean;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -73,6 +76,14 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
         initData();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PurchaseInputActivity.REQ_CODE) {
+            mPresenter.start();
+        }
+    }
+
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mAdapter = new PurchaseSummaryAdapter();
@@ -80,6 +91,16 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
         mAdapter.setHeaderView(mHeader);
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.rps_modify_amount:
+                    recordAmount();
+                    break;
+                case R.id.rps_modify_logistics:
+                    recordLogistics();
+                    break;
+            }
+        });
     }
 
     private void initData() {
@@ -109,13 +130,39 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
                                 mPresenter.export(null);
                                 break;
                             case OptionType.OPTION_RECORD_PURCHASE_LOGISTICS:
+                                recordLogistics();
                                 break;
                             case OptionType.OPTION_RECORD_PURCHASE_AMOUNT:
+                                recordAmount();
                                 break;
                         }
                     });
         }
         mOptionsWindow.showAsDropDownFix(v, Gravity.END);
+    }
+
+    private void recordLogistics() {
+        PurchaseBean logPurchase;
+        if (CommonUtils.isEmpty(mAdapter.getData()) ||
+                !CalendarUtils.toLocalDate(new Date()).equals(mAdapter.getData().get(0).getDate())) {
+            logPurchase = new PurchaseBean();
+        } else {
+            logPurchase = mAdapter.getData().get(0).deepCopy();
+        }
+        logPurchase.setPurchaserNum(-1);
+        PurchaseInputActivity.start(this, logPurchase);
+    }
+
+    private void recordAmount() {
+        PurchaseBean amountPurchase;
+        if (CommonUtils.isEmpty(mAdapter.getData()) ||
+                !CalendarUtils.toLocalDate(new Date()).equals(mAdapter.getData().get(0).getDate())) {
+            amountPurchase = new PurchaseBean();
+        } else {
+            amountPurchase = mAdapter.getData().get(0).deepCopy();
+        }
+        amountPurchase.setCarNums(-1);
+        PurchaseInputActivity.start(this, amountPurchase);
     }
 
     private void updateDateText() {

@@ -5,8 +5,12 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
@@ -19,7 +23,22 @@ import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
+import com.hll_sc_app.bean.report.produce.ProduceInputReq;
+import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
+import com.hll_sc_app.bean.report.purchase.ManHourBean;
+import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
+import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
+import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
+import com.hll_sc_app.bean.report.refund.RefundedProductReq;
+import com.hll_sc_app.bean.report.refund.RefundedProductResp;
+import com.hll_sc_app.bean.report.refund.RefundedReq;
+import com.hll_sc_app.bean.report.refund.RefundedResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundReq;
+import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
@@ -27,8 +46,10 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -258,6 +279,193 @@ public class Report {
         ReportService.INSTANCE
                 .queryPurchaseSummary(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 录入采购信息
+     *
+     * @param builder 采购信息请求
+     */
+    public static void recordPurchaseInfo(BaseMapReq.Builder builder, SimpleObserver<MsgWrapper<Object>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        ReportService
+                .INSTANCE
+                .recordPurchaseInfo(builder
+                        .put("groupID", user.getGroupID())
+                        .put("enterEmp", user.getEmployeeName())
+                        .put("currentDay", CalendarUtils.toLocalDate(new Date()))
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询生产汇总
+     */
+    public static void queryProduceSummary(BaseMapReq req, SimpleObserver<ProduceSummaryResp> observer) {
+        ReportService.INSTANCE
+                .queryProduceSummary(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 退款合计
+     *
+     * @param flag
+     * @param observer
+     */
+    public static void queryRefundTotal(int flag, SimpleObserver<WaitRefundTotalResp> observer) {
+        ReportService.INSTANCE.queryRefundTotal(BaseMapReq.newBuilder().put("flag", flag + "").put("groupID", UserConfig.getGroupID()).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 待退货退款 集团列表查询
+     *
+     * @param waitRefundReq
+     * @param observer
+     */
+    public static void queryWaitRefundCustomerList(WaitRefundReq waitRefundReq, SimpleObserver<WaitRefundCustomerResp> observer) {
+        ReportService.INSTANCE.queryRefundCustomerList(new BaseReq<>(waitRefundReq))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 待退货 商品列表查询
+     *
+     * @param waitRefundReq
+     * @param observer
+     */
+    public static void queryWaitRefundProductList(WaitRefundReq waitRefundReq, SimpleObserver<WaitRefundProductResp> observer) {
+        ReportService.INSTANCE.queryRefundProductList(new BaseReq<>(waitRefundReq))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 退货明细
+     *
+     * @param req
+     * @param observer
+     */
+    public static void queryRefundedDetail(RefundedReq req, SimpleObserver<RefundedResp> observer) {
+        ReportService.INSTANCE.queryRefundedDetail(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 退货 商品列表查询
+     *
+     * @param req
+     * @param observer
+     */
+    public static void queryRefundedProductList(RefundedProductReq req, SimpleObserver<RefundedProductResp> observer) {
+        ReportService.INSTANCE.queryRefundProductDetail(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 退货客户明细
+     *
+     * @param req
+     * @param observer
+     */
+    public static void queryRefundedCustomerList(RefundedCustomerReq req, SimpleObserver<RefundedCustomerResp> observer) {
+        ReportService.INSTANCE.queryRefundedCustomerDetail(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询工时费与班次
+     *
+     * @param key 1-工时费 2-班次
+     */
+    public static void queryManHour(int key, SimpleObserver<List<ManHourBean>> observer) {
+        ReportService.INSTANCE
+                .queryManHour(BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("key", String.valueOf(key))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+
+    }
+
+    /**
+     * 保存工时费与班次信息
+     */
+    public static void saveManHour(ManHourReq req, SimpleObserver<MsgWrapper<Object>> observer) {
+        ReportService.INSTANCE
+                .saveManHour(new BaseReq<>(req))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 生产汇总明细查询
+     *
+     * @param classes 班次
+     * @param date    时间 yyyyMMdd
+     * @param opType  0: 查看明细数据 1:修改明细数据
+     */
+    public static void queryProduceDetails(String classes, String date, int opType, SimpleObserver<List<ProduceDetailBean>> observer) {
+        ReportService.INSTANCE
+                .queryProduceDetails(BaseMapReq.newBuilder()
+                        .put("classes", classes)
+                        .put("date", date)
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("opType", String.valueOf(opType))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 录入生产数据
+     */
+    public static void recordProduceInfo(ProduceInputReq req, SimpleObserver<MsgWrapper<Object>> observer) {
+        ReportService.INSTANCE
+                .recordProduceInfo(new BaseReq<>(req))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 录入人效
+     *
+     * @param date                  日期
+     * @param deliveryPackageQty    包裹数量
+     * @param orderQtyPackageWeight 称重数量
+     */
+    public static void recordPeopleEffect(String date, String deliveryPackageQty, String orderQtyPackageWeight, SimpleObserver<MsgWrapper<Object>> observer) {
+        ReportService.INSTANCE
+                .recordPeopleEffect(BaseMapReq.newBuilder()
+                        .put("date", date)
+                        .put("deliveryPackageQty", deliveryPackageQty)
+                        .put("orderQtyPackageWeight", orderQtyPackageWeight)
+                        .put("groupID", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

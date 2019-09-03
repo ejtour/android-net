@@ -172,20 +172,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
 
     @OnTextChanged(value = R.id.aii_invoice_amount, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void textChanged(Editable s) {
-        if (!s.toString().startsWith("¥")) {
-            s.insert(0, "¥");
-        }
-        String substring = s.toString().substring(1);
-        if (substring.contains("¥")) { // 避免出现多个金钱符号
-            substring = substring.replaceAll("¥", "");
-            s.delete(1, s.length());
-            s.insert(1, substring);
-        }
-        if (s.toString().substring(1).startsWith("."))
-            s.insert(1, "0");
-        if (!CommonUtils.checkMoneyNum(s.toString().substring(1)) && s.length() > 2) {
-            s.delete(s.length() - 1, s.length());
-        }
+        Utils.processMoney(s, true);
         mMakeReq.setInvoicePrice(CommonUtils.getDouble(s.toString()));
         updateEnable();
     }

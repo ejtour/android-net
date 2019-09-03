@@ -100,7 +100,7 @@
 
             <EditText
                 android:id="@+id/asi_person_name"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:hint="请输入银行开户名"
                 app:layout_constraintBottom_toTopOf="@id/asi_bank_info_div1"
                 app:layout_constraintEnd_toEndOf="@id/asi_bank_info_bg"
@@ -119,7 +119,7 @@
 
             <TextView
                 android:id="@+id/asi_bank_name"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="5dp"
                 android:hint="请选择开户行"
@@ -140,7 +140,7 @@
 
             <TextView
                 android:id="@+id/asi_account_type"
-                style="@style/WalletInfoEdit"
+                style="@style/InfoEdit"
                 android:drawableRight="@drawable/ic_arrow_gray"
                 android:drawablePadding="5dp"
                 android:hint="请选择银行账户类型"

@@ -1,6 +1,12 @@
 package com.hll_sc_app.bean.report.inspectLack.detail;
 
-public class InspectLackDetailItem {
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class InspectLackDetailItem implements IStringArrayGenerator {
 
     private long date;
     private String inspectionAmount;
@@ -15,6 +21,20 @@ public class InspectLackDetailItem {
     private long shopNum;
     private long specID;
     private String specUnit;
+
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(getProductName()); // 商品名称
+        list.add(getSpecUnit()); // 规格
+        list.add(CommonUtils.formatNumber(getOriDeliveryNum())); // 发货量
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getOriDeliveryAmount()))); // 原发货金额
+        list.add(CommonUtils.formatNumber(getInspectionNum())); //收货差异商品数
+        list.add(CommonUtils.formatNumber(getInspectionLackNum())); // 收货差异量
+        list.add(CommonUtils.formatMoney(Double.parseDouble(getInspectionLackAmount()))); // 收货差异金额
+        list.add(getInspectionLackRate());//收货差异率
+        return list;
+    }
 
     public long getDate() {
         return date;

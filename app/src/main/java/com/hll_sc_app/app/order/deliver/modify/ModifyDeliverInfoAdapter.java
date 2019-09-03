@@ -14,6 +14,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.detail.OrderDepositBean;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.order.OrderDepositList;
 
 import java.util.List;
@@ -51,11 +52,7 @@ public class ModifyDeliverInfoAdapter extends BaseQuickAdapter<OrderDetailBean, 
             public void afterTextChanged(Editable s) {
                 OrderDetailBean item = getItem(holder.getAdapterPosition());
                 if (item != null) {
-                    if (s.toString().startsWith("."))
-                        s.insert(0, "0");
-                    if (!CommonUtils.checkMoneyNum(s.toString()) && s.length() > 1) {
-                        s.delete(s.length() - 1, s.length());
-                    }
+                    Utils.processMoney(s, false);
                     item.setAdjustmentNum(TextUtils.isEmpty(s.toString()) ? 0 : Double.parseDouble(s.toString()));
                     item.setAdjustmentAmount(CommonUtils.mulDouble(item.getProductPrice(), item.getAdjustmentNum()).doubleValue());
                     if (!CommonUtils.isEmpty(item.getDepositList())) {

@@ -15,7 +15,7 @@ public interface IDetailsListContract {
         /**
          * 设置明细列表
          */
-        void setDetailsList(List<DetailsRecordWrapper> wrappers);
+        void setDetailsList(List<DetailsRecordWrapper> wrappers,boolean refresh);
 
         void setEnableLoadMore(boolean enableLoadMore);
     }

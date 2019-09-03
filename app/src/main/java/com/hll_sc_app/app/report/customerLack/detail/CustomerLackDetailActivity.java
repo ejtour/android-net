@@ -38,7 +38,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import butterknife.BindView;
@@ -246,26 +245,7 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
     @Override
     public void setList(List<CustomerLackItem> beans, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(beans) && beans.size() == 20);
-        List<List<CharSequence>> list = new ArrayList<>();
-        if (!CommonUtils.isEmpty(beans)) {
-            for (CustomerLackItem bean : beans) {
-                list.add(convertToRowData(bean));
-            }
-        }
-        mExcel.setData(list, append);
-    }
-
-    private List<CharSequence> convertToRowData(CustomerLackItem item){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(item.getProductName()); // 商品名称
-        list.add(item.getSpecUnit()); // 商品规格
-        list.add(item.getOriReserveNum()); // 订货量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getOriReserveAmount()))); // 订货金额
-        list.add(item.getDeliveryNum()); //发货量
-        list.add(item.getDeliveryNum()); // 缺货量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getDeliveryLackAmount()))); // 缺货金额
-        list.add(item.getDeliveryLackRate());
-        return list;
+        mExcel.setData(beans, append);
     }
 
     @Override
