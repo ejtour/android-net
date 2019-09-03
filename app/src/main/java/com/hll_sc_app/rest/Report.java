@@ -20,6 +20,8 @@ import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
+import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
+import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
@@ -43,8 +45,14 @@ import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
+import com.hll_sc_app.bean.report.search.SearchReq;
+import com.hll_sc_app.bean.report.search.SearchResultResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
+import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
+import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -466,6 +474,54 @@ public class Report {
                         .put("groupID", UserConfig.getGroupID())
                         .create())
                 .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 客户，门店流失率明细
+     * @param req
+     * @param observer
+     */
+    public static void queryCustomerOrShopLossDetail(CustomerAndShopLossReq req, SimpleObserver<CustomerAndShopLossResp> observer){
+        ReportService.INSTANCE.queryCustomerOrShopLossDetail(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 代仓发货统计
+     * @param req
+     * @param observer
+     */
+    public static void queryWareHouseDeliveryInfo(WareHouseDeliveryReq req, SimpleObserver<WareHouseDeliveryResp> observer){
+        ReportService.INSTANCE.queryWareHouseDeliveryInfo(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 代仓服务费统计
+     * @param req
+     * @param observer
+     */
+    public static void queryWareHouseServiceFee(WareHouseServiceFeeReq req, SimpleObserver<WareHouseServiceFeeResp> observer){
+        ReportService.INSTANCE.queryWareHouseServiceFee(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 搜索查询
+     * @param req
+     * @param observer
+     */
+    public static void querySearchList(SearchReq req, SimpleObserver<SearchResultResp> observer){
+        ReportService.INSTANCE.querySearchList(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

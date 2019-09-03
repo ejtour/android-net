@@ -70,10 +70,8 @@ public class WaitRefundProductDetailPresenter implements WaitRefundProductDetail
         Report.queryWaitRefundProductList(requestParams, new SimpleObserver<WaitRefundProductResp>(mView,showLoading) {
             @Override
             public void onSuccess(WaitRefundProductResp refundProductResp) {
+                mPageNum = mTempPageNum;
                 mView.showRefundProductDetail(refundProductResp,mPageNum>1);
-                if (!CommonUtils.isEmpty(refundProductResp.getRecords())) {
-                    mPageNum = mTempPageNum;
-                }
             }
             @Override
             public void onFailure(UseCaseException e) {

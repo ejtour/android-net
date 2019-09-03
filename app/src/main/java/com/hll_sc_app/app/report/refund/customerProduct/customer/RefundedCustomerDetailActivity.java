@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.refund.customerProduct.customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,9 +20,12 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
 import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
+import com.hll_sc_app.bean.report.refund.WaitRefundReq;
+import com.hll_sc_app.bean.report.search.SearchResultItem;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -35,6 +39,8 @@ import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,8 +59,8 @@ import butterknife.OnClick;
  * @date 20190720
  */
 @Route(path = RouterConfig.REPORT_REFUNDED_CUSTOMER_DETAIL)
-public class RefundedCustomertDetailActivity extends BaseLoadActivity implements RefundedCustomerDetailContract.IRefundedCustomerDetailView, BaseQuickAdapter.OnItemClickListener {
-
+public class RefundedCustomerDetailActivity extends BaseLoadActivity implements RefundedCustomerDetailContract.IRefundedCustomerDetailView, BaseQuickAdapter.OnItemClickListener {
+    private static final int REFUND_CUSTOMERT_CODE = 11002;
     private static final int COLUMN_NUM = 9;
     private static final int[] WIDTH_ARRAY = {150,120,80, 80, 60, 60,60,60,60};
     @BindView(R.id.ogd_excel)
@@ -149,7 +155,7 @@ public class RefundedCustomertDetailActivity extends BaseLoadActivity implements
         super.hideLoading();
     }
 
-    @OnClick({R.id.rog_title_bar,R.id.img_clear,R.id.txt_filter_flag,R.id.txt_date_name})
+    @OnClick({R.id.rog_title_bar,R.id.img_clear,R.id.txt_filter_flag,R.id.txt_date_name,R.id.edt_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_clear:
@@ -165,6 +171,9 @@ public class RefundedCustomertDetailActivity extends BaseLoadActivity implements
                 break;
             case R.id.txt_date_name:
                 showDateRangeWindow();
+                break;
+            case R.id.edt_search:
+                RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_SEARCH, this, REFUND_CUSTOMERT_CODE);
             default:
                 break;
         }
@@ -343,5 +352,27 @@ public class RefundedCustomertDetailActivity extends BaseLoadActivity implements
         depositTextView.setText(text);
         mPresenter.queryRefundedCustomerDetail(true);
         mOptionsWindow.dismiss();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REFUND_CUSTOMERT_CODE && resultCode == RESULT_OK) {
+            SearchResultItem bean = data.getParcelableExtra("result");
+            edtSearch.setText(bean.getName());
+            imgClear.setVisibility(View.VISIBLE);
+            RefundedCustomerReq requestParams = getRequestParams();
+            if(bean.getType()==0) {
+                requestParams.setPurchaserID(bean.getShopMallId());
+            }else{
+                requestParams.setShopID(bean.getShopMallId());
+            }
+            mPresenter.queryRefundedCustomerDetail(true);
+        }
     }
 }

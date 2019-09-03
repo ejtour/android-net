@@ -20,4 +20,5 @@
         android:textSize="@dimen/base_text_13"
         android:paddingLeft="@dimen/base_text_20"
         android:text="采购商集团名称"/>
+
 </LinearLayout>

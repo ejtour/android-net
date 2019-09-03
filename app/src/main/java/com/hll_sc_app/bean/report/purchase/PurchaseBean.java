@@ -14,7 +14,7 @@ public class PurchaseBean implements Parcelable {
     private double logisticsCost;
     private int carNums;
     private String id;
-    private transient double purchaserEfficiency;
+    private double purchaserEfficiency;
     private double purchaseAmount;
 
     public String getDate() {
@@ -85,6 +85,7 @@ public class PurchaseBean implements Parcelable {
         dest.writeDouble(this.logisticsCost);
         dest.writeInt(this.carNums);
         dest.writeString(this.id);
+        dest.writeDouble(this.purchaserEfficiency);
         dest.writeDouble(this.purchaseAmount);
     }
 
@@ -104,6 +105,7 @@ public class PurchaseBean implements Parcelable {
         this.logisticsCost = in.readDouble();
         this.carNums = in.readInt();
         this.id = in.readString();
+        this.purchaserEfficiency = in.readDouble();
         this.purchaseAmount = in.readDouble();
     }
 

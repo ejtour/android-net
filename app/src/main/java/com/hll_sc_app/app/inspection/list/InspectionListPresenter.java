@@ -1,16 +1,14 @@
 package com.hll_sc_app.app.inspection.list;
 
-import android.text.TextUtils;
-
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.PurchaserBean;
-import com.hll_sc_app.bean.common.PurchaserShopBean;
-import com.hll_sc_app.bean.inspection.InspectionResp;
 import com.hll_sc_app.bean.filter.DateShopParam;
+import com.hll_sc_app.bean.inspection.InspectionResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Inspection;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +32,7 @@ public class InspectionListPresenter implements IInspectionListContract.IInspect
 
     @Override
     public void start() {
-        getPurchaserList("");
+        getPurchaserList();
         reload();
     }
 
@@ -55,6 +53,28 @@ public class InspectionListPresenter implements IInspectionListContract.IInspect
         load(false);
     }
 
+    @Override
+    public void getPurchaserList() {
+        Common.queryPurchaserList("inspectionBill", "", new SimpleObserver<List<PurchaserBean>>(mView) {
+            @Override
+            public void onSuccess(List<PurchaserBean> purchaserBeans) {
+                List<com.hll_sc_app.bean.goods.PurchaserBean> beans = new ArrayList<>();
+                if (!CommonUtils.isEmpty(purchaserBeans)) {
+                    com.hll_sc_app.bean.goods.PurchaserBean all = new com.hll_sc_app.bean.goods.PurchaserBean();
+                    all.setPurchaserName("全部");
+                    beans.add(all);
+                    for (PurchaserBean bean : purchaserBeans) {
+                        com.hll_sc_app.bean.goods.PurchaserBean purchaserBean = new com.hll_sc_app.bean.goods.PurchaserBean();
+                        purchaserBean.setPurchaserID(bean.getPurchaserID());
+                        purchaserBean.setPurchaserName(bean.getPurchaserName());
+                        beans.add(purchaserBean);
+                    }
+                }
+                mView.cachePurchaserList(beans);
+            }
+        });
+    }
+
     private void load(boolean showLoading) {
         Inspection.getInspectionList(mPageNum,
                 mParam.getFormatStartDate(), mParam.getFormatEndDate(),
@@ -71,26 +91,5 @@ public class InspectionListPresenter implements IInspectionListContract.IInspect
     @Override
     public void register(IInspectionListContract.IInspectionListView view) {
         mView = CommonUtils.requireNonNull(view);
-    }
-
-    @Override
-    public void getPurchaserList(String searchWords) {
-        Common.queryPurchaserList("customerOrder", searchWords, new SimpleObserver<List<PurchaserBean>>(mView) {
-            @Override
-            public void onSuccess(List<PurchaserBean> purchaserBeans) {
-                mView.refreshPurchaserList(purchaserBeans);
-            }
-        });
-    }
-
-    @Override
-    public void getShopList(String purchaseID, String searchWords) {
-        if (TextUtils.isEmpty(purchaseID)) return;
-        Common.queryPurchaserShopList(purchaseID, "customerOrder", searchWords, new SimpleObserver<List<PurchaserShopBean>>(mView) {
-            @Override
-            public void onSuccess(List<PurchaserShopBean> purchaserShopBeans) {
-                mView.refreshShopList(purchaserShopBeans);
-            }
-        });
     }
 }

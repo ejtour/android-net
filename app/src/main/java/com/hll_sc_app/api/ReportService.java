@@ -5,7 +5,6 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
@@ -17,6 +16,8 @@ import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
+import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
+import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
@@ -49,8 +50,14 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
+import com.hll_sc_app.bean.report.search.SearchReq;
+import com.hll_sc_app.bean.report.search.SearchResultResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
+import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
+import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 
 import java.util.List;
@@ -259,4 +266,40 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111094")
     Observable<BaseResp<Object>> recordPeopleEffect(@Body BaseMapReq req);
+
+    /**
+     * 客户流失率统计（门店明细）
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111032")
+    Observable<BaseResp<CustomerAndShopLossResp>> queryCustomerOrShopLossDetail(@Body BaseReq<CustomerAndShopLossReq> body);
+
+    /**
+     * 代仓发货统计
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111067")
+    Observable<BaseResp<WareHouseDeliveryResp>> queryWareHouseDeliveryInfo(@Body BaseReq<WareHouseDeliveryReq> body);
+
+    /**
+     * 代仓服务费统计
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111093")
+    Observable<BaseResp<WareHouseServiceFeeResp>> queryWareHouseServiceFee(@Body BaseReq<WareHouseServiceFeeReq> body);
+
+    /**
+     * 搜索
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:103083")
+    Observable<BaseResp<SearchResultResp>> querySearchList(@Body BaseReq<SearchReq> body);
 }

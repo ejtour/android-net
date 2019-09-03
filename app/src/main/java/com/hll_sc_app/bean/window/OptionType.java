@@ -30,6 +30,7 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_REPORT_PRE_SEVEN_DATE, OptionType.OPTION_REPORT_PRE_THIRTY_DATE, OptionType.OPTION_REPORT_PRE_NINETY_DATE,
         OptionType.OPTION_NOT_DEPOSIT, OptionType.OPTION_EXPORT_PRICE_MANAGE_LOG, OptionType.OPTION_CHECK_PRICE_MANAGE_CHANGE_LOG,
         OptionType.OPTION_EXPORT_SUMMARY_TABLE, OptionType.OPTION_RECORD_PURCHASE_LOGISTICS, OptionType.OPTION_RECORD_PURCHASE_AMOUNT,
+        OptionType.OPTION_PRE_SEVEN_LOSS,OptionType.OPTION_PRE_THIRTY_LOSS,
         OptionType.OPTION_EXPORT_DETAILS_TABLE, OptionType.OPTION_SET_MAN_HOUR_COST, OptionType.OPTION_RECORD_PRODUCE_DATA})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
@@ -112,6 +113,9 @@ public @interface OptionType {
     String OPTION_EXPORT_SUMMARY_TABLE = "导出汇总表";
     String OPTION_RECORD_PURCHASE_LOGISTICS = "录入采购物流";
     String OPTION_RECORD_PURCHASE_AMOUNT = "录入采购金额";
+
+    String OPTION_PRE_SEVEN_LOSS = "七日流失";
+    String OPTION_PRE_THIRTY_LOSS = "30日流失";
 
     String OPTION_EXPORT_DETAILS_TABLE = "导出明细表";
     String OPTION_SET_MAN_HOUR_COST = "设置工时费";

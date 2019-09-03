@@ -64,6 +64,7 @@
         style="@style/InfoEdit"
         android:hint="请输入采购数"
         android:inputType="number"
+        android:maxLength="8"
         app:layout_constraintBottom_toBottomOf="@id/rpi_num_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/rpi_num_label"

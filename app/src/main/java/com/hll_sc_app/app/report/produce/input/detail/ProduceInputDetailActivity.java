@@ -100,6 +100,10 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
     }
 
     private void save(View view) {
+        if (TextUtils.isEmpty(mBean.getCoopGroupName())) {
+            showToast("请选择合作公司");
+            return;
+        }
         mBean.setStandardSortNum(string2Int(mStandardPickNum.getText()));
         mBean.setStandardSortHours(string2Double(mStandardPickTime.getText()));
         mBean.setVegetablesSortNum(string2Int(mVegetablePickNum.getText()));

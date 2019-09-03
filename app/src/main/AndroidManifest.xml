@@ -752,7 +752,7 @@
 
         <!--代仓缺货商品明细-->
         <activity
-            android:name=".app.report.warehouse.WareHouseProductDetailActivity"
+            android:name=".app.report.warehouse.product.WareHouseProductDetailActivity"
             android:screenOrientation="portrait" />
 
         <!--配送及时率汇总-->
@@ -792,15 +792,30 @@
             android:screenOrientation="portrait" />
         <!--退货客户明细-->
         <activity
-            android:name=".app.report.refund.customerProduct.customer.RefundedCustomertDetailActivity"
+            android:name=".app.report.refund.customerProduct.customer.RefundedCustomerDetailActivity"
             android:screenOrientation="portrait" />
         <!--退款商品明细-->
         <activity
             android:name=".app.report.refund.customerProduct.product.RefundedProductDetailActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.inspection.list.InspectionListActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
+        <!--流失客户明细-->
+        <activity android:name=".app.report.loss.customer.CustomerLossDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <!--流失门店明细-->
+        <activity android:name=".app.report.loss.shop.ShopLossDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!--代仓发货统计-->
+        <activity android:name=".app.report.warehouse.delivery.WareHouseDeliveryStatisticsActivity"
+            android:screenOrientation="portrait"/>
+        <!--代仓服务费-->
+        <activity android:name=".app.report.warehouse.serviceFee.WareHouseServiceFeeActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".app.inspection.detail.InspectionDetailActivity"
@@ -837,6 +852,11 @@
         <activity
             android:name=".app.report.produce.input.maneffect.PeopleEffectInputActivity"
             android:screenOrientation="portrait" />
+
+        <!--退货搜索-->
+        <activity android:name=".app.report.refund.search.RefundSearchActivity"
+            android:screenOrientation="portrait"/>
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"

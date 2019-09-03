@@ -152,10 +152,10 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ManHourSettingActivity.REQ_CODE
+        if ((requestCode == ManHourSettingActivity.REQ_CODE
                 || requestCode == ProduceInputActivity.REQ_CODE
                 || requestCode == PeopleEffectInputActivity.REQ_CODE
-                || requestCode == ProduceDetailsActivity.REQ_CODE
+                || requestCode == ProduceDetailsActivity.REQ_CODE)
                 && resultCode == RESULT_OK) {
             mPresenter.start();
         }

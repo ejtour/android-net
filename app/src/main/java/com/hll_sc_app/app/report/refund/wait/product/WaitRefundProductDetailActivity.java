@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -13,9 +14,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.RefundSearch;
+import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.event.RefundSearchEvent;
+import com.hll_sc_app.bean.event.SalesManSearchEvent;
 import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.window.OptionType;
@@ -28,6 +34,9 @@ import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,6 +76,7 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
         setContentView(R.layout.activity_report_wait_refund_product_detail);
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        EventBus.getDefault().register(this);
         initView();
         initData();
     }
@@ -99,7 +109,7 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
         super.hideLoading();
     }
 
-    @OnClick({R.id.rog_title_bar,R.id.img_clear})
+    @OnClick({R.id.rog_title_bar,R.id.img_clear,R.id.edt_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_clear:
@@ -110,6 +120,9 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
                 break;
             case R.id.rog_title_bar:
                showExportOptionsWindow(mTitleBar);
+                break;
+            case R.id.edt_search:
+                SearchActivity.start("", RefundSearch.class.getSimpleName());
                 break;
             default:
                 break;
@@ -221,5 +234,24 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
             mExcel.setHeaderView(generateHeader(append));
             mExcel.setFooterView(generatorFooter(refundProductResp, append));
         }
+    }
+
+    @Subscribe
+    public void onEvent(RefundSearchEvent event) {
+        String name = event.getSearchWord();
+        if (!TextUtils.isEmpty(name)) {
+            edtSearch.setText(name);
+            mParam.setProductName(name);
+            imgClear.setVisibility(View.VISIBLE);
+        } else {
+            mParam.setProductName("");
+        }
+        mPresenter.queryRefundProductDetail(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -71,11 +71,8 @@ public class RefundedCustomerDetailPresenter implements RefundedCustomerDetailCo
         Report.queryRefundedCustomerList(requestParams, new SimpleObserver<RefundedCustomerResp>(mView,showLoading) {
             @Override
             public void onSuccess(RefundedCustomerResp refundCustomerResp) {
-                boolean isNotEmpty = !CommonUtils.isEmpty(refundCustomerResp.getGroupVoList());
-                mView.showRefundedCustomerDetail(refundCustomerResp,mPageNum>1 && isNotEmpty);
-                if (isNotEmpty) {
-                    mPageNum = mTempPageNum;
-                }
+                mPageNum = mTempPageNum;
+                mView.showRefundedCustomerDetail(refundCustomerResp,mPageNum>1);
             }
             @Override
             public void onFailure(UseCaseException e) {
