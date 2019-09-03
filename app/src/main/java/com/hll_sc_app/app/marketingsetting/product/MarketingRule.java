@@ -14,6 +14,8 @@ public enum MarketingRule {
     RULE_ZQ("5", "赠券"),
     RULE_MJ("6", "满减"),
     RULE_DZ("7", "打折"),
+    RULE_MANZHE("3", "满折"),
+    RULE_MJ_ORDER("2", "满减"),
     RULE_NULL("", "");
 
 
@@ -37,6 +39,10 @@ public enum MarketingRule {
             return RULE_DZ;
         } else if (TextUtils.equals(sType, RULE_MJ.getKey())) {
             return RULE_MJ;
+        } else if (TextUtils.equals(sType, RULE_MANZHE.getKey())) {
+            return RULE_MANZHE;
+        } else if (TextUtils.equals(sType, RULE_MJ_ORDER.getKey())) {
+            return RULE_MJ_ORDER;
         } else {
             return RULE_NULL;
         }

@@ -39,6 +39,8 @@ public interface IProductMarketingContract {
          * 获取结束时间
          */
         String getEndTime();
+
+        String getDiscountType();
     }
 
 

@@ -125,19 +125,6 @@
 
             </RelativeLayout>
 
-
-            <com.hll_sc_app.app.marketingsetting.view.CouponRuleSelectView
-                android:id="@+id/view_coupon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@color/base_white"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:visibility="gone"
-                app:modal="check" />
-
-
             <LinearLayout
                 android:id="@+id/ll_rule_dz"
                 android:layout_width="match_parent"

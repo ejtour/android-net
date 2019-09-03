@@ -87,7 +87,13 @@ public interface IProductMarketingAddContract {
          * @return
          */
         String getId();
+
+        /**
+         *
+         */
+        int getDiscountType();
     }
+
 
 
     interface IPresenter extends com.hll_sc_app.base.IPresenter<IView> {

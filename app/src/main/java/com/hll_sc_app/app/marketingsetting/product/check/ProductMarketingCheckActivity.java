@@ -10,29 +10,28 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.marketingsetting.adapter.CouponRuleAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingProductAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingRuleAdapter;
 import com.hll_sc_app.app.marketingsetting.coupon.check.MarketingCouponCheckActivity;
 import com.hll_sc_app.app.marketingsetting.product.MarketingRule;
 import com.hll_sc_app.app.marketingsetting.product.add.ProductMarketingAddActivity;
 import com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity;
-import com.hll_sc_app.app.marketingsetting.view.CouponRuleSelectView;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
-import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.marketingsetting.AreaListBean;
-import com.hll_sc_app.bean.marketingsetting.GiveBean;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
 import com.hll_sc_app.bean.marketingsetting.RuleListBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -78,6 +77,8 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
     private static String CREATE_TIME_FORMAT_OUT = "yyyy/MM/dd HH:mm:ss";
     @Autowired(name = "object0")
     String discountId;
+    @Autowired(name = "object1")
+    int discountType;
     @BindView(R.id.txt_title)
     TextView mTitle;
     @BindView(R.id.txt_activity_time)
@@ -90,8 +91,6 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
     TextView mRuleContent;
     @BindView(R.id.txt_check_product)
     TextView mCheckProduct;
-    @BindView(R.id.view_coupon)
-    CouponRuleSelectView mCouponRuleSelectView;
     @BindView(R.id.rl_rule)
     RecyclerView mRuleList;
     @BindView(R.id.txt_area)
@@ -110,12 +109,14 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
     TextView mTxtDelete;
     @BindView(R.id.txt_edt)
     TextView mTxtEdit;
+    @BindView(R.id.rl_product)
+    RelativeLayout mRlProduct;
     private Unbinder unbinder;
     private IProductMarketingCheckContract.IPresenter mPresenter;
     private MarketingDetailCheckResp mDetail;
 
-    public static void start(String discountId) {
-        RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_DETAIL, discountId);
+    public static void start(String discountId, int discountType) {
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_DETAIL, discountId, discountType);
     }
 
     @Override
@@ -140,6 +141,9 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
 
     private void initView() {
         mActivityProductList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        if (discountType == 1) {
+            mRlProduct.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -177,6 +181,12 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
      * @param resp
      */
     private void showActivityProducts(MarketingDetailCheckResp resp) {
+        /**
+         * 订单促销
+         */
+        if (discountType == 1) {
+            return;
+        }
         MarketingProductAdapter marketingProductAdapter = new MarketingProductAdapter(null, MarketingProductAdapter.Modal.SHOW);
         if (TextUtils.equals(MarketingRule.RULE_DZ.getKey(), resp.getDiscountRuleType() + "")) {
             marketingProductAdapter.setModal(MarketingProductAdapter.Modal.SHOW_DZ);
@@ -199,23 +209,40 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
      */
     private void showRuleList(MarketingDetailCheckResp resp) {
         if (TextUtils.equals(resp.getDiscountRuleType() + "", MarketingRule.RULE_ZQ.getKey())) {
-            mCouponRuleSelectView.setVisibility(View.VISIBLE);
-            RuleListBean ruleBean = resp.getRuleList().get(0);
-            List<GiveBean> giveBeans = JsonUtil.parseJsonList(ruleBean.getGiveTarget(), GiveBean.class);
-            mCouponRuleSelectView.setData(ruleBean.getRuleCondition() + "", giveBeans.get(0));
-            mCouponRuleSelectView.setSelectListener(() -> {
-                MarketingCouponCheckActivity.start(giveBeans.get(0).getGiveTargetID());
+            mRuleList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            CouponRuleAdapter ruleAdapter = new CouponRuleAdapter(resp.getRuleList(), CouponRuleAdapter.CHECK, discountType);
+            mRuleList.setAdapter(ruleAdapter);
+            ruleAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                RuleListBean ruleListBean = ruleAdapter.getItem(position);
+                switch (view.getId()) {
+                    case R.id.txt_coupon_select:
+                        MarketingCouponCheckActivity.start(ruleListBean.getGiveList().get(0).getGiveTargetID());
+                        break;
+                    default:
+                        break;
+                }
             });
+
+           /* else {
+                mCouponRuleSelectView.setVisibility(View.VISIBLE);
+                RuleListBean ruleBean = resp.getRuleList().get(0);
+                List<GiveBean> giveBeans = JsonUtil.parseJsonList(ruleBean.getGiveTarget(), GiveBean.class);
+                mCouponRuleSelectView.setData(ruleBean.getRuleCondition() + "", giveBeans.get(0));
+                mCouponRuleSelectView.setSelectListener(() -> {
+                    MarketingCouponCheckActivity.start(giveBeans.get(0).getGiveTargetID());
+                });
+            }*/
         } else if (TextUtils.equals(resp.getDiscountRuleType() + "", MarketingRule.RULE_DZ.getKey())) {
             mllRuleDz.setVisibility(View.VISIBLE);
             RuleListBean ruleBean = resp.getRuleList().get(0);
             mTxtRuleDz.setText(ruleBean.getRuleDiscountValue());
         } else {
-            MarketingRuleAdapter ruleAdapter = new MarketingRuleAdapter(null, false);
+            mRuleList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+            MarketingRuleAdapter ruleAdapter = new MarketingRuleAdapter(null, false, discountType);
             ruleAdapter.setRultType(resp.getDiscountRuleType());
             ruleAdapter.setNewData(resp.getRuleList());
-            mRuleList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             mRuleList.setAdapter(ruleAdapter);
+
         }
     }
 
@@ -350,7 +377,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
                         .create().show();
                 break;
             case R.id.txt_edt:
-                ProductMarketingAddActivity.start(mDetail);
+                ProductMarketingAddActivity.start(mDetail, discountType);
                 break;
             default:
                 break;

@@ -15,11 +15,11 @@ public class MarketingProductSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEditHint() {
-        return "请输入商品优惠名称";
+        return "请输入优惠名称";
     }
 
     @Override
     public String getEmptyTip() {
-        return "请输入商品优惠名称";
+        return "请输入优惠名称";
     }
 }
