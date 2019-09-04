@@ -20,6 +20,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.app.search.SearchActivity;
@@ -32,19 +33,14 @@ import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
-import com.hll_sc_app.widget.DatePickerDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -174,68 +170,13 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 case OptionType.OPTION_FILTER_CREATE:
                 case OptionType.OPTION_FILTER_EXECUTE:
                 case OptionType.OPTION_FILTER_SIGN:
-                    showDatePicker(label);
+                    OrderHelper.showDatePicker(label, mOrderParam, requireActivity());
                     break;
                 default:
                     EventBus.getDefault().post(new ExportEvent(label));
                     break;
             }
         }
-    }
-
-    private void showDatePicker(@OptionType String type) {
-        long selectBegin, selectEnd;
-        selectBegin = selectEnd = System.currentTimeMillis();
-        if (type.equals(OptionType.OPTION_FILTER_EXECUTE) && mOrderParam.getExecuteStart() != 0) {
-            selectBegin = mOrderParam.getExecuteStart();
-            selectEnd = mOrderParam.getExecuteEnd();
-        } else if (type.equals(OptionType.OPTION_FILTER_CREATE) && mOrderParam.getCreateStart() != 0) {
-            selectBegin = mOrderParam.getCreateStart();
-            selectEnd = mOrderParam.getCreateEnd();
-        } else if (type.equals(OptionType.OPTION_FILTER_SIGN) && mOrderParam.getSignStart() != 0) {
-            selectBegin = mOrderParam.getSignStart();
-            selectEnd = mOrderParam.getSignEnd();
-        }
-        Calendar endTime = Calendar.getInstance();
-        if (type.equals(OptionType.OPTION_FILTER_EXECUTE)) {
-            int year = endTime.get(Calendar.YEAR);
-            endTime.set(Calendar.YEAR, year + 3);
-        }
-        DatePickerDialog.newBuilder(requireActivity())
-                .setBeginTime(CalendarUtils.parse("20170101", Constants.UNSIGNED_YYYY_MM_DD).getTime())
-                .setEndTime(endTime.getTimeInMillis())
-                .setSelectBeginTime(selectBegin)
-                .setSelectEndTime(selectEnd)
-                .setTitle(type)
-                .setShowHour(!type.equals(OptionType.OPTION_FILTER_CREATE))
-                .setCallback(new DatePickerDialog.SelectCallback() {
-                    @Override
-                    public void select(Date beginTime, Date endTime) {
-                        if (CalendarUtils.getDateBefore(endTime, 31).getTime() > beginTime.getTime()) {
-                            showToast("开始日期至结束日期限制选择31天以内");
-                            return;
-                        }
-                        mOrderParam.cancelTimeInterval();
-                        switch (type) {
-                            case OptionType.OPTION_FILTER_CREATE:
-                                mOrderParam.setCreateStart(beginTime.getTime());
-                                mOrderParam.setCreateEnd(endTime.getTime());
-                                break;
-                            case OptionType.OPTION_FILTER_EXECUTE:
-                                mOrderParam.setExecuteStart(beginTime.getTime());
-                                mOrderParam.setExecuteEnd(endTime.getTime());
-                                break;
-                            case OptionType.OPTION_FILTER_SIGN:
-                                mOrderParam.setSignStart(beginTime.getTime());
-                                mOrderParam.setSignEnd(endTime.getTime());
-                                break;
-                        }
-                        EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
-                    }
-                })
-                .setCancelable(false)
-                .create()
-                .show();
     }
 
     class OrderListFragmentPager extends FragmentPagerAdapter {
