@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/cop_label"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:textSize="11sp"
+        android:textColor="@color/color_999999"
+        android:layout_width="match_parent"
+        tools:text="订单量：112笔 订单金额：96,763.00元  下单门店：16家"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/layout_simple_refresh_list" />
+</LinearLayout>
