@@ -16,8 +16,8 @@
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/iss_search_view"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:background="@android:color/white"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iss_title_bar" />

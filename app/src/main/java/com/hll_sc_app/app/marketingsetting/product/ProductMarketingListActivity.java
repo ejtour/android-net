@@ -132,8 +132,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
      * *头部搜索样式
      */
     private void initSearch() {
-        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_strip);
-        mSearchView.setBackgroundResource(R.drawable.base_bg_shadow_top_bar);
+        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
         mSearchView.setTextColorWhite();
         mSearchView.setSearchTextLeft();
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {

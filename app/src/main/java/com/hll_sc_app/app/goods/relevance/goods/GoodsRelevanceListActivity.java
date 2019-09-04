@@ -123,12 +123,8 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
     }
 
     private void initView() {
-        mSearchView.setPadding(0, 0, 0, 0);
-        mSearchView.setBackgroundResource(R.color.base_colorPrimary);
         LinearLayout llContent = mSearchView.getContentView();
         if (llContent != null) {
-            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) llContent.getLayoutParams();
-            params.setMargins(0, 0, 0, 0);
             llContent.setBackgroundResource(R.drawable.bg_search_text);
             llContent.setGravity(Gravity.CENTER_VERTICAL);
             mSearchView.setTextColorWhite();

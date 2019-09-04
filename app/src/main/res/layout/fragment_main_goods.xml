@@ -77,6 +77,9 @@
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_toolbar"/>
 

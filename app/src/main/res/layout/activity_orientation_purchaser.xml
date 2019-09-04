@@ -31,6 +31,8 @@
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
+        android:padding="@dimen/dp_10"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
         android:layout_height="49dp" />
 
     <android.support.v7.widget.RecyclerView
