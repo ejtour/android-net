@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/otf_hint"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="7dp"
-    android:paddingBottom="7dp"
-    android:visibility="gone">
+    tools:paddingTop="7dp"
+    tools:paddingBottom="7dp"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
 
     <com.hll_sc_app.widget.TriangleView
         android:id="@+id/otf_arrow"
@@ -64,4 +63,4 @@
         app:layout_constraintStart_toEndOf="@+id/otf_interval"
         app:layout_constraintTop_toTopOf="@+id/otf_interval" />
 
-</android.support.constraint.ConstraintLayout>
+</merge>
