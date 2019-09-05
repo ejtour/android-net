@@ -874,6 +874,10 @@
         <activity
             android:name=".app.stockmanage.storehousemanage.edit.StoreHouseEditActivity"
             android:screenOrientation="portrait" />
+        <!--库存查询-->
+        <activity
+            android:name=".app.stockmanage.stockquery.StockQueryActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

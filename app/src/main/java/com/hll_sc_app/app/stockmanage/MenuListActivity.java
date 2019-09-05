@@ -41,6 +41,7 @@ public class MenuListActivity extends AppCompatActivity {
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_STORE_HOUSE_MANAGE);
                 break;
             case R.id.ll_stock_query:
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_QUERY_LIST);
                 break;
             case R.id.ll_product_stock_check:
                 break;

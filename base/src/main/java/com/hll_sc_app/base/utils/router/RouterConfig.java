@@ -981,5 +981,8 @@ public class RouterConfig {
 
     /*仓库新增编辑*/
     public static final String ACTIVITY_STORE_HOUSE_EDIT = "/activity/store/house/edit";
+
+    /*仓库-库存查询*/
+    public static final String ACTIVITY_STOCK_QUERY_LIST = "/activity/stock/query/list";
 }
 

@@ -133,8 +133,24 @@ public class GoodsBean implements Parcelable {
     private String usableStock;
     private double stockWarnNum;
     private boolean select;
+    private String occupiedStock;
+    private String totalStock;
 
+    public String getTotalStock() {
+        return totalStock;
+    }
 
+    public void setTotalStock(String totalStock) {
+        this.totalStock = totalStock;
+    }
+
+    public String getOccupiedStock() {
+        return occupiedStock;
+    }
+
+    public void setOccupiedStock(String occupiedStock) {
+        this.occupiedStock = occupiedStock;
+    }
 
     public boolean isSelect() {
         return select;
@@ -820,6 +836,8 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.usableStock);
         dest.writeDouble(this.stockWarnNum);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
+        dest.writeString(this.occupiedStock);
+        dest.writeString(this.totalStock);
     }
 
     protected GoodsBean(Parcel in) {
@@ -895,6 +913,8 @@ public class GoodsBean implements Parcelable {
         this.usableStock = in.readString();
         this.stockWarnNum = in.readDouble();
         this.select = in.readByte() != 0;
+        this.occupiedStock = in.readString();
+        this.totalStock = in.readString();
     }
 
     public static final Creator<GoodsBean> CREATOR = new Creator<GoodsBean>() {
