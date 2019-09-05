@@ -8,6 +8,7 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,6 +96,7 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
         this.setFocusable(true);
         this.setOutsideTouchable(true);
         this.setBackgroundDrawable(new ColorDrawable(0xbb000000));
+        this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         initView();
     }
 

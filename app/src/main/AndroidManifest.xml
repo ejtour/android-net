@@ -503,6 +503,7 @@
 
         <activity
             android:name=".app.aftersales.audit.AuditActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <activity
@@ -527,6 +528,7 @@
 
         <activity
             android:name=".app.report.orderGoods.OrderGoodsActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <!--客户销售汇总-->
         <activity
@@ -555,6 +557,7 @@
 
         <activity
             android:name=".app.search.SearchActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <activity
@@ -691,6 +694,7 @@
 
         <activity
             android:name=".app.bill.list.BillListActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <activity
@@ -717,6 +721,7 @@
         <!--缺货汇总表-->
         <activity
             android:name=".app.report.customerLack.CustomerLackSummaryActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <!--缺货明细-->
@@ -753,6 +758,7 @@
         <!--代仓缺货商品明细-->
         <activity
             android:name=".app.report.warehouse.product.WareHouseProductDetailActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
         <!--配送及时率汇总-->
@@ -812,9 +818,11 @@
             android:screenOrientation="portrait"/>
         <!--代仓发货统计-->
         <activity android:name=".app.report.warehouse.delivery.WareHouseDeliveryStatisticsActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
         <!--代仓服务费-->
         <activity android:name=".app.report.warehouse.serviceFee.WareHouseServiceFeeActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
         <activity
