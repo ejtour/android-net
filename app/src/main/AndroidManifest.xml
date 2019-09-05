@@ -801,21 +801,25 @@
 
         <activity
             android:name=".app.inspection.list.InspectionListActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <!--流失客户明细-->
-        <activity android:name=".app.report.loss.customer.CustomerLossDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.loss.customer.CustomerLossDetailActivity"
+            android:screenOrientation="portrait" />
 
         <!--流失门店明细-->
-        <activity android:name=".app.report.loss.shop.ShopLossDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.loss.shop.ShopLossDetailActivity"
+            android:screenOrientation="portrait" />
         <!--代仓发货统计-->
-        <activity android:name=".app.report.warehouse.delivery.WareHouseDeliveryStatisticsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.warehouse.delivery.WareHouseDeliveryStatisticsActivity"
+            android:screenOrientation="portrait" />
         <!--代仓服务费-->
-        <activity android:name=".app.report.warehouse.serviceFee.WareHouseServiceFeeActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.warehouse.serviceFee.WareHouseServiceFeeActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.inspection.detail.InspectionDetailActivity"
@@ -843,7 +847,7 @@
 
         <activity
             android:name=".app.report.produce.input.detail.ProduceInputDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.report.produce.details.ProduceDetailsActivity"
@@ -854,10 +858,22 @@
             android:screenOrientation="portrait" />
 
         <!--退货搜索-->
-        <activity android:name=".app.report.refund.search.RefundSearchActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.refund.search.RefundSearchActivity"
+            android:screenOrientation="portrait" />
 
-
+        <!--库存管理首页-->
+        <activity
+            android:name=".app.stockmanage.MenuListActivity"
+            android:screenOrientation="portrait" />
+        <!--仓库查询-->
+        <activity
+            android:name=".app.stockmanage.storehousemanage.StoreHouseManageActivity"
+            android:screenOrientation="portrait" />
+        <!--仓库新增编辑-->
+        <activity
+            android:name=".app.stockmanage.storehousemanage.edit.StoreHouseEditActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

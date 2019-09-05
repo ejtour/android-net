@@ -1,0 +1,42 @@
+package com.hll_sc_app.api;
+
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
+import com.hll_sc_app.base.http.HttpConfig;
+import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.stockmanage.StorehouseListResp;
+
+import io.reactivex.Observable;
+import retrofit2.http.Body;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
+
+/**
+ * 库存管理接口
+ */
+public interface StockManageService {
+    StockManageService INSTANCE = HttpFactory.create(StockManageService.class);
+
+    /**
+     * 获取供应商员工列表
+     *
+     * @param req req
+     * @return resp
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100119")
+    Observable<BaseResp<StorehouseListResp>> getStoreHouseList(@Body BaseMapReq req);
+
+    /**
+     * 新增和修改仓库信息
+     *
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100118")
+    Observable<BaseResp<Object>> saveStoreHouseInfo(@Body BaseReq<StorehouseListResp.Storehouse> req);
+
+
+}

@@ -897,7 +897,6 @@ public class RouterConfig {
     public static final String CRM_MINE = "/fragment/crm/mine";
 
     /**
-     *
      * 待退合计
      */
     public static final String REPORT_WAIT_REFUND_TOTAL = "/activity/report/refund/wait";
@@ -974,5 +973,13 @@ public class RouterConfig {
     public static final String REPORT_REFUND_SEARCH_FRAGMENT = "/activity/report/refund/search/fragment";
 
 
+    /*库存管理首页*/
+    public static final String ACTIVITY_STOCK_MANAGE_MENU = "/activity/stock/mange/menu";
+
+    /*仓库查询 管理*/
+    public static final String ACTIVITY_STORE_HOUSE_MANAGE = "/activity/store/house/manage";
+
+    /*仓库新增编辑*/
+    public static final String ACTIVITY_STORE_HOUSE_EDIT = "/activity/store/house/edit";
 }
 
