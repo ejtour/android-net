@@ -138,12 +138,15 @@ public class CommodityCheckActivity extends BaseLoadActivity implements ICommodi
         if (mBAdapter != null) {
             reqList.addAll(mBAdapter.getReqList());
         }
+        if (reqList.size() == 0) {
+            finish();
+            return;
+        }
         mPresenter.commitCheck(reqList);
     }
 
     @Override
     public void commitSuccess() {
-        showToast("处理成功");
         setResult(RESULT_OK);
         finish();
     }

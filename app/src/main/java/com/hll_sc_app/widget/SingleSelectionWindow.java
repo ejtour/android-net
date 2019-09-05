@@ -5,8 +5,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -34,6 +36,7 @@ public class SingleSelectionWindow<T> extends BasePopupWindow implements View.On
     private OnSelectListener<T> mSelectListener;
     private WrapperName<T> mWrapperName;
     private OnClickWindow mClickListener;
+    private int mGravity = Gravity.CENTER_VERTICAL;
 
     public SingleSelectionWindow(Activity context, WrapperName<T> wrapperName) {
         super(context);
@@ -98,6 +101,11 @@ public class SingleSelectionWindow<T> extends BasePopupWindow implements View.On
         this.mSelectListener = selectListener;
     }
 
+    public void setTextGravity(int gravity) {
+        mGravity = gravity;
+        mAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onClick(View view) {
         if (this.mClickListener != null) {
@@ -148,6 +156,14 @@ public class SingleSelectionWindow<T> extends BasePopupWindow implements View.On
     private class ListAdapter extends BaseQuickAdapter<T, BaseViewHolder> {
         ListAdapter(@Nullable List<T> data) {
             super(R.layout.item_single_selection, data);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) helper.getView(R.id.iss_label).getLayoutParams();
+            params.gravity = mGravity;
+            return helper;
         }
 
         @Override

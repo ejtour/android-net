@@ -159,8 +159,6 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有商品模板数据").create();
         mRecyclerView.setAdapter(mAdapter);
-        int padding = UIUtils.dip2px(10);
-        mSearchView.setPadding(0, padding, 0, 0);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {

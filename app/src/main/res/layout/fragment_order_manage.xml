@@ -5,7 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/view_order_time_filter_hint" />
+    <com.hll_sc_app.widget.order.OrderFilterView
+        android:id="@+id/fom_filter_view"
+        android:visibility="gone"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <ViewStub
         android:id="@+id/fom_deliver_type_stub"

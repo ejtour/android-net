@@ -44,8 +44,6 @@ public class ProduceInputHeader extends ConstraintLayout {
         setBackgroundColor(Color.WHITE);
         View view = View.inflate(context, R.layout.view_report_produce_input_header, this);
         ButterKnife.bind(this, view);
-        Date local = new Date();
-        mDate.setText(CalendarUtils.format(local, Constants.SLASH_YYYY_MM_DD));
         mPerson.setText(GreenDaoUtils.getUser().getEmployeeName());
     }
 
@@ -60,5 +58,9 @@ public class ProduceInputHeader extends ConstraintLayout {
 
     public void setShiftColor(int color) {
         mShift.setTextColor(color);
+    }
+
+    public void setDate(CharSequence s) {
+        mDate.setText(s);
     }
 }

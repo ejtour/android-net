@@ -28,6 +28,8 @@ import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
@@ -112,6 +114,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         mHeader = new ProduceInputHeader(this);
         mHeader.setOnClickListener(this::selectShift);
         mHeader.setShift(mClasses);
+        mHeader.setDate(mDate == null ? CalendarUtils.format(new Date(), Constants.SLASH_YYYY_MM_DD) : DateUtil.getReadableTime(mDate, Constants.SLASH_YYYY_MM_DD));
         mFooter = new ProduceInputFooter(this);
         mFooter.setOnClickListener(this::addData);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));

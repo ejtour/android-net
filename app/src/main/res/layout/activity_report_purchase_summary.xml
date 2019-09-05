@@ -65,10 +65,8 @@
             android:id="@+id/rps_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
             android:clipToPadding="false"
-            android:paddingTop="@dimen/dp_10"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </android.support.constraint.ConstraintLayout>

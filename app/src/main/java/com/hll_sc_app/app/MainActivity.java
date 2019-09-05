@@ -127,7 +127,6 @@ public class MainActivity extends BaseLoadActivity {
                     currentFragment = RouterUtil.getFragment(RouterConfig.ROOT_HOME_MAIN);
                     break;
                 case PageType.SUPPLIER_ORDER:
-                case PageType.CRM_ORDER:
                     currentFragment = RouterUtil.getFragment(RouterConfig.ROOT_HOME_ORDER);
                     break;
                 case PageType.SUPPLIER_GOODS:
@@ -139,6 +138,9 @@ public class MainActivity extends BaseLoadActivity {
                     break;
                 case PageType.CRM_HOME:
                     currentFragment = RouterUtil.getFragment(RouterConfig.CRM_HOME);
+                    break;
+                case PageType.CRM_ORDER:
+                    currentFragment = RouterUtil.getFragment(RouterConfig.CRM_ORDER);
                     break;
                 case PageType.CRM_CUSTOMER:
                     currentFragment = RouterUtil.getFragment(RouterConfig.CRM_CUSTOMER);

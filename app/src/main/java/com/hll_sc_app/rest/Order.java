@@ -8,6 +8,7 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -30,6 +31,7 @@ import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
+import com.hll_sc_app.bean.order.shop.OrderShopResp;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
@@ -526,10 +528,10 @@ public class Order {
      *
      * @param beans 库存提交列表
      */
-    public static void commitInventoryCheck(List<InventoryCheckReq.InventoryCheckBean> beans, SimpleObserver<Object> observer) {
+    public static void commitInventoryCheck(List<InventoryCheckReq.InventoryCheckBean> beans, SimpleObserver<MsgWrapper<Object>> observer) {
         OrderService.INSTANCE
                 .commitInventoryCheck(new BaseReq<>(new InventoryCheckReq(beans)))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
@@ -543,6 +545,53 @@ public class Order {
         OrderService.INSTANCE
                 .tagDoNotRelevance(BaseMapReq.newBuilder()
                         .put("id", id).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取下单门店列表数据
+     *
+     * @param billStatus       订单状态 0-未下单 1-已下单
+     * @param actionType       1-今日订单 2-全部订单
+     * @param pageNum          页码
+     * @param searchWords      搜索词
+     * @param createTimeStart  下单开始时间 yyyyMMdd
+     * @param createTimeEnd    下单结束时间 yyyyMMdd
+     * @param signTimeStart    签收开始时间 yyyyMMddHH
+     * @param signTimeEnd      签收结束时间 yyyyMMddHH
+     * @param executeDateStart 到货开始时间 yyyyMMddHH
+     * @param executeDateEnd   到货结束时间 yyyyMMddHH
+     */
+    public static void queryOrderShopList(int billStatus,
+                                          String actionType,
+                                          int pageNum,
+                                          String searchWords,
+                                          String createTimeStart,
+                                          String createTimeEnd,
+                                          String executeDateStart,
+                                          String executeDateEnd,
+                                          String signTimeStart,
+                                          String signTimeEnd,
+                                          SimpleObserver<OrderShopResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        OrderService.INSTANCE
+                .queryOrderShopList(BaseMapReq.newBuilder()
+                        .put("billStatus", String.valueOf(billStatus))
+                        .put("actionType", actionType)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("salesmanID", user.getEmployeeID())
+                        .put("groupID", user.getGroupID())
+                        .put("searchWords", searchWords)
+                        .put("subBillCreateTimeStart", createTimeStart)
+                        .put("subBillCreateTimeEnd", createTimeEnd)
+                        .put("subBillExecuteDateStart", executeDateStart)
+                        .put("subBillExecuteDateEnd", executeDateEnd)
+                        .put("subBillSignTimeStart", signTimeStart)
+                        .put("subBillSignTimeEnd", signTimeEnd)
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

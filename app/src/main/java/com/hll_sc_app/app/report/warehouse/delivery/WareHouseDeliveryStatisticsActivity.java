@@ -84,6 +84,8 @@ public class WareHouseDeliveryStatisticsActivity extends BaseLoadActivity implem
     private ContextOptionsWindow mExportOptionsWindow;
     private PurchaserSelectWindow mPurchaserWindow;
 
+    private AtomicInteger sequence;
+
 
 
     @Override
@@ -288,7 +290,13 @@ public class WareHouseDeliveryStatisticsActivity extends BaseLoadActivity implem
     @Override
     public void setWareHouseDeliveryList(WareHouseDeliveryResp wareHouseDeliveryResp, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(wareHouseDeliveryResp.getRecords()) && wareHouseDeliveryResp.getRecords().size() == 20);
+        if(!append){
+            sequence = new AtomicInteger(0);
+        }
         if (!CommonUtils.isEmpty(wareHouseDeliveryResp.getRecords())) {
+            for(WareHouseDeliveryItem item:wareHouseDeliveryResp.getRecords()){
+                item.setSequenceNo(sequence.incrementAndGet());
+            }
             mExcel.setData(wareHouseDeliveryResp.getRecords(), append);
             mExcel.setHeaderView(generateHeader(true));
         }else{

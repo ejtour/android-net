@@ -26,7 +26,7 @@ public class WareHouseDeliveryReq {
     /**
      * 货主集团IDs
      */
-    private List<Long> shipperGroupID;
+    private Long shipperGroupID;
     /**
      * 货主IDs
      */
@@ -68,11 +68,11 @@ public class WareHouseDeliveryReq {
         this.pageSize = pageSize;
     }
 
-    public List<Long> getShipperGroupID() {
+    public Long getShipperGroupID() {
         return shipperGroupID;
     }
 
-    public void setShipperGroupID(List<Long> shipperGroupID) {
+    public void setShipperGroupID(Long shipperGroupID) {
         this.shipperGroupID = shipperGroupID;
     }
 

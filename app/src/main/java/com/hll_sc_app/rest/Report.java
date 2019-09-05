@@ -437,7 +437,7 @@ public class Report {
     public static void queryProduceDetails(String classes, String date, int opType, SimpleObserver<List<ProduceDetailBean>> observer) {
         ReportService.INSTANCE
                 .queryProduceDetails(BaseMapReq.newBuilder()
-                        .put("classes", classes)
+                        .put("classes", classes, true)
                         .put("date", date)
                         .put("groupID", UserConfig.getGroupID())
                         .put("opType", String.valueOf(opType))
