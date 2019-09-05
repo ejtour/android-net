@@ -73,7 +73,7 @@ public class WareHouseDeliveryStatisticsPresenter implements IWareHouseDeliveryS
         WareHouseDeliveryReq params = mView.getRequestParams();
         params.setGroupID(UserConfig.getGroupID());
         if(!StringUtil.isEmpty(mView.getShipperID())) {
-            params.setShipperGroupID(Arrays.asList(Long.valueOf(mView.getShipperID())));
+            params.setShipperGroupID(Long.valueOf(mView.getShipperID()));
         }
         params.setPageNo(mPageNum);
         params.setPageSize(20);

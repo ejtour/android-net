@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class WareHouseDeliveryItem implements IStringArrayGenerator {
 
-    private AtomicInteger atomicInteger = new AtomicInteger(0);
+    private int sequenceNo;
     /**
      * 发货金额
      */
@@ -96,10 +96,18 @@ public class WareHouseDeliveryItem implements IStringArrayGenerator {
         this.wareHouseDeliveryGoodsAmount = wareHouseDeliveryGoodsAmount;
     }
 
+    public int getSequenceNo() {
+        return sequenceNo;
+    }
+
+    public void setSequenceNo(int sequenceNo) {
+        this.sequenceNo = sequenceNo;
+    }
+
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
-        list.add(atomicInteger.incrementAndGet()+"");
+        list.add(getSequenceNo()+"");
         list.add(getShipperGroup()); // 货主集团
         list.add(getShipperShop()); // 货主门店
         list.add(getDeliveryBillNum()); // 发货单数
