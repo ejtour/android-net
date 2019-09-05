@@ -3,13 +3,11 @@ package com.hll_sc_app.app.order.transfer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
@@ -29,8 +27,8 @@ import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.order.OrderFilterView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -52,21 +50,8 @@ import butterknife.Unbinder;
  */
 
 public class OrderTransferFragment extends BaseLazyFragment implements IOrderTransferContract.IOrderTransferView {
-    /**
-     * 过滤头前导文本
-     */
-    @BindView(R.id.otf_label)
-    TextView mLabel;
-    /**
-     * 过滤时间间隔
-     */
-    @BindView(R.id.otf_interval)
-    TextView mInterval;
-    /**
-     * 过滤头
-     */
-    @BindView(R.id.otf_hint)
-    ConstraintLayout mFilterHeader;
+    @BindView(R.id.fot_filter_view)
+    OrderFilterView mFilterHeader;
     @BindView(R.id.fot_list)
     RecyclerView mListView;
     @BindView(R.id.fot_refresh)
@@ -211,24 +196,7 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
 
     @Override
     protected void initData() {
-        if (!TextUtils.isEmpty(mOrderParam.getFormatCreateStart(Constants.SIGNED_YYYY_MM_DD))) {
-            mFilterHeader.setVisibility(View.VISIBLE);
-            mLabel.setText("当前按下单时间筛选");
-            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatCreateStart(Constants.SIGNED_YYYY_MM_DD),
-                    mOrderParam.getFormatCreateEnd(Constants.SIGNED_YYYY_MM_DD)));
-        } else if (!TextUtils.isEmpty(mOrderParam.getFormatExecuteStart(Constants.SIGNED_YYYY_MM_DD_HH))) {
-            mFilterHeader.setVisibility(View.VISIBLE);
-            mLabel.setText("当前按到货时间筛选");
-            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatExecuteStart(Constants.SIGNED_YYYY_MM_DD_HH),
-                    mOrderParam.getFormatExecuteEnd(Constants.SIGNED_YYYY_MM_DD_HH)));
-        } else if (!TextUtils.isEmpty(mOrderParam.getFormatSignStart(Constants.SIGNED_YYYY_MM_DD_HH))) {
-            mFilterHeader.setVisibility(View.VISIBLE);
-            mLabel.setText("当前按签收时间筛选");
-            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatSignStart(Constants.SIGNED_YYYY_MM_DD_HH),
-                    mOrderParam.getFormatSignEnd(Constants.SIGNED_YYYY_MM_DD_HH)));
-        } else {
-            mFilterHeader.setVisibility(View.GONE);
-        }
+        mFilterHeader.setData(mOrderParam);
         mPresenter.start();
     }
 
@@ -325,7 +293,7 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
         updateBottomBarData();
     }
 
-    @OnClick(R.id.otf_cancel)
+    @OnClick(R.id.fot_filter_view)
     public void cancelFilter() {
         mOrderParam.cancelTimeInterval();
         EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));

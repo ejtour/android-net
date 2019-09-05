@@ -10,9 +10,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingListAdapter;
+import com.hll_sc_app.app.marketingsetting.product.add.ProductMarketingAddActivity;
 import com.hll_sc_app.app.marketingsetting.product.check.ProductMarketingCheckActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -64,6 +67,12 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     TextView mFilterStatus;
     @BindView(R.id.txt_filter_date)
     TextView mFilterDate;
+    @BindView(R.id.btn_add)
+    TextView mEmptyTxtAdd;
+    @BindView(R.id.txt_empty_title)
+    TextView mEmptyTitle;
+    @Autowired(name = "object0")
+    int mDiscountType;
     private Unbinder unbinder;
     private IProductMarketingContract.IPresenter mPresent;
     private SingleSelectionWindow<MarketingStatusBean> mStatusWindow;
@@ -73,11 +82,16 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     private String mFilterStartTime;
     private String mFilterEndTime;
 
+    public static void start(int discountType) {
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST, discountType);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marketing_product_list);
         unbinder = ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         EventBus.getDefault().register(this);
         initView();
         mPresent = ProductMarketingPresenter.newInstance();
@@ -95,6 +109,8 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     }
 
     private void initView() {
+        mEmptyTxtAdd.setText(String.format("新增一个%s促销活动", getType()));
+        mEmptyTitle.setText(String.format("您还没有设置过%s促销活动", getType()));
         initSearch();
         initList();
         mListContainer.setVisibility(View.GONE);
@@ -102,12 +118,21 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
 
     }
 
+
+    /**
+     * 判断是商品促销还是订单促销
+     *
+     * @return
+     */
+    private String getType() {
+        return mDiscountType == 1 ? "订单" : "商品";
+    }
+
     /**
      * *头部搜索样式
      */
     private void initSearch() {
-        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_strip);
-        mSearchView.setBackgroundResource(R.drawable.base_bg_shadow_top_bar);
+        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
         mSearchView.setTextColorWhite();
         mSearchView.setSearchTextLeft();
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
@@ -131,7 +156,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
         mListAdapter = new MarketingListAdapter(null);
         mListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (view.getId() == R.id.txt_check_detail) {
-                ProductMarketingCheckActivity.start(mListAdapter.getItem(position).getId());
+                ProductMarketingCheckActivity.start(mListAdapter.getItem(position).getId(), mDiscountType);
             }
         });
         mList.setAdapter(mListAdapter);
@@ -147,7 +172,6 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
             }
         });
     }
-
 
     @Override
     public void showMarketingStatus(List<MarketingStatusBean> marketingStatusBeans) {
@@ -208,6 +232,11 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
         return mFilterEndTime;
     }
 
+    @Override
+    public String getDiscountType() {
+        return mDiscountType + "";
+    }
+
     /**
      * 是否是过滤模式
      *
@@ -226,7 +255,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    @OnClick({R.id.txt_filter_status_true, R.id.txt_filter_date_true, R.id.img_close, R.id.txt_add,R.id.btn_add,})
+    @OnClick({R.id.txt_filter_status_true, R.id.txt_filter_date_true, R.id.img_close, R.id.txt_add, R.id.btn_add,})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_filter_status_true:
@@ -263,7 +292,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
                 break;
             case R.id.btn_add:
             case R.id.txt_add:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST_ADD);
+                ProductMarketingAddActivity.start(null, mDiscountType);
                 break;
             default:
                 break;

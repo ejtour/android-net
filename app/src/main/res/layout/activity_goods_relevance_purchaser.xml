@@ -47,8 +47,8 @@
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_height="45dp"/>
+        android:padding="@dimen/dp_10"
+        android:layout_height="wrap_content" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

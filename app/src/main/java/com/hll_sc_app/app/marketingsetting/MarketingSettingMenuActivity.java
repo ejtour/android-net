@@ -9,6 +9,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.marketingsetting.product.ProductMarketingListActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 
@@ -42,9 +43,10 @@ public class MarketingSettingMenuActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_product:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST);
+                ProductMarketingListActivity.start(2);
                 break;
             case R.id.ll_order:
+                ProductMarketingListActivity.start(1);
                 break;
             case R.id.ll_coupon:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_COUPON_LIST);

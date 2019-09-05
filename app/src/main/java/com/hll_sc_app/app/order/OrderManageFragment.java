@@ -46,6 +46,7 @@ import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.order.ExpressInfoDialog;
+import com.hll_sc_app.widget.order.OrderFilterView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -68,21 +69,8 @@ import butterknife.Unbinder;
 
 public class OrderManageFragment extends BaseLazyFragment implements IOrderManageContract.IOrderManageView {
     private static final String ORDER_TYPE_KEY = "order_type";
-    /**
-     * 过滤头前导文本
-     */
-    @BindView(R.id.otf_label)
-    TextView mLabel;
-    /**
-     * 过滤时间间隔
-     */
-    @BindView(R.id.otf_interval)
-    TextView mInterval;
-    /**
-     * 过滤头
-     */
-    @BindView(R.id.otf_hint)
-    ConstraintLayout mFilterHeader;
+    @BindView(R.id.fom_filter_view)
+    OrderFilterView mFilterHeader;
     @BindView(R.id.fom_list)
     RecyclerView mListView;
     @BindView(R.id.fom_refresh)
@@ -251,24 +239,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
 
     @Override
     protected void initData() {
-        if (!TextUtils.isEmpty(mOrderParam.getFormatCreateStart(Constants.SIGNED_YYYY_MM_DD))) {
-            mFilterHeader.setVisibility(View.VISIBLE);
-            mLabel.setText("当前按下单时间筛选");
-            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatCreateStart(Constants.SIGNED_YYYY_MM_DD),
-                    mOrderParam.getFormatCreateEnd(Constants.SIGNED_YYYY_MM_DD)));
-        } else if (!TextUtils.isEmpty(mOrderParam.getFormatExecuteStart(Constants.SIGNED_YYYY_MM_DD_HH))) {
-            mFilterHeader.setVisibility(View.VISIBLE);
-            mLabel.setText("当前按到货时间筛选");
-            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatExecuteStart(Constants.SIGNED_YYYY_MM_DD_HH),
-                    mOrderParam.getFormatExecuteEnd(Constants.SIGNED_YYYY_MM_DD_HH)));
-        } else if (!TextUtils.isEmpty(mOrderParam.getFormatSignStart(Constants.SIGNED_YYYY_MM_DD_HH))) {
-            mFilterHeader.setVisibility(View.VISIBLE);
-            mLabel.setText("当前按签收时间筛选");
-            mInterval.setText(String.format("%s ~ %s", mOrderParam.getFormatSignStart(Constants.SIGNED_YYYY_MM_DD_HH),
-                    mOrderParam.getFormatSignEnd(Constants.SIGNED_YYYY_MM_DD_HH)));
-        } else {
-            mFilterHeader.setVisibility(View.GONE);
-        }
+        mFilterHeader.setData(mOrderParam);
         mPresenter.start();
     }
 
@@ -440,7 +411,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         }
     }
 
-    @OnClick(R.id.otf_cancel)
+    @OnClick(R.id.fom_filter_view)
     public void cancelFilter() {
         mOrderParam.cancelTimeInterval();
         EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));

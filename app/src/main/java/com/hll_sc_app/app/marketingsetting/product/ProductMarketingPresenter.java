@@ -75,7 +75,7 @@ public class ProductMarketingPresenter implements IProductMarketingContract.IPre
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
                 .put("discountName", mView.getDiscountName())
                 .put("discountStatus", mView.getDiscountStatus())
-                .put("discountType", "2")
+                .put("discountType", mView.getDiscountType())
                 .put("groupID", userBean.getGroupID())
                 .put("pageNum", String.valueOf(pageNumTemp))
                 .put("pageSize", String.valueOf(pageSize))

@@ -21,6 +21,7 @@
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/transparent"
             android:layout_marginRight="@dimen/title_bar_height"
             android:layout_toRightOf="@+id/img_close"/>
 

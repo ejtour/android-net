@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.crm.home;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,16 +16,13 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.MPPointF;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -184,6 +180,8 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         legend.setYOffset(10);
+        legend.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_666666));
+        legend.setTextSize(10);
 
         mTrendChart.getDescription().setEnabled(false);
         mTrendChart.setNoDataText("无数据");
@@ -204,19 +202,25 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
             }
         });
         xAxis.setDrawGridLines(false);
-        xAxis.setSpaceMax(0.25f);
+        xAxis.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_999999));
+        xAxis.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_999999));
+        xAxis.setTextSize(10);
 
         YAxis axisLeft = mTrendChart.getAxisLeft();
         axisLeft.setDrawAxisLine(false);
         axisLeft.setLabelCount(7, true);
-        axisLeft.setGranularity(0.1f);
         axisLeft.setAxisMinimum(0);
+        axisLeft.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_999999));
+        axisLeft.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_999999));
+        axisLeft.setTextSize(10);
 
         YAxis axisRight = mTrendChart.getAxisRight();
         axisRight.setDrawAxisLine(false);
         axisRight.setLabelCount(8, true);
-        axisLeft.setGranularity(1f);
         axisRight.setAxisMinimum(0);
+        axisRight.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_999999));
+        axisRight.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_999999));
+        axisRight.setTextSize(10);
     }
 
     private void showStatusBar() {
@@ -305,11 +309,17 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
         List<Entry> amountList = new ArrayList<>();
         List<Entry> billNumList = new ArrayList<>();
         if (!CommonUtils.isEmpty(list)) {
+            double maxAmount = 0;
+            double maxBill = 0;
             for (int i = 0; i < list.size(); i++) {
                 TrendBean trendBean = list.get(i);
+                maxAmount = Math.max(maxAmount, trendBean.getAmount());
+                maxBill = Math.max(maxBill, trendBean.getBillNum());
                 amountList.add(new Entry(i, trendBean.getAmount(), trendBean.getDate()));
                 billNumList.add(new Entry(i, trendBean.getBillNum(), trendBean.getDate()));
             }
+            mTrendChart.getAxisLeft().setAxisMaximum(Math.max(6, (long) Math.ceil(maxAmount / 6) * 6));
+            mTrendChart.getAxisRight().setAxisMaximum(Math.max(7, (long) Math.ceil(maxBill / 7) * 7)); // Math.max(7, (float) Math.ceil(maxBill))
         }
         LineDataSet amountSet, billNumSet;
         if (mTrendChart.getData() != null && mTrendChart.getData().getDataSetCount() == 2) {

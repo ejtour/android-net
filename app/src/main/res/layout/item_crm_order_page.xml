@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="18dp"
+    android:paddingBottom="18dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/cop_shop_name"
+        android:textSize="15sp"
+        android:textAppearance="@style/TextAppearance.City22.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="风尚佳美餐饮城凯德店"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/cop_shop_detail"
+        android:src="@drawable/ic_crm_order_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cop_shop_name"
+        app:layout_constraintBottom_toBottomOf="@id/cop_shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/cop_latest_visit"
+        android:layout_marginTop="6dp"
+        android:drawableLeft="@drawable/ic_crm_order_visit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cop_shop_name"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        tools:text="最近一次拜访：2018.08.30"
+        android:layout_width="wrap_content"
+        android:drawablePadding="4dp"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/cop_div"
+        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+        android:layerType="software"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cop_latest_visit"
+        android:background="@drawable/line_dash_divider"
+        android:layout_height="1.5dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/cop_guide_line"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/cop_all_orders_label"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/cop_div"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:text="全部订单"
+        android:drawableLeft="@drawable/ic_crm_order_all"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/cop_all_orders"
+        app:layout_constraintStart_toStartOf="@id/cop_all_orders_label"
+        app:layout_constraintTop_toBottomOf="@id/cop_all_orders_label"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        tools:text="45,367.00 / 89笔"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/cop_ave_order_label"
+        app:layout_constraintStart_toEndOf="@id/cop_guide_line"
+        app:layout_constraintBaseline_toBaselineOf="@id/cop_all_orders_label"
+        android:text="近30日日均下单"
+        android:drawableLeft="@drawable/ic_crm_order_month"
+        android:drawablePadding="5dp"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/cop_ave_order"
+        app:layout_constraintStart_toStartOf="@id/cop_ave_order_label"
+        app:layout_constraintTop_toBottomOf="@id/cop_ave_order_label"
+        android:layout_marginTop="5dp"
+        tools:text="1,834.00 / 2笔"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</android.support.constraint.ConstraintLayout>

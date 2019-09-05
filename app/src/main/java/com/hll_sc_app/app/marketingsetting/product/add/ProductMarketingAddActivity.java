@@ -18,7 +18,10 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.marketingsetting.adapter.CouponRuleAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingProductAdapter;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingRuleAdapter;
 import com.hll_sc_app.app.marketingsetting.product.MarketingRule;
@@ -26,14 +29,13 @@ import com.hll_sc_app.app.marketingsetting.product.check.ProductMarketingCheckAc
 import com.hll_sc_app.app.marketingsetting.product.selectcoupon.CouponSelectListActivity;
 import com.hll_sc_app.app.marketingsetting.selectarea.SelectAreaActivity;
 import com.hll_sc_app.app.marketingsetting.selectproduct.ProductSelectActivity;
-import com.hll_sc_app.app.marketingsetting.view.CouponRuleSelectView;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.JsonUtil;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.marketingsetting.AreaListBean;
@@ -54,7 +56,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -89,6 +90,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     @Autowired(name = "parcelable")
     MarketingDetailCheckResp mDetail;
+    @Autowired(name = "discountType")
+    int mDiscountType;
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.edit_theme)
@@ -103,8 +106,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     TextView mEmptyWord;
     @BindView(R.id.txt_rule_select)
     TextView mRuleSelect;
-    @BindView(R.id.view_coupon_select)
-    CouponRuleSelectView mCouponRuleSelectView;
+    //    @BindView(R.id.view_coupon_select)
+//    CouponRuleSelectView mCouponRuleSelectView;
     @BindView(R.id.list_rule)
     RecyclerView mListRule;
     @BindView(R.id.ll_rule_dz)
@@ -119,12 +122,16 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     Switch mSwitchLadder;
     @BindView(R.id.edt_rule_dz)
     EditText mEdtRuleDZ;
+    @BindView(R.id.group_add_product)
+    Group mGroupAddProduct;
     private Unbinder unbinder;
     private DateTimePickerDialog.Builder mDateTimeDialogBuilder;
     private SingleSelectionDialog mSingleRuleDilog;
     private MarketingRuleAdapter mMarketingRuleAdapter;
+    private CouponRuleAdapter mCouponRuleAdapter;
     private ProductMarketingAddPresenter mPresenter;
     private SelectCouponListBean mSelectCoupon;
+    private int currentSelectCouponIndex = -1;
     /**
      * 选择的时间
      */
@@ -144,9 +151,11 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
      */
     private HashMap<String, ArrayList<AreaBean.ChildBeanX>> selectedAreaMap = new HashMap<>();
 
-    public static void start(MarketingDetailCheckResp detailCheckResp) {
-        RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST_ADD, detailCheckResp);
-
+    public static void start(MarketingDetailCheckResp detailCheckResp, int discountType) {
+        ARouter.getInstance().build(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST_ADD)
+                .withParcelable("parcelable", detailCheckResp)
+                .withInt("discountType", discountType)
+                .setProvider(new LoginInterceptor()).navigation();
     }
 
     @Override
@@ -169,6 +178,9 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     }
 
     private void initView() {
+        mTitleBar.setHeaderTitle(String.format("新增%s促销", getMarketingTypeName()));
+        mGroupAddProduct.setVisibility(mDiscountType == 1 ? View.GONE : View.VISIBLE);
+        mEmptyWord.setVisibility(mDiscountType == 1 ? View.GONE : View.VISIBLE);
         mPresenter = ProductMarketingAddPresenter.newInstance();
         mPresenter.register(this);
         /*活动商品列表*/
@@ -179,6 +191,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         mMarketingProductAdpater.setOnItemChildClickListener((adapter, view, position) -> {
             if (view.getId() == R.id.img_delete) {
                 adapter.remove(position);
+                mEmptyWord.setVisibility(adapter.getData().size() > 0 ? View.GONE : View.VISIBLE);
             }
         });
         /*促销规则列表*/
@@ -194,8 +207,9 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 if (mListRule.getVisibility() == View.VISIBLE) {
                     mRuleAdd.setVisibility(View.VISIBLE);
                 }
-            } else {//关闭阶梯
-                if (mListRule.getVisibility() == View.VISIBLE && mMarketingRuleAdapter.getData().size() > 1) {
+            } else {//关闭阶梯:赠券判断mCouponRuleAdapter 其他判断mMarketingRuleAdapter
+                if ((TextUtils.equals(getRuleType() + "", RULE_ZQ.getKey()) && mCouponRuleAdapter != null && mCouponRuleAdapter.getData().size() > 1) ||
+                        (mMarketingRuleAdapter != null && mMarketingRuleAdapter.getData().size() > 1)) {
                     showToast("您已设置阶梯促销，若要关闭，请先删除阶梯促销规则");
                     mSwitchLadder.setChecked(true);
                 } else {
@@ -208,11 +222,11 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         mTitleBar.setRightBtnClick(v -> {
             onSave();
         });
-
-        /*赠券点击跳转优惠券*/
-        mCouponRuleSelectView.setSelectListener(() -> {
-            CouponSelectListActivity.start(this, REQUEST_SELECT_COUPON, mSelectCoupon);
-        });
+//
+//        /*赠券点击跳转优惠券*/
+//        mCouponRuleSelectView.setSelectListener(() -> {
+//            CouponSelectListActivity.start(this, REQUEST_SELECT_COUPON, mSelectCoupon);
+//        });
 
         /*打折输入格式监听*/
         mEdtRuleDZ.addTextChangedListener(new TextWatcher() {
@@ -244,7 +258,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                     if (isEmpty) {
                         skuGoodsBean.setDiscountPrice("");
                     } else {
-                        skuGoodsBean.setDiscountPrice(CommonUtils.mulStringPercentage(content, skuGoodsBean.getProductPrice(),10).toString());
+                        skuGoodsBean.setDiscountPrice(CommonUtils.mulStringPercentage(content, skuGoodsBean.getProductPrice(), 10).toString());
                     }
                 }
                 mMarketingProductAdpater.notifyDataSetChanged();
@@ -262,7 +276,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             return;
         }
         //更改标题
-        mTitleBar.setHeaderTitle("编辑商品促销");
+        mTitleBar.setHeaderTitle("编辑" + getMarketingTypeName() + "促销");
         //促销主题
         mEditTheme.setText(mDetail.getDiscountName());
         //开始结束时间
@@ -279,13 +293,14 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         mRuleSelect.setText(mDetail.getRuleTypeName());
         MarketingRule rule = MarketingRule.getRuleEnum(mDetail.getDiscountRuleType());
         mRuleSelect.setTag(new NameValue(rule.getValue(), rule.getKey()));
-
         //活动内容
         toggleRuleType(mDetail.getDiscountRuleType() + "", false);
         if (TextUtils.equals(mDetail.getDiscountRuleType() + "", MarketingRule.RULE_ZQ.getKey())) {
+//            mCouponRuleAdapter = new CouponRuleAdapter(mDetail.getRuleList(), CouponRuleAdapter.EDIT, mDiscountType);
+            mCouponRuleAdapter.setNewData(mDetail.getRuleList());
+            mSwitchLadder.setChecked(mDetail.getRuleList().size() > 1);
             RuleListBean ruleBean = mDetail.getRuleList().get(0);
             List<GiveBean> giveBeans = JsonUtil.parseJsonList(ruleBean.getGiveTarget(), GiveBean.class);
-            mCouponRuleSelectView.setData(ruleBean.getRuleCondition() + "", giveBeans.get(0));
             mSelectCoupon = new SelectCouponListBean();
             mSelectCoupon.setDiscountID(giveBeans.get(0).getGiveTargetID());
             mSelectCoupon.setDiscountName(giveBeans.get(0).getGiveTargetName());
@@ -306,6 +321,12 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             selectedAreaMap = transformFlatAreaToMap(mDetail.getAreaList());
         }
         mTxtAreaSelect.setTag(mDetail.getAreaScope() == 1);
+
+
+    }
+
+    private String getMarketingTypeName() {
+        return mDiscountType == 1 ? "订单" : "商品";
     }
 
     /**
@@ -314,12 +335,11 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
      * @param ruleType
      */
     private void addRule(int ruleType) {
-        if (mMarketingRuleAdapter == null) {
-            return;
+        if (mCouponRuleAdapter != null && TextUtils.equals(ruleType + "", RULE_ZQ.getKey())) {
+            mCouponRuleAdapter.addData(getNewRuleListBean());
+        } else if (mMarketingRuleAdapter != null) {
+            mMarketingRuleAdapter.addData(getNewRuleListBean());
         }
-        RuleListBean ruleListBean = new RuleListBean();
-        ruleListBean.setRuleType(ruleType);
-        mMarketingRuleAdapter.addData(ruleListBean);
     }
 
     /**
@@ -337,7 +357,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     private void toggleRuleType(String ruleType, boolean isInitData) {
         if (TextUtils.equals(ruleType, RULE_ZJ.getKey())) {
-            mCouponRuleSelectView.setVisibility(View.GONE);
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
             mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
@@ -345,7 +364,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_MZ.getKey())) {
-            mCouponRuleSelectView.setVisibility(View.GONE);
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
             mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
@@ -353,14 +371,18 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_ZQ.getKey())) {
-            mCouponRuleSelectView.setVisibility(View.VISIBLE);
             mRuleDZLayout.setVisibility(View.GONE);
-            mListRule.setVisibility(View.GONE);
-            mRuleAdd.setVisibility(View.GONE);
-            mGroupLadder.setVisibility(View.VISIBLE);
+            mListRule.setVisibility(View.VISIBLE);
+            if (mDiscountType == 1) {
+                mGroupLadder.setVisibility(View.VISIBLE);
+                mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
+            } else {
+                mGroupLadder.setVisibility(View.GONE);
+                mRuleAdd.setVisibility(View.GONE);
+            }
+            initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_MJ.getKey())) {
-            mCouponRuleSelectView.setVisibility(View.GONE);
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
             mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
@@ -368,7 +390,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         } else if (TextUtils.equals(ruleType, RULE_DZ.getKey())) {
-            mCouponRuleSelectView.setVisibility(View.GONE);
             mRuleDZLayout.setVisibility(View.VISIBLE);
             mListRule.setVisibility(View.GONE);
             mRuleAdd.setVisibility(View.GONE);
@@ -421,6 +442,14 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         return flatMap;
     }
 
+    private RuleListBean getNewRuleListBean() {
+        RuleListBean ruleListBean = new RuleListBean();
+        List<GiveBean> giveBeans = new ArrayList<>();
+        giveBeans.add(new GiveBean());
+        ruleListBean.setGiveList(giveBeans);
+        return ruleListBean;
+    }
+
     /**
      * 校验输入
      *
@@ -442,7 +471,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         } else if (mTxtAreaSelect.getText().toString().length() == 0) {
             showToast("请选择活动区域");
             return false;
-        } else if (mMarketingProductAdpater.getData().size() == 0) {
+        } else if (mDiscountType == 2 && mMarketingProductAdpater.getData().size() == 0) {
             showToast("请选择活动商品");
             return false;
         }
@@ -451,18 +480,20 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 TextUtils.equals(getRuleType() + "", RULE_MZ.getKey()) ||
                 TextUtils.equals(getRuleType() + "", RULE_MJ.getKey())
         ) {
-            if (mMarketingRuleAdapter == null || mMarketingProductAdpater.getData().size() == 0) {
+            if (mMarketingRuleAdapter == null || mMarketingRuleAdapter.getData().size() == 0) {
                 showToast("请填写至少一个促销规则");
                 return false;
             }
         }
         //赠券
-        if (TextUtils.equals(getRuleType() + "", RULE_ZQ.getKey()) && !mCouponRuleSelectView.isInputComplete()) {
-            showToast("请填写完整的赠券规则");
-            return false;
+        else if (TextUtils.equals(getRuleType() + "", RULE_ZQ.getKey())) {
+            if (!isCouponInfoComplete()) {
+                showToast("请填写至少一个促销规则");
+                return false;
+            }
         }
         //打折
-        if (TextUtils.equals(getRuleType() + "", RULE_DZ.getKey()) && mEdtRuleDZ.getText().toString().trim().length() == 0) {
+        else if (TextUtils.equals(getRuleType() + "", RULE_DZ.getKey()) && mEdtRuleDZ.getText().toString().trim().length() == 0) {
             showToast("请填写打折规则");
             return false;
         }
@@ -471,21 +502,73 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     }
 
     private void initRuleListAdapter(int ruleType, boolean isInitData) {
-        if (mMarketingRuleAdapter == null) {
-            mMarketingRuleAdapter = new MarketingRuleAdapter(null, true);
-            mListRule.setAdapter(mMarketingRuleAdapter);
-            mMarketingRuleAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-                adapter.remove(position);
-            });
-        }
-        mMarketingRuleAdapter.setRultType(ruleType);
-        mMarketingRuleAdapter.setNewData(null);
+        BaseQuickAdapter<RuleListBean, BaseViewHolder> currentAdapter;
+        if (TextUtils.equals((ruleType + ""), RULE_ZQ.getKey())) {
+            if (mCouponRuleAdapter == null) {
+                mCouponRuleAdapter = new CouponRuleAdapter(null, CouponRuleAdapter.EDIT, mDiscountType);
+                mCouponRuleAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                    switch (view.getId()) {
+                        case R.id.txt_coupon_select:
+                            currentSelectCouponIndex = position;
+                            GiveBean giveBean = mCouponRuleAdapter.getItem(position).getGiveList().get(0);
+                            mSelectCoupon = new SelectCouponListBean();
+                            mSelectCoupon.setDiscountID(giveBean.getGiveTargetID());
+                            mSelectCoupon.setDiscountName(giveBean.getGiveTargetName());
+                            CouponSelectListActivity.start(this, REQUEST_SELECT_COUPON, mSelectCoupon);
+                            break;
+                        case R.id.img_delete:
+                            mCouponRuleAdapter.remove(position);
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            }
+            currentAdapter = mCouponRuleAdapter;
 
-        if (isInitData) {
-            RuleListBean ruleListBean = new RuleListBean();
-            mMarketingRuleAdapter.addData(ruleListBean);
-            mMarketingRuleAdapter.notifyDataSetChanged();
+        } else {
+            if (mMarketingRuleAdapter == null) {
+                mMarketingRuleAdapter = new MarketingRuleAdapter(null, true, mDiscountType);
+                mMarketingRuleAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                    adapter.remove(position);
+                });
+            }
+            mMarketingRuleAdapter.setRultType(ruleType);
+            mMarketingRuleAdapter.setNewData(null);
+            currentAdapter = mMarketingRuleAdapter;
         }
+
+
+        mListRule.setAdapter(currentAdapter);
+        if (isInitData) {
+            currentAdapter.setNewData(null);
+            currentAdapter.addData(getNewRuleListBean());
+            currentAdapter.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 赠券模式下，是否填写完全
+     *
+     * @return
+     */
+    private boolean isCouponInfoComplete() {
+        if (mCouponRuleAdapter == null || mCouponRuleAdapter.getData().size() == 0) {
+            return false;
+        }
+        List<RuleListBean> ruleListBeans = mCouponRuleAdapter.getData();
+        for (RuleListBean ruleListBean : ruleListBeans) {
+            if (TextUtils.isEmpty(ruleListBean.getRuleCondition()) ||
+                    TextUtils.isEmpty(ruleListBean.getRuleDiscountValue())) {
+                return false;
+            }
+            GiveBean giveBean = ruleListBean.getGiveList().get(0);
+            if (giveBean == null || TextUtils.isEmpty(giveBean.getGiveTargetID())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Subscribe
@@ -497,7 +580,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             /*如果是打折的。需要将商品重新计算价格*/
             if (mMarketingProductAdpater.getModal() == MarketingProductAdapter.Modal.EDIT_DZ) {
                 for (SkuGoodsBean skuGoodsBean : skuGoodsBeans) {
-                    skuGoodsBean.setDiscountPrice(CommonUtils.mulStringPercentage(mEdtRuleDZ.getText().toString(), skuGoodsBean.getProductPrice(),10).toString());
+                    skuGoodsBean.setDiscountPrice(CommonUtils.mulStringPercentage(mEdtRuleDZ.getText().toString(), skuGoodsBean.getProductPrice(), 10).toString());
                 }
             }
             mMarketingProductAdpater.setNewData(skuGoodsBeans);
@@ -548,6 +631,10 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 ProductSelectActivity.start(ProductMarketingAddActivity.class.getSimpleName(), "选择活动商品", new ArrayList<>(mMarketingProductAdpater.getData()));
                 break;
             case R.id.txt_rule_select:
+                if (mDetail != null) {
+                    showToast("不能更改类型");
+                    return;
+                }
                 /*促销规则类型window*/
                 if (mSingleRuleDilog == null) {
                     mSingleRuleDilog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
@@ -611,8 +698,10 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             case REQUEST_SELECT_COUPON:
                 if (resultCode == RESULT_OK) {
                     mSelectCoupon = data.getParcelableExtra(CouponSelectListActivity.RESULT_NAME);
-                    mCouponRuleSelectView.setCouponName(mSelectCoupon.getDiscountName());
-
+                    GiveBean giveBean = mCouponRuleAdapter.getData().get(currentSelectCouponIndex).getGiveList().get(0);
+                    giveBean.setGiveTargetName(mSelectCoupon.getDiscountName());
+                    giveBean.setGiveTargetID(mSelectCoupon.getDiscountID());
+                    mCouponRuleAdapter.notifyDataSetChanged();
                 }
                 break;
             default:
@@ -635,7 +724,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                     EventBus.getDefault().post(event);
                     dialog.dismiss();
                     if (item == 1) {
-                        ProductMarketingCheckActivity.start(resp.getId());
+                        ProductMarketingCheckActivity.start(resp.getId(), mDiscountType);
                     }
                     finish();
                 }, "返回列表", "查看详情")
@@ -697,28 +786,17 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             bean.setRuleDiscountValue(mEdtRuleDZ.getText().toString());
             ruleListBeans.add(bean);
             return ruleListBeans;
-        }
-        //赠券
-        else if (getRuleType() == Integer.parseInt(RULE_ZQ.getKey())) {
-            List<RuleListBean> ruleListBeans = new ArrayList<>();
-            RuleListBean bean = new RuleListBean();
-            bean.setRuleCondition(mCouponRuleSelectView.getValue()[0]);
-            bean.setRuleDiscountValue(mCouponRuleSelectView.getValue()[1]);
-            GiveBean giveBean = new GiveBean();
-            giveBean.setGiveCount(mCouponRuleSelectView.getValue()[1]);
-            if (mSelectCoupon != null) {
-                giveBean.setGiveTargetID(mSelectCoupon.getDiscountID());
-                giveBean.setGiveTargetName(mSelectCoupon.getDiscountName());
-            }
-            giveBean.setGiveType(2);
-            bean.setGiveList(Arrays.asList(giveBean));
-            ruleListBeans.add(bean);
-            return ruleListBeans;
         } else {
-            if (mMarketingRuleAdapter == null) {
+            BaseQuickAdapter<RuleListBean, BaseViewHolder> currentAdapter;
+            if (TextUtils.equals(getRuleType() + "", RULE_ZQ.getKey())) {
+                currentAdapter = mDiscountType == 2 ? mMarketingRuleAdapter : mCouponRuleAdapter;
+            } else {
+                currentAdapter = mMarketingRuleAdapter;
+            }
+            if (currentAdapter == null) {
                 return null;
             }
-            return mMarketingRuleAdapter.getData();
+            return currentAdapter.getData();
         }
     }
 
@@ -760,5 +838,10 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     @Override
     public String getId() {
         return mDetail != null ? mDetail.getId() : null;
+    }
+
+    @Override
+    public int getDiscountType() {
+        return mDiscountType;
     }
 }

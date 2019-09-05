@@ -1,9 +1,8 @@
 package com.hll_sc_app.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.utils.UIUtils;
 
 /**
  * 搜索
@@ -47,9 +45,7 @@ public class SearchView extends FrameLayout {
     private void init(Context context) {
         mContext = context;
         if (getBackground() == null)
-            setBackgroundResource(R.drawable.base_bg_shadow_top_white_bar);
-        int padding = UIUtils.dip2px(10);
-        setPadding(0, padding, 0, padding);
+            setBackgroundColor(Color.WHITE);
         View.inflate(context, R.layout.view_search, this);
         mTxtSearchContent = findViewById(R.id.txt_searchContent);
         mImgSearchClear = findViewById(R.id.img_searchClear);

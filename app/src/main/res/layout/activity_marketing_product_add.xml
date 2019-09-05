@@ -184,6 +184,11 @@
                 android:textSize="@dimen/base_text_13"
                 app:layout_constraintTop_toBottomOf="@id/list_marketing_product" />
 
+            <android.support.constraint.Group
+                android:id="@+id/group_add_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="view_back_2,txt_title_product,txt_add_product,list_marketing_product," />
 
 
             <View
@@ -275,17 +280,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/list_rule" />
 
-
-            <com.hll_sc_app.app.marketingsetting.view.CouponRuleSelectView
-                android:id="@+id/view_coupon_select"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/base_white"
-                android:padding="@dimen/dp_10"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/txt_add_rule"
-                app:modal="edit" />
-
             <LinearLayout
                 android:id="@+id/ll_rule_dz"
                 android:layout_width="match_parent"
@@ -296,7 +290,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/view_coupon_select">
+                app:layout_constraintTop_toBottomOf="@id/txt_add_rule">
 
                 <TextView
                     android:layout_width="wrap_content"

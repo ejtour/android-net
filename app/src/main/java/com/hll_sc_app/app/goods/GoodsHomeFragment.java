@@ -133,8 +133,6 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         mViewPager.setOffscreenPageLimit(2);
         mTab.setViewPager(mViewPager, STR_TITLE);
         mRadioGroup.setOnCheckedChangeListener((group, checkedId) -> updateFragment());
-        int padding = UIUtils.dip2px(10);
-        mSearchView.setPadding(0, padding, 0, 0);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {

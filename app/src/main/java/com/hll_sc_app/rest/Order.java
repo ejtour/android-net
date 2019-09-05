@@ -8,6 +8,7 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -526,10 +527,10 @@ public class Order {
      *
      * @param beans 库存提交列表
      */
-    public static void commitInventoryCheck(List<InventoryCheckReq.InventoryCheckBean> beans, SimpleObserver<Object> observer) {
+    public static void commitInventoryCheck(List<InventoryCheckReq.InventoryCheckBean> beans, SimpleObserver<MsgWrapper<Object>> observer) {
         OrderService.INSTANCE
                 .commitInventoryCheck(new BaseReq<>(new InventoryCheckReq(beans)))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

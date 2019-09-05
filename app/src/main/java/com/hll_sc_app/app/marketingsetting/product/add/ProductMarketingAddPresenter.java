@@ -46,7 +46,7 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
         addReq.setDiscountEndTime(mView.getEndTime());
         addReq.setProductList(processProductBean(mView.getProducts()));
         addReq.setRuleList(mView.getRuleList());
-        addReq.setDiscountType(2);
+        addReq.setDiscountType(mView.getDiscountType());
         addReq.setCustomerScope(mView.getCustomerScope());
         addReq.setDiscountStage(mView.getDiscountStage());
         addReq.setDiscountRuleType(mView.getRuleType());
@@ -108,7 +108,7 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
         addReq.setDiscountEndTime(mView.getEndTime());
         addReq.setProductList(processProductBean(mView.getProducts()));
         addReq.setRuleList(mView.getRuleList());
-        addReq.setDiscountType(2);
+        addReq.setDiscountType(mView.getDiscountType());
         addReq.setCustomerScope(mView.getCustomerScope());
         addReq.setDiscountStage(mView.getDiscountStage());
         addReq.setDiscountRuleType(mView.getRuleType());

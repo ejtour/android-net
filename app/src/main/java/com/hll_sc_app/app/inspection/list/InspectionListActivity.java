@@ -85,7 +85,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     private void initData() {
         Date endDate = new Date();
         mParam.setEndDate(endDate);
-        mParam.setStartDate(CalendarUtils.getDateBefore(endDate, 29));
+        mParam.setStartDate(CalendarUtils.getDateBefore(endDate, 30));
         updateSelectedDate();
         mPresenter = InspectionListPresenter.newInstance(mParam);
         mPresenter.register(this);
@@ -222,6 +222,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     private void showPurchaserWindow(View view) {
         if (mPurchaserBeans == null) {
             mPresenter.getPurchaserList();
+            return;
         }
         mPurchaserArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
         mPurchaser.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
