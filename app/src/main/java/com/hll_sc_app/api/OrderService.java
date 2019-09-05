@@ -19,6 +19,7 @@ import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
+import com.hll_sc_app.bean.order.shop.OrderShopResp;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
@@ -138,4 +139,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103724")
     Observable<BaseResp<Object>> tagDoNotRelevance(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103081")
+    Observable<BaseResp<OrderShopResp>> queryOrderShopList(@Body BaseMapReq req);
 }

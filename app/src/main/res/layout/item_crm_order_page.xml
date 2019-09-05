@@ -30,6 +30,23 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/cop_make_order"
+        android:background="@drawable/bg_small_primary_stroke"
+        android:paddingLeft="13dp"
+        android:paddingRight="13dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:text="下单"
+        android:textSize="11sp"
+        app:layout_constraintTop_toTopOf="@id/cop_shop_name"
+        app:layout_constraintBottom_toBottomOf="@id/cop_shop_name"
+        app:layout_constraintEnd_toStartOf="@id/cop_shop_detail"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:id="@+id/cop_latest_visit"
         android:layout_marginTop="6dp"
         android:drawableLeft="@drawable/ic_crm_order_visit"
@@ -78,6 +95,7 @@
         app:layout_constraintTop_toBottomOf="@id/cop_all_orders_label"
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
         tools:text="45,367.00 / 89笔"
         android:layout_height="wrap_content" />
 
@@ -98,6 +116,7 @@
         app:layout_constraintStart_toStartOf="@id/cop_ave_order_label"
         app:layout_constraintTop_toBottomOf="@id/cop_ave_order_label"
         android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
         tools:text="1,834.00 / 2笔"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

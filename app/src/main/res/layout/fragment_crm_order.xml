@@ -9,19 +9,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/base_bg_shadow_top_bar"
-        app:layout_constraintBottom_toBottomOf="@+id/fco_options"
+        app:layout_constraintBottom_toBottomOf="@+id/fco_filter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/fco_options"
-        android:layout_width="44dp"
-        android:layout_height="0dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_options"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -30,21 +20,33 @@
         android:text="今日"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/fco_search_view"
-        app:layout_constraintTop_toTopOf="@id/fco_options"
-        app:layout_constraintBottom_toBottomOf="@id/fco_options"
+        app:layout_constraintTop_toTopOf="parent"
         android:padding="@dimen/dp_10"
         android:gravity="center"
         android:drawablePadding="3dp"
         android:textAppearance="@style/TextAppearance.City22.Middle.White"
         android:drawableRight="@drawable/ic_arrow_drop_white"
-        android:layout_height="0dp" />
+        android:layout_height="44dp" />
+
+    <ImageView
+        android:id="@+id/fco_options"
+        android:layout_width="44dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_options"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fco_filter" />
 
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/fco_search_view"
-        app:layout_constraintTop_toTopOf="@id/fco_options"
-        app:layout_constraintBottom_toBottomOf="@id/fco_options"
+        app:layout_constraintTop_toTopOf="@id/fco_filter"
+        app:layout_constraintBottom_toBottomOf="@id/fco_filter"
         app:layout_constraintStart_toEndOf="@id/fco_filter"
         app:layout_constraintEnd_toStartOf="@id/fco_options"
+        app:layout_goneMarginRight="44dp"
+        android:background="@android:color/transparent"
         android:layout_width="0dp"
         android:layout_height="30dp" />
 
@@ -55,12 +57,12 @@
         android:background="@drawable/bg_divider_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fco_options"
+        app:layout_constraintTop_toBottomOf="@+id/fco_filter"
         app:tl_indicator_color="@color/colorPrimary"
         app:tl_indicator_corner_radius="2dp"
         app:tl_indicator_height="2dp"
         app:tl_indicator_width="65dp"
-        app:tl_tab_space_equal="false"
+        app:tl_tab_space_equal="true"
         app:tl_textSelectColor="@color/colorPrimary"
         app:tl_textUnselectColor="@color/color_999999" />
 
