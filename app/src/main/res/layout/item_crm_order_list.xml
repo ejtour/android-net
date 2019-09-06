@@ -10,7 +10,7 @@
     android:background="@android:color/white"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/col_logo"
         android:layout_width="70dp"
         app:layout_constraintStart_toStartOf="parent"

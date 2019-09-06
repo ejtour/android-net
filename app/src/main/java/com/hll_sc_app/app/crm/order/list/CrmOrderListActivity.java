@@ -89,6 +89,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
         mTitleBar.setHeaderTitle("订单列表");
         mShop.setText("门店");
         mStatus.setText("全部状态");
+        mListView.setPadding(0, UIUtils.dip2px(1), 0, 0);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
         mListView.addItemDecoration(decor);

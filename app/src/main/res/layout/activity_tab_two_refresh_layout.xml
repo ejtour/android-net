@@ -18,7 +18,7 @@
         android:id="@+id/trl_tab_one_btn"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:background="@android:color/white"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
         app:layout_constraintEnd_toStartOf="@id/trl_tab_two_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/trl_title_bar" />
@@ -27,7 +27,7 @@
         android:id="@+id/trl_tab_two_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@android:color/white"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
         app:layout_constraintBottom_toBottomOf="@id/trl_tab_one_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/trl_tab_one_btn"
