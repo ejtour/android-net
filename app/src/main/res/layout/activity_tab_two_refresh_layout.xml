@@ -5,106 +5,106 @@
     android:layout_height="match_parent">
 
     <com.hll_sc_app.widget.TitleBar
-        android:id="@+id/rog_title_bar"
+        android:id="@+id/trl_title_bar"
         android:layout_width="0dp"
         android:layout_height="@dimen/title_bar_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tb_rightVisibility="true"
-        app:tb_title="客户订货明细汇总" />
+        app:tb_title="标题" />
 
     <View
-        android:id="@+id/rog_purchaser_btn"
+        android:id="@+id/trl_tab_one_btn"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:background="@android:color/white"
-        app:layout_constraintEnd_toStartOf="@id/rog_date_btn"
+        app:layout_constraintEnd_toStartOf="@id/trl_tab_two_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rog_title_bar" />
+        app:layout_constraintTop_toBottomOf="@id/trl_title_bar" />
 
     <View
-        android:id="@+id/rog_date_btn"
+        android:id="@+id/trl_tab_two_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@id/rog_purchaser_btn"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_one_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/rog_purchaser_btn"
-        app:layout_constraintTop_toTopOf="@id/rog_purchaser_btn" />
+        app:layout_constraintStart_toEndOf="@id/trl_tab_one_btn"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_one_btn" />
 
     <View
-        android:id="@+id/rog_ver_line"
+        android:id="@+id/trl_ver_line"
         android:layout_width="1dp"
         android:layout_height="18dp"
         android:background="@color/color_dddddd"
-        app:layout_constraintBottom_toBottomOf="@id/rog_purchaser_btn"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_one_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/rog_purchaser_btn" />
+        app:layout_constraintTop_toTopOf="@id/trl_tab_one_btn" />
 
     <TextView
-        android:id="@+id/rog_purchaser"
+        android:id="@+id/trl_tab_one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:ellipsize="middle"
         android:singleLine="true"
-        android:text="全部采购商"
+        android:text="标签 1"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="@id/rog_purchaser_btn"
-        app:layout_constraintEnd_toStartOf="@id/rog_purchaser_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_one_btn"
+        app:layout_constraintEnd_toStartOf="@id/trl_tab_one_arrow"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/rog_purchaser_btn"
-        app:layout_constraintTop_toTopOf="@id/rog_purchaser_btn" />
+        app:layout_constraintStart_toStartOf="@id/trl_tab_one_btn"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_one_btn" />
 
     <com.hll_sc_app.widget.TriangleView
-        android:id="@+id/rog_purchaser_arrow"
+        android:id="@+id/trl_tab_one_arrow"
         android:layout_width="8dp"
         android:layout_height="5dp"
-        app:layout_constraintBottom_toBottomOf="@id/rog_purchaser_btn"
-        app:layout_constraintEnd_toEndOf="@id/rog_purchaser_btn"
-        app:layout_constraintStart_toEndOf="@id/rog_purchaser"
-        app:layout_constraintTop_toTopOf="@id/rog_purchaser_btn"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_one_btn"
+        app:layout_constraintEnd_toEndOf="@id/trl_tab_one_btn"
+        app:layout_constraintStart_toEndOf="@id/trl_tab_one"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_one_btn"
         app:trv_color="@color/color_dddddd"
         app:trv_direction="bottom" />
 
     <TextView
-        android:id="@+id/rog_date"
+        android:id="@+id/trl_tab_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
-        android:text="按日期筛选"
+        android:text="标签 2"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-        app:layout_constraintBottom_toBottomOf="@id/rog_date_btn"
-        app:layout_constraintEnd_toStartOf="@id/rog_date_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_two_btn"
+        app:layout_constraintEnd_toStartOf="@id/trl_tab_two_arrow"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/rog_date_btn"
-        app:layout_constraintTop_toTopOf="@id/rog_date_btn" />
+        app:layout_constraintStart_toStartOf="@id/trl_tab_two_btn"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_two_btn" />
 
     <com.hll_sc_app.widget.TriangleView
-        android:id="@+id/rog_date_arrow"
+        android:id="@+id/trl_tab_two_arrow"
         android:layout_width="8dp"
         android:layout_height="5dp"
-        app:layout_constraintBottom_toBottomOf="@id/rog_date_btn"
-        app:layout_constraintEnd_toEndOf="@id/rog_date_btn"
-        app:layout_constraintStart_toEndOf="@id/rog_date"
-        app:layout_constraintTop_toTopOf="@id/rog_date_btn"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_two_btn"
+        app:layout_constraintEnd_toEndOf="@id/trl_tab_two_btn"
+        app:layout_constraintStart_toEndOf="@id/trl_tab_two"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_two_btn"
         app:trv_color="@color/color_dddddd"
         app:trv_direction="bottom" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/rog_refresh_view"
+        android:id="@+id/trl_refresh_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rog_purchaser_btn">
+        app:layout_constraintTop_toBottomOf="@id/trl_tab_one_btn">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rog_list_view"
+            android:id="@+id/trl_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
