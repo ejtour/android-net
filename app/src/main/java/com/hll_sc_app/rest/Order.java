@@ -15,6 +15,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.filter.OrderParam;
@@ -88,7 +89,6 @@ public class Order {
         OrderService.INSTANCE
                 .getOrderList(BaseMapReq
                         .newBuilder()
-                        .put("curRole", user.getRoleID())
                         .put("groupID", user.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
@@ -154,7 +154,6 @@ public class Order {
                         .newBuilder()
                         .put("subBillID", subBillID)
                         .put("groupID", user.getGroupID())
-                        .put("curRole", user.getRoleID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -585,6 +584,50 @@ public class Order {
                         .put("salesmanID", user.getEmployeeID())
                         .put("groupID", user.getGroupID())
                         .put("searchWords", searchWords)
+                        .put("subBillCreateTimeStart", createTimeStart)
+                        .put("subBillCreateTimeEnd", createTimeEnd)
+                        .put("subBillExecuteDateStart", executeDateStart)
+                        .put("subBillExecuteDateEnd", executeDateEnd)
+                        .put("subBillSignTimeStart", signTimeStart)
+                        .put("subBillSignTimeEnd", signTimeEnd)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 销售查询订单列表
+     *
+     * @param pageNum          页码
+     * @param shopID           门店id
+     * @param createTimeStart  下单开始时间 yyyyMMdd
+     * @param createTimeEnd    下单结束时间 yyyyMMdd
+     * @param signTimeStart    签收开始时间 yyyyMMddHH
+     * @param signTimeEnd      签收结束时间 yyyyMMddHH
+     * @param executeDateStart 到货开始时间 yyyyMMddHH
+     * @param executeDateEnd   到货结束时间 yyyyMMddHH
+     */
+    public static void crmQueryOrderList(int pageNum, String shopID,
+                                         int subBillStatus,
+                                         String createTimeStart,
+                                         String createTimeEnd,
+                                         String executeDateStart,
+                                         String executeDateEnd,
+                                         String signTimeStart,
+                                         String signTimeEnd,
+                                         SimpleObserver<SingleListResp<OrderResp>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        OrderService.INSTANCE
+                .crmQueryOrderList(BaseMapReq.newBuilder()
+                        .put("curRole", user.getAuthType())
+                        .put("shopID", shopID)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("salesmanID", user.getEmployeeID())
+                        .put("groupID", user.getGroupID())
+                        .put("subBillStatus", String.valueOf(subBillStatus))
+                        .put("roleTypes", user.getAuthType())
                         .put("subBillCreateTimeStart", createTimeStart)
                         .put("subBillCreateTimeEnd", createTimeEnd)
                         .put("subBillExecuteDateStart", executeDateStart)

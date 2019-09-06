@@ -897,6 +897,11 @@ public class RouterConfig {
     public static final String CRM_MINE = "/fragment/crm/mine";
 
     /**
+     * CRM-订单列表
+     */
+    public static final String CRM_ORDER_LIST = "/activity/crm/order/list";
+
+    /**
      *
      * 待退合计
      */

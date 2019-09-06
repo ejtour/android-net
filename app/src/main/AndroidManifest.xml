@@ -865,6 +865,10 @@
         <activity android:name=".app.report.refund.search.RefundSearchActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".app.crm.order.list.CrmOrderListActivity"
+            android:screenOrientation="portrait" />
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.order.list.CrmOrderListActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -114,7 +115,7 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
             switch (view.getId()) {
                 case R.id.cop_all_orders_label:
                 case R.id.cop_ave_order_label:
-                    showToast("订单列表待添加");
+                    CrmOrderListActivity.start(mCurBean.getShopID());
                     break;
                 case R.id.cop_shop_detail:
                     showShopInfoWindow(view);
