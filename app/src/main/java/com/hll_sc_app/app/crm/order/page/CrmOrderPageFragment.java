@@ -23,11 +23,13 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.filter.CrmOrderParam;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
+import com.hll_sc_app.bean.order.shop.OrderShopBean;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.order.OrderFilterView;
+import com.hll_sc_app.widget.order.OrderShopInfoWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -59,8 +61,10 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
     @Autowired(name = "status")
     int mBillStatus;
     private CrmOrderParam mOrderParam;
+    private OrderShopInfoWindow mShopInfoWindow;
     private ICrmOrderPageContract.ICrmOrderPagePresenter mPresenter;
     private EmptyView mEmptyView;
+    private OrderShopBean mCurBean;
 
     public static CrmOrderPageFragment newInstance(CrmOrderParam param, int billStatus) {
         Bundle args = new Bundle();
@@ -105,19 +109,27 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
             }
         });
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mCurBean = mAdapter.getItem(position);
+            if (mCurBean == null) return;
             switch (view.getId()) {
                 case R.id.cop_all_orders_label:
                 case R.id.cop_ave_order_label:
                     showToast("订单列表待添加");
                     break;
                 case R.id.cop_shop_detail:
-                    showToast("门店详情待添加");
+                    showShopInfoWindow(view);
                     break;
                 case R.id.cop_make_order:
                     showToast("代客下单待添加");
                     break;
             }
         });
+    }
+
+    private void showShopInfoWindow(View view) {
+        if (mShopInfoWindow == null)
+            mShopInfoWindow = new OrderShopInfoWindow(requireActivity());
+        mShopInfoWindow.setData(mCurBean).showAtLocationCompat(view);
     }
 
     @Override

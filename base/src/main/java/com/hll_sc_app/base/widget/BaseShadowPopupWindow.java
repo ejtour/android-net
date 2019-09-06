@@ -30,7 +30,7 @@ public class BaseShadowPopupWindow extends BasePopupWindow {
         super.showAsDropDown(anchor, xOff, yOff);
     }
 
-    private void showAnim() {
+    protected void showAnim() {
         ValueAnimator animator = ValueAnimator.ofFloat(1f, 0.6f).setDuration(250);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
