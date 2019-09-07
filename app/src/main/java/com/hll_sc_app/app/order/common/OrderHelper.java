@@ -67,8 +67,10 @@ public class OrderHelper {
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 return spannableString;
             case 3: // 已发货
-            case 4: // 待结算
                 source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "发货";
+                break;
+            case 4: // 待结算
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "送达";
                 break;
             case 5:
                 source = CalendarUtils.format(CalendarUtils.parse(resp.getSettlementTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "结算";
