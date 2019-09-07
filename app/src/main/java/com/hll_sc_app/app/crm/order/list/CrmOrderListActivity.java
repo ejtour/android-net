@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -22,13 +25,17 @@ import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionWindow;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
+import com.hll_sc_app.widget.order.OrderFilterView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -43,7 +50,7 @@ import butterknife.OnClick;
  * @since 2019/9/6
  */
 @Route(path = RouterConfig.CRM_ORDER_LIST)
-public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderListContract.ICrmOrderListView {
+public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderListContract.ICrmOrderListView, BaseQuickAdapter.OnItemClickListener {
 
     /**
      * @param shopID 门店id
@@ -62,9 +69,11 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     TextView mStatus;
     @BindView(R.id.trl_tab_two_arrow)
     TriangleView mStatusArrow;
-    @BindView(R.id.trl_list_view)
+    @BindView(R.id.col_list_view)
     RecyclerView mListView;
-    @BindView(R.id.trl_refresh_view)
+    @BindView(R.id.col_filter_view)
+    OrderFilterView mFilterHeader;
+    @BindView(R.id.col_refresh_view)
     SmartRefreshLayout mRefreshView;
     private final OrderParam mOrderParam = new OrderParam();
     private ICrmOrderListContract.ICrmOrderListPresenter mPresenter;
@@ -78,12 +87,13 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     private EmptyView mEmptyView;
     private SingleSelectionWindow<PurchaserShopBean> mShopWindow;
     private SingleSelectionWindow<NameValue> mStatusWindow;
+    private ContextOptionsWindow mOptionsWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        setContentView(R.layout.activity_tab_two_refresh_layout);
+        setContentView(R.layout.activity_crm_order_list);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
         initView();
@@ -96,16 +106,35 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
         mPresenter.start();
     }
 
+    private void refreshList() {
+        mFilterHeader.setData(mOrderParam);
+        mPresenter.reload();
+    }
+
     private void initView() {
+        mTitleBar.setRightBtnClick(this::showOptionsWindows);
         mTitleBar.setHeaderTitle("订单列表");
         mShop.setText(mShopName);
         mStatus.setText("全部状态");
-        mListView.setPadding(0, UIUtils.dip2px(1), 0, 0);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
         mListView.addItemDecoration(decor);
         mAdapter = new CrmOrderListAdapter();
         mListView.setAdapter(mAdapter);
+    }
+
+    private void showOptionsWindows(View view) {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_CREATE));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_EXECUTE));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_FILTER_SIGN));
+            mOptionsWindow = new ContextOptionsWindow(this)
+                    .refreshList(list)
+                    .setListener(this);
+        }
+        mOptionsWindow.showAsDropDownFix(view, Gravity.END);
     }
 
     @OnClick({R.id.trl_tab_one_btn, R.id.trl_tab_two_btn})
@@ -122,6 +151,12 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
                 showStatusWindow(view);
                 break;
         }
+    }
+
+    @OnClick({R.id.col_filter_view})
+    public void dateFilter(View view) {
+        mOrderParam.cancelTimeInterval();
+        refreshList();
     }
 
     private void showShopWindow(View view) {
@@ -238,5 +273,15 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     @Override
     public void exportFailure(String msg) {
         Utils.exportFailure(this, msg);
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        if (adapter.getItem(position) instanceof OptionsBean) {
+            mOptionsWindow.dismiss();
+            OptionsBean item = (OptionsBean) adapter.getItem(position);
+            if (item == null) return;
+            OrderHelper.showDatePicker(item.getLabel(), mOrderParam, this, this::refreshList);
+        }
     }
 }
