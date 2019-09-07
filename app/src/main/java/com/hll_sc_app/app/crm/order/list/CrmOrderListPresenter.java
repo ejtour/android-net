@@ -12,6 +12,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Order;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -68,7 +69,7 @@ public class CrmOrderListPresenter implements ICrmOrderListContract.ICrmOrderLis
 
     @Override
     public void export(String email) {
-
+        Order.exportNormal(mOrderParam, mView.getBillStatus(), 0, mView.getShopID(), email, Utils.getExportObserver(mView));
     }
 
     @Override

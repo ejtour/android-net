@@ -271,10 +271,6 @@ public class Order {
      * @param email      邮件地址
      */
     public static void exportDelivery(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (user == null) {
-            throw new IllegalStateException("未登录");
-        }
         OrderExportReq req = new OrderExportReq(subBillIds, UserConfig.getGroupID(), email);
         OrderService.INSTANCE
                 .exportDelivery(new BaseReq<>(req))
@@ -290,10 +286,6 @@ public class Order {
      * @param email      邮件地址
      */
     public static void exportAssembly(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (user == null) {
-            throw new IllegalStateException("未登录");
-        }
         OrderExportReq req = new OrderExportReq(subBillIds, UserConfig.getGroupID(), email);
         OrderService.INSTANCE
                 .exportAssembly(new BaseReq<>(req))
@@ -311,10 +303,6 @@ public class Order {
      * @param email         邮件地址
      */
     public static void exportSpecial(OrderParam param, int subBillStatus, int type, String email, SimpleObserver<ExportResp> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (user == null) {
-            throw new IllegalStateException("未登录");
-        }
         OrderService.INSTANCE
                 .exportSpecial(buildSpecialExportReq(param, subBillStatus, type, email)
                         .put("groupID", UserConfig.getGroupID()).create())
@@ -329,17 +317,16 @@ public class Order {
      * @param param         订单参数
      * @param subBillStatus 订单状态
      * @param type          0-订单导出 1-订单明细导出 必传
+     * @param shopID        crm订单导出用到的shopID
      * @param email         邮件地址
      */
-    public static void exportNormal(OrderParam param, int subBillStatus, int type, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportNormal(OrderParam param, int subBillStatus, int type, String shopID, String email, SimpleObserver<ExportResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
-        if (user == null) {
-            throw new IllegalStateException("未登录");
-        }
         OrderService.INSTANCE
                 .exportNormal(buildSpecialExportReq(param, subBillStatus, type, email)
-                        .put("flag", "0")
-                        .put("groupIDs", UserConfig.getGroupID()).create())
+                        .put("flag", "1".equals(user.getAuthType()) ? "2" : "0")
+                        .put("shopID", shopID)
+                        .put("groupIDs", user.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -356,7 +343,7 @@ public class Order {
                 .put("subBillExecuteDateStart", param.getFormatExecuteStart(Constants.UNSIGNED_YYYY_MM_DD_HH))
                 .put("subBillSignTimeEnd", param.getFormatSignEnd(Constants.UNSIGNED_YYYY_MM_DD_HH))
                 .put("subBillSignTimeStart", param.getFormatSignStart(Constants.UNSIGNED_YYYY_MM_DD_HH))
-                .put("subBillStatus", String.valueOf(subBillStatus))
+                .put("subBillStatus", subBillStatus == 0 ? "" : String.valueOf(subBillStatus))
                 .put("type", String.valueOf(type));
     }
 
@@ -609,7 +596,7 @@ public class Order {
      * @param executeDateEnd   到货结束时间 yyyyMMddHH
      */
     public static void crmQueryOrderList(int pageNum, String shopID,
-                                         String subBillStatus,
+                                         int subBillStatus,
                                          String createTimeStart,
                                          String createTimeEnd,
                                          String executeDateStart,
@@ -626,7 +613,7 @@ public class Order {
                         .put("pageSize", "20")
                         .put("salesmanID", user.getEmployeeID())
                         .put("groupID", user.getGroupID())
-                        .put("subBillStatus", subBillStatus)
+                        .put("subBillStatus", subBillStatus == 0 ? "" : String.valueOf(subBillStatus))
                         .put("roleTypes", user.getAuthType())
                         .put("subBillCreateTimeStart", createTimeStart)
                         .put("subBillCreateTimeEnd", createTimeEnd)

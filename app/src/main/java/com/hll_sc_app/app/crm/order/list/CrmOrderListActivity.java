@@ -81,7 +81,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     String mShopID;
     @Autowired(name = "object1")
     String mShopName;
-    private String mBillStatus;
+    private Integer mBillStatus = 0;
     private List<PurchaserShopBean> mShopBeans;
     private CrmOrderListAdapter mAdapter;
     private EmptyView mEmptyView;
@@ -185,7 +185,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     private void showStatusWindow(View view) {
         if (mStatusWindow == null) {
             List<NameValue> list = new ArrayList<>();
-            list.add(new NameValue("全部状态", ""));
+            list.add(new NameValue("全部状态", "0"));
             list.add(new NameValue("待接单", "1"));
             list.add(new NameValue("待发货", "2"));
             list.add(new NameValue("已收货", "3"));
@@ -197,7 +197,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
             mStatusWindow.hideDivider();
             mStatusWindow.setSelect(list.get(0));
             mStatusWindow.setSelectListener(nameValue -> {
-                mBillStatus = nameValue.getValue();
+                mBillStatus = Integer.valueOf(nameValue.getValue());
                 mStatus.setText(nameValue.getName());
                 mPresenter.reload();
             });
@@ -251,7 +251,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     }
 
     @Override
-    public String getBillStatus() {
+    public Integer getBillStatus() {
         return mBillStatus;
     }
 
@@ -281,6 +281,10 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
             mOptionsWindow.dismiss();
             OptionsBean item = (OptionsBean) adapter.getItem(position);
             if (item == null) return;
+            if (OptionType.OPTION_EXPORT_ORDER.equals(item.getLabel())) {
+                mPresenter.export("");
+                return;
+            }
             OrderHelper.showDatePicker(item.getLabel(), mOrderParam, this, this::refreshList);
         }
     }

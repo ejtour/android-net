@@ -18,7 +18,7 @@ public interface ICrmOrderListContract {
 
         String getShopID();
 
-        String getBillStatus();
+        Integer getBillStatus();
 
         void cacheShopData(List<PurchaserShopBean> list);
     }
