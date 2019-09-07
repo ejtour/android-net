@@ -609,7 +609,7 @@ public class Order {
      * @param executeDateEnd   到货结束时间 yyyyMMddHH
      */
     public static void crmQueryOrderList(int pageNum, String shopID,
-                                         int subBillStatus,
+                                         String subBillStatus,
                                          String createTimeStart,
                                          String createTimeEnd,
                                          String executeDateStart,
@@ -626,7 +626,7 @@ public class Order {
                         .put("pageSize", "20")
                         .put("salesmanID", user.getEmployeeID())
                         .put("groupID", user.getGroupID())
-                        .put("subBillStatus", String.valueOf(subBillStatus))
+                        .put("subBillStatus", subBillStatus)
                         .put("roleTypes", user.getAuthType())
                         .put("subBillCreateTimeStart", createTimeStart)
                         .put("subBillCreateTimeEnd", createTimeEnd)

@@ -115,7 +115,7 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
             switch (view.getId()) {
                 case R.id.cop_all_orders_label:
                 case R.id.cop_ave_order_label:
-                    CrmOrderListActivity.start(mCurBean.getShopID());
+                    CrmOrderListActivity.start(mCurBean.getShopID(), mCurBean.getShopName());
                     break;
                 case R.id.cop_shop_detail:
                     showShopInfoWindow(view);

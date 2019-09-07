@@ -1,12 +1,15 @@
 package com.hll_sc_app.app.crm.order.list;
 
-import android.os.Bundle;
-
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Order;
 import com.hll_sc_app.utils.Constants;
 
@@ -30,8 +33,8 @@ public class CrmOrderListPresenter implements ICrmOrderListContract.ICrmOrderLis
 
     @Override
     public void start() {
-        mPageNum = 1;
-        load(true);
+        queryShopList();
+        reload();
     }
 
     private void load(boolean showLoading) {
@@ -66,6 +69,29 @@ public class CrmOrderListPresenter implements ICrmOrderListContract.ICrmOrderLis
     @Override
     public void export(String email) {
 
+    }
+
+    @Override
+    public void queryShopList() {
+        UserBean user = GreenDaoUtils.getUser();
+        Common.queryCooperationShop(BaseMapReq.newBuilder()
+                .put("actionType", "crmBill")
+                .put("groupID", user.getGroupID())
+                .put("pageNo", "1")
+                .put("pageSize", "9999")
+                .put("salesmanID", user.getEmployeeID())
+                .create(), new SimpleObserver<CooperationShopListResp>(mView) {
+            @Override
+            public void onSuccess(CooperationShopListResp cooperationShopListResp) {
+                mView.cacheShopData(cooperationShopListResp.getShopList());
+            }
+        });
+    }
+
+    @Override
+    public void reload() {
+        mPageNum = 1;
+        load(true);
     }
 
     @Override

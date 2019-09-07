@@ -13,6 +13,7 @@
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/col_logo"
         android:layout_width="70dp"
+        app:base_RoundingRadius="3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintDimensionRatio="1"

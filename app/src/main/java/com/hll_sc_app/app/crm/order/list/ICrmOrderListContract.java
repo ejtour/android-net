@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.crm.order.list;
 
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.impl.IExportView;
 
@@ -17,7 +18,9 @@ public interface ICrmOrderListContract {
 
         String getShopID();
 
-        int getBillStatus();
+        String getBillStatus();
+
+        void cacheShopData(List<PurchaserShopBean> list);
     }
 
     interface ICrmOrderListPresenter extends IPresenter<ICrmOrderListView> {
@@ -26,5 +29,9 @@ public interface ICrmOrderListContract {
         void loadMore();
 
         void export(String email);
+
+        void queryShopList();
+
+        void reload();
     }
 }

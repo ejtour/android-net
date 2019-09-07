@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -17,20 +18,25 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.SingleSelectionWindow;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -42,8 +48,8 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     /**
      * @param shopID 门店id
      */
-    public static void start(String shopID) {
-        RouterUtil.goToActivity(RouterConfig.CRM_ORDER_LIST, shopID);
+    public static void start(String shopID, String shopName) {
+        RouterUtil.goToActivity(RouterConfig.CRM_ORDER_LIST, shopID, shopName);
     }
 
     @BindView(R.id.trl_title_bar)
@@ -64,9 +70,14 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     private ICrmOrderListContract.ICrmOrderListPresenter mPresenter;
     @Autowired(name = "object0")
     String mShopID;
-    private int mBillStatus;
+    @Autowired(name = "object1")
+    String mShopName;
+    private String mBillStatus;
+    private List<PurchaserShopBean> mShopBeans;
     private CrmOrderListAdapter mAdapter;
     private EmptyView mEmptyView;
+    private SingleSelectionWindow<PurchaserShopBean> mShopWindow;
+    private SingleSelectionWindow<NameValue> mStatusWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +98,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
 
     private void initView() {
         mTitleBar.setHeaderTitle("订单列表");
-        mShop.setText("门店");
+        mShop.setText(mShopName);
         mStatus.setText("全部状态");
         mListView.setPadding(0, UIUtils.dip2px(1), 0, 0);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
@@ -95,6 +106,68 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
         mListView.addItemDecoration(decor);
         mAdapter = new CrmOrderListAdapter();
         mListView.setAdapter(mAdapter);
+    }
+
+    @OnClick({R.id.trl_tab_one_btn, R.id.trl_tab_two_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.trl_tab_one_btn:
+                if (mShopBeans == null) {
+                    mPresenter.queryShopList();
+                    return;
+                }
+                showShopWindow(view);
+                break;
+            case R.id.trl_tab_two_btn:
+                showStatusWindow(view);
+                break;
+        }
+    }
+
+    private void showShopWindow(View view) {
+        if (mShopWindow == null) {
+            PurchaserShopBean bean = null;
+            for (PurchaserShopBean shopBean : mShopBeans) {
+                if (mShopID.equals(shopBean.getShopID())) {
+                    bean = shopBean;
+                    break;
+                }
+            }
+            mShopWindow = new SingleSelectionWindow<>(this, PurchaserShopBean::getShopName);
+            mShopWindow.fixedHeight(UIUtils.dip2px(364));
+            mShopWindow.hideDivider();
+            mShopWindow.refreshList(mShopBeans);
+            mShopWindow.setSelect(bean);
+            mShopWindow.setSelectListener(bean1 -> {
+                mShopID = bean1.getShopID();
+                mShop.setText(bean1.getShopName());
+                mPresenter.reload();
+            });
+        }
+        mShopWindow.showAsDropDownFix(view);
+    }
+
+    private void showStatusWindow(View view) {
+        if (mStatusWindow == null) {
+            List<NameValue> list = new ArrayList<>();
+            list.add(new NameValue("全部状态", ""));
+            list.add(new NameValue("待接单", "1"));
+            list.add(new NameValue("待发货", "2"));
+            list.add(new NameValue("已收货", "3"));
+            list.add(new NameValue("待结算", "4"));
+            list.add(new NameValue("已结算", "5"));
+            list.add(new NameValue("已完成", "6"));
+            mStatusWindow = new SingleSelectionWindow<>(this, NameValue::getName);
+            mStatusWindow.refreshList(list);
+            mStatusWindow.hideDivider();
+            mStatusWindow.setSelect(list.get(0));
+            mStatusWindow.setSelectListener(nameValue -> {
+                mBillStatus = nameValue.getValue();
+                mStatus.setText(nameValue.getName());
+                mPresenter.reload();
+            });
+        }
+        mStatusWindow.showAsDropDownFix(view);
     }
 
     @Override
@@ -112,6 +185,12 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
             mAdapter.setNewData(list);
         }
         mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
+    }
+
+    @Override
+    public void hideLoading() {
+        mRefreshView.closeHeaderOrFooter();
+        super.hideLoading();
     }
 
     @Override
@@ -137,8 +216,13 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     }
 
     @Override
-    public int getBillStatus() {
+    public String getBillStatus() {
         return mBillStatus;
+    }
+
+    @Override
+    public void cacheShopData(List<PurchaserShopBean> list) {
+        mShopBeans = list;
     }
 
     @Override

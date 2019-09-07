@@ -72,6 +72,9 @@ public class OrderHelper {
             case 4: // 待结算
                 source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "发货";
                 break;
+            case 5:
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getSettlementTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "结算";
+                break;
             case 6: // 已签收
                 source = CalendarUtils.format(CalendarUtils.parse(resp.getSignTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "签收";
                 break;
