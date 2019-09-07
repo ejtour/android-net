@@ -2,6 +2,7 @@ package com.hll_sc_app.app.crm.order.list;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,8 @@ import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 import com.hll_sc_app.widget.order.OrderFilterView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +124,17 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
         mListView.addItemDecoration(decor);
         mAdapter = new CrmOrderListAdapter();
         mListView.setAdapter(mAdapter);
+        mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.loadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.refresh();
+            }
+        });
     }
 
     private void showOptionsWindows(View view) {
