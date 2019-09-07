@@ -52,6 +52,7 @@ public class CrmOrderListAdapter extends BaseQuickAdapter<OrderResp, BaseViewHol
                 return value.getLabel();
             }
         }
+        if (status == 8) return "已拒收";
         return "";
     }
 }

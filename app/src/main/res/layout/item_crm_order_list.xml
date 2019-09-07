@@ -94,7 +94,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:minWidth="60dp"
         tools:text="退款中"
-        android:background="@drawable/bg_crm_order_tag"
+        android:background="@drawable/bg_crm_order_refund_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -107,14 +107,14 @@
         android:paddingRight="5dp"
         android:gravity="center"
         android:textSize="@dimen/text_little_size"
-        android:textColor="@color/color_f6bb42"
+        android:textColor="@color/color_7ed321"
         app:layout_constraintEnd_toStartOf="@id/col_after_sales_status"
         app:layout_constraintEnd_toEndOf="parent"
         android:minWidth="60dp"
         android:layout_marginRight="5dp"
         app:layout_goneMarginRight="0dp"
         tools:text="准时配送"
-        android:background="@drawable/bg_crm_order_tag"
+        android:background="@drawable/bg_crm_order_deliver_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>
