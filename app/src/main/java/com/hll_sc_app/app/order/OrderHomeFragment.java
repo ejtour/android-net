@@ -170,7 +170,8 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                 case OptionType.OPTION_FILTER_CREATE:
                 case OptionType.OPTION_FILTER_EXECUTE:
                 case OptionType.OPTION_FILTER_SIGN:
-                    OrderHelper.showDatePicker(label, mOrderParam, requireActivity());
+                    OrderHelper.showDatePicker(label, mOrderParam, requireActivity(),
+                            () -> EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST)));
                     break;
                 default:
                     EventBus.getDefault().post(new ExportEvent(label));

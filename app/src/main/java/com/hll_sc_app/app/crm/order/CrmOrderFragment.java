@@ -176,7 +176,8 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
             mOptionsWindow.dismiss();
             OptionsBean item = (OptionsBean) adapter.getItem(position);
             if (item == null) return;
-            OrderHelper.showDatePicker(item.getLabel(), mOrderParam, requireActivity());
+            OrderHelper.showDatePicker(item.getLabel(), mOrderParam, requireActivity(),
+                    () -> EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST)));
         }
     }
 
