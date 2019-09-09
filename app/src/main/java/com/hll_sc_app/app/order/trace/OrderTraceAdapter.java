@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.utils.ColorStr;
+import com.hll_sc_app.utils.DateUtil;
 
 import java.util.List;
 
@@ -36,11 +37,12 @@ public class OrderTraceAdapter extends BaseQuickAdapter<OrderTraceBean, BaseView
     protected void convert(BaseViewHolder helper, OrderTraceBean item) {
         int position = helper.getAdapterPosition();
         helper.setVisible(R.id.iot_receive_tag, position == 0)
-                .setText(R.id.iot_label, processText(item.getLabel(), item.getDesc()))
+                .setText(R.id.iot_label, processText(item.getOpTypeName(), item.getTitle()))
                 .setVisible(R.id.iot_current_tag, position == 1)
                 .setVisible(R.id.iot_earlier_tag, position > 1)
                 .setGone(R.id.iot_time, position > 0)
-                .setText(R.id.iot_time, item.getTime());
+                .setGone(R.id.iot_bottom_padding, position < getItemCount() - 1)
+                .setText(R.id.iot_time, DateUtil.getReadableTime(item.getOpTime()));
     }
 
     private SpannableString processText(String label, String desc) {

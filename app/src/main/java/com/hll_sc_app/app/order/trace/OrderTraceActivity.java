@@ -15,10 +15,9 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
+import com.hll_sc_app.bean.order.trace.OrderTraceParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,8 +31,13 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.ORDER_TRACE)
 public class OrderTraceActivity extends BaseLoadActivity {
 
-    public static void start(OrderResp resp) {
-        RouterUtil.goToActivity(RouterConfig.ORDER_TRACE, resp);
+    /**
+     * @param address 收货地址
+     * @param list    订单追踪列表
+     */
+    public static void start(String address, List<OrderTraceBean> list) {
+        OrderTraceParam param = new OrderTraceParam(address, list);
+        RouterUtil.goToActivity(RouterConfig.ORDER_TRACE, param);
     }
 
     @BindView(R.id.aot_title)
@@ -41,7 +45,9 @@ public class OrderTraceActivity extends BaseLoadActivity {
     @BindView(R.id.aot_list_view)
     RecyclerView mListView;
     @Autowired(name = "parcelable")
-    OrderResp mOrderResp;
+    OrderTraceParam mTraceParam;
+    @BindView(R.id.aot_status_title)
+    TextView mStatusTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,10 +60,9 @@ public class OrderTraceActivity extends BaseLoadActivity {
     }
 
     private void initView() {
-        mTitle.setText("仓库处理中");
-        List<OrderTraceBean> list = new ArrayList<>();
-        list.add(new OrderTraceBean("【收货地址】" + mOrderResp.getReceiverAddress(), null, null));
-        mListView.setAdapter(new OrderTraceAdapter(list));
+        mTitle.setText(mTraceParam.getTitle());
+        mStatusTitle.setText(mTraceParam.getDeliverTitle());
+        mListView.setAdapter(new OrderTraceAdapter(mTraceParam.getList()));
     }
 
     @OnClick({R.id.aot_close, R.id.aot_complaint})

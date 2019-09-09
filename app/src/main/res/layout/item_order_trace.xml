@@ -55,7 +55,7 @@
         app:layout_constraintTop_toTopOf="@id/iot_receive_tag"
         app:layout_constraintStart_toEndOf="@id/iot_receive_tag"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="1dp"
         android:gravity="center_vertical"
         android:lineSpacingExtra="2dp"
         tools:text="仓库处理中"
