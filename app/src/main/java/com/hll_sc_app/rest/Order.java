@@ -33,6 +33,7 @@ import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
+import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.order.transfer.InventoryCheckReq;
 import com.hll_sc_app.bean.order.transfer.OrderResultResp;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
@@ -153,6 +154,8 @@ public class Order {
                 .getOrderDetails(BaseMapReq
                         .newBuilder()
                         .put("subBillID", subBillID)
+                        .put("roleTypes", user.getAuthType())
+                        .put("curRole", user.getAuthType())
                         .put("groupID", user.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -625,5 +628,22 @@ public class Order {
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
+    }
+
+    /**
+     * 查询订单日志
+     *
+     * @param billID 订单id
+     */
+    public static void queryOrderLog(String billID, SimpleObserver<SingleListResp<OrderTraceBean>> observer) {
+        if (TextUtils.isEmpty(UserConfig.getSalesmanID())) return;
+        OrderService.INSTANCE
+                .queryOrderLog(BaseMapReq.newBuilder()
+                        .put("billID", billID)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+
     }
 }
