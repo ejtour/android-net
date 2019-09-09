@@ -899,6 +899,14 @@
         <activity
             android:name=".app.stockmanage.customersendmanage.CustomerSendManageActivity"
             android:screenOrientation="portrait" />
+        <!--商品库存校验设置-->
+        <activity
+            android:name=".app.stockmanage.stockchecksetting.StockCheckSettingActivity"
+            android:screenOrientation="portrait" />
+        <!--商品库存校验选择商品页面-->
+        <activity
+            android:name=".app.stockmanage.selectproduct.ProductSelectActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

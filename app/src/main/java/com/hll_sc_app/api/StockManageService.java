@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.stockmanage.BusinessTypeBean;
 import com.hll_sc_app.bean.stockmanage.CustomerSendManageListResp;
+import com.hll_sc_app.bean.stockmanage.RemoveStockCheckSettingReq;
 import com.hll_sc_app.bean.stockmanage.StockLogResp;
 import com.hll_sc_app.bean.stockmanage.StorehouseListResp;
 
@@ -73,4 +74,17 @@ public interface StockManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:102053")
     Observable<BaseResp<CustomerSendManageListResp>> queryCustomerSendManageListResp(@Body BaseMapReq req);
+
+
+    /**
+     * 商品库存校验设置
+     *
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100110")
+    Observable<BaseResp<Object>> changeStockCheckSetting(@Body BaseReq<RemoveStockCheckSettingReq> req);
+
+
 }

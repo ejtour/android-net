@@ -44,6 +44,7 @@ public class MenuListActivity extends AppCompatActivity {
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_QUERY_LIST);
                 break;
             case R.id.ll_product_stock_check:
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_CHECK_SETTING);
                 break;
             case R.id.ll_stock_log_query:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_LOG_QUERY);
@@ -52,6 +53,7 @@ public class MenuListActivity extends AppCompatActivity {
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_CUSTOMER_SEND);
                 break;
             case R.id.ll_purchaser_query:
+
                 break;
             default:
                 break;

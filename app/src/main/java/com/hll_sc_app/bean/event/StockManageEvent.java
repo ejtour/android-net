@@ -3,6 +3,7 @@ package com.hll_sc_app.bean.event;
 public class StockManageEvent {
     public static final int TYPE_LOG = 1;
     public static final int TYPE_COSTOMER_SEND_STOCK = 2;
+    public static final int TYPE_COSTOMER_CHECK = 3;
     private int type;
     private String content;
 

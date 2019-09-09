@@ -996,5 +996,10 @@ public class RouterConfig {
     /*仓库-客户发货仓库管理*/
     public static final String ACTIVITY_STOCK_CUSTOMER_SEND = "/activity/stock/customer/send";
 
+    /*仓库-仓库库存校验设置*/
+    public static final String ACTIVITY_STOCK_CHECK_SETTING = "/activity/stock/check/setting";
+    /*仓库-库存校验选择商品*/
+    public static final String ACTIVITY_STOCK_CHECK_SELECT_PRODUCT = "/activity/stock/check/select/product";
+
 }
 

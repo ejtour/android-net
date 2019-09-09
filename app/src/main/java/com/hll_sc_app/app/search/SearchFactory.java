@@ -22,6 +22,7 @@ import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.app.search.stratery.SelectGroupSearch;
 import com.hll_sc_app.app.search.stratery.SelectShopSearch;
 import com.hll_sc_app.app.search.stratery.ShopSearch;
+import com.hll_sc_app.app.search.stratery.StockCheckSearch;
 import com.hll_sc_app.app.search.stratery.StockLogSearch;
 import com.hll_sc_app.app.search.stratery.WarehouseSearch;
 
@@ -60,6 +61,7 @@ class SearchFactory {
         ITEM_MAP.put(StockLogSearch.class.getSimpleName(), StockLogSearch.class);
         ITEM_MAP.put(CustomerSendStockSearch.class.getSimpleName(), CustomerSendStockSearch.class);
         ITEM_MAP.put(CrmOrderSearch.class.getSimpleName(), CrmOrderSearch.class);
+        ITEM_MAP.put(StockCheckSearch.class.getSimpleName(), StockCheckSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {
