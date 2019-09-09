@@ -442,6 +442,11 @@ public class RouterConfig {
     public static final String ORDER_DETAIL = "/activity/order/detail";
 
     /**
+     * 订单追踪
+     */
+    public static final String ORDER_TRACE = "/activity/order/trace";
+
+    /**
      * 订单转单详情
      */
     public static final String ORDER_TRANSFER_DETAIL = "/activity/order/transfer/detail";

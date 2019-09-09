@@ -874,6 +874,10 @@
             android:name=".app.crm.order.list.CrmOrderListActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.order.trace.OrderTraceActivity"
+            android:screenOrientation="portrait" />
+
 
         <!--库存管理首页-->
         <activity

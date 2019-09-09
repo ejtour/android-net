@@ -5,9 +5,10 @@ import android.text.TextUtils;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportReq;
-import com.hll_sc_app.bean.invoice.InvoiceListResp;
 import com.hll_sc_app.bean.filter.DateParam;
+import com.hll_sc_app.bean.invoice.InvoiceListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Invoice;
@@ -52,8 +53,10 @@ public class InvoicePresenter implements IInvoiceContract.IInvoicePresenter {
         exportReq.setUserID(user.getEmployeeID());
         ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
         ExportReq.ParamsBean.InvoiceParams invoiceParams = new ExportReq.ParamsBean.InvoiceParams();
-        invoiceParams.setEndTime(mParam.getFormatEndDate());
-        invoiceParams.setStartTime(mParam.getFormatStartDate());
+        if (mStatus > 1 && TextUtils.isEmpty(UserConfig.getSalesmanID())) {
+            invoiceParams.setEndTime(mParam.getFormatEndDate());
+            invoiceParams.setStartTime(mParam.getFormatStartDate());
+        }
         invoiceParams.setGroupID(user.getGroupID());
         invoiceParams.setInvoiceStatus(mStatus);
         bean.setInvoice(invoiceParams);
