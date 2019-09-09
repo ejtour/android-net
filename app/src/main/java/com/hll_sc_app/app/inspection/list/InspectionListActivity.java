@@ -50,19 +50,19 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.INSPECTION_LIST)
 public class InspectionListActivity extends BaseLoadActivity implements IInspectionListContract.IInspectionListView {
 
-    @BindView(R.id.rog_title_bar)
+    @BindView(R.id.trl_title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.rog_purchaser)
+    @BindView(R.id.trl_tab_one)
     TextView mPurchaser;
-    @BindView(R.id.rog_purchaser_arrow)
+    @BindView(R.id.trl_tab_one_arrow)
     TriangleView mPurchaserArrow;
-    @BindView(R.id.rog_date)
+    @BindView(R.id.trl_tab_two)
     TextView mDate;
-    @BindView(R.id.rog_date_arrow)
+    @BindView(R.id.trl_tab_two_arrow)
     TriangleView mDateArrow;
-    @BindView(R.id.rog_list_view)
+    @BindView(R.id.trl_list_view)
     RecyclerView mListView;
-    @BindView(R.id.rog_refresh_view)
+    @BindView(R.id.trl_refresh_view)
     SmartRefreshLayout mRefreshView;
     private DateRangeWindow mDateRangeWindow;
     private PurchaserSelectWindow mPurchaserWindow;
@@ -75,7 +75,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_order_goods);
+        setContentView(R.layout.activity_tab_two_refresh_layout);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ButterKnife.bind(this);
         initView();
@@ -123,17 +123,17 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
         });
     }
 
-    @OnClick({R.id.rog_purchaser_btn, R.id.rog_date_btn})
+    @OnClick({R.id.trl_tab_one_btn, R.id.trl_tab_two_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.rog_purchaser_btn:
+            case R.id.trl_tab_one_btn:
                 if (mPurchaserBeans == null) {
                     mPresenter.getPurchaserList();
                     return;
                 }
                 showPurchaserWindow(view);
                 break;
-            case R.id.rog_date_btn:
+            case R.id.trl_tab_two_btn:
                 showDateRangeWindow(view);
                 break;
         }

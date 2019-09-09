@@ -157,7 +157,7 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
 
     @Override
     public void exportNormalOrder(int type, String email) {
-        Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getType(), type, email, Utils.getExportObserver(mView));
+        Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getType(), type, null, email, Utils.getExportObserver(mView));
     }
 
     @Override

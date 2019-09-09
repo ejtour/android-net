@@ -82,9 +82,11 @@ public class SimpleDecoration extends RecyclerView.ItemDecoration {
         for (int i = 0; i < childCount - 1; i += step) {
             View child = parent.getChildAt(i);
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
-            int posY = child.getBottom() + params.bottomMargin + mTopMargin + mLineWidth / 2;
-            mLinePaint.setColor(mDecorColor);
-            c.drawLine(0, posY, parent.getWidth(), posY, mLinePaint);
+            float posY = child.getBottom() + params.bottomMargin + mTopMargin + mLineWidth / 2f;
+            if (mDecorColor != Color.TRANSPARENT) {
+                mLinePaint.setColor(mDecorColor);
+                c.drawLine(0, posY, parent.getWidth(), posY, mLinePaint);
+            }
             mLinePaint.setColor(mLineColor);
             c.drawLine(startX, posY, stopX, posY, mLinePaint);
         }
@@ -101,9 +103,11 @@ public class SimpleDecoration extends RecyclerView.ItemDecoration {
         for (int i = 0; i < childCount - 1; i += step) {
             View child = parent.getChildAt(i);
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
-            int posX = child.getRight() + params.rightMargin + mLeftMargin + mLineWidth / 2;
-            mLinePaint.setColor(mDecorColor);
-            c.drawLine(posX, 0, posX, parent.getHeight(), mLinePaint);
+            float posX = child.getRight() + params.rightMargin + mLeftMargin + mLineWidth / 2f;
+            if (mDecorColor != Color.TRANSPARENT) {
+                mLinePaint.setColor(mDecorColor);
+                c.drawLine(posX, 0, posX, parent.getHeight(), mLinePaint);
+            }
             mLinePaint.setColor(mLineColor);
             c.drawLine(posX, startY, posX, stopY, mLinePaint);
         }

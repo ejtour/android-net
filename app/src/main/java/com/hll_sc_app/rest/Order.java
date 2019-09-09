@@ -15,6 +15,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.filter.OrderParam;
@@ -88,7 +89,6 @@ public class Order {
         OrderService.INSTANCE
                 .getOrderList(BaseMapReq
                         .newBuilder()
-                        .put("curRole", user.getRoleID())
                         .put("groupID", user.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
@@ -154,7 +154,6 @@ public class Order {
                         .newBuilder()
                         .put("subBillID", subBillID)
                         .put("groupID", user.getGroupID())
-                        .put("curRole", user.getRoleID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -272,10 +271,6 @@ public class Order {
      * @param email      邮件地址
      */
     public static void exportDelivery(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (user == null) {
-            throw new IllegalStateException("未登录");
-        }
         OrderExportReq req = new OrderExportReq(subBillIds, UserConfig.getGroupID(), email);
         OrderService.INSTANCE
                 .exportDelivery(new BaseReq<>(req))
@@ -291,10 +286,6 @@ public class Order {
      * @param email      邮件地址
      */
     public static void exportAssembly(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (user == null) {
-            throw new IllegalStateException("未登录");
-        }
         OrderExportReq req = new OrderExportReq(subBillIds, UserConfig.getGroupID(), email);
         OrderService.INSTANCE
                 .exportAssembly(new BaseReq<>(req))
@@ -312,10 +303,6 @@ public class Order {
      * @param email         邮件地址
      */
     public static void exportSpecial(OrderParam param, int subBillStatus, int type, String email, SimpleObserver<ExportResp> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (user == null) {
-            throw new IllegalStateException("未登录");
-        }
         OrderService.INSTANCE
                 .exportSpecial(buildSpecialExportReq(param, subBillStatus, type, email)
                         .put("groupID", UserConfig.getGroupID()).create())
@@ -330,17 +317,16 @@ public class Order {
      * @param param         订单参数
      * @param subBillStatus 订单状态
      * @param type          0-订单导出 1-订单明细导出 必传
+     * @param shopID        crm订单导出用到的shopID
      * @param email         邮件地址
      */
-    public static void exportNormal(OrderParam param, int subBillStatus, int type, String email, SimpleObserver<ExportResp> observer) {
+    public static void exportNormal(OrderParam param, int subBillStatus, int type, String shopID, String email, SimpleObserver<ExportResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
-        if (user == null) {
-            throw new IllegalStateException("未登录");
-        }
         OrderService.INSTANCE
                 .exportNormal(buildSpecialExportReq(param, subBillStatus, type, email)
-                        .put("flag", "0")
-                        .put("groupIDs", UserConfig.getGroupID()).create())
+                        .put("flag", "1".equals(user.getAuthType()) ? "2" : "0")
+                        .put("shopID", shopID)
+                        .put("groupIDs", user.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -357,7 +343,7 @@ public class Order {
                 .put("subBillExecuteDateStart", param.getFormatExecuteStart(Constants.UNSIGNED_YYYY_MM_DD_HH))
                 .put("subBillSignTimeEnd", param.getFormatSignEnd(Constants.UNSIGNED_YYYY_MM_DD_HH))
                 .put("subBillSignTimeStart", param.getFormatSignStart(Constants.UNSIGNED_YYYY_MM_DD_HH))
-                .put("subBillStatus", String.valueOf(subBillStatus))
+                .put("subBillStatus", subBillStatus == 0 ? "" : String.valueOf(subBillStatus))
                 .put("type", String.valueOf(type));
     }
 
@@ -585,6 +571,50 @@ public class Order {
                         .put("salesmanID", user.getEmployeeID())
                         .put("groupID", user.getGroupID())
                         .put("searchWords", searchWords)
+                        .put("subBillCreateTimeStart", createTimeStart)
+                        .put("subBillCreateTimeEnd", createTimeEnd)
+                        .put("subBillExecuteDateStart", executeDateStart)
+                        .put("subBillExecuteDateEnd", executeDateEnd)
+                        .put("subBillSignTimeStart", signTimeStart)
+                        .put("subBillSignTimeEnd", signTimeEnd)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 销售查询订单列表
+     *
+     * @param pageNum          页码
+     * @param shopID           门店id
+     * @param createTimeStart  下单开始时间 yyyyMMdd
+     * @param createTimeEnd    下单结束时间 yyyyMMdd
+     * @param signTimeStart    签收开始时间 yyyyMMddHH
+     * @param signTimeEnd      签收结束时间 yyyyMMddHH
+     * @param executeDateStart 到货开始时间 yyyyMMddHH
+     * @param executeDateEnd   到货结束时间 yyyyMMddHH
+     */
+    public static void crmQueryOrderList(int pageNum, String shopID,
+                                         int subBillStatus,
+                                         String createTimeStart,
+                                         String createTimeEnd,
+                                         String executeDateStart,
+                                         String executeDateEnd,
+                                         String signTimeStart,
+                                         String signTimeEnd,
+                                         SimpleObserver<SingleListResp<OrderResp>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        OrderService.INSTANCE
+                .crmQueryOrderList(BaseMapReq.newBuilder()
+                        .put("curRole", user.getAuthType())
+                        .put("shopID", shopID)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("salesmanID", user.getEmployeeID())
+                        .put("groupID", user.getGroupID())
+                        .put("subBillStatus", subBillStatus == 0 ? "" : String.valueOf(subBillStatus))
+                        .put("roleTypes", user.getAuthType())
                         .put("subBillCreateTimeStart", createTimeStart)
                         .put("subBillCreateTimeEnd", createTimeEnd)
                         .put("subBillExecuteDateStart", executeDateStart)

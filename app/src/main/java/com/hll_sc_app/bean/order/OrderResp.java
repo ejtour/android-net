@@ -141,11 +141,20 @@ public class OrderResp implements Parcelable {
     private String plateNumber;
     private List<Integer> buttonList;
     private int receiptRemaining;
+    private String distributionStatus;
     private List<OrderDetailBean> billDetailList;
 
     public boolean isCanSelect(String groupID) {
         return !(isCheck == 2 && groupID.equals(this.groupID)
                 || isCheck == 1 && groupID.equals(this.agencyID));
+    }
+
+    public String getDistributionStatus() {
+        return distributionStatus;
+    }
+
+    public void setDistributionStatus(String distributionStatus) {
+        this.distributionStatus = distributionStatus;
     }
 
     public double getDiffPrice() {
@@ -1300,6 +1309,7 @@ public class OrderResp implements Parcelable {
         dest.writeString(this.plateNumber);
         dest.writeList(this.buttonList);
         dest.writeInt(this.receiptRemaining);
+        dest.writeString(this.distributionStatus);
         dest.writeTypedList(this.billDetailList);
     }
 
@@ -1432,6 +1442,7 @@ public class OrderResp implements Parcelable {
         this.buttonList = new ArrayList<Integer>();
         in.readList(this.buttonList, Integer.class.getClassLoader());
         this.receiptRemaining = in.readInt();
+        this.distributionStatus = in.readString();
         this.billDetailList = in.createTypedArrayList(OrderDetailBean.CREATOR);
     }
 

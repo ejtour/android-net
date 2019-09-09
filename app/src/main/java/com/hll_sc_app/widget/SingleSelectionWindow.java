@@ -82,6 +82,14 @@ public class SingleSelectionWindow<T> extends BasePopupWindow implements View.On
         }
     }
 
+    public void fixedHeight(int height) {
+        mListView.getLayoutParams().height = height;
+    }
+
+    public void hideDivider() {
+        mListView.removeItemDecorationAt(0);
+    }
+
     /**
      * 刷新列表
      *

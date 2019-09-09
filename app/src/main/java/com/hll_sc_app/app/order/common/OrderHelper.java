@@ -6,17 +6,15 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 
-import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.impl.IChangeListener;
 import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.DatePickerDialog;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -69,8 +67,13 @@ public class OrderHelper {
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 return spannableString;
             case 3: // 已发货
-            case 4: // 待结算
                 source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "发货";
+                break;
+            case 4: // 待结算
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getDeliveryTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "送达";
+                break;
+            case 5:
+                source = CalendarUtils.format(CalendarUtils.parse(resp.getSettlementTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "结算";
                 break;
             case 6: // 已签收
                 source = CalendarUtils.format(CalendarUtils.parse(resp.getSignTime()), Constants.SIGNED_YYYY_MM_DD_HH_MM_SS) + "签收";
@@ -97,7 +100,7 @@ public class OrderHelper {
         }
     }
 
-    public static void showDatePicker(@OptionType String type, OrderParam param, Activity activity) {
+    public static void showDatePicker(@OptionType String type, OrderParam param, Activity activity, IChangeListener changeListener) {
         long selectBegin, selectEnd;
         selectBegin = selectEnd = System.currentTimeMillis();
         if (type.equals(OptionType.OPTION_FILTER_EXECUTE) && param.getExecuteStart() != 0) {
@@ -144,7 +147,8 @@ public class OrderHelper {
                                 param.setSignEnd(endTime.getTime());
                                 break;
                         }
-                        EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
+                        if (changeListener != null)
+                            changeListener.onChanged();
                     }
                 })
                 .setCancelable(false)

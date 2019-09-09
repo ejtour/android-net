@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,13 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.order.page.CrmOrderPageFragment;
 import com.hll_sc_app.app.order.common.OrderHelper;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.CrmOrderSearch;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.filter.CrmOrderParam;
+import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -33,6 +37,8 @@ import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SingleSelectionWindow;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +82,7 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crm_order, container, false);
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         showStatusBar();
         initView();
         return view;
@@ -84,6 +91,18 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
     private void initView() {
         mSearchView.setTextColorWhite();
         mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(searchContent, CrmOrderSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                if (TextUtils.isEmpty(searchContent))
+                    EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, new OrderSearchBean()));
+            }
+        });
         mPager.setAdapter(new Pager());
         String[] titles = {"已下单", "未下单"};
         mTabLayout.setViewPager(mPager, titles);
@@ -95,8 +114,19 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
         }
     }
 
+    @Subscribe(priority = 1, threadMode = ThreadMode.MAIN)
+    public void handleOrderEvent(OrderEvent event) {
+        if (event.getMessage().equals(OrderEvent.SEARCH_WORDS)) {
+            OrderSearchBean data = (OrderSearchBean) event.getData();
+            if (!TextUtils.isEmpty(data.getName())) {
+                mSearchView.showSearchContent(true, data.getName());
+            }
+        }
+    }
+
     @Override
     public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
         unbinder.unbind();
     }
@@ -146,7 +176,8 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
             mOptionsWindow.dismiss();
             OptionsBean item = (OptionsBean) adapter.getItem(position);
             if (item == null) return;
-            OrderHelper.showDatePicker(item.getLabel(), mOrderParam, requireActivity());
+            OrderHelper.showDatePicker(item.getLabel(), mOrderParam, requireActivity(),
+                    () -> EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST)));
         }
     }
 

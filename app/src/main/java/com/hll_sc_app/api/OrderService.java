@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.order.OrderResp;
@@ -143,4 +144,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103081")
     Observable<BaseResp<OrderShopResp>> queryOrderShopList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103080")
+    Observable<BaseResp<SingleListResp<OrderResp>>> crmQueryOrderList(@Body BaseMapReq req);
 }

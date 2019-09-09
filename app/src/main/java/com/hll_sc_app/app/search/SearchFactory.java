@@ -5,6 +5,7 @@ import com.hll_sc_app.app.marketingsetting.product.check.SelectProductListActivi
 import com.hll_sc_app.app.search.stratery.BrandSearch;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.CooperationSearch;
+import com.hll_sc_app.app.search.stratery.CrmOrderSearch;
 import com.hll_sc_app.app.search.stratery.CustomerLackSearch;
 import com.hll_sc_app.app.search.stratery.CustomerSendStockSearch;
 import com.hll_sc_app.app.search.stratery.EmployeeSearch;
@@ -58,6 +59,7 @@ class SearchFactory {
         ITEM_MAP.put(ShopSearch.class.getSimpleName(), ShopSearch.class);
         ITEM_MAP.put(StockLogSearch.class.getSimpleName(), StockLogSearch.class);
         ITEM_MAP.put(CustomerSendStockSearch.class.getSimpleName(), CustomerSendStockSearch.class);
+        ITEM_MAP.put(CrmOrderSearch.class.getSimpleName(), CrmOrderSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {

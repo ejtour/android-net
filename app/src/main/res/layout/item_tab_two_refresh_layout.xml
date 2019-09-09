@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.support.constraint.ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/trl_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightVisibility="true"
+        app:tb_title="标题" />
+
+    <View
+        android:id="@+id/trl_tab_one_btn"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        app:layout_constraintEnd_toStartOf="@id/trl_tab_two_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trl_title_bar" />
+
+    <View
+        android:id="@+id/trl_tab_two_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/base_bg_shadow_top_white_bar"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_one_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/trl_tab_one_btn"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_one_btn" />
+
+    <View
+        android:id="@+id/trl_ver_line"
+        android:layout_width="1dp"
+        android:layout_height="18dp"
+        android:background="@color/color_dddddd"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_one_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_one_btn" />
+
+    <TextView
+        android:id="@+id/trl_tab_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:text="标签 1"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_one_btn"
+        app:layout_constraintEnd_toStartOf="@id/trl_tab_one_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/trl_tab_one_btn"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_one_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/trl_tab_one_arrow"
+        android:layout_width="8dp"
+        android:layout_height="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_one_btn"
+        app:layout_constraintEnd_toEndOf="@id/trl_tab_one_btn"
+        app:layout_constraintStart_toEndOf="@id/trl_tab_one"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_one_btn"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <TextView
+        android:id="@+id/trl_tab_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="标签 2"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_two_btn"
+        app:layout_constraintEnd_toStartOf="@id/trl_tab_two_arrow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/trl_tab_two_btn"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_two_btn" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/trl_tab_two_arrow"
+        android:layout_width="8dp"
+        android:layout_height="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/trl_tab_two_btn"
+        app:layout_constraintEnd_toEndOf="@id/trl_tab_two_btn"
+        app:layout_constraintStart_toEndOf="@id/trl_tab_two"
+        app:layout_constraintTop_toTopOf="@id/trl_tab_two_btn"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+</merge>
