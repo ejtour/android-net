@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
+import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -91,6 +92,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     private SingleSelectionWindow<PurchaserShopBean> mShopWindow;
     private SingleSelectionWindow<NameValue> mStatusWindow;
     private ContextOptionsWindow mOptionsWindow;
+    private OrderResp mCurResp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,6 +125,11 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
         mListView.addItemDecoration(decor);
         mAdapter = new CrmOrderListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mCurResp = mAdapter.getItem(position);
+            if (mCurResp == null) return;
+            OrderDetailActivity.start(mCurResp.getSubBillID());
+        });
         mListView.setAdapter(mAdapter);
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

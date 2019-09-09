@@ -26,6 +26,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -154,6 +155,11 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     public void handleStatusChanged() {
         mHasChanged = true;
         mPresenter.start();
+    }
+
+    @Override
+    public void updateOrderTraceLog(List<OrderTraceBean> list) {
+        mDetailHeader.setData(list);
     }
 
     @Override
