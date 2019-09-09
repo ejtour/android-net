@@ -5,7 +5,12 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.stockmanage.BusinessTypeBean;
+import com.hll_sc_app.bean.stockmanage.CustomerSendManageListResp;
+import com.hll_sc_app.bean.stockmanage.StockLogResp;
 import com.hll_sc_app.bean.stockmanage.StorehouseListResp;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -38,5 +43,34 @@ public interface StockManageService {
     @Headers("pv:100118")
     Observable<BaseResp<Object>> saveStoreHouseInfo(@Body BaseReq<StorehouseListResp.Storehouse> req);
 
+    /**
+     * 获取交易类型
+     *
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100128")
+    Observable<BaseResp<List<BusinessTypeBean>>> queryBusinessType(@Body BaseReq<Object> req);
 
+    /**
+     * 库存流水列表查询
+     *
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100125")
+    Observable<BaseResp<StockLogResp>> fetchStockLogs(@Body BaseMapReq req);
+
+
+    /**
+     * 客户发货仓库管理列表
+     *
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102053")
+    Observable<BaseResp<CustomerSendManageListResp>> queryCustomerSendManageListResp(@Body BaseMapReq req);
 }

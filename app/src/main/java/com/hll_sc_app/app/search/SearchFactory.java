@@ -6,6 +6,7 @@ import com.hll_sc_app.app.search.stratery.BrandSearch;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.CooperationSearch;
 import com.hll_sc_app.app.search.stratery.CustomerLackSearch;
+import com.hll_sc_app.app.search.stratery.CustomerSendStockSearch;
 import com.hll_sc_app.app.search.stratery.EmployeeSearch;
 import com.hll_sc_app.app.search.stratery.GoodsInvWarnSearch;
 import com.hll_sc_app.app.search.stratery.GoodsRelevanceListSearch;
@@ -20,6 +21,7 @@ import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.app.search.stratery.SelectGroupSearch;
 import com.hll_sc_app.app.search.stratery.SelectShopSearch;
 import com.hll_sc_app.app.search.stratery.ShopSearch;
+import com.hll_sc_app.app.search.stratery.StockLogSearch;
 import com.hll_sc_app.app.search.stratery.WarehouseSearch;
 
 import java.util.HashMap;
@@ -46,7 +48,7 @@ class SearchFactory {
         ITEM_MAP.put(OrderSearch.class.getSimpleName(), OrderSearch.class);
         ITEM_MAP.put(WarehouseSearch.class.getSimpleName(), WarehouseSearch.class);
         ITEM_MAP.put(SalesManSearch.class.getSimpleName(), SalesManSearch.class);
-        ITEM_MAP.put(RefundSearch.class.getSimpleName(),RefundSearch.class);
+        ITEM_MAP.put(RefundSearch.class.getSimpleName(), RefundSearch.class);
         ITEM_MAP.put(MarketingProductSearch.class.getSimpleName(), MarketingProductSearch.class);
         ITEM_MAP.put(SelectProductListActivity.MarketingSelectProductSearch.class.getSimpleName(), SelectProductListActivity.MarketingSelectProductSearch.class);
         ITEM_MAP.put(SelectGroupSearch.class.getSimpleName(), SelectGroupSearch.class);
@@ -54,6 +56,8 @@ class SearchFactory {
         ITEM_MAP.put(CustomerLackSearch.class.getSimpleName(), CustomerLackSearch.class);
         ITEM_MAP.put(InspectLackDetailSearch.class.getSimpleName(), InspectLackDetailSearch.class);
         ITEM_MAP.put(ShopSearch.class.getSimpleName(), ShopSearch.class);
+        ITEM_MAP.put(StockLogSearch.class.getSimpleName(), StockLogSearch.class);
+        ITEM_MAP.put(CustomerSendStockSearch.class.getSimpleName(), CustomerSendStockSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {

@@ -198,6 +198,7 @@ public class MarketingCouponAddActivity extends BaseLoadActivity implements IMar
                 } else {
                     if (mDateSelectWindow == null) {
                         mDateSelectWindow = new DateSelectWindow(this);
+                        mDateSelectWindow.setForbiddenStartBeforeCurrent(false);
                         mDateSelectWindow.setSelectListener((startDate, endDate) -> {
                             mTxtTimeSpan.setText(CalendarUtils.getDateFormatString(startDate, FORMAT_LOCAL_DATE, FORMAT_TIME_OUT) + "~" + CalendarUtils.getDateFormatString(endDate, FORMAT_LOCAL_DATE, FORMAT_TIME_OUT));
                             mTxtTimeSpan.setTag(R.id.base_tag_1, startDate);

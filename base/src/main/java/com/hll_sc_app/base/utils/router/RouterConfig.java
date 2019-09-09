@@ -984,5 +984,12 @@ public class RouterConfig {
 
     /*仓库-库存查询*/
     public static final String ACTIVITY_STOCK_QUERY_LIST = "/activity/stock/query/list";
+
+    /*仓库-库存日志查询*/
+    public static final String ACTIVITY_STOCK_LOG_QUERY = "/activity/stock/log/query";
+
+    /*仓库-客户发货仓库管理*/
+    public static final String ACTIVITY_STOCK_CUSTOMER_SEND = "/activity/stock/customer/send";
+
 }
 
