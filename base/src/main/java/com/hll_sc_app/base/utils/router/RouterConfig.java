@@ -1005,6 +1005,9 @@ public class RouterConfig {
     public static final String ACTIVITY_STOCK_CHECK_SETTING = "/activity/stock/check/setting";
     /*仓库-库存校验选择商品*/
     public static final String ACTIVITY_STOCK_CHECK_SELECT_PRODUCT = "/activity/stock/check/select/product";
+    /*投诉管理页面*/
+    public static final String ACTIVITY_COMPLAIN_MANAGE_LIST = "/activity/complain/manage/list";
+
 
 }
 

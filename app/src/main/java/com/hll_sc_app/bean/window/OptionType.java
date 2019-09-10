@@ -32,7 +32,7 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_EXPORT_SUMMARY_TABLE, OptionType.OPTION_RECORD_PURCHASE_LOGISTICS, OptionType.OPTION_RECORD_PURCHASE_AMOUNT,
         OptionType.OPTION_PRE_SEVEN_LOSS, OptionType.OPTION_PRE_THIRTY_LOSS,
         OptionType.OPTION_EXPORT_DETAILS_TABLE, OptionType.OPTION_SET_MAN_HOUR_COST, OptionType.OPTION_RECORD_PRODUCE_DATA,
-        OptionType.OPTION_STOCK_LOG_EXPORT})
+        OptionType.OPTION_STOCK_LOG_EXPORT,OptionType.OPTION_COMPLAIN_ADD,OptionType.OPTION_COMPLAIN_EXPORT})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -122,4 +122,7 @@ public @interface OptionType {
     String OPTION_SET_MAN_HOUR_COST = "设置工时费";
     String OPTION_RECORD_PRODUCE_DATA = "录入生产数据";
     String OPTION_STOCK_LOG_EXPORT = "导出库存日志";
+
+    String OPTION_COMPLAIN_ADD = "新增投诉记录";
+    String OPTION_COMPLAIN_EXPORT = "导出投诉记录";
 }
