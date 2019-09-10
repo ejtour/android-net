@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.stockmanage.stockchecksetting;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.api.StockManageService;
 import com.hll_sc_app.base.UseCaseException;
@@ -120,7 +122,12 @@ public class StockCheckSettingPresent implements IStockCheckSettingContract.IPre
                 .subscribe(new BaseCallback<BaseResp<Object>>() {
                     @Override
                     public void onSuccess(BaseResp<Object> objectBaseResp) {
-                        mView.changeSuccess(objectBaseResp.getMessage());
+                        if (TextUtils.equals(actionType, "ADD")) {
+                            mView.addSuccess();
+
+                        } else if (TextUtils.equals(actionType, "DELETE")) {
+                            mView.removeSuccess();
+                        }
                     }
 
                     @Override

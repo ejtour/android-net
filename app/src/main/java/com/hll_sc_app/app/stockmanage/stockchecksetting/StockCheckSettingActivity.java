@@ -68,6 +68,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     private Unbinder unbinder;
     private ProductAdpter mAdapter;
 
+    /*需要移除的ids*/
     private Set<String> mProductIds = new HashSet<>();
 
     @Override
@@ -170,6 +171,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
             }
             mAdapter.setNewData(goodsBeans);
         }
+        mCheckAll.setChecked(mAdapter.getData().size() == getProductIds().size());
     }
 
     @Override
@@ -178,8 +180,13 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     }
 
     @Override
-    public void changeSuccess(String msg) {
-        showToast(msg);
+    public void addSuccess() {
+        mPresent.refresh();
+        showToast("新增成功");
+    }
+
+    @Override
+    public void removeSuccess() {
         mPresent.refresh();
         mProductIds.clear();
     }
@@ -190,12 +197,11 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    @OnClick({R.id.check_all, R.id.txt_move, R.id.txt_add})
+    @OnClick({R.id.ll_check_all, R.id.txt_move, R.id.txt_add})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.check_all:
-                CheckBox checkBox = (CheckBox) view;
-                if (checkBox.isChecked()) {
+            case R.id.ll_check_all:
+                if (mCheckAll.isChecked()) {
                     mProductIds.clear();
                 } else {
                     for (GoodsBean goodsBean : mAdapter.getData()) {

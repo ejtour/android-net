@@ -15,7 +15,9 @@ public interface IStockCheckSettingContract {
 
         ArrayList<String> getProductIds();
 
-        void changeSuccess(String msg);
+        void addSuccess();
+
+        void removeSuccess();
 
     }
 
