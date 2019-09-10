@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.StockManageEvent;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.stockmanage.CustomerSendManageListResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -150,6 +151,10 @@ public class CustomerSendManageActivity extends BaseLoadActivity implements ICus
                 mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("当前条件下没有数据").create());
             }
             mAdapter.setNewData(resp.getRecords());
+        }
+
+        if (!CommonUtils.isEmpty(resp.getRecords())) {
+            mRefreshLayout.setEnableLoadMore(resp.getRecords().size() == mPresent.getPageSize());
         }
     }
 

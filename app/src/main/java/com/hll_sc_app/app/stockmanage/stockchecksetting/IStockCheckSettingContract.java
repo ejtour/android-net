@@ -35,5 +35,7 @@ public interface IStockCheckSettingContract {
 
         void add(List<String> ids);
 
+        int getPageSize();
+
     }
 }

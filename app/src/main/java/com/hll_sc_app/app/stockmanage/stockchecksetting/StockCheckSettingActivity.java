@@ -157,7 +157,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
 
     @Override
     public void queryGoodsSuccess(List<GoodsBean> goodsBeans, boolean isMore) {
-        if (isMore && goodsBeans.size() > 0) {
+        if (isMore && goodsBeans != null && goodsBeans.size() > 0) {
             mAdapter.addData(goodsBeans);
         } else if (!isMore) {
             if (goodsBeans.size() == 0) {
@@ -170,6 +170,10 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
                 mTitle.setRightBtnVisible(true);
             }
             mAdapter.setNewData(goodsBeans);
+        }
+
+        if (goodsBeans != null) {
+            mRefreshLayout.setEnableLoadMore(goodsBeans.size() == mPresent.getPageSize());
         }
         mCheckAll.setChecked(mAdapter.getData().size() == getProductIds().size());
     }

@@ -230,6 +230,10 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
             mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("当前条件下没有数据").create());
             mAdapter.setNewData(resp.getList());
         }
+
+        if (!CommonUtils.isEmpty(resp.getList())) {
+            mRefreshLayout.setEnableLoadMore(resp.getList().size() == mPresent.getPageSize());
+        }
     }
 
     @Override

@@ -28,5 +28,7 @@ public interface IStockQueryContract {
         void getMoreGoodsList();
 
         void search();
+
+        int getPageSize();
     }
 }

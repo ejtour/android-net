@@ -128,11 +128,14 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
 
     @Override
     public void getGoodsListSuccess(List<GoodsBean> goodsBeans, boolean isMore) {
-        if (isMore && goodsBeans.size() > 0) {
+        if (isMore && goodsBeans != null && goodsBeans.size() > 0) {
             mAdapter.addData(goodsBeans);
         } else if (!isMore) {
             mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("喔唷，居然是「 空 」的").create());
             mAdapter.setNewData(goodsBeans);
+        }
+        if (goodsBeans != null) {
+            mRefresh.setEnableLoadMore(goodsBeans.size() == mPresent.getPageSize());
         }
     }
 

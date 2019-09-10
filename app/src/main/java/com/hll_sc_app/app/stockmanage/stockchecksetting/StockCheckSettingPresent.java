@@ -146,4 +146,9 @@ public class StockCheckSettingPresent implements IStockCheckSettingContract.IPre
     public void add(List<String> ids) {
         changeStockCheckSetting("ADD", ids);
     }
+
+    @Override
+    public int getPageSize() {
+        return pageSize;
+    }
 }
