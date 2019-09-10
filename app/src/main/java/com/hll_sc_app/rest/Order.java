@@ -15,6 +15,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
@@ -644,6 +645,24 @@ public class Order {
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
+    }
 
+    /**
+     * 根据订单号查询关联的售后单
+     *
+     * @param pageNum   页码
+     * @param subBillID 订单号
+     */
+    public static void queryAssociatedAfterSalesOrder(int pageNum, String subBillID, SimpleObserver<SingleListResp<AfterSalesBean>> observer) {
+        OrderService.INSTANCE
+                .queryAssociatedAfterSalesOrder(BaseMapReq.newBuilder()
+                        .put("pageNum",String.valueOf(pageNum))
+                        .put("subBillID",subBillID)
+                        .put("pageSize","20")
+                        .put("flag","1")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
     }
 }

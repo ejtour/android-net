@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
 import com.hll_sc_app.app.order.reject.OrderRejectActivity;
@@ -25,6 +26,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
@@ -165,6 +167,16 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     }
 
     @Override
+    public void handleAfterSalesInfo(List<AfterSalesBean> list) {
+        if (CommonUtils.isEmpty(list)) return;
+        if (list.size() == 1) {
+            AfterSalesDetailActivity.start(this, list.get(0).getId());
+        } else {
+            showToast("退换货列表待添加");
+        }
+    }
+
+    @Override
     public void bindEmail() {
         Utils.bindEmail(this, email -> {
             export(mLabel, email);
@@ -212,7 +224,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 showToast("申请退换货待添加");
                 break;
             case R.id.oab_refund_detail:
-                showToast("查看退款进度待添加");
+                mPresenter.getAfterSalesInfo();
                 break;
         }
     }

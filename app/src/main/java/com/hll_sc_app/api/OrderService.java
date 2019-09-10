@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
@@ -153,4 +154,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103140")
     Observable<BaseResp<SingleListResp<OrderTraceBean>>> queryOrderLog(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103101")
+    Observable<BaseResp<SingleListResp<AfterSalesBean>>> queryAssociatedAfterSalesOrder(@Body BaseMapReq req);
 }
