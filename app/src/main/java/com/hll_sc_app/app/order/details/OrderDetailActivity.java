@@ -179,9 +179,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         Utils.exportFailure(this, msg);
     }
 
-    @OnClick({R.id.oab_cancel, R.id.oab_modify,
-            R.id.oab_receive, R.id.oab_deliver,
-            R.id.oab_settle, R.id.oab_reject, R.id.oab_inspection})
+    @OnClick(R.id.aod_bottom_bar)
     public void onActionClick(View view) {
         switch (view.getId()) {
             case R.id.oab_cancel:
@@ -207,6 +205,12 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 break;
             case R.id.oab_inspection:
                 OrderInspectionActivity.start(this, mOrderResp);
+                break;
+            case R.id.oab_refund:
+                showToast("申请退换货待添加");
+                break;
+            case R.id.oab_refund_detail:
+                showToast("查看退款进度待添加");
                 break;
         }
     }
