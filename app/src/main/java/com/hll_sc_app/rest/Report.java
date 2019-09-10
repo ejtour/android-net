@@ -45,6 +45,8 @@ import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
+import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
+import com.hll_sc_app.bean.report.salesReport.SalesReportResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
@@ -77,7 +79,7 @@ public class Report {
      * @param endDate   结束时间 yyyyMMdd
      * @param pageNum   页码
      */
-    public static void queryOrderGoods(String shopIDs, String startDate, String endDate, int pageNum, SimpleObserver<OrderGoodsResp<OrderGoodsBean>> observer) {
+    public static void querySupplyChainPurchaserOrderList(String shopIDs, String startDate, String endDate, int pageNum, SimpleObserver<OrderGoodsResp<OrderGoodsBean>> observer) {
         ReportService.INSTANCE
                 .queryOrderGoods(BaseMapReq.newBuilder()
                         .put("shopIDs", shopIDs)
@@ -521,6 +523,18 @@ public class Report {
      */
     public static void querySearchList(SearchReq req, SimpleObserver<SearchResultResp> observer){
         ReportService.INSTANCE.querySearchList(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 销售日报
+     * @param req
+     * @param observer
+     */
+    public static void querySalesReportList(SalesReportReq req, SimpleObserver<SalesReportResp> observer){
+        ReportService.INSTANCE.querySalesReportList(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

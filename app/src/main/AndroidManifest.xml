@@ -869,6 +869,10 @@
             android:name=".app.crm.order.list.CrmOrderListActivity"
             android:screenOrientation="portrait" />
 
+        <!--销售crm日报-->
+        <activity android:name=".app.report.salesReport.SalesReportActivity"
+            android:screenOrientation="portrait"/>
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"

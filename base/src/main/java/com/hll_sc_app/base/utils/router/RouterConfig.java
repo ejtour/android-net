@@ -978,6 +978,16 @@ public class RouterConfig {
 
     public static final String REPORT_REFUND_SEARCH_FRAGMENT = "/activity/report/refund/search/fragment";
 
+    /**
+     * 销售日报
+     */
+    public static final String REPORT_SALES_DAY_REPORT = "/activity/report/sales/report";
+
+    /**
+     * 采购商查询
+     */
+    public static final String STOCK_PURCHASER_ORDER = "/activity/stock/purchaser/order";
+
 
 }
 

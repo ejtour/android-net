@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.common.SalesVolumeResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
@@ -47,6 +48,8 @@ import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
 import com.hll_sc_app.bean.report.resp.product.OrderDetailTotalResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
+import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
+import com.hll_sc_app.bean.report.salesReport.SalesReportResp;
 import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
@@ -61,6 +64,7 @@ import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 
 import java.util.List;
+import java.util.Observer;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -302,4 +306,13 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:103083")
     Observable<BaseResp<SearchResultResp>> querySearchList(@Body BaseReq<SearchReq> body);
+
+    /**
+     * 销售日报
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:111045")
+    Observable<BaseResp<SalesReportResp>> querySalesReportList(@Body BaseReq<SalesReportReq> body);
 }
