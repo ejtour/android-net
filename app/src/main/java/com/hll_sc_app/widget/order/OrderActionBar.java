@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -53,7 +52,7 @@ public class OrderActionBar extends RelativeLayout {
         MAP.put(ACTION_SETTLE, new ButtonAction(BUTTON_POSITIVE, R.id.oab_settle, "立即收款"));
         MAP.put(ACTION_REFUND, new ButtonAction(BUTTON_POSITIVE, R.id.oab_refund, "申请退换货"));
 
-        MAP.put(ACTION_CANCEL, new ButtonAction(TextUtils.isEmpty(UserConfig.getSalesmanID()) ? BUTTON_NEGATIVE_GRAY : BUTTON_NEGATIVE
+        MAP.put(ACTION_CANCEL, new ButtonAction(UserConfig.crm() ? BUTTON_NEGATIVE : BUTTON_NEGATIVE_GRAY
                 , R.id.oab_cancel, "取消订单"));
         MAP.put(ACTION_REJECT, new ButtonAction(BUTTON_NEGATIVE, R.id.oab_reject, "拒收"));
         MAP.put(ACTION_MODIFY, new ButtonAction(BUTTON_NEGATIVE, R.id.oab_modify, "修改发货数量"));
@@ -84,7 +83,7 @@ public class OrderActionBar extends RelativeLayout {
 
     public void setData(List<Integer> buttonList, double diffPrice) {
         removeAllViews();
-        boolean center = !TextUtils.isEmpty(UserConfig.getSalesmanID()) && buttonList.size() == 1;
+        boolean center = UserConfig.crm() && buttonList.size() == 1;
         for (int i = buttonList.size() - 1; i >= 0; i--) {
             ButtonAction action = MAP.get(buttonList.get(i));
             if (action == null) continue;

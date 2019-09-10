@@ -636,7 +636,7 @@ public class Order {
      * @param billID 订单id
      */
     public static void queryOrderLog(String billID, SimpleObserver<SingleListResp<OrderTraceBean>> observer) {
-        if (TextUtils.isEmpty(UserConfig.getSalesmanID())) return;
+        if (!UserConfig.crm()) return;
         OrderService.INSTANCE
                 .queryOrderLog(BaseMapReq.newBuilder()
                         .put("billID", billID)

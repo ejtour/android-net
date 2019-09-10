@@ -53,7 +53,7 @@ public class InvoicePresenter implements IInvoiceContract.IInvoicePresenter {
         exportReq.setUserID(user.getEmployeeID());
         ExportReq.ParamsBean bean = new ExportReq.ParamsBean();
         ExportReq.ParamsBean.InvoiceParams invoiceParams = new ExportReq.ParamsBean.InvoiceParams();
-        if (mStatus > 1 && TextUtils.isEmpty(UserConfig.getSalesmanID())) {
+        if (mStatus > 1 && !UserConfig.crm()) {
             invoiceParams.setEndTime(mParam.getFormatEndDate());
             invoiceParams.setStartTime(mParam.getFormatStartDate());
         }

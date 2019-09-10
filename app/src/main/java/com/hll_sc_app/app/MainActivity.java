@@ -8,7 +8,6 @@ import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.RadioGroup;
 
@@ -60,7 +59,7 @@ public class MainActivity extends BaseLoadActivity {
 
     private void initView() {
         mGroupType.setOnCheckedChangeListener((group, checkedId) -> setCurrentTab(checkedId));
-        if (TextUtils.isEmpty(UserConfig.getSalesmanID())) {
+        if (!UserConfig.crm()) {
             addRatioButton(PageType.SUPPLIER_HOME, "首页", getResources().getDrawable(R.drawable.bg_main_button_home));
             addRatioButton(PageType.SUPPLIER_ORDER, "订单管理", getResources().getDrawable(R.drawable.bg_main_button_order));
             addRatioButton(PageType.SUPPLIER_GOODS, "商品管理", getResources().getDrawable(R.drawable.bg_main_button_goods));
