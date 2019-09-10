@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -35,6 +36,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 @Route(path = RouterConfig.ACTIVITY_STOCK_QUERY_LIST)
@@ -153,6 +155,17 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
     public void hideLoading() {
         super.hideLoading();
         mRefresh.closeHeaderOrFooter();
+    }
+
+    @OnClick({R.id.img_close})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.img_close:
+                finish();
+                break;
+            default:
+                break;
+        }
     }
 
     private class GoodAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
