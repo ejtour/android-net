@@ -659,7 +659,7 @@ public class Order {
                         .put("pageNum",String.valueOf(pageNum))
                         .put("subBillID",subBillID)
                         .put("pageSize","20")
-                        .put("flag","1")
+                        .put("flag","2")
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

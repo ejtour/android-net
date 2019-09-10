@@ -911,6 +911,10 @@
         <activity
             android:name=".app.stockmanage.selectproduct.ProductSelectActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".app.aftersales.list.AfterSalesListActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

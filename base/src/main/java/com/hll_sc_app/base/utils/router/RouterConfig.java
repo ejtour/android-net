@@ -546,6 +546,11 @@ public class RouterConfig {
     public static final String AFTER_SALES_AUDIT = "/activity/afterSales/audit";
 
     /**
+     * 订单管理-订单详情-退换货列表
+     */
+    public static final String AFTER_SALES_LIST = "/activity/afterSales/list";
+
+    /**
      * 我的-退货审核-售后详情
      */
     public static final String AFTER_SALES_DETAIL = "/activity/afterSales/detail";

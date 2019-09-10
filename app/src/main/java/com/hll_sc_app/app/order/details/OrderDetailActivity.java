@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
+import com.hll_sc_app.app.aftersales.list.AfterSalesListActivity;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
 import com.hll_sc_app.app.order.reject.OrderRejectActivity;
@@ -172,7 +173,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         if (list.size() == 1) {
             AfterSalesDetailActivity.start(this, list.get(0).getId());
         } else {
-            showToast("退换货列表待添加");
+            AfterSalesListActivity.start(new ArrayList<>(list));
         }
     }
 

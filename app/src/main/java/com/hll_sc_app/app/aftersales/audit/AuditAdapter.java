@@ -27,7 +27,7 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
 
     private boolean mIsCheckable;
 
-    AuditAdapter() {
+    public AuditAdapter() {
         super(R.layout.item_after_sales_audit);
     }
 
