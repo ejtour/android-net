@@ -22,6 +22,7 @@ import com.hll_sc_app.app.order.reject.OrderRejectActivity;
 import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
@@ -36,6 +37,7 @@ import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.order.OrderActionBar;
+import com.hll_sc_app.widget.order.OrderCancelDialog;
 import com.hll_sc_app.widget.order.OrderDetailFooter;
 import com.hll_sc_app.widget.order.OrderDetailHeader;
 
@@ -216,14 +218,19 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     }
 
     private void showCancelDialog() {
-        RemarkDialog.newBuilder(this)
-                .setHint("可简要输入放弃原因...(非必填)")
-                .setMaxLength(200)
-                .setButtons("容我再想想", "确认放弃", (dialog, positive, content) -> {
-                    dialog.dismiss();
-                    if (positive) mPresenter.orderCancel(content);
-                })
-                .create().show();
+        if (UserConfig.crm())
+            new OrderCancelDialog(this, mPresenter::orderCancel)
+                    .setData(mOrderResp.getPurchaserName(), mOrderResp.getShopName())
+                    .show();
+        else
+            RemarkDialog.newBuilder(this)
+                    .setHint("可简要输入放弃原因...(非必填)")
+                    .setMaxLength(200)
+                    .setButtons("容我再想想", "确认放弃", (dialog, positive, content) -> {
+                        dialog.dismiss();
+                        if (positive) mPresenter.orderCancel(content);
+                    })
+                    .create().show();
     }
 
     @Override
