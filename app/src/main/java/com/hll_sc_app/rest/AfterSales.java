@@ -13,6 +13,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
+import com.hll_sc_app.bean.aftersales.AfterSalesVerifyResp;
 import com.hll_sc_app.bean.aftersales.CommitComplainProductBean;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.bean.aftersales.NegotiationHistoryResp;
@@ -242,4 +243,21 @@ public class AfterSales {
                 .subscribe(observer);
     }
 
+    /**
+     * 验证是否可退换货
+     *
+     * @param refundBillType 退货单类型, 3 退货退款单 4 退押金
+     * @param subBillID      订单ID
+     */
+    public static void afterSalesVerify(int refundBillType, String subBillID, SimpleObserver<AfterSalesVerifyResp> observer) {
+        AfterSalesService.INSTANCE
+                .afterSalesVerify(BaseMapReq.newBuilder()
+                        .put("refundBillType", String.valueOf(refundBillType))
+                        .put("subBillID", subBillID)
+                        .put("flag", "2")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }

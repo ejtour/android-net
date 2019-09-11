@@ -15,9 +15,10 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.base.BaseActivity;
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.aftersales.AfterSalesVerifyResp;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.DateUtil;
@@ -33,7 +34,7 @@ import butterknife.OnClick;
  */
 
 @Route(path = RouterConfig.AFTER_SALES_ENTRY)
-public class AfterSalesEntryActivity extends BaseActivity {
+public class AfterSalesEntryActivity extends BaseLoadActivity implements IAfterSalesEntryContract.IAfterSalesEntryView {
 
     public static void start(OrderResp resp) {
         RouterUtil.goToActivity(RouterConfig.AFTER_SALES_ENTRY, resp);
@@ -57,6 +58,7 @@ public class AfterSalesEntryActivity extends BaseActivity {
     TextView mReturnDeposit;
     @Autowired(name = "parcelable")
     OrderResp mOrderResp;
+    private IAfterSalesEntryContract.IAfterSalesEntryPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +68,12 @@ public class AfterSalesEntryActivity extends BaseActivity {
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
         initView();
+        initData();
+    }
+
+    private void initData() {
+        mPresenter = AfterSalesEntryPresenter.newInstance(mOrderResp.getSubBillID());
+        mPresenter.register(this);
     }
 
     private void initView() {
@@ -97,9 +105,20 @@ public class AfterSalesEntryActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ase_return_goods:
+                mPresenter.verify(3);
                 break;
             case R.id.ase_return_deposit:
+                mPresenter.verify(4);
                 break;
         }
+    }
+
+    @Override
+    public void handleVerifyResult(AfterSalesVerifyResp resp) {
+        if (!resp.isCanRefund()) {
+            showToast(resp.getTips());
+            return;
+        }
+        showToast("退货退款操作页待添加");
     }
 }
