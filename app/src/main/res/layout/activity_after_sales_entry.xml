@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/ase_title_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="0dp"
+        app:tb_title="选择服务类型"
+        android:layout_height="@dimen/title_bar_height" />
+
+    <View
+        android:id="@+id/ase_top_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ase_title_bar"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:layout_width="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/ase_order_date"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        android:id="@+id/ase_shop_name"
+        tools:text="供应商店铺名称"
+        app:layout_constraintTop_toTopOf="@id/ase_top_bg"
+        app:layout_constraintStart_toStartOf="@id/ase_top_bg"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:drawablePadding="5dp"
+        android:drawableLeft="@drawable/ic_supplier"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/ase_order_no"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintStart_toStartOf="@id/ase_shop_name"
+        app:layout_constraintTop_toBottomOf="@id/ase_shop_name"
+        android:layout_marginTop="5dp"
+        tools:text="订单号：102340921321"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/ase_money"
+        app:layout_constraintBaseline_toBaselineOf="@id/ase_order_no"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/ase_top_bg"
+        android:layout_marginRight="@dimen/dp_10"
+        tools:text="实付款：¥5600.00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.hll_sc_app.widget.ThumbnailView
+        android:id="@+id/ase_thumbnail"
+        android:layout_width="0dp"
+        app:layout_constraintTop_toBottomOf="@id/ase_order_no"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/ase_top_bg"
+        app:layout_constraintEnd_toEndOf="@id/ase_top_bg"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:padding="5dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/ase_order_date"
+        app:layout_constraintStart_toStartOf="@id/ase_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/ase_thumbnail"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        tools:text="订货日期：2018-06-21 17:31:34"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/ase_inspection_date"
+        app:layout_constraintBaseline_toBaselineOf="@id/ase_order_date"
+        app:layout_constraintEnd_toEndOf="@id/ase_thumbnail"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        tools:text="验货日期：2018-06-22 17:31:34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/ase_return_goods"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ase_top_bg"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_after_sales_goods"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:layout_width="0dp"
+        tools:text="退货退款\n已收到货，需要退回货物。未支付的订单只能退货"
+        android:layout_height="57dp" />
+
+    <View
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/ase_return_goods"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        android:layout_height="1dp" />
+
+
+    <TextView
+        android:id="@+id/ase_return_deposit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ase_return_goods"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:drawablePadding="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_after_sales_deposit"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:layout_width="0dp"
+        tools:text="退押金\n退回押金商品"
+        android:layout_height="57dp" />
+
+    <TextView
+        android:id="@+id/ase_tip_label"
+        android:text="退货操作说明："
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/ase_return_deposit"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.hll_sc_app.widget.AlignTextView
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/ase_tip_label"
+        app:layout_constraintStart_toStartOf="@id/ase_tip_label"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        android:text="*客户向所属管理销售人员提出退货要求，由销售人员进行初步核实，认为符合退货、换货条件的，可以协助操作提出申请。\n*审核通过后，进行正常退换货流程。"
+        android:layout_width="0dp"
+        android:lineSpacingExtra="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_height="wrap_content" />
+</android.support.constraint.ConstraintLayout>

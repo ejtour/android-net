@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
+import com.hll_sc_app.app.aftersales.entry.AfterSalesEntryActivity;
 import com.hll_sc_app.app.aftersales.list.AfterSalesListActivity;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
@@ -222,7 +223,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 OrderInspectionActivity.start(this, mOrderResp);
                 break;
             case R.id.oab_refund:
-                showToast("申请退换货待添加");
+                AfterSalesEntryActivity.start(mOrderResp);
                 break;
             case R.id.oab_refund_detail:
                 mPresenter.getAfterSalesInfo();
