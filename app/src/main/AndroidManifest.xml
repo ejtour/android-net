@@ -558,7 +558,7 @@
         <activity
             android:name=".app.search.SearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
             android:name=".app.report.refundReason.RefundReasonActivity"
