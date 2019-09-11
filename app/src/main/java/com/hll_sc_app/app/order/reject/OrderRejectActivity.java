@@ -117,7 +117,7 @@ public class OrderRejectActivity extends BaseLoadActivity implements IOrderRejec
 
     @Override
     public void rejectSuccess() {
-        SubmitSuccessActivity.start("订单拒收提交成功", BackType.ORDER_LIST);
+        SubmitSuccessActivity.start("订单拒收提交成功");
     }
 
     @Override
