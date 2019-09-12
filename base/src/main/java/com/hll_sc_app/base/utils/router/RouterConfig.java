@@ -457,11 +457,6 @@ public class RouterConfig {
     public static final String ORDER_MODIFY_DELIVER = "/activity/order/modify/deliver";
 
     /**
-     * 订单拒收
-     */
-    public static final String ORDER_REJECT = "/activity/order/reject";
-
-    /**
      * 订单验货
      */
     public static final String ORDER_INSPECTION = "/activity/order/inspection";

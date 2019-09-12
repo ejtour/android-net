@@ -22,7 +22,6 @@ import com.hll_sc_app.app.aftersales.entry.AfterSalesEntryActivity;
 import com.hll_sc_app.app.aftersales.list.AfterSalesListActivity;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
-import com.hll_sc_app.app.order.reject.OrderRejectActivity;
 import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
