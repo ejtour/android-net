@@ -62,7 +62,6 @@ public class AfterSalesApplyHeader extends ConstraintLayout {
         View view = View.inflate(context, R.layout.view_after_sales_apply_header, this);
         ButterKnife.bind(this, view);
         setBackgroundColor(Color.WHITE);
-        mUploadGroup.register((ILoadView) context);
     }
 
     public void init(IAfterSalesApplyContract.IAfterSalesApplyText afterSalesText) {

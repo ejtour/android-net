@@ -35,7 +35,6 @@ public class ImageUploadGroup extends LinearLayout {
      */
     private final int MAX_IMG_NUMBER = 5;
     private int mItemSize;
-    private ILoadView mView;
     private int mPadding;
 
     public ImageUploadGroup(Context context) {
@@ -75,18 +74,9 @@ public class ImageUploadGroup extends LinearLayout {
         }
     }
 
-    public void register(ILoadView view) {
-        mView = CommonUtils.requireNonNull(view);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        mView = null;
-        super.onDetachedFromWindow();
-    }
-
     public void imageUpload(File imageFile) {
-        Upload.imageUpload(imageFile, new SimpleObserver<String>(mView) {
+        if (!(getContext() instanceof ILoadView)) return;
+        Upload.imageUpload(imageFile, new SimpleObserver<String>((ILoadView) getContext()) {
             @Override
             public void onSuccess(String s) {
                 showUploadedImg(s);
