@@ -6,11 +6,16 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyReq;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
+import com.hll_sc_app.bean.aftersales.AfterSalesReasonBean;
 import com.hll_sc_app.bean.aftersales.AfterSalesVerifyResp;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.bean.aftersales.NegotiationHistoryResp;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 
 import java.util.List;
@@ -59,4 +64,20 @@ public interface AfterSalesService {
     @POST(HttpConfig.URL)
     @Headers("pv:103094")
     Observable<BaseResp<AfterSalesVerifyResp>> afterSalesVerify(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103054")
+    Observable<BaseResp<SingleListResp<AfterSalesDetailsBean>>> getReturnableGoods(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103162")
+    Observable<BaseResp<SingleListResp<AfterSalesReasonBean>>> getReasonList(@Body BaseReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103056")
+    Observable<BaseResp<AfterSalesApplyResp>> applyAfterSalesBill(@Body BaseReq<AfterSalesApplyReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103059")
+    Observable<BaseResp<AfterSalesApplyResp>> reapplyAfterSalesBill(@Body BaseReq<AfterSalesApplyReq> body);
 }
