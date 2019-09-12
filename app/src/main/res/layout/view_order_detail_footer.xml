@@ -568,6 +568,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_salesman_name_label"
         app:layout_constraintStart_toEndOf="@+id/odf_salesman_name_label"
+        android:hint="— —"
         tools:text="— —" />
 
     <TextView
@@ -577,6 +578,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_salesman_phone_label"
         app:layout_constraintStart_toStartOf="@+id/odf_salesman_name"
+        android:hint="— —"
         tools:text="— —" />
 
     <View
