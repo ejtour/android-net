@@ -18,6 +18,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.apply.operation.AfterSalesDeposit;
 import com.hll_sc_app.app.aftersales.apply.operation.AfterSalesGoods;
 import com.hll_sc_app.app.aftersales.apply.operation.AfterSalesReject;
+import com.hll_sc_app.app.aftersales.apply.select.AfterSalesSelectActivity;
 import com.hll_sc_app.app.aftersales.common.AfterSalesType;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -46,8 +47,6 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.AFTER_SALES_APPLY)
 public class AfterSalesApplyActivity extends BaseLoadActivity implements IAfterSalesApplyContract.IAfterSalesApplyView {
 
-    private List<AfterSalesDetailsBean> mDetailsBeans;
-
     public static void start(AfterSalesApplyParam resp) {
         RouterUtil.goToActivity(RouterConfig.AFTER_SALES_APPLY, resp);
     }
@@ -66,6 +65,7 @@ public class AfterSalesApplyActivity extends BaseLoadActivity implements IAfterS
     private AfterSalesApplyHeader mHeader;
     private AfterSaleApplyFooter mFooter;
     private SingleSelectionDialog mDialog;
+    private List<AfterSalesDetailsBean> mDetailsBeans;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,7 +128,12 @@ public class AfterSalesApplyActivity extends BaseLoadActivity implements IAfterS
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mHeader.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            if (requestCode == AfterSalesSelectActivity.REQ_CODE) {
+                mDetailsBeans = ((AfterSalesApplyParam) data.getParcelableExtra("parcelable")).getAfterSalesDetailList();
+                updateData();
+            } else mHeader.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -213,7 +218,7 @@ public class AfterSalesApplyActivity extends BaseLoadActivity implements IAfterS
             case R.id.sah_details_edit:
             case R.id.sah_add_item:
                 if (!CommonUtils.isEmpty(mDetailsBeans)) {
-                    showToast("选择退换货明细待添加");
+                    AfterSalesSelectActivity.start(this, mDetailsBeans, mParam.getAfterSalesType());
                 }
                 break;
         }

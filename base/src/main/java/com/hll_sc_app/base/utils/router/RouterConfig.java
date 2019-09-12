@@ -551,6 +551,11 @@ public class RouterConfig {
     public static final String AFTER_SALES_APPLY = "/activity/afterSales/apply";
 
     /**
+     * 申请退换货-明细选择
+     */
+    public static final String AFTER_SALES_SELECT = "/activity/afterSales/select";
+
+    /**
      * 订单管理-订单详情-退换货列表
      */
     public static final String AFTER_SALES_LIST = "/activity/afterSales/list";

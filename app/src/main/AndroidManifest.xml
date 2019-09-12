@@ -915,7 +915,9 @@
 
         <activity
             android:name=".app.aftersales.apply.AfterSalesApplyActivity"
-            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.aftersales.apply.select.AfterSalesSelectActivity"
             android:screenOrientation="portrait" />
 
         <provider

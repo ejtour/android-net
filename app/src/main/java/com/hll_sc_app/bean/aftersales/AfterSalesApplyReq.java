@@ -63,6 +63,7 @@ public class AfterSalesApplyReq {
         req.setRefundExplain(param.getExplain());
         req.setRefundVoucher(param.getVoucher());
         req.setRefundReason(param.getReason());
+        req.setRefundBillType(param.getAfterSalesType());
         if (!CommonUtils.isEmpty(param.getAfterSalesDetailList())) {
             double amount = 0;
             List<DetailBean> list = new ArrayList<>();
@@ -299,34 +300,34 @@ public class AfterSalesApplyReq {
         private String subBillDetailID;
 
         static DetailBean createFromAfterSalesDetail(AfterSalesDetailsBean item) {
-            DetailBean temp = new DetailBean();
-            temp.setAdjustmentNum(item.getAdjustmentNum());
-            temp.setAdjustmentUnit(item.getAdjustmentUnit());
-            temp.setAuxiliaryPrice(item.getAuxiliaryPrice());
-            temp.setAuxiliaryUnit(item.getAuxiliaryUnit());
-            temp.setConvertRate(String.valueOf(item.getConvertRate()));
+            DetailBean bean = new DetailBean();
+            bean.setAdjustmentNum(item.getAdjustmentNum());
+            bean.setAdjustmentUnit(item.getAdjustmentUnit());
+            bean.setAuxiliaryPrice(item.getAuxiliaryPrice());
+            bean.setAuxiliaryUnit(item.getAuxiliaryUnit());
+            bean.setConvertRate(String.valueOf(item.getConvertRate()));
             // NOTICE: 订单明细备注没有，传空字符串
-            temp.setDetailRemark("");
-            temp.setImgUrl(item.getImgUrl());
-            temp.setInspectionNum(item.getInspectionNum());
-            temp.setInspectionUnit(item.getInspectionUnit());
-            temp.setProductCategoryID(item.getProductCategoryID());
-            temp.setProductCode(item.getProductCode());
-            temp.setProductID(item.getProductID());
-            temp.setProductName(item.getProductName());
-            temp.setProductNum(item.getProductNum());
-            temp.setProductPrice(item.getProductPrice());
-            temp.setProductSpecID(item.getProductSpecID());
+            bean.setDetailRemark("");
+            bean.setImgUrl(item.getImgUrl());
+            bean.setInspectionNum(item.getInspectionNum());
+            bean.setInspectionUnit(item.getInspectionUnit());
+            bean.setProductCategoryID(item.getProductCategoryID());
+            bean.setProductCode(item.getProductCode());
+            bean.setProductID(item.getProductID());
+            bean.setProductName(item.getProductName());
+            bean.setProductNum(item.getProductNum());
+            bean.setProductPrice(item.getProductPrice());
+            bean.setProductSpecID(item.getProductSpecID());
             // 退款金额
-            temp.setRefundAmount(item.getPendingRefundAmount());
+            bean.setRefundAmount(item.getPendingRefundAmount());
 
-            temp.setRefundNum(item.getRefundNum());
+            bean.setRefundNum(item.getRefundNum());
             // 退货单位为签收单位
-            temp.setRefundUnit(item.getRefundUnit());
-            temp.setSaleUnitName(item.getSaleUnitName());
+            bean.setRefundUnit(item.getRefundUnit());
+            bean.setSaleUnitName(item.getSaleUnitName());
             // 明细ID
-            temp.setSubBillDetailID(item.getDetailID());
-            return temp;
+            bean.setSubBillDetailID(item.getDetailID());
+            return bean;
         }
 
         public double getAdjustmentNum() {
