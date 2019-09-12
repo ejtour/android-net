@@ -921,6 +921,11 @@
         <activity
             android:name=".app.complainmanage.detail.ComplainMangeDetailActivity"
             android:screenOrientation="portrait" />
+
+        <!--员工管理-部门选择-->
+        <activity
+            android:name=".app.staffmanage.detail.depart.DepartListActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

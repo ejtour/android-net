@@ -1008,6 +1008,9 @@ public class RouterConfig {
     /*投诉管理页面*/
     public static final String ACTIVITY_COMPLAIN_MANAGE_LIST = "/activity/complain/manage/list";
 
+    /*选择员工部门*/
+    public static final String ACTIVITY_SELECT_DEPARTMENT_LIST = "/activity/staff/select/department/list";
+
 
 }
 

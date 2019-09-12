@@ -12,6 +12,17 @@ import java.util.List;
  * @date 2019-07-18
  */
 public class EmployeeBean implements Parcelable {
+    public static final Creator<EmployeeBean> CREATOR = new Creator<EmployeeBean>() {
+        @Override
+        public EmployeeBean createFromParcel(Parcel source) {
+            return new EmployeeBean(source);
+        }
+
+        @Override
+        public EmployeeBean[] newArray(int size) {
+            return new EmployeeBean[size];
+        }
+    };
     private String actionTime;
     private String loginPWD;
     private String purchaserOemToken;
@@ -42,19 +53,58 @@ public class EmployeeBean implements Parcelable {
     private String loginPhone;
     private String purchaserToken;
     private String resourceType;
+    private String deptIDs = "";
     private boolean select;
-    public static final Creator<EmployeeBean> CREATOR = new Creator<EmployeeBean>() {
-        @Override
-        public EmployeeBean createFromParcel(Parcel source) {
-            return new EmployeeBean(source);
-        }
-
-        @Override
-        public EmployeeBean[] newArray(int size) {
-            return new EmployeeBean[size];
-        }
-    };
     private String employeeNum;
+    private List<RoleBean> roles;
+
+    public EmployeeBean() {
+    }
+
+    protected EmployeeBean(Parcel in) {
+        this.actionTime = in.readString();
+        this.loginPWD = in.readString();
+        this.purchaserOemToken = in.readString();
+        this.roleID = in.readString();
+        this.employeeID = in.readString();
+        this.adminCodeConfirmed = in.readString();
+        this.employeeImg = in.readString();
+        this.employeeCode = in.readString();
+        this.createby = in.readString();
+        this.loginTime = in.readString();
+        this.loginName = in.readString();
+        this.action = in.readString();
+        this.email = in.readString();
+        this.employeeName = in.readString();
+        this.actionBy = in.readString();
+        this.supplierToken = in.readString();
+        this.accountType = in.readString();
+        this.groupID = in.readString();
+        this.loginStatus = in.readString();
+        this.recommendCode = in.readString();
+        this.purchaserWebToken = in.readString();
+        this.supplierDeviceId = in.readString();
+        this.token = in.readString();
+        this.employeeType = in.readString();
+        this.recommendQRCode = in.readString();
+        this.codeConfirmed = in.readString();
+        this.createTime = in.readString();
+        this.loginPhone = in.readString();
+        this.purchaserToken = in.readString();
+        this.resourceType = in.readString();
+        this.deptIDs = in.readString();
+        this.select = in.readByte() != 0;
+        this.employeeNum = in.readString();
+        this.roles = in.createTypedArrayList(RoleBean.CREATOR);
+    }
+
+    public String getDeptIDs() {
+        return deptIDs;
+    }
+
+    public void setDeptIDs(String deptIDs) {
+        this.deptIDs = deptIDs;
+    }
 
     public String getActionTime() {
         return actionTime;
@@ -296,49 +346,12 @@ public class EmployeeBean implements Parcelable {
         this.resourceType = resourceType;
     }
 
-    private List<RoleBean> roles;
-
-    public EmployeeBean() {
-    }
-
-    protected EmployeeBean(Parcel in) {
-        this.actionTime = in.readString();
-        this.loginPWD = in.readString();
-        this.purchaserOemToken = in.readString();
-        this.roleID = in.readString();
-        this.employeeID = in.readString();
-        this.adminCodeConfirmed = in.readString();
-        this.employeeImg = in.readString();
-        this.employeeCode = in.readString();
-        this.createby = in.readString();
-        this.loginTime = in.readString();
-        this.loginName = in.readString();
-        this.action = in.readString();
-        this.email = in.readString();
-        this.employeeName = in.readString();
-        this.actionBy = in.readString();
-        this.supplierToken = in.readString();
-        this.accountType = in.readString();
-        this.groupID = in.readString();
-        this.loginStatus = in.readString();
-        this.recommendCode = in.readString();
-        this.purchaserWebToken = in.readString();
-        this.supplierDeviceId = in.readString();
-        this.token = in.readString();
-        this.employeeType = in.readString();
-        this.recommendQRCode = in.readString();
-        this.codeConfirmed = in.readString();
-        this.createTime = in.readString();
-        this.loginPhone = in.readString();
-        this.purchaserToken = in.readString();
-        this.resourceType = in.readString();
-        this.select = in.readByte() != 0;
-        this.roles = in.createTypedArrayList(RoleBean.CREATOR);
-        this.employeeNum = in.readString();
-    }
-
     public boolean isSelect() {
         return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
     }
 
     public String getEmployeeNum() {
@@ -349,21 +362,17 @@ public class EmployeeBean implements Parcelable {
         this.employeeNum = employeeNum;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public void setSelect(boolean select) {
-        this.select = select;
-    }
-
     public List<RoleBean> getRoles() {
         return roles;
     }
 
     public void setRoles(List<RoleBean> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -398,8 +407,9 @@ public class EmployeeBean implements Parcelable {
         dest.writeString(this.loginPhone);
         dest.writeString(this.purchaserToken);
         dest.writeString(this.resourceType);
+        dest.writeString(this.deptIDs);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this.roles);
         dest.writeString(this.employeeNum);
+        dest.writeTypedList(this.roles);
     }
 }
