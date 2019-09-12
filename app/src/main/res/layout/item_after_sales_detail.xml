@@ -147,6 +147,16 @@
         app:layout_constraintStart_toStartOf="@+id/asd_order_confirmed_num"
         tools:text="退款：¥126.00" />
 
+    <ImageView
+        android:id="@+id/asd_delete_btn"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        android:src="@drawable/base_ic_img_del"
+        android:layout_width="28dp"
+        android:layout_height="28dp" />
+
     <TextView
         android:id="@+id/asd_not_associated_flag"
         android:layout_width="0dp"

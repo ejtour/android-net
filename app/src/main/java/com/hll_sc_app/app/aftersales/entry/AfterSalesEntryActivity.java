@@ -15,9 +15,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesVerifyResp;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -119,6 +121,6 @@ public class AfterSalesEntryActivity extends BaseLoadActivity implements IAfterS
             showToast(resp.getTips());
             return;
         }
-        showToast("退货退款操作页待添加");
+        AfterSalesApplyActivity.start(AfterSalesApplyParam.afterSalesFromOrder(mOrderResp, resp.getSubBillType()));
     }
 }

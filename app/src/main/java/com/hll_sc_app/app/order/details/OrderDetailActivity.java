@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.aftersales.entry.AfterSalesEntryActivity;
 import com.hll_sc_app.app.aftersales.list.AfterSalesListActivity;
@@ -28,6 +29,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderResp;
@@ -217,7 +219,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                         mOrderResp.getPayType() == 1 ? 2 : 1);
                 break;
             case R.id.oab_reject:
-                OrderRejectActivity.start(mOrderResp);
+                AfterSalesApplyActivity.start(AfterSalesApplyParam.rejectFromOrder(mOrderResp));
                 break;
             case R.id.oab_inspection:
                 OrderInspectionActivity.start(this, mOrderResp);

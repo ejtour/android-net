@@ -23,7 +23,7 @@ public class OrderInspectionReq {
     /**
      * 拒收原因
      */
-    private int rejectReason;
+    private String rejectReason;
     /**
      * 拒收凭证
      */
@@ -57,11 +57,11 @@ public class OrderInspectionReq {
         this.rejectExplain = rejectExplain;
     }
 
-    public int getRejectReason() {
+    public String getRejectReason() {
         return rejectReason;
     }
 
-    public void setRejectReason(int rejectReason) {
+    public void setRejectReason(String rejectReason) {
         this.rejectReason = rejectReason;
     }
 

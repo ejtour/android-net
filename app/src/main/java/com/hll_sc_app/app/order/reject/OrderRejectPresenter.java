@@ -32,7 +32,7 @@ public class OrderRejectPresenter implements IOrderRejectContract.IOrderRejectPr
         OrderInspectionReq req = new OrderInspectionReq();
         req.setFlag(1);
         req.setRejectExplain(rejectExplain);
-        req.setRejectReason(rejectReason);
+        req.setRejectReason(String.valueOf(rejectReason));
         req.setRejectVoucher(rejectVoucher);
         req.setSubBillID(orderResp.getSubBillID());
         List<OrderInspectionReq.OrderInspectionItem> items = new ArrayList<>();

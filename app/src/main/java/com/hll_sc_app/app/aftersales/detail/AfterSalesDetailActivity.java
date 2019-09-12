@@ -88,7 +88,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     }
 
     private void initView() {
-        mAdapter = new AfterSalesDetailAdapter(null);
+        mAdapter = new AfterSalesDetailAdapter();
         listView.addItemDecoration(new SimpleDecoration(Color.WHITE, UIUtils.dip2px(5)));
         listView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
