@@ -15,11 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.AfterSalesEvent;
 import com.hll_sc_app.bean.filter.AuditParam;
@@ -137,6 +139,9 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                     break;
                 case R.id.asa_thumbnail_wrapper:
                     actionViewDetails();
+                    break;
+                case R.id.after_sales_actions_reapply:
+                    actionReapply();
                     break;
                 case R.id.asa_check:
                     mCurBean.setSelected(!mCurBean.isSelected());
@@ -390,6 +395,11 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 mCurBean.getRefundBillStatus(),
                 mCurBean.getRefundBillType(),
                 null, null);
+    }
+
+    @Override
+    public void actionReapply() {
+        AfterSalesApplyActivity.start(AfterSalesApplyParam.afterSalesFromAfterSales(mCurBean, mCurBean.getRefundBillType()));
     }
 
     @Override

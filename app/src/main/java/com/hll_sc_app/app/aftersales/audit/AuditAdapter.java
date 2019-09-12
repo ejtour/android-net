@@ -55,6 +55,7 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
                 .addOnClickListener(R.id.after_sales_actions_driver)
                 .addOnClickListener(R.id.after_sales_actions_driver_cancel)
                 .addOnClickListener(R.id.after_sales_actions_warehouse)
+                .addOnClickListener(R.id.after_sales_actions_reapply)
                 .addOnClickListener(R.id.asa_check);
         return helper;
     }

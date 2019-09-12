@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.common.AfterSalesHelper;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.app.goods.relevance.goods.select.GoodsRelevanceSelectActivity;
@@ -22,6 +23,7 @@ import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
@@ -202,6 +204,7 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
             R.id.after_sales_actions_finance,
             R.id.after_sales_actions_driver,
             R.id.after_sales_actions_warehouse,
+            R.id.after_sales_actions_reapply,
             R.id.after_sales_actions_complain})
     public void onActionClick(View view) {
         if (mBean == null) {
@@ -224,6 +227,9 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
             case R.id.after_sales_actions_finance:
                 actionFinance();
                 break;
+            case R.id.after_sales_actions_reapply:
+                actionReapply();
+                break;
             case R.id.after_sales_actions_complain:
                 SuccessDialog.newBuilder(this)
                         .setMessageTitle("确定生成投诉单么")
@@ -242,6 +248,11 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
             default:
                 break;
         }
+    }
+
+    @Override
+    public void actionReapply() {
+        AfterSalesApplyActivity.start(AfterSalesApplyParam.afterSalesFromAfterSales(mBean, mBean.getRefundBillType()));
     }
 
     @Override

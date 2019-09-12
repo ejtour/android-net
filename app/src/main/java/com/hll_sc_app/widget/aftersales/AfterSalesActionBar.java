@@ -60,9 +60,15 @@ public class AfterSalesActionBar extends ConstraintLayout {
     @BindView(R.id.after_sales_actions_complain)
     TextView mActionComplain;
 
+    /**
+     * 重新申请
+     */
+    @BindView(R.id.after_sales_actions_reapply)
+    TextView mActionReapply;
+
     @BindViews({R.id.after_sales_actions_reject, R.id.after_sales_actions_customer_service,
             R.id.after_sales_actions_driver_cancel, R.id.after_sales_actions_driver, R.id.after_sales_actions_warehouse,
-            R.id.after_sales_actions_finance, R.id.after_sales_actions_complain})
+            R.id.after_sales_actions_finance, R.id.after_sales_actions_complain, R.id.after_sales_actions_reapply})
     List<View> mButtons;
 
     private boolean isItem;
@@ -111,6 +117,9 @@ public class AfterSalesActionBar extends ConstraintLayout {
                     break;
                 case 6: // 财务审核
                     mActionsFinance.setVisibility(VISIBLE);
+                    break;
+                case 7: //重新申请
+                    mActionReapply.setVisibility(VISIBLE);
                     break;
                 case 8: // 司机取消订单
                     mActionDriverCancel.setVisibility(VISIBLE);

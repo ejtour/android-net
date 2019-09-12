@@ -75,4 +75,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/after_sales_actions_reject"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/after_sales_actions_reapply"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="重新申请"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/after_sales_actions_complain"
+        style="@style/BtnAfterSalesAction.PrimarySolid" />
 </merge>
