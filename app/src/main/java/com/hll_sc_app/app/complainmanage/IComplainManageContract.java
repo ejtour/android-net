@@ -11,6 +11,8 @@ public interface IComplainManageContract {
 
         int getComplaintStatus();
 
+        void showCheckBox(boolean isCheck);
+
     }
 
     interface IPresent extends IPresenter<IView> {

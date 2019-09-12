@@ -916,6 +916,11 @@
         <activity
             android:name=".app.complainmanage.ComplainManageActivity"
             android:screenOrientation="portrait" />
+
+        <!--投诉管理-详情-->
+        <activity
+            android:name=".app.complainmanage.detail.ComplainMangeDetailActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

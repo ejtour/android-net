@@ -62,8 +62,8 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(root, savedInstanceState);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -77,6 +77,17 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mAdapter = new ComplainListApdater(null);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ComplainListResp.ComplainListBean complainListBean = mAdapter.getItem(position);
+            if (complainListBean == null) {
+                return;
+            }
+            if (mAdapter.isCheck()) {
+              mAdapter.updateSelect(complainListBean);
+            } else {
+
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -101,6 +112,11 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
     @Override
     public int getComplaintStatus() {
         return mStatus;
+    }
+
+    @Override
+    public void showCheckBox(boolean isCheck) {
+        mAdapter.checkModal(isCheck);
     }
 
     @Override

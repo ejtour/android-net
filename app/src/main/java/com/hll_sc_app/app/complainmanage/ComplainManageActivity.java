@@ -80,8 +80,11 @@ public class ComplainManageActivity extends BaseLoadActivity implements IComplai
             mMenuWindow.setListener((adapter, view, position) -> {
                 switch (position) {
                     case 0:
+
                         break;
                     case 1:
+                        mMenuWindow.dismiss();
+                        ((ComplainListFragmentAdapter) mViewPager.getAdapter()).getFragments().get(mViewPager.getCurrentItem()).showCheckBox(true);
                         break;
                     default:
                         break;
@@ -100,6 +103,11 @@ public class ComplainManageActivity extends BaseLoadActivity implements IComplai
         return -1;
     }
 
+    @Override
+    public void showCheckBox(boolean isCheck) {
+        //no
+    }
+
     private class ComplainListFragmentAdapter extends FragmentPagerAdapter {
         private List<ComplainListFragment> fragments = new ArrayList<>();
         private String[] titles;
@@ -110,6 +118,14 @@ public class ComplainManageActivity extends BaseLoadActivity implements IComplai
             for (int i = 0; i < titles.length; i++) {
                 fragments.add(ComplainListFragment.newInstance(status[i]));
             }
+        }
+
+        public List<ComplainListFragment> getFragments() {
+            return fragments;
+        }
+
+        public void setFragments(List<ComplainListFragment> fragments) {
+            this.fragments = fragments;
         }
 
         @Override
@@ -124,4 +140,5 @@ public class ComplainManageActivity extends BaseLoadActivity implements IComplai
         }
 
     }
+
 }
