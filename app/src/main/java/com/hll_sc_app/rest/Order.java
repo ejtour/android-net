@@ -156,7 +156,7 @@ public class Order {
                         .newBuilder()
                         .put("subBillID", subBillID)
                         .put("roleTypes", user.getAuthType())
-                        .put("curRole", user.getAuthType())
+                        .put("curRole", user.getCurRole())
                         .put("groupID", user.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -611,7 +611,7 @@ public class Order {
         UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
                 .crmQueryOrderList(BaseMapReq.newBuilder()
-                        .put("curRole", user.getAuthType())
+                        .put("curRole", user.getCurRole())
                         .put("shopID", shopID)
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")

@@ -25,7 +25,9 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -74,8 +76,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         mPresenter.register(this);
         mPresenter.start();
         if (UserConfig.isLogin()) {
-            // TODO:此处需要判断跳转的目标
-            toManageActivity();
+            toHomePage();
         }
     }
 
@@ -88,7 +89,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         mEdtPWD.addTextChangedListener(textWatcher);
     }
 
-    private void toManageActivity() {
+    private void toHomePage() {
         RouterUtil.goToActivity(RouterConfig.ROOT_HOME, this);
     }
 
@@ -105,19 +106,15 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
             return;
         }
         if (TextUtils.isEmpty(authType)) {
-            toManageActivity();
+            toHomePage();
             return;
         }
         String[] strings = authType.split(",");
         if (strings.length == 1) {
-            toBusinessActivity();
+            toHomePage();
         } else {
             showChoiceDialog();
         }
-    }
-
-    private void toBusinessActivity() {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME, this);
     }
 
     @Override
@@ -128,12 +125,18 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
 
             @Override
             public void toManage() {
-                toManageActivity();
+                UserBean user = GreenDaoUtils.getUser();
+                user.setCurRole("2");
+                GreenDaoUtils.updateUser(user);
+                toHomePage();
             }
 
             @Override
             public void toBusiness() {
-                toBusinessActivity();
+                UserBean user = GreenDaoUtils.getUser();
+                user.setCurRole("1");
+                GreenDaoUtils.updateUser(user);
+                toHomePage();
             }
 
             @Override
