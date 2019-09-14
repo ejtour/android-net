@@ -69,7 +69,7 @@ public interface IAfterSalesApplyContract {
 
         BaseQuickAdapter createAdapter();
 
-        void updateAdapter();
+        void updateAdapter(List<AfterSalesDetailsBean> list);
     }
 
     interface IAfterSalesApplyPresenter extends IPresenter<IAfterSalesApplyView> {

@@ -80,7 +80,7 @@ public class AfterSalesApplyHeader extends ConstraintLayout {
         mOption.setText(param.getReasonDesc());
         mDescEdit.setText(param.getExplain());
         updateEditVisibility(param);
-        if (param.getVoucher() != null)
+        if (!TextUtils.isEmpty(param.getVoucher()))
             mUploadGroup.showImages(param.getVoucher().split(","));
     }
 

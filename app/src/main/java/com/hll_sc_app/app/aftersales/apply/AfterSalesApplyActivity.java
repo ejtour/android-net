@@ -95,7 +95,7 @@ public class AfterSalesApplyActivity extends BaseLoadActivity implements IAfterS
         mPresenter.register(this);
         mPresenter.start();
         mHeader.initData(mParam);
-        mFooter.updateMoney(mParam);
+        toggleViewStatus();
     }
 
     private void initView() {
@@ -131,7 +131,8 @@ public class AfterSalesApplyActivity extends BaseLoadActivity implements IAfterS
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == AfterSalesSelectActivity.REQ_CODE) {
                 mDetailsBeans = ((AfterSalesApplyParam) data.getParcelableExtra("parcelable")).getAfterSalesDetailList();
-                updateData();
+                mStrategy.updateAdapter(mDetailsBeans);
+                toggleViewStatus();
             } else mHeader.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -142,7 +143,7 @@ public class AfterSalesApplyActivity extends BaseLoadActivity implements IAfterS
         if (!CommonUtils.isEmpty(mParam.getAfterSalesDetailList())) {
             for (AfterSalesDetailsBean bean : mParam.getAfterSalesDetailList()) {
                 for (AfterSalesDetailsBean detailsBean : list) {
-                    if (bean.getId().equals(detailsBean.getId())) {
+                    if (bean.getProductID().equals(detailsBean.getProductID())) {
                         detailsBean.setRefundNum(bean.getRefundNum());
                         detailsBean.setSelected(true);
                         break;
@@ -150,17 +151,6 @@ public class AfterSalesApplyActivity extends BaseLoadActivity implements IAfterS
                 }
             }
         }
-        updateData();
-    }
-
-    private void updateData() {
-        List<AfterSalesDetailsBean> list = new ArrayList<>();
-        for (AfterSalesDetailsBean bean : mDetailsBeans) {
-            if (bean.isSelected()) list.add(bean);
-        }
-        mParam.setAfterSalesDetailList(list);
-        mStrategy.updateAdapter();
-        toggleViewStatus();
     }
 
     private void toggleViewStatus() {

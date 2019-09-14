@@ -11,6 +11,7 @@ import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
 import com.hll_sc_app.bean.window.NameValue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,13 +62,18 @@ public abstract class BaseAfterSalesApply implements IAfterSalesApplyContract.IA
 
     @Override
     public BaseQuickAdapter createAdapter() {
-        mAdapter = new AfterSalesDetailAdapter(false);
+        mAdapter = new AfterSalesDetailAdapter(mParam.getAfterSalesDetailList(), false);
         mAdapter.setRefundBillType(mParam.getAfterSalesType());
         return mAdapter;
     }
 
     @Override
-    public void updateAdapter() {
+    public void updateAdapter(List<AfterSalesDetailsBean> list) {
+        List<AfterSalesDetailsBean> result = new ArrayList<>();
+        for (AfterSalesDetailsBean bean : list) {
+            if (bean.isSelected()) result.add(bean);
+        }
+        mParam.setAfterSalesDetailList(result);
         mAdapter.setNewData(mParam.getAfterSalesDetailList());
     }
 }

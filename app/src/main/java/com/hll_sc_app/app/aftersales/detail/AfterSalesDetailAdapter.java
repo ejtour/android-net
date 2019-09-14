@@ -21,6 +21,8 @@ import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.ColorStr;
 
+import java.util.List;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/4/25
@@ -47,11 +49,11 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
     }
 
     AfterSalesDetailAdapter() {
-        this(true);
+        this(null, true);
     }
 
-    public AfterSalesDetailAdapter(boolean onlyShow) {
-        super(R.layout.item_after_sales_detail);
+    public AfterSalesDetailAdapter(List<AfterSalesDetailsBean> data, boolean onlyShow) {
+        super(R.layout.item_after_sales_detail, data);
         mOnlyShow = onlyShow;
     }
 
