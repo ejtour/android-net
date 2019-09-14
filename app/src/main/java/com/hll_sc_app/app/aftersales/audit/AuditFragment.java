@@ -121,26 +121,26 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 return;
             }
             switch (view.getId()) {
-                case R.id.after_sales_actions_reject:
+                case R.id.asa_reject:
                     actionReject();
                     break;
-                case R.id.after_sales_actions_driver_cancel:
+                case R.id.asa_cancel:
                     actionCancel();
                     break;
-                case R.id.after_sales_actions_driver:
-                case R.id.after_sales_actions_warehouse:
+                case R.id.asa_driver:
+                case R.id.asa_warehouse:
                     actionGoodsOperation();
                     break;
-                case R.id.after_sales_actions_customer_service:
+                case R.id.asa_customer:
                     actionCustomerService();
                     break;
-                case R.id.after_sales_actions_finance:
+                case R.id.asa_finance:
                     actionFinance();
                     break;
                 case R.id.asa_thumbnail_wrapper:
                     actionViewDetails();
                     break;
-                case R.id.after_sales_actions_reapply:
+                case R.id.asa_reapply:
                     actionReapply();
                     break;
                 case R.id.asa_check:

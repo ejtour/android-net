@@ -198,39 +198,32 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
         showToast("生成投诉单成功");
     }
 
-    @OnClick({R.id.after_sales_actions_reject,
-            R.id.after_sales_actions_driver_cancel,
-            R.id.after_sales_actions_customer_service,
-            R.id.after_sales_actions_finance,
-            R.id.after_sales_actions_driver,
-            R.id.after_sales_actions_warehouse,
-            R.id.after_sales_actions_reapply,
-            R.id.after_sales_actions_complain})
+    @OnClick(R.id.asd_action_bar)
     public void onActionClick(View view) {
         if (mBean == null) {
             return;
         }
         switch (view.getId()) {
-            case R.id.after_sales_actions_reject:
+            case R.id.asa_reject:
                 actionReject();
                 break;
-            case R.id.after_sales_actions_driver_cancel:
+            case R.id.asa_cancel:
                 actionCancel();
                 break;
-            case R.id.after_sales_actions_driver:
-            case R.id.after_sales_actions_warehouse:
+            case R.id.asa_driver:
+            case R.id.asa_warehouse:
                 actionGoodsOperation();
                 break;
-            case R.id.after_sales_actions_customer_service:
+            case R.id.asa_customer:
                 actionCustomerService();
                 break;
-            case R.id.after_sales_actions_finance:
+            case R.id.asa_finance:
                 actionFinance();
                 break;
-            case R.id.after_sales_actions_reapply:
+            case R.id.asa_reapply:
                 actionReapply();
                 break;
-            case R.id.after_sales_actions_complain:
+            case R.id.asa_complain:
                 SuccessDialog.newBuilder(this)
                         .setMessageTitle("确定生成投诉单么")
                         .setImageTitle(R.drawable.ic_dialog_failure)
