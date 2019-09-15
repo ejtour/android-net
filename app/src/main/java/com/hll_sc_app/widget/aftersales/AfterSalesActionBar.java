@@ -84,16 +84,16 @@ public class AfterSalesActionBar extends LinearLayout {
         if (CommonUtils.isEmpty(buttons))  // 如果按钮数组为 0
             setVisibility(GONE);
         else {
-            setVisibility(VISIBLE);
             removeAllViews();
-            for (int i = buttons.size() - 1; i >= 0; i--) {
-                ButtonAction action = MAP.get(buttons.get(i));
-                if (action == null) continue;
+            for (int key : buttons) {
+                ButtonAction action = MAP.get(key);
+                if (action == null || isItem && key == ACTION_COMPLAIN) continue;
                 TextView view = createButton(action.type);
                 view.setId(action.id);
                 view.setText(action.label);
                 addView(view);
             }
+            setVisibility(getChildCount() == 0 ? GONE : VISIBLE);
         }
     }
 
