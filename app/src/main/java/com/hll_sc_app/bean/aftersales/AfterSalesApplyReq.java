@@ -326,7 +326,8 @@ public class AfterSalesApplyReq {
             bean.setRefundUnit(item.getRefundUnit());
             bean.setSaleUnitName(item.getSaleUnitName());
             // 明细ID
-            bean.setSubBillDetailID(item.getDetailID());
+            bean.setSubBillDetailID(TextUtils.isEmpty(item.getDetailID()) ?
+                    item.getSubBillDetailID() : item.getDetailID());
             return bean;
         }
 
