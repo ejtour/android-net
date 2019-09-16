@@ -15,6 +15,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
@@ -155,7 +156,7 @@ public class Order {
                         .newBuilder()
                         .put("subBillID", subBillID)
                         .put("roleTypes", user.getAuthType())
-                        .put("curRole", user.getAuthType())
+                        .put("curRole", user.getCurRole())
                         .put("groupID", user.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
@@ -610,7 +611,7 @@ public class Order {
         UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
                 .crmQueryOrderList(BaseMapReq.newBuilder()
-                        .put("curRole", user.getAuthType())
+                        .put("curRole", user.getCurRole())
                         .put("shopID", shopID)
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
@@ -636,7 +637,7 @@ public class Order {
      * @param billID 订单id
      */
     public static void queryOrderLog(String billID, SimpleObserver<SingleListResp<OrderTraceBean>> observer) {
-        if (TextUtils.isEmpty(UserConfig.getSalesmanID())) return;
+        if (!UserConfig.crm()) return;
         OrderService.INSTANCE
                 .queryOrderLog(BaseMapReq.newBuilder()
                         .put("billID", billID)
@@ -644,6 +645,24 @@ public class Order {
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
+    }
 
+    /**
+     * 根据订单号查询关联的售后单
+     *
+     * @param pageNum   页码
+     * @param subBillID 订单号
+     */
+    public static void queryAssociatedAfterSalesOrder(int pageNum, String subBillID, SimpleObserver<SingleListResp<AfterSalesBean>> observer) {
+        OrderService.INSTANCE
+                .queryAssociatedAfterSalesOrder(BaseMapReq.newBuilder()
+                        .put("pageNum",String.valueOf(pageNum))
+                        .put("subBillID",subBillID)
+                        .put("pageSize","20")
+                        .put("flag","2")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
     }
 }

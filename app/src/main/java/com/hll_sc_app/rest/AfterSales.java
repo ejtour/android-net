@@ -5,23 +5,31 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.AfterSalesService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.aftersales.AfterSalesActionReq;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyReq;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyResp;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
+import com.hll_sc_app.bean.aftersales.AfterSalesReasonBean;
+import com.hll_sc_app.bean.aftersales.AfterSalesVerifyResp;
 import com.hll_sc_app.bean.aftersales.CommitComplainProductBean;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.bean.aftersales.NegotiationHistoryResp;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -65,7 +73,7 @@ public class AfterSales {
             int pageNum,
             SimpleObserver<List<AfterSalesBean>> observer) {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder()
-                .put("flag", "1")
+                .put("flag", UserConfig.crm() ? "2" : "1")
                 .put("groupID", UserConfig.getGroupID());
         if (refundBillID != null)
             builder.put("refundBillID", refundBillID)
@@ -242,4 +250,65 @@ public class AfterSales {
                 .subscribe(observer);
     }
 
+    /**
+     * 验证是否可退换货
+     *
+     * @param refundBillType 退货单类型, 3 退货退款单 4 退押金
+     * @param subBillID      订单ID
+     */
+    public static void afterSalesVerify(int refundBillType, String subBillID, SimpleObserver<AfterSalesVerifyResp> observer) {
+        AfterSalesService.INSTANCE
+                .afterSalesVerify(BaseMapReq.newBuilder()
+                        .put("refundBillType", String.valueOf(refundBillType))
+                        .put("subBillID", subBillID)
+                        .put("flag", "2")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取可退明细
+     *
+     * @param subBillID      订单id
+     * @param refundBillType 退货单类型
+     */
+    public static void getReturnableGoods(String subBillID, int refundBillType, SimpleObserver<SingleListResp<AfterSalesDetailsBean>> observer) {
+        AfterSalesService.INSTANCE
+                .getReturnableGoods(BaseMapReq.newBuilder()
+                        .put("subBillID", subBillID)
+                        .put("flag", "2")
+                        .put("refundBillType", String.valueOf(refundBillType))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取退货退款原因
+     */
+    public static void getReasonList(SimpleObserver<SingleListResp<AfterSalesReasonBean>> observer) {
+        AfterSalesService.INSTANCE
+                .getReasonList(new BaseReq<>(new Object()))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 申请售后
+     *
+     * @param reapply 是否重新申请
+     */
+    public static void applyAfterSales(boolean reapply, AfterSalesApplyReq req, SimpleObserver<AfterSalesApplyResp> observer) {
+        Observable<BaseResp<AfterSalesApplyResp>> observable;
+        if (reapply)
+            observable = AfterSalesService.INSTANCE.reapplyAfterSalesBill(new BaseReq<>(req));
+        else observable = AfterSalesService.INSTANCE.applyAfterSalesBill(new BaseReq<>(req));
+        observable.compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }

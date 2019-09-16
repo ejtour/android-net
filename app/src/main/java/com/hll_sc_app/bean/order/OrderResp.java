@@ -87,7 +87,7 @@ public class OrderResp implements Parcelable {
     private double ruleDiscountValue;
     private String originalBillNo;
     private String signTime;
-    private int supplyShopID;
+    private String supplyShopID;
     private String subBillID;
     private String groupID;
     private int exchangeBillID;
@@ -113,7 +113,7 @@ public class OrderResp implements Parcelable {
     private int refundBillID;
     private String createby;
     private int total;
-    private int purchaserID;
+    private String purchaserID;
     private int settlementStatus;
     private int subBillStatus;
     private double inspectionDiscountSubAmount;
@@ -738,11 +738,11 @@ public class OrderResp implements Parcelable {
         this.signTime = signTime;
     }
 
-    public int getSupplyShopID() {
+    public String getSupplyShopID() {
         return supplyShopID;
     }
 
-    public void setSupplyShopID(int supplyShopID) {
+    public void setSupplyShopID(String supplyShopID) {
         this.supplyShopID = supplyShopID;
     }
 
@@ -946,11 +946,11 @@ public class OrderResp implements Parcelable {
         this.total = total;
     }
 
-    public int getPurchaserID() {
+    public String getPurchaserID() {
         return purchaserID;
     }
 
-    public void setPurchaserID(int purchaserID) {
+    public void setPurchaserID(String purchaserID) {
         this.purchaserID = purchaserID;
     }
 
@@ -1255,7 +1255,7 @@ public class OrderResp implements Parcelable {
         dest.writeDouble(this.ruleDiscountValue);
         dest.writeString(this.originalBillNo);
         dest.writeString(this.signTime);
-        dest.writeInt(this.supplyShopID);
+        dest.writeString(this.supplyShopID);
         dest.writeString(this.subBillID);
         dest.writeString(this.groupID);
         dest.writeInt(this.exchangeBillID);
@@ -1281,7 +1281,7 @@ public class OrderResp implements Parcelable {
         dest.writeInt(this.refundBillID);
         dest.writeString(this.createby);
         dest.writeInt(this.total);
-        dest.writeInt(this.purchaserID);
+        dest.writeString(this.purchaserID);
         dest.writeInt(this.settlementStatus);
         dest.writeInt(this.subBillStatus);
         dest.writeDouble(this.inspectionDiscountSubAmount);
@@ -1387,7 +1387,7 @@ public class OrderResp implements Parcelable {
         this.ruleDiscountValue = in.readDouble();
         this.originalBillNo = in.readString();
         this.signTime = in.readString();
-        this.supplyShopID = in.readInt();
+        this.supplyShopID = in.readString();
         this.subBillID = in.readString();
         this.groupID = in.readString();
         this.exchangeBillID = in.readInt();
@@ -1413,7 +1413,7 @@ public class OrderResp implements Parcelable {
         this.refundBillID = in.readInt();
         this.createby = in.readString();
         this.total = in.readInt();
-        this.purchaserID = in.readInt();
+        this.purchaserID = in.readString();
         this.settlementStatus = in.readInt();
         this.subBillStatus = in.readInt();
         this.inspectionDiscountSubAmount = in.readDouble();

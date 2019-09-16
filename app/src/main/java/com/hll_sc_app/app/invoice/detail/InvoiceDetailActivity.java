@@ -228,7 +228,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     @Override
     public void updateData(InvoiceBean bean) {
-        boolean crm = !TextUtils.isEmpty(UserConfig.getSalesmanID());
+        boolean crm = UserConfig.crm();
         updateBaseInfo(bean, crm);
         reset();
         if (bean.getInvoiceStatus() == 3) { // 已驳回

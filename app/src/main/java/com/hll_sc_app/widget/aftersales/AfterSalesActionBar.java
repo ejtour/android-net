@@ -2,68 +2,55 @@ package com.hll_sc_app.widget.aftersales;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.constraint.ConstraintLayout;
+import android.graphics.Color;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.Gravity;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.common.ButtonAction;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.BindViews;
-import butterknife.ButterKnife;
+import static com.hll_sc_app.bean.common.ButtonAction.BUTTON_NEGATIVE;
+import static com.hll_sc_app.bean.common.ButtonAction.BUTTON_POSITIVE;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/7/8
  */
 
-public class AfterSalesActionBar extends ConstraintLayout {
-    /**
-     * 审核员驳回
-     */
-    @BindView(R.id.after_sales_actions_reject)
-    TextView mActionsReject;
-    /**
-     * 客服审核
-     */
-    @BindView(R.id.after_sales_actions_customer_service)
-    TextView mActionsCustomerService;
-    /**
-     * 司机取消
-     */
-    @BindView(R.id.after_sales_actions_driver_cancel)
-    TextView mActionDriverCancel;
-    /**
-     * 司机提货
-     */
-    @BindView(R.id.after_sales_actions_driver)
-    TextView mActionDriver;
-    /**
-     * 仓库收货
-     */
-    @BindView(R.id.after_sales_actions_warehouse)
-    TextView mActionWarehouse;
-    /**
-     * 财务审核
-     */
-    @BindView(R.id.after_sales_actions_finance)
-    TextView mActionsFinance;
+public class AfterSalesActionBar extends LinearLayout {
+    private static final int ACTION_CUSTOMER = 2;
+    private static final int ACTION_REJECT = 3;
+    private static final int ACTION_DRIVER = 4;
+    private static final int ACTION_WAREHOUSE = 5;
+    private static final int ACTION_FINANCE = 6;
+    private static final int ACTION_REAPPLY = 7;
+    private static final int ACTION_CANCEL = 8;
+    private static final int ACTION_COMPLAIN = 9;
 
-    /**
-     * 生成投诉单
-     */
-    @BindView(R.id.after_sales_actions_complain)
-    TextView mActionComplain;
+    private final HashMap<Integer, ButtonAction> MAP;
+    private OnClickListener mListener;
 
-    @BindViews({R.id.after_sales_actions_reject, R.id.after_sales_actions_customer_service,
-            R.id.after_sales_actions_driver_cancel, R.id.after_sales_actions_driver, R.id.after_sales_actions_warehouse,
-            R.id.after_sales_actions_finance, R.id.after_sales_actions_complain})
-    List<View> mButtons;
+    {
+        MAP = new HashMap<>();
+        MAP.put(ACTION_CUSTOMER, new ButtonAction(BUTTON_POSITIVE, R.id.asa_customer, "客服审核"));
+        MAP.put(ACTION_DRIVER, new ButtonAction(BUTTON_POSITIVE, R.id.asa_driver, "司机提货"));
+        MAP.put(ACTION_WAREHOUSE, new ButtonAction(BUTTON_POSITIVE, R.id.asa_warehouse, "仓库收货"));
+        MAP.put(ACTION_FINANCE, new ButtonAction(BUTTON_POSITIVE, R.id.asa_finance, "财务审核"));
+        MAP.put(ACTION_REAPPLY, new ButtonAction(BUTTON_POSITIVE, R.id.asa_reapply, "重新申请"));
+
+        MAP.put(ACTION_REJECT, new ButtonAction(BUTTON_NEGATIVE, R.id.asa_reject, "驳回"));
+        MAP.put(ACTION_CANCEL, new ButtonAction(BUTTON_NEGATIVE, R.id.asa_cancel, "取消退换"));
+        MAP.put(ACTION_COMPLAIN, new ButtonAction(BUTTON_NEGATIVE, R.id.asa_complain, "生成投诉单"));
+    }
 
     private boolean isItem;
 
@@ -85,44 +72,52 @@ public class AfterSalesActionBar extends ConstraintLayout {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AfterSalesActionBar);
         isItem = typedArray.getBoolean(R.styleable.AfterSalesActionBar_sab_item, false);
         typedArray.recycle();
-        ViewGroup rootView = (ViewGroup) View.inflate(context, !isItem ? R.layout.view_after_sales_action : R.layout.item_after_sales_action, this);
-        ButterKnife.bind(this, rootView);
+        setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        mListener = l;
     }
 
     public void setData(List<Integer> buttons) {
-        setVisibility(VISIBLE);
-        ButterKnife.apply(mButtons, (view, index) -> view.setVisibility(GONE));
-        if (CommonUtils.isEmpty(buttons)) { // 如果按钮数组为 0
+        if (CommonUtils.isEmpty(buttons))  // 如果按钮数组为 0
             setVisibility(GONE);
-        }
-        for (Integer button : buttons) {
-            switch (button) {
-                case 2: // 客服审核
-                    mActionsCustomerService.setVisibility(VISIBLE);
-                    break;
-                case 3: // 审核驳回
-                    mActionsReject.setVisibility(VISIBLE);
-                    break;
-                case 4: // 司机提货
-                    mActionDriver.setVisibility(VISIBLE);
-                    break;
-                case 5: // 仓库收货
-                    mActionWarehouse.setVisibility(VISIBLE);
-                    break;
-                case 6: // 财务审核
-                    mActionsFinance.setVisibility(VISIBLE);
-                    break;
-                case 8: // 司机取消订单
-                    mActionDriverCancel.setVisibility(VISIBLE);
-                    break;
-                case 9:// 生成投诉单
-                    if (!isItem) { //在详情页中才显示 列表中不显示
-                        mActionComplain.setVisibility(VISIBLE);
-                    }
-                    break;
-                default:
-                    break;
+        else {
+            removeAllViews();
+            for (int key : buttons) {
+                ButtonAction action = MAP.get(key);
+                if (action == null || isItem && key == ACTION_COMPLAIN) continue;
+                TextView view = createButton(action.type);
+                view.setId(action.id);
+                view.setText(action.label);
+                addView(view);
             }
+            setVisibility(getChildCount() == 0 ? GONE : VISIBLE);
         }
+    }
+
+    private TextView createButton(int viewType) {
+        TextView textView = new TextView(getContext());
+        textView.setTextSize(12);
+        textView.setGravity(Gravity.CENTER);
+        textView.setPadding(UIUtils.dip2px(isItem ? 16 : 26), 0, UIUtils.dip2px(isItem ? 16 : 26), 0);
+        textView.setMinWidth(UIUtils.dip2px(isItem ? 80 : 100));
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, UIUtils.dip2px(isItem ? 25 : 30));
+        textView.setLayoutParams(params);
+        params.rightMargin = UIUtils.dip2px(10);
+
+        switch (viewType) {
+            case BUTTON_POSITIVE:
+                textView.setTextColor(Color.WHITE);
+                textView.setBackgroundResource(isItem ? R.drawable.bg_button_large_solid_primary : R.drawable.bg_button_mid_solid_primary);
+                break;
+            case BUTTON_NEGATIVE:
+                textView.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                textView.setBackgroundResource(isItem ? R.drawable.bg_button_large_stroke_primary : R.drawable.bg_button_mid_stroke_primary);
+                break;
+        }
+        textView.setOnClickListener(mListener);
+        return textView;
     }
 }

@@ -5,46 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/orf_bar_bg"
+    <TextView
+        android:id="@+id/saf_money_label"
         android:layout_width="0dp"
         android:layout_height="45dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:gravity="center_vertical"
+        tools:text="收款金额"
         android:background="@color/base_white"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/orf_money_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:gravity="center"
-        android:text="收款金额"
-        android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintBottom_toBottomOf="@+id/orf_bar_bg"
-        app:layout_constraintStart_toStartOf="@+id/orf_bar_bg"
-        app:layout_constraintTop_toTopOf="@+id/orf_bar_bg" />
-
-    <TextView
-        android:id="@+id/orf_money"
+        android:id="@+id/saf_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
         android:textAppearance="@style/TextAppearance.City22.Middle.Red"
-        app:layout_constraintBottom_toBottomOf="@+id/orf_money_label"
-        app:layout_constraintEnd_toEndOf="@+id/orf_bar_bg"
-        app:layout_constraintTop_toTopOf="@+id/orf_money_label"
+        app:layout_constraintBottom_toBottomOf="@+id/saf_money_label"
+        app:layout_constraintEnd_toEndOf="@+id/saf_money_label"
+        app:layout_constraintTop_toTopOf="@+id/saf_money_label"
+        android:text="¥0.00"
         tools:text="¥2550.00" />
 
     <android.support.constraint.Group
-        android:id="@+id/orf_money_group"
+        android:id="@+id/saf_money_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="orf_bar_bg,orf_money_label,orf_money" />
+        app:constraint_referenced_ids="saf_money_label,saf_money" />
 
     <TextView
-        android:id="@+id/orf_tips_title"
+        android:id="@+id/saf_tips"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
@@ -52,10 +45,10 @@
         android:lineSpacingMultiplier="1.7"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:text="温馨提示： \n• 如果采购商付款时选择的是现金、刷卡等线下支付方式时，商品全部拒收时无需支付金额。 \n• 如果采购商付款时选择账期支付时，退货款项会在结算时自动扣除！ \n• 供货商完成退款后，线上支付款项会根据订单的支付方式原路返还！"
+        tools:text="温馨提示： \n• 如果采购商付款时选择的是现金、刷卡等线下支付方式时，商品全部拒收时无需支付金额。 \n• 如果采购商付款时选择账期支付时，退货款项会在结算时自动扣除！ \n• 供货商完成退款后，线上支付款项会根据订单的支付方式原路返还！"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orf_bar_bg" />
+        app:layout_constraintTop_toBottomOf="@+id/saf_money_label" />
 
 </android.support.constraint.ConstraintLayout>

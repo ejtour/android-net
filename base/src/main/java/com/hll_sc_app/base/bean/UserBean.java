@@ -22,6 +22,10 @@ public class UserBean {
      */
     private String authType;
     /**
+     * 当前角色类型
+     */
+    private String curRole;
+    /**
      * token
      */
     private String accessToken;
@@ -67,11 +71,6 @@ public class UserBean {
      * 是否自营
      */
     private String selfOperated;
-
-    /**
-     * 角色 ID
-     */
-    private String roleID;
     /**
      * 登录手机号
      */
@@ -80,13 +79,14 @@ public class UserBean {
      * 账号类型(0-主账号，1-子账号)
      */
     private String accountType;
-    @Generated(hash = 1538480509)
-    public UserBean(String authType, String accessToken, String email,
-            String employeeID, String employeeName, String groupID,
+    @Generated(hash = 407746394)
+    public UserBean(String authType, String curRole, String accessToken,
+            String email, String employeeID, String employeeName, String groupID,
             String groupLogoUrl, String groupName, List<String> roleCode,
-            String roleNames, String roles, String selfOperated, String roleID,
-            String loginPhone, String accountType) {
+            String roleNames, String roles, String selfOperated, String loginPhone,
+            String accountType) {
         this.authType = authType;
+        this.curRole = curRole;
         this.accessToken = accessToken;
         this.email = email;
         this.employeeID = employeeID;
@@ -98,7 +98,6 @@ public class UserBean {
         this.roleNames = roleNames;
         this.roles = roles;
         this.selfOperated = selfOperated;
-        this.roleID = roleID;
         this.loginPhone = loginPhone;
         this.accountType = accountType;
     }
@@ -110,6 +109,12 @@ public class UserBean {
     }
     public void setAuthType(String authType) {
         this.authType = authType;
+    }
+    public String getCurRole() {
+        return this.curRole;
+    }
+    public void setCurRole(String curRole) {
+        this.curRole = curRole;
     }
     public String getAccessToken() {
         return this.accessToken;
@@ -177,12 +182,6 @@ public class UserBean {
     public void setSelfOperated(String selfOperated) {
         this.selfOperated = selfOperated;
     }
-    public String getRoleID() {
-        return this.roleID;
-    }
-    public void setRoleID(String roleID) {
-        this.roleID = roleID;
-    }
     public String getLoginPhone() {
         return this.loginPhone;
     }
@@ -195,6 +194,4 @@ public class UserBean {
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
-
-
 }

@@ -1,17 +1,13 @@
 package com.hll_sc_app.widget.order;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,7 +23,6 @@ import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.utils.DateUtil;
 
 import java.util.List;
@@ -148,18 +143,8 @@ public class OrderDetailHeader extends ConstraintLayout {
 
     private CharSequence handlePhoneNum(String number) {
         String source = PhoneUtil.formatPhoneNum(number);
-        if (TextUtils.isEmpty(source)) {
-            return "暂未提供";
-        }
-        SpannableString ss = new SpannableString(source);
-        ss.setSpan(new UnderlineSpan() {
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setColor(Color.parseColor(ColorStr.COLOR_5695D2)); // 下划线
-            }
-        }, 0, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return ss;
+        if (TextUtils.isEmpty(source)) return "暂未提供";
+        return source;
     }
 
     private void handleLabel(String wareHouseName, boolean wareHouse) {

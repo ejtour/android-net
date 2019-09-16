@@ -81,9 +81,16 @@ public class UserConfig {
      */
     public static String getSalesmanID() {
         UserBean user = GreenDaoUtils.getUser();
-        if (user != null && "1".equals(user.getAuthType())) {
+        if (user != null && "1".equals(user.getCurRole())) {
             return user.getEmployeeID();
         }
         return "";
+    }
+
+    /**
+     * @return 是否 crm
+     */
+    public static boolean crm() {
+        return !TextUtils.isEmpty(getSalesmanID());
     }
 }

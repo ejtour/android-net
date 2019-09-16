@@ -457,11 +457,6 @@ public class RouterConfig {
     public static final String ORDER_MODIFY_DELIVER = "/activity/order/modify/deliver";
 
     /**
-     * 订单拒收
-     */
-    public static final String ORDER_REJECT = "/activity/order/reject";
-
-    /**
      * 订单验货
      */
     public static final String ORDER_INSPECTION = "/activity/order/inspection";
@@ -544,6 +539,26 @@ public class RouterConfig {
      * 我的-退货审核
      */
     public static final String AFTER_SALES_AUDIT = "/activity/afterSales/audit";
+
+    /**
+     * 申请退换货-入口
+     */
+    public static final String AFTER_SALES_ENTRY = "/activity/afterSales/entry";
+
+    /**
+     * 申请退换货-售后申请页面
+     */
+    public static final String AFTER_SALES_APPLY = "/activity/afterSales/apply";
+
+    /**
+     * 申请退换货-明细选择
+     */
+    public static final String AFTER_SALES_SELECT = "/activity/afterSales/select";
+
+    /**
+     * 订单管理-订单详情-退换货列表
+     */
+    public static final String AFTER_SALES_LIST = "/activity/afterSales/list";
 
     /**
      * 我的-退货审核-售后详情

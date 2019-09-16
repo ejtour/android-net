@@ -12,4 +12,23 @@
     <item name="crm_customer" type="id" />
     <item name="crm_daily" type="id" />
     <item name="crm_mine" type="id" />
+    <item name="oab_settle" type="id" />
+    <item name="oab_deliver" type="id" />
+    <item name="oab_receive" type="id" />
+    <item name="oab_modify" type="id" />
+    <item name="oab_inspection" type="id" />
+    <item name="oab_reject" type="id" />
+    <item name="oab_cancel" type="id" />
+    <item name="oab_diff" type="id" />
+    <item name="oab_confirm" type="id" />
+    <item name="oab_refund" type="id" />
+    <item name="oab_refund_detail" type="id" />
+    <item name="asa_customer" type="id" />
+    <item name="asa_reject" type="id" />
+    <item name="asa_driver" type="id" />
+    <item name="asa_warehouse" type="id" />
+    <item name="asa_finance" type="id" />
+    <item name="asa_reapply" type="id" />
+    <item name="asa_cancel" type="id" />
+    <item name="asa_complain" type="id" />
 </resources>

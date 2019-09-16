@@ -480,11 +480,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.order.reject.OrderRejectActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-
-        <activity
             android:name=".app.submit.SubmitSuccessActivity"
             android:screenOrientation="portrait" />
 
@@ -558,7 +553,7 @@
         <activity
             android:name=".app.search.SearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
             android:name=".app.report.refundReason.RefundReasonActivity"
@@ -926,6 +921,22 @@
         <activity
             android:name=".app.staffmanage.detail.depart.DepartListActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.aftersales.list.AfterSalesListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.entry.AfterSalesEntryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.apply.AfterSalesApplyActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.apply.select.AfterSalesSelectActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

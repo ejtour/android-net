@@ -14,12 +14,15 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.AfterSalesEvent;
 import com.hll_sc_app.bean.filter.AuditParam;
@@ -113,30 +116,34 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 mPresenter.refresh();
             }
         });
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mCurBean = mAdapter.getData().get(position);
+            if (mCurBean != null) actionViewDetails();
+        });
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             mCurBean = mAdapter.getData().get(position);
             if (mCurBean == null) {
                 return;
             }
             switch (view.getId()) {
-                case R.id.after_sales_actions_reject:
+                case R.id.asa_reject:
                     actionReject();
                     break;
-                case R.id.after_sales_actions_driver_cancel:
+                case R.id.asa_cancel:
                     actionCancel();
                     break;
-                case R.id.after_sales_actions_driver:
-                case R.id.after_sales_actions_warehouse:
+                case R.id.asa_driver:
+                case R.id.asa_warehouse:
                     actionGoodsOperation();
                     break;
-                case R.id.after_sales_actions_customer_service:
+                case R.id.asa_customer:
                     actionCustomerService();
                     break;
-                case R.id.after_sales_actions_finance:
+                case R.id.asa_finance:
                     actionFinance();
                     break;
-                case R.id.asa_thumbnail_wrapper:
-                    actionViewDetails();
+                case R.id.asa_reapply:
+                    actionReapply();
                     break;
                 case R.id.asa_check:
                     mCurBean.setSelected(!mCurBean.isSelected());
@@ -390,6 +397,11 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 mCurBean.getRefundBillStatus(),
                 mCurBean.getRefundBillType(),
                 null, null);
+    }
+
+    @Override
+    public void actionReapply() {
+        AfterSalesApplyActivity.start(AfterSalesApplyParam.afterSalesFromAfterSales(mCurBean, mCurBean.getRefundBillType()));
     }
 
     @Override

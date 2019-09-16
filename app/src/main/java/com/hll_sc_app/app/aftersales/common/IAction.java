@@ -16,6 +16,8 @@ public interface IAction {
 
     void actionFinance();
 
+    void actionReapply();
+
     default void actionViewDetails() {
     }
 }
