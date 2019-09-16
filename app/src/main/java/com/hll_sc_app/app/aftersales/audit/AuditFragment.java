@@ -14,6 +14,7 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
@@ -115,6 +116,10 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 mPresenter.refresh();
             }
         });
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mCurBean = mAdapter.getData().get(position);
+            if (mCurBean != null) actionViewDetails();
+        });
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             mCurBean = mAdapter.getData().get(position);
             if (mCurBean == null) {
@@ -136,9 +141,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                     break;
                 case R.id.asa_finance:
                     actionFinance();
-                    break;
-                case R.id.asa_thumbnail_wrapper:
-                    actionViewDetails();
                     break;
                 case R.id.asa_reapply:
                     actionReapply();

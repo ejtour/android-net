@@ -14,12 +14,14 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.audit.AuditAdapter;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -96,6 +98,12 @@ public class AfterSalesListActivity extends BaseLoadActivity implements IAfterSa
     }
 
     @Override
+    public void hideLoading() {
+        mRefreshView.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
+    @Override
     public void setData(List<AfterSalesBean> list, boolean append) {
         if (append) {
             if (!CommonUtils.isEmpty(list)) mAdapter.addData(list);
@@ -106,6 +114,8 @@ public class AfterSalesListActivity extends BaseLoadActivity implements IAfterSa
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         AfterSalesBean item = mAdapter.getItem(position);
         if (item == null) return;
-        AfterSalesDetailActivity.start(this, item.getId());
+        if (view.getId() == R.id.asa_reapply)
+            AfterSalesApplyActivity.start(AfterSalesApplyParam.afterSalesFromAfterSales(item, item.getRefundBillType()));
+        else AfterSalesDetailActivity.start(this, item.getId());
     }
 }

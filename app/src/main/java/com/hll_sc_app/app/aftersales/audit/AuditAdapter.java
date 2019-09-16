@@ -48,8 +48,7 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
         // 绑定点击事件
-        helper.addOnClickListener(R.id.asa_thumbnail_wrapper)
-                .addOnClickListener(R.id.asa_action_bar)
+        helper.addOnClickListener(R.id.asa_action_bar)
                 .addOnClickListener(R.id.asa_check);
         return helper;
     }
