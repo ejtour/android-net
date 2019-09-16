@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -39,6 +40,8 @@ public class TopSingleSelectWindow<T> extends BasePopupWindow {
     private WrapperName<T> mWrapperName;
     private SelectConfirmListener<T> mListener;
 
+    private SimpleDecoration mItemDecoration;
+
     public TopSingleSelectWindow(Activity context, WrapperName<T> wrapperName, boolean showCancel) {
         super(context);
         init(context, wrapperName, showCancel);
@@ -60,8 +63,9 @@ public class TopSingleSelectWindow<T> extends BasePopupWindow {
     }
 
     private void initView() {
-        mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(mActivity,
-                R.color.base_color_divider), UIUtils.dip2px(1)));
+        mItemDecoration = new SimpleDecoration(ContextCompat.getColor(mActivity,
+                R.color.base_color_divider), UIUtils.dip2px(1));
+        mRecyclerView.addItemDecoration(mItemDecoration);
         mAdapter = new ListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             T t = mAdapter.getItem(position);
@@ -104,7 +108,21 @@ public class TopSingleSelectWindow<T> extends BasePopupWindow {
     }
 
     public void setSeletct(int index) {
-        mAdapter.select(mAdapter.getItem(index));
+        if (index > -1 && index < mAdapter.getData().size()) {
+            mAdapter.select(mAdapter.getItem(index));
+        } else {
+            mAdapter.select(null);
+        }
+    }
+
+    public void setAdapterGravity(int gravity) {
+        if (mAdapter != null) {
+            mAdapter.setGravity(gravity);
+        }
+    }
+
+    public void removeAdapterDecoration() {
+        mRecyclerView.removeItemDecoration(mItemDecoration);
     }
 
     public interface WrapperName<T> {
@@ -128,9 +146,15 @@ public class TopSingleSelectWindow<T> extends BasePopupWindow {
 
     private class ListAdapter extends BaseQuickAdapter<T, BaseViewHolder> {
         private T mSelect;
+        private int textGravity = Gravity.CENTER;
 
         ListAdapter() {
             super(R.layout.item_window_house);
+        }
+
+        public void setGravity(int gravity) {
+            textGravity = gravity;
+            notifyDataSetChanged();
         }
 
         public void select(T t) {
@@ -143,6 +167,7 @@ public class TopSingleSelectWindow<T> extends BasePopupWindow {
             textView.setText(mWrapperName.getName(item));
             helper.setVisible(R.id.img_select, mSelect == item);
             textView.setSelected(mSelect == item);
+            textView.setGravity(textGravity);
         }
     }
 }
