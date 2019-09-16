@@ -15,6 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.staffmanage.detail.depart.DepartListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -115,7 +116,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 mTxtRoles.setText(String.format(Locale.getDefault(), "已选择%d个岗位", rolesBeans.size()));
             }
         }
-        mTxtDepart.setText("已选" + bean.getDeptIDs().split(",").length + "个部门");
+        mTxtDepart.setText("已选" + (!TextUtils.isEmpty(bean.getDeptIDs()) ? bean.getDeptIDs().split(",").length : 0) + "个部门");
     }
 
     private boolean isAdd() {
@@ -124,11 +125,8 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
 
     @Subscribe(sticky = true)
     public void onEvent(StaffDepartListEvent event) {
-        if (!CommonUtils.isEmpty(event.getDepartIds())) {
             mEmployeeBean.setDeptIDs(TextUtils.join(",", event.getDepartIds()));
             mTxtDepart.setText("已选" + event.getDepartIds().size() + "个部门");
-        }
-
     }
 
     @Override
@@ -159,7 +157,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 RouterUtil.goToActivity(RouterConfig.STAFF_ROLE_SELECT, mTxtRoles.getTag());
                 break;
             case R.id.ll_depart:
-                RouterUtil.goToActivity(RouterConfig.ACTIVITY_SELECT_DEPARTMENT_LIST);
+                DepartListActivity.start(mEmployeeBean.getDeptIDs());
                 break;
             default:
                 break;

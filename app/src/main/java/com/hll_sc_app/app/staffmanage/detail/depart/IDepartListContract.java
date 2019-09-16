@@ -6,7 +6,7 @@ import com.hll_sc_app.bean.staff.DepartmentListResp;
 
 public interface IDepartListContract {
     interface IView extends ILoadView {
-        void querySuccess(DepartmentListResp resp);
+        void querySuccess(DepartmentListResp resp,boolean isMore);
 
         String getDepartName();
 

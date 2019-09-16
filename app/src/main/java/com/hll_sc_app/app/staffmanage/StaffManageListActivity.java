@@ -254,7 +254,9 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
             helper.setText(R.id.txt_employeeName, item.getEmployeeName())
                     .setText(R.id.txt_loginPhone, PhoneUtil.formatPhoneNum(item.getLoginPhone()))
                     .setText(R.id.txt_roles, "拥有职务" + (CommonUtils.isEmpty(item.getRoles()) ? "0" :
-                            item.getRoles().size()) + "个");
+                            item.getRoles().size()) + "个")
+                    .setText(R.id.txt_departs, "归属部门" + (TextUtils.isEmpty(item.getDeptIDs()) ? 0 : item.getDeptIDs().split(",").length) + "个");
+
         }
     }
 }

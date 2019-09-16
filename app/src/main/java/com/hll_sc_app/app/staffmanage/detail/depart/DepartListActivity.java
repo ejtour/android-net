@@ -2,6 +2,7 @@ package com.hll_sc_app.app.staffmanage.detail.depart;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,13 +29,19 @@ import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.StaffDepartListEvent;
 import com.hll_sc_app.bean.staff.DepartmentListResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,19 +62,26 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
     TextView mTxtAdd;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mrefreshLayout;
+
     @Autowired(name = "ids")
     ArrayList<String> ids;
 
     private Unbinder unbinder;
     private InputDialog mAddDiolog;
-    private Set<String> mSelectIds;
+    private Set<String> mSelectIds = new HashSet<>();
     private DepartAdapter mAdpater;
     private IDepartListContract.IPresent mPresent;
 
-    public static void start(ArrayList<String> ids) {
+    public static void start(String ids) {
+        ArrayList<String> idList = new ArrayList<>();
+        if (!TextUtils.isEmpty(ids)) {
+            idList.addAll(Arrays.asList(ids.split(",")));
+        }
         ARouter.getInstance()
                 .build(RouterConfig.ACTIVITY_SELECT_DEPARTMENT_LIST)
-                .withStringArrayList("ids", ids)
+                .withStringArrayList("ids", idList)
                 .setProvider(new LoginInterceptor())
                 .navigation();
     }
@@ -93,7 +107,9 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
     }
 
     private void initView() {
-        mSelectIds = new HashSet<>(ids);
+        if (ids != null) {
+            mSelectIds.addAll(ids);
+        }
         SpannableString string = new SpannableString("同一位员工支持多选部门噢；点击这里这里可以新建部门");
         string.setSpan(new ForegroundColorSpan(Color.parseColor("#5695D2")),
                 string.length() - 4, string.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -126,6 +142,18 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
         mTitle.setRightBtnClick(v -> {
             EventBus.getDefault().post(new StaffDepartListEvent(new ArrayList<>(mSelectIds)));
             finish();
+        });
+
+        mrefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresent.getMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresent.refresh();
+            }
         });
     }
 
@@ -177,7 +205,17 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
     }
 
     @Override
-    public void querySuccess(DepartmentListResp resp) {
+    public void querySuccess(DepartmentListResp resp, boolean isMore) {
+        if (isMore && !CommonUtils.isEmpty(resp.getList())) {
+            mAdpater.addData(resp.getList());
+        } else if (!isMore) {
+            mAdpater.setNewData(resp.getList());
+            mAdpater.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("您还没有配置过部门哦").setTips("点击新建部门进行添加").create());
+        }
+
+        if (!CommonUtils.isEmpty(resp.getList())) {
+            mrefreshLayout.setEnableLoadMore(resp.getList().size() == mPresent.getPageSize());
+        }
 
     }
 
@@ -190,6 +228,12 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
     public void addSuccess() {
         showToast("新增部门成功");
         mPresent.refresh();
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mrefreshLayout.closeHeaderOrFooter();
     }
 
     private class DepartAdapter extends BaseQuickAdapter<DepartmentListResp.DepartmentLisBean, BaseViewHolder> {

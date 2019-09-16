@@ -54,7 +54,7 @@ public class DepartListPresent implements IDepartListContract.IPresent {
                 .subscribe(new BaseCallback<DepartmentListResp>() {
                     @Override
                     public void onSuccess(DepartmentListResp resp) {
-                        mView.querySuccess(resp);
+                        mView.querySuccess(resp, pageNumTemp > 1);
                         pageNum = pageNumTemp;
                     }
 
