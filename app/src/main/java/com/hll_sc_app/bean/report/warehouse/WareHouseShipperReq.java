@@ -2,10 +2,19 @@ package com.hll_sc_app.bean.report.warehouse;
 
 public class WareHouseShipperReq {
 
-    private String     groupID;
-    private Integer    actionType;
-    private String     name;
-    private Integer    status;
+    private String groupID;
+    private int actionType;
+    private String name;
+    private Integer status;
+    private int isSizeLimit;
+
+    public int getIsSizeLimit() {
+        return isSizeLimit;
+    }
+
+    public void setIsSizeLimit(int isSizeLimit) {
+        this.isSizeLimit = isSizeLimit;
+    }
 
     public String getGroupID() {
         return groupID;
@@ -15,11 +24,11 @@ public class WareHouseShipperReq {
         this.groupID = groupID;
     }
 
-    public Integer getActionType() {
+    public int getActionType() {
         return actionType;
     }
 
-    public void setActionType(Integer actionType) {
+    public void setActionType(int actionType) {
         this.actionType = actionType;
     }
 

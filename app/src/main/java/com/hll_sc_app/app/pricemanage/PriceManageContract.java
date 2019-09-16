@@ -2,6 +2,7 @@ package com.hll_sc_app.app.pricemanage;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
@@ -63,9 +64,14 @@ public interface PriceManageContract {
 
         /**
          * 获取过滤商品属性：自营代仓
+         *
          * @return
          */
         int getIsWareHourse();
+
+        String getOwnerID();
+
+        void queryOwnersSuccess(List<WareHouseShipperBean> wareHouseShipperBeans);
     }
 
     interface IPriceManagePresenter extends IPresenter<IPriceManageView> {
@@ -109,8 +115,11 @@ public interface PriceManageContract {
 
         /**
          * 导出邮箱
+         *
          * @param email
          */
         void export(String email);
+
+        void queryOwners();
     }
 }
