@@ -44,6 +44,16 @@ public class BillBean implements Parcelable {
     private String paymentSettleDay;
     private boolean isSelected;
     private List<BillDetailsBean> records;
+    private int payee;
+
+    public int getPayee() {
+        return payee;
+    }
+
+    public void setPayee(int payee) {
+        this.payee = payee;
+    }
+
 
     public String getActionTime() {
         return actionTime;
@@ -301,6 +311,9 @@ public class BillBean implements Parcelable {
         isSelected = selected;
     }
 
+    public BillBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -340,9 +353,7 @@ public class BillBean implements Parcelable {
         dest.writeString(this.paymentSettleDay);
         dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
         dest.writeList(this.records);
-    }
-
-    public BillBean() {
+        dest.writeInt(this.payee);
     }
 
     protected BillBean(Parcel in) {
@@ -379,9 +390,10 @@ public class BillBean implements Parcelable {
         this.isSelected = in.readByte() != 0;
         this.records = new ArrayList<BillDetailsBean>();
         in.readList(this.records, BillDetailsBean.class.getClassLoader());
+        this.payee = in.readInt();
     }
 
-    public static final Parcelable.Creator<BillBean> CREATOR = new Parcelable.Creator<BillBean>() {
+    public static final Creator<BillBean> CREATOR = new Creator<BillBean>() {
         @Override
         public BillBean createFromParcel(Parcel source) {
             return new BillBean(source);

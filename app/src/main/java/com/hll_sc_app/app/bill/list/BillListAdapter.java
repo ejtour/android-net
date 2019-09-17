@@ -32,6 +32,12 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
     }
 
     @Override
+    public void setNewData(@Nullable List<BillBean> data) {
+        preProcess(data);
+        super.setNewData(data);
+    }
+
+    @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
         helper.addOnClickListener(R.id.ibl_confirm)
@@ -69,13 +75,9 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
                 .setGone(R.id.ibl_check_box, mIsBatch)
                 .setGone(R.id.ibl_view_detail, !mIsBatch)
                 .setChecked(R.id.ibl_check_box, item.isSelected())
+                .setGone(R.id.txt_bill_type, !mIsBatch && item.getBillStatementFlag() == 1)
+                .setText(R.id.txt_bill_type, String.format("%s/%s", "代仓账单", item.getPayee() == 0 ? "代仓代收款" : "货主收款"))
                 .getView(R.id.ibl_icon)).setImageURL(item.getGroupLogoUrl());
-    }
-
-    @Override
-    public void setNewData(@Nullable List<BillBean> data) {
-        preProcess(data);
-        super.setNewData(data);
     }
 
     private void preProcess(@Nullable List<BillBean> data) {
@@ -96,11 +98,11 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
         notifyDataSetChanged();
     }
 
-    private int getItemPosition(BillBean item) {
-        return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
-    }
-
     void removeData(BillBean data) {
         remove(getItemPosition(data));
+    }
+
+    private int getItemPosition(BillBean item) {
+        return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
     }
 }

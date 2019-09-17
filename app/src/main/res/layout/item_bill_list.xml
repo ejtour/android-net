@@ -198,6 +198,17 @@
         app:layout_constraintTop_toBottomOf="@id/ibl_data_bg" />
 
     <TextView
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/ibl_check_box"
+        app:layout_constraintBaseline_toBaselineOf="@id/ibl_check_box"
+        android:id="@+id/txt_bill_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/base_text_10"
+        tools:text="代仓账单/代仓代收款"/>
+
+    <TextView
         android:id="@+id/ibl_confirm"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_height="25dp"

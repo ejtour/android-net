@@ -8,17 +8,6 @@
     tools:paddingBottom="@dimen/dp_10"
     tools:parentTag="android.support.constraint.ConstraintLayout">
 
-    <com.hll_sc_app.base.utils.glide.GlideImageView
-        android:id="@+id/bdh_icon"
-        android:layout_width="@dimen/dp_40"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/dp_10"
-        app:base_RoundingRadius="2"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_shop_placeholder" />
-
     <TextView
         android:id="@+id/bdh_shop_name"
         android:layout_width="wrap_content"
@@ -99,6 +88,26 @@
         app:layout_constraintEnd_toEndOf="@id/bdh_status"
         tools:text="结算日：2019/02/04" />
 
+    <TextView
+        android:id="@+id/bdh_bill_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintStart_toStartOf="@id/bdh_shop_name"
+        app:layout_constraintTop_toBottomOf="@id/bdh_bill_cycle"
+        tools:text="账单类型：代仓对账单" />
+
+    <TextView
+        android:id="@+id/bdh_bill_receive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintStart_toStartOf="@id/bdh_bill_date"
+        app:layout_constraintTop_toBottomOf="@id/bdh_settlement_date"
+        tools:text="收款方：货主收款" />
+
     <View
         android:id="@+id/bdh_data_bg"
         android:layout_width="0dp"
@@ -107,7 +116,7 @@
         android:background="@drawable/bg_express_info_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bdh_bill_cycle" />
+        app:layout_constraintTop_toBottomOf="@id/bdh_bill_type" />
 
     <View
         android:id="@+id/bdh_line1"
@@ -200,4 +209,17 @@
         app:layout_constraintEnd_toEndOf="@id/bdh_refund"
         app:layout_constraintStart_toStartOf="@id/bdh_refund"
         app:layout_constraintTop_toBottomOf="@id/bdh_refund" />
+
+
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/bdh_icon"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp_10"
+        app:base_RoundingRadius="2"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_shop_placeholder" />
 </merge>
