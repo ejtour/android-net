@@ -20,6 +20,7 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.filter.OrderParam;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
@@ -29,6 +30,7 @@ import com.hll_sc_app.bean.order.deliver.ModifyDeliverInfoReq;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
+import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
@@ -660,6 +662,54 @@ public class Order {
                         .put("subBillID",subBillID)
                         .put("pageSize","20")
                         .put("flag","2")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询商品分类列表
+     */
+    public static void queryGoodsCategory(SimpleObserver<GoodsCategoryResp> observer) {
+        OrderService.INSTANCE
+                .queryGoodsCategory(BaseMapReq.newBuilder()
+                        .put("getResource", "1")
+                        .put("groupID", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询商品列表
+     *
+     * @param pageNum         页码
+     * @param subID           二级分类id
+     * @param threeID         三级分类id
+     * @param searchWords     搜索词
+     * @param purchaserID     采购商集团id
+     * @param purchaserShopID 采购商门店id
+     */
+    public static void queryGoodsList(int pageNum,
+                                      String subID,
+                                      String threeID,
+                                      String searchWords,
+                                      String purchaserID,
+                                      String purchaserShopID,
+                                      SimpleObserver<List<GoodsBean>> observer) {
+        OrderService.INSTANCE
+                .queryGoodsList(BaseMapReq.newBuilder()
+                        .put("actionType", "shopInnerSelect")
+                        .put("productName", searchWords)
+                        .put("shopProductCategorySubID", subID)
+                        .put("shopProductCategoryThreeID", threeID)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("purchaserID", purchaserID)
+                        .put("purchaserShopID", purchaserShopID)
+                        .put("supplierID", UserConfig.getGroupID())
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
