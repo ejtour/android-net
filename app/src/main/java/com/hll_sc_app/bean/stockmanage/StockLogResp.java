@@ -48,7 +48,16 @@ public class StockLogResp {
         private int businessType;
         private String stockChange;
         private String occupiedStockChange;
+        private String cargoOwnerName;
         private int verifyType;
+
+        public String getCargoOwnerName() {
+            return cargoOwnerName;
+        }
+
+        public void setCargoOwnerName(String cargoOwnerName) {
+            this.cargoOwnerName = cargoOwnerName;
+        }
 
         public String getSpecID() {
             return specID;

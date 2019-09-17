@@ -158,13 +158,16 @@ public class CustomerSendManageActivity extends BaseLoadActivity implements ICus
         }
     }
 
-    @OnClick({R.id.txt_house_name})
+    @OnClick({R.id.txt_house_name,R.id.img_close})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_house_name:
                 if (mSelectHouseWindow != null) {
                     mSelectHouseWindow.showAsDropDown(mTxtHouseName);
                 }
+                break;
+            case R.id.img_close:
+                finish();
                 break;
             default:
                 break;

@@ -50,6 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_DATE_TIME;
 import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_LOCAL_DATE;
 
@@ -79,6 +80,8 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
     ImageView mImageAdd;
     @BindView(R.id.ll_filter)
     LinearLayout mLlFilter;
+    @BindView(R.id.ll_empty)
+    LinearLayout mEmptyContainer;
     private SingleSelectionDialog mHourseSelectDialog;
     private SingleSelectionDialog mBusinessSelectDialog;
     private ContextOptionsWindow mMenuWindow;
@@ -86,6 +89,7 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
     private Unbinder unbinder;
     private LogAdpater mAdapter;
     private IStockLogQueryContract.IPresent mPresent;
+    private EmptyView emptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,7 +152,7 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
         }
     }
 
-    @OnClick({R.id.ll_stock_name, R.id.ll_time, R.id.ll_type, R.id.txt_add,R.id.img_close})
+    @OnClick({R.id.ll_stock_name, R.id.ll_time, R.id.ll_type, R.id.txt_add, R.id.img_close})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_stock_name:
@@ -230,7 +234,18 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
         if (isMore && resp.getList().size() > 0) {
             mAdapter.addData(resp.getList());
         } else if (!isMore) {
-            mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("当前条件下没有数据").create());
+            if (emptyView == null) {
+                emptyView = EmptyView.newBuilder(this).setTipsTitle("当前条件下没有数据").create();
+                mEmptyContainer.addView(emptyView);
+            }
+            if (resp.getList().size() == 0) {
+                mEmptyContainer.setVisibility(View.VISIBLE);
+                mRefreshLayout.setVisibility(View.GONE);
+
+            } else {
+                mEmptyContainer.setVisibility(View.GONE);
+                mRefreshLayout.setVisibility(View.VISIBLE);
+            }
             mAdapter.setNewData(resp.getList());
         }
 
@@ -296,6 +311,7 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
                     .setText(R.id.txt_number, CommonUtils.formatNumber(item.getStockChange()))
                     .setText(R.id.txt_time, item.getCreateTime())
                     .setText(R.id.txt_no, item.getBusinessNo())
+                    .setText(R.id.txt_cargoOwnerName, item.getCargoOwnerName())
                     .setText(R.id.txt_source, getSource(item.getSource()));
 
             helper.getView(R.id.ll_item).setBackgroundColor(Color.parseColor(helper.getLayoutPosition() % 2 == 0 ? "#ffffff" : "#FAFAFA"));

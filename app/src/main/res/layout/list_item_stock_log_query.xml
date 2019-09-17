@@ -88,4 +88,14 @@
         android:text="来源"
         android:textColor="@color/base_text222"
         android:textSize="@dimen/base_text_10" />
+
+    <TextView
+        android:id="@+id/txt_cargoOwnerName"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="货主"
+        android:textColor="@color/base_text222"
+        android:textSize="@dimen/base_text_10" />
 </LinearLayout>
