@@ -148,7 +148,7 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
         }
     }
 
-    @OnClick({R.id.ll_stock_name, R.id.ll_time, R.id.ll_type, R.id.txt_add})
+    @OnClick({R.id.ll_stock_name, R.id.ll_time, R.id.ll_type, R.id.txt_add,R.id.img_close})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_stock_name:
@@ -185,6 +185,9 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
                     });
                 }
                 mMenuWindow.showAsDropDownFix(mImageAdd, Gravity.END);
+                break;
+            case R.id.img_close:
+                finish();
                 break;
             default:
                 break;
