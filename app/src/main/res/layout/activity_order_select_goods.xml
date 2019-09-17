@@ -26,20 +26,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/osg_title_bar" />
 
-    <com.flyco.tablayout.CommonTabLayout
-        android:id="@+id/osg_tab_layout"
+    <HorizontalScrollView
+        android:id="@+id/osg_scroll_view"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:background="@drawable/bg_divider_bottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="45dp"
+        android:background="@drawable/bg_divider_bottom"
         app:layout_constraintTop_toBottomOf="@id/osg_search_view"
-        app:tl_indicator_corner_radius="2dp"
-        app:tl_indicator_height="2dp"
-        app:tl_indicator_width="65dp"
-        app:tl_textSelectColor="@color/colorPrimary"
-        app:tl_textUnselectColor="@color/color_222222"
-        app:tl_textsize="@dimen/text_middle_size" />
+        android:scrollbars="none">
+
+        <com.flyco.tablayout.CommonTabLayout
+            android:id="@+id/osg_tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:tl_indicator_bounce_enable="false"
+            app:tl_indicator_color="@color/colorPrimary"
+            app:tl_indicator_corner_radius="2dp"
+            app:tl_indicator_height="2dp"
+            app:tl_indicator_width="65dp"
+            app:tl_tab_space_equal="false"
+            app:tl_tab_width="75dp"
+            app:tl_textSelectColor="@color/colorPrimary"
+            app:tl_textUnselectColor="@color/color_222222"
+            app:tl_textsize="@dimen/text_middle_size" />
+    </HorizontalScrollView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/osg_left_list"
@@ -49,7 +60,7 @@
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/osg_tab_layout" />
+        app:layout_constraintTop_toBottomOf="@id/osg_scroll_view" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/osg_refresh_layout"
