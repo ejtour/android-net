@@ -9,6 +9,7 @@ import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
@@ -17,6 +18,7 @@ import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.bean.order.deliver.ModifyDeliverInfoReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
+import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
@@ -158,4 +160,12 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:103101")
     Observable<BaseResp<SingleListResp<AfterSalesBean>>> queryAssociatedAfterSalesOrder(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100018")
+    Observable<BaseResp<GoodsCategoryResp>> queryGoodsCategory(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100201")
+    Observable<BaseResp<List<GoodsBean>>> queryGoodsList(@Body BaseMapReq req);
 }
