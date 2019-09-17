@@ -68,6 +68,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_DZ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MANZHE;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MJ;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MZ;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZJ;
@@ -395,6 +396,13 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             mRuleAdd.setVisibility(View.GONE);
             mGroupLadder.setVisibility(View.GONE);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT_DZ);
+        }else if(TextUtils.equals(ruleType, RULE_MANZHE.getKey())){
+            mRuleDZLayout.setVisibility(View.GONE);
+            mListRule.setVisibility(View.VISIBLE);
+            mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
+            mGroupLadder.setVisibility(View.VISIBLE);
+            initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
+            mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
         }
     }
 
@@ -670,11 +678,16 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     private List<NameValue> getRules() {
         List<NameValue> statusBeans = new ArrayList<>();
-        statusBeans.add(new NameValue(RULE_ZJ.getValue(), RULE_ZJ.getKey()));
-//        statusBeans.add(new NameValue(RULE_MZ.getValue(), RULE_MZ.getKey()));
-        statusBeans.add(new NameValue(RULE_ZQ.getValue(), RULE_ZQ.getKey()));
-        statusBeans.add(new NameValue(RULE_MJ.getValue(), RULE_MJ.getKey()));
-        statusBeans.add(new NameValue(RULE_DZ.getValue(), RULE_DZ.getKey()));
+        if (mDiscountType != 1) {//订单活动没有直降
+            statusBeans.add(new NameValue(RULE_ZJ.getValue(), RULE_ZJ.getKey()));
+            statusBeans.add(new NameValue(RULE_ZQ.getValue(), RULE_ZQ.getKey()));
+            statusBeans.add(new NameValue(RULE_MJ.getValue(), RULE_MJ.getKey()));
+            statusBeans.add(new NameValue(RULE_DZ.getValue(), RULE_DZ.getKey()));
+        } else if (mDiscountType == 1) {
+            statusBeans.add(new NameValue(RULE_ZQ.getValue(), RULE_ZQ.getKey()));
+            statusBeans.add(new NameValue(RULE_MJ.getValue(), RULE_MJ.getKey()));
+            statusBeans.add(new NameValue(RULE_MANZHE.getValue(), RULE_MANZHE.getKey()));
+        }
         return statusBeans;
     }
 
@@ -789,7 +802,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         } else {
             BaseQuickAdapter<RuleListBean, BaseViewHolder> currentAdapter;
             if (TextUtils.equals(getRuleType() + "", RULE_ZQ.getKey())) {
-                currentAdapter = mDiscountType == 2 ? mMarketingRuleAdapter : mCouponRuleAdapter;
+                currentAdapter = mCouponRuleAdapter;
             } else {
                 currentAdapter = mMarketingRuleAdapter;
             }
