@@ -32,6 +32,7 @@ public class InputDialog extends BaseDialog {
     public void initView() {
         mTitle.setText(mConfig.getTitle());
         mEdtName.setHint(mConfig.getHint());
+        mEdtName.setText(mConfig.getValue());
         if (mConfig.getMaxInputLength() > 0) {
             mEdtName.setFilters(new InputFilter[]{
                     new InputFilter.LengthFilter(mConfig.getMaxInputLength())
@@ -68,7 +69,7 @@ public class InputDialog extends BaseDialog {
             attributes.height = UIUtils.dip2px(230);
             attributes.gravity = Gravity.CENTER;
             window.setAttributes(attributes);
-            window.setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid );
+            window.setBackgroundDrawableResource(R.drawable.base_bg_white_radius_5_solid);
         }
         setCancelable(false);
     }
@@ -76,6 +77,10 @@ public class InputDialog extends BaseDialog {
 
     public interface InputDialogConfig {
         String getTitle();
+
+        default String getValue() {
+            return "";
+        }
 
         default String getHint() {
             return null;

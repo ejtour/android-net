@@ -6,11 +6,15 @@ import com.hll_sc_app.bean.staff.DepartmentListResp;
 
 public interface IDepartListContract {
     interface IView extends ILoadView {
-        void querySuccess(DepartmentListResp resp,boolean isMore);
+        void querySuccess(DepartmentListResp resp, boolean isMore);
 
         String getDepartName();
 
         void addSuccess();
+
+        void removeSuccess(String id);
+
+        void modifySuccess();
     }
 
     interface IPresent extends IPresenter<IView> {
@@ -23,6 +27,10 @@ public interface IDepartListContract {
         int getPageSize();
 
         void addDepartment(String name);
+
+        void removeDepartment(String id);
+
+        void modifyDepartment(String id, String deptName);
 
     }
 }

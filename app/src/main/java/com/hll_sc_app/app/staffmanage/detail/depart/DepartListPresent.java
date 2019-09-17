@@ -100,6 +100,61 @@ public class DepartListPresent implements IDepartListContract.IPresent {
     }
 
     @Override
+    public void removeDepartment(String id) {
+        BaseMapReq baseMapReq = BaseMapReq.newBuilder()
+                .put("id", id)
+                .create();
+        StaffManageService.INSTANCE
+                .delDepartment(baseMapReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    mView.showLoading();
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.removeSuccess(id);
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+    }
+
+    @Override
+    public void modifyDepartment(String id, String deptName) {
+        BaseMapReq baseMapReq = BaseMapReq.newBuilder()
+                .put("deptName", deptName)
+                .put("id", id)
+                .create();
+        StaffManageService.INSTANCE
+                .mdfDepartment(baseMapReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    mView.showLoading();
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.modifySuccess();
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+    }
+
+    @Override
     public void getMore() {
         pageNumTemp++;
         queryDepartments(false);

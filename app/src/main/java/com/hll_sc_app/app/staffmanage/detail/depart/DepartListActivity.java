@@ -1,18 +1,17 @@
 package com.hll_sc_app.app.staffmanage.detail.depart;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -60,16 +59,24 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
     TitleBar mTitle;
     @BindView(R.id.txt_add)
     TextView mTxtAdd;
+    @BindView(R.id.txt_edt)
+    TextView mTxtEdt;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mrefreshLayout;
-
+    @BindView(R.id.ll_btn)
+    LinearLayout mLlButton;
+    @BindView(R.id.txt_or)
+    TextView mTxtOr;
+    @BindView(R.id.txt_alert)
+    TextView mTxtAlert;
     @Autowired(name = "ids")
     ArrayList<String> ids;
 
     private Unbinder unbinder;
     private InputDialog mAddDiolog;
+    private InputDialog mEdtDiolog;
     private Set<String> mSelectIds = new HashSet<>();
     private DepartAdapter mAdpater;
     private IDepartListContract.IPresent mPresent;
@@ -110,14 +117,15 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
         if (ids != null) {
             mSelectIds.addAll(ids);
         }
-        SpannableString string = new SpannableString("同一位员工支持多选部门噢；点击这里这里可以新建部门");
-        string.setSpan(new ForegroundColorSpan(Color.parseColor("#5695D2")),
-                string.length() - 4, string.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        string.setSpan(new UnderlineSpan(), string.length() - 4, string.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTxtAdd.setText(string);
+        mTxtEdt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        mTxtAdd.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mAdpater = new DepartAdapter(null);
         mAdpater.setOnItemClickListener((adapter, view, position) -> {
+            if (mAdpater.isEdt()) {
+                return;
+            }
             DepartmentListResp.DepartmentLisBean bean = mAdpater.getItem(position);
             if (mSelectIds.contains(bean.getId())) {
                 mSelectIds.remove(bean.getId());
@@ -125,6 +133,53 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
                 mSelectIds.add(bean.getId());
             }
             mAdpater.notifyDataSetChanged();
+        });
+
+        mAdpater.setOnItemChildClickListener((adapter, view, position) -> {
+            if (!mAdpater.isEdt()) {
+                return;
+            }
+            if (view.getId() == R.id.img_edt) {
+                if (mEdtDiolog == null) {
+                    mEdtDiolog = new InputDialog(this, new InputDialog.InputDialogConfig() {
+                        @Override
+                        public String getTitle() {
+                            return "编辑部门";
+                        }
+
+                        @Override
+                        public String getValue() {
+                            return mAdpater.getItem(position).getDeptName();
+                        }
+
+                        @Override
+                        public String getHint() {
+                            return "部门名称要在10个字以内";
+                        }
+
+                        @Override
+                        public int getMaxInputLength() {
+                            return 10;
+                        }
+
+                        @Override
+                        public void click(BaseDialog dialog, String content, int index) {
+                            dialog.dismiss();
+                            if (index == 1) {
+                                mPresent.modifyDepartment(mAdpater.getItem(position).getId(), content);
+                            }
+                        }
+
+                        @Override
+                        public String getRightButtonText() {
+                            return "确认修改";
+                        }
+                    });
+                }
+                mEdtDiolog.show();
+            } else if (view.getId() == R.id.img_remove) {
+                mPresent.removeDepartment(mAdpater.getItem(position).getId());
+            }
         });
         mRecyclerView.setAdapter(mAdpater);
         mSearch.setContentClickListener(new SearchView.ContentClickListener() {
@@ -162,7 +217,7 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
         mSearch.showSearchContent(!TextUtils.isEmpty(event.getContent()), event.getContent());
     }
 
-    @OnClick({R.id.txt_add})
+    @OnClick({R.id.txt_add, R.id.txt_edt, R.id.txt_finish})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_add:
@@ -199,6 +254,22 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
                 }
                 mAddDiolog.show();
                 break;
+            case R.id.txt_edt:
+                mTxtAlert.setText("您正在编辑部门信息…");
+                mTxtOr.setVisibility(View.GONE);
+                mTxtAdd.setVisibility(View.GONE);
+                mTxtEdt.setVisibility(View.GONE);
+                mLlButton.setVisibility(View.VISIBLE);
+                mAdpater.isEdtModal(true);
+                break;
+            case R.id.txt_finish:
+                mTxtAlert.setText("同一位员工支持多选部门；点击这里可以");
+                mTxtOr.setVisibility(View.VISIBLE);
+                mTxtAdd.setVisibility(View.VISIBLE);
+                mTxtEdt.setVisibility(View.VISIBLE);
+                mLlButton.setVisibility(View.GONE);
+                mAdpater.isEdtModal(false);
+                break;
             default:
                 break;
         }
@@ -231,18 +302,44 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
     }
 
     @Override
+    public void removeSuccess(String id) {
+        showToast("删除成功");
+        mSelectIds.remove(id);
+        mPresent.refresh();
+    }
+
+    @Override
+    public void modifySuccess() {
+        showToast("编辑成功");
+        mPresent.refresh();
+    }
+
+    @Override
     public void hideLoading() {
         super.hideLoading();
         mrefreshLayout.closeHeaderOrFooter();
     }
 
     private class DepartAdapter extends BaseQuickAdapter<DepartmentListResp.DepartmentLisBean, BaseViewHolder> {
+        private boolean isEdt = false;
+
         public DepartAdapter(@Nullable List<DepartmentListResp.DepartmentLisBean> data) {
             super(R.layout.list_item_staff_department, data);
         }
 
         @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
+            holder.addOnClickListener(R.id.img_edt);
+            holder.addOnClickListener(R.id.img_remove);
+            return holder;
+        }
+
+        @Override
         protected void convert(BaseViewHolder helper, DepartmentListResp.DepartmentLisBean item) {
+            helper.setGone(R.id.checkbox, !isEdt)
+                    .setGone(R.id.img_edt, isEdt)
+                    .setGone(R.id.img_remove, isEdt);
             helper.setText(R.id.txt_name, item.getDeptName());
             if (mSelectIds.contains(item.getId())) {
                 helper.setTextColor(R.id.txt_name, Color.parseColor("#222222"));
@@ -251,6 +348,15 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
                 helper.setTextColor(R.id.txt_name, Color.parseColor("#999999"));
                 ((CheckBox) helper.getView(R.id.checkbox)).setChecked(false);
             }
+        }
+
+        public void isEdtModal(boolean isEdt) {
+            this.isEdt = isEdt;
+            notifyDataSetChanged();
+        }
+
+        public boolean isEdt() {
+            return isEdt;
         }
     }
 }
