@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.order.list.CrmOrderListActivity;
+import com.hll_sc_app.app.order.place.select.SelectGoodsActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -121,7 +122,7 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
                     showShopInfoWindow(view);
                     break;
                 case R.id.cop_make_order:
-                    showToast("代客下单待添加");
+                    SelectGoodsActivity.start(mCurBean.getPurchaserID(), mCurBean.getShopID());
                     break;
             }
         });

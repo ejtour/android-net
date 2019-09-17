@@ -937,6 +937,9 @@
             android:name=".app.aftersales.apply.select.AfterSalesSelectActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".app.order.place.select.SelectGoodsActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

@@ -1026,6 +1026,9 @@ public class RouterConfig {
     /*选择员工部门*/
     public static final String ACTIVITY_SELECT_DEPARTMENT_LIST = "/activity/staff/select/department/list";
 
-
+    /**
+     * 代客下单-选择商品
+     */
+    public static final String ORDER_PLACE_SELECT_GOODS = "/activity/order/place/select/goods";
 }
 
