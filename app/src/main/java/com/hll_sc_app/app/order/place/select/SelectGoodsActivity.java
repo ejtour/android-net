@@ -73,6 +73,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     private SelectGoodsAdapter mAdapter;
     private ISelectGoodsContract.ISelectGoodsPresenter mPresenter;
     private List<GoodsCategoryBean> mCategoryList;
+    private List<PlaceOrderSpecBean> mSpecList = new ArrayList<>();
 
     public static void start(String purchaserID, String purchaserShopID) {
         SelectGoodsParam param = new SelectGoodsParam();
@@ -132,6 +133,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
             SpecsBean item = (SpecsBean) adapter.getItem(position);
             if (item == null) return;
             double step = CommonUtils.getDouble(item.getMinOrder());
+            if (step == 0) step = 1;
             switch (view.getId()) {
                 case R.id.sgs_add_btn:
                     item.setBuyQty(CommonUtils.addDouble(CommonUtils.getDouble(item.getBuyQty())
@@ -144,6 +146,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
                     break;
             }
             adapter.notifyDataSetChanged();
+            updateNum(item);
         });
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
@@ -161,6 +164,23 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
                 mPresenter.loadList();
             }
         });
+    }
+
+    private void updateNum(SpecsBean item) {
+        PlaceOrderSpecBean select = null;
+        for (PlaceOrderSpecBean bean : mSpecList) {
+            if (bean.getProductSpecID().equals(item.getProductSpecID())) {
+                select = bean;
+                break;
+            }
+        }
+        if (select == null) {
+            select = new PlaceOrderSpecBean();
+            select.setProductID(item.getProductID());
+            select.setProductSpecID(item.getProductSpecID());
+            mSpecList.add(select);
+        }
+        select.setProductNum(item.getBuyQty());
     }
 
     @Override
@@ -199,7 +219,23 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
             mEmptyView.reset();
             mEmptyView.setTips("暂无商品列表");
         }
+        preProcessData(list);
         mAdapter.setNewData(list);
+    }
+
+    private void preProcessData(List<GoodsBean> list) {
+        if (CommonUtils.isEmpty(list) || CommonUtils.isEmpty(mSpecList)) return;
+        for (GoodsBean bean : list) {
+            for (PlaceOrderSpecBean specBean : mSpecList) {
+                if (specBean.getProductID().equals(bean.getProductID())) {
+                    for (SpecsBean spec : bean.getSpecs()) {
+                        if (spec.getProductSpecID().equals(specBean.getProductSpecID())) {
+                            spec.setBuyQty(specBean.getProductNum());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
