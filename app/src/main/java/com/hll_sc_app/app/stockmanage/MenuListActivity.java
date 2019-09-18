@@ -53,7 +53,7 @@ public class MenuListActivity extends AppCompatActivity {
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_CUSTOMER_SEND);
                 break;
             case R.id.ll_purchaser_query:
-
+                RouterUtil.goToActivity(RouterConfig.STOCK_PURCHASER_ORDER);
                 break;
             default:
                 break;

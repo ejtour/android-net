@@ -17,7 +17,6 @@ import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
-import com.hll_sc_app.rest.ReportRest;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -81,7 +80,7 @@ public class DeliveryLackGatherPresenter implements DeliveryLackGatherContract.I
         params.setGroupID(UserConfig.getGroupID());
         params.setPageNum(mTempPageNum);
         params.setPageSize(20);
-        ReportRest.queryDeliveryLackGather(params, new SimpleObserver<DeliveryLackGatherResp>(mView, showLoading) {
+        Report.queryDeliveryLackGather(params, new SimpleObserver<DeliveryLackGatherResp>(mView, showLoading) {
             @Override
             public void onSuccess(DeliveryLackGatherResp deliveryLackGatherResp) {
                 mPageNum = mTempPageNum;

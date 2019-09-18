@@ -166,6 +166,11 @@
         <item name="android:paddingRight">@dimen/dp_10</item>
         <item name="android:paddingLeft">@dimen/dp_10</item>
     </style>
+    <style name="BasePopupAnimation" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/base_pop_up</item>
+        <item name="android:windowExitAnimation">@anim/base_pop_down</item>
+    </style>
+
 
     <style name="InfoLabel">
         <item name="android:layout_width">wrap_content</item>

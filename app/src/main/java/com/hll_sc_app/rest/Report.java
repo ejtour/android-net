@@ -2,6 +2,7 @@ package com.hll_sc_app.rest;
 
 import android.text.TextUtils;
 
+import com.alibaba.sdk.android.ams.common.util.StringUtil;
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -15,6 +16,7 @@ import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
+import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
@@ -42,9 +44,20 @@ import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
+import com.hll_sc_app.bean.report.req.CustomerSaleReq;
+import com.hll_sc_app.bean.report.req.ProductDetailReq;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
+import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
+import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
+import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
+import com.hll_sc_app.bean.report.resp.product.OrderDetailTotalResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
+import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
+import com.hll_sc_app.bean.report.salesReport.SalesReportResp;
+import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
+import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
+import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
@@ -521,6 +534,149 @@ public class Report {
      */
     public static void querySearchList(SearchReq req, SimpleObserver<SearchResultResp> observer){
         ReportService.INSTANCE.querySearchList(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 销售日报
+     * @param req
+     * @param observer
+     */
+    public static void querySalesReportList(SalesReportReq req, SimpleObserver<SalesReportResp> observer){
+        ReportService.INSTANCE.querySalesReportList(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 商品统计（明细）
+     *
+     * @param req
+     * @return
+     */
+    public static void queryProductDetailList(ProductDetailReq req, SimpleObserver<OrderDetailTotalResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (null == user) {
+            return;
+        }
+        ReportService.INSTANCE
+                .queryProductDetailList(
+                        new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+
+    /**
+     * 日销售额查询
+     *
+     * @param req
+     * @return
+     */
+    public static void queryDateSaleAmount(BaseReportReqParam req, SimpleObserver<DateSaleAmountResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (null == user) {
+            return;
+        }
+        ReportService.INSTANCE
+                .queryDateSaleAmount(
+                        new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 客户销售/门店汇总查询
+     *
+     * @param req
+     * @return
+     */
+    public static void queryCustomerSales(CustomerSaleReq req, SimpleObserver<CustomerSalesResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (null == user) {
+            return;
+        }
+        ReportService.INSTANCE
+                .queryCustomerSales(
+                        new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 客户明细，门店汇总搜索
+     * @param groupType
+     * @param searchParam
+     * @param pageNo
+     * @param pageSize
+     * @param observer
+     */
+    public static void queryPurchaser(String groupType,String searchParam,Integer pageNo,Integer pageSize, SimpleObserver<List<PurchaserGroupBean>> observer){
+        UserBean user = GreenDaoUtils.getUser();
+        if(null == user){
+            return;
+        }
+        ReportService.INSTANCE.queryPurchaser(
+                BaseMapReq.newBuilder()
+                        .put("groupType",groupType)
+                        .put("searchParam", StringUtil.isEmpty(searchParam)?"":searchParam)
+                        .put("pageNo",pageNo==null?"1":pageNo+"")
+                        .put("pageSize",pageSize==null?"50":pageSize+"")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询客户签约绩效
+     *
+     * @param req
+     * @param observer
+     */
+    public static void querySalesmanSignAchievement(SalesManAchievementReq req,
+                                                    SimpleObserver<SalesManSignResp> observer) {
+        ReportService.INSTANCE
+                .querySalesManSignAchievement(
+                        new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询客户签约绩效
+     *
+     * @param req
+     * @param observer
+     */
+    public static void querySalesmanSalesAchievement(SalesManAchievementReq req,
+                                                     SimpleObserver<SalesManSalesResp> observer) {
+        ReportService.INSTANCE
+                .querySalesManSalesAchievement(
+                        new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询缺货汇总
+     *
+     * @param req
+     * @param observer
+     */
+    public static void queryDeliveryLackGather(BaseReportReqParam req,
+                                               SimpleObserver<DeliveryLackGatherResp> observer) {
+        ReportService.INSTANCE
+                .queryDeliveryLackGather(
+                        new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

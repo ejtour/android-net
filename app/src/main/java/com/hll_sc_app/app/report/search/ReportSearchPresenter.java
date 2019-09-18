@@ -3,7 +3,7 @@ package com.hll_sc_app.app.report.search;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.rest.ReportRest;
+import com.hll_sc_app.rest.Report;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class ReportSearchPresenter implements IReportSearchContract.IReportSearc
 
     @Override
     public void querySearchList(String groupType, String searchWord, Integer pageNo, Integer pageSize) {
-        ReportRest.queryPurchaser(groupType, searchWord, pageNo, pageSize, new SimpleObserver<List<PurchaserGroupBean>>(mView) {
+        Report.queryPurchaser(groupType, searchWord, pageNo, pageSize, new SimpleObserver<List<PurchaserGroupBean>>(mView) {
             @Override
             public void onSuccess(List<PurchaserGroupBean> list) {
                 mView.showSearchList(list);

@@ -147,6 +147,7 @@ public class GoodsBean implements Parcelable {
     private String occupiedStock;
     private String totalStock;
     private boolean isSelected;
+    private String discountRuleTypeName;
 
     public GoodsBean() {
     }
@@ -226,6 +227,15 @@ public class GoodsBean implements Parcelable {
         this.select = in.readByte() != 0;
         this.occupiedStock = in.readString();
         this.totalStock = in.readString();
+        this.discountRuleTypeName = in.readString();
+    }
+
+    public String getDiscountRuleTypeName() {
+        return discountRuleTypeName;
+    }
+
+    public void setDiscountRuleTypeName(String discountRuleTypeName) {
+        this.discountRuleTypeName = discountRuleTypeName;
     }
 
     public boolean isSelected() {
@@ -933,5 +943,6 @@ public class GoodsBean implements Parcelable {
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
         dest.writeString(this.occupiedStock);
         dest.writeString(this.totalStock);
+        dest.writeString(this.discountRuleTypeName);
     }
 }

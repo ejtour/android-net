@@ -869,6 +869,9 @@
             android:name=".app.crm.order.list.CrmOrderListActivity"
             android:screenOrientation="portrait" />
 
+        <!--销售crm日报-->
+        <activity android:name=".app.report.salesReport.SalesReportActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".app.order.trace.OrderTraceActivity"
             android:screenOrientation="portrait" />
@@ -907,6 +910,16 @@
             android:name=".app.stockmanage.selectproduct.ProductSelectActivity"
             android:screenOrientation="portrait" />
 
+        <!--采购单查询-->
+        <activity android:name=".app.stockmanage.purchaserorder.PurchaserOrderActivity"
+            android:screenOrientation="portrait"/>
+        <!--采购单明细查询-->
+        <activity android:name=".app.stockmanage.purchaserorder.detail.PurchaserOrderDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!--采购单搜索-->
+        <activity android:name=".app.stockmanage.purchaserorder.search.PurchaserOrderSearchActivity"
+            android:screenOrientation="portrait"/>
+
         <!--投诉管理列表首页-->
         <activity
             android:name=".app.complainmanage.ComplainManageActivity"
@@ -937,6 +950,9 @@
             android:name=".app.aftersales.apply.select.AfterSalesSelectActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".app.order.place.select.SelectGoodsActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
@@ -954,6 +970,25 @@
         <meta-data
             android:name="com.alibaba.app.appsecret"
             android:value="${ALIBABA_APP_SECRET}" />
+
+        <!--qq-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent${QQ_APPID}" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <receiver
             android:name=".receiver.NotificationMessageReceiver"

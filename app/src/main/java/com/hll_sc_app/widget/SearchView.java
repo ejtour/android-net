@@ -51,7 +51,7 @@ public class SearchView extends FrameLayout {
         mImgSearchClear = findViewById(R.id.img_searchClear);
         mImgSearchTitle = findViewById(R.id.img_search_title);
         mLlContent = findViewById(R.id.ll_content);
-        this.setOnClickListener(v -> {
+        mLlContent.setOnClickListener(v -> {
             if (mListener != null) {
                 mListener.click(getSearchContent());
             }

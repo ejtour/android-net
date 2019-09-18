@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/base_bg_white_radius_5_solid"
+    android:layout_marginTop="10dp"
+    android:paddingBottom="@dimen/dp_10"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/purchaser_order_comp_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            tools:text="哗啦啦"
+            android:textColor="#222222"
+            android:textSize="@dimen/base_text_13" />
+        <TextView
+            android:id="@+id/purchaser_order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            tools:text="未审核"
+            android:textColor="#ED5655"
+            android:textSize="@dimen/base_text_12" />
+        <TextView
+            android:layout_below="@+id/purchaser_order_comp_name"
+            android:id="@+id/purchaser_order_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            tools:text="32"
+            android:textColor="#999999"
+            android:textSize="@dimen/base_text_10"/>
+        <TextView
+            android:id="@+id/purchaser_order_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/purchaser_order_status"
+            tools:text="3800"
+            android:textColor="@color/base_text_black"
+            android:textSize="@dimen/base_text_16"
+            android:layout_marginTop="20dp" />
+        <TextView
+            android:layout_below="@+id/purchaser_order_no"
+            android:id="@+id/purchaser_order_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            tools:text="采购日期:2019/08/08"
+            android:textColor="#999999"
+            android:textSize="@dimen/base_text_10" />
+        <TextView
+            android:id="@+id/purchaser_order_arrival_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/purchaser_order_amount"
+            tools:text="到货日期:2019/08/08"
+            android:textColor="#999999"
+            android:textSize="@dimen/base_text_10"/>
+    </RelativeLayout>
+</LinearLayout>

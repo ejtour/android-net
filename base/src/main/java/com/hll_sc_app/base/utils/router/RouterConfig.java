@@ -997,6 +997,25 @@ public class RouterConfig {
 
     public static final String REPORT_REFUND_SEARCH_FRAGMENT = "/activity/report/refund/search/fragment";
 
+    /**
+     * 销售日报
+     */
+    public static final String REPORT_SALES_DAY_REPORT = "/activity/report/sales/report";
+
+    /**
+     * 采购单查询
+     */
+    public static final String STOCK_PURCHASER_ORDER = "/activity/stock/purchaser/order";
+
+    /**
+     * 采购单明细查询
+     */
+    public static final String STOCK_PURCHASER_ORDER_DETAIL = "/activity/stock/purchaser/order/detail";
+
+    /**
+     * 采购单搜索
+     */
+    public static final String STOCK_PURCHASER_ORDER_SEARCH = "/activity/stock/purchaser/order/search";
 
     /*库存管理首页*/
     public static final String ACTIVITY_STOCK_MANAGE_MENU = "/activity/stock/mange/menu";
@@ -1026,6 +1045,9 @@ public class RouterConfig {
     /*选择员工部门*/
     public static final String ACTIVITY_SELECT_DEPARTMENT_LIST = "/activity/staff/select/department/list";
 
-
+    /**
+     * 代客下单-选择商品
+     */
+    public static final String ORDER_PLACE_SELECT_GOODS = "/activity/order/place/select/goods";
 }
 

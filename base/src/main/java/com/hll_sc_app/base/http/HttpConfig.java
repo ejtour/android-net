@@ -64,7 +64,7 @@ public class HttpConfig {
      *
      * @return url
      */
-    static String getHost() {
+    public static String getHost() {
         if (!BuildConfig.isDebug) {
             if (TextUtils.equals(Env.VIP, mEnv)) {
                 return TextUtils.isEmpty(VIP_HOST) ? VIP_HOST_DEFAULT : VIP_HOST;

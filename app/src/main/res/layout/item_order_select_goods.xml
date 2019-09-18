@@ -19,6 +19,21 @@
         tools:src="@drawable/ic_placeholder" />
 
     <TextView
+        android:id="@+id/osg_promotion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/ic_promotion_flag"
+        android:gravity="center_horizontal"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/osg_icon"
+        app:layout_constraintTop_toTopOf="@id/osg_icon"
+        tools:text="满减" />
+
+    <TextView
         android:id="@+id/osg_goods_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -49,6 +64,39 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/osg_goods_name"
         android:overScrollMode="never"
+        tools:itemCount="2"
         app:layout_constraintEnd_toEndOf="@id/osg_goods_name"
         app:layout_constraintTop_toBottomOf="@id/osg_goods_brief" />
+
+    <TextView
+        android:id="@+id/osg_next_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_tip_blue"
+        android:paddingLeft="5dp"
+        android:paddingTop="1dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="1dp"
+        android:text="隔日配送"
+        android:textColor="@color/colorPrimary"
+        android:textSize="9sp"
+        app:layout_constraintStart_toStartOf="@id/osg_goods_name"
+        app:layout_constraintTop_toBottomOf="@id/osg_spec_list" />
+
+    <TextView
+        android:id="@+id/osg_bundle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/bg_tip_blue"
+        android:paddingLeft="5dp"
+        android:paddingTop="1dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="1dp"
+        android:text="组合商品"
+        android:textColor="@color/colorPrimary"
+        android:textSize="9sp"
+        app:layout_constraintStart_toEndOf="@id/osg_next_day"
+        app:layout_constraintTop_toBottomOf="@id/osg_spec_list"
+        app:layout_goneMarginLeft="0dp" />
 </android.support.constraint.ConstraintLayout>

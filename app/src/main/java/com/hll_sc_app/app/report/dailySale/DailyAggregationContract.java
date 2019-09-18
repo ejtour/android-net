@@ -10,9 +10,9 @@ import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import java.util.List;
 
 /**
- * 售价设置-变更日志
+ * 售日销售汇总
  *
- * @author zhuyingsong
+ * @author chukun
  * @date 2019/7/16
  */
 public interface DailyAggregationContract {

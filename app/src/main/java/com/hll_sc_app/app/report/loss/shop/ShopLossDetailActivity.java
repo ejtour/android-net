@@ -133,7 +133,7 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
         super.hideLoading();
     }
 
-    @OnClick({R.id.rog_title_bar,R.id.txt_filter_flag})
+    @OnClick({R.id.rog_title_bar,R.id.txt_filter_flag,R.id.txt_date_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rog_title_bar:
@@ -289,11 +289,11 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
         array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         array[3] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[3]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         array[4] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[4]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[5] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[5]));
-        array[6] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[6]));
-        array[7] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[7]));
-        array[8] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[8]));
-        array[9] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[9]));
+        array[5] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[5]),Gravity.CENTER_VERTICAL|Gravity.LEFT);
+        array[6] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[6]),Gravity.CENTER_VERTICAL);
+        array[7] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[7]),Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        array[8] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[8]),Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        array[9] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[9]),Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         return array;
     }
 
@@ -317,21 +317,6 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
             mExcel.setHeaderView(generateHeader(append));
         }
 
-    }
-
-    private List<CharSequence> convertToRowData(CustomerAndShopLossItem item, AtomicInteger sequence){
-        List<CharSequence> list = new ArrayList<>();
-        list.add(sequence.incrementAndGet()+"");//序号
-        list.add(item.getPurchaserName());// 采购商集团
-        list.add(item.getShopName()); // 采购商门店
-        list.add(item.getLinkMan()); // 联系人
-        list.add(item.getLinkPhone()); //联系方式
-        list.add(item.getSalesManName()); // 销售代表
-        list.add(CalendarUtils.getDateFormatString(item.getLastBillTime()+"",CalendarUtils.FORMAT_LOCAL_DATE,Constants.SLASH_YYYY_MM_DD)); // 最后下单日期
-        list.add(item.getShopBillNums()+"");//门店下单量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getSalesAmount())));//销售总额
-        list.add(CommonUtils.formatMoney(Double.parseDouble(item.getAverageAmount())));//单均
-        return list;
     }
 
     @Override
