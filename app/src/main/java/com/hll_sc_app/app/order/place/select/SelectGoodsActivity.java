@@ -79,7 +79,6 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     private List<GoodsCategoryBean> mCategoryList;
     private List<PlaceOrderSpecBean> mSpecList = new ArrayList<>();
     private KeyboardWatcher mKeyboardWatcher;
-    private KeyboardWatcher.SoftKeyboardStateListener mListener;
 
     public static void start(String purchaserID, String purchaserShopID) {
         SelectGoodsParam param = new SelectGoodsParam();
@@ -149,6 +148,10 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
                 adapter.notifyDataSetChanged();
             }
         }, (adapter, view, position) -> {
+            if (!mTitleBar.isFocused()) {
+                onTouch(view);
+                return;
+            }
             SpecsBean item = (SpecsBean) adapter.getItem(position);
             if (item == null) return;
             double step = CommonUtils.getDouble(item.getMinOrder());
