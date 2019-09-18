@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -17,14 +18,18 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
+import com.hll_sc_app.bean.order.place.PlaceOrderSpecBean;
 import com.hll_sc_app.bean.order.place.SelectGoodsParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -32,6 +37,10 @@ import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,9 +87,16 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_order_select_goods);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         ARouter.getInstance().inject(this);
         initView();
         initData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 
     private void initData() {
@@ -133,6 +149,18 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
         mRightList.addItemDecoration(decor);
         mRightList.setAdapter(mAdapter);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(searchContent, GoodsSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                mParam.setSearchWords(searchContent);
+                mPresenter.loadList();
+            }
+        });
     }
 
     @Override
@@ -186,6 +214,14 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         if (e.getLevel() == UseCaseException.Level.NET) {
             initEmptyView();
             mEmptyView.setNetError();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleGoodsEvent(GoodsSearchEvent event) {
+        String name = event.getName();
+        if (!TextUtils.isEmpty(name)) {
+            mSearchView.showSearchContent(true, name);
         }
     }
 
