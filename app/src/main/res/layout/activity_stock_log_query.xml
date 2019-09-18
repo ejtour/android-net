@@ -61,6 +61,11 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="@color/base_color_divider" />
+
         <LinearLayout
             android:id="@+id/ll_time"
             android:layout_width="0dp"
@@ -82,6 +87,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="18dp"
+            android:background="@color/base_color_divider" />
         <LinearLayout
             android:id="@+id/ll_type"
             android:layout_width="0dp"
@@ -93,10 +102,10 @@
                 android:id="@+id/txt_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_arrow_drop"
-                android:drawablePadding="@dimen/dp_10"
                 android:gravity="center_vertical"
                 android:text="交易类型"
+                android:drawableRight="@drawable/ic_arrow_drop"
+                android:drawablePadding="@dimen/dp_10"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -107,10 +116,27 @@
             android:layout_height="18dp"
             android:background="@color/base_color_divider" />
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="18dp"
-            android:background="@color/base_color_divider" />
+        <LinearLayout
+            android:id="@+id/ll_owner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txt_owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_arrow_drop"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:text="货主"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -168,7 +194,7 @@
                     android:textSize="@dimen/base_text_10" />
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
                     android:gravity="center"
@@ -213,7 +239,7 @@
                     android:textSize="@dimen/base_text_10" />
 
                 <TextView
-                    android:layout_width="60dp"
+                    android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background="#f3f3f3"
                     android:gravity="center"

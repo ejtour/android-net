@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/txt_name"
+        android:id="@+id/txt_product_name"
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
@@ -40,7 +40,7 @@
 
     <TextView
         android:id="@+id/txt_type"
-        android:layout_width="80dp"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:gravity="center"
         android:maxLines="1"
@@ -91,7 +91,7 @@
 
     <TextView
         android:id="@+id/txt_cargoOwnerName"
-        android:layout_width="60dp"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
         android:gravity="center"
         android:maxLines="1"

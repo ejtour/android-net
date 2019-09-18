@@ -22,6 +22,7 @@ import com.hll_sc_app.app.search.stratery.StockLogSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateSelectWindow;
+import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.event.StockManageEvent;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.stockmanage.BusinessTypeBean;
@@ -50,7 +51,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_DATE_TIME;
 import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_LOCAL_DATE;
 
@@ -82,8 +82,13 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
     LinearLayout mLlFilter;
     @BindView(R.id.ll_empty)
     LinearLayout mEmptyContainer;
+    @BindView(R.id.ll_owner)
+    LinearLayout mLlOwner;
+    @BindView(R.id.txt_owner)
+    TextView mTxtOwner;
     private SingleSelectionDialog mHourseSelectDialog;
     private SingleSelectionDialog mBusinessSelectDialog;
+    private SingleSelectionDialog mOwnerSelectDialog;
     private ContextOptionsWindow mMenuWindow;
     private DateSelectWindow mDateSelectWindow;
     private Unbinder unbinder;
@@ -152,7 +157,7 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
         }
     }
 
-    @OnClick({R.id.ll_stock_name, R.id.ll_time, R.id.ll_type, R.id.txt_add, R.id.img_close})
+    @OnClick({R.id.ll_stock_name, R.id.ll_time, R.id.ll_type, R.id.txt_add, R.id.img_close, R.id.ll_owner})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_stock_name:
@@ -192,6 +197,11 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
                 break;
             case R.id.img_close:
                 finish();
+                break;
+            case R.id.ll_owner:
+                if (mOwnerSelectDialog != null) {
+                    mOwnerSelectDialog.show();
+                }
                 break;
             default:
                 break;
@@ -304,7 +314,7 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
 
         @Override
         protected void convert(BaseViewHolder helper, StockLogResp.StockLog item) {
-            helper.setText(R.id.txt_name, item.getProductName())
+            helper.setText(R.id.txt_product_name, item.getProductName())
                     .setText(R.id.txt_code, item.getProductCode())
                     .setText(R.id.txt_id, item.getHouseID())
                     .setText(R.id.txt_type, item.getBusinessTypeName())
@@ -332,5 +342,30 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
                     return "";
             }
         }
+    }
+
+    @Override
+    public String getPurchaserID() {
+        if (mTxtOwner.getTag() != null) {
+            return ((WareHouseShipperBean) mTxtOwner.getTag()).getPurchaserID();
+        }
+        return "";
+    }
+
+    @Override
+    public void queryOwnersSuccess(List<WareHouseShipperBean> wareHouseShipperBeans) {
+        WareHouseShipperBean bean = new WareHouseShipperBean();
+        bean.setPurchaserName("全部货主");
+        bean.setPurchaserID("");
+        wareHouseShipperBeans.add(0, bean);
+        wareHouseShipperBeans.add(new WareHouseShipperBean());
+        mOwnerSelectDialog = SingleSelectionDialog.newBuilder(this, WareHouseShipperBean::getPurchaserName)
+                .refreshList(wareHouseShipperBeans)
+                .setTitleText("选择货主")
+                .setOnSelectListener(wareHouseShipperBean -> {
+                    mTxtOwner.setText(wareHouseShipperBean.getPurchaserName());
+                    mTxtOwner.setTag(wareHouseShipperBean);
+                    mPresent.refresh();
+                }).create();
     }
 }

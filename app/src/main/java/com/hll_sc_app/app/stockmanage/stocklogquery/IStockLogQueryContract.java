@@ -2,6 +2,7 @@ package com.hll_sc_app.app.stockmanage.stocklogquery;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.stockmanage.BusinessTypeBean;
 import com.hll_sc_app.bean.stockmanage.StockLogResp;
@@ -29,6 +30,10 @@ public interface IStockLogQueryContract {
         String getBusinessType();
 
         String getSearchKey();
+
+        String getPurchaserID();
+
+        void queryOwnersSuccess(List<WareHouseShipperBean> wareHouseShipperBeans);
     }
 
     interface IPresent extends IPresenter<IView> {
@@ -48,5 +53,7 @@ public interface IStockLogQueryContract {
         void export(String email);
 
         int getPageSize();
+
+        void queryOwners();
     }
 }
