@@ -90,7 +90,7 @@ public class PurchaseInputActivity extends BaseLoadActivity implements IPurchase
             if (!TextUtils.isEmpty(mBean.getId())) { // 编辑
                 mTitleBar.setHeaderTitle("修改采购物流");
                 mNum.setText(String.valueOf(mBean.getCarNums()));
-                mFee.setText(CommonUtils.formatMoney(mBean.getLogisticsCost()));
+                mFee.setText(CommonUtils.formatNumber(mBean.getLogisticsCost()));
             }
         }
         if (mBean.getCarNums() == -1) { // 金额
@@ -102,7 +102,7 @@ public class PurchaseInputActivity extends BaseLoadActivity implements IPurchase
             if (!TextUtils.isEmpty(mBean.getId())) { // 编辑
                 mTitleBar.setHeaderTitle("修改采购金额");
                 mNum.setText(String.valueOf(mBean.getPurchaserNum()));
-                mFee.setText(CommonUtils.formatMoney(mBean.getPurchaseAmount()));
+                mFee.setText(CommonUtils.formatNumber(mBean.getPurchaseAmount()));
             }
         }
         mTitleBar.setRightBtnClick(this::save);
