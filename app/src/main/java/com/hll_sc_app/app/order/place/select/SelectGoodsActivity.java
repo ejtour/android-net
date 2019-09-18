@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -32,6 +34,7 @@ import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
 import com.hll_sc_app.bean.order.place.PlaceOrderSpecBean;
 import com.hll_sc_app.bean.order.place.SelectGoodsParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.KeyboardWatcher;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -47,13 +50,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTouch;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/9/16
  */
 @Route(path = RouterConfig.ORDER_PLACE_SELECT_GOODS)
-public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGoodsContract.ISelectGoodsView {
+public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGoodsContract.ISelectGoodsView, KeyboardWatcher.SoftKeyboardStateListener {
     @BindView(R.id.osg_title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.osg_search_view)
@@ -74,6 +78,8 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     private ISelectGoodsContract.ISelectGoodsPresenter mPresenter;
     private List<GoodsCategoryBean> mCategoryList;
     private List<PlaceOrderSpecBean> mSpecList = new ArrayList<>();
+    private KeyboardWatcher mKeyboardWatcher;
+    private KeyboardWatcher.SoftKeyboardStateListener mListener;
 
     public static void start(String purchaserID, String purchaserShopID) {
         SelectGoodsParam param = new SelectGoodsParam();
@@ -96,6 +102,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
 
     @Override
     protected void onDestroy() {
+        mKeyboardWatcher.removeSoftKeyboardStateListener(this);
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
@@ -107,6 +114,8 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     }
 
     private void initView() {
+        mKeyboardWatcher = new KeyboardWatcher(this);
+        mKeyboardWatcher.addSoftKeyboardStateListener(this);
         mCategoryAdapter = new CategoryAdapter();
         mLeftList.setAdapter(mCategoryAdapter);
         mCategoryAdapter.setOnItemClickListener((adapter, view, position) -> mCategoryAdapter.select(position));
@@ -127,7 +136,17 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         });
         mAdapter = new SelectGoodsAdapter((v, hasFocus) -> {
             if (!hasFocus) {
-                showToast("数量修正待添加");
+                SpecsBean bean = (SpecsBean) v.getTag();
+                double inputNum = CommonUtils.getDouble(((EditText) v).getText().toString());
+                double minNum = CommonUtils.getDouble(bean.getBuyMinNum());
+                double minOrder = CommonUtils.getDouble(bean.getMinOrder());
+                if (inputNum < minNum) {
+                    showToast(String.format("该商品的最低起购数量是%s哦", CommonUtils.formatNum(minNum)));
+                } else if (minOrder != 0 && inputNum % minOrder != 0) {
+                    showToast(String.format("该商品的最小订购倍数是%s哦", CommonUtils.formatNum(minOrder)));
+                } else bean.setBuyQty(CommonUtils.formatNumber(inputNum));
+                RecyclerView.Adapter adapter = (RecyclerView.Adapter) v.getTag(R.id.sgs_spec);
+                adapter.notifyDataSetChanged();
             }
         }, (adapter, view, position) -> {
             SpecsBean item = (SpecsBean) adapter.getItem(position);
@@ -212,6 +231,13 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         }
     }
 
+    @OnTouch({R.id.osg_title_bar, R.id.osg_search_view, R.id.osg_left_list, R.id.osg_right_list, R.id.osg_refresh_layout, R.id.osg_scroll_view})
+    public boolean onTouch(View view) {
+        UIUtils.hideActivitySoftKeyboard(this);
+        onSoftKeyboardClosed();
+        return false;
+    }
+
     @Override
     public void setGoodsList(List<GoodsBean> list) {
         if (CommonUtils.isEmpty(list)) {
@@ -268,6 +294,16 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
                     .create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    @Override
+    public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+        // no-op
+    }
+
+    @Override
+    public void onSoftKeyboardClosed() {
+        mTitleBar.requestFocus();
     }
 
     private class CategoryAdapter extends BaseQuickAdapter<GoodsCategoryBean, BaseViewHolder> {

@@ -57,7 +57,7 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
 
             @Override
             public void afterTextChanged(Editable s) {
-                SpecsBean bean = mData.get((int) edit.getTag());
+                SpecsBean bean = (SpecsBean) edit.getTag();
                 if ("1".equals(bean.getIsDecimalBuy())) { // 允许输入小数
                     if (!CommonUtils.checkDotNum(s.toString()) && s.length() - 1 >= 0) {
                         s.delete(s.length() - 1, s.length());
@@ -65,7 +65,6 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
                 } else if (!CommonUtils.checkIntegerNum(s.toString()) && s.length() - 1 >= 0) {
                     s.delete(s.length() - 1, s.length());
                 }
-                bean.setBuyQtyBackup(s.toString());
             }
         });
         return helper;
@@ -73,7 +72,6 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, SpecsBean item) {
-        LogUtil.d("vixb-ddd", "position = " + mData.indexOf(item));
         StringBuilder specInfo = new StringBuilder(item.getSpecContent());
         // 辅助价格
         double ration = CommonUtils.getDouble(item.getRation()); // 转换率
@@ -133,7 +131,8 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
                 .setGone(R.id.sgs_status, status != null)
                 .setText(R.id.sgs_status, status)
                 .setText(R.id.sgs_unit, item.getSaleUnitName())
-                .setTag(R.id.sgs_edit, mData.indexOf(item))
+                .setTag(R.id.sgs_edit, item)
+                .setTag(R.id.sgs_edit, R.id.sgs_spec, this)
                 .setText(R.id.sgs_edit, item.getBuyQty());
     }
 
