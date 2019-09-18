@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -55,6 +56,10 @@ public class SelectGoodsAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
     protected void convert(BaseViewHolder helper, GoodsBean item) {
         ((GlideImageView) helper.setText(R.id.osg_goods_name, item.getProductName())
                 .setText(R.id.osg_goods_brief, item.getProductBrief())
+                .setGone(R.id.osg_promotion, !TextUtils.isEmpty(item.getDiscountRuleTypeName()))
+                .setGone(R.id.osg_next_day, "1".equals(item.getNextDayDelivery()))
+                .setGone(R.id.osg_bundle, "1".equals(item.getBundlingGoodsType()))
+                .setText(R.id.osg_promotion, item.getDiscountRuleTypeName())
                 .getView(R.id.osg_icon)).setImageURL(item.getImgUrl());
         RecyclerView listView = helper.getView(R.id.osg_spec_list);
         ((SelectGoodsSpecAdapter) listView.getAdapter()).setNewData(item.getSpecs(), item);
