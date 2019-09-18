@@ -2,33 +2,20 @@ package com.hll_sc_app.app.report.dailySale;
 
 import android.text.TextUtils;
 
-import com.alibaba.sdk.android.ams.common.util.StringUtil;
 import com.google.gson.Gson;
-import com.google.zxing.common.StringUtils;
-import com.hll_sc_app.api.GoodsService;
-import com.hll_sc_app.api.PriceManageService;
-import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.BaseCallback;
-import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.pricemanage.PriceLogResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
-import com.hll_sc_app.rest.ReportRest;
-import com.hll_sc_app.utils.DateUtil;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -111,7 +98,7 @@ public class DailyAggregationPresenter implements DailyAggregationContract.IDail
         dailyReq.setGroupID(UserConfig.getGroupID());
         dailyReq.setPageNum(mTempPageNum);
         dailyReq.setPageSize(20);
-        ReportRest.queryDateSaleAmount(dailyReq, new SimpleObserver<DateSaleAmountResp>(mView,showLoading) {
+        Report.queryDateSaleAmount(dailyReq, new SimpleObserver<DateSaleAmountResp>(mView,showLoading) {
             @Override
             public void onSuccess(DateSaleAmountResp dateSaleAmountResp) {
                 mPageNum = mTempPageNum;

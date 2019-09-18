@@ -65,7 +65,7 @@ public class AfterSales {
             int pageNum,
             SimpleObserver<List<AfterSalesBean>> observer) {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder()
-                .put("flag", "1")
+                .put("flag", UserConfig.crm() ? "2" : "1")
                 .put("groupID", UserConfig.getGroupID());
         if (refundBillID != null)
             builder.put("refundBillID", refundBillID)

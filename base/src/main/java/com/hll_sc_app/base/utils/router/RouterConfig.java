@@ -442,6 +442,11 @@ public class RouterConfig {
     public static final String ORDER_DETAIL = "/activity/order/detail";
 
     /**
+     * 订单追踪
+     */
+    public static final String ORDER_TRACE = "/activity/order/trace";
+
+    /**
      * 订单转单详情
      */
     public static final String ORDER_TRANSFER_DETAIL = "/activity/order/transfer/detail";
@@ -902,7 +907,6 @@ public class RouterConfig {
     public static final String CRM_ORDER_LIST = "/activity/crm/order/list";
 
     /**
-     *
      * 待退合计
      */
     public static final String REPORT_WAIT_REFUND_TOTAL = "/activity/report/refund/wait";
@@ -984,9 +988,42 @@ public class RouterConfig {
     public static final String REPORT_SALES_DAY_REPORT = "/activity/report/sales/report";
 
     /**
-     * 采购商查询
+     * 采购单查询
      */
     public static final String STOCK_PURCHASER_ORDER = "/activity/stock/purchaser/order";
+
+    /**
+     * 采购单明细查询
+     */
+    public static final String STOCK_PURCHASER_ORDER_DETAIL = "/activity/stock/purchaser/order/detail";
+
+    /**
+     * 采购单搜索
+     */
+    public static final String STOCK_PURCHASER_ORDER_SEARCH = "/activity/stock/purchaser/order/search";
+
+    /*库存管理首页*/
+    public static final String ACTIVITY_STOCK_MANAGE_MENU = "/activity/stock/mange/menu";
+
+    /*仓库查询 管理*/
+    public static final String ACTIVITY_STORE_HOUSE_MANAGE = "/activity/store/house/manage";
+
+    /*仓库新增编辑*/
+    public static final String ACTIVITY_STORE_HOUSE_EDIT = "/activity/store/house/edit";
+
+    /*仓库-库存查询*/
+    public static final String ACTIVITY_STOCK_QUERY_LIST = "/activity/stock/query/list";
+
+    /*仓库-库存日志查询*/
+    public static final String ACTIVITY_STOCK_LOG_QUERY = "/activity/stock/log/query";
+
+    /*仓库-客户发货仓库管理*/
+    public static final String ACTIVITY_STOCK_CUSTOMER_SEND = "/activity/stock/customer/send";
+
+    /*仓库-仓库库存校验设置*/
+    public static final String ACTIVITY_STOCK_CHECK_SETTING = "/activity/stock/check/setting";
+    /*仓库-库存校验选择商品*/
+    public static final String ACTIVITY_STOCK_CHECK_SELECT_PRODUCT = "/activity/stock/check/select/product";
 
 
 }

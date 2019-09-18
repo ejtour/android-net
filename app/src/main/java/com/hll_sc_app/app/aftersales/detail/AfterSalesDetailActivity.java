@@ -72,8 +72,8 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
      * @param id       售后订单 id
      */
     public static void start(Activity activity, String id) {
-        String[] array = {id};
-        RouterUtil.goToActivity(RouterConfig.AFTER_SALES_DETAIL, activity, REQ_CODE, (Object[]) array);
+        Object[] array = {id};
+        RouterUtil.goToActivity(RouterConfig.AFTER_SALES_DETAIL, activity, REQ_CODE, array);
     }
 
     @Override

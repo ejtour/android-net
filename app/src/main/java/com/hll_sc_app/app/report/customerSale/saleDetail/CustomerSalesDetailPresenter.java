@@ -4,25 +4,19 @@ package com.hll_sc_app.app.report.customerSale.saleDetail;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.hll_sc_app.api.PriceManageService;
-import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.BaseCallback;
-import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.pricemanage.PriceLogResp;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
-import com.hll_sc_app.rest.ReportRest;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -90,7 +84,7 @@ public class CustomerSalesDetailPresenter implements CustomerSalesDetailContract
         params.setGroupID(UserConfig.getGroupID());
         params.setPageNum(mTempPageNum);
         params.setPageSize(20);
-        ReportRest.queryCustomerSales(params, new SimpleObserver<CustomerSalesResp>(mView,showLoading) {
+        Report.queryCustomerSales(params, new SimpleObserver<CustomerSalesResp>(mView,showLoading) {
             @Override
             public void onSuccess(CustomerSalesResp customerSalesResp) {
                 mPageNum = mTempPageNum;

@@ -1,18 +1,13 @@
 package com.hll_sc_app.widget.order;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,11 +15,17 @@ import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderStatus;
+import com.hll_sc_app.app.order.trace.OrderTraceActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
-import com.hll_sc_app.utils.ColorStr;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.DateUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +63,14 @@ public class OrderDetailHeader extends ConstraintLayout {
     TextView mLabel;
     @BindView(R.id.odh_self_lift_tag)
     TextView mSelfLiftTag;
+    @BindView(R.id.odh_trace_label)
+    TextView mTraceLabel;
+    @BindView(R.id.odh_trace_desc)
+    TextView mTraceDesc;
+    @BindView(R.id.odh_trace_group)
+    Group mTraceGroup;
+    private OrderResp mOrderResp;
+    private List<OrderTraceBean> mTraceBeans;
 
     public OrderDetailHeader(Context context) {
         this(context, null);
@@ -78,6 +87,7 @@ public class OrderDetailHeader extends ConstraintLayout {
     }
 
     public void setData(OrderResp data) {
+        mOrderResp = data;
         handleOrderStatus(data.getSubBillStatus(), data.getCanceler(), data.getActionBy(), data.getCancelReason());
         mShopLogo.setImageURL(data.getImgUrl());
         mShopName.setText(data.getShopName());
@@ -93,6 +103,19 @@ public class OrderDetailHeader extends ConstraintLayout {
                 data.getTargetExecuteDate(),
                 data.getTargetAddress());
         handleLabel(data.getWareHourseName(), data.getShipperType() > 0);
+    }
+
+    public void setData(List<OrderTraceBean> list) {
+        mTraceBeans = list;
+        if (CommonUtils.isEmpty(list)) {
+            mTraceGroup.setVisibility(GONE);
+        } else {
+            mTraceGroup.setVisibility(VISIBLE);
+            OrderTraceBean bean = list.get(0);
+            mTraceLabel.setText(bean.getOpTypeName());
+            mTraceDesc.setText(String.format("%s %s", bean.getTitle(), DateUtil.getReadableTime(bean.getOpTime())));
+        }
+        mTraceGroup.getParent().requestLayout();
     }
 
     public void setData(TransferBean data) {
@@ -120,18 +143,8 @@ public class OrderDetailHeader extends ConstraintLayout {
 
     private CharSequence handlePhoneNum(String number) {
         String source = PhoneUtil.formatPhoneNum(number);
-        if (TextUtils.isEmpty(source)) {
-            return "暂未提供";
-        }
-        SpannableString ss = new SpannableString(source);
-        ss.setSpan(new UnderlineSpan() {
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setColor(Color.parseColor(ColorStr.COLOR_5695D2)); // 下划线
-            }
-        }, 0, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return ss;
+        if (TextUtils.isEmpty(source)) return "暂未提供";
+        return source;
     }
 
     private void handleLabel(String wareHouseName, boolean wareHouse) {
@@ -164,17 +177,20 @@ public class OrderDetailHeader extends ConstraintLayout {
         }
     }
 
-    @OnClick({R.id.odh_orderer_dial, R.id.odh_consignee_dial})
+    @OnClick({R.id.odh_orderer_dial, R.id.odh_consignee_dial, R.id.odh_trace_btn})
     public void onViewClicked(View view) {
         if (view.getTag() == null || view.getTag().toString().length() == 0) return;
         switch (view.getId()) {
             case R.id.odh_orderer_dial:
             case R.id.odh_consignee_dial:
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri info = Uri.parse("tel:" + view.getTag());
-                intent.setData(info);
-                getContext().startActivity(intent);
+                UIUtils.callPhone(getContext(), view.getTag().toString());
                 break;
         }
+    }
+
+    @OnClick(R.id.odh_trace_btn)
+    public void orderTrace() {
+        if (mOrderResp == null || CommonUtils.isEmpty(mTraceBeans)) return;
+        OrderTraceActivity.start(mOrderResp.getTargetAddress(), mTraceBeans);
     }
 }

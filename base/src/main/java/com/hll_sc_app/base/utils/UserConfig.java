@@ -86,4 +86,11 @@ public class UserConfig {
         }
         return "";
     }
+
+    /**
+     * @return 是否 crm
+     */
+    public static boolean crm() {
+        return !TextUtils.isEmpty(getSalesmanID());
+    }
 }

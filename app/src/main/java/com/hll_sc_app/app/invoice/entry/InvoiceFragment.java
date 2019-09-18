@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,7 +99,7 @@ public class InvoiceFragment extends BaseLazyFragment implements IInvoiceContrac
     }
 
     private void initView() {
-        if (mInvoiceStatus > 1 && TextUtils.isEmpty(UserConfig.getSalesmanID())) {
+        if (mInvoiceStatus > 1 && !UserConfig.crm()) {
             mFilterGroup.setVisibility(View.VISIBLE);
             updateDate();
         } else mFilterGroup.setVisibility(View.GONE);

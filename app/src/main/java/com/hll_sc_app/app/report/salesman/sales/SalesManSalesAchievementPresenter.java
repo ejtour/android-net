@@ -17,7 +17,6 @@ import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
-import com.hll_sc_app.rest.ReportRest;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -84,7 +83,7 @@ public class SalesManSalesAchievementPresenter implements SalesManSalesAchieveme
         params.setGroupID(UserConfig.getGroupID());
         params.setPageNum(mTempPageNum);
         params.setPageSize(20);
-        ReportRest.querySalesmanSalesAchievement(params, new SimpleObserver<SalesManSalesResp>(mView, showLoading) {
+        Report.querySalesmanSalesAchievement(params, new SimpleObserver<SalesManSalesResp>(mView, showLoading) {
             @Override
             public void onSuccess(SalesManSalesResp salesManSalesResp) {
                 mPageNum = mTempPageNum;

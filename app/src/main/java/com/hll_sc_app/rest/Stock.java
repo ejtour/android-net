@@ -1,13 +1,14 @@
 package com.hll_sc_app.rest;
 
-import com.hll_sc_app.api.StockService;
+import com.hll_sc_app.api.StockManageService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.stock.purchaserorder.PurchaserOrderDetailResp;
-import com.hll_sc_app.bean.stock.purchaserorder.PurchaserOrderReq;
-import com.hll_sc_app.bean.stock.purchaserorder.PurchaserOrderResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderReq;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -22,7 +23,7 @@ public class Stock {
      * @param orderReq
      */
     public static void querySupplyChainPurchaserOrderList(PurchaserOrderReq orderReq, SimpleObserver<PurchaserOrderResp> observer) {
-        StockService.INSTANCE
+        StockManageService.INSTANCE
                 .querySupplyChainPurchaserOrderList(new BaseReq<>(orderReq))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -35,10 +36,31 @@ public class Stock {
      * @param purchaserBillID
      */
     public static void querySupplyChainPurchaserOrderDetail(String groupID,String purchaserBillID, SimpleObserver<PurchaserOrderDetailResp> observer) {
-        StockService.INSTANCE
+        StockManageService.INSTANCE
                 .querySupplyChainPurchaserOrderDetail(BaseMapReq.newBuilder()
                         .put("groupID", groupID)
                         .put("purchaserBillID", purchaserBillID)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 供应链供应商列表查询
+     * @param groupID
+     * @param pageNo
+     * @param pageSize
+     * @param searchKey
+     * @param observer
+     */
+    public static void querySupplyChainGroupList(String groupID, int pageNo, int pageSize, String searchKey, SimpleObserver<PurchaserOrderSearchResp> observer){
+        StockManageService.INSTANCE
+                .querySupplyChainGroupList(BaseMapReq.newBuilder()
+                        .put("groupID", groupID)
+                        .put("pageNo", pageNo+"")
+                        .put("pageSize", pageSize+"")
+                        .put("searchKey", searchKey)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

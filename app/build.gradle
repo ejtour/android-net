@@ -48,16 +48,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [ALIBABA_APP_KEY   : "24751874",
                                     APPLICATION_ID    : defaultConfig.applicationId,
-                                    ALIBABA_APP_SECRET: "b75329820fdf637100fcadd368ef064f"]
+                                    ALIBABA_APP_SECRET: "b75329820fdf637100fcadd368ef064f",
+                                    QQ_APPID          :"1106551913"]
             signingConfig signingConfigs.release
         }
 
         debug {
-            applicationIdSuffix ".beta2"
+            applicationIdSuffix ".beta"
             buildConfigField "boolean", "isDebug", "true"
             manifestPlaceholders = [ALIBABA_APP_KEY   : "24764562",
-                                    APPLICATION_ID    : defaultConfig.applicationId + ".beta2",
-                                    ALIBABA_APP_SECRET: "62b53846e3bffb7e4cdbd1385421b0d9"]
+                                    APPLICATION_ID    : defaultConfig.applicationId + ".beta",
+                                    ALIBABA_APP_SECRET: "62b53846e3bffb7e4cdbd1385421b0d9",
+                                    QQ_APPID          :"101536988"]
             signingConfig signingConfigs.release
         }
     }
@@ -111,4 +113,12 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     // switchbutton
     implementation 'com.kyleduo.switchbutton:library:2.0.0'
+    //fastJson
+    implementation 'com.alibaba:fastjson:1.2.48'
+
+    //微信sdk
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //qq sdk
+    implementation files('libs/open_sdk_r6019_lite.jar')
+
 }

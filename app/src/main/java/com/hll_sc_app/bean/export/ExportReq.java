@@ -137,6 +137,80 @@ public class ExportReq {
          */
         private SellPrice sellPrice;
 
+
+        private String groupID;
+        private String pageNum;
+        private String pageSize;
+        private String houseID;
+        private String businessType;
+        private String searchKey;
+        private String createTimeStart;
+        private String createTimeEnd;
+
+        public String getGroupID() {
+            return groupID;
+        }
+
+        public void setGroupID(String groupID) {
+            this.groupID = groupID;
+        }
+
+        public String getPageNum() {
+            return pageNum;
+        }
+
+        public void setPageNum(String pageNum) {
+            this.pageNum = pageNum;
+        }
+
+        public String getPageSize() {
+            return pageSize;
+        }
+
+        public void setPageSize(String pageSize) {
+            this.pageSize = pageSize;
+        }
+
+        public String getHouseID() {
+            return houseID;
+        }
+
+        public void setHouseID(String houseID) {
+            this.houseID = houseID;
+        }
+
+        public String getBusinessType() {
+            return businessType;
+        }
+
+        public void setBusinessType(String businessType) {
+            this.businessType = businessType;
+        }
+
+        public String getSearchKey() {
+            return searchKey;
+        }
+
+        public void setSearchKey(String searchKey) {
+            this.searchKey = searchKey;
+        }
+
+        public String getCreateTimeStart() {
+            return createTimeStart;
+        }
+
+        public void setCreateTimeStart(String createTimeStart) {
+            this.createTimeStart = createTimeStart;
+        }
+
+        public String getCreateTimeEnd() {
+            return createTimeEnd;
+        }
+
+        public void setCreateTimeEnd(String createTimeEnd) {
+            this.createTimeEnd = createTimeEnd;
+        }
+
         public SellPrice getSellPrice() {
             return sellPrice;
         }
@@ -408,7 +482,7 @@ public class ExportReq {
             private String name;
             private String productStatus;
             private String shopProductCategoryThreeIds;
-            private String isWareHourse ;
+            private String isWareHourse;
 
             public String getGroupID() {
                 return groupID;
@@ -450,6 +524,7 @@ public class ExportReq {
                 this.isWareHourse = isWareHourse;
             }
         }
+
     }
 
 

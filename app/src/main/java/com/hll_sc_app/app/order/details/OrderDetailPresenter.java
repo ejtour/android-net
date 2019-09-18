@@ -4,7 +4,10 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.aftersales.AfterSalesBean;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 import com.hll_sc_app.utils.Utils;
@@ -34,6 +37,12 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
             @Override
             public void onSuccess(OrderResp resp) {
                 mView.updateOrderData(resp);
+            }
+        });
+        Order.queryOrderLog(mSubBillID, new SimpleObserver<SingleListResp<OrderTraceBean>>(mView) {
+            @Override
+            public void onSuccess(SingleListResp<OrderTraceBean> orderTraceBeanSingleListResp) {
+                mView.updateOrderTraceLog(orderTraceBeanSingleListResp.getRecords());
             }
         });
     }
@@ -79,5 +88,15 @@ public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPr
     @Override
     public void exportDeliveryOrder(String subBillID, String email) {
         Order.exportDelivery(Collections.singletonList(subBillID), email, Utils.getExportObserver(mView));
+    }
+
+    @Override
+    public void getAfterSalesInfo() {
+        Order.queryAssociatedAfterSalesOrder(1, mSubBillID, new SimpleObserver<SingleListResp<AfterSalesBean>>(mView) {
+            @Override
+            public void onSuccess(SingleListResp<AfterSalesBean> afterSalesBeanSingleListResp) {
+                mView.handleAfterSalesInfo(afterSalesBeanSingleListResp.getRecords());
+            }
+        });
     }
 }

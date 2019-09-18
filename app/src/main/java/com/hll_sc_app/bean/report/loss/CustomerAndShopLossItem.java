@@ -221,7 +221,7 @@ public class CustomerAndShopLossItem implements IStringArrayGenerator {
             list.add(getLinkMan()); // 联系人
             list.add(getLinkPhone()); //联系方式
             list.add(getSalesManName()); // 销售代表
-            list.add(CalendarUtils.getDateFormatString(getLastBillTime()+"",CalendarUtils.FORMAT_LOCAL_DATE,Constants.SLASH_YYYY_MM_DD)); // 最后下单日期
+            list.add(CalendarUtils.getDateFormatString(getLastBillTime()+"","yyyyMMddHHmmss",Constants.SLASH_YYYY_MM_DD)); // 最后下单日期
             list.add(getShopBillNums()+"");//门店下单量
             list.add(CommonUtils.formatMoney(Double.parseDouble(getSalesAmount())));//销售总额
             list.add(CommonUtils.formatMoney(Double.parseDouble(getAverageAmount())));//单均

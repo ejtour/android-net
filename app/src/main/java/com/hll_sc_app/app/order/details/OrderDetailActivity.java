@@ -16,16 +16,20 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
 import com.hll_sc_app.app.order.reject.OrderRejectActivity;
 import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -35,6 +39,7 @@ import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.order.OrderActionBar;
+import com.hll_sc_app.widget.order.OrderCancelDialog;
 import com.hll_sc_app.widget.order.OrderDetailFooter;
 import com.hll_sc_app.widget.order.OrderDetailHeader;
 
@@ -157,6 +162,21 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     }
 
     @Override
+    public void updateOrderTraceLog(List<OrderTraceBean> list) {
+        mDetailHeader.setData(list);
+    }
+
+    @Override
+    public void handleAfterSalesInfo(List<AfterSalesBean> list) {
+        if (CommonUtils.isEmpty(list)) return;
+        if (list.size() == 1) {
+            AfterSalesDetailActivity.start(this, list.get(0).getId());
+        } else {
+            showToast("退换货列表待添加");
+        }
+    }
+
+    @Override
     public void bindEmail() {
         Utils.bindEmail(this, email -> {
             export(mLabel, email);
@@ -173,9 +193,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         Utils.exportFailure(this, msg);
     }
 
-    @OnClick({R.id.oab_cancel, R.id.oab_modify,
-            R.id.oab_receive, R.id.oab_deliver,
-            R.id.oab_settle, R.id.oab_reject, R.id.oab_inspection})
+    @OnClick(R.id.aod_bottom_bar)
     public void onActionClick(View view) {
         switch (view.getId()) {
             case R.id.oab_cancel:
@@ -202,18 +220,29 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
             case R.id.oab_inspection:
                 OrderInspectionActivity.start(this, mOrderResp);
                 break;
+            case R.id.oab_refund:
+                showToast("申请退换货待添加");
+                break;
+            case R.id.oab_refund_detail:
+                mPresenter.getAfterSalesInfo();
+                break;
         }
     }
 
     private void showCancelDialog() {
-        RemarkDialog.newBuilder(this)
-                .setHint("可简要输入放弃原因...(非必填)")
-                .setMaxLength(200)
-                .setButtons("容我再想想", "确认放弃", (dialog, positive, content) -> {
-                    dialog.dismiss();
-                    if (positive) mPresenter.orderCancel(content);
-                })
-                .create().show();
+        if (UserConfig.crm())
+            new OrderCancelDialog(this, mPresenter::orderCancel)
+                    .setData(mOrderResp.getPurchaserName(), mOrderResp.getShopName())
+                    .show();
+        else
+            RemarkDialog.newBuilder(this)
+                    .setHint("可简要输入放弃原因...(非必填)")
+                    .setMaxLength(200)
+                    .setButtons("容我再想想", "确认放弃", (dialog, positive, content) -> {
+                        dialog.dismiss();
+                        if (positive) mPresenter.orderCancel(content);
+                    })
+                    .create().show();
     }
 
     @Override

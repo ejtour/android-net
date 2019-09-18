@@ -53,6 +53,61 @@
         app:layout_constraintTop_toTopOf="@+id/odh_status_label"
         tools:src="@drawable/ic_order_process" />
 
+    <TextView
+        android:id="@+id/odh_trace_btn"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/bg_divider_bottom"
+        android:paddingRight="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@id/odh_status_bg"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:gravity="center_vertical|right"
+        app:layout_constraintBottom_toBottomOf="@id/odh_trace_desc"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:id="@+id/odh_trace_label"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        tools:text="已发货"
+        app:layout_constraintStart_toStartOf="@id/odh_status_label"
+        app:layout_constraintTop_toBottomOf="@id/odh_status_bg"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/odh_trace_desc"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="12dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        tools:text="您的订单已出库 2019-03-18 23:32:34 "
+        app:layout_constraintEnd_toEndOf="parent"
+        android:lineSpacingExtra="4dp"
+        android:singleLine="true"
+        android:layout_marginRight="30dp"
+        app:layout_constraintStart_toStartOf="@id/odh_trace_label"
+        app:layout_constraintTop_toBottomOf="@id/odh_trace_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/odh_trace_icon"
+        app:layout_constraintTop_toTopOf="@id/odh_trace_label"
+        app:layout_constraintBottom_toBottomOf="@id/odh_trace_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/odh_trace_label"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_order_trace"
+        android:layout_height="wrap_content" />
+
+    <android.support.constraint.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="odh_trace_btn,odh_trace_label,odh_trace_desc,odh_trace_icon"
+        android:id="@+id/odh_trace_group" />
+
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/odh_shop_logo"
         android:layout_width="33dp"
@@ -62,7 +117,7 @@
         app:base_placeholder="@drawable/ic_group_placeholder"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/odh_status_bg"
+        app:layout_constraintTop_toBottomOf="@+id/odh_trace_btn"
         tools:src="@drawable/ic_group_placeholder" />
 
     <TextView

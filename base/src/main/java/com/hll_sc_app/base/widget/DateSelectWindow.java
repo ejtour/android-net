@@ -37,6 +37,7 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
     private DateSelectListener mSelectListener;
     private TextView mTxtStartDate;
     private TextView mTxtEndDate;
+    private boolean isForbiddenStartBeforeCurrent = true;
 
 
     public DateSelectWindow(Activity context) {
@@ -166,7 +167,7 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
 
     private void setDateText() {
         String dateString = CalendarUtils.format(CalendarUtils.toCalendar(mYear, mMonth, mDay).getTime(), "yyyy" +
-            "-MM-dd");
+                "-MM-dd");
         if (mTxtStartDate.isSelected()) {
             mTxtStartDate.setText(dateString);
         } else if (mTxtEndDate.isSelected()) {
@@ -187,15 +188,19 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
     private boolean checkStartLegal() {
         boolean isLegal = false;
         Date selectDate =
-            CalendarUtils.parse(CalendarUtils.format(CalendarUtils.toCalendar(mYear, mMonth, mDay).getTime(),
-                CalendarUtils.FORMAT_SERVER_DATE), CalendarUtils.FORMAT_SERVER_DATE);
+                CalendarUtils.parse(CalendarUtils.format(CalendarUtils.toCalendar(mYear, mMonth, mDay).getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE), CalendarUtils.FORMAT_SERVER_DATE);
         Date currentDate = CalendarUtils.parse(CalendarUtils.format(new Date(), CalendarUtils.FORMAT_SERVER_DATE),
-            CalendarUtils.FORMAT_SERVER_DATE);
+                CalendarUtils.FORMAT_SERVER_DATE);
         Date endDate = CalendarUtils.parse(mTxtEndDate.getText().toString().replace("-", ""),
-            CalendarUtils.FORMAT_SERVER_DATE);
+                CalendarUtils.FORMAT_SERVER_DATE);
         if (selectDate != null && endDate != null) {
             // 起始时间大于当前时间小于结束时间
-            isLegal = !selectDate.before(currentDate) && !selectDate.after(endDate);
+            if (isForbiddenStartBeforeCurrent) {
+                isLegal = !selectDate.before(currentDate) && !selectDate.after(endDate);
+            } else {
+                isLegal = !selectDate.after(endDate);
+            }
         }
         return isLegal;
     }
@@ -203,10 +208,10 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
     private boolean checkEndLegal() {
         boolean isLegal = false;
         Date selectDate =
-            CalendarUtils.parse(CalendarUtils.format(CalendarUtils.toCalendar(mYear, mMonth, mDay).getTime(),
-                CalendarUtils.FORMAT_SERVER_DATE), CalendarUtils.FORMAT_SERVER_DATE);
+                CalendarUtils.parse(CalendarUtils.format(CalendarUtils.toCalendar(mYear, mMonth, mDay).getTime(),
+                        CalendarUtils.FORMAT_SERVER_DATE), CalendarUtils.FORMAT_SERVER_DATE);
         Date startDate = CalendarUtils.parse(mTxtStartDate.getText().toString().replace("-", ""),
-            CalendarUtils.FORMAT_SERVER_DATE);
+                CalendarUtils.FORMAT_SERVER_DATE);
         if (selectDate != null && startDate != null) {
             isLegal = !selectDate.before(startDate);
         }
@@ -248,6 +253,10 @@ public class DateSelectWindow extends BaseShadowPopupWindow implements View.OnCl
             }
         }
         dismiss();
+    }
+
+    public void setForbiddenStartBeforeCurrent(boolean isForbidden) {
+        isForbiddenStartBeforeCurrent = isForbidden;
     }
 
     /**

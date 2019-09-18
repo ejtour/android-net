@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
+import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -91,6 +92,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     private SingleSelectionWindow<PurchaserShopBean> mShopWindow;
     private SingleSelectionWindow<NameValue> mStatusWindow;
     private ContextOptionsWindow mOptionsWindow;
+    private OrderResp mCurResp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,6 +125,11 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
         decor.setLineMargin(UIUtils.dip2px(90), 0, 0, 0, Color.WHITE);
         mListView.addItemDecoration(decor);
         mAdapter = new CrmOrderListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mCurResp = mAdapter.getItem(position);
+            if (mCurResp == null) return;
+            OrderDetailActivity.start(mCurResp.getSubBillID());
+        });
         mListView.setAdapter(mAdapter);
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -174,6 +181,8 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
     }
 
     private void showShopWindow(View view) {
+        mShopArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
+        mShop.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (mShopWindow == null) {
             PurchaserShopBean bean = null;
             for (PurchaserShopBean shopBean : mShopBeans) {
@@ -192,11 +201,17 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
                 mShop.setText(bean1.getShopName());
                 mPresenter.reload();
             });
+            mShopWindow.setOnDismissListener(() -> {
+                mShopArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
+                mShop.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
+            });
         }
         mShopWindow.showAsDropDownFix(view);
     }
 
     private void showStatusWindow(View view) {
+        mStatusArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
+        mStatus.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (mStatusWindow == null) {
             List<NameValue> list = new ArrayList<>();
             list.add(new NameValue("全部状态", "0"));
@@ -206,6 +221,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
             list.add(new NameValue("待结算", "4"));
             list.add(new NameValue("已结算", "5"));
             list.add(new NameValue("已完成", "6"));
+            list.add(new NameValue("已取消", "7"));
             mStatusWindow = new SingleSelectionWindow<>(this, NameValue::getName);
             mStatusWindow.refreshList(list);
             mStatusWindow.hideDivider();
@@ -214,6 +230,10 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
                 mBillStatus = Integer.valueOf(nameValue.getValue());
                 mStatus.setText(nameValue.getName());
                 mPresenter.reload();
+            });
+            mStatusWindow.setOnDismissListener(() -> {
+                mStatusArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
+                mStatus.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
             });
         }
         mStatusWindow.showAsDropDownFix(view);

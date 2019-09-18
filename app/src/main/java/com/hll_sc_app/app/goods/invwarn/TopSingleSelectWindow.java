@@ -61,7 +61,7 @@ public class TopSingleSelectWindow<T> extends BasePopupWindow {
 
     private void initView() {
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(mActivity,
-            R.color.base_color_divider), UIUtils.dip2px(1)));
+                R.color.base_color_divider), UIUtils.dip2px(1)));
         mAdapter = new ListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             T t = mAdapter.getItem(position);
@@ -101,6 +101,10 @@ public class TopSingleSelectWindow<T> extends BasePopupWindow {
         }
         mAdapter.notifyDataSetChanged();
         dismiss();
+    }
+
+    public void setSeletct(int index) {
+        mAdapter.select(mAdapter.getItem(index));
     }
 
     public interface WrapperName<T> {

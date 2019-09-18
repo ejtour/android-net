@@ -16,7 +16,6 @@ import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
-import com.hll_sc_app.rest.ReportRest;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -84,7 +83,7 @@ public class CustomerShopDetailPresenter implements CustomerShopDetailContract.I
         params.setGroupID(UserConfig.getGroupID());
         params.setPageNum(mTempPageNum);
         params.setPageSize(20);
-        ReportRest.queryCustomerSales(params, new SimpleObserver<CustomerSalesResp>(mView,showLoading) {
+        Report.queryCustomerSales(params, new SimpleObserver<CustomerSalesResp>(mView,showLoading) {
             @Override
             public void onSuccess(CustomerSalesResp customerSalesResp) {
                 mPageNum = mTempPageNum;

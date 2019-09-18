@@ -9,7 +9,6 @@
     android:paddingBottom="@dimen/dp_10"
     android:orientation="vertical">
     <RelativeLayout
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -17,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             tools:text="哗啦啦"
             android:textColor="#222222"
             android:textSize="@dimen/base_text_13" />
