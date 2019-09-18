@@ -57,7 +57,6 @@
         android:paddingRight="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         android:src="@drawable/ic_goods_add"
-        android:tint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,7 +97,6 @@
         android:paddingRight="5dp"
         android:paddingBottom="@dimen/dp_10"
         android:src="@drawable/ic_goods_sub"
-        android:tint="@color/colorPrimary"
         app:layout_constraintEnd_toStartOf="@id/sgs_edit"
         app:layout_constraintTop_toTopOf="@id/sgs_add_btn" />
 
