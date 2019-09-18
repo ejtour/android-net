@@ -27,7 +27,7 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
 
     private boolean mIsCheckable;
 
-    AuditAdapter() {
+    public AuditAdapter() {
         super(R.layout.item_after_sales_audit);
     }
 
@@ -48,13 +48,7 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
         // 绑定点击事件
-        helper.addOnClickListener(R.id.asa_thumbnail_wrapper)
-                .addOnClickListener(R.id.after_sales_actions_reject)
-                .addOnClickListener(R.id.after_sales_actions_customer_service)
-                .addOnClickListener(R.id.after_sales_actions_finance)
-                .addOnClickListener(R.id.after_sales_actions_driver)
-                .addOnClickListener(R.id.after_sales_actions_driver_cancel)
-                .addOnClickListener(R.id.after_sales_actions_warehouse)
+        helper.addOnClickListener(R.id.asa_action_bar)
                 .addOnClickListener(R.id.asa_check);
         return helper;
     }

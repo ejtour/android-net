@@ -184,7 +184,8 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             R.id.txt_return_audit, R.id.img_setting, R.id.txt_price_setting, R.id.txt_report_center,
             R.id.txt_staff_manage, R.id.txt_delivery_manage, R.id.txt_return_time, R.id.txt_directional_selling,
             R.id.txt_store_manage, R.id.txt_account_statement, R.id.txt_payment_settings, R.id.txt_invoice_manage,
-            R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage})
+            R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage,
+            R.id.txt_complaint_manage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -250,6 +251,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 break;
             case R.id.txt_inventory_manage:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_STOCK_MANAGE_MENU);
+                break;
+            case R.id.txt_complaint_manage:
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_MANAGE_LIST);
                 break;
             default:
                 break;

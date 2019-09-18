@@ -46,5 +46,7 @@ public interface IStockLogQueryContract {
         void refresh();
 
         void export(String email);
+
+        int getPageSize();
     }
 }

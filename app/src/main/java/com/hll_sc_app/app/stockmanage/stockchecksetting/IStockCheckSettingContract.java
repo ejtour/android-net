@@ -15,7 +15,9 @@ public interface IStockCheckSettingContract {
 
         ArrayList<String> getProductIds();
 
-        void changeSuccess(String msg);
+        void addSuccess();
+
+        void removeSuccess();
 
     }
 
@@ -32,6 +34,8 @@ public interface IStockCheckSettingContract {
         void remove();
 
         void add(List<String> ids);
+
+        int getPageSize();
 
     }
 }

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.hll_sc_app.bean.order.detail.TransferDetailBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -119,6 +120,11 @@ public class AfterSalesDetailsBean implements Parcelable {
     private String spareField2;
     private int homologous;
     private boolean selected;
+
+    public double getPendingRefundAmount() {
+        return refundNum >= refundableNum ? refundableAmount :
+                CommonUtils.mulDouble(refundNum, newPrice, 4).doubleValue();
+    }
 
     public TransferDetailBean convertToTransferDetail(String erpShopID) {
         TransferDetailBean detailBean = new TransferDetailBean();

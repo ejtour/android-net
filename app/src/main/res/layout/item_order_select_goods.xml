@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingBottom="5dp">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/osg_icon"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder" />
+
+    <TextView
+        android:id="@+id/osg_goods_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/osg_icon"
+        app:layout_constraintTop_toTopOf="@id/osg_icon"
+        tools:text="红萝卜木盘装特别好吃" />
+
+    <TextView
+        android:id="@+id/osg_goods_brief"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/osg_goods_name"
+        app:layout_constraintStart_toStartOf="@id/osg_goods_name"
+        app:layout_constraintTop_toBottomOf="@id/osg_goods_name" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/osg_spec_list"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/osg_goods_name"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toEndOf="@id/osg_goods_name"
+        app:layout_constraintTop_toBottomOf="@id/osg_goods_brief" />
+</android.support.constraint.ConstraintLayout>

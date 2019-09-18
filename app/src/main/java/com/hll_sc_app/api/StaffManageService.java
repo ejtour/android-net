@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.staff.DepartmentListResp;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.staff.RolePermissionResp;
 import com.hll_sc_app.bean.staff.RoleResp;
@@ -94,4 +95,42 @@ public interface StaffManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:104124")
     Observable<BaseResp<RoleResp>> queryRoles(@Body BaseMapReq req);
+
+
+    /***
+     * 查询部门列表
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101117")
+    Observable<BaseResp<DepartmentListResp>> queryDepartments(@Body BaseMapReq req);
+
+    /***
+     * 新增部门列表
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101114")
+    Observable<BaseResp<Object>> addDepartment(@Body BaseMapReq req);
+
+
+    /***
+     * 删除部门
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101116")
+    Observable<BaseResp<Object>> delDepartment(@Body BaseMapReq req);
+
+    /***
+     * 编辑部门
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101115")
+    Observable<BaseResp<Object>> mdfDepartment(@Body BaseMapReq req);
 }

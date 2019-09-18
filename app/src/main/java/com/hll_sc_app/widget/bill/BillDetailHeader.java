@@ -47,6 +47,10 @@ public class BillDetailHeader extends ConstraintLayout {
     TextView mIncome;
     @BindView(R.id.bdh_refund)
     TextView mRefund;
+    @BindView(R.id.bdh_bill_type)
+    TextView mTxtBillType;
+    @BindView(R.id.bdh_bill_receive)
+    TextView mTxtBillReceive;
 
     public BillDetailHeader(Context context) {
         this(context, null);
@@ -82,6 +86,16 @@ public class BillDetailHeader extends ConstraintLayout {
         mTotalAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
         mIncome.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalIncomeAmount())));
         mRefund.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalRefundAmount())));
+
+        //代仓类型
+        if (data.getBillStatementFlag() == 1) {
+            mTxtBillType.setVisibility(VISIBLE);
+            mTxtBillType.setText("账单类型：代仓对账单");
+            mTxtBillReceive.setText("收款方" + (data.getPayee() == 0 ? "代仓代收款" : "货主收款"));
+        } else {
+            mTxtBillType.setVisibility(GONE);
+            mTxtBillReceive.setVisibility(GONE);
+        }
     }
 
     private String convertDate(String time) {

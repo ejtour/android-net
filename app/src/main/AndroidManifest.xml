@@ -480,11 +480,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.order.reject.OrderRejectActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-
-        <activity
             android:name=".app.submit.SubmitSuccessActivity"
             android:screenOrientation="portrait" />
 
@@ -558,7 +553,7 @@
         <activity
             android:name=".app.search.SearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
             android:name=".app.report.refundReason.RefundReasonActivity"
@@ -914,6 +909,7 @@
         <activity
             android:name=".app.stockmanage.selectproduct.ProductSelectActivity"
             android:screenOrientation="portrait" />
+
         <!--采购单查询-->
         <activity android:name=".app.stockmanage.purchaserorder.PurchaserOrderActivity"
             android:screenOrientation="portrait"/>
@@ -923,6 +919,40 @@
         <!--采购单搜索-->
         <activity android:name=".app.stockmanage.purchaserorder.search.PurchaserOrderSearchActivity"
             android:screenOrientation="portrait"/>
+
+        <!--投诉管理列表首页-->
+        <activity
+            android:name=".app.complainmanage.ComplainManageActivity"
+            android:screenOrientation="portrait" />
+
+        <!--投诉管理-详情-->
+        <activity
+            android:name=".app.complainmanage.detail.ComplainMangeDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!--员工管理-部门选择-->
+        <activity
+            android:name=".app.staffmanage.detail.depart.DepartListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.aftersales.list.AfterSalesListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.entry.AfterSalesEntryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.apply.AfterSalesApplyActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.aftersales.apply.select.AfterSalesSelectActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.order.place.select.SelectGoodsActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

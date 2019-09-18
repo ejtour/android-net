@@ -23,6 +23,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.StockManageEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -68,6 +69,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     private Unbinder unbinder;
     private ProductAdpter mAdapter;
 
+    /*需要移除的ids*/
     private Set<String> mProductIds = new HashSet<>();
 
     @Override
@@ -156,12 +158,17 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
 
     @Override
     public void queryGoodsSuccess(List<GoodsBean> goodsBeans, boolean isMore) {
-        if (isMore && goodsBeans.size() > 0) {
+        if (isMore && goodsBeans != null && goodsBeans.size() > 0) {
             mAdapter.addData(goodsBeans);
         } else if (!isMore) {
             if (goodsBeans.size() == 0) {
-                mLlEmpty.setVisibility(View.VISIBLE);
-                mLlData.setVisibility(View.GONE);
+                /*没有搜索词的情况下*/
+                if (TextUtils.isEmpty(mSearchView.getSearchContent())) {
+                    mLlEmpty.setVisibility(View.VISIBLE);
+                    mLlData.setVisibility(View.GONE);
+                } else {
+                    mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("当前条件下没有商品库存校验数据噢~").create());
+                }
                 mTitle.setRightBtnVisible(false);
             } else {
                 mLlEmpty.setVisibility(View.GONE);
@@ -170,6 +177,11 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
             }
             mAdapter.setNewData(goodsBeans);
         }
+
+        if (goodsBeans != null) {
+            mRefreshLayout.setEnableLoadMore(goodsBeans.size() == mPresent.getPageSize());
+        }
+        mCheckAll.setChecked(mAdapter.getData().size() == getProductIds().size());
     }
 
     @Override
@@ -178,8 +190,14 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
     }
 
     @Override
-    public void changeSuccess(String msg) {
-        showToast(msg);
+    public void addSuccess() {
+        mPresent.refresh();
+        showToast("新增商品成功");
+    }
+
+    @Override
+    public void removeSuccess() {
+        showToast("移除商品成功");
         mPresent.refresh();
         mProductIds.clear();
     }
@@ -190,12 +208,12 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    @OnClick({R.id.check_all, R.id.txt_move, R.id.txt_add})
+    @OnClick({R.id.check_all, R.id.ll_check_all, R.id.txt_move, R.id.txt_add})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.check_all:
-                CheckBox checkBox = (CheckBox) view;
-                if (checkBox.isChecked()) {
+            case R.id.ll_check_all:
+                if (mCheckAll.isChecked()) {
                     mProductIds.clear();
                 } else {
                     for (GoodsBean goodsBean : mAdapter.getData()) {

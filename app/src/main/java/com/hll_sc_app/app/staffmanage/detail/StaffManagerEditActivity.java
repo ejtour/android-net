@@ -15,15 +15,16 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.staffmanage.detail.depart.DepartListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.StaffDepartListEvent;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.staff.RoleBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -61,6 +62,8 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
     EditText mTxtEmail;
     @BindView(R.id.txt_roles)
     TextView mTxtRoles;
+    @BindView(R.id.txt_depart)
+    TextView mTxtDepart;
     @Autowired(name = "parcelable")
     EmployeeBean mEmployeeBean;
     private StaffManagerEditPresenter mPresenter;
@@ -113,10 +116,17 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 mTxtRoles.setText(String.format(Locale.getDefault(), "已选择%d个岗位", rolesBeans.size()));
             }
         }
+        mTxtDepart.setText("已选" + (!TextUtils.isEmpty(bean.getDeptIDs()) ? bean.getDeptIDs().split(",").length : 0) + "个部门");
     }
 
     private boolean isAdd() {
         return mEmployeeBean == null;
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(StaffDepartListEvent event) {
+            mEmployeeBean.setDeptIDs(TextUtils.join(",", event.getDepartIds()));
+            mTxtDepart.setText("已选" + event.getDepartIds().size() + "个部门");
     }
 
     @Override
@@ -127,13 +137,14 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             showToast("更新员工信息成功");
         }
         ARouter.getInstance().build(RouterConfig.STAFF_LIST)
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            .navigation(this);
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                .navigation(this);
     }
 
     @OnClick({R.id.img_back,
-        R.id.txt_save,
-        R.id.ll_roles})
+            R.id.txt_save,
+            R.id.ll_roles,
+            R.id.ll_depart})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -144,6 +155,9 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 break;
             case R.id.ll_roles:
                 RouterUtil.goToActivity(RouterConfig.STAFF_ROLE_SELECT, mTxtRoles.getTag());
+                break;
+            case R.id.ll_depart:
+                DepartListActivity.start(mEmployeeBean.getDeptIDs());
                 break;
             default:
                 break;

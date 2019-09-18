@@ -77,6 +77,16 @@ public class OrderDetailFooter extends ConstraintLayout {
     TextView mOrderSource;
     @BindView(R.id.odf_order_type)
     TextView mOrderType;
+    @BindView(R.id.odf_express_name)
+    TextView mExpressName;
+    @BindView(R.id.odf_express_no)
+    TextView mExpressNo;
+    @BindView(R.id.odf_copy_express_no)
+    TextView mCopyExpressNo;
+    @BindView(R.id.odf_salesman_name)
+    TextView mSalesmanName;
+    @BindView(R.id.odf_salesman_phone)
+    TextView mSalesmanPhone;
     @BindView(R.id.odf_deposit_amount_group)
     Group mDepositAmountGroup;
     @BindView(R.id.odf_shop_discount_group)
@@ -89,6 +99,8 @@ public class OrderDetailFooter extends ConstraintLayout {
     Group mOrderTypeGroup;
     @BindView(R.id.odf_driver_group)
     Group mDriverGroup;
+    @BindView(R.id.odf_express_group)
+    Group mExpressGroup;
 
     public OrderDetailFooter(Context context) {
         this(context, null);
@@ -145,12 +157,24 @@ public class OrderDetailFooter extends ConstraintLayout {
                     payType + "（" + paymentWay + "）" : payType);
         else mPayMethod.setText(null);
         handleOrderType(data);
-        /*if (data.getBillSource() == 1 || data.getBillSource() == 2) {
-            mOrderSourceGroup.setVisibility(VISIBLE);
-            mOrderSource.setText(data.getBillSource() == 1 ? "商城订单" : "哗啦啦供应链");
-        }*/
         handleDeliveryInfo(data);
+        handleExpressInfo(data);
+        handleSalesMans(data);
         requestLayout();
+    }
+
+    private void handleSalesMans(OrderResp data) {
+        mSalesmanName.setText(data.getSalesManName());
+        mSalesmanPhone.setText(PhoneUtil.formatPhoneNum(data.getLinkPhone()));
+    }
+
+    private void handleExpressInfo(OrderResp data) {
+        if (!TextUtils.isEmpty(data.getExpressNo())) {
+            mExpressGroup.setVisibility(VISIBLE);
+            mExpressName.setText(data.getExpressName());
+            mExpressNo.setText(data.getExpressNo());
+            mCopyExpressNo.setTag(data.getExpressNo());
+        } else mExpressGroup.setVisibility(GONE);
     }
 
     private void handleDeliveryInfo(OrderResp data) {
@@ -191,14 +215,15 @@ public class OrderDetailFooter extends ConstraintLayout {
         return ss;
     }
 
-    @OnClick({R.id.odf_copy_order_no, R.id.odf_copy_supply_chain_no, R.id.odf_dial_driver})
+    @OnClick({R.id.odf_copy_order_no, R.id.odf_copy_supply_chain_no, R.id.odf_copy_express_no, R.id.odf_dial_driver})
     public void onViewClicked(View view) {
         if (view.getTag() == null) return;
         switch (view.getId()) {
             case R.id.odf_copy_order_no:
             case R.id.odf_copy_supply_chain_no:
+            case R.id.odf_copy_express_no:
                 ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                if (cm == null) {
+                if (cm == null || view.getTag() == null) {
                     return;
                 }
                 ClipData clipData = ClipData.newPlainText("编号", view.getTag().toString());

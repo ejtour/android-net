@@ -120,4 +120,9 @@ public class CustomerSendManagePresent implements ICustomerSendManageContract.IP
         pageNumTemp = 1;
         queryCustomerSendManageListResp(false);
     }
+
+    @Override
+    public int getPageSize() {
+        return pageSize;
+    }
 }

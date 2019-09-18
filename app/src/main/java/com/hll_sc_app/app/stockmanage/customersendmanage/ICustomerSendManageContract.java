@@ -27,5 +27,7 @@ public interface ICustomerSendManageContract {
 
         void refresh();
 
+        int getPageSize();
+
     }
 }

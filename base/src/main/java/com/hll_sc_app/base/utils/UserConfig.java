@@ -81,7 +81,7 @@ public class UserConfig {
      */
     public static String getSalesmanID() {
         UserBean user = GreenDaoUtils.getUser();
-        if (user != null && "1".equals(user.getAuthType())) {
+        if (user != null && "1".equals(user.getCurRole())) {
             return user.getEmployeeID();
         }
         return "";

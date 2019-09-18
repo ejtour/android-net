@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/sgs_spec"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="3斤／包 [每斤¥5.10] [5包起购]" />
+
+    <TextView
+        android:id="@+id/sgs_unit_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sgs_spec"
+        tools:text="¥15.30/包" />
+
+    <TextView
+        android:id="@+id/sgs_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="商品已售罄"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="@dimen/text_little_size"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@id/sgs_unit_price"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/sgs_change_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_reload_button"
+        app:layout_constraintBottom_toBottomOf="@id/sgs_add_btn"
+        app:layout_constraintEnd_toEndOf="@id/sgs_add_btn"
+        app:layout_constraintStart_toStartOf="@id/sgs_sub_btn"
+        app:layout_constraintTop_toTopOf="@id/sgs_add_btn" />
+
+    <ImageView
+        android:id="@+id/sgs_add_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:src="@drawable/ic_goods_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sgs_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
+        app:layout_constraintBottom_toBottomOf="@id/sgs_add_btn"
+        app:layout_constraintEnd_toStartOf="@id/sgs_add_btn"
+        app:layout_constraintTop_toTopOf="@id/sgs_add_btn"
+        tools:text="袋" />
+
+    <EditText
+        android:id="@+id/sgs_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_edit"
+        android:gravity="center"
+        android:minWidth="40dp"
+        android:inputType="numberDecimal"
+        android:singleLine="true"
+        android:textColor="@color/color_222222"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/sgs_add_btn"
+        app:layout_constraintEnd_toStartOf="@id/sgs_unit"
+        app:layout_constraintTop_toTopOf="@id/sgs_add_btn"
+        tools:text="22" />
+
+    <ImageView
+        android:id="@+id/sgs_sub_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingRight="5dp"
+        android:paddingBottom="@dimen/dp_10"
+        android:src="@drawable/ic_goods_sub"
+        app:layout_constraintEnd_toStartOf="@id/sgs_edit"
+        app:layout_constraintTop_toTopOf="@id/sgs_add_btn" />
+
+    <android.support.constraint.Group
+        android:id="@+id/sgs_change_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="sgs_change_bg,sgs_sub_btn,sgs_edit,sgs_unit" />
+</android.support.constraint.ConstraintLayout>

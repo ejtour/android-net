@@ -37,17 +37,14 @@ public class SubmitSuccessActivity extends BaseActivity {
      * @param title       标题
      * @param desc        描述
      * @param detailsPath 详情路径
-     * @param backType    回退类型
      * @param id          详情 id
      */
     public static void start(@NonNull String title,
                              @Nullable String desc,
                              @Nullable String detailsPath,
-                             @NonNull BackType backType,
                              @Nullable String id) {
         SubmitParams params = new SubmitParams(id);
         params.setTitle(title);
-        params.setBackType(backType);
         params.setDetailsPath(detailsPath);
         if (desc != null) {
             params.setDesc(desc);
@@ -59,9 +56,8 @@ public class SubmitSuccessActivity extends BaseActivity {
                 .navigation();
     }
 
-    public static void start(@NonNull String title,
-                             BackType backType) {
-        start(title, null, null, backType, null);
+    public static void start(@NonNull String title) {
+        start(title, null, null, null);
     }
 
     @BindView(R.id.ass_label)
@@ -72,6 +68,7 @@ public class SubmitSuccessActivity extends BaseActivity {
     TextView assGotoList;
     @BindView(R.id.ass_view_detail)
     TextView assViewDetail;
+    private BackType mBackType = BackType.ORDER_LIST;
     private Unbinder unbinder;
 
     /**
@@ -96,7 +93,7 @@ public class SubmitSuccessActivity extends BaseActivity {
         // 通过类型参数对按钮按钮状态进行调整
         assViewDetail.setVisibility(TextUtils.isEmpty(entry.getDetailsPath()) || TextUtils.isEmpty(entry.getDetailsId())
                 ? View.GONE : View.VISIBLE);
-        assGotoList.setText(entry.getBackType().getLabel());
+        assGotoList.setText(mBackType.getLabel());
         assHeader.setLeftBtnClick(this::goBack);
     }
 
@@ -120,8 +117,7 @@ public class SubmitSuccessActivity extends BaseActivity {
             case R.id.ass_view_detail:
                 ARouter.getInstance()
                         .build(entry.getDetailsPath())
-                        .withSerializable("serializable", entry.getBackType())
-                        .withString("object", entry.getDetailsId())
+                        .withString("object0", entry.getDetailsId())
                         .setProvider(new LoginInterceptor())
                         .navigation();
                 break;
@@ -132,7 +128,7 @@ public class SubmitSuccessActivity extends BaseActivity {
 
     private void goBack(View view) {
         ARouter.getInstance()
-                .build(entry.getBackType().getPath())
+                .build(mBackType.getPath())
                 .withBoolean("reload", true)
                 .withBoolean("item", true)
                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)

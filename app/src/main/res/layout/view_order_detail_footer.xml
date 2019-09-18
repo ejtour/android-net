@@ -25,7 +25,7 @@
         android:text="备注信息"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/odf_div_0"/>
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_0" />
 
     <TextView
         android:id="@+id/odf_remark"
@@ -40,7 +40,7 @@
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/odf_remark_label"
-        app:layout_constraintTop_toBottomOf="@+id/odf_div_0"/>
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_0" />
 
     <View
         android:id="@+id/odf_div_1"
@@ -467,6 +467,130 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/odf_driver_contact_label" />
 
+    <TextView
+        android:id="@+id/odf_express_info_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="物流信息"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_5" />
+
+    <TextView
+        android:id="@+id/odf_express_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="物流公司"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_express_info_label" />
+
+    <TextView
+        android:id="@+id/odf_express_no_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="物流单号"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_express_name_label" />
+
+
+    <TextView
+        android:id="@+id/odf_express_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_express_name_label"
+        app:layout_constraintStart_toEndOf="@+id/odf_express_name_label"
+        tools:text="顺丰速递" />
+
+    <TextView
+        android:id="@+id/odf_express_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_express_no_label"
+        app:layout_constraintStart_toStartOf="@+id/odf_express_name"
+        tools:text="单号" />
+
+    <TextView
+        android:id="@+id/odf_copy_express_no"
+        android:layout_width="50dp"
+        android:layout_height="18dp"
+        android:background="@drawable/bg_action_button_little"
+        android:gravity="center"
+        android:text="复制"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@+id/odf_express_no_label"
+        app:layout_constraintEnd_toEndOf="@+id/odf_remark"
+        app:layout_constraintTop_toTopOf="@+id/odf_express_no_label" />
+
+    <View
+        android:id="@+id/odf_div_6"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/odf_express_no_label" />
+
+    <TextView
+        android:id="@+id/odf_salesman_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="销售代表"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_div_6" />
+
+    <TextView
+        android:id="@+id/odf_salesman_phone_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="联系方式"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@+id/odf_remark_label"
+        app:layout_constraintTop_toBottomOf="@+id/odf_salesman_name_label" />
+
+
+    <TextView
+        android:id="@+id/odf_salesman_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_salesman_name_label"
+        app:layout_constraintStart_toEndOf="@+id/odf_salesman_name_label"
+        android:hint="— —"
+        tools:text="— —" />
+
+    <TextView
+        android:id="@+id/odf_salesman_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBaseline_toBaselineOf="@+id/odf_salesman_phone_label"
+        app:layout_constraintStart_toStartOf="@+id/odf_salesman_name"
+        android:hint="— —"
+        tools:text="— —" />
+
+    <View
+        android:id="@+id/odf_div_7"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/odf_salesman_phone_label" />
+
     <android.support.constraint.Group
         android:id="@+id/odf_deposit_amount_group"
         android:layout_width="wrap_content"
@@ -508,4 +632,11 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="odf_driver_name,odf_driver_name_label,odf_driver_contact_label,odf_driver_contact,odf_plate_no,odf_plate_no_label,odf_dial_driver,odf_shipping_info_label,odf_div_5" />
+
+    <android.support.constraint.Group
+        android:id="@+id/odf_express_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="odf_express_info_label,odf_express_name_label,odf_express_name,odf_express_no_label,odf_express_no,odf_copy_express_no,odf_div_6" />
 </merge>

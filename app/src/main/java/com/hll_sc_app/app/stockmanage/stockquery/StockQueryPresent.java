@@ -164,4 +164,9 @@ public class StockQueryPresent implements IStockQueryContract.IPresent {
                     }
                 });
     }
+
+    @Override
+    public int getPageSize() {
+        return pageSize;
+    }
 }

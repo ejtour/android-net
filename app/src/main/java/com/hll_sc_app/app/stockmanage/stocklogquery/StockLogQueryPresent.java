@@ -203,4 +203,9 @@ public class StockLogQueryPresent implements IStockLogQueryContract.IPresent {
                     }
                 });
     }
+
+    @Override
+    public int getPageSize() {
+        return pageSize;
+    }
 }

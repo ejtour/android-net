@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class SingleListResp<T> {
-    @SerializedName(value = "list", alternate = "records")
+    @SerializedName(value = "list", alternate = {"records", "detailList"})
     private List<T> records;
     @SerializedName(value = "total", alternate = {"size", "totalSize"})
     private int totalSize;

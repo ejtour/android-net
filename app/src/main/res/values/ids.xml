@@ -23,4 +23,12 @@
     <item name="oab_confirm" type="id" />
     <item name="oab_refund" type="id" />
     <item name="oab_refund_detail" type="id" />
+    <item name="asa_customer" type="id" />
+    <item name="asa_reject" type="id" />
+    <item name="asa_driver" type="id" />
+    <item name="asa_warehouse" type="id" />
+    <item name="asa_finance" type="id" />
+    <item name="asa_reapply" type="id" />
+    <item name="asa_cancel" type="id" />
+    <item name="asa_complain" type="id" />
 </resources>

@@ -28,11 +28,6 @@ public class SubmitParams implements Parcelable {
      */
     private String detailsPath;
 
-    /**
-     * 返回类型
-     */
-    private BackType backType;
-
     public SubmitParams() {
     }
 
@@ -60,14 +55,6 @@ public class SubmitParams implements Parcelable {
         return detailsId;
     }
 
-    public BackType getBackType() {
-        return backType;
-    }
-
-    public void setBackType(BackType backType) {
-        this.backType = backType;
-    }
-
     public void setDetailsId(String detailsId) {
         this.detailsId = detailsId;
     }
@@ -91,7 +78,6 @@ public class SubmitParams implements Parcelable {
         dest.writeString(this.desc);
         dest.writeString(this.detailsId);
         dest.writeString(this.detailsPath);
-        dest.writeInt(this.backType == null ? -1 : this.backType.ordinal());
     }
 
     protected SubmitParams(Parcel in) {
@@ -99,8 +85,6 @@ public class SubmitParams implements Parcelable {
         this.desc = in.readString();
         this.detailsId = in.readString();
         this.detailsPath = in.readString();
-        int tmpBackType = in.readInt();
-        this.backType = tmpBackType == -1 ? null : BackType.values()[tmpBackType];
     }
 
     public static final Creator<SubmitParams> CREATOR = new Creator<SubmitParams>() {

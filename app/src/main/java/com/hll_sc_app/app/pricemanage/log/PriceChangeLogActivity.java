@@ -288,6 +288,8 @@ public class PriceChangeLogActivity extends BaseLoadActivity implements PriceCha
                     .setText(R.id.txt_priceAfter, CommonUtils.formatNumber(bean.getPriceAfter()))
                     .setText(R.id.txt_modifier, bean.getModifier())
                     .setText(R.id.txt_modifyTime, formatModifyTime(bean.getModifyTime()))
+                    .setText(R.id.txt_good_origin,bean.getCargoOwnerName())
+
                     .itemView.setBackgroundResource(helper.getLayoutPosition() % 2 == 0 ?
                     R.drawable.bg_price_log_content_gray : R.drawable.bg_price_log_content_white);
         }

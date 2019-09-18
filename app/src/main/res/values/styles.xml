@@ -63,6 +63,14 @@
         <item name="android:background">@drawable/bg_selector_close</item>
     </style>
 
+    <style name="BtnSubmit">
+        <item name="android:layout_width">230dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_button_mid_solid_primary</item>
+        <item name="android:textAppearance">@style/TextAppearance.City22.Small.White</item>
+    </style>
+
     <style name="BtnOrderAction">
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>

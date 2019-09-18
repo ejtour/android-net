@@ -2,18 +2,18 @@ package com.hll_sc_app.bean.common;
 
 public class WareHouseShipperBean {
 
-    private long   groupID;
+    private String   groupID;
     private String groupName;
-    private long   id;
-    private long   purchaserID;
+    private String   id;
+    private String   purchaserID;
     private String purchaserName;
 
 
-    public long getGroupID() {
+    public String getGroupID() {
         return groupID;
     }
 
-    public void setGroupID(long groupID) {
+    public void setGroupID(String groupID) {
         this.groupID = groupID;
     }
 
@@ -25,19 +25,19 @@ public class WareHouseShipperBean {
         this.groupName = groupName;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public long getPurchaserID() {
+    public String getPurchaserID() {
         return purchaserID;
     }
 
-    public void setPurchaserID(long purchaserID) {
+    public void setPurchaserID(String purchaserID) {
         this.purchaserID = purchaserID;
     }
 

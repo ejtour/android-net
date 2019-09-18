@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.StockManageEvent;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.stockmanage.CustomerSendManageListResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -151,15 +152,22 @@ public class CustomerSendManageActivity extends BaseLoadActivity implements ICus
             }
             mAdapter.setNewData(resp.getRecords());
         }
+
+        if (!CommonUtils.isEmpty(resp.getRecords())) {
+            mRefreshLayout.setEnableLoadMore(resp.getRecords().size() == mPresent.getPageSize());
+        }
     }
 
-    @OnClick({R.id.txt_house_name})
+    @OnClick({R.id.txt_house_name,R.id.img_close})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_house_name:
                 if (mSelectHouseWindow != null) {
                     mSelectHouseWindow.showAsDropDown(mTxtHouseName);
                 }
+                break;
+            case R.id.img_close:
+                finish();
                 break;
             default:
                 break;

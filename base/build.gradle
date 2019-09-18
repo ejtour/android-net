@@ -43,7 +43,7 @@ android {
 }
 
 greendao {
-    schemaVersion 3
+    schemaVersion 1
 }
 
 dependencies {

@@ -16,16 +16,19 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
+import com.hll_sc_app.app.aftersales.entry.AfterSalesEntryActivity;
+import com.hll_sc_app.app.aftersales.list.AfterSalesListActivity;
 import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
-import com.hll_sc_app.app.order.reject.OrderRejectActivity;
 import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.order.OrderResp;
@@ -172,7 +175,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         if (list.size() == 1) {
             AfterSalesDetailActivity.start(this, list.get(0).getId());
         } else {
-            showToast("退换货列表待添加");
+            AfterSalesListActivity.start(new ArrayList<>(list));
         }
     }
 
@@ -215,13 +218,13 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                         mOrderResp.getPayType() == 1 ? 2 : 1);
                 break;
             case R.id.oab_reject:
-                OrderRejectActivity.start(mOrderResp);
+                AfterSalesApplyActivity.start(AfterSalesApplyParam.rejectFromOrder(mOrderResp));
                 break;
             case R.id.oab_inspection:
                 OrderInspectionActivity.start(this, mOrderResp);
                 break;
             case R.id.oab_refund:
-                showToast("申请退换货待添加");
+                AfterSalesEntryActivity.start(mOrderResp);
                 break;
             case R.id.oab_refund_detail:
                 mPresenter.getAfterSalesInfo();

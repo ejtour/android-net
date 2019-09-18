@@ -28,6 +28,15 @@ public class PriceLogBean {
     private String id;
     private String skuCode;
     private String specContent;
+    private String CargoOwnerName;
+
+    public String getCargoOwnerName() {
+        return CargoOwnerName;
+    }
+
+    public void setCargoOwnerName(String cargoOwnerName) {
+        CargoOwnerName = cargoOwnerName;
+    }
 
     public String getSaleUnitName() {
         return saleUnitName;

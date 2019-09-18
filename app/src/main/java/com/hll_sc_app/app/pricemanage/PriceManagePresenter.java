@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.api.PriceManageService;
 import com.hll_sc_app.api.PriceRatioTemplateService;
+import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -15,6 +16,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
@@ -22,6 +24,7 @@ import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.goods.SkuProductsResp;
 import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
 import com.hll_sc_app.bean.priceratio.RatioTemplateResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -243,11 +246,39 @@ public class PriceManagePresenter implements PriceManageContract.IPriceManagePre
                 });
     }
 
+    @Override
+    public void queryOwners() {
+        WareHouseShipperReq params = new WareHouseShipperReq();
+        params.setGroupID(UserConfig.getGroupID());
+        params.setActionType(1);
+        params.setStatus(2);
+        params.setName("");
+        params.setIsSizeLimit(1);
+        ReportService.INSTANCE
+                .queryWareHouseShipperList(new BaseReq<>(params))
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<List<WareHouseShipperBean>>() {
+                    @Override
+                    public void onSuccess(List<WareHouseShipperBean> wareHouseShipperBeans) {
+                        mView.queryOwnersSuccess(wareHouseShipperBeans);
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+
+    }
+
     private void toQueryDepositProducts(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("actionType", "sellPrice")
                 .put("pageNum", String.valueOf(mTempPageNum))
                 .put("pageSize", "20")
+                .put("cargoOwnerID", mView.getOwnerID())
                 .put("name", mView.getSearchParam())
                 .put("productStatus", mView.getProductStatus())
                 .put("isWareHourse", mView.getIsWareHourse() == -1 ? null : (mView.getIsWareHourse() + ""))

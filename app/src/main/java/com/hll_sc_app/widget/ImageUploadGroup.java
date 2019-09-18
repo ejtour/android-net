@@ -22,24 +22,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/17
  */
 
 public class ImageUploadGroup extends LinearLayout {
-    @BindView(R.id.iug_upload)
-    ImgUploadBlock mUpload;
+    private ImgUploadBlock mUpload;
     private List<String> mUploadImgUrls = new ArrayList<>();
     /**
      * 凭证最大数量
      */
     private final int MAX_IMG_NUMBER = 5;
     private int mItemSize;
-    private ILoadView mView;
     private int mPadding;
 
     public ImageUploadGroup(Context context) {
@@ -52,11 +47,12 @@ public class ImageUploadGroup extends LinearLayout {
 
     public ImageUploadGroup(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        View view = View.inflate(context, R.layout.view_image_upload_group, this);
-        ButterKnife.bind(this, view);
         calcItemSize(attrs);
-        mUpload.getLayoutParams().width = mItemSize;
-        mUpload.getLayoutParams().height = mItemSize;
+        mUpload = new ImgUploadBlock(context);
+        mUpload.setIconResId(R.drawable.ic_camera);
+        mUpload.setTitle("上传凭证");
+        mUpload.setSubTitle("0/5");
+        addView(mUpload, mItemSize, mItemSize);
     }
 
     private void calcItemSize(AttributeSet attrs) {
@@ -78,23 +74,21 @@ public class ImageUploadGroup extends LinearLayout {
         }
     }
 
-    public void register(ILoadView view) {
-        mView = CommonUtils.requireNonNull(view);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        mView = null;
-        super.onDetachedFromWindow();
-    }
-
     public void imageUpload(File imageFile) {
-        Upload.imageUpload(imageFile, new SimpleObserver<String>(mView) {
+        if (!(getContext() instanceof ILoadView)) return;
+        Upload.imageUpload(imageFile, new SimpleObserver<String>((ILoadView) getContext()) {
             @Override
             public void onSuccess(String s) {
                 showUploadedImg(s);
             }
         });
+    }
+
+    public void showImages(String[] urls) {
+        if (urls == null || urls.length == 0) return;
+        for (String url : urls) {
+            showUploadedImg(url);
+        }
     }
 
     private void showUploadedImg(String url) {

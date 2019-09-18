@@ -64,6 +64,7 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
                     GlobalPreference.putParam(LOGIN_PHONE, loginPhone);
                     UserBean userBean = resp.getUser();
                     userBean.setAccessToken(resp.getAccessToken());
+                    userBean.setCurRole(userBean.getAuthType());
                     GreenDaoUtils.updateUser(userBean);
                     GreenDaoUtils.updateShopList(resp.getShops());
                     mView.loginSuccess(userBean.getAuthType());

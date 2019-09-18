@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -21,7 +20,7 @@
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_placeholder"/>
+        tools:src="@drawable/ic_placeholder" />
 
     <TextView
         android:id="@+id/txt_productName"
@@ -35,72 +34,121 @@
         app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_imgUrl"
-        tools:text="可好吃可好吃的红彤彤的大苹果"/>
+        tools:text="可好吃可好吃的红彤彤的大苹果" />
 
     <TextView
         android:id="@+id/txt_specContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:hint="无商品规格"
+        android:minWidth="40dp"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/txt_costPrice"
+        app:layout_constraintBottom_toTopOf="@+id/ll_cost_price"
         app:layout_constraintStart_toEndOf="@+id/img_imgUrl"
         app:layout_constraintTop_toBottomOf="@+id/txt_productName"
-        tools:text="商品规格"/>
+        tools:text="" />
+
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="0.5dp"
+        android:layout_height="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/base_color_divider"
+        app:layout_constraintBottom_toBottomOf="@id/txt_group_info"
+        app:layout_constraintStart_toEndOf="@id/txt_specContent"
+        app:layout_constraintTop_toTopOf="@id/txt_specContent" />
 
     <TextView
-        android:id="@+id/txt_costPrice"
+        android:id="@+id/txt_group_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:hint="无货主公司名称"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
-        app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
+        app:layout_constraintStart_toEndOf="@+id/view_divider"
+        app:layout_constraintTop_toTopOf="@+id/txt_specContent"
+        tools:text="" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_cost_price"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_gray_solid_radius_5"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/txt_specContent"
         app:layout_constraintTop_toBottomOf="@+id/txt_specContent"
-        tools:text="成本：2800"/>
+        app:layout_constraintWidth_percent="0.368">
 
-    <TextView
-        android:id="@+id/txt_edt_costPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/bg_button_large_stroke_primary"
+        <TextView
+            android:id="@+id/txt_costPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            android:textColor="#ED5655"
+            android:textSize="@dimen/base_text_10"
+            app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
+            app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
+            app:layout_constraintTop_toBottomOf="@+id/txt_specContent"
+            tools:text="¥3000.00/套" />
+
+        <TextView
+            android:id="@+id/txt_edt_costPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="点击修改成本价"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
+            app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
+            app:layout_constraintTop_toBottomOf="@+id/txt_specContent" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_product_price"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_gray_solid_radius_5"
         android:gravity="center"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="修改成本"
-        android:textColor="@color/base_colorPrimary"
-        android:textSize="9sp"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_costPrice"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_costPrice"
-        app:layout_constraintVertical_bias="1"/>
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/ll_cost_price"
+        app:layout_constraintTop_toBottomOf="@+id/txt_specContent"
+        app:layout_constraintWidth_percent="0.368"
+        app:layout_goneMarginLeft="0dp">
 
-    <TextView
-        android:id="@+id/txt_productPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
-        app:layout_constraintTop_toBottomOf="@+id/txt_costPrice"
-        tools:text="售价：2800"/>
+        <TextView
+            android:id="@+id/txt_productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            android:textColor="#ED5655"
+            android:textSize="@dimen/base_text_10"
+            app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
+            app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
+            app:layout_constraintTop_toBottomOf="@+id/txt_specContent"
+            tools:text="¥3000.00/套" />
 
-    <TextView
-        android:id="@+id/txt_edt_productPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/bg_button_large_stroke_primary"
-        android:gravity="center"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="修改售价"
-        android:textColor="@color/base_colorPrimary"
-        android:textSize="9sp"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_productPrice"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_productPrice"
-        app:layout_constraintVertical_bias="1"/>
+        <TextView
+            android:id="@+id/txt_edt_productPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="点击修改售价"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/img_imgUrl"
+            app:layout_constraintLeft_toRightOf="@+id/img_imgUrl"
+            app:layout_constraintTop_toBottomOf="@+id/txt_specContent" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
