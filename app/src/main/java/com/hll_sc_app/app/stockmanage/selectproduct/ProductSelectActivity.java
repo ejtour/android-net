@@ -148,7 +148,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
             if (bean != null) {
-                if (bean.isSelected()) {
+                if (bean.isCheck()) {
                     remove(bean);
                     adapter.notifyItemChanged(position);
                     showBottomCount();
@@ -174,7 +174,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     }
 
     private void remove(GoodsBean goodsBean) {
-        goodsBean.setSelected(false);
+        goodsBean.setCheck(false);
         mGoodList.remove(goodsBean);
     }
 
@@ -187,7 +187,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
 
     private void add(GoodsBean bean) {
         if (!mGoodList.contains(bean)) {
-            bean.setSelected(true);
+            bean.setCheck(true);
             mGoodList.add(bean);
         }
     }
@@ -226,7 +226,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         if (!CommonUtils.isEmpty(list)) {
             for (GoodsBean bean : list) {
                 if (contains(bean)) {
-                    bean.setSelected(true);
+                    bean.setCheck(true);
                 }
             }
         }
@@ -319,7 +319,7 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         protected void convert(BaseViewHolder helper, GoodsBean item) {
             helper.setText(R.id.txt_productName, item.getProductName())
                     .setText(R.id.txt_code, "编码：" + item.getProductCode());
-            helper.getView(R.id.img_check).setSelected(item.isSelected());
+            helper.getView(R.id.img_check).setSelected(item.isCheck());
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(item.getImgUrl());
         }
     }

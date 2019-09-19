@@ -40,6 +40,6 @@ public class ProductAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> 
                 .setText(R.id.txt_product_name, item.getProductName())
                 .setText(R.id.txt_spec_name, specName)
                 .setText(R.id.txt_price, price);
-        helper.getView(R.id.img_select).setSelected(item.isSelect());
+        helper.getView(R.id.img_select).setSelected(item.isCheck());
     }
 }

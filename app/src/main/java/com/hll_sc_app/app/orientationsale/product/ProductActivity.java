@@ -122,7 +122,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         mProductAdapter = new ProductAdapter(mProductList);
         mProductAdapter.setOnItemClickListener((adapter, view, position) -> {
             GoodsBean goodsBean = (GoodsBean) adapter.getData().get(position);
-            if (goodsBean.isSelect()) {
+            if (goodsBean.isCheck()) {
                 for (OrientationDetailBean bean : mProductList) {
                     if (bean.getProductID().equalsIgnoreCase(goodsBean.getProductID())) {
                         mProductList.remove(bean);
@@ -133,7 +133,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
                 OrientationDetailBean bean = goodsBeanToOrientationDetailBean(goodsBean);
                 mProductList.add(bean);
             }
-            goodsBean.setSelect(goodsBean.isSelect() ? false : true);
+            goodsBean.setCheck(!goodsBean.isCheck());
             mSelectView.setText("已选：" + mProductList.size());
             adapter.notifyItemChanged(position);
         });
@@ -181,7 +181,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         for (GoodsBean goodsBean : list) {
             for (OrientationDetailBean bean : mProductList) {
                 if (goodsBean.getProductID().equalsIgnoreCase(bean.getProductID())) {
-                    goodsBean.setSelect(true);
+                    goodsBean.setCheck(true);
                     break;
                 }
             }

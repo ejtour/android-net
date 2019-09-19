@@ -143,10 +143,9 @@ public class GoodsBean implements Parcelable {
     private String shopProductCategorySubName = "";
     private String usableStock;
     private double stockWarnNum;
-    private boolean select;
     private String occupiedStock;
     private String totalStock;
-    private boolean isSelected;
+    private int isSelected;
     private String discountRuleTypeName;
 
     public GoodsBean() {
@@ -224,7 +223,6 @@ public class GoodsBean implements Parcelable {
         this.shopProductCategorySubName = in.readString();
         this.usableStock = in.readString();
         this.stockWarnNum = in.readDouble();
-        this.select = in.readByte() != 0;
         this.occupiedStock = in.readString();
         this.totalStock = in.readString();
         this.discountRuleTypeName = in.readString();
@@ -238,11 +236,11 @@ public class GoodsBean implements Parcelable {
         this.discountRuleTypeName = discountRuleTypeName;
     }
 
-    public boolean isSelected() {
+    public int isSelected() {
         return isSelected;
     }
 
-    public void setSelected(boolean selected) {
+    public void setSelected(int selected) {
         isSelected = selected;
     }
 
@@ -260,14 +258,6 @@ public class GoodsBean implements Parcelable {
 
     public void setOccupiedStock(String occupiedStock) {
         this.occupiedStock = occupiedStock;
-    }
-
-    public boolean isSelect() {
-        return select;
-    }
-
-    public void setSelect(boolean select) {
-        this.select = select;
     }
 
     public double getStockWarnNum() {
@@ -831,7 +821,7 @@ public class GoodsBean implements Parcelable {
                 isDeliveryRange, nextDayDelivery, stockCheckType, brandId, producer, productSale, note, priceIsVisible,
                 actionTime, saleSpecNum, isCollection, categoryThreeID, top, shopProductCategoryID, standardSpecID,
                 placeCity, shopProductCategoryThreeID, categoryID, categoryName, categorySubName, categoryThreeName,
-                productType, supplierName, actionBy, productStatus, isSupplierWarehouse, select});
+                productType, supplierName, actionBy, productStatus, isSupplierWarehouse});
     }
 
     @Override
@@ -940,7 +930,6 @@ public class GoodsBean implements Parcelable {
         dest.writeString(this.shopProductCategorySubName);
         dest.writeString(this.usableStock);
         dest.writeDouble(this.stockWarnNum);
-        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
         dest.writeString(this.occupiedStock);
         dest.writeString(this.totalStock);
         dest.writeString(this.discountRuleTypeName);
