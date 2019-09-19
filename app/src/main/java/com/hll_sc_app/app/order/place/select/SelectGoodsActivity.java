@@ -155,18 +155,20 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
             SpecsBean item = (SpecsBean) adapter.getItem(position);
             if (item == null) return;
             double step = CommonUtils.getDouble(item.getMinOrder());
+            double minNum = CommonUtils.getDouble(item.getBuyMinNum());
+            double result = CommonUtils.getDouble(item.getBuyQty());
             if (step == 0) step = 1;
             switch (view.getId()) {
                 case R.id.sgs_add_btn:
-                    item.setBuyQty(CommonUtils.addDouble(CommonUtils.getDouble(item.getBuyQty())
-                            , step).toPlainString());
+                    result = CommonUtils.addDouble(result, step).doubleValue();
+                    if (result < minNum) result = Math.ceil(minNum / step) * step;
                     break;
                 case R.id.sgs_sub_btn:
-                    double result = CommonUtils.subDouble(CommonUtils.getDouble(item.getBuyQty())
-                            , step).doubleValue();
-                    item.setBuyQty(CommonUtils.formatNumber(Math.max(0, result)));
+                    result = CommonUtils.subDouble(result, step).doubleValue();
+                    if (result < minNum) result = 0;
                     break;
             }
+            item.setBuyQty(CommonUtils.formatNumber(result));
             adapter.notifyDataSetChanged();
             updateNum(item);
         });
