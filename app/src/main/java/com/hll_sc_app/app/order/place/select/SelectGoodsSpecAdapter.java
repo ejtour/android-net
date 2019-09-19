@@ -19,7 +19,6 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 
 import java.util.List;
 
@@ -75,15 +74,17 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
         StringBuilder specInfo = new StringBuilder(item.getSpecContent());
         // 辅助价格
         double ration = CommonUtils.getDouble(item.getRation()); // 转换率
+        double producePrice = CommonUtils.getDouble(item.getProductPrice());
+        boolean showPrice = producePrice > 0;
         if ("1".equals(item.getAssistUnitStatus()) // 启用辅助单位
                 // 转换率不为0
                 && ration != 0
                 // 标准单位不为空
                 && !TextUtils.isEmpty(item.getStandardUnitName())) {
             specInfo.append(" [每").append(item.getStandardUnitName()).append("¥")
-                    .append(CommonUtils.formatMoney(
-                            CommonUtils.divDouble(CommonUtils.getDouble(item.getProductPrice()), ration).doubleValue()
-                    )).append("]");
+                    .append(showPrice ? CommonUtils.formatMoney(
+                            CommonUtils.divDouble(producePrice, ration).doubleValue()
+                    ) : "**").append("]");
         }
 
         // 起购金额
@@ -109,19 +110,15 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
             spec = ss;
         } else spec = specInfo;
 
-        String source = String.format("¥%s/%s", CommonUtils.formatMoney(CommonUtils.getDouble(item.getProductPrice())), item.getSaleUnitName());
+        String source = String.format("¥%s/%s", showPrice ? CommonUtils.formatMoney(producePrice) : "**", item.getSaleUnitName());
         SpannableString price = new SpannableString(source);
         price.setSpan(new RelativeSizeSpan(1.6f), 1, source.indexOf("/"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         String status;
         if (item.isLowStock())
             status = "商品已售罄";
-        else if ("7".equals(mBean.getProductStatus()) || "5".equals(item.getSpecStatus()))
-            status = "商品已下架";
-        else if (-2 == CommonUtils.getDouble(item.getProductPrice()))
+        else if (-2 == producePrice)
             status = "供应商未报价";
-        else if (!mBean.isIsDeliveryRange())
-            status = "非配送范围";
         else status = null;
 
         helper.setText(R.id.sgs_spec, spec)
