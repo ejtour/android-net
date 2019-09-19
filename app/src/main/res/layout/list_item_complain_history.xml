@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/base_white"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingTop="5dp"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingBottom="@dimen/dp_10">
+
+    <HorizontalScrollView
+        android:id="@+id/scroll_photo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txt_title_imgs"
+        app:layout_constraintTop_toTopOf="@id/txt_title_imgs">
+
+        <LinearLayout
+            android:id="@+id/ll_scroll_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:scrollbars="none" />
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/base_text222"
+        android:textSize="@dimen/base_text_13"
+        app:layout_constraintStart_toEndOf="@id/img_url"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="二十二城平台客服" />
+
+    <TextView
+        android:id="@+id/txt_operater"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/base_text999"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/txt_name"
+        app:layout_constraintTop_toBottomOf="@id/txt_name"
+        tools:text="客服0089号" />
+
+
+    <TextView
+        android:id="@+id/txt_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:textColor="@color/base_text999"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@id/txt_operater"
+        app:layout_constraintTop_toTopOf="@id/txt_operater"
+        tools:text="2018-06-18 17:32:32" />
+
+    <TextView
+        android:id="@+id/txt_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_4"
+        android:textColor="@color/base_text666"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/img_url"
+        app:layout_constraintTop_toBottomOf="@id/img_url"
+        tools:text="采购商（北京鲜时道餐饮管理有限公司）结束了投诉" />
+
+    <TextView
+        android:id="@+id/txt_title_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="回复内容："
+        android:textColor="@color/base_text999"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/img_url"
+        app:layout_constraintTop_toBottomOf="@id/txt_title_imgs" />
+
+    <TextView
+        android:id="@+id/txt_reply"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/base_text999"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txt_title_reply"
+        app:layout_constraintTop_toTopOf="@id/txt_title_reply"
+        tools:text="亲爱的采购商用户，非常抱歉在交易中给您带来的不便，经过我们平台客服与供应商的交涉，供应商愿意赔付您本订单中所有商品作为补偿，您收到商品签收后可发起仅退款售后服务，本订单金额将于3个工作日内返回您的支付账户中。" />
+
+
+    <TextView
+        android:id="@+id/txt_title_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="投诉类型："
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toStartOf="@id/img_url"
+        app:layout_constraintTop_toBottomOf="@id/txt_status" />
+
+    <TextView
+        android:id="@+id/txt_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toEndOf="@id/txt_title_type"
+        app:layout_constraintTop_toTopOf="@id/txt_title_type"
+        tools:text="物流问题" />
+
+    <TextView
+        android:id="@+id/txt_title_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="投诉原因："
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toStartOf="@id/img_url"
+        app:layout_constraintTop_toBottomOf="@id/txt_title_type" />
+
+    <TextView
+        android:id="@+id/txt_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toEndOf="@id/txt_title_reason"
+        app:layout_constraintTop_toTopOf="@id/txt_title_reason"
+        tools:text="未按约定时间发货" />
+
+    <TextView
+        android:id="@+id/txt_title_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="投诉订单："
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toStartOf="@id/img_url"
+        app:layout_constraintTop_toBottomOf="@id/txt_title_reason" />
+
+    <TextView
+        android:id="@+id/txt_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toEndOf="@id/txt_title_order"
+        app:layout_constraintTop_toTopOf="@id/txt_title_order"
+        tools:text="33313131313" />
+
+    <TextView
+        android:id="@+id/txt_title_explain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="投诉说明："
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toStartOf="@id/img_url"
+        app:layout_constraintTop_toBottomOf="@id/txt_title_order" />
+
+    <TextView
+        android:id="@+id/txt_explain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txt_title_explain"
+        app:layout_constraintTop_toTopOf="@id/txt_title_explain"
+        tools:text=" 说好的昨晚发货今天早上8点之前到货，现在都9点41了还没到，店里坐了一屋子客人，一根菜都没有，让吃啥啊！咋办啊！" />
+
+    <TextView
+        android:id="@+id/txt_title_imgs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="投诉凭证："
+        android:textColor="@color/base_text999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toStartOf="@id/img_url"
+        app:layout_constraintTop_toBottomOf="@id/txt_explain" />
+
+    <android.support.constraint.Group
+        android:id="@+id/group_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="txt_title_reply,txt_reply" />
+
+
+    <android.support.constraint.Group
+        android:id="@+id/group_complain_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="txt_title_type,txt_title_explain,txt_title_order,txt_title_reason,txt_title_type,
+        txt_explain,txt_order,txt_reason,txt_type,txt_title_imgs,scroll_photo" />
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/img_url"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

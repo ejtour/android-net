@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.adapter.ComplainListApdater;
+import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.bean.complain.ComplainListResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -82,10 +83,10 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
             if (complainListBean == null) {
                 return;
             }
-            if (mAdapter.isCheck()) {
+            if (mAdapter.isCheckModel()) {
               mAdapter.updateSelect(complainListBean);
             } else {
-
+                ComplainMangeDetailActivity.start(complainListBean.getId());
             }
         });
         mRecyclerView.setAdapter(mAdapter);

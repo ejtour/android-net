@@ -5,7 +5,10 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.PurchaserBean;
+import com.hll_sc_app.bean.complain.ComplainDetailResp;
+import com.hll_sc_app.bean.complain.ComplainHistoryResp;
 import com.hll_sc_app.bean.complain.ComplainListResp;
+import com.hll_sc_app.bean.complain.ComplainStatusResp;
 
 import java.util.List;
 
@@ -20,6 +23,18 @@ public interface ComplainManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:110013")
     Observable<BaseResp<ComplainListResp>> queryComplainList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:110021")
+    Observable<BaseResp<ComplainStatusResp>> queryComplainStatus(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:110020")
+    Observable<BaseResp<ComplainDetailResp>> queryComplainDetail(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:110024")
+    Observable<BaseResp<ComplainHistoryResp>> queryComplainHistory(@Body BaseMapReq req);
 
 
 }

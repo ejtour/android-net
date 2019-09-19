@@ -953,6 +953,10 @@
         <activity android:name=".app.order.place.select.SelectGoodsActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.complainmanage.history.ComplainHistorylActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

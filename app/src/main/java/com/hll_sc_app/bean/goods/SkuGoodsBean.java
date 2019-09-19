@@ -15,17 +15,6 @@ import java.util.List;
  * @date 2019-06-20
  */
 public class SkuGoodsBean implements Parcelable {
-    public static final Creator<SkuGoodsBean> CREATOR = new Creator<SkuGoodsBean>() {
-        @Override
-        public SkuGoodsBean createFromParcel(Parcel source) {
-            return new SkuGoodsBean(source);
-        }
-
-        @Override
-        public SkuGoodsBean[] newArray(int size) {
-            return new SkuGoodsBean[size];
-        }
-    };
     private String specID;
     private String productID;
     private String placeProvince;
@@ -96,76 +85,27 @@ public class SkuGoodsBean implements Parcelable {
     private boolean selected;
     private String discountPrice;
 
-    public SkuGoodsBean() {
+    /*投诉*/
+    private String productSpec;
+    private String detailID;
+
+    public String getProductSpec() {
+        return productSpec;
     }
 
-    protected SkuGoodsBean(Parcel in) {
-        this.specID = in.readString();
-        this.productID = in.readString();
-        this.placeProvince = in.readString();
-        this.specStatus = in.readString();
-        this.productName = in.readString();
-        this.productAttr = in.readString();
-        this.assistUnitStatus = in.readString();
-        this.offShelfTime = in.readString();
-        this.appointSellType = in.readString();
-        this.productNameSuggest = in.readString();
-        this.bundlingGoodsType = in.readString();
-        this.productBrief = in.readString();
-        this.isWareHourse = in.readString();
-        this.shopProductCategorySubID = in.readString();
-        this.action = in.readString();
-        this.isDecimalBuy = in.readString();
-        this.depositProductType = in.readString();
-        this.purchaserIsVisible = in.readString();
-        this.orgName = in.readString();
-        this.cargoOwnerID = in.readString();
-        this.standardUnitName = in.readString();
-        this.groupID = in.readString();
-        this.nextDayDelivery = in.readString();
-        this.onShelfTime = in.readString();
-        this.stockCheckType = in.readString();
-        this.buyMinNum = in.readString();
-        this.brandId = in.readString();
-        this.producer = in.readString();
-        this.productPrice = in.readString();
-        this.skuCode = in.readString();
-        this.saleUnitName = in.readString();
-        this.priceIsVisible = in.readByte() != 0;
-        this.standardUnitStatus = in.readString();
-        this.actionTime = in.readString();
-        this.saleUnitID = in.readString();
-        this.categoryThreeID = in.readString();
-        this.shopProductCategoryID = in.readString();
-        this.ration = in.readString();
-        this.placeCity = in.readString();
-        this.cargoOwnerName = in.readString();
-        this.shopProductCategoryThreeID = in.readString();
-        this.categoryID = in.readString();
-        this.productType = in.readString();
-        this.specContent = in.readString();
-        this.supplierName = in.readString();
-        this.actionBy = in.readString();
-        this.costPrice = in.readString();
-        this.productStatus = in.readString();
-        this.convertRatio = in.readString();
-        this.promoteNum = in.readString();
-        this.costPriceModifyFlag = in.readString();
-        this.isSupplierWarehouse = in.readString();
-        this.imgUrl = in.readString();
-        this.productNameKeyword = in.readString();
-        this.productCode = in.readString();
-        this.depositNum = in.readString();
-        this.categorySubID = in.readString();
-        this.placeCityCode = in.readString();
-        this.createTime = in.readString();
-        this.guaranteePeriod = in.readString();
-        this.placeProvinceCode = in.readString();
-        this.resourceType = in.readString();
-        this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
-        this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
-        this.selected = in.readByte() != 0;
-        this.discountPrice = in.readString();
+    public void setProductSpec(String productSpec) {
+        this.productSpec = productSpec;
+    }
+
+    public String getDetailID() {
+        return detailID;
+    }
+
+    public void setDetailID(String detailID) {
+        this.detailID = detailID;
+    }
+
+    public SkuGoodsBean() {
     }
 
     public String getDiscountPrice() {
@@ -796,5 +736,90 @@ public class SkuGoodsBean implements Parcelable {
         dest.writeTypedList(this.nicknames);
         dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
         dest.writeString(this.discountPrice);
+        dest.writeString(this.productSpec);
+        dest.writeString(this.detailID);
     }
+
+    protected SkuGoodsBean(Parcel in) {
+        this.specID = in.readString();
+        this.productID = in.readString();
+        this.placeProvince = in.readString();
+        this.specStatus = in.readString();
+        this.productName = in.readString();
+        this.productAttr = in.readString();
+        this.assistUnitStatus = in.readString();
+        this.offShelfTime = in.readString();
+        this.appointSellType = in.readString();
+        this.productNameSuggest = in.readString();
+        this.bundlingGoodsType = in.readString();
+        this.productBrief = in.readString();
+        this.isWareHourse = in.readString();
+        this.shopProductCategorySubID = in.readString();
+        this.action = in.readString();
+        this.isDecimalBuy = in.readString();
+        this.depositProductType = in.readString();
+        this.purchaserIsVisible = in.readString();
+        this.orgName = in.readString();
+        this.cargoOwnerID = in.readString();
+        this.standardUnitName = in.readString();
+        this.groupID = in.readString();
+        this.nextDayDelivery = in.readString();
+        this.onShelfTime = in.readString();
+        this.stockCheckType = in.readString();
+        this.buyMinNum = in.readString();
+        this.brandId = in.readString();
+        this.producer = in.readString();
+        this.productPrice = in.readString();
+        this.skuCode = in.readString();
+        this.saleUnitName = in.readString();
+        this.priceIsVisible = in.readByte() != 0;
+        this.standardUnitStatus = in.readString();
+        this.actionTime = in.readString();
+        this.saleUnitID = in.readString();
+        this.categoryThreeID = in.readString();
+        this.shopProductCategoryID = in.readString();
+        this.ration = in.readString();
+        this.placeCity = in.readString();
+        this.cargoOwnerName = in.readString();
+        this.shopProductCategoryThreeID = in.readString();
+        this.categoryID = in.readString();
+        this.productType = in.readString();
+        this.specContent = in.readString();
+        this.supplierName = in.readString();
+        this.actionBy = in.readString();
+        this.costPrice = in.readString();
+        this.productStatus = in.readString();
+        this.convertRatio = in.readString();
+        this.promoteNum = in.readString();
+        this.costPriceModifyFlag = in.readString();
+        this.isSupplierWarehouse = in.readString();
+        this.imgUrl = in.readString();
+        this.productNameKeyword = in.readString();
+        this.productCode = in.readString();
+        this.depositNum = in.readString();
+        this.categorySubID = in.readString();
+        this.placeCityCode = in.readString();
+        this.createTime = in.readString();
+        this.guaranteePeriod = in.readString();
+        this.placeProvinceCode = in.readString();
+        this.resourceType = in.readString();
+        this.supplierShops = in.createTypedArrayList(SupplierShopsBean.CREATOR);
+        this.nicknames = in.createTypedArrayList(NicknamesBean.CREATOR);
+        this.selected = in.readByte() != 0;
+        this.discountPrice = in.readString();
+        this.productSpec = in.readString();
+        this.detailID = in.readString();
+    }
+
+    public static final Creator<SkuGoodsBean> CREATOR = new Creator<SkuGoodsBean>() {
+        @Override
+        public SkuGoodsBean createFromParcel(Parcel source) {
+            return new SkuGoodsBean(source);
+        }
+
+        @Override
+        public SkuGoodsBean[] newArray(int size) {
+            return new SkuGoodsBean[size];
+        }
+    };
 }

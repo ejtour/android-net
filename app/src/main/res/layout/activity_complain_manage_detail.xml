@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.hll_sc_app.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tb_title="投诉详情" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -43,13 +47,54 @@
             android:layout_height="match_parent">
 
             <View
+                android:id="@+id/view_back_0"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/base_white"
+                app:layout_constraintBottom_toBottomOf="@+id/txt_my_reply_platform"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_title_my_reply_platform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="我的回复："
+                android:textColor="@color/base_text666"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toStartOf="@id/view_back_0"
+                app:layout_constraintTop_toTopOf="@id/view_back_0" />
+
+            <TextView
+                android:id="@+id/txt_my_reply_platform"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="5dp"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColor="@color/base_text666"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_title_my_reply_platform"
+                app:layout_constraintTop_toTopOf="@id/txt_title_my_reply_platform"
+                tools:text="亲，很抱歉耽误了您订购的商品，这边会给您重新安排配送，预计今晚六点前到达您的收货地址，给您带来的不便非常抱歉，祝您生意兴隆，财源广进！" />
+
+
+            <android.support.constraint.Group
+                android:id="@+id/group_my_reply_platform"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="view_back_0,txt_title_my_reply_platform,txt_my_reply_platform" />
+
+            <View
                 android:id="@+id/view_back_1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/base_white"
                 app:layout_constraintBottom_toBottomOf="@+id/txt_plat_reply"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/view_back_0" />
 
             <TextView
                 android:id="@+id/txt_title_plat_reply"
@@ -271,10 +316,18 @@
             <HorizontalScrollView
                 android:id="@+id/scroll_photo"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:minHeight="20dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="@id/view_back_3"
                 app:layout_constraintStart_toStartOf="@+id/txt_group"
-                app:layout_constraintTop_toTopOf="@id/txt_title_photo" />
+                app:layout_constraintTop_toTopOf="@id/txt_title_photo">
+
+                <LinearLayout
+                    android:id="@+id/ll_croll_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
 
             <View
                 android:id="@+id/view_space"
@@ -309,7 +362,11 @@
                 app:layout_constraintBottom_toBottomOf="@id/view_back_4"
                 app:layout_constraintTop_toBottomOf="@id/txt_title_product" />
 
-
+            <android.support.constraint.Group
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/group_product"
+                app:constraint_referenced_ids="view_back_4,txt_title_product,recyclerView" />
             <View
                 android:id="@+id/view_back_5"
                 android:layout_width="match_parent"

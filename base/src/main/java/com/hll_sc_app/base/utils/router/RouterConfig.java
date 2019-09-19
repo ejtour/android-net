@@ -1049,5 +1049,13 @@ public class RouterConfig {
      * 代客下单-选择商品
      */
     public static final String ORDER_PLACE_SELECT_GOODS = "/activity/order/place/select/goods";
+
+    /*投诉详情*/
+    public static final String ACTIVITY_COMPLAIN_DETAIL="/activity/complain/detail";
+
+    /**
+     * 投诉协商历史
+     */
+    public static final String ACTIVITY_COMPLAIN_HISTORY="/activity/complain/history";
 }
 

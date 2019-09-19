@@ -93,7 +93,11 @@ public class ComplainListApdater extends BaseQuickAdapter<ComplainListResp.Compl
         this.selectedBeanMap = selectedBeanMap;
     }
 
-    public boolean isCheck() {
+    /**
+     * 是否是编辑模式
+     * @return
+     */
+    public boolean isCheckModel() {
         return isCheck;
     }
 
