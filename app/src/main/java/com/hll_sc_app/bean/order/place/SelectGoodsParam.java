@@ -21,7 +21,8 @@ public class SelectGoodsParam implements Parcelable {
         }
     };
     private String purchaserID;
-    private String purchaserShopID;
+    private String shopID;
+    private String shopName;
     private String subID;
     private String threeID;
     private String searchWords;
@@ -31,7 +32,8 @@ public class SelectGoodsParam implements Parcelable {
 
     protected SelectGoodsParam(Parcel in) {
         this.purchaserID = in.readString();
-        this.purchaserShopID = in.readString();
+        this.shopID = in.readString();
+        this.shopName = in.readString();
         this.subID = in.readString();
         this.threeID = in.readString();
         this.searchWords = in.readString();
@@ -45,12 +47,12 @@ public class SelectGoodsParam implements Parcelable {
         this.purchaserID = purchaserID;
     }
 
-    public String getPurchaserShopID() {
-        return purchaserShopID;
+    public String getShopName() {
+        return shopName;
     }
 
-    public void setPurchaserShopID(String purchaserShopID) {
-        this.purchaserShopID = purchaserShopID;
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public String getSubID() {
@@ -82,10 +84,19 @@ public class SelectGoodsParam implements Parcelable {
         return 0;
     }
 
+    public String getShopID() {
+        return shopID;
+    }
+
+    public void setShopID(String shopID) {
+        this.shopID = shopID;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.purchaserID);
-        dest.writeString(this.purchaserShopID);
+        dest.writeString(this.shopID);
+        dest.writeString(this.shopName);
         dest.writeString(this.subID);
         dest.writeString(this.threeID);
         dest.writeString(this.searchWords);

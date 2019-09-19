@@ -20,6 +20,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.place.confirm.PlaceOrderConfirmActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -33,6 +34,8 @@ import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
 import com.hll_sc_app.bean.order.place.PlaceOrderSpecBean;
 import com.hll_sc_app.bean.order.place.SelectGoodsParam;
+import com.hll_sc_app.bean.order.place.SettlementInfoReq;
+import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.KeyboardWatcher;
 import com.hll_sc_app.widget.EmptyView;
@@ -80,10 +83,16 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     private List<PlaceOrderSpecBean> mSpecList = new ArrayList<>();
     private KeyboardWatcher mKeyboardWatcher;
 
-    public static void start(String purchaserID, String purchaserShopID) {
+    /**
+     * @param purchaserID 采购商集团id
+     * @param shopID      采购商门店id
+     * @param shopName    采购商门店名称
+     */
+    public static void start(String purchaserID, String shopID, String shopName) {
         SelectGoodsParam param = new SelectGoodsParam();
         param.setPurchaserID(purchaserID);
-        param.setPurchaserShopID(purchaserShopID);
+        param.setShopID(shopID);
+        param.setShopName(shopName);
         RouterUtil.goToActivity(RouterConfig.ORDER_PLACE_SELECT_GOODS, param);
     }
 
@@ -113,6 +122,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     }
 
     private void initView() {
+        mTitleBar.setRightBtnClick(this::confirm);
         mKeyboardWatcher = new KeyboardWatcher(this);
         mKeyboardWatcher.addSoftKeyboardStateListener(this);
         mCategoryAdapter = new CategoryAdapter();
@@ -190,6 +200,25 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         });
     }
 
+    private void confirm(View view) {
+        List<PlaceOrderSpecBean> list = new ArrayList<>();
+        for (PlaceOrderSpecBean bean : mSpecList) {
+            if (CommonUtils.getDouble(bean.getProductNum()) > 0) {
+                list.add(bean);
+            }
+        }
+        if (list.size() == 0) {
+            showToast("请先添加商品");
+        } else {
+            SettlementInfoReq req = new SettlementInfoReq();
+            req.setSpecs(list);
+            req.setPurchaserID(mParam.getPurchaserID());
+            req.setShopID(mParam.getShopID());
+            req.setShopName(mParam.getShopName());
+            mPresenter.confirm(req);
+        }
+    }
+
     private void updateNum(SpecsBean item) {
         PlaceOrderSpecBean select = null;
         for (PlaceOrderSpecBean bean : mSpecList) {
@@ -252,6 +281,11 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         }
         preProcessData(list);
         mAdapter.setNewData(list);
+    }
+
+    @Override
+    public void confirmSuccess(SettlementInfoResp resp) {
+        PlaceOrderConfirmActivity.start(resp);
     }
 
     private void preProcessData(List<GoodsBean> list) {

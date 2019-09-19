@@ -31,6 +31,8 @@ import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
+import com.hll_sc_app.bean.order.place.SettlementInfoReq;
+import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
@@ -711,6 +713,17 @@ public class Order {
                         .put("purchaserShopID", purchaserShopID)
                         .put("supplierID", UserConfig.getGroupID())
                         .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 代客下单，获取结算信息
+     */
+    public static void getSettlementInfo(SettlementInfoReq req, SimpleObserver<SettlementInfoResp> observer){
+        OrderService.INSTANCE
+                .getSettlementInfo(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

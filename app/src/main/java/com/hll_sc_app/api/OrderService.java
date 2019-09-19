@@ -19,6 +19,8 @@ import com.hll_sc_app.bean.order.deliver.ModifyDeliverInfoReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
+import com.hll_sc_app.bean.order.place.SettlementInfoReq;
+import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
@@ -168,4 +170,8 @@ public interface OrderService {
     @POST(HttpConfig.URL)
     @Headers("pv:100201")
     Observable<BaseResp<List<GoodsBean>>> queryGoodsList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103078")
+    Observable<BaseResp<SettlementInfoResp>> getSettlementInfo(@Body BaseReq<SettlementInfoReq> body);
 }

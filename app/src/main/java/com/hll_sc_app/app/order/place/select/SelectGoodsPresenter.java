@@ -5,6 +5,8 @@ import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
 import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
 import com.hll_sc_app.bean.order.place.SelectGoodsParam;
+import com.hll_sc_app.bean.order.place.SettlementInfoReq;
+import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 
@@ -35,7 +37,7 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
                 mParam.getThreeID(),
                 mParam.getSearchWords(),
                 mParam.getPurchaserID(),
-                mParam.getPurchaserShopID(),
+                mParam.getShopID(),
                 new SimpleObserver<List<GoodsBean>>(mView, showLoading) {
                     @Override
                     public void onSuccess(List<GoodsBean> goodsBeans) {
@@ -59,6 +61,16 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
     public void loadList() {
         mPageNum = 1;
         load(true);
+    }
+
+    @Override
+    public void confirm(SettlementInfoReq req) {
+        Order.getSettlementInfo(req, new SimpleObserver<SettlementInfoResp>(mView) {
+            @Override
+            public void onSuccess(SettlementInfoResp resp) {
+                mView.confirmSuccess(resp);
+            }
+        });
     }
 
     @Override

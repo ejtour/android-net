@@ -4,6 +4,8 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
+import com.hll_sc_app.bean.order.place.SettlementInfoReq;
+import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ public interface ISelectGoodsContract {
         void setCategoryInfo(List<GoodsCategoryBean> list);
 
         void setGoodsList(List<GoodsBean> list);
+
+        void confirmSuccess(SettlementInfoResp resp);
     }
 
     interface ISelectGoodsPresenter extends IPresenter<ISelectGoodsView> {
@@ -25,5 +29,7 @@ public interface ISelectGoodsContract {
         void loadMore();
 
         void loadList();
+
+        void confirm(SettlementInfoReq req);
     }
 }
