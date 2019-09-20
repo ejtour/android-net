@@ -13,20 +13,9 @@ import java.util.List;
  */
 
 public class SupplierGroupBean implements Parcelable {
-    public static final Creator<SupplierGroupBean> CREATOR = new Creator<SupplierGroupBean>() {
-        @Override
-        public SupplierGroupBean createFromParcel(Parcel in) {
-            return new SupplierGroupBean(in);
-        }
-
-        @Override
-        public SupplierGroupBean[] newArray(int size) {
-            return new SupplierGroupBean[size];
-        }
-    };
     private int deliverType;
     private double depositAmount;
-    private List<DiscountPlanBean> discountPlan;
+    private DiscountPlanBean discountPlan;
     private String houseAddress;
     private PaymentBean payment;
     private int payType;
@@ -40,7 +29,7 @@ public class SupplierGroupBean implements Parcelable {
     protected SupplierGroupBean(Parcel in) {
         deliverType = in.readInt();
         depositAmount = in.readDouble();
-        discountPlan = in.createTypedArrayList(DiscountPlanBean.CREATOR);
+        discountPlan = in.readParcelable(DiscountPlanBean.class.getClassLoader());
         houseAddress = in.readString();
         payment = in.readParcelable(PaymentBean.class.getClassLoader());
         payType = in.readInt();
@@ -56,7 +45,7 @@ public class SupplierGroupBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(deliverType);
         dest.writeDouble(depositAmount);
-        dest.writeTypedList(discountPlan);
+        dest.writeParcelable(discountPlan, flags);
         dest.writeString(houseAddress);
         dest.writeParcelable(payment, flags);
         dest.writeInt(payType);
@@ -72,6 +61,18 @@ public class SupplierGroupBean implements Parcelable {
     public int describeContents() {
         return 0;
     }
+
+    public static final Creator<SupplierGroupBean> CREATOR = new Creator<SupplierGroupBean>() {
+        @Override
+        public SupplierGroupBean createFromParcel(Parcel in) {
+            return new SupplierGroupBean(in);
+        }
+
+        @Override
+        public SupplierGroupBean[] newArray(int size) {
+            return new SupplierGroupBean[size];
+        }
+    };
 
     public int getDeliverType() {
         return deliverType;
@@ -89,11 +90,11 @@ public class SupplierGroupBean implements Parcelable {
         this.depositAmount = depositAmount;
     }
 
-    public List<DiscountPlanBean> getDiscountPlan() {
+    public DiscountPlanBean getDiscountPlan() {
         return discountPlan;
     }
 
-    public void setDiscountPlan(List<DiscountPlanBean> discountPlan) {
+    public void setDiscountPlan(DiscountPlanBean discountPlan) {
         this.discountPlan = discountPlan;
     }
 
@@ -121,13 +122,13 @@ public class SupplierGroupBean implements Parcelable {
         this.payType = payType;
     }
 
-    /*public List<GoodsBean> getProductList() {
+    public List<GoodsBean> getProductList() {
         return productList;
     }
 
     public void setProductList(List<GoodsBean> productList) {
         this.productList = productList;
-    }*/
+    }
 
     public String getSupplierID() {
         return supplierID;
