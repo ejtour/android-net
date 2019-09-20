@@ -30,6 +30,8 @@ import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
+import com.hll_sc_app.bean.order.place.OrderCommitReq;
+import com.hll_sc_app.bean.order.place.OrderCommitResp;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
@@ -724,6 +726,17 @@ public class Order {
     public static void getSettlementInfo(SettlementInfoReq req, SimpleObserver<SettlementInfoResp> observer){
         OrderService.INSTANCE
                 .getSettlementInfo(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 提交订单
+     */
+    public static void commitOrder(OrderCommitReq req, SimpleObserver<OrderCommitResp> observer){
+        OrderService.INSTANCE
+                .commitOrder(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
