@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -40,7 +39,6 @@ import com.hll_sc_app.bean.order.deliver.ExpressResp;
 import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -304,10 +302,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
         initEmptyView();
         mEmptyView.reset();
         mEmptyView.setTips("你还没有" + mOrderType.getLabel() + "的订单噢");
-        if (mDeliverType != null) { // 如果有发货类型
-            setDeliverType(null); // 发货类型置空
-            mPresenter.refresh(); // 重新请求
-        }
     }
 
     /**
@@ -340,17 +334,27 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     }
 
     @Override
-    public void updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes) {
-        String type = null;
-        if (!CommonUtils.isEmpty(deliverTypes)) {
+    public boolean updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes) {
+        if (CommonUtils.isEmpty(deliverTypes)) {
+            if (mDeliverTypeRoot != null)
+                mDeliverTypeRoot.setVisibility(View.GONE);
+            updateListData(null, false);
+            return true;
+        } else {
             initDeliverType();
             mDeliverTypeRoot.setVisibility(View.VISIBLE);
-            type = deliverTypes.get(0).getKey();
             mDeliverTypeAdapter.setNewData(deliverTypes);
-            mDeliverTypeAdapter.setSelectPos(0);
-        } else if (mDeliverTypeRoot != null)
-            mDeliverTypeRoot.setVisibility(View.GONE);
-        setDeliverType(type);
+            int selectPos = 0;
+            for (int i = 0; i < deliverTypes.size(); i++) {
+                if (deliverTypes.get(i).getKey().equals(mDeliverType)) {
+                    selectPos = i;
+                    break;
+                }
+            }
+            mDeliverTypeAdapter.setSelectPos(selectPos);
+            if (selectPos == 0) mDeliverType = deliverTypes.get(0).getKey();
+            return false;
+        }
     }
 
     @Override
@@ -403,7 +407,7 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                     return;
                 }
                 if (setDeliverType(item.getKey())) {
-                    mPresenter.refreshList();
+                    mPresenter.start();
                 }
             });
             View view = mDeliverTypeRoot.findViewById(R.id.dth_look_info);

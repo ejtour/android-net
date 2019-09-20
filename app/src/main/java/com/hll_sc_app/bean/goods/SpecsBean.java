@@ -71,43 +71,6 @@ public class SpecsBean implements Parcelable {
     private boolean isDepositProduct;
     private boolean select;
 
-    private String depositTotalPrice;
-    private String usableStock;
-    private String buyQty;
-    private String buyQtyBackup;
-
-    public String getDepositTotalPrice() {
-        return depositTotalPrice;
-    }
-
-    public void setDepositTotalPrice(String depositTotalPrice) {
-        this.depositTotalPrice = depositTotalPrice;
-    }
-
-    public String getUsableStock() {
-        return usableStock;
-    }
-
-    public void setUsableStock(String usableStock) {
-        this.usableStock = usableStock;
-    }
-
-    public String getBuyQty() {
-        return buyQty;
-    }
-
-    public void setBuyQty(String buyQty) {
-        this.buyQty = buyQty;
-    }
-
-    public String getBuyQtyBackup() {
-        return buyQtyBackup;
-    }
-
-    public void setBuyQtyBackup(String buyQtyBackup) {
-        this.buyQtyBackup = buyQtyBackup;
-    }
-
     public SpecsBean() {
     }
 
@@ -144,7 +107,6 @@ public class SpecsBean implements Parcelable {
         this.productStock = in.readString();
         this.skuCode = in.readString();
         this.minOrder = in.readString();
-        this.depositTotalPrice = in.readString();
         this.depositProducts = in.createTypedArrayList(DepositProductReq.CREATOR);
         this.isDepositProduct = in.readByte() != 0;
         this.select = in.readByte() != 0;
@@ -477,7 +439,6 @@ public class SpecsBean implements Parcelable {
         dest.writeString(this.productStock);
         dest.writeString(this.skuCode);
         dest.writeString(this.minOrder);
-        dest.writeString(this.depositTotalPrice);
         dest.writeTypedList(this.depositProducts);
         dest.writeByte(this.isDepositProduct ? (byte) 1 : (byte) 0);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);

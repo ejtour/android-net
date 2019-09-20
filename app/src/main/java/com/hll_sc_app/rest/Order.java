@@ -20,7 +20,6 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.export.OrderExportReq;
 import com.hll_sc_app.bean.filter.OrderParam;
-import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
@@ -31,6 +30,7 @@ import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
+import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
@@ -700,7 +700,7 @@ public class Order {
                                       String searchWords,
                                       String purchaserID,
                                       String purchaserShopID,
-                                      SimpleObserver<List<GoodsBean>> observer) {
+                                      SimpleObserver<List<ProductBean>> observer) {
         OrderService.INSTANCE
                 .queryGoodsList(BaseMapReq.newBuilder()
                         .put("actionType", "shopInnerSelect")

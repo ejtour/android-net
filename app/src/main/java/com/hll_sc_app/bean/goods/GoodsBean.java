@@ -145,7 +145,6 @@ public class GoodsBean implements Parcelable {
     private double stockWarnNum;
     private String occupiedStock;
     private String totalStock;
-    private int isSelected;
     private String discountRuleTypeName;
 
     public GoodsBean() {
@@ -234,14 +233,6 @@ public class GoodsBean implements Parcelable {
 
     public void setDiscountRuleTypeName(String discountRuleTypeName) {
         this.discountRuleTypeName = discountRuleTypeName;
-    }
-
-    public int isSelected() {
-        return isSelected;
-    }
-
-    public void setSelected(int selected) {
-        isSelected = selected;
     }
 
     public String getTotalStock() {

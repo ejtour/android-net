@@ -1,9 +1,9 @@
 package com.hll_sc_app.app.order.place.select;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
 import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
+import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SelectGoodsParam;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
@@ -38,9 +38,9 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
                 mParam.getSearchWords(),
                 mParam.getPurchaserID(),
                 mParam.getShopID(),
-                new SimpleObserver<List<GoodsBean>>(mView, showLoading) {
+                new SimpleObserver<List<ProductBean>>(mView, showLoading) {
                     @Override
-                    public void onSuccess(List<GoodsBean> goodsBeans) {
+                    public void onSuccess(List<ProductBean> goodsBeans) {
                         mView.setGoodsList(goodsBeans);
                     }
                 });

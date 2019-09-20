@@ -38,25 +38,19 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
         if (mView.getOrderStatus() == OrderType.PENDING_DELIVER) {
             getDeliverNum(true);
         } else {
-            refreshList();
+            mPageNum = 1;
+            getOrderList(true);
         }
-    }
-
-    @Override
-    public void refreshList() {
-        mPageNum = 1;
-        getOrderList(true);
     }
 
     private void getDeliverNum(boolean showLoading) {
         Order.getDeliverNum(new SimpleObserver<DeliverNumResp>(mView, showLoading) {
             @Override
             public void onSuccess(DeliverNumResp resp) {
-                mView.updateDeliverHeader(resp.getDeliverTypes());
-                if (!CommonUtils.isEmpty(resp.getDeliverTypes())) {
+                if (!mView.updateDeliverHeader(resp.getDeliverTypes())) {
                     mPageNum = 1;
                     getOrderList(showLoading);
-                } else mView.updateListData(null, false);
+                }
             }
         });
     }
@@ -91,7 +85,7 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
 
     @Override
     public void refresh() {
-        if (mView.getOrderStatus() == OrderType.PENDING_DELIVER && mView.getDeliverType() == null) {
+        if (mView.getOrderStatus() == OrderType.PENDING_DELIVER) {
             getDeliverNum(false);
         } else {
             mPageNum = 1;

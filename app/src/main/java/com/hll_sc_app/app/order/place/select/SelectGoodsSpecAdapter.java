@@ -16,8 +16,8 @@ import android.widget.EditText;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.bean.goods.GoodsBean;
-import com.hll_sc_app.bean.goods.SpecsBean;
+import com.hll_sc_app.bean.order.place.ProductBean;
+import com.hll_sc_app.bean.order.place.ProductSpecBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
@@ -27,9 +27,9 @@ import java.util.List;
  * @since 2019/9/17
  */
 
-public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
+public class SelectGoodsSpecAdapter extends BaseQuickAdapter<ProductSpecBean, BaseViewHolder> {
     private final View.OnFocusChangeListener mListener;
-    private GoodsBean mBean;
+    private ProductBean mBean;
 
     SelectGoodsSpecAdapter(View.OnFocusChangeListener listener) {
         super(R.layout.item_order_select_goods_spec);
@@ -56,8 +56,8 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
 
             @Override
             public void afterTextChanged(Editable s) {
-                SpecsBean bean = (SpecsBean) edit.getTag();
-                if ("1".equals(bean.getIsDecimalBuy())) { // 允许输入小数
+                ProductSpecBean bean = (ProductSpecBean) edit.getTag();
+                if (bean.getIsDecimalBuy() == 1) { // 允许输入小数
                     if (!CommonUtils.checkDotNum(s.toString()) && s.length() - 1 >= 0) {
                         s.delete(s.length() - 1, s.length());
                     }
@@ -70,13 +70,13 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, SpecsBean item) {
+    protected void convert(BaseViewHolder helper, ProductSpecBean item) {
         StringBuilder specInfo = new StringBuilder(item.getSpecContent());
         // 辅助价格
-        double ration = CommonUtils.getDouble(item.getRation()); // 转换率
-        double producePrice = CommonUtils.getDouble(item.getProductPrice());
+        double ration = item.getRation(); // 转换率
+        double producePrice = item.getProductPrice();
         boolean showPrice = producePrice > 0;
-        if ("1".equals(item.getAssistUnitStatus()) // 启用辅助单位
+        if (item.getAssistUnitStatus() == 1 // 启用辅助单位
                 // 转换率不为0
                 && ration != 0
                 // 标准单位不为空
@@ -88,18 +88,18 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
         }
 
         // 起购金额
-        double minNum = CommonUtils.getDouble(item.getBuyMinNum());
+        double minNum = item.getBuyMinNum();
         if (minNum != 0 && minNum != 1) {
             specInfo.append(" [").append(CommonUtils.formatNumber(minNum)).append(item.getSaleUnitName()).append("起购]");
         }
 
         // 库存
-        if ("1".equals(mBean.getIsWareHourse()) && CommonUtils.getDouble(item.getUsableStock()) != 0) {
+        if (mBean.getIsWareHourse() == 1 && item.getUsableStock() != 0) {
             specInfo.append(" | 库存：").append(CommonUtils.formatNumber(item.getUsableStock()));
         }
 
         // 押金
-        double deposit = CommonUtils.getDouble(item.getDepositTotalPrice());
+        double deposit = item.getDepositTotalPrice();
         if (deposit > 0) {
             specInfo.append(" [每").append(item.getSaleUnitName()).append("押金：¥").append(CommonUtils.formatMoney(deposit)).append("]");
         }
@@ -123,17 +123,17 @@ public class SelectGoodsSpecAdapter extends BaseQuickAdapter<SpecsBean, BaseView
 
         helper.setText(R.id.sgs_spec, spec)
                 .setText(R.id.sgs_unit_price, price)
-                .setGone(R.id.sgs_change_group, status == null && 0 != CommonUtils.getDouble(item.getBuyQty()))
+                .setGone(R.id.sgs_change_group, status == null && 0 != item.getShopcartNum())
                 .setGone(R.id.sgs_add_btn, status == null)
                 .setGone(R.id.sgs_status, status != null)
                 .setText(R.id.sgs_status, status)
                 .setText(R.id.sgs_unit, item.getSaleUnitName())
                 .setTag(R.id.sgs_edit, item)
                 .setTag(R.id.sgs_edit, R.id.sgs_spec, this)
-                .setText(R.id.sgs_edit, item.getBuyQty());
+                .setText(R.id.sgs_edit, CommonUtils.formatNumber(item.getShopcartNum()));
     }
 
-    public void setNewData(@Nullable List<SpecsBean> data, GoodsBean bean) {
+    public void setNewData(@Nullable List<ProductSpecBean> data, ProductBean bean) {
         mBean = bean;
         super.setNewData(data);
     }

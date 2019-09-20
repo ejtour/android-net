@@ -2,6 +2,7 @@ package com.hll_sc_app.app.order.place.select;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -29,10 +30,10 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.GoodsSearchEvent;
-import com.hll_sc_app.bean.goods.GoodsBean;
-import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
 import com.hll_sc_app.bean.order.place.PlaceOrderSpecBean;
+import com.hll_sc_app.bean.order.place.ProductBean;
+import com.hll_sc_app.bean.order.place.ProductSpecBean;
 import com.hll_sc_app.bean.order.place.SelectGoodsParam;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
@@ -43,6 +44,8 @@ import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -145,15 +148,15 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         });
         mAdapter = new SelectGoodsAdapter((v, hasFocus) -> {
             if (!hasFocus) {
-                SpecsBean bean = (SpecsBean) v.getTag();
+                ProductSpecBean bean = (ProductSpecBean) v.getTag();
                 double inputNum = CommonUtils.getDouble(((EditText) v).getText().toString());
-                double minNum = CommonUtils.getDouble(bean.getBuyMinNum());
-                double minOrder = CommonUtils.getDouble(bean.getMinOrder());
+                double minNum = bean.getBuyMinNum();
+                double minOrder = bean.getMinOrder();
                 if (inputNum < minNum) {
                     showToast(String.format("该商品的最低起购数量是%s哦", CommonUtils.formatNum(minNum)));
                 } else if (minOrder != 0 && inputNum % minOrder != 0) {
                     showToast(String.format("该商品的最小订购倍数是%s哦", CommonUtils.formatNum(minOrder)));
-                } else bean.setBuyQty(CommonUtils.formatNumber(inputNum));
+                } else bean.setShopcartNum(inputNum);
                 RecyclerView.Adapter adapter = (RecyclerView.Adapter) v.getTag(R.id.sgs_spec);
                 adapter.notifyDataSetChanged();
             }
@@ -162,11 +165,11 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
                 onTouch(view);
                 return;
             }
-            SpecsBean item = (SpecsBean) adapter.getItem(position);
+            ProductSpecBean item = (ProductSpecBean) adapter.getItem(position);
             if (item == null) return;
-            double step = CommonUtils.getDouble(item.getMinOrder());
-            double minNum = CommonUtils.getDouble(item.getBuyMinNum());
-            double result = CommonUtils.getDouble(item.getBuyQty());
+            double step = item.getMinOrder();
+            double minNum = item.getBuyMinNum();
+            double result = item.getShopcartNum();
             if (step == 0) step = 1;
             switch (view.getId()) {
                 case R.id.sgs_add_btn:
@@ -178,7 +181,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
                     if (result < minNum) result = 0;
                     break;
             }
-            item.setBuyQty(CommonUtils.formatNumber(result));
+            item.setShopcartNum(result);
             adapter.notifyDataSetChanged();
             updateNum(item);
         });
@@ -196,6 +199,18 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
             public void toSearch(String searchContent) {
                 mParam.setSearchWords(searchContent);
                 mPresenter.loadList();
+            }
+        });
+
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.loadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.refresh();
             }
         });
     }
@@ -219,7 +234,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         }
     }
 
-    private void updateNum(SpecsBean item) {
+    private void updateNum(ProductSpecBean item) {
         PlaceOrderSpecBean select = null;
         for (PlaceOrderSpecBean bean : mSpecList) {
             if (bean.getProductSpecID().equals(item.getProductSpecID())) {
@@ -233,7 +248,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
             select.setProductSpecID(item.getProductSpecID());
             mSpecList.add(select);
         }
-        select.setProductNum(item.getBuyQty());
+        select.setProductNum(CommonUtils.formatNumber(item.getShopcartNum()));
     }
 
     @Override
@@ -273,7 +288,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     }
 
     @Override
-    public void setGoodsList(List<GoodsBean> list) {
+    public void setGoodsList(List<ProductBean> list) {
         if (CommonUtils.isEmpty(list)) {
             initEmptyView();
             mEmptyView.reset();
@@ -288,14 +303,14 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         PlaceOrderConfirmActivity.start(resp);
     }
 
-    private void preProcessData(List<GoodsBean> list) {
+    private void preProcessData(List<ProductBean> list) {
         if (CommonUtils.isEmpty(list) || CommonUtils.isEmpty(mSpecList)) return;
-        for (GoodsBean bean : list) {
+        for (ProductBean bean : list) {
             for (PlaceOrderSpecBean specBean : mSpecList) {
                 if (specBean.getProductID().equals(bean.getProductID())) {
-                    for (SpecsBean spec : bean.getSpecs()) {
+                    for (ProductSpecBean spec : bean.getSpecs()) {
                         if (spec.getProductSpecID().equals(specBean.getProductSpecID())) {
-                            spec.setBuyQty(specBean.getProductNum());
+                            spec.setShopcartNum(CommonUtils.getDouble(specBean.getProductNum()));
                         }
                     }
                 }
