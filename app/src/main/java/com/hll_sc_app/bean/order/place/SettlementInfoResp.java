@@ -22,6 +22,7 @@ public class SettlementInfoResp implements Parcelable {
             return new SettlementInfoResp[size];
         }
     };
+    private String purchaserID;
     private String purchaserShopID;
     private String purchaserShopName;
     private String receiverAddress;
@@ -31,6 +32,7 @@ public class SettlementInfoResp implements Parcelable {
     private List<SupplierGroupBean> supplierGroupList;
 
     protected SettlementInfoResp(Parcel in) {
+        purchaserID = in.readString();
         purchaserShopID = in.readString();
         purchaserShopName = in.readString();
         receiverAddress = in.readString();
@@ -46,6 +48,7 @@ public class SettlementInfoResp implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(purchaserID);
         dest.writeString(purchaserShopID);
         dest.writeString(purchaserShopName);
         dest.writeString(receiverAddress);
@@ -58,6 +61,14 @@ public class SettlementInfoResp implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public String getPurchaserID() {
+        return purchaserID;
+    }
+
+    public void setPurchaserID(String purchaserID) {
+        this.purchaserID = purchaserID;
     }
 
     public String getPurchaserShopID() {

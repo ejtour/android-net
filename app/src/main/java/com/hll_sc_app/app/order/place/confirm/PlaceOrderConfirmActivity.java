@@ -29,12 +29,16 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.place.DiscountPlanBean;
+import com.hll_sc_app.bean.order.place.OrderCommitReq;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.place.SupplierGroupBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.TitleBar;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -47,7 +51,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ORDER_PLACE_CONFIRM)
 public class PlaceOrderConfirmActivity extends BaseLoadActivity {
-
+    private static String STATE_FORMAT = "MM月dd日 HH:mm";
     @BindView(R.id.opc_title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.opc_purchaser_shop)
@@ -80,6 +84,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     TextView mTotal;
     @Autowired(name = "parcelable")
     SettlementInfoResp mResp;
+    private OrderCommitReq mConfirmReq = new OrderCommitReq();
     private SupplierGroupBean mSupplierBean;
     private int mItemSize;
 
@@ -99,7 +104,15 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     }
 
     private void initData() {
-
+        mConfirmReq.setShopCartKey(mResp.getShopCartKey());
+        mConfirmReq.setIsFromShopcart(3);
+        mConfirmReq.setPurchaserID(mResp.getPurchaserID());
+        mConfirmReq.setPurchaserShopID(mResp.getPurchaserShopID());
+        DiscountPlanBean discountPlan = mSupplierBean.getDiscountPlan();
+        updateDiscount(discountPlan == null ? null : discountPlan.getProductDiscounts().get(0).getRuleID());
+        updatePayMethod(mSupplierBean.getPayType());
+        updateExecuteDate(null, null); // 使用上次时间替换
+        updateRemark(null);
     }
 
     private void initView() {
@@ -132,9 +145,20 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
         addProduct(mSupplierBean.getProductList());
 
         mGoodsNum.setText(String.format("共%s种", mSupplierBean.getProductList().size()));
+    }
 
+    private void updatePayMethod(int payType) {
+        OrderCommitReq.PayBean bean;
+        if (!CommonUtils.isEmpty(mConfirmReq.getPayList())) {
+            bean = mConfirmReq.getPayList().get(0);
+        } else {
+            bean = new OrderCommitReq.PayBean();
+            bean.setSupplierID(mSupplierBean.getSupplierID());
+            bean.setWareHourseStatus(mSupplierBean.getWareHourseStatus());
+        }
+        bean.setPayType(payType);
         SupplierGroupBean.PaymentBean payment = mSupplierBean.getPayment();
-        switch (mSupplierBean.getPayType()) {
+        switch (bean.getPayType()) {
             case 1:
                 if (payment.getCashPayment() == 1)
                     mPayMethod.setText("货到付款");
@@ -148,13 +172,73 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
                     mPayMethod.setText("在线支付");
                 break;
         }
+    }
 
-        if (mSupplierBean.getDiscountPlan() == null) {
+    private void updateDiscount(String ruleID) {
+        OrderCommitReq.DiscountBean bean;
+        DiscountPlanBean discountPlan = mSupplierBean.getDiscountPlan();
+        if (discountPlan == null) {
             mDiscountGroup.setVisibility(View.GONE);
         } else {
             mDiscountGroup.setVisibility(View.VISIBLE);
-            mDiscount.setText(mSupplierBean.getDiscountPlan().getProductDiscounts().get(0).getRuleName());
+            if (!CommonUtils.isEmpty(mConfirmReq.getDiscountList())) {
+                bean = mConfirmReq.getDiscountList().get(0);
+            } else {
+                bean = new OrderCommitReq.DiscountBean();
+                bean.setGroupID(mSupplierBean.getSupplierID());
+                bean.setSpecList(Collections.singletonList(new OrderCommitReq.DiscountBean.DiscountSpecBean()));
+            }
+            OrderCommitReq.DiscountBean.DiscountSpecBean discountSpecBean = bean.getSpecList().get(0);
+            for (DiscountPlanBean.ProductDiscountBean discount : discountPlan.getProductDiscounts()) {
+                if (discount.getRuleID().equals(ruleID)) {
+                    discountSpecBean.setDiscountID(discount.getDiscountID());
+                    discountSpecBean.setRuleID(discount.getRuleID());
+                    discountSpecBean.setSpecID(discount.getSpecID());
+                    discountSpecBean.setProductID(discount.getProductID());
+                    discountSpecBean.setDiscountAmount(discount.getDiscountValue());
+                    bean.setDiscountAmount(discount.getDiscountValue());
+                    mDiscount.setText(discount.getRuleName());
+                    break;
+                }
+            }
+            bean.setSpecList(Collections.singletonList(discountSpecBean));
         }
+    }
+
+    private void updateExecuteDate(String startDate, String endDate) {
+        OrderCommitReq.ExecuteDateBean bean;
+        if (!CommonUtils.isEmpty(mConfirmReq.getExecuteDateDtoList())) {
+            bean = mConfirmReq.getExecuteDateDtoList().get(0);
+        } else {
+            bean = new OrderCommitReq.ExecuteDateBean();
+            bean.setIsWareHouse(mSupplierBean.getWareHourseStatus());
+            bean.setSupplierID(mSupplierBean.getSupplierID());
+        }
+        bean.setSubBillExecuteDate(startDate);
+        bean.setSubBillExecuteEndDate(endDate);
+        if (!TextUtils.isEmpty(startDate) && TextUtils.isEmpty(endDate)) {
+            if ("0".equals(startDate) && "0".equals(endDate)) {
+                mRequestDate.setText("按照供应商时间配送");
+                mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+                mRequestDate.setClickable(false);
+            } else mRequestDate.setClickable(true);
+            mRequestDate.setText(String.format("%s - %s", DateUtil.getReadableTime(startDate, STATE_FORMAT),
+                    DateUtil.getReadableTime(endDate, Constants.SIGNED_HH_MM)));
+        } else mRequestDate.setClickable(true);
+    }
+
+    private void updateRemark(String remark) {
+        OrderCommitReq.RemarkBean bean;
+        if (!CommonUtils.isEmpty(mConfirmReq.getRemarkDtoList())) {
+            bean = mConfirmReq.getRemarkDtoList().get(0);
+        } else {
+            bean = new OrderCommitReq.RemarkBean();
+            bean.setIsWareHouse(mSupplierBean.getWareHourseStatus());
+            bean.setSupplyShopID(mSupplierBean.getSupplierShopID());
+            bean.setPurchaserShopID(mResp.getPurchaserShopID());
+        }
+        bean.setRemark(remark);
+        mRemark.setText(bean.getRemark());
     }
 
     private SpannableString getAmount(double amount, double depositAmount, int type) {
