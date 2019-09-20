@@ -1057,5 +1057,8 @@ public class RouterConfig {
      * 投诉协商历史
      */
     public static final String ACTIVITY_COMPLAIN_HISTORY="/activity/complain/history";
+
+    /*投诉的内部记录*/
+    public static final String ACTIVITY_COMPLAIN_INNER_LOG="/activity/complain/inner/log";
 }
 

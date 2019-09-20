@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.history.ComplainHistorylActivity;
+import com.hll_sc_app.app.complainmanage.innerlog.InnerLoglActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -349,11 +350,14 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         }
     }
 
-    @OnClick({R.id.txt_title_history})
+    @OnClick({R.id.txt_title_history, R.id.txt_btn_log})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_title_history:
                 ComplainHistorylActivity.start(mCompaintId);
+                break;
+            case R.id.txt_btn_log:
+                InnerLoglActivity.start(mCompaintId);
                 break;
             default:
                 break;
