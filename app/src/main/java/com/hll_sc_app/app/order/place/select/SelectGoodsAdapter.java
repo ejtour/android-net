@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
-import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.widget.SimpleDecoration;
 
 /**
@@ -21,7 +21,7 @@ import com.hll_sc_app.widget.SimpleDecoration;
  * @since 2019/9/17
  */
 
-public class SelectGoodsAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
+public class SelectGoodsAdapter extends BaseQuickAdapter<ProductBean, BaseViewHolder> {
 
     private final View.OnFocusChangeListener mListener;
     private final OnItemChildClickListener mClickListener;
@@ -53,12 +53,12 @@ public class SelectGoodsAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GoodsBean item) {
+    protected void convert(BaseViewHolder helper, ProductBean item) {
         ((GlideImageView) helper.setText(R.id.osg_goods_name, item.getProductName())
                 .setText(R.id.osg_goods_brief, item.getProductBrief())
                 .setGone(R.id.osg_promotion, !TextUtils.isEmpty(item.getDiscountRuleTypeName()))
-                .setGone(R.id.osg_next_day, "1".equals(item.getNextDayDelivery()))
-                .setGone(R.id.osg_bundle, "1".equals(item.getBundlingGoodsType()))
+                .setGone(R.id.osg_next_day, item.getNextDayDelivery() == 1)
+                .setGone(R.id.osg_bundle, item.getBundlingGoodsType() == 1)
                 .setText(R.id.osg_promotion, item.getDiscountRuleTypeName())
                 .getView(R.id.osg_icon)).setImageURL(item.getImgUrl());
         RecyclerView listView = helper.getView(R.id.osg_spec_list);

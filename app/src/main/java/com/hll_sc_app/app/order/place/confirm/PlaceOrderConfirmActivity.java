@@ -28,8 +28,8 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.order.place.DiscountPlanBean;
+import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.place.SupplierGroupBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -177,17 +177,17 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
         return ss;
     }
 
-    private void addProduct(List<GoodsBean> list) {
+    private void addProduct(List<ProductBean> list) {
         int count = Math.min(4, list.size());
         for (int i = 0; i < count; i++) {
-            GoodsBean goodsBean = list.get(i);
+            ProductBean goodsBean = list.get(i);
             mGoodsGroup.addView(generateProduct(goodsBean.getImgUrl(),
                     goodsBean.getSpecs().get(0).getShopcartNum(), goodsBean.getDiscountRuleTypeName()),
                     mGoodsGroup.getChildCount() - 1);
         }
     }
 
-    private FrameLayout generateProduct(String url, String count, String discountName) {
+    private FrameLayout generateProduct(String url, double count, String discountName) {
         FrameLayout frameLayout = new FrameLayout(this);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mItemSize, mItemSize);
         layoutParams.leftMargin = UIUtils.dip2px(10);
@@ -204,7 +204,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
         textView.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         textView.setTextColor(Color.WHITE);
         textView.setTextSize(12);
-        textView.setText(String.format("x%s", CommonUtils.formatNum(CommonUtils.getDouble(count))));
+        textView.setText(String.format("x%s", CommonUtils.formatNum(count)));
         frameLayout.addView(textView, params);
         if (!TextUtils.isEmpty(discountName)) {
             TextView discount = new TextView(this);

@@ -2,8 +2,8 @@ package com.hll_sc_app.app.order.place.select;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
+import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 
@@ -18,7 +18,7 @@ public interface ISelectGoodsContract {
     interface ISelectGoodsView extends ILoadView {
         void setCategoryInfo(List<GoodsCategoryBean> list);
 
-        void setGoodsList(List<GoodsBean> list);
+        void setGoodsList(List<ProductBean> list);
 
         void confirmSuccess(SettlementInfoResp resp);
     }
