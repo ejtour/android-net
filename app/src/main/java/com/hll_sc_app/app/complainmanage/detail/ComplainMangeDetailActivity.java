@@ -18,15 +18,20 @@ import com.alibaba.fastjson.JSON;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.history.ComplainHistorylActivity;
 import com.hll_sc_app.app.complainmanage.innerlog.InnerLoglActivity;
+import com.hll_sc_app.app.complainmanage.sendcomplainreply.SendComplainReplyActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.ComplainDetailResp;
 import com.hll_sc_app.bean.complain.ComplainStatusResp;
+import com.hll_sc_app.bean.event.ComplainManageEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 import java.util.Map;
@@ -123,6 +128,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         setContentView(R.layout.activity_complain_manage_detail);
         unbinder = ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
+        EventBus.getDefault().register(this);
         mPresent = ComplainMangeDetailPresent.newInstance();
         mPresent.register(this);
         mPresent.start();
@@ -132,6 +138,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     private void getStaticData() {
@@ -311,6 +318,14 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         mTxtPath.setText(mComplainDetailResp.getLineName());
     }
 
+    @Subscribe(sticky = true)
+    public void onEvent(ComplainManageEvent complainManageEvent) {
+        if (complainManageEvent.getTarget() == ComplainManageEvent.TARGET.DETAIL) {
+            if (complainManageEvent.getEvent() == ComplainManageEvent.EVENT.REFRESH) {
+                mPresent.start();
+            }
+        }
+    }
     /**
      * 展示底部按钮
      */
@@ -350,7 +365,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         }
     }
 
-    @OnClick({R.id.txt_title_history, R.id.txt_btn_log})
+    @OnClick({R.id.txt_title_history, R.id.txt_btn_log, R.id.txt_btn_reply})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_title_history:
@@ -358,6 +373,9 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                 break;
             case R.id.txt_btn_log:
                 InnerLoglActivity.start(mCompaintId);
+                break;
+            case R.id.txt_btn_reply:
+                SendComplainReplyActivity.start(mCompaintId);
                 break;
             default:
                 break;

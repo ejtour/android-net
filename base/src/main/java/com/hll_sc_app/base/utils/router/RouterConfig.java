@@ -1065,5 +1065,11 @@ public class RouterConfig {
 
     /*投诉的内部记录*/
     public static final String ACTIVITY_COMPLAIN_INNER_LOG="/activity/complain/inner/log";
+
+    /*投诉管理-发起投诉回复*/
+    public static final String ACTIVITY_COMPLAIN_SEND_REPLY = "/activity/complain/send/reply";
+
+    /*投诉管理-发起投诉回复结果页*/
+    public static final String ACTIVITY_COMPLAIN_SEND_RESULT = "/activity/complain/send/result";
 }
 

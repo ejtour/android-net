@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tb_title="处理结果" />
+
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/base_white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp_40">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/base_white"
+            android:orientation="horizontal"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp">
+
+            <TextView
+                android:id="@+id/btn_list"
+                style="@style/BtnAfterSalesAction.PrimaryStroke"
+                android:layout_width="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:text="返回投诉详情" />
+
+            <TextView
+                android:id="@+id/btn_log"
+                style="@style/BtnAfterSalesAction.PrimaryStroke"
+                android:layout_width="0dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:text="填写内部记录" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

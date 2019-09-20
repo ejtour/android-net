@@ -14,11 +14,15 @@ import com.hll_sc_app.app.complainmanage.adapter.ComplainListApdater;
 import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.bean.complain.ComplainListResp;
+import com.hll_sc_app.bean.event.ComplainManageEvent;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class ComplainListFragment extends BaseLazyFragment implements IComplainManageContract.IView {
     private final static String BUNDLE_STATUS_NAME = "status";
@@ -41,6 +45,7 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         Bundle args = getArguments();
         if (args != null) {
             mStatus = args.getInt(BUNDLE_STATUS_NAME);
@@ -124,5 +129,20 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(ComplainManageEvent complainManageEvent) {
+        if (complainManageEvent.getTarget() == ComplainManageEvent.TARGET.LIST) {
+            if (complainManageEvent.getEvent() == ComplainManageEvent.EVENT.REFRESH) {
+                mPresent.refresh();
+            }
+        }
     }
 }
