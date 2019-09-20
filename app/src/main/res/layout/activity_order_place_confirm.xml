@@ -84,6 +84,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/opc_address" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="1dp"
+                android:src="@drawable/ic_car"
+                app:layout_constraintBottom_toTopOf="@id/opc_hor_div1"
+                app:layout_constraintEnd_toEndOf="parent" />
+
             <View
                 android:id="@+id/opc_hor_div2"
                 android:layout_width="0dp"
