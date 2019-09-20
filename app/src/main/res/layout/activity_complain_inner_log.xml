@@ -59,14 +59,13 @@
 
 
             <com.zhy.view.flowlayout.TagFlowLayout
-                app:gravity="right"
                 android:id="@+id/flow_link_depart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10" />
+                app:gravity="right" />
 
             <ImageView
                 android:id="@+id/img_link_depart"
@@ -97,14 +96,13 @@
                 android:textSize="@dimen/base_text_13" />
 
             <com.zhy.view.flowlayout.TagFlowLayout
-                app:gravity="right"
                 android:id="@+id/flow_problem_depart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10" />
+                app:gravity="right" />
 
             <ImageView
                 android:id="@+id/img_problem_depart"
@@ -139,6 +137,7 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:gravity="left|top"
+                android:hint="您可在此填写该投诉问题的相关总结记录"
                 android:lineSpacingExtra="5dp"
                 android:textColor="@color/base_text222"
                 android:textSize="@dimen/base_text_12"

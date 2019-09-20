@@ -24,7 +24,6 @@ public class InnerLogPresent implements IInnerLogContract.IPresent {
     @Override
     public void start() {
         queryInnerLog();
-        queryDepartments();
     }
 
     @Override
@@ -51,6 +50,7 @@ public class InnerLogPresent implements IInnerLogContract.IPresent {
                     @Override
                     public void onSuccess(ComplainInnerLogResp complainInnerLogResp) {
                         mView.queryInnerLogSucess(complainInnerLogResp);
+                        queryDepartments();
                     }
 
                     @Override
@@ -80,6 +80,37 @@ public class InnerLogPresent implements IInnerLogContract.IPresent {
                     @Override
                     public void onSuccess(List<DepartmentsBean> departmentsBeans) {
                         mView.queryDepartmentsSuccess(departmentsBeans);
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+    }
+
+    @Override
+    public void saveComplainInnerLog() {
+        BaseMapReq baseMapReq = BaseMapReq.newBuilder()
+                .put("complaintID", mView.getComplaintID())
+                .put("issueDepartment", mView.getIssueDepartment())
+                .put("relationDepartment", mView.getrelationDepartment())
+                .put("result", mView.getResult())
+                .put("source", "2")
+                .create();
+        ComplainManageService.INSTANCE
+                .saveComplainInnerLog(baseMapReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    mView.showLoading();
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.saveLogSuccess();
                     }
 
                     @Override

@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.complainmanage.innerlog;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -21,9 +20,11 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.ComplainInnerLogResp;
 import com.hll_sc_app.bean.complain.DepartmentsBean;
+import com.hll_sc_app.widget.MultipSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,6 +62,10 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
 
     private DepartFlowAdpter mLinkAdpter;
     private DepartFlowAdpter mProblemAdpter;
+
+    private MultipSelectionDialog mLinkSelectDialog;
+    private MultipSelectionDialog mProblemSelectDialog;
+    private ComplainInnerLogResp mComplainInnerLogResp;
 
     public static void start(String compaintId) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_INNER_LOG, compaintId);
@@ -104,12 +109,12 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
                 mProblemArrow.setVisibility(View.VISIBLE);
                 mLinkArrow.setVisibility(View.VISIBLE);
                 mTxtLeftNumber.setVisibility(View.VISIBLE);
-                mProblemAdpter.setBackgroundColorandTextColor("#ffffff","#222222");
-                mLinkAdpter.setBackgroundColorandTextColor("#ffffff","#222222");
+                mProblemAdpter.setBackgroundColorandTextColor(false,"#ffffff","#222222");
+                mLinkAdpter.setBackgroundColorandTextColor(false,"#ffffff","#222222");
                 mTitlebar.setRightText("保存");
                 isEdit = !isEdit;
             } else {
-
+                mPresent.saveComplainInnerLog();
             }
         });
     }
@@ -127,35 +132,140 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
 
     @Override
     public void queryInnerLogSucess(ComplainInnerLogResp complainInnerLogResp) {
-        String linkDepartments = complainInnerLogResp.getRelationDepartmentName();
+        mComplainInnerLogResp = complainInnerLogResp;
+        mLinkAdpter = new DepartFlowAdpter(this, new ArrayList<>());
+        mTagFlowLinkDepart.setAdapter(mLinkAdpter);
+        mTagFlowLinkDepart.setOnTagClickListener((view, position, parent) -> {
+            if (mLinkSelectDialog != null) {
+                mLinkSelectDialog.show();
+            }
+            return false;
+        });
+
+        mProblemAdpter = new DepartFlowAdpter(this, new ArrayList<>());
+        mTagFlowProblemDepart.setAdapter(mProblemAdpter);
+        mTagFlowProblemDepart.setOnTagClickListener((view, position, parent) -> {
+            if (mProblemSelectDialog != null) {
+                mProblemSelectDialog.show();
+            }
+            return false;
+        });
+        String linkDepartmentName = complainInnerLogResp.getRelationDepartmentName();
         String issueDepartmentName = complainInnerLogResp.getIssueDepartmentName();
-        if (TextUtils.isEmpty(linkDepartments) || TextUtils.isEmpty(issueDepartmentName)) {
+        if (TextUtils.isEmpty(linkDepartmentName) || TextUtils.isEmpty(issueDepartmentName)) {
+            mProblemAdpter.setBackgroundColorandTextColor(false,"#ffffff", "#222222");
+            mLinkAdpter.setBackgroundColorandTextColor(false,"#ffffff", "#222222");
             return;
         }
         isEdit = true;
-        mLinkAdpter = new DepartFlowAdpter(this, Arrays.asList(linkDepartments.split(",")));
-        mTagFlowLinkDepart.setAdapter(mLinkAdpter);
-        mProblemAdpter = new DepartFlowAdpter(this, Arrays.asList(issueDepartmentName.split(",")));
-        mTagFlowProblemDepart.setAdapter(mProblemAdpter);
+        mLinkAdpter.setNewData(Arrays.asList(linkDepartmentName.split(",")));
+        mProblemAdpter.setNewData(Arrays.asList(issueDepartmentName.split(",")));
         mEdtLog.setText(complainInnerLogResp.getResult());
         mEdtLog.setEnabled(false);
         mProblemArrow.setVisibility(View.GONE);
         mLinkArrow.setVisibility(View.GONE);
         mTxtLeftNumber.setVisibility(View.GONE);
         mTitlebar.setRightText("编辑");
+
     }
 
     @Override
     public void queryDepartmentsSuccess(List<DepartmentsBean> departmentsBeanList) {
+        if (TextUtils.isEmpty(mComplainInnerLogResp.getRelationDepartment())) {
+            mComplainInnerLogResp.setRelationDepartment("");
+        }
+        if (TextUtils.isEmpty(mComplainInnerLogResp.getIssueDepartment())) {
+            mComplainInnerLogResp.setIssueDepartment("");
+        }
+        mLinkSelectDialog = MultipSelectionDialog.newBuilder(this, new MultipSelectionDialog.WrapperName<DepartmentsBean>() {
+            @Override
+            public String getName(DepartmentsBean departmentsBean) {
+                return departmentsBean.getValue();
+            }
+
+            @Override
+            public String getKey(DepartmentsBean departmentsBean) {
+                return departmentsBean.getKey();
+            }
+        })
+                .refreshList(departmentsBeanList)
+                .setTitleText("选择关联部门")
+                .setOnSelectListener(ts -> {
+                    List<String> names = new ArrayList<>();
+                    StringBuilder builder = new StringBuilder();
+                    for (DepartmentsBean departmentsBean : ts) {
+                        names.add(departmentsBean.getValue());
+                        builder.append(departmentsBean.getKey()).append(",");
+                    }
+                    mComplainInnerLogResp.setRelationDepartment(builder.toString());
+                    mLinkAdpter.setNewData(names);
+                })
+                .selectByKey(Arrays.asList(mComplainInnerLogResp.getRelationDepartment().split(",")))
+                .create();
+
+        mProblemSelectDialog = MultipSelectionDialog.newBuilder(this, new MultipSelectionDialog.WrapperName<DepartmentsBean>() {
+            @Override
+            public String getName(DepartmentsBean departmentsBean) {
+                return departmentsBean.getValue();
+            }
+
+            @Override
+            public String getKey(DepartmentsBean departmentsBean) {
+                return departmentsBean.getKey();
+            }
+        })
+                .refreshList(departmentsBeanList)
+                .setTitleText("选择问题部门")
+                .setOnSelectListener(ts -> {
+                    StringBuilder builder = new StringBuilder();
+                    List<String> names = new ArrayList<>();
+                    for (DepartmentsBean departmentsBean : ts) {
+                        names.add(departmentsBean.getValue());
+                        builder.append(departmentsBean.getKey()).append(",");
+                    }
+                    mComplainInnerLogResp.setIssueDepartment(builder.toString());
+                    mProblemAdpter.setNewData(names);
+                })
+                .selectByKey(Arrays.asList(mComplainInnerLogResp.getIssueDepartment().split(",")))
+                .create();
+
 
     }
 
-    @OnClick({R.id.ll_line_1, R.id.ll_line_2})
+    @Override
+    public void saveLogSuccess() {
+        finish();
+    }
+
+    @Override
+    public String getIssueDepartment() {
+        return mComplainInnerLogResp.getIssueDepartment();
+    }
+
+    @Override
+    public String getrelationDepartment() {
+        return mComplainInnerLogResp.getRelationDepartment();
+    }
+
+    @Override
+    public String getResult() {
+        return mEdtLog.getText().toString();
+    }
+
+    @OnClick({R.id.ll_line_1, R.id.ll_line_2, R.id.flow_link_depart, R.id.flow_problem_depart})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_line_1:
+            case R.id.flow_link_depart:
+                if (mLinkSelectDialog != null) {
+                    mLinkSelectDialog.show();
+                }
                 break;
             case R.id.ll_line_2:
+            case R.id.flow_problem_depart:
+                if (mProblemSelectDialog != null) {
+                    mProblemSelectDialog.show();
+                }
                 break;
             default:
                 break;

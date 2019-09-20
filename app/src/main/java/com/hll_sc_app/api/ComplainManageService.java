@@ -44,4 +44,9 @@ public interface ComplainManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:110022")
     Observable<BaseResp<List<DepartmentsBean>>> queryDepartments(@Body BaseMapReq req);
+
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:110019")
+    Observable<BaseResp<Object>> saveComplainInnerLog(@Body BaseMapReq req);
 }
