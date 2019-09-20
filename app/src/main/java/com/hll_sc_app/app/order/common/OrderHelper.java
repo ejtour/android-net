@@ -128,7 +128,7 @@ public class OrderHelper {
                 .setCallback(new DatePickerDialog.SelectCallback() {
                     @Override
                     public void select(Date beginTime, Date endTime) {
-                        if (CalendarUtils.getDateBefore(endTime, 31).getTime() > beginTime.getTime()) {
+                        if (CalendarUtils.getDateBefore(endTime, 30).getTime() > beginTime.getTime()) {
                             ToastUtils.showShort(activity, "开始日期至结束日期限制选择31天以内");
                             return;
                         }
