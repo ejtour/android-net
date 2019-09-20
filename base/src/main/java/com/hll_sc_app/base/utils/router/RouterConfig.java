@@ -1050,6 +1050,11 @@ public class RouterConfig {
      */
     public static final String ORDER_PLACE_SELECT_GOODS = "/activity/order/place/select/goods";
 
+    /**
+     * 代客下单-代下单确认
+     */
+    public static final String ORDER_PLACE_CONFIRM = "/activity/order/place/confirm";
+
     /*投诉详情*/
     public static final String ACTIVITY_COMPLAIN_DETAIL="/activity/complain/detail";
 

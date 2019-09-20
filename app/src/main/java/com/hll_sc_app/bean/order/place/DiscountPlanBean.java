@@ -22,13 +22,13 @@ public class DiscountPlanBean implements Parcelable {
         }
     };
     private String groupID;
-    private String productDiscountMoney;
+    private double productDiscountMoney;
     private int useDiscountType;
     private List<ProductDiscountBean> productDiscounts;
 
     protected DiscountPlanBean(Parcel in) {
         groupID = in.readString();
-        productDiscountMoney = in.readString();
+        productDiscountMoney = in.readDouble();
         useDiscountType = in.readInt();
         productDiscounts = in.createTypedArrayList(ProductDiscountBean.CREATOR);
     }
@@ -41,11 +41,11 @@ public class DiscountPlanBean implements Parcelable {
         this.groupID = groupID;
     }
 
-    public String getProductDiscountMoney() {
+    public double getProductDiscountMoney() {
         return productDiscountMoney;
     }
 
-    public void setProductDiscountMoney(String productDiscountMoney) {
+    public void setProductDiscountMoney(double productDiscountMoney) {
         this.productDiscountMoney = productDiscountMoney;
     }
 
@@ -68,7 +68,7 @@ public class DiscountPlanBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(groupID);
-        dest.writeString(productDiscountMoney);
+        dest.writeDouble(productDiscountMoney);
         dest.writeInt(useDiscountType);
         dest.writeTypedList(productDiscounts);
     }
