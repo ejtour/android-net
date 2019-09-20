@@ -50,8 +50,9 @@ interface IOrderManageContract {
 
         /**
          * 更新待发货头部信息
+         * @return 处理是否完成
          */
-        void updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes);
+        boolean updateDeliverHeader(List<DeliverNumResp.DeliverType> deliverTypes);
 
         /**
          * 展示物流公司列表
@@ -60,7 +61,6 @@ interface IOrderManageContract {
     }
 
     interface IOrderManagePresenter extends IPresenter<IOrderManageView> {
-        void refreshList();
 
         void refresh();
 
