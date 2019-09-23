@@ -35,7 +35,7 @@ public class PriceLogBean {
     }
 
     public void setCargoOwnerName(String cargoOwnerName) {
-        cargoOwnerName = cargoOwnerName;
+       this.cargoOwnerName = cargoOwnerName;
     }
 
     public String getSaleUnitName() {
