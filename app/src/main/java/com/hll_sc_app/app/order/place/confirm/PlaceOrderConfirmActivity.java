@@ -33,11 +33,15 @@ import com.hll_sc_app.bean.order.place.OrderCommitReq;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.place.SupplierGroupBean;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.order.ShopDiscountDialog;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -87,6 +91,8 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     private OrderCommitReq mConfirmReq = new OrderCommitReq();
     private SupplierGroupBean mSupplierBean;
     private int mItemSize;
+    private ShopDiscountDialog mDiscountDialog;
+    private SingleSelectionDialog mPayMethodDialog;
 
     public static void start(SettlementInfoResp resp) {
         RouterUtil.goToActivity(RouterConfig.ORDER_PLACE_CONFIRM, resp);
@@ -108,11 +114,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
         mConfirmReq.setIsFromShopcart(3);
         mConfirmReq.setPurchaserID(mResp.getPurchaserID());
         mConfirmReq.setPurchaserShopID(mResp.getPurchaserShopID());
-        DiscountPlanBean discountPlan = mSupplierBean.getDiscountPlan();
-        updateDiscount(discountPlan == null ? null : discountPlan.getProductDiscounts().get(0).getRuleID());
-        updatePayMethod(mSupplierBean.getPayType());
-        updateExecuteDate(null, null); // 使用上次时间替换
-        updateRemark(null);
+        setSupplierData();
     }
 
     private void initView() {
@@ -126,7 +128,6 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
         mPurchaserShop.setText(mResp.getPurchaserShopName());
         mReceiver.setText(String.format("收货人：%s / %s", mResp.getReceiverName(), PhoneUtil.formatPhoneNum(mResp.getReceiverMobile())));
         mAddress.setText(String.format("地址：%s", mResp.getReceiverAddress()));
-        setSupplierData();
     }
 
     private void setSupplierData() {
@@ -136,73 +137,96 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
         mSubtotal.setText(getAmount(mSupplierBean.getTotalAmount(), mSupplierBean.getDepositAmount(), 0));
 
         DiscountPlanBean discountPlan = mSupplierBean.getDiscountPlan();
-        double discount = discountPlan == null ? 0 : discountPlan.getProductDiscountMoney();
-        mTotalAmount.setText(getAmount(CommonUtils.subDouble(mSupplierBean.getTotalAmount(), discount).doubleValue()
-                , mSupplierBean.getDepositAmount(), 1));
-        mTotal.setText(getAmount(CommonUtils.subDouble(mSupplierBean.getTotalAmount(), discount).doubleValue()
-                , mSupplierBean.getDepositAmount(), 2));
 
         addProduct(mSupplierBean.getProductList());
 
         mGoodsNum.setText(String.format("共%s种", mSupplierBean.getProductList().size()));
+
+        initDiscount(discountPlan);
+        updatePayMethod(mSupplierBean.getPayType(), null);
+        updateExecuteDate(null, null); // 使用上次时间替换
+        updateRemark(null);
     }
 
-    private void updatePayMethod(int payType) {
+    private void initDiscount(DiscountPlanBean discountPlan) {
+        DiscountPlanBean.DiscountBean discountBean = null;
+        if (discountPlan == null || CommonUtils.isEmpty(discountPlan.getShopDiscounts())) {
+            mDiscountGroup.setVisibility(View.GONE);
+        } else {
+            mDiscountGroup.setVisibility(View.VISIBLE);
+            List<DiscountPlanBean.DiscountBean> discounts = discountPlan.getShopDiscounts();
+            if (discountPlan.getUseDiscountType() == DiscountPlanBean.DISCOUNT_PRODUCT) {
+                for (DiscountPlanBean.DiscountBean bean : discounts) {
+                    if (bean.getRuleType() == -1) {
+                        discountBean = bean;
+                        break;
+                    }
+                }
+            } else if (discountPlan.getUseDiscountType() == DiscountPlanBean.DISCOUNT_NONE) {
+                for (DiscountPlanBean.DiscountBean bean : discounts) {
+                    if (bean.getRuleType() == 0) {
+                        discountBean = bean;
+                    }
+                }
+            } else discountBean = discounts.get(1);
+        }
+        updateDiscount(discountBean);
+    }
+
+    private void updatePayMethod(int payType, String payMethod) {
         OrderCommitReq.PayBean bean;
         if (!CommonUtils.isEmpty(mConfirmReq.getPayList())) {
             bean = mConfirmReq.getPayList().get(0);
         } else {
             bean = new OrderCommitReq.PayBean();
+            mConfirmReq.setPayList(Collections.singletonList(bean));
             bean.setSupplierID(mSupplierBean.getSupplierID());
             bean.setWareHourseStatus(mSupplierBean.getWareHourseStatus());
         }
         bean.setPayType(payType);
-        SupplierGroupBean.PaymentBean payment = mSupplierBean.getPayment();
-        switch (bean.getPayType()) {
-            case 1:
-                if (payment.getCashPayment() == 1)
-                    mPayMethod.setText("货到付款");
-                break;
-            case 2:
-                if (payment.getAccountPayment() == 1)
-                    mPayMethod.setText("账期支付");
-                break;
-            case 3:
-                if (payment.getOnlinePayment() == 1)
-                    mPayMethod.setText("在线支付");
-                break;
-        }
+        if (TextUtils.isEmpty(payMethod)) {
+            SupplierGroupBean.PaymentBean payment = mSupplierBean.getPayment();
+            switch (bean.getPayType()) {
+                case 1:
+                    if (payment.getCashPayment() == 1) mPayMethod.setText("货到付款");
+                    break;
+                case 2:
+                    if (payment.getAccountPayment() == 1) mPayMethod.setText("账期支付");
+                    break;
+                case 3:
+                    if (payment.getOnlinePayment() == 1) mPayMethod.setText("在线支付");
+                    break;
+            }
+        } else mPayMethod.setText(payMethod);
     }
 
-    private void updateDiscount(String ruleID) {
-        OrderCommitReq.DiscountBean bean;
-        DiscountPlanBean discountPlan = mSupplierBean.getDiscountPlan();
-        if (discountPlan == null) {
-            mDiscountGroup.setVisibility(View.GONE);
-        } else {
-            mDiscountGroup.setVisibility(View.VISIBLE);
-            if (!CommonUtils.isEmpty(mConfirmReq.getDiscountList())) {
-                bean = mConfirmReq.getDiscountList().get(0);
+    private void updateDiscount(DiscountPlanBean.DiscountBean discountBean) {
+        double discount = 0;
+        if (discountBean != null) {
+            mDiscount.setTag(discountBean);
+            discount = discountBean.getDiscountValue();
+            mDiscount.setText(discountBean.getRuleName());
+            if (discountBean.getRuleType() == 0) { // 不使用店铺优惠
+                mConfirmReq.setDiscountList(null);
             } else {
-                bean = new OrderCommitReq.DiscountBean();
-                bean.setGroupID(mSupplierBean.getSupplierID());
-                bean.setSpecList(Collections.singletonList(new OrderCommitReq.DiscountBean.DiscountSpecBean()));
-            }
-            OrderCommitReq.DiscountBean.DiscountSpecBean discountSpecBean = bean.getSpecList().get(0);
-            for (DiscountPlanBean.ProductDiscountBean discount : discountPlan.getProductDiscounts()) {
-                if (discount.getRuleID().equals(ruleID)) {
-                    discountSpecBean.setDiscountID(discount.getDiscountID());
-                    discountSpecBean.setRuleID(discount.getRuleID());
-                    discountSpecBean.setSpecID(discount.getSpecID());
-                    discountSpecBean.setProductID(discount.getProductID());
-                    discountSpecBean.setDiscountAmount(discount.getDiscountValue());
-                    bean.setDiscountAmount(discount.getDiscountValue());
-                    mDiscount.setText(discount.getRuleName());
-                    break;
+                OrderCommitReq.DiscountBean bean;
+                if (!CommonUtils.isEmpty(mConfirmReq.getDiscountList())) {
+                    bean = mConfirmReq.getDiscountList().get(0);
+                } else {
+                    bean = new OrderCommitReq.DiscountBean();
+                    mConfirmReq.setDiscountList(Collections.singletonList(bean));
+                    bean.setGroupID(mSupplierBean.getSupplierID());
                 }
+                bean.setDiscountAmount(discountBean.getDiscountValue());
+                bean.setDiscountID(discountBean.getDiscountID());
+                bean.setRuleID(discountBean.getRuleID());
+                bean.setSpecList(discountBean.getSpecList());
             }
-            bean.setSpecList(Collections.singletonList(discountSpecBean));
         }
+        mTotalAmount.setText(getAmount(CommonUtils.subDouble(mSupplierBean.getTotalAmount(), discount).doubleValue()
+                , mSupplierBean.getDepositAmount(), 1));
+        mTotal.setText(getAmount(CommonUtils.subDouble(mSupplierBean.getTotalAmount(), discount).doubleValue()
+                , mSupplierBean.getDepositAmount(), 2));
     }
 
     private void updateExecuteDate(String startDate, String endDate) {
@@ -211,6 +235,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
             bean = mConfirmReq.getExecuteDateDtoList().get(0);
         } else {
             bean = new OrderCommitReq.ExecuteDateBean();
+            mConfirmReq.setExecuteDateDtoList(Collections.singletonList(bean));
             bean.setIsWareHouse(mSupplierBean.getWareHourseStatus());
             bean.setSupplierID(mSupplierBean.getSupplierID());
         }
@@ -228,17 +253,23 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     }
 
     private void updateRemark(String remark) {
+        mRemark.setText(remark);
+        if (TextUtils.isEmpty(remark)) {
+            mConfirmReq.setRemarkDtoList(null);
+            return;
+        }
         OrderCommitReq.RemarkBean bean;
         if (!CommonUtils.isEmpty(mConfirmReq.getRemarkDtoList())) {
             bean = mConfirmReq.getRemarkDtoList().get(0);
         } else {
             bean = new OrderCommitReq.RemarkBean();
+            mConfirmReq.setRemarkDtoList(Collections.singletonList(bean));
             bean.setIsWareHouse(mSupplierBean.getWareHourseStatus());
             bean.setSupplyShopID(mSupplierBean.getSupplierShopID());
             bean.setPurchaserShopID(mResp.getPurchaserShopID());
         }
         bean.setRemark(remark);
-        mRemark.setText(bean.getRemark());
+
     }
 
     private SpannableString getAmount(double amount, double depositAmount, int type) {
@@ -316,12 +347,53 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     }
 
     @OnClick(R.id.opc_discount)
-    public void selectDiscount() {
+    public void showDiscountDialog(View view) {
+        if (mDiscountDialog == null) {
+            mDiscountDialog = new ShopDiscountDialog(this)
+                    .refreshList(mSupplierBean.getDiscountPlan().getShopDiscounts())
+                    .select((DiscountPlanBean.DiscountBean) view.getTag())
+                    .setOnItemClickListener((adapter, view1, position) -> {
+                        mDiscountDialog.dismiss();
+                        DiscountPlanBean.DiscountBean item = (DiscountPlanBean.DiscountBean) adapter.getItem(position);
+                        if (item == null) return;
+                        mDiscountDialog.select(item);
+                        updateDiscount(item);
+                    });
+        }
+        mDiscountDialog.show();
     }
 
     @OnClick(R.id.opc_pay_method)
     public void selectPayMethod() {
-
+        SupplierGroupBean.PaymentBean payment = mSupplierBean.getPayment();
+        if (payment == null) {
+            showToast("没有可用的支付方式");
+            return;
+        }
+        if (mPayMethodDialog == null) {
+            List<NameValue> list = new ArrayList<>();
+            NameValue select = null;
+            if (payment.getAccountPayment() == 1) list.add(new NameValue("账期支付", "2"));
+            if (payment.getCashPayment() == 1) list.add(new NameValue("货到付款", "1"));
+            if (payment.getOnlinePayment() == 1) list.add(new NameValue("在线支付", "3"));
+            if (list.size() == 0) {
+                showToast("没有可用的支付方式");
+                return;
+            }
+            for (NameValue value : list) {
+                if (value.getValue().equals(String.valueOf(mSupplierBean.getPayType()))) {
+                    select = value;
+                    break;
+                }
+            }
+            mPayMethodDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+                    .refreshList(list)
+                    .setTitleText("选择支付方式")
+                    .select(select)
+                    .setOnSelectListener(nameValue -> updatePayMethod(Integer.parseInt(nameValue.getValue()), nameValue.getName()))
+                    .create();
+        }
+        mPayMethodDialog.show();
     }
 
     @OnClick(R.id.opc_request_date)

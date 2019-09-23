@@ -128,6 +128,8 @@ public class OrderCommitReq {
     public static class DiscountBean {
         private double discountAmount;
         private String groupID;
+        private String discountID;
+        private String ruleID;
         private List<DiscountSpecBean> specList;
 
         public double getDiscountAmount() {
@@ -144,6 +146,22 @@ public class OrderCommitReq {
 
         public void setGroupID(String groupID) {
             this.groupID = groupID;
+        }
+
+        public String getDiscountID() {
+            return discountID;
+        }
+
+        public void setDiscountID(String discountID) {
+            this.discountID = discountID;
+        }
+
+        public String getRuleID() {
+            return ruleID;
+        }
+
+        public void setRuleID(String ruleID) {
+            this.ruleID = ruleID;
         }
 
         public List<DiscountSpecBean> getSpecList() {

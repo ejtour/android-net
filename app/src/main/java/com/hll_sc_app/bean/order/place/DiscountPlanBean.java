@@ -3,6 +3,9 @@ package com.hll_sc_app.bean.order.place;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.citymall.util.CommonUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +13,9 @@ import java.util.List;
  * @since 2019/9/19
  */
 public class DiscountPlanBean implements Parcelable {
+    public static final int DISCOUNT_PRODUCT = 2;
+    public static final int DISCOUNT_ORDER = 1;
+    public static final int DISCOUNT_NONE = 0;
     public static final Creator<DiscountPlanBean> CREATOR = new Creator<DiscountPlanBean>() {
         @Override
         public DiscountPlanBean createFromParcel(Parcel in) {
@@ -24,13 +30,30 @@ public class DiscountPlanBean implements Parcelable {
     private String groupID;
     private double productDiscountMoney;
     private int useDiscountType;
-    private List<ProductDiscountBean> productDiscounts;
+    private List<DiscountBean> productDiscounts;
+    private List<DiscountBean> orderDiscounts;
+    private transient List<DiscountBean> shopDiscounts;
 
     protected DiscountPlanBean(Parcel in) {
         groupID = in.readString();
         productDiscountMoney = in.readDouble();
         useDiscountType = in.readInt();
-        productDiscounts = in.createTypedArrayList(ProductDiscountBean.CREATOR);
+        productDiscounts = in.createTypedArrayList(DiscountBean.CREATOR);
+        orderDiscounts = in.createTypedArrayList(DiscountBean.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(groupID);
+        dest.writeDouble(productDiscountMoney);
+        dest.writeInt(useDiscountType);
+        dest.writeTypedList(productDiscounts);
+        dest.writeTypedList(orderDiscounts);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public String getGroupID() {
@@ -57,71 +80,106 @@ public class DiscountPlanBean implements Parcelable {
         this.useDiscountType = useDiscountType;
     }
 
-    public List<ProductDiscountBean> getProductDiscounts() {
+    public List<DiscountBean> getProductDiscounts() {
         return productDiscounts;
     }
 
-    public void setProductDiscounts(List<ProductDiscountBean> productDiscounts) {
+    public void setProductDiscounts(List<DiscountBean> productDiscounts) {
         this.productDiscounts = productDiscounts;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(groupID);
-        dest.writeDouble(productDiscountMoney);
-        dest.writeInt(useDiscountType);
-        dest.writeTypedList(productDiscounts);
+    public List<DiscountBean> getOrderDiscounts() {
+        return orderDiscounts;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setOrderDiscounts(List<DiscountBean> orderDiscounts) {
+        this.orderDiscounts = orderDiscounts;
     }
 
-    public static class ProductDiscountBean implements Parcelable {
-        public static final Creator<ProductDiscountBean> CREATOR = new Creator<ProductDiscountBean>() {
+    public List<DiscountBean> getShopDiscounts() {
+        if (shopDiscounts == null) {
+            if (CommonUtils.isEmpty(productDiscounts) && CommonUtils.isEmpty(orderDiscounts)) {
+                return null;
+            }
+            shopDiscounts = new ArrayList<>();
+            DiscountBean noneBean = new DiscountBean();
+            noneBean.setRuleName("不使用店铺优惠");
+            shopDiscounts.add(noneBean);
+            if (!CommonUtils.isEmpty(orderDiscounts)) {
+                shopDiscounts.addAll(orderDiscounts);
+            }
+            if (!CommonUtils.isEmpty(productDiscounts)) {
+                DiscountBean discountBean = new DiscountBean();
+                shopDiscounts.add(discountBean);
+                discountBean.setRuleType(-1);
+                discountBean.setRuleName("商品优惠活动");
+                discountBean.setDiscountValue(productDiscountMoney);
+                List<OrderCommitReq.DiscountBean.DiscountSpecBean> specBeans = new ArrayList<>();
+                discountBean.setSpecList(specBeans);
+                for (DiscountBean bean : productDiscounts) {
+                    OrderCommitReq.DiscountBean.DiscountSpecBean specBean = new OrderCommitReq.DiscountBean.DiscountSpecBean();
+                    specBean.setSpecID(bean.getSpecID());
+                    specBean.setDiscountID(bean.getDiscountID());
+                    specBean.setProductID(bean.getProductID());
+                    specBean.setRuleID(bean.getRuleID());
+                    specBean.setDiscountAmount(bean.getDiscountValue());
+                    specBeans.add(specBean);
+                }
+            }
+        }
+        return shopDiscounts;
+    }
+
+    public static class DiscountBean implements Parcelable {
+        public static final Creator<DiscountBean> CREATOR = new Creator<DiscountBean>() {
             @Override
-            public ProductDiscountBean createFromParcel(Parcel in) {
-                return new ProductDiscountBean(in);
+            public DiscountBean createFromParcel(Parcel in) {
+                return new DiscountBean(in);
             }
 
             @Override
-            public ProductDiscountBean[] newArray(int size) {
-                return new ProductDiscountBean[size];
+            public DiscountBean[] newArray(int size) {
+                return new DiscountBean[size];
             }
         };
-        private int discountCondition;
+        /**
+         * 优惠 id
+         */
         private String discountID;
+        /**
+         * 优惠额
+         */
         private double discountValue;
+        /**
+         * 商品优惠时商品id
+         */
         private String productID;
-        private int ruleCondition;
-        private double ruleDiscountValue;
+        /**
+         * 活动规则id
+         */
         private String ruleID;
+        /**
+         * 活动规则名称
+         */
         private String ruleName;
+        /**
+         * 活动规则类型 1 赠送 2 满减 3 满折 4 直降 5 赠券
+         */
         private int ruleType;
-        private String ruleTypeName;
         private String specID;
+        private transient List<OrderCommitReq.DiscountBean.DiscountSpecBean> specList;
 
-        protected ProductDiscountBean(Parcel in) {
-            discountCondition = in.readInt();
+        public DiscountBean() {
+        }
+
+        protected DiscountBean(Parcel in) {
             discountID = in.readString();
             discountValue = in.readDouble();
             productID = in.readString();
-            ruleCondition = in.readInt();
-            ruleDiscountValue = in.readDouble();
             ruleID = in.readString();
             ruleName = in.readString();
             ruleType = in.readInt();
-            ruleTypeName = in.readString();
             specID = in.readString();
-        }
-
-        public int getDiscountCondition() {
-            return discountCondition;
-        }
-
-        public void setDiscountCondition(int discountCondition) {
-            this.discountCondition = discountCondition;
         }
 
         public String getDiscountID() {
@@ -148,22 +206,6 @@ public class DiscountPlanBean implements Parcelable {
             this.productID = productID;
         }
 
-        public int getRuleCondition() {
-            return ruleCondition;
-        }
-
-        public void setRuleCondition(int ruleCondition) {
-            this.ruleCondition = ruleCondition;
-        }
-
-        public double getRuleDiscountValue() {
-            return ruleDiscountValue;
-        }
-
-        public void setRuleDiscountValue(double ruleDiscountValue) {
-            this.ruleDiscountValue = ruleDiscountValue;
-        }
-
         public String getRuleID() {
             return ruleID;
         }
@@ -188,14 +230,6 @@ public class DiscountPlanBean implements Parcelable {
             this.ruleType = ruleType;
         }
 
-        public String getRuleTypeName() {
-            return ruleTypeName;
-        }
-
-        public void setRuleTypeName(String ruleTypeName) {
-            this.ruleTypeName = ruleTypeName;
-        }
-
         public String getSpecID() {
             return specID;
         }
@@ -204,18 +238,22 @@ public class DiscountPlanBean implements Parcelable {
             this.specID = specID;
         }
 
+        public List<OrderCommitReq.DiscountBean.DiscountSpecBean> getSpecList() {
+            return specList;
+        }
+
+        public void setSpecList(List<OrderCommitReq.DiscountBean.DiscountSpecBean> specList) {
+            this.specList = specList;
+        }
+
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(discountCondition);
             dest.writeString(discountID);
             dest.writeDouble(discountValue);
             dest.writeString(productID);
-            dest.writeInt(ruleCondition);
-            dest.writeDouble(ruleDiscountValue);
             dest.writeString(ruleID);
             dest.writeString(ruleName);
             dest.writeInt(ruleType);
-            dest.writeString(ruleTypeName);
             dest.writeString(specID);
         }
 
