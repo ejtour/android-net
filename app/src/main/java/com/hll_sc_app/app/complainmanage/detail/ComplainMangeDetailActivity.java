@@ -19,6 +19,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.history.ComplainHistorylActivity;
 import com.hll_sc_app.app.complainmanage.innerlog.InnerLoglActivity;
 import com.hll_sc_app.app.complainmanage.sendcomplainreply.SendComplainReplyActivity;
+import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -366,7 +367,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         }
     }
 
-    @OnClick({R.id.txt_title_history, R.id.txt_btn_log, R.id.txt_btn_reply, R.id.txt_title_inject})
+    @OnClick({R.id.txt_title_history, R.id.txt_btn_log, R.id.txt_btn_reply, R.id.txt_title_inject, R.id.view_back_5})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_title_history:
@@ -394,6 +395,11 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                         }, "我再看看", "确认申请")
                         .create()
                         .show();
+                break;
+            case R.id.view_back_5:
+                if (mComplainDetailResp != null) {
+                    OrderDetailActivity.start(mComplainDetailResp.getSubBillID());
+                }
                 break;
             default:
                 break;

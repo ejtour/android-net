@@ -20,8 +20,18 @@ public class ComplainDetailResp {
     private String billID;
     private String createBy;
     private String interventionContact;
+    private String subBillID;
     private int target;
     private int operationIntervention;
+
+
+    public String getSubBillID() {
+        return subBillID;
+    }
+
+    public void setSubBillID(String subBillID) {
+        this.subBillID = subBillID;
+    }
 
     public int getOperationIntervention() {
         return operationIntervention;
