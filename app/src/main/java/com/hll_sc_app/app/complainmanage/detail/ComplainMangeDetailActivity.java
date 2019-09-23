@@ -7,6 +7,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.hll_sc_app.app.complainmanage.sendcomplainreply.SendComplainReplyActi
 import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -29,12 +31,15 @@ import com.hll_sc_app.bean.complain.ComplainDetailResp;
 import com.hll_sc_app.bean.complain.ComplainStatusResp;
 import com.hll_sc_app.bean.event.ComplainManageEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.hll_sc_app.bean.window.OptionType.OPTION_PHONE_LINK;
 import static com.hll_sc_app.citymall.util.CalendarUtils.FORMAT_HH_MM_SS;
 
 /**
@@ -119,6 +125,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
     private Map<Integer, String[]> statusTip = new ArrayMap<>();
     private Map<Integer, String[]> platformStatusTip = new ArrayMap<>();
 
+    private ContextOptionsWindow mBottomMenuWindow;
     public static void start(String compaintId) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_DETAIL, compaintId);
     }
@@ -367,7 +374,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         }
     }
 
-    @OnClick({R.id.txt_title_history, R.id.txt_btn_log, R.id.txt_btn_reply, R.id.txt_title_inject, R.id.view_back_5})
+    @OnClick({R.id.txt_title_history, R.id.txt_btn_log, R.id.txt_btn_reply, R.id.txt_title_inject, R.id.view_back_5, R.id.txt_link})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_title_history:
@@ -400,6 +407,24 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                 if (mComplainDetailResp != null) {
                     OrderDetailActivity.start(mComplainDetailResp.getSubBillID());
                 }
+                break;
+            case R.id.txt_link:
+                if (mBottomMenuWindow == null) {
+                    mBottomMenuWindow = new ContextOptionsWindow(this, ContextOptionsWindow.TYPE.bottom);
+                    OptionsBean optionsBean = new OptionsBean(R.drawable.ic_phone_circle_white, OPTION_PHONE_LINK);
+                    mBottomMenuWindow.refreshList(Arrays.asList(optionsBean));
+                    mBottomMenuWindow.setListener((adapter, view1, position) -> {
+                        mBottomMenuWindow.dismiss();
+                        if (position == 0 && mComplainDetailResp != null) {
+                            String phone = mComplainDetailResp.getPurchaserContact();
+                            if (mComplainDetailResp.getTarget() == 3) {
+                                phone = "01056247979";
+                            }
+                            UIUtils.callPhone(this, phone);
+                        }
+                    });
+                }
+                mBottomMenuWindow.showAsDropDownFix(mBtnLink, 0, -240, Gravity.LEFT);
                 break;
             default:
                 break;

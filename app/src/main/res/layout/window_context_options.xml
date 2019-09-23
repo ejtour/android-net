@@ -6,6 +6,14 @@
     android:orientation="vertical"
     android:padding="5dp">
 
+    <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/wco_top_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_context_options_list"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
     <com.hll_sc_app.widget.TriangleView
         android:id="@+id/wco_arrow"
         android:layout_width="6dp"
@@ -16,6 +24,7 @@
         app:trv_color="@color/color0_7_000000" />
 
     <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/wco_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -586,7 +586,8 @@ txt_complain_person,txt_title_complain_phone,txt_complain_phone" />
         <TextView
             android:id="@+id/txt_link"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableLeft="@drawable/ic_phone_circle_blue"
             android:drawablePadding="5dp"

@@ -1,7 +1,9 @@
 package com.hll_sc_app.widget;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.IntDef;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.bean.window.OptionsBean;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,16 +33,33 @@ public class ContextOptionsWindow extends BasePopupWindow {
     private OptionsAdapter mAdapter;
     @BindView(R.id.wco_arrow)
     TriangleView mArrow;
+    @BindView(R.id.wco_top_list)
+    RecyclerView mTopListView;
 
+    private int type = TYPE.top;
     public ContextOptionsWindow(Activity context) {
         super(context);
         initWindow(context);
         initView();
     }
 
+    public ContextOptionsWindow(Activity context, @TYPE int type) {
+        super(context);
+        this.type = type;
+        initWindow(context);
+        initView();
+    }
+
     private void initView() {
         mAdapter = new OptionsAdapter();
-        mListView.setAdapter(mAdapter);
+        if (type == TYPE.top) {
+            mListView.setVisibility(View.VISIBLE);
+            mListView.setAdapter(mAdapter);
+        } else {
+            mTopListView.setVisibility(View.VISIBLE);
+            mTopListView.setAdapter(mAdapter);
+            mArrow.update(1, Color.parseColor("#b3000000"));
+        }
     }
 
     private void initWindow(Activity context) {
@@ -87,5 +108,12 @@ public class ContextOptionsWindow extends BasePopupWindow {
             helper.setImageResource(R.id.ico_icon, item.getIconRes())
                     .setText(R.id.ico_label, item.getLabel());
         }
+    }
+
+    @IntDef({TYPE.bottom, TYPE.top})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface TYPE {
+        int top = 1;
+        int bottom = 2;
     }
 }
