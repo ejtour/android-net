@@ -6,6 +6,11 @@ public class BusinessTypeBean {
     private int sort;
     private String businessType;
 
+    public BusinessTypeBean(String businessName, String businessType) {
+        this.businessName = businessName;
+        this.businessType = businessType;
+    }
+
     public String getBusinessName() {
         return businessName;
     }

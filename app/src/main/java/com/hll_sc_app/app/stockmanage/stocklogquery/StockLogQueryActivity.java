@@ -227,6 +227,7 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
     @Override
     public void queryBusinessTypeSuccess(List<BusinessTypeBean> businessTypeBeans) {
         if (mBusinessSelectDialog == null) {
+            businessTypeBeans.add(0,new BusinessTypeBean("全部交易",""));
             mBusinessSelectDialog = SingleSelectionDialog.newBuilder(this, BusinessTypeBean::getBusinessName)
                     .setOnSelectListener(businessTypeBean -> {
                         mTxtBusinessType.setTag(businessTypeBean);
