@@ -159,6 +159,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
                 } else bean.setShopcartNum(inputNum);
                 RecyclerView.Adapter adapter = (RecyclerView.Adapter) v.getTag(R.id.sgs_spec);
                 adapter.notifyDataSetChanged();
+                updateNum(bean);
             }
         }, (adapter, view, position) -> {
             if (!mTitleBar.isFocused()) {
