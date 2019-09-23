@@ -31,6 +31,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.place.DiscountPlanBean;
+import com.hll_sc_app.bean.order.place.ExecuteDateBean;
 import com.hll_sc_app.bean.order.place.OrderCommitReq;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
@@ -41,11 +42,14 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.order.ExecuteDateDialog;
 import com.hll_sc_app.widget.order.ShopDiscountDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +61,8 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ORDER_PLACE_CONFIRM)
 public class PlaceOrderConfirmActivity extends BaseLoadActivity {
-    private static String STATE_FORMAT = "MM月dd日 HH:mm";
+    private static String START_FORMAT = "MM月dd日 HH:mm";
+    private static String LOCALE_DATE = "MM月dd日";
     @BindView(R.id.opc_title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.opc_purchaser_shop)
@@ -95,6 +100,8 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     private int mItemSize;
     private ShopDiscountDialog mDiscountDialog;
     private SingleSelectionDialog mPayMethodDialog;
+    private ExecuteDateDialog mDateDialog;
+    private List<String> mDayList = new ArrayList<>();
 
     public static void start(SettlementInfoResp resp) {
         RouterUtil.goToActivity(RouterConfig.ORDER_PLACE_CONFIRM, resp);
@@ -154,7 +161,9 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
 
         initDiscount(discountPlan);
         updatePayMethod(mSupplierBean.getPayType(), null);
-        updateExecuteDate(null, null); // 使用上次时间替换
+        if (mSupplierBean.getExecuteDateList() == null)
+            updateExecuteDate("0", "0");
+        else updateExecuteDate(null, null);
         updateRemark(null);
     }
 
@@ -251,13 +260,13 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
         }
         bean.setSubBillExecuteDate(startDate);
         bean.setSubBillExecuteEndDate(endDate);
-        if (!TextUtils.isEmpty(startDate) && TextUtils.isEmpty(endDate)) {
+        if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
             if ("0".equals(startDate) && "0".equals(endDate)) {
                 mRequestDate.setText("按照供应商时间配送");
                 mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
                 mRequestDate.setClickable(false);
             } else mRequestDate.setClickable(true);
-            mRequestDate.setText(String.format("%s - %s", DateUtil.getReadableTime(startDate, STATE_FORMAT),
+            mRequestDate.setText(String.format("%s - %s", DateUtil.getReadableTime(startDate, START_FORMAT),
                     DateUtil.getReadableTime(endDate, Constants.SIGNED_HH_MM)));
         } else mRequestDate.setClickable(true);
     }
@@ -407,7 +416,65 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     }
 
     @OnClick(R.id.opc_request_date)
-    public void selectRequestDate() {
+    public void showDateDialog() {
+        if (mDateDialog == null) {
+            Map<String, List<String>> map = getExecuteList();
+            if (map.isEmpty()) {
+                return;
+            }
+            mDateDialog = new ExecuteDateDialog(this, map);
+            mDateDialog.setDayTimeCallback((day, time) -> {
+                String dayStr = mDayList.get(day);
+                ExecuteDateBean.FirstDay firstDay = mSupplierBean.getExecuteDateList().getFirstDay();
+                ExecuteDateBean.TimeBean timeBean;
+                if (firstDay != null && dayStr.equals(firstDay.getDate())) {
+                    timeBean = firstDay.getFirstTimeList().get(time);
+                } else {
+                    timeBean = mSupplierBean.getExecuteDateList().getTimeList().get(time);
+                }
+                updateExecuteDate(dayStr + timeBean.getArrivalStartTime().replace(":", ""),
+                        dayStr + timeBean.getArrivalEndTime().replace(":", ""));
+            });
+        }
+        mDateDialog.show();
+    }
+
+    private Map<String, List<String>> getExecuteList() {
+        Map<String, List<String>> map = new LinkedHashMap<>();
+        mDayList.clear();
+        if (mSupplierBean.getExecuteDateList() != null) {
+            ExecuteDateBean.FirstDay firstDayBean = mSupplierBean.getExecuteDateList().getFirstDay();
+            if (firstDayBean != null) {
+                List<String> listFirstTime = new ArrayList<>();
+                if (!CommonUtils.isEmpty(firstDayBean.getFirstTimeList())) {
+                    for (ExecuteDateBean.TimeBean firstTimeListBean : firstDayBean.getFirstTimeList()) {
+                        listFirstTime.add(firstTimeListBean.getArrivalStartTime() + " - " + firstTimeListBean.getArrivalEndTime());
+                    }
+                }
+                if (!TextUtils.isEmpty(firstDayBean.getDate()) && !CommonUtils.isEmpty(listFirstTime)) {
+                    mDayList.add(firstDayBean.getDate());
+                    map.put(DateUtil.getReadableTime(firstDayBean.getDate(), LOCALE_DATE), listFirstTime);
+                }
+            }
+
+            List<String> listTime = new ArrayList<>();
+            if (!CommonUtils.isEmpty(mSupplierBean.getExecuteDateList().getTimeList())) {
+                for (ExecuteDateBean.TimeBean timeListBean : mSupplierBean.getExecuteDateList().getTimeList()) {
+                    listTime.add(timeListBean.getArrivalStartTime() + " - " + timeListBean.getArrivalEndTime());
+                }
+            }
+            if (CommonUtils.isEmpty(listTime)) return map;
+            if (!TextUtils.isEmpty(mSupplierBean.getExecuteDateList().getTimes())) {
+                String[] timeStr = mSupplierBean.getExecuteDateList().getTimes().split(",");
+                for (String s : timeStr) {
+                    if (!TextUtils.isEmpty(s) && !CommonUtils.isEmpty(listTime)) {
+                        mDayList.add(s);
+                        map.put(DateUtil.getReadableTime(s, LOCALE_DATE), listTime);
+                    }
+                }
+            }
+        }
+        return map;
     }
 
     @OnClick(R.id.opc_remark)

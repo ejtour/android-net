@@ -11,9 +11,21 @@ import java.util.List;
  */
 
 public class SupplierGroupBean implements Parcelable {
+    public static final Creator<SupplierGroupBean> CREATOR = new Creator<SupplierGroupBean>() {
+        @Override
+        public SupplierGroupBean createFromParcel(Parcel in) {
+            return new SupplierGroupBean(in);
+        }
+
+        @Override
+        public SupplierGroupBean[] newArray(int size) {
+            return new SupplierGroupBean[size];
+        }
+    };
     private int deliverType;
     private double depositAmount;
     private DiscountPlanBean discountPlan;
+    private ExecuteDateBean executeDateList;
     private String houseAddress;
     private PaymentBean payment;
     private int payType;
@@ -28,6 +40,7 @@ public class SupplierGroupBean implements Parcelable {
         deliverType = in.readInt();
         depositAmount = in.readDouble();
         discountPlan = in.readParcelable(DiscountPlanBean.class.getClassLoader());
+        executeDateList = in.readParcelable(ExecuteDateBean.class.getClassLoader());
         houseAddress = in.readString();
         payment = in.readParcelable(PaymentBean.class.getClassLoader());
         payType = in.readInt();
@@ -44,6 +57,7 @@ public class SupplierGroupBean implements Parcelable {
         dest.writeInt(deliverType);
         dest.writeDouble(depositAmount);
         dest.writeParcelable(discountPlan, flags);
+        dest.writeParcelable(executeDateList, flags);
         dest.writeString(houseAddress);
         dest.writeParcelable(payment, flags);
         dest.writeInt(payType);
@@ -59,18 +73,6 @@ public class SupplierGroupBean implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<SupplierGroupBean> CREATOR = new Creator<SupplierGroupBean>() {
-        @Override
-        public SupplierGroupBean createFromParcel(Parcel in) {
-            return new SupplierGroupBean(in);
-        }
-
-        @Override
-        public SupplierGroupBean[] newArray(int size) {
-            return new SupplierGroupBean[size];
-        }
-    };
 
     public int getDeliverType() {
         return deliverType;
@@ -94,6 +96,14 @@ public class SupplierGroupBean implements Parcelable {
 
     public void setDiscountPlan(DiscountPlanBean discountPlan) {
         this.discountPlan = discountPlan;
+    }
+
+    public ExecuteDateBean getExecuteDateList() {
+        return executeDateList;
+    }
+
+    public void setExecuteDateList(ExecuteDateBean executeDateList) {
+        this.executeDateList = executeDateList;
     }
 
     public String getHouseAddress() {
