@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.order.place.confirm;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.place.confirm.remark.OrderConfirmRemarkActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -107,6 +109,14 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
         ARouter.getInstance().inject(this);
         initView();
         initData();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == OrderConfirmRemarkActivity.REQ_CODE && resultCode == RESULT_OK && data != null) {
+            updateRemark(data.getStringExtra("remark"));
+        }
     }
 
     private void initData() {
@@ -402,5 +412,6 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
 
     @OnClick(R.id.opc_remark)
     public void editRemark() {
+        OrderConfirmRemarkActivity.start(this, mSupplierBean.getSupplierShopName(), mRemark.getText().toString());
     }
 }
