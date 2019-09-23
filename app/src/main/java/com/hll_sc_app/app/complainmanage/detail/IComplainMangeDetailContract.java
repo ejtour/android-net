@@ -17,12 +17,16 @@ public interface IComplainMangeDetailContract {
         void showComplainStatus(ComplainStatusResp complainStatusResp);
 
         void showComplainDetail(ComplainDetailResp complainDetailResp);
+
+        void applyPlatformInjectSuccess();
     }
 
     interface IPresent extends IPresenter<IView> {
         void queryComplainStatus();
 
         void queryComplainDetail();
+
+        void applyPlatformInject();
     }
 
 

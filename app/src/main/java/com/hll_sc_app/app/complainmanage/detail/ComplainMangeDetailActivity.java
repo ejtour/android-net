@@ -20,6 +20,7 @@ import com.hll_sc_app.app.complainmanage.history.ComplainHistorylActivity;
 import com.hll_sc_app.app.complainmanage.innerlog.InnerLoglActivity;
 import com.hll_sc_app.app.complainmanage.sendcomplainreply.SendComplainReplyActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -344,7 +345,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         }
         //平台投诉
         else if (mComplainDetailResp.getTarget() == 3) {
-            //todo 平台投诉的按钮逻辑
+
 
         }
     }
@@ -365,7 +366,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         }
     }
 
-    @OnClick({R.id.txt_title_history, R.id.txt_btn_log, R.id.txt_btn_reply})
+    @OnClick({R.id.txt_title_history, R.id.txt_btn_log, R.id.txt_btn_reply, R.id.txt_title_inject})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_title_history:
@@ -377,8 +378,33 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
             case R.id.txt_btn_reply:
                 SendComplainReplyActivity.start(mCompaintId);
                 break;
+            case R.id.txt_title_inject:
+                if (mComplainDetailResp.getOperationIntervention() == 1) {
+                    showToast("已申请平台介入，请等待平台客服回复");
+                    return;
+                }
+                SuccessDialog.newBuilder(this)
+                        .setMessageTitle("您确定要申请平台介入么")
+                        .setImageState(R.drawable.ic_dialog_state_failure)
+                        .setImageTitle(R.drawable.ic_dialog_failure)
+                        .setMessage("平台客服收到申请后会尽快处理\n将在1-3个工作日内做出回复")
+                        .setButton((dialog, item) -> {
+                            dialog.dismiss();
+                            mPresent.applyPlatformInject();
+                        }, "我再看看", "确认申请")
+                        .create()
+                        .show();
+                break;
             default:
                 break;
         }
+    }
+
+
+    @Override
+    public void applyPlatformInjectSuccess() {
+        showToast("已申请平台介入");
+        mPresent.start();
+        EventBus.getDefault().post(new ComplainManageEvent(ComplainManageEvent.TARGET.LIST, ComplainManageEvent.EVENT.REFRESH));
     }
 }

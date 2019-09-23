@@ -21,6 +21,15 @@ public class ComplainDetailResp {
     private String createBy;
     private String interventionContact;
     private int target;
+    private int operationIntervention;
+
+    public int getOperationIntervention() {
+        return operationIntervention;
+    }
+
+    public void setOperationIntervention(int operationIntervention) {
+        this.operationIntervention = operationIntervention;
+    }
 
     public String getInterventionContact() {
         return interventionContact;

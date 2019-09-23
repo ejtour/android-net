@@ -54,4 +54,10 @@ public interface ComplainManageService {
     @Headers("pv:110015")
     Observable<BaseResp<Object>> sendComplainReply(@Body BaseMapReq req);
 
+    @POST(HttpConfig.URL)
+    @Headers("pv:110016")
+    Observable<BaseResp<Object>> applyPlatformInject(@Body BaseMapReq req);
+
+
+
 }
