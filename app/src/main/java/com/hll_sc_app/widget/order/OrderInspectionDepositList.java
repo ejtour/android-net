@@ -51,11 +51,16 @@ public class OrderInspectionDepositList extends RecyclerView {
 
         OrderInspectionDepositAdapter(@Nullable List<OrderDepositBean> data) {
             super(R.layout.item_order_inspection_deposit, data);
+            if (!CommonUtils.isEmpty(data)) {
+                for (OrderDepositBean bean : data) {
+                    bean.setRawProductNum(bean.getProductNum());
+                }
+            }
         }
 
         private void changeNum(int position, double value) {
             if (position < 0 || position >= getItemCount()) return;
-            getData().get(position).setDepositNum(value);
+            getData().get(position).setProductNum(value);
         }
 
         @Override

@@ -29,10 +29,10 @@ import com.hll_sc_app.bean.order.detail.OrderDepositBean;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -69,6 +69,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
     private OrderInspectionAdapter mAdapter;
     private IOrderInspectionContract.IOrderInspectionPresenter mPresenter;
     private OrderInspectionResp mInspectionResp;
+    private OrderInspectionReq mReq = new OrderInspectionReq();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
     }
 
     private void initData() {
+        mReq.setSubBillID(mResp.getSubBillID());
         mPresenter = OrderInspectionPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
@@ -183,10 +185,7 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
      * 发送请求
      */
     private void sendReq() {
-        OrderInspectionReq req = new OrderInspectionReq();
-        req.setSubBillID(mResp.getSubBillID());
-        req.setList(mAdapter.getReqList());
-        mPresenter.confirmOrder(req);
+        mPresenter.confirmOrder(mReq);
     }
 
     /**
@@ -194,26 +193,22 @@ public class OrderInspectionActivity extends BaseLoadActivity implements IOrderI
      */
     private boolean isModifyNumber() {
         boolean isModify = false;
+        List<OrderInspectionReq.OrderInspectionItem> confirmItemList = mAdapter.getReqList();
+        mReq.setList(confirmItemList);
         for (int i = 0; i < mResp.getBillDetailList().size(); i++) {
             OrderDetailBean detailBean = mResp.getBillDetailList().get(i);
-            List<OrderInspectionReq.OrderInspectionItem> confirmItemList = mAdapter.getReqList();
             OrderInspectionReq.OrderInspectionItem confirmItem = confirmItemList.get(i);
             // 如果验货数量与实际数量不符
             if (detailBean.getAdjustmentNum() != confirmItem.getInspectionNum()) isModify = true;
-            List<OrderDepositBean> depositList = detailBean.getDepositList(); // 获取实际押金列表
-            if (depositList != null) {
-                List<OrderDepositBean> confirmItemDepositList = new ArrayList<>(); // 生成验货押金列表
+            List<OrderDepositBean> depositList = detailBean.getDepositList();
+            if (!CommonUtils.isEmpty(depositList) && !isModify) {
                 for (OrderDepositBean bean : depositList) {
                     // 如果押金产品数与验货数不同
-                    if (bean.getProductNum() != bean.getDepositNum()) {
+                    if (bean.getProductNum() != bean.getRawProductNum()) {
                         isModify = true;
+                        break;
                     }
-                    OrderDepositBean beanCopy = bean.deepCopy();
-                    // 设置验货押金的产品数为输入数
-                    beanCopy.setProductNum(bean.getDepositNum());
-                    confirmItemDepositList.add(beanCopy);
                 }
-                confirmItem.setDepositList(confirmItemDepositList);
             }
         }
         return isModify;
