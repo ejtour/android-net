@@ -61,7 +61,7 @@ import butterknife.OnClick;
  * @since 2019/9/16
  */
 @Route(path = RouterConfig.ORDER_PLACE_CONFIRM)
-public class PlaceOrderConfirmActivity extends BaseLoadActivity {
+public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlaceOrderConfirmContract.IPlaceOrderConfirmView {
     private static String START_FORMAT = "MM月dd日 HH:mm";
     private static String LOCALE_DATE = "MM月dd日";
     @BindView(R.id.opc_title_bar)
@@ -102,6 +102,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     private ShopDiscountDialog mDiscountDialog;
     private SingleSelectionDialog mPayMethodDialog;
     private ExecuteDateDialog mDateDialog;
+    private IPlaceOrderConfirmContract.IPlaceOrderConfirmPresenter mPresenter;
     private List<String> mDayList = new ArrayList<>();
 
     public static void start(SettlementInfoResp resp) {
@@ -133,6 +134,8 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
         mConfirmReq.setPurchaserID(mResp.getPurchaserID());
         mConfirmReq.setPurchaserShopID(mResp.getPurchaserShopID());
         setSupplierData();
+        mPresenter = PlaceOrderConfirmPresenter.newInstance();
+        mPresenter.register(this);
     }
 
     private void initView() {
@@ -358,7 +361,15 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
 
     @OnClick(R.id.opc_commit)
     public void commit() {
-
+        if (TextUtils.isEmpty(mPayMethod.getText())){
+            showToast(mPayMethod.getHint().toString());
+            return;
+        }
+        if (TextUtils.isEmpty(mRequestDate.getText())) {
+            showToast(mRequestDate.getHint().toString());
+            return;
+        }
+        mPresenter.commitOrder(mConfirmReq);
     }
 
     @OnClick(R.id.opc_edit)
@@ -487,5 +498,10 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     @OnClick(R.id.opc_remark)
     public void editRemark() {
         OrderConfirmRemarkActivity.start(this, mSupplierBean.getSupplierShopName(), mRemark.getText().toString());
+    }
+
+    @Override
+    public void commitSuccess(String masterBillIDs) {
+        showToast("提交成功：" + masterBillIDs);
     }
 }
