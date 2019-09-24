@@ -18,11 +18,13 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.ordernumberlist.SelectOrderListActivity;
+import com.hll_sc_app.app.complainmanage.purchaserlist.SelectPurchaserListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.ComplainDetailResp;
 import com.hll_sc_app.bean.complain.DropMenuBean;
+import com.hll_sc_app.bean.complain.ReportFormSearchResp;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
@@ -41,6 +43,8 @@ import butterknife.Unbinder;
 public class ComplainMangeAddActivity extends BaseLoadActivity implements IComplainMangeAddContract.IView {
     private final int MAX_INPUT_LENGTH = 200;
     private final int REQUEST_CODE_ORDER_NUMBER_LIST = 100;
+    private final int REQUEST_SELECT_PURCHASER_LIST = 101;
+    private final int REQUEST_SELECT_SHOP_LIST = 102;
     @BindView(R.id.title_bar)
     TitleBar mTitle;
     @BindView(R.id.txt_group)
@@ -175,13 +179,17 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_group:
-
+                String purchaserId = mTxtGroup.getTag() == null ? "" : mTxtGroup.getTag().toString();
+                SelectPurchaserListActivity.start(SelectPurchaserListActivity.TYPE.GROUP, this, REQUEST_SELECT_PURCHASER_LIST, purchaserId, purchaserId);
                 break;
             case R.id.txt_shop:
                 if (mTxtGroup.getTag() == null) {
                     showToast("请选择投诉集团");
                     return;
                 }
+                purchaserId = mTxtGroup.getTag().toString();
+                String shopId = mTxtShop.getTag() == null ? "" : mTxtShop.getTag().toString();
+                SelectPurchaserListActivity.start(SelectPurchaserListActivity.TYPE.SHOP, this, REQUEST_SELECT_SHOP_LIST, purchaserId, shopId);
                 break;
             case R.id.txt_type:
                 if (mSelectTypeDialog != null) {
@@ -199,7 +207,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                 break;
             case R.id.txt_order:
                 String subBillNo = mTxtOrder.getTag() == null ? "" : mTxtOrder.getTag().toString();
-                /* if (mTxtGroup.getTag() == null) {
+                if (mTxtGroup.getTag() == null) {
                     showToast("请选择投诉集团");
                     return;
                 }
@@ -211,14 +219,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                         REQUEST_CODE_ORDER_NUMBER_LIST,
                         subBillNo,
                         mTxtGroup.getTag().toString(),
-                        mTxtShop.getTag().toString());*/
-
-                SelectOrderListActivity.start(this,
-                        REQUEST_CODE_ORDER_NUMBER_LIST,
-                        subBillNo,
-                        "4105",
-                        "91215");
-
+                       mTxtShop.getTag().toString());
                 break;
             default:
                 break;
@@ -268,6 +269,23 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                     mTxtOrder.setTag(resp.getSubBillNo());
                     mTxtOrder.setText(resp.getSubBillNo());
                     mEdtPhone.setText(resp.getReceiverMobile());
+                }
+                break;
+            case REQUEST_SELECT_PURCHASER_LIST:
+                if (resultCode == RESULT_OK) {
+                    ReportFormSearchResp.ShopMallBean shopMallBean = data.getParcelableExtra("bean");
+                    mTxtGroup.setTag(shopMallBean.getShopmallID());
+                    mTxtGroup.setText(shopMallBean.getName());
+                    mTxtShop.setTag(null);
+                    mTxtShop.setText("");
+                }
+                break;
+
+            case REQUEST_SELECT_SHOP_LIST:
+                if (resultCode == RESULT_OK) {
+                    ReportFormSearchResp.ShopMallBean shopMallBean = data.getParcelableExtra("bean");
+                    mTxtShop.setTag(shopMallBean.getShopmallID());
+                    mTxtShop.setText(shopMallBean.getName());
                 }
                 break;
             default:

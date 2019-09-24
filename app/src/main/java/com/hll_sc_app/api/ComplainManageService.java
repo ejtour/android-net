@@ -10,6 +10,7 @@ import com.hll_sc_app.bean.complain.ComplainInnerLogResp;
 import com.hll_sc_app.bean.complain.ComplainListResp;
 import com.hll_sc_app.bean.complain.ComplainStatusResp;
 import com.hll_sc_app.bean.complain.DropMenuBean;
+import com.hll_sc_app.bean.complain.ReportFormSearchResp;
 
 import java.util.List;
 
@@ -58,6 +59,10 @@ public interface ComplainManageService {
     @Headers("pv:110016")
     Observable<BaseResp<Object>> applyPlatformInject(@Body BaseMapReq req);
 
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111027")
+    Observable<BaseResp<ReportFormSearchResp>> queryReportFormPurchaserList(@Body BaseMapReq req);
 
 
 }

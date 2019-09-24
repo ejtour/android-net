@@ -1088,5 +1088,10 @@ public class RouterConfig {
     /*选择订单号列表*/
     public static final String ACTIVITY_ORDER_LIST_NUMBER = "/activity/order/list/number";
 
+    /*选择采购商集团*/
+    public static final String ACTIVITY_SELECT_PURCHASER_LIST = "/activity/select/purchaser/list";
+
+
+
 }
 

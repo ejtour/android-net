@@ -11,9 +11,19 @@ public class ComplainManageEvent {
     private @EVENT
     int event;
 
+    private String searchContent;
+
     public ComplainManageEvent(@TARGET int target, @EVENT int event) {
         this.target = target;
         this.event = event;
+    }
+
+    public String getSearchContent() {
+        return searchContent;
+    }
+
+    public void setSearchContent(String searchContent) {
+        this.searchContent = searchContent;
     }
 
     public int getTarget() {
@@ -32,11 +42,12 @@ public class ComplainManageEvent {
         this.event = event;
     }
 
-    @IntDef({TARGET.LIST, TARGET.DETAIL})
+    @IntDef({TARGET.LIST, TARGET.DETAIL, TARGET.SELECT_PURCHASER_LIST})
     @Retention(RetentionPolicy.SOURCE)
     public @interface TARGET {
         int LIST = 1;
         int DETAIL = 2;
+        int SELECT_PURCHASER_LIST = 3;
     }
 
     @IntDef({EVENT.REFRESH})

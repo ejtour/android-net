@@ -982,6 +982,10 @@
         <activity
             android:name=".app.complainmanage.ordernumberlist.SelectOrderListActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.complainmanage.purchaserlist.SelectPurchaserListActivity"
+            android:screenOrientation="portrait" />
         <!--qq-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
