@@ -23,6 +23,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.place.commit.PlaceOrderCommitActivity;
 import com.hll_sc_app.app.order.place.confirm.details.PlaceOrderDetailsActivity;
 import com.hll_sc_app.app.order.place.confirm.remark.OrderConfirmRemarkActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -502,6 +503,6 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
 
     @Override
     public void commitSuccess(String masterBillIDs) {
-        showToast("提交成功：" + masterBillIDs);
+        PlaceOrderCommitActivity.start(masterBillIDs);
     }
 }
