@@ -3,6 +3,7 @@ package com.hll_sc_app.bean.order.place;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.ArrayList;
@@ -161,12 +162,14 @@ public class DiscountPlanBean implements Parcelable {
         /**
          * 活动规则名称
          */
+        @SerializedName(value = "ruleName", alternate = "discountRuleTypeName")
         private String ruleName;
         /**
          * 活动规则类型 1 赠送 2 满减 3 满折 4 直降 5 赠券
          */
         private int ruleType;
         private String specID;
+        private List<DiscountRuleBean> ruleList;
         private transient List<OrderCommitReq.DiscountBean.DiscountSpecBean> specList;
 
         public DiscountBean() {
@@ -180,6 +183,24 @@ public class DiscountPlanBean implements Parcelable {
             ruleName = in.readString();
             ruleType = in.readInt();
             specID = in.readString();
+            ruleList = in.createTypedArrayList(DiscountRuleBean.CREATOR);
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(discountID);
+            dest.writeDouble(discountValue);
+            dest.writeString(productID);
+            dest.writeString(ruleID);
+            dest.writeString(ruleName);
+            dest.writeInt(ruleType);
+            dest.writeString(specID);
+            dest.writeTypedList(ruleList);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
         }
 
         public String getDiscountID() {
@@ -238,6 +259,14 @@ public class DiscountPlanBean implements Parcelable {
             this.specID = specID;
         }
 
+        public List<DiscountRuleBean> getRuleList() {
+            return ruleList;
+        }
+
+        public void setRuleList(List<DiscountRuleBean> ruleList) {
+            this.ruleList = ruleList;
+        }
+
         public List<OrderCommitReq.DiscountBean.DiscountSpecBean> getSpecList() {
             return specList;
         }
@@ -246,20 +275,75 @@ public class DiscountPlanBean implements Parcelable {
             this.specList = specList;
         }
 
+    }
+
+    public static class DiscountRuleBean implements Parcelable {
+        public static final Creator<DiscountRuleBean> CREATOR = new Creator<DiscountRuleBean>() {
+            @Override
+            public DiscountRuleBean createFromParcel(Parcel in) {
+                return new DiscountRuleBean(in);
+            }
+
+            @Override
+            public DiscountRuleBean[] newArray(int size) {
+                return new DiscountRuleBean[size];
+            }
+        };
+        private String id;
+        private double ruleCondition;
+        private double ruleDiscountValue;
+        private String ruleName;
+
+        protected DiscountRuleBean(Parcel in) {
+            id = in.readString();
+            ruleCondition = in.readDouble();
+            ruleDiscountValue = in.readDouble();
+            ruleName = in.readString();
+        }
+
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(discountID);
-            dest.writeDouble(discountValue);
-            dest.writeString(productID);
-            dest.writeString(ruleID);
+            dest.writeString(id);
+            dest.writeDouble(ruleCondition);
+            dest.writeDouble(ruleDiscountValue);
             dest.writeString(ruleName);
-            dest.writeInt(ruleType);
-            dest.writeString(specID);
         }
 
         @Override
         public int describeContents() {
             return 0;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public double getRuleCondition() {
+            return ruleCondition;
+        }
+
+        public void setRuleCondition(double ruleCondition) {
+            this.ruleCondition = ruleCondition;
+        }
+
+        public double getRuleDiscountValue() {
+            return ruleDiscountValue;
+        }
+
+        public void setRuleDiscountValue(double ruleDiscountValue) {
+            this.ruleDiscountValue = ruleDiscountValue;
+        }
+
+        public String getRuleName() {
+            return ruleName;
+        }
+
+        public void setRuleName(String ruleName) {
+            this.ruleName = ruleName;
         }
     }
 }

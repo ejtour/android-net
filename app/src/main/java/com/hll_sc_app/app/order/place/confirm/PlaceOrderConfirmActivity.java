@@ -23,6 +23,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.place.confirm.details.PlaceOrderDetailsActivity;
 import com.hll_sc_app.app.order.place.confirm.remark.OrderConfirmRemarkActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
@@ -363,6 +364,12 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity {
     @OnClick(R.id.opc_edit)
     public void edit(View view) {
         finish();
+    }
+
+    @OnClick(R.id.opc_goods_num)
+    public void produceList() {
+        if (mSupplierBean != null)
+            PlaceOrderDetailsActivity.start(mSupplierBean);
     }
 
     @OnClick(R.id.opc_discount)

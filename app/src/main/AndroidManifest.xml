@@ -959,6 +959,9 @@
         <activity android:name=".app.order.place.confirm.remark.OrderConfirmRemarkActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".app.order.place.confirm.details.PlaceOrderDetailsActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.complainmanage.history.ComplainHistorylActivity"
             android:screenOrientation="portrait" />

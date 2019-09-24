@@ -3,6 +3,10 @@ package com.hll_sc_app.bean.order.place;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.bean.order.detail.OrderDepositBean;
+
+import java.util.List;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/9/19
@@ -11,8 +15,8 @@ import android.os.Parcelable;
 public class ProductSpecBean implements Parcelable {
     public static final Creator<ProductSpecBean> CREATOR = new Creator<ProductSpecBean>() {
         @Override
-        public ProductSpecBean createFromParcel(Parcel source) {
-            return new ProductSpecBean(source);
+        public ProductSpecBean createFromParcel(Parcel in) {
+            return new ProductSpecBean(in);
         }
 
         @Override
@@ -65,38 +69,80 @@ public class ProductSpecBean implements Parcelable {
     private int standardUnitStatus;
     private double usableStock;
     private double shopcartNum;
+    private List<OrderDepositBean> depositProducts;
+    private DiscountPlanBean.DiscountBean discount;
 
     public ProductSpecBean() {
     }
 
     protected ProductSpecBean(Parcel in) {
-        this.assistUnitID = in.readString();
-        this.assistUnitName = in.readString();
-        this.assistUnitStatus = in.readInt();
-        this.buyMinNum = in.readDouble();
-        this.depositTotalPrice = in.readDouble();
-        this.isDecimalBuy = in.readInt();
-        this.isLowStock = in.readByte() != 0;
-        this.minOrder = in.readDouble();
-        this.nextDayDelivery = in.readInt();
-        this.preferentialPriceType = in.readInt();
-        this.premiumType = in.readInt();
-        this.productID = in.readString();
-        this.productPrice = in.readDouble();
-        this.productSpecID = in.readString();
-        this.ration = in.readDouble();
-        this.saleUnitID = in.readString();
-        this.saleUnitName = in.readString();
-        this.skuCode = in.readString();
-        this.specContent = in.readString();
-        this.specID = in.readString();
-        this.specStatus = in.readInt();
-        this.standardSpecID = in.readString();
-        this.standardTaxRate = in.readDouble();
-        this.standardUnitName = in.readString();
-        this.standardUnitStatus = in.readInt();
-        this.usableStock = in.readDouble();
-        this.shopcartNum = in.readDouble();
+        assistUnitID = in.readString();
+        assistUnitName = in.readString();
+        assistUnitStatus = in.readInt();
+        buyMinNum = in.readDouble();
+        depositTotalPrice = in.readDouble();
+        isDecimalBuy = in.readInt();
+        isLowStock = in.readByte() != 0;
+        minOrder = in.readDouble();
+        nextDayDelivery = in.readInt();
+        preferentialPriceType = in.readInt();
+        premiumType = in.readInt();
+        productID = in.readString();
+        productPrice = in.readDouble();
+        productSpecID = in.readString();
+        ration = in.readDouble();
+        saleUnitID = in.readString();
+        saleUnitName = in.readString();
+        skuCode = in.readString();
+        specContent = in.readString();
+        specID = in.readString();
+        specStatus = in.readInt();
+        standardSpecID = in.readString();
+        standardTaxRate = in.readDouble();
+        standardUnitName = in.readString();
+        standardUnitStatus = in.readInt();
+        usableStock = in.readDouble();
+        shopcartNum = in.readDouble();
+        depositProducts = in.createTypedArrayList(OrderDepositBean.CREATOR);
+        discount = in.readParcelable(DiscountPlanBean.DiscountBean.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(assistUnitID);
+        dest.writeString(assistUnitName);
+        dest.writeInt(assistUnitStatus);
+        dest.writeDouble(buyMinNum);
+        dest.writeDouble(depositTotalPrice);
+        dest.writeInt(isDecimalBuy);
+        dest.writeByte((byte) (isLowStock ? 1 : 0));
+        dest.writeDouble(minOrder);
+        dest.writeInt(nextDayDelivery);
+        dest.writeInt(preferentialPriceType);
+        dest.writeInt(premiumType);
+        dest.writeString(productID);
+        dest.writeDouble(productPrice);
+        dest.writeString(productSpecID);
+        dest.writeDouble(ration);
+        dest.writeString(saleUnitID);
+        dest.writeString(saleUnitName);
+        dest.writeString(skuCode);
+        dest.writeString(specContent);
+        dest.writeString(specID);
+        dest.writeInt(specStatus);
+        dest.writeString(standardSpecID);
+        dest.writeDouble(standardTaxRate);
+        dest.writeString(standardUnitName);
+        dest.writeInt(standardUnitStatus);
+        dest.writeDouble(usableStock);
+        dest.writeDouble(shopcartNum);
+        dest.writeTypedList(depositProducts);
+        dest.writeParcelable(discount, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public String getAssistUnitID() {
@@ -315,39 +361,19 @@ public class ProductSpecBean implements Parcelable {
         this.shopcartNum = shopcartNum;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public DiscountPlanBean.DiscountBean getDiscount() {
+        return discount;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.assistUnitID);
-        dest.writeString(this.assistUnitName);
-        dest.writeInt(this.assistUnitStatus);
-        dest.writeDouble(this.buyMinNum);
-        dest.writeDouble(this.depositTotalPrice);
-        dest.writeInt(this.isDecimalBuy);
-        dest.writeByte(this.isLowStock ? (byte) 1 : (byte) 0);
-        dest.writeDouble(this.minOrder);
-        dest.writeInt(this.nextDayDelivery);
-        dest.writeInt(this.preferentialPriceType);
-        dest.writeInt(this.premiumType);
-        dest.writeString(this.productID);
-        dest.writeDouble(this.productPrice);
-        dest.writeString(this.productSpecID);
-        dest.writeDouble(this.ration);
-        dest.writeString(this.saleUnitID);
-        dest.writeString(this.saleUnitName);
-        dest.writeString(this.skuCode);
-        dest.writeString(this.specContent);
-        dest.writeString(this.specID);
-        dest.writeInt(this.specStatus);
-        dest.writeString(this.standardSpecID);
-        dest.writeDouble(this.standardTaxRate);
-        dest.writeString(this.standardUnitName);
-        dest.writeInt(this.standardUnitStatus);
-        dest.writeDouble(this.usableStock);
-        dest.writeDouble(this.shopcartNum);
+    public void setDiscount(DiscountPlanBean.DiscountBean discount) {
+        this.discount = discount;
+    }
+
+    public List<OrderDepositBean> getDepositProducts() {
+        return depositProducts;
+    }
+
+    public void setDepositProducts(List<OrderDepositBean> depositProducts) {
+        this.depositProducts = depositProducts;
     }
 }
