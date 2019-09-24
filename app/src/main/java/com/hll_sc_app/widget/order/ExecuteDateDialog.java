@@ -37,6 +37,8 @@ public class ExecuteDateDialog extends BaseDialog {
     WheelView mDate;
     @BindView(R.id.ded_time)
     WheelView mTime;
+    @BindView(R.id.ded_title)
+    TextView mTitle;
     private WheelAdapter mDateAdapter;
     private WheelAdapter mTimeAdapter;
     private Map<String, List<String>> mMap;
@@ -44,10 +46,11 @@ public class ExecuteDateDialog extends BaseDialog {
     private int mSelectTime;
     private IDayTimeCallback mCallback;
 
-    public ExecuteDateDialog(@NonNull Activity context, Map<String, List<String>> map) {
+    public ExecuteDateDialog(@NonNull Activity context, String title, Map<String, List<String>> map) {
         super(context, R.style.date_picker_dialog);
         mMap = map;
         initView();
+        mTitle.setText(title);
     }
 
     private void initView() {

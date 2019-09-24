@@ -30,7 +30,6 @@
         android:id="@+id/ded_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="选择要求到货时间"
         android:textColor="@color/color_030303"
         android:textSize="@dimen/text_middle_size"
         app:layout_constraintBottom_toBottomOf="@+id/ded_close"
