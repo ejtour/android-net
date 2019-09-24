@@ -81,6 +81,7 @@ public class ComplainManageActivity extends BaseLoadActivity implements IComplai
             mMenuWindow.setListener((adapter, view, position) -> {
                 switch (position) {
                     case 0:
+                        mMenuWindow.dismiss();
                         ComplainMangeAddActivity.start(null);
                         break;
                     case 1:
