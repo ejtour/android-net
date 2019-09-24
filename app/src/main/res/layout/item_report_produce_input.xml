@@ -8,6 +8,7 @@
     android:layout_height="wrap_content">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/rpi_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@android:color/white">
@@ -22,14 +23,12 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="这里显示合作公司名称" />
 
-        <EditText
+        <TextView
             android:id="@+id/rpi_money"
             style="@style/InfoEdit"
-            android:digits="¥0123456789."
-            android:inputType="numberDecimal"
             android:drawableRight="@drawable/ic_arrow_gray"
             android:drawablePadding="5dp"
-            android:text="¥0.00"
+            android:hint="¥0.00"
             app:layout_constraintBottom_toBottomOf="@id/rpi_company_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/rpi_company_name"

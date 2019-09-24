@@ -264,9 +264,41 @@
         style="@style/InfoEdit"
         android:layout_alignTop="@id/pid_vegetable_pack_time_label"
         android:layout_alignBottom="@id/pid_vegetable_pack_time_label"
-        android:inputType="numberDecimal"
         android:layout_toLeftOf="@id/pid_vegetable_pack_time_unit"
         android:layout_toRightOf="@id/pid_vegetable_pack_time_label"
         android:background="@android:color/white"
-        android:hint="请输入蔬果打包工时" />
+        android:hint="请输入蔬果打包工时"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/pid_produce_cost_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/pid_vegetable_pack_time_label"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@android:color/white"
+        android:text="生产费用" />
+
+    <TextView
+        android:id="@+id/pid_produce_cost_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/pid_produce_cost_label"
+        android:layout_alignBottom="@id/pid_produce_cost_label"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingRight="@dimen/dp_10"
+        android:text="元"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+    <EditText
+        android:id="@+id/pid_produce_cost"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/pid_produce_cost_label"
+        android:layout_alignBottom="@id/pid_produce_cost_label"
+        android:inputType="numberDecimal"
+        android:layout_toLeftOf="@id/pid_produce_cost_unit"
+        android:layout_toRightOf="@id/pid_produce_cost_label"
+        android:background="@android:color/white"
+        android:hint="将自动核算，也可以手动修改" />
 </RelativeLayout>
