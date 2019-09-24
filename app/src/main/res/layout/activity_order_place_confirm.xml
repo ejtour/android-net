@@ -105,7 +105,8 @@
 
             <TextView
                 android:id="@+id/opc_supplier_shop"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="@dimen/dp_40"
                 android:drawableLeft="@drawable/ic_supplier"
                 android:drawablePadding="5dp"
@@ -115,6 +116,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/opc_hor_div2"
                 tools:text="供应商店铺名称" />
+
+            <TextView
+                android:id="@+id/opc_self_lift_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/bg_tag_primary_stroke"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="自提"
+                android:textAppearance="@style/TextAppearance.City22.Little.Blue"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/opc_supplier_shop"
+                app:layout_constraintEnd_toEndOf="@id/opc_supplier_shop"
+                app:layout_constraintTop_toTopOf="@id/opc_supplier_shop" />
 
             <LinearLayout
                 android:id="@+id/opc_goods_group"
@@ -262,11 +278,44 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
+                android:id="@+id/opc_lift_address_label"
+                style="@style/InfoLabel"
+                android:text="提货地址"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/opc_request_date_label" />
+
+            <TextView
+                android:id="@+id/opc_lift_address"
+                style="@style/InfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/opc_lift_address_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/opc_lift_address_label"
+                app:layout_constraintTop_toTopOf="@id/opc_lift_address_label"
+                tools:text="提货地址" />
+
+            <View
+                android:id="@+id/opc_hor_div4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/opc_lift_address_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <android.support.constraint.Group
+                android:id="@+id/opc_lift_address_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="opc_lift_address,opc_lift_address_label,opc_hor_div4" />
+
+            <TextView
                 android:id="@+id/opc_remark_label"
                 style="@style/InfoLabel"
                 android:text="备注"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/opc_request_date_label" />
+                app:layout_constraintTop_toBottomOf="@id/opc_lift_address_label" />
 
             <TextView
                 android:id="@+id/opc_remark"

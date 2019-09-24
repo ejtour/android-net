@@ -3,6 +3,7 @@ package com.hll_sc_app.app.report.purchase;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,8 @@ import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 import com.hll_sc_app.widget.report.PurchaseSummaryHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -99,6 +102,17 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
                 case R.id.rps_modify_logistics:
                     recordLogistics();
                     break;
+            }
+        });
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.loadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.refresh();
             }
         });
     }

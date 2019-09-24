@@ -2,6 +2,7 @@ package com.hll_sc_app.app.wallet.details.list;
 
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -37,9 +38,7 @@ public class DetailsListAdapter extends BaseSectionQuickAdapter<DetailsRecordWra
 
     @Override
     protected void convertHead(BaseViewHolder helper, DetailsRecordWrapper item) {
-        helper.setText(R.id.wdh_date_filter, item.header);
-        helper.addOnClickListener(R.id.wdh_date_filter)
-                .addOnClickListener(R.id.wdh_type_filter);
+        ((TextView) helper.itemView).setText(item.header);
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.order.place.commit.PlaceOrderCommitActivity;
 import com.hll_sc_app.app.order.place.confirm.details.PlaceOrderDetailsActivity;
 import com.hll_sc_app.app.order.place.confirm.remark.OrderConfirmRemarkActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -96,6 +97,14 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
     TextView mTotal;
     @Autowired(name = "parcelable")
     SettlementInfoResp mResp;
+    @BindView(R.id.opc_self_lift_tag)
+    TextView mSelfLiftTag;
+    @BindView(R.id.opc_request_date_label)
+    TextView mRequestDateLabel;
+    @BindView(R.id.opc_lift_address)
+    TextView mLiftAddress;
+    @BindView(R.id.opc_lift_address_group)
+    Group mLiftAddressGroup;
     private OrderCommitReq mConfirmReq = new OrderCommitReq();
     private SupplierGroupBean mSupplierBean;
     private int mItemSize;
@@ -162,6 +171,19 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
         addProduct(mSupplierBean.getProductList());
 
         mGoodsNum.setText(String.format("共%s种", mSupplierBean.getProductList().size()));
+
+        if (mSupplierBean.getDeliverType() == 2) {
+            mSelfLiftTag.setVisibility(View.VISIBLE);
+            mLiftAddressGroup.setVisibility(View.VISIBLE);
+            mRequestDateLabel.setText("要求提货日期");
+            mRequestDate.setHint("请选择要求提货日期");
+            mLiftAddress.setText(mSupplierBean.getHouseAddress());
+        } else {
+            mSelfLiftTag.setVisibility(View.GONE);
+            mLiftAddressGroup.setVisibility(View.GONE);
+            mRequestDateLabel.setText("要求到货日期");
+            mRequestDate.setHint("请选择要求到货日期");
+        }
 
         initDiscount(discountPlan);
         updatePayMethod(mSupplierBean.getPayType(), null);
@@ -267,12 +289,18 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
         if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
             if ("0".equals(startDate) && "0".equals(endDate)) {
                 mRequestDate.setText("按照供应商时间配送");
-                mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+                mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 mRequestDate.setClickable(false);
-            } else mRequestDate.setClickable(true);
-            mRequestDate.setText(String.format("%s - %s", DateUtil.getReadableTime(startDate, START_FORMAT),
-                    DateUtil.getReadableTime(endDate, Constants.SIGNED_HH_MM)));
-        } else mRequestDate.setClickable(true);
+            } else {
+                mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+                mRequestDate.setClickable(true);
+                mRequestDate.setText(String.format("%s - %s", DateUtil.getReadableTime(startDate, START_FORMAT),
+                        DateUtil.getReadableTime(endDate, Constants.SIGNED_HH_MM)));
+            }
+        } else {
+            mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+            mRequestDate.setClickable(true);
+        }
     }
 
     private void updateRemark(String remark) {
@@ -361,7 +389,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
 
     @OnClick(R.id.opc_commit)
     public void commit() {
-        if (TextUtils.isEmpty(mPayMethod.getText())){
+        if (TextUtils.isEmpty(mPayMethod.getText())) {
             showToast(mPayMethod.getHint().toString());
             return;
         }
@@ -440,7 +468,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
             if (map.isEmpty()) {
                 return;
             }
-            mDateDialog = new ExecuteDateDialog(this, map);
+            mDateDialog = new ExecuteDateDialog(this,mRequestDate.getHint().toString(), map);
             mDateDialog.setDayTimeCallback((day, time) -> {
                 String dayStr = mDayList.get(day);
                 ExecuteDateBean.FirstDay firstDay = mSupplierBean.getExecuteDateList().getFirstDay();
@@ -502,6 +530,6 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
 
     @Override
     public void commitSuccess(String masterBillIDs) {
-        showToast("提交成功：" + masterBillIDs);
+        PlaceOrderCommitActivity.start(masterBillIDs);
     }
 }

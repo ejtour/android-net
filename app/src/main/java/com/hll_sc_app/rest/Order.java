@@ -30,6 +30,7 @@ import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionReq;
 import com.hll_sc_app.bean.order.inspection.OrderInspectionResp;
 import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
+import com.hll_sc_app.bean.order.place.OrderCommitBean;
 import com.hll_sc_app.bean.order.place.OrderCommitReq;
 import com.hll_sc_app.bean.order.place.OrderCommitResp;
 import com.hll_sc_app.bean.order.place.ProductBean;
@@ -737,6 +738,20 @@ public class Order {
     public static void commitOrder(OrderCommitReq req, SimpleObserver<OrderCommitResp> observer){
         OrderService.INSTANCE
                 .commitOrder(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 提交后查询订单信息
+     *
+     * @param id 提交成功后的id串，多个id用逗号分隔
+     */
+    public static void queryCommitResult(String id, SimpleObserver<List<OrderCommitBean>> observer) {
+        OrderService.INSTANCE
+                .queryCommitResult(BaseMapReq.newBuilder()
+                        .put("masterBillIDs", id).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

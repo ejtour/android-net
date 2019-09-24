@@ -1065,6 +1065,11 @@ public class RouterConfig {
      */
     public static final String ORDER_PLACE_DETAILS = "/activity/order/place/details";
 
+    /**
+     * 代客下单-代下单确认-提交成功
+     */
+    public static final String ORDER_PLACE_COMMIT = "/activity/order/place/commit";
+
     /*投诉详情*/
     public static final String ACTIVITY_COMPLAIN_DETAIL="/activity/complain/detail";
 

@@ -97,16 +97,6 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
                 DetailsShowActivity.start(item.t);
             }
         });
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            switch (view.getId()) {
-                case R.id.wdh_date_filter:
-                    filterDate();
-                    break;
-                case R.id.wdh_type_filter:
-                    filterType();
-                    break;
-            }
-        });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
