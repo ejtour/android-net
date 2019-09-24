@@ -1060,6 +1060,11 @@ public class RouterConfig {
      */
     public static final String ORDER_PLACE_CONFIRM_REMARK = "/activity/order/place/confirm/remark";
 
+    /**
+     * 代客下单-代下单确认-商品列表
+     */
+    public static final String ORDER_PLACE_DETAILS = "/activity/order/place/details";
+
     /*投诉详情*/
     public static final String ACTIVITY_COMPLAIN_DETAIL="/activity/complain/detail";
 

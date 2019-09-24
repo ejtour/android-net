@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp"
+    tools:background="@android:color/white">
+
+    <View
+        android:id="@+id/ded_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ded_close"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintBottom_toTopOf="@+id/ded_divider"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ded_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择要求到货时间"
+        android:textColor="@color/color_030303"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintBottom_toBottomOf="@+id/ded_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ded_close" />
+
+    <TextView
+        android:id="@+id/ded_ok"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="确定"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toBottomOf="@+id/ded_close"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ded_close" />
+
+    <TextView
+        android:id="@+id/ded_tip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/color0_2_f5a623"
+        android:paddingLeft="20dp"
+        android:paddingTop="6dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="6dp"
+        android:textColor="@color/color_f5a623"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ded_divider"
+        tools:text="您当前能够选择的最快配送日期为7月20日" />
+
+    <ImageView
+        android:id="@+id/ded_dismiss_tip"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintBottom_toBottomOf="@id/ded_tip"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="@id/ded_tip"
+        app:layout_constraintTop_toTopOf="@id/ded_tip" />
+
+    <TextView
+        android:id="@+id/ded_date_label"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:text="配送日期"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/ded_time_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ded_tip" />
+
+    <TextView
+        android:id="@+id/ded_time_label"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center"
+        android:text="配送时间"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ded_date_label"
+        app:layout_constraintTop_toBottomOf="@id/ded_tip" />
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/ded_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="44dp"
+        android:layout_marginRight="44dp"
+        android:minHeight="225dp"
+        app:layout_constraintEnd_toEndOf="@+id/ded_date_label"
+        app:layout_constraintStart_toStartOf="@+id/ded_date_label"
+        app:layout_constraintTop_toBottomOf="@+id/ded_date_label" />
+
+    <kankan.wheel.widget.WheelView
+        android:id="@+id/ded_time"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ded_date"
+        app:layout_constraintEnd_toEndOf="@+id/ded_time_label"
+        app:layout_constraintStart_toStartOf="@+id/ded_time_label"
+        app:layout_constraintTop_toTopOf="@+id/ded_date" />
+</android.support.constraint.ConstraintLayout>

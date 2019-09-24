@@ -3,6 +3,8 @@ package com.hll_sc_app.bean.order.detail;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/12
@@ -13,7 +15,9 @@ public class OrderDepositBean implements Parcelable {
     private int detailID;
     private int productID;
     private String productName;
+    @SerializedName(value = "productNum", alternate = "shopcartNum")
     private double productNum;
+    private transient double rawProductNum;
     private double productPrice;
     private String productSpec;
     private int productSpecID;
@@ -109,16 +113,17 @@ public class OrderDepositBean implements Parcelable {
         this.subtotalAmount = subtotalAmount;
     }
 
+    public double getRawProductNum() {
+        return rawProductNum;
+    }
+
+    public void setRawProductNum(double rawProductNum) {
+        this.rawProductNum = rawProductNum;
+    }
+
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    public OrderDepositBean deepCopy() {
-        Parcel parcel = Parcel.obtain();
-        writeToParcel(parcel, 0);
-        parcel.setDataPosition(0);
-        return CREATOR.createFromParcel(parcel);
     }
 
     @Override
