@@ -3,7 +3,7 @@ package com.hll_sc_app.app.complainmanage.innerlog;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.complain.ComplainInnerLogResp;
-import com.hll_sc_app.bean.complain.DepartmentsBean;
+import com.hll_sc_app.bean.complain.DropMenuBean;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface IInnerLogContract {
 
         void queryInnerLogSucess(ComplainInnerLogResp complainInnerLogResp);
 
-        void queryDepartmentsSuccess(List<DepartmentsBean> departmentsBeanList);
+        void queryDropMenusSuccess(List<DropMenuBean> departmentsBeanList);
 
         void saveLogSuccess();
 
@@ -26,7 +26,7 @@ public interface IInnerLogContract {
 
     interface IPresent extends IPresenter<IView> {
         void queryInnerLog();
-        void queryDepartments();
+        void queryDropMenus();
 
         void saveComplainInnerLog();
     }

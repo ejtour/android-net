@@ -29,7 +29,7 @@ public class DepartListPresent implements IDepartListContract.IPresent {
     }
 
     @Override
-    public void queryDepartments(boolean isLoading) {
+    public void queryDropMenus(boolean isLoading) {
         UserBean userBean = GreenDaoUtils.getUser();
         if (userBean == null) {
             return;
@@ -41,7 +41,7 @@ public class DepartListPresent implements IDepartListContract.IPresent {
                 .put("deptName", mView.getDepartName())
                 .create();
         StaffManageService.INSTANCE
-                .queryDepartments(baseMapReq)
+                .queryDropMenus(baseMapReq)
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())
                 .doOnSubscribe(disposable -> {
@@ -157,13 +157,13 @@ public class DepartListPresent implements IDepartListContract.IPresent {
     @Override
     public void getMore() {
         pageNumTemp++;
-        queryDepartments(false);
+        queryDropMenus(false);
     }
 
     @Override
     public void refresh() {
         pageNumTemp = 1;
-        queryDepartments(false);
+        queryDropMenus(false);
     }
 
     @Override

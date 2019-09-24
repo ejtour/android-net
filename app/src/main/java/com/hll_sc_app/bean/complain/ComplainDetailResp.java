@@ -1,7 +1,10 @@
 package com.hll_sc_app.bean.complain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /*投诉详情*/
-public class ComplainDetailResp {
+public class ComplainDetailResp implements Parcelable {
 
     private String complaintExplain;
     private String driverName;
@@ -21,9 +24,17 @@ public class ComplainDetailResp {
     private String createBy;
     private String interventionContact;
     private String subBillID;
+    private String purchaserID;
+    private String purchaserShopID;
+    public ComplainDetailResp() {
+    }
     private int target;
     private int operationIntervention;
 
+
+    public String getPurchaserShopID() {
+        return purchaserShopID;
+    }
 
     public String getSubBillID() {
         return subBillID;
@@ -184,4 +195,84 @@ public class ComplainDetailResp {
     public void setTypeName(String typeName) {
         this.typeName = typeName;
     }
+
+    public void setPurchaserShopID(String purchaserShopID) {
+        this.purchaserShopID = purchaserShopID;
+    }
+
+    public String getPurchaserID() {
+        return purchaserID;
+    }
+
+    public void setPurchaserID(String purchaserID) {
+        this.purchaserID = purchaserID;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.complaintExplain);
+        dest.writeString(this.driverName);
+        dest.writeString(this.id);
+        dest.writeString(this.imgUrls);
+        dest.writeString(this.lineName);
+        dest.writeString(this.products);
+        dest.writeString(this.purchaserContact);
+        dest.writeString(this.reason);
+        dest.writeString(this.reasonName);
+        dest.writeString(this.supplyContact);
+        dest.writeString(this.type);
+        dest.writeString(this.typeName);
+        dest.writeString(this.purchaserShopName);
+        dest.writeString(this.purchaserName);
+        dest.writeString(this.billID);
+        dest.writeString(this.createBy);
+        dest.writeString(this.interventionContact);
+        dest.writeString(this.subBillID);
+        dest.writeString(this.purchaserID);
+        dest.writeString(this.purchaserShopID);
+        dest.writeInt(this.target);
+        dest.writeInt(this.operationIntervention);
+    }
+
+    protected ComplainDetailResp(Parcel in) {
+        this.complaintExplain = in.readString();
+        this.driverName = in.readString();
+        this.id = in.readString();
+        this.imgUrls = in.readString();
+        this.lineName = in.readString();
+        this.products = in.readString();
+        this.purchaserContact = in.readString();
+        this.reason = in.readString();
+        this.reasonName = in.readString();
+        this.supplyContact = in.readString();
+        this.type = in.readString();
+        this.typeName = in.readString();
+        this.purchaserShopName = in.readString();
+        this.purchaserName = in.readString();
+        this.billID = in.readString();
+        this.createBy = in.readString();
+        this.interventionContact = in.readString();
+        this.subBillID = in.readString();
+        this.purchaserID = in.readString();
+        this.purchaserShopID = in.readString();
+        this.target = in.readInt();
+        this.operationIntervention = in.readInt();
+    }
+
+    public static final Creator<ComplainDetailResp> CREATOR = new Creator<ComplainDetailResp>() {
+        @Override
+        public ComplainDetailResp createFromParcel(Parcel source) {
+            return new ComplainDetailResp(source);
+        }
+
+        @Override
+        public ComplainDetailResp[] newArray(int size) {
+            return new ComplainDetailResp[size];
+        }
+    };
 }

@@ -973,6 +973,12 @@
         <activity
             android:name=".app.complainmanage.sendcomplainreply.ComplainReplyResultActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.complainmanage.add.ComplainMangeAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.complainmanage.ordernumberlist.SelectOrderListActivity"
+            android:screenOrientation="portrait" />
         <!--qq-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"

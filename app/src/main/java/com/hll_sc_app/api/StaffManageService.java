@@ -104,7 +104,7 @@ public interface StaffManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:101117")
-    Observable<BaseResp<DepartmentListResp>> queryDepartments(@Body BaseMapReq req);
+    Observable<BaseResp<DepartmentListResp>> queryDropMenus(@Body BaseMapReq req);
 
     /***
      * 新增部门列表

@@ -103,7 +103,7 @@ public class DepartListActivity extends BaseLoadActivity implements IDepartListC
         mPresent = DepartListPresent.newInstance();
         mPresent.register(this);
         initView();
-        mPresent.queryDepartments(true);
+        mPresent.queryDropMenus(true);
     }
 
     @Override

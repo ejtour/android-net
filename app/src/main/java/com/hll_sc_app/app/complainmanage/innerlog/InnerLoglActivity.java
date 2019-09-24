@@ -19,7 +19,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.ComplainInnerLogResp;
-import com.hll_sc_app.bean.complain.DepartmentsBean;
+import com.hll_sc_app.bean.complain.DropMenuBean;
 import com.hll_sc_app.widget.MultipSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -170,21 +170,21 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
     }
 
     @Override
-    public void queryDepartmentsSuccess(List<DepartmentsBean> departmentsBeanList) {
+    public void queryDropMenusSuccess(List<DropMenuBean> departmentsBeanList) {
         if (TextUtils.isEmpty(mComplainInnerLogResp.getRelationDepartment())) {
             mComplainInnerLogResp.setRelationDepartment("");
         }
         if (TextUtils.isEmpty(mComplainInnerLogResp.getIssueDepartment())) {
             mComplainInnerLogResp.setIssueDepartment("");
         }
-        mLinkSelectDialog = MultipSelectionDialog.newBuilder(this, new MultipSelectionDialog.WrapperName<DepartmentsBean>() {
+        mLinkSelectDialog = MultipSelectionDialog.newBuilder(this, new MultipSelectionDialog.WrapperName<DropMenuBean>() {
             @Override
-            public String getName(DepartmentsBean departmentsBean) {
+            public String getName(DropMenuBean departmentsBean) {
                 return departmentsBean.getValue();
             }
 
             @Override
-            public String getKey(DepartmentsBean departmentsBean) {
+            public String getKey(DropMenuBean departmentsBean) {
                 return departmentsBean.getKey();
             }
         })
@@ -193,7 +193,7 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
                 .setOnSelectListener(ts -> {
                     List<String> names = new ArrayList<>();
                     StringBuilder builder = new StringBuilder();
-                    for (DepartmentsBean departmentsBean : ts) {
+                    for (DropMenuBean departmentsBean : ts) {
                         names.add(departmentsBean.getValue());
                         builder.append(departmentsBean.getKey()).append(",");
                     }
@@ -203,14 +203,14 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
                 .selectByKey(Arrays.asList(mComplainInnerLogResp.getRelationDepartment().split(",")))
                 .create();
 
-        mProblemSelectDialog = MultipSelectionDialog.newBuilder(this, new MultipSelectionDialog.WrapperName<DepartmentsBean>() {
+        mProblemSelectDialog = MultipSelectionDialog.newBuilder(this, new MultipSelectionDialog.WrapperName<DropMenuBean>() {
             @Override
-            public String getName(DepartmentsBean departmentsBean) {
+            public String getName(DropMenuBean departmentsBean) {
                 return departmentsBean.getValue();
             }
 
             @Override
-            public String getKey(DepartmentsBean departmentsBean) {
+            public String getKey(DropMenuBean departmentsBean) {
                 return departmentsBean.getKey();
             }
         })
@@ -219,7 +219,7 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
                 .setOnSelectListener(ts -> {
                     StringBuilder builder = new StringBuilder();
                     List<String> names = new ArrayList<>();
-                    for (DepartmentsBean departmentsBean : ts) {
+                    for (DropMenuBean departmentsBean : ts) {
                         names.add(departmentsBean.getValue());
                         builder.append(departmentsBean.getKey()).append(",");
                     }

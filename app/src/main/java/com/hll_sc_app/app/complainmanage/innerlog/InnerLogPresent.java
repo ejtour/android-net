@@ -7,7 +7,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.complain.ComplainInnerLogResp;
-import com.hll_sc_app.bean.complain.DepartmentsBean;
+import com.hll_sc_app.bean.complain.DropMenuBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class InnerLogPresent implements IInnerLogContract.IPresent {
                     @Override
                     public void onSuccess(ComplainInnerLogResp complainInnerLogResp) {
                         mView.queryInnerLogSucess(complainInnerLogResp);
-                        queryDepartments();
+                        queryDropMenus();
                     }
 
                     @Override
@@ -63,12 +63,12 @@ public class InnerLogPresent implements IInnerLogContract.IPresent {
 
 
     @Override
-    public void queryDepartments() {
+    public void queryDropMenus() {
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
                 .put("name", "DepartmentEnum")
                 .create();
         ComplainManageService.INSTANCE
-                .queryDepartments(baseMapReq)
+                .queryDropMenus(baseMapReq)
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())
                 .doOnSubscribe(disposable -> {
@@ -76,10 +76,10 @@ public class InnerLogPresent implements IInnerLogContract.IPresent {
                 })
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<List<DepartmentsBean>>() {
+                .subscribe(new BaseCallback<List<DropMenuBean>>() {
                     @Override
-                    public void onSuccess(List<DepartmentsBean> departmentsBeans) {
-                        mView.queryDepartmentsSuccess(departmentsBeans);
+                    public void onSuccess(List<DropMenuBean> departmentsBeans) {
+                        mView.queryDropMenusSuccess(departmentsBeans);
                     }
 
                     @Override

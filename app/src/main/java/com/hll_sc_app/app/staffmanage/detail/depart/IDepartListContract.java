@@ -18,7 +18,7 @@ public interface IDepartListContract {
     }
 
     interface IPresent extends IPresenter<IView> {
-        void queryDepartments(boolean isLoading);
+        void queryDropMenus(boolean isLoading);
 
         void getMore();
 

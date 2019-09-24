@@ -1076,5 +1076,12 @@ public class RouterConfig {
 
     /*投诉管理-发起投诉回复结果页*/
     public static final String ACTIVITY_COMPLAIN_SEND_RESULT = "/activity/complain/send/result";
+
+    /*投诉管理-新增*/
+    public static final String ACTIVITY_COMPLAIN_ADD = "/activity/complain/add";
+
+    /*选择订单号列表*/
+    public static final String ACTIVITY_ORDER_LIST_NUMBER = "/activity/order/list/number";
+
 }
 

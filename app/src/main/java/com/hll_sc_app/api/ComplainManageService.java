@@ -9,7 +9,7 @@ import com.hll_sc_app.bean.complain.ComplainHistoryResp;
 import com.hll_sc_app.bean.complain.ComplainInnerLogResp;
 import com.hll_sc_app.bean.complain.ComplainListResp;
 import com.hll_sc_app.bean.complain.ComplainStatusResp;
-import com.hll_sc_app.bean.complain.DepartmentsBean;
+import com.hll_sc_app.bean.complain.DropMenuBean;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public interface ComplainManageService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:110022")
-    Observable<BaseResp<List<DepartmentsBean>>> queryDepartments(@Body BaseMapReq req);
+    Observable<BaseResp<List<DropMenuBean>>> queryDropMenus(@Body BaseMapReq req);
 
 
     @POST(HttpConfig.URL)

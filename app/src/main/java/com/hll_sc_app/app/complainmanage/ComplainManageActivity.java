@@ -11,6 +11,7 @@ import android.view.Gravity;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.complainmanage.add.ComplainMangeAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.complain.ComplainListResp;
@@ -80,7 +81,7 @@ public class ComplainManageActivity extends BaseLoadActivity implements IComplai
             mMenuWindow.setListener((adapter, view, position) -> {
                 switch (position) {
                     case 0:
-
+                        ComplainMangeAddActivity.start(null);
                         break;
                     case 1:
                         mMenuWindow.dismiss();
