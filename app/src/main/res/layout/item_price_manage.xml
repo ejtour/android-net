@@ -41,21 +41,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="无商品规格"
-        android:minWidth="40dp"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/ll_cost_price"
-        app:layout_constraintStart_toEndOf="@+id/img_imgUrl"
-        app:layout_constraintTop_toBottomOf="@+id/txt_productName"
-        tools:text="" />
+        app:layout_constraintStart_toStartOf="@+id/txt_productName"
+        app:layout_constraintTop_toBottomOf="@+id/txt_productName" />
 
-    <View
-        android:id="@+id/view_divider"
-        android:layout_width="0.5dp"
-        android:layout_height="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:background="@color/base_color_divider"
+    <TextView
+        android:id="@+id/txt_divider"
+        android:layout_width="@dimen/dp_10"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="|"
+        android:textColor="@color/base_color_divider"
+        android:textSize="@dimen/base_text_10"
         app:layout_constraintBottom_toBottomOf="@id/txt_group_info"
         app:layout_constraintStart_toEndOf="@id/txt_specContent"
         app:layout_constraintTop_toTopOf="@id/txt_specContent" />
@@ -64,12 +62,10 @@
         android:id="@+id/txt_group_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:hint="无货主公司名称"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintStart_toEndOf="@+id/view_divider"
+        app:layout_constraintStart_toEndOf="@+id/txt_divider"
         app:layout_constraintTop_toTopOf="@+id/txt_specContent"
-        tools:text="" />
+        tools:text="大集集团" />
 
 
     <LinearLayout

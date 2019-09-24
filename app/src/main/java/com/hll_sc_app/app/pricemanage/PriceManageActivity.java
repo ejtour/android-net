@@ -267,7 +267,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
                     mTxtRationName.setText(ratioTemplateBean.getTemplateName());
                     mTxtRationName.setTag(ratioTemplateBean);
                 } else {
-                    mTxtRationName.setText(null);
+                    mTxtRationName.setText("比例模版");
                     mTxtRationName.setTag(null);
                 }
             });
@@ -374,7 +374,9 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
                     .setText(R.id.txt_productPrice, getPrice(getMoney(bean.getProductPrice()),
                             bean.getSaleUnitName()))
                     .setText(R.id.txt_group_info, bean.getCargoOwnerName())
-                    .setGone(R.id.ll_cost_price, TextUtils.equals(bean.getCostPriceModifyFlag(), "0"));
+                    .setGone(R.id.ll_cost_price, TextUtils.equals(bean.getCostPriceModifyFlag(), "0"))
+                    .setGone(R.id.txt_divider, !TextUtils.isEmpty(bean.getCargoOwnerName()) && !TextUtils.isEmpty(bean.getSpecContent()));
+
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(bean.getImgUrl());
 
 
