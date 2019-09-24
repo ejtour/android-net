@@ -268,12 +268,18 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
         if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
             if ("0".equals(startDate) && "0".equals(endDate)) {
                 mRequestDate.setText("按照供应商时间配送");
-                mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+                mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 mRequestDate.setClickable(false);
-            } else mRequestDate.setClickable(true);
-            mRequestDate.setText(String.format("%s - %s", DateUtil.getReadableTime(startDate, START_FORMAT),
-                    DateUtil.getReadableTime(endDate, Constants.SIGNED_HH_MM)));
-        } else mRequestDate.setClickable(true);
+            } else {
+                mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+                mRequestDate.setClickable(true);
+                mRequestDate.setText(String.format("%s - %s", DateUtil.getReadableTime(startDate, START_FORMAT),
+                        DateUtil.getReadableTime(endDate, Constants.SIGNED_HH_MM)));
+            }
+        } else {
+            mRequestDate.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_gray, 0);
+            mRequestDate.setClickable(true);
+        }
     }
 
     private void updateRemark(String remark) {
