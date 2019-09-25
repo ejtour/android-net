@@ -151,7 +151,6 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         ARouter.getInstance()
             .build(RouterConfig.ORIENTATION_LIST)
             .withBoolean("reload", true)
-            .withBoolean("item", true)
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
             .setProvider(new LoginInterceptor())
             .navigation(this);

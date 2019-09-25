@@ -23,6 +23,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.TipRadioButton;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.impl.IReload;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -181,10 +182,9 @@ public class MainActivity extends BaseLoadActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (intent.getBooleanExtra("reload", false)) {
-            if (intent.getBooleanExtra("item", false))
-                EventBus.getDefault().post(new OrderEvent(OrderEvent.RELOAD_ITEM));
-            else EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
+        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag));
+        if (currentFragment instanceof IReload){
+            ((IReload) currentFragment).reload();
         }
     }
 
