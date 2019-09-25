@@ -129,8 +129,6 @@ public class SubmitSuccessActivity extends BaseActivity {
     private void goBack(View view) {
         ARouter.getInstance()
                 .build(mBackType.getPath())
-                .withBoolean("reload", true)
-                .withBoolean("item", true)
                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 .setProvider(new LoginInterceptor())
                 .navigation(this);

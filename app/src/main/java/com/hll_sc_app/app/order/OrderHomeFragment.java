@@ -34,6 +34,7 @@ import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,7 +56,7 @@ import butterknife.Unbinder;
  * @since 2019/6/4
  */
 @Route(path = RouterConfig.ROOT_HOME_ORDER)
-public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener {
+public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener, IReload {
     Unbinder unbinder;
     @BindView(R.id.fmo_options)
     ImageView mOptions;
@@ -178,6 +179,11 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
                     break;
             }
         }
+    }
+
+    @Override
+    public void reload() {
+        EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
     }
 
     class OrderListFragmentPager extends FragmentPagerAdapter {

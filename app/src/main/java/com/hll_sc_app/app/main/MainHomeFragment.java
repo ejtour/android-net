@@ -32,6 +32,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -56,7 +57,7 @@ import butterknife.Unbinder;
  * @since 2019/7/25
  */
 @Route(path = RouterConfig.ROOT_HOME_MAIN)
-public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContract.IMainHomeView, BaseQuickAdapter.OnItemClickListener {
+public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContract.IMainHomeView, BaseQuickAdapter.OnItemClickListener, IReload {
 
     @BindView(R.id.fmh_top_bg)
     ImageView mTopBg;
@@ -294,7 +295,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     @OnClick({R.id.fmh_customer_service_btn, R.id.fmh_driver_btn, R.id.fmh_warehouse_in_btn, R.id.fmh_finance_btn})
     public void gotoAfterSales(View view) {
-        int position = 0;
+        int position;
         switch (view.getId()) {
             case R.id.fmh_customer_service_btn:
                 position = 1;
@@ -334,7 +335,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
                 break;
             case R.id.fmh_entry_sale:
-                showToast("定向售卖待添加");
+                RouterUtil.goToActivity(RouterConfig.ORIENTATION_LIST);
                 break;
             case R.id.fmh_entry_report_center:
                 ReportEntryActivity.start();
@@ -354,5 +355,10 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 showOptionsWindow(view);
                 break;
         }
+    }
+
+    @Override
+    public void reload() {
+        mPresenter.start();
     }
 }
