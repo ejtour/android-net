@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -214,6 +215,7 @@ public class PurchaserOrderSearchActivity extends BaseLoadActivity implements Pu
         protected void convert(BaseViewHolder helper, PurchaserOrderSearchRecord bean) {
             helper.setText(R.id.txt_purchaser_order_search, bean.getSupplierName());
             CheckBox checkBox = helper.getView(R.id.purchaser_order_search_checkbox);
+            checkBox.setClickable(false);
             if(selectiveSuppliers.contains(bean.getSupplierID())) {
                 checkBox.setChecked(true);
             }else{

@@ -9,7 +9,7 @@ public class PurchaserOrderReq {
     /**
      * 日期标志 1、订货日期 2、要求到货日期
      */
-    private int    flag;
+    private int    flag=1;
     /**
      * 供应商集团ID
      */

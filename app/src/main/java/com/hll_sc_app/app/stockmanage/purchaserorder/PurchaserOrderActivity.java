@@ -11,10 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.sdk.android.ams.common.util.StringUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
@@ -23,8 +21,6 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.req.CustomerSaleReq;
-import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderRecord;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderReq;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderResp;
@@ -34,15 +30,19 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.SearchView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
 import org.greenrobot.eventbus.EventBus;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -66,6 +66,8 @@ public class PurchaserOrderActivity extends BaseLoadActivity implements Purchase
     ImageView imageView;
     @BindView(R.id.purchaser_order_filter_text)
     TextView filterTextView;
+    @BindView(R.id.search_view)
+    SearchView mSearchView;
 
     PurchaserOrderReq requestParams = new PurchaserOrderReq();
     private PurchaserOrderListAdapter mAdapter;
@@ -99,6 +101,16 @@ public class PurchaserOrderActivity extends BaseLoadActivity implements Purchase
             String billID = item.getBillID();
             PurchaserOrderDetailActivity.start(billID);
         });
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                RouterUtil.goToActivity(RouterConfig.STOCK_PURCHASER_ORDER_SEARCH, PurchaserOrderActivity.this, PURCHASER_ORDER_SEARCH_CODE);
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+            }
+        });
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -117,7 +129,7 @@ public class PurchaserOrderActivity extends BaseLoadActivity implements Purchase
         mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(currentDate, CalendarUtils.FORMAT_SERVER_DATE));
     }
 
-    @OnClick({R.id.img_back,R.id.purchaser_order_filter_text,R.id.purchaser_order_date,R.id.search_view})
+    @OnClick({R.id.img_back, R.id.purchaser_order_filter_text, R.id.purchaser_order_date})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -128,9 +140,6 @@ public class PurchaserOrderActivity extends BaseLoadActivity implements Purchase
                 break;
             case R.id.purchaser_order_filter_text:
                 showPurchaserOrderWindow(filterTextView);
-                break;
-            case R.id.search_view:
-                RouterUtil.goToActivity(RouterConfig.STOCK_PURCHASER_ORDER_SEARCH, this, PURCHASER_ORDER_SEARCH_CODE);
                 break;
             default:
                 break;
@@ -208,6 +217,7 @@ public class PurchaserOrderActivity extends BaseLoadActivity implements Purchase
         list.add(new OptionsBean(R.drawable.ic_order_goods_statistic, OptionType.OPTION_PURCHASER_ORDER_ARRIVAL_DATE));
         mOptionsWindow.setOnDismissListener(()->{
             imageView.setRotation(0);
+
         });
         imageView.setRotation(180);
         mOptionsWindow.refreshList(list);
@@ -221,12 +231,20 @@ public class PurchaserOrderActivity extends BaseLoadActivity implements Purchase
         if (optionsBean == null) {
             return;
         }
+        String text = "";
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_PURCHASER_ORDER_CREATE_DATE)) {
             requestParams.setFlag(1);
+            text = OptionType.OPTION_PURCHASER_ORDER_CREATE_DATE;
         }else if(TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_PURCHASER_ORDER_ARRIVAL_DATE)){
             requestParams.setFlag(2);
+            text = OptionType.OPTION_PURCHASER_ORDER_ARRIVAL_DATE;
         }else{
 
+        }
+        filterTextView.setText(text);
+        if (mOptionsWindow != null) {
+            imageView.setRotation(0);
+            mOptionsWindow.dismiss();
         }
         mPresenter.queryPurchaserOrderList(true);
     }

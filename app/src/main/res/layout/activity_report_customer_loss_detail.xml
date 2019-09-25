@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -43,45 +42,47 @@
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/txt_filter_flag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
-            android:gravity="center_vertical">
-            <TextView
-                android:id="@+id/txt_filter_flag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
-                android:drawableLeft="@drawable/ic_report_drawable_date_type_white"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:text="7日流失"
-                android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
-            <ImageView
-                android:id="@+id/report_date_arrow"
-                android:src="@drawable/ic_arrow_drop"
-                android:layout_width="7dp"
-                android:paddingLeft="5dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_gravity="center_vertical"/>
-        </LinearLayout>
+            android:drawableLeft="@drawable/ic_date"
+            android:drawablePadding="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="7日流失"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+        <ImageView
+            android:id="@+id/report_filter_arrow"
+            android:background="@drawable/ic_report_drawable_date_type_ddd"
+            android:layout_toRightOf="@+id/txt_filter_flag"
+            android:layout_width="wrap_content"
+            android:paddingLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"/>
 
         <TextView
             android:id="@+id/txt_date_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:drawableLeft="@drawable/ic_date"
-            android:drawableRight="@drawable/ic_arrow_drop"
             android:drawablePadding="5dp"
-            android:gravity="right"
+            android:paddingRight="10dp"
             android:hint="请选择日期"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
             android:textColorHint="@color/color_aeaeae"/>
+
+        <ImageView
+            android:id="@+id/report_date_arrow"
+            android:background="@drawable/ic_report_drawable_date_type_ddd"
+            android:layout_alignRight="@+id/txt_date_name"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"/>
 
     </RelativeLayout>
 
