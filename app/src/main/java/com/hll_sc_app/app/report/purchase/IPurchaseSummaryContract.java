@@ -12,6 +12,8 @@ import com.hll_sc_app.impl.IExportView;
 public interface IPurchaseSummaryContract {
     interface IPurchaseSummaryView extends IExportView {
         void setList(PurchaseSummaryResp resp, boolean append);
+
+        void handleTodayData(PurchaseSummaryResp resp);
     }
 
     interface IPurchaseSummaryPresenter extends IPresenter<IPurchaseSummaryView> {
@@ -20,5 +22,7 @@ public interface IPurchaseSummaryContract {
         void loadMore();
 
         void export(String email);
+
+        void getTodayData();
     }
 }

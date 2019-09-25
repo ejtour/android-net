@@ -68,6 +68,7 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     private ContextOptionsWindow mOptionsWindow;
     private PurchaseSummaryAdapter mAdapter;
     private PurchaseSummaryHeader mHeader;
+    private int mRecordFlag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -156,27 +157,25 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
     }
 
     private void recordLogistics() {
-        PurchaseBean logPurchase;
+        mRecordFlag = 0;
         if (CommonUtils.isEmpty(mAdapter.getData()) ||
                 !CalendarUtils.toLocalDate(new Date()).equals(mAdapter.getData().get(0).getDate())) {
-            logPurchase = new PurchaseBean();
-        } else {
-            logPurchase = mAdapter.getData().get(0).deepCopy();
-        }
-        logPurchase.setPurchaserNum(-1);
-        PurchaseInputActivity.start(this, logPurchase);
+            mPresenter.getTodayData();
+        } else toInput(mAdapter.getData().get(0).deepCopy());
+    }
+
+    private void toInput(PurchaseBean bean) {
+        if (mRecordFlag == 0) bean.setPurchaserNum(-1);
+        else bean.setCarNums(-1);
+        PurchaseInputActivity.start(this, bean);
     }
 
     private void recordAmount() {
-        PurchaseBean amountPurchase;
+        mRecordFlag = 1;
         if (CommonUtils.isEmpty(mAdapter.getData()) ||
                 !CalendarUtils.toLocalDate(new Date()).equals(mAdapter.getData().get(0).getDate())) {
-            amountPurchase = new PurchaseBean();
-        } else {
-            amountPurchase = mAdapter.getData().get(0).deepCopy();
-        }
-        amountPurchase.setCarNums(-1);
-        PurchaseInputActivity.start(this, amountPurchase);
+            mPresenter.getTodayData();
+        } else toInput(mAdapter.getData().get(0).deepCopy());
     }
 
     private void updateDateText() {
@@ -238,6 +237,11 @@ public class PurchaseSummaryActivity extends BaseLoadActivity implements IPurcha
             mAdapter.setNewData(resp.getRecords());
         }
         mRefreshLayout.setEnableLoadMore(resp.getRecords() != null && resp.getRecords().size() == 20);
+    }
+
+    @Override
+    public void handleTodayData(PurchaseSummaryResp resp) {
+        toInput(CommonUtils.isEmpty(resp.getRecords()) ? new PurchaseBean() : resp.getRecords().get(0));
     }
 
     @Override
