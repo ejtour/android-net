@@ -20,15 +20,22 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.ordernumberlist.SelectOrderListActivity;
 import com.hll_sc_app.app.complainmanage.purchaserlist.SelectPurchaserListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.base.widget.ImgShowDelBlock;
+import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.complain.ComplainDetailResp;
 import com.hll_sc_app.bean.complain.DropMenuBean;
 import com.hll_sc_app.bean.complain.ReportFormSearchResp;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
+import com.zhihu.matisse.Matisse;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,11 +78,15 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
     TextView mTxtLeftNumber;
     @Autowired(name = "parcelable")
     ComplainDetailResp mDetail;
+    @BindView(R.id.upload_img)
+    ImgUploadBlock mUpload;
+
     private Unbinder unbinder;
     private IComplainMangeAddContract.IPresent mPresent;
     private SingleSelectionDialog mSelectTypeDialog;
     private SingleSelectionDialog mSelectReasonDialog;
 
+    private ProductAdapter mProductAdpater;
     public static void start(ComplainDetailResp complainDetailResp) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_ADD, complainDetailResp);
     }
@@ -221,6 +232,9 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                         mTxtGroup.getTag().toString(),
                        mTxtShop.getTag().toString());
                 break;
+            case R.id.ll_add_product:
+
+                break;
             default:
                 break;
         }
@@ -247,6 +261,8 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                     mTxtReason.setTag(null);
                     mTxtReason.setText("");
                     mSelectReasonDialog.refreshList(dropMenuBean.getChildren());
+                    /*选择商品问题*/
+                    mGroupProductArea.setVisibility(TextUtils.equals("1", dropMenuBean.getKey()) ? View.VISIBLE : View.GONE);
                 })
                 .refreshList(dropMenuBeans)
                 .setTitleText("选择投诉类型")
@@ -259,6 +275,34 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
         mSelectTypeDialog.selectItem(mTxtType.getTag());
     }
 
+    @Override
+    public void showImage(String url) {
+        addImgUrlDetail(url);
+    }
+
+    private void addImgUrlDetail(String url) {
+        if (mLlScrollPhoto.getTag() == null) {
+            mLlScrollPhoto.setTag(new ArrayList<String>());
+        }
+        ArrayList<String> urls = (ArrayList<String>) mLlScrollPhoto.getTag();
+        urls.add(url);
+        ImgShowDelBlock block = new ImgShowDelBlock(this);
+        block.setImgUrl(url);
+        block.setDeleteListener(v -> {
+            urls.remove(block.getImageUrl());
+            mLlScrollPhoto.removeView(block);
+            mUpload.setSubTitle(String.format("%s/%s", mLlScrollPhoto.getChildCount() - 1, 4));
+        });
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(UIUtils.dip2px(60),
+                UIUtils.dip2px(60));
+        params.rightMargin = UIUtils.dip2px(10);
+
+        int curChildCount = mLlScrollPhoto.getChildCount();
+        mLlScrollPhoto.addView(block, curChildCount - 1, params);
+        mUpload.setSubTitle(String.format("%s/%s", mLlScrollPhoto.getChildCount() - 1, 4));
+        mUpload.setVisibility(curChildCount == 4 ? View.GONE : View.VISIBLE);
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -286,6 +330,14 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                     ReportFormSearchResp.ShopMallBean shopMallBean = data.getParcelableExtra("bean");
                     mTxtShop.setTag(shopMallBean.getShopmallID());
                     mTxtShop.setText(shopMallBean.getName());
+                }
+                break;
+            case ImgUploadBlock.REQUEST_CODE_CHOOSE:
+                if (resultCode == RESULT_OK) {
+                    List<String> list = Matisse.obtainPathResult(data);
+                    if (!CommonUtils.isEmpty(list)) {
+                        mPresent.imageUpload(new File(list.get(0)));
+                    }
                 }
                 break;
             default:

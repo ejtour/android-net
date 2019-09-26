@@ -1,5 +1,6 @@
-package com.hll_sc_app.app.complainmanage.detail;
+package com.hll_sc_app.app.complainmanage.add;
 
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -10,45 +11,54 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
-import com.hll_sc_app.bean.goods.SkuGoodsBean;
+import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
-public class ProductAdapter extends BaseQuickAdapter<SkuGoodsBean, BaseViewHolder> {
+public class ProductAdapter extends BaseQuickAdapter<OrderDetailBean, BaseViewHolder> {
 
-    public ProductAdapter(@Nullable List<SkuGoodsBean> data) {
+    private int mType;
+
+    public ProductAdapter(@Nullable List<OrderDetailBean> data, @TYPE int type) {
         super(R.layout.list_item_complain_product, data);
+        mType = type;
     }
 
     @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
-        holder.setGone(R.id.check_view, false)
-                .setGone(R.id.img_del, false);
+        holder.setGone(R.id.check_view, mType == TYPE.SELECT)
+                .setGone(R.id.img_del, mType == TYPE.EDIT);
         return holder;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, SkuGoodsBean item) {
+    protected void convert(BaseViewHolder helper, OrderDetailBean item) {
         ((GlideImageView) helper.setText(R.id.txt_product_name, item.getProductName())
-                .setText(R.id.txt_group_name, item.getSupplierName())
-                .setText(R.id.txt_spec, item.getSpecContent())
+                .setText(R.id.txt_group_name, item.getSuppierName())
+                .setText(R.id.txt_spec, item.getProductSpec())
                 .setText(R.id.txt_price, getPrice(item.getProductPrice(), item.getSaleUnitName()))
                 .getView(R.id.img_product))
                 .setImageURL(item.getImgUrl());
     }
 
-    private SpannableString getPrice(String price, String unit) {
-        if (price == null) {
-            price = "";
-        }
+    private SpannableString getPrice(double price, String unit) {
         if (unit == null) {
             unit = "";
         }
-        String out = "¥" + CommonUtils.formatMoney(Double.parseDouble(price)) + "/" + unit;
+        String out = "¥" + CommonUtils.formatMoney(price) + "/" + unit;
         SpannableString spannableString = new SpannableString(out);
         spannableString.setSpan(new RelativeSizeSpan(1.5f), 1, out.indexOf("."), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
+    }
+
+    @IntDef({TYPE.EDIT, TYPE.SELECT})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface TYPE {
+        int EDIT = 0;
+        int SELECT = 1;
     }
 }

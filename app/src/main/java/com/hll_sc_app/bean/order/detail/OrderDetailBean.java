@@ -84,11 +84,20 @@ public class OrderDetailBean implements Parcelable {
     private double inspectionAmount;
     private String productCode;
     private String productID;
+    private String suppierName;
     private double oldProductPrice;
     private double couponInspectionDiscountAmount;
     private double couponAdjustmentDiscountAmount;
     private transient String deliverUnit;
     private List<OrderDepositBean> depositList;
+
+    public String getSuppierName() {
+        return suppierName;
+    }
+
+    public void setSuppierName(String suppierName) {
+        this.suppierName = suppierName;
+    }
 
     public String getDeliverUnit() {
         return TextUtils.isEmpty(deliverUnit) ? adjustmentUnit : deliverUnit;
@@ -696,6 +705,9 @@ public class OrderDetailBean implements Parcelable {
         this.depositList = depositList;
     }
 
+    public OrderDetailBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -771,13 +783,11 @@ public class OrderDetailBean implements Parcelable {
         dest.writeDouble(this.inspectionAmount);
         dest.writeString(this.productCode);
         dest.writeString(this.productID);
+        dest.writeString(this.suppierName);
         dest.writeDouble(this.oldProductPrice);
         dest.writeDouble(this.couponInspectionDiscountAmount);
         dest.writeDouble(this.couponAdjustmentDiscountAmount);
         dest.writeTypedList(this.depositList);
-    }
-
-    public OrderDetailBean() {
     }
 
     protected OrderDetailBean(Parcel in) {
@@ -849,13 +859,14 @@ public class OrderDetailBean implements Parcelable {
         this.inspectionAmount = in.readDouble();
         this.productCode = in.readString();
         this.productID = in.readString();
+        this.suppierName = in.readString();
         this.oldProductPrice = in.readDouble();
         this.couponInspectionDiscountAmount = in.readDouble();
         this.couponAdjustmentDiscountAmount = in.readDouble();
         this.depositList = in.createTypedArrayList(OrderDepositBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<OrderDetailBean> CREATOR = new Parcelable.Creator<OrderDetailBean>() {
+    public static final Creator<OrderDetailBean> CREATOR = new Creator<OrderDetailBean>() {
         @Override
         public OrderDetailBean createFromParcel(Parcel source) {
             return new OrderDetailBean(source);

@@ -6,9 +6,12 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.complain.DropMenuBean;
+import com.hll_sc_app.rest.Upload;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.io.File;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -47,5 +50,16 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
                     }
                 });
 
+    }
+
+
+    @Override
+    public void imageUpload(File file) {
+        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
+            @Override
+            public void onSuccess(String s) {
+                mView.showImage(s);
+            }
+        });
     }
 }
