@@ -145,8 +145,12 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     private void loadUrl() {
         if (mNeedLoad && mUrl != null) {
             StringBuilder sb = new StringBuilder(mUrl);
-            if (mUrl.contains(".") && mWidth > 0 && mHeight > 0) {
-                sb.insert(mUrl.lastIndexOf("."), "=" + mWidth + "x" + mHeight);
+            if (mWidth > 0 && mHeight > 0) {
+                if (mUrl.startsWith("group")) {
+                    sb.insert(mUrl.lastIndexOf("."), "=" + mWidth + "x" + mHeight);
+                } else {
+                    sb.append(String.format("?x-oss-process=image/resize,m_pad,h_%s,w_%s", mHeight, mWidth));
+                }
             }
             String myUrl = "http://res.hualala.com/" + sb.toString();
             if (!TextUtils.isEmpty(mType)) {

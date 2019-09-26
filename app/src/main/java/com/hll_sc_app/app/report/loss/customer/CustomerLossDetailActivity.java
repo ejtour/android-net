@@ -63,6 +63,8 @@ public class CustomerLossDetailActivity extends BaseLoadActivity implements Cust
     TitleBar mTitleBar;
     @BindView(R.id.report_date_arrow)
     ImageView dateArrow;
+    @BindView(R.id.report_filter_arrow)
+    ImageView filterArrow;
     @BindView(R.id.txt_date_name)
     TextView dateTextView;
     @BindView(R.id.txt_filter_flag)
@@ -177,6 +179,10 @@ public class CustomerLossDetailActivity extends BaseLoadActivity implements Cust
                 }
             });
         }
+        mDateRangeWindow.setOnDismissListener(()->{
+            dateArrow.setRotation(0);
+        });
+        dateArrow.setRotation(180);
         mDateRangeWindow.showAsDropDownFix(dateTextView);
     }
 
@@ -236,9 +242,9 @@ public class CustomerLossDetailActivity extends BaseLoadActivity implements Cust
         list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_PRE_SEVEN_LOSS));
         list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_PRE_THIRTY_LOSS));
         mOptionsWindow.setOnDismissListener(()->{
-            dateArrow.setRotation(0);
+            filterArrow.setRotation(0);
         });
-        dateArrow.setRotation(180);
+        filterArrow.setRotation(180);
         mOptionsWindow.refreshList(list);
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }
@@ -313,11 +319,11 @@ public class CustomerLossDetailActivity extends BaseLoadActivity implements Cust
             return;
         }
         if(TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_PRE_SEVEN_LOSS)){
-            //包含押金
+            //7日流失
             mParam.setDataType(0);
         }
         if(TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_PRE_THIRTY_LOSS)){
-            //不包含押金
+            //30日流失
             mParam.setDataType(1);
             text = OptionType.OPTION_PRE_THIRTY_LOSS;
         }

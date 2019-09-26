@@ -65,6 +65,8 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
     TitleBar mTitleBar;
     @BindView(R.id.report_date_arrow)
     ImageView dateArrow;
+    @BindView(R.id.report_filter_arrow)
+    ImageView filterArrow;
     @BindView(R.id.txt_date_name)
     TextView dateTextView;
     @BindView(R.id.txt_filter_flag)
@@ -95,7 +97,7 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
         mPresenter = ShopLossDetailPresenter.newInstance();
         Date date = new Date();
         String currentDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
-        long startDate = DateUtil.getMonthFirstDay(0,Long.valueOf(currentDate));
+        String startDate = CalendarUtils.format(CalendarUtils.getWantDay(date, -7),CalendarUtils.FORMAT_LOCAL_DATE);
         dateTextView.setText(
                 String.format("%s - %s",
                         CalendarUtils.getDateFormatString(startDate+"",CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD),
@@ -181,6 +183,10 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
                 }
             });
         }
+        mDateRangeWindow.setOnDismissListener(()->{
+            dateArrow.setRotation(0);
+        });
+        dateArrow.setRotation(180);
         mDateRangeWindow.showAsDropDownFix(dateTextView);
     }
 
@@ -240,9 +246,9 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
         list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_PRE_SEVEN_LOSS));
         list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_PRE_THIRTY_LOSS));
         mOptionsWindow.setOnDismissListener(()->{
-            dateArrow.setRotation(0);
+            filterArrow.setRotation(0);
         });
-        dateArrow.setRotation(180);
+        filterArrow.setRotation(180);
         mOptionsWindow.refreshList(list);
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }

@@ -32,6 +32,7 @@ import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SingleSelectionWindow;
@@ -55,7 +56,7 @@ import butterknife.Unbinder;
  */
 
 @Route(path = RouterConfig.CRM_ORDER)
-public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener {
+public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener, IReload {
     @BindView(R.id.fco_options)
     ImageView mOptions;
     @BindView(R.id.fco_filter)
@@ -179,6 +180,11 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
             OrderHelper.showDatePicker(item.getLabel(), mOrderParam, requireActivity(),
                     () -> EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST)));
         }
+    }
+
+    @Override
+    public void reload() {
+        EventBus.getDefault().post(new OrderEvent(OrderEvent.REFRESH_LIST));
     }
 
     private class Pager extends FragmentPagerAdapter {

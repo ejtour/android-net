@@ -175,7 +175,6 @@ public class CooperationShopActivity extends BaseLoadActivity implements ICooper
                     .build(RouterConfig.ORIENTATION_DETAIL)
                     .withParcelable("parcelable", mOrientationListBean)
                     .withBoolean("reload", true)
-                    .withBoolean("item", true)
                     .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     .setProvider(new LoginInterceptor())
                     .navigation(this);

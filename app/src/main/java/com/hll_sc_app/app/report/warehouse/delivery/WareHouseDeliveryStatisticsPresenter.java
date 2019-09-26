@@ -110,7 +110,7 @@ public class WareHouseDeliveryStatisticsPresenter implements IWareHouseDeliveryS
             bindEmail(email);
             return;
         }
-        Report.exportReport(reqParams, "111012", email, new SimpleObserver<ExportResp>(mView) {
+        Report.exportReport(reqParams, "111067", email, new SimpleObserver<ExportResp>(mView) {
             @Override
             public void onSuccess(ExportResp exportResp) {
                 if (!TextUtils.isEmpty(exportResp.getEmail()))

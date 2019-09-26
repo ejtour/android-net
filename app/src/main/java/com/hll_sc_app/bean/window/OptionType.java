@@ -116,7 +116,7 @@ public @interface OptionType {
     String OPTION_RECORD_PURCHASE_LOGISTICS = "录入采购物流";
     String OPTION_RECORD_PURCHASE_AMOUNT = "录入采购金额";
 
-    String OPTION_PRE_SEVEN_LOSS = "七日流失";
+    String OPTION_PRE_SEVEN_LOSS = "7日流失";
     String OPTION_PRE_THIRTY_LOSS = "30日流失";
 
     String OPTION_EXPORT_DETAILS_TABLE = "导出明细表";

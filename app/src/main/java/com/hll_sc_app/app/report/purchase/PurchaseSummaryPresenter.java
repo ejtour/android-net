@@ -5,11 +5,12 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.filter.DateParam;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.utils.Utils;
 
-import java.util.HashMap;
+import java.util.Date;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -72,6 +73,25 @@ public class PurchaseSummaryPresenter implements IPurchaseSummaryContract.IPurch
     @Override
     public void export(String email) {
         Report.exportReport(getReqParam().create().getData(), "111038", email, Utils.getExportObserver(mView));
+    }
+
+    @Override
+    public void getTodayData() {
+        String date = CalendarUtils.toLocalDate(new Date());
+        Report.queryPurchaseSummary(
+                BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("startDate", date)
+                        .put("endDate", date)
+                        .put("pageNum", "1")
+                        .put("pageSize", "1")
+                        .create(),
+                new SimpleObserver<PurchaseSummaryResp>(mView) {
+                    @Override
+                    public void onSuccess(PurchaseSummaryResp purchaseSummaryResp) {
+                        mView.handleTodayData(purchaseSummaryResp);
+                    }
+                });
     }
 
     @Override

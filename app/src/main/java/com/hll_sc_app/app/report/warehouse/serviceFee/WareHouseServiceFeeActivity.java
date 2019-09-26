@@ -102,7 +102,7 @@ public class WareHouseServiceFeeActivity extends BaseLoadActivity implements IWa
         String startDateStr = CalendarUtils.format(date, Constants.SLASH_YYYY_MM_DD);
         String currentServerDate = CalendarUtils.getDateFormatString(startDateStr,Constants.SLASH_YYYY_MM_DD,CalendarUtils.FORMAT_LOCAL_DATE);
         String startServerDate = DateUtil.getMonthFirstDay(0,Long.valueOf(currentServerDate))+"";
-        mTimeText.setText(String.format("%s", startDateStr));
+        mTimeText.setText(String.format("%s", "日期筛选"));
         mParam.setStartDate(startServerDate);
         mParam.setEndDate(currentServerDate);
         mExcel.setColumnDataList(generateColumnData());

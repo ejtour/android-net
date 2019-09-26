@@ -118,7 +118,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         mFooter = new ProduceInputFooter(this);
         mFooter.setOnClickListener(this::addData);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
-        mAdapter = new ProduceInputAdapter(this::updateAmount);
+        mAdapter = new ProduceInputAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             mCurBean = mAdapter.getItem(position);
             if (mCurBean == null) return;
@@ -126,7 +126,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
                 case R.id.rpi_del:
                     mAdapter.remove(position);
                     break;
-                case R.id.rpi_company_name:
+                case R.id.rpi_btn:
                     ProduceInputDetailActivity.start(this, mCurBean);
                     break;
             }
@@ -227,6 +227,7 @@ public class ProduceInputActivity extends BaseLoadActivity implements IProduceIn
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ProduceInputDetailActivity.REQ_CODE && resultCode == RESULT_OK && data != null) {
             mAdapter.replace(mCurBean, data.getParcelableExtra("parcelable"));
+            updateAmount();
         }
     }
 

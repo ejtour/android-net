@@ -38,9 +38,7 @@
         <com.hll_sc_app.widget.SearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10" />
+            android:layout_height="match_parent"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

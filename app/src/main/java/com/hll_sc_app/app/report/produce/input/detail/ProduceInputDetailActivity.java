@@ -61,11 +61,14 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
     EditText mVegetablePackNum;
     @BindView(R.id.pid_vegetable_pack_time)
     EditText mVegetablePackTime;
+    @BindView(R.id.pid_produce_cost)
+    EditText mProduceCost;
     @Autowired(name = "parcelable")
     ProduceDetailBean mBean;
     private List<ManHourBean> mBeanList;
     private SingleSelectionDialog mDialog;
     private IProduceInputDetailContract.IProduceInputDetailPresenter mPresenter;
+    private boolean mInit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,10 +96,12 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
         mVegetablePickTime.setText(num2String(mBean.getVegetablesSortHours()));
         mVegetablePackNum.setText(num2String(mBean.getVegetablesPackNum()));
         mVegetablePackTime.setText(num2String(mBean.getVegetablesPackHours()));
+        mProduceCost.setText(num2String(mBean.getTotalCost()));
+        mInit = true;
     }
 
     private String num2String(Number num) {
-        return num.doubleValue() == 0 ? "" : String.valueOf(num);
+        return num.doubleValue() == 0 ? "" : CommonUtils.formatNumber(num.toString());
     }
 
     private void save(View view) {
@@ -104,17 +109,15 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
             showToast("请选择合作公司");
             return;
         }
-        mBean.setStandardSortNum(string2Int(mStandardPickNum.getText()));
-        mBean.setStandardSortHours(string2Double(mStandardPickTime.getText()));
-        mBean.setVegetablesSortNum(string2Int(mVegetablePickNum.getText()));
-        mBean.setVegetablesSortHours(string2Double(mVegetablePickTime.getText()));
-        mBean.setVegetablesPackNum(string2Int(mVegetablePackNum.getText()));
-        mBean.setVegetablesPackHours(string2Double(mVegetablePackTime.getText()));
-        mBean.generateTotalCost();
         Intent intent = new Intent();
         intent.putExtra("parcelable", mBean);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private void updateCost() {
+        mBean.generateTotalCost();
+        mProduceCost.setText(CommonUtils.formatNumber(mBean.getTotalCost()));
     }
 
     private int string2Int(CharSequence s) {
@@ -142,6 +145,7 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
                     .setOnSelectListener(manHourBean -> {
                         mBean.setCoopGroupName(manHourBean.getCoopGroupName());
                         mBean.setHoursFee(TextUtils.isEmpty(manHourBean.getValue()) ? 0 : Double.parseDouble(manHourBean.getValue()));
+                        updateCost();
                         mCompany.setText(manHourBean.getCoopGroupName());
                     })
                     .create();
@@ -152,7 +156,29 @@ public class ProduceInputDetailActivity extends BaseLoadActivity implements IPro
     @OnTextChanged(value = {R.id.pid_vegetable_pick_time, R.id.pid_standard_pick_time, R.id.pid_vegetable_pack_time},
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void afterTextChanged(Editable s) {
+        if (!mInit) return;
         Utils.processMoney(s, false);
+        mBean.setStandardSortHours(string2Double(mStandardPickTime.getText()));
+        mBean.setVegetablesSortHours(string2Double(mVegetablePickTime.getText()));
+        mBean.setVegetablesPackHours(string2Double(mVegetablePackTime.getText()));
+        updateCost();
+    }
+
+    @OnTextChanged(value = {R.id.pid_vegetable_pick_num, R.id.pid_standard_pick_num, R.id.pid_vegetable_pack_num},
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void numChanged() {
+        if (!mInit) return;
+        mBean.setStandardSortNum(string2Int(mStandardPickNum.getText()));
+        mBean.setVegetablesSortNum(string2Int(mVegetablePickNum.getText()));
+        mBean.setVegetablesPackNum(string2Int(mVegetablePackNum.getText()));
+        updateCost();
+    }
+
+    @OnTextChanged(value = R.id.pid_produce_cost, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    void costChanged(Editable s) {
+        if (!mInit) return;
+        Utils.processMoney(s, false);
+        mBean.setTotalCost(CommonUtils.getDouble(s.toString()));
     }
 
     @Override
