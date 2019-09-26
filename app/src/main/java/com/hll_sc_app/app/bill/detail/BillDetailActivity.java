@@ -18,6 +18,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.bill.BillBean;
@@ -38,8 +39,6 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.BILL_DETAIL)
 public class BillDetailActivity extends BaseLoadActivity implements IBillDetailContract.IBillDetailView {
     public static final int REQ_CODE = 0x766;
-    @BindView(R.id.abd_action_btn)
-    TextView mActionBtn;
     @BindView(R.id.abd_list_view)
     RecyclerView mListView;
     @BindView(R.id.abd_title_bar)
@@ -115,7 +114,7 @@ public class BillDetailActivity extends BaseLoadActivity implements IBillDetailC
     private void updateData() {
         mHeader.setData(mCurBean);
         mAdapter.setNewData(mCurBean.getRecords());
-        mActionGroup.setVisibility(mCurBean.getSettlementStatus() == BillStatus.SETTLED ? View.GONE : View.VISIBLE);
+        mActionGroup.setVisibility(mCurBean.getSettlementStatus() == BillStatus.SETTLED || UserConfig.crm() ? View.GONE : View.VISIBLE);
         ((ViewGroup) mActionGroup.getParent()).requestLayout();
     }
 }
