@@ -240,6 +240,7 @@
             <TextView
                 android:id="@+id/aid_business_date"
                 style="@style/InfoEdit"
+                android:hint="无"
                 app:layout_constraintBottom_toBottomOf="@id/aid_business_date_label"
                 app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
                 app:layout_constraintStart_toEndOf="@id/aid_business_date_label"

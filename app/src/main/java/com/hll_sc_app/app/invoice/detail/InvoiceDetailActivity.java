@@ -285,8 +285,12 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     private void updateBaseInfo(InvoiceBean bean, boolean crm) {
         mGroupName.setText(bean.getPurchaserName());
         mApplyDate.setText(DateUtil.getReadableTime(bean.getCreateTime(), Constants.SLASH_YYYY_MM_DD));
-        mBusinessDate.setText(String.format("%s - %s", DateUtil.getReadableTime(bean.getBusinessBeginDate(), Constants.SLASH_YYYY_MM_DD),
-                DateUtil.getReadableTime(bean.getBusinessEndDate(), Constants.SLASH_YYYY_MM_DD)));
+        if (CommonUtils.getDouble(bean.getBusinessBeginDate()) == 0 || CommonUtils.getDouble(bean.getBusinessEndDate()) == 0) {
+            mBusinessDate.setText(null);
+        } else {
+            mBusinessDate.setText(String.format("%s - %s", DateUtil.getReadableTime(bean.getBusinessBeginDate(), Constants.SLASH_YYYY_MM_DD),
+                    DateUtil.getReadableTime(bean.getBusinessEndDate(), Constants.SLASH_YYYY_MM_DD)));
+        }
         mInvoiceType.setText(bean.getInvoiceType() == 1 ? "普通发票" : "专用发票");
         mInvoiceAmount.setText(processMoney(bean.getInvoicePrice()));
         mInvoiceAmount.setTag(bean.getInvoicePrice());
