@@ -97,7 +97,7 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
     private void initView() {
         updateHeaderLabel(0, 0, 0);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(8)));
-        mAdapter = new CrmOrderPageAdapter(mBillStatus);
+        mAdapter = new CrmOrderPageAdapter();
         mListView.setAdapter(mAdapter);
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -137,7 +137,7 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
 
     @Override
     protected void initData() {
-        if ("1".equals(mOrderParam.getActionType()))
+        if ("1".equals(mOrderParam.getActionType()) || mBillStatus == 0) // 今日订单或全部未下单
             mFilterHeader.setVisibility(View.GONE);
         else mFilterHeader.setData(mOrderParam);
         mPresenter.start();

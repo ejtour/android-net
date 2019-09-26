@@ -26,15 +26,13 @@ import java.util.List;
 
 public class CrmOrderPageAdapter extends BaseQuickAdapter<OrderShopBean, BaseViewHolder> {
 
-    private final int mBillStatus;
     private String mActionType;
     private Drawable mToday;
     private Drawable mAll;
     private Drawable mArrow;
 
-    CrmOrderPageAdapter(int billStatus) {
+    CrmOrderPageAdapter() {
         super(R.layout.item_crm_order_page);
-        mBillStatus = billStatus;
     }
 
     @Override
@@ -74,7 +72,6 @@ public class CrmOrderPageAdapter extends BaseQuickAdapter<OrderShopBean, BaseVie
         helper.addOnClickListener(R.id.cop_shop_detail)
                 .addOnClickListener(R.id.cop_all_orders_label)
                 .addOnClickListener(R.id.cop_ave_order_label)
-                .setGone(R.id.cop_make_order, mBillStatus == 0)
                 .addOnClickListener(R.id.cop_make_order);
         return helper;
     }
