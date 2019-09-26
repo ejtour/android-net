@@ -83,6 +83,8 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
     protected void convert(BaseViewHolder helper, AfterSalesDetailsBean item) {
         ((GlideImageView) helper.getView(R.id.asd_img)).setImageURL(item.getImgUrl()); // 商品图片
         String refundText = "退款：¥" + CommonUtils.formatMoney(mOnlyShow ? item.getRefundAmount() : item.getPendingRefundAmount()); // 售后金额
+        boolean toAssociate = mOnlyShow && mCanModify && CommonUtils.getInt(item.getOnlyReceiveOrder()) != 2
+                && item.getHomologous() == 0;
         helper.setText(R.id.asd_productName, item.getProductName()) // 商品名
                 .setText(R.id.asd_spec_content, "规格："+item.getProductSpec()) // 商品规格
                 .setText(R.id.asd_spec_price, "¥" + CommonUtils.formatMoney(
@@ -102,8 +104,8 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
                 // 修改价格权限
                 .setGone(R.id.asd_change_price_group, mOnlyShow && mCanModify && item.getHomologous() == 1)
                 // 未关联商品
-                .setGone(R.id.asd_not_associated_group, mOnlyShow && mCanModify && item.getHomologous() == 0);
-        if (mOnlyShow && mCanModify && item.getHomologous() == 0) {
+                .setGone(R.id.asd_not_associated_group, toAssociate);
+        if (toAssociate) {
             TextView textView = helper.getView(R.id.asd_not_associated_desc);
             textView.setTag(item);
             textView.setText(getClickText());
