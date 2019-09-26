@@ -37,10 +37,10 @@ public class SelectProductListPresent implements ISelectProductListContract.IPre
         }
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
                 .put("groupIDs", userBean.getGroupID())
-                .put("searchType", String.valueOf(mView.getSearchType()))
+//                .put("searchType", String.valueOf(mView.getSearchType()))
                 .put("type", "0")
                 .put("searchWords", mView.getSearchWords())
-                .put("purchaserID", mView.getPurchaserId())
+//                .put("purchaserID", mView.getPurchaserId())
                 .create();
 
         ComplainManageService.INSTANCE
@@ -57,7 +57,7 @@ public class SelectProductListPresent implements ISelectProductListContract.IPre
                 .subscribe(new BaseCallback<ReportFormSearchResp>() {
                     @Override
                     public void onSuccess(ReportFormSearchResp reportFormSearchResp) {
-                        mView.queySuccess(reportFormSearchResp, false);
+//                        mView.queySuccess(reportFormSearchResp, false);
                     }
 
                     @Override
