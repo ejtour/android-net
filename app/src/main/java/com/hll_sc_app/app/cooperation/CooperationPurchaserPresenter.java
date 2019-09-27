@@ -76,6 +76,7 @@ public class CooperationPurchaserPresenter implements CooperationPurchaserContra
             .subscribe(new BaseCallback<Object>() {
                 @Override
                 public void onSuccess(Object resp) {
+                    mView.showToast("解除关系成功");
                     queryPurchaserList(true);
                 }
 
