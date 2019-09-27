@@ -82,7 +82,8 @@
             android:name=".app.shop.SupplierShopActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".app.crm.settings.CrmSettingActivity"
+        <activity
+            android:name=".app.crm.settings.CrmSettingActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -1017,6 +1018,11 @@
         <activity
             android:name=".app.complainmanage.productlist.SelectProductListActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliveryroute.DeliveryRouteActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

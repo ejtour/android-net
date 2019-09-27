@@ -95,6 +95,7 @@ public class CrmMineFragment extends BaseFragment {
                 RouterUtil.goToActivity(RouterConfig.INVOICE_ENTRY);
                 break;
             case R.id.fcm_delivery_route:
+                RouterUtil.goToActivity(RouterConfig.DELIVERY_ROUTE);
                 break;
             case R.id.fcm_report_center:
                 RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY);

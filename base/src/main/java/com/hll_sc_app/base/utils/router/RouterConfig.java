@@ -1101,7 +1101,9 @@ public class RouterConfig {
     /*选择采购商集团*/
     public static final String ACTIVITY_SELECT_PURCHASER_LIST = "/activity/select/purchaser/list";
 
-
-
+    /**
+     * CRM-我的-配送路线
+     */
+    public static final String DELIVERY_ROUTE = "/activity/delivery/route";
 }
 
