@@ -21,7 +21,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
-import com.hll_sc_app.bean.filter.DateShopParam;
+import com.hll_sc_app.bean.filter.DateStringParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -73,7 +73,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
     private PurchaserShopSelectWindow mSelectionWindow;
     private List<PurchaserBean> mPurchaserBeans;
     private IOrderGoodsContract.IOrderGoodsPresenter mPresenter;
-    private final DateShopParam mParam = new DateShopParam();
+    private final DateStringParam mParam = new DateStringParam();
     private OrderGoodsAdapter mAdapter;
 
     @Override
@@ -246,7 +246,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
                 @Override
                 public void onSelect(String purchaserID, String shopID, List<String> shopNameList) {
                     mSelectionWindow.dismiss();
-                    mParam.setShopIDs(shopID);
+                    mParam.setExtra(shopID);
                     mPresenter.reload();
                     if (!CommonUtils.isEmpty(shopNameList)) {
                         mPurchaser.setText(TextUtils.join(",", shopNameList));

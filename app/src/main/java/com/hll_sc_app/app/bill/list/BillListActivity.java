@@ -256,7 +256,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
                 @Override
                 public void onSelect(String purchaserID, String shopID, List<String> shopNameList) {
                     mSelectionWindow.dismiss();
-                    mParam.setShopIDs(shopID);
+                    mParam.setExtra(shopID);
                     mPresenter.start();
                     if (!CommonUtils.isEmpty(shopNameList)) {
                         mPurchaser.setText(TextUtils.join(",", shopNameList));
