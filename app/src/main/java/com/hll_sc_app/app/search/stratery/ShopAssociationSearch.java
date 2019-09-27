@@ -1,8 +1,7 @@
 package com.hll_sc_app.app.search.stratery;
 
 import com.hll_sc_app.app.search.ISearchContract;
-import com.hll_sc_app.app.search.presenter.OrderSearchPresenter;
-import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.app.search.presenter.ShopSearchPresenter;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.window.NameValue;
 
@@ -16,7 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 public class ShopAssociationSearch implements ISearchContract.ISearchStrategy {
     @Override
     public ISearchContract.ISearchPresenter getSearchPresenter() {
-        return new OrderSearchPresenter();
+        return new ShopSearchPresenter();
     }
 
     @Override

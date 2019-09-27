@@ -24,7 +24,6 @@ import com.hll_sc_app.bean.order.place.OrderCommitBean;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
-import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
@@ -65,10 +64,6 @@ public interface OrderService {
     @Headers("pv:103004")
     @POST(HttpConfig.URL)
     Observable<BaseResp<Object>> modifyOrderStatus(@Body BaseMapReq req);
-
-    @Headers("pv:103083")
-    @POST(HttpConfig.URL)
-    Observable<BaseResp<OrderSearchResp>> requestSearch(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103010")
