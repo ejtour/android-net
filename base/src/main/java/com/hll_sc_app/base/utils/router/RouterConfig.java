@@ -917,6 +917,11 @@ public class RouterConfig {
     public static final String CRM_MINE = "/fragment/crm/mine";
 
     /**
+     * CRM-设置
+     */
+    public static final String CRM_SETTING = "/activity/crm/settings";
+
+    /**
      * CRM-订单列表
      */
     public static final String CRM_ORDER_LIST = "/activity/crm/order/list";

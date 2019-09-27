@@ -82,6 +82,9 @@
             android:name=".app.shop.SupplierShopActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".app.crm.settings.CrmSettingActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.setting.SettingActivity"
             android:screenOrientation="portrait" />
