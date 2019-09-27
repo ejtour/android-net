@@ -217,7 +217,7 @@ public class CrmOrderListActivity extends BaseLoadActivity implements ICrmOrderL
             list.add(new NameValue("全部状态", "0"));
             list.add(new NameValue("待接单", "1"));
             list.add(new NameValue("待发货", "2"));
-            list.add(new NameValue("已收货", "3"));
+            list.add(new NameValue("已发货", "3"));
             list.add(new NameValue("待结算", "4"));
             list.add(new NameValue("已结算", "5"));
             list.add(new NameValue("已完成", "6"));
