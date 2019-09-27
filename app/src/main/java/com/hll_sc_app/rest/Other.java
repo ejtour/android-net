@@ -6,7 +6,6 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.other.RouteBean;
 import com.hll_sc_app.bean.other.RouteDetailResp;
@@ -26,13 +25,16 @@ public class Other {
      * @param pageNum 页码
      * @param date    日期
      */
-    public static void queryRouteList(int pageNum, String date, SimpleObserver<SingleListResp<RouteBean>> observer) {
+    public static void queryRouteList(int pageNum, String date, String shopID, SimpleObserver<SingleListResp<RouteBean>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
         OtherService.INSTANCE
                 .queryRouteList(BaseMapReq.newBuilder()
                         .put("pageNum", String.valueOf(pageNum))
-                        .put("date", date)
                         .put("pageSize", "20")
-                        .put("salesmanID", UserConfig.getSalesmanID())
+                        .put("date", date)
+                        .put("groupID", user.getGroupID())
+                        .put("salesmanID", user.getEmployeeID())
+                        .put("shopIDs", shopID)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -45,7 +47,7 @@ public class Other {
      * @param pageNum    页码
      * @param deliveryNo 运输单号
      */
-    public static void queryRouteDetail(int pageNum, String deliveryNo, SimpleObserver<RouteDetailResp> observer) {
+    public static void queryRouteDetail(int pageNum, String deliveryNo, String shopID, SimpleObserver<RouteDetailResp> observer) {
         UserBean user = GreenDaoUtils.getUser();
         OtherService.INSTANCE
                 .queryRouteDetail(BaseMapReq.newBuilder()
@@ -54,6 +56,7 @@ public class Other {
                         .put("groupID", user.getGroupID())
                         .put("salesmanID", user.getEmployeeID())
                         .put("deliveryNo", deliveryNo)
+                        .put("shopIDs", shopID)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

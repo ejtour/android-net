@@ -9,6 +9,7 @@ public class RouteBean {
     private int completedBillNum;
     private int delayBillNum;
     private String deliveryNo;
+    private int demandNum;
     private String driverName;
     private String lineCode;
     private String lineName;
@@ -39,6 +40,14 @@ public class RouteBean {
 
     public void setDeliveryNo(String deliveryNo) {
         this.deliveryNo = deliveryNo;
+    }
+
+    public int getDemandNum() {
+        return demandNum;
+    }
+
+    public void setDemandNum(int demandNum) {
+        this.demandNum = demandNum;
     }
 
     public String getDriverName() {
