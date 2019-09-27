@@ -18,7 +18,7 @@ public interface ISelectGoodsContract {
     interface ISelectGoodsView extends ILoadView {
         void setCategoryInfo(List<GoodsCategoryBean> list);
 
-        void setGoodsList(List<ProductBean> list);
+        void setGoodsList(List<ProductBean> list, boolean append);
 
         void confirmSuccess(SettlementInfoResp resp);
     }
