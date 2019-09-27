@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="175dp"
+    android:background="@android:color/white">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/drd_icon"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp_10"
+        app:base_RoundingRadius="2"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_shop_placeholder" />
+
+    <TextView
+        android:id="@+id/drd_shop_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toStartOf="@id/drd_deliver_status"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@id/drd_icon"
+        app:layout_constraintTop_toTopOf="@id/drd_icon"
+        tools:text="采购商门店名称" />
+
+    <TextView
+        android:id="@+id/drd_group_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="1dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/drd_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/drd_shop_name"
+        tools:text="采购商集团名称" />
+
+    <TextView
+        android:id="@+id/drd_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/drd_shop_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/drd_shop_name"
+        tools:text="待发运" />
+
+    <TextView
+        android:id="@+id/drd_deliver_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_crm_order_deliver_tag"
+        android:gravity="center"
+        android:minWidth="60dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="1dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="1dp"
+        android:textColor="@color/color_7ed321"
+        android:textSize="@dimen/text_little_size"
+        app:layout_constraintBaseline_toBaselineOf="@id/drd_status"
+        app:layout_constraintEnd_toStartOf="@id/drd_status"
+        app:layout_goneMarginRight="0dp"
+        tools:text="准时配送" />
+
+    <View
+        android:id="@+id/drd_data_bg"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/bg_express_info_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/drd_icon" />
+
+    <View
+        android:id="@+id/drd_line1"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/drd_data_bg"
+        app:layout_constraintEnd_toStartOf="@id/drd_line2"
+        app:layout_constraintStart_toStartOf="@id/drd_data_bg"
+        app:layout_constraintTop_toTopOf="@id/drd_data_bg" />
+
+    <View
+        android:id="@+id/drd_line2"
+        android:layout_width="1dp"
+        android:layout_height="30dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/drd_data_bg"
+        app:layout_constraintEnd_toEndOf="@id/drd_data_bg"
+        app:layout_constraintStart_toEndOf="@id/drd_line1"
+        app:layout_constraintTop_toTopOf="@id/drd_data_bg" />
+
+    <TextView
+        android:id="@+id/drd_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/drd_line1"
+        app:layout_constraintStart_toStartOf="@id/drd_data_bg"
+        app:layout_constraintTop_toTopOf="@id/drd_data_bg"
+        tools:text="¥82,890.00" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="应收金额"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/drd_amount"
+        app:layout_constraintStart_toStartOf="@id/drd_amount"
+        app:layout_constraintTop_toBottomOf="@id/drd_amount" />
+
+    <TextView
+        android:id="@+id/drd_bill_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/drd_line2"
+        app:layout_constraintStart_toEndOf="@id/drd_line1"
+        app:layout_constraintTop_toTopOf="@id/drd_data_bg"
+        tools:text="20" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="配送订单数"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/drd_bill_num"
+        app:layout_constraintStart_toStartOf="@id/drd_bill_num"
+        app:layout_constraintTop_toBottomOf="@id/drd_bill_num" />
+
+    <TextView
+        android:id="@+id/drd_goods_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="@id/drd_data_bg"
+        app:layout_constraintStart_toEndOf="@id/drd_line2"
+        app:layout_constraintTop_toTopOf="@id/drd_data_bg"
+        tools:text="1,489" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="配送商品数"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="@id/drd_goods_num"
+        app:layout_constraintStart_toStartOf="@id/drd_goods_num"
+        app:layout_constraintTop_toBottomOf="@id/drd_goods_num" />
+
+    <View
+        android:id="@+id/drd_line3"
+        android:layout_width="1dp"
+        android:layout_height="18dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/drd_line4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/drd_data_bg" />
+
+    <View
+        android:id="@+id/drd_line4"
+        android:layout_width="1dp"
+        android:layout_height="18dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/drd_line3"
+        app:layout_constraintTop_toBottomOf="@id/drd_data_bg" />
+
+    <TextView
+        android:id="@+id/drd_receiver"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:text="收货人：张经理"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/drd_line3"
+        app:layout_constraintEnd_toStartOf="@id/drd_line3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/drd_line3" />
+
+    <TextView
+        android:id="@+id/drd_driver"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:text="司机：李师傅"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/drd_line3"
+        app:layout_constraintEnd_toStartOf="@id/drd_line4"
+        app:layout_constraintStart_toEndOf="@id/drd_line3"
+        app:layout_constraintTop_toTopOf="@id/drd_line3" />
+
+    <TextView
+        android:id="@+id/drd_salesman"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:text="销售代表：王经理"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/drd_line4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/drd_line4"
+        app:layout_constraintTop_toTopOf="@id/drd_line3" />
+
+</android.support.constraint.ConstraintLayout>
