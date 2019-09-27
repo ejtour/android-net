@@ -1,11 +1,11 @@
-package com.hll_sc_app.bean.order.search;
+package com.hll_sc_app.bean.event;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/10
  */
 
-public class OrderSearchBean {
+public class ShopSearchEvent {
 
     private String name = "";
     private String shopMallId = "";

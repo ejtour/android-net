@@ -24,13 +24,13 @@ import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.OrderSearch;
+import com.hll_sc_app.app.search.stratery.ShopAssociationSearch;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.OrderParam;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
@@ -96,13 +96,15 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
     @Subscribe(priority = 1, threadMode = ThreadMode.MAIN, sticky = true)
     public void handleOrderEvent(OrderEvent event) {
-        if (event.getMessage().equals(OrderEvent.SEARCH_WORDS)) {
-            OrderSearchBean data = (OrderSearchBean) event.getData();
-            mClearSearch.setVisibility(!TextUtils.isEmpty(data.getName()) ? View.VISIBLE : View.GONE);
-            mSearch.setText(data.getName());
-        } else if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
+        if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
             if (mPager != null) mPager.setCurrentItem(((Integer) event.getData()));
         }
+    }
+
+    @Subscribe(priority = 1, threadMode = ThreadMode.MAIN)
+    public void handleSearchEvent(ShopSearchEvent event) {
+        mClearSearch.setVisibility(!TextUtils.isEmpty(event.getName()) ? View.VISIBLE : View.GONE);
+        mSearch.setText(event.getName());
     }
 
     @Override
@@ -116,10 +118,10 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fmo_search:
-                SearchActivity.start(mOrderParam.getSearchWords(), OrderSearch.class.getSimpleName());
+                SearchActivity.start(mOrderParam.getSearchWords(), ShopAssociationSearch.class.getSimpleName());
                 break;
             case R.id.fmo_clear_search:
-                EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, new OrderSearchBean()));
+                EventBus.getDefault().post(new ShopSearchEvent());
                 break;
             case R.id.fmo_options:
                 showOptionsWindow(view);

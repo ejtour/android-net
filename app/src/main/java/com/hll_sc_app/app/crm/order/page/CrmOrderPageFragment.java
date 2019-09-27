@@ -23,8 +23,8 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.CrmOrderParam;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.order.shop.OrderShopBean;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -158,15 +158,18 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
 
     @Subscribe
     public void handleOrderEvent(OrderEvent event) {
-        switch (event.getMessage()) {
-            case OrderEvent.SEARCH_WORDS:
-                if (isFragmentVisible())
-                    mOrderParam.setSearchBean((OrderSearchBean) event.getData());
-            case OrderEvent.REFRESH_LIST:
-                setForceLoad(true);
-                lazyLoad();
-                break;
+        if (OrderEvent.REFRESH_LIST.equals(event.getMessage())) {
+            setForceLoad(true);
+            lazyLoad();
         }
+    }
+
+    @Subscribe
+    public void handleSearchEvent(ShopSearchEvent event){
+        if (isFragmentVisible())
+            mOrderParam.setSearchBean(event);
+        setForceLoad(true);
+        lazyLoad();
     }
 
     private void updateHeaderLabel(int billNum, double amount, int shopNum) {

@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.order.search;
 
+import com.hll_sc_app.bean.event.ShopSearchEvent;
+
 import java.util.List;
 
 /**
@@ -8,13 +10,13 @@ import java.util.List;
  */
 
 public class OrderSearchResp {
-    private List<OrderSearchBean> list;
+    private List<ShopSearchEvent> list;
 
-    public List<OrderSearchBean> getList() {
+    public List<ShopSearchEvent> getList() {
         return list;
     }
 
-    public void setList(List<OrderSearchBean> list) {
+    public void setList(List<ShopSearchEvent> list) {
         this.list = list;
     }
 }

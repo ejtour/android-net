@@ -1,6 +1,6 @@
 package com.hll_sc_app.bean.filter;
 
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 
 import java.util.Date;
@@ -11,7 +11,7 @@ import java.util.Date;
  */
 
 public class OrderParam {
-    private OrderSearchBean searchBean;
+    private ShopSearchEvent searchBean;
     private long createStart;
     private long createEnd;
     private long executeStart;
@@ -19,7 +19,7 @@ public class OrderParam {
     private long signStart;
     private long signEnd;
 
-    public void setSearchBean(OrderSearchBean searchBean) {
+    public void setSearchBean(ShopSearchEvent searchBean) {
         this.searchBean = searchBean;
     }
 

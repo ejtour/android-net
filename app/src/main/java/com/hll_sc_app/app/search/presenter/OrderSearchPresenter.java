@@ -1,7 +1,7 @@
 package com.hll_sc_app.app.search.presenter;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -24,7 +24,7 @@ public class OrderSearchPresenter extends BaseSearchPresenter {
             public void onSuccess(OrderSearchResp resp) {
                 List<NameValue> list = new ArrayList<>();
                 if (!CommonUtils.isEmpty(resp.getList())) {
-                    for (OrderSearchBean bean : resp.getList()) {
+                    for (ShopSearchEvent bean : resp.getList()) {
                         list.add(new NameValue(bean.getName(), bean.getShopMallId()));
                     }
                 }
