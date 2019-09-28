@@ -18,7 +18,7 @@ public class RouteDetailBean {
     private String salesManName;
     private String shopID;
     private String shopName;
-    private int status;
+    private String status;
 
     public String getDriverName() {
         return driverName;
@@ -116,11 +116,11 @@ public class RouteDetailBean {
         this.shopName = shopName;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }
