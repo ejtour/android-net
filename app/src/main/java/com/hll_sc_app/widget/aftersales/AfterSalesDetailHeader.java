@@ -60,7 +60,7 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
         mRecordsBean = data;
         StringBuilder statusBuilder = new StringBuilder(AfterSalesHelper.getRefundStatusDesc(data.getRefundBillStatus()));
         if (data.getRefundBillStatus() == 5)
-            statusBuilder.insert(0, AfterSalesHelper.getRefundInfoPrefix(data.getRefundBillType()));
+            statusBuilder.insert(0, AfterSalesHelper.getRefundTypeLabel(data.getRefundBillType()));
         else if (data.getRefundBillStatus() == 7)
             statusBuilder.insert(0, AfterSalesHelper.getCancelRoleDes(data.getCancelRole()));
         // 订单状态
@@ -99,7 +99,7 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
         }
         // 金额
         refundAmount.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalAmount())));
-        mOperationInfo.setText(String.format("%s信息", AfterSalesHelper.getOperatedNumPrefix(data.getRefundBillType())));
+        mOperationInfo.setText(String.format("%s信息", AfterSalesHelper.getRefundInfoPrefix(data.getRefundBillType())));
         requestLayout();
     }
 

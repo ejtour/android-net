@@ -98,12 +98,12 @@ public class AfterSalesHelper {
     }
 
     /**
-     * 获取售后信息前缀
+     * 根据售后类型获取类型对应标签
      *
      * @param type 售后类型状态码
-     * @return 售后信息前缀
+     * @return 售后类型标签
      */
-    public static String getRefundInfoPrefix(int type) {
+    public static String getRefundTypeLabel(int type) {
         switch (type) {
             case 1:
             case 2:
@@ -119,12 +119,10 @@ public class AfterSalesHelper {
     }
 
     /**
-     * 获取售后数量前缀文本
-     *
-     * @param type 售后订单类型码
-     * @return 售后数量前缀
+     * @param type 售后类型码
+     * @return 售后信息前缀
      */
-    public static String getOperatedNumPrefix(int type) {
+    public static String getRefundInfoPrefix(int type){
         switch (type) {
             case 1:
             case 2:

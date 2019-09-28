@@ -96,8 +96,9 @@ public class AfterSalesDetailAdapter extends BaseQuickAdapter<AfterSalesDetailsB
                 .setText(R.id.asd_refund_amount, mOnlyShow ? processAmount(refundText) : refundText)// 退款总金额
                 .setVisible(R.id.asd_order_operation_num, mRefundBillType == 3 || mRefundBillType == 4)
                 // 售后操作数
-                .setText(R.id.asd_order_operation_num, AfterSalesHelper.getOperatedNumPrefix(mRefundBillType)+"："
-                        + CommonUtils.formatNum(item.getRefundNum()) + item.getRefundUnit())
+                .setText(R.id.asd_order_operation_num, String.format("%s：%s%s",
+                        mRefundBillType == 4 ? "退回" : "退货"
+                        , CommonUtils.formatNum(item.getRefundNum()), item.getRefundUnit()))
                 .setVisible(R.id.asd_order_pick_num, mOnlyShow && (mRefundBillType == 3 || mRefundBillType == 4))
                 // 提货数量
                 .setText(R.id.asd_order_pick_num, "提货：" + CommonUtils.formatNum(item.getDeliveryNum()) + item.getInspectionUnit())
