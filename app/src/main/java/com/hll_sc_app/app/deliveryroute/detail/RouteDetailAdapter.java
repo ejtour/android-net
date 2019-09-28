@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.order.list.CrmOrderListActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.other.RouteDetailBean;
@@ -25,6 +26,12 @@ public class RouteDetailAdapter extends BaseQuickAdapter<RouteDetailBean, BaseVi
     RouteDetailAdapter() {
         super(R.layout.item_delivery_route_detail);
         setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.drd_order_btn) {
+                RouteDetailBean item = getItem(position);
+                if (item == null) return;
+                CrmOrderListActivity.start(item.getShopID(), item.getShopName());
+                return;
+            }
             if (view.getTag() == null) return;
             UIUtils.callPhone(view.getContext(), view.getTag().toString());
         });
@@ -35,6 +42,7 @@ public class RouteDetailAdapter extends BaseQuickAdapter<RouteDetailBean, BaseVi
         BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
         helper.addOnClickListener(R.id.drd_receiver)
                 .addOnClickListener(R.id.drd_driver)
+                .addOnClickListener(R.id.drd_order_btn)
                 .addOnClickListener(R.id.drd_salesman);
         return helper;
     }
@@ -44,6 +52,7 @@ public class RouteDetailAdapter extends BaseQuickAdapter<RouteDetailBean, BaseVi
         ((GlideImageView) helper.setText(R.id.drd_shop_name, item.getShopName())
                 .setText(R.id.drd_status, item.getStatus())
                 .setText(R.id.drd_amount, CommonUtils.formatMoney(item.getPrice()))
+                .setText(R.id.drd_bill_num, CommonUtils.formatNum(item.getOrderNum()))
                 .setText(R.id.drd_goods_num, CommonUtils.formatNum(item.getGoodsNum()))
                 .setTag(R.id.drd_receiver, item.getReceiverPhone())
                 .setTag(R.id.drd_driver, item.getMobilePhone())
