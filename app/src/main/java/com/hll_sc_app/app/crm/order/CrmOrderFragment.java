@@ -39,7 +39,6 @@ import com.hll_sc_app.widget.SingleSelectionWindow;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +114,7 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
         }
     }
 
-    @Subscribe(priority = 1, threadMode = ThreadMode.MAIN)
+    @Subscribe(priority = 1)
     public void handleSearchEvent(ShopSearchEvent event) {
         if (!TextUtils.isEmpty(event.getName())) {
             mSearchView.showSearchContent(true, event.getName());

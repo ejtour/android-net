@@ -86,8 +86,9 @@ public class DeliveryRouteActivity extends BaseLoadActivity implements IDelivery
         super.onDestroy();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(priority = 2)
     public void handleSearchEvent(ShopSearchEvent event) {
+        EventBus.getDefault().cancelEventDelivery(event);
         if (!TextUtils.isEmpty(event.getShopMallId())) {
             mSearchView.showSearchContent(true, event.getName());
             mParam.setExtra(event.getShopMallId());
