@@ -192,6 +192,12 @@ public class DeliveryRouteActivity extends BaseLoadActivity implements IDelivery
     }
 
     @Override
+    public void hideLoading() {
+        mRefreshLayout.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
+    @Override
     public void showError(UseCaseException e) {
         super.showError(e);
         if (e.getLevel() == UseCaseException.Level.NET) {
