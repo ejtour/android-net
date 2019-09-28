@@ -154,7 +154,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
         ViewGroup.LayoutParams layoutParams = mGoodsNum.getLayoutParams();
         layoutParams.width = layoutParams.height = mItemSize;
         mGoodsNum.setLayoutParams(layoutParams);
-        mTitleBar.setRightBtnClick(this::edit);
+        mTitleBar.setRightBtnClick(v -> RouterUtil.goToActivity(RouterConfig.ROOT_HOME));
         mPurchaserShop.setText(mResp.getPurchaserShopName());
         mReceiver.setText(String.format("收货人：%s / %s", mResp.getReceiverName(), PhoneUtil.formatPhoneNum(mResp.getReceiverMobile())));
         mAddress.setText(String.format("地址：%s", mResp.getReceiverAddress()));
