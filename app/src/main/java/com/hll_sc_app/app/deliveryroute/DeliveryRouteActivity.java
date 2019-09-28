@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.deliveryroute.detail.RouteDetailActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.ShopAssociationSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -125,6 +126,11 @@ public class DeliveryRouteActivity extends BaseLoadActivity implements IDelivery
         });
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
         mAdapter = new DeliveryRouteAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            RouteBean item = mAdapter.getItem(position);
+            if (item == null) return;
+            RouteDetailActivity.start(item.getDeliveryNo());
+        });
         mListView.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

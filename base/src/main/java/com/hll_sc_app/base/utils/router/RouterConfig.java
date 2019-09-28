@@ -1105,5 +1105,10 @@ public class RouterConfig {
      * CRM-我的-配送路线
      */
     public static final String DELIVERY_ROUTE = "/activity/delivery/route";
+
+    /**
+     * CRM-我的-配送路线-路线详情
+     */
+    public static final String DELIVERY_ROUTE_DETAIL = "/activity/delivery/route/detail";
 }
 
