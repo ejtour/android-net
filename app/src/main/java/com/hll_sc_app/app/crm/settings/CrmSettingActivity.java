@@ -3,6 +3,7 @@ package com.hll_sc_app.app.crm.settings;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.format.Formatter;
 import android.view.View;
 import android.widget.TextView;
 
@@ -52,7 +53,7 @@ public class CrmSettingActivity extends BaseLoadActivity implements ICrmSettingC
 
     private String getCacheValue() {
         try {
-            return FileManager.getFormatSize(FileManager.getFolderSize(new File(Constant.GLIDE_CACHE_DIR)));
+            return Formatter.formatFileSize(this, FileManager.getFolderSize(new File(Constant.GLIDE_CACHE_DIR)));
         } catch (Exception e) {
             e.printStackTrace();
             return "获取失败";
