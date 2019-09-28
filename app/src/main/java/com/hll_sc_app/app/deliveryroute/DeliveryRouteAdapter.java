@@ -12,7 +12,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
  */
 
 public class DeliveryRouteAdapter extends BaseQuickAdapter<RouteBean, BaseViewHolder> {
-    public DeliveryRouteAdapter() {
+    DeliveryRouteAdapter() {
         super(R.layout.item_delivery_route);
     }
 
@@ -23,8 +23,8 @@ public class DeliveryRouteAdapter extends BaseQuickAdapter<RouteBean, BaseViewHo
                 .setText(R.id.idr_driver, "司机：" + item.getDriverName())
                 .setText(R.id.idr_plate_number, "车牌：" + item.getPlateNumber())
                 .setText(R.id.idr_done, "已完成：" + CommonUtils.formatNum(item.getCompletedBillNum()))
-                .setText(R.id.idr_done, "未配送：" + CommonUtils.formatNum(item.getNoDeliveryBillNum()))
-                .setText(R.id.idr_done, "准时：" + CommonUtils.formatNum(item.getOnTimeBillNum()))
-                .setText(R.id.idr_done, "延迟：" + CommonUtils.formatNum(item.getDelayBillNum()));
+                .setText(R.id.idr_no_delivery, "未配送：" + CommonUtils.formatNum(item.getNoDeliveryBillNum()))
+                .setText(R.id.idr_on_time, "准时：" + CommonUtils.formatNum(item.getOnTimeBillNum()))
+                .setText(R.id.idr_delay, "延迟：" + CommonUtils.formatNum(item.getDelayBillNum()));
     }
 }
