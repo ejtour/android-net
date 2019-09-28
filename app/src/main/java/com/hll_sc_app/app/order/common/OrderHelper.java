@@ -6,7 +6,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 
-import com.hll_sc_app.bean.filter.CrmOrderParam;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.window.OptionType;
@@ -129,7 +129,7 @@ public class OrderHelper {
                 .setCallback(new DatePickerDialog.SelectCallback() {
                     @Override
                     public void select(Date beginTime, Date endTime) {
-                        if (CalendarUtils.getDateBefore(endTime, 30).getTime() > beginTime.getTime() && !(param instanceof CrmOrderParam)) {
+                        if (CalendarUtils.getDateBefore(endTime, 30).getTime() > beginTime.getTime() && !UserConfig.crm()) {
                             ToastUtils.showShort(activity, "开始日期至结束日期限制选择31天以内");
                             return;
                         }
