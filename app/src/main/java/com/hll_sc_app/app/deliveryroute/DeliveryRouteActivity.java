@@ -2,6 +2,7 @@ package com.hll_sc_app.app.deliveryroute;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -122,6 +123,17 @@ public class DeliveryRouteActivity extends BaseLoadActivity implements IDelivery
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
         mAdapter = new DeliveryRouteAdapter();
         mListView.setAdapter(mAdapter);
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.loadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.refresh();
+            }
+        });
     }
 
     @OnClick({R.id.adr_close, R.id.adr_filter_btn})
