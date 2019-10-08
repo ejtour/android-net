@@ -14,7 +14,6 @@ import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
@@ -22,6 +21,7 @@ import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.event.AfterSalesEvent;
@@ -162,7 +162,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     }
 
     private void updateBottomBar() {
-        if (mBillType != null && ((mBillType == 1 && getAuditParam().getSourceType() == 2) || mBillType == 4)) {
+        if (mBillType != null && ((mBillType == 1 && getAuditParam().getSourceType() == 2) || mBillType == 4) && !UserConfig.crm()) {
             if (mBottomBarRoot == null) {
                 mBottomBarRoot = mBottomBarStub.inflate();
                 mConfirm = mBottomBarRoot.findViewById(R.id.abb_confirm);

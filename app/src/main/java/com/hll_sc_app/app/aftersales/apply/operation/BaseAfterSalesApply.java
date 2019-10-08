@@ -56,7 +56,7 @@ public abstract class BaseAfterSalesApply implements IAfterSalesApplyContract.IA
 
     @Override
     public void submitSuccess(String id) {
-        SubmitSuccessActivity.start(mApplyText.getLabel() + "申请提交成功",
+        SubmitSuccessActivity.start(mApplyText.getTitle() + "申请提交成功",
                 null, RouterConfig.AFTER_SALES_DETAIL, id);
     }
 

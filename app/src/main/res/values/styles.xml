@@ -142,6 +142,15 @@
         <item name="android:textAppearance">@style/TextAppearance.City22.Little.Color666</item>
     </style>
 
+    <style name="CrmMineButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">90dp</item>
+        <item name="android:gravity">center_horizontal|bottom</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">@dimen/dp_10</item>
+        <item name="android:textAppearance">@style/TextAppearance.City22.Small</item>
+    </style>
+
     <style name="SettingStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
@@ -166,11 +175,6 @@
         <item name="android:paddingRight">@dimen/dp_10</item>
         <item name="android:paddingLeft">@dimen/dp_10</item>
     </style>
-    <style name="BasePopupAnimation" mce_bogus="1" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/base_pop_up</item>
-        <item name="android:windowExitAnimation">@anim/base_pop_down</item>
-    </style>
-
 
     <style name="InfoLabel">
         <item name="android:layout_width">wrap_content</item>

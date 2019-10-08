@@ -64,7 +64,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawablePadding="@dimen/dp_10"
-            android:drawableLeft="@drawable/ic_time_filter"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10"

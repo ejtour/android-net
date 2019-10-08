@@ -5,6 +5,8 @@
     android:background="#fafafa"
     android:layout_height="45dp"
     android:gravity="center_vertical"
-    android:paddingLeft="35dp"
+    android:drawablePadding="@dimen/dp_10"
+    android:drawableLeft="@drawable/ic_time_filter"
+    android:paddingLeft="@dimen/dp_10"
     android:textAppearance="@style/TextAppearance.City22.Middle"
     tools:text="8月份" />

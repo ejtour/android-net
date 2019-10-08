@@ -143,7 +143,7 @@ public class AfterSalesApplyActivity extends BaseLoadActivity implements IAfterS
         if (!CommonUtils.isEmpty(mParam.getAfterSalesDetailList())) {
             for (AfterSalesDetailsBean bean : mParam.getAfterSalesDetailList()) {
                 for (AfterSalesDetailsBean detailsBean : list) {
-                    if (bean.getProductID().equals(detailsBean.getProductID())) {
+                    if (bean.getTargetDetailID().equals(detailsBean.getTargetDetailID())) {
                         detailsBean.setRefundNum(bean.getRefundNum());
                         detailsBean.setSelected(true);
                         break;

@@ -54,9 +54,7 @@ public class RefundedSearchFragment extends BaseRefundSearchFragment implements 
 
     @Override
     public void setSearchResultList(List<SearchResultItem> resultList) {
-          if(null!=resultList && resultList.size()>0){
-              mAdapter.setNewData(resultList);
-          }
+        mAdapter.setNewData(resultList);
     }
 
     @Override
@@ -87,6 +85,7 @@ public class RefundedSearchFragment extends BaseRefundSearchFragment implements 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             SearchResultItem item = (SearchResultItem) adapter.getItem(position);
             Intent intent = new Intent();
+            item.setType(Integer.valueOf(searchType));
             intent.putExtra("result",item);
             getActivity().setResult(getActivity().RESULT_OK,intent);
             getActivity().finish();

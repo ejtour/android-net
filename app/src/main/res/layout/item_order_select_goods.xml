@@ -49,8 +49,28 @@
         android:visibility="gone"
         android:textAppearance="@style/TextAppearance.City22.Little.White"
         app:layout_constraintBottom_toBottomOf="@id/osg_goods_name"
-        app:layout_constraintEnd_toStartOf="@id/osg_goods_name"
+        app:layout_constraintEnd_toStartOf="@id/osg_top"
         app:layout_constraintStart_toStartOf="@id/osg_goods_brief"
+        app:layout_constraintTop_toTopOf="@id/osg_goods_name" />
+
+    <TextView
+        android:id="@+id/osg_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bg_tag_primary_solid"
+        android:gravity="center"
+        android:paddingLeft="3dp"
+        android:paddingTop="1dp"
+        android:paddingRight="3dp"
+        android:paddingBottom="1dp"
+        android:text="TOP"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/osg_goods_name"
+        app:layout_constraintEnd_toStartOf="@id/osg_goods_name"
+        app:layout_constraintStart_toEndOf="@id/osg_self_support"
         app:layout_constraintTop_toTopOf="@id/osg_goods_name" />
 
     <TextView
@@ -62,7 +82,7 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Middle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/osg_self_support"
+        app:layout_constraintStart_toEndOf="@id/osg_top"
         app:layout_constraintTop_toTopOf="@id/osg_icon"
         tools:text="红萝卜木盘装特别好吃" />
 

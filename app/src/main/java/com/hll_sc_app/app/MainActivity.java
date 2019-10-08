@@ -133,7 +133,6 @@ public class MainActivity extends BaseLoadActivity {
                     currentFragment = RouterUtil.getFragment(RouterConfig.ROOT_HOME_GOODS);
                     break;
                 case PageType.SUPPLIER_MINE:
-                case PageType.CRM_MINE:
                     currentFragment = RouterUtil.getFragment(RouterConfig.ROOT_HOME_MINE);
                     break;
                 case PageType.CRM_HOME:
@@ -147,6 +146,9 @@ public class MainActivity extends BaseLoadActivity {
                     break;
                 case PageType.CRM_DAILY:
                     currentFragment = RouterUtil.getFragment(RouterConfig.CRM_DAILY);
+                    break;
+                case PageType.CRM_MINE:
+                    currentFragment = RouterUtil.getFragment(RouterConfig.CRM_MINE);
                     break;
                 default:
                     break;

@@ -30,8 +30,10 @@ import com.hll_sc_app.widget.StickyItemDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.wallet.TradeTypeWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -106,6 +108,12 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.refresh();
+            }
+        });
+        mRefreshLayout.setOnMultiPurposeListener(new SimpleMultiPurposeListener() {
+            @Override
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
+                mFilterContainer.setTranslationY(offset);
             }
         });
     }

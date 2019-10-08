@@ -1,7 +1,6 @@
 package com.hll_sc_app.bean.event;
 
 import com.hll_sc_app.bean.order.OrderResp;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.LogUtil;
 
@@ -15,7 +14,6 @@ public class OrderEvent extends BaseEvent {
     public static final String REFRESH_LIST = "refresh_list";
     public static final String UPDATE_ITEM = "update_item";
     public static final String REMOVE_SELECTED = "remove_selected";
-    public static final String SEARCH_WORDS = "search_words";
     public static final String RELOAD_ITEM = "reload_item";
     public static final String UPDATE_TRANSFER_ITEM = "update_transfer_item";
     public static final String CHANGE_INDEX = "change_index";
@@ -33,10 +31,6 @@ public class OrderEvent extends BaseEvent {
                 break;
             case CHANGE_INDEX:
                 if (b != null && "Integer".equals(b.getClass().getSimpleName())) break;
-                LogUtil.e(TAG, "Wrong type");
-                break;
-            case SEARCH_WORDS:
-                if (b instanceof OrderSearchBean) break;
                 LogUtil.e(TAG, "Wrong type");
                 break;
             case UPDATE_ITEM:

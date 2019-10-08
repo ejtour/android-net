@@ -11,7 +11,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
-import com.hll_sc_app.bean.filter.DateShopParam;
+import com.hll_sc_app.bean.filter.DateStringParam;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
@@ -29,11 +29,11 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 
 public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPresenter {
-    private DateShopParam mParam;
+    private DateStringParam mParam;
     private IOrderGoodsContract.IOrderGoodsView mView;
     private int mPageNum;
 
-    public static OrderGoodsPresenter newInstance(DateShopParam param) {
+    public static OrderGoodsPresenter newInstance(DateStringParam param) {
         OrderGoodsPresenter presenter = new OrderGoodsPresenter();
         presenter.mParam = param;
         return presenter;
@@ -67,7 +67,7 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
 
     @Override
     public void getOrderGoods(boolean showLoading) {
-        Report.queryOrderGoods(mParam.getShopIDs(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
+        Report.queryOrderGoods(mParam.getExtra(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
                 mPageNum, new SimpleObserver<OrderGoodsResp<OrderGoodsBean>>(mView, showLoading) {
                     @Override
                     public void onSuccess(OrderGoodsResp orderGoodsResp) {
@@ -95,7 +95,7 @@ public class OrderGoodsPresenter implements IOrderGoodsContract.IOrderGoodsPrese
             bindEmail(email);
             return;
         }
-        Report.exportOrderGoodsDetails(mParam.getShopIDs(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
+        Report.exportOrderGoodsDetails(mParam.getExtra(), mParam.getFormatStartDate(), mParam.getFormatEndDate(),
                 Utils.getExportObserver(mView));
     }
 

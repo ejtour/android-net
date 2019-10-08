@@ -2,7 +2,7 @@ package com.hll_sc_app.app.inspection.list;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.PurchaserBean;
-import com.hll_sc_app.bean.filter.DateShopParam;
+import com.hll_sc_app.bean.filter.DateStringParam;
 import com.hll_sc_app.bean.inspection.InspectionResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
@@ -17,11 +17,11 @@ import java.util.List;
  */
 
 public class InspectionListPresenter implements IInspectionListContract.IInspectionListPresenter {
-    private DateShopParam mParam;
+    private DateStringParam mParam;
     private IInspectionListContract.IInspectionListView mView;
     private int mPageNum;
 
-    public static InspectionListPresenter newInstance(DateShopParam param) {
+    public static InspectionListPresenter newInstance(DateStringParam param) {
         InspectionListPresenter presenter = new InspectionListPresenter();
         presenter.mParam = param;
         return presenter;
@@ -78,7 +78,7 @@ public class InspectionListPresenter implements IInspectionListContract.IInspect
     private void load(boolean showLoading) {
         Inspection.getInspectionList(mPageNum,
                 mParam.getFormatStartDate(), mParam.getFormatEndDate(),
-                mParam.getShopIDs(), new SimpleObserver<InspectionResp>(mView, showLoading) {
+                mParam.getExtra(), new SimpleObserver<InspectionResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(InspectionResp inspectionResp) {
                         mView.showList(inspectionResp.getList(), mPageNum > 1);

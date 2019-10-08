@@ -7,7 +7,7 @@ import com.hll_sc_app.bean.bill.BillStatus;
  * @since 2019/8/7
  */
 
-public class BillParam extends DateShopParam {
+public class BillParam extends DateStringParam {
     private int settlementStatus;
 
     @BillStatus

@@ -35,7 +35,7 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
     @Override
     public void export(String email, int sign) {
         Bill.exportEmail(sign, email, mParam.getFormatStartDate(), mParam.getFormatEndDate(), UserConfig.getGroupID(),
-                mParam.getShopIDs(), mParam.getSettlementStatus(), Utils.getExportObserver(mView));
+                mParam.getExtra(), mParam.getSettlementStatus(), Utils.getExportObserver(mView));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class BillListPresenter implements IBillListContract.IBillListPresenter {
                 mParam.getFormatStartDate(),
                 mParam.getFormatEndDate(),
                 UserConfig.getGroupID(),
-                mParam.getShopIDs(),
+                mParam.getExtra(),
                 mParam.getSettlementStatus(),
                 new SimpleObserver<BillListResp>(mView, showLoading) {
                     @Override

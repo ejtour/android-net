@@ -289,14 +289,21 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     }
 
     @Override
-    public void setGoodsList(List<ProductBean> list) {
-        if (CommonUtils.isEmpty(list)) {
-            initEmptyView();
-            mEmptyView.reset();
-            mEmptyView.setTips("暂无商品列表");
-        }
+    public void setGoodsList(List<ProductBean> list, boolean append) {
         preProcessData(list);
-        mAdapter.setNewData(list);
+        if (append) {
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
+            }
+        } else {
+            if (CommonUtils.isEmpty(list)) {
+                initEmptyView();
+                mEmptyView.reset();
+                mEmptyView.setTips("暂无商品列表");
+            }
+            mAdapter.setNewData(list);
+        }
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
     }
 
     @Override

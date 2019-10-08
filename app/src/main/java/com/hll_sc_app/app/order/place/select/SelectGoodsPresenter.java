@@ -41,7 +41,9 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
                 new SimpleObserver<List<ProductBean>>(mView, showLoading) {
                     @Override
                     public void onSuccess(List<ProductBean> goodsBeans) {
-                        mView.setGoodsList(goodsBeans);
+                        mView.setGoodsList(goodsBeans, mPageNum > 1);
+                        if (CommonUtils.isEmpty(goodsBeans)) return;
+                        mPageNum++;
                     }
                 });
     }

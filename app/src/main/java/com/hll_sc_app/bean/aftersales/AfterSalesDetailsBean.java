@@ -126,6 +126,10 @@ public class AfterSalesDetailsBean implements Parcelable {
                 CommonUtils.mulDouble(refundNum, newPrice, 4).doubleValue();
     }
 
+    public String getTargetDetailID() {
+        return TextUtils.isEmpty(detailID) ? subBillDetailID : detailID;
+    }
+
     public TransferDetailBean convertToTransferDetail(String erpShopID) {
         TransferDetailBean detailBean = new TransferDetailBean();
         detailBean.setGoodsCode(goodsCode);

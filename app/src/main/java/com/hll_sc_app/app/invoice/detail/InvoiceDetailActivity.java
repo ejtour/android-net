@@ -39,6 +39,8 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.invoice.InvoiceBean;
 import com.hll_sc_app.bean.invoice.ReturnRecordBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
@@ -104,6 +106,12 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     ImgUploadBlock mInvoiceLicense;
     @BindView(R.id.aid_identifier)
     TextView mIdentifier;
+    @BindView(R.id.aid_group_name)
+    TextView mGroupName;
+    @BindView(R.id.aid_apply_date)
+    TextView mApplyDate;
+    @BindView(R.id.aid_business_date)
+    TextView mBusinessDate;
     private TextView mAddBtn;
     @BindView(R.id.aid_list_view)
     RecyclerView mListView;
@@ -275,6 +283,14 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     }
 
     private void updateBaseInfo(InvoiceBean bean, boolean crm) {
+        mGroupName.setText(bean.getPurchaserName());
+        mApplyDate.setText(DateUtil.getReadableTime(bean.getCreateTime(), Constants.SLASH_YYYY_MM_DD));
+        if (CommonUtils.getDouble(bean.getBusinessBeginDate()) == 0 || CommonUtils.getDouble(bean.getBusinessEndDate()) == 0) {
+            mBusinessDate.setText(null);
+        } else {
+            mBusinessDate.setText(String.format("%s - %s", DateUtil.getReadableTime(bean.getBusinessBeginDate(), Constants.SLASH_YYYY_MM_DD),
+                    DateUtil.getReadableTime(bean.getBusinessEndDate(), Constants.SLASH_YYYY_MM_DD)));
+        }
         mInvoiceType.setText(bean.getInvoiceType() == 1 ? "普通发票" : "专用发票");
         mInvoiceAmount.setText(processMoney(bean.getInvoicePrice()));
         mInvoiceAmount.setTag(bean.getInvoicePrice());

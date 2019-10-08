@@ -8,7 +8,7 @@ import com.hll_sc_app.app.search.ISearchContract;
  * @since 2019/9/5
  */
 
-public class CrmOrderSearch extends OrderSearch {
+public class CrmOrderShopSearch extends ShopAssociationSearch {
 
     @Override
     public ISearchContract.ISearchPresenter getSearchPresenter() {

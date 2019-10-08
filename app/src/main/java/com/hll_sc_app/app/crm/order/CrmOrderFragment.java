@@ -22,12 +22,12 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.order.page.CrmOrderPageFragment;
 import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.CrmOrderSearch;
+import com.hll_sc_app.app.search.stratery.CrmOrderShopSearch;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.CrmOrderParam;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -39,7 +39,6 @@ import com.hll_sc_app.widget.SingleSelectionWindow;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,13 +94,13 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, CrmOrderSearch.class.getSimpleName());
+                SearchActivity.start(searchContent, CrmOrderShopSearch.class.getSimpleName());
             }
 
             @Override
             public void toSearch(String searchContent) {
                 if (TextUtils.isEmpty(searchContent))
-                    EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, new OrderSearchBean()));
+                    EventBus.getDefault().post(new ShopSearchEvent());
             }
         });
         mPager.setAdapter(new Pager());
@@ -115,13 +114,10 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
         }
     }
 
-    @Subscribe(priority = 1, threadMode = ThreadMode.MAIN)
-    public void handleOrderEvent(OrderEvent event) {
-        if (event.getMessage().equals(OrderEvent.SEARCH_WORDS)) {
-            OrderSearchBean data = (OrderSearchBean) event.getData();
-            if (!TextUtils.isEmpty(data.getName())) {
-                mSearchView.showSearchContent(true, data.getName());
-            }
+    @Subscribe(priority = 1)
+    public void handleSearchEvent(ShopSearchEvent event) {
+        if (!TextUtils.isEmpty(event.getName())) {
+            mSearchView.showSearchContent(true, event.getName());
         }
     }
 

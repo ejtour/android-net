@@ -23,8 +23,8 @@ import com.hll_sc_app.app.order.transfer.details.TransferDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.OrderParam;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -332,9 +332,6 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
     @Subscribe
     public void handleOrderEvent(OrderEvent event) {
         switch (event.getMessage()) {
-            case OrderEvent.SEARCH_WORDS:
-                if (isFragmentVisible())
-                    mOrderParam.setSearchBean((OrderSearchBean) event.getData());
             case OrderEvent.REFRESH_LIST:
                 setForceLoad(true);
                 lazyLoad();
@@ -349,6 +346,14 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
                 }
                 break;
         }
+    }
+
+    @Subscribe
+    public void handleSearchEvent(ShopSearchEvent event){
+        if (isFragmentVisible())
+            mOrderParam.setSearchBean(event);
+        setForceLoad(true);
+        lazyLoad();
     }
 
     @Override

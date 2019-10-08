@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/idr_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="西南王府线（3792183913）" />
+
+    <View
+        android:id="@+id/idr_line_1"
+        android:layout_width="1dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toStartOf="@id/idr_line_2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idr_name" />
+
+    <View
+        android:id="@+id/idr_line_2"
+        android:layout_width="1dp"
+        android:layout_height="18dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/idr_line_1"
+        app:layout_constraintTop_toTopOf="@id/idr_line_1" />
+
+    <TextView
+        android:id="@+id/idr_shop_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/idr_line_1"
+        app:layout_constraintEnd_toStartOf="@id/idr_line_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/idr_line_1"
+        tools:text="配送门店：6个" />
+
+    <TextView
+        android:id="@+id/idr_driver"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_crm_order_phone"
+        android:drawablePadding="5dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/idr_line_1"
+        app:layout_constraintEnd_toStartOf="@id/idr_line_2"
+        app:layout_constraintStart_toEndOf="@id/idr_line_1"
+        app:layout_constraintTop_toTopOf="@id/idr_line_1"
+        tools:text="司机：李师傅" />
+
+    <TextView
+        android:id="@+id/idr_plate_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/idr_line_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/idr_line_2"
+        app:layout_constraintTop_toTopOf="@id/idr_line_1"
+        tools:text="车牌：京Q818F" />
+
+    <View
+        android:id="@+id/idr_hor_div"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idr_line_1" />
+
+    <View
+        android:id="@+id/idr_ver_div"
+        android:layout_width="1dp"
+        android:layout_height="16dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/idr_done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idr_hor_div" />
+
+    <TextView
+        android:id="@+id/idr_done"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintEnd_toStartOf="@id/idr_no_delivery"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idr_hor_div"
+        tools:text="已完成：10单" />
+
+    <TextView
+        android:id="@+id/idr_no_delivery"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/idr_done"
+        app:layout_constraintEnd_toStartOf="@id/idr_ver_div"
+        app:layout_constraintStart_toEndOf="@id/idr_done"
+        app:layout_constraintTop_toTopOf="@id/idr_done"
+        tools:text="未配送：8单" />
+
+    <TextView
+        android:id="@+id/idr_on_time"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/idr_done"
+        app:layout_constraintEnd_toStartOf="@id/idr_delay"
+        app:layout_constraintStart_toEndOf="@id/idr_ver_div"
+        app:layout_constraintTop_toTopOf="@id/idr_done"
+        tools:text="准时：9单" />
+
+    <TextView
+        android:id="@+id/idr_delay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/idr_done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/idr_on_time"
+        app:layout_constraintTop_toTopOf="@id/idr_done"
+        tools:text="延迟：1单" />
+</android.support.constraint.ConstraintLayout>

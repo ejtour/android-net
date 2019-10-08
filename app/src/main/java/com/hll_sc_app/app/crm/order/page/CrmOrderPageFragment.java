@@ -23,8 +23,8 @@ import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.CrmOrderParam;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.order.shop.OrderShopBean;
 import com.hll_sc_app.bean.order.shop.OrderShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -97,7 +97,7 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
     private void initView() {
         updateHeaderLabel(0, 0, 0);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(8)));
-        mAdapter = new CrmOrderPageAdapter(mBillStatus);
+        mAdapter = new CrmOrderPageAdapter();
         mListView.setAdapter(mAdapter);
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -137,7 +137,7 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
 
     @Override
     protected void initData() {
-        if ("1".equals(mOrderParam.getActionType()))
+        if ("1".equals(mOrderParam.getActionType()) || mBillStatus == 0) // 今日订单或全部未下单
             mFilterHeader.setVisibility(View.GONE);
         else mFilterHeader.setData(mOrderParam);
         mPresenter.start();
@@ -158,15 +158,18 @@ public class CrmOrderPageFragment extends BaseLazyFragment implements ICrmOrderP
 
     @Subscribe
     public void handleOrderEvent(OrderEvent event) {
-        switch (event.getMessage()) {
-            case OrderEvent.SEARCH_WORDS:
-                if (isFragmentVisible())
-                    mOrderParam.setSearchBean((OrderSearchBean) event.getData());
-            case OrderEvent.REFRESH_LIST:
-                setForceLoad(true);
-                lazyLoad();
-                break;
+        if (OrderEvent.REFRESH_LIST.equals(event.getMessage())) {
+            setForceLoad(true);
+            lazyLoad();
         }
+    }
+
+    @Subscribe
+    public void handleSearchEvent(ShopSearchEvent event){
+        if (isFragmentVisible())
+            mOrderParam.setSearchBean(event);
+        setForceLoad(true);
+        lazyLoad();
     }
 
     private void updateHeaderLabel(int billNum, double amount, int shopNum) {

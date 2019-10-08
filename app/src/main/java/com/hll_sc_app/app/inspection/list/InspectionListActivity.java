@@ -20,7 +20,7 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.filter.DateShopParam;
+import com.hll_sc_app.bean.filter.DateStringParam;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.inspection.InspectionBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -68,7 +68,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
     private PurchaserSelectWindow mPurchaserWindow;
     private List<PurchaserBean> mPurchaserBeans;
     private IInspectionListContract.IInspectionListPresenter mPresenter;
-    private final DateShopParam mParam = new DateShopParam();
+    private final DateStringParam mParam = new DateStringParam();
     private InspectionListAdapter mAdapter;
     private EmptyView mEmptyView;
 
@@ -234,7 +234,7 @@ public class InspectionListActivity extends BaseLoadActivity implements IInspect
                 } else {
                     mPurchaser.setText(bean.getPurchaserName());
                 }
-                mParam.setShopIDs(bean.getPurchaserID());
+                mParam.setExtra(bean.getPurchaserID());
                 mPresenter.reload();
             });
             mPurchaserWindow.setOnDismissListener(() -> {

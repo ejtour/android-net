@@ -83,6 +83,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.crm.settings.CrmSettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.setting.SettingActivity"
             android:screenOrientation="portrait" />
 
@@ -792,11 +796,13 @@
         <!--待退商品统计明细-->
         <activity
             android:name=".app.report.refund.wait.product.WaitRefundProductDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <!--待退客户明细统计-->
         <activity
             android:name=".app.report.refund.wait.customer.WaitRefundCustomertDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
         <!--退货统计-->
         <activity
@@ -814,11 +820,13 @@
         <!--退货客户明细-->
         <activity
             android:name=".app.report.refund.customerProduct.customer.RefundedCustomerDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
         <!--退款商品明细-->
         <activity
             android:name=".app.report.refund.customerProduct.product.RefundedProductDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity
             android:name=".app.inspection.list.InspectionListActivity"
@@ -1014,6 +1022,15 @@
         <activity
             android:name=".app.complainmanage.productlist.SelectProductListActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliveryroute.DeliveryRouteActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.deliveryroute.detail.RouteDetailActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

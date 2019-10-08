@@ -35,7 +35,7 @@
         android:background="@drawable/bg_white_radius_top_half_5_solid"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:paddingTop="5dp"
+        android:padding="5dp"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_centerVertical="true"
@@ -107,6 +107,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:padding="5dp"
         android:background="@drawable/bg_white_radius_top_half_5_solid" >
         <ImageView
             android:layout_centerVertical="true"

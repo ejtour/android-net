@@ -1,9 +1,6 @@
 package com.hll_sc_app.bean.event;
 
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
-import com.hll_sc_app.bean.order.OrderResp;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
-import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.LogUtil;
 
 /**

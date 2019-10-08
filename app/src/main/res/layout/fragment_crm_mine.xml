@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="210dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_main_mine_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/fcm_message_icon"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@drawable/base_bg_selector_close"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_mine_title_message"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_marginTop="20dp" />
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/fcm_avatar"
+        android:layout_width="65dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_mine_logo"
+        android:padding="5dp"
+        app:base_circle="true"
+        app:base_placeholder="@drawable/ic_mine_head_default"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fcm_message_icon" />
+
+    <TextView
+        android:id="@+id/fcm_group_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="35dp"
+        android:drawableLeft="@drawable/ic_mine_company"
+        android:drawablePadding="5dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Large.White"
+        app:layout_constraintBottom_toTopOf="@id/fcm_salesman_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fcm_avatar"
+        app:layout_constraintTop_toTopOf="@id/fcm_avatar"
+        tools:text="二十二城的第三供应商" />
+
+    <TextView
+        android:id="@+id/fcm_salesman_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Small.White"
+        app:layout_constraintBottom_toBottomOf="@id/fcm_avatar"
+        app:layout_constraintEnd_toEndOf="@id/fcm_group_name"
+        app:layout_constraintStart_toStartOf="@id/fcm_group_name"
+        app:layout_constraintTop_toBottomOf="@id/fcm_group_name"
+        tools:text="贾小倩  |  15520115888" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_arrow_gray"
+        android:tint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/fcm_avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fcm_avatar" />
+
+    <TextView
+        android:id="@+id/fcm_salesman_code"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="销售推荐码"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fcm_avatar" />
+
+    <ImageView
+        android:id="@+id/fcm_arrow"
+        android:layout_width="7dp"
+        android:layout_height="13dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/ic_arrow_gray"
+        app:layout_constraintBottom_toBottomOf="@id/fcm_salesman_code"
+        app:layout_constraintEnd_toEndOf="@id/fcm_salesman_code"
+        app:layout_constraintTop_toTopOf="@id/fcm_salesman_code" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="7dp"
+        android:src="@drawable/ic_qrcode"
+        app:layout_constraintBottom_toBottomOf="@id/fcm_salesman_code"
+        app:layout_constraintEnd_toStartOf="@id/fcm_arrow"
+        app:layout_constraintTop_toTopOf="@id/fcm_salesman_code" />
+
+    <View
+        android:id="@+id/fcm_dashboard_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        app:layout_constraintBottom_toBottomOf="@id/fcm_report_center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fcm_salesman_code" />
+
+    <TextView
+        android:id="@+id/fcm_product_lib"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_product_lib"
+        android:text="商品库"
+        app:layout_constraintEnd_toStartOf="@id/fcm_staff_manage"
+        app:layout_constraintStart_toStartOf="@id/fcm_dashboard_bg"
+        app:layout_constraintTop_toTopOf="@id/fcm_dashboard_bg" />
+
+    <TextView
+        android:id="@+id/fcm_staff_manage"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_staff_manage"
+        android:text="员工管理"
+        app:layout_constraintEnd_toStartOf="@id/fcm_new_product_feedback"
+        app:layout_constraintStart_toEndOf="@id/fcm_product_lib"
+        app:layout_constraintTop_toTopOf="@id/fcm_product_lib" />
+
+    <TextView
+        android:id="@+id/fcm_new_product_feedback"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_new_product_feedback"
+        android:text="新品反馈"
+        app:layout_constraintEnd_toStartOf="@id/fcm_complaint_manage"
+        app:layout_constraintStart_toEndOf="@id/fcm_staff_manage"
+        app:layout_constraintTop_toTopOf="@id/fcm_product_lib" />
+
+    <TextView
+        android:id="@+id/fcm_complaint_manage"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_complaint_manage"
+        android:text="投诉管理"
+        app:layout_constraintEnd_toEndOf="@id/fcm_dashboard_bg"
+        app:layout_constraintStart_toEndOf="@id/fcm_new_product_feedback"
+        app:layout_constraintTop_toTopOf="@id/fcm_product_lib" />
+
+    <TextView
+        android:id="@+id/fcm_bill_list"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_account_statement"
+        android:text="对账单"
+        app:layout_constraintEnd_toEndOf="@id/fcm_product_lib"
+        app:layout_constraintStart_toStartOf="@id/fcm_product_lib"
+        app:layout_constraintTop_toBottomOf="@id/fcm_product_lib" />
+
+    <TextView
+        android:id="@+id/fcm_refund"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_return_audit"
+        android:text="退货退款"
+        app:layout_constraintEnd_toEndOf="@id/fcm_staff_manage"
+        app:layout_constraintStart_toStartOf="@id/fcm_staff_manage"
+        app:layout_constraintTop_toTopOf="@id/fcm_bill_list" />
+
+    <TextView
+        android:id="@+id/fcm_invoice_center"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_invoice_manage"
+        android:text="发票中心"
+        app:layout_constraintEnd_toEndOf="@id/fcm_new_product_feedback"
+        app:layout_constraintStart_toStartOf="@id/fcm_new_product_feedback"
+        app:layout_constraintTop_toTopOf="@id/fcm_bill_list" />
+
+    <TextView
+        android:id="@+id/fcm_delivery_route"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_delivery_route"
+        android:text="配送路线"
+        app:layout_constraintEnd_toEndOf="@id/fcm_complaint_manage"
+        app:layout_constraintStart_toStartOf="@id/fcm_complaint_manage"
+        app:layout_constraintTop_toTopOf="@id/fcm_bill_list" />
+
+    <TextView
+        android:id="@+id/fcm_report_center"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_report_center"
+        android:text="报表中心"
+        app:layout_constraintEnd_toEndOf="@id/fcm_product_lib"
+        app:layout_constraintStart_toStartOf="@id/fcm_product_lib"
+        app:layout_constraintTop_toBottomOf="@id/fcm_bill_list" />
+
+    <TextView
+        android:id="@+id/fcm_salesman_rank"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_directional_selling"
+        android:text="销售排名"
+        app:layout_constraintEnd_toEndOf="@id/fcm_staff_manage"
+        app:layout_constraintStart_toStartOf="@id/fcm_staff_manage"
+        app:layout_constraintTop_toTopOf="@id/fcm_report_center" />
+
+    <TextView
+        android:id="@+id/fcm_product_special_demand"
+        style="@style/CrmMineButton"
+        android:drawableTop="@drawable/ic_mine_product_special_demand"
+        android:text="商品特殊需求"
+        app:layout_constraintEnd_toEndOf="@id/fcm_new_product_feedback"
+        app:layout_constraintStart_toStartOf="@id/fcm_new_product_feedback"
+        app:layout_constraintTop_toTopOf="@id/fcm_report_center" />
+
+    <TextView
+        android:id="@+id/fcm_settings"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:drawableLeft="@drawable/ic_mine_settings"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="@dimen/dp_10"
+        android:text="设置"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fcm_dashboard_bg" />
+</android.support.constraint.ConstraintLayout>

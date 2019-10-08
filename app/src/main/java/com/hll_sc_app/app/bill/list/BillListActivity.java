@@ -21,6 +21,7 @@ import com.hll_sc_app.app.bill.detail.BillDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.bill.BillBean;
@@ -179,7 +180,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private boolean canBatch() {
-        return mParam.getSettlementStatus() != BillStatus.SETTLED && !CommonUtils.isEmpty(mAdapter.getData());
+        return mParam.getSettlementStatus() != BillStatus.SETTLED && !CommonUtils.isEmpty(mAdapter.getData()) && !UserConfig.crm();
     }
 
     private void updateBottomBar() {
@@ -255,7 +256,7 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
                 @Override
                 public void onSelect(String purchaserID, String shopID, List<String> shopNameList) {
                     mSelectionWindow.dismiss();
-                    mParam.setShopIDs(shopID);
+                    mParam.setExtra(shopID);
                     mPresenter.start();
                     if (!CommonUtils.isEmpty(shopNameList)) {
                         mPurchaser.setText(TextUtils.join(",", shopNameList));

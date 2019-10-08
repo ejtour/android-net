@@ -8,7 +8,9 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -81,6 +83,21 @@ public class Common {
                 .listCooperationShop(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 请求搜索门店
+     *
+     * @param searchWords 搜索词
+     */
+    public static void searchShopList(String searchWords, SimpleObserver<SingleListResp<ShopSearchEvent>> observer) {
+        CommonService.INSTANCE
+                .searchShopList(BaseMapReq.newBuilder()
+                        .put("searchWords", searchWords)
+                        .put("source", "0")
+                        .put("shopMallID", UserConfig.getGroupID()).create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .subscribe(observer);
     }
 }

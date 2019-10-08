@@ -32,11 +32,11 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.event.ExportEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.OrderParam;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.deliver.DeliverNumResp;
 import com.hll_sc_app.bean.order.deliver.ExpressResp;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
@@ -498,9 +498,6 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
     @Subscribe
     public void handleOrderEvent(OrderEvent event) {
         switch (event.getMessage()) {
-            case OrderEvent.SEARCH_WORDS:
-                if (isFragmentVisible())
-                    mOrderParam.setSearchBean((OrderSearchBean) event.getData());
             case OrderEvent.REFRESH_LIST:
                 setForceLoad(true);
                 lazyLoad();
@@ -518,6 +515,14 @@ public class OrderManageFragment extends BaseLazyFragment implements IOrderManag
                     mPresenter.getOrderDetails(mCurResp.getSubBillID());
                 break;
         }
+    }
+
+    @Subscribe
+    public void handleSearchEvent(ShopSearchEvent event){
+        if (isFragmentVisible())
+            mOrderParam.setSearchBean(event);
+        setForceLoad(true);
+        lazyLoad();
     }
 
     @Subscribe

@@ -36,7 +36,6 @@ import com.hll_sc_app.bean.order.place.OrderCommitResp;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
-import com.hll_sc_app.bean.order.search.OrderSearchResp;
 import com.hll_sc_app.bean.order.settle.CashierResp;
 import com.hll_sc_app.bean.order.settle.PayWaysResp;
 import com.hll_sc_app.bean.order.settle.SettlementResp;
@@ -198,22 +197,6 @@ public class Order {
                         .put("expressNo", expressNo).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-
-    /**
-     * 请求搜索
-     *
-     * @param searchWords 搜索词
-     */
-    public static void requestSearch(String searchWords, SimpleObserver<OrderSearchResp> observer) {
-        OrderService.INSTANCE
-                .requestSearch(BaseMapReq.newBuilder()
-                        .put("searchWords", searchWords)
-                        .put("source", "0")
-                        .put("shopMallID", UserConfig.getGroupID()).create())
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .subscribe(observer);
     }
 

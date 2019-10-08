@@ -48,12 +48,11 @@
 
         <ImageView
             android:id="@+id/img_clear"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:scaleType="centerCrop"
-            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/edt_search"
+            android:paddingRight="10dp"
             android:layout_centerVertical="true"
-            android:layout_marginRight="40dp"
             android:src="@drawable/ic_clear_search"
             android:visibility="gone"
             tools:visibility="visible" />

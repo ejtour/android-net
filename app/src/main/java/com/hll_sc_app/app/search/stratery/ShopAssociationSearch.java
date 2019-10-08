@@ -1,9 +1,8 @@
 package com.hll_sc_app.app.search.stratery;
 
 import com.hll_sc_app.app.search.ISearchContract;
-import com.hll_sc_app.app.search.presenter.OrderSearchPresenter;
-import com.hll_sc_app.bean.event.OrderEvent;
-import com.hll_sc_app.bean.order.search.OrderSearchBean;
+import com.hll_sc_app.app.search.presenter.ShopSearchPresenter;
+import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.window.NameValue;
 
 import org.greenrobot.eventbus.EventBus;
@@ -13,25 +12,25 @@ import org.greenrobot.eventbus.EventBus;
  * @since 2019/7/25
  */
 
-public class OrderSearch implements ISearchContract.ISearchStrategy {
+public class ShopAssociationSearch implements ISearchContract.ISearchStrategy {
     @Override
     public ISearchContract.ISearchPresenter getSearchPresenter() {
-        return new OrderSearchPresenter();
+        return new ShopSearchPresenter();
     }
 
     @Override
     public void onSearch(String searchWords) {
-        OrderSearchBean bean = new OrderSearchBean();
-        bean.setName(searchWords);
-        EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, bean));
+        ShopSearchEvent event = new ShopSearchEvent();
+        event.setName(searchWords);
+        EventBus.getDefault().post(event);
     }
 
     @Override
     public void onClick(NameValue nameValue) {
-        OrderSearchBean bean = new OrderSearchBean();
-        bean.setName(nameValue.getName());
-        bean.setShopMallId(nameValue.getValue());
-        EventBus.getDefault().post(new OrderEvent(OrderEvent.SEARCH_WORDS, bean));
+        ShopSearchEvent event = new ShopSearchEvent();
+        event.setName(nameValue.getName());
+        event.setShopMallId(nameValue.getValue());
+        EventBus.getDefault().post(event);
     }
 
     @Override

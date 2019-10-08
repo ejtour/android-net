@@ -58,6 +58,7 @@ public class SelectGoodsAdapter extends BaseQuickAdapter<ProductBean, BaseViewHo
                 .setText(R.id.osg_goods_brief, item.getProductBrief())
                 .setGone(R.id.osg_promotion, !TextUtils.isEmpty(item.getDiscountRuleTypeName()))
                 .setGone(R.id.osg_self_support, item.getProductType() == 1)
+                .setGone(R.id.osg_top, item.getTop() > 0)
                 .setGone(R.id.osg_next_day, item.getNextDayDelivery() == 1)
                 .setGone(R.id.osg_bundle, item.getBundlingGoodsType() == 1)
                 .setText(R.id.osg_promotion, item.getDiscountRuleTypeName())

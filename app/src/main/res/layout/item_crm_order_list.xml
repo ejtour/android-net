@@ -109,7 +109,6 @@
         android:textSize="@dimen/text_little_size"
         android:textColor="@color/color_7ed321"
         app:layout_constraintEnd_toStartOf="@id/col_after_sales_status"
-        app:layout_constraintEnd_toEndOf="parent"
         android:minWidth="60dp"
         android:layout_marginRight="5dp"
         app:layout_goneMarginRight="0dp"

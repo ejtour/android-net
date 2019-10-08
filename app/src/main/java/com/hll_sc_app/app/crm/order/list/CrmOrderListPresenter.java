@@ -14,6 +14,8 @@ import com.hll_sc_app.rest.Order;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 
+import java.util.List;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/9/6
@@ -75,12 +77,14 @@ public class CrmOrderListPresenter implements ICrmOrderListContract.ICrmOrderLis
     @Override
     public void queryShopList() {
         UserBean user = GreenDaoUtils.getUser();
+        List<String> roleCode = user.getRoleCode();
+        String salesmanID = roleCode != null && roleCode.contains("SalesManager") ? "" : user.getEmployeeID();
         Common.queryCooperationShop(BaseMapReq.newBuilder()
                 .put("actionType", "crmBill")
                 .put("groupID", user.getGroupID())
                 .put("pageNo", "1")
-                .put("pageSize", "9999")
-                .put("salesmanID", user.getEmployeeID())
+                .put("pageSize", "999")
+                .put("salesmanID", salesmanID, true)
                 .create(), new SimpleObserver<CooperationShopListResp>(mView) {
             @Override
             public void onSuccess(CooperationShopListResp cooperationShopListResp) {

@@ -59,7 +59,7 @@ public class AuditAdapter extends BaseQuickAdapter<AfterSalesBean, BaseViewHolde
         ((ThumbnailView) helper.getView(R.id.asa_thumbnail_wrapper)).setThumbnailListData(item.getDetailList()); // 缩略图
         StringBuilder descBuilder = new StringBuilder(AfterSalesHelper.getRefundTypeDesc(item.getRefundBillType())).append("，");
         if (item.getRefundBillStatus() == 5)
-            descBuilder.append(AfterSalesHelper.getRefundInfoPrefix(item.getRefundBillType()));
+            descBuilder.append(AfterSalesHelper.getRefundTypeLabel(item.getRefundBillType()));
         else if (item.getRefundBillStatus() == 7)
             descBuilder.append(AfterSalesHelper.getCancelRoleDes(item.getCancelRole()));
         descBuilder.append(AfterSalesHelper.getRefundStatusDesc(item.getRefundBillStatus()));

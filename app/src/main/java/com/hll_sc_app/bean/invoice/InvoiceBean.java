@@ -52,6 +52,9 @@ public class InvoiceBean {
 
     private String rejectReason;
 
+    private String businessBeginDate;
+    private String businessEndDate;
+
     public String getCreateTime() {
         return createTime;
     }
@@ -362,5 +365,21 @@ public class InvoiceBean {
 
     public void setShopTotal(int shopTotal) {
         this.shopTotal = shopTotal;
+    }
+
+    public String getBusinessBeginDate() {
+        return businessBeginDate;
+    }
+
+    public void setBusinessBeginDate(String businessBeginDate) {
+        this.businessBeginDate = businessBeginDate;
+    }
+
+    public String getBusinessEndDate() {
+        return businessEndDate;
+    }
+
+    public void setBusinessEndDate(String businessEndDate) {
+        this.businessEndDate = businessEndDate;
     }
 }

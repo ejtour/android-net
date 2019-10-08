@@ -81,6 +81,64 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
+                android:id="@+id/aid_shop_info_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aid_relevance_shop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_tips" />
+
+            <TextView
+                android:id="@+id/aid_group_name_label"
+                style="@style/InfoLabel"
+                android:text="开票集团"
+                app:layout_constraintStart_toStartOf="@id/aid_shop_info_bg"
+                app:layout_constraintTop_toTopOf="@id/aid_shop_info_bg" />
+
+            <TextView
+                android:id="@+id/aid_group_name"
+                style="@style/InfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_group_name_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_shop_info_bg"
+                app:layout_constraintStart_toEndOf="@id/aid_group_name_label"
+                app:layout_constraintTop_toTopOf="@id/aid_group_name_label"
+                tools:text="集团名称" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_group_name_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_group_name"
+                app:layout_constraintStart_toStartOf="@id/aid_group_name_label" />
+
+            <TextView
+                android:id="@+id/aid_relevance_shop"
+                style="@style/InfoEdit"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:drawablePadding="5dp"
+                app:layout_constraintBottom_toBottomOf="@id/aid_relevance_shop_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_shop_info_bg"
+                app:layout_constraintStart_toStartOf="@id/aid_relevance_shop_label"
+                app:layout_constraintTop_toTopOf="@id/aid_relevance_shop_label"
+                tools:text="包含 2 个门店" />
+
+            <TextView
+                android:id="@+id/aid_relevance_shop_label"
+                style="@style/InfoLabel"
+                android:layout_width="0dp"
+                android:text="关联门店"
+                app:layout_constraintStart_toStartOf="@id/aid_shop_info_bg"
+                app:layout_constraintTop_toBottomOf="@id/aid_group_name_label" />
+
+            <View
                 android:id="@+id/aid_base_info_bg"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -88,10 +146,10 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:background="@drawable/base_bg_white_radius_5_solid"
-                app:layout_constraintBottom_toBottomOf="@id/aid_remark"
+                app:layout_constraintBottom_toBottomOf="@id/aid_business_date_label"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aid_tips" />
+                app:layout_constraintTop_toBottomOf="@id/aid_shop_info_bg" />
 
             <TextView
                 android:id="@+id/aid_invoice_type_label"
@@ -147,17 +205,73 @@
                 app:layout_constraintStart_toStartOf="@id/aid_invoice_amount_label" />
 
             <TextView
+                android:id="@+id/aid_apply_date_label"
+                style="@style/InfoLabel"
+                android:text="申请日期"
+                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
+                app:layout_constraintTop_toBottomOf="@id/aid_invoice_amount_label" />
+
+            <TextView
+                android:id="@+id/aid_apply_date"
+                style="@style/InfoEdit"
+                app:layout_constraintBottom_toBottomOf="@id/aid_apply_date_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
+                app:layout_constraintStart_toEndOf="@id/aid_apply_date_label"
+                app:layout_constraintTop_toTopOf="@id/aid_apply_date_label"
+                tools:text="2019/09/23" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_apply_date_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_apply_date"
+                app:layout_constraintStart_toStartOf="@id/aid_apply_date_label" />
+
+            <TextView
+                android:id="@+id/aid_business_date_label"
+                style="@style/InfoLabel"
+                android:text="业务日期"
+                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
+                app:layout_constraintTop_toBottomOf="@id/aid_apply_date_label" />
+
+            <TextView
+                android:id="@+id/aid_business_date"
+                style="@style/InfoEdit"
+                android:hint="无"
+                app:layout_constraintBottom_toBottomOf="@id/aid_business_date_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
+                app:layout_constraintStart_toEndOf="@id/aid_business_date_label"
+                app:layout_constraintTop_toTopOf="@id/aid_business_date_label"
+                tools:text="2019/08/23 - 2019-09-22" />
+
+            <View
+                android:id="@+id/aid_taxpayer_info_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aid_address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_base_info_bg" />
+
+            <TextView
                 android:id="@+id/aid_invoice_title_label"
                 style="@style/InfoLabel"
                 android:text="发票抬头"
-                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
-                app:layout_constraintTop_toBottomOf="@id/aid_invoice_amount_label" />
+                app:layout_constraintStart_toStartOf="@id/aid_taxpayer_info_bg"
+                app:layout_constraintTop_toTopOf="@id/aid_taxpayer_info_bg" />
 
             <TextView
                 android:id="@+id/aid_invoice_title"
                 style="@style/InfoEdit"
                 app:layout_constraintBottom_toBottomOf="@id/aid_invoice_title_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
+                app:layout_constraintEnd_toEndOf="@id/aid_taxpayer_info_bg"
                 app:layout_constraintStart_toEndOf="@id/aid_invoice_title_label"
                 app:layout_constraintTop_toTopOf="@id/aid_invoice_title_label"
                 tools:text="个人" />
@@ -173,44 +287,17 @@
                 app:layout_constraintStart_toStartOf="@id/aid_invoice_title_label" />
 
             <TextView
-                android:id="@+id/aid_account_label"
-                style="@style/InfoLabel"
-                android:text="账号"
-                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
-                app:layout_constraintTop_toBottomOf="@id/aid_invoice_title_label" />
-
-            <TextView
-                android:id="@+id/aid_account"
-                style="@style/InfoEdit"
-                android:hint="无"
-                app:layout_constraintBottom_toBottomOf="@id/aid_account_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
-                app:layout_constraintStart_toEndOf="@id/aid_account_label"
-                app:layout_constraintTop_toTopOf="@id/aid_account_label"
-                tools:text="61239821983359432" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
-                android:background="@color/color_eeeeee"
-                app:layout_constraintBottom_toBottomOf="@id/aid_account_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_account"
-                app:layout_constraintStart_toStartOf="@id/aid_account_label" />
-
-            <TextView
                 android:id="@+id/aid_identifier_label"
                 style="@style/InfoLabel"
                 android:text="纳税人识别号"
-                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
-                app:layout_constraintTop_toBottomOf="@id/aid_account_label" />
+                app:layout_constraintStart_toStartOf="@id/aid_taxpayer_info_bg"
+                app:layout_constraintTop_toBottomOf="@id/aid_invoice_title_label" />
 
             <TextView
                 android:id="@+id/aid_identifier"
                 style="@style/InfoEdit"
                 app:layout_constraintBottom_toBottomOf="@id/aid_identifier_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
+                app:layout_constraintEnd_toEndOf="@id/aid_taxpayer_info_bg"
                 app:layout_constraintStart_toEndOf="@id/aid_identifier_label"
                 app:layout_constraintTop_toTopOf="@id/aid_identifier_label"
                 tools:text="321632613215" />
@@ -237,7 +324,7 @@
                 android:id="@+id/aid_bank_label"
                 style="@style/InfoLabel"
                 android:text="开户行"
-                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
+                app:layout_constraintStart_toStartOf="@id/aid_taxpayer_info_bg"
                 app:layout_constraintTop_toBottomOf="@id/aid_identifier_label" />
 
             <TextView
@@ -245,7 +332,7 @@
                 style="@style/InfoEdit"
                 android:hint="无"
                 app:layout_constraintBottom_toBottomOf="@id/aid_bank_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
+                app:layout_constraintEnd_toEndOf="@id/aid_taxpayer_info_bg"
                 app:layout_constraintStart_toEndOf="@id/aid_bank_label"
                 app:layout_constraintTop_toTopOf="@id/aid_bank_label"
                 tools:text="北京市西直门分行" />
@@ -260,22 +347,23 @@
                 app:layout_constraintEnd_toEndOf="@id/aid_bank"
                 app:layout_constraintStart_toStartOf="@id/aid_bank_label" />
 
+
             <TextView
-                android:id="@+id/aid_address_label"
+                android:id="@+id/aid_account_label"
                 style="@style/InfoLabel"
-                android:text="地址"
-                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
+                android:text="开户账号"
+                app:layout_constraintStart_toStartOf="@id/aid_taxpayer_info_bg"
                 app:layout_constraintTop_toBottomOf="@id/aid_bank_label" />
 
             <TextView
-                android:id="@+id/aid_address"
+                android:id="@+id/aid_account"
                 style="@style/InfoEdit"
                 android:hint="无"
-                app:layout_constraintBottom_toBottomOf="@id/aid_address_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
-                app:layout_constraintStart_toEndOf="@id/aid_address_label"
-                app:layout_constraintTop_toTopOf="@id/aid_address_label"
-                tools:text="北京市西直门外大街" />
+                app:layout_constraintBottom_toBottomOf="@id/aid_account_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_taxpayer_info_bg"
+                app:layout_constraintStart_toEndOf="@id/aid_account_label"
+                app:layout_constraintTop_toTopOf="@id/aid_account_label"
+                tools:text="61239821983359432" />
 
             <View
                 android:layout_width="0dp"
@@ -283,22 +371,52 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_10"
                 android:background="@color/color_eeeeee"
+                app:layout_constraintBottom_toBottomOf="@id/aid_account_label"
+                app:layout_constraintEnd_toEndOf="@id/aid_account"
+                app:layout_constraintStart_toStartOf="@id/aid_account_label" />
+
+            <TextView
+                android:id="@+id/aid_address_label"
+                style="@style/InfoLabel"
+                android:text="注册地址"
+                app:layout_constraintStart_toStartOf="@id/aid_taxpayer_info_bg"
+                app:layout_constraintTop_toBottomOf="@id/aid_account_label" />
+
+            <TextView
+                android:id="@+id/aid_address"
+                style="@style/InfoEdit"
+                android:hint="无"
                 app:layout_constraintBottom_toBottomOf="@id/aid_address_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_address"
-                app:layout_constraintStart_toStartOf="@id/aid_address_label" />
+                app:layout_constraintEnd_toEndOf="@id/aid_taxpayer_info_bg"
+                app:layout_constraintStart_toEndOf="@id/aid_address_label"
+                app:layout_constraintTop_toTopOf="@id/aid_address_label"
+                tools:text="北京市西直门外大街" />
+
+            <View
+                android:id="@+id/aid_recipient_info_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                app:layout_constraintBottom_toBottomOf="@id/aid_remark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_taxpayer_info_bg" />
 
             <TextView
                 android:id="@+id/aid_recipient_label"
                 style="@style/InfoLabel"
                 android:text="申请人"
-                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
-                app:layout_constraintTop_toBottomOf="@id/aid_address_label" />
+                app:layout_constraintStart_toStartOf="@id/aid_recipient_info_bg"
+                app:layout_constraintTop_toTopOf="@id/aid_recipient_info_bg" />
 
             <TextView
                 android:id="@+id/aid_recipient"
                 style="@style/InfoEdit"
                 app:layout_constraintBottom_toBottomOf="@id/aid_recipient_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
+                app:layout_constraintEnd_toEndOf="@id/aid_recipient_info_bg"
                 app:layout_constraintStart_toEndOf="@id/aid_recipient_label"
                 app:layout_constraintTop_toTopOf="@id/aid_recipient_label"
                 tools:text="销售大萌" />
@@ -317,14 +435,14 @@
                 android:id="@+id/aid_phone_label"
                 style="@style/InfoLabel"
                 android:text="联系电话"
-                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
+                app:layout_constraintStart_toStartOf="@id/aid_recipient_info_bg"
                 app:layout_constraintTop_toBottomOf="@id/aid_recipient_label" />
 
             <TextView
                 android:id="@+id/aid_phone"
                 style="@style/InfoEdit"
                 app:layout_constraintBottom_toBottomOf="@id/aid_phone_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
+                app:layout_constraintEnd_toEndOf="@id/aid_recipient_info_bg"
                 app:layout_constraintStart_toEndOf="@id/aid_phone_label"
                 app:layout_constraintTop_toTopOf="@id/aid_phone_label"
                 tools:text="19809876543" />
@@ -353,7 +471,7 @@
                 android:id="@+id/aid_remark_label"
                 style="@style/InfoLabel"
                 android:text="备注"
-                app:layout_constraintStart_toStartOf="@id/aid_base_info_bg"
+                app:layout_constraintStart_toStartOf="@id/aid_recipient_info_bg"
                 app:layout_constraintTop_toBottomOf="@id/aid_phone_label" />
 
             <TextView
@@ -365,59 +483,22 @@
                 android:minHeight="45dp"
                 android:padding="@dimen/dp_10"
                 android:singleLine="false"
-                app:layout_constraintEnd_toEndOf="@id/aid_base_info_bg"
+                app:layout_constraintEnd_toEndOf="@id/aid_recipient_info_bg"
                 app:layout_constraintStart_toEndOf="@id/aid_remark_label"
                 app:layout_constraintTop_toTopOf="@id/aid_remark_label" />
-
-            <View
-                android:id="@+id/aid_shop_order_bg"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
-                android:background="@drawable/base_bg_white_radius_5_solid"
-                app:layout_constraintBottom_toBottomOf="@id/aid_relevance_order"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aid_base_info_bg" />
-
-            <TextView
-                android:id="@+id/aid_relevance_shop_label"
-                style="@style/InfoLabel"
-                android:text="关联门店"
-                app:layout_constraintStart_toStartOf="@id/aid_shop_order_bg"
-                app:layout_constraintTop_toTopOf="@id/aid_shop_order_bg" />
-
-            <TextView
-                android:id="@+id/aid_relevance_shop"
-                style="@style/InfoEdit"
-                android:drawablePadding="5dp"
-                app:layout_constraintBottom_toBottomOf="@id/aid_relevance_shop_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_shop_order_bg"
-                app:layout_constraintStart_toEndOf="@id/aid_relevance_shop_label"
-                app:layout_constraintTop_toTopOf="@id/aid_relevance_shop_label"
-                tools:text="包含 8 个门店" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
-                android:background="@color/color_eeeeee"
-                app:layout_constraintBottom_toBottomOf="@id/aid_relevance_shop_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_relevance_shop"
-                app:layout_constraintStart_toStartOf="@id/aid_relevance_shop_label" />
 
             <TextView
                 android:id="@+id/aid_relevance_order"
                 style="@style/InfoEdit"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@drawable/base_bg_white_radius_5_solid"
                 android:drawableRight="@drawable/ic_arrow_gray"
-                android:drawablePadding="5dp"
                 app:layout_constraintBottom_toBottomOf="@id/aid_relevance_order_label"
-                app:layout_constraintEnd_toEndOf="@id/aid_shop_order_bg"
-                app:layout_constraintStart_toStartOf="@id/aid_relevance_order_label"
-                app:layout_constraintTop_toTopOf="@id/aid_relevance_order_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aid_recipient_info_bg"
                 tools:text="包含 4 个订单" />
 
             <TextView
@@ -425,8 +506,8 @@
                 style="@style/InfoLabel"
                 android:layout_width="0dp"
                 android:text="关联订单"
-                app:layout_constraintStart_toStartOf="@id/aid_shop_order_bg"
-                app:layout_constraintTop_toBottomOf="@id/aid_relevance_shop_label" />
+                app:layout_constraintStart_toStartOf="@id/aid_relevance_order"
+                app:layout_constraintTop_toTopOf="@id/aid_relevance_order" />
 
             <View
                 android:id="@+id/aid_extra_info_bg"

@@ -917,6 +917,11 @@ public class RouterConfig {
     public static final String CRM_MINE = "/fragment/crm/mine";
 
     /**
+     * CRM-设置
+     */
+    public static final String CRM_SETTING = "/activity/crm/settings";
+
+    /**
      * CRM-订单列表
      */
     public static final String CRM_ORDER_LIST = "/activity/crm/order/list";
@@ -1096,7 +1101,14 @@ public class RouterConfig {
     /*选择采购商集团*/
     public static final String ACTIVITY_SELECT_PURCHASER_LIST = "/activity/select/purchaser/list";
 
+    /**
+     * CRM-我的-配送路线
+     */
+    public static final String DELIVERY_ROUTE = "/activity/delivery/route";
 
-
+    /**
+     * CRM-我的-配送路线-路线详情
+     */
+    public static final String DELIVERY_ROUTE_DETAIL = "/activity/delivery/route/detail";
 }
 

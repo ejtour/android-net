@@ -15,7 +15,7 @@ import java.util.List;
 public class AfterSalesBean implements Parcelable {
     private int cancelRole;
     private long returnGoodsAuditTime;
-    private String onlyReceiveOrder;
+    private String onlyReceiveOrder; // 1关闭，2开启
     private int refundBillDate;
     private String canceler;
     private int clientSource;
@@ -111,8 +111,7 @@ public class AfterSalesBean implements Parcelable {
     }
 
     public boolean canModify() {
-        return billSource != 1 && refundBillStatus == 1 &&
-                !TextUtils.isEmpty(onlyReceiveOrder) && Integer.valueOf(onlyReceiveOrder) != 2;
+        return billSource != 1 && refundBillStatus == 1;
     }
 
     public double getPriceDifferences() {

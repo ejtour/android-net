@@ -510,7 +510,10 @@
 
     <TextView
         android:id="@+id/odf_express_no"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toStartOf="@id/odf_copy_express_no"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintBaseline_toBaselineOf="@+id/odf_express_no_label"
