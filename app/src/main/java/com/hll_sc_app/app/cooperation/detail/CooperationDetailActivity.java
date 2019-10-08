@@ -285,6 +285,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                     builder.append("账期支付").append("/");
                 } else if (TextUtils.equals(s, CooperationShopSettlementActivity.PAY_ONLINE)) {
                     builder.append("线上支付").append("/");
+                } else if (TextUtils.equals(s, CooperationShopSettlementActivity.PAY_CARD)) {
+                    builder.append("卡支付").append("/");
                 }
             }
         }

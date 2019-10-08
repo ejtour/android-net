@@ -50,6 +50,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     public static final String PAY_CASH = "1";
     public static final String PAY_ACCOUNT = "2";
     public static final String PAY_ONLINE = "3";
+    public static final String PAY_CARD = "4";
     public static final String TERM_WEEK = "1";
     public static final String TERM_MONTH = "2";
     public static final String[] STRINGS_WEEK = {"每周日", "每周一", "每周二", "每周三", "每周四", "每周五", "每周六"};
