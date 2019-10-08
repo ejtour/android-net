@@ -18,7 +18,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.common.AfterSalesType;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.CommonSearch;
+import com.hll_sc_app.app.search.stratery.AfterSalesGoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -102,7 +102,7 @@ public class AfterSalesSelectActivity extends BaseLoadActivity {
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, CommonSearch.class.getSimpleName());
+                SearchActivity.start(searchContent, AfterSalesGoodsSearch.class.getSimpleName());
             }
 
             @Override
