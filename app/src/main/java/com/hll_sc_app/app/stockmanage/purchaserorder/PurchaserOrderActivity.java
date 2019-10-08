@@ -171,6 +171,11 @@ public class PurchaserOrderActivity extends BaseLoadActivity implements Purchase
                     mPresenter.queryPurchaserOrderList(true);
                 }
             });
+            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+            start.setTime(CalendarUtils.parse(mTxtDateName.getTag(R.id.date_start).toString(),CalendarUtils.FORMAT_SERVER_DATE));
+            end.setTime(CalendarUtils.parse(mTxtDateName.getTag(R.id.date_end).toString(),CalendarUtils.FORMAT_SERVER_DATE));
+            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
+                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }
         mDateRangeWindow.showAsDropDownFix(mTxtDateName);
     }
