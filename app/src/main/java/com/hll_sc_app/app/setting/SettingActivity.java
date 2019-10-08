@@ -11,6 +11,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -53,7 +54,7 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
 
 
     @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting,
-        R.id.txt_cooperation_setting})
+            R.id.txt_cooperation_setting, R.id.rl_custom_phone})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.img_close) {
             finish();
@@ -68,6 +69,8 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
             RouterUtil.goToActivity(RouterConfig.COOPERATION_SETTING);
         } else if (view.getId() == R.id.txt_account_manage) {
             RouterUtil.goToActivity(RouterConfig.SETTING_ACCOUNT);
+        } else if (view.getId() == R.id.rl_custom_phone) {
+            UIUtils.callPhone(this, "56247970");
         }
     }
 
