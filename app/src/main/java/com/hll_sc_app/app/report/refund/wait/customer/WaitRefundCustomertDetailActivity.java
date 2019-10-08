@@ -113,6 +113,8 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
         switch (view.getId()) {
             case R.id.img_clear:
                 mParam.setProductName("");
+                mParam.setPurchaserID("");
+                mParam.setShopID("");
                 edtSearch.setText("");
                 mPresenter.queryRefundCustomerDetail(true);
                 imgClear.setVisibility(View.GONE);

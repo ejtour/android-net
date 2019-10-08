@@ -115,6 +115,8 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
             case R.id.img_clear:
                 mParam.setProductName("");
                 edtSearch.setText("");
+                mParam.setPurchaserID("");
+                mParam.setShopID("");
                 mPresenter.queryRefundProductDetail(true);
                 imgClear.setVisibility(View.GONE);
                 break;

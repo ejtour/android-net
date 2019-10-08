@@ -77,6 +77,8 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
     TextView depositTextView;
     @BindView(R.id.report_date_arrow)
     ImageView dateArrow;
+    @BindView(R.id.report_filter_arrow)
+    ImageView filterArrow;
     @BindView(R.id.txt_date_name)
     TextView dateTextView;
     private ContextOptionsWindow mExportOptionsWindow;
@@ -141,9 +143,9 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
         list.add(new OptionsBean(R.drawable.ic_menu_all, OptionType.OPTION_ALL));
         list.add(new OptionsBean(R.drawable.ic_menu_deposit, OptionType.OPTION_NOT_DEPOSIT));
         mOptionsWindow.setOnDismissListener(()->{
-            dateArrow.setRotation(0);
+            filterArrow.setRotation(0);
         });
-        dateArrow.setRotation(180);
+        filterArrow.setRotation(180);
         mOptionsWindow.refreshList(list);
         mOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
     }
@@ -210,6 +212,10 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
                 }
             });
         }
+        mDateRangeWindow.setOnDismissListener(()->{
+            dateArrow.setRotation(0);
+        });
+        dateArrow.setRotation(180);
         mDateRangeWindow.showAsDropDownFix(dateTextView);
     }
 

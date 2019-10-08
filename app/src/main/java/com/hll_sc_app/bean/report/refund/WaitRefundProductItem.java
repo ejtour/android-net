@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.report.refund;
 
+import com.alibaba.sdk.android.ams.common.util.StringUtil;
+import com.google.zxing.common.StringUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.impl.IStringArrayGenerator;
 
@@ -46,8 +48,8 @@ public class WaitRefundProductItem implements IStringArrayGenerator {
         List<CharSequence> list = new ArrayList<>();
         list.add(getProductCode());// 商品编码
         list.add(getProductName()); // 商品名称
-        list.add(getProductSpec()); // 规格
-        list.add(getRefundUnit()); //单位
+        list.add(StringUtil.isBlank(getProductSpec())?"-":getProductSpec()); // 规格
+        list.add(StringUtil.isBlank(getRefundUnit())?"-":getRefundUnit()); //单位
         list.add(getRefundNum()); // 数量
         list.add(CommonUtils.formatMoney(Double.parseDouble(getRefundAmount()))); //金额
         return list;
