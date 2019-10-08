@@ -1,9 +1,14 @@
 package com.hll_sc_app.app.wallet.status;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +21,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.wallet.account.create.CreateAccountActivity;
 import com.hll_sc_app.base.BaseFragment;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.wallet.WalletStatusResp;
@@ -70,8 +76,15 @@ public class VerifyFragment extends BaseFragment {
             case WalletStatusResp.STATUS_VERIFYING:
                 mIcon.setImageResource(R.drawable.ic_dialog_good);
                 mResultTitle.setText("您的账号申请已提交至铁金库！");
-                mResultDesc.setText("审核时间一般为1-3个工作日\n请耐心等待，我们将尽快审核您的相关信息！");
+                SpannableString alert = new SpannableString("审核时间一般为1-3个工作日\n请耐心等待，我们将尽快审核您的相关信息！\n 您也可以联系客服:010-56247970");
+                int len = alert.length();
+                alert.setSpan(new ForegroundColorSpan(Color.parseColor("#5695D2")), len - 12, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                alert.setSpan(new UnderlineSpan(), len - 12, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                mResultDesc.setText(alert);
                 mBtn.setVisibility(View.GONE);
+                mResultDesc.setOnClickListener(v -> {
+                    UIUtils.callPhone(getActivity(), "010-56247970");
+                });
                 break;
             case WalletStatusResp.STATUS_VERIFY_FAIL:
                 mIcon.setImageResource(R.drawable.ic_dialog_failure);
