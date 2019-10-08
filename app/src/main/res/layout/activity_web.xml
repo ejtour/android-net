@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.hll_sc_app.widget.TitleBar
         android:id="@+id/aw_title_bar"
@@ -18,7 +19,7 @@
             android:id="@+id/aw_progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:progress="5"/>
+            android:layout_height="2dp"
+            tools:progress="50" />
     </FrameLayout>
 </LinearLayout>
