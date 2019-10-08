@@ -102,9 +102,9 @@ public @interface OptionType {
 
     String OPTION_EXPORT_INVOICE = "导出开票记录";
 
-    String OPTION_REPORT_PRE_SEVEN_DATE = "近7日  ";
-    String OPTION_REPORT_PRE_THIRTY_DATE = "近30日  ";
-    String OPTION_REPORT_PRE_NINETY_DATE = "近90日  ";
+    String OPTION_REPORT_PRE_SEVEN_DATE = "近7日";
+    String OPTION_REPORT_PRE_THIRTY_DATE = "近30日";
+    String OPTION_REPORT_PRE_NINETY_DATE = "近90日";
 
     String OPTION_NOT_DEPOSIT = "不包含押金商品";
 

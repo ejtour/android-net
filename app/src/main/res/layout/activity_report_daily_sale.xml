@@ -39,7 +39,7 @@
 
     <RelativeLayout
         android:id="@+id/rl_select_date"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:paddingLeft="10dp"
@@ -61,12 +61,19 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:drawableLeft="@drawable/ic_date"
-            android:drawableRight="@drawable/ic_arrow_drop"
             android:drawablePadding="5dp"
-            android:gravity="right"
+            android:paddingRight="10dp"
             android:hint="请选择日期"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
             android:textColorHint="@color/color_aeaeae"/>
+        <ImageView
+            android:id="@+id/report_date_arrow"
+            android:background="@drawable/ic_report_drawable_date_type_ddd"
+            android:layout_alignRight="@+id/txt_date_name"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="5dp"
+            android:layout_height="wrap_content"/>
 
     </RelativeLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

@@ -102,6 +102,8 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
     TextView dateCustomer;
     @BindView(R.id.date_customer_display)
     LinearLayout linearLayout;
+    @BindView(R.id.report_time_arrow)
+    ImageView timeArrow;
 
     private CustomerSalesPresenter mPresenter;
 
@@ -343,6 +345,10 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
                     timeType = TimeTypeEnum.DAY.getCode();
                     setDateSelect(dateText);
                 });
+                dateWindow.setOnDismissListener(()->{
+                    timeArrow.setRotation(0);
+                });
+                timeArrow.setRotation(180);
                 dateWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDate==1){
                 //周的
@@ -357,6 +363,10 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
                     timeType = TimeTypeEnum.WEEK.getCode();
                     setDateSelect(dateText);
                 });
+                weekWindow.setOnDismissListener(()->{
+                    timeArrow.setRotation(0);
+                });
+                timeArrow.setRotation(180);
                 weekWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDate==2){
                 //月
@@ -368,6 +378,10 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
                     timeType = TimeTypeEnum.MONTH.getCode();
                     setDateSelect(dateText);
                 });
+                dateYearMonthWindow.setOnDismissListener(()->{
+                    timeArrow.setRotation(0);
+                });
+                timeArrow.setRotation(180);
                 dateYearMonthWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDate==3){
                 //年的
@@ -379,6 +393,10 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
                     timeType = TimeTypeEnum.YEAR.getCode();
                     setDateSelect(dateText);
                 });
+                dateYearWindow.setOnDismissListener(()->{
+                    timeArrow.setRotation(0);
+                });
+                timeArrow.setRotation(180);
                 dateYearWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }
         }

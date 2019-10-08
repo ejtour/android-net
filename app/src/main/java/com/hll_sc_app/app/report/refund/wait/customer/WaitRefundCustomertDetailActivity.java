@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
@@ -63,7 +64,7 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
     private WaitRefundCustomerDetailContract.IWaitRefundCustomerDetailPresenter mPresenter;
     WaitRefundReq mParam = new WaitRefundReq();
     @BindView(R.id.edt_search)
-    EditText edtSearch;
+    TextView edtSearch;
     @BindView(R.id.img_clear)
     ImageView imgClear;
     private ContextOptionsWindow mExportOptionsWindow;

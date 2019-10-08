@@ -290,6 +290,11 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
                     mPresenter.queryDeliveryLackGatherList(true);
                 }
             });
+            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+            start.setTime(CalendarUtils.parse(startDate,CalendarUtils.FORMAT_SERVER_DATE));
+            end.setTime(CalendarUtils.parse(endDate,CalendarUtils.FORMAT_SERVER_DATE));
+            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
+                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }
         mDateRangeWindow.showAsDropDownFix(mRlSelectDate);
     }

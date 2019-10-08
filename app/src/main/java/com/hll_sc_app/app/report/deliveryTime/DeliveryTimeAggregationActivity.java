@@ -237,10 +237,17 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
         DeliveryTimeBean deliveryTimeBean = new DeliveryTimeBean();
         long totalOrderNum = item.getOnTimeInspectionNum()+item.getBeyond30MinInspectionNum()
                   +item.getWithin15MinInspectionNum()+item.getWithin30MinInspectionNum();
-        deliveryTimeBean.setBeyond30MinInspectionNumRatio(new BigDecimal(item.getBeyond30MinInspectionNum()).divide(new BigDecimal(totalOrderNum),2,BigDecimal.ROUND_HALF_UP).floatValue());
-        deliveryTimeBean.setOnTimeInspectionNumRatio(new BigDecimal(item.getOnTimeInspectionNum()).divide(new BigDecimal(totalOrderNum),2,BigDecimal.ROUND_HALF_UP).floatValue());
-        deliveryTimeBean.setWithin15MinInspectionNumRatio(new BigDecimal(item.getWithin15MinInspectionNum()).divide(new BigDecimal(totalOrderNum),2,BigDecimal.ROUND_HALF_UP).floatValue());
-        deliveryTimeBean.setWithin30MinInspectionNumRatio(new BigDecimal(item.getWithin30MinInspectionNum()).divide(new BigDecimal(totalOrderNum),2,BigDecimal.ROUND_HALF_UP).floatValue());
+        if(totalOrderNum==0){
+            deliveryTimeBean.setBeyond30MinInspectionNumRatio(0.00f);
+            deliveryTimeBean.setOnTimeInspectionNumRatio(0.00f);
+            deliveryTimeBean.setWithin15MinInspectionNumRatio(0.00f);
+            deliveryTimeBean.setWithin30MinInspectionNumRatio(0.00f);
+        }else {
+            deliveryTimeBean.setBeyond30MinInspectionNumRatio(new BigDecimal(item.getBeyond30MinInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
+            deliveryTimeBean.setOnTimeInspectionNumRatio(new BigDecimal(item.getOnTimeInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
+            deliveryTimeBean.setWithin15MinInspectionNumRatio(new BigDecimal(item.getWithin15MinInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
+            deliveryTimeBean.setWithin30MinInspectionNumRatio(new BigDecimal(item.getWithin30MinInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
+        }
         deliveryTimeBean.setBeyond30MinInspectionNumDesc("差异30分钟以上");
         deliveryTimeBean.setOnTimeInspectionNumDesc("要求时间内");
         deliveryTimeBean.setWithin15MinInspectionNumDesc("差异15分钟内");

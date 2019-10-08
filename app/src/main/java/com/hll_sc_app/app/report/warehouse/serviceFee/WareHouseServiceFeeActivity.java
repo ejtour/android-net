@@ -249,6 +249,11 @@ public class WareHouseServiceFeeActivity extends BaseLoadActivity implements IWa
                     mPresenter.loadWareHouseServiceFeeList();
                 }
             });
+            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+            start.setTime(CalendarUtils.parse(mParam.getStartDate(),CalendarUtils.FORMAT_SERVER_DATE));
+            end.setTime(CalendarUtils.parse(mParam.getEndDate(),CalendarUtils.FORMAT_SERVER_DATE));
+            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
+                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }
         mDateRangeWindow.showAsDropDownFix(mRlSelectDate);
     }

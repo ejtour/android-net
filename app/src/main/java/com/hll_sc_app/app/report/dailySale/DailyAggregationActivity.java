@@ -65,6 +65,8 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     TextView dailyTotalnum;
     @BindView(R.id.txt_options)
     ImageView txtOptions;
+    @BindView(R.id.report_date_arrow)
+    ImageView dateArrow;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
 
@@ -115,13 +117,13 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(endDate, CalendarUtils.FORMAT_SERVER_DATE));
     }
 
-    @OnClick({R.id.img_back, R.id.rl_select_date,R.id.txt_options})
+    @OnClick({R.id.img_back, R.id.txt_date_name,R.id.txt_options})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
                 finish();
                 break;
-            case R.id.rl_select_date:
+            case R.id.txt_date_name:
                 showDateRangeWindow();
                 break;
             case R.id.txt_options:
@@ -158,7 +160,16 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
                     mPresenter.queryDailyAggregationList(true);
                 }
             });
+            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+            start.setTime(CalendarUtils.parse(mTxtDateName.getTag(R.id.date_start).toString(),CalendarUtils.FORMAT_SERVER_DATE));
+            end.setTime(CalendarUtils.parse(mTxtDateName.getTag(R.id.date_end).toString(),CalendarUtils.FORMAT_SERVER_DATE));
+            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
+                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }
+        mDateRangeWindow.setOnDismissListener(()->{
+            dateArrow.setRotation(0);
+        });
+        dateArrow.setRotation(180);
         mDateRangeWindow.showAsDropDownFix(mRlSelectDate);
     }
 

@@ -27,12 +27,13 @@
         app:layout_constraintStart_toStartOf="@id/rog_title_bar"
         app:layout_constraintTop_toTopOf="@id/rog_title_bar">
 
-        <EditText
+        <TextView
             android:id="@+id/edt_search"
             android:layout_width="287dp"
             android:layout_height="25dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_fafafa_radius_20_solid"

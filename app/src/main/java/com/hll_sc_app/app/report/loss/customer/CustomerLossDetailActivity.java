@@ -27,6 +27,7 @@ import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.TitleBar;
@@ -93,7 +94,8 @@ public class CustomerLossDetailActivity extends BaseLoadActivity implements Cust
         mPresenter = CustomerLossDetailPresenter.newInstance();
         Date date = new Date();
         String currentDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
-        String startDate = CalendarUtils.format(CalendarUtils.getWantDay(date, -7),CalendarUtils.FORMAT_LOCAL_DATE);
+        startDate = CalendarUtils.format(CalendarUtils.getWantDay(date, -7),CalendarUtils.FORMAT_LOCAL_DATE);
+        endDate = currentDate;
         dateTextView.setText(
                 String.format("%s - %s",
                         CalendarUtils.getDateFormatString(startDate,CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD),
@@ -103,7 +105,7 @@ public class CustomerLossDetailActivity extends BaseLoadActivity implements Cust
         //0-客户流失率 1-门店明细
         mParam.setFlag(0);
         mParam.setStartDate(startDate);
-        mParam.setEndDate(currentDate);
+        mParam.setEndDate(endDate);
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -178,6 +180,12 @@ public class CustomerLossDetailActivity extends BaseLoadActivity implements Cust
                     mPresenter.queryCustomerLossDetail(true);
                 }
             });
+            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+            start.setTime(CalendarUtils.parse(startDate,CalendarUtils.FORMAT_SERVER_DATE));
+            end.setTime(CalendarUtils.parse(endDate,CalendarUtils.FORMAT_SERVER_DATE));
+            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
+                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
+
         }
         mDateRangeWindow.setOnDismissListener(()->{
             dateArrow.setRotation(0);
