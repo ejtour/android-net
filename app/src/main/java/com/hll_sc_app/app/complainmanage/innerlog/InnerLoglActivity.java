@@ -20,7 +20,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.ComplainInnerLogResp;
 import com.hll_sc_app.bean.complain.DropMenuBean;
-import com.hll_sc_app.widget.MultipSelectionDialog;
+import com.hll_sc_app.widget.MultiSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
@@ -63,8 +63,8 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
     private DepartFlowAdpter mLinkAdpter;
     private DepartFlowAdpter mProblemAdpter;
 
-    private MultipSelectionDialog mLinkSelectDialog;
-    private MultipSelectionDialog mProblemSelectDialog;
+    private MultiSelectionDialog mLinkSelectDialog;
+    private MultiSelectionDialog mProblemSelectDialog;
     private ComplainInnerLogResp mComplainInnerLogResp;
 
     public static void start(String compaintId) {
@@ -177,7 +177,7 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
         if (TextUtils.isEmpty(mComplainInnerLogResp.getIssueDepartment())) {
             mComplainInnerLogResp.setIssueDepartment("");
         }
-        mLinkSelectDialog = MultipSelectionDialog.newBuilder(this, new MultipSelectionDialog.WrapperName<DropMenuBean>() {
+        mLinkSelectDialog = MultiSelectionDialog.newBuilder(this, new MultiSelectionDialog.WrapperName<DropMenuBean>() {
             @Override
             public String getName(DropMenuBean departmentsBean) {
                 return departmentsBean.getValue();
@@ -203,7 +203,7 @@ public class InnerLoglActivity extends BaseLoadActivity implements IInnerLogCont
                 .selectByKey(Arrays.asList(mComplainInnerLogResp.getRelationDepartment().split(",")))
                 .create();
 
-        mProblemSelectDialog = MultipSelectionDialog.newBuilder(this, new MultipSelectionDialog.WrapperName<DropMenuBean>() {
+        mProblemSelectDialog = MultiSelectionDialog.newBuilder(this, new MultiSelectionDialog.WrapperName<DropMenuBean>() {
             @Override
             public String getName(DropMenuBean departmentsBean) {
                 return departmentsBean.getValue();

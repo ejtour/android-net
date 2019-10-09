@@ -26,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MultipSelectionDialog<T> extends BaseDialog {
+public class MultiSelectionDialog<T> extends BaseDialog {
     private final WrapperName<T> mWrapperName;
     @BindView(R.id.dss_title)
     TextView mTitle;
@@ -35,7 +35,7 @@ public class MultipSelectionDialog<T> extends BaseDialog {
     private MultipSelectionAdapter mAdapter;
     private OnSelectListener<T> mListener;
 
-    private MultipSelectionDialog(@NonNull Activity context, WrapperName<T> wrapperName) {
+    private MultiSelectionDialog(@NonNull Activity context, WrapperName<T> wrapperName) {
         super(context);
         mWrapperName = wrapperName;
     }
@@ -108,10 +108,10 @@ public class MultipSelectionDialog<T> extends BaseDialog {
 
 
     public static class Builder<T> {
-        private MultipSelectionDialog<T> mDialog;
+        private MultiSelectionDialog<T> mDialog;
 
         Builder(Activity context, WrapperName<T> wrapperName) {
-            mDialog = new MultipSelectionDialog<T>(context, wrapperName);
+            mDialog = new MultiSelectionDialog<T>(context, wrapperName);
         }
 
         public Builder<T> refreshList(List<T> list) {
@@ -139,7 +139,7 @@ public class MultipSelectionDialog<T> extends BaseDialog {
             return this;
         }
 
-        public MultipSelectionDialog create() {
+        public MultiSelectionDialog create() {
             return mDialog;
         }
     }
