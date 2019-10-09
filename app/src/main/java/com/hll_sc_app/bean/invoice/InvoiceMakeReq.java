@@ -24,6 +24,14 @@ public class InvoiceMakeReq implements Parcelable {
      */
     private List<String> billIDList;
     /**
+     * 业务开始日期
+     */
+    private String businessBeginDate;
+    /**
+     * 业务结束日期
+     */
+    private String businessEndDate;
+    /**
      * 集团ID
      */
     private String groupID;
@@ -118,6 +126,22 @@ public class InvoiceMakeReq implements Parcelable {
 
     public void setBillIDList(List<String> billIDList) {
         this.billIDList = billIDList;
+    }
+
+    public String getBusinessBeginDate() {
+        return businessBeginDate;
+    }
+
+    public void setBusinessBeginDate(String businessBeginDate) {
+        this.businessBeginDate = businessBeginDate;
+    }
+
+    public String getBusinessEndDate() {
+        return businessEndDate;
+    }
+
+    public void setBusinessEndDate(String businessEndDate) {
+        this.businessEndDate = businessEndDate;
     }
 
     public String getGroupID() {
@@ -274,6 +298,8 @@ public class InvoiceMakeReq implements Parcelable {
         dest.writeString(this.account);
         dest.writeString(this.address);
         dest.writeStringList(this.billIDList);
+        dest.writeString(this.businessBeginDate);
+        dest.writeString(this.businessEndDate);
         dest.writeString(this.groupID);
         dest.writeString(this.invoiceNO);
         dest.writeDouble(this.invoicePrice);
@@ -301,6 +327,8 @@ public class InvoiceMakeReq implements Parcelable {
         this.account = in.readString();
         this.address = in.readString();
         this.billIDList = in.createStringArrayList();
+        this.businessBeginDate = in.readString();
+        this.businessEndDate = in.readString();
         this.groupID = in.readString();
         this.invoiceNO = in.readString();
         this.invoicePrice = in.readDouble();

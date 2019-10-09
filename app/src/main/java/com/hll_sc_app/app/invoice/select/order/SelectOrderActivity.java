@@ -158,6 +158,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
                 mMakeReq.setInvoicePrice(mInvoiceOrderResp.getInvoinceAmount());
                 mMakeReq.setOrderAmount(mInvoiceOrderResp.getOrderAmount());
                 mMakeReq.setRefundAmount(mInvoiceOrderResp.getRefundAmount());
+                mMakeReq.setBusinessBeginDate(mParam.getFormatStartDate());
+                mMakeReq.setBusinessEndDate(mParam.getFormatEndDate());
                 List<String> orderList = new ArrayList<>();
                 List<String> refundList = new ArrayList<>();
                 for (InvoiceOrderBean bean : mInvoiceOrderResp.getList()) {
