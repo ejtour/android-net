@@ -32,24 +32,6 @@
         tools:text="采购商门店名称" />
 
     <TextView
-        android:id="@+id/ibl_warehouse_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/bg_tag_primary_solid"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:text="代仓"
-        android:textAppearance="@style/TextAppearance.City22.Little.White"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/ibl_shop_name"
-        app:layout_constraintEnd_toStartOf="@+id/ibl_status"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toEndOf="@+id/ibl_shop_name"
-        app:layout_constraintTop_toTopOf="@+id/ibl_shop_name" />
-
-    <TextView
         android:id="@+id/ibl_group_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

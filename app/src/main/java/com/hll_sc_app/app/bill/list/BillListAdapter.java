@@ -74,7 +74,6 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
                 .setText(R.id.ibl_bill_num, CommonUtils.formatNumber(item.getBillNum()))
                 .setText(R.id.ibl_bill_amount, String.format("¥%s", CommonUtils.formatMoney(item.getTotalAmount())))
                 .setGone(R.id.ibl_confirm, !mCrm && !mIsBatch && item.getSettlementStatus() != BillStatus.SETTLED)
-                .setGone(R.id.ibl_warehouse_tag, item.getBillStatementFlag() == 1)
                 .setGone(R.id.ibl_check_box, mIsBatch)
                 .setGone(R.id.ibl_view_detail, !mIsBatch)
                 .setChecked(R.id.ibl_check_box, item.isSelected())

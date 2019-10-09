@@ -29,8 +29,6 @@ public class BillDetailHeader extends ConstraintLayout {
     GlideImageView mIcon;
     @BindView(R.id.bdh_shop_name)
     TextView mShopName;
-    @BindView(R.id.bdh_warehouse_tag)
-    TextView mWarehouseTag;
     @BindView(R.id.bdh_group_name)
     TextView mGroupName;
     @BindView(R.id.bdh_bill_cycle)
@@ -79,7 +77,6 @@ public class BillDetailHeader extends ConstraintLayout {
         mShopName.setText(data.getShopName());
         mGroupName.setText(data.getPurchaserName());
         mStatus.setText(builder);
-        mWarehouseTag.setVisibility(data.getBillStatementFlag() == 1 ? VISIBLE : GONE);
         mBillDate.setText(String.format("账单日：%s", convertDate(data.getBillCreateTime())));
         mSettlementDate.setText(String.format("结算日：%s", convertDate(data.getPaymentSettleDay())));
         mBillCycle.setText(String.format("账单周期：%s - %s", convertDate(data.getStartPaymentDay()), convertDate(data.getEndPaymentDay())));
@@ -87,11 +84,11 @@ public class BillDetailHeader extends ConstraintLayout {
         mIncome.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalIncomeAmount())));
         mRefund.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalRefundAmount())));
 
-        //代仓类型
+        // 代仓类型
         if (data.getBillStatementFlag() == 1) {
             mTxtBillType.setVisibility(VISIBLE);
             mTxtBillType.setText("账单类型：代仓对账单");
-            mTxtBillReceive.setText("收款方" + (data.getPayee() == 0 ? "代仓代收款" : "货主收款"));
+            mTxtBillReceive.setText(String.format("收款方%s", data.getPayee() == 0 ? "代仓代收款" : "货主收款"));
         } else {
             mTxtBillType.setVisibility(GONE);
             mTxtBillReceive.setVisibility(GONE);
