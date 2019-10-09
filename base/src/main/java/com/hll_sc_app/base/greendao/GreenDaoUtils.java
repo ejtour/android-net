@@ -1,5 +1,7 @@
 package com.hll_sc_app.base.greendao;
 
+import com.hll_sc_app.base.bean.AccountBean;
+import com.hll_sc_app.base.bean.AccountBeanDao;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.bean.UserBeanDao;
 import com.hll_sc_app.base.bean.UserShop;
@@ -36,4 +38,31 @@ public class GreenDaoUtils {
         DaoSessionManager.getDaoSession().getUserBeanDao().deleteAll();
         DaoSessionManager.getDaoSession().getUserShopDao().deleteAll();
     }
+
+
+    /**
+     * 更新缓存的账号
+     * 最多存10个
+     */
+    public static void updateAccount(AccountBean accountBean) {
+        if (queryAllAccount().size() == 10) {
+            AccountBean old = DaoSessionManager.getDaoSession().getAccountBeanDao().queryBuilder().orderAsc(AccountBeanDao.Properties.Time).list().get(0);
+            deleteAccount(old.getAccount());
+        }
+        DaoSessionManager.getDaoSession().getAccountBeanDao().insertOrReplaceInTx(accountBean);
+    }
+
+    public static List<AccountBean> queryAllAccount() {
+        return DaoSessionManager.getDaoSession().getAccountBeanDao().queryBuilder().orderDesc(AccountBeanDao.Properties.Time).list();
+    }
+
+    public static void deleteAccount(String key) {
+        DaoSessionManager.getDaoSession().getAccountBeanDao().deleteByKey(key);
+    }
+
+    private static void deleteAllAccount() {
+        DaoSessionManager.getDaoSession().getAccountBeanDao().deleteAll();
+    }
+
+
 }

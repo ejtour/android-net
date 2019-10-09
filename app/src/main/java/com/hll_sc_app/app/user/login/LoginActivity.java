@@ -4,14 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,10 +23,12 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.AccountBean;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -35,6 +39,9 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ClearEditText;
 import com.hll_sc_app.citymall.util.ViewUtils;
+
+import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +71,14 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
     LinearLayout mLlLogin;
     @BindView(R.id.ll_toLogin)
     LinearLayout mLlToLogin;
+    @BindView(R.id.list_account_view)
+    RecyclerView mListCountView;
+    @BindView(R.id.img_arrow_account)
+    ImageView mArrowAccount;
+    @BindView(R.id.ll_edt_phone)
+    LinearLayout mLlEdtPhone;
+    @BindView(R.id.ll_operation)
+    LinearLayout mLlOperation;
     private LoginPresenter mPresenter;
 
     @Override
@@ -84,17 +99,72 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         mLlContent.post(() -> ObjectAnimator.ofFloat(mLlContent, "translationY", mLlContent.getHeight(),
             UIUtils.dip2px(127)).setDuration(800).start());
         InputTextWatcher textWatcher = new InputTextWatcher();
-        mEdtPhone.setText(GlobalPreference.getParam(LoginPresenter.LOGIN_PHONE, ""));
         mEdtPhone.addTextChangedListener(textWatcher);
         mEdtPWD.addTextChangedListener(textWatcher);
+        mEdtPhone.clearFocus();
+        //获取存储的已登记的账号并初始化列表
+        List<AccountBean> accountBeans = GreenDaoUtils.queryAllAccount();
+        mArrowAccount.setVisibility(accountBeans.size() == 0 ? View.GONE : View.VISIBLE);
+        if (accountBeans.size() > 0) {
+            mEdtPhone.setText(accountBeans.get(0).getAccount());
+            CountAdapter countAdapter = new CountAdapter(accountBeans);
+            mListCountView.setAdapter(countAdapter);
+            countAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                AccountBean accountBean = countAdapter.getItem(position);
+                if (view.getId() == R.id.txt_phone) {
+                    mEdtPhone.setText(accountBean.getAccount());
+                    mEdtPhone.setSelection(accountBean.getAccount().length());
+                    mEdtPWD.setText("");
+                    setAccountListVisible(false);
+                } else if (view.getId() == R.id.img_del) {
+                    countAdapter.remove(position);
+                    GreenDaoUtils.deleteAccount(accountBean.getAccount());
+                    if (countAdapter.getData().size() == 0) {
+                        mArrowAccount.setVisibility(View.GONE);
+                        setAccountListVisible(false);
+                    }
+                }
+            });
+            mEdtPhone.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    setAccountListVisible(false);
+                }
+                setPhoneEdtBackgroudColor(hasFocus);
+            });
+        }
     }
 
-    private void toHomePage() {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME, this);
+    /**
+     * 账号历史列表显示和隐藏
+     *
+     * @param bVisible
+     */
+    private void setAccountListVisible(boolean bVisible) {
+        int isVisible = bVisible ? View.VISIBLE : View.GONE;
+        mListCountView.setVisibility(isVisible);
+        mArrowAccount.setRotation(bVisible ? 180f : 0f);
+        mEdtPWD.setVisibility(isVisible == View.VISIBLE ? View.GONE : View.VISIBLE);
+        mTxtLogin.setVisibility(isVisible == View.VISIBLE ? View.GONE : View.VISIBLE);
+        mLlOperation.setVisibility(isVisible == View.VISIBLE ? View.GONE : View.VISIBLE);
+        if (bVisible) {
+            ViewUtils.clearEditFocus(mEdtPhone);
+            mEdtPhone.clearFocus();
+        }
+        setPhoneEdtBackgroudColor(bVisible);
+    }
+
+    private void setPhoneEdtBackgroudColor(boolean isFocus) {
+        mLlEdtPhone.setBackgroundResource(isFocus ? R.drawable.bg_66white_radius_5:R.drawable.bg_33white_radius_5);
     }
 
     @Override
     public void loginSuccess(String authType) {
+        //存储登录的账号
+        AccountBean accountBean = new AccountBean();
+        accountBean.setAccount(mEdtPhone.getText().toString());
+        accountBean.setTime(Calendar.getInstance().getTimeInMillis());
+        GreenDaoUtils.updateAccount(accountBean);
+
         if (!TextUtils.isEmpty(mDestination)) {
             ARouter.getInstance().build(mDestination).with(getIntent().getExtras()).setProvider(new LoginInterceptor())
                 .navigation(LoginActivity.this, new NavCallback() {
@@ -114,6 +184,34 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
             toHomePage();
         } else {
             showChoiceDialog();
+        }
+    }
+
+    private void toHomePage() {
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME, this);
+    }
+
+    @OnClick({R.id.txt_login, R.id.txt_findPWD, R.id.txt_register, R.id.txt_toLogin, R.id.txt_toRegister, R.id.img_arrow_account})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.txt_login:
+                mPresenter.toLogin(getLoginPhone(), getLoginPWD(), null);
+                break;
+            case R.id.txt_findPWD:
+                RouterUtil.goToActivity(RouterConfig.USER_FIND);
+                break;
+            case R.id.txt_register:
+            case R.id.txt_toRegister:
+                toRegister();
+                break;
+            case R.id.txt_toLogin:
+                toLogin();
+                break;
+            case R.id.img_arrow_account:
+                toggleCountList();
+                break;
+            default:
+                break;
         }
     }
 
@@ -195,27 +293,6 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         RouterUtil.goToActivity(RouterConfig.USER_REGISTER);
     }
 
-    @OnClick({R.id.txt_login, R.id.txt_findPWD, R.id.txt_register, R.id.txt_toLogin, R.id.txt_toRegister})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.txt_login:
-                mPresenter.toLogin(getLoginPhone(), getLoginPWD(), null);
-                break;
-            case R.id.txt_findPWD:
-                RouterUtil.goToActivity(RouterConfig.USER_FIND);
-                break;
-            case R.id.txt_register:
-            case R.id.txt_toRegister:
-                toRegister();
-                break;
-            case R.id.txt_toLogin:
-                toLogin();
-                break;
-            default:
-                break;
-        }
-    }
-
     private void toLogin() {
         float screenHeight = UIUtils.getScreenHeight(this);
         float translationY = screenHeight - UIUtils.dip2px(130) - mLlContent.getHeight();
@@ -230,16 +307,24 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 mLlToLogin.setVisibility(View.INVISIBLE);
-                ViewUtils.getEditFocus(mEdtPhone);
+            /*  ViewUtils.getEditFocus(mEdtPhone);
                 InputMethodManager imm =
                     (InputMethodManager) LoginActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
                     imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                }
+                }*/
             }
         });
         animatorSet.start();
         mLlLogin.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 切换隐藏和显示账号列表
+     */
+    private void toggleCountList() {
+        int visible = mListCountView.getVisibility();
+        setAccountListVisible(visible == View.GONE);
     }
 
     private class InputTextWatcher implements TextWatcher {
@@ -256,6 +341,27 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         @Override
         public void afterTextChanged(Editable s) {
             mTxtLogin.setEnabled(!TextUtils.isEmpty(getLoginPhone()) && !TextUtils.isEmpty(getLoginPWD()));
+        }
+    }
+
+    /**
+     * 存储已登录过的账号
+     */
+    private class CountAdapter extends BaseQuickAdapter<AccountBean, BaseViewHolder> {
+        public CountAdapter(@Nullable List<AccountBean> data) {
+            super(R.layout.list_item_login_account, data);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
+            holder.addOnClickListener(R.id.img_del).addOnClickListener(R.id.txt_phone);
+            return holder;
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, AccountBean item) {
+            helper.setText(R.id.txt_phone, item.getAccount());
         }
     }
 }

@@ -61,7 +61,7 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
                 @Override
                 public void onSuccess(LoginResp resp) {
                     GlobalPreference.putParam(UserConfig.ACCESS_TOKEN, resp.getAccessToken());
-                    GlobalPreference.putParam(LOGIN_PHONE, loginPhone);
+//                    GlobalPreference.putParam(LOGIN_PHONE, loginPhone);
                     UserBean userBean = resp.getUser();
                     userBean.setAccessToken(resp.getAccessToken());
                     userBean.setCurRole(userBean.getAuthType());
