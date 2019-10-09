@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/isr_rank"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toStartOf="@id/isr_number"
+        app:layout_constraintHorizontal_weight="16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="" />
+
+    <ImageView
+        android:id="@+id/isr_medal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/isr_rank"
+        app:layout_constraintEnd_toEndOf="@id/isr_rank"
+        app:layout_constraintStart_toStartOf="@id/isr_rank"
+        app:layout_constraintTop_toTopOf="@id/isr_rank"
+        tools:src="@drawable/ic_medal_gold" />
+
+    <TextView
+        android:id="@+id/isr_number"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toBottomOf="@id/isr_rank"
+        app:layout_constraintEnd_toStartOf="@id/isr_name"
+        app:layout_constraintHorizontal_weight="27"
+        app:layout_constraintStart_toEndOf="@id/isr_rank"
+        app:layout_constraintTop_toTopOf="@id/isr_rank"
+        tools:text="002" />
+
+    <TextView
+        android:id="@+id/isr_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toBottomOf="@id/isr_rank"
+        app:layout_constraintEnd_toStartOf="@id/isr_amount"
+        app:layout_constraintHorizontal_weight="27"
+        app:layout_constraintStart_toEndOf="@id/isr_number"
+        app:layout_constraintTop_toTopOf="@id/isr_rank"
+        tools:text="赵钱" />
+
+    <TextView
+        android:id="@+id/isr_amount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical|right"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toBottomOf="@id/isr_rank"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="30"
+        app:layout_constraintStart_toEndOf="@id/isr_name"
+        app:layout_constraintTop_toTopOf="@id/isr_rank"
+        tools:text="¥1000.00" />
+</android.support.constraint.ConstraintLayout>

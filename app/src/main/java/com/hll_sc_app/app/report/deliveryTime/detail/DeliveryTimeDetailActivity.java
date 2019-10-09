@@ -331,6 +331,7 @@ public class DeliveryTimeDetailActivity extends BaseLoadActivity implements IDel
             mTimeText.setText(OptionType.OPTION_REPORT_PRE_NINETY_DATE);
         }else if(TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CUSTOMER_DEFINE)){
             timeFlag = TimeFlagEnum.CUSTOMDEFINE.getCode();
+            mTimeText.setText(OptionType.OPTION_REPORT_CUSTOMER_DEFINE);
             isClickCustomerDefined = true;
             isFirstClickCustomerDefined = true;
             //显示时间组件

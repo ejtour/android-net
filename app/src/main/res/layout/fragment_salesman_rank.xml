@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/fsr_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="10月" />
+
+    <TextView
+        android:id="@+id/fsr_amount_my"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="right|center_vertical"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="¥4000.00" />
+
+    <TextView
+        android:id="@+id/fsr_rank_my"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toStartOf="@id/fsr_amount_my"
+        app:layout_constraintStart_toEndOf="@id/fsr_date_label"
+        app:layout_constraintTop_toTopOf="@id/fsr_date_label"
+        tools:text="我的本月排名：5" />
+
+    <TextView
+        android:id="@+id/fsr_rank"
+        android:layout_width="0dp"
+        android:layout_height="38dp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:text="排名"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintEnd_toStartOf="@id/fsr_number"
+        app:layout_constraintHorizontal_weight="16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fsr_date_label" />
+
+    <TextView
+        android:id="@+id/fsr_number"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:text="销售号码"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/fsr_rank"
+        app:layout_constraintEnd_toStartOf="@id/fsr_name"
+        app:layout_constraintHorizontal_weight="27"
+        app:layout_constraintStart_toEndOf="@id/fsr_rank"
+        app:layout_constraintTop_toTopOf="@id/fsr_rank" />
+
+    <TextView
+        android:id="@+id/fsr_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:text="销售姓名"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/fsr_rank"
+        app:layout_constraintEnd_toStartOf="@id/fsr_amount"
+        app:layout_constraintHorizontal_weight="27"
+        app:layout_constraintStart_toEndOf="@id/fsr_number"
+        app:layout_constraintTop_toTopOf="@id/fsr_rank" />
+
+    <TextView
+        android:id="@+id/fsr_amount"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical|right"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:text="交易额"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/fsr_rank"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="30"
+        app:layout_constraintStart_toEndOf="@id/fsr_name"
+        app:layout_constraintTop_toTopOf="@id/fsr_rank" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/fsr_refresh_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fsr_rank">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fsr_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</android.support.constraint.ConstraintLayout>

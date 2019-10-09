@@ -38,13 +38,12 @@ import com.hll_sc_app.bean.order.place.OrderCommitReq;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.bean.order.place.SupplierGroupBean;
-import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
-import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.order.ExecuteDateDialog;
+import com.hll_sc_app.widget.order.PayMethodDialog;
 import com.hll_sc_app.widget.order.ShopDiscountDialog;
 
 import java.util.ArrayList;
@@ -109,7 +108,7 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
     private SupplierGroupBean mSupplierBean;
     private int mItemSize;
     private ShopDiscountDialog mDiscountDialog;
-    private SingleSelectionDialog mPayMethodDialog;
+    private PayMethodDialog mPayMethodDialog;
     private ExecuteDateDialog mDateDialog;
     private IPlaceOrderConfirmContract.IPlaceOrderConfirmPresenter mPresenter;
     private List<String> mDayList = new ArrayList<>();
@@ -436,27 +435,28 @@ public class PlaceOrderConfirmActivity extends BaseLoadActivity implements IPlac
             return;
         }
         if (mPayMethodDialog == null) {
-            List<NameValue> list = new ArrayList<>();
-            NameValue select = null;
-            if (payment.getAccountPayment() == 1) list.add(new NameValue("账期支付", "2"));
-            if (payment.getCashPayment() == 1) list.add(new NameValue("货到付款", "1"));
-            if (payment.getOnlinePayment() == 1) list.add(new NameValue("在线支付", "3"));
+            List<PayMethodDialog.PayMethod> list = new ArrayList<>();
+            PayMethodDialog.PayMethod select = null;
+            if (payment.getOnlinePayment() == 1)
+                list.add(new PayMethodDialog.PayMethod("在线支付", "3", R.drawable.ic_pay_online));
+            if (payment.getCashPayment() == 1)
+                list.add(new PayMethodDialog.PayMethod("货到付款", "1", R.drawable.ic_pay_cash));
+            if (payment.getAccountPayment() == 1)
+                list.add(new PayMethodDialog.PayMethod("账期支付", "2", R.drawable.ic_pay_account));
             if (list.size() == 0) {
                 showToast("没有可用的支付方式");
                 return;
             }
-            for (NameValue value : list) {
+            for (PayMethodDialog.PayMethod value : list) {
                 if (value.getValue().equals(String.valueOf(mSupplierBean.getPayType()))) {
                     select = value;
                     break;
                 }
             }
-            mPayMethodDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
+            mPayMethodDialog = new PayMethodDialog(this)
                     .refreshList(list)
-                    .setTitleText("选择支付方式")
                     .select(select)
-                    .setOnSelectListener(nameValue -> updatePayMethod(Integer.parseInt(nameValue.getValue()), nameValue.getName()))
-                    .create();
+                    .setListener(nameValue -> updatePayMethod(Integer.parseInt(nameValue.getValue()), nameValue.getName()));
         }
         mPayMethodDialog.show();
     }

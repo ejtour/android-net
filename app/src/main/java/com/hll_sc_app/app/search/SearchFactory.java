@@ -2,6 +2,7 @@ package com.hll_sc_app.app.search;
 
 import com.hll_sc_app.app.marketingsetting.product.MarketingProductSearch;
 import com.hll_sc_app.app.marketingsetting.product.check.SelectProductListActivity;
+import com.hll_sc_app.app.search.stratery.AfterSalesGoodsSearch;
 import com.hll_sc_app.app.search.stratery.BrandSearch;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.ComplainSearch;
@@ -17,12 +18,12 @@ import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.app.search.stratery.GoodsTemplateSearch;
 import com.hll_sc_app.app.search.stratery.GoodsTopSearch;
 import com.hll_sc_app.app.search.stratery.InspectLackDetailSearch;
-import com.hll_sc_app.app.search.stratery.ShopAssociationSearch;
 import com.hll_sc_app.app.search.stratery.RefundSearch;
 import com.hll_sc_app.app.search.stratery.SalesDayReportSearch;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
 import com.hll_sc_app.app.search.stratery.SelectGroupSearch;
 import com.hll_sc_app.app.search.stratery.SelectShopSearch;
+import com.hll_sc_app.app.search.stratery.ShopAssociationSearch;
 import com.hll_sc_app.app.search.stratery.ShopSearch;
 import com.hll_sc_app.app.search.stratery.StaffDepartListSearch;
 import com.hll_sc_app.app.search.stratery.StockCheckSearch;
@@ -68,6 +69,7 @@ class SearchFactory {
         ITEM_MAP.put(StockCheckSearch.class.getSimpleName(), StockCheckSearch.class);
         ITEM_MAP.put(StaffDepartListSearch.class.getSimpleName(), StaffDepartListSearch.class);
         ITEM_MAP.put(ComplainSearch.class.getSimpleName(), ComplainSearch.class);
+        ITEM_MAP.put(AfterSalesGoodsSearch.class.getSimpleName(), AfterSalesGoodsSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {

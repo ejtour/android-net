@@ -113,6 +113,7 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
         String startDateStr = CalendarUtils.format(date, Constants.SLASH_YYYY_MM_DD);
         mTimeText.setText(String.format("%s", startDateStr));
         mParam.setDate(CalendarUtils.getDateFormatString(startDateStr,Constants.SLASH_YYYY_MM_DD,CalendarUtils.FORMAT_LOCAL_DATE));
+        mParam.setEndDate(CalendarUtils.getDateFormatString(startDateStr,Constants.SLASH_YYYY_MM_DD,CalendarUtils.FORMAT_LOCAL_DATE));
         mExcel.setColumnDataList(generateColumnData());
         mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -314,6 +315,11 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
                     mPresenter.loadWareHouseProductDetailList();
                 }
             });
+            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+            start.setTime(CalendarUtils.parse(mParam.getDate(),CalendarUtils.FORMAT_SERVER_DATE));
+            end.setTime(CalendarUtils.parse(mParam.getEndDate(),CalendarUtils.FORMAT_SERVER_DATE));
+            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
+                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }
         mDateRangeWindow.showAsDropDownFix(mRlSelectDate);
     }

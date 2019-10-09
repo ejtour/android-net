@@ -54,6 +54,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -101,6 +102,8 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
     EditText edtSearch;
     @BindView(R.id.img_clear)
     ImageView imgClear;
+    @BindView(R.id.report_time_arrow)
+    ImageView timeArrow;
     @BindView(R.id.report_date_customer_arrow)
     ImageView reportCustomerDateArrow;
     @BindView(R.id.date_customer)
@@ -415,6 +418,10 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                     timeType = TimeTypeEnum.DAY.getCode();
                     setDateSelect(dateText);
                 });
+                dateWindow.setOnDismissListener(()->{
+                    timeArrow.setRotation(0);
+                });
+                timeArrow.setRotation(180);
                 dateWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDateAggregation==1){
                 //周的
@@ -429,6 +436,10 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                     timeType = TimeTypeEnum.WEEK.getCode();
                     setDateSelect(dateText);
                 });
+                weekWindow.setOnDismissListener(()->{
+                    timeArrow.setRotation(0);
+                });
+                timeArrow.setRotation(180);
                 weekWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDateAggregation==2){
                 //月
@@ -440,6 +451,10 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                     timeType = TimeTypeEnum.MONTH.getCode();
                     setDateSelect(dateText);
                 });
+                dateYearMonthWindow.setOnDismissListener(()->{
+                    timeArrow.setRotation(0);
+                });
+                timeArrow.setRotation(180);
                 dateYearMonthWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }else if(isClickCustomerDateAggregation==3){
                 //年的
@@ -451,6 +466,10 @@ public class SalesManSalesAchievementActivity extends BaseLoadActivity implement
                     timeType = TimeTypeEnum.YEAR.getCode();
                     setDateSelect(dateText);
                 });
+                dateYearWindow.setOnDismissListener(()->{
+                    timeArrow.setRotation(0);
+                });
+                timeArrow.setRotation(180);
                 dateYearWindow.showAtLocation(getCurrentFocus(),Gravity.BOTTOM,0,0);
             }
         }

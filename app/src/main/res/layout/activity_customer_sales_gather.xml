@@ -117,13 +117,19 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
                 android:drawableTint="@color/base_white"
                 android:drawableLeft="@drawable/ic_report_drawable_date_filter_white"
                 android:drawablePadding="5dp"
                 android:textColor="@color/base_white"
                 android:textSize="@dimen/base_text_12"
                 tools:text="2018/08/08" />
+            <ImageView
+                android:id="@+id/report_time_arrow"
+                android:src="@drawable/ic_arrow_drop"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
     </LinearLayout>

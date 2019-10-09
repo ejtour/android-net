@@ -55,13 +55,13 @@
         android:id="@+id/txt_refund_basic_block"
         android:layout_below="@+id/txt_sub_title_block"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="100dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/bg_white_radius_bottom_half_5_solid">
         <RelativeLayout
             android:layout_width="177dp"
-            android:layout_height="110dp">
+            android:layout_height="100dp">
             <TextView
                 android:id="@+id/refunded_num"
                 android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="178dp"
-            android:layout_height="110dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="187dp">
             <TextView
                 android:id="@+id/refunded_customer"
@@ -108,6 +108,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:padding="5dp"
+        android:paddingTop="10dp"
         android:background="@drawable/bg_white_radius_top_half_5_solid" >
         <ImageView
             android:layout_centerVertical="true"
