@@ -78,6 +78,7 @@
                     android:layout_height="50dp"
                     android:padding="20dp"
                     android:scaleType="centerInside"
+                    android:tint="#ccffffff"
                     android:src="@drawable/ic_collect_arrow_drop" />
             </LinearLayout>
 
