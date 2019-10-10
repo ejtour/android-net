@@ -16,6 +16,15 @@ public class WarehouseDetailResp {
     private PurchaserBean groupInfo;
     private String status;
     private String returnAudit;
+    private int warehouseActive;
+
+    public int getWarehouseActive() {
+        return warehouseActive;
+    }
+
+    public void setWarehouseActive(int warehouseActive) {
+        this.warehouseActive = warehouseActive;
+    }
 
     public PurchaserBean getGroupInfo() {
         return groupInfo;

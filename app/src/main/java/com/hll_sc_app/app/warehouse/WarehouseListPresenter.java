@@ -98,7 +98,9 @@ public class WarehouseListPresenter implements WarehouseListContract.IWarehouseL
         if (UserConfig.isSelfOperated()) {
             builder
                 .put("groupID", UserConfig.getGroupID())
-                .put("originator", "1");
+                .put("originator", "1")
+                .put("warehouseActive", String.valueOf(mView.getWarehouseActive()));
+
         } else {
             builder
                 .put("purchaserID", UserConfig.getGroupID())

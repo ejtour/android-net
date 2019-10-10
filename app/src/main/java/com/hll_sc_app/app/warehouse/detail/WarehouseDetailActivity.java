@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -54,9 +55,13 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
     TextView mTxtGroupArea;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+    @BindView(R.id.img_title_arrow)
+    ImageView mImgTitleArrow;
     private ShopListAdapter mAdapter;
     private EmptyView mEmptyView;
 
+    //在自营（代仓管理）且 代仓公司为已停止状态 则不进一步查看详情
+    private boolean isAllowCheckDetail = true;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +81,9 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
             , UIUtils.dip2px(1)));
         mAdapter = new ShopListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (!isAllowCheckDetail) {
+                return;
+            }
             WarehouseShopBean shopBean = (WarehouseShopBean) adapter.getItem(position);
             if (shopBean != null) {
                 shopBean.setPurchaserId(mGroupId);
@@ -105,6 +113,12 @@ public class WarehouseDetailActivity extends BaseLoadActivity implements Warehou
                 getString(PhoneUtil.formatPhoneNum(info.getMobile()))));
             mTxtGroupArea.setText(String.format("所在地区：%s", TextUtils.isEmpty(info.getGroupArea()) ? "无" :
                 info.getGroupArea()));
+
+            //自营则为代仓管理，且代仓公司为已停止合作状态
+            if (UserConfig.isSelfOperated() && resp.getWarehouseActive() == 1) {
+                isAllowCheckDetail = false;
+                mImgTitleArrow.setVisibility(View.GONE);
+            }
         }
         mAdapter.setNewData(resp.getShops());
         mAdapter.setEmptyView(mEmptyView);

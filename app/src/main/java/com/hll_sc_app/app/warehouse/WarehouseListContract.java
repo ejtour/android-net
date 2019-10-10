@@ -30,6 +30,9 @@ public interface WarehouseListContract {
          * @param totalNum 总数
          */
         void showWarehouseList(List<PurchaserBean> list, boolean append, int totalNum);
+
+
+        int getWarehouseActive();
     }
 
     interface IWarehouseListPresenter extends IPresenter<IWarehouseListView> {

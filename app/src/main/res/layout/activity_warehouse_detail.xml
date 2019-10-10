@@ -92,6 +92,7 @@
             tools:text=" 所在地区：北京市-西城区"/>
 
         <ImageView
+            android:id="@+id/img_title_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_gray"

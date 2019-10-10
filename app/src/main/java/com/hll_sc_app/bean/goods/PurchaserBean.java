@@ -73,6 +73,16 @@ public class PurchaserBean implements Parcelable {
      */
     private int cooperationActive;
 
+    private int warehouseActive;
+
+    public int getWarehouseActive() {
+        return warehouseActive;
+    }
+
+    public void setWarehouseActive(int warehouseActive) {
+        this.warehouseActive = warehouseActive;
+    }
+
     public int getCooperationActive() {
         return cooperationActive;
     }
@@ -524,6 +534,7 @@ public class PurchaserBean implements Parcelable {
         dest.writeString(this.groupActiveLabel);
         dest.writeInt(this.businessModel);
         dest.writeInt(this.cooperationActive);
+        dest.writeInt(this.warehouseActive);
     }
 
     protected PurchaserBean(Parcel in) {
@@ -576,6 +587,7 @@ public class PurchaserBean implements Parcelable {
         this.groupActiveLabel = in.readString();
         this.businessModel = in.readInt();
         this.cooperationActive = in.readInt();
+        this.warehouseActive = in.readInt();
     }
 
     public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {

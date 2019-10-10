@@ -112,9 +112,10 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
         mAdapter = new WarehouseListAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean bean = mAdapter.getItem(position);
-            if (bean != null) {
-                RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getGroupID(), "myApplication");
+            if (bean == null || bean.getWarehouseActive() == 1) {
+                return;
             }
+            RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, bean.getGroupID(), "myApplication");
         });
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -201,6 +202,9 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
                     break;
                 default:
                     break;
+            }
+            if (item.getWarehouseActive() == 1) {
+                txtStatus.setText(txtStatus.getText().toString() + "\n已停止");
             }
         }
     }

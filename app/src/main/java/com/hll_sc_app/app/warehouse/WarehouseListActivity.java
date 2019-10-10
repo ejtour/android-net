@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -72,12 +73,17 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     TextView mTxtTitle;
     @BindView(R.id.txt_options)
     ImageView mTxtOptions;
+    @BindView(R.id.img_title_arrow)
+    ImageView mImgTitleArrow;
+    @BindView(R.id.rl_toolbar)
+    RelativeLayout mRlTitleBar;
 
     private EmptyView mEmptyView;
     private EmptyView mSearchEmptyView;
     private WarehouseListPresenter mPresenter;
     private WarehouseGroupListAdapter mAdapter;
     private ContextOptionsWindow mOptionsWindow;
+    private ContextOptionsWindow mTitleOptionsWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +106,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
 
     private void initView() {
         mTxtTitle.setText(UserConfig.isSelfOperated() ? "我是代仓公司" : "代仓公司");
+        mImgTitleArrow.setVisibility(UserConfig.isSelfOperated() ? View.VISIBLE : View.GONE);
         mTxtOptions.setVisibility(UserConfig.isSelfOperated() ? View.VISIBLE : View.GONE);
         mSearchEmptyView = EmptyView.newBuilder(this).setTips("搜索不到代仓公司数据").create();
         mEmptyView = EmptyView.newBuilder(this)
@@ -232,7 +239,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
         mRefreshLayout.setEnableLoadMore(totalNum != mAdapter.getItemCount());
     }
 
-    @OnClick({R.id.img_close, R.id.txt_options})
+    @OnClick({R.id.img_close, R.id.txt_options, R.id.txt_title})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -240,6 +247,26 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                 break;
             case R.id.txt_options:
                 showOptionsWindow(view);
+                break;
+            case R.id.txt_title:
+                if (!UserConfig.isSelfOperated()) {
+                    return;
+                }
+                if (mTitleOptionsWindow == null) {
+                    mTitleOptionsWindow = new ContextOptionsWindow(this);
+                    List<OptionsBean> optionsBeans = new ArrayList<>();
+                    optionsBeans.add(new OptionsBean("      我是代仓公司     "));
+                    optionsBeans.add(new OptionsBean("      停止代仓公司     "));
+                    mTitleOptionsWindow.refreshList(optionsBeans);
+                    mTitleOptionsWindow.setListener((adapter, view1, position) -> {
+                        mTitleOptionsWindow.dismiss();
+                        mTxtTitle.setTag(position);
+                        mTxtTitle.setText(((OptionsBean) adapter.getItem(position)).getLabel());
+                        mPresenter.queryWarehouseList(true);
+
+                    });
+                }
+                mTitleOptionsWindow.showAsDropDownFix(mRlTitleBar, 0, 0, Gravity.CENTER_HORIZONTAL);
                 break;
             default:
                 break;
@@ -277,5 +304,14 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mPresenter.start();
+    }
+
+    @Override
+    public int getWarehouseActive() {
+        Object o = mTxtTitle.getTag();
+        if (o == null) {
+            return 0;
+        }
+        return Integer.parseInt(o.toString());
     }
 }

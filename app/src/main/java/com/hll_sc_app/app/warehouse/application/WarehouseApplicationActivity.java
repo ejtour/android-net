@@ -117,7 +117,7 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
         mAdapter = new WarehouseListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = mAdapter.getItem(position);
-            if (bean == null) {
+            if (bean == null || bean.getWarehouseActive() == 1) {
                 return;
             }
             int id = view.getId();
@@ -243,6 +243,10 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
                     break;
                 default:
                     break;
+            }
+
+            if (item.getWarehouseActive() == 1) {
+                txtStatus.setText(txtStatus.getText().toString() + "\n已停止");
             }
         }
     }

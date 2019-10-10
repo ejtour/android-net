@@ -82,7 +82,8 @@ public class WarehouseApplicationPresenter implements WarehouseApplicationContra
             .put("name", mView.getSearchParam())
             .put("pageNum", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
-            .put("source", "app");
+            .put("source", "app")
+            .put("warehouseActive", "2");
         if (UserConfig.isSelfOperated()) {
             // 如果为自营则是代仓公司
             builder
