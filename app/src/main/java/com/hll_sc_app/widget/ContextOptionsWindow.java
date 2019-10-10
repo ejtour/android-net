@@ -66,7 +66,7 @@ public class ContextOptionsWindow extends BasePopupWindow {
         View rootView = View.inflate(context, R.layout.window_context_options, null);
         ButterKnife.bind(this, rootView);
         this.setContentView(rootView);
-        this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setFocusable(true);
         this.setOutsideTouchable(true);
@@ -95,6 +95,12 @@ public class ContextOptionsWindow extends BasePopupWindow {
         }
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mArrow.getLayoutParams();
         params.gravity = gravity;
+
+        LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams) mListView.getLayoutParams();
+        params2.gravity = gravity;
+
+        LinearLayout.LayoutParams params3 = (LinearLayout.LayoutParams) mTopListView.getLayoutParams();
+        params3.gravity = gravity;
     }
 
     class OptionsAdapter extends BaseQuickAdapter<OptionsBean, BaseViewHolder> {
@@ -105,6 +111,7 @@ public class ContextOptionsWindow extends BasePopupWindow {
 
         @Override
         protected void convert(BaseViewHolder helper, OptionsBean item) {
+            helper.setGone(R.id.ico_icon, item.getIconRes() != 0);
             helper.setImageResource(R.id.ico_icon, item.getIconRes())
                     .setText(R.id.ico_label, item.getLabel());
         }

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp">
 
     <android.support.v7.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/wco_top_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_context_options_list"
+        android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
     <com.hll_sc_app.widget.TriangleView
@@ -24,10 +25,10 @@
         app:trv_color="@color/color0_7_000000" />
 
     <android.support.v7.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/wco_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_context_options_list"
+        android:visibility="gone"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 </LinearLayout>
