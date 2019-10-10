@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -81,7 +82,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     String mPurchaserId;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
-
+    @BindView(R.id.txt_options)
+    ImageView mImgOption;
     private PurchaserShopListAdapter mAdapter;
     private CooperationPurchaserDetail mDetail;
     private ContextOptionsWindow mOptionsWindow;
@@ -131,6 +133,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 showDelTipsDialog(bean);
             } else if (view.getId() == R.id.content) {
                 bean.setPurchaserID(mDetail.getPurchaserID());
+                bean.setCooperationActive(mDetail.getCooperationActive());
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL, bean);
             }
         });
@@ -238,6 +241,8 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         }
         mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("还没有合作门店数据").create());
         mRefreshLayout.setEnableLoadMore(shopBeans != null && shopBeans.size() == 20);
+
+        mImgOption.setVisibility(resp.getCooperationActive() == 1 ? View.GONE : View.VISIBLE);
     }
 
     /**

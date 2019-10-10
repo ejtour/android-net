@@ -161,6 +161,16 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
         mTxtShopsNum.setText(String.format("需合作%s个门店", CommonUtils.isEmpty(mDetail.getShopDetailList()) ? "0" :
             mDetail.getShopDetailList().size()));
         checkItem();
+
+
+        if (mDetail.getCooperationActive() == 1) {
+            mTxtDefaultSettlementWay.setCompoundDrawables(null, null, null, null);
+            mTxtMaintainLevel.setCompoundDrawables(null, null, null, null);
+            mTxtDefaultDeliveryWay.setCompoundDrawables(null, null, null, null);
+            mTxtCustomerLevel.setCompoundDrawables(null, null, null, null);
+            mTxtDeliveryPeriod.setCompoundDrawables(null, null, null, null);
+            mTxtShopsNum.setCompoundDrawables(null, null, null, null);
+        }
     }
 
     private String getResourceType(String type) {
@@ -272,6 +282,9 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     @OnClick({R.id.ll_defaultSettlementWay, R.id.ll_maintainLevel, R.id.ll_customerLevel, R.id.ll_defaultDeliveryWay,
         R.id.ll_deliveryPeriod, R.id.ll_shopsNum})
     public void onViewClicked(View view) {
+        if (mDetail.getCooperationActive() == 1) {
+            return;
+        }
         switch (view.getId()) {
             case R.id.ll_defaultSettlementWay:
                 toSelect(CooperationSelectShopActivity.TYPE_SETTLEMENT);

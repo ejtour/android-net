@@ -122,12 +122,28 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
             mTxtDel.setVisibility(View.VISIBLE);
         }
         mTxtCooperationSource.setText(CommonUtils.isEmpty(mShopBean.getCooperationSource()) ? "暂无" : "点击查看合作方式");
+
+        //已停止合作的 不显示任何操作按钮 及不能操作页面
+        if (mShopBean.getCooperationActive() == 1) {
+            mTxtDel.setVisibility(View.GONE);
+            mLlStatus0.setVisibility(View.GONE);
+            mTxtSettlementWay.setCompoundDrawables(null, null, null, null);
+            mTxtSalesRepresentativeName.setCompoundDrawables(null, null, null, null);
+            mTxtDriverName.setCompoundDrawables(null, null, null, null);
+            mTxtDeliveryWay.setCompoundDrawables(null, null, null, null);
+            mTxtCooperationSource.setCompoundDrawables(null, null, null, null);
+            mTxtDeliveryPeriod.setCompoundDrawables(null, null, null, null);
+        }
     }
 
     @OnClick({R.id.img_close, R.id.ll_settlementWay, R.id.ll_salesRepresentativeName,
         R.id.ll_driverName, R.id.ll_deliveryWay, R.id.ll_cooperationSource, R.id.ll_deliveryPeriod
         , R.id.txt_del, R.id.txt_agree, R.id.txt_reject})
     public void onViewClicked(View view) {
+        //已停止状态 不作任何操作
+        if (mShopBean.getCooperationActive() == 1) {
+            return;
+        }
         switch (view.getId()) {
             case R.id.img_close:
                 finish();

@@ -52,6 +52,15 @@ public class PurchaserShopBean implements Parcelable {
     private String driverID;
     private String salesmanName;
     private String salesmanPhone;
+    private int cooperationActive;
+
+    public int getCooperationActive() {
+        return cooperationActive;
+    }
+
+    public void setCooperationActive(int cooperationActive) {
+        this.cooperationActive = cooperationActive;
+    }
 
     public String getSalesmanName() {
         return salesmanName;
@@ -397,6 +406,7 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeString(this.driverID);
         dest.writeString(this.salesmanName);
         dest.writeString(this.salesmanPhone);
+        dest.writeInt(this.cooperationActive);
         dest.writeTypedList(this.cooperationSource);
     }
 
@@ -437,10 +447,11 @@ public class PurchaserShopBean implements Parcelable {
         this.driverID = in.readString();
         this.salesmanName = in.readString();
         this.salesmanPhone = in.readString();
+        this.cooperationActive = in.readInt();
         this.cooperationSource = in.createTypedArrayList(CooperationSourceBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<PurchaserShopBean> CREATOR = new Parcelable.Creator<PurchaserShopBean>() {
+    public static final Creator<PurchaserShopBean> CREATOR = new Creator<PurchaserShopBean>() {
         @Override
         public PurchaserShopBean createFromParcel(Parcel source) {
             return new PurchaserShopBean(source);
