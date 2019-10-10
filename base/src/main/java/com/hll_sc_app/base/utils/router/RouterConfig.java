@@ -1110,5 +1110,10 @@ public class RouterConfig {
      * CRM-我的-配送路线-路线详情
      */
     public static final String DELIVERY_ROUTE_DETAIL = "/activity/delivery/route/detail";
+
+    /**
+     * CRM-我的-销售排名
+     */
+    public static final String CRM_RANK = "/activity/rank";
 }
 

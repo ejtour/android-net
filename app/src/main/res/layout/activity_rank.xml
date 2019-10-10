@@ -18,7 +18,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="13dp"
-        android:src="@drawable/ic_month_option"
+        android:src="@drawable/ic_day_option"
         app:layout_constraintBottom_toBottomOf="@id/ar_title_bar"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="@id/ar_title_bar"

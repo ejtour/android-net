@@ -101,6 +101,7 @@ public class CrmMineFragment extends BaseFragment {
                 RouterUtil.goToActivity(RouterConfig.REPORT_ENTRY);
                 break;
             case R.id.fcm_salesman_rank:
+                RouterUtil.goToActivity(RouterConfig.CRM_RANK);
                 break;
             case R.id.fcm_product_special_demand:
                 break;
