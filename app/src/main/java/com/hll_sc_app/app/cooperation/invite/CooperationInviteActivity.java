@@ -203,6 +203,9 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
                 default:
                     break;
             }
+            if (item.getCooperationActive() == 1) {
+                txtStatus.setText(txtStatus.getText().toString() + "\n已停止");
+            }
         }
     }
 }

@@ -15,17 +15,6 @@ import java.util.List;
  * @date 2019-07-04
  */
 public class PurchaserBean implements Parcelable {
-    public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {
-        @Override
-        public PurchaserBean createFromParcel(Parcel source) {
-            return new PurchaserBean(source);
-        }
-
-        @Override
-        public PurchaserBean[] newArray(int size) {
-            return new PurchaserBean[size];
-        }
-    };
     private String readStatus;
     private String uniformSocialCreditCode;
     private String unRelationProductNum;
@@ -79,58 +68,20 @@ public class PurchaserBean implements Parcelable {
     private String groupActiveLabel;
     private int businessModel;
 
-    public PurchaserBean() {
+    /**
+     * 0-未解除，1-解除
+     */
+    private int cooperationActive;
+
+    public int getCooperationActive() {
+        return cooperationActive;
     }
 
-    protected PurchaserBean(Parcel in) {
-        this.readStatus = in.readString();
-        this.uniformSocialCreditCode = in.readString();
-        this.unRelationProductNum = in.readString();
-        this.auditBy = in.readString();
-        this.mail = in.readString();
-        this.erpShopName = in.readString();
-        this.relationProductNum = in.readString();
-        this.licenceGroupName = in.readString();
-        this.licencePhotoUrl = in.readString();
-        this.purchaserID = in.readString();
-        this.legalPerson = in.readString();
-        this.plateSupplierID = in.readString();
-        this.action = in.readString();
-        this.groupCity = in.readString();
-        this.erpShopID = in.readString();
-        this.id = in.readString();
-        this.cancelReason = in.readString();
-        this.fax = in.readString();
-        this.auditDate = in.readString();
-        this.groupID = in.readString();
-        this.identityCard = in.readString();
-        this.message = in.readString();
-        this.linkman = in.readString();
-        this.purchaserName = in.readString();
-        this.groupName = in.readString();
-        this.operateModel = in.readString();
-        this.groupProvince = in.readString();
-        this.createTime = in.readString();
-        this.frontImg = in.readString();
-        this.groupAddress = in.readString();
-        this.groupPhone = in.readString();
-        this.shopID = in.readString();
-        this.applyDate = in.readString();
-        this.groupDistrict = in.readString();
-        this.otherLicense = in.readString();
-        this.resourceType = in.readString();
-        this.status = in.readString();
-        this.select = in.readByte() != 0;
-        this.shopList = in.createTypedArrayList(PurchaserShopBean.CREATOR);
-        this.logoUrl = in.readString();
-        this.shopCount = in.readString();
-        this.newShopNum = in.readString();
-        this.mobile = in.readString();
-        this.groupArea = in.readString();
-        this.shopNum = in.readString();
-        this.groupNum = in.readString();
-        this.groupActiveLabel = in.readString();
-        this.businessModel = in.readInt();
+    public void setCooperationActive(int cooperationActive) {
+        this.cooperationActive = cooperationActive;
+    }
+
+    public PurchaserBean() {
     }
 
     public String getGroupActiveLabel() {
@@ -572,5 +523,70 @@ public class PurchaserBean implements Parcelable {
         dest.writeString(this.groupNum);
         dest.writeString(this.groupActiveLabel);
         dest.writeInt(this.businessModel);
+        dest.writeInt(this.cooperationActive);
     }
+
+    protected PurchaserBean(Parcel in) {
+        this.readStatus = in.readString();
+        this.uniformSocialCreditCode = in.readString();
+        this.unRelationProductNum = in.readString();
+        this.auditBy = in.readString();
+        this.mail = in.readString();
+        this.erpShopName = in.readString();
+        this.relationProductNum = in.readString();
+        this.licenceGroupName = in.readString();
+        this.licencePhotoUrl = in.readString();
+        this.purchaserID = in.readString();
+        this.legalPerson = in.readString();
+        this.plateSupplierID = in.readString();
+        this.action = in.readString();
+        this.groupCity = in.readString();
+        this.erpShopID = in.readString();
+        this.id = in.readString();
+        this.cancelReason = in.readString();
+        this.fax = in.readString();
+        this.auditDate = in.readString();
+        this.groupID = in.readString();
+        this.identityCard = in.readString();
+        this.message = in.readString();
+        this.linkman = in.readString();
+        this.purchaserName = in.readString();
+        this.groupName = in.readString();
+        this.operateModel = in.readString();
+        this.groupProvince = in.readString();
+        this.createTime = in.readString();
+        this.frontImg = in.readString();
+        this.groupAddress = in.readString();
+        this.groupPhone = in.readString();
+        this.shopID = in.readString();
+        this.applyDate = in.readString();
+        this.groupDistrict = in.readString();
+        this.otherLicense = in.readString();
+        this.resourceType = in.readString();
+        this.status = in.readString();
+        this.select = in.readByte() != 0;
+        this.shopList = in.createTypedArrayList(PurchaserShopBean.CREATOR);
+        this.logoUrl = in.readString();
+        this.shopCount = in.readString();
+        this.newShopNum = in.readString();
+        this.mobile = in.readString();
+        this.groupArea = in.readString();
+        this.shopNum = in.readString();
+        this.groupNum = in.readString();
+        this.groupActiveLabel = in.readString();
+        this.businessModel = in.readInt();
+        this.cooperationActive = in.readInt();
+    }
+
+    public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {
+        @Override
+        public PurchaserBean createFromParcel(Parcel source) {
+            return new PurchaserBean(source);
+        }
+
+        @Override
+        public PurchaserBean[] newArray(int size) {
+            return new PurchaserBean[size];
+        }
+    };
 }

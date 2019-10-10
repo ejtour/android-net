@@ -46,6 +46,13 @@ public interface CooperationPurchaserContract {
          * 绑定邮箱
          */
         void bindEmail();
+
+
+        /**
+         * 查询 未解除 解除的合作采购商
+         * @return
+         */
+        int getCooperationActive();
     }
 
     interface IGoodsRelevancePurchaserPresenter extends IPresenter<IGoodsRelevancePurchaserView> {

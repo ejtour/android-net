@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -71,12 +72,17 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
     SearchView mSearchView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
+    @BindView(R.id.rl_toolbar)
+    RelativeLayout mRlToolbar;
     private EmptyView mEmptyView;
     private CooperationPurchaserPresenter mPresenter;
     private PurchaserListAdapter mAdapter;
     private ContextOptionsWindow mOptionsWindow;
     private TextView mTxtGroupTotal;
     private TextView mTxtShopTotal;
+    private ContextOptionsWindow mTitleOptionWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -219,7 +225,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         Utils.bindEmail(this, email -> mPresenter.exportPurchaser(email));
     }
 
-    @OnClick({R.id.img_close, R.id.txt_options})
+    @OnClick({R.id.img_close, R.id.txt_options, R.id.txt_title})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -227,6 +233,22 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
                 break;
             case R.id.txt_options:
                 showOptionsWindow(view);
+                break;
+            case R.id.txt_title:
+                if (mTitleOptionWindow == null) {
+                    mTitleOptionWindow = new ContextOptionsWindow(this);
+                    List<OptionsBean> optionsBeans = new ArrayList<>();
+                    optionsBeans.add(new OptionsBean("      合作采购商"));
+                    optionsBeans.add(new OptionsBean("    停止合作采购商    "));
+                    mTitleOptionWindow.refreshList(optionsBeans);
+                    mTitleOptionWindow.setListener((adapter, view1, position) -> {
+                        mTitleOptionWindow.dismiss();
+                        mTxtTitle.setTag(position);
+                        mTxtTitle.setText(((OptionsBean) adapter.getItem(position)).getLabel());
+                        mPresenter.queryPurchaserList(true);
+                    });
+                }
+                mTitleOptionWindow.showAsDropDownFix(mRlToolbar, 0, 0, Gravity.CENTER_HORIZONTAL);
                 break;
             default:
                 break;
@@ -335,5 +357,15 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
             }
             return content;
         }
+    }
+
+
+    @Override
+    public int getCooperationActive() {
+        Object o = mTxtTitle.getTag();
+        if (o == null) {
+            return 0;
+        }
+        return Integer.parseInt(o.toString());
     }
 }

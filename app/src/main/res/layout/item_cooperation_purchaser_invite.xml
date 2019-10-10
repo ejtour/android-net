@@ -59,6 +59,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txt_reason"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/img_logoUrl"
+        android:gravity="center"
         tools:text="未同意"/>
 
     <TextView

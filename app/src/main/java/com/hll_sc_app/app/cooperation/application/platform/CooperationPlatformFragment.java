@@ -234,6 +234,9 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
                 default:
                     break;
             }
+            if (item.getCooperationActive() == 1) {
+                txtStatus.setText(txtStatus.getText().toString() + "\n已停止");
+            }
         }
     }
 }

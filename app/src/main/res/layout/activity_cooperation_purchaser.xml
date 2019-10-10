@@ -16,12 +16,22 @@
             style="@style/BtnClose"/>
 
         <TextView
+            android:id="@+id/txt_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="合作采购商"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"/>
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/txt_title"
+            android:src="@drawable/bg_select_window_arrow"
+            android:tint="@color/base_white" />
 
         <ImageView
             android:id="@+id/txt_options"

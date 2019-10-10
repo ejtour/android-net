@@ -85,7 +85,7 @@ public class CooperationDetailsCertificationFragment extends BaseCooperationDeta
 
     @Override
     protected void initData() {
-        mButtonView.showButton(mDetail.getActionType(), mDetail.getStatus());
+        mButtonView.showButton(mDetail.getActionType(), mDetail.getStatus(),mDetail.getCooperationActive());
         mButtonView.setListener(this, mDetail);
         if (TextUtils.equals(mDetail.getIsCertified(), "2")) {
             // 已通过

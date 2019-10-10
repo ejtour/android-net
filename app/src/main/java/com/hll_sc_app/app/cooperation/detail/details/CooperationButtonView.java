@@ -69,8 +69,12 @@ public class CooperationButtonView extends LinearLayout {
 
     }
 
-    public void showButton(String actionType, String status) {
+    public void showButton(String actionType, String status, int cooperationActive) {
         ButterKnife.apply(mButtonList, (view, index) -> view.setVisibility(GONE));
+        //已停止合作 不显示任何按钮
+        if (cooperationActive == 1) {
+            return;
+        }
         switch (status) {
             case "0":
                 if (TextUtils.equals(actionType, TYPE_MY_APPLICATION)) {

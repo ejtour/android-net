@@ -14,18 +14,6 @@ import java.util.List;
  * @date 2019-07-17
  */
 public class CooperationPurchaserDetail implements Parcelable {
-    public static final Parcelable.Creator<CooperationPurchaserDetail> CREATOR =
-        new Parcelable.Creator<CooperationPurchaserDetail>() {
-            @Override
-            public CooperationPurchaserDetail createFromParcel(Parcel source) {
-                return new CooperationPurchaserDetail(source);
-            }
-
-            @Override
-            public CooperationPurchaserDetail[] newArray(int size) {
-                return new CooperationPurchaserDetail[size];
-            }
-        };
     private String defaultAccountPeriod;
     private String agreeTime;
     private String businessModel;
@@ -70,8 +58,21 @@ public class CooperationPurchaserDetail implements Parcelable {
     private List<PurchaserShopBean> shopDetailList;
     private List<OtherLicensesBean> otherLicenses;
 
-    public CooperationPurchaserDetail() {
-    }
+    public static final Creator<CooperationPurchaserDetail> CREATOR = new Creator<CooperationPurchaserDetail>() {
+        @Override
+        public CooperationPurchaserDetail createFromParcel(Parcel source) {
+            return new CooperationPurchaserDetail(source);
+        }
+
+        @Override
+        public CooperationPurchaserDetail[] newArray(int size) {
+            return new CooperationPurchaserDetail[size];
+        }
+    };
+    /**
+     * 0-未解除，1-解除
+     */
+    private int cooperationActive;
 
     protected CooperationPurchaserDetail(Parcel in) {
         this.defaultAccountPeriod = in.readString();
@@ -111,8 +112,13 @@ public class CooperationPurchaserDetail implements Parcelable {
         this.groupDistrict = in.readString();
         this.resourceType = in.readString();
         this.status = in.readString();
+        this.groupActiveLabel = in.readString();
         this.shopDetailList = in.createTypedArrayList(PurchaserShopBean.CREATOR);
         this.otherLicenses = in.createTypedArrayList(OtherLicensesBean.CREATOR);
+        this.cooperationActive = in.readInt();
+    }
+
+    public CooperationPurchaserDetail() {
     }
 
     public String getGroupActiveLabel() {
@@ -440,6 +446,14 @@ public class CooperationPurchaserDetail implements Parcelable {
         return 0;
     }
 
+    public int getCooperationActive() {
+        return cooperationActive;
+    }
+
+    public void setCooperationActive(int cooperationActive) {
+        this.cooperationActive = cooperationActive;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.defaultAccountPeriod);
@@ -479,7 +493,9 @@ public class CooperationPurchaserDetail implements Parcelable {
         dest.writeString(this.groupDistrict);
         dest.writeString(this.resourceType);
         dest.writeString(this.status);
+        dest.writeString(this.groupActiveLabel);
         dest.writeTypedList(this.shopDetailList);
         dest.writeTypedList(this.otherLicenses);
+        dest.writeInt(this.cooperationActive);
     }
 }

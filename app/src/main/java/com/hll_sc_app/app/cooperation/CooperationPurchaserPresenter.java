@@ -143,6 +143,7 @@ public class CooperationPurchaserPresenter implements CooperationPurchaserContra
             .put("pageSize", "20")
             .put("originator", "1")
             .put("ignoreGroupActive", "1")
+            .put("cooperationActive", String.valueOf(mView.getCooperationActive()))
             .create();
         CooperationPurchaserService.INSTANCE.queryCooperationPurchaserList(req)
             .compose(ApiScheduler.getObservableScheduler())
