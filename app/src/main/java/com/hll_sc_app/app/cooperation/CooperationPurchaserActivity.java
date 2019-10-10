@@ -81,6 +81,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
     private PurchaserListAdapter mAdapter;
     private ContextOptionsWindow mOptionsWindow;
     private TextView mTxtGroupTotal;
+    private TextView mTitleGroupTotal;
     private TextView mTxtShopTotal;
     private ContextOptionsWindow mTitleOptionWindow;
 
@@ -133,6 +134,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         View headView = LayoutInflater.from(this).inflate(R.layout.view_cooperation_purchaser_list_title,
             mRecyclerView, false);
         mTxtGroupTotal = headView.findViewById(R.id.txt_groupTotal);
+        mTitleGroupTotal = headView.findViewById(R.id.txt_title_group_total);
         mTxtShopTotal = headView.findViewById(R.id.txt_shopTotal);
         mAdapter = new PurchaserListAdapter();
         mAdapter.addHeaderView(headView);
@@ -191,6 +193,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
 
     @Override
     public void showPurchaserList(CooperationPurchaserResp resp, boolean append) {
+        mTitleGroupTotal.setText(getCooperationActive() == 0 ? "您已合作 " : "您已停止合作 ");
         mTxtGroupTotal.setText(CommonUtils.formatNumber(resp.getGroupTotal()));
         mTxtShopTotal.setText(CommonUtils.formatNumber(resp.getShopTotal()));
         List<PurchaserBean> list = resp.getRecords();
