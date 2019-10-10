@@ -132,6 +132,7 @@
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical|right"
                     android:hint="2.16.0"
+                    android:textColor="@color/text_aeaeae"
                     android:maxLength="20"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
