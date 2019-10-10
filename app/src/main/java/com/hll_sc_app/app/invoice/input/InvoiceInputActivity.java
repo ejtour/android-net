@@ -1,14 +1,15 @@
 package com.hll_sc_app.app.invoice.input;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -26,29 +27,36 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.InvoiceEvent;
 import com.hll_sc_app.bean.invoice.InvoiceHistoryBean;
-import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
-import com.hll_sc_app.widget.invoice.InvoiceHistoryWindow;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -56,9 +64,6 @@ import butterknife.OnTextChanged;
  */
 @Route(path = RouterConfig.INVOICE_INPUT)
 public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup.OnCheckedChangeListener, IInvoiceInputContract.IInvoiceInputView, BaseQuickAdapter.OnItemClickListener {
-
-    private InvoiceHistoryResp mHistoryResp;
-    private InvoiceMakeResp mMakeResp;
 
     /**
      * @param req 发票请求参数
@@ -78,7 +83,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     @BindView(R.id.aii_radio_group)
     RadioGroup mRadioGroup;
     @BindView(R.id.aii_invoice_title)
-    TextView mInvoiceTitle;
+    EditText mInvoiceTitle;
     @BindView(R.id.aii_identifier)
     TextView mIdentifier;
     @BindView(R.id.aii_identifier_group)
@@ -95,11 +100,17 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     EditText mPhone;
     @BindView(R.id.aii_remark)
     EditText mRemark;
+    @BindView(R.id.aii_list_view)
+    RecyclerView mListView;
     @Autowired(name = "parcelable")
     InvoiceMakeReq mMakeReq;
     private SingleSelectionDialog mTypeDialog;
-    private InvoiceHistoryWindow mHistoryWindow;
     private IInvoiceInputContract.IInvoiceInputPresenter mPresenter;
+    private ObservableEmitter<String> mEmitter;
+    private InvoiceHistoryAdapter mAdapter;
+    //    private InvoiceHistoryResp mHistoryResp;
+    private InvoiceMakeResp mMakeResp;
+    private boolean mNeedAssociate = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,21 +122,46 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         mRadioGroup.setOnCheckedChangeListener(this);
         initView();
         initData();
-        mInvoiceTitle.setOnFocusChangeListener((v, hasFocus) -> {
+        /*mInvoiceTitle.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) showHistoryWindow(v);
-        });
+        });*/
     }
 
     private void initData() {
         mPresenter = InvoiceInputPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.reqInvoiceHistory(1);
+        textObservable();
     }
 
     private void initView() {
         mInvoiceAmount.setText(CommonUtils.formatNumber(mMakeReq.getInvoicePrice()));
         mRecipient.setText(mMakeReq.getReceiver());
         mPhone.setText(mMakeReq.getTelephone());
+        mAdapter = new InvoiceHistoryAdapter();
+        mAdapter.bindToRecyclerView(mListView);
+        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
+        mAdapter.setOnItemClickListener(this);
+    }
+
+    private void textObservable() {
+        Observable.<String>create(emitter -> mEmitter = emitter)
+                .filter(s -> s.length() > 0)
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(mPresenter::search);
+    }
+
+
+    @OnFocusChange({R.id.aii_identifier, R.id.aii_invoice_amount, R.id.aii_remark,
+            R.id.aii_account, R.id.aii_bank, R.id.aii_address, R.id.aii_recipient, R.id.aii_phone})
+    public void focusChanged(boolean hasFocus) {
+        mListView.setVisibility(View.GONE);
+    }
+
+    @OnTextChanged(R.id.aii_invoice_title)
+    public void onTextChanged(CharSequence s) {
+        if (mEmitter != null && mNeedAssociate)
+            mEmitter.onNext(s.toString().trim());
     }
 
     @OnClick(R.id.aii_invoice_type)
@@ -226,7 +262,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         return true;
     }
 
-    @OnClick(R.id.aii_invoice_title)
+    /*@OnClick(R.id.aii_invoice_title)
     public void showHistoryWindow(View view) {
         if (mHistoryResp == null || CommonUtils.isEmpty(mHistoryResp.getRecords())) {
             if (mHistoryWindow != null) {
@@ -241,11 +277,16 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mHistoryWindow.setList(mHistoryResp.getRecords())
                     .showAsDropDownFix(view);
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void cacheInvoiceHistoryResp(InvoiceHistoryResp resp) {
         mHistoryResp = resp;
+    }*/
+
+    @Override
+    public void showInvoiceHistory(List<InvoiceHistoryBean> list) {
+        runOnUiThread(() -> mAdapter.setNewData(list, mInvoiceTitle.getText().toString().trim()));
     }
 
     @Override
@@ -281,8 +322,12 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         InvoiceHistoryBean item = (InvoiceHistoryBean) adapter.getItem(position);
         if (item == null) return;
-        mHistoryWindow.dismiss();
+//        mHistoryWindow.dismiss();
+        mListView.setVisibility(View.GONE);
+        mNeedAssociate = false;
         mInvoiceTitle.setText(item.getInvoiceTitle());
+        mInvoiceTitle.setSelection(item.getInvoiceTitle().length());
+        mNeedAssociate = true;
         if (mIdentifierGroup.getVisibility() == View.VISIBLE) {
             mIdentifier.setText(item.getTaxpayerNum());
         } else mIdentifier.setText("");

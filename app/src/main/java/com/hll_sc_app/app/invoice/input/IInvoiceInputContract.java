@@ -2,9 +2,11 @@ package com.hll_sc_app.app.invoice.input;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
+import com.hll_sc_app.bean.invoice.InvoiceHistoryBean;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -13,7 +15,7 @@ import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 
 public interface IInvoiceInputContract {
     interface IInvoiceInputView extends ILoadView {
-        void cacheInvoiceHistoryResp(InvoiceHistoryResp resp);
+        void showInvoiceHistory(List<InvoiceHistoryBean> list);
 
         void makeSuccess(InvoiceMakeResp resp);
     }
@@ -22,5 +24,7 @@ public interface IInvoiceInputContract {
         void reqInvoiceHistory(int titleType);
 
         void makeInvoice(InvoiceMakeReq req);
+
+        void search(String text);
     }
 }

@@ -78,7 +78,7 @@ public class SalesReportActivity extends BaseLoadActivity implements SalesReport
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.edt_search)
-    EditText searchEditText;
+    TextView searchEditText;
     @BindView(R.id.img_clear)
     ImageView imgClearView;
     DateWeekWindow weekWindow;
