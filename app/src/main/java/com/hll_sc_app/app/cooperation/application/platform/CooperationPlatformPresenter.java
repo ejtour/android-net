@@ -66,6 +66,7 @@ public class CooperationPlatformPresenter implements CooperationPlatformContract
             .put("pageNo", String.valueOf(mTempNum))
             .put("pageSize", "20")
             .put("originator", "1")
+            .put("cooperationActive", "2")
             .create();
         CooperationPurchaserService.INSTANCE.queryCooperationPurchaserList(req)
             .compose(ApiScheduler.getObservableScheduler())

@@ -60,6 +60,7 @@ public class CooperationInvitePresenter implements CooperationInviteContract.ICo
             .put("pageNo", String.valueOf(mTempPageNum))
             .put("pageSize", "20")
             .put("originator", "1")
+            .put("cooperationActive", "2")
             .create();
         CooperationPurchaserService.INSTANCE.queryCooperationPurchaserList(req)
             .compose(ApiScheduler.getObservableScheduler())
