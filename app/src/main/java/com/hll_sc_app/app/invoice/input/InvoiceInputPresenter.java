@@ -1,11 +1,22 @@
 package com.hll_sc_app.app.invoice.input;
 
+import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.invoice.InvoiceHistoryBean;
 import com.hll_sc_app.bean.invoice.InvoiceHistoryResp;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.rest.Invoice;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.Observable;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -14,6 +25,7 @@ import com.hll_sc_app.rest.Invoice;
 
 public class InvoiceInputPresenter implements IInvoiceInputContract.IInvoiceInputPresenter {
     private IInvoiceInputContract.IInvoiceInputView mView;
+    private InvoiceHistoryResp mHistoryResp;
 
     public static InvoiceInputPresenter newInstance() {
         return new InvoiceInputPresenter();
@@ -27,7 +39,7 @@ public class InvoiceInputPresenter implements IInvoiceInputContract.IInvoiceInpu
         Invoice.getInvoiceHistory(titleType, new SimpleObserver<InvoiceHistoryResp>(mView) {
             @Override
             public void onSuccess(InvoiceHistoryResp invoiceHistoryResp) {
-                mView.cacheInvoiceHistoryResp(invoiceHistoryResp);
+                mHistoryResp = invoiceHistoryResp;
             }
         });
     }
@@ -40,6 +52,16 @@ public class InvoiceInputPresenter implements IInvoiceInputContract.IInvoiceInpu
                 mView.makeSuccess(invoiceMakeResp);
             }
         });
+    }
+
+    @Override
+    public void search(String text) {
+        if (mHistoryResp == null || CommonUtils.isEmpty(mHistoryResp.getRecords())) return;
+        List<InvoiceHistoryBean> list = new ArrayList<>();
+        for (InvoiceHistoryBean record : mHistoryResp.getRecords()) {
+            if (record.getInvoiceTitle().contains(text)) list.add(record);
+        }
+        mView.showInvoiceHistory(list);
     }
 
     @Override

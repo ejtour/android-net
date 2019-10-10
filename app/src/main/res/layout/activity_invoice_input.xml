@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent">
 
     <com.hll_sc_app.widget.TitleBar
@@ -187,6 +189,21 @@
                 app:layout_constraintEnd_toEndOf="@id/aii_company_bg"
                 app:layout_constraintStart_toEndOf="@id/aii_invoice_title_label"
                 app:layout_constraintTop_toTopOf="@id/aii_invoice_title_label" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/aii_list_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/base_bg_white_radius_5_solid"
+                android:elevation="2dp"
+                android:focusable="false"
+                android:padding="@dimen/dp_10"
+                android:visibility="gone"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/aii_invoice_title"
+                app:layout_constraintStart_toStartOf="@id/aii_invoice_title_label"
+                app:layout_constraintTop_toBottomOf="@id/aii_invoice_title_label"
+                tools:itemCount="4" />
 
             <View
                 android:layout_width="0dp"
