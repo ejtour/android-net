@@ -70,7 +70,7 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
         } else if (view.getId() == R.id.txt_account_manage) {
             RouterUtil.goToActivity(RouterConfig.SETTING_ACCOUNT);
         } else if (view.getId() == R.id.rl_custom_phone) {
-            UIUtils.callPhone(this, "56247970");
+            UIUtils.callPhone(this, "400 0088 822");
         }
     }
 

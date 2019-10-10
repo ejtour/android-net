@@ -76,14 +76,14 @@ public class VerifyFragment extends BaseFragment {
             case WalletStatusResp.STATUS_VERIFYING:
                 mIcon.setImageResource(R.drawable.ic_dialog_good);
                 mResultTitle.setText("您的账号申请已提交至铁金库！");
-                SpannableString alert = new SpannableString("审核时间一般为1-3个工作日\n请耐心等待，我们将尽快审核您的相关信息！\n 您也可以联系客服:010-56247970");
+                SpannableString alert = new SpannableString("审核时间一般为1-3个工作日\n请耐心等待，我们将尽快审核您的相关信息！\n 您也可以联系客服:400 0088 822");
                 int len = alert.length();
                 alert.setSpan(new ForegroundColorSpan(Color.parseColor("#5695D2")), len - 12, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 alert.setSpan(new UnderlineSpan(), len - 12, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 mResultDesc.setText(alert);
                 mBtn.setVisibility(View.GONE);
                 mResultDesc.setOnClickListener(v -> {
-                    UIUtils.callPhone(getActivity(), "010-56247970");
+                    UIUtils.callPhone(getActivity(), "400 0088 822");
                 });
                 break;
             case WalletStatusResp.STATUS_VERIFY_FAIL:
