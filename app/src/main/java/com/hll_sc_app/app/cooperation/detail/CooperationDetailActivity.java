@@ -88,7 +88,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     private CooperationPurchaserDetail mDetail;
     private ContextOptionsWindow mOptionsWindow;
     private CooperationDetailPresenter mPresenter;
-
+    private SwipeItemLayout.OnSwipeItemTouchListener swipeItemTouchListener;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +138,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             }
         });
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
+        swipeItemTouchListener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
     }
 
     /**
@@ -237,6 +237,11 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
                 mAdapter.addData(shopBeans);
             }
         } else {
+            if (resp.getCooperationActive() == 0) {
+                mRecyclerView.addOnItemTouchListener(swipeItemTouchListener);
+            } else {
+                mRecyclerView.removeOnItemTouchListener(swipeItemTouchListener);
+            }
             mAdapter.setNewData(shopBeans);
         }
         mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("还没有合作门店数据").create());

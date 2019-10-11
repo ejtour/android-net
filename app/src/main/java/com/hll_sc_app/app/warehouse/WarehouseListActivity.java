@@ -84,7 +84,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
     private WarehouseGroupListAdapter mAdapter;
     private ContextOptionsWindow mOptionsWindow;
     private ContextOptionsWindow mTitleOptionsWindow;
-
+    private SwipeItemLayout.OnSwipeItemTouchListener swipeItemTouchListener;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +167,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
             }
         });
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
+        swipeItemTouchListener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
     }
 
     /**
@@ -233,6 +233,11 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                 mAdapter.addData(list);
             }
         } else {
+            if (getWarehouseActive() == 0) {
+                mRecyclerView.addOnItemTouchListener(swipeItemTouchListener);
+            } else {
+                mRecyclerView.removeOnItemTouchListener(swipeItemTouchListener);
+            }
             mAdapter.setNewData(list);
         }
         mAdapter.setEmptyView(mSearchView.isSearchStatus() ? mSearchEmptyView : mEmptyView);

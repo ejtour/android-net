@@ -84,7 +84,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
     private TextView mTitleGroupTotal;
     private TextView mTxtShopTotal;
     private ContextOptionsWindow mTitleOptionWindow;
-
+    private SwipeItemLayout.OnSwipeItemTouchListener swipeItemTouchListener;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,7 +149,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
             }
         });
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(this));
+        swipeItemTouchListener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
     }
 
     /**
@@ -202,6 +202,11 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
                 mAdapter.addData(list);
             }
         } else {
+            if (getCooperationActive() == 0) {
+                mRecyclerView.addOnItemTouchListener(swipeItemTouchListener);
+            } else {
+                mRecyclerView.removeOnItemTouchListener(swipeItemTouchListener);
+            }
             mAdapter.setNewData(list);
         }
         if (mSearchView.isSearchStatus()) {
