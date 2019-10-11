@@ -35,8 +35,6 @@ public class ContextOptionsWindow extends BasePopupWindow {
     @BindView(R.id.wco_arrow)
     TriangleView mArrow;
     private OptionsAdapter mAdapter;
-    private int mWindowWidth;
-    private int mWindowHeight;
 
     public ContextOptionsWindow(Activity context) {
         super(context);
@@ -62,10 +60,6 @@ public class ContextOptionsWindow extends BasePopupWindow {
 
     public ContextOptionsWindow refreshList(List<OptionsBean> list) {
         mAdapter.setNewData(list);
-        getContentView().measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        mWindowWidth = getContentView().getMeasuredWidth();
-        mWindowHeight = getContentView().getMeasuredHeight();
         return this;
     }
 
@@ -86,11 +80,15 @@ public class ContextOptionsWindow extends BasePopupWindow {
     public void showAsDropDownFix(View anchor, int xOff, int yOff, int gravity) {
         int[] location = new int[2];
         anchor.getLocationOnScreen(location);
+        getContentView().measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        int windowWidth = getContentView().getMeasuredWidth();
+        int windowHeight = getContentView().getMeasuredHeight();
         int hgrav = Gravity.getAbsoluteGravity(gravity, ViewCompat.getLayoutDirection(anchor))
                 & Gravity.HORIZONTAL_GRAVITY_MASK;
         ConstraintLayout.LayoutParams arrowParams = (ConstraintLayout.LayoutParams) mArrow.getLayoutParams();
         ConstraintLayout.LayoutParams listParams = (ConstraintLayout.LayoutParams) mListView.getLayoutParams();
-        boolean showTop = location[1] + anchor.getHeight() + mWindowHeight >= UIUtils.getScreenHeight(anchor.getContext());
+        boolean showTop = location[1] + anchor.getHeight() + windowHeight >= UIUtils.getScreenHeight(anchor.getContext());
         if (showTop) arrowDown(anchor, arrowParams, listParams);
         else arrowUp(anchor, arrowParams, listParams);
         switch (hgrav) {
@@ -106,7 +104,7 @@ public class ContextOptionsWindow extends BasePopupWindow {
                 break;
             case Gravity.CENTER_HORIZONTAL:
                 arrowParams.startToStart = arrowParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-                int x = location[0] + anchor.getWidth() / 2 - mWindowWidth / 2 + xOff;
+                int x = location[0] + anchor.getWidth() / 2 - windowWidth / 2 + xOff;
                 if (showTop) showAtLocation(anchor, Gravity.NO_GRAVITY,
                         x, location[1] - anchor.getHeight() + yOff);
                 else showAtLocation(anchor, Gravity.NO_GRAVITY,
@@ -132,7 +130,7 @@ public class ContextOptionsWindow extends BasePopupWindow {
         listParams.topToBottom = -1;
     }
 
-    static class OptionsAdapter extends BaseQuickAdapter<OptionsBean, BaseViewHolder> {
+    class OptionsAdapter extends BaseQuickAdapter<OptionsBean, BaseViewHolder> {
         private int mGravity;
 
         OptionsAdapter() {
