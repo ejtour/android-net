@@ -19,6 +19,7 @@ import com.hll_sc_app.bean.event.RankEvent;
 import com.hll_sc_app.bean.rank.RankParam;
 import com.hll_sc_app.bean.rank.SalesRankBean;
 import com.hll_sc_app.bean.rank.SalesRankResp;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -29,6 +30,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -107,6 +109,10 @@ public class SalesRankFragment extends BaseLazyFragment implements ISalesRankCon
                 break;
             case 2: // 周
                 mDateLabel.setText(mRankParam.getFormatDate("yyyy年第w周"));
+                if (mDateLabel.getText().toString().endsWith("第1周")) {
+                    Date date = CalendarUtils.getDateAfter(mRankParam.getStartDate(), 5);
+                    mDateLabel.setText(CalendarUtils.format(date, "yyyy年第w周"));
+                }
                 mRankMy.setText("我的周排名：0");
                 break;
             case 3: // 月

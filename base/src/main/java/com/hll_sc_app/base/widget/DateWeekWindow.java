@@ -3,19 +3,15 @@ package com.hll_sc_app.base.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.text.format.DateUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.hll_sc_app.base.R;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import kankan.wheel.widget.OnWheelChangedListener;
-import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 
@@ -27,8 +23,7 @@ import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
  */
 public class DateWeekWindow extends BaseShadowPopupWindow implements View.OnClickListener {
     private View mRootView;
-    private WheelView  startWeekPicker, startYearPicker;
-    private int year, week;
+    private WheelView startWeekPicker, startYearPicker;
     private int startYear, yearNum;
     private OnDateSelectListener mSelectListener;
 
@@ -55,14 +50,10 @@ public class DateWeekWindow extends BaseShadowPopupWindow implements View.OnClic
         mRootView.findViewById(R.id.txt_cancel).setOnClickListener(this);
         mRootView.findViewById(R.id.txt_confirm).setOnClickListener(this);
 
-        Calendar startCalendar = Calendar.getInstance();
-        year = startCalendar.get(Calendar.YEAR);
-        week = startCalendar.get(Calendar.WEEK_OF_YEAR) ;
-
-        startWeekPicker = (WheelView) mRootView.findViewById(R.id.start_week_picker);
+        startWeekPicker = mRootView.findViewById(R.id.start_week_picker);
         startWeekPicker.setCyclic(true);
         startWeekPicker.setVisibleItems(5);
-        startYearPicker = (WheelView) mRootView.findViewById(R.id.start_year_picker);
+        startYearPicker = mRootView.findViewById(R.id.start_year_picker);
         startYearPicker.setCyclic(true);
         startYearPicker.setVisibleItems(5);
     }
@@ -70,36 +61,6 @@ public class DateWeekWindow extends BaseShadowPopupWindow implements View.OnClic
     private void initStartPicker() {
         startYearPicker.setViewAdapter(new YearWheelAdapter(mActivity));
         startWeekPicker.setViewAdapter(new WeekWheelAdapter(mActivity));
-        startYearPicker.setCurrentItem(year - startYear);
-        startYearPicker.addScrollingListener(new OnWheelScrollListener() {
-            @Override
-            public void onScrollingStarted(WheelView wheel) {
-                // no-op
-            }
-
-            @Override
-            public void onScrollingFinished(WheelView wheel) {
-                year = startYearPicker.getCurrentItem() + startYear;
-            }
-        });
-
-        startWeekPicker.addChangingListener(new OnWheelChangedListener() {
-            @Override
-            public void onChanged(WheelView wheel, int oldValue, int newValue) {
-               /* if (oldValue - newValue == 11) {
-                    year++;
-                }
-                if (oldValue - newValue == -11) {
-                    year--;
-                }*/
-                week = newValue + 1;
-                if (week >= 52) {
-                    week = 52;
-                }
-            }
-        });
-        startWeekPicker.setCurrentItem(week - 1);
-        startYearPicker.setCurrentItem(year - 1);
     }
 
     public void setCalendar(Date date) {
@@ -109,9 +70,7 @@ public class DateWeekWindow extends BaseShadowPopupWindow implements View.OnClic
     }
 
     public void setCalendar(Calendar calendar) {
-        year = calendar.get(Calendar.YEAR);
-        week = calendar.get(Calendar.DAY_OF_WEEK);
-        startWeekPicker.setCurrentItem(calendar.get(Calendar.WEEK_OF_YEAR));
+        startWeekPicker.setCurrentItem(calendar.get(Calendar.WEEK_OF_YEAR) - 1);
         startYearPicker.setCurrentItem(calendar.get(Calendar.YEAR) - startYear);
     }
 
@@ -126,7 +85,12 @@ public class DateWeekWindow extends BaseShadowPopupWindow implements View.OnClic
     }
 
     private Date getSelectCalendar() {
-        return CalendarUtils.toWeekCalendar(year,week).getTime();
+        int year = startYear + startYearPicker.getCurrentItem();
+        int week = startWeekPicker.getCurrentItem() + 1;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.WEEK_OF_YEAR, week);
+        return calendar.getTime();
     }
 
     public void setSelectListener(OnDateSelectListener selectListener) {
@@ -149,7 +113,7 @@ public class DateWeekWindow extends BaseShadowPopupWindow implements View.OnClic
 
         @Override
         protected CharSequence getItemText(int index) {
-            return (index+1) + "周";
+            return (index + 1) + "周";
         }
 
         @Override
