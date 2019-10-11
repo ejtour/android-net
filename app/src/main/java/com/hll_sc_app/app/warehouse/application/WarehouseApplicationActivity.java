@@ -243,6 +243,7 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
                     break;
                 default:
                     txtStatus.setText("");
+                    txtStatus.setTextColor(0xFFAEAEAE);
                     break;
             }
 

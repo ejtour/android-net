@@ -233,7 +233,7 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
                     break;
                 default:
                     txtStatus.setText("");
-                    txtStatus.setTextColor(0xFF999999);
+                    txtStatus.setTextColor(0xFFAEAEAE);
                     txtStatus.setBackground(null);
                     break;
             }

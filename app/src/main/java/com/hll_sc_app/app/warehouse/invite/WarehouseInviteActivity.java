@@ -202,6 +202,7 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
                     break;
                 default:
                     txtStatus.setText("");
+                    txtStatus.setTextColor(0xFFAEAEAE);
                     break;
             }
             if (item.getWarehouseActive() == 1) {
