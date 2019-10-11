@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ll_container"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="5dp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/wco_top_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_context_options_list"
-        android:visibility="gone"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-
     <com.hll_sc_app.widget.TriangleView
         android:id="@+id/wco_arrow"
         android:layout_width="6dp"
         android:layout_height="4dp"
-        android:layout_gravity="right"
         android:layout_marginStart="14dp"
         android:layout_marginEnd="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:trv_color="@color/color0_7_000000" />
 
     <android.support.v7.widget.RecyclerView
@@ -29,6 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_context_options_list"
-        android:visibility="gone"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-</LinearLayout>
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wco_arrow"
+        tools:itemCount="4" />
+</android.support.constraint.ConstraintLayout>

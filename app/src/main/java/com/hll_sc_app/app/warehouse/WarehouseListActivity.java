@@ -260,15 +260,16 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                 if (mTitleOptionsWindow == null) {
                     mTitleOptionsWindow = new ContextOptionsWindow(this);
                     List<OptionsBean> optionsBeans = new ArrayList<>();
-                    optionsBeans.add(new OptionsBean("      我是代仓公司     "));
-                    optionsBeans.add(new OptionsBean("      停止代仓公司     "));
+                    optionsBeans.add(new OptionsBean(OptionType.OPTION_WAREHOUSE_COMPANY));
+                    optionsBeans.add(new OptionsBean(OptionType.OPTION_STOP_WAREHOUSE_COMPANY));
                     mTitleOptionsWindow.refreshList(optionsBeans);
                     mTitleOptionsWindow.setListener((adapter, view1, position) -> {
                         mTitleOptionsWindow.dismiss();
                         mTxtTitle.setTag(position);
-                        mTxtTitle.setText(((OptionsBean) adapter.getItem(position)).getLabel().trim());
+                        OptionsBean item = (OptionsBean) adapter.getItem(position);
+                        if (item == null) return;
+                        mTxtTitle.setText(item.getLabel());
                         mPresenter.queryWarehouseList(true);
-
                     });
                 }
                 mTitleOptionsWindow.showAsDropDownFix(mRlTitleBar, 0, 0, Gravity.CENTER_HORIZONTAL);

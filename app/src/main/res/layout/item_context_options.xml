@@ -16,9 +16,8 @@
 
     <TextView
         android:id="@+id/ico_label"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:textAppearance="@style/TextAppearance.City22.Small.White"
         tools:text="按下单时间排序" />
 </LinearLayout>

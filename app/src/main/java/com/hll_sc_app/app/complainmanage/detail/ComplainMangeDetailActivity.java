@@ -410,7 +410,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                 break;
             case R.id.txt_link:
                 if (mBottomMenuWindow == null) {
-                    mBottomMenuWindow = new ContextOptionsWindow(this, ContextOptionsWindow.TYPE.bottom);
+                    mBottomMenuWindow = new ContextOptionsWindow(this);
                     OptionsBean optionsBean = new OptionsBean(R.drawable.ic_phone_circle_white, OPTION_PHONE_LINK);
                     mBottomMenuWindow.refreshList(Arrays.asList(optionsBean));
                     mBottomMenuWindow.setListener((adapter, view1, position) -> {

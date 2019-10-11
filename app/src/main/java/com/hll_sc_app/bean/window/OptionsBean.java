@@ -18,7 +18,7 @@ public class OptionsBean {
         this.label = label;
     }
 
-    public OptionsBean(String label) {
+    public OptionsBean(@OptionType String label) {
         this.iconRes = 0;
         this.label = label;
     }

@@ -246,17 +246,21 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
                 if (mTitleOptionWindow == null) {
                     mTitleOptionWindow = new ContextOptionsWindow(this);
                     List<OptionsBean> optionsBeans = new ArrayList<>();
-                    optionsBeans.add(new OptionsBean("      合作采购商"));
-                    optionsBeans.add(new OptionsBean("    停止合作采购商    "));
-                    mTitleOptionWindow.refreshList(optionsBeans);
-                    mTitleOptionWindow.setListener((adapter, view1, position) -> {
-                        mTitleOptionWindow.dismiss();
-                        mTxtTitle.setTag(position);
-                        mTxtTitle.setText(((OptionsBean) adapter.getItem(position)).getLabel().trim());
-                        mPresenter.queryPurchaserList(true);
-                    });
+                    optionsBeans.add(new OptionsBean(OptionType.OPTION_COOPER_PURCHASER));
+                    optionsBeans.add(new OptionsBean(OptionType.OPTION_STOP_COOPER_PURCHASER));
+                    mTitleOptionWindow
+                            .refreshList(optionsBeans)
+                            .setItemGravity(Gravity.CENTER)
+                            .setListener((adapter, view1, position) -> {
+                                mTitleOptionWindow.dismiss();
+                                mTxtTitle.setTag(position);
+                                OptionsBean item = (OptionsBean) adapter.getItem(position);
+                                if (item == null) return;
+                                mTxtTitle.setText(item.getLabel());
+                                mPresenter.queryPurchaserList(true);
+                            });
                 }
-                mTitleOptionWindow.showAsDropDownFix(mRlToolbar, 0, 0, Gravity.CENTER_HORIZONTAL);
+                mTitleOptionWindow.showAsDropDownFix(mRlToolbar, Gravity.CENTER_HORIZONTAL);
                 break;
             default:
                 break;
