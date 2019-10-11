@@ -262,15 +262,16 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                     List<OptionsBean> optionsBeans = new ArrayList<>();
                     optionsBeans.add(new OptionsBean(OptionType.OPTION_WAREHOUSE_COMPANY));
                     optionsBeans.add(new OptionsBean(OptionType.OPTION_STOP_WAREHOUSE_COMPANY));
-                    mTitleOptionsWindow.refreshList(optionsBeans);
-                    mTitleOptionsWindow.setListener((adapter, view1, position) -> {
-                        mTitleOptionsWindow.dismiss();
-                        mTxtTitle.setTag(position);
-                        OptionsBean item = (OptionsBean) adapter.getItem(position);
-                        if (item == null) return;
-                        mTxtTitle.setText(item.getLabel());
-                        mPresenter.queryWarehouseList(true);
-                    });
+                    mTitleOptionsWindow
+                            .refreshList(optionsBeans)
+                            .setListener((adapter, view1, position) -> {
+                                mTitleOptionsWindow.dismiss();
+                                mTxtTitle.setTag(position);
+                                OptionsBean item = (OptionsBean) adapter.getItem(position);
+                                if (item == null) return;
+                                mTxtTitle.setText(item.getLabel());
+                                mPresenter.queryWarehouseList(true);
+                            });
                 }
                 mTitleOptionsWindow.showAsDropDownFix(mRlTitleBar, 0, 0, Gravity.CENTER_HORIZONTAL);
                 break;
