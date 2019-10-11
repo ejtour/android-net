@@ -73,6 +73,11 @@ public class ContextOptionsWindow extends BasePopupWindow {
         return this;
     }
 
+    public ContextOptionsWindow setListPadding(int left, int top, int right, int bottom) {
+        mListView.setPadding(left, top, right, bottom);
+        return this;
+    }
+
     public void showAsDropDownFix(View anchor, int gravity) {
         showAsDropDownFix(anchor, 0, 0, gravity);
     }
