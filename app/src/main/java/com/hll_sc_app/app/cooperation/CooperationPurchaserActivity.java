@@ -248,6 +248,8 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
                     List<OptionsBean> optionsBeans = new ArrayList<>();
                     optionsBeans.add(new OptionsBean(OptionType.OPTION_COOPER_PURCHASER));
                     optionsBeans.add(new OptionsBean(OptionType.OPTION_STOP_COOPER_PURCHASER));
+                    int padh = UIUtils.dip2px(10);
+                    mTitleOptionWindow.setListPadding(padh,0,padh,0);
                     mTitleOptionWindow
                             .refreshList(optionsBeans)
                             .setItemGravity(Gravity.CENTER)

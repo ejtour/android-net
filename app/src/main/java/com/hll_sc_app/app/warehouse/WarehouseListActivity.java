@@ -262,6 +262,8 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                     List<OptionsBean> optionsBeans = new ArrayList<>();
                     optionsBeans.add(new OptionsBean(OptionType.OPTION_WAREHOUSE_COMPANY));
                     optionsBeans.add(new OptionsBean(OptionType.OPTION_STOP_WAREHOUSE_COMPANY));
+                    int padh = UIUtils.dip2px(10);
+                    mTitleOptionsWindow.setListPadding(padh, 0, padh, 0);
                     mTitleOptionsWindow
                             .refreshList(optionsBeans)
                             .setListener((adapter, view1, position) -> {

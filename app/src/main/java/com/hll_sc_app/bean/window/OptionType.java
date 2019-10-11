@@ -138,9 +138,9 @@ public @interface OptionType {
     String OPTION_STATISTIC_WEEK = "周统计";
     String OPTION_STATISTIC_MONTH = "月统计";
 
-    String OPTION_COOPER_PURCHASER = "    合作采购商    ";
-    String OPTION_STOP_COOPER_PURCHASER = "    停止合作采购商    ";
+    String OPTION_COOPER_PURCHASER = "合作采购商";
+    String OPTION_STOP_COOPER_PURCHASER = "停止合作采购商";
 
-    String OPTION_WAREHOUSE_COMPANY = "    我是代仓公司    ";
-    String OPTION_STOP_WAREHOUSE_COMPANY = "    停止代仓公司    ";
+    String OPTION_WAREHOUSE_COMPANY = "我是代仓公司";
+    String OPTION_STOP_WAREHOUSE_COMPANY = "停止代仓公司";
 }
