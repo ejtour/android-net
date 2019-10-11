@@ -242,6 +242,7 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
                     txtStatus.setText("已同意");
                     break;
                 default:
+                    txtStatus.setText("");
                     break;
             }
 

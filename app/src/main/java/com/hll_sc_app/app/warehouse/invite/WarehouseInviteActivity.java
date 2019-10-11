@@ -201,6 +201,7 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
                     txtStatus.setText("已同意");
                     break;
                 default:
+                    txtStatus.setText("");
                     break;
             }
             if (item.getWarehouseActive() == 1) {
