@@ -261,7 +261,7 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
                     mTitleOptionsWindow.setListener((adapter, view1, position) -> {
                         mTitleOptionsWindow.dismiss();
                         mTxtTitle.setTag(position);
-                        mTxtTitle.setText(((OptionsBean) adapter.getItem(position)).getLabel());
+                        mTxtTitle.setText(((OptionsBean) adapter.getItem(position)).getLabel().trim());
                         mPresenter.queryWarehouseList(true);
 
                     });

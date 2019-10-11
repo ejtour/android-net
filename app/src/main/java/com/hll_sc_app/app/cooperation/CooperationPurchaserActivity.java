@@ -247,7 +247,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
                     mTitleOptionWindow.setListener((adapter, view1, position) -> {
                         mTitleOptionWindow.dismiss();
                         mTxtTitle.setTag(position);
-                        mTxtTitle.setText(((OptionsBean) adapter.getItem(position)).getLabel());
+                        mTxtTitle.setText(((OptionsBean) adapter.getItem(position)).getLabel().trim());
                         mPresenter.queryPurchaserList(true);
                     });
                 }

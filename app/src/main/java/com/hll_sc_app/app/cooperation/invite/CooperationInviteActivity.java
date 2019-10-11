@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.cooperation.invite;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -201,6 +202,9 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
                     txtStatus.setText("已同意");
                     break;
                 default:
+                    txtStatus.setText("");
+                    txtStatus.setTextColor(0xFF999999);
+                    txtStatus.setBackground(null);
                     break;
             }
             if (item.getCooperationActive() == 1) {

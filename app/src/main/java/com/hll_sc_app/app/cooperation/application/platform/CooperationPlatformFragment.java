@@ -232,6 +232,9 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
                     txtStatus.setText("已同意");
                     break;
                 default:
+                    txtStatus.setText("");
+                    txtStatus.setTextColor(0xFF999999);
+                    txtStatus.setBackground(null);
                     break;
             }
             if (item.getCooperationActive() == 1) {

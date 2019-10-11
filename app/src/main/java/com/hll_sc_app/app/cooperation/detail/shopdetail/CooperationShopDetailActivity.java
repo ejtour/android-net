@@ -140,14 +140,15 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
         R.id.ll_driverName, R.id.ll_deliveryWay, R.id.ll_cooperationSource, R.id.ll_deliveryPeriod
         , R.id.txt_del, R.id.txt_agree, R.id.txt_reject})
     public void onViewClicked(View view) {
+        if (view.getId() == R.id.img_close) {
+            finish();
+            return;
+        }
         //已停止状态 不作任何操作
         if (mShopBean.getCooperationActive() == 1) {
             return;
         }
         switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
             case R.id.txt_agree:
                 mPresenter.editCooperationShop("agree");
                 break;
