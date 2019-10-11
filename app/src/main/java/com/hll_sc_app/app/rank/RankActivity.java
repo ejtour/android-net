@@ -17,7 +17,6 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.rank.org.OrgRankFragment;
 import com.hll_sc_app.app.rank.sales.SalesRankFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateWeekWindow;
 import com.hll_sc_app.base.widget.DateWindow;
@@ -158,7 +157,7 @@ public class RankActivity extends BaseLoadActivity {
                         EventBus.getDefault().post(new RankEvent());
                     });
         }
-        mOptionsWindow.showAsDropDownFix(mFilterSelect, -UIUtils.dip2px(20), 0, Gravity.CENTER_HORIZONTAL);
+        mOptionsWindow.showAsDropDownFix(mFilterSelect, Gravity.CENTER_HORIZONTAL);
     }
 
     private class RankAdapter extends FragmentPagerAdapter {
