@@ -27,6 +27,7 @@ import butterknife.OnClick;
  * @date 2019-07-20
  */
 public class CooperationButtonView extends LinearLayout {
+    public static final String TYPE_FORMAL_APPLICATION = "formalCooperation";
     public static final String TYPE_MY_APPLICATION = "myApplication";
     public static final String TYPE_COOPERATION_APPLICATION = "cooperationApplication";
     @BindView(R.id.txt_del)
@@ -77,38 +78,29 @@ public class CooperationButtonView extends LinearLayout {
         if (isComeFromCheck() && cooperationActive == 1) {
             return;
         }
-        switch (status) {
-            case "0":
-                if (TextUtils.equals(actionType, TYPE_MY_APPLICATION)) {
-                    // 我申请 等待别人审批
-                    mLlStatus0My.setVisibility(VISIBLE);
-                    mTxtWaitMy0.setVisibility(VISIBLE);
-                    mTxtDeleteMy0.setVisibility(VISIBLE);
-                } else if (TextUtils.equals(actionType, TYPE_COOPERATION_APPLICATION)) {
-                    // 别人申请 我审批
-                    mLlStatus0Other.setVisibility(VISIBLE);
-                    mTxtAgreeOther.setVisibility(VISIBLE);
-                    mTxtRejectOther.setVisibility(VISIBLE);
-                }
-                break;
-            case "1":
-                // 未同意
-                if (TextUtils.equals(actionType, TYPE_MY_APPLICATION)) {
-                    mLlStatus1My.setVisibility(VISIBLE);
-                    mTxtRepeatMy.setVisibility(VISIBLE);
-                    mTxtDeleteMy1.setVisibility(VISIBLE);
-                }
-                break;
-            case "2":
-                // 已同意
-                mTxtDel.setVisibility(VISIBLE);
-                break;
-            case "3":
-                // 从未添加过
-                mTxtAdd.setVisibility(VISIBLE);
-                break;
-            default:
-                break;
+        //正式合作
+        if (TextUtils.equals(actionType, TYPE_FORMAL_APPLICATION)) {
+            mTxtDel.setVisibility(VISIBLE);
+        } else if (TextUtils.equals(actionType, TYPE_MY_APPLICATION)) {//我的申请
+            if (TextUtils.equals(status, "0")) {
+                // 我申请 等待别人审批
+                mLlStatus0My.setVisibility(VISIBLE);
+                mTxtWaitMy0.setVisibility(VISIBLE);
+                mTxtDeleteMy0.setVisibility(VISIBLE);
+            } else if (TextUtils.equals(status, "1")) {
+                mLlStatus1My.setVisibility(VISIBLE);
+                mTxtRepeatMy.setVisibility(VISIBLE);
+                mTxtDeleteMy1.setVisibility(VISIBLE);
+            }
+        } else if (TextUtils.equals(actionType, TYPE_COOPERATION_APPLICATION)) {//合作申请
+            if (TextUtils.equals(status, "0")) {// 别人申请 我审批
+                mLlStatus0Other.setVisibility(VISIBLE);
+                mTxtAgreeOther.setVisibility(VISIBLE);
+                mTxtRejectOther.setVisibility(VISIBLE);
+            }
+        } else {
+            // 从未添加过
+            mTxtAdd.setVisibility(VISIBLE);
         }
     }
 
