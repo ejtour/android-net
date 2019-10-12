@@ -9,7 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
+import com.hll_sc_app.citymall.App;
 
 import java.util.List;
 
@@ -72,7 +74,7 @@ public class CooperationButtonView extends LinearLayout {
     public void showButton(String actionType, String status, int cooperationActive) {
         ButterKnife.apply(mButtonList, (view, index) -> view.setVisibility(GONE));
         //已停止合作 不显示任何按钮
-        if (cooperationActive == 1) {
+        if (isComeFromCheck() && cooperationActive == 1) {
             return;
         }
         switch (status) {
@@ -108,6 +110,15 @@ public class CooperationButtonView extends LinearLayout {
             default:
                 break;
         }
+    }
+
+    /**
+     * 是否从查看页面进来后，需要判断是否停止合作，停止合作则隐藏
+     *
+     * @return
+     */
+    private boolean isComeFromCheck() {
+        return App.equalToLastActivity(CooperationDetailActivity.class.getSimpleName(), 1);
     }
 
     @OnClick({R.id.txt_del, R.id.txt_add, R.id.txt_agree_other, R.id.txt_reject_other, R.id.txt_delete_my0,
