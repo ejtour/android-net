@@ -16,6 +16,7 @@ import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.bean.aftersales.NegotiationHistoryResp;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.complain.ComplainAddReq;
 import com.hll_sc_app.bean.export.ExportResp;
 
 import java.util.List;
@@ -60,6 +61,11 @@ public interface AfterSalesService {
     @POST(HttpConfig.URL)
     @Headers("pv:110014")
     Observable<BaseResp<GenerateCompainResp>> generateComplain(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:110014")
+    Observable<BaseResp<GenerateCompainResp>> generateComplain(@Body BaseReq<ComplainAddReq>  req);
+
 
     @POST(HttpConfig.URL)
     @Headers("pv:103094")

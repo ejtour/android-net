@@ -121,7 +121,9 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
     private void initView() {
         mTitle.setHeaderTitle(getTitleName());
         mTitle.setRightBtnClick(v -> {
-            mPresent.saveComplain();
+            if (checkInput()) {
+                mPresent.saveComplain();
+            }
         });
         initExplainView();
         initDetail();
@@ -476,5 +478,41 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
             default:
                 break;
         }
+    }
+
+    private boolean checkInput() {
+        //商品类型投诉
+        if (TextUtils.equals(getType(), "1")) {
+            if (getProducts().size() == 0) {
+                showToast("请选择投诉商品商品");
+                return false;
+            }
+        }
+        if (TextUtils.isEmpty(getPurchaserName())) {
+            showToast("请选择投诉集团");
+            return false;
+        } else if (TextUtils.isEmpty(getShopName())) {
+            showToast("请选择投诉集团");
+            return false;
+        } else if (TextUtils.isEmpty(getBillID())) {
+            showToast("请选择订单");
+            return false;
+        } else if (TextUtils.isEmpty(getPhone())) {
+            showToast("请填写联系方式");
+            return false;
+        } else if (TextUtils.isEmpty(getType())) {
+            showToast("请选择投诉类型");
+            return false;
+        } else if (TextUtils.isEmpty(getReason())) {
+            showToast("请选择投诉原因");
+            return false;
+        } else if (TextUtils.isEmpty(getExplain())) {
+            showToast("请填写投诉说明");
+            return false;
+        } /*else if (TextUtils.isEmpty(getImgs())) {
+            showToast("请选择上传凭证");
+            return false;
+        }*/
+        return true;
     }
 }

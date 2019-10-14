@@ -44,7 +44,6 @@ public interface IComplainMangeAddContract {
 
         void imageUpload(File file);
 
-
         void saveComplain();
     }
 

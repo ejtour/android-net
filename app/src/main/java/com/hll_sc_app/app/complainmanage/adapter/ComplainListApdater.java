@@ -60,13 +60,13 @@ public class ComplainListApdater extends BaseQuickAdapter<ComplainListResp.Compl
 
     private String getStatus(int status) {
         switch (status) {
-            case 0:
-                return "未处理";
             case 1:
-                return "已回复";
+                return "未处理";
             case 2:
-                return "已结束";
+                return "已回复";
             case 3:
+                return "已结束";
+            case 4:
                 return "已撤销";
             default:
                 return "";

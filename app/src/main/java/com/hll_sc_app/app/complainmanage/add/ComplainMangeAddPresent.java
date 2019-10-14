@@ -2,11 +2,11 @@ package com.hll_sc_app.app.complainmanage.add;
 
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSONArray;
 import com.hll_sc_app.api.AfterSalesService;
 import com.hll_sc_app.api.ComplainManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -14,11 +14,14 @@ import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
+import com.hll_sc_app.bean.complain.ComplainAddReq;
 import com.hll_sc_app.bean.complain.DropMenuBean;
+import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.rest.Upload;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -76,34 +79,36 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
         if (userBean == null) {
             return;
         }
-        BaseMapReq.Builder builder = BaseMapReq.newBuilder()
-                .put("actionType", "1")
-                .put("complaintExplain", mView.getExplain())
-                .put("imgUrls", mView.getImgs())
-                .put("reason", mView.getReason())
-                .put("type", mView.getType())
-                .put("source", "2")
-                .put("supplyID", userBean.getGroupID())
-                .put("supplyName", userBean.getGroupName())
-                .put("supplyName", "2")
-                .put("billID", mView.getBillID())
-                .put("purchaserContact", mView.getPhone())
-                .put("purchaserID", mView.getPurchaserID())
-                .put("purchaserName", mView.getPurchaserName())
-                .put("purchaserShopID", mView.getShopID())
-                .put("purchaserShopName", mView.getShopName())
-                .put("sourceClient", "1");//todo：需判断用户角色类型：6/1
+        ComplainAddReq req = new ComplainAddReq();
+        req.setActionType(1);
+        req.setSourceClient(1);//todo：需判断用户角色类型：6/1
+        req.setSource(2);
+        req.setTarget(2);
+        req.setSupplyName(userBean.getGroupName());
+        req.setSupplyID(userBean.getGroupID());
+        req.setPurchaserName(mView.getPurchaserName());
+        req.setPurchaserID(mView.getPurchaserID());
+        req.setPurchaserShopName(mView.getShopName());
+        req.setPurchaserShopID(mView.getShopID());
+        req.setBillID(mView.getBillID());
+        req.setType(mView.getType());
+        req.setReason(mView.getReason());
+        req.setComplaintExplain(mView.getExplain());
+        req.setImgUrls(mView.getImgs());
+        req.setPurchaserContact(mView.getPhone());
         if (TextUtils.equals(mView.getType(), "1")) {
-            builder.put("products", JSONArray.toJSONString(mView.getProducts()));
+            req.setProducts(transformProducts(mView.getProducts()));
         }
+        BaseReq<ComplainAddReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
         AfterSalesService.INSTANCE
-                .generateComplain(builder.create())
+                .generateComplain(baseReq)
+                .map(new Precondition<>())
+                .compose(ApiScheduler.getObservableScheduler())
                 .doOnSubscribe(disposable -> {
                     mView.showLoading();
                 })
                 .doFinally(() -> mView.hideLoading())
-                .compose(ApiScheduler.getObservableScheduler())
-                .map(new Precondition<>())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
                 .subscribe(new BaseCallback<GenerateCompainResp>() {
                     @Override
@@ -116,5 +121,24 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
                         mView.showError(e);
                     }
                 });
+    }
+
+
+    private List<ComplainAddReq.ProductsBean> transformProducts(List<OrderDetailBean> orderDetailBeans) {
+        ArrayList<ComplainAddReq.ProductsBean> productsBeans = new ArrayList<>();
+        for (OrderDetailBean orderDetailBean : orderDetailBeans) {
+            ComplainAddReq.ProductsBean productsBean = new ComplainAddReq.ProductsBean();
+            productsBean.setImgUrl(orderDetailBean.getImgUrl());
+            productsBean.setProductPrice(orderDetailBean.getProductPrice());
+            productsBean.setProductName(orderDetailBean.getProductName());
+            productsBean.setProductID(productsBean.getProductID());
+            productsBean.setDetailID(productsBean.getDetailID());
+            productsBean.setAdjustmentNum(productsBean.getAdjustmentNum());
+            productsBean.setSaleUnitName(productsBean.getSaleUnitName());
+            productsBean.setStandardNum(productsBean.getStandardNum());
+            productsBean.setProductSpec(productsBean.getProductSpec());
+            productsBeans.add(productsBean);
+        }
+        return productsBeans;
     }
 }
