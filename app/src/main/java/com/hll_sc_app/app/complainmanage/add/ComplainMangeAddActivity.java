@@ -366,7 +366,13 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
 
     @Override
     public String getReason() {
-        return mTxtReason.getText().toString();
+        Object object = mTxtReason.getTag();
+        if (object == null) {
+            return "";
+        } else {
+            DropMenuBean bean = (DropMenuBean) object;
+            return bean.getKey();
+        }
     }
 
     @Override

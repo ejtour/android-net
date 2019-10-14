@@ -9,7 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.cooperation.application.CooperationApplicationActivity;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
+import com.hll_sc_app.app.cooperation.invite.CooperationInviteActivity;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.citymall.App;
 
@@ -110,7 +112,12 @@ public class CooperationButtonView extends LinearLayout {
      * @return
      */
     private boolean isComeFromCheck() {
-        return App.equalToLastActivity(CooperationDetailActivity.class.getSimpleName(), 1);
+        if (App.equalToLastActivity(CooperationDetailActivity.class.getSimpleName(), 1)
+                || App.equalToLastActivity(CooperationApplicationActivity.class.getSimpleName(), 1)
+                || App.equalToLastActivity(CooperationInviteActivity.class.getSimpleName(), 1)) {
+            return true;
+        }
+        return false;
     }
 
     @OnClick({R.id.txt_del, R.id.txt_add, R.id.txt_agree_other, R.id.txt_reject_other, R.id.txt_delete_my0,
