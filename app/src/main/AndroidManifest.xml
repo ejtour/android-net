@@ -1020,7 +1020,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.complainmanage.productlist.SelectProductListActivity"
+            android:name=".app.complainmanage.add.productlist.SelectProductListActivity"
             android:screenOrientation="portrait" />
 
         <activity

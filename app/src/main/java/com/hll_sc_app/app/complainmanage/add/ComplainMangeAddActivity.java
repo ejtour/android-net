@@ -3,7 +3,6 @@ package com.hll_sc_app.app.complainmanage.add;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.Group;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.complainmanage.add.productlist.SelectProductListActivity;
 import com.hll_sc_app.app.complainmanage.ordernumberlist.SelectOrderListActivity;
 import com.hll_sc_app.app.complainmanage.purchaserlist.SelectPurchaserListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -28,11 +28,15 @@ import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.complain.ComplainDetailResp;
 import com.hll_sc_app.bean.complain.DropMenuBean;
 import com.hll_sc_app.bean.complain.ReportFormSearchResp;
+import com.hll_sc_app.bean.event.ComplainManageEvent;
 import com.hll_sc_app.bean.order.OrderResp;
+import com.hll_sc_app.bean.order.detail.OrderDetailBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 import com.zhihu.matisse.Matisse;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -52,6 +56,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
     private final int REQUEST_CODE_ORDER_NUMBER_LIST = 100;
     private final int REQUEST_SELECT_PURCHASER_LIST = 101;
     private final int REQUEST_SELECT_SHOP_LIST = 102;
+    private final int REQUEST_SELECT_PRODUCT_LIST = 103;
     @BindView(R.id.title_bar)
     TitleBar mTitle;
     @BindView(R.id.txt_group)
@@ -72,21 +77,26 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
     LinearLayout mLlScrollPhoto;
     @BindView(R.id.recyclerView)
     RecyclerView mProductListView;
-    @BindView(R.id.group_product_area)
-    Group mGroupProductArea;
     @BindView(R.id.txt_left_number)
     TextView mTxtLeftNumber;
+    @BindView(R.id.txt_product_edit)
+    TextView mTxtProductEdt;
     @Autowired(name = "parcelable")
     ComplainDetailResp mDetail;
     @BindView(R.id.upload_img)
     ImgUploadBlock mUpload;
+    @BindView(R.id.ll_add_product)
+    LinearLayout mLlAddProduct;
+    @BindView(R.id.txt_title_product)
+    TextView mTxtTitleAddProduct;
+
 
     private Unbinder unbinder;
     private IComplainMangeAddContract.IPresent mPresent;
     private SingleSelectionDialog mSelectTypeDialog;
     private SingleSelectionDialog mSelectReasonDialog;
+    private ProductAdapter mProductListAdapter;
 
-    private ProductAdapter mProductAdpater;
     public static void start(ComplainDetailResp complainDetailResp) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_ADD, complainDetailResp);
     }
@@ -110,6 +120,9 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
 
     private void initView() {
         mTitle.setHeaderTitle(getTitleName());
+        mTitle.setRightBtnClick(v -> {
+            mPresent.saveComplain();
+        });
         initExplainView();
         initDetail();
     }
@@ -186,7 +199,8 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
 
     }
 
-    @OnClick({R.id.ll_add_product, R.id.txt_reason, R.id.txt_type, R.id.txt_order, R.id.txt_group, R.id.txt_shop})
+    @OnClick({R.id.ll_add_product, R.id.txt_reason, R.id.txt_type, R.id.txt_order, R.id.txt_group,
+            R.id.txt_shop, R.id.txt_product_edit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_group:
@@ -233,7 +247,14 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                        mTxtShop.getTag().toString());
                 break;
             case R.id.ll_add_product:
-
+                if (mTxtOrder.getTag() == null) {
+                    showToast("请先选择订单");
+                    return;
+                }
+                SelectProductListActivity.start(this, REQUEST_SELECT_PRODUCT_LIST, mTxtOrder.getTag().toString(), null);
+                break;
+            case R.id.txt_product_edit:
+                SelectProductListActivity.start(this, REQUEST_SELECT_PRODUCT_LIST, mTxtOrder.getTag().toString(), (ArrayList<OrderDetailBean>) mProductListAdapter.getData());
                 break;
             default:
                 break;
@@ -262,7 +283,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                     mTxtReason.setText("");
                     mSelectReasonDialog.refreshList(dropMenuBean.getChildren());
                     /*选择商品问题*/
-                    mGroupProductArea.setVisibility(TextUtils.equals("1", dropMenuBean.getKey()) ? View.VISIBLE : View.GONE);
+                    toggleSelectProductView(TextUtils.equals("1", dropMenuBean.getKey()));
                 })
                 .refreshList(dropMenuBeans)
                 .setTitleText("选择投诉类型")
@@ -304,6 +325,96 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
 
     }
 
+    /**
+     * 展示和隐藏选择投诉商品区域
+     *
+     * @param isShow
+     */
+    private void toggleSelectProductView(boolean isShow) {
+        boolean isHasProduct = mProductListAdapter != null && mProductListAdapter.getData().size() > 0;
+        mTxtProductEdt.setVisibility(isShow && isHasProduct ? View.VISIBLE : View.GONE);
+        mTxtTitleAddProduct.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        mProductListView.setVisibility(isShow && isHasProduct ? View.VISIBLE : View.GONE);
+        mLlAddProduct.setVisibility(isShow && !isHasProduct ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public String getExplain() {
+        return mEdtExplain.getText().toString();
+    }
+
+    @Override
+    public String getImgs() {
+        Object o = mLlScrollPhoto.getTag();
+        if (o == null) {
+            return "";
+        }
+        ArrayList urls = (ArrayList) o;
+        return TextUtils.join(",", urls);
+    }
+
+    @Override
+    public String getType() {
+        Object object = mTxtType.getTag();
+        if (object == null) {
+            return "";
+        } else {
+            DropMenuBean bean = (DropMenuBean) object;
+            return bean.getKey();
+        }
+    }
+
+    @Override
+    public String getReason() {
+        return mTxtReason.getText().toString();
+    }
+
+    @Override
+    public String getBillID() {
+        return mTxtOrder.getText().toString();
+    }
+
+    @Override
+    public String getPhone() {
+        return mEdtPhone.getText().toString();
+    }
+
+    @Override
+    public String getPurchaserID() {
+        Object object = mTxtGroup.getTag();
+        return object == null ? "" : object.toString();
+    }
+
+    @Override
+    public String getPurchaserName() {
+        return mTxtGroup.getText().toString();
+    }
+
+    @Override
+    public String getShopID() {
+        Object object = mTxtShop.getTag();
+        return object == null ? "" : object.toString();
+    }
+
+    @Override
+    public String getShopName() {
+        return mTxtShop.getText().toString();
+    }
+
+    @Override
+    public List<OrderDetailBean> getProducts() {
+        if (mProductListAdapter == null) {
+            return null;
+        }
+        return mProductListAdapter.getData();
+    }
+
+    @Override
+    public void saveSuccess() {
+        EventBus.getDefault().post(new ComplainManageEvent(ComplainManageEvent.TARGET.LIST, ComplainManageEvent.EVENT.REFRESH));
+        finish();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -338,6 +449,22 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                     if (!CommonUtils.isEmpty(list)) {
                         mPresent.imageUpload(new File(list.get(0)));
                     }
+                }
+                break;
+            case REQUEST_SELECT_PRODUCT_LIST:
+                if (resultCode == RESULT_OK) {
+                    List<OrderDetailBean> orderDetailBeans = data.getParcelableArrayListExtra("product");
+                    if (mProductListAdapter == null) {
+                        mProductListAdapter = new ProductAdapter(orderDetailBeans, ProductAdapter.TYPE.EDIT, null);
+                        mProductListAdapter.setOnItemClickListener((adapter, view, position) -> {
+                            mProductListAdapter.remove(position);
+                            toggleSelectProductView(true);
+                        });
+                        mProductListView.setAdapter(mProductListAdapter);
+                    } else {
+                        mProductListAdapter.setNewData(orderDetailBeans);
+                    }
+                    toggleSelectProductView(true);
                 }
                 break;
             default:

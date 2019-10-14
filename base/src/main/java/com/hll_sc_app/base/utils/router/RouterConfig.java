@@ -1115,5 +1115,9 @@ public class RouterConfig {
      * CRM-我的-销售排名
      */
     public static final String CRM_RANK = "/activity/rank";
+
+    /*选择投诉管理选择商品*/
+    public static final String ACTIVITY_COMPLAIN_SELECT_PRODUCT_LIST = "/activity/complain/select/product/list";
+
 }
 

@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 
 import java.util.List;
 
@@ -877,4 +877,16 @@ public class OrderDetailBean implements Parcelable {
             return new OrderDetailBean[size];
         }
     };
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final OrderDetailBean orderDetailBean = (OrderDetailBean) obj;
+        return UIUtils.equals(this.detailID, orderDetailBean.detailID);
+    }
 }

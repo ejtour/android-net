@@ -6,6 +6,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -19,12 +20,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 public class ProductAdapter extends BaseQuickAdapter<OrderDetailBean, BaseViewHolder> {
-
     private int mType;
+    private List<OrderDetailBean> mselectBean;
 
-    public ProductAdapter(@Nullable List<OrderDetailBean> data, @TYPE int type) {
-        super(R.layout.list_item_complain_product, data);
+    public ProductAdapter(@Nullable List<OrderDetailBean> data, @TYPE int type, List<OrderDetailBean> select) {
+        super(R.layout.list_item_complain_select_product, data);
         mType = type;
+        mselectBean = select;
     }
 
     @Override
@@ -38,11 +40,13 @@ public class ProductAdapter extends BaseQuickAdapter<OrderDetailBean, BaseViewHo
     @Override
     protected void convert(BaseViewHolder helper, OrderDetailBean item) {
         ((GlideImageView) helper.setText(R.id.txt_product_name, item.getProductName())
-                .setText(R.id.txt_group_name, item.getSuppierName())
                 .setText(R.id.txt_spec, item.getProductSpec())
                 .setText(R.id.txt_price, getPrice(item.getProductPrice(), item.getSaleUnitName()))
                 .getView(R.id.img_product))
                 .setImageURL(item.getImgUrl());
+        if (mselectBean != null) {
+            ((CheckBox) helper.getView(R.id.check_view)).setChecked(mselectBean.contains(item));
+        }
     }
 
     private SpannableString getPrice(double price, String unit) {
@@ -57,7 +61,7 @@ public class ProductAdapter extends BaseQuickAdapter<OrderDetailBean, BaseViewHo
 
     @IntDef({TYPE.EDIT, TYPE.SELECT})
     @Retention(RetentionPolicy.SOURCE)
-    @interface TYPE {
+    public @interface TYPE {
         int EDIT = 0;
         int SELECT = 1;
     }

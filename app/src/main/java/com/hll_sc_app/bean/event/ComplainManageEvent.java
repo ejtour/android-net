@@ -42,12 +42,13 @@ public class ComplainManageEvent {
         this.event = event;
     }
 
-    @IntDef({TARGET.LIST, TARGET.DETAIL, TARGET.SELECT_PURCHASER_LIST})
+    @IntDef({TARGET.LIST, TARGET.DETAIL, TARGET.SELECT_PURCHASER_LIST,TARGET.SELECT_PRODUCT_LIST})
     @Retention(RetentionPolicy.SOURCE)
     public @interface TARGET {
         int LIST = 1;
         int DETAIL = 2;
         int SELECT_PURCHASER_LIST = 3;
+        int SELECT_PRODUCT_LIST = 4;
     }
 
     @IntDef({EVENT.REFRESH})

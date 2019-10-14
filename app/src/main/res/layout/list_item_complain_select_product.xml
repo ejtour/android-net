@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/base_white"
+    android:paddingRight="@dimen/dp_10">
+
+    <CheckBox
+        android:id="@+id/check_view"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/bg_selector_check_box"
+        android:button="@drawable/bg_selector_check_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/img_product"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        app:base_RoundingRadius="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/check_view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_product_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:textColor="@color/base_text222"
+        android:textSize="@dimen/base_text_13"
+        app:layout_constraintStart_toEndOf="@+id/img_product"
+        app:layout_constraintTop_toTopOf="@+id/img_product"
+        tools:text="四川眉山爱媛38号果冻橙柑橘" />
+
+    <TextView
+        android:id="@+id/txt_spec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/base_text999"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@id/txt_product_name"
+        app:layout_constraintTop_toBottomOf="@id/txt_product_name"
+        tools:text="显示规格" />
+
+    <TextView
+        android:id="@+id/txt_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="#F33030"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toStartOf="@id/txt_product_name"
+        app:layout_constraintTop_toBottomOf="@id/txt_spec"
+        tools:text="¥350.00/箱" />
+
+
+    <ImageView
+        android:id="@+id/img_del"
+        android:layout_width="13dp"
+        android:layout_height="14dp"
+        android:src="@drawable/ic_custom_category_del"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/base_color_divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/img_product" />
+</android.support.constraint.ConstraintLayout>
