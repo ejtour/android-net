@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/aoa_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="运营分析报告" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/aoa_tab_layout"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aoa_title_bar"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_indicator_corner_radius="2dp"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_width="65dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/color_999999" />
+
+    <TextView
+        android:id="@+id/aoa_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:paddingLeft="22dp"
+        android:paddingRight="22dp"
+        android:text="周"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aoa_tab_layout" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/aoa_filter_arrow"
+        android:layout_width="8dp"
+        android:layout_height="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/aoa_filter"
+        app:layout_constraintEnd_toEndOf="@id/aoa_filter"
+        app:layout_constraintTop_toTopOf="@id/aoa_filter"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+
+    <TextView
+        android:id="@+id/aoa_date"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical|right"
+        android:paddingRight="20dp"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/aoa_filter"
+        app:layout_constraintTop_toTopOf="@id/aoa_filter"
+        tools:text="统计周期：2019/02/19 - 2019/02/25" />
+
+    <com.hll_sc_app.widget.TriangleView
+        android:id="@+id/aoa_date_arrow"
+        android:layout_width="8dp"
+        android:layout_height="4dp"
+        android:layout_marginRight="6dp"
+        app:layout_constraintBottom_toBottomOf="@id/aoa_date"
+        app:layout_constraintEnd_toEndOf="@id/aoa_date"
+        app:layout_constraintTop_toTopOf="@id/aoa_date"
+        app:trv_color="@color/color_dddddd"
+        app:trv_direction="bottom" />
+</android.support.constraint.ConstraintLayout>
