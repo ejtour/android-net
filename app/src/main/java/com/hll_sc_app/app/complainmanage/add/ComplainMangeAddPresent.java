@@ -80,7 +80,10 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
             return;
         }
         ComplainAddReq req = new ComplainAddReq();
-        req.setActionType(1);
+        req.setActionType(mView.isEditModal() ? 2 : 1);
+        if (mView.isEditModal()) {
+            req.setComplaintID(mView.getComplainID());
+        }
         req.setSourceClient(1);//todo：需判断用户角色类型：6/1
         req.setSource(2);
         req.setTarget(2);
@@ -96,6 +99,7 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
         req.setComplaintExplain(mView.getExplain());
         req.setImgUrls(mView.getImgs());
         req.setPurchaserContact(mView.getPhone());
+
         if (TextUtils.equals(mView.getType(), "1")) {
             req.setProducts(transformProducts(mView.getProducts()));
         }

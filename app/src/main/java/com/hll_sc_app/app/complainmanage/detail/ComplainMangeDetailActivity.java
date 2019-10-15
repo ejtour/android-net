@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.complainmanage.add.ComplainMangeAddActivity;
 import com.hll_sc_app.app.complainmanage.history.ComplainHistorylActivity;
 import com.hll_sc_app.app.complainmanage.innerlog.InnerLoglActivity;
 import com.hll_sc_app.app.complainmanage.sendcomplainreply.SendComplainReplyActivity;
@@ -35,6 +36,7 @@ import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -115,6 +117,8 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
     Group mGroupComplainInfo;
     @BindView(R.id.group_product)
     Group mGroupProduct;
+    @BindView(R.id.title_bar)
+    TitleBar mTitle;
 
 
     private ComplainStatusResp mComplainStatusResp;
@@ -184,6 +188,12 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
     private void initView() {
         if (mComplainDetailResp == null || mComplainStatusResp == null) {
             return;
+        }
+        if (mComplainStatusResp.getSource() == 2 && mComplainStatusResp.getStatus() == 1) {
+            mTitle.setRightText("编辑");
+            mTitle.setRightBtnClick(v -> {
+                ComplainMangeAddActivity.start(mComplainDetailResp);
+            });
         }
         showTitleStatus();
         showReplyComplainToPlat();
@@ -347,7 +357,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                 mBtnLog.setVisibility(View.VISIBLE);
                 mBtnReply.setVisibility(View.VISIBLE);
             } else {
-                mBtnLog.setVisibility(View.GONE);
+                mBtnLog.setVisibility(View.VISIBLE);
                 mBtnReply.setVisibility(View.GONE);
             }
         }

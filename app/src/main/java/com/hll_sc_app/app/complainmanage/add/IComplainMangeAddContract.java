@@ -37,6 +37,11 @@ public interface IComplainMangeAddContract {
         List<OrderDetailBean> getProducts();
 
         void saveSuccess();
+
+
+        boolean isEditModal();
+
+        String getComplainID();
     }
 
     interface IPresent extends IPresenter<IView> {

@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.alibaba.fastjson.JSON;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.add.productlist.SelectProductListActivity;
 import com.hll_sc_app.app.complainmanage.ordernumberlist.SelectOrderListActivity;
@@ -105,6 +107,7 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complain_add);
+        ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
         initView();
         mPresent = ComplainMangeAddPresent.newInstance();
@@ -189,16 +192,22 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
      * 初始化上传凭证
      */
     private void initImagesView() {
-        //todo 凭证图片
-
+        if (!TextUtils.isEmpty(mDetail.getImgUrls())) {
+            String[] imgs = mDetail.getImgUrls().split(",");
+            for (String img : imgs) {
+                addImgUrlDetail(img);
+            }
+        }
     }
 
     /**
      * 初始化商品列表区域
      */
     private void initProductListView() {
-        //todo 商品列表
-
+        List<OrderDetailBean> orderDetailBeans = JSON.parseArray(mDetail.getProducts(), OrderDetailBean.class);
+        mProductListAdapter = new ProductAdapter(orderDetailBeans, ProductAdapter.TYPE.EDIT, null);
+        mProductListView.setAdapter(mProductListAdapter);
+        toggleSelectProductView(!TextUtils.isEmpty(mDetail.getProducts()));
     }
 
     @OnClick({R.id.ll_add_product, R.id.txt_reason, R.id.txt_type, R.id.txt_order, R.id.txt_group,
@@ -296,6 +305,16 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
 
         mSelectReasonDialog.selectItem(mTxtReason.getTag());
         mSelectTypeDialog.selectItem(mTxtType.getTag());
+
+        /*编辑模式，给投诉原因window赋值*/
+        if (mDetail != null) {
+            for (int i = 0; i < dropMenuBeans.size(); i++) {
+                if (TextUtils.equals(dropMenuBeans.get(i).getKey(), mDetail.getType())) {
+                    mSelectReasonDialog.refreshList(dropMenuBeans.get(i).getChildren());
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -514,5 +533,18 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
             return false;
         }*/
         return true;
+    }
+
+    @Override
+    public boolean isEditModal() {
+        return mDetail != null;
+    }
+
+    @Override
+    public String getComplainID() {
+        if (mDetail == null) {
+            return "";
+        }
+        return mDetail.getId();
     }
 }

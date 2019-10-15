@@ -19,7 +19,16 @@ public class ComplainAddReq {
     private int target;
     private String supplyName;
     private String supplyID;
+    private String complaintID;
     private List<ProductsBean> products;
+
+    public String getComplaintID() {
+        return complaintID;
+    }
+
+    public void setComplaintID(String complaintID) {
+        this.complaintID = complaintID;
+    }
 
     public int getSourceClient() {
         return sourceClient;
