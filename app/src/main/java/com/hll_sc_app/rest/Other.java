@@ -9,6 +9,9 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
+import com.hll_sc_app.bean.operationanalysis.LostResp;
+import com.hll_sc_app.bean.operationanalysis.TopTenResp;
 import com.hll_sc_app.bean.other.RouteBean;
 import com.hll_sc_app.bean.other.RouteDetailResp;
 import com.hll_sc_app.bean.rank.OrgRankBean;
@@ -113,6 +116,64 @@ public class Other {
                             .create());
         }
         observable.compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询流失采购商明细
+     *
+     * @param date     时间 周（周一时间） 月 （每月1号）
+     * @param timeType // 2：周，3：月
+     */
+    public static void queryLostInfo(String date, int timeType, SimpleObserver<LostResp> observer) {
+        OtherService.INSTANCE
+                .queryLostInfo(BaseMapReq.newBuilder()
+                        .put("date", date)
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("optype", "1") // 0 -供应商 1-采购商
+                        .put("order", "1") // 0：升序，1：降序
+                        .put("timeType", String.valueOf(timeType))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询不含top10的运营分析报告
+     *
+     * @param date     yyyyMMdd timeType为周时传周一的日期，timeType为月时传1号日期
+     * @param timeType 2:周 3:月
+     */
+    public static void queryAnalysisInfo(String date, int timeType, SimpleObserver<AnalysisResp> observer) {
+        OtherService.INSTANCE
+                .queryAnalysisInfo(BaseMapReq.newBuilder()
+                        .put("date", date)
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("dataType", "2")
+                        .put("timeType", String.valueOf(timeType))
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * @param date     yyyyMMdd timeType为周时传周一的日期，timeType为月时传1号日期
+     * @param timeType 2:周 3:月
+     */
+    public static void queryTopTenInfo(String date, int timeType, SimpleObserver<TopTenResp> observer) {
+        OtherService.INSTANCE
+                .queryTopTenInfo(BaseMapReq.newBuilder()
+                        .put("date", date)
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("type", "1") // 1:新增合作采购商门店top10 2:新增采购商门店top10 3:新增供应商top10
+                        .put("timeType", String.valueOf(timeType))
+                        .put("order", "1") // 0：升序，1：降序
+                        .put("sortBy", "5") // 排序字段 2: 有效单量 5:有效交易额
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }

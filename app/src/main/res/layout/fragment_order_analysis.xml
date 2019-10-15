@@ -1,43 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
+    android:scrollbarStyle="outsideInset">
 
-    <ScrollView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:paddingBottom="20dp">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/foa_title"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="统计列表"
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/foa_table"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_10"
-            android:background="@drawable/base_bg_white_radius_5_solid"
-            android:paddingBottom="20dp">
-
-            <TextView
-                android:id="@+id/foa_title"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:text="统计列表"
-                android:textAppearance="@style/TextAppearance.City22.Small"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:foreground="@drawable/bg_gray_border_radius_3"
+            android:orientation="horizontal"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foa_title">
 
             <LinearLayout
                 android:id="@+id/foa_table_title"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/foa_title">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/foa_date"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_40"
                     android:gravity="center"
@@ -83,219 +90,218 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/foa_table"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/foa_table_title"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/foa_table_title"
-                app:layout_constraintTop_toTopOf="@id/foa_table_title" />
-
-            <TextView
-                android:id="@+id/foa_chart_title"
+                android:id="@+id/foa_list_view"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="统计图示"
-                android:textAppearance="@style/TextAppearance.City22.Middle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/foa_table_title" />
+                android:layout_height="match_parent"
+                android:layout_marginLeft="60dp"
+                android:overScrollMode="never" />
+        </FrameLayout>
 
-            <TextView
-                android:id="@+id/foa_chart_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:text="数额(k)"
-                android:textAppearance="@style/TextAppearance.City22.Little.Color666"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/foa_chart_title" />
+        <TextView
+            android:id="@+id/foa_chart_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="统计图示"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foa_table" />
 
-            <com.github.mikephil.charting.charts.CombinedChart
-                android:id="@+id/foa_chart"
-                android:layout_width="0dp"
-                android:layout_height="260dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/foa_chart_label" />
+        <TextView
+            android:id="@+id/foa_chart_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="数额(k)"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foa_chart_title" />
 
-            <ImageView
-                android:id="@+id/foa_left_tail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/base_activity_bg"
-                android:src="@drawable/ic_arrow_tail"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/foa_chart" />
+        <com.github.mikephil.charting.charts.CombinedChart
+            android:id="@+id/foa_chart"
+            android:layout_width="0dp"
+            android:layout_height="260dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foa_chart_label" />
 
-            <ImageView
-                android:id="@+id/foa_right_tail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/base_activity_bg"
-                android:rotation="180"
-                android:src="@drawable/ic_arrow_tail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/foa_left_tail" />
+        <ImageView
+            android:id="@+id/foa_left_tail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/base_activity_bg"
+            android:src="@drawable/ic_arrow_tail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foa_chart" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1.5dp"
-                android:background="@drawable/base_dash_line"
-                app:layout_constraintBottom_toBottomOf="@id/foa_left_tail"
-                app:layout_constraintEnd_toStartOf="@id/foa_right_tail"
-                app:layout_constraintStart_toEndOf="@id/foa_left_tail"
-                app:layout_constraintTop_toTopOf="@id/foa_left_tail" />
+        <ImageView
+            android:id="@+id/foa_right_tail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/base_activity_bg"
+            android:rotation="180"
+            android:src="@drawable/ic_arrow_tail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/foa_left_tail" />
 
-            <TextView
-                android:id="@+id/foa_tip_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="26dp"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
-                android:lineSpacingExtra="3dp"
-                android:textAppearance="@style/TextAppearance.City22.Small"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/foa_left_tail"
-                tools:text="本周买家门店数558家，比上周增加9家，升高辐度1.63%" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1.5dp"
+            android:background="@drawable/line_dash_divider"
+            app:layout_constraintBottom_toBottomOf="@id/foa_left_tail"
+            app:layout_constraintEnd_toStartOf="@id/foa_right_tail"
+            app:layout_constraintStart_toEndOf="@id/foa_left_tail"
+            app:layout_constraintTop_toTopOf="@id/foa_left_tail" />
 
-            <TextView
-                android:id="@+id/foa_tip_2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:lineSpacingExtra="3dp"
-                android:textAppearance="@style/TextAppearance.City22.Small"
-                app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
-                app:layout_constraintStart_toStartOf="@id/foa_tip_1"
-                app:layout_constraintTop_toBottomOf="@id/foa_tip_1"
-                tools:text="本周客单价呈下降趋势，比上周降低379.90元，下降辐度度为2.10%" />
+        <TextView
+            android:id="@+id/foa_tip_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:lineSpacingExtra="3dp"
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foa_left_tail"
+            tools:text="本周买家门店数558家，比上周增加9家，升高辐度1.63%" />
 
-            <TextView
-                android:id="@+id/foa_tip_3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:lineSpacingExtra="3dp"
-                android:textAppearance="@style/TextAppearance.City22.Small"
-                app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
-                app:layout_constraintStart_toStartOf="@id/foa_tip_1"
-                app:layout_constraintTop_toBottomOf="@id/foa_tip_2"
-                tools:text="本周订单总量12,862笔，比上周增加284笔，升高辐度2.25%" />
+        <TextView
+            android:id="@+id/foa_tip_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="3dp"
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
+            app:layout_constraintStart_toStartOf="@id/foa_tip_1"
+            app:layout_constraintTop_toBottomOf="@id/foa_tip_1"
+            tools:text="本周客单价呈下降趋势，比上周降低379.90元，下降辐度度为2.10%" />
 
-            <TextView
-                android:id="@+id/foa_tip_4"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:lineSpacingExtra="3dp"
-                android:textAppearance="@style/TextAppearance.City22.Small"
-                app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
-                app:layout_constraintStart_toStartOf="@id/foa_tip_1"
-                app:layout_constraintTop_toBottomOf="@id/foa_tip_3"
-                tools:text="本周单均与上周相比下降21.26元，下降辐度为2.69%" />
+        <TextView
+            android:id="@+id/foa_tip_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="3dp"
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
+            app:layout_constraintStart_toStartOf="@id/foa_tip_1"
+            app:layout_constraintTop_toBottomOf="@id/foa_tip_2"
+            tools:text="本周订单总量12,862笔，比上周增加284笔，升高辐度2.25%" />
 
-            <TextView
-                android:id="@+id/foa_tip_5"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:lineSpacingExtra="3dp"
-                android:textAppearance="@style/TextAppearance.City22.Small"
-                app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
-                app:layout_constraintStart_toStartOf="@id/foa_tip_1"
-                app:layout_constraintTop_toBottomOf="@id/foa_tip_4"
-                tools:text="本周订单量最高日为：周三(3月13日)，单量为2,808笔" />
+        <TextView
+            android:id="@+id/foa_tip_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="3dp"
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
+            app:layout_constraintStart_toStartOf="@id/foa_tip_1"
+            app:layout_constraintTop_toBottomOf="@id/foa_tip_3"
+            tools:text="本周单均与上周相比下降21.26元，下降辐度为2.69%" />
 
-            <TextView
-                android:id="@+id/foa_tip_6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:lineSpacingExtra="3dp"
-                android:textAppearance="@style/TextAppearance.City22.Small"
-                app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
-                app:layout_constraintStart_toStartOf="@id/foa_tip_1"
-                app:layout_constraintTop_toBottomOf="@id/foa_tip_5"
-                tools:text="本周订单量最低日为：周一(3月11日)，单量为1,067笔" />
+        <TextView
+            android:id="@+id/foa_tip_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="3dp"
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
+            app:layout_constraintStart_toStartOf="@id/foa_tip_1"
+            app:layout_constraintTop_toBottomOf="@id/foa_tip_4"
+            tools:text="本周订单量最高日为：周三(3月13日)，单量为2,808笔" />
 
-            <TextView
-                android:id="@+id/foa_tip_7"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:lineSpacingExtra="3dp"
-                android:textAppearance="@style/TextAppearance.City22.Small"
-                app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
-                app:layout_constraintStart_toStartOf="@id/foa_tip_1"
-                app:layout_constraintTop_toBottomOf="@id/foa_tip_6"
-                tools:text="本周订单日均单量为：1,837笔" />
+        <TextView
+            android:id="@+id/foa_tip_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="3dp"
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
+            app:layout_constraintStart_toStartOf="@id/foa_tip_1"
+            app:layout_constraintTop_toBottomOf="@id/foa_tip_5"
+            tools:text="本周订单量最低日为：周一(3月11日)，单量为1,067笔" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="•"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-                app:layout_constraintEnd_toStartOf="@id/foa_tip_1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/foa_tip_1" />
+        <TextView
+            android:id="@+id/foa_tip_7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="3dp"
+            android:textAppearance="@style/TextAppearance.City22.Small"
+            app:layout_constraintEnd_toEndOf="@id/foa_tip_1"
+            app:layout_constraintStart_toStartOf="@id/foa_tip_1"
+            app:layout_constraintTop_toBottomOf="@id/foa_tip_6"
+            tools:text="本周订单日均单量为：1,837笔" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="•"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-                app:layout_constraintEnd_toStartOf="@id/foa_tip_2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/foa_tip_2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/foa_tip_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/foa_tip_1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="•"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-                app:layout_constraintEnd_toStartOf="@id/foa_tip_3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/foa_tip_3" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/foa_tip_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/foa_tip_2" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="•"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-                app:layout_constraintEnd_toStartOf="@id/foa_tip_4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/foa_tip_4" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/foa_tip_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/foa_tip_3" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="•"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-                app:layout_constraintEnd_toStartOf="@id/foa_tip_5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/foa_tip_5" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/foa_tip_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/foa_tip_4" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="•"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-                app:layout_constraintEnd_toStartOf="@id/foa_tip_6"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/foa_tip_6" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/foa_tip_5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/foa_tip_5" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="•"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color999"
-                app:layout_constraintEnd_toStartOf="@id/foa_tip_7"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/foa_tip_7" />
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/foa_tip_6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/foa_tip_6" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/foa_tip_7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/foa_tip_7" />
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
