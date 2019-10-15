@@ -115,4 +115,34 @@ public class ComplainMangeDetailPresent implements IComplainMangeDetailContract.
                 });
 
     }
+
+
+    @Override
+    public void changeComplainStatus(int status) {
+        BaseMapReq baseMapReq = BaseMapReq.newBuilder()
+                .put("complaintID", mView.getComplaintID())
+                .put("source", "2")
+                .put("status", String.valueOf(status))
+                .create();
+        ComplainManageService.INSTANCE
+                .changeComplainStatus(baseMapReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    mView.showLoading();
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.changeStatusSuccess(status);
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+    }
 }

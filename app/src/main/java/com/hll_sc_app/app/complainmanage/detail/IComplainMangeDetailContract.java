@@ -19,6 +19,8 @@ public interface IComplainMangeDetailContract {
         void showComplainDetail(ComplainDetailResp complainDetailResp);
 
         void applyPlatformInjectSuccess();
+
+        void changeStatusSuccess(int status);
     }
 
     interface IPresent extends IPresenter<IView> {
@@ -27,6 +29,8 @@ public interface IComplainMangeDetailContract {
         void queryComplainDetail();
 
         void applyPlatformInject();
+
+        void changeComplainStatus(int status);
     }
 
 

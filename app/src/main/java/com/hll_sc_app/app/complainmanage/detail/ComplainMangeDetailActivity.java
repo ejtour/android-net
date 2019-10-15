@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.complainmanage.detail;
 
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
@@ -33,6 +34,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.ComplainDetailResp;
 import com.hll_sc_app.bean.complain.ComplainStatusResp;
 import com.hll_sc_app.bean.event.ComplainManageEvent;
+import com.hll_sc_app.bean.event.PlatformComplainEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -43,6 +45,8 @@ import com.hll_sc_app.widget.TitleBar;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +67,8 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
     private Unbinder unbinder;
     @Autowired(name = "object0")
     String mCompaintId;
+    @Autowired(name = "object1")
+    int mSource;
     @BindView(R.id.txt_status)
     TextView mTxtStatus;
     @BindView(R.id.txt_status_time)
@@ -99,9 +105,13 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
     TextView mTxtHistory;
     @BindView(R.id.txt_title_inject)
     TextView mTxtInject;
+    @BindView(R.id.txt_title_group)
+    TextView mTxtTitleGroup;
+    @BindView(R.id.txt_title_shop)
+    TextView mTxtTitleShop;
     @BindView(R.id.txt_complain_person)
     TextView mTxtPerson;
-    @BindView(R.id.txt_title_complain_phone)
+    @BindView(R.id.txt_complain_phone)
     TextView mTxtPhone;
     @BindView(R.id.txt_driver)
     TextView mTxtDriver;
@@ -132,8 +142,9 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
     private Map<Integer, String[]> platformStatusTip = new ArrayMap<>();
 
     private ContextOptionsWindow mBottomMenuWindow;
-    public static void start(String compaintId) {
-        RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_DETAIL, compaintId);
+
+    public static void start(String compaintId, @SOURCE int source) {
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_DETAIL, compaintId, source);
     }
 
     @Override
@@ -192,7 +203,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         if (mComplainDetailResp == null || mComplainStatusResp == null) {
             return;
         }
-        if (mComplainStatusResp.getSource() == 2 && mComplainStatusResp.getStatus() == 1) {
+        if (mSource == SOURCE.COMPLAIN_MANAGE && mComplainStatusResp.getSource() == 2 && mComplainStatusResp.getStatus() == 1) {
             mTitle.setRightText("编辑");
             mTitle.setRightBtnClick(v -> {
                 ComplainMangeAddActivity.start(mComplainDetailResp);
@@ -208,6 +219,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         showContactAndPhone();
         showDriverInfo();
         showButton();
+
     }
 
     private void showTitleStatus() {
@@ -271,6 +283,11 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
      * 展示投诉详情
      */
     private void showCompainDetail() {
+        mTxtTitleGroup.setVisibility(mSource == SOURCE.COMPLAIN_MANAGE ? View.VISIBLE : View.GONE);
+        mTxtTitleShop.setVisibility(mSource == SOURCE.COMPLAIN_MANAGE ? View.VISIBLE : View.GONE);
+        mTxtGroup.setVisibility(mSource == SOURCE.COMPLAIN_MANAGE ? View.VISIBLE : View.GONE);
+        mTxtShop.setVisibility(mSource == SOURCE.COMPLAIN_MANAGE ? View.VISIBLE : View.GONE);
+        mTxtInject.setVisibility(mSource == SOURCE.COMPLAIN_MANAGE ? View.VISIBLE : View.GONE);
         mTxtGroup.setText(mComplainDetailResp.getPurchaserName());
         mTxtShop.setText(mComplainDetailResp.getPurchaserShopName());
         mTxtComplainType.setText(mComplainDetailResp.getTypeName());
@@ -324,12 +341,9 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
      * 投诉详情 - 投诉人及联系方式
      */
     private void showContactAndPhone() {
-        mGroupComplainInfo.setVisibility(mComplainDetailResp.getTarget() == 3 ? View.VISIBLE : View.GONE);
-        if (mComplainDetailResp.getTarget() != 3) {
-            return;
-        }
         mTxtPerson.setText(mComplainDetailResp.getCreateBy());
         mTxtPhone.setText(mComplainDetailResp.getInterventionContact());
+        mGroupComplainInfo.setVisibility(mComplainDetailResp.getTarget() == 3 ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -352,23 +366,94 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
      * 展示底部按钮
      */
     private void showButton() {
+        mBtnLog.setVisibility(View.GONE);
+        mBtnReply.setVisibility(View.GONE);
+
         int status = mComplainStatusResp.getStatus();
         int source = mComplainStatusResp.getSource();
+
         //投诉管理
         if (mComplainDetailResp.getTarget() == 2) {
             if (status == 1 || status == 5 || status == 6 || (status == 2 && source == 3)) {
                 mBtnLog.setVisibility(View.VISIBLE);
+                mBtnLog.setText("内部记录");
                 mBtnReply.setVisibility(View.VISIBLE);
+                mBtnReply.setText("回复采购商");
+                mBtnReply.setOnClickListener(v -> {
+                    SendComplainReplyActivity.start(mCompaintId);
+                });
             } else {
                 mBtnLog.setVisibility(View.VISIBLE);
-                mBtnReply.setVisibility(View.GONE);
+                mBtnLog.setText("内部记录");
             }
-        }
-        //平台投诉
+            mBtnLog.setOnClickListener(v -> {
+                InnerLoglActivity.start(mCompaintId);
+            });
+            mBtnLink.setText("联系采购商");
+        }//平台投诉
         else if (mComplainDetailResp.getTarget() == 3) {
-
-
+            if (status == 1) {//撤销投诉
+                mBtnLog.setVisibility(View.VISIBLE);
+                mBtnLog.setText("撤销投诉");
+                mBtnLog.setOnClickListener(v -> {
+                    cancelComplain();
+                });
+            } else if (status == 2) {
+                if (source == 2) {//结束投诉
+                    mBtnReply.setVisibility(View.VISIBLE);
+                    mBtnReply.setText("结束投诉");
+                    mBtnReply.setOnClickListener(v -> {
+                        stopComplain();
+                    });
+                } else {//回复客服,结束投诉
+                    mBtnLog.setVisibility(View.VISIBLE);
+                    mBtnLog.setText("回复客服");
+                    mBtnLog.setOnClickListener(v -> {
+                        //todo 回复客服
+                    });
+                    mBtnReply.setVisibility(View.VISIBLE);
+                    mBtnReply.setText("结束投诉");
+                    mBtnReply.setOnClickListener(v -> {
+                        stopComplain();
+                    });
+                }
+            }
+            mBtnLink.setText("联系平台客服");
         }
+    }
+
+    //撤销投诉
+    private void cancelComplain() {
+        SuccessDialog.newBuilder(this)
+                .setMessageTitle("您确定要撤销么")
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setMessage("请您确认是否要撤销投诉\n确认撤销后将结束本次投诉")
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1) {
+                        mPresent.changeComplainStatus(4);
+                    }
+                }, "我再看看", "确认撤销")
+                .create()
+                .show();
+    }
+
+    //结束投诉
+    private void stopComplain() {
+        SuccessDialog.newBuilder(this)
+                .setMessageTitle("您确定要结束么")
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setMessage("请您确认是否已经达成满意协商\n确认结束将结束本次投诉")
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1) {
+                        mPresent.changeComplainStatus(3);
+                    }
+                }, "我再看看", "确认结束")
+                .create()
+                .show();
     }
 
     /**
@@ -411,7 +496,9 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                         .setMessage("平台客服收到申请后会尽快处理\n将在1-3个工作日内做出回复")
                         .setButton((dialog, item) -> {
                             dialog.dismiss();
-                            mPresent.applyPlatformInject();
+                            if (item == 1) {
+                                mPresent.applyPlatformInject();
+                            }
                         }, "我再看看", "确认申请")
                         .create()
                         .show();
@@ -450,5 +537,20 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         showToast("已申请平台介入");
         mPresent.start();
         EventBus.getDefault().post(new ComplainManageEvent(ComplainManageEvent.TARGET.LIST, ComplainManageEvent.EVENT.REFRESH));
+    }
+
+    @Override
+    public void changeStatusSuccess(int status) {
+        EventBus.getDefault().post(new PlatformComplainEvent(PlatformComplainEvent.TARGET.LIST, PlatformComplainEvent.EVENT.REFRESH));
+        finish();
+    }
+
+
+    /*来源：从投诉管理进入，从向平台投诉进入*/
+    @IntDef({SOURCE.PLATFORM, SOURCE.COMPLAIN_MANAGE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SOURCE {
+        int PLATFORM = 0;//平台投诉
+        int COMPLAIN_MANAGE = 1;//投诉管理
     }
 }

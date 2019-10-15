@@ -11,15 +11,20 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.complain.ComplainListResp;
+import com.hll_sc_app.bean.event.PlatformComplainEvent;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.TitleBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -53,16 +58,16 @@ public class PlatformComplainActivity extends BaseLoadActivity implements IPlatf
         mPresent.register(this);
         initView();
         mPresent.queryList(true);
+        EventBus.getDefault().register(this);
     }
 
     private void initView() {
         mTitle.setRightBtnClick(v -> {
 
         });
-
         mAdapter = new PlatformComplainAdapter(null);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+            ComplainMangeDetailActivity.start(mAdapter.getItem(position).getId(), ComplainMangeDetailActivity.SOURCE.PLATFORM);
         });
         mListView.setAdapter(mAdapter);
 
@@ -83,6 +88,7 @@ public class PlatformComplainActivity extends BaseLoadActivity implements IPlatf
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -113,6 +119,13 @@ public class PlatformComplainActivity extends BaseLoadActivity implements IPlatf
                     .setText(R.id.txt_reason, item.getReasonName())
                     .setText(R.id.txt_time, CalendarUtils.getDateFormatString(item.getCreateTime(), "yyyyMMddHHmmss", "yyyy/MM/dd HH:mm"))
                     .setGone(R.id.txt_status, item.getOperationIntervention() == 2);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(PlatformComplainEvent event) {
+        if (event.getTarget() == PlatformComplainEvent.TARGET.LIST) {
+            mPresent.refresh();
         }
     }
 }

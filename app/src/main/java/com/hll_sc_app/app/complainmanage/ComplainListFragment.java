@@ -91,7 +91,7 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
             if (mAdapter.isCheckModel()) {
               mAdapter.updateSelect(complainListBean);
             } else {
-                ComplainMangeDetailActivity.start(complainListBean.getId());
+                ComplainMangeDetailActivity.start(complainListBean.getId(), ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

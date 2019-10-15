@@ -64,5 +64,9 @@ public interface ComplainManageService {
     @Headers("pv:111027")
     Observable<BaseResp<ReportFormSearchResp>> queryReportFormPurchaserList(@Body BaseMapReq req);
 
+    @POST(HttpConfig.URL)
+    @Headers("pv:110017")
+    Observable<BaseResp<Object>> changeComplainStatus(@Body BaseMapReq req);
+
 
 }
