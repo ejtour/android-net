@@ -1119,5 +1119,14 @@ public class RouterConfig {
     /*选择投诉管理选择商品*/
     public static final String ACTIVITY_COMPLAIN_SELECT_PRODUCT_LIST = "/activity/complain/select/product/list";
 
+    /*意见反馈的选项页面*/
+    public static final String ACTIVITY_FEED_BACK_COMPLAIN="/activity/feedback/complain";
+
+    /*向平台投诉列表页面*/
+    public static final String ACTIVITY_PLATFORM_COMPLAIN_LIST="/activity/platform/complain/list";
+
+
+
+
 }
 

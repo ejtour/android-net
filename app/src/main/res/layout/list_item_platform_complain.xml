@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_10"
+    android:background="@drawable/base_bg_white_radius_5_solid"
+    android:padding="@dimen/dp_10">
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="11dp"
+        android:layout_height="13dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/ic_pencile_page"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_title_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="投诉类型:"
+        android:textColor="@color/text_222"
+        android:textSize="@dimen/base_text_13"
+        app:layout_constraintStart_toEndOf="@id/img"
+        app:layout_constraintTop_toTopOf="@id/img" />
+
+    <TextView
+        android:id="@+id/txt_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:textColor="@color/text_222"
+        android:textSize="@dimen/base_text_13"
+        app:layout_constraintStart_toEndOf="@id/txt_title_type"
+        app:layout_constraintTop_toTopOf="@id/txt_title_type"
+        tools:text="图片侵权" />
+
+    <TextView
+        android:id="@+id/txt_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_exclamation_circle_yellow"
+        android:drawablePadding="5dp"
+        android:textColor="#F6BB42"
+        android:textSize="@dimen/base_text_13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/txt_title_type"
+        android:text="平台已回复" />
+
+    <TextView
+        android:id="@+id/txt_title_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="投诉原因:"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toStartOf="@id/txt_title_type"
+        app:layout_constraintTop_toBottomOf="@id/txt_title_type" />
+
+    <TextView
+        android:id="@+id/txt_reason"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txt_title_reason"
+        app:layout_constraintTop_toTopOf="@id/txt_title_reason"
+        tools:text="未经图片版权所有人许可擅自使用未经图片版权所有人许可擅自使用未经图片版权所有人许可擅自使用未经图片版权所有人许可擅自使用未经图片版权所有人许可擅自使用" />
+
+    <TextView
+        android:id="@+id/txt_title_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="投诉时间:"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toStartOf="@id/txt_title_reason"
+        app:layout_constraintTop_toBottomOf="@id/txt_reason" />
+
+    <TextView
+        android:id="@+id/txt_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:lineSpacingExtra="5dp"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toEndOf="@id/txt_title_time"
+        app:layout_constraintTop_toTopOf="@id/txt_title_time"
+        tools:text="2019/01/09 09:41" />
+</android.support.constraint.ConstraintLayout>
