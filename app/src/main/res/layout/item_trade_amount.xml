@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="20dp"
     android:paddingLeft="@dimen/dp_10"
     android:paddingRight="@dimen/dp_10"
     tools:background="@android:color/white">
@@ -54,7 +55,7 @@
         android:layout_width="0dp"
         android:layout_height="1.5dp"
         android:layout_marginTop="12dp"
-        android:background="@drawable/base_dash_line"
+        android:background="@drawable/line_dash_divider"
         android:layerType="software"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

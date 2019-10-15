@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
+    android:scrollbarStyle="outsideInset">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:paddingBottom="20dp">
 
@@ -30,6 +31,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="5dp"
             android:text="数额"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fpa_bar_title" />
 
@@ -48,7 +50,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="20dp"
             android:layout_marginRight="@dimen/dp_10"
-            android:background="@drawable/base_dash_line"
+            android:background="@drawable/line_dash_divider"
             android:layerType="software"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +82,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="20dp"
             android:layout_marginRight="@dimen/dp_10"
-            android:background="@drawable/base_dash_line"
+            android:background="@drawable/line_dash_divider"
             android:layerType="software"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,81 +99,90 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fpa_line2" />
 
-        <LinearLayout
-            android:id="@+id/fpa_table_header"
-            android:layout_width="80dp"
+        <FrameLayout
+            android:id="@+id/fpa_table"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
-            android:orientation="vertical"
+            android:layout_marginRight="@dimen/dp_10"
+            android:foreground="@drawable/bg_gray_border_radius_3"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fpa_table_title">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:gravity="center"
-                android:text="日期"
-                android:textColor="@color/color_666666"
-                android:textSize="9sp" />
+            <LinearLayout
+                android:id="@+id/fpa_table_header"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:gravity="center"
-                android:text="合作集团总数"
-                android:textColor="@color/color_222222"
-                android:textSize="@dimen/text_little_size" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center"
+                    android:text="日期"
+                    android:textColor="@color/color_666666"
+                    android:textSize="9sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:gravity="center"
-                android:text="活跃合作集团"
-                android:textColor="@color/color_222222"
-                android:textSize="@dimen/text_little_size" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center"
+                    android:text="合作集团总数"
+                    android:textColor="@color/color_222222"
+                    android:textSize="@dimen/text_little_size" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:gravity="center"
-                android:text="新增合作集团"
-                android:textColor="@color/color_222222"
-                android:textSize="@dimen/text_little_size" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center"
+                    android:text="活跃合作集团"
+                    android:textColor="@color/color_222222"
+                    android:textSize="@dimen/text_little_size" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:gravity="center"
-                android:text="合作门店总数"
-                android:textColor="@color/color_222222"
-                android:textSize="@dimen/text_little_size" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center"
+                    android:text="新增合作集团"
+                    android:textColor="@color/color_222222"
+                    android:textSize="@dimen/text_little_size" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:gravity="center"
-                android:text="活跃合作门店"
-                android:textColor="@color/color_222222"
-                android:textSize="@dimen/text_little_size" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center"
+                    android:text="合作门店总数"
+                    android:textColor="@color/color_222222"
+                    android:textSize="@dimen/text_little_size" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                android:gravity="center"
-                android:text="新增合作门店"
-                android:textColor="@color/color_222222"
-                android:textSize="@dimen/text_little_size" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center"
+                    android:text="活跃合作门店"
+                    android:textColor="@color/color_222222"
+                    android:textSize="@dimen/text_little_size" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fpa_list_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/fpa_table_header"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/fpa_table_header"
-            app:layout_constraintTop_toTopOf="@id/fpa_table_header" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:gravity="center"
+                    android:text="新增合作门店"
+                    android:textColor="@color/color_222222"
+                    android:textSize="@dimen/text_little_size" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fpa_list_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="80dp"
+                android:overScrollMode="never" />
+        </FrameLayout>
 
         <ImageView
             android:id="@+id/fpa_left_tail"
@@ -181,7 +192,7 @@
             android:background="@color/base_activity_bg"
             android:src="@drawable/ic_arrow_tail"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fpa_table_header" />
+            app:layout_constraintTop_toBottomOf="@id/fpa_table" />
 
         <ImageView
             android:id="@+id/fpa_right_tail"
@@ -196,7 +207,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="1.5dp"
-            android:background="@drawable/base_dash_line"
+            android:background="@drawable/line_dash_divider"
             android:layerType="software"
             app:layout_constraintBottom_toBottomOf="@id/fpa_left_tail"
             app:layout_constraintEnd_toStartOf="@id/fpa_right_tail"
@@ -252,5 +263,41 @@
             app:layout_constraintStart_toStartOf="@id/fpa_tip_1"
             app:layout_constraintTop_toBottomOf="@id/fpa_tip_3"
             tools:text="下单量最高的合作采购商门店是武汉江湖肥肥餐饮有限公司的肥肥配送中心，订单笔，交易金额10.35万元，单均255.56元" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/fpa_tip_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fpa_tip_1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/fpa_tip_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fpa_tip_2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/fpa_tip_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fpa_tip_3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="•"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toStartOf="@id/fpa_tip_4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fpa_tip_4" />
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

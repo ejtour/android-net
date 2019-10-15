@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/dp_10"
+    android:scrollbarStyle="outsideInset">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp_10"
         android:background="@drawable/base_bg_white_radius_5_solid"
         android:paddingBottom="20dp">
 
@@ -29,6 +30,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:overScrollMode="never"
+            android:scrollbars="none"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/stt_title">
 
@@ -36,7 +41,8 @@
                 android:id="@+id/stt_list_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_excel_body"
+                android:background="@drawable/bg_dddddd_radius_2_stroke"
+                android:overScrollMode="never"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
         </HorizontalScrollView>
 
@@ -63,7 +69,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="1.5dp"
-            android:background="@drawable/base_dash_line"
+            android:background="@drawable/line_dash_divider"
             android:layerType="software"
             app:layout_constraintBottom_toBottomOf="@id/stt_left_tail"
             app:layout_constraintEnd_toStartOf="@id/stt_right_tail"
@@ -153,7 +159,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="20dp"
             android:layout_marginRight="@dimen/dp_10"
-            android:background="@drawable/base_dash_line"
+            android:background="@drawable/line_dash_divider"
             android:layerType="software"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -176,11 +182,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:lineSpacingExtra="3dp"
-            android:text="本周与上周相比流失采购门店300家，流失率21.09%"
             android:textAppearance="@style/TextAppearance.City22.Small"
             app:layout_constraintEnd_toEndOf="@id/stt_add_tip_1"
             app:layout_constraintStart_toStartOf="@id/stt_add_tip_1"
-            app:layout_constraintTop_toBottomOf="@id/stt_loss_analysis" />
+            app:layout_constraintTop_toBottomOf="@id/stt_loss_analysis"
+            tools:text="本周与上周相比流失采购门店300家，流失率21.09%" />
 
         <TextView
             android:id="@+id/stt_loss_tip_2"
@@ -188,11 +194,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:lineSpacingExtra="3dp"
-            android:text="流失采购商门店上周交易额金额最高的门店为：施耐德有限公司的山东济南店， 订单：16笔， 交易金额： 6,723.5元"
             android:textAppearance="@style/TextAppearance.City22.Small"
             app:layout_constraintEnd_toEndOf="@id/stt_add_tip_1"
             app:layout_constraintStart_toStartOf="@id/stt_add_tip_1"
-            app:layout_constraintTop_toBottomOf="@id/stt_loss_tip_1" />
+            app:layout_constraintTop_toBottomOf="@id/stt_loss_tip_1"
+            tools:text="流失采购商门店上周交易额金额最高的门店为：施耐德有限公司的山东济南店， 订单：16笔， 交易金额： 6,723.5元" />
 
         <TextView
             android:id="@+id/stt_loss_tip_3"
@@ -200,11 +206,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:lineSpacingExtra="3dp"
-            android:text="流失采购商上周订单笔数最多的门店为：全链路越库品采购商的蓬莱岛店 ， 订单：64笔，交易金额 ： 17,016.34元"
             android:textAppearance="@style/TextAppearance.City22.Small"
             app:layout_constraintEnd_toEndOf="@id/stt_add_tip_1"
             app:layout_constraintStart_toStartOf="@id/stt_add_tip_1"
-            app:layout_constraintTop_toBottomOf="@id/stt_loss_tip_2" />
+            app:layout_constraintTop_toBottomOf="@id/stt_loss_tip_2"
+            tools:text="流失采购商上周订单笔数最多的门店为：全链路越库品采购商的蓬莱岛店 ， 订单：64笔，交易金额 ： 17,016.34元" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -233,4 +239,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/stt_loss_tip_3" />
     </android.support.constraint.ConstraintLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

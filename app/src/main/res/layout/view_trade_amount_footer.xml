@@ -69,7 +69,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="1.5dp"
-        android:background="@drawable/base_dash_line"
+        android:background="@drawable/line_dash_divider"
         android:layerType="software"
         app:layout_constraintBottom_toBottomOf="@id/taf_left_tail"
         app:layout_constraintEnd_toStartOf="@id/taf_right_tail"
