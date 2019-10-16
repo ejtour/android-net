@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
-    tools:background="@android:color/white">
+    tools:background="@android:color/white"
+    tools:paddingBottom="20dp"
+    tools:paddingTop="20dp"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
 
     <TextView
         android:id="@+id/taf_title"
@@ -182,4 +183,4 @@
         app:layout_constraintEnd_toStartOf="@id/taf_tip_5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/taf_tip_5" />
-</android.support.constraint.ConstraintLayout>
+</merge>
