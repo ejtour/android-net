@@ -1034,6 +1034,7 @@
         <activity
             android:name=".app.rank.RankActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.feedbackcomplain.FeedbackComplainActivity"
             android:screenOrientation="portrait" />
@@ -1041,6 +1042,11 @@
         <activity
             android:name=".app.feedbackcomplain.platformcomplain.PlatformComplainActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.analysis.AnalysisActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

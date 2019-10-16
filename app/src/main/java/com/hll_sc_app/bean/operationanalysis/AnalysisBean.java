@@ -1,5 +1,11 @@
 package com.hll_sc_app.bean.operationanalysis;
 
+import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
+
+import java.util.Date;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/10/14
@@ -26,6 +32,23 @@ public class AnalysisBean {
     private int supplyNum;
     private int validOrderNum;
     private double validTradeAmount;
+    private double relativeRatio;
+
+    public String getDateRange(int timeType) {
+        Date date = DateUtil.parse(this.date);
+        return String.format("%s - %s", CalendarUtils.format(date, Constants.SLASH_MM_DD),
+                CalendarUtils.format(
+                        timeType == 2 ? CalendarUtils.getWeekDate(date, 0, 7) : CalendarUtils.getLastDateInMonth(date)
+                        , Constants.SLASH_MM_DD));
+    }
+
+    public double getRelativeRatio() {
+        return relativeRatio;
+    }
+
+    public void setRelativeRatio(double relativeRatio) {
+        this.relativeRatio = relativeRatio;
+    }
 
     public int getActivePurchaserNum() {
         return activePurchaserNum;

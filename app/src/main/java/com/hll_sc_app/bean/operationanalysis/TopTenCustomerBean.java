@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.operationanalysis;
 
+import android.text.TextUtils;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/10/14
@@ -19,7 +21,7 @@ public class TopTenCustomerBean {
     }
 
     public String getName() {
-        return name;
+        return TextUtils.isEmpty(name) ? "---" : name;
     }
 
     public void setName(String name) {

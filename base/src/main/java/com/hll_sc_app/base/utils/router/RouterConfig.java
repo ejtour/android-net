@@ -1125,8 +1125,9 @@ public class RouterConfig {
     /*向平台投诉列表页面*/
     public static final String ACTIVITY_PLATFORM_COMPLAIN_LIST="/activity/platform/complain/list";
 
-
-
-
+    /**
+     * 运营分析
+     */
+    public static final String OPERATION_ANALYSIS = "/activity/operationanalysis";
 }
 
