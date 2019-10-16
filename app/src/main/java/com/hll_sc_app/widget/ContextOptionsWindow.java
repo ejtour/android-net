@@ -74,7 +74,8 @@ public class ContextOptionsWindow extends BasePopupWindow {
     }
 
     public ContextOptionsWindow setListPadding(int left, int top, int right, int bottom) {
-        mListView.setPadding(left, top, right, bottom);
+        mListView.setPadding(0, top, 0, bottom);
+        mAdapter.setPadding(left, right);
         return this;
     }
 
@@ -137,13 +138,21 @@ public class ContextOptionsWindow extends BasePopupWindow {
 
     class OptionsAdapter extends BaseQuickAdapter<OptionsBean, BaseViewHolder> {
         private int mGravity;
-
+        private int mLeftPadding;
+        private int mRightPadding;
         OptionsAdapter() {
             super(R.layout.item_context_options);
+            mLeftPadding = UIUtils.dip2px(10);
+            mRightPadding = UIUtils.dip2px(10);
         }
 
         void setGravity(int gravity) {
             mGravity = gravity;
+        }
+
+        void setPadding(int deltaLeft, int deltaRight) {
+            mLeftPadding = UIUtils.dip2px(10) + deltaLeft;
+            mRightPadding = UIUtils.dip2px(10) + deltaRight;
         }
 
         @Override
@@ -158,6 +167,7 @@ public class ContextOptionsWindow extends BasePopupWindow {
                     itemView.setLayoutParams(layoutParams);
                 }
             }
+            helper.itemView.setPadding(mLeftPadding, 0, mRightPadding, 0);
             helper.setImageResource(R.id.ico_icon, item.getIconRes())
                     .setText(R.id.ico_label, item.getLabel())
                     .setGone(R.id.ico_icon, item.getIconRes() != 0);
