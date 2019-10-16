@@ -149,7 +149,7 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
                 if (mUrl.startsWith("group")) {
                     sb.insert(mUrl.lastIndexOf("."), "=" + mWidth + "x" + mHeight);
                 } else {
-                    sb.append(String.format("?x-oss-process=image/resize,m_pad,h_%s,w_%s", mHeight, mWidth));
+                    sb.append(String.format("?x-oss-process=image/resize,m_fill,h_%s,w_%s", mHeight, mWidth));
                 }
             }
             String myUrl = "http://res.hualala.com/" + sb.toString();
