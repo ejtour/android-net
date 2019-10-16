@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.hll_sc_app.api.AfterSalesService;
 import com.hll_sc_app.api.ComplainManageService;
+import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -41,7 +42,7 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
     @Override
     public void queryDropMenus() {
         BaseMapReq req = BaseMapReq.newBuilder()
-                .put("name", "ComplaintTypeEnum")
+                .put("name", mView.getSource() == ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE ? "ComplaintTypeEnum" : "PlatformComplaintTypeEnum")
                 .create();
         ComplainManageService.INSTANCE
                 .queryDropMenus(req)
@@ -86,7 +87,7 @@ public class ComplainMangeAddPresent implements IComplainMangeAddContract.IPrese
         }
         req.setSourceClient(1);//todo：需判断用户角色类型：6/1
         req.setSource(2);
-        req.setTarget(2);
+        req.setTarget(mView.getSource() == ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE ? 2 : 3);
         req.setSupplyName(userBean.getGroupName());
         req.setSupplyID(userBean.getGroupID());
         req.setPurchaserName(mView.getPurchaserName());

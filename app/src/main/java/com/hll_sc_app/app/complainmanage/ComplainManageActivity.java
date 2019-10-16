@@ -14,6 +14,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.add.ComplainMangeAddActivity;
+import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.complain.ComplainListResp;
@@ -85,7 +86,7 @@ public class ComplainManageActivity extends BaseLoadActivity implements IComplai
                 switch (position) {
                     case 0:
                         mMenuWindow.dismiss();
-                        ComplainMangeAddActivity.start(null);
+                        ComplainMangeAddActivity.start(null, ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE);
                         break;
                     case 1:
                         mMenuWindow.dismiss();

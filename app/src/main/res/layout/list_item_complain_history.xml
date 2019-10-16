@@ -158,6 +158,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/base_text_10"
+        android:hint="无"
         app:layout_constraintStart_toEndOf="@id/txt_title_order"
         app:layout_constraintTop_toTopOf="@id/txt_title_order"
         tools:text="33313131313" />
@@ -210,7 +211,7 @@
         android:layout_height="wrap_content"
         android:visibility="visible"
         app:constraint_referenced_ids="txt_title_type,txt_title_explain,txt_title_order,txt_title_reason,txt_title_type,
-        txt_explain,txt_order,txt_reason,txt_type,txt_title_imgs,scroll_photo" />
+txt_explain,txt_order,txt_reason,txt_type,txt_title_imgs,scroll_photo" />
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/img_url"

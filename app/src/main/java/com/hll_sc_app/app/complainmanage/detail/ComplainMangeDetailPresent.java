@@ -145,4 +145,35 @@ public class ComplainMangeDetailPresent implements IComplainMangeDetailContract.
                     }
                 });
     }
+
+
+    @Override
+    public void sendComplainReply(String reply) {
+        BaseMapReq baseMapReq = BaseMapReq.newBuilder()
+                .put("complaintID", mView.getComplaintID())
+                .put("reply", reply)
+                .put("source", "2")
+                .create();
+        ComplainManageService.INSTANCE
+                .sendComplainReply(baseMapReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    mView.showLoading();
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.replySuccess();
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+
+    }
 }

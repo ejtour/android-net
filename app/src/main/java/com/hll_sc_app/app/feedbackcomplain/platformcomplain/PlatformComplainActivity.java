@@ -11,11 +11,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.complainmanage.add.ComplainMangeAddActivity;
 import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.complain.ComplainListResp;
-import com.hll_sc_app.bean.event.PlatformComplainEvent;
+import com.hll_sc_app.bean.event.ComplainManageEvent;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.TitleBar;
@@ -63,7 +64,7 @@ public class PlatformComplainActivity extends BaseLoadActivity implements IPlatf
 
     private void initView() {
         mTitle.setRightBtnClick(v -> {
-
+            ComplainMangeAddActivity.start(null, ComplainMangeDetailActivity.SOURCE.PLATFORM);
         });
         mAdapter = new PlatformComplainAdapter(null);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -123,9 +124,10 @@ public class PlatformComplainActivity extends BaseLoadActivity implements IPlatf
     }
 
     @Subscribe
-    public void onEvent(PlatformComplainEvent event) {
-        if (event.getTarget() == PlatformComplainEvent.TARGET.LIST) {
+    public void onEvent(ComplainManageEvent event) {
+        if (event.getTarget() == ComplainManageEvent.TARGET.LIST) {
             mPresent.refresh();
         }
     }
+
 }

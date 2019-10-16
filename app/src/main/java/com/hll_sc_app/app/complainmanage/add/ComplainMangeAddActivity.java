@@ -21,12 +21,15 @@ import com.alibaba.fastjson.JSON;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.add.productlist.SelectProductListActivity;
+import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.app.complainmanage.ordernumberlist.SelectOrderListActivity;
 import com.hll_sc_app.app.complainmanage.purchaserlist.SelectPurchaserListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.complain.ComplainDetailResp;
@@ -54,7 +57,7 @@ import butterknife.Unbinder;
 /**
  * 投诉详情-新增
  */
-@Route(path = RouterConfig.ACTIVITY_COMPLAIN_ADD)
+@Route(path = RouterConfig.ACTIVITY_COMPLAIN_ADD, extras = Constant.LOGIN_EXTRA)
 public class ComplainMangeAddActivity extends BaseLoadActivity implements IComplainMangeAddContract.IView {
     private final int MAX_INPUT_LENGTH = 200;
     private final int REQUEST_CODE_ORDER_NUMBER_LIST = 100;
@@ -87,13 +90,30 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
     TextView mTxtProductEdt;
     @Autowired(name = "parcelable")
     ComplainDetailResp mDetail;
+    @Autowired(name = "source")
+    int mSource;
     @BindView(R.id.upload_img)
     ImgUploadBlock mUpload;
     @BindView(R.id.ll_add_product)
     LinearLayout mLlAddProduct;
     @BindView(R.id.txt_title_product)
     TextView mTxtTitleAddProduct;
-
+    @BindView(R.id.txt_title_group)
+    TextView mTxtTitleGroup;
+    @BindView(R.id.txt_title_shop)
+    TextView mTxtTitleShop;
+    @BindView(R.id.txt_title_order)
+    TextView mTxtTitleOrder;
+    @BindView(R.id.txt_title_phone)
+    TextView mTxtTitlePhone;
+    @BindView(R.id.txt_title_contract)
+    TextView mTxtTitleContract;
+    @BindView(R.id.txt_contract)
+    TextView mTxtContract;
+    @BindView(R.id.view_back_0)
+    View mViewBack0;
+    @BindView(R.id.view_back_1)
+    View mViewBack1;
 
     private Unbinder unbinder;
     private IComplainMangeAddContract.IPresent mPresent;
@@ -101,8 +121,11 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
     private SingleSelectionDialog mSelectReasonDialog;
     private ProductAdapter mProductListAdapter;
 
-    public static void start(ComplainDetailResp complainDetailResp) {
-        RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_ADD, complainDetailResp);
+    public static void start(ComplainDetailResp complainDetailResp, @ComplainMangeDetailActivity.SOURCE int source) {
+        ARouter.getInstance().build(RouterConfig.ACTIVITY_COMPLAIN_ADD).
+                withParcelable("parcelable", complainDetailResp)
+                .withInt("source", source)
+                .setProvider(new LoginInterceptor()).navigation();
     }
 
     @Override
@@ -131,8 +154,62 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
                 mPresent.saveComplain();
             }
         });
+        mViewBack0.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mViewBack1.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtTitleGroup.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtGroup.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtTitleShop.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtShop.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtTitleOrder.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtOrder.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtTitlePhone.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mEdtPhone.setVisibility(isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtTitleContract.setVisibility(!isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtContract.setVisibility(!isFromComplainManage() ? View.VISIBLE : View.GONE);
+        mTxtContract.setText(GreenDaoUtils.getUser().getLoginPhone());
+
         initExplainView();
         initDetail();
+    }
+
+    private boolean checkInput() {
+        //商品类型投诉
+        if (isFromComplainManage() && TextUtils.equals(getType(), "1")) {
+            if (getProducts().size() == 0) {
+                showToast("请选择投诉商品商品");
+                return false;
+            }
+        }
+        if (isFromComplainManage()) {
+            if (TextUtils.isEmpty(getPurchaserName())) {
+                showToast("请选择投诉集团");
+                return false;
+            } else if (TextUtils.isEmpty(getShopName())) {
+                showToast("请选择投诉集团");
+                return false;
+            } else if (TextUtils.isEmpty(getBillID())) {
+                showToast("请选择订单");
+                return false;
+            } else if (TextUtils.isEmpty(getPhone())) {
+                showToast("请填写联系方式");
+                return false;
+            }
+        }
+
+        if (TextUtils.isEmpty(getType())) {
+            showToast("请选择投诉类型");
+            return false;
+        } else if (TextUtils.isEmpty(getReason())) {
+            showToast("请选择投诉原因");
+            return false;
+        } else if (TextUtils.isEmpty(getExplain())) {
+            showToast("请填写投诉说明");
+            return false;
+        } /*else if (TextUtils.isEmpty(getImgs())) {
+            showToast("请选择上传凭证");
+            return false;
+        }*/
+        return true;
     }
 
     private String getTitleName() {
@@ -275,49 +352,14 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
         }
     }
 
-
-    @Override
-    public void queryMenuSuccess(List<DropMenuBean> dropMenuBeans) {
-        mSelectReasonDialog = SingleSelectionDialog.newBuilder(this, DropMenuBean::getValue)
-                .setOnSelectListener(dropMenuBean -> {
-                    mTxtReason.setTag(dropMenuBean);
-                    mTxtReason.setText(dropMenuBean.getValue());
-                })
-                .setTitleText("选择投诉原因")
-                .selectEqualListener((dropMenuBean, m) -> {
-                    return TextUtils.equals(dropMenuBean.getKey(), m.getKey());
-                })
-                .create();
-
-        mSelectTypeDialog = SingleSelectionDialog.newBuilder(this, DropMenuBean::getValue)
-                .setOnSelectListener(dropMenuBean -> {
-                    mTxtType.setTag(dropMenuBean);
-                    mTxtType.setText(dropMenuBean.getValue());
-                    mTxtReason.setTag(null);
-                    mTxtReason.setText("");
-                    mSelectReasonDialog.refreshList(dropMenuBean.getChildren());
-                    /*选择商品问题*/
-                    toggleSelectProductView(TextUtils.equals("1", dropMenuBean.getKey()));
-                })
-                .refreshList(dropMenuBeans)
-                .setTitleText("选择投诉类型")
-                .selectEqualListener((dropMenuBean, m) -> {
-                    return TextUtils.equals(dropMenuBean.getKey(), m.getKey());
-                })
-                .create();
-
-        mSelectReasonDialog.selectItem(mTxtReason.getTag());
-        mSelectTypeDialog.selectItem(mTxtType.getTag());
-
-        /*编辑模式，给投诉原因window赋值*/
-        if (mDetail != null) {
-            for (int i = 0; i < dropMenuBeans.size(); i++) {
-                if (TextUtils.equals(dropMenuBeans.get(i).getKey(), mDetail.getType())) {
-                    mSelectReasonDialog.refreshList(dropMenuBeans.get(i).getChildren());
-                    break;
-                }
-            }
-        }
+    /**
+     * 是否来自投诉管理页面
+     * 其他页面是平台投诉
+     *
+     * @return
+     */
+    private boolean isFromComplainManage() {
+        return mSource == ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE;
     }
 
     @Override
@@ -502,40 +544,48 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
         }
     }
 
-    private boolean checkInput() {
-        //商品类型投诉
-        if (TextUtils.equals(getType(), "1")) {
-            if (getProducts().size() == 0) {
-                showToast("请选择投诉商品商品");
-                return false;
+    @Override
+    public void queryMenuSuccess(List<DropMenuBean> dropMenuBeans) {
+        mSelectReasonDialog = SingleSelectionDialog.newBuilder(this, DropMenuBean::getValue)
+                .setOnSelectListener(dropMenuBean -> {
+                    mTxtReason.setTag(dropMenuBean);
+                    mTxtReason.setText(dropMenuBean.getValue());
+                })
+                .setTitleText("选择投诉原因")
+                .selectEqualListener((dropMenuBean, m) -> {
+                    return TextUtils.equals(dropMenuBean.getKey(), m.getKey());
+                })
+                .create();
+
+        mSelectTypeDialog = SingleSelectionDialog.newBuilder(this, DropMenuBean::getValue)
+                .setOnSelectListener(dropMenuBean -> {
+                    mTxtType.setTag(dropMenuBean);
+                    mTxtType.setText(dropMenuBean.getValue());
+                    mTxtReason.setTag(null);
+                    mTxtReason.setText("");
+                    mSelectReasonDialog.refreshList(dropMenuBean.getChildren());
+                    /*选择商品问题*/
+                    toggleSelectProductView(isFromComplainManage() && TextUtils.equals("1", dropMenuBean.getKey()));
+                })
+                .refreshList(dropMenuBeans)
+                .setTitleText("选择投诉类型")
+                .selectEqualListener((dropMenuBean, m) -> {
+                    return TextUtils.equals(dropMenuBean.getKey(), m.getKey());
+                })
+                .create();
+
+        mSelectReasonDialog.selectItem(mTxtReason.getTag());
+        mSelectTypeDialog.selectItem(mTxtType.getTag());
+
+        /*编辑模式，给投诉原因window赋值*/
+        if (mDetail != null) {
+            for (int i = 0; i < dropMenuBeans.size(); i++) {
+                if (TextUtils.equals(dropMenuBeans.get(i).getKey(), mDetail.getType())) {
+                    mSelectReasonDialog.refreshList(dropMenuBeans.get(i).getChildren());
+                    break;
+                }
             }
         }
-        if (TextUtils.isEmpty(getPurchaserName())) {
-            showToast("请选择投诉集团");
-            return false;
-        } else if (TextUtils.isEmpty(getShopName())) {
-            showToast("请选择投诉集团");
-            return false;
-        } else if (TextUtils.isEmpty(getBillID())) {
-            showToast("请选择订单");
-            return false;
-        } else if (TextUtils.isEmpty(getPhone())) {
-            showToast("请填写联系方式");
-            return false;
-        } else if (TextUtils.isEmpty(getType())) {
-            showToast("请选择投诉类型");
-            return false;
-        } else if (TextUtils.isEmpty(getReason())) {
-            showToast("请选择投诉原因");
-            return false;
-        } else if (TextUtils.isEmpty(getExplain())) {
-            showToast("请填写投诉说明");
-            return false;
-        } /*else if (TextUtils.isEmpty(getImgs())) {
-            showToast("请选择上传凭证");
-            return false;
-        }*/
-        return true;
     }
 
     @Override
@@ -549,5 +599,10 @@ public class ComplainMangeAddActivity extends BaseLoadActivity implements ICompl
             return "";
         }
         return mDetail.getId();
+    }
+
+    @Override
+    public int getSource() {
+        return mSource;
     }
 }

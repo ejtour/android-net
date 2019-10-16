@@ -34,12 +34,12 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.ComplainDetailResp;
 import com.hll_sc_app.bean.complain.ComplainStatusResp;
 import com.hll_sc_app.bean.event.ComplainManageEvent;
-import com.hll_sc_app.bean.event.PlatformComplainEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.RemarkDialog;
 import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -206,7 +206,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         if (mSource == SOURCE.COMPLAIN_MANAGE && mComplainStatusResp.getSource() == 2 && mComplainStatusResp.getStatus() == 1) {
             mTitle.setRightText("编辑");
             mTitle.setRightBtnClick(v -> {
-                ComplainMangeAddActivity.start(mComplainDetailResp);
+                ComplainMangeAddActivity.start(mComplainDetailResp, SOURCE.COMPLAIN_MANAGE);
             });
         }
         showTitleStatus();
@@ -409,7 +409,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                     mBtnLog.setVisibility(View.VISIBLE);
                     mBtnLog.setText("回复客服");
                     mBtnLog.setOnClickListener(v -> {
-                        //todo 回复客服
+                        reply();
                     });
                     mBtnReply.setVisibility(View.VISIBLE);
                     mBtnReply.setText("结束投诉");
@@ -422,6 +422,19 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
         }
     }
 
+    private void reply() {
+        RemarkDialog.newBuilder(this)
+                .setHint("可输入回复内容...")
+                .setMaxLength(200)
+                .setButtons("容我再想想", "确认", (dialog, positive, content) -> {
+                    dialog.dismiss();
+                    if (positive) {
+                        mPresent.sendComplainReply(content);
+                    }
+                })
+                .create()
+                .show();
+    }
     //撤销投诉
     private void cancelComplain() {
         SuccessDialog.newBuilder(this)
@@ -541,10 +554,14 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
 
     @Override
     public void changeStatusSuccess(int status) {
-        EventBus.getDefault().post(new PlatformComplainEvent(PlatformComplainEvent.TARGET.LIST, PlatformComplainEvent.EVENT.REFRESH));
+        EventBus.getDefault().post(new ComplainManageEvent(ComplainManageEvent.TARGET.LIST, ComplainManageEvent.EVENT.REFRESH));
         finish();
     }
 
+    @Override
+    public void replySuccess() {
+        mPresent.start();
+    }
 
     /*来源：从投诉管理进入，从向平台投诉进入*/
     @IntDef({SOURCE.PLATFORM, SOURCE.COMPLAIN_MANAGE})

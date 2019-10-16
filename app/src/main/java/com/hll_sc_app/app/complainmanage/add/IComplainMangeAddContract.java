@@ -42,6 +42,8 @@ public interface IComplainMangeAddContract {
         boolean isEditModal();
 
         String getComplainID();
+
+        int getSource();
     }
 
     interface IPresent extends IPresenter<IView> {
