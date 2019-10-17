@@ -37,13 +37,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/stt_title">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/stt_list_view"
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_dddddd_radius_2_stroke"
-                android:overScrollMode="never"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+                android:foreground="@drawable/bg_dddddd_radius_2_stroke">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/stt_list_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+            </FrameLayout>
         </HorizontalScrollView>
 
         <ImageView
