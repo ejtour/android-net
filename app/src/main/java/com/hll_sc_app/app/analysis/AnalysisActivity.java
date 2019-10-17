@@ -32,6 +32,7 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.TriangleView;
+import com.hll_sc_app.widget.analysis.AnalysisWeekDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -67,6 +68,7 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
     private AnalysisParam mParam = new AnalysisParam();
     private IAnalysisContract.IAnalysisPresenter mPresenter;
     private ContextOptionsWindow mOptionsWindow;
+    private AnalysisWeekDialog mWeekDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,11 +108,26 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
                 showOptionWindow();
                 break;
             case R.id.aa_date:
+                if (mParam.getTimeType() == 2) {
+                    showWeekDialog();
+                }
                 break;
         }
     }
 
-    protected void showOptionWindow() {
+    private void showWeekDialog() {
+        if (mWeekDialog == null) {
+            mWeekDialog = new AnalysisWeekDialog(this);
+            mWeekDialog.setOnDateSelectListener(date -> {
+                mParam.setDate(date);
+                updateDate();
+                mPresenter.start();
+            });
+        }
+        mWeekDialog.show();
+    }
+
+    private void showOptionWindow() {
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
             list.add(new OptionsBean(OptionType.OPTION_WEEK));
@@ -133,6 +150,7 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
                                     mParam.setDate(CalendarUtils.getWeekDate(-1, 1));
                                 if (mParam.getTimeType() == 3)
                                     mParam.setDate(CalendarUtils.getFirstDateInMonth(CalendarUtils.getDateBeforeMonth(new Date(), 1)));
+                                mWeekDialog = null;
                                 updateDate();
                                 mPresenter.start();
                             }
