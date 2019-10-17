@@ -102,7 +102,7 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
 
     private CharSequence handleTip1(String timeLabel, int groupNum, int shopNum, boolean up, double rate) {
         String tip = String.format("本%s活跃合作采购商集团%s家，活跃采购门店%s家，活跃率%s%s",
-                timeLabel, groupNum, shopNum, up ? "升高" : "降低", mPercentInstance.format(rate));
+                timeLabel, groupNum, shopNum, up ? "升高" : "降低", mPercentInstance.format(Math.abs(rate)));
         SpannableString ss = new SpannableString(tip);
         ss.setSpan(new ForegroundColorSpan(mHighlightColor), tip.indexOf("团") + 1, tip.indexOf("家"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new ForegroundColorSpan(mHighlightColor), tip.lastIndexOf("店") + 1, tip.lastIndexOf("家"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -112,7 +112,7 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
     }
 
     private CharSequence handleTip2(int shopNum, boolean up, double rate) {
-        String tip = String.format("新增采购门店%s家，新增%s%s", shopNum, up ? "升高" : "降低", mPercentInstance.format(rate));
+        String tip = String.format("新增采购门店%s家，新增%s%s", shopNum, up ? "升高" : "降低", mPercentInstance.format(Math.abs(rate)));
         SpannableString ss = new SpannableString(tip);
         ss.setSpan(new ForegroundColorSpan(mHighlightColor), tip.indexOf("店") + 1, tip.indexOf("家"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), up ? R.color.color_ed5655 : R.color.color_5cdad2)),
