@@ -20,6 +20,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.bean.event.AnalysisEvent;
 import com.hll_sc_app.bean.operationanalysis.AnalysisParam;
 import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
@@ -32,6 +33,7 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.TriangleView;
+import com.hll_sc_app.widget.analysis.AnalysisMonthDialog;
 import com.hll_sc_app.widget.analysis.AnalysisWeekDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -51,7 +53,7 @@ import butterknife.OnClick;
  */
 
 @Route(path = RouterConfig.OPERATION_ANALYSIS)
-public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContract.IAnalysisView {
+public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContract.IAnalysisView, DateWindow.OnDateSelectListener {
     @BindView(R.id.aa_tab_layout)
     SlidingTabLayout mTabLayout;
     @BindView(R.id.aa_filter)
@@ -69,6 +71,7 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
     private IAnalysisContract.IAnalysisPresenter mPresenter;
     private ContextOptionsWindow mOptionsWindow;
     private AnalysisWeekDialog mWeekDialog;
+    private AnalysisMonthDialog mMonthDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,6 +113,8 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
             case R.id.aa_date:
                 if (mParam.getTimeType() == 2) {
                     showWeekDialog();
+                } else {
+                    showMonthDialog();
                 }
                 break;
         }
@@ -118,13 +123,17 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
     private void showWeekDialog() {
         if (mWeekDialog == null) {
             mWeekDialog = new AnalysisWeekDialog(this);
-            mWeekDialog.setOnDateSelectListener(date -> {
-                mParam.setDate(date);
-                updateDate();
-                mPresenter.start();
-            });
+            mWeekDialog.setOnDateSelectListener(this);
         }
         mWeekDialog.show();
+    }
+
+    private void showMonthDialog() {
+        if (mMonthDialog == null) {
+            mMonthDialog = new AnalysisMonthDialog(this);
+            mMonthDialog.setOnDateSelectListener(this);
+        }
+        mMonthDialog.show();
     }
 
     private void showOptionWindow() {
@@ -151,6 +160,7 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
                                 if (mParam.getTimeType() == 3)
                                     mParam.setDate(CalendarUtils.getFirstDateInMonth(CalendarUtils.getDateBeforeMonth(new Date(), 1)));
                                 mWeekDialog = null;
+                                mMonthDialog = null;
                                 updateDate();
                                 mPresenter.start();
                             }
@@ -189,5 +199,12 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
             mAnalysisEvent.setTimeType(mParam.getTimeType());
             EventBus.getDefault().postSticky(mAnalysisEvent);
         }
+    }
+
+    @Override
+    public void dateSelect(Date date) {
+        mParam.setDate(date);
+        updateDate();
+        mPresenter.start();
     }
 }
