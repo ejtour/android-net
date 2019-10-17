@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,20 +18,27 @@ import com.hll_sc_app.app.analysis.toptean.TopTenFragment;
 import com.hll_sc_app.app.analysis.trade.TradeAmountFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.AnalysisEvent;
 import com.hll_sc_app.bean.operationanalysis.AnalysisParam;
 import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
 import com.hll_sc_app.bean.operationanalysis.LostResp;
 import com.hll_sc_app.bean.operationanalysis.TopTenResp;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.TriangleView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +66,7 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
     private AnalysisEvent mAnalysisEvent = new AnalysisEvent();
     private AnalysisParam mParam = new AnalysisParam();
     private IAnalysisContract.IAnalysisPresenter mPresenter;
+    private ContextOptionsWindow mOptionsWindow;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +79,6 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
     }
 
     private void initData() {
-        mAnalysisEvent.setTimeType(mParam.getTimeType());
         mPresenter = AnalysisPresenter.newInstance(mParam);
         mPresenter.register(this);
         mPresenter.start();
@@ -82,18 +90,56 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
                         new PurchaserAnalysisFragment(), new TopTenFragment()),
                 Arrays.asList("交易记录", "订单分析", "采购商分析", "门店TOP10")));
         mTabLayout.setViewPager(mViewPager);
+        updateDate();
+    }
+
+    private void updateDate() {
         mDate.setText(String.format("统计周期：%s - %s", CalendarUtils.format(mParam.getDate(), Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(CalendarUtils.getWeekDate(mParam.getDate(), 0, 7), Constants.SLASH_YYYY_MM_DD)));
+                CalendarUtils.format(mParam.getTimeType() == 2 ? CalendarUtils.getWeekDate(mParam.getDate(), 0, 7)
+                        : CalendarUtils.getLastDateInMonth(mParam.getDate()), Constants.SLASH_YYYY_MM_DD)));
     }
 
     @OnClick({R.id.aa_filter, R.id.aa_date})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.aa_filter:
+                showOptionWindow();
                 break;
             case R.id.aa_date:
                 break;
         }
+    }
+
+    protected void showOptionWindow() {
+        if (mOptionsWindow == null) {
+            List<OptionsBean> list = new ArrayList<>();
+            list.add(new OptionsBean(OptionType.OPTION_WEEK));
+            list.add(new OptionsBean(OptionType.OPTION_MONTH));
+            mOptionsWindow = new ContextOptionsWindow(this)
+                    .setListPadding(UIUtils.dip2px(40), 0, UIUtils.dip2px(40), 0)
+                    .refreshList(list)
+                    .setListener((adapter, view, position) -> {
+                        mOptionsWindow.dismiss();
+                        OptionsBean item = (OptionsBean) adapter.getItem(position);
+                        if (item != null) {
+                            mFilter.setText(item.getLabel());
+                            int oldType = mParam.getTimeType();
+                            if (OptionType.OPTION_MONTH.equals(item.getLabel()))
+                                mParam.setTimeType(3);
+                            if (OptionType.OPTION_WEEK.equals(item.getLabel()))
+                                mParam.setTimeType(2);
+                            if (oldType != mParam.getTimeType()) {
+                                if (mParam.getTimeType() == 2)
+                                    mParam.setDate(CalendarUtils.getWeekDate(-1, 1));
+                                if (mParam.getTimeType() == 3)
+                                    mParam.setDate(CalendarUtils.getFirstDateInMonth(CalendarUtils.getDateBeforeMonth(new Date(), 1)));
+                                updateDate();
+                                mPresenter.start();
+                            }
+                        }
+                    });
+        }
+        mOptionsWindow.showAsDropDownFix(mFilter, Gravity.LEFT);
     }
 
     @Override
@@ -122,6 +168,7 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
 
     private void afterSetData() {
         if (mAnalysisEvent.done()) {
+            mAnalysisEvent.setTimeType(mParam.getTimeType());
             EventBus.getDefault().postSticky(mAnalysisEvent);
         }
     }
