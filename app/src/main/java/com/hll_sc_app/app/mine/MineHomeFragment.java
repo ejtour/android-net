@@ -5,7 +5,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +34,19 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
+import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+
+import java.text.NumberFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,6 +106,19 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     @BindView(R.id.rl_header)
     LinearLayout mRlHeader;
     Unbinder unbinder;
+    @BindView(R.id.fmm_amount)
+    TextView mAmount;
+    @BindView(R.id.fmm_order)
+    TextView mOrder;
+    @BindView(R.id.fmm_rate)
+    TextView mRate;
+    @BindView(R.id.fmm_ave_price)
+    TextView mAvePrice;
+    @BindView(R.id.fmm_date)
+    TextView mDate;
+    @BindView(R.id.fmm_analysis_root)
+    ConstraintLayout mAnalysisRoot;
+    private MineHomeFragmentPresenter mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,7 +137,14 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         rootView = inflater.inflate(R.layout.fragment_main_mine, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         initView();
+        initData();
         return rootView;
+    }
+
+    private void initData() {
+        mPresenter = MineHomeFragmentPresenter.newInstance();
+        mPresenter.register(this);
+        mPresenter.start();
     }
 
     private void initView() {
@@ -150,7 +183,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 showUserInfo();
-                refreshLayout.closeHeaderOrFooter();
+                mPresenter.refresh();
             }
         });
     }
@@ -185,7 +218,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             R.id.txt_staff_manage, R.id.txt_delivery_manage, R.id.txt_return_time, R.id.txt_directional_selling,
             R.id.txt_store_manage, R.id.txt_account_statement, R.id.txt_payment_settings, R.id.txt_invoice_manage,
             R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage,
-            R.id.txt_complaint_manage,R.id.txt_main_feedback})
+            R.id.txt_complaint_manage, R.id.txt_main_feedback, R.id.fmm_analysis_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -258,8 +291,49 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             case R.id.txt_main_feedback:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_FEED_BACK_COMPLAIN);
                 break;
+            case R.id.fmm_analysis_btn:
+                RouterUtil.goToActivity(RouterConfig.OPERATION_ANALYSIS);
+                break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void hideLoading() {
+        mRefreshLayout.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
+    @Override
+    public void setData(AnalysisBean bean) {
+        mAnalysisRoot.setVisibility(View.VISIBLE);
+
+        String amountSource = String.format("¥%s", CommonUtils.formatMoney(bean.getValidTradeAmount()));
+        SpannableString ss = new SpannableString(amountSource);
+        ss.setSpan(new RelativeSizeSpan(0.65f), 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new RelativeSizeSpan(0.65f), amountSource.indexOf("."), amountSource.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mAmount.setText(ss);
+
+        NumberFormat percentInstance = NumberFormat.getPercentInstance();
+        percentInstance.setMaximumFractionDigits(2);
+        percentInstance.setMinimumFractionDigits(2);
+        mOrder.setText(CommonUtils.formatNum(bean.getValidOrderNum()));
+
+        String rateSource = String.format("环比增长：%s", percentInstance.format(bean.getRelativeRatio()));
+        SpannableString rate = new SpannableString(rateSource);
+        if (bean.getRelativeRatio() < 0) {
+            rate.setSpan(new ForegroundColorSpan(Color.parseColor("#48CFAD")), 5, rateSource.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        mRate.setText(rate);
+
+        String priceSource = String.format("单均：¥%s", CommonUtils.formatMoney(bean.getAverageTradeAmount()));
+        SpannableString price = new SpannableString(priceSource);
+        price.setSpan(new ForegroundColorSpan(Color.parseColor("#FFA940")), 3, priceSource.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mAvePrice.setText(price);
+
+        Date date = DateUtil.parse(bean.getDate());
+        mDate.setText(String.format("以上数据统计周期为：%s - %s", CalendarUtils.format(date, Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(CalendarUtils.getWeekDate(date, 0, 7), Constants.SLASH_YYYY_MM_DD)));
     }
 }
