@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.analysis.order;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.analysis.BaseAnalysisFragment;
 import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
@@ -22,6 +36,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.DateUtil;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -55,6 +70,7 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
     TextView mTip7;
     Unbinder unbinder;
     private OrderAnalysisAdapter mAdapter;
+    private List<String> mAxisLabels = new ArrayList<>();
 
     @Override
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +84,48 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         mAdapter = new OrderAnalysisAdapter();
         mListView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
         mListView.setAdapter(mAdapter);
+        initChart();
+    }
+
+    private void initChart() {
+        mChart.getDescription().setEnabled(false);
+        mChart.setNoDataText("无数据");
+        mChart.setScaleEnabled(false);
+        mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        mChart.setPinchZoom(false);
+        mChart.setExtraOffsets(10, 0, 10, 0);
+
+        Legend legend = mChart.getLegend();
+        legend.setTextSize(10);
+        legend.setXEntrySpace(10);
+        legend.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_666666));
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setGranularity(1);
+        xAxis.setAxisMinimum(0);
+        xAxis.setAxisMaximum(5);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
+        xAxis.setLabelRotationAngle(-20);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getAxisLabel(float value, AxisBase axis) {
+                return value < 0 || value >= mAxisLabels.size() ? "" : mAxisLabels.get((int) value);
+            }
+        });
+
+        YAxis axisLeft = mChart.getAxisLeft();
+        axisLeft.setDrawAxisLine(false);
+        axisLeft.setAxisMinimum(0);
+        axisLeft.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
+        axisLeft.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
+        axisLeft.setTextSize(10);
+
+        mChart.getAxisRight().setEnabled(false);
     }
 
     @Override
@@ -77,6 +135,7 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
             if (analysisResp != null) {
                 List<AnalysisBean> records = analysisResp.getRecords();
                 mAdapter.setNewData(records, mAnalysisEvent.getTimeType());
+                setChartData(records);
                 if (!CommonUtils.isEmpty(records) && analysisResp.getRecords().size() > 1) {
                     String label = mAnalysisEvent.getTimeType() == 2 ? "周" : "月";
                     AnalysisBean cur = records.get(records.size() - 1);
@@ -106,6 +165,49 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         }
     }
 
+    private void setChartData(List<AnalysisBean> list) {
+        List<BarEntry> shopList = new ArrayList<>();
+        List<BarEntry> orderList = new ArrayList<>();
+        List<Entry> priceList = new ArrayList<>();
+        List<Entry> avePriceList = new ArrayList<>();
+        if (!CommonUtils.isEmpty(list)) {
+            mAxisLabels.clear();
+            for (int i = 0; i < list.size(); i++) {
+                AnalysisBean bean = list.get(i);
+                String dateRange = bean.getDateRange(mAnalysisEvent.getTimeType());
+                mAxisLabels.add(dateRange);
+                shopList.add(new BarEntry(i, bean.getShopNum(), dateRange));
+                orderList.add(new BarEntry(i, bean.getValidOrderNum(), dateRange));
+                priceList.add(new Entry(i + 0.5f, bean.getAverageShopTradeAmount(), dateRange));
+                avePriceList.add(new Entry(i + 0.5f, bean.getAverageTradeAmount(), dateRange));
+            }
+        }
+        BarDataSet shopSet = new BarDataSet(shopList, "买家门店数");
+        shopSet.setColor(Color.parseColor("#95DE64"));
+        BarDataSet orderSet = new BarDataSet(orderList, "有效订单数");
+        orderSet.setColor(Color.parseColor("#5CAAF0"));
+        BarData bar = new BarData(shopSet, orderSet);
+        bar.setBarWidth(0.2f);
+        bar.groupBars(0, 0.5f, 0.05f);
+        LineDataSet priceSet = new LineDataSet(priceList, "客单价（元）");
+        priceSet.setColor(Color.parseColor("#FF7A45"));
+        LineDataSet avePriceSet = new LineDataSet(avePriceList, "单均（元）");
+        avePriceSet.setColor(Color.parseColor("#B37FEB"));
+        LineData line = new LineData(priceSet, avePriceSet);
+        for (ILineDataSet dataSet : line.getDataSets()) {
+            LineDataSet lineDataSet = (LineDataSet) dataSet;
+            lineDataSet.setForm(Legend.LegendForm.LINE);
+            lineDataSet.setFormSize(15);
+            lineDataSet.setFormLineWidth(2);
+            lineDataSet.setDrawCircles(false);
+            lineDataSet.setLineWidth(2);
+        }
+        CombinedData data = new CombinedData();
+        data.setData(bar);
+        data.setData(line);
+        mChart.setData(data);
+        mChart.invalidate();
+    }
 
     private CharSequence handleTip1(String timeLabel, int num, int diff, double rate) {
         boolean up = diff >= 0;

@@ -79,6 +79,7 @@ public class TradeAmountFragment extends BaseAnalysisFragment {
                                 handleTip5(label, analysisData.getDailyValidTradeAmount())
                         );
                     }
+                    mFooter.setData(records, mAnalysisEvent.getTimeType());
                 }
             }
         }
