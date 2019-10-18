@@ -14,8 +14,8 @@ import java.util.Date;
 public class AnalysisBean {
     private int activePurchaserNum;
     private int activeSupplyNum;
-    private double averageShopTradeAmount;
-    private double averageTradeAmount;
+    private float averageShopTradeAmount;
+    private float averageTradeAmount;
     private int coopActiveGroupNum;
     private int coopActiveShopNum;
     private int coopGroupNum;
@@ -31,8 +31,8 @@ public class AnalysisBean {
     private int shopNum;
     private int supplyNum;
     private int validOrderNum;
-    private double validTradeAmount;
-    private double relativeRatio;
+    private float validTradeAmount;
+    private float relativeRatio;
 
     public String getDateRange(int timeType) {
         Date date = DateUtil.parse(this.date);
@@ -42,11 +42,11 @@ public class AnalysisBean {
                         , Constants.SLASH_MM_DD));
     }
 
-    public double getRelativeRatio() {
+    public float getRelativeRatio() {
         return relativeRatio;
     }
 
-    public void setRelativeRatio(double relativeRatio) {
+    public void setRelativeRatio(float relativeRatio) {
         this.relativeRatio = relativeRatio;
     }
 
@@ -66,19 +66,19 @@ public class AnalysisBean {
         this.activeSupplyNum = activeSupplyNum;
     }
 
-    public double getAverageShopTradeAmount() {
+    public float getAverageShopTradeAmount() {
         return averageShopTradeAmount;
     }
 
-    public void setAverageShopTradeAmount(double averageShopTradeAmount) {
+    public void setAverageShopTradeAmount(float averageShopTradeAmount) {
         this.averageShopTradeAmount = averageShopTradeAmount;
     }
 
-    public double getAverageTradeAmount() {
+    public float getAverageTradeAmount() {
         return averageTradeAmount;
     }
 
-    public void setAverageTradeAmount(double averageTradeAmount) {
+    public void setAverageTradeAmount(float averageTradeAmount) {
         this.averageTradeAmount = averageTradeAmount;
     }
 
@@ -202,11 +202,11 @@ public class AnalysisBean {
         this.validOrderNum = validOrderNum;
     }
 
-    public double getValidTradeAmount() {
+    public float getValidTradeAmount() {
         return validTradeAmount;
     }
 
-    public void setValidTradeAmount(double validTradeAmount) {
+    public void setValidTradeAmount(float validTradeAmount) {
         this.validTradeAmount = validTradeAmount;
     }
 }
