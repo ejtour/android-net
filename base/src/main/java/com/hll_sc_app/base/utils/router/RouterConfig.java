@@ -1133,5 +1133,9 @@ public class RouterConfig {
     /*客户收货查询*/
     public static final String ACTIVITY_QUERY_CUSTOM_RECEIVE = "/activity/report/query/custom/receive";
 
+    /**
+     * 商品需求-入口
+     */
+    public static final String GOODS_DEMAND_ENTRY = "/activity/goods/demand/entry";
 }
 

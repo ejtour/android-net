@@ -1046,6 +1046,7 @@
         <activity
             android:name=".app.feedbackcomplain.feedback.FeedbackListActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.analysis.AnalysisActivity"
             android:screenOrientation="portrait" />
@@ -1053,6 +1054,12 @@
         <activity
             android:name=".app.report.customreceivequery.CustomReceiveQueryActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.goodsdemand.entry.GoodsDemandEntryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
