@@ -1129,5 +1129,9 @@ public class RouterConfig {
      * 运营分析
      */
     public static final String OPERATION_ANALYSIS = "/activity/operationanalysis";
+
+    /*客户收货查询*/
+    public static final String ACTIVITY_QUERY_CUSTOM_RECEIVE = "/activity/report/query/custom/receive";
+
 }
 
