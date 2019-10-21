@@ -47,7 +47,7 @@ public class PurchaserSearchPresenter implements IPurchaserSearchContract.IPurch
                     List<NameValue> list = new ArrayList<>();
                     if (!CommonUtils.isEmpty(cooperationPurchaserResp.getRecords())) {
                         for (PurchaserBean record : cooperationPurchaserResp.getRecords()) {
-                            list.add(new NameValue(record.getPurchaserName(), record.getId()));
+                            list.add(new NameValue(record.getPurchaserName(), record.getPurchaserID()));
                         }
                     }
                     mView.setData(list, mPageNum > 1);
