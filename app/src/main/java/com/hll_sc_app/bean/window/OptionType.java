@@ -35,7 +35,8 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_RECORD_PRODUCE_DATA, OptionType.OPTION_STOCK_LOG_EXPORT, OptionType.OPTION_COMPLAIN_ADD,
         OptionType.OPTION_COMPLAIN_EXPORT, OptionType.OPTION_PHONE_LINK, OptionType.OPTION_STATISTIC_DATE, OptionType.OPTION_STATISTIC_WEEK,
         OptionType.OPTION_STATISTIC_MONTH, OptionType.OPTION_COOPER_PURCHASER, OptionType.OPTION_STOP_COOPER_PURCHASER,
-        OptionType.OPTION_WAREHOUSE_COMPANY, OptionType.OPTION_STOP_WAREHOUSE_COMPANY, OptionType.OPTION_WEEK, OptionType.OPTION_MONTH})
+        OptionType.OPTION_WAREHOUSE_COMPANY, OptionType.OPTION_STOP_WAREHOUSE_COMPANY, OptionType.OPTION_WEEK, OptionType.OPTION_MONTH,
+        OptionType.OPTION_REPORT_EXPORT_CUSTOMER_RECEIVE_LIST, OptionType.OPTION_REPORT_EXPORT_CUSTOMER_RECEIVE_DETAIL})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -146,4 +147,7 @@ public @interface OptionType {
 
     String OPTION_WEEK = "周";
     String OPTION_MONTH = "月";
+
+    String OPTION_REPORT_EXPORT_CUSTOMER_RECEIVE_LIST = "导出单据表";
+    String OPTION_REPORT_EXPORT_CUSTOMER_RECEIVE_DETAIL = "导出明细表";
 }

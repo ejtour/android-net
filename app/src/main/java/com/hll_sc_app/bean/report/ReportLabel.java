@@ -18,7 +18,8 @@ import java.lang.annotation.RetentionPolicy;
     ReportLabel.WAREHOUSE_PRODUCT_DETAIL,ReportLabel.DELIVERY_TIME_AGGREGATION,ReportLabel.WAIT_FOR_REFUND,
     ReportLabel.REFUNDED,ReportLabel.REFUNDED_CUSTOMER_PRODUCT, ReportLabel.PURCHASE_STATISTIC,
     ReportLabel.PRODUCE_STATISTIC,ReportLabel.REPORT_GROUP_LOSS,ReportLabel.REPORT_SHOP_LOSS,
-    ReportLabel.WAREHOUSE_DELIVERY,ReportLabel.WAREHOUSE_SERVICE_FEE,ReportLabel.REPORT_DAY_REPORT})
+        ReportLabel.WAREHOUSE_DELIVERY, ReportLabel.WAREHOUSE_SERVICE_FEE, ReportLabel.REPORT_DAY_REPORT,
+        ReportLabel.QUERY_CUSTOM_RECEIVE})
 @Retention(RetentionPolicy.SOURCE)
 public @interface ReportLabel {
     String SALES_STATISTICS = "商品销量统计汇总";
@@ -51,4 +52,5 @@ public @interface ReportLabel {
     String REPORT_GROUP_LOSS = "客户流失率统计";
     String REPORT_SHOP_LOSS = "流失门店明细表";
     String REPORT_DAY_REPORT = "日报统计";
+    String QUERY_CUSTOM_RECEIVE = "客户收货查询";
 }

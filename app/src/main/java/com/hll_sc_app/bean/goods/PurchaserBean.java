@@ -75,6 +75,17 @@ public class PurchaserBean implements Parcelable {
 
     private int warehouseActive;
 
+
+    private String extGroupID;
+
+    public String getExtGroupID() {
+        return extGroupID;
+    }
+
+    public void setExtGroupID(String extGroupID) {
+        this.extGroupID = extGroupID;
+    }
+
     public int getWarehouseActive() {
         return warehouseActive;
     }
@@ -535,6 +546,7 @@ public class PurchaserBean implements Parcelable {
         dest.writeInt(this.businessModel);
         dest.writeInt(this.cooperationActive);
         dest.writeInt(this.warehouseActive);
+        dest.writeString(this.extGroupID);
     }
 
     protected PurchaserBean(Parcel in) {
@@ -588,6 +600,7 @@ public class PurchaserBean implements Parcelable {
         this.businessModel = in.readInt();
         this.cooperationActive = in.readInt();
         this.warehouseActive = in.readInt();
+        this.extGroupID = in.readString();
     }
 
     public static final Creator<PurchaserBean> CREATOR = new Creator<PurchaserBean>() {

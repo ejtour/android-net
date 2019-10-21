@@ -72,6 +72,7 @@ public class ReportEntryActivity extends BaseLoadActivity {
         list.add(new ReportItem(ReportIcon.PURCHASE_STATISTIC, ReportLabel.PURCHASE_STATISTIC, RouterConfig.REPORT_PURCHASE_STATISTIC));
         list.add(new ReportItem(ReportIcon.PRODUCE_STATISTIC, ReportLabel.PRODUCE_STATISTIC, RouterConfig.REPORT_PRODUCE_STATISTIC, true));
         list.add(new ReportItem(ReportIcon.REPORT_GROUP_LOSS,ReportLabel.REPORT_DAY_REPORT,RouterConfig.REPORT_SALES_DAY_REPORT));
+        list.add(new ReportItem(ReportIcon.QUERY_CUSTOM_RECEIVE, ReportLabel.QUERY_CUSTOM_RECEIVE, RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE, true));
         return list;
     }
 }

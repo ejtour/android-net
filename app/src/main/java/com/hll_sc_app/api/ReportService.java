@@ -11,6 +11,7 @@ import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
+import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
@@ -315,4 +316,9 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111045")
     Observable<BaseResp<SalesReportResp>> querySalesReportList(@Body BaseReq<SalesReportReq> body);
+
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:xxxx")
+    Observable<BaseResp<CustomReceiveListResp>> queryCustomReceiveList(@Body BaseMapReq req);
 }

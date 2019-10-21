@@ -9,6 +9,7 @@ import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
 import com.hll_sc_app.bean.cooperation.CooperationShopsListResp;
+import com.hll_sc_app.bean.cooperation.QueryGroupListResp;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.cooperation.ThirdPartyPurchaserBean;
@@ -255,4 +256,16 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:102025")
     Observable<BaseResp<Object>> updateSupplierShop(@Body BaseReq<SupplierShopUpdateReq> req);
+
+    /**
+     * 查询集团列表-在报表中心-客户收货统计过滤中使用
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102063")
+    Observable<BaseResp<QueryGroupListResp>> queryGroupList(@Body BaseMapReq req);
+
+
+
 }
