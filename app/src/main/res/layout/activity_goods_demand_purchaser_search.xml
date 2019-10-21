@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_title="选择合作采购商" />
+
+    <com.hll_sc_app.widget.SearchView
+        android:id="@+id/dps_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/dps_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/white"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_indicator_corner_radius="2dp"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_width="65dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/color_999999"
+        app:tl_textsize="@dimen/text_middle_size" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/dps_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp" />
+</LinearLayout>
