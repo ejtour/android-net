@@ -10,6 +10,7 @@ import com.hll_sc_app.bean.complain.ComplainInnerLogResp;
 import com.hll_sc_app.bean.complain.ComplainListResp;
 import com.hll_sc_app.bean.complain.ComplainStatusResp;
 import com.hll_sc_app.bean.complain.DropMenuBean;
+import com.hll_sc_app.bean.complain.FeedbackListResp;
 import com.hll_sc_app.bean.complain.ReportFormSearchResp;
 
 import java.util.List;
@@ -68,5 +69,8 @@ public interface ComplainManageService {
     @Headers("pv:110017")
     Observable<BaseResp<Object>> changeComplainStatus(@Body BaseMapReq req);
 
+    @POST(HttpConfig.URL)
+    @Headers("pv:101074")
+    Observable<BaseResp<FeedbackListResp>> queryFeedbackList(@Body BaseMapReq req);
 
 }
