@@ -1,5 +1,11 @@
 package com.hll_sc_app.bean.operationanalysis;
 
+import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
+
+import java.util.Date;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/10/14
@@ -8,8 +14,8 @@ package com.hll_sc_app.bean.operationanalysis;
 public class AnalysisBean {
     private int activePurchaserNum;
     private int activeSupplyNum;
-    private double averageShopTradeAmount;
-    private double averageTradeAmount;
+    private float averageShopTradeAmount;
+    private float averageTradeAmount;
     private int coopActiveGroupNum;
     private int coopActiveShopNum;
     private int coopGroupNum;
@@ -25,7 +31,24 @@ public class AnalysisBean {
     private int shopNum;
     private int supplyNum;
     private int validOrderNum;
-    private double validTradeAmount;
+    private float validTradeAmount;
+    private float relativeRatio;
+
+    public String getDateRange(int timeType) {
+        Date date = DateUtil.parse(this.date);
+        return String.format("%s - %s", CalendarUtils.format(date, Constants.SLASH_MM_DD),
+                CalendarUtils.format(
+                        timeType == 2 ? CalendarUtils.getWeekDate(date, 0, 7) : CalendarUtils.getLastDateInMonth(date)
+                        , Constants.SLASH_MM_DD));
+    }
+
+    public float getRelativeRatio() {
+        return relativeRatio;
+    }
+
+    public void setRelativeRatio(float relativeRatio) {
+        this.relativeRatio = relativeRatio;
+    }
 
     public int getActivePurchaserNum() {
         return activePurchaserNum;
@@ -43,19 +66,19 @@ public class AnalysisBean {
         this.activeSupplyNum = activeSupplyNum;
     }
 
-    public double getAverageShopTradeAmount() {
+    public float getAverageShopTradeAmount() {
         return averageShopTradeAmount;
     }
 
-    public void setAverageShopTradeAmount(double averageShopTradeAmount) {
+    public void setAverageShopTradeAmount(float averageShopTradeAmount) {
         this.averageShopTradeAmount = averageShopTradeAmount;
     }
 
-    public double getAverageTradeAmount() {
+    public float getAverageTradeAmount() {
         return averageTradeAmount;
     }
 
-    public void setAverageTradeAmount(double averageTradeAmount) {
+    public void setAverageTradeAmount(float averageTradeAmount) {
         this.averageTradeAmount = averageTradeAmount;
     }
 
@@ -179,11 +202,11 @@ public class AnalysisBean {
         this.validOrderNum = validOrderNum;
     }
 
-    public double getValidTradeAmount() {
+    public float getValidTradeAmount() {
         return validTradeAmount;
     }
 
-    public void setValidTradeAmount(double validTradeAmount) {
+    public void setValidTradeAmount(float validTradeAmount) {
         this.validTradeAmount = validTradeAmount;
     }
 }

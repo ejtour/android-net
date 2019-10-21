@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.operationanalysis;
 
+import android.text.TextUtils;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/10/14
@@ -25,7 +27,7 @@ public class LostResp {
     }
 
     public String getLostAmountShopName() {
-        return lostAmountShopName;
+        return TextUtils.isEmpty(lostAmountShopName) ? "---" : lostAmountShopName;
     }
 
     public void setLostAmountShopName(String lostAmountShopName) {
@@ -33,7 +35,7 @@ public class LostResp {
     }
 
     public String getLostBillShopName() {
-        return lostBillShopName;
+        return TextUtils.isEmpty(lostBillShopName) ? "---" : lostBillShopName;
     }
 
     public void setLostBillShopName(String lostBillShopName) {

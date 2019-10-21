@@ -12,6 +12,7 @@
         android:gravity="center"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
+        android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Small"
         tools:text="集团ID" />
 
@@ -22,6 +23,7 @@
         android:gravity="center"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
+        android:singleLine="true"
         android:text="集团名称"
         android:textAppearance="@style/TextAppearance.City22.Small" />
 
@@ -32,16 +34,18 @@
         android:gravity="center"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
+        android:singleLine="true"
         android:text="门店名称"
         android:textAppearance="@style/TextAppearance.City22.Small" />
 
     <TextView
         android:id="@+id/sst_order_num"
-        android:layout_height="match_parent"
         android:layout_width="60dp"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
+        android:singleLine="true"
         android:text="订单量"
         android:textAppearance="@style/TextAppearance.City22.Small" />
 
@@ -52,6 +56,7 @@
         android:gravity="center_vertical|right"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
+        android:singleLine="true"
         android:text="交易金额"
         android:textAppearance="@style/TextAppearance.City22.Small" />
 </LinearLayout>
