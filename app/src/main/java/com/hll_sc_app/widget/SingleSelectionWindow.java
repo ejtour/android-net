@@ -16,6 +16,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.BasePopupWindow;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.List;
 
@@ -30,8 +32,10 @@ import butterknife.ButterKnife;
 public class SingleSelectionWindow<T> extends BasePopupWindow implements View.OnClickListener {
     @BindView(R.id.wss_list_view)
     RecyclerView mListView;
+    @BindView(R.id.wss_refresh_view)
+    SmartRefreshLayout mRefreshView;
     private T mSelect;
-    private List<T> mList;
+    //    private List<T> mList;
     private ListAdapter mAdapter;
     private OnSelectListener<T> mSelectListener;
     private WrapperName<T> mWrapperName;
@@ -50,7 +54,7 @@ public class SingleSelectionWindow<T> extends BasePopupWindow implements View.On
         this.setFocusable(true);
         ColorDrawable dw = new ColorDrawable(0xbb000000);
         this.setBackgroundDrawable(dw);
-        mAdapter = new ListAdapter(mList);
+        mAdapter = new ListAdapter(null);
         mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(context, R.color.color_eeeeee), UIUtils.dip2px(1)));
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -61,6 +65,8 @@ public class SingleSelectionWindow<T> extends BasePopupWindow implements View.On
                 mSelectListener.onSelectItem(mSelect);
             }
         });
+        mRefreshView.setEnableLoadMore(false);
+        mRefreshView.setEnableRefresh(false);
     }
 
     /**
@@ -96,8 +102,13 @@ public class SingleSelectionWindow<T> extends BasePopupWindow implements View.On
      * @param list 数据源
      */
     public void refreshList(List<T> list) {
-        this.mList = list;
+//        this.mList = list;
         mAdapter.setNewData(list);
+    }
+
+    public void addList(List<T> list) {
+//        this.mList.addAll(list);
+        mAdapter.addData(list);
     }
 
     /**
@@ -158,10 +169,33 @@ public class SingleSelectionWindow<T> extends BasePopupWindow implements View.On
         String getName(T t);
     }
 
+    public void setOnRefreshLoadMoreListener(OnRefreshLoadMoreListener loadMoreListener) {
+        mRefreshView.setOnRefreshLoadMoreListener(loadMoreListener);
+    }
+
+    public void setEnableLoadMore(boolean loadMore) {
+        mRefreshView.setEnableLoadMore(loadMore);
+    }
+
+    public void setEnableRefresh(boolean refresh) {
+        mRefreshView.setEnableRefresh(refresh);
+    }
+
+    public void setListHeight(int height) {
+        SmartRefreshLayout.LayoutParams l = (SmartRefreshLayout.LayoutParams) mListView.getLayoutParams();
+        l.height = height;
+        mListView.setLayoutParams(l);
+    }
+
+    public void closeHeaderOrFooter() {
+        mRefreshView.closeHeaderOrFooter();
+    }
+
     /**
      * 列表适配器
      */
     private class ListAdapter extends BaseQuickAdapter<T, BaseViewHolder> {
+
         ListAdapter(@Nullable List<T> data) {
             super(R.layout.item_single_selection, data);
         }
@@ -186,4 +220,6 @@ public class SingleSelectionWindow<T> extends BasePopupWindow implements View.On
             txtType.setSelected(mSelect == item);
         }
     }
+
+
 }

@@ -6,13 +6,19 @@
     android:maxHeight="240dp"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/wss_list_view"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/wss_refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/base_white"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/wss_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/base_white"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>
