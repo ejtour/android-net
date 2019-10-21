@@ -1060,6 +1060,14 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.goodsdemand.add.GoodsDemandAddActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.goodsdemand.search.PurchaserSearchActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

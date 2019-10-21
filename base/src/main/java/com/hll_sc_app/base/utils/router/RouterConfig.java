@@ -1137,5 +1137,15 @@ public class RouterConfig {
      * 商品需求-入口
      */
     public static final String GOODS_DEMAND_ENTRY = "/activity/goods/demand/entry";
+
+    /**
+     * 商品需求-新增
+     */
+    public static final String GOODS_DEMAND_ADD = "/activity/goods/demand/add";
+
+    /**
+     * 商品需求-新增-采购商搜索
+     */
+    public static final String GOODS_DEMAND_PURCHASER_SEARCH = "/activity/goods/demand/purchaser/search";
 }
 

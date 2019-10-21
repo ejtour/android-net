@@ -83,7 +83,7 @@ public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoods
 
     @OnClick(R.id.gde_add)
     public void add() {
-        showToast("新增待添加");
+        RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_ADD);
     }
 
     @Override
