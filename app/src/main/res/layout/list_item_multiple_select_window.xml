@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+    <TextView
+        android:id="@+id/supplyer_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="合作供应商集团名称"
+        android:textColor="@color/text_666"
+        android:textSize="13sp" />
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:button="@drawable/bg_selector_check_box_circular" />
+</LinearLayout>
