@@ -362,7 +362,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                     List<FilterParams.StatusBean> data = new ArrayList<>();
                     data.add(new FilterParams.StatusBean("全部", 0));
                     data.add(new FilterParams.StatusBean("未审核", 1));
-                    data.add(new FilterParams.StatusBean("已审核", 2));
+                    data.add(new FilterParams.StatusBean("ic_report_custom_receive_pass", 2));
                     mSelectStatusWindow.refreshList(data);
                     mSelectStatusWindow.setSelectListener(optionsBean -> {
                         mTxtStatus.setText(optionsBean.getStatusName());

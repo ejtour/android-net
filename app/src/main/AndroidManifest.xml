@@ -1053,6 +1053,10 @@
         <activity
             android:name=".app.report.customreceivequery.CustomReceiveQueryActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.customreceivequery.detail.CustomReceiveDetailActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
