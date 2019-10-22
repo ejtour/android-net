@@ -1065,6 +1065,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.goodsdemand.commit.GoodsDemandCommitActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.goodsdemand.search.PurchaserSearchActivity"
             android:screenOrientation="portrait" />
 

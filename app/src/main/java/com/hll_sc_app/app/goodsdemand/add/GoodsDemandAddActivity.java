@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goodsdemand.commit.GoodsDemandCommitActivity;
 import com.hll_sc_app.app.goodsdemand.search.PurchaserSearchActivity;
 import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.bean.UserBean;
@@ -71,6 +72,10 @@ public class GoodsDemandAddActivity extends BaseActivity {
                         mPurchaserInfo != null ? mPurchaserInfo.getValue() : null, mDefaultSearchIndex);
                 break;
             case R.id.gda_next:
+                GoodsDemandCommitActivity.start(mPurchaserInfo.getValue(),
+                        mPurchaserInfo.getName(),
+                        mName.getText().toString().trim(),
+                        mDesc.getText().toString().trim());
                 break;
         }
     }

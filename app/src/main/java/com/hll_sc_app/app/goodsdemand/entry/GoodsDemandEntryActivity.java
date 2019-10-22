@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goodsdemand.entry;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -117,5 +118,11 @@ public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoods
                     .create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresenter.start();
     }
 }
