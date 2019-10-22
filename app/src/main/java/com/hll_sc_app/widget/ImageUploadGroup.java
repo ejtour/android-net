@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -50,7 +52,7 @@ public class ImageUploadGroup extends LinearLayout {
         calcItemSize(attrs);
         mUpload = new ImgUploadBlock(context);
         mUpload.setIconResId(R.drawable.ic_camera);
-        mUpload.setTitle("上传凭证");
+        mUpload.setTitle(mLabel);
         mUpload.setSubTitle("0/5");
         addView(mUpload, mItemSize, mItemSize);
     }
@@ -59,6 +61,8 @@ public class ImageUploadGroup extends LinearLayout {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.ImageUploadGroup);
         mPadding = typedArray.getDimensionPixelSize(R.styleable.ImageUploadGroup_iug_padding, UIUtils.dip2px(10));
         int margin = typedArray.getDimensionPixelSize(R.styleable.ImageUploadGroup_iug_margin, 0);
+        mLabel = typedArray.getString(R.styleable.ImageUploadGroup_iug_label);
+        if (TextUtils.isEmpty(mLabel)) mLabel = "上传凭证";
         typedArray.recycle();
         float sw = UIUtils.getScreenWidth(getContext());
         mItemSize = (int) ((sw - 2 * margin - 4 * mPadding) / 5);

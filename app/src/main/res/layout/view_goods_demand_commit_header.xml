@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/dch_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="以下均为非必填项"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="@dimen/text_little_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dch_brand_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="商品品牌"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dch_tip" />
+
+    <EditText
+        android:id="@+id/dch_brand"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="请输入期望商品品牌"
+        app:layout_constraintBottom_toBottomOf="@id/dch_brand_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dch_brand_label"
+        app:layout_constraintTop_toTopOf="@id/dch_brand_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/dch_brand_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/dch_spec_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="商品规格"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dch_brand_label" />
+
+    <EditText
+        android:id="@+id/dch_spec"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="请输入期望商品规格"
+        app:layout_constraintBottom_toBottomOf="@id/dch_spec_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dch_spec_label"
+        app:layout_constraintTop_toTopOf="@id/dch_spec_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/dch_spec_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/dch_origin_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="商品产地"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dch_spec_label" />
+
+    <TextView
+        android:id="@+id/dch_origin"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:hint="请选择期望商品产地"
+        app:layout_constraintBottom_toBottomOf="@id/dch_origin_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dch_origin_label"
+        app:layout_constraintTop_toTopOf="@id/dch_origin_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/dch_origin_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/dch_price_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="市场价格"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dch_origin_label" />
+
+    <EditText
+        android:id="@+id/dch_price"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="请输入商品市场价格"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@id/dch_price_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dch_price_label"
+        app:layout_constraintTop_toTopOf="@id/dch_price_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/dch_price_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/dch_pack_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="包装方式"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dch_price_label" />
+
+    <TextView
+        android:id="@+id/dch_pack"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:hint="请选择商品包装方式"
+        app:layout_constraintBottom_toBottomOf="@id/dch_pack_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dch_pack_label"
+        app:layout_constraintTop_toTopOf="@id/dch_pack_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/dch_pack_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/dch_manufacturer_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="生产厂家"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dch_pack_label" />
+
+    <EditText
+        android:id="@+id/dch_manufacturer"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="请输入期望商品生产厂家"
+        app:layout_constraintBottom_toBottomOf="@id/dch_manufacturer_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dch_manufacturer_label"
+        app:layout_constraintTop_toTopOf="@id/dch_manufacturer_label" />
+
+    <View
+        android:id="@+id/dch_pic_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/dch_pic_group"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dch_manufacturer_label" />
+
+    <TextView
+        android:id="@+id/dch_pic_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:text="商品图片"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintStart_toStartOf="@id/dch_pic_bg"
+        app:layout_constraintTop_toTopOf="@id/dch_pic_bg" />
+
+    <LinearLayout
+        android:id="@+id/dch_pic_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="15dp"
+        app:layout_constraintEnd_toEndOf="@id/dch_pic_bg"
+        app:layout_constraintStart_toStartOf="@id/dch_pic_bg"
+        app:layout_constraintTop_toBottomOf="@id/dch_pic_label">
+
+        <TextView
+            android:id="@+id/dch_pic_upload"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/bg_edit_stroke_gray"
+            android:drawableTop="@drawable/base_ic_img_add"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:text="添加图片"
+            android:textColor="@color/color_aeaeae"
+            android:textSize="@dimen/text_little_size" />
+    </LinearLayout>
+</merge>
