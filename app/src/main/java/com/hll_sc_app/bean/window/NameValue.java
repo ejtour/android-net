@@ -22,10 +22,16 @@ public class NameValue implements Parcelable {
     };
     private String name;
     private String value;
+    private transient boolean enable;
 
     public NameValue(String name, String value) {
+        this(name, value, true);
+    }
+
+    public NameValue(String name, String value, boolean enable) {
         this.name = name;
         this.value = value;
+        this.enable = enable;
     }
 
     protected NameValue(Parcel in) {
@@ -50,5 +56,13 @@ public class NameValue implements Parcelable {
 
     public String getValue() {
         return value;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }
