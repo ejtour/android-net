@@ -2,7 +2,6 @@ package com.hll_sc_app.base.widget;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
@@ -15,13 +14,10 @@ import android.widget.TextView;
 
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.base.utils.glide.Glide4Engine;
 import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.yanzhenjie.permission.Permission;
-import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.filter.Filter;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.utils.PhotoMetadataUtils;
@@ -76,20 +72,7 @@ public class ImgUploadBlock extends RelativeLayout {
     }
 
     private void selectPhoto() {
-        Matisse.from(((Activity) getContext()))
-                .choose(MimeType.ofImage())
-                .theme(R.style.Matisse_Dracula)
-                .countable(false)
-                .addFilter(new MiniSizeFilter(maxSize))
-                .maxSelectable(1)
-                .capture(true)
-                .captureStrategy(new CaptureStrategy(true, ((Activity) getContext()).getApplication().getPackageName() +
-                        ".fileprovider"))
-                .gridExpectedSize(UIUtils.dip2px(120))
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                .thumbnailScale(0.85f)
-                .imageEngine(new Glide4Engine())
-                .forResult(mRequestCode);
+        UIUtils.selectPhoto((Activity) getContext(), REQUEST_CODE_CHOOSE, new MiniSizeFilter(maxSize));
     }
 
     public ImgUploadBlock(Context context, @Nullable AttributeSet attrs) {
