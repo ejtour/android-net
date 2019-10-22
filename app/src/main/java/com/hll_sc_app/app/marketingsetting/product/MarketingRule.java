@@ -10,7 +10,7 @@ import android.text.TextUtils;
 public enum MarketingRule {
     /*商品营销增加*/
     RULE_ZJ("4", "直降"),
-    RULE_MZ("1", "买赠"),
+    RULE_MZ("1", "买赠"),//商品买赠 订单叫满赠
     RULE_ZQ("5", "赠券"),
     RULE_MJ("6", "满减"),
     RULE_DZ("7", "打折"),

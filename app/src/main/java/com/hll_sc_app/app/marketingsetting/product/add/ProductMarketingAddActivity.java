@@ -70,6 +70,7 @@ import butterknife.Unbinder;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_DZ;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MANZHE;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MJ;
+import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MJ_ORDER;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_MZ;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZJ;
 import static com.hll_sc_app.app.marketingsetting.product.MarketingRule.RULE_ZQ;
@@ -383,7 +384,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             }
             initRuleListAdapter(Integer.parseInt(ruleType), isInitData);
             mMarketingProductAdpater.setModal(MarketingProductAdapter.Modal.EDIT);
-        } else if (TextUtils.equals(ruleType, RULE_MJ.getKey())) {
+        } else if (TextUtils.equals(ruleType, RULE_MJ.getKey()) ||TextUtils.equals(ruleType, RULE_MJ_ORDER.getKey())) {
             mRuleDZLayout.setVisibility(View.GONE);
             mListRule.setVisibility(View.VISIBLE);
             mRuleAdd.setVisibility(mSwitchLadder.isChecked() ? View.VISIBLE : View.GONE);
@@ -486,7 +487,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         //直降、满减、满赠
         if (TextUtils.equals(getRuleType() + "", RULE_ZJ.getKey()) ||
                 TextUtils.equals(getRuleType() + "", RULE_MZ.getKey()) ||
-                TextUtils.equals(getRuleType() + "", RULE_MJ.getKey())
+                TextUtils.equals(getRuleType() + "", RULE_MJ.getKey()) ||
+                TextUtils.equals(getRuleType() + "", RULE_MJ_ORDER.getKey())
         ) {
             if (mMarketingRuleAdapter == null || mMarketingRuleAdapter.getData().size() == 0) {
                 showToast("请填写至少一个促销规则");
@@ -678,14 +680,14 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
 
     private List<NameValue> getRules() {
         List<NameValue> statusBeans = new ArrayList<>();
-        if (mDiscountType != 1) {//订单活动没有直降
+        if (mDiscountType != 1) {//商品活动   订单活动没有直降
             statusBeans.add(new NameValue(RULE_ZJ.getValue(), RULE_ZJ.getKey()));
             statusBeans.add(new NameValue(RULE_ZQ.getValue(), RULE_ZQ.getKey()));
             statusBeans.add(new NameValue(RULE_MJ.getValue(), RULE_MJ.getKey()));
             statusBeans.add(new NameValue(RULE_DZ.getValue(), RULE_DZ.getKey()));
-        } else if (mDiscountType == 1) {
+        } else if (mDiscountType == 1) {//订单活动
             statusBeans.add(new NameValue(RULE_ZQ.getValue(), RULE_ZQ.getKey()));
-            statusBeans.add(new NameValue(RULE_MJ.getValue(), RULE_MJ.getKey()));
+            statusBeans.add(new NameValue(RULE_MJ_ORDER.getValue(), RULE_MJ_ORDER.getKey()));
             statusBeans.add(new NameValue(RULE_MANZHE.getValue(), RULE_MANZHE.getKey()));
         }
         return statusBeans;
