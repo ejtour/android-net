@@ -10,7 +10,6 @@ public class GoodsDemandItem {
     private String actionTime;
     private String createTime;
     private String demandUrl;
-    private int action;
     private String feedbackID;
     private String demandContent;
     private String id;
@@ -38,14 +37,6 @@ public class GoodsDemandItem {
 
     public void setDemandUrl(String demandUrl) {
         this.demandUrl = demandUrl;
-    }
-
-    public int getAction() {
-        return action;
-    }
-
-    public void setAction(int action) {
-        this.action = action;
     }
 
     public String getFeedbackID() {
