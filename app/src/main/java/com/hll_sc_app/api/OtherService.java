@@ -1,10 +1,13 @@
 package com.hll_sc_app.api;
 
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
+import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
 import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
 import com.hll_sc_app.bean.operationanalysis.LostResp;
 import com.hll_sc_app.bean.operationanalysis.TopTenResp;
@@ -57,4 +60,12 @@ public interface OtherService {
     @POST(HttpConfig.URL)
     @Headers("pv:111052")
     Observable<BaseResp<TopTenResp>> queryTopTenInfo(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100116")
+    Observable<BaseResp<SingleListResp<GoodsDemandBean>>> queryGoodsDemand(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100114")
+    Observable<BaseResp<Object>> addGoodsDemand(@Body BaseReq<GoodsDemandReq> body);
 }

@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.common.IntentionCustomerBean;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.common.SingleListResp;
@@ -47,4 +48,8 @@ public interface CommonService {
     @POST(HttpConfig.URL)
     @Headers("pv:103083")
     Observable<BaseResp<SingleListResp<ShopSearchEvent>>> searchShopList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107002")
+    Observable<BaseResp<SingleListResp<IntentionCustomerBean>>> searchIntentionCustomer(@Body BaseMapReq req);
 }

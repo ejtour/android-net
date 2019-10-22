@@ -6,6 +6,7 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.common.IntentionCustomerBean;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.common.SingleListResp;
@@ -98,6 +99,25 @@ public class Common {
                         .put("source", "0")
                         .put("shopMallID", UserConfig.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .subscribe(observer);
+    }
+
+    /**
+     * 搜索意向客户
+     *
+     * @param pageNum     页码
+     * @param searchWords 搜索词
+     */
+    public static void searchIntentionCustomer(int pageNum, String searchWords, SimpleObserver<SingleListResp<IntentionCustomerBean>> observer) {
+        CommonService.INSTANCE
+                .searchIntentionCustomer(BaseMapReq.newBuilder()
+                        .put("customerName", searchWords)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("groupID", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
 }

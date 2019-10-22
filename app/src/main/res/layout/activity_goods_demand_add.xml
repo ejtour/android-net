@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/gda_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_title="新增商品需求" />
+
+    <ImageView
+        android:id="@+id/gda_tip"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_below="@id/gda_title_bar"
+        android:background="@android:color/white"
+        android:padding="@dimen/dp_10"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_goods_demand_tip" />
+
+    <TextView
+        android:id="@+id/gda_supplier_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/gda_tip"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:text="反馈供应商" />
+
+    <TextView
+        android:id="@+id/gda_supplier"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/gda_supplier_label"
+        android:layout_alignBottom="@id/gda_supplier_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/gda_supplier_label"
+        android:background="@android:color/white"
+        tools:text="某某某供应商集团" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/gda_supplier_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/gda_purchaser_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/gda_supplier_label"
+        android:background="@android:color/white"
+        android:text="采购商" />
+
+    <TextView
+        android:id="@+id/gda_purchaser"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/gda_purchaser_label"
+        android:layout_alignBottom="@id/gda_purchaser_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/gda_purchaser_label"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:hint="请选择采购商集团" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/gda_purchaser_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/gda_name_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/gda_purchaser_label"
+        android:background="@android:color/white"
+        android:text="商品名称" />
+
+    <EditText
+        android:id="@+id/gda_name"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/gda_name_label"
+        android:layout_alignBottom="@id/gda_name_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/gda_name_label"
+        android:background="@android:color/white"
+        android:hint="最多可输入20字"
+        android:maxLength="20" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/gda_name_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <EditText
+        android:id="@+id/gda_desc"
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_below="@id/gda_name_label"
+        android:background="@android:color/white"
+        android:gravity="top"
+        android:hint="描述一下您想订购的商品吧，有助于供应商更快的找到～"
+        android:maxLength="200"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="15dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="15dp"
+        android:textColor="@color/color_222222"
+        android:textColorHint="@color/color_aeaeae"
+        android:textSize="@dimen/text_middle_size" />
+
+    <TextView
+        android:id="@+id/gda_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/gda_desc"
+        android:layout_alignBottom="@id/gda_desc"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:text="200"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="9sp" />
+
+    <TextView
+        android:id="@+id/gda_contact_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/gda_desc"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:text="联系方式" />
+
+    <TextView
+        android:id="@+id/gda_contact"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/gda_contact_label"
+        android:layout_alignBottom="@id/gda_contact_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/gda_contact_label"
+        android:background="@android:color/white"
+        tools:text="13188888883" />
+
+    <TextView
+        android:id="@+id/gda_warn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gda_contact_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="12dp"
+        android:text="* 以上均为必填项噢"
+        android:textAppearance="@style/TextAppearance.City22.Little.Red" />
+
+    <Button
+        android:id="@+id/gda_next"
+        android:layout_width="230dp"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@id/gda_contact_label"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bg_button_large_solid_primary"
+        android:enabled="false"
+        android:text="下一步"
+        android:textAppearance="@style/TextAppearance.City22.Middle.White" />
+</RelativeLayout>

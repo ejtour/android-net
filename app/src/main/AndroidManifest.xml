@@ -1046,6 +1046,7 @@
         <activity
             android:name=".app.feedbackcomplain.feedback.FeedbackListActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.analysis.AnalysisActivity"
             android:screenOrientation="portrait" />
@@ -1057,6 +1058,24 @@
         <activity
             android:name=".app.report.customreceivequery.detail.CustomReceiveDetailActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.goodsdemand.entry.GoodsDemandEntryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.goodsdemand.add.GoodsDemandAddActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.goodsdemand.commit.GoodsDemandCommitActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.goodsdemand.search.PurchaserSearchActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

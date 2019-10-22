@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -36,7 +37,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.hll_sc_app.base.R;
+import com.hll_sc_app.base.utils.glide.Glide4Engine;
 import com.hll_sc_app.citymall.App;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.SelectionCreator;
+import com.zhihu.matisse.filter.Filter;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -696,5 +704,23 @@ public class UIUtils {
             drawable.draw(canvas);
             return bitmap;
         }
+    }
+
+    public static void selectPhoto(Activity activity, int reqCode, Filter filter) {
+        SelectionCreator creator = Matisse.from(activity)
+                .choose(MimeType.ofImage())
+                .theme(R.style.Matisse_Dracula)
+                .countable(false)
+                .maxSelectable(1)// 图片选择的最多数量
+                .capture(true)
+                .captureStrategy(new CaptureStrategy(true, activity.getPackageName() + ".fileprovider"))
+                .gridExpectedSize(UIUtils.dip2px(120))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                // 缩略图的比例
+                .thumbnailScale(0.85f)
+                .imageEngine(new Glide4Engine());
+        if (filter != null)
+            creator.addFilter(filter);
+        creator.forResult(reqCode);
     }
 }

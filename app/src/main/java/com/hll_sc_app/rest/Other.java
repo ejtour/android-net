@@ -2,6 +2,7 @@ package com.hll_sc_app.rest;
 
 import com.hll_sc_app.api.OtherService;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -9,6 +10,8 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
+import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
 import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
 import com.hll_sc_app.bean.operationanalysis.LostResp;
 import com.hll_sc_app.bean.operationanalysis.TopTenResp;
@@ -173,6 +176,38 @@ public class Other {
                         .put("order", "1") // 0：升序，1：降序
                         .put("sortBy", "5") // 排序字段 2: 有效单量 5:有效交易额
                         .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询商品需求
+     *
+     * @param pageNum 页码
+     * @param status  1:未处理，2：已处理
+     */
+    public static void queryGoodsDemand(int pageNum, int status, SimpleObserver<SingleListResp<GoodsDemandBean>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        OtherService.INSTANCE
+                .queryGoodsDemand(BaseMapReq.newBuilder()
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("supplyID", user.getGroupID())
+                        .put("status", status == 0 ? "" : String.valueOf(status))
+                        .put("salesmanID", UserConfig.crm() ? user.getEmployeeID() : "")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 新增商品需求
+     */
+    public static void addGoodsDemand(GoodsDemandReq req, SimpleObserver<Object> observer) {
+        OtherService.INSTANCE
+                .addGoodsDemand(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

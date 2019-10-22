@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -36,6 +38,9 @@ public class ImageUploadGroup extends LinearLayout {
     private final int MAX_IMG_NUMBER = 5;
     private int mItemSize;
     private int mPadding;
+    private String mLabel;
+    private OnClickListener mListener;
+    private OnImageCountChangedListener mChangeListener;
 
     public ImageUploadGroup(Context context) {
         this(context, null);
@@ -50,8 +55,12 @@ public class ImageUploadGroup extends LinearLayout {
         calcItemSize(attrs);
         mUpload = new ImgUploadBlock(context);
         mUpload.setIconResId(R.drawable.ic_camera);
-        mUpload.setTitle("上传凭证");
+        mUpload.setTitle(mLabel);
         mUpload.setSubTitle("0/5");
+        mUpload.setOnTouchListener((v, event) -> {
+            mListener.onClick(this);
+            return false;
+        });
         addView(mUpload, mItemSize, mItemSize);
     }
 
@@ -59,6 +68,8 @@ public class ImageUploadGroup extends LinearLayout {
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.ImageUploadGroup);
         mPadding = typedArray.getDimensionPixelSize(R.styleable.ImageUploadGroup_iug_padding, UIUtils.dip2px(10));
         int margin = typedArray.getDimensionPixelSize(R.styleable.ImageUploadGroup_iug_margin, 0);
+        mLabel = typedArray.getString(R.styleable.ImageUploadGroup_iug_label);
+        if (TextUtils.isEmpty(mLabel)) mLabel = "上传凭证";
         typedArray.recycle();
         float sw = UIUtils.getScreenWidth(getContext());
         mItemSize = (int) ((sw - 2 * margin - 4 * mPadding) / 5);
@@ -85,27 +96,52 @@ public class ImageUploadGroup extends LinearLayout {
     }
 
     public void showImages(String[] urls) {
+        reset();
         if (urls == null || urls.length == 0) return;
         for (String url : urls) {
             showUploadedImg(url);
         }
     }
 
+    private void reset() {
+        mUploadImgUrls.clear();
+        mUpload.setSubTitle("0/5");
+        if (getChildCount() > 1) {
+            View upload = getChildAt(getChildCount() - 1);
+            upload.setVisibility(VISIBLE);
+            removeAllViews();
+            addView(upload);
+        }
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        mListener = l;
+    }
+
+    public void setChangedListener(OnImageCountChangedListener listener) {
+        mChangeListener = listener;
+    }
+
     private void showUploadedImg(String url) {
+        mUploadImgUrls.add(url);
+        mChangeListener.onChanged(mUploadImgUrls);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mItemSize, mItemSize);
         layoutParams.setMargins(0, 0, mPadding, 0);
         ImgShowDelBlock del = new ImgShowDelBlock(getContext());
         del.setImgUrl(url);
         del.setLayoutParams(layoutParams);
-        addView(del, mUploadImgUrls.size());
+        addView(del, mUploadImgUrls.size() - 1);
+        del.setTag(url);
         del.setDeleteListener(v -> {
-            int delIndex = mUploadImgUrls.indexOf(url);
-            removeViewAt(delIndex);
+            if (v.getTag() == null) return;
+            int delIndex = mUploadImgUrls.indexOf(v.getTag().toString());
             mUploadImgUrls.remove(delIndex);
+            mChangeListener.onChanged(mUploadImgUrls);
+            removeViewAt(delIndex);
             mUpload.setVisibility(View.VISIBLE);
             mUpload.setSubTitle(mUploadImgUrls.size() + "/" + MAX_IMG_NUMBER);
         });
-        mUploadImgUrls.add(url);
         mUpload.setSubTitle(mUploadImgUrls.size() + "/" + MAX_IMG_NUMBER);
         //当图片为最多 则隐藏上传图片组件
         if (MAX_IMG_NUMBER == mUploadImgUrls.size())
@@ -116,5 +152,9 @@ public class ImageUploadGroup extends LinearLayout {
 
     public List<String> getUploadImgUrls() {
         return mUploadImgUrls;
+    }
+
+    public interface OnImageCountChangedListener {
+        void onChanged(List<String> urls);
     }
 }

@@ -31,6 +31,7 @@ import butterknife.OnClick;
 
 public class SingleSelectionDialog<T> extends BaseDialog {
     private final WrapperName<T> mWrapperName;
+    private WrapperEnable<T> mWrapperEnable;
     @BindView(R.id.dss_title)
     TextView mTitle;
     @BindView(R.id.dss_list_view)
@@ -46,6 +47,14 @@ public class SingleSelectionDialog<T> extends BaseDialog {
 
     public static <T> Builder<T> newBuilder(@NonNull Activity context, WrapperName<T> wrapperName) {
         return new Builder<T>(context, wrapperName);
+    }
+
+    public static <T> Builder<T> newBuilder(@NonNull Activity context, WrapperName<T> wrapperName, WrapperEnable<T> wrapperEnable) {
+        return new Builder<T>(context, wrapperName).setWrapperEnable(wrapperEnable);
+    }
+
+    private void setWrapperEnable(WrapperEnable<T> wrapperEnable) {
+        mWrapperEnable = wrapperEnable;
     }
 
     @Override
@@ -109,6 +118,10 @@ public class SingleSelectionDialog<T> extends BaseDialog {
         String getName(T t);
     }
 
+    public interface WrapperEnable<T> {
+        boolean enable(T t);
+    }
+
     @OnClick(R.id.dss_close)
     public void onViewClicked() {
         dismiss();
@@ -123,6 +136,11 @@ public class SingleSelectionDialog<T> extends BaseDialog {
 
         Builder(Activity context, WrapperName<T> wrapperName) {
             mDialog = new SingleSelectionDialog<T>(context, wrapperName);
+        }
+
+        private Builder<T> setWrapperEnable(WrapperEnable<T> wrapperEnable) {
+            mDialog.setWrapperEnable(wrapperEnable);
+            return this;
         }
 
         public Builder<T> refreshList(List<T> list) {
@@ -189,6 +207,9 @@ public class SingleSelectionDialog<T> extends BaseDialog {
             } else {
                 label.setSelected(mT == item);
             }
+            boolean enable = mWrapperEnable == null || mWrapperEnable.enable(item);
+            helper.itemView.setEnabled(enable);
+            label.setEnabled(enable);
             helper.setGone(R.id.iss_check, mT == item);
         }
     }

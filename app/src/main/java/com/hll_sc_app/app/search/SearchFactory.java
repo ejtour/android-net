@@ -19,6 +19,7 @@ import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.app.search.stratery.GoodsTemplateSearch;
 import com.hll_sc_app.app.search.stratery.GoodsTopSearch;
 import com.hll_sc_app.app.search.stratery.InspectLackDetailSearch;
+import com.hll_sc_app.app.search.stratery.PurchaserSearch;
 import com.hll_sc_app.app.search.stratery.RefundSearch;
 import com.hll_sc_app.app.search.stratery.SalesDayReportSearch;
 import com.hll_sc_app.app.search.stratery.SalesManSearch;
@@ -72,6 +73,7 @@ class SearchFactory {
         ITEM_MAP.put(ComplainSearch.class.getSimpleName(), ComplainSearch.class);
         ITEM_MAP.put(AfterSalesGoodsSearch.class.getSimpleName(), AfterSalesGoodsSearch.class);
         ITEM_MAP.put(ComplainManageSelectProductSearch.class.getSimpleName(), ComplainManageSelectProductSearch.class);
+        ITEM_MAP.put(PurchaserSearch.class.getSimpleName(), PurchaserSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {

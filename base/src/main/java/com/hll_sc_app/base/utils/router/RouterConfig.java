@@ -1136,5 +1136,24 @@ public class RouterConfig {
     /*客户收货查询详情*/
     public static final String ACTIVITY_QUERY_CUSTOM_RECEIVE_DETAIL = "/activity/report/query/custom/receive/detail";
 
+    /**
+     * 商品需求-入口
+     */
+    public static final String GOODS_DEMAND_ENTRY = "/activity/goods/demand/entry";
+
+    /**
+     * 商品需求-新增
+     */
+    public static final String GOODS_DEMAND_ADD = "/activity/goods/demand/add";
+
+    /**
+     * 商品需求-提交
+     */
+    public static final String GOODS_DEMAND_COMMIT = "/activity/goods/demand/commit";
+
+    /**
+     * 商品需求-新增-采购商搜索
+     */
+    public static final String GOODS_DEMAND_PURCHASER_SEARCH = "/activity/goods/demand/purchaser/search";
 }
 

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
+import com.hll_sc_app.app.goodsdemand.entry.GoodsDemandEntryActivity;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -81,6 +82,7 @@ public class CrmMineFragment extends BaseFragment {
                 RouterUtil.goToActivity(RouterConfig.STAFF_LIST);
                 break;
             case R.id.fcm_new_product_feedback:
+                GoodsDemandEntryActivity.start();
                 break;
             case R.id.fcm_complaint_manage:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_COMPLAIN_MANAGE_LIST);

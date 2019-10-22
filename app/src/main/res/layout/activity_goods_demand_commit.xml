@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/gdc_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="新增商品需求" />
+
+    <View
+        android:id="@+id/gdc_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/gdc_submit"
+        style="@style/BtnSubmit"
+        android:text="确认提交"
+        app:layout_constraintBottom_toBottomOf="@id/gdc_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/gdc_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/gdc_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/gdc_bottom_bg" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/gdc_list_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/gdc_bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gdc_title_bar" />
+
+</android.support.constraint.ConstraintLayout>

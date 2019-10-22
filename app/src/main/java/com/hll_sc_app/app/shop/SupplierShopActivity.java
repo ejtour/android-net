@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.shop;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -16,7 +15,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.user.register.RegisterCategoryWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
-import com.hll_sc_app.base.utils.glide.Glide4Engine;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.AreaSelectWindow;
@@ -24,18 +23,14 @@ import com.hll_sc_app.bean.shop.SupplierShopBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TimeIntervalWindow;
 import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -152,20 +147,7 @@ public class SupplierShopActivity extends BaseLoadActivity implements ISupplierS
     }
 
     private void selectPhoto() {
-        Matisse.from(this)
-                .choose(MimeType.ofImage())
-                .theme(R.style.Matisse_Dracula)
-                .countable(false)
-                // 图片选择的最多数量
-                .maxSelectable(1)
-                .capture(true)
-                .captureStrategy(new CaptureStrategy(true, getApplication().getPackageName() + ".fileprovider"))
-                .gridExpectedSize(ViewUtils.dip2px(this, 120F))
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                // 缩略图的比例
-                .thumbnailScale(0.85f)
-                .imageEngine(new Glide4Engine())
-                .forResult(REQUEST_CODE_CHOOSE);
+        UIUtils.selectPhoto(this, REQUEST_CODE_CHOOSE, null);
     }
 
     private void save() {
