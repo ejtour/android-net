@@ -38,6 +38,9 @@ public class ImageUploadGroup extends LinearLayout {
     private final int MAX_IMG_NUMBER = 5;
     private int mItemSize;
     private int mPadding;
+    private String mLabel;
+    private OnClickListener mListener;
+    private OnImageCountChangedListener mChangeListener;
 
     public ImageUploadGroup(Context context) {
         this(context, null);
@@ -54,6 +57,10 @@ public class ImageUploadGroup extends LinearLayout {
         mUpload.setIconResId(R.drawable.ic_camera);
         mUpload.setTitle(mLabel);
         mUpload.setSubTitle("0/5");
+        mUpload.setOnTouchListener((v, event) -> {
+            mListener.onClick(this);
+            return false;
+        });
         addView(mUpload, mItemSize, mItemSize);
     }
 
@@ -89,27 +96,52 @@ public class ImageUploadGroup extends LinearLayout {
     }
 
     public void showImages(String[] urls) {
+        reset();
         if (urls == null || urls.length == 0) return;
         for (String url : urls) {
             showUploadedImg(url);
         }
     }
 
+    private void reset() {
+        mUploadImgUrls.clear();
+        mUpload.setSubTitle("0/5");
+        if (getChildCount() > 1) {
+            View upload = getChildAt(getChildCount() - 1);
+            upload.setVisibility(VISIBLE);
+            removeAllViews();
+            addView(upload);
+        }
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        mListener = l;
+    }
+
+    public void setChangedListener(OnImageCountChangedListener listener) {
+        mChangeListener = listener;
+    }
+
     private void showUploadedImg(String url) {
+        mUploadImgUrls.add(url);
+        mChangeListener.onChanged(mUploadImgUrls);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mItemSize, mItemSize);
         layoutParams.setMargins(0, 0, mPadding, 0);
         ImgShowDelBlock del = new ImgShowDelBlock(getContext());
         del.setImgUrl(url);
         del.setLayoutParams(layoutParams);
-        addView(del, mUploadImgUrls.size());
+        addView(del, mUploadImgUrls.size() - 1);
+        del.setTag(url);
         del.setDeleteListener(v -> {
-            int delIndex = mUploadImgUrls.indexOf(url);
-            removeViewAt(delIndex);
+            if (v.getTag() == null) return;
+            int delIndex = mUploadImgUrls.indexOf(v.getTag().toString());
             mUploadImgUrls.remove(delIndex);
+            mChangeListener.onChanged(mUploadImgUrls);
+            removeViewAt(delIndex);
             mUpload.setVisibility(View.VISIBLE);
             mUpload.setSubTitle(mUploadImgUrls.size() + "/" + MAX_IMG_NUMBER);
         });
-        mUploadImgUrls.add(url);
         mUpload.setSubTitle(mUploadImgUrls.size() + "/" + MAX_IMG_NUMBER);
         //当图片为最多 则隐藏上传图片组件
         if (MAX_IMG_NUMBER == mUploadImgUrls.size())
@@ -120,5 +152,9 @@ public class ImageUploadGroup extends LinearLayout {
 
     public List<String> getUploadImgUrls() {
         return mUploadImgUrls;
+    }
+
+    public interface OnImageCountChangedListener {
+        void onChanged(List<String> urls);
     }
 }

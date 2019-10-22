@@ -86,4 +86,10 @@ public class ImgShowDelBlock extends RelativeLayout {
     public void setUrls(List<String> urls) {
         mImgShow.setUrls(urls);
     }
+
+    @Override
+    public void setTag(Object tag) {
+        super.setTag(tag);
+        mImgDel.setTag(tag);
+    }
 }
