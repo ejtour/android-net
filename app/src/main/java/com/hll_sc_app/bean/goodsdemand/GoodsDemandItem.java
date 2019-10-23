@@ -1,12 +1,26 @@
 package com.hll_sc_app.bean.goodsdemand;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/10/21
  */
 
-public class GoodsDemandItem {
+public class GoodsDemandItem implements Parcelable {
 
+    public static final Creator<GoodsDemandItem> CREATOR = new Creator<GoodsDemandItem>() {
+        @Override
+        public GoodsDemandItem createFromParcel(Parcel in) {
+            return new GoodsDemandItem(in);
+        }
+
+        @Override
+        public GoodsDemandItem[] newArray(int size) {
+            return new GoodsDemandItem[size];
+        }
+    };
     private String actionTime;
     private String createTime;
     private String demandUrl;
@@ -14,6 +28,35 @@ public class GoodsDemandItem {
     private String demandContent;
     private String id;
     private int demandType;
+
+    public GoodsDemandItem() {
+    }
+
+    protected GoodsDemandItem(Parcel in) {
+        actionTime = in.readString();
+        createTime = in.readString();
+        demandUrl = in.readString();
+        feedbackID = in.readString();
+        demandContent = in.readString();
+        id = in.readString();
+        demandType = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(actionTime);
+        dest.writeString(createTime);
+        dest.writeString(demandUrl);
+        dest.writeString(feedbackID);
+        dest.writeString(demandContent);
+        dest.writeString(id);
+        dest.writeInt(demandType);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public String getActionTime() {
         return actionTime;

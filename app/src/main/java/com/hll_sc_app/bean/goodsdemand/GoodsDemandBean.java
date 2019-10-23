@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.goodsdemand;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -7,8 +10,19 @@ import java.util.List;
  * @since 2019/10/21
  */
 
-public class GoodsDemandBean {
+public class GoodsDemandBean implements Parcelable {
 
+    public static final Creator<GoodsDemandBean> CREATOR = new Creator<GoodsDemandBean>() {
+        @Override
+        public GoodsDemandBean createFromParcel(Parcel in) {
+            return new GoodsDemandBean(in);
+        }
+
+        @Override
+        public GoodsDemandBean[] newArray(int size) {
+            return new GoodsDemandBean[size];
+        }
+    };
     private String productReply;
     private String supplyName;
     private String actionTime;
@@ -40,6 +54,80 @@ public class GoodsDemandBean {
     private String placeProvinceCode;
     private int status;
     private List<GoodsDemandItem> demandList;
+
+    protected GoodsDemandBean(Parcel in) {
+        productReply = in.readString();
+        supplyName = in.readString();
+        actionTime = in.readString();
+        marketPrice = in.readDouble();
+        purchaserPhone = in.readString();
+        placeProvince = in.readString();
+        productBrand = in.readString();
+        source = in.readInt();
+        supplyPhone = in.readString();
+        productName = in.readString();
+        packMethod = in.readString();
+        purchaserID = in.readString();
+        productBrief = in.readString();
+        supplyID = in.readString();
+        purchaserUserID = in.readString();
+        action = in.readInt();
+        placeCity = in.readString();
+        id = in.readString();
+        specContent = in.readString();
+        salesManID = in.readString();
+        actionBy = in.readString();
+        purchaserName = in.readString();
+        imgUrl = in.readString();
+        createBy = in.readString();
+        placeCityCode = in.readString();
+        createTime = in.readString();
+        customerID = in.readString();
+        producer = in.readString();
+        placeProvinceCode = in.readString();
+        status = in.readInt();
+        demandList = in.createTypedArrayList(GoodsDemandItem.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(productReply);
+        dest.writeString(supplyName);
+        dest.writeString(actionTime);
+        dest.writeDouble(marketPrice);
+        dest.writeString(purchaserPhone);
+        dest.writeString(placeProvince);
+        dest.writeString(productBrand);
+        dest.writeInt(source);
+        dest.writeString(supplyPhone);
+        dest.writeString(productName);
+        dest.writeString(packMethod);
+        dest.writeString(purchaserID);
+        dest.writeString(productBrief);
+        dest.writeString(supplyID);
+        dest.writeString(purchaserUserID);
+        dest.writeInt(action);
+        dest.writeString(placeCity);
+        dest.writeString(id);
+        dest.writeString(specContent);
+        dest.writeString(salesManID);
+        dest.writeString(actionBy);
+        dest.writeString(purchaserName);
+        dest.writeString(imgUrl);
+        dest.writeString(createBy);
+        dest.writeString(placeCityCode);
+        dest.writeString(createTime);
+        dest.writeString(customerID);
+        dest.writeString(producer);
+        dest.writeString(placeProvinceCode);
+        dest.writeInt(status);
+        dest.writeTypedList(demandList);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public String getProductReply() {
         return productReply;

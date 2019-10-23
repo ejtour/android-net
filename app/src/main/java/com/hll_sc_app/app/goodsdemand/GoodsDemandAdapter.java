@@ -1,8 +1,11 @@
 package com.hll_sc_app.app.goodsdemand;
 
+import android.app.Activity;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goodsdemand.detail.GoodsDemandDetailActivity;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
@@ -15,6 +18,10 @@ import com.hll_sc_app.utils.DateUtil;
 public class GoodsDemandAdapter extends BaseQuickAdapter<GoodsDemandBean, BaseViewHolder> {
     GoodsDemandAdapter() {
         super(R.layout.item_goods_demand);
+        setOnItemClickListener((adapter, view, position) -> {
+            GoodsDemandBean item = getItem(position);
+            if (item != null) GoodsDemandDetailActivity.start((Activity) view.getContext(), item);
+        });
     }
 
     @Override

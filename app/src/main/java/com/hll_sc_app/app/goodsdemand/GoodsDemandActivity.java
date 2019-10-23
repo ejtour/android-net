@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goodsdemand.detail.GoodsDemandDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
@@ -35,6 +36,7 @@ public class GoodsDemandActivity extends BaseLoadActivity {
     SlidingTabLayout mTabLayout;
     @BindView(R.id.stp_view_pager)
     ViewPager mViewPager;
+    private List<Fragment> mFragments = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,15 +49,19 @@ public class GoodsDemandActivity extends BaseLoadActivity {
 
     private void initView() {
         mTitleBar.setHeaderTitle("新品反馈");
-        List<Fragment> list = new ArrayList<>();
-        list.add(GoodsDemandFragment.newInstance(1));
-        list.add(GoodsDemandFragment.newInstance(2));
-        mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(), list));
+        mFragments.add(GoodsDemandFragment.newInstance(1));
+        mFragments.add(GoodsDemandFragment.newInstance(2));
+        mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(), mFragments));
         mTabLayout.setViewPager(mViewPager, new String[]{"未处理", "已处理"});
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == GoodsDemandDetailActivity.REQ_CODE) {
+            for (Fragment fragment : mFragments) {
+                ((GoodsDemandFragment) fragment).reload();
+            }
+        }
     }
 }
