@@ -50,13 +50,13 @@ public class CommodityCheckActivity extends BaseLoadActivity implements ICommodi
         RouterUtil.goToActivity(RouterConfig.ORDER_COMMODITY_CHECK, context, REQ_KEY, resp);
     }
 
-    @BindView(R.id.acc_title_bar)
+    @BindView(R.id.stp_title_bar)
     TitleBar mTitleBar;
     @Autowired(name = "parcelable", required = true)
     OrderResultResp mResp;
-    @BindView(R.id.acc_tab_layout)
+    @BindView(R.id.stp_tab_layout)
     SlidingTabLayout mTabLayout;
-    @BindView(R.id.acc_view_pager)
+    @BindView(R.id.stp_view_pager)
     ViewPager mViewPager;
     private CommodityCheckPresenter mPresenter;
     private InventoryCheckAdapter mAAdapter;
@@ -65,7 +65,7 @@ public class CommodityCheckActivity extends BaseLoadActivity implements ICommodi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_commodity_check);
+        setContentView(R.layout.activity_simple_tab_pager);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
@@ -79,6 +79,8 @@ public class CommodityCheckActivity extends BaseLoadActivity implements ICommodi
     }
 
     private void initView() {
+        mTitleBar.setRightText("确定");
+        mTitleBar.setHeaderTitle("商品检查");
         mTitleBar.setRightBtnClick(this::sure);
         List<RecyclerView> list = new ArrayList<>();
         List<String> titles = new ArrayList<>();
