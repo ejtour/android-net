@@ -46,4 +46,21 @@ public class GoodsDemandHelper {
                 return R.drawable.ic_blue_ok;
         }
     }
+
+    public static int getColor(int type) {
+        switch (type) {
+            case 1:
+                return 0xff379FF1;
+            case 2:
+                return 0xff73D13D;
+            case 3:
+                return 0xffFFA940;
+            case 4:
+                return 0xff5CDBD3;
+            case 5:
+                return 0xffFFA39E;
+            default:
+                return 0;
+        }
+    }
 }
