@@ -68,4 +68,8 @@ public interface OtherService {
     @POST(HttpConfig.URL)
     @Headers("pv:100114")
     Observable<BaseResp<Object>> addGoodsDemand(@Body BaseReq<GoodsDemandReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100115")
+    Observable<BaseResp<Object>> replyGoodsDemand(@Body BaseMapReq req);
 }
