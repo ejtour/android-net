@@ -50,8 +50,6 @@ import butterknife.OnClick;
 @Route(path = RouterConfig.ORIENTATION_PRODUCT, extras = Constant.LOGIN_EXTRA)
 public class ProductActivity extends BaseLoadActivity implements IProductContract.IProductView {
 
-    private IProductContract.IProductPresenter mPresenter;
-
     @BindView(R.id.searchView)
     SearchView mSearchView;
     @BindView(R.id.categoryRecyclerView)
@@ -62,17 +60,17 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_select)
     TextView mSelectView;
-
-    private ProductAdapter mProductAdapter;
-    private ProductCategoryAdapter mCategoryAdapter;
-
-    private EmptyView mProductEmptyView;
-    private EmptyView mCategoryEmptyView;
-
-    private String selectCategory;
-
     @Autowired(name = "parcelable")
     ArrayList<OrientationDetailBean> mProductList;
+
+    private IProductContract.IProductPresenter mPresenter;
+    private ProductAdapter mProductAdapter;
+    private ProductCategoryAdapter mCategoryAdapter;
+    private EmptyView mProductEmptyView;
+    private EmptyView mCategoryEmptyView;
+    private String selectCategory;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,6 +90,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         if (mProductList == null) {
             mProductList = new ArrayList<>();
         }
+
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -119,24 +118,24 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         mProductRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mProductRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
                 , UIUtils.dip2px(1)));
-        mProductAdapter = new ProductAdapter(mProductList);
-        mProductAdapter.setOnItemClickListener((adapter, view, position) -> {
-            GoodsBean goodsBean = (GoodsBean) adapter.getData().get(position);
-            if (goodsBean.isCheck()) {
-                for (OrientationDetailBean bean : mProductList) {
-                    if (bean.getProductID().equalsIgnoreCase(goodsBean.getProductID())) {
-                        mProductList.remove(bean);
-                        break;
-                    }
+        mProductAdapter = new ProductAdapter();
+        mProductAdapter.setOnSpecClickListener(goodsBean -> {
+            int index = -1;
+            for (int i = 0; i < mProductList.size(); i++) {
+                if (TextUtils.equals(goodsBean.getProductID(), mProductList.get(i).getProductID())) {
+                    index = i;
                 }
-            } else {
-                OrientationDetailBean bean = goodsBeanToOrientationDetailBean(goodsBean);
-                mProductList.add(bean);
             }
-            goodsBean.setCheck(!goodsBean.isCheck());
-            mSelectView.setText("已选：" + mProductList.size());
-            adapter.notifyItemChanged(position);
+            if (goodsBean.isCheck()) {//商品下有至少一个规格被选中
+                if (index > -1) {
+                    mProductList.remove(index);
+                }
+                mProductList.add(goodsBeanToOrientationDetailBean(goodsBean));
+            } else {//商品任何规格都没有被选中
+                mProductList.remove(index);
+            }
         });
+
         mProductEmptyView = EmptyView.newBuilder(this).setTips("该分类暂无商品").create();
         mProductRecyclerView.setAdapter(mProductAdapter);
 
@@ -159,13 +158,40 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
             }
             selectCategory = list.get(position).getCategoryID();
             mPresenter.queryGoodsList(1, true);
-
+            mSelectView.setText("已选：" + mProductList.size() + "个商品");
         });
         mCategoryEmptyView = EmptyView.newBuilder(this).setTips("暂无分类").create();
         mCategoryAdapter.setEmptyView(mCategoryEmptyView);
         mCategoryRecyclerView.setAdapter(mCategoryAdapter);
-        mSelectView.setText("已选：" + mProductList.size());
+        mSelectView.setText("已选：" + mProductList.size() + "个商品");
         mPresenter.queryCategory();
+    }
+
+    private OrientationDetailBean goodsBeanToOrientationDetailBean(GoodsBean goodsBean) {
+        OrientationDetailBean bean = new OrientationDetailBean();
+        bean.setImgUrl(goodsBean.getImgUrl());
+        bean.setProductID(goodsBean.getProductID());
+        bean.setProductName(goodsBean.getProductName());
+        bean.setSupplierName(goodsBean.getSupplierName());
+        ArrayList<OrientationProductSpecBean> list = new ArrayList<>();
+        for (SpecsBean spec : goodsBean.getSpecs()) {
+            OrientationProductSpecBean specBean = new OrientationProductSpecBean();
+            specBean.setSaleUnitName(spec.getSaleUnitName());
+            specBean.setProductPrice(BigDecimal.valueOf(Double.parseDouble(spec.getProductPrice())));
+            specBean.setSpecContent(spec.getSpecContent());
+            specBean.setSaleUnitID(spec.getSaleUnitID());
+            specBean.setAppointSellType(spec.getAppointSellType());
+            specBean.setSpecID(spec.getSpecID());
+            list.add(specBean);
+        }
+        bean.setSpecs(list);
+        return bean;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -179,13 +205,21 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
     @Override
     public void showList(List<GoodsBean> list, boolean append) {
         for (GoodsBean goodsBean : list) {
-            for (OrientationDetailBean bean : mProductList) {
-                if (goodsBean.getProductID().equalsIgnoreCase(bean.getProductID())) {
-                    goodsBean.setCheck(true);
-                    break;
+            for (int i = 0; i < mProductList.size(); i++) {
+                if (TextUtils.equals(goodsBean.getProductID(), mProductList.get(i).getProductID())) {
+                    List<OrientationProductSpecBean> orientationProductSpecBeans = mProductList.get(i).getSpecs();
+                    List<SpecsBean> specsBeans = goodsBean.getSpecs();
+                    for (OrientationProductSpecBean orientationProductSpecBean : orientationProductSpecBeans) {
+                        for (int j = 0; j < specsBeans.size(); j++) {
+                            if (TextUtils.equals(specsBeans.get(j).getSpecID(), orientationProductSpecBean.getSpecID())) {
+                                specsBeans.get(j).setAppointSellType(orientationProductSpecBean.getAppointSellType());
+                            }
+                        }
+                    }
                 }
             }
         }
+
         if (append) {
             if (!CommonUtils.isEmpty(list))
                 mProductAdapter.addData(list);
@@ -194,6 +228,16 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         }
         mRefreshLayout.setEnableLoadMore(list.size() != 0);
         mProductAdapter.setEmptyView(mProductEmptyView);
+    }
+
+    @Override
+    public String getCategorySubId() {
+        return selectCategory;
+    }
+
+    @Override
+    public String getName() {
+        return mSearchView.getSearchContent();
     }
 
     @Override
@@ -217,47 +261,11 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         }
     }
 
-    @Override
-    public String getCategorySubId() {
-        return selectCategory;
-    }
-
-    @Override
-    public String getName() {
-        return mSearchView.getSearchContent();
-    }
-
-    private OrientationDetailBean goodsBeanToOrientationDetailBean(GoodsBean goodsBean) {
-        OrientationDetailBean bean = new OrientationDetailBean();
-        bean.setImgUrl(goodsBean.getImgUrl());
-        bean.setProductID(goodsBean.getProductID());
-        bean.setProductName(goodsBean.getProductName());
-        bean.setSupplierName(goodsBean.getSupplierName());
-        ArrayList<OrientationProductSpecBean> list = new ArrayList<>();
-        for (SpecsBean spec : goodsBean.getSpecs()) {
-            OrientationProductSpecBean specBean = new OrientationProductSpecBean();
-            specBean.setSaleUnitName(spec.getSaleUnitName());
-            specBean.setProductPrice(BigDecimal.valueOf(Double.parseDouble(spec.getProductPrice())));
-            specBean.setSpecContent(spec.getSpecContent());
-            specBean.setSaleUnitID(spec.getSaleUnitID());
-            list.add(specBean);
-        }
-        bean.setSpecs(list);
-        return bean;
-    }
-
     @Subscribe
     public void onEvent(GoodsSearchEvent event) {
         String name = event.getName();
         if (!TextUtils.isEmpty(name)) {
             mSearchView.showSearchContent(true, name);
         }
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

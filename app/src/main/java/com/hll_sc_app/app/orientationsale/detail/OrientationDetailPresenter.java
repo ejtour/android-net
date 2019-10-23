@@ -14,6 +14,7 @@ import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.bean.orientation.OrientationDetailBean;
 import com.hll_sc_app.bean.orientation.OrientationDetailRes;
 import com.hll_sc_app.bean.orientation.OrientationListBean;
+import com.hll_sc_app.bean.orientation.OrientationProductSpecBean;
 import com.hll_sc_app.bean.orientation.OrientationSetReq;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -38,12 +39,22 @@ public class OrientationDetailPresenter implements IOrientationDetailContract.IO
         }
         req.setGroupID(UserConfig.getGroupID());
         req.setMainID(bean.getId());
-        List<String> productIDs = new ArrayList<>();
+
+        List<OrientationSetReq.Details> details = new ArrayList<>();
+
         for (OrientationDetailBean orientationDetailBean : list) {
-            productIDs.add(orientationDetailBean.getProductID());
+            OrientationSetReq.Details detail = new OrientationSetReq.Details();
+            detail.setProductID(orientationDetailBean.getProductID());
+            StringBuilder specIdBuilder = new StringBuilder();
+            for (OrientationProductSpecBean specBean : orientationDetailBean.getSpecs()) {
+                specIdBuilder.append(specBean.getSpecID()).append(",");
+            }
+            detail.setSpecIDList(Arrays.asList(specIdBuilder.toString().split(",")));
+            details.add(detail);
         }
+
         req.setPurchaserID(bean.getPurchaserID());
-        req.setProductIDs(productIDs);
+        req.setDetails(details);
         req.setPurchaserName(bean.getPurchaserName());
         req.setPurchaserShopIDs(Arrays.asList(bean.getPurchaserShopIDs().split(",")));
         req.setType(0);

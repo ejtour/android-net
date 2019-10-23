@@ -3,7 +3,11 @@ package com.hll_sc_app.bean.orientation;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.goods.SpecsBean;
+
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public class OrientationProductSpecBean implements Parcelable {
 
@@ -12,6 +16,31 @@ public class OrientationProductSpecBean implements Parcelable {
     private String saleUnitID;
     private String saleUnitName;
     private String specContent;
+    private String specID;
+    /**
+     * 是否设置定向售卖(0-未设置，1-设置)
+     */
+    private int appointSellType;
+
+    public OrientationProductSpecBean() {
+    }
+
+    protected OrientationProductSpecBean(Parcel in) {
+        this.productPrice = (BigDecimal) in.readSerializable();
+        this.saleUnitID = in.readString();
+        this.saleUnitName = in.readString();
+        this.specContent = in.readString();
+        this.specID = in.readString();
+        this.appointSellType = in.readInt();
+    }
+
+    public String getSpecID() {
+        return specID;
+    }
+
+    public void setSpecID(String specID) {
+        this.specID = specID;
+    }
 
     public BigDecimal getProductPrice() {
         return productPrice;
@@ -45,10 +74,17 @@ public class OrientationProductSpecBean implements Parcelable {
         this.specContent = specContent;
     }
 
+    public int getAppointSellType() {
+        return appointSellType;
+    }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public void setAppointSellType(int appointSellType) {
+        this.appointSellType = appointSellType;
     }
 
     @Override
@@ -57,16 +93,8 @@ public class OrientationProductSpecBean implements Parcelable {
         dest.writeString(this.saleUnitID);
         dest.writeString(this.saleUnitName);
         dest.writeString(this.specContent);
-    }
-
-    public OrientationProductSpecBean() {
-    }
-
-    protected OrientationProductSpecBean(Parcel in) {
-        this.productPrice = (BigDecimal) in.readSerializable();
-        this.saleUnitID = in.readString();
-        this.saleUnitName = in.readString();
-        this.specContent = in.readString();
+        dest.writeString(this.specID);
+        dest.writeInt(this.appointSellType);
     }
 
     public static final Creator<OrientationProductSpecBean> CREATOR = new Creator<OrientationProductSpecBean>() {
@@ -80,4 +108,6 @@ public class OrientationProductSpecBean implements Parcelable {
             return new OrientationProductSpecBean[size];
         }
     };
+
+
 }

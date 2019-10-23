@@ -15,17 +15,6 @@ public class SpecsBean implements Parcelable {
     public static final String SPEC_STATUS_UP = "4";
     public static final String SPEC_STATUS_DOWN = "5";
     public static final String STANDARD_UNIT = "1";
-    public static final Creator<SpecsBean> CREATOR = new Creator<SpecsBean>() {
-        @Override
-        public SpecsBean createFromParcel(Parcel source) {
-            return new SpecsBean(source);
-        }
-
-        @Override
-        public SpecsBean[] newArray(int size) {
-            return new SpecsBean[size];
-        }
-    };
     private String id;
     private String specTemplateID;
     private String specID;
@@ -71,45 +60,20 @@ public class SpecsBean implements Parcelable {
     private boolean isDepositProduct;
     private boolean select;
 
-    public SpecsBean() {
+    /**
+     * 是否设置定向售卖(0-未设置，1-设置)
+     */
+    private int appointSellType;
+
+    public int getAppointSellType() {
+        return appointSellType;
     }
 
-    protected SpecsBean(Parcel in) {
-        this.id = in.readString();
-        this.specTemplateID = in.readString();
-        this.specID = in.readString();
-        this.productSale = in.readString();
-        this.saleUnitName = in.readString();
-        this.standardUnitStatus = in.readString();
-        this.actionTime = in.readString();
-        this.preferentialPriceType = in.readString();
-        this.productID = in.readString();
-        this.specStatus = in.readString();
-        this.saleUnitID = in.readString();
-        this.isLowStock = in.readByte() != 0;
-        this.assistUnitStatus = in.readString();
-        this.offShelfTime = in.readString();
-        this.displayPrice = in.readString();
-        this.ration = in.readString();
-        this.productSpecID = in.readString();
-        this.action = in.readString();
-        this.isDecimalBuy = in.readString();
-        this.specContent = in.readString();
-        this.actionBy = in.readString();
-        this.standardUnitName = in.readString();
-        this.costPrice = in.readString();
-        this.convertRatio = in.readString();
-        this.premiumType = in.readString();
-        this.nextDayDelivery = in.readString();
-        this.onShelfTime = in.readString();
-        this.buyMinNum = in.readString();
-        this.productPrice = in.readString();
-        this.productStock = in.readString();
-        this.skuCode = in.readString();
-        this.minOrder = in.readString();
-        this.depositProducts = in.createTypedArrayList(DepositProductReq.CREATOR);
-        this.isDepositProduct = in.readByte() != 0;
-        this.select = in.readByte() != 0;
+    public void setAppointSellType(int appointSellType) {
+        this.appointSellType = appointSellType;
+    }
+
+    public SpecsBean() {
     }
 
     public String getSpecTemplateID() {
@@ -442,5 +406,57 @@ public class SpecsBean implements Parcelable {
         dest.writeTypedList(this.depositProducts);
         dest.writeByte(this.isDepositProduct ? (byte) 1 : (byte) 0);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.appointSellType);
     }
+
+    protected SpecsBean(Parcel in) {
+        this.id = in.readString();
+        this.specTemplateID = in.readString();
+        this.specID = in.readString();
+        this.productSale = in.readString();
+        this.saleUnitName = in.readString();
+        this.standardUnitStatus = in.readString();
+        this.actionTime = in.readString();
+        this.preferentialPriceType = in.readString();
+        this.productID = in.readString();
+        this.specStatus = in.readString();
+        this.saleUnitID = in.readString();
+        this.isLowStock = in.readByte() != 0;
+        this.assistUnitStatus = in.readString();
+        this.offShelfTime = in.readString();
+        this.displayPrice = in.readString();
+        this.ration = in.readString();
+        this.productSpecID = in.readString();
+        this.action = in.readString();
+        this.isDecimalBuy = in.readString();
+        this.specContent = in.readString();
+        this.actionBy = in.readString();
+        this.standardUnitName = in.readString();
+        this.costPrice = in.readString();
+        this.convertRatio = in.readString();
+        this.premiumType = in.readString();
+        this.nextDayDelivery = in.readString();
+        this.onShelfTime = in.readString();
+        this.buyMinNum = in.readString();
+        this.productPrice = in.readString();
+        this.productStock = in.readString();
+        this.skuCode = in.readString();
+        this.minOrder = in.readString();
+        this.depositProducts = in.createTypedArrayList(DepositProductReq.CREATOR);
+        this.isDepositProduct = in.readByte() != 0;
+        this.select = in.readByte() != 0;
+        this.appointSellType = in.readInt();
+    }
+
+    public static final Creator<SpecsBean> CREATOR = new Creator<SpecsBean>() {
+        @Override
+        public SpecsBean createFromParcel(Parcel source) {
+            return new SpecsBean(source);
+        }
+
+        @Override
+        public SpecsBean[] newArray(int size) {
+            return new SpecsBean[size];
+        }
+    };
 }

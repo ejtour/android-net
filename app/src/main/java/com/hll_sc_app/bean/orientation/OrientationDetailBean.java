@@ -3,7 +3,11 @@ package com.hll_sc_app.bean.orientation;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.bean.goods.GoodsBean;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class OrientationDetailBean implements Parcelable {
 
@@ -66,6 +70,9 @@ public class OrientationDetailBean implements Parcelable {
         return CREATOR;
     }
 
+    public OrientationDetailBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -79,9 +86,6 @@ public class OrientationDetailBean implements Parcelable {
         dest.writeString(this.saleSpecNum);
         dest.writeString(this.supplierName);
         dest.writeTypedList(this.specs);
-    }
-
-    public OrientationDetailBean() {
     }
 
     protected OrientationDetailBean(Parcel in) {
@@ -104,4 +108,6 @@ public class OrientationDetailBean implements Parcelable {
             return new OrientationDetailBean[size];
         }
     };
+
+
 }

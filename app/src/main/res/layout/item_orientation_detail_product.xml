@@ -33,42 +33,12 @@
         android:textColor="@color/color_222222"
         android:textSize="@dimen/base_text_13" />
 
-    <TextView
-        android:id="@+id/txt_spec_name"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_view_spec"
+        android:layout_width="match_parent"
+        android:layout_below="@id/txt_product_name"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toRightOf="@id/img_logoUrl"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_product_name"
-        android:layout_marginLeft="7dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="9dp"
-        android:layout_toRightOf="@+id/img_logoUrl"
-        android:lineSpacingExtra="6dp"
-        android:text="规格内容\n规格内容"
-        android:textColor="@color/color_999999"
-        android:textSize="@dimen/base_text_12" />
-
-    <ImageView
-        android:id="@+id/img_delete"
-        android:layout_width="@dimen/base_text_16"
-        android:layout_height="@dimen/base_text_16"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="14dp"
-        android:src="@drawable/ic_delete" />
-
-    <TextView
-        android:id="@+id/txt_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_product_name"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="9dp"
-        android:layout_toLeftOf="@+id/img_delete"
-        android:gravity="right"
-        android:lineSpacingExtra="6dp"
-        android:text="¥6.00\n¥6000.00"
-        android:textColor="@color/color_de5c5c"
-        android:textSize="@dimen/base_text_12" />
-
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 </RelativeLayout>

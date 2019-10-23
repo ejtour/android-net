@@ -12,6 +12,15 @@ public class OrientationSetReq {
     private Integer type;
     private List<String> productIDs;
     private List<String> purchaserShopIDs;
+    private List<Details> details;
+
+    public List<Details> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<Details> details) {
+        this.details = details;
+    }
 
     public Integer getFlag() {
         return flag;
@@ -76,4 +85,27 @@ public class OrientationSetReq {
     public void setPurchaserShopIDs(List<String> purchaserShopIDs) {
         this.purchaserShopIDs = purchaserShopIDs;
     }
+
+
+    public static class Details{
+        private String productID;
+        private List<String> specIDList;
+
+        public String getProductID() {
+            return productID;
+        }
+
+        public void setProductID(String productID) {
+            this.productID = productID;
+        }
+
+        public List<String> getSpecIDList() {
+            return specIDList;
+        }
+
+        public void setSpecIDList(List<String> specIDList) {
+            this.specIDList = specIDList;
+        }
+    }
 }
+
