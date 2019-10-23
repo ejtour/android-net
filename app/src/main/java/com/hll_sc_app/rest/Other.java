@@ -185,7 +185,7 @@ public class Other {
      * 查询商品需求
      *
      * @param pageNum 页码
-     * @param status  1:未处理，2：已处理
+     * @param status  0:crm ,1:未处理，2：已处理
      */
     public static void queryGoodsDemand(int pageNum, int status, SimpleObserver<SingleListResp<GoodsDemandBean>> observer) {
         UserBean user = GreenDaoUtils.getUser();

@@ -1139,6 +1139,11 @@ public class RouterConfig {
     public static final String GOODS_DEMAND_ENTRY = "/activity/goods/demand/entry";
 
     /**
+     * 商品需求
+     */
+    public static final String GOODS_DEMAND = "/activity/goods/demand";
+
+    /**
      * 商品需求-新增
      */
     public static final String GOODS_DEMAND_ADD = "/activity/goods/demand/add";
