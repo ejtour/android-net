@@ -1078,6 +1078,7 @@
 
         <activity
             android:name=".app.goodsdemand.GoodsDemandActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity

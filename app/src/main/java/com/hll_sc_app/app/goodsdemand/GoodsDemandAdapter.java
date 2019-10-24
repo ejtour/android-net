@@ -20,7 +20,7 @@ public class GoodsDemandAdapter extends BaseQuickAdapter<GoodsDemandBean, BaseVi
         super(R.layout.item_goods_demand);
         setOnItemClickListener((adapter, view, position) -> {
             GoodsDemandBean item = getItem(position);
-            if (item != null) GoodsDemandDetailActivity.start((Activity) view.getContext(), item);
+            if (item != null) GoodsDemandDetailActivity.start(item);
         });
     }
 
