@@ -206,6 +206,7 @@ public class WarehouseInviteActivity extends BaseLoadActivity implements Warehou
                     break;
             }
             if (item.getWarehouseActive() == 1) {
+                txtStatus.setTextColor(0xFFAEAEAE);
                 txtStatus.setText("已停止");
             }
         }

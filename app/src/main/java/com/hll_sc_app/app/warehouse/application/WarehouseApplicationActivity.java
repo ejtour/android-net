@@ -248,6 +248,7 @@ public class WarehouseApplicationActivity extends BaseLoadActivity implements Wa
             }
 
             if (item.getWarehouseActive() == 1) {
+                txtStatus.setTextColor(0xFFAEAEAE);
                 txtStatus.setText("已停止");
             }
         }
