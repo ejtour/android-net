@@ -46,14 +46,19 @@ public class CustomReceiveQueryPresent implements ICustomReceiveQueryContract.IP
 
     @Override
     public void queryList(boolean isLoading) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
-                .put("pageNum", String.valueOf(pageTempNum))
+                .put("pageNo", String.valueOf(pageTempNum))
                 .put("pageSize", String.valueOf(pageSize))
-                .put("ownerId", mView.getOwnerId())
+                .put("groupID", mView.getOwnerId())
                 .put("startDate", mView.getStartDate())
                 .put("endDate", mView.getEndDate())
-                .put("type", mView.getType())
-                .put("status", mView.getStatus())
+                .put("voucherTypes", mView.getType())
+                .put("voucherStatus", mView.getStatus())
+                .put("supplierID", userBean.getGroupID())
                 .create();
 
         ReportService.INSTANCE
@@ -70,7 +75,7 @@ public class CustomReceiveQueryPresent implements ICustomReceiveQueryContract.IP
                 .subscribe(new BaseCallback<CustomReceiveListResp>() {
                     @Override
                     public void onSuccess(CustomReceiveListResp customReceiveListResp) {
-                        mView.querySuccess(customReceiveListResp.getList(), pageTempNum > 1);
+                        mView.querySuccess(customReceiveListResp.getRecords(), pageTempNum > 1);
                         pageNum = pageTempNum;
                     }
 

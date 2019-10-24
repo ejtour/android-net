@@ -116,8 +116,8 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     }
 
     @Override
-    public void querySuccess(List<CustomReceiveListResp.CustomReceiveBean> customReceiveBeans, boolean isMore) {
-        if (isMore) {
+    public void querySuccess(List<CustomReceiveListResp.RecordsBean> customReceiveBeans, boolean isMore) {
+     /*   if (isMore) {
             mAdapter.addData(customReceiveBeans);
         } else {
             mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("喔唷，居然是「 空 」的").create());
@@ -127,23 +127,23 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
             mRefreshLayout.setEnableLoadMore(customReceiveBeans.size() == mPresent.getPageSize());
         } else {
             mRefreshLayout.setEnableLoadMore(false);
-        }
+        }*/
     }
 
 
-    private class ReceiveAdapter extends BaseQuickAdapter<CustomReceiveListResp.CustomReceiveBean, BaseViewHolder> {
+    private class ReceiveAdapter extends BaseQuickAdapter<CustomReceiveListResp.RecordsBean, BaseViewHolder> {
 
-        public ReceiveAdapter(@Nullable List<CustomReceiveListResp.CustomReceiveBean> data) {
+        public ReceiveAdapter(@Nullable List<CustomReceiveListResp.RecordsBean> data) {
             super(R.layout.list_item_query_custom_receive, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, CustomReceiveListResp.CustomReceiveBean item) {
-            helper.setText(R.id.txt_no, item.getNo())
-                    .setText(R.id.txt_status, item.getStatus())
-                    .setText(R.id.txt_type, "类型：" + item.getTypeName())
-                    .setText(R.id.txt_count, "数量：" + item.getCount())
-                    .setText(R.id.txt_money, "金额：¥" + CommonUtils.formatMoney(item.getMoney()));
+        protected void convert(BaseViewHolder helper, CustomReceiveListResp.RecordsBean item) {
+//            helper.setText(R.id.txt_no, item.getNo())
+//                    .setText(R.id.txt_status, item.getStatus())
+//                    .setText(R.id.txt_type, "类型：" + item.getTypeName())
+//                    .setText(R.id.txt_count, "数量：" + item.getCount())
+//                    .setText(R.id.txt_money, "金额：¥" + CommonUtils.formatMoney(item.getMoney()));
         }
     }
 

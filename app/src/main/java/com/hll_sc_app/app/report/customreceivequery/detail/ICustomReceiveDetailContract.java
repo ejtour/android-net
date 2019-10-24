@@ -12,7 +12,7 @@ import java.util.List;
  * */
 public interface ICustomReceiveDetailContract {
     interface IView extends ILoadView {
-        void querySuccess(List<CustomReceiveListResp.CustomReceiveBean> customReceiveBeans, boolean isMore);
+        void querySuccess(List<CustomReceiveListResp.RecordsBean> customReceiveBeans, boolean isMore);
 
     }
 

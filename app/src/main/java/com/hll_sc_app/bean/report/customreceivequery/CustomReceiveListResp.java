@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.report.customreceivequery;
 
+import com.hll_sc_app.app.report.customreceivequery.FilterParams;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /***
@@ -7,89 +10,248 @@ import java.util.List;
  * 列表请求响应
  */
 public class CustomReceiveListResp {
-    private int totalSize;
-    private List<CustomReceiveBean> list;
 
+    private PageInfoBean pageInfo;
+    private List<RecordsBean> records;
 
-    public int getTotalSize() {
-        return totalSize;
+    public static List<FilterParams.TypeBean> getTypeList() {
+        List<FilterParams.TypeBean> typeBeans = new ArrayList<>();
+        typeBeans.add(new FilterParams.TypeBean("验货入库", 1));
+        typeBeans.add(new FilterParams.TypeBean("入库冲销", 3));
+        typeBeans.add(new FilterParams.TypeBean("入库退货", 4));
+        typeBeans.add(new FilterParams.TypeBean("直发单", 13));
+        typeBeans.add(new FilterParams.TypeBean("采购验货", 18));
+        typeBeans.add(new FilterParams.TypeBean("采购退货", 19));
+        typeBeans.add(new FilterParams.TypeBean("直发冲销", 22));
+        typeBeans.add(new FilterParams.TypeBean("直发退货", 23));
+        typeBeans.add(new FilterParams.TypeBean("赠品入库", 24));
+        typeBeans.add(new FilterParams.TypeBean("代仓验收入库单", 30));
+        typeBeans.add(new FilterParams.TypeBean("代仓入库冲销单", 31));
+        typeBeans.add(new FilterParams.TypeBean("代仓入库退货单", 32));
+        typeBeans.add(new FilterParams.TypeBean("司机补货单", 27));
+        typeBeans.add(new FilterParams.TypeBean("库存差异调整", 28));
+        return typeBeans;
     }
 
-    public void setTotalSize(int totalSize) {
-        this.totalSize = totalSize;
+    public static String getStatusName(int index) {
+        switch (index) {
+            case 1:
+                return "未审核";
+            case 2:
+                return "已审核";
+            default:
+                return "";
+        }
     }
 
-    public List<CustomReceiveBean> getList() {
-        return list;
+    public static String getTypeName(int index) {
+        switch (index) {
+            case 1:
+                return "验货入库";
+            case 3:
+                return "入库冲销";
+            case 4:
+                return "入库退货";
+            case 13:
+                return "直发单";
+            case 18:
+                return "采购验货";
+            case 19:
+                return "采购退货";
+            case 22:
+                return "直发冲销";
+            case 23:
+                return "直发退货";
+            case 24:
+                return "赠品入库";
+            case 30:
+                return "代仓验收入库单";
+            case 31:
+                return "代仓入库冲销单";
+            case 32:
+                return "代仓入库退货单";
+            case 27:
+                return "司机补货单";
+            case 28:
+                return "库存差异调整";
+            default:
+                return "";
+        }
     }
 
-    public void setList(List<CustomReceiveBean> list) {
-        this.list = list;
+    public PageInfoBean getPageInfo() {
+        return pageInfo;
     }
 
-    public static class CustomReceiveBean {
-        private String no;//CK201910170556
-        private String statusName;//状态
-        private int status;//状态
-        private String typeName;
-        private int type;//类型
-        private double count;//数量
-        private double money;//金额
+    public void setPageInfo(PageInfoBean pageInfo) {
+        this.pageInfo = pageInfo;
+    }
 
-        public String getNo() {
-            return no;
+    public List<RecordsBean> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<RecordsBean> records) {
+        this.records = records;
+    }
+
+    public static class PageInfoBean {
+
+        private int pageNo;
+        private int pageSize;
+        private int total;
+        private int pages;
+
+        public int getPageNo() {
+            return pageNo;
         }
 
-        public void setNo(String no) {
-            this.no = no;
+        public void setPageNo(int pageNo) {
+            this.pageNo = pageNo;
         }
 
-        public String getStatusName() {
-            return statusName;
+        public int getPageSize() {
+            return pageSize;
         }
 
-        public void setStatusName(String statusName) {
-            this.statusName = statusName;
+        public void setPageSize(int pageSize) {
+            this.pageSize = pageSize;
         }
 
-        public int getStatus() {
-            return status;
+        public int getTotal() {
+            return total;
         }
 
-        public void setStatus(int status) {
-            this.status = status;
+        public void setTotal(int total) {
+            this.total = total;
         }
 
-        public String getTypeName() {
-            return typeName;
+        public int getPages() {
+            return pages;
         }
 
-        public void setTypeName(String typeName) {
-            this.typeName = typeName;
+        public void setPages(int pages) {
+            this.pages = pages;
+        }
+    }
+
+    public static class RecordsBean {
+        private String voucherID;
+        private String groupID;
+        private String voucherNo;
+        private String voucherDate;
+        private int voucherType;
+        private int voucherStatus;
+        private String auditTime;
+        private String voucherRemark;
+        private String houseName;
+        private String supplierName;
+        private double totalPrice;
+        private String createBy;
+        private String createTime;
+
+        public String getVoucherID() {
+            return voucherID;
         }
 
-        public int getType() {
-            return type;
+        public void setVoucherID(String voucherID) {
+            this.voucherID = voucherID;
         }
 
-        public void setType(int type) {
-            this.type = type;
+        public String getGroupID() {
+            return groupID;
         }
 
-        public double getCount() {
-            return count;
+        public void setGroupID(String groupID) {
+            this.groupID = groupID;
         }
 
-        public void setCount(double count) {
-            this.count = count;
+        public String getVoucherNo() {
+            return voucherNo;
         }
 
-        public double getMoney() {
-            return money;
+        public void setVoucherNo(String voucherNo) {
+            this.voucherNo = voucherNo;
         }
 
-        public void setMoney(double money) {
-            this.money = money;
+        public String getVoucherDate() {
+            return voucherDate;
+        }
+
+        public void setVoucherDate(String voucherDate) {
+            this.voucherDate = voucherDate;
+        }
+
+        public int getVoucherType() {
+            return voucherType;
+        }
+
+        public void setVoucherType(int voucherType) {
+            this.voucherType = voucherType;
+        }
+
+        public int getVoucherStatus() {
+            return voucherStatus;
+        }
+
+        public void setVoucherStatus(int voucherStatus) {
+            this.voucherStatus = voucherStatus;
+        }
+
+        public String getAuditTime() {
+            return auditTime;
+        }
+
+        public void setAuditTime(String auditTime) {
+            this.auditTime = auditTime;
+        }
+
+        public String getVoucherRemark() {
+            return voucherRemark;
+        }
+
+        public void setVoucherRemark(String voucherRemark) {
+            this.voucherRemark = voucherRemark;
+        }
+
+        public String getHouseName() {
+            return houseName;
+        }
+
+        public void setHouseName(String houseName) {
+            this.houseName = houseName;
+        }
+
+        public String getSupplierName() {
+            return supplierName;
+        }
+
+        public void setSupplierName(String supplierName) {
+            this.supplierName = supplierName;
+        }
+
+        public double getTotalPrice() {
+            return totalPrice;
+        }
+
+        public void setTotalPrice(double totalPrice) {
+            this.totalPrice = totalPrice;
+        }
+
+        public String getCreateBy() {
+            return createBy;
+        }
+
+        public void setCreateBy(String createBy) {
+            this.createBy = createBy;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
         }
     }
 }

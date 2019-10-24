@@ -141,6 +141,35 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
             mTitleMenuWindow.showAsDropDownFix(mTitle, 0, 0, Gravity.RIGHT);
         });
 
+        /*时间选择初始化*/
+        mDateWindow = new DateRangeWindow(this);
+        Calendar defaultCalendar = Calendar.getInstance();
+        mDateWindow.setSelectCalendarRange(defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH) + 1, 1,
+                defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH) + 1, defaultCalendar.get(Calendar.DATE));
+        mTxtDate.setTag(R.id.date_start, CalendarUtils.format(CalendarUtils.getFirstDateInMonth(defaultCalendar.getTime()), "yyyyMMdd"));
+        mTxtDate.setTag(R.id.date_end, CalendarUtils.format(defaultCalendar.getTime(), "yyyyMMdd"));
+        mDateWindow.setOnRangeSelectListener((start, end) -> {
+            if (start == null || end == null) {
+                mTxtDate.setTag(R.id.date_start, null);
+                mTxtDate.setTag(R.id.date_end, null);
+                mTxtDate.setText("客户");
+            } else {
+                Calendar calendarStart = Calendar.getInstance();
+                calendarStart.setTimeInMillis(start.getTimeInMillis());
+                Calendar calendarEnd = Calendar.getInstance();
+                calendarEnd.setTimeInMillis(end.getTimeInMillis());
+                String showText = String.format("%s-%s", CalendarUtils.format(calendarStart.getTime(), "yyyy/MM/dd"),
+                        CalendarUtils.format(calendarEnd.getTime(), "yyyy/MM/dd"));
+                mTxtDate.setText(showText);
+                mTxtDate.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(), "yyyyMMdd"));
+                mTxtDate.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(), "yyyyMMdd"));
+            }
+            mPresent.refresh(false);
+        });
+        mDateWindow.setOnDismissListener(() -> {
+            mImgDate.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
+            mTxtDate.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
+        });
     }
 
     @Override
@@ -157,7 +186,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
     }
 
     @Override
-    public void querySuccess(List<CustomReceiveListResp.CustomReceiveBean> customReceiveBeans, boolean isMore) {
+    public void querySuccess(List<CustomReceiveListResp.RecordsBean> customReceiveBeans, boolean isMore) {
         if (isMore) {
             mAdapter.addData(customReceiveBeans);
         } else {
@@ -173,7 +202,11 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
 
     @Override
     public String getOwnerId() {
-        return null;
+        Object o = mTxtCustom.getTag();
+        if (o == null) {
+            return "";
+        }
+        return o.toString();
     }
 
     @Override
@@ -277,41 +310,13 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                 mSelectCustomWindow.showAsDropDown(mCslFilter);
                 break;
             case R.id.view_filter_date:
-                if (mDateWindow == null) {
-                    mDateWindow = new DateRangeWindow(this);
-                    Calendar defaultCalendar = Calendar.getInstance();
-                    mDateWindow.setSelectCalendarRange(defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH) + 1, 1,
-                            defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH) + 1, defaultCalendar.get(Calendar.DATE));
-                    mDateWindow.setOnRangeSelectListener((start, end) -> {
-                        if (start == null || end == null) {
-                            mTxtDate.setTag(R.id.date_start, null);
-                            mTxtDate.setTag(R.id.date_end, null);
-                            mTxtDate.setText("客户");
-                        } else {
-                            Calendar calendarStart = Calendar.getInstance();
-                            calendarStart.setTimeInMillis(start.getTimeInMillis());
-                            Calendar calendarEnd = Calendar.getInstance();
-                            calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                            String showText = String.format("%s-%s", CalendarUtils.format(calendarStart.getTime(), "yyyy/MM/dd"),
-                                    CalendarUtils.format(calendarEnd.getTime(), "yyyy/MM/dd"));
-                            mTxtDate.setText(showText);
-                            mTxtDate.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(), "yyyyMMdd"));
-                            mTxtDate.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(), "yyyyMMdd"));
-                        }
-                        mPresent.refresh(false);
-                    });
-                    mDateWindow.setOnDismissListener(() -> {
-                        mImgDate.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
-                        mTxtDate.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
-                    });
-                }
                 mImgDate.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
                 mTxtDate.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
                 mDateWindow.showAsDropDown(mCslFilter);
                 break;
             case R.id.view_filter_type:
                 if (mSelectTypeWindow == null) {
-                    List<FilterParams.TypeBean> data = FilterParams.getFilterTypeList();
+                    List<FilterParams.TypeBean> data = CustomReceiveListResp.getTypeList();
                     mSelectTypeWindow = new MutipleSelecteWindow<>(this, data, new MutipleSelecteWindow.Config<FilterParams.TypeBean>() {
                         @Override
                         public boolean enableSelectAll() {
@@ -362,7 +367,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                     List<FilterParams.StatusBean> data = new ArrayList<>();
                     data.add(new FilterParams.StatusBean("全部", 0));
                     data.add(new FilterParams.StatusBean("未审核", 1));
-                    data.add(new FilterParams.StatusBean("ic_report_custom_receive_pass", 2));
+                    data.add(new FilterParams.StatusBean("审核", 2));
                     mSelectStatusWindow.refreshList(data);
                     mSelectStatusWindow.setSelectListener(optionsBean -> {
                         mTxtStatus.setText(optionsBean.getStatusName());
@@ -384,19 +389,18 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         }
     }
 
-    private class ReceiveAdapter extends BaseQuickAdapter<CustomReceiveListResp.CustomReceiveBean, BaseViewHolder> {
+    private class ReceiveAdapter extends BaseQuickAdapter<CustomReceiveListResp.RecordsBean, BaseViewHolder> {
 
-        public ReceiveAdapter(@Nullable List<CustomReceiveListResp.CustomReceiveBean> data) {
+        public ReceiveAdapter(@Nullable List<CustomReceiveListResp.RecordsBean> data) {
             super(R.layout.list_item_query_custom_receive, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, CustomReceiveListResp.CustomReceiveBean item) {
-            helper.setText(R.id.txt_no, item.getNo())
-                    .setText(R.id.txt_status, item.getStatus())
-                    .setText(R.id.txt_type, "类型：" + item.getTypeName())
-                    .setText(R.id.txt_count, "数量：" + item.getCount())
-                    .setText(R.id.txt_money, "金额：¥" + CommonUtils.formatMoney(item.getMoney()));
+        protected void convert(BaseViewHolder helper, CustomReceiveListResp.RecordsBean item) {
+            helper.setText(R.id.txt_no, item.getVoucherNo())
+                    .setText(R.id.txt_status, CustomReceiveListResp.getStatusName(item.getVoucherStatus()))
+                    .setText(R.id.txt_type, "类型：" + CustomReceiveListResp.getTypeName(item.getVoucherType()))
+                    .setText(R.id.txt_money, "金额：¥" + CommonUtils.formatMoney(item.getTotalPrice()));
         }
     }
 

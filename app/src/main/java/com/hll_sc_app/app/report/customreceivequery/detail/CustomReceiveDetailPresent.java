@@ -60,7 +60,7 @@ public class CustomReceiveDetailPresent implements ICustomReceiveDetailContract.
                 .subscribe(new BaseCallback<CustomReceiveListResp>() {
                     @Override
                     public void onSuccess(CustomReceiveListResp customReceiveListResp) {
-                        mView.querySuccess(customReceiveListResp.getList(), pageTempNum > 1);
+                        mView.querySuccess(customReceiveListResp.getRecords(), pageTempNum > 1);
                         pageNum = pageTempNum;
                     }
 

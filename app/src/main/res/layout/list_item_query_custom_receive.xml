@@ -53,14 +53,5 @@
         app:layout_constraintTop_toTopOf="@id/txt_type"
         tools:text="金额：¥80.00" />
 
-    <TextView
-        android:id="@+id/txt_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/text_999"
-        android:textSize="12sp"
-        app:layout_constraintRight_toLeftOf="@id/txt_money"
-        app:layout_constraintTop_toTopOf="@id/txt_type"
-        tools:text="数量：2" />
+
 </android.support.constraint.ConstraintLayout>
