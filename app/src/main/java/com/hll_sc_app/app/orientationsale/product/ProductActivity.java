@@ -136,6 +136,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
                     mProductList.remove(index);
                 }
             }
+            mSelectView.setText("已选：" + mProductList.size() + "个商品");
         });
 
         mProductEmptyView = EmptyView.newBuilder(this).setTips("该分类暂无商品").create();
@@ -160,7 +161,6 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
             }
             selectCategory = list.get(position).getCategoryID();
             mPresenter.queryGoodsList(1, true);
-            mSelectView.setText("已选：" + mProductList.size() + "个商品");
         });
         mCategoryEmptyView = EmptyView.newBuilder(this).setTips("暂无分类").create();
         mCategoryAdapter.setEmptyView(mCategoryEmptyView);
