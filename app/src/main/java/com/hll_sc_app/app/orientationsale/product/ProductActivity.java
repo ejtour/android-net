@@ -132,7 +132,9 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
                 }
                 mProductList.add(goodsBeanToOrientationDetailBean(goodsBean));
             } else {//商品任何规格都没有被选中
-                mProductList.remove(index);
+                if (index > -1) {
+                    mProductList.remove(index);
+                }
             }
         });
 
@@ -205,6 +207,9 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
     @Override
     public void showList(List<GoodsBean> list, boolean append) {
         for (GoodsBean goodsBean : list) {
+            for (SpecsBean specsBean : goodsBean.getSpecs()) {
+                specsBean.setAppointSellType(0);
+            }
             for (int i = 0; i < mProductList.size(); i++) {
                 if (TextUtils.equals(goodsBean.getProductID(), mProductList.get(i).getProductID())) {
                     List<OrientationProductSpecBean> orientationProductSpecBeans = mProductList.get(i).getSpecs();
