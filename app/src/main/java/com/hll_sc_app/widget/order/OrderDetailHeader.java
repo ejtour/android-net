@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.trace.OrderTraceBean;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.DateUtil;
 
@@ -69,6 +70,8 @@ public class OrderDetailHeader extends ConstraintLayout {
     TextView mTraceDesc;
     @BindView(R.id.odh_trace_group)
     Group mTraceGroup;
+    @BindView(R.id.odh_status_time)
+    TextView mTxtTime;
     private OrderResp mOrderResp;
     private List<OrderTraceBean> mTraceBeans;
 
@@ -89,6 +92,9 @@ public class OrderDetailHeader extends ConstraintLayout {
     public void setData(OrderResp data) {
         mOrderResp = data;
         handleOrderStatus(data.getSubBillStatus(), data.getCanceler(), data.getActionBy(), data.getCancelReason());
+        //取消订单增加取消时间的显示
+        mTxtTime.setVisibility(data.getSubBillStatus() == 7 ? VISIBLE : GONE);
+        mTxtTime.setText(CalendarUtils.getDateFormatString(data.getActionTime(), "yyyyMMddHHmmss", "yyyy/MM/dd"));
         mShopLogo.setImageURL(data.getImgUrl());
         mShopName.setText(data.getShopName());
         mGroupName.setText(data.getPurchaserName());

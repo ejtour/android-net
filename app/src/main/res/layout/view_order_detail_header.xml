@@ -28,6 +28,21 @@
         tools:text="待接单" />
 
     <TextView
+        android:id="@+id/odh_status_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="20dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="@+id/odh_status_bg"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintTop_toTopOf="@+id/odh_status_label"
+        tools:text="2010/12/21" />
+
+    <TextView
         android:id="@+id/odh_status_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
