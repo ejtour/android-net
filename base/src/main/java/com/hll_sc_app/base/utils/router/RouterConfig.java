@@ -1162,6 +1162,11 @@ public class RouterConfig {
     public static final String GOODS_DEMAND_DETAIL = "/activity/goods/demand/detail";
 
     /**
+     * 商品需求-商品选择
+     */
+    public static final String GOODS_DEMAND_SELECT = "/activity/goods/demand/select";
+
+    /**
      * 商品需求-新增-采购商搜索
      */
     public static final String GOODS_DEMAND_PURCHASER_SEARCH = "/activity/goods/demand/purchaser/search";

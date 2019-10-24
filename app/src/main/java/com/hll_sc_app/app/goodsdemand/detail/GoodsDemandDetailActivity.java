@@ -102,7 +102,7 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
         if (mBean.getStatus() == 1) {
             negative();
         } else {
-            showToast("选择商品待添加");
+            GoodsDemandSelectActivity.start(mBean.getId(), mBean.getPurchaserID());
         }
     }
 

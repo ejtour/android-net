@@ -11,7 +11,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.goodsdemand.detail.GoodsDemandDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;

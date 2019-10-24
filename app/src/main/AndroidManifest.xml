@@ -1085,6 +1085,10 @@
             android:name=".app.goodsdemand.detail.GoodsDemandDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.goodsdemand.select.GoodsDemandSelectActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
