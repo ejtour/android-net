@@ -34,6 +34,7 @@
         android:textSize="@dimen/base_text_13" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_marginLeft="@dimen/dp_10"
         android:id="@+id/list_view_spec"
         android:layout_width="match_parent"
         android:layout_below="@id/txt_product_name"
