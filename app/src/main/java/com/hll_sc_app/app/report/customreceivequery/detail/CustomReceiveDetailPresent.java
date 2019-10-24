@@ -1,17 +1,15 @@
 package com.hll_sc_app.app.report.customreceivequery.detail;
 
-import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.UserBean;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.bean.cooperation.QueryGroupListResp;
-import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
+import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -20,9 +18,6 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * */
 public class CustomReceiveDetailPresent implements ICustomReceiveDetailContract.IPresent {
     private ICustomReceiveDetailContract.IView mView;
-    private int pageSize = 20;
-    private int pageNum = 1;
-    private int pageTempNum = 1;
 
     public static CustomReceiveDetailPresent newInstance() {
         return new CustomReceiveDetailPresent();
@@ -40,54 +35,33 @@ public class CustomReceiveDetailPresent implements ICustomReceiveDetailContract.
 
 
     @Override
-    public void queryList(boolean isLoading) {
+    public void queryDetail() {
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
-                .put("pageNum", String.valueOf(pageTempNum))
-                .put("pageSize", String.valueOf(pageSize))
+                .put("groupID", mView.getOwnerId())
+                .put("voucherID", mView.getVoucherId())
                 .create();
 
         ReportService.INSTANCE
-                .queryCustomReceiveList(baseMapReq)
+                .queryCustomReceiveDetail(baseMapReq)
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())
                 .doOnSubscribe(disposable -> {
-                    if (isLoading) {
                         mView.showLoading();
-                    }
                 })
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<CustomReceiveListResp>() {
+                .subscribe(new BaseCallback<List<CustomReceiveDetailBean>>() {
                     @Override
-                    public void onSuccess(CustomReceiveListResp customReceiveListResp) {
-                        mView.querySuccess(customReceiveListResp.getRecords(), pageTempNum > 1);
-                        pageNum = pageTempNum;
+                    public void onSuccess(List<CustomReceiveDetailBean> customReceiveDetailBeans) {
+                        mView.querySuccess(customReceiveDetailBeans);
                     }
 
                     @Override
                     public void onFailure(UseCaseException e) {
                         mView.showError(e);
-                        pageTempNum = pageNum;
                     }
                 });
     }
 
-
-    @Override
-    public void refresh(boolean isLoading) {
-        pageTempNum = 1;
-        queryList(isLoading);
-    }
-
-    @Override
-    public void getMore() {
-        pageTempNum++;
-        queryList(false);
-    }
-
-    @Override
-    public int getPageSize() {
-        return pageSize;
-    }
 
 }

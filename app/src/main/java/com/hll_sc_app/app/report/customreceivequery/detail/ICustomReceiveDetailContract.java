@@ -2,8 +2,7 @@ package com.hll_sc_app.app.report.customreceivequery.detail;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
+import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 
 import java.util.List;
 
@@ -12,18 +11,16 @@ import java.util.List;
  * */
 public interface ICustomReceiveDetailContract {
     interface IView extends ILoadView {
-        void querySuccess(List<CustomReceiveListResp.RecordsBean> customReceiveBeans, boolean isMore);
+        void querySuccess(List<CustomReceiveDetailBean> customReceiveDetailBeans);
 
+        String getOwnerId();
+
+        String getVoucherId();
     }
 
     interface IPresent extends IPresenter<IView> {
-        void queryList(boolean isLoading);
+        void queryDetail();
 
-        void refresh(boolean isLoading);
-
-        void getMore();
-
-        int getPageSize();
 
 
 

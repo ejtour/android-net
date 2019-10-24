@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.customreceivequery.detail.CustomReceiveDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -111,8 +112,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         mAdapter = new ReceiveAdapter(null);
         mListView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            //todo 跳入详情
-
+            CustomReceiveDetailActivity.start(getOwnerId(), mAdapter.getItem(position));
         });
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -179,18 +179,15 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         mSelectCustomWindow.closeHeaderOrFooter();
     }
 
-    @Override
-    public void showError(UseCaseException e) {
-        super.showError(e);
-
-    }
 
     @Override
     public void querySuccess(List<CustomReceiveListResp.RecordsBean> customReceiveBeans, boolean isMore) {
         if (isMore) {
             mAdapter.addData(customReceiveBeans);
         } else {
-            mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("喔唷，居然是「 空 」的").create());
+            mAdapter.setEmptyView(EmptyView.newBuilder(this)
+                    .setImage(R.drawable.ic_char_empty)
+                    .setTipsTitle("当前条件下没有收货数据噢").create());
             mAdapter.setNewData(customReceiveBeans);
         }
         if (!CommonUtils.isEmpty(customReceiveBeans)) {
@@ -253,7 +250,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
             mSelectCustomWindow.setSelectListener(purchaserBean -> {
                 mSelectCustomWindow.dismiss();
                 mTxtCustom.setText(purchaserBean.getPurchaserName());
-                mTxtCustom.setTag(purchaserBean.getPurchaserID());
+                mTxtCustom.setTag(purchaserBean.getExtGroupID());
                 mPresent.refresh(true);
             });
             mSelectCustomWindow.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -280,7 +277,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                 PurchaserBean first = purchaserBeans.get(0);
                 mSelectCustomWindow.setSelect(first);
                 mTxtCustom.setText(first.getPurchaserName());
-                mTxtCustom.setTag(first.getPurchaserID());
+                mTxtCustom.setTag(first.getExtGroupID());
                 mPresent.refresh(true);
             }
         }
@@ -403,5 +400,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                     .setText(R.id.txt_money, "金额：¥" + CommonUtils.formatMoney(item.getTotalPrice()));
         }
     }
+
+
 
 }

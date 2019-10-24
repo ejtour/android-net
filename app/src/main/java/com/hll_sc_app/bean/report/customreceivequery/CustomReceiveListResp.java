@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.report.customreceivequery;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.hll_sc_app.app.report.customreceivequery.FilterParams;
 
 import java.util.ArrayList;
@@ -135,7 +138,7 @@ public class CustomReceiveListResp {
         }
     }
 
-    public static class RecordsBean {
+    public static class RecordsBean implements Parcelable {
         private String voucherID;
         private String groupID;
         private String voucherNo;
@@ -149,6 +152,7 @@ public class CustomReceiveListResp {
         private double totalPrice;
         private String createBy;
         private String createTime;
+
 
         public String getVoucherID() {
             return voucherID;
@@ -253,5 +257,58 @@ public class CustomReceiveListResp {
         public void setCreateTime(String createTime) {
             this.createTime = createTime;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.voucherID);
+            dest.writeString(this.groupID);
+            dest.writeString(this.voucherNo);
+            dest.writeString(this.voucherDate);
+            dest.writeInt(this.voucherType);
+            dest.writeInt(this.voucherStatus);
+            dest.writeString(this.auditTime);
+            dest.writeString(this.voucherRemark);
+            dest.writeString(this.houseName);
+            dest.writeString(this.supplierName);
+            dest.writeDouble(this.totalPrice);
+            dest.writeString(this.createBy);
+            dest.writeString(this.createTime);
+        }
+
+        public RecordsBean() {
+        }
+
+        protected RecordsBean(Parcel in) {
+            this.voucherID = in.readString();
+            this.groupID = in.readString();
+            this.voucherNo = in.readString();
+            this.voucherDate = in.readString();
+            this.voucherType = in.readInt();
+            this.voucherStatus = in.readInt();
+            this.auditTime = in.readString();
+            this.voucherRemark = in.readString();
+            this.houseName = in.readString();
+            this.supplierName = in.readString();
+            this.totalPrice = in.readDouble();
+            this.createBy = in.readString();
+            this.createTime = in.readString();
+        }
+
+        public static final Parcelable.Creator<RecordsBean> CREATOR = new Parcelable.Creator<RecordsBean>() {
+            @Override
+            public RecordsBean createFromParcel(Parcel source) {
+                return new RecordsBean(source);
+            }
+
+            @Override
+            public RecordsBean[] newArray(int size) {
+                return new RecordsBean[size];
+            }
+        };
     }
 }

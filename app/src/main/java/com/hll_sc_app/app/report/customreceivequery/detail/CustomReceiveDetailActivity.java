@@ -1,27 +1,28 @@
 package com.hll_sc_app.app.report.customreceivequery.detail;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SyncHorizontalScrollView;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,8 +46,6 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     TextView mTxtType;
     @BindView(R.id.txt_warehouse)
     TextView mTxtWarehouse;
-    @BindView(R.id.txt_ly_warehouse)
-    TextView mTxtLyWarehouse;
     @BindView(R.id.txt_mark)
     TextView mTxtMark;
     @BindView(R.id.sync_scroll_title)
@@ -55,26 +54,36 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     SyncHorizontalScrollView mScrollContent;
     @BindView(R.id.recyclerView)
     RecyclerView mListView;
-    @BindView(R.id.refreshLayout)
-    SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_footer)
     TextView mTxtFooter;
+    @Autowired(name = "ownerId")
+    String mOwnerId;
+    @Autowired(name = "object")
+    CustomReceiveListResp.RecordsBean mRecordBean;
 
     private Unbinder unbinder;
     private ICustomReceiveDetailContract.IPresent mPresent;
-    private ReceiveAdapter mAdapter;
+    private DetailListAdapter mAdapter;
+
+    public static void start(String ownerId, CustomReceiveListResp.RecordsBean recordsBean) {
+        ARouter.getInstance()
+                .build(RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE_DETAIL)
+                .withString("ownerId", ownerId)
+                .withParcelable("object", recordsBean)
+                .setProvider(new LoginInterceptor()).navigation();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activirty_report_custom_receive_detail);
+        ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
         initView();
         mPresent = CustomReceiveDetailPresent.newInstance();
         mPresent.register(this);
+        mPresent.queryDetail();
     }
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -82,68 +91,81 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     }
 
     private void initView() {
-        mAdapter = new ReceiveAdapter(null);
+        mAdapter = new DetailListAdapter(null);
         mListView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            //todo 跳入详情
 
-        });
-        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresent.getMore();
-            }
+        mScrollTitle.setLinkageViews(mScrollContent);
+        mScrollContent.setLinkageViews(mScrollTitle);
 
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresent.refresh(false);
-            }
-        });
-
-
+        mTxtNo.setText(mRecordBean.getVoucherNo());
+        mTxtDate.setText("发生日期: " + CalendarUtils.getDateFormatString(mRecordBean.getCreateTime(), "yyyyMMdd", "yyyy/MM/dd"));
+        mTxtPerson.setText("审核人: " + "等待确认");
+        mTxtType.setText(CustomReceiveListResp.getTypeName(mRecordBean.getVoucherType()));
+        mTxtWarehouse.setText(mRecordBean.getHouseName());
+        mTxtMark.setText(mRecordBean.getVoucherRemark());
+        mImgStatus.setImageResource(mRecordBean.getVoucherStatus() == 1 ? R.drawable.ic_report_custom_receive_no_pass : R.drawable.ic_report_custom_receive_pass);
     }
 
     @Override
-    public void hideLoading() {
-        super.hideLoading();
-        mRefreshLayout.closeHeaderOrFooter();
-    }
+    public void querySuccess(List<CustomReceiveDetailBean> customReceiveDetailBeans) {
+        mAdapter.setEmptyView(EmptyView.newBuilder(this)
+                .setImage(R.drawable.ic_char_empty)
+                .setTipsTitle("喔唷，居然是「 空 」的").create());
+        mAdapter.setNewData(customReceiveDetailBeans);
 
-    @Override
-    public void showError(UseCaseException e) {
-        super.showError(e);
-
-    }
-
-    @Override
-    public void querySuccess(List<CustomReceiveListResp.RecordsBean> customReceiveBeans, boolean isMore) {
-     /*   if (isMore) {
-            mAdapter.addData(customReceiveBeans);
-        } else {
-            mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("喔唷，居然是「 空 」的").create());
-            mAdapter.setNewData(customReceiveBeans);
+        BigDecimal number = new BigDecimal(0);
+        BigDecimal price = new BigDecimal(0);
+        BigDecimal priceNoTax = new BigDecimal(0);
+        for (CustomReceiveDetailBean bean : customReceiveDetailBeans) {
+            number = CommonUtils.addDouble(number, bean.getGoodsNum());
+            price = CommonUtils.addDouble(price, bean.getTaxAmount());
+            priceNoTax = CommonUtils.addDouble(priceNoTax, bean.getPretaxAmount());
         }
-        if (!CommonUtils.isEmpty(customReceiveBeans)) {
-            mRefreshLayout.setEnableLoadMore(customReceiveBeans.size() == mPresent.getPageSize());
-        } else {
-            mRefreshLayout.setEnableLoadMore(false);
-        }*/
+
+        mTxtFooter.setText(String.format("合计: 品相：%s，数量：%s，金额：¥%s，未税金额：¥%s，",
+                customReceiveDetailBeans.size(),
+                number.toString(),
+                price.toString(),
+                priceNoTax.toString()
+        ));
     }
 
+    @Override
+    public String getOwnerId() {
+        return mOwnerId;
+    }
 
-    private class ReceiveAdapter extends BaseQuickAdapter<CustomReceiveListResp.RecordsBean, BaseViewHolder> {
+    @Override
+    public String getVoucherId() {
+        return mRecordBean.getVoucherID();
+    }
 
-        public ReceiveAdapter(@Nullable List<CustomReceiveListResp.RecordsBean> data) {
-            super(R.layout.list_item_query_custom_receive, data);
+    private class DetailListAdapter extends BaseQuickAdapter<CustomReceiveDetailBean, BaseViewHolder> {
+
+        public DetailListAdapter(@Nullable List<CustomReceiveDetailBean> data) {
+            super(R.layout.list_item_custom_receive_detail, data);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, CustomReceiveListResp.RecordsBean item) {
-//            helper.setText(R.id.txt_no, item.getNo())
-//                    .setText(R.id.txt_status, item.getStatus())
-//                    .setText(R.id.txt_type, "类型：" + item.getTypeName())
-//                    .setText(R.id.txt_count, "数量：" + item.getCount())
-//                    .setText(R.id.txt_money, "金额：¥" + CommonUtils.formatMoney(item.getMoney()));
+        protected void convert(BaseViewHolder helper, CustomReceiveDetailBean item) {
+            helper.setText(R.id.txt_no, item.getVoucherNo())
+                    .setText(R.id.txt_result, "")
+                    .setText(R.id.txt_code, item.getGoodsCode())
+                    .setText(R.id.txt_name, item.getGoodsName())
+                    .setText(R.id.txt_spec, item.getGoodsDesc())
+                    .setText(R.id.txt_unit, item.getStandardUnit())
+                    .setText(R.id.txt_number, String.valueOf(item.getGoodsNum()))
+                    .setText(R.id.txt_unit_price, "¥" + CommonUtils.formatMoney(item.getTaxPrice()))
+                    .setText(R.id.txt_price, "¥" + CommonUtils.formatMoney(item.getTaxAmount()))
+                    .setText(R.id.txt_tax_rate, String.valueOf(item.getRateValue()))
+                    .setText(R.id.txt_unit_price_no_tax, "¥" + CommonUtils.formatMoney(item.getPretaxPrice()))
+                    .setText(R.id.txt_price_no_taxt, "¥" + CommonUtils.formatMoney(item.getPretaxAmount()))
+                    .setText(R.id.unit_assist, item.getAssistUnit())
+                    .setText(R.id.number_assist, item.getAssistUnit())
+                    .setText(R.id.unit_assist, item.getAuxiliaryNum())
+                    .setText(R.id.date_create, CalendarUtils.getDateFormatString(item.getCreateTime(), "yyyyMMddHHmmss", "yyyy/MM/dd"))
+                    .setText(R.id.batch_number, item.getBatchNumber())
+                    .setText(R.id.txt_remark, item.getDetailRemark());
         }
     }
 

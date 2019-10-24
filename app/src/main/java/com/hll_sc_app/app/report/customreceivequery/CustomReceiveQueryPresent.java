@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.report.customreceivequery;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.UseCaseException;
@@ -48,6 +50,11 @@ public class CustomReceiveQueryPresent implements ICustomReceiveQueryContract.IP
     public void queryList(boolean isLoading) {
         UserBean userBean = GreenDaoUtils.getUser();
         if (userBean == null) {
+            return;
+        }
+        if (TextUtils.isEmpty(mView.getOwnerId())) {
+            mView.hideLoading();
+            mView.querySuccess(null, pageTempNum > 1);
             return;
         }
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
