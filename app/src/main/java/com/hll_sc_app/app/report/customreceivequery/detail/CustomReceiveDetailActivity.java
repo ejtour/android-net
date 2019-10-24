@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.customreceivequery.detail;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
@@ -98,8 +100,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         mScrollContent.setLinkageViews(mScrollTitle);
 
         mTxtNo.setText(mRecordBean.getVoucherNo());
-        mTxtDate.setText("发生日期: " + CalendarUtils.getDateFormatString(mRecordBean.getCreateTime(), "yyyyMMdd", "yyyy/MM/dd"));
-        mTxtPerson.setText("审核人: " + "等待确认");
+        mTxtDate.setText("发生日期: " + CalendarUtils.getDateFormatString(mRecordBean.getCreateTime(), "yyyyMMddHHmmss", "yyyy/MM/dd"));
         mTxtType.setText(CustomReceiveListResp.getTypeName(mRecordBean.getVoucherType()));
         mTxtWarehouse.setText(mRecordBean.getHouseName());
         mTxtMark.setText(mRecordBean.getVoucherRemark());
@@ -108,6 +109,9 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
 
     @Override
     public void querySuccess(List<CustomReceiveDetailBean> customReceiveDetailBeans) {
+        if (customReceiveDetailBeans.size() > 0) {
+            mTxtPerson.setText("审核人: " + customReceiveDetailBeans.get(0).getAuditBy());
+        }
         mAdapter.setEmptyView(EmptyView.newBuilder(this)
                 .setImage(R.drawable.ic_char_empty)
                 .setTipsTitle("喔唷，居然是「 空 」的").create());
@@ -140,6 +144,16 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
         return mRecordBean.getVoucherID();
     }
 
+    @Override
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        if (e.getLevel() == UseCaseException.Level.NET) {
+            mAdapter.setEmptyView(EmptyView.newBuilder(this).setOnClickListener(() -> {
+                mPresent.queryDetail();
+            }).setNetError(true).create());
+        }
+    }
+
     private class DetailListAdapter extends BaseQuickAdapter<CustomReceiveDetailBean, BaseViewHolder> {
 
         public DetailListAdapter(@Nullable List<CustomReceiveDetailBean> data) {
@@ -148,7 +162,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
 
         @Override
         protected void convert(BaseViewHolder helper, CustomReceiveDetailBean item) {
-            helper.setText(R.id.txt_no, item.getVoucherNo())
+            helper.setText(R.id.txt_no, String.valueOf(helper.getAdapterPosition() + 1))
                     .setText(R.id.txt_result, "")
                     .setText(R.id.txt_code, item.getGoodsCode())
                     .setText(R.id.txt_name, item.getGoodsName())
@@ -165,7 +179,8 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
                     .setText(R.id.unit_assist, item.getAuxiliaryNum())
                     .setText(R.id.date_create, CalendarUtils.getDateFormatString(item.getCreateTime(), "yyyyMMddHHmmss", "yyyy/MM/dd"))
                     .setText(R.id.batch_number, item.getBatchNumber())
-                    .setText(R.id.txt_remark, item.getDetailRemark());
+                    .setText(R.id.txt_remark, item.getDetailRemark())
+                    .setBackgroundColor(R.id.ll_container, Color.parseColor(helper.getAdapterPosition() % 2 == 0 ? "#FFFFFF" : "#F9F9F9"));
         }
     }
 

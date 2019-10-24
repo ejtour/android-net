@@ -16,7 +16,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.report.customreceivequery.detail.CustomReceiveDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
@@ -317,7 +316,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                     mSelectTypeWindow = new MutipleSelecteWindow<>(this, data, new MutipleSelecteWindow.Config<FilterParams.TypeBean>() {
                         @Override
                         public boolean enableSelectAll() {
-                            return true;
+                            return false;
                         }
 
                         @Override
@@ -364,7 +363,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                     List<FilterParams.StatusBean> data = new ArrayList<>();
                     data.add(new FilterParams.StatusBean("全部", 0));
                     data.add(new FilterParams.StatusBean("未审核", 1));
-                    data.add(new FilterParams.StatusBean("审核", 2));
+                    data.add(new FilterParams.StatusBean("已审核", 2));
                     mSelectStatusWindow.refreshList(data);
                     mSelectStatusWindow.setSelectListener(optionsBean -> {
                         mTxtStatus.setText(optionsBean.getStatusName());

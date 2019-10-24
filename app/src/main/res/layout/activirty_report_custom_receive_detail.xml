@@ -141,13 +141,13 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             android:gravity="right"
+            android:hint="无"
             android:paddingBottom="@dimen/dp_10"
             android:textColor="@color/text_222"
             android:textSize="@dimen/base_text_10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txt_title_mark"
-            app:layout_constraintTop_toTopOf="@id/txt_title_mark"
-            tools:text="无" />
+            app:layout_constraintTop_toTopOf="@id/txt_title_mark" />
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
@@ -179,6 +179,11 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
+
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
@@ -187,6 +192,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
@@ -195,6 +204,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="190dp"
                     android:layout_height="match_parent"
@@ -203,6 +216,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
@@ -211,6 +228,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
@@ -219,6 +240,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
@@ -227,6 +252,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
@@ -235,6 +264,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
@@ -243,6 +276,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="90dp"
                     android:layout_height="match_parent"
@@ -251,6 +288,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
@@ -259,6 +300,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
@@ -267,6 +312,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
@@ -275,6 +324,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
@@ -283,6 +336,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
@@ -291,6 +348,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
@@ -299,6 +360,10 @@
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg" />
                 <TextView
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
@@ -315,12 +380,14 @@
             android:layout_height="match_parent">
 
             <com.hll_sc_app.widget.SyncHorizontalScrollView
+                android:scrollbars="none"
                 android:id="@+id/sync_scroll_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true">
 
                 <android.support.v7.widget.RecyclerView
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     android:id="@+id/recyclerView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
