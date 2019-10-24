@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_radius_3_solid"
+    android:padding="@dimen/dp_10">
+
+    <TextView
+        android:id="@+id/igd_goods_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toStartOf="@id/igd_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="拉菲古堡干红葡萄酒大拉菲波雅克" />
+
+    <TextView
+        android:id="@+id/igd_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/igd_goods_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/igd_goods_name"
+        tools:text="2019/02/05" />
+
+    <TextView
+        android:id="@+id/igd_group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="@id/igd_goods_name"
+        app:layout_constraintTop_toBottomOf="@id/igd_goods_name"
+        tools:text="尧啊尧的五星食堂" />
+
+    <TextView
+        android:id="@+id/igd_submitter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/igd_group_name"
+        tools:text="提报人：乔塞 / 193 7265 2829" />
+</android.support.constraint.ConstraintLayout>

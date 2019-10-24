@@ -185,7 +185,7 @@ public class Other {
      * 查询商品需求
      *
      * @param pageNum 页码
-     * @param status  1:未处理，2：已处理
+     * @param status  0:crm ,1:未处理，2：已处理
      */
     public static void queryGoodsDemand(int pageNum, int status, SimpleObserver<SingleListResp<GoodsDemandBean>> observer) {
         UserBean user = GreenDaoUtils.getUser();
@@ -208,6 +208,29 @@ public class Other {
     public static void addGoodsDemand(GoodsDemandReq req, SimpleObserver<Object> observer) {
         OtherService.INSTANCE
                 .addGoodsDemand(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 回复商品需求
+     *
+     * @param id           id
+     * @param productReply 商品回复，如果是商品则为json串{"productID":"","":"productName","imgUrl":""}
+     * @param purchaserID  采购商id
+     * @param status       状态
+     */
+    public static void replyGoodsDemand(String id, String productReply, String purchaserID, int status, SimpleObserver<Object> observer) {
+        if (status == 1) status = 2;
+        OtherService.INSTANCE
+                .replyGoodsDemand(BaseMapReq.newBuilder()
+                        .put("id", id)
+                        .put("productReply", productReply)
+                        .put("purchaserID", purchaserID)
+                        .put("status", String.valueOf(status))
+                        .put("supplyID", UserConfig.getGroupID())
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

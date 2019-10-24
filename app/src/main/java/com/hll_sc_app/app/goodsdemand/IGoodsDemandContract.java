@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.goodsdemand.entry;
+package com.hll_sc_app.app.goodsdemand;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
@@ -11,12 +11,12 @@ import java.util.List;
  * @since 2019/10/21
  */
 
-public interface IGoodsDemandEntryContract {
-    interface IGoodsDemandEntryView extends ILoadView {
+public interface IGoodsDemandContract {
+    interface IGoodsDemandView extends ILoadView {
         void handleData(List<GoodsDemandBean> list, boolean append);
     }
 
-    interface IGoodsDemandEntryPresenter extends IPresenter<IGoodsDemandEntryView> {
+    interface IGoodsDemandPresenter extends IPresenter<IGoodsDemandView> {
         void refresh();
 
         void loadMore();

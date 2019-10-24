@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goodsdemand.GoodsDemandPresenter;
+import com.hll_sc_app.app.goodsdemand.IGoodsDemandContract;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -36,12 +38,12 @@ import butterknife.OnClick;
  */
 
 @Route(path = RouterConfig.GOODS_DEMAND_ENTRY)
-public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoodsDemandEntryContract.IGoodsDemandEntryView {
+public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoodsDemandContract.IGoodsDemandView {
     @BindView(R.id.gde_list_view)
     RecyclerView mListView;
     @BindView(R.id.gde_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
-    private IGoodsDemandEntryContract.IGoodsDemandEntryPresenter mPresenter;
+    private IGoodsDemandContract.IGoodsDemandPresenter mPresenter;
     private GoodsDemandEntryAdapter mAdapter;
     private EmptyView mEmptyView;
 
@@ -60,7 +62,7 @@ public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoods
     }
 
     private void initData() {
-        mPresenter = GoodsDemandEntryPresenter.newInstance();
+        mPresenter = GoodsDemandPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }

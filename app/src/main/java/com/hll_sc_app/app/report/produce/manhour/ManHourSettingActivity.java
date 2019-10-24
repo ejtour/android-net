@@ -47,11 +47,11 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
         RouterUtil.goToActivity(RouterConfig.REPORT_PRODUCE_MAN_HOUR, activity, REQ_CODE);
     }
 
-    @BindView(R.id.acc_title_bar)
+    @BindView(R.id.stp_title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.acc_tab_layout)
+    @BindView(R.id.stp_tab_layout)
     SlidingTabLayout mTabLayout;
-    @BindView(R.id.acc_view_pager)
+    @BindView(R.id.stp_view_pager)
     ViewPager mViewPager;
     private BaseManHourAdapter mCostAdapter;
     private ManHourFooter mCostFooter;
@@ -63,7 +63,7 @@ public class ManHourSettingActivity extends BaseLoadActivity implements BaseQuic
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        setContentView(R.layout.activity_commodity_check);
+        setContentView(R.layout.activity_simple_tab_pager);
         ButterKnife.bind(this);
         initView();
         initData();

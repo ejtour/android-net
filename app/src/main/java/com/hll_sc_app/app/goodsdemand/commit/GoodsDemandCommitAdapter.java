@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goodsdemand.GoodsDemandHelper;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandItem;
 import com.hll_sc_app.impl.IChangeListener;
 import com.hll_sc_app.widget.ImageUploadGroup;
@@ -67,29 +68,12 @@ public class GoodsDemandCommitAdapter extends BaseQuickAdapter<GoodsDemandItem, 
 
     @Override
     protected void convert(BaseViewHolder helper, GoodsDemandItem item) {
-        ((EditText) helper.setText(R.id.gdc_type, getType(item.getDemandType()))
+        ((EditText) helper.setText(R.id.gdc_type, GoodsDemandHelper.getType(item.getDemandType()))
                 .setTag(R.id.gdc_explain_edit, helper.getView(R.id.gdc_edit_count))
                 .setText(R.id.gdc_explain_edit, item.getDemandContent())
                 .getView(R.id.gdc_explain_edit))
                 .setSelection(TextUtils.isEmpty(item.getDemandContent()) ? 0 : item.getDemandContent().length());
         ((ImageUploadGroup) helper.getView(R.id.gdc_upload_group))
                 .showImages(item.getDemandUrl() == null ? null : item.getDemandUrl().split(","));
-    }
-
-    private String getType(int type) {
-        switch (type) {
-            case 1:
-                return "商品外形";
-            case 2:
-                return "储存要求";
-            case 3:
-                return "分拣要求";
-            case 4:
-                return "配送要求";
-            case 5:
-                return "其他要求";
-            default:
-                return "";
-        }
     }
 }

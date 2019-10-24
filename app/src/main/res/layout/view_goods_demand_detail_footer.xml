@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="LinearLayout">
+
+    <TextView
+        android:id="@+id/ddf_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="提报人" />
+
+    <TextView
+        android:id="@+id/ddf_content"
+        style="@style/InfoEdit"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:singleLine="false"
+        tools:text="乔塞 / 197 6620 3418" />
+</merge>

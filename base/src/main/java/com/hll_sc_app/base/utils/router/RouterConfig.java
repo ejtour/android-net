@@ -1142,6 +1142,11 @@ public class RouterConfig {
     public static final String GOODS_DEMAND_ENTRY = "/activity/goods/demand/entry";
 
     /**
+     * 商品需求
+     */
+    public static final String GOODS_DEMAND = "/activity/goods/demand";
+
+    /**
      * 商品需求-新增
      */
     public static final String GOODS_DEMAND_ADD = "/activity/goods/demand/add";
@@ -1150,6 +1155,11 @@ public class RouterConfig {
      * 商品需求-提交
      */
     public static final String GOODS_DEMAND_COMMIT = "/activity/goods/demand/commit";
+
+    /**
+     * 商品需求-详情
+     */
+    public static final String GOODS_DEMAND_DETAIL = "/activity/goods/demand/detail";
 
     /**
      * 商品需求-新增-采购商搜索

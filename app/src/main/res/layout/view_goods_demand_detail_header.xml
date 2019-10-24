@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/ddh_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_goods_demand_status"
+        android:paddingLeft="37dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
+        android:textColor="@color/color_7ed321"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="已回复：好的，我们尽快上货。" />
+
+    <ImageView
+        android:id="@+id/ddh_status_icon"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/ic_yellow_ok"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_status"
+        app:layout_constraintStart_toStartOf="@id/ddh_status"
+        app:layout_constraintTop_toTopOf="@id/ddh_status" />
+
+    <android.support.constraint.Group
+        android:id="@+id/ddh_status_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="ddh_status,ddh_status_icon" />
+
+    <TextView
+        android:id="@+id/ddh_supplier_label"
+        style="@style/InfoLabel"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:text="供应商"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_status" />
+
+    <TextView
+        android:id="@+id/ddh_supplier"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_supplier_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_supplier_label"
+        app:layout_constraintTop_toTopOf="@id/ddh_supplier_label"
+        tools:text="呜啦啦国际酒水供应商" />
+
+    <View
+        android:id="@+id/ddh_div"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_supplier_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Group
+        android:id="@+id/ddh_supplier_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="ddh_supplier_label,ddh_supplier,ddh_div" />
+
+    <TextView
+        android:id="@+id/ddh_purchaser_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="采购商"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_supplier_label"
+        app:layout_goneMarginTop="5dp" />
+
+    <TextView
+        android:id="@+id/ddh_purchaser"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_purchaser_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_purchaser_label"
+        app:layout_constraintTop_toTopOf="@id/ddh_purchaser_label"
+        tools:text="清风餐饮管理有限公司" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_purchaser_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ddh_name_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="商品名称"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_purchaser_label" />
+
+    <TextView
+        android:id="@+id/ddh_name"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_name_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_name_label"
+        app:layout_constraintTop_toTopOf="@id/ddh_name_label"
+        tools:text="拉菲古堡干红葡萄酒大拉菲波雅克" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_name_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ddh_desc"
+        style="@style/InfoEdit"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:lineSpacingExtra="4dp"
+        android:minHeight="@dimen/dp_40"
+        android:padding="@dimen/dp_10"
+        android:singleLine="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_desc_label"
+        app:layout_constraintTop_toBottomOf="@id/ddh_name_label"
+        tools:text="想\n要\n这\n种红酒" />
+
+    <TextView
+        android:id="@+id/ddh_desc_label"
+        style="@style/InfoLabel"
+        android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:text="商品描述"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_desc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ddh_desc" />
+
+    <TextView
+        android:id="@+id/ddh_brand_label"
+        style="@style/InfoLabel"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:text="商品品牌"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_desc_label" />
+
+    <TextView
+        android:id="@+id/ddh_brand"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="—————"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_brand_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_brand_label"
+        app:layout_constraintTop_toTopOf="@id/ddh_brand_label"
+        tools:text="拉菲古堡干红葡萄酒大拉菲波雅克" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_brand_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ddh_spec_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="商品规格"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_brand_label" />
+
+    <TextView
+        android:id="@+id/ddh_spec"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="—————"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_spec_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_spec_label"
+        app:layout_constraintTop_toTopOf="@id/ddh_spec_label"
+        tools:text="2瓶/箱" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_spec_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ddh_origin_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="商品产地"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_spec_label" />
+
+    <TextView
+        android:id="@+id/ddh_origin"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="—————"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_origin_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_origin_label"
+        app:layout_constraintTop_toTopOf="@id/ddh_origin_label"
+        tools:text="海外 - 法国" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_origin_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ddh_price_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="市场价格"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_origin_label" />
+
+    <TextView
+        android:id="@+id/ddh_price"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="—————"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_price_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_price_label"
+        app:layout_constraintTop_toTopOf="@id/ddh_price_label"
+        tools:text="7900.00" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_price_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ddh_pack_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="包装方式"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_price_label" />
+
+    <TextView
+        android:id="@+id/ddh_pack"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="—————"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_pack_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_pack_label"
+        app:layout_constraintTop_toTopOf="@id/ddh_pack_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_pack_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ddh_producer_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:text="生产厂家"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_pack_label" />
+
+    <TextView
+        android:id="@+id/ddh_producer"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="—————"
+        app:layout_constraintBottom_toBottomOf="@id/ddh_producer_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ddh_producer_label"
+        app:layout_constraintTop_toTopOf="@id/ddh_producer_label" />
+
+    <TextView
+        android:id="@+id/ddh_pic_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:padding="@dimen/dp_10"
+        android:text="商品图片"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_producer_label" />
+
+    <com.hll_sc_app.widget.ThumbnailView
+        android:id="@+id/ddh_pic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        app:ctv_padding="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ddh_pic_label" />
+
+    <android.support.constraint.Group
+        android:id="@+id/ddh_pic_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="ddh_pic_label,ddh_pic" />
+</merge>

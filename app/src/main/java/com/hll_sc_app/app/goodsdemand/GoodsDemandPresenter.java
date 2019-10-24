@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.goodsdemand.entry;
+package com.hll_sc_app.app.goodsdemand;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.SingleListResp;
@@ -11,15 +11,21 @@ import com.hll_sc_app.rest.Other;
  * @since 2019/10/21
  */
 
-public class GoodsDemandEntryPresenter implements IGoodsDemandEntryContract.IGoodsDemandEntryPresenter {
+public class GoodsDemandPresenter implements IGoodsDemandContract.IGoodsDemandPresenter {
     private int mPageNum;
-    private IGoodsDemandEntryContract.IGoodsDemandEntryView mView;
+    private IGoodsDemandContract.IGoodsDemandView mView;
+    private int mStatus;
 
-    private GoodsDemandEntryPresenter() {
+    private GoodsDemandPresenter(int status) {
+        mStatus = status;
     }
 
-    public static GoodsDemandEntryPresenter newInstance() {
-        return new GoodsDemandEntryPresenter();
+    public static GoodsDemandPresenter newInstance() {
+        return new GoodsDemandPresenter(0);
+    }
+
+    public static GoodsDemandPresenter newInstance(int status) {
+        return new GoodsDemandPresenter(status);
     }
 
     @Override
@@ -34,7 +40,7 @@ public class GoodsDemandEntryPresenter implements IGoodsDemandEntryContract.IGoo
     }
 
     private void load(boolean showLoading) {
-        Other.queryGoodsDemand(mPageNum, 0, new SimpleObserver<SingleListResp<GoodsDemandBean>>(mView, showLoading) {
+        Other.queryGoodsDemand(mPageNum, mStatus, new SimpleObserver<SingleListResp<GoodsDemandBean>>(mView, showLoading) {
             @Override
             public void onSuccess(SingleListResp<GoodsDemandBean> goodsDemandBeanSingleListResp) {
                 mView.handleData(goodsDemandBeanSingleListResp.getRecords(), mPageNum > 1);
@@ -51,7 +57,7 @@ public class GoodsDemandEntryPresenter implements IGoodsDemandEntryContract.IGoo
     }
 
     @Override
-    public void register(IGoodsDemandEntryContract.IGoodsDemandEntryView view) {
+    public void register(IGoodsDemandContract.IGoodsDemandView view) {
         mView = CommonUtils.requireNonNull(view);
     }
 }
