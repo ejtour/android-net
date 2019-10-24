@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="5dp">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/gds_icon"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        app:base_RoundingRadius="3"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder" />
+
+    <ImageView
+        android:id="@+id/gds_check"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="0dp"
+        android:padding="@dimen/dp_10"
+        android:src="@drawable/ic_ok_circul_blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/gds_icon"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/gds_icon" />
+
+    <TextView
+        android:id="@+id/gds_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toStartOf="@id/gds_check"
+        app:layout_constraintStart_toEndOf="@id/gds_icon"
+        app:layout_constraintTop_toTopOf="@id/gds_icon"
+        tools:text="水洗胡萝卜  散" />
+
+    <TextView
+        android:id="@+id/gds_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintStart_toStartOf="@id/gds_name"
+        app:layout_constraintTop_toBottomOf="@id/gds_name"
+        tools:text="编码：1234567890" />
+
+    <TextView
+        android:id="@+id/gds_spec"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/gds_icon"
+        app:layout_constraintEnd_toEndOf="@id/gds_name"
+        app:layout_constraintStart_toStartOf="@id/gds_name"
+        tools:text="规格：1种" />
+</android.support.constraint.ConstraintLayout>

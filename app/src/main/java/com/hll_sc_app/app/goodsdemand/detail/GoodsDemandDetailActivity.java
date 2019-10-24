@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.goodsdemand.detail;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +15,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
+import com.hll_sc_app.app.goodsdemand.select.GoodsDemandSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -38,7 +39,6 @@ import butterknife.OnClick;
 
 @Route(path = RouterConfig.GOODS_DEMAND_DETAIL)
 public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGoodsDemandDetailContract.IGoodsDemandDetailView {
-    public static final int REQ_CODE = 0x638;
     @BindView(R.id.gdd_positive)
     TextView mPositive;
     @BindView(R.id.gdd_negative)
@@ -51,8 +51,8 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
     GoodsDemandBean mBean;
     private IGoodsDemandDetailContract.IGoodsDemandDetailPresenter mPresenter;
 
-    public static void start(Activity activity, GoodsDemandBean bean) {
-        RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_DETAIL, activity, REQ_CODE, bean);
+    public static void start(GoodsDemandBean bean) {
+        RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_DETAIL, bean);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
         if (mBean.getStatus() == 1) {
             negative();
         } else {
-            showToast("选择商品待添加");
+            GoodsDemandSelectActivity.start(mBean.getId(), mBean.getPurchaserID());
         }
     }
 
@@ -121,7 +121,6 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
 
     @Override
     public void replySuccess() {
-        setResult(RESULT_OK);
-        finish();
+        GoodsDemandActivity.start();
     }
 }

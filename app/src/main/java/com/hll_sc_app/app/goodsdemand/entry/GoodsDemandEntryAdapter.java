@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.goodsdemand.entry;
 
-import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
@@ -21,7 +20,7 @@ public class GoodsDemandEntryAdapter extends BaseQuickAdapter<GoodsDemandBean, B
         super(R.layout.item_goods_demand_entry);
         setOnItemClickListener((adapter, view, position) -> {
             GoodsDemandBean item = getItem(position);
-            if (item != null) GoodsDemandDetailActivity.start(((Activity) view.getContext()), item);
+            if (item != null) GoodsDemandDetailActivity.start(item);
         });
     }
 

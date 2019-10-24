@@ -11,9 +11,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.goodsdemand.detail.GoodsDemandDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 import com.hll_sc_app.widget.TitleBar;
 
@@ -38,6 +38,10 @@ public class GoodsDemandActivity extends BaseLoadActivity {
     ViewPager mViewPager;
     private List<Fragment> mFragments = new ArrayList<>();
 
+    public static void start() {
+        RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +60,10 @@ public class GoodsDemandActivity extends BaseLoadActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == GoodsDemandDetailActivity.REQ_CODE) {
-            for (Fragment fragment : mFragments) {
-                ((GoodsDemandFragment) fragment).reload();
-            }
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        for (Fragment fragment : mFragments) {
+            ((GoodsDemandFragment) fragment).reload();
         }
     }
 }

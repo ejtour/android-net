@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
+import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
 import com.hll_sc_app.app.helpcenter.HelpCenterJsParams;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
@@ -295,7 +296,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.OPERATION_ANALYSIS);
                 break;
             case R.id.txt_new_product_demand:
-                RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND);
+                GoodsDemandActivity.start();
                 break;
             default:
                 break;
