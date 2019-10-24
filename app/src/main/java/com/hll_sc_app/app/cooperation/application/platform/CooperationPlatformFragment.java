@@ -104,7 +104,7 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserBean bean = mAdapter.getItem(position);
             if (bean != null) {
-                if (view.getId() == R.id.txt_status && TextUtils.equals(bean.getStatus(), "0")) {
+                if (view.getId() == R.id.txt_status && TextUtils.equals(bean.getStatus(), "0") && bean.getCooperationActive() != 1) {
                     ShopSettlementReq req = new ShopSettlementReq();
                     req.setFrom(BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_AGREE);
                     req.setPurchaserID(bean.getPurchaserID());
@@ -232,12 +232,15 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
                     txtStatus.setText("已同意");
                     break;
                 default:
+                    txtStatus.setBackground(new ColorDrawable());
                     txtStatus.setText("");
                     txtStatus.setTextColor(0xFFAEAEAE);
                     txtStatus.setBackground(null);
                     break;
             }
             if (item.getCooperationActive() == 1) {
+                txtStatus.setBackground(new ColorDrawable());
+                txtStatus.setTextColor(0xFFAEAEAE);
                 txtStatus.setText("已停止");
             }
         }

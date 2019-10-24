@@ -203,11 +203,14 @@ public class CooperationInviteActivity extends BaseLoadActivity implements Coope
                     break;
                 default:
                     txtStatus.setText("");
+                    txtStatus.setBackground(new ColorDrawable());
                     txtStatus.setTextColor(0xFFAEAEAE);
                     txtStatus.setBackground(null);
                     break;
             }
             if (item.getCooperationActive() == 1) {
+                txtStatus.setBackground(new ColorDrawable());
+                txtStatus.setTextColor(0xFFAEAEAE);
                 txtStatus.setText("已停止");
             }
         }
