@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.stockmanage.selectproduct;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,18 +19,18 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.GoodsTopSearch;
+import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.GoodsStickSearchEvent;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -38,7 +39,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,16 +95,9 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
-        EventBus.getDefault().register(this);
         mPresenter = ProductSelectPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -112,7 +105,8 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, GoodsTopSearch.class.getSimpleName());
+                SearchActivity.start(ProductSelectActivity.this,
+                        searchContent, GoodsSearch.class.getSimpleName());
             }
 
             @Override
@@ -192,11 +186,13 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
         }
     }
 
-    @Subscribe
-    public void onEvent(GoodsStickSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

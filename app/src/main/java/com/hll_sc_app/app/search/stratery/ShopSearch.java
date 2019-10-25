@@ -2,9 +2,6 @@ package com.hll_sc_app.app.search.stratery;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.ISearchContract;
-import com.hll_sc_app.bean.event.SearchEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -12,10 +9,6 @@ import org.greenrobot.eventbus.EventBus;
  */
 
 public class ShopSearch implements ISearchContract.ISearchStrategy {
-    @Override
-    public void onSearch(String searchWords) {
-        EventBus.getDefault().post(new SearchEvent(searchWords));
-    }
 
     @Override
     public String getEditHint() {

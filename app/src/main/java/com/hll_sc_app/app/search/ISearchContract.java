@@ -30,12 +30,6 @@ public class ISearchContract {
             return null;
         }
 
-        void onSearch(String searchWords);
-
-        default void onClick(NameValue nameValue) {
-
-        }
-
         String getEditHint();
 
         @LayoutRes

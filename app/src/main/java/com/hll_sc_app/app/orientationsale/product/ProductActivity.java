@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.orientationsale.product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,7 +22,6 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.orientation.OrientationDetailBean;
@@ -29,6 +29,7 @@ import com.hll_sc_app.bean.orientation.OrientationProductSpecBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -37,7 +38,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -83,7 +83,6 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         mPresenter.register(this);
         mPresenter.start();
         initView();
-        EventBus.getDefault().register(this);
     }
 
     private void initView() {
@@ -94,7 +93,8 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, GoodsSearch.class.getSimpleName());
+                SearchActivity.start(ProductActivity.this,
+                        searchContent, GoodsSearch.class.getSimpleName());
             }
 
             @Override
@@ -191,12 +191,6 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     public void showCategoryList(CategoryResp resp) {
         selectCategory = resp.getList2().get(0).getCategoryID();
         resp.getList2().get(0).setSelected(true);
@@ -266,11 +260,13 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
         }
     }
 
-    @Subscribe
-    public void onEvent(GoodsSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 }

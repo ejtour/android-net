@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -26,17 +25,17 @@ import com.hll_sc_app.app.goods.relevance.goods.fragment.BaseGoodsRelevanceFragm
 import com.hll_sc_app.app.goods.relevance.goods.fragment.relevance.GoodsRelevanceListFragment;
 import com.hll_sc_app.app.goods.relevance.goods.fragment.unrelevance.GoodsUnRelevanceListFragment;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.GoodsRelevanceListSearch;
+import com.hll_sc_app.app.search.stratery.GoodsNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.GoodsRelevanceListSearchEvent;
 import com.hll_sc_app.bean.event.GoodsRelevanceRefreshEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.order.detail.TransferDetailBean;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -132,7 +131,8 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, GoodsRelevanceListSearch.class.getSimpleName());
+                SearchActivity.start(GoodsRelevanceListActivity.this,
+                        searchContent, GoodsNameSearch.class.getSimpleName());
             }
 
             @Override
@@ -169,11 +169,13 @@ public class GoodsRelevanceListActivity extends BaseLoadActivity implements IGoo
         if (mPresenter != null) mPresenter.reqTransferDetail();
     }
 
-    @Subscribe
-    public void onEvent(GoodsRelevanceListSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

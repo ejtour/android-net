@@ -18,17 +18,13 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.platform.CooperationPlatformFragment;
 import com.hll_sc_app.app.cooperation.application.thirdpart.CooperationThirdPartFragment;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.CooperationSearch;
+import com.hll_sc_app.app.search.stratery.PurchaserNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
-import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.CooperationInviteSearchEvent;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,20 +58,14 @@ public class CooperationApplicationActivity extends BaseLoadActivity {
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, CooperationSearch.class.getSimpleName());
+                SearchActivity.start(CooperationApplicationActivity.this,
+                        searchContent, PurchaserNameSearch.class.getSimpleName());
             }
 
             @Override
@@ -108,11 +98,13 @@ public class CooperationApplicationActivity extends BaseLoadActivity {
         }
     }
 
-    @Subscribe
-    public void onEvent(CooperationInviteSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.marketingsetting.product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.hll_sc_app.app.marketingsetting.adapter.MarketingListAdapter;
 import com.hll_sc_app.app.marketingsetting.product.add.ProductMarketingAddActivity;
 import com.hll_sc_app.app.marketingsetting.product.check.ProductMarketingCheckActivity;
 import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.DiscountSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -27,6 +29,7 @@ import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.marketingsetting.MarketingListResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingStatusBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SingleSelectionWindow;
@@ -103,9 +106,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -138,7 +139,8 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(getDiscountName(), MarketingProductSearch.class.getSimpleName());
+                SearchActivity.start(ProductMarketingListActivity.this,
+                        getDiscountName(), DiscountSearch.class.getSimpleName());
             }
 
             @Override
@@ -305,11 +307,18 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
             return;
         }
         // 商品属性列表展示
-        if (!TextUtils.isEmpty(event.getSearchText())) {
-            mSearchView.showSearchContent(true, event.getSearchText());
-        } else if (event.isRefresh()) {
+        if (event.isRefresh()) {
             mPresent.refreshList();
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
+        }
+    }
 }

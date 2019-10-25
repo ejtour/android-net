@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.inspectLack.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,12 +19,11 @@ import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.SalesManSearch;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateWindow;
-import com.hll_sc_app.bean.event.SalesManSearchEvent;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.window.OptionType;
@@ -37,9 +37,6 @@ import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,12 +67,9 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
     DateWindow dateWindow;
     private ContextOptionsWindow mExportOptionsWindow;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
         setContentView(R.layout.activity_report_inspect_lack_detail);
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
@@ -88,12 +82,6 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
         mPresenter = InspectLackDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-    }
-
-    @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
     }
 
     private void initView() {
@@ -134,7 +122,8 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
                 showExportOptionsWindow(textOption);
                 break;
             case R.id.edt_search:
-                SearchActivity.start("", SalesManSearch.class.getSimpleName());
+                SearchActivity.start(InspectLackDetailActivity.this,
+                        "", CommonSearch.class.getSimpleName());
                 break;
             case R.id.img_clear:
                 mParam.setProductName("");
@@ -147,19 +136,21 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
         }
     }
 
-    @Subscribe
-    public void onEvent(SalesManSearchEvent event) {
-        String name = event.getSearchWord();
-        if (!TextUtils.isEmpty(name)) {
-            edtSearch.setText(name);
-            mParam.setProductName(name);
-            imgClear.setVisibility(View.VISIBLE);
-        } else {
-            mParam.setProductName("");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name)) {
+                edtSearch.setText(name);
+                mParam.setProductName(name);
+                imgClear.setVisibility(View.VISIBLE);
+            } else {
+                mParam.setProductName("");
+            }
+            mPresenter.loadInspectLackDetailList();
         }
-        mPresenter.loadInspectLackDetailList();
     }
-
 
     @Override
     public void exportSuccess(String email) {

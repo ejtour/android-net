@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.salesman.sign;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,7 +21,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.SalesManSearch;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateWeekWindow;
@@ -29,7 +30,6 @@ import com.hll_sc_app.base.widget.DateYearMonthWindow;
 import com.hll_sc_app.base.widget.DateYearWindow;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
 import com.hll_sc_app.bean.enums.TimeTypeEnum;
-import com.hll_sc_app.bean.event.SalesManSearchEvent;
 import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSignAchievement;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
@@ -37,6 +37,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -45,9 +46,6 @@ import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -160,7 +158,6 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
         syncHorizontalScrollView.setLinkageViews(footSyncHorizontalScrollView);
         footSyncHorizontalScrollView.setLinkageViews(syncHorizontalScrollView);
         mPresenter.register(this);
-        EventBus.getDefault().register(this);
         mPresenter.start();
     }
 
@@ -174,12 +171,6 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
         String date = CalendarUtils.getDateFormatString(dateStr, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
         dateTextView.setText(String.format("%s", date));
         params.setDate(dateStr);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -379,7 +370,8 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
                 showExportOptionsWindow(exportView);
                 break;
             case R.id.edt_search:
-                SearchActivity.start("", SalesManSearch.class.getSimpleName());
+                SearchActivity.start(SalesManSignAchievementActivity.this,
+                        "", CommonSearch.class.getSimpleName());
                 break;
             case R.id.img_clear:
                 params.setKeyWords("");
@@ -521,17 +513,20 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
         mExportOptionsWindow.showAsDropDownFix(v, Gravity.END);
     }
 
-    @Subscribe
-    public void onEvent(SalesManSearchEvent event) {
-        String name = event.getSearchWord();
-        if (!TextUtils.isEmpty(name)) {
-            edtSearch.setText(name);
-            params.setKeyWords(name);
-            imgClear.setVisibility(View.VISIBLE);
-        } else {
-            params.setKeyWords("");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name)) {
+                edtSearch.setText(name);
+                params.setKeyWords(name);
+                imgClear.setVisibility(View.VISIBLE);
+            } else {
+                params.setKeyWords("");
+            }
+            mPresenter.querySalesManSignAchievementList(true);
         }
-        mPresenter.querySalesManSignAchievementList(true);
     }
 
     class SalesManSignAchievementAdapter extends BaseQuickAdapter<SalesManSignAchievement, BaseViewHolder> {

@@ -16,22 +16,19 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.ComplainSearch;
+import com.hll_sc_app.app.search.stratery.NameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.complain.ReportFormSearchResp;
-import com.hll_sc_app.bean.event.ComplainManageEvent;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.adapter.SelectItemAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -82,7 +79,6 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
         setContentView(R.layout.activity_select_purchaser_list);
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
         initView();
         mPresent = SelectPurchaserListPresent.newInstance();
         mPresent.register(this);
@@ -93,7 +89,6 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -101,7 +96,8 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, ComplainSearch.class.getSimpleName());
+                SearchActivity.start(SelectPurchaserListActivity.this,
+                        searchContent, NameSearch.class.getSimpleName());
             }
 
             @Override
@@ -144,12 +140,14 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
         mProductListView.setAdapter(mAdpter);
     }
 
-    @Subscribe(sticky = true)
-    public void onEvent(ComplainManageEvent complainManageEvent) {
-        if (complainManageEvent.getTarget() == ComplainManageEvent.TARGET.SELECT_PURCHASER_LIST) {
-            mSearchView.showSearchContent(!TextUtils.isEmpty(complainManageEvent.getSearchContent()), complainManageEvent.getSearchContent());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
-
     }
 
     @Override

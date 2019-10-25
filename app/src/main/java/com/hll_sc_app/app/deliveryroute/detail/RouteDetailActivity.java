@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.deliveryroute.detail;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,18 +23,15 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.other.RouteDetailBean;
 import com.hll_sc_app.bean.other.RouteDetailResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -72,7 +70,6 @@ public class RouteDetailActivity extends BaseLoadActivity implements IRouteDetai
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_delivery_route_detail);
         ButterKnife.bind(this);
@@ -94,7 +91,8 @@ public class RouteDetailActivity extends BaseLoadActivity implements IRouteDetai
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, ShopAssociationSearch.class.getSimpleName());
+                SearchActivity.start(RouteDetailActivity.this,
+                        searchContent, ShopAssociationSearch.class.getSimpleName());
             }
 
             @Override
@@ -123,18 +121,16 @@ public class RouteDetailActivity extends BaseLoadActivity implements IRouteDetai
     }
 
     @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
-
-    @Subscribe(priority = 3)
-    public void handleSearchEvent(ShopSearchEvent event) {
-        EventBus.getDefault().cancelEventDelivery(event);
-        if (!TextUtils.isEmpty(event.getShopMallId())) {
-            mSearchView.showSearchContent(true, event.getName());
-            mShopID = event.getShopMallId();
-            mPresenter.start();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            String value = data.getStringExtra("value");
+            if (!TextUtils.isEmpty(value)) {
+                mSearchView.showSearchContent(true, name);
+                mShopID = value;
+                mPresenter.start();
+            }
         }
     }
 

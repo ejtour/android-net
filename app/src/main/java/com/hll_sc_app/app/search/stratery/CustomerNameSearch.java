@@ -5,10 +5,10 @@ import com.hll_sc_app.app.search.ISearchContract;
 /**
  * 营销 优惠券分发选择客户
  */
-public class SelectShopSearch implements ISearchContract.ISearchStrategy {
+public class CustomerNameSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEditHint() {
-        return "请输入门店名称进行查询";
+        return "请输入客户名称进行查询";
     }
 }

@@ -30,12 +30,12 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.event.CloseShipper;
-import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.event.RefreshWarehouseList;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -129,7 +129,8 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, WarehouseSearch.class.getSimpleName());
+                SearchActivity.start(WarehouseListActivity.this,
+                        searchContent, WarehouseSearch.class.getSimpleName());
             }
 
             @Override
@@ -197,11 +198,13 @@ public class WarehouseListActivity extends BaseLoadActivity implements Warehouse
             .create().show();
     }
 
-    @Subscribe
-    public void onEvent(GoodsRelevanceSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

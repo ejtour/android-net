@@ -8,8 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -18,21 +16,14 @@ import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.PurchaserSelectWindow;
-import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.CustomerLackSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.event.CustomerLackSearchEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryItem;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductItem;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -42,16 +33,11 @@ import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.TitleBar;
-import com.hll_sc_app.widget.TriangleView;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -338,11 +324,5 @@ public class WareHouseDeliveryStatisticsActivity extends BaseLoadActivity implem
             shipperID = (String) mPurchaser.getTag();
         }
         return shipperID;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

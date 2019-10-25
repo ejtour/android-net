@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.stockmanage.stocklogquery;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,12 +19,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.StockLogSearch;
+import com.hll_sc_app.app.search.stratery.SimpleSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateSelectWindow;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
-import com.hll_sc_app.bean.event.StockManageEvent;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.bean.stockmanage.BusinessTypeBean;
 import com.hll_sc_app.bean.stockmanage.StockLogResp;
@@ -31,6 +31,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -39,9 +40,6 @@ import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +101,6 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
         unbinder = ButterKnife.bind(this);
         mPresent = StockLogQueryPresent.newInstance();
         mPresent.register(this);
-        EventBus.getDefault().register(this);
         initView();
         mPresent.start();
     }
@@ -111,7 +108,6 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
         unbinder.unbind();
     }
 
@@ -124,7 +120,8 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, StockLogSearch.class.getSimpleName());
+                SearchActivity.start(StockLogQueryActivity.this,
+                        searchContent, SimpleSearch.class.getSimpleName());
             }
 
             @Override
@@ -149,11 +146,13 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
         mRecyclerView.setAdapter(mAdapter);
     }
 
-
-    @Subscribe
-    public void subScribe(StockManageEvent stockLogEvent) {
-        if (stockLogEvent != null && stockLogEvent.getType() == StockManageEvent.TYPE_LOG) {
-            mSearchView.showSearchContent(!TextUtils.isEmpty(stockLogEvent.getContent()), stockLogEvent.getContent());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

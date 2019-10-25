@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goods;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,20 +28,16 @@ import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.app.warehouse.shipper.ShipperWarehouseGoodsActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
-import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,16 +90,15 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
-    @Subscribe
-    public void onEvent(GoodsSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 
@@ -113,9 +109,6 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         unbinder = ButterKnife.bind(this, rootView);
         showStatusBar();
         initView();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
         return rootView;
     }
 
@@ -136,7 +129,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, GoodsSearch.class.getSimpleName());
+                SearchActivity.start(requireActivity(),
+                        searchContent, GoodsSearch.class.getSimpleName());
             }
 
             @Override

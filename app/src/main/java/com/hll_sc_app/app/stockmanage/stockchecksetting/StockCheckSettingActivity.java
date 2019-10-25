@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.stockmanage.stockchecksetting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,14 +16,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.StockCheckSearch;
+import com.hll_sc_app.app.search.stratery.SimpleSearch;
 import com.hll_sc_app.app.stockmanage.selectproduct.ProductSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.StockManageEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
@@ -42,8 +43,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
-import static com.hll_sc_app.bean.event.StockManageEvent.TYPE_COSTOMER_CHECK;
 
 /**
  * 商品库存校验
@@ -125,7 +124,8 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, StockCheckSearch.class.getSimpleName());
+                SearchActivity.start(StockCheckSettingActivity.this,
+                        searchContent, SimpleSearch.class.getSimpleName());
             }
 
             @Override
@@ -135,10 +135,13 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
         });
     }
 
-    @Subscribe(sticky = true)
-    public void onEvent(StockManageEvent stockManageEvent) {
-        if (stockManageEvent.getType() == TYPE_COSTOMER_CHECK) {
-            mSearchView.showSearchContent(!TextUtils.isEmpty(stockManageEvent.getContent()), stockManageEvent.getContent());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 
@@ -264,6 +267,4 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
             ((CheckBox) helper.getView(R.id.checkbox)).setChecked(mProductIds.contains(item.getProductID()));
         }
     }
-
-
 }

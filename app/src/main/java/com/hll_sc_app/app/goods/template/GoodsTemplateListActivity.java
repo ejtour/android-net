@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goods.template;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,19 +21,19 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.GoodsTemplateSearch;
+import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.GoodsTemplateSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Tuple;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -40,9 +41,6 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -122,9 +120,6 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mPresenter = GoodsTemplateListPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
         mSelectList = new HashSet<>();
     }
 
@@ -162,7 +157,8 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, GoodsTemplateSearch.class.getSimpleName());
+                SearchActivity.start(GoodsTemplateListActivity.this,
+                        searchContent, GoodsSearch.class.getSimpleName());
             }
 
             @Override
@@ -186,14 +182,6 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         int i = mSelectList.size();
         mTextCommit.setEnabled(i > 0);
         mTextCommit.setText(String.format(Locale.getDefault(), "确定选择（%d）", i));
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
     @Override
@@ -374,11 +362,13 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    @Subscribe
-    public void onEvent(GoodsTemplateSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

@@ -10,13 +10,10 @@ import java.util.ArrayList;
  */
 public class MarketingSelectShopEvent {
     //0:集团，1：用户
-    private int scope;
-    private String searchText;
+    /*private int scope;*/
     private SelecShops mSelecShops;
 
-    public MarketingSelectShopEvent(int scope, String searchText, SelecShops selecShops) {
-        this.scope = scope;
-        this.searchText = searchText;
+    public MarketingSelectShopEvent(SelecShops selecShops) {
         this.mSelecShops = selecShops;
     }
 
@@ -28,7 +25,7 @@ public class MarketingSelectShopEvent {
         this.mSelecShops = mSelecShops;
     }
 
-    public boolean isGroupScope() {
+    /*public boolean isGroupScope() {
         return scope == 0;
     }
 
@@ -38,16 +35,7 @@ public class MarketingSelectShopEvent {
 
     public void setScope(int scope) {
         this.scope = scope;
-    }
-
-    public String getSearchText() {
-        return searchText;
-    }
-
-    public void setSearchText(String searchText) {
-        this.searchText = searchText;
-    }
-
+    }*/
 
     public static class SelecShops {
         public SelecShops(boolean isSelectAll, ArrayList<CooperationShopsListResp.ShopListBean> selectShops) {

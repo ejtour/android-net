@@ -27,19 +27,16 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
-import com.hll_sc_app.bean.event.EmployeeSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -78,20 +75,14 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         mPresenter = StaffManageListPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, EmployeeSearch.class.getSimpleName());
+                SearchActivity.start(StaffManageListActivity.this,
+                        searchContent, EmployeeSearch.class.getSimpleName());
             }
 
             @Override
@@ -174,11 +165,13 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
                 .create().show();
     }
 
-    @Subscribe
-    public void onEvent(EmployeeSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

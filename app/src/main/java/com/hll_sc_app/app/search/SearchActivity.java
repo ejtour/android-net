@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.search;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +23,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 
@@ -41,6 +44,7 @@ import io.reactivex.disposables.Disposable;
  */
 @Route(path = RouterConfig.SEARCH)
 public class SearchActivity extends BaseLoadActivity implements ISearchContract.ISearchView, BaseQuickAdapter.OnItemClickListener {
+    private static final int REQ_CODE = 0x844;
     @BindView(R.id.as_search_edit)
     EditText mSearchEdit;
     @BindView(R.id.as_search_clear)
@@ -59,8 +63,9 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
      * @param searchWords 搜索词
      * @param key         搜索MAP中对应的键值
      */
-    public static void start(String searchWords, String key) {
-        RouterUtil.goToActivity(RouterConfig.SEARCH, searchWords, key);
+    public static void start(Activity context, String searchWords, String key) {
+        Object[] args = {searchWords, key};
+        RouterUtil.goToActivity(RouterConfig.SEARCH, context, REQ_CODE, args);
     }
 
     @Override
@@ -123,7 +128,9 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
     @OnClick(R.id.as_search_button)
     public void search() {
         String trim = mSearchEdit.getText().toString().trim();
-        mStrategy.onSearch(trim);
+        Intent intent = new Intent();
+        intent.putExtra("name", trim);
+        setResult(Constants.SEARCH_RESULT_CODE, intent);
         close();
     }
 
@@ -163,7 +170,13 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        mStrategy.onClick((NameValue) adapter.getItem(position));
-        close();
+        NameValue item = (NameValue) adapter.getItem(position);
+        if (item != null) {
+            Intent intent = new Intent();
+            intent.putExtra("name", item.getName());
+            intent.putExtra("value", item.getValue());
+            setResult(Constants.SEARCH_RESULT_CODE, intent);
+            close();
+        }
     }
 }

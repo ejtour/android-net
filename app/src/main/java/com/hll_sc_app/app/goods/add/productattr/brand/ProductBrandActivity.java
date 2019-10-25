@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goods.add.productattr.brand;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -23,13 +24,12 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.BrandBackEvent;
-import com.hll_sc_app.bean.event.BrandSearchEvent;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -66,17 +66,6 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
         mPresenter = ProductBrandPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
     }
 
     private void initView() {
@@ -96,7 +85,8 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, BrandSearch.class.getSimpleName());
+                SearchActivity.start(ProductBrandActivity.this,
+                        searchContent, BrandSearch.class.getSimpleName());
             }
 
             @Override
@@ -106,11 +96,13 @@ public class ProductBrandActivity extends BaseLoadActivity implements ProductBra
         });
     }
 
-    @Subscribe
-    public void onEvent(BrandSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

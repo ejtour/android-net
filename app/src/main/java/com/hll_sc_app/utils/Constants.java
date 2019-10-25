@@ -31,4 +31,6 @@ public interface Constants {
     String WEB_JS_NAME = "js_bridge_name";
     String WEB_URL = "web_url";
     String WEB_ZOOM = "web_zoom";
+
+    int SEARCH_RESULT_CODE = 0x711;
 }

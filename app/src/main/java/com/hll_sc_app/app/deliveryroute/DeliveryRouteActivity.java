@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.deliveryroute;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,7 +23,6 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateWindow;
-import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.filter.DateStringParam;
 import com.hll_sc_app.bean.other.RouteBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -35,10 +35,6 @@ import com.hll_sc_app.widget.TriangleView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
 import java.util.List;
@@ -73,7 +69,6 @@ public class DeliveryRouteActivity extends BaseLoadActivity implements IDelivery
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_delivery_route);
         ButterKnife.bind(this);
@@ -82,18 +77,16 @@ public class DeliveryRouteActivity extends BaseLoadActivity implements IDelivery
     }
 
     @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
-
-    @Subscribe(priority = 2)
-    public void handleSearchEvent(ShopSearchEvent event) {
-        EventBus.getDefault().cancelEventDelivery(event);
-        if (!TextUtils.isEmpty(event.getShopMallId())) {
-            mSearchView.showSearchContent(true, event.getName());
-            mParam.setExtra(event.getShopMallId());
-            mPresenter.start();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            String value = data.getStringExtra("value");
+            if (!TextUtils.isEmpty(value)) {
+                mSearchView.showSearchContent(!TextUtils.isEmpty(name), name);
+                mParam.setExtra(value);
+                mPresenter.start();
+            }
         }
     }
 
@@ -113,7 +106,8 @@ public class DeliveryRouteActivity extends BaseLoadActivity implements IDelivery
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, ShopAssociationSearch.class.getSimpleName());
+                SearchActivity.start(DeliveryRouteActivity.this,
+                        searchContent, ShopAssociationSearch.class.getSimpleName());
             }
 
             @Override

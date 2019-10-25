@@ -13,20 +13,17 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.complainmanage.add.ProductAdapter;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.ComplainManageSelectProductSearch;
+import com.hll_sc_app.app.search.stratery.GoodsNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.ComplainManageEvent;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.bean.order.detail.OrderDetailBean;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +68,6 @@ public class SelectProductListActivity extends BaseLoadActivity implements ISele
         setContentView(R.layout.activity_complain_manage_select_product);
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
         initView();
         mPresent = SelectProductListPresent.newInstance();
         mPresent.register(this);
@@ -82,7 +78,6 @@ public class SelectProductListActivity extends BaseLoadActivity implements ISele
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -92,7 +87,8 @@ public class SelectProductListActivity extends BaseLoadActivity implements ISele
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, ComplainManageSelectProductSearch.class.getSimpleName());
+                SearchActivity.start(SelectProductListActivity.this,
+                        searchContent, GoodsNameSearch.class.getSimpleName());
             }
 
             @Override
@@ -122,10 +118,13 @@ public class SelectProductListActivity extends BaseLoadActivity implements ISele
 
     }
 
-    @Subscribe(sticky = true)
-    public void onEvent(ComplainManageEvent complainManageEvent) {
-        if (complainManageEvent.getTarget() == ComplainManageEvent.TARGET.SELECT_PRODUCT_LIST) {
-            mSearchView.showSearchContent(!TextUtils.isEmpty(complainManageEvent.getSearchContent()), complainManageEvent.getSearchContent());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 
@@ -150,6 +149,4 @@ public class SelectProductListActivity extends BaseLoadActivity implements ISele
             mAdpter.setNewData(orderDetailBeans);
         }
     }
-
-
 }

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.orientationsale.cooperation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -15,24 +16,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.GoodsRelevanceSearch;
+import com.hll_sc_app.app.search.stratery.PurchaserNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
 import com.hll_sc_app.bean.orientation.OrientationListBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
-
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -64,14 +60,7 @@ public class CooperationActivity extends BaseLoadActivity implements ICooperatio
         mPresenter = CooperationPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        EventBus.getDefault().register(this);
         toQueryGroupList();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -99,7 +88,8 @@ public class CooperationActivity extends BaseLoadActivity implements ICooperatio
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, GoodsRelevanceSearch.class.getSimpleName());
+                SearchActivity.start(CooperationActivity.this,
+                        searchContent, PurchaserNameSearch.class.getSimpleName());
             }
 
             @Override
@@ -113,11 +103,13 @@ public class CooperationActivity extends BaseLoadActivity implements ICooperatio
         mPresenter.queryCooperationPurchaserList();
     }
 
-    @Subscribe
-    public void onEvent(GoodsRelevanceSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

@@ -3,9 +3,6 @@ package com.hll_sc_app.app.search.stratery;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.ISearchContract;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.event.GoodsRelevanceSearchEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * 代仓客户搜索
@@ -15,10 +12,6 @@ import org.greenrobot.eventbus.EventBus;
  */
 
 public class WarehouseSearch implements ISearchContract.ISearchStrategy {
-    @Override
-    public void onSearch(String searchWords) {
-        EventBus.getDefault().post(new GoodsRelevanceSearchEvent(searchWords));
-    }
 
     @Override
     public String getEditHint() {

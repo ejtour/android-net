@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.customerLack.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,18 +18,18 @@ import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.CustomerLackSearch;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.CustomerLackSearchEvent;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackItem;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackSummary;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.report.ExcelLayout;
@@ -36,10 +37,9 @@ import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 import java.util.Collections;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -88,7 +88,6 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
         RouterUtil.goToActivity(RouterConfig.REPORT_CUSTOMER_LACK_DETAIL, params);
     }
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +95,6 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
-        EventBus.getDefault().register(this);
         initView();
         initData();
     }
@@ -139,7 +137,8 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
                 showOptionsWindow(exportView);
                 break;
             case R.id.edt_search:
-                SearchActivity.start("", CustomerLackSearch.class.getSimpleName());
+                SearchActivity.start(CustomerLackDetailActivity.this,
+                        "", CommonSearch.class.getSimpleName());
                 break;
             case R.id.img_clear:
                 customerLackParams.setProductKeyword("");
@@ -164,20 +163,21 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
         mOptionsWindow.showAsDropDownFix(v, Gravity.END);
     }
 
-    @Subscribe
-    public void onEvent(CustomerLackSearchEvent event) {
-        String name = event.getSearchWord();
-        if (!TextUtils.isEmpty(name)) {
-            edtSearch.setText(name);
-            customerLackParams.setProductKeyword(name);
-            imgClear.setVisibility(View.VISIBLE);
-        } else {
-            customerLackParams.setProductKeyword("");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name)) {
+                edtSearch.setText(name);
+                customerLackParams.setProductKeyword(name);
+                imgClear.setVisibility(View.VISIBLE);
+            } else {
+                customerLackParams.setProductKeyword("");
+            }
+            mPresenter.refresh();
         }
-        mPresenter.refresh();
     }
-
-
 
     private View generateHeader() {
         ExcelRow row = new ExcelRow(this);
@@ -246,11 +246,5 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
     public void setList(List<CustomerLackItem> beans, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(beans) && beans.size() == 20);
         mExcel.setData(beans, append);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

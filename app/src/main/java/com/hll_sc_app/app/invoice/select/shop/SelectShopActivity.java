@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.invoice.select.shop;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,18 +21,14 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
-import com.hll_sc_app.bean.event.SearchEvent;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,16 +64,9 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invoice_select_shop);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         initView();
         initData();
-    }
-
-    @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
     }
 
     private void initData() {
@@ -99,7 +89,8 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, ShopSearch.class.getSimpleName());
+                SearchActivity.start(SelectShopActivity.this,
+                        searchContent, ShopSearch.class.getSimpleName());
             }
 
             @Override
@@ -133,10 +124,14 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
         mSelectedCount.setText(String.format("已选：%s", count));
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleSearchEvent(SearchEvent event) {
-        if (TextUtils.isEmpty(event.getName())) return;
-        mSearchView.showSearchContent(true, event.getName());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
+        }
     }
 
     @Override

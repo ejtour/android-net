@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.refund.wait.product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,18 +16,16 @@ import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.RefundSearch;
-import com.hll_sc_app.app.search.stratery.SalesManSearch;
+import com.hll_sc_app.app.search.stratery.ProductNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.RefundSearchEvent;
-import com.hll_sc_app.bean.event.SalesManSearchEvent;
 import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.TitleBar;
@@ -35,9 +33,6 @@ import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,15 +64,12 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
     ImageView imgClear;
     private ContextOptionsWindow mExportOptionsWindow;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_wait_refund_product_detail);
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        EventBus.getDefault().register(this);
         initView();
         initData();
     }
@@ -125,7 +117,8 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
                showExportOptionsWindow(mTitleBar);
                 break;
             case R.id.edt_search:
-                SearchActivity.start("", RefundSearch.class.getSimpleName());
+                SearchActivity.start(WaitRefundProductDetailActivity.this,
+                        "", ProductNameSearch.class.getSimpleName());
                 break;
             default:
                 break;
@@ -239,22 +232,19 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
         }
     }
 
-    @Subscribe
-    public void onEvent(RefundSearchEvent event) {
-        String name = event.getSearchWord();
-        if (!TextUtils.isEmpty(name)) {
-            edtSearch.setText(name);
-            mParam.setProductName(name);
-            imgClear.setVisibility(View.VISIBLE);
-        } else {
-            mParam.setProductName("");
-        }
-        mPresenter.queryRefundProductDetail(true);
-    }
-
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name)) {
+                edtSearch.setText(name);
+                mParam.setProductName(name);
+                imgClear.setVisibility(View.VISIBLE);
+            } else {
+                mParam.setProductName("");
+            }
+            mPresenter.queryRefundProductDetail(true);
+        }
     }
 }

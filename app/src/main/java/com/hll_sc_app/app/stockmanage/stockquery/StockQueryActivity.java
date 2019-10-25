@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.stockmanage.stockquery;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,18 +20,15 @@ import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.HouseBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -59,7 +57,6 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_query);
         unbinder = ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
         initView();
         mPresent = StockQueryPresent.newInstance();
         mPresent.register(this);
@@ -70,7 +67,6 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -91,7 +87,8 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, GoodsSearch.class.getSimpleName());
+                SearchActivity.start(StockQueryActivity.this,
+                        searchContent, GoodsSearch.class.getSimpleName());
             }
 
             @Override
@@ -106,9 +103,14 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
         });
     }
 
-    @Subscribe
-    public void subScribe(GoodsSearchEvent goodsSearchEvent) {
-        mSearchView.showSearchContent(!TextUtils.isEmpty(goodsSearchEvent.getName()), goodsSearchEvent.getName());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
+        }
     }
 
     @Override

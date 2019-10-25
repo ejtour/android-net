@@ -7,10 +7,10 @@ import com.hll_sc_app.app.search.ISearchContract;
  * @since 2019/7/25
  */
 
-public class CommonSearch implements ISearchContract.ISearchStrategy {
+public class GoodsNameSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEditHint() {
-        return "请输入搜索词";
+        return "请输入商品名称进行查询";
     }
 }

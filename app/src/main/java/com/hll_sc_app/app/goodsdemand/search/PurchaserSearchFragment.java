@@ -15,21 +15,16 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.bean.event.PurchaserSearchEvent;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -75,7 +70,6 @@ public class PurchaserSearchFragment extends BaseLazyFragment implements IPurcha
 
     @Override
     protected View initViews(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        EventBus.getDefault().register(this);
         rootView = inflater.inflate(R.layout.layout_simple_refresh_list, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         initView();
@@ -121,15 +115,13 @@ public class PurchaserSearchFragment extends BaseLazyFragment implements IPurcha
         super.hideLoading();
     }
 
-    @Subscribe
-    public void handleSearchEvent(PurchaserSearchEvent event) {
+    public void reload() {
         setForceLoad(true);
         lazyLoad();
     }
 
     @Override
     public void onDestroyView() {
-        EventBus.getDefault().unregister(this);
         super.onDestroyView();
         unbinder.unbind();
     }

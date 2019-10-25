@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.report.warehouse.product;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,12 +20,11 @@ import com.google.gson.Gson;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.PurchaserSelectWindow;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.CustomerLackSearch;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.event.CustomerLackSearchEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductItem;
@@ -43,9 +43,6 @@ import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -103,7 +100,6 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
     private void initData() {
         mPresenter = WareHouseProductDetailPresenter.newInstance();
         mPresenter.register(this);
-        EventBus.getDefault().register(this);
         mPresenter.start();
     }
 
@@ -141,7 +137,8 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
                 showDateRangeWindow();
                 break;
             case R.id.edt_search:
-                SearchActivity.start("", CustomerLackSearch.class.getSimpleName());
+                SearchActivity.start(WareHouseProductDetailActivity.this,
+                        "", CommonSearch.class.getSimpleName());
                 break;
             case R.id.img_clear:
                 mParam.setProductName("");
@@ -162,20 +159,21 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
         mPresenter.getShipperList("");
     }
 
-
-    @Subscribe
-    public void onEvent(CustomerLackSearchEvent event) {
-        String name = event.getSearchWord();
-        if (!TextUtils.isEmpty(name)) {
-            edtSearch.setText(name);
-            mParam.setProductName(name);
-            imgClear.setVisibility(View.VISIBLE);
-        } else {
-            mParam.setProductName("");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name)) {
+                edtSearch.setText(name);
+                mParam.setProductName(name);
+                imgClear.setVisibility(View.VISIBLE);
+            } else {
+                mParam.setProductName("");
+            }
+            mPresenter.loadWareHouseProductDetailList();
         }
-        mPresenter.loadWareHouseProductDetailList();
     }
-
 
     @Override
     public void exportSuccess(String email) {
@@ -368,11 +366,5 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
             shipperID = (String) mPurchaser.getTag();
         }
         return shipperID;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

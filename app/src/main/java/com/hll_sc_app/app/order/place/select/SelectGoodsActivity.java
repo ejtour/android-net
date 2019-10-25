@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.order.place.select;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,7 +30,6 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.GoodsSearchEvent;
 import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
 import com.hll_sc_app.bean.order.place.PlaceOrderSpecBean;
 import com.hll_sc_app.bean.order.place.ProductBean;
@@ -38,6 +38,7 @@ import com.hll_sc_app.bean.order.place.SelectGoodsParam;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.KeyboardWatcher;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -46,10 +47,6 @@ import com.hll_sc_app.widget.TitleBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +102,6 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_order_select_goods);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
         ARouter.getInstance().inject(this);
         initView();
         initData();
@@ -114,7 +110,6 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     @Override
     protected void onDestroy() {
         mKeyboardWatcher.removeSoftKeyboardStateListener(this);
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
@@ -193,7 +188,8 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, GoodsSearch.class.getSimpleName());
+                SearchActivity.start(SelectGoodsActivity.this,
+                        searchContent, GoodsSearch.class.getSimpleName());
             }
 
             @Override
@@ -341,11 +337,13 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleGoodsEvent(GoodsSearchEvent event) {
-        String name = event.getName();
-        if (!TextUtils.isEmpty(name)) {
-            mSearchView.showSearchContent(true, name);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 

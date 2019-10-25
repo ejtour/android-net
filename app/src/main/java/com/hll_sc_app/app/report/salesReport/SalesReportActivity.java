@@ -1,6 +1,6 @@
 package com.hll_sc_app.app.report.salesReport;
 
-import android.database.DatabaseUtils;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,9 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -19,21 +17,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.SalesDayReportSearch;
-import com.hll_sc_app.app.search.stratery.SalesManSearch;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.DateWeekWindow;
-import com.hll_sc_app.base.widget.DateWindow;
-import com.hll_sc_app.base.widget.DateYearMonthWindow;
-import com.hll_sc_app.base.widget.DateYearWindow;
-import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.enums.TimeFlagEnum;
-import com.hll_sc_app.bean.enums.TimeTypeEnum;
-import com.hll_sc_app.bean.event.SalesDayReportSearchEvent;
-import com.hll_sc_app.bean.event.SalesManSearchEvent;
-import com.hll_sc_app.bean.report.resp.bill.DateSaleAmount;
-import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.bean.report.salesReport.SalesReportDetail;
 import com.hll_sc_app.bean.report.salesReport.SalesReportRecord;
 import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
@@ -42,6 +29,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
@@ -49,11 +37,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -111,14 +95,7 @@ public class SalesReportActivity extends BaseLoadActivity implements SalesReport
             }
         });
         mPresenter.register(this);
-        EventBus.getDefault().register(this);
         mPresenter.start();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initDefaultTime() {
@@ -151,7 +128,8 @@ public class SalesReportActivity extends BaseLoadActivity implements SalesReport
                 showCustomerDate(mTxtDateName);
                 break;
             case R.id.edt_search:
-                SearchActivity.start("", SalesDayReportSearch.class.getSimpleName());
+                SearchActivity.start(SalesReportActivity.this,
+                        "", CommonSearch.class.getSimpleName());
                 break;
             case R.id.img_clear:
                 searchEditText.setText("");
@@ -163,17 +141,20 @@ public class SalesReportActivity extends BaseLoadActivity implements SalesReport
         }
     }
 
-    @Subscribe
-    public void onEvent(SalesDayReportSearchEvent event) {
-        String name = event.getSearchWord();
-        if (!TextUtils.isEmpty(name)) {
-            searchEditText.setText(name);
-            salesReportReq.setKeyword(name);
-            imgClearView.setVisibility(View.VISIBLE);
-        } else {
-            salesReportReq.setKeyword("");
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name)) {
+                searchEditText.setText(name);
+                salesReportReq.setKeyword(name);
+                imgClearView.setVisibility(View.VISIBLE);
+            } else {
+                salesReportReq.setKeyword("");
+            }
+            mPresenter.querySalesReportList(true);
         }
-        mPresenter.querySalesReportList(true);
     }
 
     //点击自定义事件

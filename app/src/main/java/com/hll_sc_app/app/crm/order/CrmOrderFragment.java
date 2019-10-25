@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.crm.order;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,12 +34,12 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.impl.IReload;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SingleSelectionWindow;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,6 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crm_order, container, false);
         unbinder = ButterKnife.bind(this, view);
-        EventBus.getDefault().register(this);
         showStatusBar();
         initView();
         return view;
@@ -94,13 +94,15 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, CrmOrderShopSearch.class.getSimpleName());
+                SearchActivity.start(requireActivity(),
+                        searchContent, CrmOrderShopSearch.class.getSimpleName());
             }
 
             @Override
             public void toSearch(String searchContent) {
-                if (TextUtils.isEmpty(searchContent))
-                    EventBus.getDefault().post(new ShopSearchEvent());
+                ShopSearchEvent event = new ShopSearchEvent();
+                event.setName(searchContent);
+                EventBus.getDefault().post(event);
             }
         });
         mPager.setAdapter(new Pager());
@@ -114,16 +116,18 @@ public class CrmOrderFragment extends BaseLoadFragment implements BaseQuickAdapt
         }
     }
 
-    @Subscribe(priority = 1)
-    public void handleSearchEvent(ShopSearchEvent event) {
-        if (!TextUtils.isEmpty(event.getName())) {
-            mSearchView.showSearchContent(true, event.getName());
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 
     @Override
     public void onDestroyView() {
-        EventBus.getDefault().unregister(this);
         super.onDestroyView();
         unbinder.unbind();
     }

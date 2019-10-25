@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.goodsdemand.search;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,12 +20,9 @@ import com.hll_sc_app.app.search.stratery.PurchaserSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.PurchaserSearchEvent;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 import com.hll_sc_app.widget.SearchView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +48,7 @@ public class PurchaserSearchActivity extends BaseLoadActivity {
     String mID;
     @Autowired(name = "object1")
     int mIndex;
+    private List<Fragment> mFragments = new ArrayList<>();
 
     /**
      * @param id 已选择的采购商id
@@ -62,7 +61,6 @@ public class PurchaserSearchActivity extends BaseLoadActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_goods_demand_purchaser_search);
         ButterKnife.bind(this);
@@ -70,37 +68,34 @@ public class PurchaserSearchActivity extends BaseLoadActivity {
         initView();
     }
 
-    @Subscribe
-    public void handleSearchEvent(PurchaserSearchEvent event) {
-        if (!TextUtils.isEmpty(event.getName())) {
-            mSearchView.showSearchContent(true, event.getName());
-        }
-    }
-
     @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
+        }
     }
 
     private void initView() {
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, PurchaserSearch.class.getSimpleName());
+                SearchActivity.start(PurchaserSearchActivity.this,
+                        searchContent, PurchaserSearch.class.getSimpleName());
             }
 
             @Override
             public void toSearch(String searchContent) {
-                if (TextUtils.isEmpty(searchContent)) {
-                    EventBus.getDefault().post(new PurchaserSearchEvent(""));
+                for (Fragment fragment : mFragments) {
+                    ((PurchaserSearchFragment) fragment).reload();
                 }
             }
         });
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(PurchaserSearchFragment.newInstance(0, mID));
-        fragments.add(PurchaserSearchFragment.newInstance(1, mID));
-        mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(), fragments));
+        mFragments.add(PurchaserSearchFragment.newInstance(0, mID));
+        mFragments.add(PurchaserSearchFragment.newInstance(1, mID));
+        mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(), mFragments));
         mTabLayout.setViewPager(mViewPager, new String[]{"合作客户", "意向客户"});
         mViewPager.setCurrentItem(mIndex);
     }

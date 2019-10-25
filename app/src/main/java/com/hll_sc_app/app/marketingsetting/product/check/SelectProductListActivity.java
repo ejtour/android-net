@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.marketingsetting.product.check;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,16 +13,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingProductAdapter;
-import com.hll_sc_app.app.search.ISearchContract;
 import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.ProductSearch;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +56,6 @@ public class SelectProductListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_marketing_select_product_list);
         unbinder = ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
-        EventBus.getDefault().register(this);
         initView();
     }
 
@@ -66,7 +63,6 @@ public class SelectProductListActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initView() {
@@ -78,7 +74,8 @@ public class SelectProductListActivity extends AppCompatActivity {
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, MarketingSelectProductSearch.class.getSimpleName());
+                SearchActivity.start(SelectProductListActivity.this,
+                        searchContent, ProductSearch.class.getSimpleName());
             }
 
             @Override
@@ -98,35 +95,13 @@ public class SelectProductListActivity extends AppCompatActivity {
         });
     }
 
-
-    @Subscribe
-    public void onEvent(MarketingEvent event) {
-        if (event.getTarget() != MarketingEvent.Target.MARKETING_SELECT_PRODUCT_LIST) {
-            return;
-        }
-        mSearchView.showSearchContent(!TextUtils.isEmpty(event.getSearchText()), event.getSearchText());
-    }
-
-    static public class MarketingSelectProductSearch implements ISearchContract.ISearchStrategy {
-
-        @Override
-        public void onSearch(String searchWords) {
-            MarketingEvent event = new MarketingEvent();
-            event.setTarget(MarketingEvent.Target.MARKETING_SELECT_PRODUCT_LIST);
-            event.setSearchText(searchWords);
-            EventBus.getDefault().post(event);
-        }
-
-        @Override
-        public String getEditHint() {
-            return "请输入商品名称进行查询";
-        }
-
-        @Override
-        public int getEmptyImage() {
-            return R.drawable.ic_search_goods;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
-
-
 }

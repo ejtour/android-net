@@ -1,10 +1,12 @@
 package com.hll_sc_app.app.marketingsetting.coupon.selectshops;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -21,12 +23,12 @@ import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.cooperation.CooperationShopsListResp;
 import com.hll_sc_app.bean.event.MarketingSelectShopEvent;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,7 +78,6 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marketing_select_shop);
         ARouter.getInstance().inject(this);
-        EventBus.getDefault().register(this);
         unbinder = ButterKnife.bind(this);
         mSelectMap = transformSelect(mSelectList);
         initView();
@@ -86,7 +87,6 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
-        EventBus.getDefault().unregister(this);
     }
 
     private Map<String, CooperationShopsListResp.ShopListBean> transformSelect(List<CooperationShopsListResp.ShopListBean> customerListBeans) {
@@ -116,7 +116,8 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
         mSearch.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, SelectShopSearch.class.getSimpleName());
+                SearchActivity.start(SelectShopsActivity.this,
+                        searchContent, SelectShopSearch.class.getSimpleName());
             }
 
             @Override
@@ -131,8 +132,7 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
 
         mTitle.setRightBtnClick(v -> {
             mSelectList = new ArrayList<>(mSelectMap.values());
-            EventBus.getDefault().post(new MarketingSelectShopEvent(0, null,
-                    new MarketingSelectShopEvent.SelecShops(mSelectList.size() == mShopAdapter.getItemCount(), mSelectList)));
+            EventBus.getDefault().post(new MarketingSelectShopEvent(new MarketingSelectShopEvent.SelecShops(mSelectList.size() == mShopAdapter.getItemCount(), mSelectList)));
             finish();
         });
     }
@@ -159,10 +159,13 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
         }
     }
 
-    @Subscribe
-    public void onSubscribe(MarketingSelectShopEvent event) {
-        if (!event.isGroupScope()) {
-            mSearch.showSearchContent(true, event.getSearchText());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearch.showSearchContent(true, name);
         }
     }
 

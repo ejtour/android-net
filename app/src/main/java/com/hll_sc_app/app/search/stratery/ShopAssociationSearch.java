@@ -2,10 +2,6 @@ package com.hll_sc_app.app.search.stratery;
 
 import com.hll_sc_app.app.search.ISearchContract;
 import com.hll_sc_app.app.search.presenter.ShopSearchPresenter;
-import com.hll_sc_app.bean.event.ShopSearchEvent;
-import com.hll_sc_app.bean.window.NameValue;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -16,21 +12,6 @@ public class ShopAssociationSearch implements ISearchContract.ISearchStrategy {
     @Override
     public ISearchContract.ISearchPresenter getSearchPresenter() {
         return new ShopSearchPresenter();
-    }
-
-    @Override
-    public void onSearch(String searchWords) {
-        ShopSearchEvent event = new ShopSearchEvent();
-        event.setName(searchWords);
-        EventBus.getDefault().post(event);
-    }
-
-    @Override
-    public void onClick(NameValue nameValue) {
-        ShopSearchEvent event = new ShopSearchEvent();
-        event.setName(nameValue.getName());
-        event.setShopMallId(nameValue.getValue());
-        EventBus.getDefault().post(event);
     }
 
     @Override

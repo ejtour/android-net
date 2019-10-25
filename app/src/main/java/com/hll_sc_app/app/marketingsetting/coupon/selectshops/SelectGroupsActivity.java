@@ -1,9 +1,11 @@
 package com.hll_sc_app.app.marketingsetting.coupon.selectshops;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -16,7 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.SelectGroupSearch;
+import com.hll_sc_app.app.search.stratery.CustomerNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -25,6 +27,7 @@ import com.hll_sc_app.bean.cooperation.CooperationShopsListResp;
 import com.hll_sc_app.bean.event.MarketingSelectShopEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.marketingsetting.CouponSendReq;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
@@ -135,7 +138,8 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
         mSearch.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, SelectGroupSearch.class.getSimpleName());
+                SearchActivity.start(SelectGroupsActivity.this,
+                        searchContent, CustomerNameSearch.class.getSimpleName());
             }
 
             @Override
@@ -221,29 +225,35 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
 
     @Subscribe
     public void onSubscribe(MarketingSelectShopEvent event) {
-        if (event.isGroupScope()) {
-            if (event.getSearchText() != null) {
-                mSearch.showSearchContent(true, event.getSearchText());
-            } else if (event.getSelecShops() != null && currentGroupIndex > -1) {
-                PurchaserBean currentGroupBean = mGroupAdapter.getItem(currentGroupIndex);
-                ArrayList<String> shopIds = new ArrayList<>();
-                for (CooperationShopsListResp.ShopListBean shopListBean : event.getSelecShops().getSelectShops()) {
-                    shopIds.add(shopListBean.getShopID());
-                }
-                if (mSelectMap.get(currentGroupBean.getPurchaserID()) != null) {
-                    mSelectMap.get(currentGroupBean.getPurchaserID()).setShopIDList(shopIds);
-                    mSelectMap.get(currentGroupBean.getPurchaserID()).setScope(event.getSelecShops().isSelectAll() ? 1 : 0);
-                } else {
-                    CouponSendReq.GroupandShopsBean groupandShopsBean = new CouponSendReq.GroupandShopsBean();
-                    groupandShopsBean.setPurchaserID(currentGroupBean.getPurchaserID());
-                    groupandShopsBean.setPurchaserName(currentGroupBean.getPurchaserName());
-                    groupandShopsBean.setScope(event.getSelecShops().isSelectAll() ? 1 : 0);
-                    groupandShopsBean.setShopIDList(shopIds);
-                    mSelectMap.put(currentGroupBean.getPurchaserID(), groupandShopsBean);
-                }
-                mGroupAdapter.notifyDataSetChanged();
-                updateConfirm(mSelectMap.size());
+        if (event.getSelecShops() != null && currentGroupIndex > -1) {
+            PurchaserBean currentGroupBean = mGroupAdapter.getItem(currentGroupIndex);
+            ArrayList<String> shopIds = new ArrayList<>();
+            for (CooperationShopsListResp.ShopListBean shopListBean : event.getSelecShops().getSelectShops()) {
+                shopIds.add(shopListBean.getShopID());
             }
+            if (mSelectMap.get(currentGroupBean.getPurchaserID()) != null) {
+                mSelectMap.get(currentGroupBean.getPurchaserID()).setShopIDList(shopIds);
+                mSelectMap.get(currentGroupBean.getPurchaserID()).setScope(event.getSelecShops().isSelectAll() ? 1 : 0);
+            } else {
+                CouponSendReq.GroupandShopsBean groupandShopsBean = new CouponSendReq.GroupandShopsBean();
+                groupandShopsBean.setPurchaserID(currentGroupBean.getPurchaserID());
+                groupandShopsBean.setPurchaserName(currentGroupBean.getPurchaserName());
+                groupandShopsBean.setScope(event.getSelecShops().isSelectAll() ? 1 : 0);
+                groupandShopsBean.setShopIDList(shopIds);
+                mSelectMap.put(currentGroupBean.getPurchaserID(), groupandShopsBean);
+            }
+            mGroupAdapter.notifyDataSetChanged();
+            updateConfirm(mSelectMap.size());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearch.showSearchContent(true, name);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.order;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,6 +36,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.impl.IReload;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 
 import org.greenrobot.eventbus.EventBus;
@@ -101,10 +103,24 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         }
     }
 
-    @Subscribe(priority = 1, threadMode = ThreadMode.MAIN)
-    public void handleSearchEvent(ShopSearchEvent event) {
-        mClearSearch.setVisibility(!TextUtils.isEmpty(event.getName()) ? View.VISIBLE : View.GONE);
-        mSearch.setText(event.getName());
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            String value = data.getStringExtra("value");
+            handleNameValue(name, value);
+        }
+    }
+
+    public void handleNameValue(String name, String value) {
+        mClearSearch.setVisibility(!TextUtils.isEmpty(name) ? View.VISIBLE : View.GONE);
+        mSearch.setText(name);
+
+        ShopSearchEvent event = new ShopSearchEvent();
+        event.setName(name);
+        event.setShopMallId(value);
+        EventBus.getDefault().post(event);
     }
 
     @Override
@@ -118,10 +134,11 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fmo_search:
-                SearchActivity.start(mOrderParam.getSearchWords(), ShopAssociationSearch.class.getSimpleName());
+                SearchActivity.start(requireActivity(),
+                        mOrderParam.getSearchWords(), ShopAssociationSearch.class.getSimpleName());
                 break;
             case R.id.fmo_clear_search:
-                EventBus.getDefault().post(new ShopSearchEvent());
+                handleNameValue("", "");
                 break;
             case R.id.fmo_options:
                 showOptionsWindow(view);

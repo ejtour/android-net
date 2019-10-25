@@ -11,19 +11,9 @@ public class ComplainManageEvent {
     private @EVENT
     int event;
 
-    private String searchContent;
-
     public ComplainManageEvent(@TARGET int target, @EVENT int event) {
         this.target = target;
         this.event = event;
-    }
-
-    public String getSearchContent() {
-        return searchContent;
-    }
-
-    public void setSearchContent(String searchContent) {
-        this.searchContent = searchContent;
     }
 
     public int getTarget() {

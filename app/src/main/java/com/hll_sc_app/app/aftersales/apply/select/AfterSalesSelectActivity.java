@@ -25,15 +25,11 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
 import com.hll_sc_app.bean.aftersales.AfterSalesDetailsBean;
-import com.hll_sc_app.bean.event.SearchEvent;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,15 +75,8 @@ public class AfterSalesSelectActivity extends BaseLoadActivity {
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_after_sales_select);
         ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
         ARouter.getInstance().inject(this);
         initView();
-    }
-
-    @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
     }
 
     private void initView() {
@@ -102,7 +91,8 @@ public class AfterSalesSelectActivity extends BaseLoadActivity {
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(searchContent, AfterSalesGoodsSearch.class.getSimpleName());
+                SearchActivity.start(AfterSalesSelectActivity.this,
+                        searchContent, AfterSalesGoodsSearch.class.getSimpleName());
             }
 
             @Override
@@ -125,9 +115,14 @@ public class AfterSalesSelectActivity extends BaseLoadActivity {
         mSum.setText(price == 0 ? "- -" : "¥" + CommonUtils.formatMoney(price));
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleSearchWords(SearchEvent event) {
-        mSearchView.showSearchContent(true, event.getName());
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
+        }
     }
 
     private List<AfterSalesDetailsBean> filter(String searchWords) {
