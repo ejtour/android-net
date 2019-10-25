@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="90dp"
     android:background="@android:color/white">
 
     <com.hll_sc_app.base.utils.glide.GlideImageView
@@ -35,7 +35,7 @@
         android:id="@+id/ii_shop_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="6dp"
         android:layout_marginRight="@dimen/dp_10"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
@@ -57,31 +57,33 @@
         tools:text="普通发票" />
 
     <TextView
-        android:id="@+id/ii_money_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="发票金额："
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/ii_icon"
-        app:layout_constraintStart_toStartOf="@id/ii_group_name" />
-
-    <TextView
         android:id="@+id/ii_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¥ 9,300.00"
         android:textAppearance="@style/TextAppearance.City22.Little.Red"
-        app:layout_constraintBottom_toBottomOf="@id/ii_money_label"
-        app:layout_constraintStart_toEndOf="@id/ii_money_label"
-        app:layout_constraintTop_toTopOf="@id/ii_money_label" />
+        app:layout_constraintBottom_toBottomOf="@id/ii_icon"
+        app:layout_constraintEnd_toEndOf="@id/ii_tag" />
+
+    <TextView
+        android:id="@+id/ii_range"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/ii_icon"
+        app:layout_constraintEnd_toStartOf="@id/ii_money"
+        app:layout_constraintStart_toStartOf="@id/ii_group_name"
+        tools:text="业务日期：2019/08/01 - 2019/08/30" />
 
     <TextView
         android:id="@+id/ii_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintBottom_toTopOf="@id/ii_range"
+        app:layout_constraintStart_toStartOf="@id/ii_group_name"
+        app:layout_constraintTop_toBottomOf="@id/ii_shop_name"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBaseline_toBaselineOf="@id/ii_money_label"
-        app:layout_constraintEnd_toEndOf="parent"
         tools:text="2018/03/15 10:22" />
 </android.support.constraint.ConstraintLayout>
