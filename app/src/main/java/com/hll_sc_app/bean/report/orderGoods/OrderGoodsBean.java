@@ -9,6 +9,7 @@ import android.os.Parcelable;
  */
 
 public class OrderGoodsBean implements Parcelable {
+    private double adjustmentAmount;
     private double inspectionNum;
     private double inspectionAmount;
     private double orderAmount;
@@ -17,6 +18,14 @@ public class OrderGoodsBean implements Parcelable {
     private String shopID;
     private String purchaserName;
     private double skuNum;
+
+    public double getAdjustmentAmount() {
+        return adjustmentAmount;
+    }
+
+    public void setAdjustmentAmount(double adjustmentAmount) {
+        this.adjustmentAmount = adjustmentAmount;
+    }
 
     public double getInspectionNum() {
         return inspectionNum;
@@ -89,6 +98,7 @@ public class OrderGoodsBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(this.adjustmentAmount);
         dest.writeDouble(this.inspectionNum);
         dest.writeDouble(this.inspectionAmount);
         dest.writeDouble(this.orderAmount);
@@ -103,6 +113,7 @@ public class OrderGoodsBean implements Parcelable {
     }
 
     protected OrderGoodsBean(Parcel in) {
+        this.adjustmentAmount = in.readDouble();
         this.inspectionNum = in.readDouble();
         this.inspectionAmount = in.readDouble();
         this.orderAmount = in.readDouble();

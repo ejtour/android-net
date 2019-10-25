@@ -50,7 +50,7 @@
     <View
         android:id="@+id/ogd_data_bg"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="52dp"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
@@ -64,9 +64,9 @@
         android:layout_width="1dp"
         android:layout_height="12dp"
         android:background="@color/color_dddddd"
-        app:layout_constraintBottom_toBottomOf="@id/ogd_data_bg"
-        app:layout_constraintEnd_toStartOf="@id/ogd_div2"
+        app:layout_constraintBottom_toTopOf="@id/ogd_div2"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/ogd_data_bg" />
 
     <View
@@ -76,8 +76,8 @@
         android:background="@color/color_dddddd"
         app:layout_constraintBottom_toBottomOf="@id/ogd_data_bg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ogd_div1"
-        app:layout_constraintTop_toTopOf="@id/ogd_data_bg" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ogd_div1" />
 
     <TextView
         android:id="@+id/ogd_product_num_label"
@@ -86,9 +86,9 @@
         android:layout_marginLeft="5dp"
         android:text="商品数"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/ogd_data_bg"
+        app:layout_constraintBottom_toBottomOf="@id/ogd_div1"
         app:layout_constraintStart_toStartOf="@id/ogd_data_bg"
-        app:layout_constraintTop_toTopOf="@id/ogd_data_bg" />
+        app:layout_constraintTop_toTopOf="@id/ogd_div1" />
 
     <TextView
         android:id="@+id/ogd_product_num"
@@ -96,53 +96,75 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        app:layout_constraintBottom_toBottomOf="@id/ogd_data_bg"
+        app:layout_constraintBottom_toBottomOf="@id/ogd_div1"
         app:layout_constraintEnd_toStartOf="@id/ogd_div1"
-        app:layout_constraintTop_toTopOf="@id/ogd_data_bg"
+        app:layout_constraintTop_toTopOf="@id/ogd_div1"
         tools:text="1" />
 
     <TextView
-        android:id="@+id/ogd_inspection_num_label"
+        android:id="@+id/ogd_order_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:text="验货数"
+        android:text="订货金额"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/ogd_data_bg"
+        app:layout_constraintBottom_toBottomOf="@id/ogd_div1"
         app:layout_constraintStart_toEndOf="@id/ogd_div1"
-        app:layout_constraintTop_toTopOf="@id/ogd_data_bg" />
+        app:layout_constraintTop_toTopOf="@id/ogd_div1" />
 
     <TextView
-        android:id="@+id/ogd_inspection_num"
+        android:id="@+id/ogd_order_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        app:layout_constraintBottom_toBottomOf="@id/ogd_data_bg"
-        app:layout_constraintEnd_toStartOf="@id/ogd_div2"
-        app:layout_constraintTop_toTopOf="@id/ogd_data_bg"
-        tools:text="11300" />
+        app:layout_constraintBottom_toBottomOf="@id/ogd_div1"
+        app:layout_constraintEnd_toEndOf="@id/ogd_data_bg"
+        app:layout_constraintTop_toTopOf="@id/ogd_div1"
+        tools:text="¥10,000" />
 
     <TextView
-        android:id="@+id/ogd_amount_label"
+        android:id="@+id/ogd_delivery_amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
-        android:text="金额"
+        android:text="发货金额"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toBottomOf="@id/ogd_data_bg"
-        app:layout_constraintStart_toEndOf="@id/ogd_div2"
-        app:layout_constraintTop_toTopOf="@id/ogd_data_bg" />
+        app:layout_constraintBottom_toBottomOf="@id/ogd_div2"
+        app:layout_constraintStart_toStartOf="@id/ogd_data_bg"
+        app:layout_constraintTop_toTopOf="@id/ogd_div2" />
 
     <TextView
-        android:id="@+id/ogd_amount"
+        android:id="@+id/ogd_delivery_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:textAppearance="@style/TextAppearance.City22.Little"
-        app:layout_constraintBottom_toBottomOf="@id/ogd_data_bg"
+        app:layout_constraintBottom_toBottomOf="@id/ogd_div2"
+        app:layout_constraintEnd_toStartOf="@id/ogd_div2"
+        app:layout_constraintTop_toTopOf="@id/ogd_div2"
+        tools:text="¥10,000" />
+
+    <TextView
+        android:id="@+id/ogd_inspection_amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="验货金额"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/ogd_div2"
+        app:layout_constraintStart_toEndOf="@id/ogd_div2"
+        app:layout_constraintTop_toTopOf="@id/ogd_div2" />
+
+    <TextView
+        android:id="@+id/ogd_inspection_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:textAppearance="@style/TextAppearance.City22.Little"
+        app:layout_constraintBottom_toBottomOf="@id/ogd_div2"
         app:layout_constraintEnd_toEndOf="@id/ogd_data_bg"
-        app:layout_constraintTop_toTopOf="@id/ogd_data_bg"
+        app:layout_constraintTop_toTopOf="@id/ogd_div2"
         tools:text="¥10,000" />
 
     <View

@@ -21,7 +21,8 @@ public class OrderGoodsAdapter extends BaseQuickAdapter<OrderGoodsBean, BaseView
         helper.setText(R.id.rog_shop_name, item.getShopName())
                 .setText(R.id.rog_group_name, item.getPurchaserName())
                 .setText(R.id.rog_product_num, CommonUtils.formatNum(item.getSkuNum()))
-                .setText(R.id.rog_inspection_num, CommonUtils.formatNum(item.getInspectionNum()))
-                .setText(R.id.rog_amount, String.format("¥%s", CommonUtils.formatMoney(item.getInspectionAmount())));
+                .setText(R.id.rog_order_amount, String.format("¥%s", CommonUtils.formatMoney(item.getOrderAmount())))
+                .setText(R.id.rog_delivery_amount, String.format("¥%s", CommonUtils.formatMoney(item.getAdjustmentAmount())))
+                .setText(R.id.rog_inspection_amount, String.format("¥%s", CommonUtils.formatMoney(item.getInspectionAmount())));
     }
 }
