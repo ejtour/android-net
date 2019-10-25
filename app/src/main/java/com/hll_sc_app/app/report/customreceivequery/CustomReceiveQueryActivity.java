@@ -145,8 +145,14 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
         Calendar defaultCalendar = Calendar.getInstance();
         mDateWindow.setSelectCalendarRange(defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH) + 1, 1,
                 defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH) + 1, defaultCalendar.get(Calendar.DATE));
+
         mTxtDate.setTag(R.id.date_start, CalendarUtils.format(CalendarUtils.getFirstDateInMonth(defaultCalendar.getTime()), "yyyyMMdd"));
         mTxtDate.setTag(R.id.date_end, CalendarUtils.format(defaultCalendar.getTime(), "yyyyMMdd"));
+
+        String initText = String.format("%s-%s", CalendarUtils.format(CalendarUtils.getFirstDateInMonth(defaultCalendar.getTime()), "yyyy/MM/dd"),
+                CalendarUtils.format(defaultCalendar.getTime(), "yyyy/MM/dd"));
+        mTxtDate.setText(initText);
+
         mDateWindow.setOnRangeSelectListener((start, end) -> {
             if (start == null || end == null) {
                 mTxtDate.setTag(R.id.date_start, null);
