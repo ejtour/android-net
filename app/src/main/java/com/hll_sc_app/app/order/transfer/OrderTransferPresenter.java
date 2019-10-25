@@ -36,8 +36,9 @@ public class OrderTransferPresenter implements IOrderTransferContract.IOrderTran
         Order.getPendingTransferList(mPageNum,
                 param.getFormatCreateStart(Constants.UNSIGNED_YYYY_MM_DD),
                 param.getFormatCreateEnd(Constants.UNSIGNED_YYYY_MM_DD),
-                TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
+                param.getSearchWords(),
                 param.getSearchShopID(),
+                param.getSearchType(),
                 new SimpleObserver<TransferResp>(mView, showLoading) {
                     @Override
                     public void onSuccess(TransferResp resp) {
