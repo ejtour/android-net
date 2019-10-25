@@ -8,12 +8,7 @@ import com.hll_sc_app.app.search.ISearchContract;
  * @since 2019/9/5
  */
 
-public class CrmOrderShopSearch extends ShopAssociationSearch {
-
-    @Override
-    public ISearchContract.ISearchPresenter getSearchPresenter() {
-        return null;
-    }
+public class CrmOrderShopSearch implements ISearchContract.ISearchStrategy {
 
     @Override
     public String getEditHint() {
