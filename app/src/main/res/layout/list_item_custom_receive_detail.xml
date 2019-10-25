@@ -43,7 +43,7 @@
         android:paddingLeft="@dimen/dp_10"
         android:textColor="@color/base_text999"
         android:textSize="@dimen/base_text_10"
-        tools:text="品相编码" />
+        tools:text="品项编码" />
 
     <View
         android:layout_width="1dp"

@@ -126,7 +126,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
             priceNoTax = CommonUtils.addDouble(priceNoTax, bean.getPretaxAmount());
         }
 
-        mTxtFooter.setText(String.format("合计: 品相：%s，数量：%s，金额：¥%s，未税金额：¥%s，",
+        mTxtFooter.setText(String.format("合计: 品项：%s，数量：%s，金额：¥%s，未税金额：¥%s，",
                 customReceiveDetailBeans.size(),
                 number.toString(),
                 price.toString(),
@@ -175,13 +175,11 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
                     .setText(R.id.txt_unit_price_no_tax, "¥" + CommonUtils.formatMoney(item.getPretaxPrice()))
                     .setText(R.id.txt_price_no_taxt, "¥" + CommonUtils.formatMoney(item.getPretaxAmount()))
                     .setText(R.id.unit_assist, item.getAssistUnit())
-                    .setText(R.id.number_assist, item.getAssistUnit())
-                    .setText(R.id.unit_assist, item.getAuxiliaryNum())
+                    .setText(R.id.number_assist, CommonUtils.formatNumber(item.getAuxiliaryNum()))
                     .setText(R.id.date_create, CalendarUtils.getDateFormatString(item.getCreateTime(), "yyyyMMddHHmmss", "yyyy/MM/dd"))
                     .setText(R.id.batch_number, item.getBatchNumber())
                     .setText(R.id.txt_remark, item.getDetailRemark())
                     .setBackgroundColor(R.id.ll_container, Color.parseColor(helper.getAdapterPosition() % 2 == 0 ? "#FFFFFF" : "#F9F9F9"));
         }
     }
-
 }

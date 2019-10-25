@@ -200,7 +200,7 @@
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="品相编码"
+                    android:text="品项编码"
                     android:textColor="@color/base_text999"
                     android:textSize="@dimen/base_text_10" />
 
