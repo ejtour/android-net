@@ -30,7 +30,12 @@ public class InvoiceAdapter extends BaseQuickAdapter<InvoiceBean, BaseViewHolder
                 .setText(R.id.ii_group_name, item.getPurchaserName())
                 .setText(R.id.ii_money, processMoney(item.getInvoicePrice()))
                 .setText(R.id.ii_tag, item.getInvoiceType() == 2 ? "专用发票" : "普通发票")
-                .setText(R.id.ii_time, DateUtil.getReadableTime(item.getCreateTime(), Constants.SLASH_YYYY_MM_DD_HH_MM))
+                .setText(R.id.ii_time, String.format("申请日期：%s", DateUtil.getReadableTime(item.getCreateTime(), Constants.SLASH_YYYY_MM_DD_HH_MM)))
+                .setText(R.id.ii_range, String.format("业务日期：%s - %s",
+                        CommonUtils.getDouble(item.getBusinessBeginDate()) == 0 ? "0" :
+                                DateUtil.getReadableTime(item.getBusinessBeginDate(), Constants.SLASH_YYYY_MM_DD),
+                        CommonUtils.getDouble(item.getBusinessEndDate()) == 0 ? "0" :
+                                DateUtil.getReadableTime(item.getBusinessEndDate(), Constants.SLASH_YYYY_MM_DD)))
                 .getView(R.id.ii_icon)).setImageURL(item.getImagePath());
     }
 
