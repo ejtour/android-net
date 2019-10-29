@@ -322,7 +322,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                     mSelectTypeWindow = new MutipleSelecteWindow<>(this, data, new MutipleSelecteWindow.Config<FilterParams.TypeBean>() {
                         @Override
                         public boolean enableSelectAll() {
-                            return false;
+                            return true;
                         }
 
                         @Override
@@ -343,7 +343,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
                                 nameBuilder.append(data.get(index).getTypeName()).append(",");
                                 idBuilder.append(data.get(index).getType()).append(",");
                             }
-                            mTxtType.setText(nameBuilder.length() == 0 ? "单据类型" : nameBuilder.toString());
+                            mTxtType.setText(nameBuilder.length() == 0 ? "单据类型" : selectedIndexs.size() == data.size() ? "全部" : nameBuilder.toString());
                             mTxtType.setTag(idBuilder.toString());
                             mPresent.refresh(false);
                         }

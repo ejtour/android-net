@@ -19,6 +19,7 @@ public class CustomReceiveListResp {
 
     public static List<FilterParams.TypeBean> getTypeList() {
         List<FilterParams.TypeBean> typeBeans = new ArrayList<>();
+        typeBeans.add(new FilterParams.TypeBean("全部", 0));
         typeBeans.add(new FilterParams.TypeBean("验货入库", 1));
         typeBeans.add(new FilterParams.TypeBean("入库冲销", 3));
         typeBeans.add(new FilterParams.TypeBean("入库退货", 4));
