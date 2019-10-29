@@ -28,9 +28,9 @@ public class CustomReceiveListResp {
         typeBeans.add(new FilterParams.TypeBean("直发冲销", 22));
         typeBeans.add(new FilterParams.TypeBean("直发退货", 23));
         typeBeans.add(new FilterParams.TypeBean("赠品入库", 24));
-        typeBeans.add(new FilterParams.TypeBean("代仓验收入库单", 30));
-        typeBeans.add(new FilterParams.TypeBean("代仓入库冲销单", 31));
-        typeBeans.add(new FilterParams.TypeBean("代仓入库退货单", 32));
+//        typeBeans.add(new FilterParams.TypeBean("代仓验收入库单", 30));
+//        typeBeans.add(new FilterParams.TypeBean("代仓入库冲销单", 31));
+//        typeBeans.add(new FilterParams.TypeBean("代仓入库退货单", 32));
         typeBeans.add(new FilterParams.TypeBean("司机补货单", 27));
         typeBeans.add(new FilterParams.TypeBean("库存差异调整", 28));
         return typeBeans;
