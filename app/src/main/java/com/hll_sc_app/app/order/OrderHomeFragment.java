@@ -23,9 +23,8 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.app.order.search.OrderSearchActivity;
 import com.hll_sc_app.app.order.transfer.OrderTransferFragment;
-import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.ShopAssociationSearch;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.event.ExportEvent;
@@ -109,6 +108,7 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             String name = data.getStringExtra("name");
             String value = data.getStringExtra("value");
+            mOrderParam.setSearchType(data.getIntExtra("index", 0));
             handleNameValue(name, value);
         }
     }
@@ -134,8 +134,8 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fmo_search:
-                SearchActivity.start(requireActivity(),
-                        mOrderParam.getSearchWords(), ShopAssociationSearch.class.getSimpleName());
+                OrderSearchActivity.start(requireActivity(),
+                        mOrderParam.getSearchWords(), String.valueOf(mOrderParam.getSearchType()));
                 break;
             case R.id.fmo_clear_search:
                 handleNameValue("", "");

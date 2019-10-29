@@ -11,6 +11,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.setting.SettingContract;
+import com.hll_sc_app.app.setting.SettingPresenter;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -31,12 +33,12 @@ import butterknife.OnClick;
  * @since 2019/9/27
  */
 @Route(path = RouterConfig.CRM_SETTING)
-public class CrmSettingActivity extends BaseLoadActivity implements ICrmSettingContract.ICrmSettingsView {
+public class CrmSettingActivity extends BaseLoadActivity implements SettingContract.ISettingView {
     @BindView(R.id.acs_clean_cache)
     TextView mCleanCache;
     @BindView(R.id.acs_version_info)
     TextView mVersionInfo;
-    private ICrmSettingContract.ICrmSettingPresenter mPresenter;
+    private SettingContract.ISettingPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class CrmSettingActivity extends BaseLoadActivity implements ICrmSettingC
         mCleanCache.setText(getCacheValue());
         mVersionInfo.setText(String.format(Locale.getDefault(), "%s.%d", SystemUtils.getVersionName(this),
                 SystemUtils.getVersionCode(this)));
-        mPresenter = new CrmSettingPresenter();
+        mPresenter = new SettingPresenter();
         mPresenter.register(this);
     }
 

@@ -44,21 +44,21 @@ import io.reactivex.disposables.Disposable;
  */
 @Route(path = RouterConfig.SEARCH)
 public class SearchActivity extends BaseLoadActivity implements ISearchContract.ISearchView, BaseQuickAdapter.OnItemClickListener {
-    private static final int REQ_CODE = 0x844;
+    protected static final int REQ_CODE = 0x844;
     @BindView(R.id.as_search_edit)
-    EditText mSearchEdit;
+    protected EditText mSearchEdit;
     @BindView(R.id.as_search_clear)
     ImageView mSearchClear;
     @BindView(R.id.as_list)
     RecyclerView mListView;
     @Autowired(name = "object0")
-    String mSearchWords;
+    protected String mSearchWords;
     @Autowired(name = "object1")
-    String mKey;
-    private Disposable mDisposable;
+    protected String mKey;
+    protected Disposable mDisposable;
     private ISearchContract.ISearchStrategy mStrategy;
     private ObservableEmitter<String> mEmitter;
-
+    private SearchAdapter mAdapter;
     /**
      * @param searchWords 搜索词
      * @param key         搜索MAP中对应的键值
@@ -75,13 +75,14 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        mStrategy = SearchFactory.getSearchStrategy(mKey);
-        if (mStrategy == null) return;
+        beforeInitView();
         initView();
-        initData();
     }
 
-    private void initData() {
+    protected void beforeInitView() {
+        mStrategy = SearchFactory.getSearchStrategy(mKey);
+        if (mStrategy == null) return;
+        mSearchEdit.setHint(mStrategy.getEditHint());
         ISearchContract.ISearchPresenter presenter = mStrategy.getSearchPresenter();
         if (presenter != null) {
             presenter.register(this);
@@ -97,26 +98,22 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
         super.onDestroy();
     }
 
-    private Observable<String> getTextObservable() {
+    protected Observable<String> getTextObservable() {
         Observable<String> observable = Observable.create(emitter -> mEmitter = emitter);
         return observable.filter(s -> s.length() > 0).debounce(500, TimeUnit.MILLISECONDS);
     }
 
     private void initView() {
-        mSearchEdit.setHint(mStrategy.getEditHint());
         mSearchEdit.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 search();
             }
             return true;
         });
-        SearchAdapter adapter = new SearchAdapter(mStrategy.getLayoutRes());
-        adapter.setEmptyView(EmptyView.newBuilder(this)
-                .setTips(mStrategy.getEmptyTip())
-                .setImage(mStrategy.getEmptyImage())
-                .create());
-        adapter.setOnItemClickListener(this);
-        mListView.setAdapter(adapter);
+        mAdapter = new SearchAdapter(getLayoutRes());
+        mAdapter.setEmptyView(getEmptyView());
+        mAdapter.setOnItemClickListener(this);
+        mListView.setAdapter(mAdapter);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee),
                 UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0, Color.WHITE);
@@ -124,14 +121,29 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
         updateSearchEdit(mSearchWords);
     }
 
+    protected View getEmptyView() {
+        return EmptyView.newBuilder(this)
+                .setTips(mStrategy.getEmptyTip())
+                .setImage(mStrategy.getEmptyImage())
+                .create();
+    }
+
+    protected int getLayoutRes() {
+        return mStrategy.getLayoutRes();
+    }
 
     @OnClick(R.id.as_search_button)
     public void search() {
         String trim = mSearchEdit.getText().toString().trim();
         Intent intent = new Intent();
         intent.putExtra("name", trim);
+        beforeFinish(intent);
         setResult(Constants.SEARCH_RESULT_CODE, intent);
         close();
+    }
+
+    protected void beforeFinish(Intent intent) {
+        // no-op
     }
 
     private void updateSearchEdit(String content) {
@@ -157,7 +169,8 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
             mSearchClear.setVisibility(View.VISIBLE);
         } else {
             mSearchClear.setVisibility(View.GONE);
-            ((SearchAdapter) mListView.getAdapter()).setNewData(null);
+            if (mAdapter != null)
+                mAdapter.setNewData(null);
         }
         if (mEmitter != null)
             mEmitter.onNext(s.toString().trim());
@@ -165,7 +178,7 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
 
     @Override
     public void refreshSearchData(List<NameValue> list) {
-        ((SearchAdapter) mListView.getAdapter()).setNewData(list, mSearchEdit.getText().toString().trim());
+        mAdapter.setNewData(list, mSearchEdit.getText().toString().trim());
     }
 
     @Override
@@ -175,6 +188,7 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
             Intent intent = new Intent();
             intent.putExtra("name", item.getName());
             intent.putExtra("value", item.getValue());
+            beforeFinish(intent);
             setResult(Constants.SEARCH_RESULT_CODE, intent);
             close();
         }

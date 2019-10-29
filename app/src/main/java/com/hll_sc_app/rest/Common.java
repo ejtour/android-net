@@ -10,6 +10,7 @@ import com.hll_sc_app.bean.common.IntentionCustomerBean;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.export.ExportReq;
@@ -118,6 +119,23 @@ public class Common {
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 搜索货主列表
+     *
+     * @param actionType 0-代仓公司名称,1-货主名称,2-根据货主名称查询代仓公司
+     * @param searchWord 搜索词
+     */
+    public static void searchShipperList(int actionType, String searchWord, SimpleObserver<List<WareHouseShipperBean>> observer) {
+        CommonService.INSTANCE
+                .searchShipperList(BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("actionType", String.valueOf(actionType))
+                        .put("name", searchWord)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .subscribe(observer);
     }
 }

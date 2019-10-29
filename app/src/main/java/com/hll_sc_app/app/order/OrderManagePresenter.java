@@ -1,7 +1,5 @@
 package com.hll_sc_app.app.order;
 
-import android.text.TextUtils;
-
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.event.OrderEvent;
@@ -59,8 +57,9 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
         OrderParam param = mView.getOrderParam();
         Order.getOrderList(mPageNum,
                 mView.getOrderStatus().getType(),
-                TextUtils.isEmpty(param.getSearchShopID()) ? param.getSearchWords() : "",
+                param.getSearchWords(),
                 param.getSearchShopID(),
+                param.getSearchType(),
                 param.getFormatCreateStart(Constants.UNSIGNED_YYYY_MM_DD),
                 param.getFormatCreateEnd(Constants.UNSIGNED_YYYY_MM_DD),
                 param.getFormatExecuteStart(Constants.UNSIGNED_YYYY_MM_DD_HH),

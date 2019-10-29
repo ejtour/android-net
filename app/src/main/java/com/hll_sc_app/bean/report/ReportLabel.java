@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.SOURCE)
 public @interface ReportLabel {
     String SALES_STATISTICS = "商品销量统计汇总";
-    String ORDER_GOODS_DETAILS = "客户订货明细汇总";
+    String ORDER_GOODS_DETAILS = "客户订货统计";
     String DAILY_SALES_VOLUME = "日销售额汇总";
     String CUSTOMER_SALES = "客户销售汇总";
     String SIGNING_PERFORMANCE = "业务员签约绩效";

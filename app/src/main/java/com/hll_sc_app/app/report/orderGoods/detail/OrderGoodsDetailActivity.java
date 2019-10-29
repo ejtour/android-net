@@ -50,10 +50,12 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrder
     TextView mTime;
     @BindView(R.id.ogd_product_num)
     TextView mProductNum;
-    @BindView(R.id.ogd_inspection_num)
-    TextView mInspectionNum;
-    @BindView(R.id.ogd_amount)
-    TextView mAmount;
+    @BindView(R.id.ogd_inspection_amount)
+    TextView mInspectionAmount;
+    @BindView(R.id.ogd_order_amount)
+    TextView mOrderAmount;
+    @BindView(R.id.ogd_delivery_amount)
+    TextView mDeliveryAmount;
     @Autowired(name = "parcelable")
     OrderGoodsDetailParam mParam;
     @BindView(R.id.ogd_excel)
@@ -95,8 +97,9 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrder
         mShopName.setText(bean.getShopName());
         mGroupName.setText(bean.getPurchaserName());
         mProductNum.setText(CommonUtils.formatNum(bean.getSkuNum()));
-        mInspectionNum.setText(CommonUtils.formatNum(bean.getInspectionNum()));
-        mAmount.setText(String.format("¥%s", CommonUtils.formatMoney(bean.getInspectionAmount())));
+        mInspectionAmount.setText(String.format("¥%s", CommonUtils.formatMoney(bean.getInspectionAmount())));
+        mOrderAmount.setText(String.format("¥%s", CommonUtils.formatMoney(bean.getOrderAmount())));
+        mDeliveryAmount.setText(String.format("¥%s", CommonUtils.formatMoney(bean.getAdjustmentAmount())));
         mTime.setText(String.format("%s - %s", mParam.getFormatStartDate(Constants.SLASH_YYYY_MM_DD),
                 mParam.getFormatEndDate(Constants.SLASH_YYYY_MM_DD)));
         mExcel.setHeaderView(generateHeader());

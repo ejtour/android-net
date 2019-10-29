@@ -9,7 +9,9 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.account.UnbindGroupReq;
+import com.hll_sc_app.rest.User;
 
 /**
  * 解绑集团
@@ -66,26 +68,12 @@ public class UnbindGroupPresent implements IUnbindGroupContract.IPresent {
 
     @Override
     public void logout() {
-        UserBean userBean = GreenDaoUtils.getUser();
-        if (userBean != null) {
-            SettingPresenter.logoutObservable()
-                    .subscribe(new BaseCallback<Object>() {
-                        @Override
-                        public void onFailure(UseCaseException e) {
-                            if (mView.isActive()){
-                                mView.showToast(e.getMessage());
-                            }
-                        }
-
-                        @Override
-                        public void onSuccess(Object result) {
-                           if(mView.isActive()){
-                               mView.logoutSuccess();
-                           }
-                        }
-                    });
-        }
-
+        User.logout(new SimpleObserver<Object>(mView) {
+            @Override
+            public void onSuccess(Object o) {
+                mView.logoutSuccess();
+            }
+        });
     }
 
     @Override

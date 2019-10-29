@@ -437,6 +437,11 @@ public class RouterConfig {
     public static final String ORDER_DELIVER = "/activity/order/deliver";
 
     /**
+     * 订单搜索
+     */
+    public static final String ORDER_SEARCH = "/activity/order/search";
+
+    /**
      * 订单详情
      */
     public static final String ORDER_DETAIL = "/activity/order/detail";

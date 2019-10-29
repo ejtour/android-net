@@ -68,8 +68,9 @@ public class Order {
      *
      * @param pageNum          页码
      * @param subBillStatus    订单状态
-     * @param shopID           搜索门店ID
+     * @param associatedID     搜索结果关联id
      * @param searchWords      搜索词
+     * @param searchType       搜索类型
      * @param createTimeStart  下单开始时间 yyyyMMdd
      * @param createTimeEnd    下单结束时间 yyyyMMdd
      * @param signTimeStart    签收开始时间 yyyyMMddHH
@@ -81,7 +82,8 @@ public class Order {
     public static void getOrderList(int pageNum,
                                     int subBillStatus,
                                     String searchWords,
-                                    String shopID,
+                                    String associatedID,
+                                    int searchType,
                                     String createTimeStart,
                                     String createTimeEnd,
                                     String executeDateStart,
@@ -90,14 +92,11 @@ public class Order {
                                     String signTimeEnd,
                                     String deliverType,
                                     SimpleObserver<List<OrderResp>> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (user == null) {
-            return;
-        }
+        searchWords = !TextUtils.isEmpty(associatedID) ? "" : searchWords;
         OrderService.INSTANCE
                 .getOrderList(BaseMapReq
                         .newBuilder()
-                        .put("groupID", user.getGroupID())
+                        .put("groupID", UserConfig.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
                         .put("flag", "0")
@@ -109,8 +108,8 @@ public class Order {
                         .put("subBillSignTimeStart", signTimeStart)
                         .put("subBillSignTimeEnd", signTimeEnd)
                         .put("deliverType", deliverType)
-                        .put("searchWords", searchWords)
-                        .put("shopID", shopID)
+                        .put(searchType == 2 ? "subBillNo" : "searchWords", searchWords)
+                        .put(searchType == 1 ? "shipperID" : "shopID", associatedID)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -124,22 +123,25 @@ public class Order {
      * @param createTimeStart 开始时间
      * @param createTimeEnd   结束时间
      * @param searchWords     搜索词
-     * @param shopID          搜索门店ID
+     * @param searchType      搜索类型
+     * @param associatedID    搜索门店关联id
      */
     public static void getPendingTransferList(int pageNum,
                                               String createTimeStart,
                                               String createTimeEnd,
                                               String searchWords,
-                                              String shopID,
+                                              String associatedID,
+                                              int searchType,
                                               SimpleObserver<TransferResp> observer) {
+        searchWords = !TextUtils.isEmpty(associatedID) ? "" : searchWords;
         OrderService.INSTANCE
                 .getPendingTransferList(BaseMapReq.newBuilder()
                         .put("plateSupplierID", UserConfig.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
                         .put("mutiStatus", "1,3")
-                        .put("searchWords", searchWords)
-                        .put("shopID", shopID)
+                        .put(searchType == 2 ? "subBillNo" : "searchWords", searchWords)
+                        .put(searchType == 1 ? "shipperID" : "shopID", associatedID)
                         .put("beginDate", createTimeStart)
                         .put("endDate", createTimeEnd).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
