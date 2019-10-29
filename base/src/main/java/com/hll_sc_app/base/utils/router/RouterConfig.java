@@ -1175,5 +1175,10 @@ public class RouterConfig {
      * 商品需求-新增-采购商搜索
      */
     public static final String GOODS_DEMAND_PURCHASER_SEARCH = "/activity/goods/demand/purchaser/search";
+
+    /**
+     * 市场价格
+     */
+    public static final String PRICE = "/activity/price";
 }
 

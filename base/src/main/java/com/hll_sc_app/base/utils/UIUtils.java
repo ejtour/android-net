@@ -37,9 +37,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hll_sc_app.base.R;
+import com.hll_sc_app.base.bean.AreaBean;
 import com.hll_sc_app.base.utils.glide.Glide4Engine;
 import com.hll_sc_app.citymall.App;
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.FileManager;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.SelectionCreator;
@@ -53,6 +58,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -722,5 +728,24 @@ public class UIUtils {
         if (filter != null)
             creator.addFilter(filter);
         creator.forResult(reqCode);
+    }
+
+    /**
+     * 获取地区列表
+     *
+     * @param includeOverSeas 是否包含海外城市
+     */
+    public static List<AreaBean> getAreaList(Context context, boolean includeOverSeas) {
+        String json = FileManager.getAssetsData("productarea.json", context);
+        if (TextUtils.isEmpty(json)) {
+            return new ArrayList<>();
+        } else {
+            List<AreaBean> list = new Gson().fromJson(json, new TypeToken<List<AreaBean>>() {
+            }.getType());
+            if (!CommonUtils.isEmpty(list) && !includeOverSeas) {
+                list.remove(list.size() - 1);
+            }
+            return list;
+        }
     }
 }
