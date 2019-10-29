@@ -2,6 +2,7 @@ package com.hll_sc_app.app.setting.account.unbindgroup;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -52,7 +53,7 @@ public class UnbindGroupActivity extends BaseLoadActivity implements IUnbindGrou
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unbind_group);
-        StatusBarCompat.setStatusBarColor(this, 0xFFFFFFFF);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         unbinder = ButterKnife.bind(this);
         mPresent = new UnbindGroupPresent();
         mPresent.register(this);
