@@ -42,6 +42,9 @@ public class AfterSalesHelper {
             case 8:
                 desc = "受理中";
                 break;
+            case 9:
+                desc = "退款关闭";
+                break;
             default:
                 break;
         }

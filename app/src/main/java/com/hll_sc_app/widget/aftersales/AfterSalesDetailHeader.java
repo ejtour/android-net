@@ -75,6 +75,9 @@ public class AfterSalesDetailHeader extends ConstraintLayout {
             // 拒绝原因
             String refuseDesc = TextUtils.isEmpty(data.getRefuseReason()) ? "" : "拒绝原因：" + data.getRefuseReason();
             if (!TextUtils.isEmpty(refuseDesc)) desc += "\n" + refuseDesc;
+        } else if (data.getRefundBillStatus() == 9) {
+            String closeDesc = TextUtils.isEmpty(data.getCloseReason()) ? "" : "取消原因：" + data.getCloseReason();
+            if (!TextUtils.isEmpty(closeDesc)) desc += "\n" + closeDesc;
         }
         statusDesc.setText(desc);
 
