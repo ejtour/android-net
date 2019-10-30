@@ -11,10 +11,20 @@ import java.util.List;
  * @date 2019-06-18
  */
 public class CustomCategoryResp {
+    @SerializedName("1")
+    private List<CustomCategoryBean> list1;
     @SerializedName("2")
     private List<CustomCategoryBean> list2;
     @SerializedName("3")
     private List<CustomCategoryBean> list3;
+
+    public List<CustomCategoryBean> getList1() {
+        return list1;
+    }
+
+    public void setList1(List<CustomCategoryBean> list1) {
+        this.list1 = list1;
+    }
 
     public List<CustomCategoryBean> getList2() {
         return list2;

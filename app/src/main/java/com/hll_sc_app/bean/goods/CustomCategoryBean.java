@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.goods;
 
+import java.util.List;
+
 /**
  * 查询自定义分类列表item
  *
@@ -41,6 +43,7 @@ public class CustomCategoryBean {
      */
     private String categoryName;
     private boolean checked;
+    private List<CustomCategoryBean> subList;
 
     public boolean isChecked() {
         return checked;
@@ -120,5 +123,13 @@ public class CustomCategoryBean {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public List<CustomCategoryBean> getSubList() {
+        return subList;
+    }
+
+    public void setSubList(List<CustomCategoryBean> subList) {
+        this.subList = subList;
     }
 }

@@ -1,8 +1,8 @@
 package com.hll_sc_app.app.order.place.select;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
-import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
+import com.hll_sc_app.bean.goods.CustomCategoryBean;
+import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SelectGoodsParam;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
@@ -77,16 +77,16 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
 
     @Override
     public void start() {
-        Order.queryGoodsCategory(new SimpleObserver<GoodsCategoryResp>(mView) {
+        Order.queryGoodsCategory(new SimpleObserver<CustomCategoryResp>(mView) {
             @Override
-            public void onSuccess(GoodsCategoryResp goodsCategoryResp) {
-                if (CommonUtils.isEmpty(goodsCategoryResp.getList2())) return;
-                if (!CommonUtils.isEmpty(goodsCategoryResp.getList3())) {
-                    for (GoodsCategoryBean bean : goodsCategoryResp.getList3()) {
-                        for (GoodsCategoryBean categoryBean : goodsCategoryResp.getList2()) {
+            public void onSuccess(CustomCategoryResp customCategoryResp) {
+                if (CommonUtils.isEmpty(customCategoryResp.getList2())) return;
+                if (!CommonUtils.isEmpty(customCategoryResp.getList3())) {
+                    for (CustomCategoryBean bean : customCategoryResp.getList3()) {
+                        for (CustomCategoryBean categoryBean : customCategoryResp.getList2()) {
                             if (bean.getShopCategoryPID().equals(categoryBean.getId())) {
                                 if (categoryBean.getSubList() == null) {
-                                    List<GoodsCategoryBean> list = new ArrayList<>();
+                                    List<CustomCategoryBean> list = new ArrayList<>();
                                     list.add(bean);
                                     categoryBean.setSubList(list);
                                 } else categoryBean.getSubList().add(bean);
@@ -95,8 +95,8 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
                         }
                     }
                 }
-                mView.setCategoryInfo(goodsCategoryResp.getList2());
-                mParam.setSubID(goodsCategoryResp.getList2().get(0).getId());
+                mView.setCategoryInfo(customCategoryResp.getList2());
+                mParam.setSubID(customCategoryResp.getList2().get(0).getId());
                 loadList();
             }
         });
