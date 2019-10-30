@@ -78,7 +78,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activirty_report_custom_receive_detail);
+        setContentView(R.layout.activity_report_custom_receive_detail);
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
         initView();
