@@ -61,7 +61,7 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
 
 
     @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting,
-            R.id.txt_cooperation_setting, R.id.rl_custom_phone, R.id.txt_categoryName})
+            R.id.txt_cooperation_setting, R.id.rl_custom_phone, R.id.txt_categoryName, R.id.txt_tax})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -88,6 +88,9 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
                 break;
             case R.id.rl_custom_phone:
                 UIUtils.callPhone(this, "400 0088 822");
+                break;
+            case R.id.txt_tax:
+                RouterUtil.goToActivity(RouterConfig.SETTING_TAX);
                 break;
         }
     }

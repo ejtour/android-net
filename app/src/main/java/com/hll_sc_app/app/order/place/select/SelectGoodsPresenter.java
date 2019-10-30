@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.order.place.select;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SelectGoodsParam;
@@ -10,7 +9,6 @@ import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,22 +78,9 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
         Order.queryGoodsCategory(new SimpleObserver<CustomCategoryResp>(mView) {
             @Override
             public void onSuccess(CustomCategoryResp customCategoryResp) {
-                if (CommonUtils.isEmpty(customCategoryResp.getList2())) return;
-                if (!CommonUtils.isEmpty(customCategoryResp.getList3())) {
-                    for (CustomCategoryBean bean : customCategoryResp.getList3()) {
-                        for (CustomCategoryBean categoryBean : customCategoryResp.getList2()) {
-                            if (bean.getShopCategoryPID().equals(categoryBean.getId())) {
-                                if (categoryBean.getSubList() == null) {
-                                    List<CustomCategoryBean> list = new ArrayList<>();
-                                    list.add(bean);
-                                    categoryBean.setSubList(list);
-                                } else categoryBean.getSubList().add(bean);
-                                break;
-                            }
-                        }
-                    }
-                }
+                customCategoryResp.processList();
                 mView.setCategoryInfo(customCategoryResp.getList2());
+                if (CommonUtils.isEmpty(customCategoryResp.getList2())) return;
                 mParam.setSubID(customCategoryResp.getList2().get(0).getId());
                 loadList();
             }

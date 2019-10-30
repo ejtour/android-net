@@ -1,7 +1,9 @@
 package com.hll_sc_app.bean.goods;
 
 import com.google.gson.annotations.SerializedName;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,5 +42,23 @@ public class CustomCategoryResp {
 
     public void setList3(List<CustomCategoryBean> list3) {
         this.list3 = list3;
+    }
+
+    public void processList() {
+        if (CommonUtils.isEmpty(list2)) return;
+        if (!CommonUtils.isEmpty(list3)) {
+            for (CustomCategoryBean bean : list3) {
+                for (CustomCategoryBean categoryBean : list2) {
+                    if (bean.getShopCategoryPID().equals(categoryBean.getId())) {
+                        if (categoryBean.getSubList() == null) {
+                            List<CustomCategoryBean> list = new ArrayList<>();
+                            list.add(bean);
+                            categoryBean.setSubList(list);
+                        } else categoryBean.getSubList().add(bean);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

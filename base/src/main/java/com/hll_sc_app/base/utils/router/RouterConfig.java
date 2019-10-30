@@ -23,6 +23,12 @@ public class RouterConfig {
      * 设置界面-价格比例设置
      */
     public static final String SETTING_PRICE_RATIO = "/activity/setting/priceRatio";
+
+    /**
+     * 税率设置
+     */
+    public static final String SETTING_TAX = "/activity/setting/tax";
+
     /**
      * 配送管理
      */
