@@ -8,6 +8,8 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -17,13 +19,18 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.AccountPeriodSelectWindow;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
+import com.hll_sc_app.app.paymanage.PayManagePresenter;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.dialog.InputDialog;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +54,17 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
     String mPayTerm;
     @Autowired(name = "object2")
     String mSettleDate;
+    @BindView(R.id.switch_pay_type)
+    SwitchButton mSwitchPayType;
+    @BindView(R.id.rl_accountPeriod)
+    RelativeLayout mRlAccountPeriod;
+    @BindView(R.id.rl_settleDate)
+    RelativeLayout mRlSettleDate;
+    @BindView(R.id.txt_alter)
+    TextView mTxtAlter;
+    @BindView(R.id.ll_button_bottom)
+    LinearLayout mLlButtonBottom;
+
     private PayAccountManagePresenter mPresenter;
 
     public static void start(String payTermType, String payTerm, String settleDate) {
@@ -66,6 +84,25 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
     }
 
     public void showAccountView() {
+        //账期日checkbox
+        mSwitchPayType.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            PayManagePresenter.editSettlement("2", isChecked ? "1" : "0", new SimpleObserver<MsgWrapper<Object>>(this) {
+                @Override
+                public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                    showToast(objectMsgWrapper.getMessage());
+                    showContent(isChecked);
+                }
+
+                @Override
+                public void onFailure(UseCaseException e) {
+                    mSwitchPayType.setCheckedNoEvent(!isChecked);
+                    showToast(e.getMessage());
+                }
+            });
+        });
+        mSwitchPayType.setCheckedNoEvent(!TextUtils.equals("0", mPayTermType));
+        showContent(!TextUtils.equals("0", mPayTermType));
+
         // 账期日
         if (TextUtils.equals(mPayTermType, CooperationShopSettlementActivity.TERM_WEEK)) {
             // 周结
@@ -85,6 +122,13 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
         // 结算日
         mTxtSettleDate.setText(String.format("对账单产生后%s日", mSettleDate));
         mTxtSettleDate.setTag(mSettleDate);
+    }
+
+    private void showContent(boolean isShow) {
+        mRlAccountPeriod.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        mRlSettleDate.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        mTxtAlter.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        mLlButtonBottom.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
     @OnClick({R.id.img_close, R.id.txt_save, R.id.rl_accountPeriod, R.id.rl_settleDate})

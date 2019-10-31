@@ -10,6 +10,21 @@ import java.util.List;
  */
 public class SettlementBean {
     /**
+     * 微信直连 0-未启用,1-启用
+     */
+    private String wechatStatus;
+
+    /**
+     * 铁金库 0-未启用,1-启用
+     */
+    private String openStatus;
+
+    /**
+     * 储值卡 0-未启用,1-启用
+     */
+    private String cardStatus;
+
+    /**
      * 在线支付 -1-未开通,0-未启用,1-启用
      */
     private String onlinePayment;
@@ -42,6 +57,31 @@ public class SettlementBean {
      */
     private String codPayMethod;
     private List<String> payTypeEnum;
+
+
+    public String getWechatStatus() {
+        return wechatStatus;
+    }
+
+    public void setWechatStatus(String wechatStatus) {
+        this.wechatStatus = wechatStatus;
+    }
+
+    public String getOpenStatus() {
+        return openStatus;
+    }
+
+    public void setOpenStatus(String openStatus) {
+        this.openStatus = openStatus;
+    }
+
+    public String getCardStatus() {
+        return cardStatus;
+    }
+
+    public void setCardStatus(String cardStatus) {
+        this.cardStatus = cardStatus;
+    }
 
     public String getOnlinePayment() {
         return onlinePayment;

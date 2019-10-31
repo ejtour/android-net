@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,7 +16,7 @@
 
         <ImageView
             android:id="@+id/img_close"
-            style="@style/BtnClose"/>
+            style="@style/BtnClose" />
 
         <TextView
             android:id="@+id/txt_title"
@@ -26,31 +25,64 @@
             android:layout_centerInParent="true"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_text_18"
-            tools:text="在线支付设置"/>
+            tools:text="在线支付设置" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pay_type"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/rl_title"
+        android:layout_marginTop="5dp"
+        android:background="@color/base_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/txt_pay_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_13"
+            tools:text="在线支付" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/switch_pay_type"
+            android:layout_width="35dp"
+            android:layout_height="21dp"
+            app:kswBackDrawable="@drawable/switch_track"
+            app:kswThumbDrawable="@drawable/base_thumb" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rl_bottom"
-        android:layout_below="@+id/rl_title"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        android:layout_below="@+id/ll_pay_type"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
     <RelativeLayout
         android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/base_bg_shadow_bottom_white_bar">
+        android:background="@drawable/base_bg_shadow_bottom_white_bar"
+        android:paddingLeft="@dimen/dp_72"
+        android:paddingRight="@dimen/dp_72">
 
         <TextView
             android:id="@+id/txt_save"
             style="@style/BtnOrderAction.PrimarySolid"
-            android:layout_alignParentRight="true"
+            android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="保存"/>
+            android:text="保存设置" />
 
     </RelativeLayout>
 
