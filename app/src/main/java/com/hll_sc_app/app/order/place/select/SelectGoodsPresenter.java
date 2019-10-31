@@ -1,8 +1,7 @@
 package com.hll_sc_app.app.order.place.select;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
-import com.hll_sc_app.bean.order.place.GoodsCategoryResp;
+import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SelectGoodsParam;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
@@ -10,7 +9,6 @@ import com.hll_sc_app.bean.order.place.SettlementInfoResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Order;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,26 +75,13 @@ public class SelectGoodsPresenter implements ISelectGoodsContract.ISelectGoodsPr
 
     @Override
     public void start() {
-        Order.queryGoodsCategory(new SimpleObserver<GoodsCategoryResp>(mView) {
+        Order.queryGoodsCategory(new SimpleObserver<CustomCategoryResp>(mView) {
             @Override
-            public void onSuccess(GoodsCategoryResp goodsCategoryResp) {
-                if (CommonUtils.isEmpty(goodsCategoryResp.getList2())) return;
-                if (!CommonUtils.isEmpty(goodsCategoryResp.getList3())) {
-                    for (GoodsCategoryBean bean : goodsCategoryResp.getList3()) {
-                        for (GoodsCategoryBean categoryBean : goodsCategoryResp.getList2()) {
-                            if (bean.getShopCategoryPID().equals(categoryBean.getId())) {
-                                if (categoryBean.getSubList() == null) {
-                                    List<GoodsCategoryBean> list = new ArrayList<>();
-                                    list.add(bean);
-                                    categoryBean.setSubList(list);
-                                } else categoryBean.getSubList().add(bean);
-                                break;
-                            }
-                        }
-                    }
-                }
-                mView.setCategoryInfo(goodsCategoryResp.getList2());
-                mParam.setSubID(goodsCategoryResp.getList2().get(0).getId());
+            public void onSuccess(CustomCategoryResp customCategoryResp) {
+                customCategoryResp.processList();
+                mView.setCategoryInfo(customCategoryResp.getList2());
+                if (CommonUtils.isEmpty(customCategoryResp.getList2())) return;
+                mParam.setSubID(customCategoryResp.getList2().get(0).getId());
                 loadList();
             }
         });

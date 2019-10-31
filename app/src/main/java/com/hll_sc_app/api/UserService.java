@@ -16,6 +16,7 @@ import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
 import com.hll_sc_app.bean.user.RegisterReq;
+import com.hll_sc_app.bean.user.TaxSaveReq;
 
 import java.util.List;
 
@@ -186,4 +187,12 @@ public interface UserService {
     @Headers("pv:101066")
     Observable<BaseResp<RefundTimeResp>> setRefundTime(@Body BaseReq<SetRefundTimeReq> body);
 
+    /**
+     * 保存税率
+     * @param body
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100072")
+    Observable<BaseResp<Object>> saveTaxRate(@Body BaseReq<TaxSaveReq> body);
 }
