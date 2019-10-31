@@ -41,13 +41,12 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.PAY_MANAGE, extras = Constant.LOGIN_EXTRA)
 public class PayManageActivity extends BaseLoadActivity implements PayManageContract.IPayManageView {
-    TextView mTxtPayTermType;
     @BindView(R.id.txt_payOnline)
     TextView mTxtPayOnline;
     @BindView(R.id.txt_payCash)
     TextView mTxtPayCash;
     @BindView(R.id.txt_payTermType)
-    TextView mTxtPayTerm;
+    TextView mTxtPayTermType;
 
     private SettlementBean mBean;
     private List<PayBean> mData;
