@@ -5,10 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.complain.FeedbackListResp;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.TitleBar;
@@ -25,6 +27,7 @@ import butterknife.Unbinder;
 /**
  * 意见反馈列表
  */
+@Route(path = RouterConfig.ACTIVITY_FEED_BACK_LIST)
 public class FeedbackListActivity extends BaseLoadActivity implements IFeedbackListContract.IView {
     @BindView(R.id.title_bar)
     TitleBar mTitle;
@@ -49,11 +52,13 @@ public class FeedbackListActivity extends BaseLoadActivity implements IFeedbackL
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unbinder.unbind();
     }
 
     private void initView() {
         mTitle.setRightBtnClick(v -> {
             //todo:新建
+
         });
         mAdapter = new FeedbackAdapter(null);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -87,7 +92,7 @@ public class FeedbackListActivity extends BaseLoadActivity implements IFeedbackL
 
     private class FeedbackAdapter extends BaseQuickAdapter<FeedbackListResp.FeedbackBean, BaseViewHolder> {
         public FeedbackAdapter(@Nullable List<FeedbackListResp.FeedbackBean> data) {
-            super(R.layout.list_item_platform_complain, data);
+            super(R.layout.list_item_feedback, data);
         }
 
         @Override

@@ -1180,5 +1180,10 @@ public class RouterConfig {
      * 市场价格
      */
     public static final String PRICE = "/activity/price";
+
+    /**
+     * 意见反馈列表
+     */
+    public static final String ACTIVITY_FEED_BACK_LIST="/activity/feedback/list";
 }
 
