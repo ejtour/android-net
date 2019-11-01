@@ -1097,7 +1097,14 @@
         <activity
             android:name=".app.price.PriceActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".app.setting.tax.TaxSettingActivity" />
+
+        <activity
+            android:name=".app.setting.tax.TaxSettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.setting.tax.goodsselect.GoodsSelectActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

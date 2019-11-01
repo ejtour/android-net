@@ -30,6 +30,11 @@ public class RouterConfig {
     public static final String SETTING_TAX = "/activity/setting/tax";
 
     /**
+     * 税率设置-选择商品
+     */
+    public static final String SETTING_TAX_SELECT_GOODS = "/activity/select/goods";
+
+    /**
      * 配送管理
      */
     public static final String DELIVERY_MANAGE = "/activity/deliveryManage";
