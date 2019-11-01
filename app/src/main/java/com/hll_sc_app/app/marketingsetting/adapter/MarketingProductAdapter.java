@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -80,7 +81,8 @@ public class MarketingProductAdapter extends BaseQuickAdapter<SkuGoodsBean, Base
                 .setText(R.id.txt_spec_content, item.getSpecContent())
                 .setText(R.id.txt_product_code, "编码：" + item.getProductCode())
                 .setText(R.id.txt_product_price, "¥" + item.getProductPrice())
-                .setText(R.id.txt_promote_num_content_show, item.getPromoteNum());
+                .setText(R.id.txt_promote_num_content_show, item.getPromoteNum())
+                .setText(R.id.txt_no_return_content_show, item.getNonRefund() == 0 ? "按原退换时效" : "不可退货");
 
         /*打折模式下*/
         if (isEdit == Modal.EDIT_DZ || isEdit == Modal.SHOW_DZ) {
@@ -92,42 +94,57 @@ public class MarketingProductAdapter extends BaseQuickAdapter<SkuGoodsBean, Base
         }
         GlideImageView productImage = helper.getView(R.id.img_product);
         productImage.setImageURL(item.getImgUrl());
+
+        ((CheckBox) helper.getView(R.id.check_no_return)).setChecked(item.getNonRefund() == 1);
     }
 
     private void toggleModal(BaseViewHolder holder) {
         switch (isEdit) {
             case Modal.EDIT:
                 holder.addOnClickListener(R.id.img_delete);
+                holder.addOnClickListener(R.id.rl_no_return);
+                holder.addOnClickListener(R.id.check_no_return);
                 holder.getView(R.id.img_delete).setVisibility(View.VISIBLE);
                 holder.getView(R.id.group_edt_promote).setVisibility(View.VISIBLE);
                 holder.getView(R.id.group_promote_show).setVisibility(View.GONE);
                 holder.getView(R.id.txt_product_old_price).setVisibility(View.GONE);
+                holder.getView(R.id.group_no_return_show).setVisibility(View.GONE);
+                holder.getView(R.id.group_no_return_check).setVisibility(View.VISIBLE);
                 break;
             case Modal.SHOW:
                 holder.getView(R.id.img_delete).setVisibility(View.GONE);
                 holder.getView(R.id.group_edt_promote).setVisibility(View.GONE);
                 holder.getView(R.id.group_promote_show).setVisibility(View.VISIBLE);
                 holder.getView(R.id.txt_product_old_price).setVisibility(View.GONE);
+                holder.getView(R.id.group_no_return_show).setVisibility(View.VISIBLE);
+                holder.getView(R.id.group_no_return_check).setVisibility(View.GONE);
                 break;
             case Modal.HIDE:
                 holder.getView(R.id.img_delete).setVisibility(View.GONE);
                 holder.getView(R.id.group_edt_promote).setVisibility(View.GONE);
                 holder.getView(R.id.group_promote_show).setVisibility(View.GONE);
                 holder.getView(R.id.txt_product_old_price).setVisibility(View.GONE);
+                holder.getView(R.id.group_no_return_show).setVisibility(View.GONE);
+                holder.getView(R.id.group_no_return_check).setVisibility(View.GONE);
                 break;
             case Modal.EDIT_DZ:
                 holder.addOnClickListener(R.id.img_delete);
+                holder.addOnClickListener(R.id.rl_no_return);
+                holder.addOnClickListener(R.id.check_no_return);
                 holder.getView(R.id.img_delete).setVisibility(View.VISIBLE);
                 holder.getView(R.id.group_edt_promote).setVisibility(View.VISIBLE);
                 holder.getView(R.id.group_promote_show).setVisibility(View.GONE);
                 holder.getView(R.id.txt_product_old_price).setVisibility(View.VISIBLE);
+                holder.getView(R.id.group_no_return_show).setVisibility(View.GONE);
+                holder.getView(R.id.group_no_return_check).setVisibility(View.VISIBLE);
                 break;
             case Modal.SHOW_DZ:
                 holder.getView(R.id.img_delete).setVisibility(View.GONE);
                 holder.getView(R.id.group_edt_promote).setVisibility(View.GONE);
                 holder.getView(R.id.group_promote_show).setVisibility(View.VISIBLE);
-                holder.getView(R.id.txt_product_old_price).setVisibility(View.GONE);
                 holder.getView(R.id.txt_product_old_price).setVisibility(View.VISIBLE);
+                holder.getView(R.id.group_no_return_show).setVisibility(View.VISIBLE);
+                holder.getView(R.id.group_no_return_check).setVisibility(View.GONE);
                 break;
             default:
                 break;

@@ -89,6 +89,17 @@ public class SkuGoodsBean implements Parcelable {
     private String productSpec;
     private String detailID;
 
+    /*商品优惠 不可退货 0-否 1-是*/
+    private int nonRefund;
+
+    public int getNonRefund() {
+        return nonRefund;
+    }
+
+    public void setNonRefund(int nonRefund) {
+        this.nonRefund = nonRefund;
+    }
+
     public String getProductSpec() {
         return productSpec;
     }
@@ -738,6 +749,7 @@ public class SkuGoodsBean implements Parcelable {
         dest.writeString(this.discountPrice);
         dest.writeString(this.productSpec);
         dest.writeString(this.detailID);
+        dest.writeInt(this.nonRefund);
     }
 
     protected SkuGoodsBean(Parcel in) {
@@ -809,6 +821,7 @@ public class SkuGoodsBean implements Parcelable {
         this.discountPrice = in.readString();
         this.productSpec = in.readString();
         this.detailID = in.readString();
+        this.nonRefund = in.readInt();
     }
 
     public static final Creator<SkuGoodsBean> CREATOR = new Creator<SkuGoodsBean>() {
