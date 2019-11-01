@@ -13,6 +13,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.user.TaxSaveBean;
 import com.hll_sc_app.bean.user.TaxSaveReq;
@@ -97,7 +98,7 @@ public class TaxSettingActivity extends BaseLoadActivity implements ITaxSettingC
 
     @OnClick(R.id.ats_setting)
     public void onViewClicked() {
-
+        RouterUtil.goToActivity(RouterConfig.SETTING_TAX_SPECIAL);
     }
 
     @Override
@@ -112,6 +113,6 @@ public class TaxSettingActivity extends BaseLoadActivity implements ITaxSettingC
 
     @Override
     public void saveSuccess() {
-        finish();
+        showToast("保存成功");
     }
 }

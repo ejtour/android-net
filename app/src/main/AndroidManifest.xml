@@ -1103,6 +1103,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.setting.tax.special.SpecialTaxSettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.setting.tax.goodsselect.GoodsSelectActivity"
             android:screenOrientation="portrait" />
 
