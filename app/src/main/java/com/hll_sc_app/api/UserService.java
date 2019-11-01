@@ -8,6 +8,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.account.UnbindGroupReq;
 import com.hll_sc_app.bean.account.UnbindMainAccountReq;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.groupInfo.GroupInfoReq;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.bean.refundtime.RefundTimeResp;
@@ -16,6 +17,8 @@ import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
 import com.hll_sc_app.bean.user.RegisterReq;
+import com.hll_sc_app.bean.user.SpecialTaxBean;
+import com.hll_sc_app.bean.user.SpecialTaxSaveReq;
 import com.hll_sc_app.bean.user.TaxSaveReq;
 
 import java.util.List;
@@ -195,4 +198,12 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:100072")
     Observable<BaseResp<Object>> saveTaxRate(@Body BaseReq<TaxSaveReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100085")
+    Observable<BaseResp<Object>> saveSpecialTaxRate(@Body BaseReq<SpecialTaxSaveReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100086")
+    Observable<BaseResp<SingleListResp<SpecialTaxBean>>> querySpecialTax(@Body BaseMapReq req);
 }
