@@ -16,6 +16,7 @@ import com.hll_sc_app.bean.refundtime.SetRefundTimeReq;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
+import com.hll_sc_app.bean.user.PurchaseTemplateBean;
 import com.hll_sc_app.bean.user.RegisterReq;
 import com.hll_sc_app.bean.user.RemindReq;
 import com.hll_sc_app.bean.user.RemindResp;
@@ -216,4 +217,8 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:103090")
     Observable<BaseResp<Object>> updateRemind(@Body BaseReq<RemindReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100155")
+    Observable<BaseResp<SingleListResp<PurchaseTemplateBean>>> queryPurchaseTemplate(@Body BaseMapReq req);
 }

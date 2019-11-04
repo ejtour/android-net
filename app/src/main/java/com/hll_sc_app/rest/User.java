@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.user.PurchaseTemplateBean;
 import com.hll_sc_app.bean.user.RemindReq;
 import com.hll_sc_app.bean.user.RemindResp;
 import com.hll_sc_app.bean.user.SpecialTaxBean;
@@ -80,6 +81,29 @@ public class User {
     public static void updateRemind(boolean isOpen, String remindTimes, SimpleObserver<Object> observer) {
         UserService.INSTANCE
                 .updateRemind(new BaseReq<>(new RemindReq(isOpen, remindTimes)))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询采购模板
+     *
+     * @param pageNum         页码
+     * @param purchaserID     采购商id
+     * @param purchaserShopID 采购商门店id
+     */
+    public static void queryPurchaseTemplate(int pageNum, String purchaserID, String purchaserShopID, SimpleObserver<SingleListResp<PurchaseTemplateBean>> observer) {
+        UserService.INSTANCE
+                .queryPurchaseTemplate(BaseMapReq.newBuilder()
+                        .put("actionType", "supplier")
+                        .put("flag", "2")
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("supplyID", UserConfig.getGroupID())
+                        .put("purchaserID", purchaserID)
+                        .put("purchaserShopID", purchaserShopID)
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

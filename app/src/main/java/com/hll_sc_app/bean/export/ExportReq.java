@@ -137,6 +137,11 @@ public class ExportReq {
          */
         private SellPrice sellPrice;
 
+        /**
+         * 供应商常采清单
+         */
+        private CommonExport supplierCommonExport;
+
 
         private String groupID;
         private String pageNum;
@@ -218,6 +223,14 @@ public class ExportReq {
 
         public void setSellPrice(SellPrice sellPrice) {
             this.sellPrice = sellPrice;
+        }
+
+        public CommonExport getSupplierCommonExport() {
+            return supplierCommonExport;
+        }
+
+        public void setSupplierCommonExport(CommonExport supplierCommonExport) {
+            this.supplierCommonExport = supplierCommonExport;
         }
 
         public StockWarnNum getStockWarnNum() {
@@ -526,6 +539,53 @@ public class ExportReq {
             }
         }
 
+        public static class CommonExport{
+            private String actionType;
+            private int flag;
+            private String supplyID;
+            private String purchaserID;
+            private String shopID;
+
+            public String getActionType() {
+                return actionType;
+            }
+
+            public void setActionType(String actionType) {
+                this.actionType = actionType;
+            }
+
+            public int getFlag() {
+                return flag;
+            }
+
+            public void setFlag(int flag) {
+                this.flag = flag;
+            }
+
+            public String getSupplyID() {
+                return supplyID;
+            }
+
+            public void setSupplyID(String supplyID) {
+                this.supplyID = supplyID;
+            }
+
+            public String getPurchaserID() {
+                return purchaserID;
+            }
+
+            public void setPurchaserID(String purchaserID) {
+                this.purchaserID = purchaserID;
+            }
+
+            public String getShopID() {
+                return shopID;
+            }
+
+            public void setShopID(String shopID) {
+                this.shopID = shopID;
+            }
+        }
     }
 
 
