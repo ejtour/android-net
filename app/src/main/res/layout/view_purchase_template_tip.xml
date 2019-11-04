@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ptt_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_purchase_template_empty"
+        app:layout_constraintBottom_toTopOf="@+id/ptt_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.21"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/ptt_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="您需要先搜索要查询的合作客户"
+        android:textAppearance="@style/TextAppearance.City22.Large.Blue"
+        app:layout_constraintBottom_toTopOf="@+id/ptt_tip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ptt_img" />
+
+    <TextView
+        android:id="@+id/ptt_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:maxWidth="300dp"
+        android:text="点击采购商集团先找到您的合作采购商\n然后查询其采购模版"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ptt_label" />
+</android.support.constraint.ConstraintLayout>
