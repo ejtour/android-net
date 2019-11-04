@@ -42,7 +42,7 @@ import butterknife.Unbinder;
  */
 
 @Route(path = RouterConfig.BILL_SETTING, extras = Constant.LOGIN_EXTRA)
-public class BillSettingActivityActivity extends BaseLoadActivity implements IBillSettingActivityContract.IBillSettingView {
+public class BillSettingActivity extends BaseLoadActivity implements IBillSettingContract.IBillSettingView {
 
 //    2-自动接单开关
     @BindView(R.id.switch_2)
@@ -88,7 +88,7 @@ public class BillSettingActivityActivity extends BaseLoadActivity implements IBi
     @BindView(R.id.switch_21)
     SwitchButton mSwitch_21;
 
-    private IBillSettingActivityContract.IBillSettingPresentr mPresent;
+    private IBillSettingContract.IBillSettingPresenter mPresent;
     private Unbinder unbinder;
     private static Integer OPEN_VALUE = 2;
 
@@ -123,7 +123,7 @@ public class BillSettingActivityActivity extends BaseLoadActivity implements IBi
         typeToSwitchMap.put(15, mSwitch_15);
         typeToSwitchMap.put(21, mSwitch_21);
 
-        mPresent = BillSettingActivityPresenter.newInstance();
+        mPresent = BillSettingPresenter.newInstance();
         mPresent.register(this);
         StringBuffer types = new StringBuffer();
         for (Map.Entry<Integer, SwitchButton> entry : typeToSwitchMap.entrySet()) {
@@ -175,6 +175,7 @@ public class BillSettingActivityActivity extends BaseLoadActivity implements IBi
                 .setImageState(R.drawable.ic_dialog_state_failure)
                 .setMessageTitle(messageTitleMap.get(type + "_" + isChecked))
                 .setMessage(messageMap.get(type + "_" + isChecked))
+                .setCancelable(false)
                 .setButton(((dialog, item) -> {
                     if (1 == item) {
                         mPresent.changeBillSetting(isChecked, type);

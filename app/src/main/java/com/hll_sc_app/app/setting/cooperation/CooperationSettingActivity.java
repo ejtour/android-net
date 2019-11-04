@@ -41,7 +41,7 @@ import butterknife.Unbinder;
  * 
  */
 @Route(path = RouterConfig.COOPERATION_SETTING, extras = Constant.LOGIN_EXTRA)
-public class CooperationSettingActivityActivity extends BaseLoadActivity implements ICooperationSettingActivityContract.ICooperationSettingView {
+public class CooperationSettingActivity extends BaseLoadActivity implements ICooperationSettingContract.ICooperationSettingView {
 
     //    6-添加我为合作供应商时需要验证开关
     @BindView(R.id.switch_6)
@@ -51,7 +51,7 @@ public class CooperationSettingActivityActivity extends BaseLoadActivity impleme
     @BindView(R.id.switch_18)
     SwitchButton mSwitch_18;
 
-    private ICooperationSettingActivityContract.ICooperationSettingPresentr mPresent;
+    private ICooperationSettingContract.ICooperationSettingPresenter mPresent;
     private Unbinder unbinder;
     private static Integer OPEN_VALUE = 2;
 
@@ -77,7 +77,7 @@ public class CooperationSettingActivityActivity extends BaseLoadActivity impleme
         typeToSwitchMap.put(6, mSwitch_6);
         typeToSwitchMap.put(18, mSwitch_18);
 
-        mPresent = CooperationSettingActivityPresenter.newInstance();
+        mPresent = CooperationSettingPresenter.newInstance();
         mPresent.register(this);
         StringBuffer types = new StringBuffer();
         for (Map.Entry<Integer, SwitchButton> entry : typeToSwitchMap.entrySet()) {
@@ -129,6 +129,7 @@ public class CooperationSettingActivityActivity extends BaseLoadActivity impleme
                 .setImageState(R.drawable.ic_dialog_state_failure)
                 .setMessageTitle(messageTitleMap.get(type + "_" + isChecked))
                 .setMessage(messageMap.get(type + "_" + isChecked))
+                .setCancelable(false)
                 .setButton(((dialog, item) -> {
                     if (1 == item) {
                         mPresent.changeCooperationSetting(isChecked, type);

@@ -103,11 +103,11 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.setting.bill.BillSettingActivityActivity"
+            android:name=".app.setting.bill.BillSettingActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.setting.cooperation.CooperationSettingActivityActivity"
+            android:name=".app.setting.cooperation.CooperationSettingActivity"
             android:screenOrientation="portrait" />
 
         <activity

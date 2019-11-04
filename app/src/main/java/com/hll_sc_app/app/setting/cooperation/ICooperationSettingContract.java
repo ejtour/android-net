@@ -1,33 +1,31 @@
-package com.hll_sc_app.app.setting.bill;
+package com.hll_sc_app.app.setting.cooperation;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.user.GroupParame;
-import com.kyleduo.switchbutton.SwitchButton;
 
 import java.util.List;
 
 /**
  * @author baitianqi baitianqi@hualala.com
- *
+ * 
  * version 1.0.0
- * Copyright (C) 2017-2018 hualala
- *           This program is protected by copyright laws.
+ * Copyright (C) 2017-2018 hualala 
+ *           This program is protected by copyright laws. 
  *           Program Name:哗啦啦商城
  *
- * Description:
- *
- * CreateTime: 2019/7/12 18:11
+ * Description:  
+ * 
+ * CreateTime: 2019/7/17 11:00
  *
  * Change History:
  *
  *        Date             CR Number              Name              Description of change
- *
+ * 
  */
+public interface ICooperationSettingContract {
 
-public interface IBillSettingActivityContract {
-
-    interface IBillSettingView extends ILoadView {
+    interface ICooperationSettingView extends ILoadView {
         /**
          * Description: 显示订单设置
          *
@@ -37,7 +35,7 @@ public interface IBillSettingActivityContract {
          *
          * @param
          */
-        void showBillSetting(List<GroupParame> groupParameList);
+        void showCooperationSetting(List<GroupParame> groupParameList);
 
         /**
          * Description: 开关状态变更
@@ -48,7 +46,7 @@ public interface IBillSettingActivityContract {
          *
          * @param
          */
-        void toggleBillSettingStatus(boolean isChecked, Integer type);
+        void toggleCooperationSettingStatus(boolean isChecked, Integer type);
 
         /**
          * Description: 恢复状态
@@ -73,7 +71,7 @@ public interface IBillSettingActivityContract {
         void showAlertDialog(boolean isChecked, Integer type);
     }
 
-    interface IBillSettingPresentr extends IPresenter<IBillSettingView> {
+    interface ICooperationSettingPresenter extends IPresenter<ICooperationSettingContract.ICooperationSettingView> {
 
         /**
          * Description:获取集团参数
@@ -84,7 +82,7 @@ public interface IBillSettingActivityContract {
          *
          * @param
          */
-        void getBillSetting(String types);
+        void getCooperationSetting(String types);
 
         /**
          * Description: 修改集团参数
@@ -95,6 +93,6 @@ public interface IBillSettingActivityContract {
          *
          * @param
          */
-        void changeBillSetting(boolean isChecked, Integer type);
+        void changeCooperationSetting(boolean isChecked, Integer type);
     }
 }

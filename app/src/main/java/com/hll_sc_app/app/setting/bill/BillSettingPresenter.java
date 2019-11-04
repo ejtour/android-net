@@ -10,6 +10,7 @@ import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
 
@@ -31,12 +32,12 @@ import java.util.List;
  *
  */
 
-public class BillSettingActivityPresenter implements IBillSettingActivityContract.IBillSettingPresentr {
-    private IBillSettingActivityContract.IBillSettingView mView;
+public class BillSettingPresenter implements IBillSettingContract.IBillSettingPresenter {
+    private IBillSettingContract.IBillSettingView mView;
 
 
-    static BillSettingActivityPresenter newInstance() {
-        return new BillSettingActivityPresenter();
+    static BillSettingPresenter newInstance() {
+        return new BillSettingPresenter();
     }
     @Override
     public void getBillSetting(String types) {
@@ -118,7 +119,7 @@ public class BillSettingActivityPresenter implements IBillSettingActivityContrac
     }
 
     @Override
-    public void register(IBillSettingActivityContract.IBillSettingView view) {
-        mView = view;
+    public void register(IBillSettingContract.IBillSettingView view) {
+        mView = CommonUtils.requireNonNull(view);
     }
 }

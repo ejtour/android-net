@@ -10,6 +10,7 @@ import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.util.List;
 
@@ -30,11 +31,11 @@ import java.util.List;
  *        Date             CR Number              Name              Description of change
  * 
  */
-public class CooperationSettingActivityPresenter implements ICooperationSettingActivityContract.ICooperationSettingPresentr {
-    ICooperationSettingActivityContract.ICooperationSettingView mView;
+public class CooperationSettingPresenter implements ICooperationSettingContract.ICooperationSettingPresenter {
+    private ICooperationSettingContract.ICooperationSettingView mView;
 
-    static CooperationSettingActivityPresenter newInstance() {
-        return new CooperationSettingActivityPresenter();
+    static CooperationSettingPresenter newInstance() {
+        return new CooperationSettingPresenter();
     }
 
     @Override
@@ -117,7 +118,7 @@ public class CooperationSettingActivityPresenter implements ICooperationSettingA
     }
 
     @Override
-    public void register(ICooperationSettingActivityContract.ICooperationSettingView view) {
-        this.mView = view;
+    public void register(ICooperationSettingContract.ICooperationSettingView view) {
+        this.mView = CommonUtils.requireNonNull(view);
     }
 }
