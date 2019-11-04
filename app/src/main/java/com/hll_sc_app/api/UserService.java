@@ -17,6 +17,8 @@ import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
 import com.hll_sc_app.bean.user.RegisterReq;
+import com.hll_sc_app.bean.user.RemindReq;
+import com.hll_sc_app.bean.user.RemindResp;
 import com.hll_sc_app.bean.user.SpecialTaxBean;
 import com.hll_sc_app.bean.user.SpecialTaxSaveReq;
 import com.hll_sc_app.bean.user.TaxSaveReq;
@@ -206,4 +208,12 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:100086")
     Observable<BaseResp<SingleListResp<SpecialTaxBean>>> querySpecialTax(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103091")
+    Observable<BaseResp<RemindResp>> queryRemind(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103090")
+    Observable<BaseResp<Object>> updateRemind(@Body BaseReq<RemindReq> body);
 }
