@@ -1206,5 +1206,10 @@ public class RouterConfig {
      * 意见反馈列表
      */
     public static final String ACTIVITY_FEED_BACK_LIST="/activity/feedback/list";
+    
+    /**
+     * 采购模板
+     */
+    public static final String PURCHASE_TEMPLATE = "/activity/purchase/template";
 }
 
