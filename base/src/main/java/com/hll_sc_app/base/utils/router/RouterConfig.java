@@ -40,6 +40,11 @@ public class RouterConfig {
     public static final String SETTING_TAX_SELECT_GOODS = "/activity/select/goods";
 
     /**
+     * 提醒设置
+     */
+    public static final String SETTING_REMIND = "/activity/setting/remind";
+
+    /**
      * 配送管理
      */
     public static final String DELIVERY_MANAGE = "/activity/deliveryManage";

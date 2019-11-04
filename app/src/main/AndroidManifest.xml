@@ -1110,6 +1110,11 @@
             android:name=".app.setting.tax.goodsselect.GoodsSelectActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.setting.remind.RemindSettingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
