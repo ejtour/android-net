@@ -143,7 +143,17 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
         if (!CommonUtils.isEmpty(mData)) {
             for (PayBean bean : mData) {
                 if (TextUtils.equals("1", bean.getPayType())) {
+
+                    if (!TextUtils.isEmpty(mBean.getOnlinePayMethod()) && mBean.getOnlinePayMethod().contains(bean.getId())) {
+                        bean.setSelect(true);
+                    } else {
+                        bean.setSelect(false);
+                    }
                     bean.setEnable(true);
+                    if (TextUtils.equals("0", mBean.getOpenStatus())) {//铁金库没开通，则只能使用现金刷卡
+                        bean.setEnable(false);
+                    }
+
                     if (TextUtils.equals("4", bean.getId())) {//微信直连关闭-》微信支付不能用
                         bean.setEnable(TextUtils.equals("1", mBean.getWechatStatus()));
                     }
@@ -156,7 +166,6 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
         }
         return arrayList;
     }
-
 
 
     @Override
@@ -176,27 +185,29 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
 
     private void showOnlinePayment(SettlementBean bean) {
         mTxtPayOnline.setVisibility(View.VISIBLE);
-        if (TextUtils.equals("0", bean.getOnlinePayment())) {
-            mTxtPayOnline.setText("未开启");
-        } else {
+        if (TextUtils.equals("1", bean.getOnlinePayment())) {
             mTxtPayOnline.setText(String.format("已开启 %s 种支付方式", bean.getOnlinePayMethod().split(",").length));
+        } else {
+            mTxtPayOnline.setText("未开启");
         }
     }
 
     private void showCashPayment(SettlementBean bean) {
-        if (TextUtils.equals("0", bean.getOnlinePayment())) {
-            mTxtPayCash.setText("未开启");
-        } else {
+        if (TextUtils.equals("1", bean.getCashPayment())) {
             mTxtPayCash.setText(String.format("已开启 %s 种支付方式", bean.getCodPayMethod().split(",").length));
+        } else {
+            mTxtPayCash.setText("未开启");
         }
     }
 
     private void showAccountPayment(SettlementBean bean) {
-        if (TextUtils.equals(bean.getPayTermType(), CooperationShopSettlementActivity.TERM_WEEK)) {
-            mTxtPayTermType.setText(String.format("已开启 周结,%s",
-                CooperationShopSettlementActivity.getPayTermStr(CommonUtils.getInt(bean.getPayTerm()))));
-        } else if (TextUtils.equals(bean.getPayTermType(), CooperationShopSettlementActivity.TERM_MONTH)) {
-            mTxtPayTermType.setText(String.format("已开启 月结，每月%s号", bean.getPayTerm()));
+        if (TextUtils.equals("1", bean.getAccountPayment())) {
+            if (TextUtils.equals(bean.getPayTermType(), CooperationShopSettlementActivity.TERM_WEEK)) {
+                mTxtPayTermType.setText(String.format("已开启 周结,%s",
+                        CooperationShopSettlementActivity.getPayTermStr(CommonUtils.getInt(bean.getPayTerm()))));
+            } else if (TextUtils.equals(bean.getPayTermType(), CooperationShopSettlementActivity.TERM_MONTH)) {
+                mTxtPayTermType.setText(String.format("已开启 月结，每月%s号", bean.getPayTerm()));
+            }
         } else {
             mTxtPayTermType.setText("未开启");
         }

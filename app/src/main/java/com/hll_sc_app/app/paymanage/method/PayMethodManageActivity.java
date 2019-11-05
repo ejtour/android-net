@@ -239,7 +239,7 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
-                finish();
+                goBack();
                 break;
             case R.id.txt_save:
                 toSave();
@@ -266,12 +266,20 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
     }
 
     @Override
-    public void editSuccess() {
-        showToast("修改支付方式列表成功");
+    public void onBackPressed() {
+       goBack();
+    }
+
+    private void goBack(){
         ARouter.getInstance().build(RouterConfig.PAY_MANAGE)
                 .setProvider(new LoginInterceptor())
                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 .navigation(this);
+    }
+    @Override
+    public void editSuccess() {
+        showToast("修改支付方式列表成功");
+        goBack();
     }
 
     private class PayListAdapter extends BaseQuickAdapter<PayBean, BaseViewHolder> {
