@@ -18,4 +18,10 @@ public interface CardManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101120")
     Observable<BaseResp<CardManageListResp>> queryCardManageList(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101118")
+    Observable<BaseResp<Object>> openCard(@Body BaseMapReq req);
+
+
 }

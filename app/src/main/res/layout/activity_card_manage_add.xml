@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tb_title="新建卡" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_list_item_card_manage"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="您正在创建储值卡的公司名称："
+            android:textColor="@color/text_999"
+            android:textSize="@dimen/base_text_12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_purchaser_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="27dp"
+            android:drawableLeft="@drawable/ic_company"
+            android:drawableRight="@drawable/ic_little_right_arrow"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_16"
+            app:layout_constraintTop_toBottomOf="@id/txt_title"
+            tools:text="北京二十二城电子商务有限公司" />
+
+        <View
+            android:id="@+id/view_divider_0"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/base_color_divider"
+            app:layout_constraintTop_toBottomOf="@id/txt_purchaser_name" />
+
+        <TextView
+            android:id="@+id/txt_title_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:text="消费模式："
+            android:textColor="@color/text_999"
+            android:textSize="@dimen/base_text_12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider_0" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_title_type">
+
+            <RadioButton
+                android:id="@+id/radio_cash"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@drawable/bg_button_radio_concentric_circles"
+                android:gravity="center_vertical"
+                android:text="   优先现金卡值"
+                android:textColor="@color/text_666"
+                android:textSize="@dimen/base_text_12" />
+
+            <RadioButton
+                android:id="@+id/radio_gift"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@drawable/bg_button_radio_concentric_circles"
+                android:gravity="center_vertical"
+                android:text="   优先赠送卡值"
+                android:textColor="@color/text_666"
+                android:textSize="@dimen/base_text_12" />
+
+            <RadioButton
+                android:id="@+id/radio_proportion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:button="@drawable/bg_button_radio_concentric_circles"
+                android:gravity="center_vertical"
+                android:text="   按比例同时使用"
+                android:textColor="@color/text_666"
+                android:textSize="@dimen/base_text_12" />
+        </RadioGroup>
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/txt_add_card"
+        android:enabled="false"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:layout_width="230dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="确认新建卡" />
+</LinearLayout>

@@ -16,9 +16,9 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.CardManageListSearch;
-import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
@@ -54,9 +54,12 @@ public class CardManageListActivity extends BaseLoadActivity implements ICardMan
         initView();
     }
 
+    private void goToAdd() {
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_ADD_SELECT_PURCHASER);
+    }
     private void initView() {
         mTitle.setRightBtnClick(v -> {
-            //todo:新建
+            goToAdd();
         });
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
@@ -132,5 +135,12 @@ public class CardManageListActivity extends BaseLoadActivity implements ICardMan
             super.destroyItem(container, position, object);
             mObservable.deleteObserver((Observer) object);
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mTabLayout.setCurrentTab(0);
+        mObservable.notify("refresh");
     }
 }

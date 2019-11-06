@@ -1227,5 +1227,11 @@ public class RouterConfig {
      */
     public static  final String ACTIVITY_CARD_MANAGE_ADD_SELECT_PURCHASER ="/activity/card/manage/add/select/purchaser";
 
+    /**
+     * 卡管理添加新建卡
+     */
+    public static final String ACTIVITY_CARD_MANAGE_ADD_CARD = "/activity/card/manage/add/card/";
+
+
 }
 

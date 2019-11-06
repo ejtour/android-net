@@ -18,6 +18,8 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.cardmanage.detail.CardManageDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cardmanage.CardManageBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
@@ -124,7 +126,7 @@ public class CardManageFragment extends BaseLazyFragment implements ICardManageC
 
                             @Override
                             public void action() {
-                                //todo:新建
+                                RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_ADD_SELECT_PURCHASER);
                             }
                         }).create());
             } else {
