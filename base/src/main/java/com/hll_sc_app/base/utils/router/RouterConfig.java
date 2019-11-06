@@ -1211,5 +1211,21 @@ public class RouterConfig {
      * 采购模板
      */
     public static final String PURCHASE_TEMPLATE = "/activity/purchase/template";
+
+    /**
+     * 卡管理列表页面
+     */
+    public static  final String ACTIVITY_CARD_MANAGE_LIST ="/activity/card/manage/list";
+
+    /**
+     * 卡管理详情
+     */
+    public static  final String ACTIVITY_CARD_MANAGE_DETAIL ="/activity/card/manage/detail";
+
+    /**
+     * 卡管理添加选择合作采购商
+     */
+    public static  final String ACTIVITY_CARD_MANAGE_ADD_SELECT_PURCHASER ="/activity/card/manage/add/select/purchaser";
+
 }
 

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tb_title="卡详情" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:paddingBottom="25dp">
+
+        <View
+            android:id="@+id/view_bk"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_list_item_card_manage"
+            app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.hll_sc_app.base.utils.glide.GlideImageView
+            android:id="@+id/img_purchaser_url"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="27dp"
+            app:base_circle="true"
+            app:base_placeholder="@drawable/ic_default_house_green_radius"
+            app:layout_constraintStart_toStartOf="@id/view_bk"
+            app:layout_constraintTop_toTopOf="@id/view_bk" />
+
+        <TextView
+            android:id="@+id/txt_purchaser_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/img_card_status"
+            app:layout_constraintStart_toEndOf="@id/img_purchaser_url"
+            app:layout_constraintTop_toTopOf="@id/img_purchaser_url"
+            tools:text="中国北京市二十二城电子商务股份有限责任公司" />
+
+        <TextView
+            android:id="@+id/txt_card_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_666666"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/txt_purchaser_name"
+            app:layout_constraintTop_toBottomOf="@id/txt_purchaser_name"
+            tools:text="集团卡号：100291009220190909001" />
+
+        <ImageView
+            android:id="@+id/img_card_status"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintEnd_toEndOf="@id/view_bk"
+            app:layout_constraintTop_toTopOf="@id/view_bk" />
+
+        <View
+            android:id="@+id/view_bottom"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintRight_toRightOf="@+id/view_bk"
+            app:layout_constraintTop_toBottomOf="@id/txt_card_num" />
+
+        <TextView
+            android:id="@+id/txt_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_16"
+            app:layout_constraintEnd_toStartOf="@id/txt_cash"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_bk"
+            tools:text="5,000.00" />
+
+        <TextView
+            android:id="@+id/txt_cash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_16"
+            app:layout_constraintEnd_toStartOf="@+id/txt_gift"
+            app:layout_constraintStart_toEndOf="@+id/txt_balance"
+            app:layout_constraintTop_toTopOf="@id/txt_balance"
+            tools:text="4,500.00" />
+
+        <TextView
+            android:id="@+id/txt_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="26dp"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txt_cash"
+            app:layout_constraintTop_toTopOf="@id/txt_balance"
+            tools:text="500.00" />
+
+        <TextView
+            android:id="@+id/txt_title_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="可用余额"
+            android:textColor="@color/text_999"
+            android:textSize="@dimen/base_text_12"
+            app:layout_constraintEnd_toEndOf="@id/txt_balance"
+            app:layout_constraintStart_toStartOf="@id/txt_balance"
+            app:layout_constraintTop_toBottomOf="@id/txt_balance" />
+
+        <TextView
+            android:id="@+id/txt_title_cash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="现金卡值"
+            android:textColor="@color/text_999"
+            android:textSize="@dimen/base_text_12"
+            app:layout_constraintEnd_toEndOf="@id/txt_cash"
+            app:layout_constraintStart_toStartOf="@id/txt_cash"
+            app:layout_constraintTop_toBottomOf="@id/txt_balance" />
+
+
+        <TextView
+            android:id="@+id/txt_title_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="赠送卡纸"
+            android:textColor="@color/text_999"
+            android:textSize="@dimen/base_text_12"
+            app:layout_constraintEnd_toEndOf="@id/txt_gift"
+            app:layout_constraintStart_toStartOf="@id/txt_gift"
+            app:layout_constraintTop_toBottomOf="@id/txt_balance" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/base_color_divider"
+            app:layout_constraintBottom_toBottomOf="@id/txt_title_balance"
+            app:layout_constraintEnd_toStartOf="@+id/txt_cash"
+            app:layout_constraintStart_toEndOf="@+id/txt_balance"
+            app:layout_constraintTop_toTopOf="@+id/txt_balance" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/base_color_divider"
+            app:layout_constraintBottom_toBottomOf="@id/txt_title_balance"
+            app:layout_constraintEnd_toStartOf="@+id/txt_gift"
+            app:layout_constraintStart_toEndOf="@+id/txt_cash"
+            app:layout_constraintTop_toTopOf="@+id/txt_balance" />
+
+        <TextView
+            android:id="@+id/txt_racharge"
+            style="@style/BtnAfterSalesAction.PrimarySolid"
+            android:layout_width="230dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="26dp"
+            android:text="充值"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_title_balance" />
+
+        <View
+            android:id="@+id/view_divider_0"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="22dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@color/base_color_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_racharge" />
+
+        <View
+            android:id="@+id/view_divider_1"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@color/base_color_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider_0" />
+
+        <View
+            android:id="@+id/view_divider_2"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@color/base_color_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider_1" />
+
+
+        <View
+            android:id="@+id/view_divider_3"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@color/base_color_divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_divider_2" />
+
+        <TextView
+            android:id="@+id/txt_detail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:text="交易明细"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_13"
+            app:layout_constraintBottom_toBottomOf="@id/view_divider_1"
+            app:layout_constraintTop_toTopOf="@id/view_divider_0" />
+
+        <TextView
+            android:id="@+id/txt_log"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:text="卡日志"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_13"
+            app:layout_constraintTop_toTopOf="@id/view_divider_1" />
+
+        <TextView
+            android:id="@+id/txt_freeze"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:text="卡冻结"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_13"
+            app:layout_constraintBottom_toBottomOf="@id/view_divider_3"
+            app:layout_constraintTop_toTopOf="@id/view_divider_2" />
+
+        <TextView
+            android:id="@+id/txt_remove"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableRight="@drawable/ic_arrow_gray"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:text="卡注销"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_13"
+            app:layout_constraintTop_toTopOf="@id/view_divider_3" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_remove_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="view_divider_2,view_divider_3,txt_freeze,txt_remove" />
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
