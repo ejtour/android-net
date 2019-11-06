@@ -9,11 +9,10 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.report.ReportIcon;
 import com.hll_sc_app.bean.report.ReportItem;
-import com.hll_sc_app.bean.report.ReportLabel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,33 +45,52 @@ public class ReportEntryActivity extends BaseLoadActivity {
 
     private List<ReportItem> prepareMenu() {
         List<ReportItem> list = new ArrayList<>();
-        list.add(new ReportItem(ReportIcon.SALES_STATISTICS, ReportLabel.SALES_STATISTICS, RouterConfig.REPORT_PRODUCT_SALES_STATISTICS));
-        list.add(new ReportItem(ReportIcon.ORDER_GOODS_DETAILS, ReportLabel.ORDER_GOODS_DETAILS, RouterConfig.REPORT_ORDER_GOODS, true));
-        list.add(new ReportItem(ReportIcon.DAILY_SALES_VOLUME, ReportLabel.DAILY_SALES_VOLUME, RouterConfig.REPORT_DAILY_AGGREGATION));
-        list.add(new ReportItem(ReportIcon.CUSTOMER_SALES, ReportLabel.CUSTOMER_SALES, RouterConfig.CUSTOMER_SALE_AGGREGATION, true));
-        list.add(new ReportItem(ReportIcon.SALES_MAN_SIGN, ReportLabel.SALES_MAN_SIGN_ACHIEVEMENT,
-                RouterConfig.REPORT_SALESMAN_SIGN_ACHIEVEMENT));
-        list.add(new ReportItem(ReportIcon.SALES_PERFORMANCE, ReportLabel.SALES_MAN_SALES_ACHIEVEMENT,
-                RouterConfig.REPORT_SALESMAN_SALES_ACHIEVEMENT));
-        list.add(new ReportItem(ReportIcon.STOCKOUT_DIFFERENCES, ReportLabel.DELIVERY_LACK_GATHER,
-            RouterConfig.REPORT_DELIVERY_LACK_GATHER));
-        list.add(new ReportItem(ReportIcon.STOCKOUT_STATISTICS,ReportLabel.CUSTOMER_LACK_AGGREGATION,RouterConfig.REPORT_CUSTOMER_LACK_SUMMARY));
-        list.add(new ReportItem(ReportIcon.RECEIVE_DIFFERENCE,ReportLabel.INSPECT_LACK_AGGREGATION,RouterConfig.REPORT_INSPECT_LACK_LIST));
-        list.add(new ReportItem(ReportIcon.PRODUCTS_DETAILS,ReportLabel.INSPECT_LACK_DETAIL,RouterConfig.REPORT_INSPECT_LACK_DETAIL));
-        list.add(new ReportItem(ReportIcon.REPORT_WAREHOUSE_PRODUCT,ReportLabel.WAREHOUSE_PRODUCT_DETAIL,RouterConfig.REPORT_WAREHOUSE_PRODUCT_DETAIL));
-        list.add(new ReportItem(ReportIcon.REPORT_WAREHOUSE_DELIVERY,ReportLabel.WAREHOUSE_DELIVERY,RouterConfig.REPORT_WAREHOUSE_DELIVERY));
-        list.add(new ReportItem(ReportIcon.REPORT_WAREHOUSE_SERVICE_FEE,ReportLabel.WAREHOUSE_SERVICE_FEE,RouterConfig.REPORT_WAREHOUSE_SERVICE_FEE));
-        list.add(new ReportItem(ReportIcon.RECEIVE_DIFFERENCE_DETAILS,ReportLabel.DELIVERY_TIME_AGGREGATION,RouterConfig.REPORT_DELIVERY_TIME_AGGREGATION));
-        list.add(new ReportItem(ReportIcon.WAIT_REFUND,ReportLabel.WAIT_FOR_REFUND,RouterConfig.REPORT_WAIT_REFUND_TOTAL));
-        list.add(new ReportItem(ReportIcon.REFUNDED,ReportLabel.REFUNDED,RouterConfig.REPORT_REFUNDED_COLLECT));
-        list.add(new ReportItem(ReportIcon.REFUNDED_CUSTOMER_PRODUCT,ReportLabel.REFUNDED_CUSTOMER_PRODUCT,RouterConfig.REPORT_REFUNDED_CUSTOMER_PRODUCT_TOTAL));
-        list.add(new ReportItem(ReportIcon.REFUND_REASONS, ReportLabel.REFUND_REASONS, RouterConfig.REFUND_REASON_STATICS));
-        list.add(new ReportItem(ReportIcon.REPORT_GROUP_LOSS,ReportLabel.REPORT_GROUP_LOSS,RouterConfig.REPORT_CUSTOMER_LOSS_DETAIL));
-        list.add(new ReportItem(ReportIcon.REPORT_SHOP_LOSS,ReportLabel.REPORT_SHOP_LOSS,RouterConfig.REPORT_SHOP_LOSS_DETAIL));
-        list.add(new ReportItem(ReportIcon.PURCHASE_STATISTIC, ReportLabel.PURCHASE_STATISTIC, RouterConfig.REPORT_PURCHASE_STATISTIC));
-        list.add(new ReportItem(ReportIcon.PRODUCE_STATISTIC, ReportLabel.PRODUCE_STATISTIC, RouterConfig.REPORT_PRODUCE_STATISTIC, true));
-        list.add(new ReportItem(ReportIcon.REPORT_GROUP_LOSS,ReportLabel.REPORT_DAY_REPORT,RouterConfig.REPORT_SALES_DAY_REPORT,true));
-        list.add(new ReportItem(ReportIcon.QUERY_CUSTOM_RECEIVE, ReportLabel.QUERY_CUSTOM_RECEIVE, RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE));
+
+        if (UserConfig.crm()) {
+            list.add(new ReportItem(R.drawable.ic_salesman_sign, "业务员签约绩效", RouterConfig.REPORT_SALESMAN_SIGN_ACHIEVEMENT));
+            list.add(new ReportItem(R.drawable.ic_report_sales_performance, "业务员销售额绩效", RouterConfig.REPORT_SALESMAN_SALES_ACHIEVEMENT, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS_DETAIL));
+            list.add(new ReportItem(R.drawable.ic_report_shop_loss, "流失门店明细表", RouterConfig.REPORT_SHOP_LOSS_DETAIL, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_group_loss, "日报统计", RouterConfig.REPORT_SALES_DAY_REPORT, true));
+        } else {
+            list.add(new ReportItem(R.drawable.ic_report_sales_statistics, "商品销量统计汇总", RouterConfig.REPORT_PRODUCT_SALES_STATISTICS));
+            list.add(new ReportItem(R.drawable.ic_report_order_goods_details, "客户订货统计", RouterConfig.REPORT_ORDER_GOODS, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_sales_volume, "日销售额汇总", RouterConfig.REPORT_DAILY_AGGREGATION));
+            list.add(new ReportItem(R.drawable.ic_report_customer_sales, "客户销售汇总", RouterConfig.CUSTOMER_SALE_AGGREGATION, true));
+
+            list.add(new ReportItem(R.drawable.ic_salesman_sign, "业务员签约绩效", RouterConfig.REPORT_SALESMAN_SIGN_ACHIEVEMENT));
+            list.add(new ReportItem(R.drawable.ic_report_sales_performance, "业务员销售额绩效", RouterConfig.REPORT_SALESMAN_SALES_ACHIEVEMENT, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_stockout_difference, "缺货差异汇总", RouterConfig.REPORT_DELIVERY_LACK_GATHER));
+            list.add(new ReportItem(R.drawable.ic_report_receive_difference, "收货差异汇总", RouterConfig.REPORT_INSPECT_LACK_LIST));
+            list.add(new ReportItem(R.drawable.ic_report_products_details, "收货差异商品明细表", RouterConfig.REPORT_INSPECT_LACK_DETAIL));
+            list.add(new ReportItem(R.drawable.ic_report_stockout_statistics, "客户缺货统计表", RouterConfig.REPORT_CUSTOMER_LACK_SUMMARY, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_receive_difference_details, "配送及时率统计", RouterConfig.REPORT_DELIVERY_TIME_AGGREGATION, true));
+
+            list.add(new ReportItem(R.drawable.ic_wait_refund, "待退货统计表", RouterConfig.REPORT_WAIT_REFUND_TOTAL));
+            list.add(new ReportItem(R.drawable.ic_report_refunded, "退货统计表", RouterConfig.REPORT_REFUNDED_COLLECT));
+            list.add(new ReportItem(R.drawable.ic_report_refunded_customer_product, "退货客户与商品统计表", RouterConfig.REPORT_REFUNDED_CUSTOMER_PRODUCT_TOTAL, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS_DETAIL));
+            list.add(new ReportItem(R.drawable.ic_report_shop_loss, "流失门店明细表", RouterConfig.REPORT_SHOP_LOSS_DETAIL, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_purchase_statistic, "采购汇总统计", RouterConfig.REPORT_PURCHASE_STATISTIC));
+            list.add(new ReportItem(R.drawable.ic_report_produce_statistic, "生产汇总统计", RouterConfig.REPORT_PRODUCE_STATISTIC, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_warehouse_product, "代仓商品缺货明细", RouterConfig.REPORT_WAREHOUSE_PRODUCT_DETAIL));
+            list.add(new ReportItem(R.drawable.ic_report_warehouse_delivery, "代仓发货统计", RouterConfig.REPORT_WAREHOUSE_DELIVERY));
+            list.add(new ReportItem(R.drawable.ic_report_warehouse_service_fee, "代仓服务费统计", RouterConfig.REPORT_WAREHOUSE_SERVICE_FEE, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_group_loss, "日报统计", RouterConfig.REPORT_SALES_DAY_REPORT, true));
+
+            list.add(new ReportItem(R.drawable.ic_board_question_blue, "退货原因统计", RouterConfig.REFUND_REASON_STATICS, true));
+
+            list.add(new ReportItem(R.drawable.ic_query_custom_receive, "客户收货查询", RouterConfig.ACTIVITY_QUERY_CUSTOM_RECEIVE, true));
+        }
         return list;
     }
 }
