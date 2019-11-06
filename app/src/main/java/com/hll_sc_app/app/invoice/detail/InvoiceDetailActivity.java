@@ -286,7 +286,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
         mGroupName.setText(bean.getPurchaserName());
         mApplyDate.setText(DateUtil.getReadableTime(bean.getCreateTime(), Constants.SLASH_YYYY_MM_DD));
         if (CommonUtils.getDouble(bean.getBusinessBeginDate()) == 0 || CommonUtils.getDouble(bean.getBusinessEndDate()) == 0) {
-            mBusinessDate.setText(null);
+            mBusinessDate.setText("0 - 0");
         } else {
             mBusinessDate.setText(String.format("%s - %s", DateUtil.getReadableTime(bean.getBusinessBeginDate(), Constants.SLASH_YYYY_MM_DD),
                     DateUtil.getReadableTime(bean.getBusinessEndDate(), Constants.SLASH_YYYY_MM_DD)));
