@@ -25,6 +25,44 @@ public class CardManageBean implements Parcelable {
     private String purchaserName;
 
 
+    //充值时使用
+    private String cashBalanceText;
+    private String giftBalanceText;
+    private String remark;
+    private String payType;
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
+    public String getCashBalanceText() {
+        return cashBalanceText;
+    }
+
+    public void setCashBalanceText(String cashBalanceText) {
+        this.cashBalanceText = cashBalanceText;
+    }
+
+    public String getGiftBalanceText() {
+        return giftBalanceText;
+    }
+
+    public void setGiftBalanceText(String giftBalanceText) {
+        this.giftBalanceText = giftBalanceText;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public double getBalance() {
         return balance;
     }
@@ -161,6 +199,9 @@ public class CardManageBean implements Parcelable {
         this.purchaserName = purchaserName;
     }
 
+    public CardManageBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -185,9 +226,10 @@ public class CardManageBean implements Parcelable {
         dest.writeString(this.purchaserID);
         dest.writeString(this.purchaserImgUrl);
         dest.writeString(this.purchaserName);
-    }
-
-    public CardManageBean() {
+        dest.writeString(this.cashBalanceText);
+        dest.writeString(this.giftBalanceText);
+        dest.writeString(this.remark);
+        dest.writeString(this.payType);
     }
 
     protected CardManageBean(Parcel in) {
@@ -208,6 +250,10 @@ public class CardManageBean implements Parcelable {
         this.purchaserID = in.readString();
         this.purchaserImgUrl = in.readString();
         this.purchaserName = in.readString();
+        this.cashBalanceText = in.readString();
+        this.giftBalanceText = in.readString();
+        this.remark = in.readString();
+        this.payType = in.readString();
     }
 
     public static final Creator<CardManageBean> CREATOR = new Creator<CardManageBean>() {

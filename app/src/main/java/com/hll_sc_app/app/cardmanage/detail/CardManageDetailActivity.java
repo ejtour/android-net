@@ -14,6 +14,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.cardmanage.recharge.CardManageRechargeActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -27,7 +28,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 @Route(path = RouterConfig.ACTIVITY_CARD_MANAGE_DETAIL)
-public class CardManageDetailActivity extends BaseLoadActivity implements ICardManageDetailContract.IView {
+public class CardManageDetailActivity extends BaseLoadActivity {
     @Autowired(name = "parcelable")
     CardManageBean mCardManageBean;
     @BindView(R.id.img_purchaser_url)
@@ -56,7 +57,6 @@ public class CardManageDetailActivity extends BaseLoadActivity implements ICardM
     TextView mTxtTitleGift;
 
     private Unbinder unbinder;
-    private ICardManageDetailContract.IPresent mPresent;
 
     public static void start(CardManageBean bean) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_DETAIL, bean);
@@ -100,16 +100,19 @@ public class CardManageDetailActivity extends BaseLoadActivity implements ICardM
     }
 
 
-    @OnClick({R.id.txt_detail, R.id.txt_log, R.id.txt_freeze, R.id.txt_remove})
+    @OnClick({R.id.txt_detail, R.id.txt_log, R.id.txt_freeze, R.id.txt_remove, R.id.txt_racharge})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_detail:
                 break;
             case R.id.txt_racharge:
+                CardManageRechargeActivity.start(mCardManageBean);
                 break;
             case R.id.txt_freeze:
                 break;
             case R.id.txt_remove:
+                break;
+            case R.id.txt_log:
                 break;
             default:
                 break;

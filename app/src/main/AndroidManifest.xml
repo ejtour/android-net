@@ -1135,6 +1135,9 @@
         <activity
             android:name=".app.cardmanage.add.AddCardActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.cardmanage.recharge.CardManageRechargeActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

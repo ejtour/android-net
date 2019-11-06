@@ -72,6 +72,7 @@ public class ProductMarketingAddPresenter implements IProductMarketingAddContrac
             addProductBean.setProductID(skuGoodsBean.getProductID());
             addProductBean.setSpecID(skuGoodsBean.getSpecID());
             addProductBean.setPromoteNum(skuGoodsBean.getPromoteNum());
+            addProductBean.setNonRefund(skuGoodsBean.getNonRefund());
             addProductBeans.add(addProductBean);
         }
         return addProductBeans;

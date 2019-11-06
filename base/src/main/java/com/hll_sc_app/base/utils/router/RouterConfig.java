@@ -1232,6 +1232,11 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_CARD_MANAGE_ADD_CARD = "/activity/card/manage/add/card/";
 
+    /**
+     * 卡管理添加充值
+     */
+    public static final String ACTIVITY_CARD_MANAGE_RECHARGE = "/activity/card/manage/recharge/";
+
 
 }
 
