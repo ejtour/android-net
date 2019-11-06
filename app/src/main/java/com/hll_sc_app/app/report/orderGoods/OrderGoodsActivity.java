@@ -22,7 +22,6 @@ import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.filter.DateStringParam;
-import com.hll_sc_app.bean.report.ReportLabel;
 import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -105,7 +104,7 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
 
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
-        mTitleBar.setHeaderTitle(ReportLabel.ORDER_GOODS_DETAILS);
+        mTitleBar.setHeaderTitle("客户订货统计");
         mPurchaser.setText("全部采购商");
         mAdapter = new OrderGoodsAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
