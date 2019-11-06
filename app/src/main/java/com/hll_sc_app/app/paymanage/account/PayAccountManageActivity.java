@@ -135,7 +135,7 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
-                finish();
+                goBack();
                 break;
             case R.id.txt_save:
                 toSave();
@@ -149,6 +149,13 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
             default:
                 break;
         }
+    }
+
+    private void goBack() {
+        ARouter.getInstance().build(RouterConfig.PAY_MANAGE)
+                .setProvider(new LoginInterceptor())
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                .navigation(this);
     }
 
     private void toSave() {
@@ -210,11 +217,13 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
     }
 
     @Override
+    public void onBackPressed() {
+        goBack();
+    }
+
+    @Override
     public void editSuccess() {
         showToast("修改支付方式成功");
-        ARouter.getInstance().build(RouterConfig.PAY_MANAGE)
-            .setProvider(new LoginInterceptor())
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            .navigation(this);
+        goBack();
     }
 }
