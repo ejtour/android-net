@@ -28,6 +28,10 @@ public interface CardManageService {
     @Headers("pv:101122")
     Observable<BaseResp<Object>> recharge(@Body BaseMapReq req);
 
+    @POST(HttpConfig.URL)
+    @Headers("pv:101119")
+    Observable<BaseResp<Object>> changeCardStatus(@Body BaseMapReq req);
+
 
 
 }
