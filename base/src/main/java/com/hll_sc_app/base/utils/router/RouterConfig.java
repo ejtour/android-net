@@ -1237,6 +1237,11 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_CARD_MANAGE_RECHARGE = "/activity/card/manage/recharge/";
 
+    /**
+     * 卡管理-卡日志
+     */
+    public static final String ACTIVITY_CARD_MANAGE_LOG = "/activity/card/manage/log/";
+
 
 }
 

@@ -23,6 +23,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.cardmanage.cardlog.CardLogActivity;
 import com.hll_sc_app.app.cardmanage.recharge.CardManageRechargeActivity;
 import com.hll_sc_app.app.staffmanage.detail.depart.InputDialog;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -282,6 +283,7 @@ public class CardManageDetailActivity extends BaseLoadActivity implements ICardM
                 mRemoveDialog.show();
                 break;
             case R.id.txt_log:
+                CardLogActivity.start(mCardManageBean.getCardNo());
                 break;
             default:
                 break;
