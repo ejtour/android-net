@@ -69,7 +69,10 @@ public class CrmMineFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.fcm_avatar, R.id.fcm_salesman_code, R.id.fcm_product_lib, R.id.fcm_staff_manage, R.id.fcm_new_product_feedback, R.id.fcm_complaint_manage, R.id.fcm_bill_list, R.id.fcm_refund, R.id.fcm_invoice_center, R.id.fcm_delivery_route, R.id.fcm_report_center, R.id.fcm_salesman_rank, R.id.fcm_product_special_demand, R.id.fcm_settings})
+    @OnClick({R.id.fcm_avatar, R.id.fcm_salesman_code, R.id.fcm_product_lib, R.id.fcm_staff_manage,
+            R.id.fcm_new_product_feedback, R.id.fcm_complaint_manage, R.id.fcm_bill_list,
+            R.id.fcm_refund, R.id.fcm_invoice_center, R.id.fcm_delivery_route, R.id.fcm_report_center,
+            R.id.fcm_salesman_rank, R.id.fcm_product_special_demand, R.id.fcm_settings, R.id.fcm_info_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fcm_avatar:
@@ -109,6 +112,9 @@ public class CrmMineFragment extends BaseFragment {
                 break;
             case R.id.fcm_settings:
                 RouterUtil.goToActivity(RouterConfig.CRM_SETTING);
+                break;
+            case R.id.fcm_info_btn:
+                RouterUtil.goToActivity(RouterConfig.INFO);
                 break;
         }
     }

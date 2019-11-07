@@ -1135,9 +1135,29 @@
         <activity
             android:name=".app.cardmanage.add.AddCardActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.cardmanage.recharge.CardManageRechargeActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.info.InfoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.info.modify.InfoModifyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
+
+        <activity android:name=".app.info.doorway.InfoDoorwayActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.info.license.InfoLicenseActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".app.info.other.InfoOtherActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

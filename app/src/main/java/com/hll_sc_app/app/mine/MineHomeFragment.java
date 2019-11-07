@@ -220,7 +220,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             R.id.txt_store_manage, R.id.txt_account_statement, R.id.txt_payment_settings, R.id.txt_invoice_manage,
             R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage,
             R.id.txt_complaint_manage, R.id.txt_main_feedback, R.id.fmm_analysis_btn, R.id.txt_new_product_demand,
-            R.id.txt_market_price, R.id.txt_customer_purchase_template, R.id.txt_card_manage})
+            R.id.txt_market_price, R.id.txt_customer_purchase_template, R.id.txt_card_manage,R.id.ll_user_message})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -307,6 +307,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 break;
             case R.id.txt_card_manage:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_LIST);
+                break;
+            case R.id.ll_user_message:
+                RouterUtil.goToActivity(RouterConfig.INFO);
                 break;
             default:
                 break;
