@@ -61,7 +61,7 @@ public class InspectLackDetailActivity extends BaseLoadActivity implements IInsp
     @Autowired(name = "parcelable")
     InspectLackDetailReq mParam = new InspectLackDetailReq();
     @BindView(R.id.edt_search)
-    EditText edtSearch;
+    TextView edtSearch;
     @BindView(R.id.img_clear)
     ImageView imgClear;
     DateWindow dateWindow;

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.report.customerSale.saleDetail;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -142,7 +143,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Bas
         mPresenter.register(this);
         View headView = LayoutInflater.from(this).inflate(R.layout.item_customer_sale_detail_title, mRecyclerView, false);
         mAdapter.addHeaderView(headView);
-        mEmptyView = EmptyView.newBuilder(this).setTipsTitle("当前日期下没有数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setImage(R.drawable.ic_char_empty).setTips("当前日期下没有统计数据噢").create();
         syncHorizontalScrollView.setLinkageViews(footSyncHorizontalScrollView);
         footSyncHorizontalScrollView.setLinkageViews(syncHorizontalScrollView);
         mPresenter.start();

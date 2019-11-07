@@ -70,7 +70,7 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
     private IWareHouseProductDetailContract.IWareHouseProductDetailPresenter mPresenter;
     WareHouseLackProductReq mParam = new WareHouseLackProductReq();
     @BindView(R.id.edt_search)
-    EditText edtSearch;
+    TextView edtSearch;
     @BindView(R.id.img_clear)
     ImageView imgClear;
     @BindView(R.id.rog_date_btn)
