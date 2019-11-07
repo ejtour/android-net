@@ -3,9 +3,13 @@ package com.hll_sc_app.app.paymanage;
 import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.MsgWrapper;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.paymanage.PayResp;
@@ -65,27 +69,6 @@ public class PayManagePresenter implements PayManageContract.IPayManagePresenter
             .subscribe(new SettlementBeanBaseCallback());
     }
 
-    @Override
-    public void editSettlement(String payType, String status) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("actionType", "1")
-            .put("payType", payType)
-            .put("status", status)
-            .put("supplierID", UserConfig.getGroupID())
-            .create();
-        CooperationPurchaserService.INSTANCE
-            .editSettlement(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .flatMap((Function<Object, ObservableSource<SettlementBean>>) o -> {
-                mView.showToast("支付方式修改成功");
-                return getSettlementListObservable();
-            })
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new SettlementBeanBaseCallback());
-    }
 
     private Observable<SettlementBean> getSettlementListObservable() {
         BaseMapReq req = BaseMapReq.newBuilder()
@@ -109,5 +92,28 @@ public class PayManagePresenter implements PayManageContract.IPayManagePresenter
             // 失败处理
             mView.showPayList();
         }
+    }
+
+    /**
+     * 修改支付方式
+     *
+     * @param payType 支付方式	0-在线支付,1-货到付款,2-账期支付
+     * @param status  开启状态 0-停用,1-启用
+     */
+    public static void editSettlement(String payType, String status, SimpleObserver<MsgWrapper<Object>> observer) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("actionType", "1")
+                .put("payType", payType)
+                .put("status", status)
+                .put("supplierID", UserConfig.getGroupID())
+                .create();
+        CooperationPurchaserService.INSTANCE
+                .editSettlement(req)
+                .compose(ApiScheduler.getMsgLoadingScheduler(observer))
+                .subscribe(observer);
     }
 }

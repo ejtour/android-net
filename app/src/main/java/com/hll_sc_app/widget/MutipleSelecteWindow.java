@@ -130,7 +130,7 @@ public class MutipleSelecteWindow<T> extends BasePopupWindow {
         }
         //全选的操作 点击了全部这个item
         if (mConfig.enableSelectAll() && position == 0) {
-            int itemCount = adapter.getItemCount();
+            int itemCount = adapter.getData().size();
             if (selectedIndexs.size() != itemCount) {
                 selectedIndexs.removeAll(selectedIndexs);
                 for (int i = 0; i < adapter.getItemCount(); i++) {

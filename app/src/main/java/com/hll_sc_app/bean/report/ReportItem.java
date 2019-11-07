@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.report;
 
+import androidx.annotation.DrawableRes;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/7/22
@@ -11,7 +13,7 @@ public class ReportItem {
     private boolean bottomDivider;
     private String path;
 
-    public ReportItem(@ReportIcon int icon, @ReportLabel String label, String path) {
+    public ReportItem(@DrawableRes int icon, String label, String path) {
         this(icon, label, path, false);
     }
 
@@ -21,19 +23,17 @@ public class ReportItem {
      * @param path          跳转路径
      * @param bottomDivider 是否显示底部分割线
      */
-    public ReportItem(@ReportIcon int icon, @ReportLabel String label, String path, boolean bottomDivider) {
+    public ReportItem(@DrawableRes int icon, String label, String path, boolean bottomDivider) {
         this.icon = icon;
         this.label = label;
         this.path = path;
         this.bottomDivider = bottomDivider;
     }
 
-    @ReportIcon
     public int getIcon() {
         return icon;
     }
 
-    @ReportLabel
     public String getLabel() {
         return label;
     }

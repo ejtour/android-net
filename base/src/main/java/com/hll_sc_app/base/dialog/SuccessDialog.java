@@ -76,6 +76,12 @@ public class SuccessDialog extends BaseDialog {
         msgTxt.setText(messageTitle);
     }
 
+    public void setMessage(CharSequence message, View.OnClickListener clickListener) {
+        setMessage(message);
+        TextView msgTxt = mRootView.findViewById(R.id.txt_message);
+        msgTxt.setOnClickListener(clickListener);
+    }
+
     public void setMessage(CharSequence message) {
         TextView msgTxt = mRootView.findViewById(R.id.txt_message);
         if (TextUtils.isEmpty(message)) {
@@ -199,6 +205,12 @@ public class SuccessDialog extends BaseDialog {
             return this;
         }
 
+        public Builder setMessage(CharSequence msg, View.OnClickListener clickListener) {
+            P.mMessage = msg;
+            P.mMsgOnClickListener = clickListener;
+            return this;
+        }
+
         public SuccessDialog create() {
             final SuccessDialog dialog = new SuccessDialog(P.mContext, R.style.BaseDialog);
             P.apply(dialog);
@@ -230,6 +242,7 @@ public class SuccessDialog extends BaseDialog {
         OnCancelListener mOnCancelListener;
         OnDismissListener mOnDismissListener;
         OnClickListener mOnClickListener;
+        View.OnClickListener mMsgOnClickListener;
         String[] items;
 
         void apply(SuccessDialog dialog) {
@@ -238,6 +251,9 @@ public class SuccessDialog extends BaseDialog {
             dialog.setImageState(mImgState);
             dialog.setMessage(mMessage);
             dialog.setMessageTitle(mMessageTitle);
+            if (mMsgOnClickListener != null) {
+                dialog.setMessage(mMessage, mMsgOnClickListener);
+            }
             if (!TextUtils.isEmpty(mContent)) {
                 dialog.setContent(mContent);
             }

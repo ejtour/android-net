@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -126,6 +127,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     EditText mEdtRuleDZ;
     @BindView(R.id.group_add_product)
     Group mGroupAddProduct;
+    @BindView(R.id.check_no_return)
+    CheckBox mCheckNoReturn;
     private Unbinder unbinder;
     private DateTimePickerDialog.Builder mDateTimeDialogBuilder;
     private SingleSelectionDialog mSingleRuleDilog;
@@ -187,6 +190,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         mPresenter.register(this);
         /*活动商品列表*/
         mMarketingProductList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mMarketingProductList.setNestedScrollingEnabled(false);
         /*默认是普通编辑模式*/
         mMarketingProductAdpater = new MarketingProductAdapter(null, MarketingProductAdapter.Modal.EDIT);
         mMarketingProductList.setAdapter(mMarketingProductAdpater);
@@ -194,6 +198,25 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             if (view.getId() == R.id.img_delete) {
                 adapter.remove(position);
                 mEmptyWord.setVisibility(adapter.getData().size() > 0 ? View.GONE : View.VISIBLE);
+                updateProductNoReturnCheck(mMarketingProductAdpater.getData());
+            } else if (view.getId() == R.id.rl_no_return) {
+                SkuGoodsBean skuGoodsBean = mMarketingProductAdpater.getItem(position);
+                if (skuGoodsBean == null) {
+                    return;
+                }
+                skuGoodsBean.setNonRefund(skuGoodsBean.getNonRefund() == 0 ? 1 : 0);
+//                mMarketingProductAdpater.notifyDataSetChanged();//这个方法会触发列表抖动
+                ((CheckBox) view.findViewById(R.id.check_no_return)).setChecked(skuGoodsBean.getNonRefund() == 1);
+                updateProductNoReturnCheck(mMarketingProductAdpater.getData());
+            } else if (view.getId() == R.id.check_no_return) {
+                SkuGoodsBean skuGoodsBean = mMarketingProductAdpater.getItem(position);
+                if (skuGoodsBean == null) {
+                    return;
+                }
+                skuGoodsBean.setNonRefund(skuGoodsBean.getNonRefund() == 0 ? 1 : 0);
+//                mMarketingProductAdpater.notifyDataSetChanged();//这个方法会触发列表抖动
+                ((CheckBox) view).setChecked(skuGoodsBean.getNonRefund() == 1);
+                updateProductNoReturnCheck(mMarketingProductAdpater.getData());
             }
         });
         /*促销规则列表*/
@@ -266,7 +289,6 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 mMarketingProductAdpater.notifyDataSetChanged();
             }
         });
-
 
     }
 
@@ -581,6 +603,32 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         return true;
     }
 
+    /***
+     * 全部不可退货的checkbox的选中的状态
+     * @param skuGoodsBeans
+     */
+    private void updateProductNoReturnCheck(List<SkuGoodsBean> skuGoodsBeans) {
+        int isSelectedTimes = 0;
+        for (SkuGoodsBean skuGoodsBean : skuGoodsBeans) {
+            if (skuGoodsBean.getNonRefund() == 1) {
+                isSelectedTimes++;
+            }
+        }
+
+        //遍历：看是否勾选不可退货 -1 一个没有,0:部分,1:全都选了
+        int checkResult = isSelectedTimes == skuGoodsBeans.size() ? 1 : isSelectedTimes > 0 ? 0 : -1;
+        if (checkResult == 1) {
+            mCheckNoReturn.setBackgroundResource(R.drawable.bg_selector_check_box);
+            mCheckNoReturn.setChecked(true);
+        } else if (checkResult == 0) {
+            mCheckNoReturn.setChecked(false);
+            mCheckNoReturn.setBackgroundResource(R.drawable.bg_selector_check_box_part);
+        } else {
+            mCheckNoReturn.setBackgroundResource(R.drawable.bg_selector_check_box);
+            mCheckNoReturn.setChecked(false);
+        }
+    }
+
     @Subscribe
     public void onEvent(List<SkuGoodsBean> skuGoodsBeans) {
         if (CommonUtils.isEmpty(skuGoodsBeans)) {
@@ -594,10 +642,12 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 }
             }
             mMarketingProductAdpater.setNewData(skuGoodsBeans);
+            updateProductNoReturnCheck(skuGoodsBeans);
         }
     }
 
-    @OnClick({R.id.txt_time_start_select, R.id.txt_time_end_select, R.id.txt_add_product, R.id.txt_rule_select, R.id.txt_area_select})
+    @OnClick({R.id.txt_time_start_select, R.id.txt_time_end_select, R.id.txt_add_product, R.id.txt_rule_select,
+            R.id.txt_area_select, R.id.txt_no_return, R.id.check_no_return})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_time_start_select:
@@ -664,6 +714,18 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
                 break;
             case R.id.txt_area_select:
                 SelectAreaActivity.start(this, REQUEST_SELECT_AREA, REQUEST_SELECT_AREA_NAME, "选择区域", selectedAreaMap);
+                break;
+            case R.id.txt_no_return:
+            case R.id.check_no_return:
+                /*商品促销-全部不可退货checkbox事件*/
+                if (mDiscountType == 2) {//商品促销
+                    mCheckNoReturn.setChecked(!mCheckNoReturn.isChecked());
+                    mCheckNoReturn.setBackgroundResource(R.drawable.bg_selector_check_box);
+                    for (SkuGoodsBean skuGoodsBean : mMarketingProductAdpater.getData()) {
+                        skuGoodsBean.setNonRefund(mCheckNoReturn.isChecked() ? 1 : 0);
+                    }
+                    mMarketingProductAdpater.notifyDataSetChanged();
+                }
                 break;
             default:
                 break;

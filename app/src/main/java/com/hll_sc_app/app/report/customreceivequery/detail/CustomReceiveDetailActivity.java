@@ -78,7 +78,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activirty_report_custom_receive_detail);
+        setContentView(R.layout.activity_report_custom_receive_detail);
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
         initView();
@@ -176,7 +176,7 @@ public class CustomReceiveDetailActivity extends BaseLoadActivity implements ICu
                     .setText(R.id.txt_price_no_taxt, "¥" + CommonUtils.formatMoney(item.getPretaxAmount()))
                     .setText(R.id.unit_assist, item.getAssistUnit())
                     .setText(R.id.number_assist, CommonUtils.formatNumber(item.getAuxiliaryNum()))
-                    .setText(R.id.date_create, CalendarUtils.getDateFormatString(item.getCreateTime(), "yyyyMMddHHmmss", "yyyy/MM/dd"))
+                    .setText(R.id.date_create, CalendarUtils.getDateFormatString(item.getProductionDate(), "yyyyMMddHHmmss", "yyyy/MM/dd"))
                     .setText(R.id.batch_number, item.getBatchNumber())
                     .setText(R.id.txt_remark, item.getDetailRemark())
                     .setBackgroundColor(R.id.ll_container, Color.parseColor(helper.getAdapterPosition() % 2 == 0 ? "#FFFFFF" : "#F9F9F9"));

@@ -85,6 +85,15 @@ public class AfterSalesBean implements Parcelable {
     private String refundReasonDesc;
     private boolean isSelected;
     private String receiverMobile;
+    private String closeReason;
+
+    public String getCloseReason() {
+        return closeReason;
+    }
+
+    public void setCloseReason(String closeReason) {
+        this.closeReason = closeReason;
+    }
 
     public String getReceiverMobile() {
         return receiverMobile;
@@ -812,6 +821,7 @@ public class AfterSalesBean implements Parcelable {
         dest.writeString(this.refundReasonDesc);
         dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
         dest.writeString(this.receiverMobile);
+        dest.writeString(this.closeReason);
     }
 
     protected AfterSalesBean(Parcel in) {
@@ -888,6 +898,7 @@ public class AfterSalesBean implements Parcelable {
         this.refundReasonDesc = in.readString();
         this.isSelected = in.readByte() != 0;
         this.receiverMobile = in.readString();
+        this.closeReason = in.readString();
     }
 
     public static final Creator<AfterSalesBean> CREATOR = new Creator<AfterSalesBean>() {

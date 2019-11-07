@@ -47,13 +47,7 @@ public interface PayManageContract {
          */
         void querySettlementList();
 
-        /**
-         * 修改支付方式
-         *
-         * @param payType 支付方式	0-在线支付,1-货到付款,2-账期支付
-         * @param status  开启状态 0-停用,1-启用
-         */
-        void editSettlement(String payType, String status);
+
 
         /**
          * 查询默认支付方式列表

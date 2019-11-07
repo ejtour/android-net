@@ -30,7 +30,7 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
+import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.order.place.PlaceOrderSpecBean;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.ProductSpecBean;
@@ -79,7 +79,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     private CategoryAdapter mCategoryAdapter;
     private SelectGoodsAdapter mAdapter;
     private ISelectGoodsContract.ISelectGoodsPresenter mPresenter;
-    private List<GoodsCategoryBean> mCategoryList;
+    private List<CustomCategoryBean> mCategoryList;
     private List<PlaceOrderSpecBean> mSpecList = new ArrayList<>();
     private KeyboardWatcher mKeyboardWatcher;
 
@@ -129,7 +129,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         mTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                GoodsCategoryBean bean = mCategoryList.get(position);
+                CustomCategoryBean bean = mCategoryList.get(position);
                 mCategoryAdapter.setNewData(bean.getSubList());
                 mParam.setSubID(bean.getId());
                 mParam.setThreeID(null);
@@ -249,11 +249,11 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
     }
 
     @Override
-    public void setCategoryInfo(List<GoodsCategoryBean> list) {
+    public void setCategoryInfo(List<CustomCategoryBean> list) {
         mCategoryList = list;
         if (!CommonUtils.isEmpty(list)) {
             ArrayList<CustomTabEntity> arrayList = new ArrayList<>();
-            for (GoodsCategoryBean bean : list) {
+            for (CustomCategoryBean bean : list) {
                 arrayList.add(new CustomTabEntity() {
                     @Override
                     public String getTabTitle() {
@@ -366,7 +366,7 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         mTitleBar.requestFocus();
     }
 
-    private class CategoryAdapter extends BaseQuickAdapter<GoodsCategoryBean, BaseViewHolder> {
+    private class CategoryAdapter extends BaseQuickAdapter<CustomCategoryBean, BaseViewHolder> {
         private int mCurPos;
 
         CategoryAdapter() {
@@ -381,17 +381,17 @@ public class SelectGoodsActivity extends BaseLoadActivity implements ISelectGood
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, GoodsCategoryBean item) {
+        protected void convert(BaseViewHolder helper, CustomCategoryBean item) {
             TextView itemView = (TextView) helper.itemView;
             itemView.setText(item.getCategoryName());
             itemView.setSelected(mCurPos == mData.indexOf(item));
         }
 
         @Override
-        public void setNewData(@Nullable List<GoodsCategoryBean> data) {
+        public void setNewData(@Nullable List<CustomCategoryBean> data) {
             mCurPos = 0;
-            List<GoodsCategoryBean> temp = new ArrayList<>();
-            GoodsCategoryBean bean = new GoodsCategoryBean();
+            List<CustomCategoryBean> temp = new ArrayList<>();
+            CustomCategoryBean bean = new CustomCategoryBean();
             bean.setCategoryName("全部");
             temp.add(bean);
             if (data != null) temp.addAll(data);

@@ -23,6 +23,27 @@ public class RouterConfig {
      * 设置界面-价格比例设置
      */
     public static final String SETTING_PRICE_RATIO = "/activity/setting/priceRatio";
+
+    /**
+     * 税率设置
+     */
+    public static final String SETTING_TAX = "/activity/setting/tax";
+
+    /**
+     * 商品特殊税率设置
+     */
+    public static final String SETTING_TAX_SPECIAL = "/activity/setting/tax/special";
+
+    /**
+     * 税率设置-选择商品
+     */
+    public static final String SETTING_TAX_SELECT_GOODS = "/activity/select/goods";
+
+    /**
+     * 提醒设置
+     */
+    public static final String SETTING_REMIND = "/activity/setting/remind";
+
     /**
      * 配送管理
      */
@@ -1175,5 +1196,47 @@ public class RouterConfig {
      * 商品需求-新增-采购商搜索
      */
     public static final String GOODS_DEMAND_PURCHASER_SEARCH = "/activity/goods/demand/purchaser/search";
+
+    /**
+     * 市场价格
+     */
+    public static final String PRICE = "/activity/price";
+
+    /**
+     * 意见反馈列表
+     */
+    public static final String ACTIVITY_FEED_BACK_LIST="/activity/feedback/list";
+    
+    /**
+     * 采购模板
+     */
+    public static final String PURCHASE_TEMPLATE = "/activity/purchase/template";
+
+    /**
+     * 卡管理列表页面
+     */
+    public static  final String ACTIVITY_CARD_MANAGE_LIST ="/activity/card/manage/list";
+
+    /**
+     * 卡管理详情
+     */
+    public static  final String ACTIVITY_CARD_MANAGE_DETAIL ="/activity/card/manage/detail";
+
+    /**
+     * 卡管理添加选择合作采购商
+     */
+    public static  final String ACTIVITY_CARD_MANAGE_ADD_SELECT_PURCHASER ="/activity/card/manage/add/select/purchaser";
+
+    /**
+     * 卡管理添加新建卡
+     */
+    public static final String ACTIVITY_CARD_MANAGE_ADD_CARD = "/activity/card/manage/add/card/";
+
+    /**
+     * 卡管理添加充值
+     */
+    public static final String ACTIVITY_CARD_MANAGE_RECHARGE = "/activity/card/manage/recharge/";
+
+
 }
 

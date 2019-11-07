@@ -289,9 +289,9 @@ public class ProductSelectActivity extends BaseLoadActivity implements IProductS
     /**
      * 分类适配器
      */
-    class CategoryAdapter extends BaseQuickAdapter<CustomCategoryBean, BaseViewHolder> {
+    public static class CategoryAdapter extends BaseQuickAdapter<CustomCategoryBean, BaseViewHolder> {
 
-        CategoryAdapter() {
+        public CategoryAdapter() {
             super(R.layout.item_goods_custom_category_top);
         }
 

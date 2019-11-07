@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/bg_goods_select_category"
+    android:gravity="center"
+    android:singleLine="true"
+    android:textColor="@drawable/base_text_color_window_check"
+    android:textSize="@dimen/text_middle_size"
+    tools:text="一级分类" />

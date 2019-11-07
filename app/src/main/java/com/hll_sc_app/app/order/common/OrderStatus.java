@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.order.common;
 
 import android.support.annotation.DrawableRes;
+import android.text.TextUtils;
 
 import com.hll_sc_app.R;
 
@@ -30,7 +31,10 @@ public enum OrderStatus {
                 } else if (canceler == 3) {
                     builder.append("客服");
                 }
-                builder.append(actionBy.equals("admin") ? "管理员" : actionBy).append("取消：").append(cancelReason);
+                builder.append(actionBy.equals("admin") ? "管理员" : actionBy).append("取消");
+            }
+            if (!TextUtils.isEmpty(cancelReason)){
+                builder.append("：").append(cancelReason);
             }
             return builder.toString();
         }

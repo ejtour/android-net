@@ -166,7 +166,15 @@ public class MarketingProductAddReq {
         private String productID;
         private String promoteNum;
         private String specID;
-        
+        private int nonRefund;
+
+        public int getNonRefund() {
+            return nonRefund;
+        }
+
+        public void setNonRefund(int nonRefund) {
+            this.nonRefund = nonRefund;
+        }
 
         public String getProductID() {
             return productID;

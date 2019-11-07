@@ -28,7 +28,7 @@ import java.util.Date;
 public class OrderHelper {
 
     private static final String[] PAY_TYPES = {"货到付款", "账期支付", "在线支付"};
-    private static final String[] PAYMENT_WAYS = {"微信支付", "支付宝支付", "银联支付", "现金支付", "支票支付", "快捷支付", "余额支付", "微信扫码", "支付宝扫码"};
+    private static final String[] PAYMENT_WAYS = {"微信支付", "支付宝支付", "银联支付", "现金支付", "支票支付", "快捷支付", "余额支付", "微信扫码", "支付宝扫码","","","储值卡支付"};
 
     /**
      * 获取订单支付类型

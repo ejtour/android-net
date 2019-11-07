@@ -2,7 +2,7 @@ package com.hll_sc_app.app.order.place.select;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.order.place.GoodsCategoryBean;
+import com.hll_sc_app.bean.goods.CustomCategoryBean;
 import com.hll_sc_app.bean.order.place.ProductBean;
 import com.hll_sc_app.bean.order.place.SettlementInfoReq;
 import com.hll_sc_app.bean.order.place.SettlementInfoResp;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public interface ISelectGoodsContract {
     interface ISelectGoodsView extends ILoadView {
-        void setCategoryInfo(List<GoodsCategoryBean> list);
+        void setCategoryInfo(List<CustomCategoryBean> list);
 
         void setGoodsList(List<ProductBean> list, boolean append);
 

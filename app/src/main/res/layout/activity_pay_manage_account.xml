@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_activity_bg"
@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/img_close"
-            style="@style/BtnClose"/>
+            style="@style/BtnClose" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,24 +22,45 @@
             android:layout_centerInParent="true"
             android:text="账期支付设置"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_18"/>
-
-        <TextView
-            android:id="@+id/txt_save"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="保存"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_13"/>
+            android:textSize="@dimen/base_text_18" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pay_type"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/rl_title"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@color/base_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/txt_pay_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="账期支付"
+            android:textColor="@color/text_222"
+            android:textSize="@dimen/base_text_13" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/switch_pay_type"
+            android:layout_width="35dp"
+            android:layout_height="21dp"
+            app:kswBackDrawable="@drawable/switch_track"
+            app:kswThumbDrawable="@drawable/base_thumb" />
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/rl_accountPeriod"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_below="@+id/ll_pay_type"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:paddingLeft="20dp"
         android:paddingRight="10dp">
@@ -50,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="账单日"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
         <TextView
             android:id="@+id/txt_accountPeriod"
@@ -64,7 +85,7 @@
             android:hint="请选择账单日"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-            android:textColorHint="@color/color_aeaeae"/>
+            android:textColorHint="@color/color_aeaeae" />
 
     </RelativeLayout>
 
@@ -72,6 +93,7 @@
         android:id="@+id/rl_settleDate"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_below="@+id/rl_accountPeriod"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:paddingLeft="20dp"
         android:paddingRight="10dp">
@@ -82,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="结算日"
-            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"/>
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
 
         <TextView
             android:id="@+id/txt_settleDate"
@@ -93,19 +115,40 @@
             android:singleLine="true"
             android:text="对账单产生后0日"
             android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-            android:textColorHint="@color/color_aeaeae"/>
+            android:textColorHint="@color/color_aeaeae" />
 
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/txt_alter"
         android:layout_width="match_parent"
         android:layout_height="33dp"
+        android:layout_below="@+id/rl_settleDate"
         android:background="@color/color_fafafa"
         android:gravity="center_vertical|right"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="点击可修改结算日"
         android:textColor="@color/color_aeaeae"
-        android:textSize="9sp"/>
+        android:textSize="9sp" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_button_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/base_bg_shadow_bottom_white_bar"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_72"
+        android:paddingRight="@dimen/dp_72">
+
+        <TextView
+            android:id="@+id/txt_save"
+            style="@style/BtnAfterSalesAction.PrimarySolid"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:text="保存设置"
+            android:textColor="@color/base_white"
+            android:textSize="@dimen/base_text_13" />
+    </LinearLayout>
+</RelativeLayout>

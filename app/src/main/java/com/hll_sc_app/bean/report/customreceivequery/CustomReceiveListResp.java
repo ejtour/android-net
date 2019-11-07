@@ -19,6 +19,7 @@ public class CustomReceiveListResp {
 
     public static List<FilterParams.TypeBean> getTypeList() {
         List<FilterParams.TypeBean> typeBeans = new ArrayList<>();
+        typeBeans.add(new FilterParams.TypeBean("全部", 0));
         typeBeans.add(new FilterParams.TypeBean("验货入库", 1));
         typeBeans.add(new FilterParams.TypeBean("入库冲销", 3));
         typeBeans.add(new FilterParams.TypeBean("入库退货", 4));
@@ -28,9 +29,9 @@ public class CustomReceiveListResp {
         typeBeans.add(new FilterParams.TypeBean("直发冲销", 22));
         typeBeans.add(new FilterParams.TypeBean("直发退货", 23));
         typeBeans.add(new FilterParams.TypeBean("赠品入库", 24));
-        typeBeans.add(new FilterParams.TypeBean("代仓验收入库单", 30));
-        typeBeans.add(new FilterParams.TypeBean("代仓入库冲销单", 31));
-        typeBeans.add(new FilterParams.TypeBean("代仓入库退货单", 32));
+//        typeBeans.add(new FilterParams.TypeBean("代仓验收入库单", 30));
+//        typeBeans.add(new FilterParams.TypeBean("代仓入库冲销单", 31));
+//        typeBeans.add(new FilterParams.TypeBean("代仓入库退货单", 32));
         typeBeans.add(new FilterParams.TypeBean("司机补货单", 27));
         typeBeans.add(new FilterParams.TypeBean("库存差异调整", 28));
         return typeBeans;
