@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.user.CertifyReq;
 import com.hll_sc_app.bean.user.PurchaseTemplateBean;
 import com.hll_sc_app.bean.user.RemindReq;
 import com.hll_sc_app.bean.user.RemindResp;
@@ -104,6 +105,36 @@ public class User {
                         .put("purchaserID", purchaserID)
                         .put("purchaserShopID", purchaserShopID)
                         .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 更新集团信息
+     *
+     * @param key   集团信息键
+     * @param value 集团信息值
+     */
+    public static void updateGroupInfo(String key, String value, SimpleObserver<Object> observer) {
+        UserService.INSTANCE
+                .updateGroupInfo(BaseMapReq.newBuilder()
+                        .put("groupID", UserConfig.getGroupID())
+                        .put(key, value)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 请求认证
+     *
+     * @param req 认证请求
+     */
+    public static void reqCertify(CertifyReq req, SimpleObserver<Object> observer) {
+        UserService.INSTANCE
+                .reqCertify(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

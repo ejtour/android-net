@@ -26,11 +26,12 @@
         android:layout_toRightOf="@+id/img_back"
         android:paddingLeft="15dp">
 
-        <EditText
+        <TextView
             android:paddingLeft="10dp"
             android:id="@+id/edt_search"
             android:layout_width="287dp"
             android:layout_height="25dp"
+            android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:background="@drawable/bg_fafafa_radius_20_solid"
             android:drawableLeft="@drawable/ic_search_aeaeae"
@@ -136,9 +137,12 @@
 
     <LinearLayout
         android:id="@+id/order_statics"
+        android:background="@drawable/base_bg_white_radius_5_solid"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_marginTop="111dp"
+        android:layout_marginLeft="@dimen/base_text_10"
+        android:layout_marginRight="@dimen/base_text_10"
         android:orientation="horizontal">
         <RelativeLayout
             android:layout_width="0dp"
@@ -162,7 +166,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="有效订单"
-                android:textColor="#222222"
+                android:textColor="@color/base_text999"
                 android:textSize="10dp" />
         </RelativeLayout>
         <RelativeLayout
@@ -187,7 +191,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="退单数"
-                android:textColor="#222222"
+                android:textColor="@color/base_text999"
                 android:textSize="10dp" />
         </RelativeLayout>
     </LinearLayout>
@@ -195,6 +199,10 @@
         android:id="@+id/customer_statics"
         android:layout_width="match_parent"
         android:layout_height="110dp"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="@dimen/base_text_10"
+        android:layout_marginRight="@dimen/base_text_10"
         android:layout_below="@+id/order_statics"
         android:orientation="horizontal">
         <RelativeLayout
@@ -217,7 +225,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="订单客户数"
-                android:textColor="#222222"
+                android:textColor="@color/base_text999"
                 android:textSize="10dp" />
         </RelativeLayout>
         <RelativeLayout
@@ -240,14 +248,18 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="退货客户数"
-                android:textColor="#222222"
+                android:textColor="@color/base_text999"
                 android:textSize="10dp" />
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/amount_statics"
         android:layout_width="match_parent"
+        android:background="@drawable/base_bg_white_radius_5_solid"
         android:layout_height="110dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="@dimen/base_text_10"
+        android:layout_marginRight="@dimen/base_text_10"
         android:layout_below="@+id/customer_statics"
         android:orientation="horizontal">
         <RelativeLayout
@@ -270,7 +282,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="销售金额(元)"
-                android:textColor="#222222"
+                android:textColor="@color/base_text999"
                 android:textSize="10dp" />
         </RelativeLayout>
         <RelativeLayout
@@ -293,14 +305,18 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="退款金额(元)"
-                android:textColor="#222222"
+                android:textColor="@color/base_text999"
                 android:textSize="10dp" />
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/amount_total"
         android:layout_width="match_parent"
+        android:background="@drawable/base_bg_white_radius_5_solid"
         android:layout_height="110dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="@dimen/base_text_10"
+        android:layout_marginRight="@dimen/base_text_10"
         android:layout_below="@+id/amount_statics"
         android:orientation="horizontal">
         <RelativeLayout
@@ -323,14 +339,18 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:text="销售金额(元)"
-                android:textColor="#222222"
+                android:textColor="@color/base_text999"
                 android:textSize="10dp" />
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/customer_sale_agg_link"
         android:layout_width="match_parent"
+        android:background="@drawable/base_bg_white_radius_5_solid"
         android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="@dimen/base_text_10"
+        android:layout_marginRight="@dimen/base_text_10"
         android:layout_below="@+id/amount_total"
         android:orientation="horizontal">
         <RelativeLayout
@@ -350,8 +370,12 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/customer_sale_shop_link"
+        android:background="@drawable/base_bg_white_radius_5_solid"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="@dimen/base_text_10"
+        android:layout_marginRight="@dimen/base_text_10"
         android:layout_below="@+id/customer_sale_agg_link"
         android:orientation="horizontal">
         <RelativeLayout

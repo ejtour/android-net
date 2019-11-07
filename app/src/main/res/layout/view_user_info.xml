@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="RelativeLayout">
+
+    <TextView
+        android:id="@+id/vui_company_name_label"
+        style="@style/InfoLabel"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@android:color/white"
+        android:text="公司名称"
+        android:textColor="@color/color_222222" />
+
+    <TextView
+        android:id="@+id/vui_company_name"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/vui_company_name_label"
+        android:layout_alignBottom="@id/vui_company_name_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/vui_company_name_label"
+        android:background="@android:color/white"
+        android:textColor="@color/color_666666"
+        tools:text="北京二十二城生鲜供应集团" />
+
+    <TextView
+        android:id="@+id/vui_name_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/vui_company_name_label"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@android:color/white"
+        android:text="我的姓名"
+        android:textColor="@color/color_222222" />
+
+    <TextView
+        android:id="@+id/vui_name"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/vui_name_label"
+        android:layout_alignBottom="@id/vui_name_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/vui_name_label"
+        android:background="@android:color/white"
+        android:textColor="@color/color_666666"
+        tools:text="章小小" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/vui_name_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/vui_work_num_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/vui_name_label"
+        android:background="@android:color/white"
+        android:text="我的工号"
+        android:textColor="@color/color_222222" />
+
+    <TextView
+        android:id="@+id/vui_work_num"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/vui_work_num_label"
+        android:layout_alignBottom="@id/vui_work_num_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/vui_work_num_label"
+        android:background="@android:color/white"
+        android:textColor="@color/color_666666"
+        tools:text="003" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/vui_work_num_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/vui_account_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/vui_work_num_label"
+        android:background="@android:color/white"
+        android:text="我的账号"
+        android:textColor="@color/color_222222" />
+
+    <TextView
+        android:id="@+id/vui_account"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/vui_account_label"
+        android:layout_alignBottom="@id/vui_account_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/vui_account_label"
+        android:background="@android:color/white"
+        android:textColor="@color/color_666666"
+        tools:text="155 2011 5888" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/vui_account_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <TextView
+        android:id="@+id/vui_email_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/vui_account_label"
+        android:background="@android:color/white"
+        android:text="我的邮箱"
+        android:textColor="@color/color_222222" />
+
+    <TextView
+        android:id="@+id/vui_email"
+        style="@style/InfoEdit"
+        android:layout_alignTop="@id/vui_email_label"
+        android:layout_alignBottom="@id/vui_email_label"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/vui_email_label"
+        android:background="@android:color/white"
+        android:drawableRight="@drawable/ic_arrow_gray"
+        android:textColor="@color/color_666666"
+        tools:text="jiaxiaoqian@22city.cn" />
+
+    <TextView
+        android:id="@+id/vui_job_label"
+        style="@style/InfoLabel"
+        android:layout_below="@id/vui_email_label"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@android:color/white"
+        android:text="我的岗位"
+        android:textColor="@color/color_222222" />
+
+    <LinearLayout
+        android:id="@+id/vui_job_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignTop="@id/vui_job_label"
+        android:layout_alignBottom="@id/vui_job_label"
+        android:layout_toRightOf="@id/vui_job_label"
+        android:background="@android:color/white"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10" />
+
+</merge>

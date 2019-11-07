@@ -1,0 +1,131 @@
+package com.hll_sc_app.app.info;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.flyco.tablayout.SlidingTabLayout;
+import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.R;
+import com.hll_sc_app.app.info.license.InfoLicenseParam;
+import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
+import com.hll_sc_app.bean.user.CertifyReq;
+import com.hll_sc_app.utils.adapter.ViewPagerAdapter;
+import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.info.GroupInfoBaseView;
+import com.hll_sc_app.widget.info.GroupInfoCertifyView;
+import com.hll_sc_app.widget.info.UserInfoView;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
+ * @since 2019/11/5
+ */
+
+@Route(path = RouterConfig.INFO)
+public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInfoView {
+    @BindView(R.id.stp_title_bar)
+    TitleBar mTitleBar;
+    @BindView(R.id.stp_tab_layout)
+    SlidingTabLayout mTabLayout;
+    @BindView(R.id.stp_view_pager)
+    ViewPager mViewPager;
+    private IInfoContract.IInfoPresenter mPresenter;
+    private UserBean mUser;
+    private GroupInfoBaseView mBaseView;
+    private GroupInfoCertifyView mCertifyView;
+    private UserInfoView mInfoView;
+    private CertifyReq mReq = new CertifyReq();
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        setContentView(R.layout.activity_simple_tab_pager);
+        ButterKnife.bind(this);
+        mUser = GreenDaoUtils.getUser();
+        initView();
+        initData();
+    }
+
+    private void initData() {
+        if (isMaster()) {
+            mPresenter = new InfoPresenter();
+            mPresenter.register(this);
+            mPresenter.start();
+        } else {
+            mInfoView.setData();
+        }
+    }
+
+    private void initView() {
+        if (isMaster()) {
+            mBaseView = new GroupInfoBaseView(this);
+            mCertifyView = new GroupInfoCertifyView(this);
+            mCertifyView.withReq(mReq);
+            mViewPager.setAdapter(new ViewPagerAdapter(mBaseView, mCertifyView));
+            mTabLayout.setViewPager(mViewPager, new String[]{"基本信息", "认证信息"});
+            mTitleBar.setHeaderTitle("供应商信息");
+            mCertifyView.setOnClickListener(v -> mPresenter.reqCertify(mReq));
+        } else {
+            mInfoView = new UserInfoView(this);
+            mViewPager.setAdapter(new ViewPagerAdapter(mInfoView));
+            mTabLayout.setVisibility(View.GONE);
+            mTitleBar.setHeaderTitle("个人信息");
+        }
+    }
+
+    private boolean isMaster() {
+        return "0".equals(mUser.getAccountType());
+    }
+
+    @Override
+    public void setData(GroupInfoResp resp) {
+        if (isMaster()) {
+            mBaseView.setData(resp);
+            mReq.inflate(resp);
+            mCertifyView.refreshData();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (isMaster()) {
+                if (data == null)
+                    mPresenter.start();
+                else {
+                    int type = data.getIntExtra("type", 0);
+                    String content = data.getStringExtra("content");
+                    if (type == ModifyType.NAME) {
+                        mReq.setBusinessEntity(content);
+                    } else if (type == ModifyType.ID_CARD) {
+                        mReq.setEntityIDNo(content);
+                    } else if (type == ModifyType.DOORWAY) {
+                        mReq.setFrontImg(content);
+                    } else if (type == ModifyType.LICENSE) {
+                        InfoLicenseParam param = data.getParcelableExtra("obj");
+                        param.inflateToCertifyReq(mReq);
+                    } else if (type == ModifyType.OTHER) {
+                        List<GroupInfoResp.OtherLicensesBean> list = data.getParcelableArrayListExtra("array");
+                        mReq.setOtherLicenses(list);
+                    }
+                    mCertifyView.refreshData();
+                }
+            } else mInfoView.setData();
+        }
+    }
+}

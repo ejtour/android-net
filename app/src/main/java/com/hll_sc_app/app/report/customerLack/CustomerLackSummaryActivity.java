@@ -34,6 +34,7 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
@@ -81,6 +82,7 @@ public class CustomerLackSummaryActivity extends BaseLoadActivity implements ICu
     private ICustomerLackSummaryContract.ICustomerLackPresenter mPresenter;
     CustomerLackReq mParam = new CustomerLackReq();
     private CustomerLackSummaryAdapter mAdapter;
+    private EmptyView mEmptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,6 +121,7 @@ public class CustomerLackSummaryActivity extends BaseLoadActivity implements ICu
         });
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
         mListView.setAdapter(mAdapter);
+        mEmptyView = EmptyView.newBuilder(this).setImage(R.drawable.ic_char_empty).setTips("当前日期下没有统计数据噢").create();
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -184,6 +187,7 @@ public class CustomerLackSummaryActivity extends BaseLoadActivity implements ICu
             if (!CommonUtils.isEmpty(list))
                 mAdapter.addData(list);
         } else mAdapter.setNewData(list);
+        mAdapter.setEmptyView(mEmptyView);
         mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
     }
 

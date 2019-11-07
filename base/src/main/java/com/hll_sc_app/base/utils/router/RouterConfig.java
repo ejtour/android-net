@@ -1243,5 +1243,29 @@ public class RouterConfig {
     public static final String ACTIVITY_CARD_MANAGE_LOG = "/activity/card/manage/log/";
 
 
+    /**
+     * 用户信息
+     */
+    public static final String INFO = "/activity/info";
+
+    /**
+     * 修改用户信息
+     */
+    public static final String INFO_MODIFY = "/activity/info/modify";
+
+    /**
+     * 用户信息-门头照
+     */
+    public static final String INFO_DOORWAY = "/activity/info/doorway";
+
+    /**
+     * 用户信息-营业执照
+     */
+    public static final String INFO_LICENSE = "/activity/info/license";
+
+    /**
+     * 用户信息-其他证照
+     */
+    public static final String INFO_OTHER = "/activity/info/other";
 }
 

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:parentTag="RelativeLayout">
+
+    <TextView
+        android:id="@+id/gei_email_1_label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:text="邮箱1："
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+    <EditText
+        android:id="@+id/gei_email_1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/gei_email_1_label"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_toRightOf="@id/gei_email_1_label"
+        android:textColor="@color/color_222222"
+        android:textSize="@dimen/text_middle_size" />
+
+    <TextView
+        android:id="@+id/gei_email_2_label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/gei_email_1_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:text="邮箱2："
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+    <EditText
+        android:id="@+id/gei_email_2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/gei_email_2_label"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_toRightOf="@id/gei_email_2_label"
+        android:textColor="@color/color_222222"
+        android:textSize="@dimen/text_middle_size" />
+
+    <TextView
+        android:id="@+id/gei_email_3_label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/gei_email_2_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:text="邮箱3："
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+    <EditText
+        android:id="@+id/gei_email_3"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/gei_email_3_label"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_toRightOf="@id/gei_email_3_label"
+        android:textColor="@color/color_222222"
+        android:textSize="@dimen/text_middle_size" />
+
+    <TextView
+        android:id="@+id/gei_email_4_label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/gei_email_3_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:text="邮箱4："
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+    <EditText
+        android:id="@+id/gei_email_4"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/gei_email_4_label"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_toRightOf="@id/gei_email_4_label"
+        android:textColor="@color/color_222222"
+        android:textSize="@dimen/text_middle_size" />
+
+    <TextView
+        android:id="@+id/gei_email_5_label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_below="@id/gei_email_4_label"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:text="邮箱5："
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666" />
+
+    <EditText
+        android:id="@+id/gei_email_5"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignTop="@id/gei_email_5_label"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_toRightOf="@id/gei_email_5_label"
+        android:textColor="@color/color_222222"
+        android:textSize="@dimen/text_middle_size" />
+</merge>

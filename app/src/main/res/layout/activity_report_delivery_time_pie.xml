@@ -60,9 +60,11 @@
                             android:textColor="@color/base_text_black"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/nearly_seven_layout"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="7">
+                        android:layout_weight="7"
+                        android:orientation="vertical">
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/nearly_seven_pie"
                             android:layout_width="match_parent"
@@ -91,16 +93,20 @@
                             android:textColor="@color/base_text_black"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/nearly_thirty_layout"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="7">
+                        android:layout_weight="7"
+                        android:orientation="vertical">
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/nearly_thirty_pie"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/base_white"
-                            android:minHeight="200dp"/>
+                            android:minHeight="200dp"
+                            android:visibility="gone"/>
                     </LinearLayout>
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -122,9 +128,11 @@
                             android:textColor="@color/base_text_black"/>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/nearly_ninety_layout"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="7">
+                        android:layout_weight="7"
+                        android:orientation="vertical">
                         <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/nearly_ninety_pie"
                             android:layout_width="match_parent"
@@ -152,12 +160,4 @@
                 android:background="@drawable/bg_color_primary_radius_ground_30_solid"/>
         </RelativeLayout>
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_char_empty"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone"/>
 </LinearLayout>

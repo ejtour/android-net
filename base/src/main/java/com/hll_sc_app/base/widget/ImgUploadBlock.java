@@ -55,7 +55,8 @@ public class ImgUploadBlock extends RelativeLayout {
     }
 
     private void initView(Context context) {
-        setBackgroundResource(R.drawable.base_bg_border_radius_3);
+        if (getBackground() == null)
+            setBackgroundResource(R.drawable.base_bg_border_radius_3);
         View.inflate(context, R.layout.base_view_upload_img, this);
         mTitle = findViewById(R.id.txt_title);
         mSubTitle = findViewById(R.id.txt_sub_title);

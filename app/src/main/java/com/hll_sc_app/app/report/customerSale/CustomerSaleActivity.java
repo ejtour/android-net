@@ -91,7 +91,7 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
     @BindView(R.id.txt_customer_agg_shop)
     TextView txtCustomerAggShop;
     @BindView(R.id.edt_search)
-    EditText edtSearch;
+    TextView edtSearch;
     @BindView(R.id.img_clear)
     ImageView imgClear;
     @BindView(R.id.report_date_arrow)

@@ -271,12 +271,12 @@ public class SalesReportActivity extends BaseLoadActivity implements SalesReport
             helper.setText(R.id.txt_day_report_reportnum,String.format("共 %d 条",bean.getReportNum()));
             List<SalesReportDetail> reportDetail = bean.getReportDetail();
             helper.setText(R.id.day_report_sunday,reportDetail.get(reportDetail.size()-1).getReportNum()+"");
-            helper.setText(R.id.day_report_monday,reportDetail.get(1).getReportNum()+"");
-            helper.setText(R.id.day_report_tuesday,reportDetail.get(2).getReportNum()+"");
-            helper.setText(R.id.day_report_wedday,reportDetail.get(3).getReportNum()+"");
-            helper.setText(R.id.day_report_thurday,reportDetail.get(4).getReportNum()+"");
-            helper.setText(R.id.day_report_friday,reportDetail.get(5).getReportNum()+"");
-            helper.setText(R.id.day_report_satday,reportDetail.get(6).getReportNum()+"");
+            helper.setText(R.id.day_report_monday,reportDetail.get(0).getReportNum()+"");
+            helper.setText(R.id.day_report_tuesday,reportDetail.get(1).getReportNum()+"");
+            helper.setText(R.id.day_report_wedday,reportDetail.get(2).getReportNum()+"");
+            helper.setText(R.id.day_report_thurday,reportDetail.get(3).getReportNum()+"");
+            helper.setText(R.id.day_report_friday,reportDetail.get(4).getReportNum()+"");
+            helper.setText(R.id.day_report_satday,reportDetail.get(5).getReportNum()+"");
         }
     }
 }

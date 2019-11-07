@@ -120,7 +120,7 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
             recyclerView, false);
         mAdapter.addHeaderView(headView);
         recyclerView.setAdapter(mAdapter);
-        mEmptyView = EmptyView.newBuilder(this).setTipsTitle("当前日期下没有数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setImage(R.drawable.ic_char_empty).setTips("当前日期下没有统计数据噢").create();
         syncHorizontalScrollView.setLinkageViews(footSyncHorizontalScrollView);
         footSyncHorizontalScrollView.setLinkageViews(syncHorizontalScrollView);
         mPresenter.register(this);

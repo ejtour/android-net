@@ -84,12 +84,19 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
     PieChart nearLyThirtyPieChartView;
     @BindView(R.id.nearly_ninety_pie)
     PieChart nearLyNinetyPieChartView;
-    @BindView(R.id.ll_char_empty)
-    LinearLayout mCharEmpty;
+    @BindView(R.id.nearly_seven_layout)
+    LinearLayout nearlySevenLayout;
+    @BindView(R.id.nearly_thirty_layout)
+    LinearLayout nearlyThirtyLayout;
+    @BindView(R.id.nearly_ninety_layout)
+    LinearLayout nearlyNinetyLayout;
     private int mX;
     private int mY;
 
+    private EmptyView emptyView;
+
     private  Map<String,PieChart> pieChartMap = new HashMap<>(3);
+    private  Map<String,LinearLayout> layoutMap = new HashMap<>(3);
     private DeliveryTimeAggregationPresenter mPresenter;
 
     @Override
@@ -106,8 +113,12 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
 
     private void initView(){
         pieChartMap.put("0",nearLySevenPieChartView);
+        layoutMap.put("0",nearlySevenLayout);
         pieChartMap.put("1",nearLyThirtyPieChartView);
+        layoutMap.put("1",nearlyThirtyLayout);
         pieChartMap.put("2",nearLyNinetyPieChartView);
+        layoutMap.put("2",nearlyNinetyLayout);
+        emptyView = EmptyView.newBuilder(this).setImage(R.drawable.ic_char_empty).setTips("您还没有配送及时率的统计数据").create();
         for(PieChart pieChart:pieChartMap.values()){
             //设置饼状图
             //画统计图
@@ -193,9 +204,8 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
                 default:
                     break;
             }
-            if (deliveryTimeNearlyItem!= null) {
-                mCharEmpty.setVisibility(View.GONE);
-                nearLySevenPieChartView.setVisibility(View.VISIBLE);
+            if (!isEmptyDeliveryTime(deliveryTimeNearlyItem)) {
+                pieChart.setVisibility(View.VISIBLE);
                 //饼状图
                 ArrayList<PieEntry> entries = new ArrayList<>();
                 DeliveryTimeBean deliveryTimeBean = handler(deliveryTimeNearlyItem);
@@ -215,10 +225,11 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
                     PieData data = new PieData(dataSet);
                     pieChart.setData(data);
                     pieChart.invalidate();
-                } else {
-                    mCharEmpty.setVisibility(View.VISIBLE);
-                    pieChart.setVisibility(View.GONE);
                 }
+            }else {
+                LinearLayout linearLayout = layoutMap.get(key);
+                pieChart.setVisibility(View.GONE);
+                linearLayout.addView(emptyView);
             }
         }
     }
@@ -253,5 +264,16 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
         deliveryTimeBean.setWithin15MinInspectionNumDesc("差异15分钟内");
         deliveryTimeBean.setWithin30MinInspectionNumDesc("差异30分钟内");
         return deliveryTimeBean;
+    }
+
+    /**
+     * 判断是否有配送及时率的数据
+     * @param deliveryTimeNearlyItem
+     * @return
+     */
+    private boolean isEmptyDeliveryTime(DeliveryTimeNearlyItem deliveryTimeNearlyItem){
+
+        return  (deliveryTimeNearlyItem.getOnTimeInspectionNum()+deliveryTimeNearlyItem.getBeyond30MinInspectionNum()
+                +deliveryTimeNearlyItem.getWithin15MinInspectionNum()+deliveryTimeNearlyItem.getWithin30MinInspectionNum())==0;
     }
 }

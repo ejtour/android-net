@@ -155,7 +155,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         mRecyclerView.setAdapter(mAdapter);
         View headView = LayoutInflater.from(this).inflate(R.layout.item_customer_shop_detail_title, mRecyclerView, false);
         mAdapter.addHeaderView(headView);
-        mEmptyView = EmptyView.newBuilder(this).setTipsTitle("当前日期下没有数据").create();
+        mEmptyView = EmptyView.newBuilder(this).setImage(R.drawable.ic_char_empty).setTips("当前日期下没有统计数据噢").create();
         syncHorizontalScrollView.setLinkageViews(footSyncHorizontalScrollView);
         footSyncHorizontalScrollView.setLinkageViews(syncHorizontalScrollView);
         mPresenter.register(this);
