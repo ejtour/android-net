@@ -82,7 +82,7 @@ public class BillDetailHeader extends ConstraintLayout {
         mRefund.setText(String.format("¥%s", CommonUtils.formatMoney(data.getTotalRefundAmount())));
 
         // 代仓类型
-        if (data.getBillStatementFlag() == 1) {
+        if (data.getBillStatementFlag() == 2) {
             mTxtBillType.setVisibility(VISIBLE);
             mTxtBillType.setText("账单类型：代仓对账单");
             mTxtBillReceive.setText(String.format("收款方：%s", data.getPayee() == 0 ? "代仓代收款" : "货主收款"));
