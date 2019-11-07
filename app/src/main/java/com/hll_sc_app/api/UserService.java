@@ -14,6 +14,7 @@ import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.bean.refundtime.RefundTimeResp;
 import com.hll_sc_app.bean.refundtime.SetRefundTimeReq;
 import com.hll_sc_app.bean.user.CategoryResp;
+import com.hll_sc_app.bean.user.CertifyReq;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
 import com.hll_sc_app.bean.user.PurchaseTemplateBean;
@@ -52,6 +53,14 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101009")
     Observable<BaseResp<GroupInfoResp>> getGroupInfo(@Body BaseReq<GroupInfoReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101010")
+    Observable<BaseResp<Object>> updateGroupInfo(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101063")
+    Observable<BaseResp<Object>> reqCertify(@Body BaseReq<CertifyReq> body);
 
     /**
      * 登录
