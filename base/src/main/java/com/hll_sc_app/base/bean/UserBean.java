@@ -38,6 +38,11 @@ public class UserBean {
      */
     @Id
     private String employeeID;
+
+    /**
+     * 员工工号
+     */
+    private String employeeCode;
     /**
      * 员工名称
      */
@@ -79,17 +84,18 @@ public class UserBean {
      * 账号类型(0-主账号，1-子账号)
      */
     private String accountType;
-    @Generated(hash = 407746394)
+    @Generated(hash = 26276635)
     public UserBean(String authType, String curRole, String accessToken,
-            String email, String employeeID, String employeeName, String groupID,
-            String groupLogoUrl, String groupName, List<String> roleCode,
-            String roleNames, String roles, String selfOperated, String loginPhone,
-            String accountType) {
+            String email, String employeeID, String employeeCode,
+            String employeeName, String groupID, String groupLogoUrl,
+            String groupName, List<String> roleCode, String roleNames, String roles,
+            String selfOperated, String loginPhone, String accountType) {
         this.authType = authType;
         this.curRole = curRole;
         this.accessToken = accessToken;
         this.email = email;
         this.employeeID = employeeID;
+        this.employeeCode = employeeCode;
         this.employeeName = employeeName;
         this.groupID = groupID;
         this.groupLogoUrl = groupLogoUrl;
@@ -193,5 +199,11 @@ public class UserBean {
     }
     public void setAccountType(String accountType) {
         this.accountType = accountType;
+    }
+    public String getEmployeeCode() {
+        return this.employeeCode;
+    }
+    public void setEmployeeCode(String employeeCode) {
+        this.employeeCode = employeeCode;
     }
 }
