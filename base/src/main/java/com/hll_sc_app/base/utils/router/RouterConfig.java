@@ -1267,5 +1267,12 @@ public class RouterConfig {
      * 用户信息-其他证照
      */
     public static final String INFO_OTHER = "/activity/info/other";
+
+    /**
+     * 卡管理-卡交易日志
+     */
+    public static final String ACTIVITY_CARD_MANAGE_TRANSACTION_LIST = "/activity/card/manage/transaction/list";
+
+
 }
 

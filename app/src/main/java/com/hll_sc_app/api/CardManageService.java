@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.bill.BillListResp;
 import com.hll_sc_app.bean.cardmanage.CardLogResp;
 import com.hll_sc_app.bean.cardmanage.CardManageListResp;
+import com.hll_sc_app.bean.cardmanage.CardTransactionListResp;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -38,6 +39,8 @@ public interface CardManageService {
     Observable<BaseResp<CardLogResp>> queryCardLog(@Body BaseMapReq req);
 
 
-
+    @POST(HttpConfig.URL)
+    @Headers("pv:103166")
+    Observable<BaseResp<CardTransactionListResp>> queryTransationList(@Body BaseMapReq body);
 
 }
