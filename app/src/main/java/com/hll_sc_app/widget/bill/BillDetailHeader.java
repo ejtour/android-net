@@ -85,7 +85,7 @@ public class BillDetailHeader extends ConstraintLayout {
         if (data.getBillStatementFlag() == 2) {
             mTxtBillType.setVisibility(VISIBLE);
             mTxtBillType.setText("账单类型：代仓对账单");
-            mTxtBillReceive.setText(String.format("收款方：%s", data.getPayee() == 0 ? "代仓代收款" : "货主收款"));
+            mTxtBillReceive.setText(String.format("收款方：%s", data.getPayee() == 0 ? "代仓代收" : "货主收款"));
         } else {
             mTxtBillType.setVisibility(GONE);
             mTxtBillReceive.setVisibility(GONE);

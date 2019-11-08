@@ -189,7 +189,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/ibl_data_bg"
         app:layout_constraintTop_toBottomOf="@id/ibl_data_bg"
-        tools:text="代仓账单/代仓代收款" />
+        tools:text="代仓账单/代仓代收" />
 
     <TextView
         android:id="@+id/ibl_confirm"
