@@ -12,10 +12,13 @@ import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.greendao.DaoSessionManager;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.receiver.ActivityLifecycleHandler;
+import com.hll_sc_app.utils.Constants;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -37,8 +40,33 @@ public class MyApplication extends Application {
         });
     }
 
-    public static Context getInstance() {
+    public static MyApplication getInstance() {
         return instance;
+    }
+
+    private IWXAPI mWxApi;
+
+    public IWXAPI getWxApi() {
+        if (mWxApi == null)
+            regToWx();
+        return mWxApi;
+    }
+
+    private void regToWx() {
+        mWxApi = WXAPIFactory.createWXAPI(this, Constants.WX_APP_ID, true);
+        mWxApi.registerApp(Constants.WX_APP_ID);
+    }
+
+    @Override
+    public void onTerminate() {
+        unRegFromWx();
+        super.onTerminate();
+    }
+
+    private void unRegFromWx() {
+        if (mWxApi == null) return;
+        mWxApi.unregisterApp();
+        mWxApi = null;
     }
 
     @Override

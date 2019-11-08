@@ -1,9 +1,13 @@
 package com.hll_sc_app.utils;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.support.annotation.DrawableRes;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.ILoadView;
@@ -14,6 +18,8 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.widget.ExportDialog;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,5 +126,17 @@ public class Utils {
                     ((IExportView) view).exportFailure(TextUtils.isEmpty(e.getMsg()) ? "噢，服务器暂时开了小差\n攻城狮正在全力抢修" : e.getMsg());
             }
         };
+    }
+
+    public static Bitmap createBitmapThumbnail(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int newWidth = 80;
+        int newHeight = 80;
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
     }
 }
