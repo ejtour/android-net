@@ -4,6 +4,7 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.cardmanage.CardLogResp;
 import com.hll_sc_app.bean.cardmanage.CardTransactionListResp;
+import com.hll_sc_app.bean.complain.ReportFormSearchResp;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public interface ITransactionListContract {
         String getCardNo();
 
         void queryListSuccess(CardTransactionListResp resp, boolean isMore);
+
+        void queryPurchaseSuccess(ReportFormSearchResp reportFormSearchResp);
     }
 
     interface IPresent extends IPresenter<IView> {
@@ -33,5 +36,7 @@ public interface ITransactionListContract {
         void refresh();
 
         void filter();
+
+        void queryPurchaseList(String purchaserID, String searchContent);
     }
 }

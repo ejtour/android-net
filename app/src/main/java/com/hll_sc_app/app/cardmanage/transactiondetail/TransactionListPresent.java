@@ -1,12 +1,19 @@
 package com.hll_sc_app.app.cardmanage.transactiondetail;
 
 import com.hll_sc_app.api.CardManageService;
+import com.hll_sc_app.api.ComplainManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.cardmanage.CardTransactionListResp;
+import com.hll_sc_app.bean.complain.ReportFormSearchResp;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 public class TransactionListPresent implements ITransactionListContract.IPresent {
 
@@ -95,5 +102,41 @@ public class TransactionListPresent implements ITransactionListContract.IPresent
     public void filter() {
         pageTempNum = 1;
         queryDetailList(true);
+    }
+
+
+    @Override
+    public void queryPurchaseList(String purchaserID, String searchContent) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        BaseMapReq baseMapReq = BaseMapReq.newBuilder()
+                .put("groupIDs", userBean.getGroupID())
+                .put("searchType", "1")
+                .put("size", "10")
+                .put("type", "0")
+                .put("searchWords", searchContent)
+                .put("purchaserID", purchaserID)
+                .create();
+
+        ComplainManageService.INSTANCE
+                .queryReportFormPurchaserList(baseMapReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<ReportFormSearchResp>() {
+                    @Override
+                    public void onSuccess(ReportFormSearchResp reportFormSearchResp) {
+                        mView.queryPurchaseSuccess(reportFormSearchResp);
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+
     }
 }

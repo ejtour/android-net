@@ -25,6 +25,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cardmanage.cardlog.CardLogActivity;
 import com.hll_sc_app.app.cardmanage.recharge.CardManageRechargeActivity;
+import com.hll_sc_app.app.cardmanage.transactiondetail.TransactionListActivity;
 import com.hll_sc_app.app.staffmanage.detail.depart.InputDialog;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.BaseDialog;
@@ -148,6 +149,7 @@ public class CardManageDetailActivity extends BaseLoadActivity implements ICardM
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_detail:
+                TransactionListActivity.start(mCardManageBean);
                 break;
             case R.id.txt_racharge:
                 CardManageRechargeActivity.start(mCardManageBean);

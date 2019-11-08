@@ -1273,6 +1273,12 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_CARD_MANAGE_TRANSACTION_LIST = "/activity/card/manage/transaction/list";
 
+    /**
+     * 卡管理-卡交易日志详情
+     */
+    public static final String ACTIVITY_CARD_MANAGE_TRANSACTION_LIST_DETAIL = "/activity/card/manage/transaction/list/detail";
+
+
 
 }
 

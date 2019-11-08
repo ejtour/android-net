@@ -18,19 +18,16 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.bean.UserBean;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.BasePopupWindow;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.cardmanage.CardLogResp;
+import com.hll_sc_app.bean.cardmanage.CardManageBean;
 import com.hll_sc_app.bean.cardmanage.CardTransactionListResp;
-import com.hll_sc_app.bean.common.PurchaserBean;
+import com.hll_sc_app.bean.complain.ReportFormSearchResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.MutipleSelecteWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -39,7 +36,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -61,30 +57,31 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.recyclerView)
     RecyclerView mDealListView;
-    @Autowired(name = "object")
-    String mCardNo;
+    @Autowired(name = "parcelable")
+    CardManageBean mCardBean;
     private Unbinder unbinder;
     private MutipleSelecteWindow<String> selecteTypeWindow;
-    private MutipleSelecteWindow<PurchaserBean> selecteShopWindow;
+    private MutipleSelecteWindow<ReportFormSearchResp.ShopMallBean> selecteShopWindow;
     private DateRangeWindow selecteTimeWindow;
     private ITransactionListContract.IPresent mPresenter;
 
     private DealAdapter mAdapter;
 
-    public static void start(String cardNo) {
-        RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_TRANSACTION_LIST, cardNo);
+    public static void start(CardManageBean bean) {
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_TRANSACTION_LIST, bean);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_manage_transaction_list);
-        StatusBarCompat.setStatusBarColor(this, 0xFFFFFFFF);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
         unbinder = ButterKnife.bind(this);
         initView();
         mPresenter = TransactionListPresent.newInstance();
         mPresenter.register(this);
+        mPresenter.queryPurchaseList(mCardBean.getPurchaserID(), "");
         mPresenter.queryDetailList(true);
     }
 
@@ -109,7 +106,7 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
 
         mAdapter = new DealAdapter(null);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-//            CardDealDetailActivity.start(mAdapter.getItem(position));
+            TransactionDetailActivity.start(mAdapter.getItem(position));
         });
         mDealListView.setAdapter(mAdapter);
     }
@@ -163,49 +160,7 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
                 break;
             case R.id.ll_shop:
                 if (selecteShopWindow == null) {
-                    List<PurchaserBean> mList;
-                    UserBean userBean = GreenDaoUtils.getUser();
-//                    if (userBean != null) {
-//                        mList = userBean.getPurchaserBeans();
-//                        PurchaserBean all = new PurchaserBean();
-//                        all.setShopName("全部");
-//                        all.setShopID("");
-//                        mList.add(0, all);
-//                        selecteShopWindow = new MutipleSelecteWindow<>(this, mList, new MutipleSelecteWindow.Config<PurchaserBean>() {
-//                            @Override
-//                            public boolean enableSelectAll() {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public boolean enableMultiple() {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public String getName(PurchaserBean shop) {
-//                                return shop.getShopName();
-//                            }
-//
-//                            @Override
-//                            public void onConfirm(List<Integer> selecteIndexs) {
-//                                int index = selecteIndexs.get(0);
-//                                mLlShop.setTag(selecteShopWindow.getAllData().get(index));
-//                                mPresenter.filter();
-//                            }
-//
-//                            @Override
-//                            public void showBefore() {
-//                                dimissOtherWindow();
-//                            }
-//
-//                            @Override
-//                            public void dismissBefore() {
-//                            }
-//                        });
-//                    }
-                    selecteShopWindow.setContentViewHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-                    selecteShopWindow.addSelectedIndex(0);
+                    return;
                 }
                 toggleWindow(selecteShopWindow);
                 break;
@@ -233,7 +188,7 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
                             mPresenter.filter();
                         }
                     });
-                    initSelectDate();
+//                    initSelectDate();
                 }
                 toggleWindow(selecteTimeWindow);
                 break;
@@ -284,8 +239,7 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
         if (mLlShop.getTag() == null) {
             return null;
         } else {
-//            return ((PurchaserBean) mLlShop.getTag()).getShopID();
-            return "";
+            return ((ReportFormSearchResp.ShopMallBean) mLlShop.getTag()).getShopmallID();
         }
     }
 
@@ -318,7 +272,7 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
 
     @Override
     public String getCardNo() {
-        return mCardNo;
+        return mCardBean.getCardNo();
     }
 
     @Override
@@ -369,5 +323,68 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
             }
         }
 
+    }
+
+
+    @Override
+    public void queryPurchaseSuccess(ReportFormSearchResp reportFormSearchResp) {
+        ReportFormSearchResp.ShopMallBean allBean = new ReportFormSearchResp.ShopMallBean();
+        allBean.setName("全部门店");
+        allBean.setShopmallID("0");
+        reportFormSearchResp.getList().add(0, allBean);
+        if (selecteShopWindow == null) {
+            selecteShopWindow = new MutipleSelecteWindow<>(this, reportFormSearchResp.getList(), new MutipleSelecteWindow.Config<ReportFormSearchResp.ShopMallBean>() {
+                @Override
+                public boolean enableSelectAll() {
+                    return false;
+                }
+
+                @Override
+                public boolean enableMultiple() {
+                    return false;
+                }
+
+                @Override
+                public String getName(ReportFormSearchResp.ShopMallBean item) {
+                    return item.getName();
+                }
+
+                @Override
+                public void onConfirm(List<Integer> selectedIndexs) {
+                    selecteShopWindow.dismiss();
+                    mLlShop.setTag(selecteShopWindow.getAllData().get(selectedIndexs.get(0)));
+                    mPresenter.queryDetailList(true);
+                }
+
+                @Override
+                public void showBefore() {
+
+                }
+
+                @Override
+                public void dismissBefore() {
+
+                }
+
+                @Override
+                public void search(String content) {
+                    mPresenter.queryPurchaseList(mCardBean.getPurchaserID(), content);
+                }
+
+                @Override
+                public boolean isHasSearch() {
+                    return true;
+                }
+
+                @Override
+                public String searchHint() {
+                    return "请输入关键字搜索";
+                }
+            });
+            selecteShopWindow.setContentViewHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+            selecteShopWindow.addSelectedIndex(0);
+        } else {
+            selecteShopWindow.setNewData(reportFormSearchResp.getList());
+        }
     }
 }

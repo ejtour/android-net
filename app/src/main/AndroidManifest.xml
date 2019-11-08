@@ -1165,6 +1165,13 @@
             android:name=".app.info.other.InfoOtherActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.cardmanage.transactiondetail.TransactionListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.cardmanage.transactiondetail.TransactionDetailActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
