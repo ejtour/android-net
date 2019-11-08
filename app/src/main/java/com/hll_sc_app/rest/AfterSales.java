@@ -47,7 +47,7 @@ public class AfterSales {
     public static void requestAfterSalesDetail(String refundBillID,
                                                SimpleObserver<List<AfterSalesBean>> observer) {
         requestAfterSalesList(null, null, null,
-                null, null, refundBillID,
+                null, null, refundBillID, null,
                 0, 0, observer);
     }
 
@@ -60,6 +60,7 @@ public class AfterSales {
      * @param purchaserShopID  采购商门店id
      * @param purchaserID      采购商id
      * @param refundBillID     订单id
+     * @param refundBillNo    订单no
      * @param sourceType       0：全部 1：自由退货 2：快速退货
      * @param pageNum          页码
      */
@@ -69,16 +70,20 @@ public class AfterSales {
             String purchaserShopID,
             String purchaserID,
             String refundBillID,
+            String refundBillNo,
             int sourceType,
             int pageNum,
             SimpleObserver<List<AfterSalesBean>> observer) {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder()
                 .put("flag", UserConfig.crm() ? "2" : "1")
                 .put("groupID", UserConfig.getGroupID());
-        if (refundBillID != null)
+        if (refundBillID != null) {
             builder.put("refundBillID", refundBillID)
                     .put("sign", "2");
-        else
+        } else if (refundBillNo != null) {
+            builder.put("refundBillNo", refundBillNo)
+                    .put("sign", "2");
+        } else
             builder.put("pageNum", String.valueOf(pageNum))
                     .put("pageSize", "20")
                     .put("refundBillStatus", refundBillStatus != null ? String.valueOf(refundBillStatus) : null)
@@ -92,6 +97,18 @@ public class AfterSales {
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
+    }
+
+    /**
+     * 请求售后详情
+     *
+     * @param refundBillNo 订单no
+     */
+    public static void requestAfterSalesDetailByNo(String refundBillNo,
+                                                   SimpleObserver<List<AfterSalesBean>> observer) {
+        requestAfterSalesList(null, null, null,
+                null, null, null, refundBillNo,
+                0, 0, observer);
     }
 
     /**

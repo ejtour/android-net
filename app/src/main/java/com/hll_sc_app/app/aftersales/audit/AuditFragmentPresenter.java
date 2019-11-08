@@ -41,7 +41,7 @@ public class AuditFragmentPresenter implements IAuditFragmentContract.IAuditFrag
                 mView.getBillStatus(),
                 param.getPurchaserShopID(),
                 param.getPurchaserID(),
-                null,
+                null, null,
                 param.getSourceType(),
                 mPageNum,
                 new SimpleObserver<List<AfterSalesBean>>(mView, showLoading) {
@@ -55,6 +55,7 @@ public class AuditFragmentPresenter implements IAuditFragmentContract.IAuditFrag
                 });
     }
 
+    @Override
     public void requestDetails(String refundBillID) {
         AfterSales.requestAfterSalesDetail(
                 refundBillID,

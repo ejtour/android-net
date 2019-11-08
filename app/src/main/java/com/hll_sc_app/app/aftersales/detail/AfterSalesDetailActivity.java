@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.hll_sc_app.app.goods.relevance.goods.select.GoodsRelevanceSelectActiv
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
@@ -56,6 +58,8 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     AfterSalesActionBar mActionBar;
     @Autowired(name = "object0")
     String mId;
+    @Autowired(name = "billNo")
+    String mBillNo;
     private AfterSalesDetailHeader mHeaderView;
     private AfterSalesDetailFooter mFooterView;
     private AfterSalesDetailAdapter mAdapter;
@@ -76,6 +80,13 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     public static void start(Activity activity, String id) {
         Object[] array = {id};
         RouterUtil.goToActivity(RouterConfig.AFTER_SALES_DETAIL, activity, REQ_CODE, array);
+    }
+
+    public static void startByNo(String billNo){
+        ARouter.getInstance().build(RouterConfig.AFTER_SALES_DETAIL)
+                .withString("billNo", billNo)
+                .setProvider(new LoginInterceptor())
+                .navigation();
     }
 
     @Override
@@ -120,7 +131,11 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     }
 
     private void initData() {
-        present = AfterSalesDetailPresenter.newInstance(mId);
+        if(!TextUtils.isEmpty(mId)){
+            present = AfterSalesDetailPresenter.newInstance(mId);
+        }else if(!TextUtils.isEmpty(mBillNo)){
+            present = AfterSalesDetailPresenter.newInstanceByNo(mBillNo);
+        }
         present.register(this);
         present.start();
     }
