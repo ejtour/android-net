@@ -14,6 +14,8 @@ import com.hll_sc_app.app.info.modify.InfoModifyActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 
 import butterknife.BindView;
@@ -101,5 +103,6 @@ public class GroupInfoBaseView extends RelativeLayout {
 
     @OnClick(R.id.gib_invite_code_label)
     public void showInviteCode() {
+        RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);
     }
 }

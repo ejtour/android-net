@@ -23,7 +23,7 @@ import com.hll_sc_app.base.R;
  */
 public abstract class BaseDialog extends Dialog {
     public View mRootView;
-    private Activity mActivity;
+    protected Activity mActivity;
 
     public BaseDialog(@NonNull Activity context) {
         this(context, R.style.BaseDialog);

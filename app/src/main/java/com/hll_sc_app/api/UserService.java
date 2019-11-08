@@ -17,6 +17,7 @@ import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.bean.user.CertifyReq;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.hll_sc_app.bean.user.GroupParameReq;
+import com.hll_sc_app.bean.user.InviteCodeResp;
 import com.hll_sc_app.bean.user.PurchaseTemplateBean;
 import com.hll_sc_app.bean.user.RegisterReq;
 import com.hll_sc_app.bean.user.RemindReq;
@@ -230,4 +231,8 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:100155")
     Observable<BaseResp<SingleListResp<PurchaseTemplateBean>>> queryPurchaseTemplate(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101091")
+    Observable<BaseResp<InviteCodeResp>> queryInviteCode(@Body BaseMapReq req);
 }

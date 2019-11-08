@@ -802,12 +802,12 @@
         <activity
             android:name=".app.report.refund.wait.product.WaitRefundProductDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <!--待退客户明细统计-->
         <activity
             android:name=".app.report.refund.wait.customer.WaitRefundCustomertDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
 
         <!--退货统计-->
         <activity
@@ -826,12 +826,12 @@
         <activity
             android:name=".app.report.refund.customerProduct.customer.RefundedCustomerDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <!--退款商品明细-->
         <activity
             android:name=".app.report.refund.customerProduct.product.RefundedProductDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
 
         <activity
             android:name=".app.inspection.list.InspectionListActivity"
@@ -903,8 +903,9 @@
             android:screenOrientation="portrait" />
 
         <!--销售crm日报-->
-        <activity android:name=".app.report.salesReport.SalesReportActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.report.salesReport.SalesReportActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".app.order.trace.OrderTraceActivity"
             android:screenOrientation="portrait" />
@@ -944,14 +945,17 @@
             android:screenOrientation="portrait" />
 
         <!--采购单查询-->
-        <activity android:name=".app.stockmanage.purchaserorder.PurchaserOrderActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.stockmanage.purchaserorder.PurchaserOrderActivity"
+            android:screenOrientation="portrait" />
         <!--采购单明细查询-->
-        <activity android:name=".app.stockmanage.purchaserorder.detail.PurchaserOrderDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.stockmanage.purchaserorder.detail.PurchaserOrderDetailActivity"
+            android:screenOrientation="portrait" />
         <!--采购单搜索-->
-        <activity android:name=".app.stockmanage.purchaserorder.search.PurchaserOrderSearchActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".app.stockmanage.purchaserorder.search.PurchaserOrderSearchActivity"
+            android:screenOrientation="portrait" />
 
         <!--投诉管理列表首页-->
         <activity
@@ -983,16 +987,20 @@
             android:name=".app.aftersales.apply.select.AfterSalesSelectActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".app.order.place.select.SelectGoodsActivity"
+        <activity
+            android:name=".app.order.place.select.SelectGoodsActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".app.order.place.confirm.PlaceOrderConfirmActivity"
-            android:screenOrientation="portrait"  />
-
-        <activity android:name=".app.order.place.confirm.remark.OrderConfirmRemarkActivity"
+        <activity
+            android:name=".app.order.place.confirm.PlaceOrderConfirmActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".app.order.place.confirm.details.PlaceOrderDetailsActivity"
+        <activity
+            android:name=".app.order.place.confirm.remark.OrderConfirmRemarkActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.order.place.confirm.details.PlaceOrderDetailsActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -1172,6 +1180,10 @@
         <activity
             android:name=".app.cardmanage.transactiondetail.TransactionDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.info.invitecode.InviteCodeActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

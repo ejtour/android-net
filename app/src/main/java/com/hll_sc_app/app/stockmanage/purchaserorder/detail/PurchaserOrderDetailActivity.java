@@ -1,11 +1,11 @@
 package com.hll_sc_app.app.stockmanage.purchaserorder.detail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
+import android.util.Base64;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -15,25 +15,24 @@ import com.alibaba.sdk.android.ams.common.util.StringUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.stockmanage.purchaserorder.window.ShareQQWXWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.http.HttpConfig;
+import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailRecord;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderRecord;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.ShareParams;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.UrlObject;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.ShareDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,8 +71,7 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements Pu
     TextView purchaserOrderNum;
     @BindView(R.id.purchaser_order_amount)
     TextView purchaserOrderAmount;
-
-    private ShareQQWXWindow mShareWindow;
+    private ShareDialog mShareDialog;
 
     private String supplyerName;
 
@@ -99,6 +97,7 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements Pu
 
     @Override
     protected void onDestroy() {
+        if (mShareDialog != null) mShareDialog.release();
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
@@ -110,28 +109,36 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements Pu
                 finish();
                 break;
             case R.id.shared_purchaser_order_detail_btn:
-                if (mShareWindow==null) {
-                    ShareParams shareParams = new ShareParams();
-                    shareParams.setPageName("purchaserOrderDetail");
-                    shareParams.setTitle(String.format("%s%s",supplyerName,"采购商分享"));
-                    shareParams.setDescription("的生鲜食材很棒棒呦，快来看看吧~");
-                    shareParams.setImgUrl("group3/M00/80/E7/wKgVe1zl_-bdkxJ3AACi1GpqlbY426.jpg");
+                if (mShareDialog == null) {
+                    mShareDialog = new ShareDialog(this);
                     UrlObject urlObject = new UrlObject();
-                    urlObject.setUrl(HttpConfig.getHost()+HttpConfig.URL);
+                    urlObject.setUrl(HttpConfig.getHost() + HttpConfig.URL);
                     UrlObject.UrlData body = new UrlObject.UrlData();
                     body.setPurchaserBillID(mPurchaserBillID);
                     body.setGroupID(UserConfig.getGroupID());
                     urlObject.setBody(body);
-                    shareParams.setUrlData(urlObject);
-                    mShareWindow = new ShareQQWXWindow(this, shareParams);
+                    String url = "http://172.16.32.222:3001/client/sharePurchase?shareData="
+                            + Base64.encodeToString(JsonUtil.toJson(urlObject).getBytes(), Base64.NO_WRAP);
+                    mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
+                            "采购单分享",
+                            "http://res.hualala.com/group3/M02/11/E4/wKgVbV3FKiGutZpqAABNhltbYDI135.png",
+                            "二十二城采购单分享",
+                            "二十二城的生鲜食材很棒棒呦，快来看看吧~",
+                            url
+                    ).setShareTimeLine(false).setShareQzone(false));
                 }
-                mShareWindow.showAtLocation(getWindow().getDecorView(), Gravity.END, 0, 130);
+                mShareDialog.show();
                 break;
             default:
                 break;
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mShareDialog != null) mShareDialog.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public void showPurchaserOrderDetail(PurchaserOrderDetailResp purchaserOrderDetailResp) {

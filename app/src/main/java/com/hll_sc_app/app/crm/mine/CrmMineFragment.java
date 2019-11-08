@@ -78,6 +78,7 @@ public class CrmMineFragment extends BaseFragment {
             case R.id.fcm_avatar:
                 break;
             case R.id.fcm_salesman_code:
+                RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);
                 break;
             case R.id.fcm_product_lib:
                 break;

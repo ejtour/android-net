@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    tools:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/ds_close"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="155dp"
+        android:layout_height="0.5dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ds_close" />
+
+    <TextView
+        android:id="@+id/ds_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_petal"
+        android:gravity="center_horizontal"
+        android:text="分享"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintBottom_toBottomOf="@id/ds_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ds_close" />
+
+    <TextView
+        android:id="@+id/ds_wx"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:drawableTop="@drawable/ic_wx"
+        android:gravity="center_horizontal"
+        android:text="微信好友"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/ds_timeline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ds_close" />
+
+    <TextView
+        android:id="@+id/ds_timeline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:drawableTop="@drawable/ic_timeline"
+        android:gravity="center_horizontal"
+        android:text="朋友圈"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/ds_qq"
+        app:layout_constraintStart_toEndOf="@id/ds_wx"
+        app:layout_constraintTop_toBottomOf="@id/ds_close" />
+
+    <TextView
+        android:id="@+id/ds_qq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:drawableTop="@drawable/ic_qq"
+        android:gravity="center_horizontal"
+        android:text="QQ好友"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/ds_qzone"
+        app:layout_constraintStart_toEndOf="@id/ds_timeline"
+        app:layout_constraintTop_toBottomOf="@id/ds_close" />
+
+    <TextView
+        android:id="@+id/ds_qzone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:drawableTop="@drawable/ic_qzone"
+        android:gravity="center_horizontal"
+        android:text="QQ空间"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ds_qq"
+        app:layout_constraintTop_toBottomOf="@id/ds_close" />
+</android.support.constraint.ConstraintLayout>
