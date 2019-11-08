@@ -37,7 +37,6 @@ public class GoodsSelectAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHold
         View view = helper.getView(R.id.igs_check);
         view.setSelected(item.isCheck());
         view.setEnabled(enabled);
-        LogUtil.d("vixb-ddd", "enable = " + view.isEnabled() + " select = " + view.isSelected());
         helper.itemView.setEnabled(enabled);
     }
 }
