@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.aftersales.AfterSalesApplyParam;
@@ -70,14 +72,25 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         RouterUtil.goToActivity(RouterConfig.ORDER_DETAIL, billID);
     }
 
+    @Autowired(name = "object0")
+    String mBillID;
+
     @BindView(R.id.aod_title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.aod_list_view)
     RecyclerView mListView;
     @BindView(R.id.aod_bottom_bar)
     OrderActionBar mActionBar;
-    @Autowired(name = "object0", required = true)
-    String mBillID;
+    @Autowired(name = "billNo")
+    String mBillNo;
+
+    public static void startByBillNo(String billNo) {
+        ARouter.getInstance().build(RouterConfig.ORDER_DETAIL).
+                withString("billNo", billNo)
+                .setProvider(new LoginInterceptor())
+                .navigation();
+
+    }
     @BindDimen(R.dimen.bottom_bar_height)
     int mBottomBarHeight;
     private IOrderDetailContract.IOrderDetailPresenter mPresenter;
@@ -98,7 +111,11 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
     }
 
     private void initData() {
-        mPresenter = OrderDetailPresenter.newInstance(mBillID);
+        if (!TextUtils.isEmpty(mBillID)) {
+            mPresenter = OrderDetailPresenter.newInstance(mBillID);
+        } else if (!TextUtils.isEmpty(mBillNo)) {
+            mPresenter = OrderDetailPresenter.newInstanceByBillNo(mBillNo);
+        }
         mPresenter.register(this);
         mPresenter.start();
     }

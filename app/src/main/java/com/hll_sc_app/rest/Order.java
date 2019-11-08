@@ -171,6 +171,29 @@ public class Order {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+    /**
+     * 请求订单明细
+     *
+     */
+    public static void getOrderDetailsByBillNo(String subBillNo, SimpleObserver<OrderResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        if (user == null) {
+            return;
+        }
+        OrderService.INSTANCE
+                .getOrderDetails(BaseMapReq
+                        .newBuilder()
+                        .put("subBillNo", subBillNo)
+                        .put("roleTypes", user.getAuthType())
+                        .put("curRole", user.getCurRole())
+                        .put("groupID", user.getGroupID())
+                        .put("flag", "2")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
 
     /**
      * 修改订单状态

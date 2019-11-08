@@ -21,30 +21,51 @@ import java.util.Collections;
 
 public class OrderDetailPresenter implements IOrderDetailContract.IOrderDetailPresenter {
     private String mSubBillID;
+    private String mSubBillNo;
     private IOrderDetailContract.IOrderDetailView mView;
 
-    private OrderDetailPresenter(String subBillID) {
+    private OrderDetailPresenter(String subBillID, String subBillNo) {
         mSubBillID = subBillID;
+        mSubBillNo = subBillNo;
     }
 
     public static OrderDetailPresenter newInstance(@NonNull String subBillID) {
-        return new OrderDetailPresenter(subBillID);
+        return new OrderDetailPresenter(subBillID, "");
+    }
+
+    public static OrderDetailPresenter newInstanceByBillNo(@NonNull String subBillNo) {
+        return new OrderDetailPresenter("", subBillNo);
     }
 
     @Override
     public void start() {
-        Order.getOrderDetails(mSubBillID, new SimpleObserver<OrderResp>(mView) {
-            @Override
-            public void onSuccess(OrderResp resp) {
-                mView.updateOrderData(resp);
-            }
-        });
-        Order.queryOrderLog(mSubBillID, new SimpleObserver<SingleListResp<OrderTraceBean>>(mView) {
-            @Override
-            public void onSuccess(SingleListResp<OrderTraceBean> orderTraceBeanSingleListResp) {
-                mView.updateOrderTraceLog(orderTraceBeanSingleListResp.getRecords());
-            }
-        });
+        if(!TextUtils.isEmpty(mSubBillID)){
+            Order.getOrderDetails(mSubBillID, new SimpleObserver<OrderResp>(mView) {
+                @Override
+                public void onSuccess(OrderResp resp) {
+                    mView.updateOrderData(resp);
+                }
+            });
+            Order.queryOrderLog(mSubBillID, new SimpleObserver<SingleListResp<OrderTraceBean>>(mView) {
+                @Override
+                public void onSuccess(SingleListResp<OrderTraceBean> orderTraceBeanSingleListResp) {
+                    mView.updateOrderTraceLog(orderTraceBeanSingleListResp.getRecords());
+                }
+            });
+        }else if(!TextUtils.isEmpty(mSubBillNo)){
+            Order.getOrderDetailsByBillNo(mSubBillNo, new SimpleObserver<OrderResp>(mView) {
+                @Override
+                public void onSuccess(OrderResp resp) {
+                    mView.updateOrderData(resp);
+                    Order.queryOrderLog(resp.getSubBillID(), new SimpleObserver<SingleListResp<OrderTraceBean>>(mView) {
+                        @Override
+                        public void onSuccess(SingleListResp<OrderTraceBean> orderTraceBeanSingleListResp) {
+                            mView.updateOrderTraceLog(orderTraceBeanSingleListResp.getRecords());
+                        }
+                    });
+                }
+            });
+        }
     }
 
     @Override
