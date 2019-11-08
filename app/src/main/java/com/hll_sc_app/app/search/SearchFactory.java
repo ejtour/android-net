@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.search;
 
-import com.hll_sc_app.app.cardmanage.CardManageListActivity;
 import com.hll_sc_app.app.search.stratery.AfterSalesGoodsSearch;
 import com.hll_sc_app.app.search.stratery.BrandSearch;
 import com.hll_sc_app.app.search.stratery.CardManageListSearch;
@@ -16,6 +15,7 @@ import com.hll_sc_app.app.search.stratery.ProductNameSearch;
 import com.hll_sc_app.app.search.stratery.ProductSearch;
 import com.hll_sc_app.app.search.stratery.PurchaserNameSearch;
 import com.hll_sc_app.app.search.stratery.PurchaserSearch;
+import com.hll_sc_app.app.search.stratery.PurchaserShopSearch;
 import com.hll_sc_app.app.search.stratery.SelectShopSearch;
 import com.hll_sc_app.app.search.stratery.ShopAssociationSearch;
 import com.hll_sc_app.app.search.stratery.ShopNameSearch;
@@ -49,6 +49,7 @@ class SearchFactory {
         ITEM_MAP.put(ProductSearch.class.getSimpleName(), ProductSearch.class);
         ITEM_MAP.put(PurchaserNameSearch.class.getSimpleName(), PurchaserNameSearch.class);
         ITEM_MAP.put(PurchaserSearch.class.getSimpleName(), PurchaserSearch.class);
+        ITEM_MAP.put(PurchaserShopSearch.class.getSimpleName(), PurchaserShopSearch.class);
         ITEM_MAP.put(SelectShopSearch.class.getSimpleName(), SelectShopSearch.class);
         ITEM_MAP.put(ShopAssociationSearch.class.getSimpleName(), ShopAssociationSearch.class);
         ITEM_MAP.put(ShopNameSearch.class.getSimpleName(), ShopNameSearch.class);

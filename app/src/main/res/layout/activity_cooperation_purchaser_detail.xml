@@ -121,24 +121,30 @@
         android:layout_height="40dp"
         android:background="@drawable/base_bg_shadow_top_white_bar"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingLeft="10dp">
 
         <View
             android:layout_width="2dp"
             android:layout_height="12dp"
-            android:layout_gravity="center_vertical"
             android:background="@color/base_colorPrimary"/>
 
         <TextView
             android:id="@+id/txt_shopCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
             android:singleLine="true"
             android:textAppearance="@style/TextAppearance.City22.Small.Color666"
             tools:text="当前合作门店数量：3"/>
 
+        <com.hll_sc_app.widget.SearchView
+            android:id="@+id/cpd_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10" />
     </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
