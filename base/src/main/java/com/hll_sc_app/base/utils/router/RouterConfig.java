@@ -1242,7 +1242,6 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_CARD_MANAGE_LOG = "/activity/card/manage/log/";
 
-
     /**
      * 用户信息
      */
@@ -1273,6 +1272,9 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_CARD_MANAGE_TRANSACTION_LIST = "/activity/card/manage/transaction/list";
 
-
+    /**
+     * 用户信息-邀请码
+     */
+    public static final String INFO_INVITE_CODE = "/activity/invite/code";
 }
 

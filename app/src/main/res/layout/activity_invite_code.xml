@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/aic_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_rightText="分享"
+        app:tb_rightVisibility="true"
+        app:tb_title="我的邀请码" />
+
+    <LinearLayout
+        android:id="@+id/aic_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginRight="38dp"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="28dp">
+
+        <TextView
+            android:id="@+id/aic_crm_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="该二维码用于合作商户扫码注册推荐使用"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/aic_div"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_40"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@color/color_eeeeee" />
+
+        <TextView
+            android:id="@+id/aic_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.City22.Large"
+            tools:text="北京二十二城生鲜供应集团" />
+
+        <TextView
+            android:id="@+id/aic_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+            tools:text="邀请码：2786432" />
+
+        <com.hll_sc_app.base.utils.glide.GlideImageView
+            android:id="@+id/aic_pic"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="15dp"
+            tools:src="@drawable/ic_placeholder" />
+
+        <TextView
+            android:id="@+id/aic_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/dp_10"
+            android:text="扫码注册二十二城采购商\n审核通过后会自动添加合作关系"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+    </LinearLayout>
+
+</LinearLayout>

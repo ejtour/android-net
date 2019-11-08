@@ -3,11 +3,14 @@ package com.hll_sc_app.rest;
 import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.user.CertifyReq;
+import com.hll_sc_app.bean.user.InviteCodeResp;
 import com.hll_sc_app.bean.user.PurchaseTemplateBean;
 import com.hll_sc_app.bean.user.RemindReq;
 import com.hll_sc_app.bean.user.RemindResp;
@@ -135,6 +138,22 @@ public class User {
     public static void reqCertify(CertifyReq req, SimpleObserver<Object> observer) {
         UserService.INSTANCE
                 .reqCertify(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询邀请码
+     */
+    public static void queryInviteCode(SimpleObserver<InviteCodeResp> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        UserService.INSTANCE
+                .queryInviteCode(BaseMapReq.newBuilder()
+                        .put("employeeID", user.getEmployeeID())
+                        .put("groupID", user.getGroupID())
+                        .put("type", "1".equals(user.getCurRole()) ? "2" : "1")
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
