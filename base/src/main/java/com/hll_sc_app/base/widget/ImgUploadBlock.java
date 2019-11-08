@@ -73,7 +73,7 @@ public class ImgUploadBlock extends RelativeLayout {
     }
 
     private void selectPhoto() {
-        UIUtils.selectPhoto((Activity) getContext(), REQUEST_CODE_CHOOSE, new MiniSizeFilter(maxSize));
+        UIUtils.selectPhoto((Activity) getContext(), mRequestCode, new MiniSizeFilter(maxSize));
     }
 
     public ImgUploadBlock(Context context, @Nullable AttributeSet attrs) {
