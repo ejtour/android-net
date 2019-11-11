@@ -107,7 +107,7 @@ public class AfterSalesSelectAdapter extends BaseQuickAdapter<AfterSalesDetailsB
                 .setText(R.id.ass_order_confirmed_num, String.format("签收：%s%s", CommonUtils.formatNum(item.getInspectionNum()), item.getInspectionUnit()))
                 .setText(R.id.ass_return_num_hint, item.isCanRefund() ?
                         String.format("%s%s%s", mLabel.getLabel(), CommonUtils.formatNum(item.getRefundableNum()), item.getInspectionUnit()) :
-                        "该商品已经超过退货期限")
+                        item.getCanNotRefundReason())
                 .setText(R.id.ass_return_unit, item.getInspectionUnit())
                 .setText(R.id.ass_return_label, mLabel.getEditPrefix())
                 .setGone(R.id.ass_edit_group, item.isSelected());
