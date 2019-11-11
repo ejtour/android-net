@@ -5,10 +5,12 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
@@ -34,6 +36,12 @@ public class RemarkDialog extends BaseDialog {
     TextView mCancel;
     @BindView(R.id.dr_ok)
     TextView mOk;
+    @BindView(R.id.dr_title)
+    TextView mTitle;
+    @BindView(R.id.dr_state_icon)
+    ImageView mStateIcon;
+    @BindView(R.id.dr_tip)
+    TextView mTip;
     private OnClickListener mListener;
 
     private RemarkDialog(@NonNull Activity context) {
@@ -87,6 +95,21 @@ public class RemarkDialog extends BaseDialog {
         mListener = listener;
     }
 
+    private void setDialogTitle(CharSequence title) {
+        if (!TextUtils.isEmpty(title)) {
+            mTitle.setText(title);
+            mStateIcon.setVisibility(View.VISIBLE);
+            mTitle.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setTip(CharSequence tip) {
+        if (!TextUtils.isEmpty(tip)) {
+            mTip.setText(tip);
+            mTip.setVisibility(View.VISIBLE);
+        }
+    }
+
     @OnClick({R.id.dr_cancel, R.id.dr_ok})
     public void onViewClicked(View view) {
         if (mListener == null) {
@@ -138,6 +161,16 @@ public class RemarkDialog extends BaseDialog {
             return this;
         }
 
+        public Builder setTitle(CharSequence title) {
+            P.title = title;
+            return this;
+        }
+
+        public Builder setTip(CharSequence tip) {
+            P.tip = tip;
+            return this;
+        }
+
         public RemarkDialog create() {
             final RemarkDialog dialog = new RemarkDialog(P.mContext);
             P.apply(dialog);
@@ -150,6 +183,8 @@ public class RemarkDialog extends BaseDialog {
         CharSequence negativeText;
         CharSequence positiveButton;
         CharSequence hint;
+        CharSequence title;
+        CharSequence tip;
         int maxLength;
         OnClickListener mOnClickListener;
 
@@ -157,6 +192,8 @@ public class RemarkDialog extends BaseDialog {
             dialog.setButtons(negativeText, positiveButton, mOnClickListener);
             dialog.setHint(hint);
             dialog.setMaxLength(maxLength);
+            dialog.setDialogTitle(title);
+            dialog.setTip(tip);
         }
     }
 }
