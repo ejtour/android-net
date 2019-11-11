@@ -24,6 +24,7 @@ import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
@@ -60,6 +61,8 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_staffNum)
     TextView mTxtStaffNum;
+    @BindView(R.id.txt_add)
+    TextView mAdd;
     private EmptyView mEmptyView;
     private EmptyView mSearchEmptyView;
     private StaffManageListPresenter mPresenter;
@@ -78,6 +81,8 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     }
 
     private void initView() {
+        if (UserConfig.crm()) mAdd.setVisibility(View.GONE);
+        mSearchView.setHint("可以根据姓名或手机号搜索");
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -230,14 +235,22 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     }
 
     public static class StaffListAdapter extends BaseQuickAdapter<EmployeeBean, BaseViewHolder> {
+        private boolean mCrm;
 
         StaffListAdapter() {
             super(R.layout.item_staff_list);
+            mCrm = UserConfig.crm();
         }
 
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             BaseViewHolder viewHolder = super.onCreateDefViewHolder(parent, viewType);
+            if (mCrm) {
+                View del = viewHolder.getView(R.id.txt_del);
+                ViewGroup.LayoutParams layoutParams = del.getLayoutParams();
+                layoutParams.width = 0;
+                del.setLayoutParams(layoutParams);
+            }
             viewHolder.addOnClickListener(R.id.txt_del).addOnClickListener(R.id.content);
             return viewHolder;
         }
@@ -246,10 +259,20 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         protected void convert(BaseViewHolder helper, EmployeeBean item) {
             helper.setText(R.id.txt_employeeName, item.getEmployeeName())
                     .setText(R.id.txt_loginPhone, PhoneUtil.formatPhoneNum(item.getLoginPhone()))
+                    .setGone(R.id.txt_departs, !mCrm)
+                    .setGone(R.id.view_divider, !mCrm)
                     .setText(R.id.txt_roles, "拥有职务" + (CommonUtils.isEmpty(item.getRoles()) ? "0" :
                             item.getRoles().size()) + "个")
                     .setText(R.id.txt_departs, "归属部门" + (TextUtils.isEmpty(item.getDeptIDs()) ? 0 : item.getDeptIDs().split(",").length) + "个");
 
+            TextView view = helper.getView(R.id.txt_roles);
+            if (mCrm) {
+                view.setText(String.format("关联门店%s个", item.getShopNum()));
+                view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_staff_shop, 0, 0, 0);
+            } else {
+                view.setText(String.format("拥有职务%s个", CommonUtils.isEmpty(item.getRoles()) ? "0" :
+                        item.getRoles().size()));
+            }
         }
     }
 }

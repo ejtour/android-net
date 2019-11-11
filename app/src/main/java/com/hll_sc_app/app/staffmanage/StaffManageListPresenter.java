@@ -1,19 +1,22 @@
 package com.hll_sc_app.app.staffmanage;
 
+import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.api.StaffManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -50,9 +53,10 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
             return;
         }
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("flag", "2")
-            .put("groupID", UserConfig.getGroupID())
-            .create();
+                .put("flag", "2")
+                .put("groupID", userBean.getGroupID())
+                .put("roleType", userBean.getAuthType())
+                .create();
         StaffManageService.INSTANCE
             .queryStaffNum(req)
             .compose(ApiScheduler.getObservableScheduler())
@@ -116,34 +120,39 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
     }
 
     private void toQueryStaffList(boolean showLoading) {
+        UserBean user = GreenDaoUtils.getUser();
+        boolean crm = "1".equals(user.getCurRole());
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("pageNum", String.valueOf(mTempPageNum))
-            .put("pageSize", "20")
-            .put("groupID", UserConfig.getGroupID())
-            .put("searchParam", mView.getSearchParam())
-            .create();
-        StaffManageService.INSTANCE
-            .queryStaffList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> {
-                if (showLoading) {
-                    mView.showLoading();
-                }
-            })
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<EmployeeBean>>() {
-                @Override
-                public void onSuccess(List<EmployeeBean> list) {
-                    mPageNum = mTempPageNum;
-                    mView.showStaffList(list, mPageNum != 1);
-                }
+                .put("pageNum", String.valueOf(mTempPageNum))
+                .put("pageSize", "20")
+                .put("groupID", user.getGroupID())
+                .put("flag", crm ? "1" : "")
+                .put("roleType", user.getAuthType())
+                .put(crm ? "keyword" : "searchParam", mView.getSearchParam())
+                .create();
+        Observable<BaseResp<List<EmployeeBean>>> observable;
+        if (crm) observable = CooperationPurchaserService.INSTANCE.queryEmployeeList(req);
+        else observable = StaffManageService.INSTANCE.queryStaffList(req);
+        observable.compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    if (showLoading) {
+                        mView.showLoading();
+                    }
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<List<EmployeeBean>>() {
+                    @Override
+                    public void onSuccess(List<EmployeeBean> list) {
+                        mPageNum = mTempPageNum;
+                        mView.showStaffList(list, mPageNum != 1);
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 }
