@@ -367,6 +367,8 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     public void actionCustomerService() {
         if (mCurBean.canModify())
             AfterSalesAuditDialog.create(getActivity())
+                    .withLoadView(this)
+                    .withRefundBillID(mCurBean.getId())
                     .setCallback((payType, remark) ->
                             mPresenter.doAction(1, mCurBean.getId(),
                                     mCurBean.getRefundBillStatus(), mCurBean.getRefundBillType(), payType,

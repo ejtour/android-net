@@ -315,6 +315,8 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     public void actionCustomerService() {
         if (mBean.canModify())
             AfterSalesAuditDialog.create(this)
+                    .withLoadView(this)
+                    .withRefundBillID(mBean.getId())
                     .setCallback((payType, remark) ->
                             present.doAction(1, payType,
                                     mBean.getRefundBillStatus(), mBean.getRefundBillType(),
