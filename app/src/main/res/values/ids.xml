@@ -31,4 +31,5 @@
     <item name="asa_reapply" type="id" />
     <item name="asa_cancel" type="id" />
     <item name="asa_complain" type="id" />
+    <item name="asa_close" type="id" />
 </resources>

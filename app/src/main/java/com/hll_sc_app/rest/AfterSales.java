@@ -203,7 +203,8 @@ public class AfterSales {
         req.setRefundBillType(refundBillType);
         req.setPayType(payType);
         if (action == 1) req.setCustomAuditNote(msg);
-        else req.setRefuseReason(msg);
+        else if (action == 5) req.setRefuseReason(msg);
+        else if (action == 7) req.setCloseReason(msg);
         req.setRefundBillDetailList(list);
         AfterSalesService.INSTANCE
                 .afterSalesAction(new BaseReq<>(req))

@@ -35,6 +35,7 @@ public class AfterSalesActionBar extends LinearLayout {
     private static final int ACTION_REAPPLY = 7;
     private static final int ACTION_CANCEL = 8;
     private static final int ACTION_COMPLAIN = 9;
+    private static final int ACTION_CLOSE = 10;
 
     private final HashMap<Integer, ButtonAction> MAP;
     private OnClickListener mListener;
@@ -50,6 +51,7 @@ public class AfterSalesActionBar extends LinearLayout {
         MAP.put(ACTION_REJECT, new ButtonAction(BUTTON_NEGATIVE, R.id.asa_reject, "驳回"));
         MAP.put(ACTION_CANCEL, new ButtonAction(BUTTON_NEGATIVE, R.id.asa_cancel, "取消退换"));
         MAP.put(ACTION_COMPLAIN, new ButtonAction(BUTTON_NEGATIVE, R.id.asa_complain, "生成投诉单"));
+        MAP.put(ACTION_CLOSE, new ButtonAction(BUTTON_NEGATIVE, R.id.asa_close, "关闭退款"));
     }
 
     private boolean isItem;

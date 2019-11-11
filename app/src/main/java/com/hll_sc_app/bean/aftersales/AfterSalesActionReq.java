@@ -29,6 +29,11 @@ public class AfterSalesActionReq {
      * 驳回原因
      */
     private String refuseReason;
+
+    /**
+     * 财务关闭原因
+     */
+    private String closeReason;
     /**
      * 退货明细列表，司机收货和仓库收货时传入
      */
@@ -96,6 +101,14 @@ public class AfterSalesActionReq {
 
     public void setRefuseReason(String refuseReason) {
         this.refuseReason = refuseReason;
+    }
+
+    public String getCloseReason() {
+        return closeReason;
+    }
+
+    public void setCloseReason(String closeReason) {
+        this.closeReason = closeReason;
     }
 
     public String getCustomAuditNote() {

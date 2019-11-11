@@ -253,6 +253,9 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
                         .create()
                         .show();
                 break;
+            case R.id.asa_close:
+                actionClose();
+                break;
             default:
                 break;
         }
@@ -261,6 +264,20 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
     @Override
     public void actionReapply() {
         AfterSalesApplyActivity.start(AfterSalesApplyParam.afterSalesFromAfterSales(mBean, mBean.getRefundBillType()));
+    }
+
+    @Override
+    public void actionClose() {
+        RemarkDialog.newBuilder(this)
+                .setTitle("您确定要关闭退款么？")
+                .setTip("关闭后钱款将不再退还采购商")
+                .setHint("备注信息")
+                .setMaxLength(50)
+                .setButtons("容我再想想", "确认关闭", (dialog, positive, content) -> {
+                    dialog.dismiss();
+                    if (positive) closeRefund(content);
+                })
+                .create().show();
     }
 
     @Override
@@ -327,6 +344,13 @@ public class AfterSalesDetailActivity extends BaseLoadActivity implements IAfter
 
     private void rejectReq(String reason) {
         present.doAction(5, null,
+                mBean.getRefundBillStatus(),
+                mBean.getRefundBillType(),
+                reason);
+    }
+
+    private void closeRefund(String reason) {
+        present.doAction(7, null,
                 mBean.getRefundBillStatus(),
                 mBean.getRefundBillType(),
                 reason);
