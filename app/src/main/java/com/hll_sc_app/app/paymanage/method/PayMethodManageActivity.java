@@ -107,20 +107,25 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
 
         //顶部支付设置checkbox
         mSwitchPayType.setOnCheckedChangeListener((buttonView, isChecked1) -> {
-            PayManagePresenter.editSettlement(isOnline() ? "0" : "1", isChecked1 ? "1" : "0", new SimpleObserver<MsgWrapper<Object>>(this) {
+            //开启，直接打开
+            if (isChecked1) {
+                showPayList(true);
+                return;
+            }
+            //关闭的时候才发请求
+            PayManagePresenter.editSettlement(isOnline() ? "0" : "1", "0", new SimpleObserver<MsgWrapper<Object>>(this) {
                 @Override
                 public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
-                    showPayList(isChecked1);
+                    showPayList(false);
                     showToast(objectMsgWrapper.getMessage());
                 }
 
                 @Override
                 public void onFailure(UseCaseException e) {
-                    mSwitchPayType.setCheckedNoEvent(!isChecked1);
+                    mSwitchPayType.setCheckedNoEvent(true);
                     showToast(e.getMessage());
                 }
             });
-
         });
         mSwitchPayType.setCheckedNoEvent(isChecked);
         showPayList(isChecked);
@@ -163,7 +168,7 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
                         .setButton((dialog, item) -> {
                             dialog.dismiss();
                             if (item == 1) {
-                                //todo:跳转到储值卡
+                                RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_ADD_SELECT_PURCHASER);
                             }
                         }, "我再想想", "马上创建")
                         .create()
