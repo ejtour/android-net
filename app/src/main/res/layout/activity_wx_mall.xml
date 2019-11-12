@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/awm_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="微信商城" />
+
+    <View
+        android:id="@+id/awm_top_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/awm_wx_tip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_title_bar" />
+
+    <ImageView
+        android:id="@+id/awm_wx_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_wx_mall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/awm_top_bg" />
+
+    <TextView
+        android:id="@+id/awm_wx_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp"
+        android:paddingBottom="20dp"
+        android:text="开通微信商城，即刻拥有您的专属商城！"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_wx_icon" />
+
+    <View
+        android:id="@+id/awm_step_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/awm_step_tip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_top_bg" />
+
+    <TextView
+        android:id="@+id/awm_step_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:text="开通步骤"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/awm_step_bg" />
+
+    <TextView
+        android:id="@+id/awm_step_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_item_goods_detail_name"
+        android:lineSpacingExtra="3dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="5dp"
+        android:text="1、在微信公众号平台申请一个服务号或订阅号，且必须通过微信认证！详细认证步骤请访问微信公众号平台https://mp.weixin.qq.com；"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_step_title" />
+
+    <ImageView
+        android:id="@+id/awm_arrow_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:rotation="90"
+        android:src="@drawable/ic_warehouse_manager_arrow"
+        android:tint="@color/color_aeaeae"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_step_1" />
+
+    <TextView
+        android:id="@+id/awm_step_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_item_goods_detail_name"
+        android:lineSpacingExtra="3dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="5dp"
+        android:text="2、请在PC端登录二十二城微信公众号服务平台，点击左侧菜单“公众号授权”，网址为https://weixin.22city.cn；"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_arrow_1" />
+
+    <ImageView
+        android:id="@+id/awm_arrow_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:rotation="90"
+        android:src="@drawable/ic_warehouse_manager_arrow"
+        android:tint="@color/color_aeaeae"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_step_2" />
+
+    <TextView
+        android:id="@+id/awm_step_3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_item_goods_detail_name"
+        android:lineSpacingExtra="3dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="5dp"
+        android:text="3、请在右侧页面中点击“立即授权绑定”，会自动跳转到微信官方的公众号授权页面；"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_arrow_2" />
+
+    <ImageView
+        android:id="@+id/awm_arrow_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:rotation="90"
+        android:src="@drawable/ic_warehouse_manager_arrow"
+        android:tint="@color/color_aeaeae"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_step_3" />
+
+    <TextView
+        android:id="@+id/awm_step_4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/bg_item_goods_detail_name"
+        android:lineSpacingExtra="3dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="5dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="5dp"
+        android:text="4、用已认证的公众号管理员微信账号扫描二维码，并授权即完成绑定，绑定成功即可开启专属微信商城！"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_arrow_3" />
+
+    <TextView
+        android:id="@+id/awm_step_tip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:lineSpacingExtra="3dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="15dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="20dp"
+        android:text="✶ 提示：当您确认授权后，二十二城平台会在您授权的公众号菜单中自动创建“商城”菜单，并将覆盖掉公众号原有的菜单内容。"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/awm_step_4" />
+
+</android.support.constraint.ConstraintLayout>

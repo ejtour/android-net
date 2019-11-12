@@ -232,7 +232,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage,
             R.id.txt_complaint_manage, R.id.txt_main_feedback, R.id.fmm_analysis_btn, R.id.txt_new_product_demand,
             R.id.txt_market_price, R.id.txt_customer_purchase_template, R.id.txt_card_manage, R.id.ll_user_message,
-            R.id.txt_product_special_demand})
+            R.id.txt_product_special_demand, R.id.txt_wechat_mall})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -325,6 +325,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 break;
             case R.id.txt_product_special_demand:
                 RouterUtil.goToActivity(RouterConfig.GOODS_SPECIAL_DEMAND_ENTRY);
+                break;
+            case R.id.txt_wechat_mall:
+                RouterUtil.goToActivity(RouterConfig.WX_MALL);
                 break;
             default:
                 break;

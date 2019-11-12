@@ -1297,5 +1297,10 @@ public class RouterConfig {
      * 商品特殊需求-需求详情
      */
     public static final String GOODS_SPECIAL_DEMAND_DETAIL = "/activity/goods/demand/special/detail";
+
+    /**
+     * 微信商城
+     */
+    public static final String WX_MALL = "/activity/wx";
 }
 
