@@ -86,16 +86,22 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
     public void showAccountView() {
         //账期日checkbox
         mSwitchPayType.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            PayManagePresenter.editSettlement("2", isChecked ? "1" : "0", new SimpleObserver<MsgWrapper<Object>>(this) {
+            //打开
+            if (isChecked) {
+                showContent(true);
+                return;
+            }
+            //关闭
+            PayManagePresenter.editSettlement("2", "0", new SimpleObserver<MsgWrapper<Object>>(this) {
                 @Override
                 public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
                     showToast(objectMsgWrapper.getMessage());
-                    showContent(isChecked);
+                    showContent(false);
                 }
 
                 @Override
                 public void onFailure(UseCaseException e) {
-                    mSwitchPayType.setCheckedNoEvent(!isChecked);
+                    mSwitchPayType.setCheckedNoEvent(true);
                     showToast(e.getMessage());
                 }
             });
