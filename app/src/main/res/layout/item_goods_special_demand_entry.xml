@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white_radius_3_solid">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/sde_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/dp_10"
+        app:base_RoundingRadius="3"
+        tools:src="@drawable/ic_placeholder" />
+
+    <TextView
+        android:id="@+id/sde_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/sde_image"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_toRightOf="@id/sde_image"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        tools:text="合作采购商集团名称" />
+
+    <TextView
+        android:id="@+id/sde_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/sde_image"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@id/sde_image"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        tools:text="已设置 10 个特殊需求商品" />
+</RelativeLayout>
