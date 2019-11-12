@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.info;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,14 +17,18 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.bean.user.CertifyReq;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.adapter.ViewPagerAdapter;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.info.GroupInfoBaseView;
 import com.hll_sc_app.widget.info.GroupInfoCertifyView;
 import com.hll_sc_app.widget.info.UserInfoView;
+import com.zhihu.matisse.Matisse;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,6 +41,7 @@ import butterknife.ButterKnife;
 
 @Route(path = RouterConfig.INFO)
 public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInfoView {
+    public static final int REQ_CODE = 0x482;
     @BindView(R.id.stp_title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.stp_tab_layout)
@@ -48,6 +54,12 @@ public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInf
     private GroupInfoCertifyView mCertifyView;
     private UserInfoView mInfoView;
     private CertifyReq mReq = new CertifyReq();
+    private boolean mHasChanged;
+    private String mAvatar;
+
+    public static void start(Activity context) {
+        RouterUtil.goToActivity(RouterConfig.INFO, context, REQ_CODE);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +82,15 @@ public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInf
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mHasChanged)
+            setResult(RESULT_OK);
+        super.onBackPressed();
+    }
+
     private void initView() {
+        mTitleBar.setLeftBtnClick(v -> onBackPressed());
         if (isMaster()) {
             mBaseView = new GroupInfoBaseView(this);
             mCertifyView = new GroupInfoCertifyView(this);
@@ -101,9 +121,29 @@ public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInf
     }
 
     @Override
+    public void cacheUrl(String url) {
+        mBaseView.setAvatar(url);
+        mAvatar = url;
+    }
+
+    @Override
+    public void avatarChanged() {
+        UserBean user = GreenDaoUtils.getUser();
+        user.setGroupLogoUrl(mAvatar);
+        GreenDaoUtils.updateUser(user);
+        mHasChanged = true;
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            if (requestCode == GroupInfoBaseView.REQUEST_CODE_CHOOSE) {
+                if (data == null) return;
+                List<String> list = Matisse.obtainPathResult(data);
+                if (!CommonUtils.isEmpty(list)) mPresenter.upload(new File(list.get(0)));
+                return;
+            }
             if (isMaster()) {
                 if (data == null)
                     mPresenter.start();

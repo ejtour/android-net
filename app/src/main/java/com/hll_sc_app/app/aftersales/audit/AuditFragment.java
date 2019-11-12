@@ -150,6 +150,9 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                     adapter.notifyItemChanged(position);
                     updateBottomBar();
                     break;
+                case R.id.asa_close:
+                    actionClose();
+                    break;
                 default:
                     break;
             }
@@ -364,6 +367,8 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     public void actionCustomerService() {
         if (mCurBean.canModify())
             AfterSalesAuditDialog.create(getActivity())
+                    .withLoadView(this)
+                    .withRefundBillID(mCurBean.getId())
                     .setCallback((payType, remark) ->
                             mPresenter.doAction(1, mCurBean.getId(),
                                     mCurBean.getRefundBillStatus(), mCurBean.getRefundBillType(), payType,
@@ -402,6 +407,28 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     @Override
     public void actionReapply() {
         AfterSalesApplyActivity.start(AfterSalesApplyParam.afterSalesFromAfterSales(mCurBean, mCurBean.getRefundBillType()));
+    }
+
+    @Override
+    public void actionClose() {
+        RemarkDialog.newBuilder(requireActivity())
+                .setTitle("您确定要关闭退款么？")
+                .setTip("关闭后钱款将不再退还采购商")
+                .setHint("备注信息")
+                .setMaxLength(50)
+                .setButtons("容我再想想", "确认关闭", (dialog, positive, content) -> {
+                    dialog.dismiss();
+                    if (positive) closeRefund(content);
+                })
+                .create().show();
+    }
+
+    private void closeRefund(String reason){
+        mPresenter.doAction(7,
+                mCurBean.getId(),
+                mCurBean.getRefundBillStatus(),
+                mCurBean.getRefundBillType(),
+                null, reason);
     }
 
     @Override

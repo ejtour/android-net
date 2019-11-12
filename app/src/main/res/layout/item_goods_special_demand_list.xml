@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingTop="7dp"
+    android:paddingRight="@dimen/dp_10"
+    android:paddingBottom="7dp">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/sdl_image"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        app:base_RoundingRadius="3"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder" />
+
+    <TextView
+        android:id="@+id/sdl_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="20dp"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sdl_image"
+        app:layout_constraintTop_toTopOf="@id/sdl_image"
+        tools:text="特别好吃的小青柠" />
+
+    <LinearLayout
+        android:id="@+id/sdl_tags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/sdl_image"
+        app:layout_constraintEnd_toEndOf="@id/sdl_name"
+        app:layout_constraintStart_toStartOf="@id/sdl_name" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_gray"
+        app:layout_constraintBottom_toBottomOf="@id/sdl_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/sdl_image" />
+</android.support.constraint.ConstraintLayout>

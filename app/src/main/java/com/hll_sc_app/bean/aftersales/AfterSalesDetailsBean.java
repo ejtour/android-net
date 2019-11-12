@@ -119,6 +119,7 @@ public class AfterSalesDetailsBean implements Parcelable {
     private String spareField1;
     private String spareField2;
     private int homologous;
+    private String canNotRefundReason;
     private boolean selected;
 
     public double getPendingRefundAmount() {
@@ -989,6 +990,14 @@ public class AfterSalesDetailsBean implements Parcelable {
         this.homologous = homologous;
     }
 
+    public String getCanNotRefundReason() {
+        return canNotRefundReason;
+    }
+
+    public void setCanNotRefundReason(String canNotRefundReason) {
+        this.canNotRefundReason = canNotRefundReason;
+    }
+
     public String getSpareField1() {
         return spareField1;
     }
@@ -1114,6 +1123,7 @@ public class AfterSalesDetailsBean implements Parcelable {
         dest.writeString(this.spareField1);
         dest.writeString(this.spareField2);
         dest.writeInt(this.homologous);
+        dest.writeString(this.canNotRefundReason);
         dest.writeByte(this.selected ? (byte) 1 : (byte) 0);
     }
 
@@ -1224,6 +1234,7 @@ public class AfterSalesDetailsBean implements Parcelable {
         this.spareField1 = in.readString();
         this.spareField2 = in.readString();
         this.homologous = in.readInt();
+        this.canNotRefundReason = in.readString();
         this.selected = in.readByte() != 0;
     }
 

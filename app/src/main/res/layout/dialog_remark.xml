@@ -1,10 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="wrap_content"
-                                             tools:background="@drawable/base_bg_white_radius_5_solid">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@drawable/base_bg_white_radius_5_solid">
+
+    <TextView
+        android:id="@+id/dr_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41dp"
+        android:layout_marginTop="24dp"
+        android:textAppearance="@style/TextAppearance.City22.Large.Blue"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="您确定要关闭退款么？" />
+
+    <ImageView
+        android:id="@+id/dr_state_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:src="@drawable/ic_dialog_state_failure"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/dr_title"
+        app:layout_constraintEnd_toStartOf="@id/dr_title"
+        app:layout_constraintTop_toTopOf="@id/dr_title" />
+
+    <TextView
+        android:id="@+id/dr_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@id/dr_title"
+        app:layout_constraintTop_toBottomOf="@id/dr_title"
+        tools:text="关闭后钱款将不再退还采购商" />
 
     <EditText
         android:id="@+id/dr_edit"
@@ -18,7 +52,7 @@
         android:textColorHint="@color/color_aeaeae"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dr_tip"
         tools:hint="可输入驳回理由，选填" />
 
     <TextView
@@ -51,7 +85,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/dr_cancel"
         app:layout_constraintEnd_toStartOf="@+id/dr_ok"
         app:layout_constraintStart_toEndOf="@+id/dr_cancel"
-        app:layout_constraintTop_toTopOf="@+id/dr_cancel"/>
+        app:layout_constraintTop_toTopOf="@+id/dr_cancel" />
 
     <TextView
         android:id="@+id/dr_ok"

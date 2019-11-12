@@ -90,6 +90,10 @@ public class SearchView extends FrameLayout {
         }
     }
 
+    public void setHint(CharSequence hint){
+        mTxtSearchContent.setHint(hint);
+    }
+
     public LinearLayout getContentView() {
         return mLlContent;
     }

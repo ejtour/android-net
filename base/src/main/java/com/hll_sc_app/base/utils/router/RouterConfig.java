@@ -1282,5 +1282,25 @@ public class RouterConfig {
      * 用户信息-邀请码
      */
     public static final String INFO_INVITE_CODE = "/activity/invite/code";
+
+    /**
+     * 商品特殊需求
+     */
+    public static final String GOODS_SPECIAL_DEMAND_ENTRY = "/activity/goods/demand/special/entry";
+
+    /**
+     * 商品特殊需求-特定客户
+     */
+    public static final String GOODS_SPECIAL_DEMAND_LIST = "/activity/goods/demand/special/list";
+
+    /**
+     * 商品特殊需求-需求详情
+     */
+    public static final String GOODS_SPECIAL_DEMAND_DETAIL = "/activity/goods/demand/special/detail";
+
+    /**
+     * 微信商城
+     */
+    public static final String WX_MALL = "/activity/wx";
 }
 

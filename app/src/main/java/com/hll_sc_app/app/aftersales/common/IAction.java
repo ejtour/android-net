@@ -18,6 +18,8 @@ public interface IAction {
 
     void actionReapply();
 
+    void actionClose();
+
     default void actionViewDetails() {
     }
 }

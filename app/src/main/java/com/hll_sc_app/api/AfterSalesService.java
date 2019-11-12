@@ -15,6 +15,7 @@ import com.hll_sc_app.bean.aftersales.AfterSalesVerifyResp;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.bean.aftersales.NegotiationHistoryResp;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
+import com.hll_sc_app.bean.aftersales.RefundMethodBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.complain.ComplainAddReq;
 import com.hll_sc_app.bean.export.ExportResp;
@@ -86,4 +87,8 @@ public interface AfterSalesService {
     @POST(HttpConfig.URL)
     @Headers("pv:103059")
     Observable<BaseResp<AfterSalesApplyResp>> reapplyAfterSalesBill(@Body BaseReq<AfterSalesApplyReq> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:103169")
+    Observable<BaseResp<SingleListResp<RefundMethodBean>>> getRefundMethod(@Body BaseMapReq req);
 }

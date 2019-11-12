@@ -20,7 +20,8 @@ import java.util.List;
 
 public class GoodsDemandDetailAdapter extends BaseQuickAdapter<GoodsDemandItem, BaseViewHolder> {
     private int mWidth;
-    GoodsDemandDetailAdapter(List<GoodsDemandItem> data) {
+
+    public GoodsDemandDetailAdapter(List<GoodsDemandItem> data) {
         super(R.layout.item_goods_demand_detail, data);
     }
 
@@ -32,6 +33,7 @@ public class GoodsDemandDetailAdapter extends BaseQuickAdapter<GoodsDemandItem, 
                 .setText(R.id.gdd_content, item.getDemandContent())
                 .setGone(R.id.gdd_pic_group, !TextUtils.isEmpty(item.getDemandUrl()))
                 .getView(R.id.gdd_pic_group);
+        thumbnailView.enablePreview(true);
         if (item.getDemandUrl() != null) thumbnailView.setData(item.getDemandUrl().split(","));
         GradientDrawable drawable = (GradientDrawable) helper.getView(R.id.gdd_type).getBackground();
         if (mWidth == 0) mWidth = ViewUtils.dip2px(helper.itemView.getContext(), 0.5f);

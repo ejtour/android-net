@@ -8,6 +8,8 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
+import com.hll_sc_app.bean.goodsdemand.SpecialDemandBean;
+import com.hll_sc_app.bean.goodsdemand.SpecialDemandEntryBean;
 import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
 import com.hll_sc_app.bean.operationanalysis.LostResp;
 import com.hll_sc_app.bean.operationanalysis.TopTenResp;
@@ -72,4 +74,12 @@ public interface OtherService {
     @POST(HttpConfig.URL)
     @Headers("pv:100115")
     Observable<BaseResp<Object>> replyGoodsDemand(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100158")
+    Observable<BaseResp<SingleListResp<SpecialDemandEntryBean>>> querySpecialDemandCustomer(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:100157")
+    Observable<BaseResp<SingleListResp<SpecialDemandBean>>> querySpecialDemand(@Body BaseMapReq req);
 }

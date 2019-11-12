@@ -12,6 +12,8 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandReq;
+import com.hll_sc_app.bean.goodsdemand.SpecialDemandBean;
+import com.hll_sc_app.bean.goodsdemand.SpecialDemandEntryBean;
 import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
 import com.hll_sc_app.bean.operationanalysis.LostResp;
 import com.hll_sc_app.bean.operationanalysis.TopTenResp;
@@ -230,6 +232,46 @@ public class Other {
                         .put("purchaserID", purchaserID)
                         .put("status", String.valueOf(status))
                         .put("supplyID", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询特殊需求采购商
+     *
+     * @param pageNum     页码
+     * @param searchWords 搜索词
+     */
+    public static void querySpecialDemandCustomer(int pageNum, String searchWords, SimpleObserver<SingleListResp<SpecialDemandEntryBean>> observer) {
+        OtherService.INSTANCE
+                .querySpecialDemandCustomer(BaseMapReq.newBuilder()
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("searchParams", searchWords)
+                        .put("groupID", UserConfig.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询特殊需求
+     *
+     * @param pageNum     页码
+     * @param searchWords 搜索词
+     * @param purchaserID 采购商id
+     */
+    public static void querySpecialDemand(int pageNum, String searchWords, String purchaserID, SimpleObserver<SingleListResp<SpecialDemandBean>> observer) {
+        OtherService.INSTANCE
+                .querySpecialDemand(BaseMapReq.newBuilder()
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("purchaserID", purchaserID)
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("searchParams", searchWords)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

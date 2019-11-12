@@ -23,6 +23,8 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.PurchaserShopSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -40,8 +42,10 @@ import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -84,11 +88,14 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_options)
     ImageView mImgOption;
+    @BindView(R.id.cpd_search_view)
+    SearchView mSearchView;
     private PurchaserShopListAdapter mAdapter;
     private CooperationPurchaserDetail mDetail;
     private ContextOptionsWindow mOptionsWindow;
     private CooperationDetailPresenter mPresenter;
     private SwipeItemLayout.OnSwipeItemTouchListener swipeItemTouchListener;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +129,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             }
         });
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
+                , UIUtils.dip2px(1)));
         mAdapter = new PurchaserShopListAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             PurchaserShopBean bean = mAdapter.getItem(position);
@@ -139,6 +146,27 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         });
         mRecyclerView.setAdapter(mAdapter);
         swipeItemTouchListener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(CooperationDetailActivity.this, searchContent, PurchaserShopSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                mPresenter.start();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
+        }
     }
 
     /**
@@ -148,19 +176,19 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
      */
     private void showDelTipsDialog(PurchaserShopBean bean) {
         SuccessDialog.newBuilder(this)
-            .setImageTitle(R.drawable.ic_dialog_failure)
-            .setImageState(R.drawable.ic_dialog_state_failure)
-            .setMessageTitle("确认解除合作吗？")
-            .setMessage("解除合作关系后，将不能再为该门店下单")
-            .setButton((dialog, item) -> {
-                dialog.dismiss();
-                if (item == 1) {
-                    toDelShop(bean);
-                } else {
-                    SwipeItemLayout.closeAllItems(mRecyclerView);
-                }
-            }, "我再看看", "立即解除")
-            .create().show();
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setMessageTitle("确认解除合作吗？")
+                .setMessage("解除合作关系后，将不能再为该门店下单")
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1) {
+                        toDelShop(bean);
+                    } else {
+                        SwipeItemLayout.closeAllItems(mRecyclerView);
+                    }
+                }, "我再看看", "立即解除")
+                .create().show();
     }
 
     private void toDelShop(PurchaserShopBean bean) {
@@ -228,7 +256,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
             mTxtName.setText(resp.getName());
             mTxtDefaultDeliveryWay.setText(String.format("默认配送方式：%s", getDeliveryWay(resp.getDefaultDeliveryWay())));
             mTxtDefaultSettlementWay.setText(String.format("默认结算方式：%s",
-                getSettlementWay(resp.getDefaultSettlementWay())));
+                    getSettlementWay(resp.getDefaultSettlementWay())));
             mTxtShopCount.setText(String.format("当前合作门店数量：%s", CommonUtils.formatNumber(resp.getShopCount())));
         }
         List<PurchaserShopBean> shopBeans = resp.getShopDetailList();
@@ -313,6 +341,11 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         return mPurchaserId;
     }
 
+    @Override
+    public String getSearchWords() {
+        return mSearchView.getSearchContent();
+    }
+
     @OnClick({R.id.img_close, R.id.txt_options, R.id.cons_details})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -334,13 +367,13 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         if (mOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
             list.add(new OptionsBean(R.drawable.ic_cooperation_detail_settlement,
-                OptionType.OPTION_COOPERATION_DETAIL_SETTLEMENT));
+                    OptionType.OPTION_COOPERATION_DETAIL_SETTLEMENT));
             list.add(new OptionsBean(R.drawable.ic_cooperation_detail_salesman,
-                OptionType.OPTION_COOPERATION_DETAIL_SALESMAN));
+                    OptionType.OPTION_COOPERATION_DETAIL_SALESMAN));
             list.add(new OptionsBean(R.drawable.ic_cooperation_detail_driver,
-                OptionType.OPTION_COOPERATION_DETAIL_DRIVER));
+                    OptionType.OPTION_COOPERATION_DETAIL_DRIVER));
             list.add(new OptionsBean(R.drawable.ic_cooperation_detail_driver,
-                OptionType.OPTION_COOPERATION_DETAIL_DELIVERY));
+                    OptionType.OPTION_COOPERATION_DETAIL_DELIVERY));
             list.add(new OptionsBean(R.drawable.ic_cooperation_detail_shop, OptionType.OPTION_COOPERATION_DETAIL_SHOP));
             mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
         }
@@ -378,10 +411,10 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         req.setGroupID(UserConfig.getGroupID());
         req.setPurchaserID(mDetail.getPurchaserID());
         ARouter.getInstance()
-            .build(RouterConfig.COOPERATION_PURCHASER_DETAIL_SELECT_SHOP)
-            .withParcelableArrayList("parcelable", new ArrayList<>(mAdapter.getData()))
-            .withParcelable("parcelable1", req)
-            .navigation();
+                .build(RouterConfig.COOPERATION_PURCHASER_DETAIL_SELECT_SHOP)
+                .withParcelableArrayList("parcelable", new ArrayList<>(mAdapter.getData()))
+                .withParcelable("parcelable1", req)
+                .navigation();
     }
 
     @Override
@@ -414,12 +447,12 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         @Override
         protected void convert(BaseViewHolder helper, PurchaserShopBean item) {
             helper.setText(R.id.txt_shopName, item.getShopName())
-                .setText(R.id.txt_shopAdmin, "联系人：" + getString(item.getShopAdmin()) + " / "
-                    + getString(PhoneUtil.formatPhoneNum(item.getShopPhone())))
-                .setText(R.id.txt_shopAddress, "地址：" + getString(item.getShopAddress()))
-                .setGone(R.id.txt_newShopNum, !mIsAdd && CommonUtils.getDouble(item.getStatus()) == 0)
-                .setGone(R.id.img_select, mIsAdd)
-                .getView(R.id.img_select).setSelected(mSelectMap != null && mSelectMap.containsKey(item.getShopID()));
+                    .setText(R.id.txt_shopAdmin, "联系人：" + getString(item.getShopAdmin()) + " / "
+                            + getString(PhoneUtil.formatPhoneNum(item.getShopPhone())))
+                    .setText(R.id.txt_shopAddress, "地址：" + getString(item.getShopAddress()))
+                    .setGone(R.id.txt_newShopNum, !mIsAdd && CommonUtils.getDouble(item.getStatus()) == 0)
+                    .setGone(R.id.img_select, mIsAdd)
+                    .getView(R.id.img_select).setSelected(mSelectMap != null && mSelectMap.containsKey(item.getShopID()));
             GlideImageView imageView = helper.getView(R.id.img_imagePath);
             if (TextUtils.equals(item.getIsActive(), "0")) {
                 imageView.setDisableImageUrl(item.getImagePath(), GlideImageView.DISABLE_SHOP);

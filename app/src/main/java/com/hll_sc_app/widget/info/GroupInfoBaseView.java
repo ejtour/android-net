@@ -76,6 +76,10 @@ public class GroupInfoBaseView extends RelativeLayout {
         mEmail.setText(groupMail);
     }
 
+    public void setAvatar(String url) {
+        mAvatar.setImageURL(url);
+    }
+
     @OnClick(R.id.gib_avatar)
     public void changeAvatar() {
         UIUtils.selectPhoto((Activity) getContext(), REQUEST_CODE_CHOOSE, null);

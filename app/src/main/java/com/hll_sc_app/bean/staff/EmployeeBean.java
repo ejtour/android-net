@@ -56,6 +56,7 @@ public class EmployeeBean implements Parcelable {
     private String deptIDs = "";
     private boolean select;
     private String employeeNum;
+    private int shopNum;
     private List<RoleBean> roles;
 
     public EmployeeBean() {
@@ -95,6 +96,7 @@ public class EmployeeBean implements Parcelable {
         this.deptIDs = in.readString();
         this.select = in.readByte() != 0;
         this.employeeNum = in.readString();
+        this.shopNum = in.readInt();
         this.roles = in.createTypedArrayList(RoleBean.CREATOR);
     }
 
@@ -362,6 +364,14 @@ public class EmployeeBean implements Parcelable {
         this.employeeNum = employeeNum;
     }
 
+    public int getShopNum() {
+        return shopNum;
+    }
+
+    public void setShopNum(int shopNum) {
+        this.shopNum = shopNum;
+    }
+
     public List<RoleBean> getRoles() {
         return roles;
     }
@@ -410,6 +420,7 @@ public class EmployeeBean implements Parcelable {
         dest.writeString(this.deptIDs);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
         dest.writeString(this.employeeNum);
+        dest.writeInt(this.shopNum);
         dest.writeTypedList(this.roles);
     }
 }

@@ -88,6 +88,7 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
             .put("ignoreGroupActive", "1")
             .put("groupID", UserConfig.getGroupID())
             .put("purchaserID", mView.getPurchaserId())
+            .put("searchParams", mView.getSearchWords())
             .create();
         CooperationPurchaserService.INSTANCE.queryCooperationPurchaserDetail(req)
             .compose(ApiScheduler.getObservableScheduler())

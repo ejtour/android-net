@@ -28,6 +28,8 @@ public interface CooperationDetailContract {
          * @return 合作商 ID
          */
         String getPurchaserId();
+
+        String getSearchWords();
     }
 
     interface ICooperationDetailPresenter extends IPresenter<ICooperationDetailView> {

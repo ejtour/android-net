@@ -10,13 +10,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.dialog.BaseDialog;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.bean.window.NameValue;
+import com.hll_sc_app.bean.aftersales.RefundMethodBean;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.rest.AfterSales;
 import com.hll_sc_app.widget.SingleSelectionDialog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,6 +42,9 @@ public class AfterSalesAuditDialog extends BaseDialog {
     private SingleSelectionDialog mDialog;
     private static final int LIMIT = 200;
     private AuditCallback mCallback;
+    private List<RefundMethodBean> mBeans;
+    private ILoadView mLoadView;
+    private String mRefundBillID;
 
     public interface AuditCallback {
         void callback(String payType, String remark);
@@ -46,6 +52,16 @@ public class AfterSalesAuditDialog extends BaseDialog {
 
     public AfterSalesAuditDialog setCallback(AuditCallback callback) {
         mCallback = callback;
+        return this;
+    }
+
+    public AfterSalesAuditDialog withLoadView(ILoadView loadView) {
+        mLoadView = loadView;
+        return this;
+    }
+
+    public AfterSalesAuditDialog withRefundBillID(String refundBillID) {
+        mRefundBillID = refundBillID;
         return this;
     }
 
@@ -82,16 +98,23 @@ public class AfterSalesAuditDialog extends BaseDialog {
 
     @OnClick(R.id.asa_select_method)
     public void select() {
+        if (mBeans == null) {
+            AfterSales.getRefundMethod(mRefundBillID, new SimpleObserver<SingleListResp<RefundMethodBean>>(mLoadView) {
+                @Override
+                public void onSuccess(SingleListResp<RefundMethodBean> refundMethodBeanSingleListResp) {
+                    mBeans = refundMethodBeanSingleListResp.getRecords();
+                    select();
+                }
+            });
+            return;
+        }
         if (mDialog == null) {
-            List<NameValue> list = new ArrayList<>();
-            list.add(new NameValue("线下现金", "1"));
-            list.add(new NameValue("账期", "2"));
-            mDialog = SingleSelectionDialog.newBuilder((getOwnerActivity()), NameValue::getName)
-                    .refreshList(list)
+            mDialog = SingleSelectionDialog.newBuilder((getOwnerActivity()), RefundMethodBean::getTypeName)
+                    .refreshList(mBeans)
                     .setTitleText("请选择退款方式")
                     .setOnSelectListener(nameValue -> {
-                        mSelectMethod.setText(nameValue.getName());
-                        mSelectMethod.setTag(nameValue.getValue());
+                        mSelectMethod.setText(nameValue.getTypeName());
+                        mSelectMethod.setTag(nameValue.getTypeID());
                     })
                     .create();
             mDialog.setOnDismissListener(dialog -> show());

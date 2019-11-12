@@ -9,8 +9,11 @@ import com.hll_sc_app.bean.groupInfo.GroupInfoReq;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
 import com.hll_sc_app.bean.user.CertifyReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Upload;
 import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.io.File;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -49,6 +52,22 @@ public class InfoPresenter implements IInfoContract.IInfoPresenter {
             @Override
             public void onSuccess(Object o) {
                 start();
+            }
+        });
+    }
+
+    @Override
+    public void upload(File file) {
+        Upload.imageUpload(file, new SimpleObserver<String>(mView) {
+            @Override
+            public void onSuccess(String s) {
+                mView.cacheUrl(s);
+                User.updateGroupInfo("groupLogoUrl", s, new SimpleObserver<Object>(mView) {
+                    @Override
+                    public void onSuccess(Object o) {
+                        mView.avatarChanged();
+                    }
+                });
             }
         });
     }

@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.mine;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
 import com.hll_sc_app.app.helpcenter.HelpCenterJsParams;
+import com.hll_sc_app.app.info.InfoActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.bean.UserBean;
@@ -142,6 +145,14 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         return rootView;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == InfoActivity.REQ_CODE) {
+            showUserInfo();
+        }
+    }
+
     private void initData() {
         mPresenter = MineHomeFragmentPresenter.newInstance();
         mPresenter.register(this);
@@ -220,7 +231,8 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             R.id.txt_store_manage, R.id.txt_account_statement, R.id.txt_payment_settings, R.id.txt_invoice_manage,
             R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage,
             R.id.txt_complaint_manage, R.id.txt_main_feedback, R.id.fmm_analysis_btn, R.id.txt_new_product_demand,
-            R.id.txt_market_price, R.id.txt_customer_purchase_template, R.id.txt_card_manage,R.id.ll_user_message})
+            R.id.txt_market_price, R.id.txt_customer_purchase_template, R.id.txt_card_manage, R.id.ll_user_message,
+            R.id.txt_product_special_demand, R.id.txt_wechat_mall})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.txt_wallet:
@@ -309,7 +321,13 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_LIST);
                 break;
             case R.id.ll_user_message:
-                RouterUtil.goToActivity(RouterConfig.INFO);
+                InfoActivity.start(requireActivity());
+                break;
+            case R.id.txt_product_special_demand:
+                RouterUtil.goToActivity(RouterConfig.GOODS_SPECIAL_DEMAND_ENTRY);
+                break;
+            case R.id.txt_wechat_mall:
+                RouterUtil.goToActivity(RouterConfig.WX_MALL);
                 break;
             default:
                 break;

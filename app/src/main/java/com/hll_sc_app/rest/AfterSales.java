@@ -22,6 +22,7 @@ import com.hll_sc_app.bean.aftersales.CommitComplainProductBean;
 import com.hll_sc_app.bean.aftersales.GenerateCompainResp;
 import com.hll_sc_app.bean.aftersales.NegotiationHistoryResp;
 import com.hll_sc_app.bean.aftersales.PurchaserListResp;
+import com.hll_sc_app.bean.aftersales.RefundMethodBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -203,7 +204,8 @@ public class AfterSales {
         req.setRefundBillType(refundBillType);
         req.setPayType(payType);
         if (action == 1) req.setCustomAuditNote(msg);
-        else req.setRefuseReason(msg);
+        else if (action == 5) req.setRefuseReason(msg);
+        else if (action == 7) req.setCloseReason(msg);
         req.setRefundBillDetailList(list);
         AfterSalesService.INSTANCE
                 .afterSalesAction(new BaseReq<>(req))
@@ -325,6 +327,21 @@ public class AfterSales {
             observable = AfterSalesService.INSTANCE.reapplyAfterSalesBill(new BaseReq<>(req));
         else observable = AfterSalesService.INSTANCE.applyAfterSalesBill(new BaseReq<>(req));
         observable.compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 获取退款方式
+     *
+     * @param refundBillID 退货单id
+     */
+    public static void getRefundMethod(String refundBillID, SimpleObserver<SingleListResp<RefundMethodBean>> observer) {
+        AfterSalesService.INSTANCE
+                .getRefundMethod(BaseMapReq.newBuilder()
+                        .put("refundBillID", refundBillID)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
