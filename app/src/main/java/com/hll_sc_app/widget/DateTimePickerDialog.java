@@ -79,7 +79,7 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
     WheelView mHour;
 
     /**
-     * 时
+     * 分
      */
     @BindView(R.id.wdf_minute)
     WheelView mMinute;
@@ -87,7 +87,7 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
     @BindView(R.id.view_date_divider)
     View mSelectBorder;
 
-    @BindViews({R.id.wdf_year, R.id.wdf_month, R.id.wdf_day, R.id.wdf_hour})
+    @BindViews({R.id.wdf_year, R.id.wdf_month, R.id.wdf_day, R.id.wdf_hour,R.id.wdf_minute})
     List<WheelView> mWheelViews;
     /**
      * 时间选择器的时间区间
