@@ -36,6 +36,8 @@ public class SingleSelectionDialog<T> extends BaseDialog {
     TextView mTitle;
     @BindView(R.id.dss_list_view)
     RecyclerView mListView;
+    @BindView(R.id.txt_alert)
+    TextView mTxtAlert;
     private SingleSelectionAdapter mAdapter;
     private OnSelectListener<T> mListener;
     private SelectEqualListener<T> mSelectEqualListener;
@@ -88,6 +90,11 @@ public class SingleSelectionDialog<T> extends BaseDialog {
 
     private void setTitleText(CharSequence text) {
         mTitle.setText(text);
+    }
+
+    private void setAlertText(CharSequence text) {
+        mTxtAlert.setVisibility(View.VISIBLE);
+        mTxtAlert.setText(text);
     }
 
     private void setOnSelectListener(OnSelectListener<T> listener) {
@@ -165,6 +172,11 @@ public class SingleSelectionDialog<T> extends BaseDialog {
 
         public Builder<T> selectEqualListener(SelectEqualListener<T> listener) {
             mDialog.setSelectEqual(listener);
+            return this;
+        }
+
+        public Builder<T> setAlertText(CharSequence text) {
+            mDialog.setAlertText(text);
             return this;
         }
 

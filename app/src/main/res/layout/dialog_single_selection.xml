@@ -37,6 +37,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dss_close"/>
 
+    <TextView
+        android:id="@+id/txt_alert"
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:background="#f5f5f5"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/dss_divider"
+        tools:text="启用验货模式，当订单中包含已发货但未验货的订单时，不可切换其他模式。"
+        tools:visibility="visible" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/dss_list_view"
         android:layout_width="0dp"
@@ -47,5 +60,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dss_divider"/>
+        app:layout_constraintTop_toBottomOf="@+id/txt_alert" />
 </android.support.constraint.ConstraintLayout>
