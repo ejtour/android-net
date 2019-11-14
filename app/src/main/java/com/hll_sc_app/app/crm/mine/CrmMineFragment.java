@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
+import com.hll_sc_app.app.goods.template.GoodsTemplateListActivity;
 import com.hll_sc_app.app.goodsdemand.entry.GoodsDemandEntryActivity;
 import com.hll_sc_app.app.info.InfoActivity;
 import com.hll_sc_app.base.BaseFragment;
@@ -80,6 +81,7 @@ public class CrmMineFragment extends BaseFragment {
                 RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);
                 break;
             case R.id.fcm_product_lib:
+                GoodsTemplateListActivity.start(true);
                 break;
             case R.id.fcm_staff_manage:
                 RouterUtil.goToActivity(RouterConfig.STAFF_LIST);

@@ -4,15 +4,19 @@ import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.goods.list.GoodsListFragmentPresenter;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
+
+import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -24,9 +28,12 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  */
 public class GoodsDetailPresenter implements GoodsDetailContract.IGoodsDetailPresenter {
     private GoodsDetailContract.IGoodsDetailView mView;
+    private boolean mEditable;
 
-    static GoodsDetailPresenter newInstance() {
-        return new GoodsDetailPresenter();
+    static GoodsDetailPresenter newInstance(boolean editable) {
+        GoodsDetailPresenter presenter = new GoodsDetailPresenter();
+        presenter.mEditable = editable;
+        return presenter;
     }
 
     @Override
@@ -45,23 +52,18 @@ public class GoodsDetailPresenter implements GoodsDetailContract.IGoodsDetailPre
             .put("productID", mView.getProductId())
             .put("forward", "1")
             .create();
-        GoodsService.INSTANCE.queryGoodsDetail(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<GoodsBean>() {
-                @Override
-                public void onSuccess(GoodsBean resp) {
-                    mView.showDetail(resp);
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+        SimpleObserver<GoodsBean> observer = new SimpleObserver<GoodsBean>(mView) {
+            @Override
+            public void onSuccess(GoodsBean bean) {
+                mView.showDetail(bean);
+            }
+        };
+        Observable<BaseResp<GoodsBean>> observable;
+        if (mEditable) observable = GoodsService.INSTANCE.queryGoodsDetail(req);
+        else observable = GoodsService.INSTANCE.getGoodsDetail(req);
+        observable.compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
     }
 
     @Override

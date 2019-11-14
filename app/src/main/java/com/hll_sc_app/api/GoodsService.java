@@ -60,6 +60,13 @@ public interface GoodsService {
     Observable<BaseResp<GoodsBean>> queryGoodsDetail(@Body BaseMapReq req);
 
     /**
+     * 获取商品详情
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:100054")
+    Observable<BaseResp<GoodsBean>> getGoodsDetail(@Body BaseMapReq req);
+
+    /**
      * 复制商城分类为自定义分类
      *
      * @param req req

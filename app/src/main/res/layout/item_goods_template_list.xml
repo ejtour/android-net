@@ -22,6 +22,7 @@
         android:layout_width="50dp"
         android:layout_height="0dp"
         app:base_placeholder="@drawable/ic_placeholder"
+        app:layout_goneMarginLeft="@dimen/dp_10"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintLeft_toRightOf="@+id/img_check"
