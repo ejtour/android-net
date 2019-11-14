@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/cdd_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="日报详情" />
+
+    <View
+        android:id="@+id/cdd_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@drawable/base_bg_shadow_bottom_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/cdd_send"
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="发表"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Blue"
+        app:layout_constraintBottom_toBottomOf="@id/cdd_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/cdd_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/cdd_bottom_bg" />
+
+    <EditText
+        android:id="@+id/cdd_edit"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/bg_goods_search"
+        android:hint="点评点什么吧～"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:textColorHint="@color/color_aeaeae"
+        android:textSize="@dimen/text_middle_size"
+        app:layout_constraintBottom_toBottomOf="@id/cdd_bottom_bg"
+        app:layout_constraintEnd_toStartOf="@id/cdd_send"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cdd_bottom_bg" />
+
+    <android.support.constraint.Group
+        android:id="@+id/cdd_bottom_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="cdd_bottom_bg,cdd_send,cdd_edit" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/cdd_refresh_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/cdd_bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cdd_title_bar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cdd_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</android.support.constraint.ConstraintLayout>
