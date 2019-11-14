@@ -14,23 +14,24 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.ams.common.util.StringUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.http.HttpConfig;
-import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailRecord;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderRecord;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.UrlObject;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.ShareDialog;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 
@@ -111,14 +112,19 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements Pu
             case R.id.shared_purchaser_order_detail_btn:
                 if (mShareDialog == null) {
                     mShareDialog = new ShareDialog(this);
-                    UrlObject urlObject = new UrlObject();
-                    urlObject.setUrl(HttpConfig.getHost() + HttpConfig.URL);
-                    UrlObject.UrlData body = new UrlObject.UrlData();
-                    body.setPurchaserBillID(mPurchaserBillID);
-                    body.setGroupID(UserConfig.getGroupID());
-                    urlObject.setBody(body);
-                    String url = "http://172.16.32.222:3001/client/sharePurchase?shareData="
-                            + Base64.encodeToString(JsonUtil.toJson(urlObject).getBytes(), Base64.NO_WRAP);
+                    JSONObject json = new JSONObject();
+                    try {
+                        json.put("url", HttpConfig.getHost() + HttpConfig.URL);
+                        JSONObject obj = new JSONObject();
+                        obj.put("purchaserBillID", mPurchaserBillID);
+                        obj.put("groupID", UserConfig.getGroupID());
+                        json.put("body", obj);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    String url = (BuildConfig.isDebug ? "http://172.16.32.222:3001" : "http://weixin.22city.cn")
+                            + "/client/sharePurchase?shareData="
+                            + Base64.encodeToString(json.toString().getBytes(), Base64.NO_WRAP);
                     mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
                             "采购单分享",
                             "http://res.hualala.com/group3/M02/11/E4/wKgVbV3FKiGutZpqAABNhltbYDI135.png",
