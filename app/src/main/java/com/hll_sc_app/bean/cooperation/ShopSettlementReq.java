@@ -12,17 +12,6 @@ import java.util.List;
  * @date 2019-07-18
  */
 public class ShopSettlementReq implements Parcelable {
-    public static final Creator<ShopSettlementReq> CREATOR = new Creator<ShopSettlementReq>() {
-        @Override
-        public ShopSettlementReq createFromParcel(Parcel source) {
-            return new ShopSettlementReq(source);
-        }
-
-        @Override
-        public ShopSettlementReq[] newArray(int size) {
-            return new ShopSettlementReq[size];
-        }
-    };
     private String changeAllShops;
     private String deliveryWay;
     /**
@@ -59,27 +48,17 @@ public class ShopSettlementReq implements Parcelable {
     private String purchaserName;
     private String from;
 
-    public ShopSettlementReq() {
+    private int inspector;
+
+    public int getInspector() {
+        return inspector;
     }
 
-    protected ShopSettlementReq(Parcel in) {
-        this.changeAllShops = in.readString();
-        this.deliveryWay = in.readString();
-        this.actionType = in.readString();
-        this.groupID = in.readString();
-        this.purchaserID = in.readString();
-        this.shopIds = in.createStringArrayList();
-        this.settlementWay = in.readString();
-        this.settleDate = in.readString();
-        this.accountPeriodType = in.readString();
-        this.accountPeriod = in.readString();
-        this.employeeID = in.readString();
-        this.employeeName = in.readString();
-        this.employeePhone = in.readString();
-        this.shopIDs = in.readString();
-        this.deliveryPeriod = in.readString();
-        this.purchaserName = in.readString();
-        this.from = in.readString();
+    public void setInspector(int inspector) {
+        this.inspector = inspector;
+    }
+
+    public ShopSettlementReq() {
     }
 
     public String getPurchaserName() {
@@ -242,5 +221,39 @@ public class ShopSettlementReq implements Parcelable {
         dest.writeString(this.deliveryPeriod);
         dest.writeString(this.purchaserName);
         dest.writeString(this.from);
+        dest.writeInt(this.inspector);
     }
+
+    protected ShopSettlementReq(Parcel in) {
+        this.changeAllShops = in.readString();
+        this.deliveryWay = in.readString();
+        this.actionType = in.readString();
+        this.groupID = in.readString();
+        this.purchaserID = in.readString();
+        this.shopIds = in.createStringArrayList();
+        this.settlementWay = in.readString();
+        this.settleDate = in.readString();
+        this.accountPeriodType = in.readString();
+        this.accountPeriod = in.readString();
+        this.employeeID = in.readString();
+        this.employeeName = in.readString();
+        this.employeePhone = in.readString();
+        this.shopIDs = in.readString();
+        this.deliveryPeriod = in.readString();
+        this.purchaserName = in.readString();
+        this.from = in.readString();
+        this.inspector = in.readInt();
+    }
+
+    public static final Creator<ShopSettlementReq> CREATOR = new Creator<ShopSettlementReq>() {
+        @Override
+        public ShopSettlementReq createFromParcel(Parcel source) {
+            return new ShopSettlementReq(source);
+        }
+
+        @Override
+        public ShopSettlementReq[] newArray(int size) {
+            return new ShopSettlementReq[size];
+        }
+    };
 }

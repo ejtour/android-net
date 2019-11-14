@@ -6,13 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -22,7 +22,6 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.dialog.InputDialog;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -46,7 +45,7 @@ import butterknife.OnTextChanged;
  * @date 2019/7/18
  */
 @Route(path = RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, extras = Constant.LOGIN_EXTRA)
-public class CooperationShopSettlementActivity extends BaseLoadActivity implements CooperationShopSettlementContract.ICooperationShopSettlementView {
+public class CooperationShopSettlementActivity extends BaseLoadActivity implements CooperationShopSettlementContract.ICooperationShopSettlementView, RadioGroup.OnCheckedChangeListener {
     public static final String PAY_CASH = "1";
     public static final String PAY_ACCOUNT = "2";
     public static final String PAY_ONLINE = "3";
@@ -75,6 +74,12 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     TextView mTxtRemainNum;
     @BindView(R.id.ll_verification)
     ConstraintLayout mLlVerification;
+    @BindView(R.id.edt_settle_date)
+    EditText mEdtSettleDate;
+    @BindView(R.id.radio_group_modal)
+    RadioGroup mRadioGroupModal;
+
+
     private CooperationShopSettlementPresenter mPresenter;
 
     @Override
@@ -94,6 +99,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             TextUtils.equals(mReq.getFrom(), BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_REPEAT)) {
             mPresenter.queryGroupParameterInSetting(mReq.getPurchaserID());
         }
+        mRadioGroupModal.setOnCheckedChangeListener(this);
     }
 
     /**
@@ -103,7 +109,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         mLlAccountDetail.setVisibility(mCbAccountPayment.isChecked() ? View.VISIBLE : View.GONE);
     }
 
-    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_accountPeriod, R.id.rl_settleDate})
+    @OnClick({R.id.img_close, R.id.txt_confirm, R.id.rl_accountPeriod, /*R.id.rl_settleDate*/})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -115,9 +121,9 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             case R.id.rl_accountPeriod:
                 showAccountPeriodWindow();
                 break;
-            case R.id.rl_settleDate:
+            /*case R.id.rl_settleDate:
                 showInputDialog();
-                break;
+                break;*/
             default:
                 break;
         }
@@ -150,8 +156,11 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             if (mTxtAccountPeriod.getTag(R.id.date_end) != null) {
                 mReq.setAccountPeriod(String.valueOf(mTxtAccountPeriod.getTag(R.id.date_end)));
             }
-            if (mTxtSettleDate.getTag() != null) {
+            /*if (mTxtSettleDate.getTag() != null) {
                 mReq.setSettleDate(String.valueOf(mTxtSettleDate.getTag()));
+            }*/
+            if (mEdtSettleDate.getText() != null) {
+                mReq.setSettleDate(mEdtSettleDate.getText().toString());
             }
         }
 
@@ -191,7 +200,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         window.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
-    private void showInputDialog() {
+   /* private void showInputDialog() {
         InputDialog.newBuilder(this)
             .setCancelable(false)
             .setTextTitle("输入结算日")
@@ -211,7 +220,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             }, "取消", "确定")
             .create()
             .show();
-    }
+    }*/
 
     /**
      * 修改集团参数
@@ -282,8 +291,9 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             } else {
                 mTxtAccountPeriod.setText(null);
             }
-            mTxtSettleDate.setText(String.format("对账单产生后%s日", bean.getSettleDate()));
-            mTxtSettleDate.setTag(bean.getSettleDate());
+            mEdtSettleDate.setText(bean.getSettleDate());
+//            mTxtSettleDate.setText(String.format("对账单产生后%s日", bean.getSettleDate()));
+//            mTxtSettleDate.setTag(bean.getSettleDate());
         } else {
             if (!TextUtils.isEmpty(mReq.getSettlementWay())) {
                 if (mCbCashPayment.getVisibility() == View.VISIBLE) {
@@ -308,8 +318,9 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             } else {
                 mTxtAccountPeriod.setText(null);
             }
-            mTxtSettleDate.setText(String.format("对账单产生后%s日", mReq.getSettleDate()));
-            mTxtSettleDate.setTag(mReq.getSettleDate());
+//            mTxtSettleDate.setText(String.format("对账单产生后%s日", mReq.getSettleDate()));
+//            mTxtSettleDate.setTag(mReq.getSettleDate());
+            mEdtSettleDate.setText(bean.getSettleDate());
         }
     }
 
@@ -341,5 +352,14 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             verification = mEdtVerification.getText().toString().trim();
         }
         return verification;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (checkedId == R.id.radio_purchaser) {
+            mReq.setInspector(0);
+        } else if (checkedId == R.id.radio_supplyer) {
+            mReq.setInspector(1);
+        }
     }
 }
