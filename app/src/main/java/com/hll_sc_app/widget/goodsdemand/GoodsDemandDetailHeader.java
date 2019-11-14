@@ -105,8 +105,6 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
         } else {
             mStatusGroup.setVisibility(VISIBLE);
             mReplyTitleGroup.setVisibility(VISIBLE);
-            mReplySaleGroup.setVisibility(VISIBLE);
-            mReplyCustomerGroup.setVisibility(VISIBLE);
 
             if (bean.getStatus() == 3) {
                 mTxtReplyTitle.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
@@ -123,8 +121,15 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
             } else {
                 mTxtReplyTitle.setText("已回复");
             }
-            mTxtReplySale.setText(bean.getProductReplySale());
-            mTxtReplyCustomer.setText(bean.getProductReply());
+
+            if (!TextUtils.isEmpty(bean.getProductReplySale())) {
+                mReplySaleGroup.setVisibility(VISIBLE);
+                mTxtReplySale.setText(bean.getProductReplySale());
+            }
+            if (!TextUtils.isEmpty(bean.getProductReply())) {
+                mReplyCustomerGroup.setVisibility(VISIBLE);
+                mTxtReplyCustomer.setText(bean.getProductReply());
+            }
         }
 
 
