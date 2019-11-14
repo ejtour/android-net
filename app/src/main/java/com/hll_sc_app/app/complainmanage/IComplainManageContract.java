@@ -9,7 +9,7 @@ public interface IComplainManageContract {
     interface IView extends ILoadView {
         void queryListSuccess(ComplainListResp resp,boolean isMore);
 
-        int getComplaintStatus();
+        String getComplaintStatus();
 
         void showCheckBox(boolean isCheck);
 

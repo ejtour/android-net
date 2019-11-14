@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.complainmanage.adapter.ComplainListApdater;
+import com.hll_sc_app.app.complainmanage.adapter.ComplainListAdapter;
 import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.bean.complain.ComplainListResp;
@@ -26,17 +28,17 @@ import org.greenrobot.eventbus.Subscribe;
 
 public class ComplainListFragment extends BaseLazyFragment implements IComplainManageContract.IView {
     private final static String BUNDLE_STATUS_NAME = "status";
-
-    private int mStatus = -1;
+    @Autowired(name = BUNDLE_STATUS_NAME)
+    String mStatus;
 
     private RecyclerView mRecyclerView;
     private SmartRefreshLayout mRefreshLayout;
-    private ComplainListApdater mAdapter;
+    private ComplainListAdapter mAdapter;
     private IComplainManageContract.IPresent mPresent;
 
-    public static ComplainListFragment newInstance(int status) {
+    public static ComplainListFragment newInstance(String status) {
         Bundle bundle = new Bundle();
-        bundle.putInt(BUNDLE_STATUS_NAME, status);
+        bundle.putString(BUNDLE_STATUS_NAME, status);
         ComplainListFragment fragment = new ComplainListFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -45,11 +47,8 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ARouter.getInstance().inject(this);
         EventBus.getDefault().register(this);
-        Bundle args = getArguments();
-        if (args != null) {
-            mStatus = args.getInt(BUNDLE_STATUS_NAME);
-        }
     }
 
     @Override
@@ -82,7 +81,7 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mAdapter = new ComplainListApdater(null);
+        mAdapter = new ComplainListAdapter(null);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             ComplainListResp.ComplainListBean complainListBean = mAdapter.getItem(position);
             if (complainListBean == null) {
@@ -116,7 +115,7 @@ public class ComplainListFragment extends BaseLazyFragment implements IComplainM
     }
 
     @Override
-    public int getComplaintStatus() {
+    public String getComplaintStatus() {
         return mStatus;
     }
 

@@ -39,7 +39,7 @@ public class ComplainManagePresent implements IComplainManageContract.IPresent {
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
                 .put("pageNum", pageNumTemp + "")
                 .put("pageSize", pageSize + "")
-                .put("status", mView.getComplaintStatus() + "")
+                .put("status", mView.getComplaintStatus())
                 .put("supplyID", userBean.getGroupID())
                 .put("target", "2")
                 .create();
