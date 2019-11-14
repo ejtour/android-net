@@ -1,33 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/base_activity_bg">
 
-    <RelativeLayout
+    <com.hll_sc_app.widget.TitleBar
         android:id="@+id/rl_toolbar"
+        app:tb_title="从商品库导入"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_colorPrimary">
-
-        <ImageView
-            android:id="@+id/img_close"
-            android:layout_width="@dimen/title_bar_height"
-            android:layout_height="match_parent"
-            android:background="@drawable/base_bg_selector_close"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_close"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="从商品库导入"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_18"/>
-
-    </RelativeLayout>
+        android:layout_height="@dimen/title_bar_height"/>
 
     <com.hll_sc_app.widget.SearchView
         android:id="@+id/searchView"

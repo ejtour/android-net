@@ -1302,5 +1302,20 @@ public class RouterConfig {
      * 微信商城
      */
     public static final String WX_MALL = "/activity/wx";
+
+    /**
+     * 日报-列表
+     */
+    public static final String CRM_DAILY_LIST = "/activity/daily/list";
+
+    /**
+     * 日报-详情
+     */
+    public static final String CRM_DAILY_DETAIL = "/activity/daily/detail";
+
+    /**
+     * 日报-编辑
+     */
+    public static final String CRM_DAILY_EDIT = "/activity/daily/edit";
 }
 

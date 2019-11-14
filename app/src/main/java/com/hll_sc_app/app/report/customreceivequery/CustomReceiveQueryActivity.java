@@ -27,7 +27,7 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
-import com.hll_sc_app.widget.MutipleSelecteWindow;
+import com.hll_sc_app.widget.MultiSelectionWindow;
 import com.hll_sc_app.widget.SingleSelectionWindow;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
@@ -84,7 +84,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
     private ReceiveAdapter mAdapter;
 
     private SingleSelectionWindow<PurchaserBean> mSelectCustomWindow;
-    private MutipleSelecteWindow<FilterParams.TypeBean> mSelectTypeWindow;
+    private MultiSelectionWindow<FilterParams.TypeBean> mSelectTypeWindow;
     private SingleSelectionWindow<FilterParams.StatusBean> mSelectStatusWindow;
     private DateRangeWindow mDateWindow;
     private ContextOptionsWindow mTitleMenuWindow;
@@ -319,7 +319,7 @@ public class CustomReceiveQueryActivity extends BaseLoadActivity implements ICus
             case R.id.view_filter_type:
                 if (mSelectTypeWindow == null) {
                     List<FilterParams.TypeBean> data = CustomReceiveListResp.getTypeList();
-                    mSelectTypeWindow = new MutipleSelecteWindow<>(this, data, new MutipleSelecteWindow.Config<FilterParams.TypeBean>() {
+                    mSelectTypeWindow = new MultiSelectionWindow<>(this, data, new MultiSelectionWindow.Config<FilterParams.TypeBean>() {
                         @Override
                         public boolean enableSelectAll() {
                             return true;

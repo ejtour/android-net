@@ -105,7 +105,7 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
 
     public static class SpecAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
         private boolean mIsDepositProduct;
-        private boolean mIsBundlingDetail;
+        private boolean mEditable = true;
 
         public SpecAdapter(GoodsBean goodsBean) {
             super(R.layout.item_window_spec_list, goodsBean != null ? goodsBean.getSpecs() : null);
@@ -114,10 +114,13 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
             }
         }
 
-        public void setNewData(GoodsBean goodsBean, boolean isBundlingDetail) {
+        /**
+         * @param editable 组合商品下的商品明细在商品详情 不能操作上下架
+         */
+        public void setNewData(GoodsBean goodsBean, boolean editable) {
             if (goodsBean != null) {
                 super.setNewData(goodsBean.getSpecs());
-                mIsBundlingDetail = isBundlingDetail;
+                mEditable = editable;
                 mIsDepositProduct = TextUtils.equals(goodsBean.getDepositProductType(), GoodsBean.DEPOSIT_GOODS_TYPE);
             }
         }
@@ -125,17 +128,16 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
         @Override
         protected void convert(BaseViewHolder helper, SpecsBean item) {
             helper.setText(R.id.txt_productPrice, getProductPrice(item))
-                .setGone(R.id.txt_standardUnitStatus, TextUtils.equals(item.getStandardUnitStatus(), "1"))
-                .setGone(R.id.txt_assistUnitStatus, TextUtils.equals(item.getAssistUnitStatus(), "1"))
-                .setText(R.id.txt_specContent, getMiddleContent(item))
-                .setText(R.id.txt_productCode, getBottomContent(item))
-                // 规格状态：4-已上架，5-未上架
-                .setText(R.id.txt_update, TextUtils.equals(SpecsBean.SPEC_STATUS_UP, item.getSpecStatus()) ? "下架" :
-                    "上架")
-                // 押金商品不能操作上下架
-                // 组合商品下的商品明细在商品详情 不能操作上下架
-                .setGone(R.id.txt_update, !mIsDepositProduct && !mIsBundlingDetail)
-                .addOnClickListener(R.id.txt_update);
+                    .setGone(R.id.txt_standardUnitStatus, TextUtils.equals(item.getStandardUnitStatus(), "1"))
+                    .setGone(R.id.txt_assistUnitStatus, TextUtils.equals(item.getAssistUnitStatus(), "1"))
+                    .setText(R.id.txt_specContent, getMiddleContent(item))
+                    .setText(R.id.txt_productCode, getBottomContent(item))
+                    // 规格状态：4-已上架，5-未上架
+                    .setText(R.id.txt_update, TextUtils.equals(SpecsBean.SPEC_STATUS_UP, item.getSpecStatus()) ? "下架" :
+                            "上架")
+                    // 押金商品不能操作上下架
+                    .setGone(R.id.txt_update, !mIsDepositProduct && mEditable)
+                    .addOnClickListener(R.id.txt_update);
         }
 
         private SpannableString getProductPrice(SpecsBean item) {

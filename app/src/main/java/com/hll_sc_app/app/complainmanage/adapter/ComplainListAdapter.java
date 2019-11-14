@@ -18,11 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ComplainListApdater extends BaseQuickAdapter<ComplainListResp.ComplainListBean, BaseViewHolder> {
+public class ComplainListAdapter extends BaseQuickAdapter<ComplainListResp.ComplainListBean, BaseViewHolder> {
     private boolean isCheck = false;
     private Map<String, ComplainListResp.ComplainListBean> selectedBeanMap;
 
-    public ComplainListApdater(@Nullable List<ComplainListResp.ComplainListBean> data) {
+    public ComplainListAdapter(@Nullable List<ComplainListResp.ComplainListBean> data) {
         super(R.layout.list_item_comlain_manage_list, data);
     }
 

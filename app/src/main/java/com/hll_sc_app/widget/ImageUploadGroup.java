@@ -58,7 +58,7 @@ public class ImageUploadGroup extends LinearLayout {
         mUpload.setTitle(mLabel);
         mUpload.setSubTitle("0/5");
         mUpload.setOnTouchListener((v, event) -> {
-            mListener.onClick(this);
+            if (mListener != null) mListener.onClick(this);
             return false;
         });
         addView(mUpload, mItemSize, mItemSize);
@@ -125,7 +125,7 @@ public class ImageUploadGroup extends LinearLayout {
 
     private void showUploadedImg(String url) {
         mUploadImgUrls.add(url);
-        mChangeListener.onChanged(mUploadImgUrls);
+        if (mChangeListener != null) mChangeListener.onChanged(mUploadImgUrls);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mItemSize, mItemSize);
         layoutParams.setMargins(0, 0, mPadding, 0);
         ImgShowDelBlock del = new ImgShowDelBlock(getContext());
@@ -137,7 +137,7 @@ public class ImageUploadGroup extends LinearLayout {
             if (v.getTag() == null) return;
             int delIndex = mUploadImgUrls.indexOf(v.getTag().toString());
             mUploadImgUrls.remove(delIndex);
-            mChangeListener.onChanged(mUploadImgUrls);
+            if (mChangeListener != null) mChangeListener.onChanged(mUploadImgUrls);
             removeViewAt(delIndex);
             mUpload.setVisibility(View.VISIBLE);
             mUpload.setSubTitle(mUploadImgUrls.size() + "/" + MAX_IMG_NUMBER);

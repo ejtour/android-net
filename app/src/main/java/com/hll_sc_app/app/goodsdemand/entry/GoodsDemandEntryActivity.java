@@ -95,7 +95,8 @@ public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoods
             if (!CommonUtils.isEmpty(list)) mAdapter.addData(list);
         } else {
             mAdapter.setNewData(list);
-            if (CommonUtils.isEmpty(list)) add();
+            if (CommonUtils.isEmpty(list))
+                RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_ADD, this);
         }
         mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
     }

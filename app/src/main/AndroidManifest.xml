@@ -1200,6 +1200,18 @@
             android:name=".app.wx.WxMallActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.crm.daily.list.CrmDailyListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.crm.daily.detail.CrmDailyDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.crm.daily.edit.CrmDailyEditActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

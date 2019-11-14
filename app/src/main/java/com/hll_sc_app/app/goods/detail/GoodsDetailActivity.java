@@ -37,6 +37,7 @@ import com.hll_sc_app.bean.goods.ProductAttrBean;
 import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TitleBar;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -68,6 +69,10 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     String mProductId;
     @Autowired(name = "object1")
     boolean mIsBundlingDetail;
+    @Autowired(name = "object2")
+    boolean mEditable;
+    @BindView(R.id.rl_toolbar)
+    TitleBar mTitleBar;
     @BindView(R.id.txt_productName)
     TextView mTxtProductName;
     @BindView(R.id.txt_productBrief)
@@ -113,6 +118,16 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     private SpecStatusWindow.SpecAdapter mAdapterSpec;
     private GoodsBean mGoodsBean;
 
+    /**
+     * start activity
+     *
+     * @param productId        productId
+     * @param isBundlingDetail 组合商品下的商品明细的商品详情
+     */
+    public static void start(String productId, boolean isBundlingDetail, boolean edit) {
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_DETAIL, productId, isBundlingDetail, edit);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +136,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
-        mPresenter = GoodsDetailPresenter.newInstance();
+        mPresenter = GoodsDetailPresenter.newInstance(mEditable);
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -160,20 +175,10 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mAdapterBundlingGoods.setOnItemClickListener((adapter, view, position) -> {
             GoodsBean goodsBean = (GoodsBean) adapter.getItem(position);
             if (goodsBean != null) {
-                GoodsDetailActivity.start(goodsBean.getProductID(), true);
+                GoodsDetailActivity.start(goodsBean.getProductID(), true, mEditable);
             }
         });
         mRecyclerViewBundlingGoods.setAdapter(mAdapterBundlingGoods);
-    }
-
-    /**
-     * start activity
-     *
-     * @param productId        productId
-     * @param isBundlingDetail 组合商品下的商品明细的商品详情
-     */
-    public static void start(String productId, boolean isBundlingDetail) {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_DETAIL, productId, isBundlingDetail);
     }
 
     @Override
@@ -188,12 +193,9 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mBanner.startAutoPlay();
     }
 
-    @OnClick({R.id.img_close, R.id.txt_update_spec, R.id.txt_edit})
+    @OnClick({R.id.txt_update_spec, R.id.txt_edit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_close:
-                finish();
-                break;
             case R.id.txt_update_spec:
                 toUpdateSpec();
                 break;
@@ -276,7 +278,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
 
     private void showBottomButton(GoodsBean bean) {
         // 组合商品明细不显示底部按钮
-        mRlBottom.setVisibility(!mIsBundlingDetail ? View.VISIBLE : View.GONE);
+        mRlBottom.setVisibility(!mIsBundlingDetail && mEditable ? View.VISIBLE : View.GONE);
         mTxtUpdateSpec.setVisibility(TextUtils.equals(bean.getDepositProductType(), GoodsBean.DEPOSIT_GOODS_TYPE) ?
             View.GONE : View.VISIBLE);
         boolean isDown = false;
@@ -321,7 +323,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     }
 
     private void showSpecList(GoodsBean bean) {
-        mAdapterSpec.setNewData(bean, mIsBundlingDetail);
+        mAdapterSpec.setNewData(bean, !mIsBundlingDetail && mEditable);
     }
 
     private void showBundlingGoodsList(GoodsBean bean) {

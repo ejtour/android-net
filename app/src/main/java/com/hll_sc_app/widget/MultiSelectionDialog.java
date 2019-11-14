@@ -32,7 +32,7 @@ public class MultiSelectionDialog<T> extends BaseDialog {
     TextView mTitle;
     @BindView(R.id.dss_list_view)
     RecyclerView mListView;
-    private MultipSelectionAdapter mAdapter;
+    private MultiSelectionAdapter mAdapter;
     private OnSelectListener<T> mListener;
 
     private MultiSelectionDialog(@NonNull Activity context, WrapperName<T> wrapperName) {
@@ -49,7 +49,7 @@ public class MultiSelectionDialog<T> extends BaseDialog {
         View view = inflater.inflate(R.layout.dialog_single_selection, null);
         ButterKnife.bind(this, view);
         mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(getContext(), R.color.color_eeeeee), UIUtils.dip2px(1)));
-        mAdapter = new MultipSelectionAdapter();
+        mAdapter = new MultiSelectionAdapter();
         mAdapter.bindToRecyclerView(mListView);
         return view;
     }
@@ -144,11 +144,11 @@ public class MultiSelectionDialog<T> extends BaseDialog {
         }
     }
 
-    class MultipSelectionAdapter extends BaseQuickAdapter<T, BaseViewHolder> {
+    class MultiSelectionAdapter extends BaseQuickAdapter<T, BaseViewHolder> {
 
         private List<T> mT = new ArrayList<>();
 
-        private MultipSelectionAdapter() {
+        private MultiSelectionAdapter() {
             super(R.layout.item_single_selection);
             setOnItemClickListener((adapter, view, position) -> {
                 if (mListener == null) {

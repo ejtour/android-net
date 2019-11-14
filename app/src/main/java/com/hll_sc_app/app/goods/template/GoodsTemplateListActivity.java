@@ -7,19 +7,24 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.detail.GoodsDetailActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -38,6 +43,7 @@ import com.hll_sc_app.utils.Tuple;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TitleBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -60,10 +66,8 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.GOODS_TEMPLATE_LIST, extras = Constant.LOGIN_EXTRA)
 public class GoodsTemplateListActivity extends BaseLoadActivity implements GoodsTemplateListContract.IGoodsTemplateListView {
-    @BindView(R.id.img_close)
-    ImageView mImgClose;
     @BindView(R.id.rl_toolbar)
-    RelativeLayout mRlToolbar;
+    TitleBar mTitleBar;
     @BindView(R.id.ll_filter)
     LinearLayout mLlFilter;
     @BindView(R.id.recyclerView)
@@ -98,6 +102,8 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     ImageView mImgFilter;
     @BindView(R.id.rl_filter)
     RelativeLayout mRlFilter;
+    @Autowired(name = "object0")
+    boolean mOnlyView;
     private GoodsTemplateAdapter mAdapter;
     private GoodsTemplateListPresenter mPresenter;
     private EmptyView mEmptyView;
@@ -110,12 +116,20 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     private LabelFilterWindow mLabelFilterWindow;
     private TemplateFilterWindow mTemplateFilterWindow;
 
+    /**
+     * @param onlyView 是否仅查看
+     */
+    public static void start(boolean onlyView) {
+        RouterUtil.goToActivity(RouterConfig.GOODS_TEMPLATE_LIST, onlyView);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_template_list);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
+        ARouter.getInstance().inject(this);
         initView();
         mPresenter = GoodsTemplateListPresenter.newInstance();
         mPresenter.register(this);
@@ -124,6 +138,10 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
     }
 
     private void initView() {
+        if (mOnlyView) {
+            mTitleBar.setHeaderTitle("查看商品库");
+            mFlBottom.setVisibility(View.GONE);
+        }
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -138,22 +156,27 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
             , UIUtils.dip2px(1)));
-        mAdapter = new GoodsTemplateAdapter();
+        mAdapter = new GoodsTemplateAdapter(mOnlyView);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            GoodsBean goodsBean = (GoodsBean) adapter.getItem(position);
-            if (goodsBean != null) {
-                if (goodsBean.isCheck()) {
-                    // 之前状态为选中，再次点击状态改为未选中
-                    remove(goodsBean);
-                } else {
-                    add(goodsBean);
-                }
-                adapter.notifyItemChanged(position);
+            GoodsBean goodsBean = mAdapter.getItem(position);
+            if (goodsBean == null) return;
+            if (mOnlyView) {
+                GoodsDetailActivity.start(goodsBean.getProductID(), false, false);
+                return;
             }
+            if (goodsBean.isCheck()) {
+                // 之前状态为选中，再次点击状态改为未选中
+                remove(goodsBean);
+            } else {
+                add(goodsBean);
+            }
+            adapter.notifyItemChanged(position);
             showBottomCount();
         });
         mEmptyView = EmptyView.newBuilder(this).setTips("您还没有商品模板数据").create();
         mRecyclerView.setAdapter(mAdapter);
+        // 避免 notifyItemChanged 闪烁
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -296,16 +319,13 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         return mSearchView.isSearchStatus();
     }
 
-    @OnClick({R.id.img_close, R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck, R.id.rl_category, R.id.rl_label
+    @OnClick({R.id.text_commit, R.id.img_allCheck, R.id.txt_allCheck, R.id.rl_category, R.id.rl_label
         , R.id.rl_filter})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.text_commit:
                 // 确定选择
                 RouterUtil.goToActivity(RouterConfig.GOODS_TEMPLATE_EDIT, this, new ArrayList<>(mSelectList));
-                break;
-            case R.id.img_close:
-                finish();
                 break;
             case R.id.img_allCheck:
             case R.id.txt_allCheck:
@@ -372,19 +392,29 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         }
     }
 
-    class GoodsTemplateAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
+    private static class GoodsTemplateAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
 
-        GoodsTemplateAdapter() {
+        private boolean onlyView;
+
+        GoodsTemplateAdapter(boolean onlyView) {
             super(R.layout.item_goods_template_list);
+            this.onlyView = onlyView;
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            helper.setGone(R.id.img_check, !onlyView);
+            return helper;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, GoodsBean bean) {
             helper.getView(R.id.img_check).setSelected(bean.isCheck());
             ((GlideImageView) helper.setText(R.id.txt_specsContent, !CommonUtils.isEmpty(bean.getSpecs()) ?
-                "规格：" + bean.getSpecs().get(0).getSpecContent() : "")
-                .setText(R.id.txt_productName, bean.getProductName())
-                .getView(R.id.img_imgUrl)).setImageURL(bean.getImgUrl());
+                    "规格：" + bean.getSpecs().get(0).getSpecContent() : "")
+                    .setText(R.id.txt_productName, bean.getProductName())
+                    .getView(R.id.img_imgUrl)).setImageURL(bean.getImgUrl());
         }
     }
 }
