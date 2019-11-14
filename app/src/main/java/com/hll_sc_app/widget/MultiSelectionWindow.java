@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author zc
  */
-public class MutipleSelecteWindow<T> extends BasePopupWindow {
+public class MultiSelectionWindow<T> extends BasePopupWindow {
     private RecyclerView mRecyclerView;
     private WindowAdapter mAdapter;
     private List<T> mData;
@@ -51,7 +51,7 @@ public class MutipleSelecteWindow<T> extends BasePopupWindow {
     private Config<T> mConfig;
     private Activity mActivity;
 
-    public MutipleSelecteWindow(Activity activity, List<T> data, Config<T> uiConfig) {
+    public MultiSelectionWindow(Activity activity, List<T> data, Config<T> uiConfig) {
         super(activity);
         mActivity = activity;
         mData = data;

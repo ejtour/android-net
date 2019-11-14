@@ -29,7 +29,7 @@ import com.hll_sc_app.bean.complain.ReportFormSearchResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
-import com.hll_sc_app.widget.MutipleSelecteWindow;
+import com.hll_sc_app.widget.MultiSelectionWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -60,8 +60,8 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
     @Autowired(name = "parcelable")
     CardManageBean mCardBean;
     private Unbinder unbinder;
-    private MutipleSelecteWindow<String> selecteTypeWindow;
-    private MutipleSelecteWindow<ReportFormSearchResp.ShopMallBean> selecteShopWindow;
+    private MultiSelectionWindow<String> selecteTypeWindow;
+    private MultiSelectionWindow<ReportFormSearchResp.ShopMallBean> selecteShopWindow;
     private DateRangeWindow selecteTimeWindow;
     private ITransactionListContract.IPresent mPresenter;
 
@@ -121,7 +121,7 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
                     status.add("消费");
                     status.add("充值");
                     status.add("消费退款");
-                    selecteTypeWindow = new MutipleSelecteWindow<>(this, status, new MutipleSelecteWindow.Config<String>() {
+                    selecteTypeWindow = new MultiSelectionWindow<>(this, status, new MultiSelectionWindow.Config<String>() {
                         @Override
                         public boolean enableSelectAll() {
                             return false;
@@ -333,7 +333,7 @@ public class TransactionListActivity extends BaseLoadActivity implements ITransa
         allBean.setShopmallID("0");
         reportFormSearchResp.getList().add(0, allBean);
         if (selecteShopWindow == null) {
-            selecteShopWindow = new MutipleSelecteWindow<>(this, reportFormSearchResp.getList(), new MutipleSelecteWindow.Config<ReportFormSearchResp.ShopMallBean>() {
+            selecteShopWindow = new MultiSelectionWindow<>(this, reportFormSearchResp.getList(), new MultiSelectionWindow.Config<ReportFormSearchResp.ShopMallBean>() {
                 @Override
                 public boolean enableSelectAll() {
                     return false;
