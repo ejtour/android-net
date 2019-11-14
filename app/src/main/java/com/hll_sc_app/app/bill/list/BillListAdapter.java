@@ -77,8 +77,8 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
                 .setGone(R.id.ibl_check_box, mIsBatch)
                 .setGone(R.id.ibl_view_detail, !mIsBatch)
                 .setChecked(R.id.ibl_check_box, item.isSelected())
-                .setGone(R.id.ibl_bill_type, !mIsBatch && item.getBillStatementFlag() == 2)
-                .setText(R.id.ibl_bill_type, String.format("%s/%s", "代仓账单", item.getPayee() == 0 ? "代仓代收" : "货主收款"))
+                .setGone(R.id.ibl_bill_type, !mIsBatch && item.getBillStatementFlag() != 0)
+                .setText(R.id.ibl_bill_type, String.format("收款方：%s", item.getPayee() == 0 ? "代仓代收" : "货主收款"))
                 .getView(R.id.ibl_icon)).setImageURL(item.getGroupLogoUrl());
     }
 
