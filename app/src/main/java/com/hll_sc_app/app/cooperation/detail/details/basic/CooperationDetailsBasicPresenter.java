@@ -5,16 +5,21 @@ import com.hll_sc_app.api.DeliveryManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.cooperation.ChangeGroupParamReq;
+import com.hll_sc_app.bean.cooperation.QueryGroupListResp;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodBean;
 import com.hll_sc_app.bean.delivery.DeliveryPeriodResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -122,5 +127,45 @@ public class CooperationDetailsBasicPresenter implements CooperationDetailsBasic
                     mView.showError(e);
                 }
             });
+    }
+
+
+    @Override
+    public void changeGroupParams(String type, String value, String purchaserID) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null) {
+            return;
+        }
+        ChangeGroupParamReq req = new ChangeGroupParamReq();
+        ChangeGroupParamReq.BizList bizList = new ChangeGroupParamReq.BizList();
+        bizList.setBizType(type);
+        bizList.setBizValue(value);
+        req.setBizList(Arrays.asList(bizList));
+        req.setGroupID(userBean.getGroupID());
+        req.setPurchaserID(purchaserID);
+
+        BaseReq<ChangeGroupParamReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        CooperationPurchaserService
+                .INSTANCE
+                .changeGroupParams(baseReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<QueryGroupListResp>() {
+                    @Override
+                    public void onSuccess(QueryGroupListResp queryGroupListResp) {
+                        mView.showToast("修改成功");
+                        mView.saveSuccess();
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+
     }
 }

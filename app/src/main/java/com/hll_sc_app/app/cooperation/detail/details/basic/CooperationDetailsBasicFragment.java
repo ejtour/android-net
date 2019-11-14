@@ -88,6 +88,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
 
     private SingleSelectionDialog mMaintainLevelDialog;
     private SingleSelectionDialog mCustomerLevelDialog;
+    private SingleSelectionDialog mCheckModalDialog;
     private SingleSelectionDialog mDeliveryPeriodDialog;
 
     private CooperationPurchaserDetail mDetail;
@@ -280,7 +281,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     }
 
     @OnClick({R.id.ll_defaultSettlementWay, R.id.ll_maintainLevel, R.id.ll_customerLevel, R.id.ll_defaultDeliveryWay,
-        R.id.ll_deliveryPeriod, R.id.ll_shopsNum})
+            R.id.ll_deliveryPeriod, R.id.ll_shopsNum, R.id.ll_check_modal})
     public void onViewClicked(View view) {
         if (mDetail.getCooperationActive() == 1) {
             return;
@@ -305,6 +306,9 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 // 合作门店展示
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOPS,
                     new ArrayList<>(mDetail.getShopDetailList()));
+                break;
+            case R.id.ll_check_modal:
+                showCheckModalWindow();
                 break;
             default:
                 break;
@@ -364,6 +368,26 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 .create();
         }
         mCustomerLevelDialog.show();
+    }
+
+    /**
+     * 验货模式
+     */
+    private void showCheckModalWindow() {
+        if (mCheckModalDialog == null) {
+            List<NameValue> values = new ArrayList<>();
+            values.add(new NameValue("采购商验货", "1"));
+            values.add(new NameValue("供应商验货", "2"));
+            mCheckModalDialog = SingleSelectionDialog.newBuilder(requireActivity(), NameValue::getName)
+                    .setTitleText("验货模式")
+                    .setOnSelectListener(bean -> {
+                        mPresenter.changeGroupParams("inspector", bean.getValue(), mDetail.getPurchaserID());
+                    })
+                    .setAlertText("启用验货模式，当订单中包含已发货但未验货的订单时，不可切换其他模式。")
+                    .refreshList(values)
+                    .create();
+        }
+        mCheckModalDialog.show();
     }
 
     private void toSelect(String actionType, String deliveryPeriod) {

@@ -52,5 +52,8 @@ public interface CooperationDetailsBasicContract {
          * @param req 请求参数
          */
         void editCooperationPurchaserLevel(BaseMapReq req);
+
+
+        void changeGroupParams(String type,String value,String purchaserID);
     }
 }
