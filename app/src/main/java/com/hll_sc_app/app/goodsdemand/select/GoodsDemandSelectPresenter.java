@@ -75,7 +75,7 @@ public class GoodsDemandSelectPresenter implements IGoodsDemandSelectContract.IG
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Other.replyGoodsDemand(mView.getID(), jsonObject.toString(), mView.getPurchaserID(), 3, new SimpleObserver<Object>(mView) {
+        Other.replyGoodsDemand(mView.getID(), jsonObject.toString(), "", mView.getPurchaserID(), 3, new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
                 mView.success();

@@ -23,37 +23,48 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/gdd_positive"
+        android:id="@+id/gdd_reply_sale"
+        style="@style/BtnAfterSalesAction.PrimaryStroke"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
-        android:background="@drawable/bg_button_mid_solid_primary"
         android:gravity="center"
-        android:minWidth="140dp"
+        android:minWidth="100dp"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-        android:text="回复采购商"
-        android:textAppearance="@style/TextAppearance.City22.Small.White"
+        android:text="回复销售"
         app:layout_constraintBottom_toBottomOf="@id/gdd_bottom_bg"
-        app:layout_constraintEnd_toEndOf="@id/gdd_bottom_bg"
+        app:layout_constraintEnd_toStartOf="@id/gdd_reply_custome"
         app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
 
     <TextView
-        android:id="@+id/gdd_negative"
+        android:id="@+id/gdd_reply_custome"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginRight="@dimen/dp_10"
-        android:background="@drawable/bg_button_mid_stroke_primary"
         android:gravity="center"
-        android:minWidth="140dp"
-        android:text="再次回复采购商"
-        android:textAppearance="@style/TextAppearance.City22.Small.Blue"
+        android:minWidth="100dp"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:text="回复客户"
+        app:layout_constraintBottom_toBottomOf="@id/gdd_bottom_bg"
+        app:layout_constraintEnd_toStartOf="@id/gdd_notice"
+        app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
+
+    <TextView
+        android:id="@+id/gdd_notice"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:text="通知客户已上架"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/gdd_bottom_bg"
-        app:layout_constraintEnd_toStartOf="@id/gdd_positive"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toStartOf="@id/gdd_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/gdd_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
 
     <android.support.constraint.Group
@@ -61,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="gdd_bottom_bg,gdd_positive" />
+        app:constraint_referenced_ids="gdd_bottom_bg,gdd_reply_sale,gdd_reply_custome" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gdd_list_view"

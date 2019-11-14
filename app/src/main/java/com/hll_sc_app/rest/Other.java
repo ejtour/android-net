@@ -223,12 +223,13 @@ public class Other {
      * @param purchaserID  采购商id
      * @param status       状态
      */
-    public static void replyGoodsDemand(String id, String productReply, String purchaserID, int status, SimpleObserver<Object> observer) {
+    public static void replyGoodsDemand(String id, String productReply,String productReplySale, String purchaserID, int status, SimpleObserver<Object> observer) {
         if (status == 1) status = 2;
         OtherService.INSTANCE
                 .replyGoodsDemand(BaseMapReq.newBuilder()
                         .put("id", id)
                         .put("productReply", productReply)
+                        .put("productReplySale", productReplySale)
                         .put("purchaserID", purchaserID)
                         .put("status", String.valueOf(status))
                         .put("supplyID", UserConfig.getGroupID())

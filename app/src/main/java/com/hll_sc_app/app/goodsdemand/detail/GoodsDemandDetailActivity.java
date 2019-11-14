@@ -3,7 +3,6 @@ package com.hll_sc_app.app.goodsdemand.detail;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -39,10 +38,12 @@ import butterknife.OnClick;
 
 @Route(path = RouterConfig.GOODS_DEMAND_DETAIL)
 public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGoodsDemandDetailContract.IGoodsDemandDetailView {
-    @BindView(R.id.gdd_positive)
-    TextView mPositive;
-    @BindView(R.id.gdd_negative)
-    TextView mNegative;
+    @BindView(R.id.gdd_reply_custome)
+    TextView mReplyCustome;
+    @BindView(R.id.gdd_reply_sale)
+    TextView mReplySale;
+    @BindView(R.id.gdd_notice)
+    TextView mNotice;
     @BindView(R.id.gdd_bottom_group)
     Group mBottomGroup;
     @BindView(R.id.gdd_list_view)
@@ -79,15 +80,14 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
         if (!UserConfig.crm()) {
             if (mBean.getStatus() == 1) {
                 mBottomGroup.setVisibility(View.VISIBLE);
-                mPositive.setText("回复采购商");
-                ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) mPositive.getLayoutParams();
-                layoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
-                layoutParams.width = UIUtils.dip2px(230);
+                mReplySale.setText("回复销售");
+                mReplyCustome.setText("回复客户");
             } else if (mBean.getStatus() == 2) {
                 mBottomGroup.setVisibility(View.VISIBLE);
-                mPositive.setText("通知采购商已上架商品");
-                mNegative.setVisibility(View.VISIBLE);
-                mNegative.setText("再次回复采购商");
+                mReplySale.setText("再次回复销售");
+                mReplyCustome.setText("再次回复客户");
+                mNotice.setVisibility(View.VISIBLE);
+                mNotice.setText("通知客户已上架");
             }
         }
     }
@@ -97,26 +97,44 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
         mPresenter.register(this);
     }
 
-    @OnClick(R.id.gdd_positive)
-    public void positive() {
-        if (mBean.getStatus() == 1) {
-            negative();
-        } else {
-            GoodsDemandSelectActivity.start(mBean.getId(), mBean.getPurchaserID());
-        }
+
+    @OnClick(R.id.gdd_notice)
+    public void notice() {
+        GoodsDemandSelectActivity.start(mBean.getId(), mBean.getPurchaserID());
     }
 
-    @OnClick(R.id.gdd_negative)
-    public void negative() {
-        RemarkDialog.newBuilder(this)
-                .setButtons("容我再想想", "确认回复", (dialog, positive, content) -> {
-                    dialog.dismiss();
-                    if (positive) mPresenter.reply(content);
-                })
-                .setHint("请填写回复说明")
-                .setMaxLength(50)
-                .create()
-                .show();
+    @OnClick({R.id.gdd_reply_custome, R.id.gdd_reply_sale})
+    public void reply(View view) {
+        switch (view.getId()) {
+            case R.id.gdd_reply_sale:
+                RemarkDialog.newBuilder(this)
+                        .setButtons("容我再想想", "确认回复", (dialog, positive, content) -> {
+                            dialog.dismiss();
+                            if (positive) {
+                                mPresenter.reply(content, IGoodsDemandDetailContract.TARGET.SALE);
+                            }
+                        })
+                        .setHint("请填写回复说明")
+                        .setMaxLength(50)
+                        .create()
+                        .show();
+                break;
+            case R.id.gdd_reply_custome:
+                RemarkDialog.newBuilder(this)
+                        .setButtons("容我再想想", "确认回复", (dialog, positive, content) -> {
+                            dialog.dismiss();
+                            if (positive) {
+                                mPresenter.reply(content, IGoodsDemandDetailContract.TARGET.CUSTOMER);
+                            }
+                        })
+                        .setHint("请填写回复说明")
+                        .setMaxLength(50)
+                        .create()
+                        .show();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

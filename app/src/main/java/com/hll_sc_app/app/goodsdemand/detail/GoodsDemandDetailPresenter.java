@@ -29,9 +29,10 @@ public class GoodsDemandDetailPresenter implements IGoodsDemandDetailContract.IG
     }
 
     @Override
-    public void reply(String content) {
+    public void reply(String content, @IGoodsDemandDetailContract.TARGET int target) {
         Other.replyGoodsDemand(mBean.getId(),
-                content,
+                target == IGoodsDemandDetailContract.TARGET.CUSTOMER ? content : "",
+                target == IGoodsDemandDetailContract.TARGET.SALE ? content : "",
                 mBean.getPurchaserID(),
                 mBean.getStatus(),
                 new SimpleObserver<Object>(mView) {
