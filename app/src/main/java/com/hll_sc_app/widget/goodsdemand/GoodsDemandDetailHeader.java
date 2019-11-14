@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,8 +29,6 @@ import butterknife.ButterKnife;
  */
 
 public class GoodsDemandDetailHeader extends ConstraintLayout {
-    @BindView(R.id.ddh_status)
-    TextView mStatus;
     @BindView(R.id.ddh_status_icon)
     ImageView mStatusIcon;
     @BindView(R.id.ddh_status_group)
@@ -60,6 +61,19 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
     ThumbnailView mPic;
     @BindView(R.id.ddh_pic_group)
     Group mPicGroup;
+    @BindView(R.id.ddh_reply_customer_group)
+    Group mReplyCustomerGroup;
+    @BindView(R.id.ddh_reply_sale_group)
+    Group mReplySaleGroup;
+    @BindView(R.id.ddh_replay_title_group)
+    Group mReplyTitleGroup;
+    @BindView(R.id.ddh_reply_customer)
+    TextView mTxtReplyCustomer;
+    @BindView(R.id.ddh_reply_sale)
+    TextView mTxtReplySale;
+    @BindView(R.id.ddh_title_status)
+    TextView mTxtReplyTitle;
+
 
     public GoodsDemandDetailHeader(Context context) {
         this(context, null);
@@ -80,18 +94,40 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
         if (bean.getStatus() == 1) {
             if (crm) {
                 mStatusGroup.setVisibility(VISIBLE);
-                mStatus.setText("待回复：反馈已提交至合作供应商，请耐心等待回复");
+                mReplyTitleGroup.setVisibility(VISIBLE);
+                mReplySaleGroup.setVisibility(GONE);
+                mReplyCustomerGroup.setVisibility(GONE);
+                mTxtReplyTitle.setText("待回复：反馈已提交至合作供应商，请耐心等待回复");
             } else {
                 LayoutParams layoutParams = (LayoutParams) mPurchaserLabel.getLayoutParams();
                 layoutParams.goneTopMargin = 0;
             }
         } else {
             mStatusGroup.setVisibility(VISIBLE);
+            mReplyTitleGroup.setVisibility(VISIBLE);
+            mReplySaleGroup.setVisibility(VISIBLE);
+            mReplyCustomerGroup.setVisibility(VISIBLE);
+
             if (bean.getStatus() == 3) {
-                mStatus.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                mStatus.setText(crm ? "已上架：您需要的商品已上架" : "已通知采购商相关商品已上架");
-            } else mStatus.setText(String.format("已回复：%s", bean.getProductReply()));
+                mTxtReplyTitle.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                if (crm) {
+                    String title = "已上架：您需要的商品已上架 点击查看商品详情";
+                    SpannableString content = new SpannableString(title);
+                    content.setSpan(new UnderlineSpan(), title.length() - 8, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    mTxtReplyTitle.setOnClickListener(v -> {
+
+                    });
+                } else {
+                    mTxtReplyTitle.setText("已通知采购商相关商品已上架");
+                }
+            } else {
+                mTxtReplyTitle.setText("已回复");
+            }
+            mTxtReplySale.setText(bean.getProductReplySale());
+            mTxtReplyCustomer.setText(bean.getProductReply());
         }
+
+
         mStatusIcon.setImageResource(GoodsDemandHelper.getIcon(bean.getStatus()));
         if (crm) {
             mSupplierGroup.setVisibility(VISIBLE);

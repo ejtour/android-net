@@ -12,17 +12,6 @@ import java.util.List;
 
 public class GoodsDemandBean implements Parcelable {
 
-    public static final Creator<GoodsDemandBean> CREATOR = new Creator<GoodsDemandBean>() {
-        @Override
-        public GoodsDemandBean createFromParcel(Parcel in) {
-            return new GoodsDemandBean(in);
-        }
-
-        @Override
-        public GoodsDemandBean[] newArray(int size) {
-            return new GoodsDemandBean[size];
-        }
-    };
     private String productReply;
     private String supplyName;
     private String actionTime;
@@ -55,78 +44,14 @@ public class GoodsDemandBean implements Parcelable {
     private int status;
     private List<GoodsDemandItem> demandList;
 
-    protected GoodsDemandBean(Parcel in) {
-        productReply = in.readString();
-        supplyName = in.readString();
-        actionTime = in.readString();
-        marketPrice = in.readDouble();
-        purchaserPhone = in.readString();
-        placeProvince = in.readString();
-        productBrand = in.readString();
-        source = in.readInt();
-        supplyPhone = in.readString();
-        productName = in.readString();
-        packMethod = in.readString();
-        purchaserID = in.readString();
-        productBrief = in.readString();
-        supplyID = in.readString();
-        purchaserUserID = in.readString();
-        action = in.readInt();
-        placeCity = in.readString();
-        id = in.readString();
-        specContent = in.readString();
-        salesManID = in.readString();
-        actionBy = in.readString();
-        purchaserName = in.readString();
-        imgUrl = in.readString();
-        createBy = in.readString();
-        placeCityCode = in.readString();
-        createTime = in.readString();
-        customerID = in.readString();
-        producer = in.readString();
-        placeProvinceCode = in.readString();
-        status = in.readInt();
-        demandList = in.createTypedArrayList(GoodsDemandItem.CREATOR);
+    private String productReplySale;
+
+    public String getProductReplySale() {
+        return productReplySale;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(productReply);
-        dest.writeString(supplyName);
-        dest.writeString(actionTime);
-        dest.writeDouble(marketPrice);
-        dest.writeString(purchaserPhone);
-        dest.writeString(placeProvince);
-        dest.writeString(productBrand);
-        dest.writeInt(source);
-        dest.writeString(supplyPhone);
-        dest.writeString(productName);
-        dest.writeString(packMethod);
-        dest.writeString(purchaserID);
-        dest.writeString(productBrief);
-        dest.writeString(supplyID);
-        dest.writeString(purchaserUserID);
-        dest.writeInt(action);
-        dest.writeString(placeCity);
-        dest.writeString(id);
-        dest.writeString(specContent);
-        dest.writeString(salesManID);
-        dest.writeString(actionBy);
-        dest.writeString(purchaserName);
-        dest.writeString(imgUrl);
-        dest.writeString(createBy);
-        dest.writeString(placeCityCode);
-        dest.writeString(createTime);
-        dest.writeString(customerID);
-        dest.writeString(producer);
-        dest.writeString(placeProvinceCode);
-        dest.writeInt(status);
-        dest.writeTypedList(demandList);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setProductReplySale(String productReplySale) {
+        this.productReplySale = productReplySale;
     }
 
     public String getProductReply() {
@@ -376,4 +301,95 @@ public class GoodsDemandBean implements Parcelable {
     public void setDemandList(List<GoodsDemandItem> demandList) {
         this.demandList = demandList;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.productReply);
+        dest.writeString(this.supplyName);
+        dest.writeString(this.actionTime);
+        dest.writeDouble(this.marketPrice);
+        dest.writeString(this.purchaserPhone);
+        dest.writeString(this.placeProvince);
+        dest.writeString(this.productBrand);
+        dest.writeInt(this.source);
+        dest.writeString(this.supplyPhone);
+        dest.writeString(this.productName);
+        dest.writeString(this.packMethod);
+        dest.writeString(this.purchaserID);
+        dest.writeString(this.productBrief);
+        dest.writeString(this.supplyID);
+        dest.writeString(this.purchaserUserID);
+        dest.writeInt(this.action);
+        dest.writeString(this.placeCity);
+        dest.writeString(this.id);
+        dest.writeString(this.specContent);
+        dest.writeString(this.salesManID);
+        dest.writeString(this.actionBy);
+        dest.writeString(this.purchaserName);
+        dest.writeString(this.imgUrl);
+        dest.writeString(this.createBy);
+        dest.writeString(this.placeCityCode);
+        dest.writeString(this.createTime);
+        dest.writeString(this.customerID);
+        dest.writeString(this.producer);
+        dest.writeString(this.placeProvinceCode);
+        dest.writeInt(this.status);
+        dest.writeTypedList(this.demandList);
+        dest.writeString(this.productReplySale);
+    }
+
+    public GoodsDemandBean() {
+    }
+
+    protected GoodsDemandBean(Parcel in) {
+        this.productReply = in.readString();
+        this.supplyName = in.readString();
+        this.actionTime = in.readString();
+        this.marketPrice = in.readDouble();
+        this.purchaserPhone = in.readString();
+        this.placeProvince = in.readString();
+        this.productBrand = in.readString();
+        this.source = in.readInt();
+        this.supplyPhone = in.readString();
+        this.productName = in.readString();
+        this.packMethod = in.readString();
+        this.purchaserID = in.readString();
+        this.productBrief = in.readString();
+        this.supplyID = in.readString();
+        this.purchaserUserID = in.readString();
+        this.action = in.readInt();
+        this.placeCity = in.readString();
+        this.id = in.readString();
+        this.specContent = in.readString();
+        this.salesManID = in.readString();
+        this.actionBy = in.readString();
+        this.purchaserName = in.readString();
+        this.imgUrl = in.readString();
+        this.createBy = in.readString();
+        this.placeCityCode = in.readString();
+        this.createTime = in.readString();
+        this.customerID = in.readString();
+        this.producer = in.readString();
+        this.placeProvinceCode = in.readString();
+        this.status = in.readInt();
+        this.demandList = in.createTypedArrayList(GoodsDemandItem.CREATOR);
+        this.productReplySale = in.readString();
+    }
+
+    public static final Creator<GoodsDemandBean> CREATOR = new Creator<GoodsDemandBean>() {
+        @Override
+        public GoodsDemandBean createFromParcel(Parcel source) {
+            return new GoodsDemandBean(source);
+        }
+
+        @Override
+        public GoodsDemandBean[] newArray(int size) {
+            return new GoodsDemandBean[size];
+        }
+    };
 }
