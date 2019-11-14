@@ -25,6 +25,7 @@ public class PurchaseTemplateAdapter extends BaseQuickAdapter<PurchaseTemplateBe
                 .setText(R.id.ipt_price, "售价：" + CommonUtils.formatMoney(item.getProductPrice()))
                 .setText(R.id.ipt_agreement_price,
                         "协议价：" + (0 == item.getPremiumPrice() ? "- -" : CommonUtils.formatMoney(item.getPremiumPrice())))
+                .setText(R.id.ipt_cost_price, "成本价：¥" + CommonUtils.formatMoney(item.getCostPrice()))
                 .getView(R.id.ipt_image)).setImageURL(item.getImgUrl());
     }
 }

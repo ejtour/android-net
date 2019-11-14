@@ -31,11 +31,10 @@
         android:id="@+id/ipt_agreement_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="110dp"
         android:text="协议价：- -"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/ipt_image"
-        app:layout_constraintStart_toEndOf="@id/ipt_image" />
+        app:layout_constraintStart_toStartOf="@id/ipt_cost_price" />
 
     <TextView
         android:id="@+id/ipt_price"
@@ -74,4 +73,27 @@
         app:layout_constraintStart_toEndOf="@id/ipt_price"
         app:layout_constraintStart_toStartOf="@id/ipt_price"
         tools:text="编码：1234567890" />
+
+    <TextView
+        android:id="@+id/ipt_cost_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintStart_toEndOf="@id/view_divider"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintTop_toTopOf="@id/ipt_spec"
+        tools:text="成本价：¥50.00" />
+
+    <View
+        android:id="@+id/view_divider"
+        android:background="@color/base_color_divider"
+        android:layout_width="0.5dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/ipt_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ipt_name"
+        app:layout_constraintTop_toTopOf="@id/ipt_spec" />
+
 </android.support.constraint.ConstraintLayout>

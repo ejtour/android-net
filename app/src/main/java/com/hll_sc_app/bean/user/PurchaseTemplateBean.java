@@ -20,6 +20,15 @@ public class PurchaseTemplateBean {
     private double productPrice;
     private String skuCode;
     private String specContent;
+    private double costPrice;
+
+    public double getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(double costPrice) {
+        this.costPrice = costPrice;
+    }
 
     public String getSaleUnitName() {
         return saleUnitName;
