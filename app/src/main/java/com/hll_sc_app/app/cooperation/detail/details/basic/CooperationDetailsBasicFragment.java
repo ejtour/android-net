@@ -85,6 +85,8 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     TextView mTxtVerificationTitle;
     @BindView(R.id.buttonView)
     CooperationButtonView mButtonView;
+    @BindView(R.id.txt_check_modal)
+    TextView mTxtCheckModal;
 
     private SingleSelectionDialog mMaintainLevelDialog;
     private SingleSelectionDialog mCustomerLevelDialog;
@@ -93,6 +95,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
 
     private CooperationPurchaserDetail mDetail;
     private CooperationDetailsBasicPresenter mPresenter;
+
 
     public static CooperationDetailsBasicFragment newInstance(CooperationPurchaserDetail bean) {
         Bundle args = new Bundle();
@@ -172,6 +175,8 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
             mTxtDeliveryPeriod.setCompoundDrawables(null, null, null, null);
             mTxtShopsNum.setCompoundDrawables(null, null, null, null);
         }
+
+        mTxtCheckModal.setText(mDetail.getInspector() == 1 ? "采购商验货" : mDetail.getInspector() == 2 ? "供应商验货" : "");
     }
 
     private String getResourceType(String type) {
@@ -380,6 +385,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
             values.add(new NameValue("供应商验货", "2"));
             mCheckModalDialog = SingleSelectionDialog.newBuilder(requireActivity(), NameValue::getName)
                     .setTitleText("验货模式")
+                    .select(mDetail.getInspector() > 0 ? values.get(mDetail.getInspector() - 1) : null)
                     .setOnSelectListener(bean -> {
                         mPresenter.changeGroupParams("inspector", bean.getValue(), mDetail.getPurchaserID());
                     })

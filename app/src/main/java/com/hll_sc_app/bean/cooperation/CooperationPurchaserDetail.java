@@ -58,65 +58,23 @@ public class CooperationPurchaserDetail implements Parcelable {
     private List<PurchaserShopBean> shopDetailList;
     private List<OtherLicensesBean> otherLicenses;
 
-    public static final Creator<CooperationPurchaserDetail> CREATOR = new Creator<CooperationPurchaserDetail>() {
-        @Override
-        public CooperationPurchaserDetail createFromParcel(Parcel source) {
-            return new CooperationPurchaserDetail(source);
-        }
+    /**
+     * 验货方式（1-采购商验货，2-供应商验货）
+     */
+    private int inspector;
 
-        @Override
-        public CooperationPurchaserDetail[] newArray(int size) {
-            return new CooperationPurchaserDetail[size];
-        }
-    };
+    public int getInspector() {
+        return inspector;
+    }
+
+    public void setInspector(int inspector) {
+        this.inspector = inspector;
+    }
+
     /**
      * 0-未解除，1-解除
      */
     private int cooperationActive;
-
-    protected CooperationPurchaserDetail(Parcel in) {
-        this.defaultAccountPeriod = in.readString();
-        this.agreeTime = in.readString();
-        this.businessModel = in.readString();
-        this.defaultDeliveryWay = in.readString();
-        this.entityIDNo = in.readString();
-        this.businessEntity = in.readString();
-        this.defaultSettleDate = in.readString();
-        this.groupMail = in.readString();
-        this.businessNo = in.readString();
-        this.licencePhotoUrl = in.readString();
-        this.purchaserID = in.readString();
-        this.defaultAccountPeriodType = in.readString();
-        this.defaultDeliveryPeriod = in.readString();
-        this.groupCity = in.readString();
-        this.startTime = in.readString();
-        this.fax = in.readString();
-        this.reply = in.readString();
-        this.verification = in.readString();
-        this.isCertified = in.readString();
-        this.groupID = in.readString();
-        this.mobile = in.readString();
-        this.licenseName = in.readString();
-        this.customerLevel = in.readString();
-        this.linkman = in.readString();
-        this.logoUrl = in.readString();
-        this.actionType = in.readString();
-        this.maintainLevel = in.readString();
-        this.groupProvince = in.readString();
-        this.frontImg = in.readString();
-        this.groupAddress = in.readString();
-        this.shopCount = in.readString();
-        this.name = in.readString();
-        this.defaultSettlementWay = in.readString();
-        this.endTime = in.readString();
-        this.groupDistrict = in.readString();
-        this.resourceType = in.readString();
-        this.status = in.readString();
-        this.groupActiveLabel = in.readString();
-        this.shopDetailList = in.createTypedArrayList(PurchaserShopBean.CREATOR);
-        this.otherLicenses = in.createTypedArrayList(OtherLicensesBean.CREATOR);
-        this.cooperationActive = in.readInt();
-    }
 
     public CooperationPurchaserDetail() {
     }
@@ -441,17 +399,17 @@ public class CooperationPurchaserDetail implements Parcelable {
         this.otherLicenses = otherLicenses;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public int getCooperationActive() {
         return cooperationActive;
     }
 
     public void setCooperationActive(int cooperationActive) {
         this.cooperationActive = cooperationActive;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -496,6 +454,64 @@ public class CooperationPurchaserDetail implements Parcelable {
         dest.writeString(this.groupActiveLabel);
         dest.writeTypedList(this.shopDetailList);
         dest.writeTypedList(this.otherLicenses);
+        dest.writeInt(this.inspector);
         dest.writeInt(this.cooperationActive);
     }
+
+    protected CooperationPurchaserDetail(Parcel in) {
+        this.defaultAccountPeriod = in.readString();
+        this.agreeTime = in.readString();
+        this.businessModel = in.readString();
+        this.defaultDeliveryWay = in.readString();
+        this.entityIDNo = in.readString();
+        this.businessEntity = in.readString();
+        this.defaultSettleDate = in.readString();
+        this.groupMail = in.readString();
+        this.businessNo = in.readString();
+        this.licencePhotoUrl = in.readString();
+        this.purchaserID = in.readString();
+        this.defaultAccountPeriodType = in.readString();
+        this.defaultDeliveryPeriod = in.readString();
+        this.groupCity = in.readString();
+        this.startTime = in.readString();
+        this.fax = in.readString();
+        this.reply = in.readString();
+        this.verification = in.readString();
+        this.isCertified = in.readString();
+        this.groupID = in.readString();
+        this.mobile = in.readString();
+        this.licenseName = in.readString();
+        this.customerLevel = in.readString();
+        this.linkman = in.readString();
+        this.logoUrl = in.readString();
+        this.actionType = in.readString();
+        this.maintainLevel = in.readString();
+        this.groupProvince = in.readString();
+        this.frontImg = in.readString();
+        this.groupAddress = in.readString();
+        this.shopCount = in.readString();
+        this.name = in.readString();
+        this.defaultSettlementWay = in.readString();
+        this.endTime = in.readString();
+        this.groupDistrict = in.readString();
+        this.resourceType = in.readString();
+        this.status = in.readString();
+        this.groupActiveLabel = in.readString();
+        this.shopDetailList = in.createTypedArrayList(PurchaserShopBean.CREATOR);
+        this.otherLicenses = in.createTypedArrayList(OtherLicensesBean.CREATOR);
+        this.inspector = in.readInt();
+        this.cooperationActive = in.readInt();
+    }
+
+    public static final Creator<CooperationPurchaserDetail> CREATOR = new Creator<CooperationPurchaserDetail>() {
+        @Override
+        public CooperationPurchaserDetail createFromParcel(Parcel source) {
+            return new CooperationPurchaserDetail(source);
+        }
+
+        @Override
+        public CooperationPurchaserDetail[] newArray(int size) {
+            return new CooperationPurchaserDetail[size];
+        }
+    };
 }
