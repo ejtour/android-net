@@ -23,6 +23,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.cardmanage.add.SelectPurchaserListActivity;
 import com.hll_sc_app.app.paymanage.PayManagePresenter;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
@@ -72,6 +73,10 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
 
     private PayMethodManagePresenter mPresenter;
 
+    private PayListAdapter mAdapter;
+
+    private int selectIndexInListByCard = -1;//储值卡的index
+
     public static void start(ArrayList<PayBean> payBeans, boolean isChecked) {
         ARouter.getInstance().build(RouterConfig.PAY_MANAGE_METHOD)
                 .withParcelableArrayList("parcelable", payBeans)
@@ -79,6 +84,7 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
                 .setProvider(new LoginInterceptor())
                 .navigation();
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,9 +107,9 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
             mTxtPayType.setText("货到付款");
         }
         mRecyclerView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(1)));
-        PayListAdapter payAdapter = new PayListAdapter(mPayList);
-        payAdapter.setOnItemClickListener((adapter, view, position) -> clickItem(adapter, position));
-        mRecyclerView.setAdapter(payAdapter);
+        mAdapter = new PayListAdapter(mPayList);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> clickItem(adapter, position));
+        mRecyclerView.setAdapter(mAdapter);
 
         //顶部支付设置checkbox
         mSwitchPayType.setOnCheckedChangeListener((buttonView, isChecked1) -> {
@@ -160,6 +166,7 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
             }
         } else {//禁用的点击
             if (TextUtils.equals("15", payBean.getId()) || TextUtils.equals("16", payBean.getId())) {//储值卡
+                selectIndexInListByCard = position;
                 SuccessDialog.newBuilder(this)
                         .setImageTitle(R.drawable.ic_dialog_introduce)
                         .setMessageTitle("您需要先创建储值卡噢")
@@ -168,7 +175,7 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
                         .setButton((dialog, item) -> {
                             dialog.dismiss();
                             if (item == 1) {
-                                RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_ADD_SELECT_PURCHASER);
+                                SelectPurchaserListActivity.start(RouterConfig.PAY_MANAGE_METHOD);
                             }
                         }, "我再想想", "马上创建")
                         .create()
@@ -215,6 +222,17 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
                         .create()
                         .show();
             }
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (selectIndexInListByCard > -1) {
+            PayBean bean = mAdapter.getItem(selectIndexInListByCard);
+            bean.setEnable(true);
+            mAdapter.notifyDataSetChanged();
+            selectIndexInListByCard = -1;
         }
     }
 

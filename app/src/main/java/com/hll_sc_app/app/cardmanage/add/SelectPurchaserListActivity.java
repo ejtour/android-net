@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -21,6 +22,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
@@ -50,7 +52,12 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     private PurchaserListAdapter mAdapter;
     private ISelectPurchaserContract.IPresent mPresenter;
     private PurchaserBean mSelectPurchaser;
+    @Autowired(name = "object0")
+    String mSource;
 
+    public static void start(String source) {
+        RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_ADD_SELECT_PURCHASER, source);
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +81,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
             if (bean != null) {
                 mSelectPurchaser = bean;
                 mAdapter.notifyDataSetChanged();
-                AddCardActivity.start(bean);
+                AddCardActivity.start(mSource,bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

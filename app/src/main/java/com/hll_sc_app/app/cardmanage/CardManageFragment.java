@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.cardmanage.add.SelectPurchaserListActivity;
 import com.hll_sc_app.app.cardmanage.detail.CardManageDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -126,7 +127,7 @@ public class CardManageFragment extends BaseLazyFragment implements ICardManageC
 
                             @Override
                             public void action() {
-                                RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_ADD_SELECT_PURCHASER);
+                                SelectPurchaserListActivity.start(RouterConfig.ACTIVITY_CARD_MANAGE_LIST);
                             }
                         }).create());
             } else {

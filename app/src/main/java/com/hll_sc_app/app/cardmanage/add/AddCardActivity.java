@@ -24,7 +24,6 @@ import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -52,10 +51,18 @@ public class AddCardActivity extends BaseLoadActivity implements RadioGroup.OnCh
 
     @Autowired(name = "parcelable")
     PurchaserBean mPurchaserBean;
+    @Autowired(name = "source")
+    String mSource;
     private Unbinder unbinder;
 
-    public static void start(PurchaserBean purchaserBean) {
-        RouterUtil.goToActivity(RouterConfig.ACTIVITY_CARD_MANAGE_ADD_CARD, purchaserBean);
+    public static void start(String source, PurchaserBean purchaserBean) {
+        ARouter.getInstance()
+                .build(RouterConfig.ACTIVITY_CARD_MANAGE_ADD_CARD)
+                .withParcelable("parcelable", purchaserBean)
+                .withString("source", source)
+                .setProvider(new LoginInterceptor())
+                .navigation();
+
     }
 
     @Override
@@ -99,7 +106,7 @@ public class AddCardActivity extends BaseLoadActivity implements RadioGroup.OnCh
                         .subscribe(new BaseCallback<Object>() {
                             @Override
                             public void onSuccess(Object o) {
-                                ARouter.getInstance().build(RouterConfig.ACTIVITY_CARD_MANAGE_LIST)
+                                ARouter.getInstance().build(mSource)
                                         .setProvider(new LoginInterceptor())
                                         .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
                                         .navigation(AddCardActivity.this);
