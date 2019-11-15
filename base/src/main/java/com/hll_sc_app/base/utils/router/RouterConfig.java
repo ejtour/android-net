@@ -1317,5 +1317,10 @@ public class RouterConfig {
      * 日报-编辑
      */
     public static final String CRM_DAILY_EDIT = "/activity/daily/edit";
+
+    /**
+     * 客户-新增
+     */
+    public static final String CRM_CUSTOMER_ADD = "/activity/customer/add";
 }
 

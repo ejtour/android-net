@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.customer.add.CustomerAddActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.customer.CrmCustomerResp;
@@ -90,6 +91,7 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
 
     @OnClick(R.id.fcc_add)
     public void add() {
+        CustomerAddActivity.start(requireContext());
     }
 
     @OnClick(R.id.fcc_intent_btn)
