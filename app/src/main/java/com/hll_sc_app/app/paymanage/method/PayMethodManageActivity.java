@@ -228,9 +228,10 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (selectIndexInListByCard > -1) {
+        if (selectIndexInListByCard > -1) {//储值卡
             PayBean bean = mAdapter.getItem(selectIndexInListByCard);
             bean.setEnable(true);
+            bean.setSelect(true);
             mAdapter.notifyDataSetChanged();
             selectIndexInListByCard = -1;
         }
