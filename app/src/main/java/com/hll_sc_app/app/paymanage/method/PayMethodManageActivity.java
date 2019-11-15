@@ -258,16 +258,28 @@ public class PayMethodManageActivity extends BaseLoadActivity implements PayMeth
      * 保存
      */
     private void toSave() {
-        String payType = isOnline() ? "1" : "2";
-        List<String> selectList = new ArrayList<>();
-        if (!CommonUtils.isEmpty(mPayList)) {
-            for (PayBean bean : mPayList) {
-                if (bean.isEnable() && bean.isSelect()) {
-                    selectList.add(String.valueOf(bean.getId()));
+        //开启支付方式
+        PayManagePresenter.editSettlement(isOnline() ? "0" : "1", "1", new SimpleObserver<MsgWrapper<Object>>(this) {
+            @Override
+            public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
+                String payType = isOnline() ? "1" : "2";
+                List<String> selectList = new ArrayList<>();
+                if (!CommonUtils.isEmpty(mPayList)) {
+                    for (PayBean bean : mPayList) {
+                        if (bean.isEnable() && bean.isSelect()) {
+                            selectList.add(String.valueOf(bean.getId()));
+                        }
+                    }
                 }
+                //在开启支付列表
+                mPresenter.editPayMethod(payType, TextUtils.join(",", selectList));
             }
-        }
-        mPresenter.editPayMethod(payType, TextUtils.join(",", selectList));
+            @Override
+            public void onFailure(UseCaseException e) {
+                mSwitchPayType.setCheckedNoEvent(false);
+                showToast(e.getMessage());
+            }
+        });
     }
 
     @Override
