@@ -13,9 +13,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.detail.GoodsDetailActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandHelper;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.ThumbnailView;
@@ -113,23 +116,25 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
                     SpannableString content = new SpannableString(title);
                     content.setSpan(new UnderlineSpan(), title.length() - 8, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     mTxtReplyTitle.setOnClickListener(v -> {
-
+                        GoodsBean goodsBean = JSONObject.parseObject(bean.getProductReply(), GoodsBean.class);
+                        GoodsDetailActivity.start(goodsBean.getProductID(), false, false);
                     });
                 } else {
                     mTxtReplyTitle.setText("已通知采购商相关商品已上架");
                 }
             } else {
                 mTxtReplyTitle.setText("已回复");
+                if (!TextUtils.isEmpty(bean.getProductReplySale())) {
+                    mReplySaleGroup.setVisibility(VISIBLE);
+                    mTxtReplySale.setText(bean.getProductReplySale());
+                }
+                if (!TextUtils.isEmpty(bean.getProductReply())) {
+                    mReplyCustomerGroup.setVisibility(VISIBLE);
+                    mTxtReplyCustomer.setText(bean.getProductReply());
+                }
             }
 
-            if (!TextUtils.isEmpty(bean.getProductReplySale())) {
-                mReplySaleGroup.setVisibility(VISIBLE);
-                mTxtReplySale.setText(bean.getProductReplySale());
-            }
-            if (!TextUtils.isEmpty(bean.getProductReply())) {
-                mReplyCustomerGroup.setVisibility(VISIBLE);
-                mTxtReplyCustomer.setText(bean.getProductReply());
-            }
+
         }
 
 
