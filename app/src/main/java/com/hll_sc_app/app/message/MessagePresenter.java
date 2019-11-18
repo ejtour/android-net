@@ -41,6 +41,11 @@ public class MessagePresenter implements IMessageContract.IMessagePresenter {
         Message.queryMessageSummary(new SimpleObserver<List<MessageBean>>(mView) {
             @Override
             public void onSuccess(List<MessageBean> messageBeans) {
+                if (!CommonUtils.isEmpty(messageBeans)) {
+                    for (MessageBean bean : messageBeans) {
+                        bean.preProcess();
+                    }
+                }
                 mView.setData(messageBeans);
             }
         });
@@ -58,6 +63,11 @@ public class MessagePresenter implements IMessageContract.IMessagePresenter {
         Message.queryMessageList(mPageNum, new SimpleObserver<SingleListResp<MessageBean>>(mView, showLoading) {
             @Override
             public void onSuccess(SingleListResp<MessageBean> messageBeanSingleListResp) {
+                if (!CommonUtils.isEmpty(messageBeanSingleListResp.getRecords())) {
+                    for (MessageBean bean : messageBeanSingleListResp.getRecords()) {
+                        bean.preProcess();
+                    }
+                }
                 mView.setData(messageBeanSingleListResp.getRecords(), mPageNum > 1);
                 if (CommonUtils.isEmpty(messageBeanSingleListResp.getRecords())) return;
                 mPageNum++;
