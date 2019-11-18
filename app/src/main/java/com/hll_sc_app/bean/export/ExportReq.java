@@ -604,7 +604,7 @@ public class ExportReq {
             private int billStatus;
             /*1协议价低于成本价*/
             private int costFlag;
-            private String categoryIDs;
+            private List<String> categoryIDs;
             private String startDate;
             private String endDate;
             private String groupID;
@@ -648,11 +648,11 @@ public class ExportReq {
                 this.costFlag = costFlag;
             }
 
-            public String getCategoryIDs() {
+            public List<String> getCategoryIDs() {
                 return categoryIDs;
             }
 
-            public void setCategoryIDs(String categoryIDs) {
+            public void setCategoryIDs(List<String> categoryIDs) {
                 this.categoryIDs = categoryIDs;
             }
 
