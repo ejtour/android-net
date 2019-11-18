@@ -42,6 +42,7 @@ public class ExportReq {
      * 发票业务 (invoice)
      * 代仓预警值（stock_warn_num）
      * 售价管理 (sell_price)
+     * 协议价（common_quotation）
      */
     private String typeCode;
     /**
@@ -98,6 +99,8 @@ public class ExportReq {
     }
 
     public static class ParamsBean {
+
+        private CommonQuotation commonQuotation;
         /**
          * 规格上下架日志导出
          */
@@ -152,6 +155,13 @@ public class ExportReq {
         private String createTimeStart;
         private String createTimeEnd;
 
+        public CommonQuotation getCommonQuotation() {
+            return commonQuotation;
+        }
+
+        public void setCommonQuotation(CommonQuotation commonQuotation) {
+            this.commonQuotation = commonQuotation;
+        }
 
         public String getGroupID() {
             return groupID;
@@ -586,7 +596,148 @@ public class ExportReq {
                 this.shopID = shopID;
             }
         }
+
+        public static class CommonQuotation{
+            private String billCreateBy;
+            private List<String> billNos;
+            /*报价单状态 1-未审核 2-已审核 3-已驳回 4-已取消 5-已到期 6-放弃*/
+            private int billStatus;
+            /*1协议价低于成本价*/
+            private int costFlag;
+            private String categoryIDs;
+            private String startDate;
+            private String endDate;
+            private String groupID;
+            private String priceEndDate;
+            private String priceStartDate;
+            private String productName;
+            private String purchaserID;
+            private String searchParams;
+            private List<String> productCode;
+            private List<String> shopIDs;
+
+            public String getBillCreateBy() {
+                return billCreateBy;
+            }
+
+            public void setBillCreateBy(String billCreateBy) {
+                this.billCreateBy = billCreateBy;
+            }
+
+            public List<String> getBillNos() {
+                return billNos;
+            }
+
+            public void setBillNos(List<String> billNos) {
+                this.billNos = billNos;
+            }
+
+            public int getBillStatus() {
+                return billStatus;
+            }
+
+            public void setBillStatus(int billStatus) {
+                this.billStatus = billStatus;
+            }
+
+            public int getCostFlag() {
+                return costFlag;
+            }
+
+            public void setCostFlag(int costFlag) {
+                this.costFlag = costFlag;
+            }
+
+            public String getCategoryIDs() {
+                return categoryIDs;
+            }
+
+            public void setCategoryIDs(String categoryIDs) {
+                this.categoryIDs = categoryIDs;
+            }
+
+            public String getStartDate() {
+                return startDate;
+            }
+
+            public void setStartDate(String startDate) {
+                this.startDate = startDate;
+            }
+
+            public String getEndDate() {
+                return endDate;
+            }
+
+            public void setEndDate(String endDate) {
+                this.endDate = endDate;
+            }
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getPriceEndDate() {
+                return priceEndDate;
+            }
+
+            public void setPriceEndDate(String priceEndDate) {
+                this.priceEndDate = priceEndDate;
+            }
+
+            public String getPriceStartDate() {
+                return priceStartDate;
+            }
+
+            public void setPriceStartDate(String priceStartDate) {
+                this.priceStartDate = priceStartDate;
+            }
+
+            public String getProductName() {
+                return productName;
+            }
+
+            public void setProductName(String productName) {
+                this.productName = productName;
+            }
+
+            public String getPurchaserID() {
+                return purchaserID;
+            }
+
+            public void setPurchaserID(String purchaserID) {
+                this.purchaserID = purchaserID;
+            }
+
+            public String getSearchParams() {
+                return searchParams;
+            }
+
+            public void setSearchParams(String searchParams) {
+                this.searchParams = searchParams;
+            }
+
+            public List<String> getProductCode() {
+                return productCode;
+            }
+
+            public void setProductCode(List<String> productCode) {
+                this.productCode = productCode;
+            }
+
+            public List<String> getShopIDs() {
+                return shopIDs;
+            }
+
+            public void setShopIDs(List<String> shopIDs) {
+                this.shopIDs = shopIDs;
+            }
+        }
     }
+
 
 
 }

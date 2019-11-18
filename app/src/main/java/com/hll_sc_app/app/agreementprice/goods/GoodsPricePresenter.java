@@ -3,6 +3,7 @@ package com.hll_sc_app.app.agreementprice.goods;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.AgreementPriceService;
+import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.app.agreementprice.quotation.QuotationFragmentPresenter;
 import com.hll_sc_app.app.user.register.RegisterComplementPresenter;
 import com.hll_sc_app.base.UseCaseException;
@@ -16,13 +17,14 @@ import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
+import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.export.GoodsPriceExportReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -55,30 +57,30 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
     @Override
     public void queryGoodsPriceList() {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("startDate", mView.getPriceStartDate())
-            .put("endDate", mView.getPriceEndDate())
-            .put("categoryID", mView.getCategoryId())
-            .put("shopIDs", mView.getShopIds())
-            .put("productName", mView.getSearchParam())
-            .create();
+                .put("groupID", UserConfig.getGroupID())
+                .put("startDate", mView.getPriceStartDate())
+                .put("endDate", mView.getPriceEndDate())
+                .put("categoryID", mView.getCategoryId())
+                .put("shopIDs", mView.getShopIds())
+                .put("productName", mView.getSearchParam())
+                .create();
         AgreementPriceService.INSTANCE.queryGoodsPriceList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<QuotationDetailBean>>() {
-                @Override
-                public void onSuccess(List<QuotationDetailBean> list) {
-                    mView.showGoodsPriceList(list);
-                }
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<List<QuotationDetailBean>>() {
+                    @Override
+                    public void onSuccess(List<QuotationDetailBean> list) {
+                        mView.showGoodsPriceList(list);
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 
     @Override
@@ -88,58 +90,26 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
             return;
         }
         QuotationFragmentPresenter.getCooperationPurchaserObservable(null)
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<PurchaserBean>>() {
-                @Override
-                public void onSuccess(List<PurchaserBean> result) {
-                    mListPurchaser = result;
-                    PurchaserBean bean = new PurchaserBean();
-                    bean.setPurchaserName(GoodsPriceShopSelectWindow.STRING_SELECT_ALL);
-                    mListPurchaser.add(0, bean);
-                    mView.showPurchaserWindow(mListPurchaser);
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    if (mView.isActive()) {
-                        mView.showToast(e.getMessage());
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<List<PurchaserBean>>() {
+                    @Override
+                    public void onSuccess(List<PurchaserBean> result) {
+                        mListPurchaser = result;
+                        PurchaserBean bean = new PurchaserBean();
+                        bean.setPurchaserName(GoodsPriceShopSelectWindow.STRING_SELECT_ALL);
+                        mListPurchaser.add(0, bean);
+                        mView.showPurchaserWindow(mListPurchaser);
                     }
-                }
-            });
-    }
 
-    @Override
-    public void queryPurchaserShopList(String purchaserId) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-            .put("groupID", UserConfig.getGroupID())
-            .put("actionType", "quotation")
-            .put("purchaserID", purchaserId)
-            .put("searchParam", mView.getSearchParam())
-            .create();
-        AgreementPriceService.INSTANCE.queryCooperationPurchaserShopList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<PurchaserShopBean>>() {
-                @Override
-                public void onSuccess(List<PurchaserShopBean> result) {
-                    if (!CommonUtils.isEmpty(result)) {
-                        PurchaserShopBean shopBean = new PurchaserShopBean();
-                        shopBean.setShopName(GoodsPriceShopSelectWindow.STRING_SELECT_ALL);
-                        result.add(0, shopBean);
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if (mView.isActive()) {
+                            mView.showToast(e.getMessage());
+                        }
                     }
-                    mView.showPurchaserShopList(result);
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showToast(e.getMessage());
-                }
-            });
+                });
     }
 
     @Override
@@ -149,21 +119,21 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
             return;
         }
         RegisterComplementPresenter.getCategoryObservable()
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<CategoryResp>() {
-                @Override
-                public void onSuccess(CategoryResp resp) {
-                    mCategoryResp = resp;
-                    mView.showCategoryWindow(mCategoryResp);
-                }
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<CategoryResp>() {
+                    @Override
+                    public void onSuccess(CategoryResp resp) {
+                        mCategoryResp = resp;
+                        mView.showCategoryWindow(mCategoryResp);
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 
     @Override
@@ -172,45 +142,83 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
         if (userBean == null) {
             return;
         }
-        GoodsPriceExportReq req = new GoodsPriceExportReq();
-        req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
+        ExportReq req = new ExportReq();
+        req.setActionType("2");
         req.setEmail(email);
-        req.setGroupID(UserConfig.getGroupID());
-        GoodsPriceExportReq.SearchParamsBean bean = new GoodsPriceExportReq.SearchParamsBean();
-        bean.setShopIDs(mView.getShopIds());
-        bean.setCategoryID(mView.getCategoryId());
-        bean.setPriceStartDate(mView.getPriceStartDate());
-        bean.setPriceEndDate(mView.getPriceEndDate());
-        req.setSearchParams(bean);
-        BaseReq<GoodsPriceExportReq> baseReq = new BaseReq<>();
-        baseReq.setData(req);
-        AgreementPriceService.INSTANCE
-            .exportGoodsPriceList(baseReq)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<ExportResp>() {
-                @Override
-                public void onSuccess(ExportResp resp) {
-                    if (!TextUtils.isEmpty(resp.getEmail())) {
-                        mView.exportSuccess(resp.getEmail());
-                    } else {
-                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                    }
-                }
+        req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
+        req.setTypeCode("common_quotation");
+        req.setUserID(userBean.getEmployeeID());
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    if (TextUtils.equals("00120112037", e.getCode())) {
-                        mView.bindEmail();
-                    } else if (TextUtils.equals("00120112038", e.getCode())) {
-                        mView.exportFailure("当前没有可导出的数据");
-                    } else {
-                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+        ExportReq.ParamsBean paramsBean = new ExportReq.ParamsBean();
+        ExportReq.ParamsBean.CommonQuotation commonQuotation = new ExportReq.ParamsBean.CommonQuotation();
+        commonQuotation.setShopIDs(Arrays.asList(mView.getShopIds().split(",")));
+        commonQuotation.setCategoryIDs(mView.getCategoryId());
+        commonQuotation.setPriceStartDate(mView.getPriceStartDate());
+        commonQuotation.setPriceEndDate(mView.getPriceEndDate());
+
+        paramsBean.setCommonQuotation(commonQuotation);
+        req.setParams(paramsBean);
+        BaseReq<ExportReq> baseReq = new BaseReq<>();
+        baseReq.setData(req);
+        GoodsService.INSTANCE
+                .exportRecord(baseReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<ExportResp>() {
+                    @Override
+                    public void onSuccess(ExportResp resp) {
+                        if (!TextUtils.isEmpty(resp.getEmail())) {
+                            mView.exportSuccess(resp.getEmail());
+                        } else {
+                            mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                        }
                     }
-                }
-            });
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if (TextUtils.equals("00120112037", e.getCode())) {
+                            mView.bindEmail();
+                        } else if (TextUtils.equals("00120112038", e.getCode())) {
+                            mView.exportFailure("当前没有可导出的数据");
+                        } else {
+                            mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void queryPurchaserShopList(String purchaserId) {
+        BaseMapReq req = BaseMapReq.newBuilder()
+                .put("groupID", UserConfig.getGroupID())
+                .put("actionType", "quotation")
+                .put("purchaserID", purchaserId)
+                .put("searchParam", mView.getSearchParam())
+                .create();
+        AgreementPriceService.INSTANCE.queryCooperationPurchaserShopList(req)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<List<PurchaserShopBean>>() {
+                    @Override
+                    public void onSuccess(List<PurchaserShopBean> result) {
+                        if (!CommonUtils.isEmpty(result)) {
+                            PurchaserShopBean shopBean = new PurchaserShopBean();
+                            shopBean.setShopName(GoodsPriceShopSelectWindow.STRING_SELECT_ALL);
+                            result.add(0, shopBean);
+                        }
+                        mView.showPurchaserShopList(result);
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showToast(e.getMessage());
+                    }
+                });
     }
 }

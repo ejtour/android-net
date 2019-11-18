@@ -74,38 +74,38 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
             return;
         }
         getCooperationPurchaserObservable(null)
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<List<PurchaserBean>>() {
-                @Override
-                public void onSuccess(List<PurchaserBean> result) {
-                    mListPurchaser = result;
-                    PurchaserBean bean = new PurchaserBean();
-                    bean.setPurchaserID("");
-                    bean.setPurchaserName("全部");
-                    mListPurchaser.add(0, bean);
-                    mView.showPurchaserWindow(mListPurchaser);
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    if (mView.isActive()) {
-                        mView.showToast(e.getMessage());
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<List<PurchaserBean>>() {
+                    @Override
+                    public void onSuccess(List<PurchaserBean> result) {
+                        mListPurchaser = result;
+                        PurchaserBean bean = new PurchaserBean();
+                        bean.setPurchaserID("");
+                        bean.setPurchaserName("全部");
+                        mListPurchaser.add(0, bean);
+                        mView.showPurchaserWindow(mListPurchaser);
                     }
-                }
-            });
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if (mView.isActive()) {
+                            mView.showToast(e.getMessage());
+                        }
+                    }
+                });
     }
 
     public static Observable<List<PurchaserBean>> getCooperationPurchaserObservable(String searchParam) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("searchParam", searchParam)
-            .put("groupID", UserConfig.getGroupID())
-            .put("actionType", "quotation")
-            .create();
+                .put("searchParam", searchParam)
+                .put("groupID", UserConfig.getGroupID())
+                .put("actionType", "quotation")
+                .create();
         return AgreementPriceService.INSTANCE.queryCooperationPurchaserList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>());
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>());
     }
 
     @Override
@@ -114,85 +114,90 @@ public class QuotationFragmentPresenter implements QuotationFragmentContract.IHo
         if (userBean == null) {
             return;
         }
+
         ExportReq req = new ExportReq();
-        req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
+        req.setActionType("2");
         req.setEmail(email);
-        req.setTypeCode("quotation");
+        req.setIsBindEmail(TextUtils.isEmpty(email) ? "0" : "1");
+        req.setTypeCode("common_quotation");
         req.setUserID(userBean.getEmployeeID());
+
         ExportReq.ParamsBean paramsBean = new ExportReq.ParamsBean();
-        ExportReq.ParamsBean.SupplierQuotationBean quotationBean = new ExportReq.ParamsBean.SupplierQuotationBean();
-        quotationBean.setGroupID(userBean.getGroupID());
-        quotationBean.setBillNos(mView.getBillNos());
-        paramsBean.setSupplierQuotation(quotationBean);
+        ExportReq.ParamsBean.CommonQuotation commonQuotation = new ExportReq.ParamsBean.CommonQuotation();
+        commonQuotation.setGroupID(userBean.getGroupID());
+        commonQuotation.setBillNos(mView.getBillNos());
+
+        paramsBean.setCommonQuotation(commonQuotation);
         req.setParams(paramsBean);
         BaseReq<ExportReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
-        GoodsService.INSTANCE.exportRecord(baseReq)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> mView.showLoading())
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<ExportResp>() {
-                @Override
-                public void onSuccess(ExportResp resp) {
-                    if (!TextUtils.isEmpty(resp.getEmail())) {
-                        mView.exportSuccess(resp.getEmail());
-                    } else {
-                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+        GoodsService.INSTANCE
+                .exportRecord(baseReq)
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> mView.showLoading())
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<ExportResp>() {
+                    @Override
+                    public void onSuccess(ExportResp resp) {
+                        if (!TextUtils.isEmpty(resp.getEmail())) {
+                            mView.exportSuccess(resp.getEmail());
+                        } else {
+                            mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    if (TextUtils.equals("00120112037", e.getCode())) {
-                        mView.bindEmail();
-                    } else if (TextUtils.equals("00120112038", e.getCode())) {
-                        mView.exportFailure("当前没有可导出的数据");
-                    } else {
-                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if (TextUtils.equals("00120112037", e.getCode())) {
+                            mView.bindEmail();
+                        } else if (TextUtils.equals("00120112038", e.getCode())) {
+                            mView.exportFailure("当前没有可导出的数据");
+                        } else {
+                            mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
+                        }
                     }
-                }
-            });
+                });
     }
 
 
     private void toQueryQuotationList(boolean showLoading) {
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("startDate", mView.getStartDate())
-            .put("endDate", mView.getEndDate())
-            .put("billType", "1")
-            .put("priceEndDate", mView.getPriceEndDate())
-            .put("priceStartDate", mView.getPriceStartDate())
-            .put("groupID", UserConfig.getGroupID())
-            .put("billNo", mView.getSearchParam())
-            .put("pageNum", String.valueOf(mTempNum))
-            .put("pageSize", String.valueOf(PAGE_SIZE))
-            .put("purchaserID", mView.getPurchaserId())
-            .create();
+                .put("startDate", mView.getStartDate())
+                .put("endDate", mView.getEndDate())
+                .put("billType", "1")
+                .put("priceEndDate", mView.getPriceEndDate())
+                .put("priceStartDate", mView.getPriceStartDate())
+                .put("groupID", UserConfig.getGroupID())
+                .put("billNo", mView.getSearchParam())
+                .put("pageNum", String.valueOf(mTempNum))
+                .put("pageSize", String.valueOf(PAGE_SIZE))
+                .put("purchaserID", mView.getPurchaserId())
+                .create();
         AgreementPriceService.INSTANCE.queryQuotationList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> {
-                if (showLoading) {
-                    mView.showLoading();
-                }
-            })
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<QuotationResp>() {
-                @Override
-                public void onSuccess(QuotationResp result) {
-                    mPageNum = mTempNum;
-                    mView.showQuotationList(result, mPageNum != 1);
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    if (mView.isActive()) {
-                        mView.showError(e);
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    if (showLoading) {
+                        mView.showLoading();
                     }
-                }
-            });
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<QuotationResp>() {
+                    @Override
+                    public void onSuccess(QuotationResp result) {
+                        mPageNum = mTempNum;
+                        mView.showQuotationList(result, mPageNum != 1);
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        if (mView.isActive()) {
+                            mView.showError(e);
+                        }
+                    }
+                });
     }
 }
