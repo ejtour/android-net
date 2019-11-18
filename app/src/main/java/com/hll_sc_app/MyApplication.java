@@ -11,6 +11,7 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.greendao.DaoSessionManager;
 import com.hll_sc_app.citymall.util.LogUtil;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.receiver.ActivityLifecycleHandler;
 import com.hll_sc_app.utils.Constants;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -77,6 +78,7 @@ public class MyApplication extends Application {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
+        ToastUtils.init(this);
         LeakCanary.install(this);
         instance = this;
         // 初始化 ARouter
