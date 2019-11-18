@@ -1322,5 +1322,10 @@ public class RouterConfig {
      * 客户-新增
      */
     public static final String CRM_CUSTOMER_ADD = "/activity/customer/add";
+
+    /**
+     * 消息中心 - 首页
+     */
+    public static final String MESSAGE = "/activity/message";
 }
 

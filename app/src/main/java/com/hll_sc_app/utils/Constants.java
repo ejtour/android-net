@@ -29,6 +29,7 @@ public interface Constants {
     String SLASH_MM_DD = "MM/dd";
     String SLASH_YYYY_MM_DD = "yyyy/MM/dd";
     String SLASH_YYYY_MM_DD_HH_MM = "yyyy/MM/dd HH:mm";
+    String SLASH_YYYY_MM_DD_HH_MM_SS = "yyyy/MM/dd HH:mm:ss";
 
 
     String WEB_TITLE = "web_title";

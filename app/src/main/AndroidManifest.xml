@@ -1217,6 +1217,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme" />
 
+        <activity
+            android:name=".app.message.MessageActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

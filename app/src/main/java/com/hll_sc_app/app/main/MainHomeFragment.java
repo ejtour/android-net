@@ -20,6 +20,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
+import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.report.ReportEntryActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
@@ -350,6 +351,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fmh_message_icon:
+                MessageActivity.start();
                 break;
             case R.id.fmh_top_tag:
                 showOptionsWindow(view);
