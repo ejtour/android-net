@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.apply.AfterSalesApplyActivity;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
@@ -41,6 +42,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.RemarkDialog;
+import com.hll_sc_app.widget.ShareDialog;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.order.OrderActionBar;
@@ -67,6 +69,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
 
     private OrderResp mOrderResp;
     private String mLabel;
+    private ShareDialog mShareDialog;
 
     public static void start(String billID) {
         RouterUtil.goToActivity(RouterConfig.ORDER_DETAIL, billID);
@@ -140,8 +143,9 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
             mTitleBar.setRightBtnVisible(true);
             mTitleBar.setRightBtnClick(this::showOptionsWindow);
         } else {
-            mTitleBar.setRightBtnVisible(false);
-            mTitleBar.setRightBtnClick(null);
+            mTitleBar.setRightBtnVisible(true);
+            mTitleBar.setRightButtonImg(R.drawable.ic_export_option);
+            mTitleBar.setRightBtnClick(v -> exportDetail());
         }
         if (CommonUtils.isEmpty(resp.getButtonList())) {
             mActionBar.setVisibility(View.GONE);
@@ -163,6 +167,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         if (mOrderResp.getSubBillStatus() == 2)
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ASSEMBLY));
         list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_OUT));
+        list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_ORDER_DETAIL));
         mOptionsWindow.refreshList(list)
                 .showAsDropDownFix(view, Gravity.END);
     }
@@ -286,6 +291,23 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
         export(mLabel, null);
     }
 
+    private void exportDetail() {
+        if (mShareDialog == null) {
+            mShareDialog = new ShareDialog(this);
+            String url = (BuildConfig.isDebug ? "http://172.16.32.222:3001" : "http://weixin.22city.cn")
+                    + "/client/supplyOrder?subBillID="
+                    + mBillID + "&billSource=1";
+            mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
+                    "订单详情",
+                    "http://res.hualala.com/group3/M02/11/E4/wKgVbV3FKiGutZpqAABNhltbYDI135.png",
+                    "二十二城订单分享",
+                    "二十二城的生鲜食材很棒棒呦，快来看看吧~",
+                    url
+            ).setShareTimeLine(false).setShareQzone(false));
+        }
+        mShareDialog.show();
+    }
+
     private void export(String label, String email) {
         switch (label) {
             case OptionType.OPTION_EXPORT_ASSEMBLY:
@@ -293,6 +315,11 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
                 break;
             case OptionType.OPTION_EXPORT_OUT:
                 mPresenter.exportDeliveryOrder(mOrderResp.getSubBillID(), email);
+                break;
+            case OptionType.OPTION_EXPORT_ORDER_DETAIL:
+                exportDetail();
+                break;
+            default:
                 break;
         }
     }
