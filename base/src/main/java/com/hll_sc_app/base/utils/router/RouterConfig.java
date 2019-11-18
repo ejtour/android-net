@@ -1327,5 +1327,10 @@ public class RouterConfig {
      * 消息中心 - 首页
      */
     public static final String MESSAGE = "/activity/message";
+
+    /**
+     * 消息中心-详情
+     */
+    public static final String MESSAGE_DETAIL = "/activity/message/detail";
 }
 

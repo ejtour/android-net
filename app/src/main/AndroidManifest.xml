@@ -1221,6 +1221,10 @@
             android:name=".app.message.MessageActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.message.detail.MessageDetailActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

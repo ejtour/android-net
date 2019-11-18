@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.message;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.message.detail.MessageDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -81,10 +83,26 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mMessageList = null;
                 if (mSummaryList == null) mPresenter.loadSummary(false);
                 mPresenter.refresh();
             }
         });
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            MessageBean item = mAdapter.getItem(position);
+            if (item == null) return;
+            if (item.getMessageTypeCode() != 0) {
+                MessageDetailActivity.start(this, item.getMessageTypeCode());
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MessageDetailActivity.REQ_CODE && resultCode == RESULT_OK) {
+            startLoad();
+        }
     }
 
     private void initData() {
@@ -156,9 +174,15 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
     private void initEmptyView() {
         if (mEmptyView == null) {
             mEmptyView = EmptyView.newBuilder(this)
-                    .setOnClickListener(mPresenter::start)
+                    .setOnClickListener(this::startLoad)
                     .create();
             mAdapter.setEmptyView(mEmptyView);
         }
+    }
+
+    private void startLoad() {
+        mSummaryList = null;
+        mMessageList = null;
+        mPresenter.start();
     }
 }
