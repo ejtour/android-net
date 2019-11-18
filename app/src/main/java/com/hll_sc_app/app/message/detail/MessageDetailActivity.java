@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -14,6 +15,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.message.MessageHelper;
+import com.hll_sc_app.app.message.notice.MessageNoticeActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -48,7 +50,7 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
     private IMessageDetailContract.IMessageDetailPresenter mPresenter;
     private MessageDetailAdapter mAdapter;
     private boolean mHasChanged;
-    private int mCurPos;
+    private MessageDetailBean mCurBean;
 
     /**
      * @param code 消息代码
@@ -83,10 +85,11 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
         mAdapter = new MessageDetailAdapter();
         mListView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            mCurPos = position;
-            MessageDetailBean item = mAdapter.getItem(mCurPos);
-            if (item != null && item.getReadStatus() == 1) {
-                mPresenter.markAsRead(item.getId());
+            mCurBean = mAdapter.getItem(position);
+            if (mCurBean != null) {
+                if (mCurBean.getReadStatus() == 1)
+                    mPresenter.markAsRead(mCurBean.getId());
+                else dealGoto();
             }
         });
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -100,6 +103,12 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
                 mPresenter.refresh();
             }
         });
+    }
+
+    private void dealGoto() {
+        if (TextUtils.isEmpty(mCurBean.getServiceType())) {
+            MessageNoticeActivity.start(mCurBean.getMessageTitle(), mCurBean.getActionTime(), mCurBean.getMessageContent(), mCurBean.getImgUrl());
+        }
     }
 
     private void initData() {
@@ -127,10 +136,7 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
     @Override
     public void success() {
         mHasChanged = true;
-        MessageDetailBean item = mAdapter.getItem(mCurPos);
-        if (item != null) {
-            item.setReadStatus(2);
-            mAdapter.notifyItemChanged(mCurPos);
-        }
+        mAdapter.markAsRead(mCurBean);
+        dealGoto();
     }
 }

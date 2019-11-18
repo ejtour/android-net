@@ -25,10 +25,11 @@ public class MessageDetailBean {
     private String id;
     private String serviceID;
     private String messageContent;
+    private String content;
 
     public void preProcess(){
         actionTime = DateUtil.getReadableTime(actionTime, Constants.SLASH_YYYY_MM_DD_HH_MM_SS);
-        messageContent = UIUtils.replaceBlank(UIUtils.delHTMLTag(messageContent));
+        content = UIUtils.replaceBlank(UIUtils.delHTMLTag(messageContent));
     }
 
     public int getReadStatus() {
@@ -149,5 +150,13 @@ public class MessageDetailBean {
 
     public void setMessageContent(String messageContent) {
         this.messageContent = messageContent;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
