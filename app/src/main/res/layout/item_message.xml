@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="@dimen/dp_10">
+
+    <com.hll_sc_app.base.utils.glide.GlideImageView
+        android:id="@+id/im_image"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_placeholder" />
+
+    <TextView
+        android:id="@+id/im_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="2dp"
+        android:maxWidth="200dp"
+        android:text="订单消息"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        app:layout_constraintStart_toEndOf="@id/im_image"
+        app:layout_constraintTop_toTopOf="@id/im_image" />
+
+    <View
+        android:id="@+id/im_status"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/bg_red_dot"
+        app:layout_constraintStart_toEndOf="@id/im_name"
+        app:layout_constraintTop_toTopOf="@id/im_name" />
+
+    <TextView
+        android:id="@+id/im_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="@dimen/text_little_size"
+        app:layout_constraintBottom_toBottomOf="@id/im_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/im_name"
+        tools:text="08/03/18 16:35" />
+
+    <TextView
+        android:id="@+id/im_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/im_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/im_name"
+        tools:text="您的订单201805049876，供应商已发货" />
+</android.support.constraint.ConstraintLayout>

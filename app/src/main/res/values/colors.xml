@@ -51,11 +51,12 @@
 
     <color name="color_FFF1B8">#FFF1B8</color>
     <color name="color_E6FED1">#E6FED1</color>
-    <color name="color_EEEEEE">#EEEEEE</color>
     <color name="color_e8f5fe">#e8f5fe</color>
     <color name="color_f5a623">#f5a623</color>
     <color name="color_d9d9d9">#d9d9d9</color>
     <color name="color_b7d5f1">#b7d5f1</color>
+    <color name="color_f3f3f3">#f3f3f3</color>
+
     <!--文字颜色-->
     <color name="text_selected">#ED5655</color>
     <color name="text_222">#222</color>

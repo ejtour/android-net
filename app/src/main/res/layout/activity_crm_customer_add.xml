@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cca_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e6ffffff">
+
+    <ImageView
+        android:id="@+id/cca_dismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:src="@drawable/ic_crm_customer_dismiss"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/cca_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="88dp"
+        android:drawableTop="@drawable/ic_crm_customer_plan_add"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="拜访计划"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/cca_dismiss"
+        app:layout_constraintEnd_toEndOf="@id/cca_intent"
+        app:layout_constraintStart_toStartOf="@id/cca_intent" />
+
+    <TextView
+        android:id="@+id/cca_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_crm_customer_record_add"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="拜访记录"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/cca_plan"
+        app:layout_constraintEnd_toEndOf="@id/cca_registered"
+        app:layout_constraintStart_toStartOf="@id/cca_registered" />
+
+    <TextView
+        android:id="@+id/cca_unregistered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:drawableTop="@drawable/ic_crm_customer_partner_unregistered"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="合作客户\n未注册"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/cca_plan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cca_registered" />
+
+    <TextView
+        android:id="@+id/cca_registered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_crm_customer_partner_registered"
+        android:drawablePadding="8dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="合作客户\n已注册"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/cca_unregistered"
+        app:layout_constraintStart_toEndOf="@id/cca_intent"
+        app:layout_constraintTop_toTopOf="@id/cca_unregistered" />
+
+    <TextView
+        android:id="@+id/cca_intent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_crm_customer_intent_add"
+        android:drawablePadding="8dp"
+        android:text="意向客户"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@id/cca_registered"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cca_unregistered" />
+</android.support.constraint.ConstraintLayout>

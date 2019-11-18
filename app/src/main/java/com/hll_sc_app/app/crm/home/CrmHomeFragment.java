@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.home.ManagementShopResp;
@@ -263,6 +264,11 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
             case R.id.fch_finance_btn:
                 break;
         }
+    }
+
+    @OnClick(R.id.fch_message_icon)
+    public void message() {
+        MessageActivity.start();
     }
 
     @Override

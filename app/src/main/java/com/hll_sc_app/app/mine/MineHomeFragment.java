@@ -28,6 +28,7 @@ import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
 import com.hll_sc_app.app.helpcenter.HelpCenterJsParams;
 import com.hll_sc_app.app.info.InfoActivity;
+import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.bean.UserBean;
@@ -232,9 +233,12 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage,
             R.id.txt_complaint_manage, R.id.txt_main_feedback, R.id.fmm_analysis_btn, R.id.txt_new_product_demand,
             R.id.txt_market_price, R.id.txt_customer_purchase_template, R.id.txt_card_manage, R.id.ll_user_message,
-            R.id.txt_product_special_demand, R.id.txt_wechat_mall})
+            R.id.txt_product_special_demand, R.id.txt_wechat_mall, R.id.img_message})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.img_message:
+                MessageActivity.start();
+                break;
             case R.id.txt_wallet:
                 RouterUtil.goToActivity(RouterConfig.WALLET);
                 break;

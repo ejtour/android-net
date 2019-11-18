@@ -1212,6 +1212,15 @@
             android:name=".app.crm.daily.edit.CrmDailyEditActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.crm.customer.add.CustomerAddActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentTheme" />
+
+        <activity
+            android:name=".app.message.MessageActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
