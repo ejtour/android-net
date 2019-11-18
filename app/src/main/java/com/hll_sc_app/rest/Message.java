@@ -7,6 +7,8 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.message.MessageBean;
+import com.hll_sc_app.bean.message.MessageDetailBean;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.List;
@@ -28,6 +30,14 @@ public class Message {
                         .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
                         .put("source", "supplier")
                         .create())
+                .map(listBaseResp -> {
+                    if (!CommonUtils.isEmpty(listBaseResp.getData())) {
+                        for (MessageBean bean : listBaseResp.getData()) {
+                            bean.preProcess();
+                        }
+                    }
+                    return listBaseResp;
+                })
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -44,6 +54,62 @@ public class Message {
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")
                         .put("userID", GreenDaoUtils.getUser().getEmployeeID())
+                        .create())
+                .map(singleListRespBaseResp -> {
+                    if (singleListRespBaseResp.getData() != null
+                            && !CommonUtils.isEmpty(singleListRespBaseResp.getData().getRecords())) {
+                        for (MessageBean bean : singleListRespBaseResp.getData().getRecords()) {
+                            bean.preProcess();
+                        }
+                    }
+                    return singleListRespBaseResp;
+                })
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询消息详情
+     *
+     * @param pageNum 页码
+     * @param code    消息代码
+     */
+    public static void queryMessageDetail(int pageNum, int code, SimpleObserver<List<MessageDetailBean>> observer) {
+        MessageService.INSTANCE
+                .queryMessageDetail(BaseMapReq.newBuilder()
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
+                        .put("source", "supplier")
+                        .put("messageTypeCode", String.valueOf(code))
+                        .create())
+                .map(listBaseResp -> {
+                    if (!CommonUtils.isEmpty(listBaseResp.getData())) {
+                        for (MessageDetailBean bean : listBaseResp.getData()) {
+                            bean.preProcess();
+                        }
+                    }
+                    return listBaseResp;
+                })
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 标记消息已读
+     *
+     * @param messageID 消息id
+     * @param code      消息代码
+     */
+    public static void markAsRead(String messageID, int code, SimpleObserver<Object> observer) {
+        MessageService.INSTANCE
+                .markAsRead(BaseMapReq.newBuilder()
+                        .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
+                        .put("source", "supplier")
+                        .put("messageTypeCode", String.valueOf(code))
+                        .put("messageID", messageID)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

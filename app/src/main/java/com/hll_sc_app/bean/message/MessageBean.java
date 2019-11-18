@@ -34,6 +34,11 @@ public class MessageBean {
     private int receiveType;
     private int messageTypeCode;
 
+    public void preProcess() {
+        time = DateUtil.getReadableTime(time, Constants.SLASH_YYYY_MM_DD_HH_MM);
+        message = UIUtils.isPicture(message) ? "[图片]" : UIUtils.replaceBlank(UIUtils.delHTMLTag(message));
+    }
+
     public String getName() {
         return name;
     }
@@ -59,7 +64,7 @@ public class MessageBean {
     }
 
     public String getTime() {
-        return DateUtil.getReadableTime(time, Constants.SLASH_YYYY_MM_DD_HH_MM);
+        return time;
     }
 
     public void setTime(String time) {
@@ -71,7 +76,7 @@ public class MessageBean {
     }
 
     public void setMessage(String message) {
-        this.message = UIUtils.isPicture(message) ? "[图片]" : UIUtils.replaceBlank(UIUtils.delHTMLTag(message));
+        this.message = message;
     }
 
     public String getReceiver() {
