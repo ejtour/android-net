@@ -730,6 +730,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.invoice.search.InvoiceSearchActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.invoice.select.shop.SelectShopActivity"
             android:screenOrientation="portrait" />
 

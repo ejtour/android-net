@@ -863,6 +863,11 @@ public class RouterConfig {
     public static final String INVOICE_DETAIL_SHOP = "/activity/invoice/detail/shop";
 
     /**
+     * 发票管理-门店搜索
+     */
+    public static final String INVOICE_SEARCH = "/activity/invoice/search";
+
+    /**
      * 发票管理-选择开票门店
      */
     public static final String INVOICE_SELECT_SHOP = "/activity/invoice/select/shop";
