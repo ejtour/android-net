@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +12,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,6 +28,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AccountBean;
 import com.hll_sc_app.base.bean.UserBean;
@@ -39,6 +41,8 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ClearEditText;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.KeyboardWatcher;
 
 import java.util.Calendar;
 import java.util.List;
@@ -54,7 +58,7 @@ import butterknife.OnClick;
  * @date 2019/6/4
  */
 @Route(path = RouterConfig.USER_LOGIN)
-public class LoginActivity extends BaseLoadActivity implements LoginContract.ILoginView {
+public class LoginActivity extends BaseLoadActivity implements LoginContract.ILoginView, KeyboardWatcher.SoftKeyboardStateListener {
     public static final String CODE_NEED_CHECK = "00120113053";
     public static final String CODE_UN_REGISTER = "该手机号未注册，是否现在注册";
     @BindView(R.id.edt_phone)
@@ -80,6 +84,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
     @BindView(R.id.ll_operation)
     LinearLayout mLlOperation;
     private LoginPresenter mPresenter;
+    private KeyboardWatcher mKeyboardWatcher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,7 +100,15 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        mKeyboardWatcher.removeSoftKeyboardStateListener(this);
+        super.onDestroy();
+    }
+
     private void initView() {
+        mKeyboardWatcher = new KeyboardWatcher(this);
+        mKeyboardWatcher.addSoftKeyboardStateListener(this);
         mLlContent.post(() -> ObjectAnimator.ofFloat(mLlContent, "translationY", mLlContent.getHeight(),
             UIUtils.dip2px(127)).setDuration(800).start());
         InputTextWatcher textWatcher = new InputTextWatcher();
@@ -325,6 +338,20 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
     private void toggleCountList() {
         int visible = mListCountView.getVisibility();
         setAccountListVisible(visible == View.GONE);
+    }
+
+    @Override
+    public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+        View view = getCurrentFocus();
+        if (view instanceof EditText && ((EditText) view).getInputType() == (EditorInfo.TYPE_CLASS_TEXT | EditorInfo.TYPE_TEXT_VARIATION_PASSWORD)) {
+            return;
+        }
+        GlobalPreference.putParam(Constants.KEYBOARD_KEY, keyboardHeightInPx);
+    }
+
+    @Override
+    public void onSoftKeyboardClosed() {
+        // no-op
     }
 
     private class InputTextWatcher implements TextWatcher {

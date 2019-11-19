@@ -39,4 +39,6 @@ public interface Constants {
     String WEB_ZOOM = "web_zoom";
 
     int SEARCH_RESULT_CODE = 0x711;
+
+    String KEYBOARD_KEY = "keyboard_key";
 }

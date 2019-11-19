@@ -20,6 +20,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.JsonUtil;
@@ -33,6 +34,7 @@ import com.hll_sc_app.bean.message.IMBean;
 import com.hll_sc_app.bean.message.MessageBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.IMConnection;
 import com.hll_sc_app.widget.TitleBar;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -163,7 +165,7 @@ public class MessageChatActivity extends BaseLoadActivity implements IMessageCha
             }
             return false;
         });
-        mInput.setMenuContainerHeight(535);
+        mInput.setMenuContainerHeight(GlobalPreference.getParam(Constants.KEYBOARD_KEY, 535));
         mInput.setMenuClickListener(new ChatMenuClickListener());
         mInput.getInputView().setOnTouchListener((view, motionEvent) -> {
             scrollToBottom();
