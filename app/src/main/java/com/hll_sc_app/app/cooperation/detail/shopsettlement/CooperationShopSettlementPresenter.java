@@ -110,7 +110,8 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
             .put("defaultSettlementWay", req.getSettlementWay())
             .put("defaultAccountPeriod", req.getAccountPeriod())
             .put("defaultAccountPeriodType", req.getAccountPeriodType())
-            .put("defaultSettleDate", req.getSettleDate());
+            .put("defaultSettleDate", req.getSettleDate())
+            .put("inspector", req.getInspector());
         CooperationPurchaserService.INSTANCE
             .editCooperationPurchaser(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
@@ -149,7 +150,8 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
             .put("defaultSettleDate", req.getSettleDate())
             .put("groupName", userBean.getGroupName())
             .put("purchaserName", req.getPurchaserName())
-            .put("verification", mView.getVerification());
+            .put("verification", mView.getVerification())
+            .put("inspector", req.getInspector());
         CooperationPurchaserService.INSTANCE
             .addCooperationPurchaser(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
