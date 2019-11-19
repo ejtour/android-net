@@ -128,12 +128,12 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         mRadioGroupModal.setOnCheckedChangeListener(this);
 
 
-        boolean isAdd = mPurchaserDetail != null && (TextUtils.isEmpty(mPurchaserDetail.getStatus()) || mPurchaserDetail.getCooperationActive() == 1);
+        boolean isAddAgain = mPurchaserDetail != null && (mPurchaserDetail.getCooperationActive() == 1);
         boolean isWaitAgree = mPurchaserDetail != null && (TextUtils.equals(mPurchaserDetail.getStatus(),"0"));
         boolean isNewAdd = mPurchaserDetail != null && (TextUtils.equals(mPurchaserDetail.getStatus(), "3"));
 
-        mLlCheckModal.setVisibility((isAdd || isNewAdd || isWaitAgree) ? View.VISIBLE : View.GONE);
-        if (isAdd || isNewAdd || isWaitAgree) {//只有新增的时候才显示，默认提供一个值
+        mLlCheckModal.setVisibility((isAddAgain || isNewAdd || isWaitAgree) ? View.VISIBLE : View.GONE);
+        if (isAddAgain || isNewAdd || isWaitAgree) {//只有新增的时候才显示，默认提供一个值
             mReq.setInspector("0");
         }
     }
