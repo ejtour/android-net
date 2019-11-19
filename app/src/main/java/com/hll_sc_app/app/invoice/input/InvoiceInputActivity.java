@@ -11,6 +11,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -69,8 +70,6 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
      * @param req 发票请求参数
      */
     public static void start(InvoiceMakeReq req) {
-        req.setInvoiceType(1);
-        req.setTitleType(1);
         RouterUtil.goToActivity(RouterConfig.INVOICE_INPUT, req);
     }
 
@@ -82,6 +81,10 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     TextView mInvoiceAmount;
     @BindView(R.id.aii_radio_group)
     RadioGroup mRadioGroup;
+    @BindView(R.id.aii_type_company)
+    RadioButton mCompany;
+    @BindView(R.id.aii_type_personal)
+    RadioButton mPersonal;
     @BindView(R.id.aii_invoice_title)
     EditText mInvoiceTitle;
     @BindView(R.id.aii_identifier)
@@ -130,8 +133,8 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     private void initData() {
         mPresenter = InvoiceInputPresenter.newInstance();
         mPresenter.register(this);
-        mPresenter.reqInvoiceHistory(1);
         textObservable();
+        inflateData();
     }
 
     private void initView() {
@@ -142,6 +145,28 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         mAdapter.bindToRecyclerView(mListView);
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
         mAdapter.setOnItemClickListener(this);
+    }
+
+    private void inflateData() {
+        mInvoiceType.setText(getInvoiceType(mMakeReq.getInvoiceType()));
+        if (mMakeReq.getTitleType() == 1) mCompany.setChecked(true);
+        else mPersonal.setChecked(true);
+        setInvoiceTile(mMakeReq.getInvoiceTitle());
+        mIdentifier.setText(mMakeReq.getTaxpayerNum());
+        mAccount.setText(mMakeReq.getAccount());
+        mBank.setText(mMakeReq.getOpenBank());
+        mAddress.setText(mMakeReq.getAddress());
+        mRemark.setText(mMakeReq.getNote());
+    }
+
+    private String getInvoiceType(int type) {
+        switch (type) {
+            case 1:
+                return "普通发票";
+            case 2:
+                return "专用发票";
+        }
+        return "";
     }
 
     private void textObservable() {
@@ -170,14 +195,14 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             List<NameValue> list = new ArrayList<>();
             list.add(new NameValue("普通发票", String.valueOf(1)));
             list.add(new NameValue("专用发票", String.valueOf(2)));
-            NameValue cur = list.get(0);
+            NameValue cur = list.get(mMakeReq.getInvoiceType() - 1);
             mTypeDialog = SingleSelectionDialog
                     .newBuilder(this, NameValue::getName)
                     .setTitleText("选择发票类型")
                     .refreshList(list)
                     .setOnSelectListener(nameValue -> {
                         mInvoiceType.setText(nameValue.getName());
-                        mMakeReq.setInvoiceType(Integer.valueOf(nameValue.getValue()));
+                        mMakeReq.setInvoiceType(Integer.parseInt(nameValue.getValue()));
                     })
                     .select(cur)
                     .create();
@@ -191,11 +216,11 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mMakeReq.setTitleType(1);
             mInvoiceTitle.setHint("请输入企业名称");
             mIdentifierGroup.setVisibility(View.VISIBLE);
-        } else {
+        } else if (checkedId == R.id.aii_type_personal) {
             mMakeReq.setTitleType(2);
             mInvoiceTitle.setHint("请输入抬头名称");
             mIdentifierGroup.setVisibility(View.GONE);
-        }
+        } else return;
         mPresenter.reqInvoiceHistory(mMakeReq.getTitleType());
         updateEnable();
     }
@@ -324,15 +349,19 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         if (item == null) return;
 //        mHistoryWindow.dismiss();
         mListView.setVisibility(View.GONE);
-        mNeedAssociate = false;
-        mInvoiceTitle.setText(item.getInvoiceTitle());
+        setInvoiceTile(item.getInvoiceTitle());
         mInvoiceTitle.setSelection(item.getInvoiceTitle().length());
-        mNeedAssociate = true;
         if (mIdentifierGroup.getVisibility() == View.VISIBLE) {
             mIdentifier.setText(item.getTaxpayerNum());
         } else mIdentifier.setText("");
         mAccount.setText(item.getAccount());
         mBank.setText(item.getOpenBank());
         mAddress.setText(item.getAddress());
+    }
+
+    private void setInvoiceTile(String title) {
+        mNeedAssociate = false;
+        mInvoiceTitle.setText(title);
+        mNeedAssociate = true;
     }
 }

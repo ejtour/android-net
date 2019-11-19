@@ -29,6 +29,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.invoice.detail.order.RelevanceOrderActivity;
 import com.hll_sc_app.app.invoice.detail.record.ReturnRecordActivity;
 import com.hll_sc_app.app.invoice.detail.shop.RelevanceShopActivity;
+import com.hll_sc_app.app.invoice.select.order.SelectOrderActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -51,6 +52,7 @@ import java.util.List;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -72,8 +74,14 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     @BindView(R.id.aid_title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.aid_bottom_group)
-    Group mBottomGroup;
+    @BindView(R.id.aid_confirm)
+    TextView mConfirm;
+    @BindView(R.id.aid_reject)
+    TextView mReject;
+    @BindView(R.id.aid_bottom_bg)
+    View mBottomBg;
+    @BindViews({R.id.aid_bottom_bg, R.id.aid_confirm, R.id.aid_reject})
+    List<View> mBottomViews;
     @BindView(R.id.aid_tips)
     TextView mTips;
     @BindView(R.id.aid_invoice_type)
@@ -129,6 +137,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     String mID;
     private IInvoiceDetailContract.IInvoiceDetailPresenter mPresenter;
     private ReturnRecordAdapter mAdapter;
+    private InvoiceBean mBean;
     private boolean mHasChanged;
 
     @Override
@@ -205,6 +214,10 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     @OnClick(R.id.aid_confirm)
     public void confirm() {
+        if (UserConfig.crm()) {
+            SelectOrderActivity.start(mBean);
+            return;
+        }
         RemarkDialog.newBuilder(this)
                 .setHint("请填写发票号，多个号码请用逗号隔开")
                 .setButtons("容我再想想", "确认开票", (dialog, positive, content) -> {
@@ -236,6 +249,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
 
     @Override
     public void updateData(InvoiceBean bean) {
+        mBean = bean;
         boolean crm = UserConfig.crm();
         updateBaseInfo(bean, crm);
         reset();
@@ -247,21 +261,22 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
             updateNotInvoiceData(crm);
         }
         mRemark.getParent().requestLayout();
-        mTitleBar.getParent().requestLayout();
     }
 
     private void updateNotInvoiceData(boolean crm) {
         if (crm) {
+            showAgainView();
             mTips.setText("开票申请已提交至供应商，请等待供应商处理");
         } else {
             mInvoiceLicense.setEditable(true);
             mInvoiceLicenseGroup.setVisibility(View.VISIBLE);
-            mBottomGroup.setVisibility(View.VISIBLE);
+            ButterKnife.apply(mBottomViews, (view, index) -> view.setVisibility(View.VISIBLE));
         }
     }
 
     private void updateMadeInvoiceData(InvoiceBean bean, boolean crm) {
         if (crm) {
+            showAgainView();
             mTips.setText("供应商已开具发票，请查收");
         } else {
             if (!isInEditMode()) {
@@ -280,6 +295,12 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
             mExtraInfoGroup.setVisibility(View.VISIBLE);
             mExtraInfo.setText(!TextUtils.isEmpty(bean.getInvoiceNO()) ? bean.getInvoiceNO() : "无");
         }
+    }
+
+    private void showAgainView() {
+        mBottomBg.setVisibility(View.VISIBLE);
+        mConfirm.setVisibility(View.VISIBLE);
+        mConfirm.setText("再次开票");
     }
 
     private void updateBaseInfo(InvoiceBean bean, boolean crm) {
@@ -319,6 +340,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     private void updateRejectData(InvoiceBean bean, boolean crm) {
         mExtraInfoLabel.setText("驳回原因");
         if (crm) {
+            showAgainView();
             mTips.setText(String.format("开票申请被驳回%s", TextUtils.isEmpty(bean.getRejectReason()) ? "" : "：" + bean.getRejectReason()));
         } else if (!TextUtils.isEmpty(bean.getRejectReason())) {
             mExtraInfoGroup.setVisibility(View.VISIBLE);
@@ -327,7 +349,7 @@ public class InvoiceDetailActivity extends BaseLoadActivity implements IInvoiceD
     }
 
     private void reset() {
-        mBottomGroup.setVisibility(View.GONE);
+        ButterKnife.apply(mBottomViews, (view, index) -> view.setVisibility(View.GONE));
         mRecordsGroup.setVisibility(View.GONE);
         if (!isInEditMode()) {
             mInvoiceLicense.setEditable(false);
