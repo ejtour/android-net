@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
@@ -87,6 +88,8 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
     CooperationButtonView mButtonView;
     @BindView(R.id.txt_check_modal)
     TextView mTxtCheckModal;
+    @BindView(R.id.ll_check_modal)
+    LinearLayout mLlCheckModal;
 
     private SingleSelectionDialog mMaintainLevelDialog;
     private SingleSelectionDialog mCustomerLevelDialog;
@@ -176,6 +179,8 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
             mTxtShopsNum.setCompoundDrawables(null, null, null, null);
         }
 
+        //验货模式-已同意才显示
+        mLlCheckModal.setVisibility(TextUtils.equals("2", mDetail.getStatus()) ? View.VISIBLE : View.GONE);
         mTxtCheckModal.setText(mDetail.getInspector() == 1 ? "采购商验货" : mDetail.getInspector() == 2 ? "供应商验货" : "");
     }
 
