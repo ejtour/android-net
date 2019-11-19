@@ -281,7 +281,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
                     mReq.setChangeAllShops("1");
                 }
                 mPresenter.editShopSettlement(mReq);
-            }, "确认修改", "暂不修改")
+            }, "确认统一", "暂不统一")
             .create().show();
     }
 
