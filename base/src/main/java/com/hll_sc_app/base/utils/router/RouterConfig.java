@@ -1342,5 +1342,10 @@ public class RouterConfig {
      * 消息中心-通知
      */
     public static final String MESSAGE_NOTICE = "/activity/message/notice";
+
+    /**
+     * 消息中心-im
+     */
+    public static final String MESSAGE_CHAT = "/activity/message/chat";
 }
 

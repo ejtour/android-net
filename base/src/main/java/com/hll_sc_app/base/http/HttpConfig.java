@@ -128,12 +128,12 @@ public class HttpConfig {
         }
         switch (mEnv) {
             case Env.TEST:
-                return "172.16.32.78";
+                return "172.20.5.169";
             case Env.ONLINE:
             case Env.VIP:
                 return "im.22city.cn";
             default:
-                return "172.16.32.78";
+                return "172.20.5.169";
         }
     }
 

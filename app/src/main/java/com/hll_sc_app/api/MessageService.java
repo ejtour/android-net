@@ -21,7 +21,7 @@ import retrofit2.http.POST;
  */
 
 public interface MessageService {
-    MessageService INSTANCE = HttpFactory.create(MessageService.class);
+    MessageService INSTANCE = HttpFactory.create(MessageService.class, HttpConfig.getMessageHost());
 
     @POST(HttpConfig.URL)
     @Headers("pv:108002")
@@ -38,4 +38,8 @@ public interface MessageService {
     @POST(HttpConfig.URL)
     @Headers("pv:108004")
     Observable<BaseResp<Object>> markAsRead(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:109007")
+    Observable<BaseResp<Object>> clearUnreadMessage(@Body BaseMapReq req);
 }

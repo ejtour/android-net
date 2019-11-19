@@ -124,5 +124,10 @@ dependencies {
     //圆角textview
     implementation 'com.github.QQzs:BorderView:1.0.6'
 
-
+    // IM
+    implementation 'org.igniterealtime.smack:smack-tcp:4.3.3'
+    implementation 'org.igniterealtime.smack:smack-android:4.3.3'
+    implementation 'org.igniterealtime.smack:smack-experimental:4.3.3'
+    implementation 'cn.jiguang.imui:messagelist:0.8.0'
+    implementation 'cn.jiguang.imui:chatinput:0.10.0'
 }

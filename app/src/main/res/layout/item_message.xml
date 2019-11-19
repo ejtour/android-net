@@ -11,6 +11,7 @@
         android:id="@+id/im_image"
         android:layout_width="50dp"
         android:layout_height="0dp"
+        app:base_placeholder="@drawable/ic_group_placeholder"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
