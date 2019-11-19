@@ -26,6 +26,8 @@ import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -56,6 +58,10 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     private static final int MAX = 100;
     @Autowired(name = "parcelable", required = true)
     ShopSettlementReq mReq;
+    @Autowired(name = "detail")
+    CooperationPurchaserDetail mPurchaserDetail;
+    @Autowired(name = "shopBean")
+    PurchaserShopBean mShopDetail;
     @BindView(R.id.txt_accountPeriod)
     TextView mTxtAccountPeriod;
     @BindView(R.id.txt_settleDate)
@@ -78,9 +84,29 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     EditText mEdtSettleDate;
     @BindView(R.id.radio_group_modal)
     RadioGroup mRadioGroupModal;
+    @BindView(R.id.ll_check_modal)
+    LinearLayout mLlCheckModal;
 
 
     private CooperationShopSettlementPresenter mPresenter;
+
+    public static void start(ShopSettlementReq req, CooperationPurchaserDetail detail) {
+        ARouter.getInstance()
+                .build(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT)
+                .withParcelable("parcelable", req)
+                .withParcelable("detail", detail)
+                .setProvider(new LoginInterceptor())
+                .navigation();
+    }
+
+    public static void start(ShopSettlementReq req, PurchaserShopBean shopBean) {
+        ARouter.getInstance()
+                .build(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT)
+                .withParcelable("parcelable", req)
+                .withParcelable("shopBean", shopBean)
+                .setProvider(new LoginInterceptor())
+                .navigation();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +126,12 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             mPresenter.queryGroupParameterInSetting(mReq.getPurchaserID());
         }
         mRadioGroupModal.setOnCheckedChangeListener(this);
+
+        boolean isShowCheckModal = mPurchaserDetail != null && (TextUtils.isEmpty(mPurchaserDetail.getStatus()) || mPurchaserDetail.getCooperationActive() == 1);
+        mLlCheckModal.setVisibility(isShowCheckModal ? View.VISIBLE : View.GONE);
+        if (isShowCheckModal) {//只有新增的时候才显示，默认提供一个值
+            mReq.setInspector("0");
+        }
     }
 
     /**
@@ -357,9 +389,9 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if (checkedId == R.id.radio_purchaser) {
-            mReq.setInspector(0);
+            mReq.setInspector("0");
         } else if (checkedId == R.id.radio_supplyer) {
-            mReq.setInspector(1);
+            mReq.setInspector("1");
         }
     }
 }

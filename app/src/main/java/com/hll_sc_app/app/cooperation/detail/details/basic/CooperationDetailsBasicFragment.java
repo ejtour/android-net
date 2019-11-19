@@ -15,6 +15,7 @@ import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragm
 import com.hll_sc_app.app.cooperation.detail.details.CooperationButtonView;
 import com.hll_sc_app.app.cooperation.detail.details.CooperationDetailsActivity;
 import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
+import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -414,7 +415,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 req.setAccountPeriodType(mDetail.getDefaultAccountPeriodType());
                 req.setAccountPeriod(mDetail.getDefaultAccountPeriod());
                 req.setSettleDate(mDetail.getDefaultSettleDate());
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+                CooperationShopSettlementActivity.start(req,mDetail);
                 break;
             case CooperationSelectShopActivity.TYPE_DELIVERY:
                 // 修改配送方式

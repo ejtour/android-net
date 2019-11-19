@@ -15,6 +15,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
+import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -187,7 +188,7 @@ public class CooperationSelectShopActivity extends BaseLoadActivity {
         switch (mReq.getActionType()) {
             case TYPE_SETTLEMENT:
                 mReq.setShopIds(listShopIds);
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, mReq);
+                CooperationShopSettlementActivity.start(mReq, new PurchaserShopBean());
                 break;
             case TYPE_DELIVERY:
                 mReq.setShopIds(listShopIds);

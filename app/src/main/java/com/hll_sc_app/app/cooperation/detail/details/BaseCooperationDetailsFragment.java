@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.api.CooperationPurchaserService;
+import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -86,7 +87,7 @@ public abstract class BaseCooperationDetailsFragment extends BaseLazyFragment im
         req.setFrom(FROM_COOPERATION_DETAILS_AGREE);
         req.setPurchaserID(detail.getPurchaserID());
         // 同意之前先选择结算方式
-        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+        CooperationShopSettlementActivity.start(req,detail);
     }
 
     @Override
@@ -95,7 +96,7 @@ public abstract class BaseCooperationDetailsFragment extends BaseLazyFragment im
         req.setPurchaserName(detail.getName());
         req.setFrom(FROM_COOPERATION_DETAILS_ADD);
         req.setPurchaserID(detail.getPurchaserID());
-        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+        CooperationShopSettlementActivity.start(req,detail);
     }
 
     @Override
@@ -104,7 +105,7 @@ public abstract class BaseCooperationDetailsFragment extends BaseLazyFragment im
         req.setPurchaserName(detail.getName());
         req.setFrom(FROM_COOPERATION_DETAILS_REPEAT);
         req.setPurchaserID(detail.getPurchaserID());
-        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+        CooperationShopSettlementActivity.start(req,detail);
     }
 
     private void rejectRequest(String reply, CooperationPurchaserDetail detail) {

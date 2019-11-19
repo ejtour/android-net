@@ -48,13 +48,13 @@ public class ShopSettlementReq implements Parcelable {
     private String purchaserName;
     private String from;
 
-    private int inspector;
+    private String inspector;
 
-    public int getInspector() {
+    public String getInspector() {
         return inspector;
     }
 
-    public void setInspector(int inspector) {
+    public void setInspector(String inspector) {
         this.inspector = inspector;
     }
 
@@ -221,7 +221,7 @@ public class ShopSettlementReq implements Parcelable {
         dest.writeString(this.deliveryPeriod);
         dest.writeString(this.purchaserName);
         dest.writeString(this.from);
-        dest.writeInt(this.inspector);
+        dest.writeString(this.inspector);
     }
 
     protected ShopSettlementReq(Parcel in) {
@@ -242,7 +242,7 @@ public class ShopSettlementReq implements Parcelable {
         this.deliveryPeriod = in.readString();
         this.purchaserName = in.readString();
         this.from = in.readString();
-        this.inspector = in.readInt();
+        this.inspector = in.readString();
     }
 
     public static final Creator<ShopSettlementReq> CREATOR = new Creator<ShopSettlementReq>() {

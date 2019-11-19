@@ -17,12 +17,14 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.BaseCooperationApplicationFragment;
 import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragment;
+import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -109,7 +111,10 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
                     req.setFrom(BaseCooperationDetailsFragment.FROM_COOPERATION_DETAILS_AGREE);
                     req.setPurchaserID(bean.getPurchaserID());
                     // 同意之前先选择结算方式
-                    RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+                    CooperationPurchaserDetail purchaserDetail = new CooperationPurchaserDetail();
+                    purchaserDetail.setStatus(bean.getStatus());
+                    purchaserDetail.setCooperationActive(bean.getCooperationActive());
+                    CooperationShopSettlementActivity.start(req, purchaserDetail);
                 } else {
                     RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, bean.getPurchaserID());
                 }

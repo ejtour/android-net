@@ -16,6 +16,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
+import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -197,7 +198,7 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
                 req.setAccountPeriodType(mShopBean.getAccountPeriodType());
                 req.setAccountPeriod(mShopBean.getAccountPeriod());
                 req.setSettleDate(mShopBean.getSettleDate());
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, req);
+                CooperationShopSettlementActivity.start(req, mShopBean);
                 break;
             case CooperationSelectShopActivity.TYPE_DELIVERY:
                 req.setShopIds(Collections.singletonList(mShopBean.getShopID()));
