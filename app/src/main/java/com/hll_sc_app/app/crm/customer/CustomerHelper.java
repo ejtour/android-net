@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.crm.customer;
 
+import com.hll_sc_app.R;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/11/20
@@ -27,6 +29,19 @@ public class CustomerHelper {
                 return "低价值客户";
             default:
                 return "";
+        }
+    }
+
+    public static int getCustomerLevelFlag(String level){
+        switch (level) {
+            case "A":
+                return R.drawable.ic_a;
+            case "B":
+                return R.drawable.ic_b;
+            case "C":
+                return R.drawable.ic_c;
+            default:
+                return 0;
         }
     }
 

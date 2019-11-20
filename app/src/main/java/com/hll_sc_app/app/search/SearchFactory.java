@@ -10,6 +10,7 @@ import com.hll_sc_app.app.search.stratery.DiscountSearch;
 import com.hll_sc_app.app.search.stratery.EmployeeSearch;
 import com.hll_sc_app.app.search.stratery.GoodsNameSearch;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
+import com.hll_sc_app.app.search.stratery.IntentCustomerSearch;
 import com.hll_sc_app.app.search.stratery.NameSearch;
 import com.hll_sc_app.app.search.stratery.ProductNameSearch;
 import com.hll_sc_app.app.search.stratery.ProductSearch;
@@ -44,6 +45,7 @@ class SearchFactory {
         ITEM_MAP.put(EmployeeSearch.class.getSimpleName(), EmployeeSearch.class);
         ITEM_MAP.put(GoodsNameSearch.class.getSimpleName(), GoodsNameSearch.class);
         ITEM_MAP.put(GoodsSearch.class.getSimpleName(), GoodsSearch.class);
+        ITEM_MAP.put(IntentCustomerSearch.class.getSimpleName(), IntentCustomerSearch.class);
         ITEM_MAP.put(NameSearch.class.getSimpleName(), NameSearch.class);
         ITEM_MAP.put(ProductNameSearch.class.getSimpleName(), ProductNameSearch.class);
         ITEM_MAP.put(ProductSearch.class.getSimpleName(), ProductSearch.class);

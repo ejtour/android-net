@@ -7,6 +7,7 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.customer.CrmCustomerResp;
 import com.hll_sc_app.bean.customer.CrmShopResp;
 import com.hll_sc_app.bean.customer.CustomerBean;
@@ -56,6 +57,28 @@ public class Customer {
     public static void saveIntentCustomer(CustomerBean bean, SimpleObserver<Object> observer) {
         CustomerService.INSTANCE
                 .saveIntentCustomer(new BaseReq<>(bean))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询意向客户
+     *
+     * @param all         是否为全部
+     * @param pageNum     页码
+     * @param searchWords 客户名称
+     */
+    public static void queryIntentCustomer(boolean all, int pageNum, String searchWords, SimpleObserver<SingleListResp<CustomerBean>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        CustomerService.INSTANCE
+                .queryIntentCustomer(BaseMapReq.newBuilder()
+                        .put("groupID", user.getGroupID())
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .put("customerName", searchWords)
+                        .put("employeeID", all ? "" : user.getEmployeeID())
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

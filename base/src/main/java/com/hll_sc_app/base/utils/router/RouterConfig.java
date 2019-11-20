@@ -1352,5 +1352,10 @@ public class RouterConfig {
      * 客户-意向客户-新增
      */
     public static final String CRM_CUSTOMER_INTENT_ADD = "/activity/customer/intent/add";
+
+    /**
+     * 客户-意向客户
+     */
+    public static final String CRM_CUSTOMER_INTENT = "/activity/customer/intent";
 }
 

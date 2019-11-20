@@ -17,6 +17,7 @@ import com.hll_sc_app.app.crm.customer.add.CustomerAddActivity;
 import com.hll_sc_app.app.crm.customer.intent.add.AddCustomerActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.customer.CrmCustomerResp;
 import com.hll_sc_app.bean.customer.CrmShopResp;
 import com.hll_sc_app.bean.home.VisitResp;
@@ -120,6 +121,7 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
 
     @OnClick(R.id.fcc_intent_btn)
     public void intent() {
+        RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_INTENT);
     }
 
     @OnClick(R.id.fcc_partner_btn)
