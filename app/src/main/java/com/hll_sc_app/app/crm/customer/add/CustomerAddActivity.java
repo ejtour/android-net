@@ -3,7 +3,8 @@ package com.hll_sc_app.app.crm.customer.add;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -21,6 +22,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.customer.CustomerHelper;
 import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -39,6 +41,7 @@ import butterknife.OnClick;
 
 @Route(path = RouterConfig.CRM_CUSTOMER_ADD)
 public class CustomerAddActivity extends BaseActivity {
+    private static final int REQ_CODE = 0x882;
 
     @BindView(R.id.cca_unregistered)
     TextView mUnregistered;
@@ -50,11 +53,12 @@ public class CustomerAddActivity extends BaseActivity {
     ImageView mDismiss;
     private ObjectAnimator mDismissAnimator;
     private int mMax;
+    private Intent mIntent;
 
-    public static void start(Context context) {
+    public static void start(Activity context) {
         ARouter.getInstance().build(RouterConfig.CRM_CUSTOMER_ADD)
                 .withOptionsCompat(ActivityOptionsCompat.makeCustomAnimation(context, 0, 0))
-                .navigation(context);
+                .navigation(context, REQ_CODE);
     }
 
     @Override
@@ -119,21 +123,42 @@ public class CustomerAddActivity extends BaseActivity {
 
     @OnClick(R.id.cca_plan)
     public void plan() {
+        mIntent = new Intent();
+        mIntent.putExtra(CustomerHelper.GOTO_KEY, CustomerHelper.GOTO_PLAN);
+        finishDirectly();
+    }
+
+    private void finishDirectly() {
+        setResult(RESULT_OK, mIntent);
+        finish();
+        overridePendingTransition(0, 0);
     }
 
     @OnClick(R.id.cca_record)
     public void record() {
+        mIntent = new Intent();
+        mIntent.putExtra(CustomerHelper.GOTO_KEY, CustomerHelper.GOTO_RECORD);
+        finishDirectly();
     }
 
     @OnClick(R.id.cca_unregistered)
     public void unregistered() {
+        mIntent = new Intent();
+        mIntent.putExtra(CustomerHelper.GOTO_KEY, CustomerHelper.GOTO_PARTNER_UNREGISTERED);
+        finishDirectly();
     }
 
     @OnClick(R.id.cca_registered)
     public void registered() {
+        mIntent = new Intent();
+        mIntent.putExtra(CustomerHelper.GOTO_KEY, CustomerHelper.GOTO_PARTNER_REGISTERED);
+        finishDirectly();
     }
 
     @OnClick(R.id.cca_intent)
     public void intent() {
+        mIntent = new Intent();
+        mIntent.putExtra(CustomerHelper.GOTO_KEY, CustomerHelper.GOTO_INTENT);
+        finishDirectly();
     }
 }

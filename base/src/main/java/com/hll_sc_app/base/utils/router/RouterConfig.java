@@ -1347,5 +1347,10 @@ public class RouterConfig {
      * 消息中心-im
      */
     public static final String MESSAGE_CHAT = "/activity/message/chat";
+
+    /**
+     * 客户-意向客户-新增
+     */
+    public static final String CRM_CUSTOMER_INTENT_ADD = "/activity/customer/intent/add";
 }
 

@@ -1237,6 +1237,10 @@
             android:name=".app.message.chat.MessageChatActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.crm.customer.intent.add.AddCustomerActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

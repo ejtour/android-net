@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.crm.customer;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.add.CustomerAddActivity;
+import com.hll_sc_app.app.crm.customer.intent.add.AddCustomerActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.customer.CrmCustomerResp;
@@ -54,6 +57,7 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
     @BindView(R.id.fcc_record_right)
     TextView mRecordRight;
     Unbinder unbinder;
+    private CrmCustomerPresenter mPresenter;
 
     @Nullable
     @Override
@@ -65,10 +69,30 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                switch (data.getIntExtra(CustomerHelper.GOTO_KEY, 0)) {
+                    case CustomerHelper.GOTO_INTENT:
+                        AddCustomerActivity.start(requireActivity(), null);
+                        break;
+                    case CustomerHelper.GOTO_PARTNER_REGISTERED:
+                    case CustomerHelper.GOTO_PARTNER_UNREGISTERED:
+                    case CustomerHelper.GOTO_PLAN:
+                    case CustomerHelper.GOTO_RECORD:
+                    default:
+                        break;
+                }
+            } else mPresenter.start();
+        }
+    }
+
     private void initData() {
-        ICrmCustomerContract.ICrmCustomerPresenter presenter = new CrmCustomerPresenter();
-        presenter.register(this);
-        presenter.start();
+        mPresenter = new CrmCustomerPresenter();
+        mPresenter.register(this);
+        mPresenter.start();
     }
 
     private void initView() {
@@ -91,7 +115,7 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
 
     @OnClick(R.id.fcc_add)
     public void add() {
-        CustomerAddActivity.start(requireContext());
+        CustomerAddActivity.start(requireActivity());
     }
 
     @OnClick(R.id.fcc_intent_btn)
