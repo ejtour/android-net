@@ -43,4 +43,8 @@ public interface CustomerService {
     @POST(HttpConfig.URL)
     @Headers("pv:107007")
     Observable<BaseResp<SingleListResp<VisitRecordBean>>> queryVisitRecord(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107008")
+    Observable<BaseResp<Object>> delVisitRecord(@Body BaseMapReq req);
 }

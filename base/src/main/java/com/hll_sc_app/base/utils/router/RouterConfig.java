@@ -1362,5 +1362,10 @@ public class RouterConfig {
      * 客户-意向客户-详情
      */
     public static final String CRM_CUSTOMER_INTENT_DETAIL = "/activity/customer/intent/detail";
+
+    /**
+     * 客户-拜访记录
+     */
+    public static final String CRM_CUSTOMER_RECORD = "/activity/customer/record";
 }
 
