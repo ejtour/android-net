@@ -26,7 +26,8 @@ public class CrmOrderListAdapter extends BaseQuickAdapter<OrderResp, BaseViewHol
 
     @Override
     protected void convert(BaseViewHolder helper, OrderResp item) {
-        GlideImageView imageView = helper.setText(R.id.col_name, item.getPurchaserName())
+        String name = TextUtils.isEmpty(item.getStallName()) ? "" : (item.getStallName() + " - ") + item.getPurchaserName();
+        GlideImageView imageView = helper.setText(R.id.col_name, name)
                 .setText(R.id.col_status, getStatus(item.getSubBillStatus()))
                 .setText(R.id.col_money, processMoney(item.getTotalAmount()))
                 .setText(R.id.col_settlement_status, item.getSettlementStatus() == 2 ? "（已结算）" : "（未结算）")
