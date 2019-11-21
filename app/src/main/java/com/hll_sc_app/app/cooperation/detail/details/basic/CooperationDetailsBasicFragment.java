@@ -395,7 +395,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                     .setOnSelectListener(bean -> {
                         mPresenter.changeGroupParams("inspector", bean.getValue(), mDetail.getPurchaserID());
                     })
-                    .setAlertText("启用验货模式，当订单中包含已发货但未验货的订单时，不可切换其他模式。")
+//                    .setAlertText("启用验货模式，当订单中包含已发货但未验货的订单时，不可切换其他模式。")
                     .refreshList(values)
                     .create();
         }
