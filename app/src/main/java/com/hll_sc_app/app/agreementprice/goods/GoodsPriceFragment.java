@@ -252,7 +252,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
 
     @Override
     public String getCategoryId() {
-        String categoryId = null;
+        String categoryId = "";
         if (mTxtCategory.getTag() != null) {
             categoryId = (String) mTxtCategory.getTag();
         }
@@ -261,7 +261,7 @@ public class GoodsPriceFragment extends BaseAgreementPriceFragment implements Go
 
     @Override
     public String getShopIds() {
-        String shopIds = null;
+        String shopIds = "";
         if (mTxtPurchaser.getTag() != null) {
             shopIds = (String) mTxtPurchaser.getTag();
         }
