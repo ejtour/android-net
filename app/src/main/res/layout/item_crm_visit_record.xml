@@ -17,6 +17,7 @@
             android:layout_marginRight="12dp"
             android:drawableLeft="@drawable/ic_valid"
             android:drawablePadding="3dp"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="@id/cvr_name"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,6 +79,7 @@
         android:id="@+id/cvr_del"
         android:layout_width="60dp"
         android:layout_height="100dp"
+        android:background="@color/color_ff655d"
         android:gravity="center"
         android:text="删除"
         android:textAppearance="@style/TextAppearance.City22.Small.White" />
