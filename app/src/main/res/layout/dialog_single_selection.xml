@@ -48,7 +48,7 @@
         android:textSize="10sp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/dss_divider"
-        tools:text="启用验货模式，当订单中包含已发货但未验货的订单时，不可切换其他模式。"
+        tools:text="xxxxxxxxxxxxxxx"
         tools:visibility="visible" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/dss_list_view"
