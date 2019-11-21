@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.CustomerHelper;
@@ -89,6 +90,7 @@ public class AddCustomerActivity extends BaseLoadActivity implements IAddCustome
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_crm_customer_intent_add);
+        ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initData();
     }
@@ -102,6 +104,7 @@ public class AddCustomerActivity extends BaseLoadActivity implements IAddCustome
             mManager.setText(user.getEmployeeName());
             mBean.setActionType(1);
         } else {
+            mTitleBar.setHeaderTitle("修改意向客户");
             mBean.setActionType(2);
             mBean.preProcess();
             mType.setText(CustomerHelper.getCustomerType(mBean.getCustomerType()));
@@ -187,6 +190,9 @@ public class AddCustomerActivity extends BaseLoadActivity implements IAddCustome
         UIUtils.hideActivitySoftKeyboard(this);
         if (mAreaWindow == null) {
             mAreaWindow = new AreaSelectWindow(this);
+            if (mBean.getCustomerArea() != null) {
+                mAreaWindow.select(mBean.getCustomerProvinceCode(), mBean.getCustomerCityCode(), mBean.getCustomerDistrictCode());
+            }
             mAreaWindow.setResultSelectListener(t -> {
                 CustomerAreaBean area = mBean.getCustomerArea();
                 if (area == null) {
@@ -264,6 +270,7 @@ public class AddCustomerActivity extends BaseLoadActivity implements IAddCustome
 
     @Override
     public void saveSuccess() {
+        showToast("保存成功");
         setResult(RESULT_OK);
         finish();
     }

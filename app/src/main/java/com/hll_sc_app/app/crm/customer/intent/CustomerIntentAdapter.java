@@ -1,15 +1,16 @@
 package com.hll_sc_app.app.crm.customer.intent;
 
+import android.app.Activity;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.CustomerHelper;
+import com.hll_sc_app.app.crm.customer.intent.detail.CustomerDetailActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.customer.CustomerBean;
-import com.hll_sc_app.citymall.util.ToastUtils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -20,7 +21,9 @@ public class CustomerIntentAdapter extends BaseQuickAdapter<CustomerBean, BaseVi
     CustomerIntentAdapter() {
         super(R.layout.item_crm_customer_intent);
         setOnItemChildClickListener((adapter, view, position) -> UIUtils.callPhone(view.getContext(), view.getTag().toString()));
-        setOnItemClickListener((adapter, view, position) -> ToastUtils.showShort("详情待添加"));
+        setOnItemClickListener((adapter, view, position) -> {
+            CustomerDetailActivity.start(((Activity) view.getContext()), getItem(position));
+        });
     }
 
     @Override

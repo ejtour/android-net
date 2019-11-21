@@ -9,6 +9,7 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.customer.CrmCustomerResp;
 import com.hll_sc_app.bean.customer.CrmShopResp;
 import com.hll_sc_app.bean.customer.CustomerBean;
+import com.hll_sc_app.bean.customer.VisitRecordBean;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -38,4 +39,8 @@ public interface CustomerService {
     @POST(HttpConfig.URL)
     @Headers("pv:107002")
     Observable<BaseResp<SingleListResp<CustomerBean>>> queryIntentCustomer(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107007")
+    Observable<BaseResp<SingleListResp<VisitRecordBean>>> queryVisitRecord(@Body BaseMapReq req);
 }
