@@ -14,7 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tb_rightImage="@drawable/ic_edit"
-        app:tb_rightVisibility="true"
         app:tb_title="客户详情" />
 
     <ImageView
