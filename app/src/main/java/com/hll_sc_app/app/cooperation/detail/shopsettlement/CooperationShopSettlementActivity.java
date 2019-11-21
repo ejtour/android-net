@@ -393,9 +393,9 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         if (checkedId == R.id.radio_purchaser) {
-            mReq.setInspector("0");
-        } else if (checkedId == R.id.radio_supplyer) {
             mReq.setInspector("1");
+        } else if (checkedId == R.id.radio_supplyer) {
+            mReq.setInspector("2");
         }
     }
 }
