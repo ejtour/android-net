@@ -26,6 +26,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.filter.DateParam;
+import com.hll_sc_app.bean.invoice.InvoiceBean;
 import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceOrderBean;
 import com.hll_sc_app.bean.invoice.InvoiceOrderResp;
@@ -64,6 +65,8 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
     public static void start(List<PurchaserShopBean> list) {
         PurchaserShopBean firstShop = list.get(0);
         InvoiceMakeReq req = new InvoiceMakeReq();
+        req.setInvoiceType(1);
+        req.setTitleType(1);
         req.setTelephone(firstShop.getSalesmanPhone());
         req.setReceiver(firstShop.getSalesmanName());
         List<String> shopIDList = new ArrayList<>();
@@ -73,6 +76,28 @@ public class SelectOrderActivity extends BaseLoadActivity implements ISelectOrde
         req.setShopIDList(shopIDList);
         req.setPurchaserName(firstShop.getPurchaserName());
         req.setPurchaserID(firstShop.getPurchaserID());
+        RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_ORDER, req);
+    }
+
+    /**
+     * @param bean 原发票信息
+     */
+    public static void start(InvoiceBean bean) {
+        if (bean == null) return;
+        InvoiceMakeReq req = new InvoiceMakeReq();
+        req.setInvoiceType(bean.getInvoiceType());
+        req.setTelephone(bean.getTelephone());
+        req.setReceiver(bean.getReceiver());
+        req.setShopIDList(bean.getShopIDList());
+        req.setPurchaserName(bean.getPurchaserName());
+        req.setPurchaserID(bean.getPurchaserID());
+        req.setTitleType(bean.getTitleType());
+        req.setInvoiceTitle(bean.getInvoiceTitle());
+        req.setTaxpayerNum(bean.getTaxpayerNum());
+        req.setOpenBank(bean.getOpenBank());
+        req.setNote(bean.getNote());
+        req.setAddress(bean.getAddress());
+        req.setAccount(bean.getAccount());
         RouterUtil.goToActivity(RouterConfig.INVOICE_SELECT_ORDER, req);
     }
 

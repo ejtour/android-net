@@ -13,9 +13,8 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.invoice.search.InvoiceSearchActivity;
 import com.hll_sc_app.app.invoice.select.order.SelectOrderActivity;
-import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.ShopSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -55,9 +54,9 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
     @BindView(R.id.iss_commit)
     TextView mCommit;
     private ISelectShopContract.ISelectShopPresenter mPresenter;
-    private String mSearchWords;
     private SelectShopAdapter mAdapter;
     private EmptyView mEmptyView;
+    private boolean mIsShop;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,13 +88,12 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(SelectShopActivity.this,
-                        searchContent, ShopSearch.class.getSimpleName());
+                InvoiceSearchActivity.start(SelectShopActivity.this,
+                        searchContent, isShop() ? "1" : "0");
             }
 
             @Override
             public void toSearch(String searchContent) {
-                mSearchWords = searchContent;
                 mPresenter.start();
             }
         });
@@ -129,6 +127,7 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             String name = data.getStringExtra("name");
+            mIsShop = data.getIntExtra("index", 1) == 1;
             if (!TextUtils.isEmpty(name))
                 mSearchView.showSearchContent(true, name);
         }
@@ -159,7 +158,12 @@ public class SelectShopActivity extends BaseLoadActivity implements ISelectShopC
 
     @Override
     public String getSearchWords() {
-        return mSearchWords;
+        return mSearchView.getSearchContent();
+    }
+
+    @Override
+    public boolean isShop() {
+        return mIsShop;
     }
 
     @Override

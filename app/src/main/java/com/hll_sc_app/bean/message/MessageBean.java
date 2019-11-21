@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.message;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.utils.Constants;
@@ -10,7 +13,18 @@ import com.hll_sc_app.utils.DateUtil;
  * @since 2019/11/18
  */
 
-public class MessageBean {
+public class MessageBean implements Parcelable {
+    public static final Creator<MessageBean> CREATOR = new Creator<MessageBean>() {
+        @Override
+        public MessageBean createFromParcel(Parcel in) {
+            return new MessageBean(in);
+        }
+
+        @Override
+        public MessageBean[] newArray(int size) {
+            return new MessageBean[size];
+        }
+    };
     @SerializedName(value = "senderName", alternate = "messageTypeName")
     private String name;
     @SerializedName(value = "unreadCount", alternate = "unreadNum")
@@ -33,6 +47,52 @@ public class MessageBean {
     private String topicName;
     private int receiveType;
     private int messageTypeCode;
+
+    protected MessageBean(Parcel in) {
+        name = in.readString();
+        unreadCount = in.readInt();
+        imgUrl = in.readString();
+        time = in.readString();
+        message = in.readString();
+        receiver = in.readString();
+        dataType = in.readString();
+        source = in.readInt();
+        receiverLogo = in.readString();
+        reveiverName = in.readString();
+        topicID = in.readString();
+        createTime = in.readString();
+        sender = in.readString();
+        topic = in.readString();
+        topicName = in.readString();
+        receiveType = in.readInt();
+        messageTypeCode = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(unreadCount);
+        dest.writeString(imgUrl);
+        dest.writeString(time);
+        dest.writeString(message);
+        dest.writeString(receiver);
+        dest.writeString(dataType);
+        dest.writeInt(source);
+        dest.writeString(receiverLogo);
+        dest.writeString(reveiverName);
+        dest.writeString(topicID);
+        dest.writeString(createTime);
+        dest.writeString(sender);
+        dest.writeString(topic);
+        dest.writeString(topicName);
+        dest.writeInt(receiveType);
+        dest.writeInt(messageTypeCode);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public void preProcess() {
         time = DateUtil.getReadableTime(time, Constants.SLASH_YYYY_MM_DD_HH_MM);

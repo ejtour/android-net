@@ -91,7 +91,7 @@ public class Invoice {
     public static void getInvoiceHistory(int titleType, SimpleObserver<InvoiceHistoryResp> observer) {
         InvoiceService.INSTANCE
                 .getInvoiceHistory(BaseMapReq.newBuilder()
-                        .put("pageSize", "3")
+                        .put("pageSize", "9999")
                         .put("pageNum", "1")
                         .put("titleType", String.valueOf(titleType))
                         .put("userID", GreenDaoUtils.getUser().getEmployeeID())

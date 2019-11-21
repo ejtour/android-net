@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.message.chat.MessageChatActivity;
 import com.hll_sc_app.app.message.detail.MessageDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
@@ -93,7 +94,7 @@ public class MessageActivity extends BaseLoadActivity implements IMessageContrac
             if (item == null) return;
             if (item.getMessageTypeCode() != 0) {
                 MessageDetailActivity.start(this, item.getMessageTypeCode());
-            }
+            } else MessageChatActivity.start(item);
         });
     }
 

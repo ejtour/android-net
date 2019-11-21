@@ -1,7 +1,5 @@
 package com.hll_sc_app.app.invoice.select.shop;
 
-import android.os.Bundle;
-
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -40,7 +38,7 @@ public class SelectShopPresenter implements ISelectShopContract.ISelectShopPrese
                         .put("pageNo", String.valueOf(mPageNum))
                         .put("pageSize", "20")
                         .put("salesmanID", user.getEmployeeID())
-                        .put("searchParams", mView.getSearchWords())
+                        .put(mView.isShop() ? "searchParams" : "purchaserName", mView.getSearchWords())
                         .create(),
                 new SimpleObserver<CooperationShopListResp>(mView, showLoading) {
                     @Override

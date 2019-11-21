@@ -55,6 +55,8 @@ public class InvoiceBean {
     private String businessBeginDate;
     private String businessEndDate;
 
+    private List<String> shopIDList;
+
     public String getCreateTime() {
         return createTime;
     }
@@ -381,5 +383,13 @@ public class InvoiceBean {
 
     public void setBusinessEndDate(String businessEndDate) {
         this.businessEndDate = businessEndDate;
+    }
+
+    public List<String> getShopIDList() {
+        return shopIDList;
+    }
+
+    public void setShopIDList(List<String> shopIDList) {
+        this.shopIDList = shopIDList;
     }
 }

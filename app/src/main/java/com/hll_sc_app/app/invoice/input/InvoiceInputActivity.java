@@ -11,7 +11,9 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.Postcard;
@@ -37,16 +39,17 @@ import com.hll_sc_app.bean.invoice.InvoiceMakeReq;
 import com.hll_sc_app.bean.invoice.InvoiceMakeResp;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.KeyboardWatcher;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
+import com.hll_sc_app.widget.TitleBar;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,17 +66,17 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
  * @since 2019/8/9
  */
 @Route(path = RouterConfig.INVOICE_INPUT)
-public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup.OnCheckedChangeListener, IInvoiceInputContract.IInvoiceInputView, BaseQuickAdapter.OnItemClickListener {
+public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup.OnCheckedChangeListener, IInvoiceInputContract.IInvoiceInputView, BaseQuickAdapter.OnItemClickListener, KeyboardWatcher.SoftKeyboardStateListener {
 
     /**
      * @param req 发票请求参数
      */
     public static void start(InvoiceMakeReq req) {
-        req.setInvoiceType(1);
-        req.setTitleType(1);
         RouterUtil.goToActivity(RouterConfig.INVOICE_INPUT, req);
     }
 
+    @BindView(R.id.aii_title_bar)
+    TitleBar mTitleBar;
     @BindView(R.id.aii_confirm)
     TextView mConfirm;
     @BindView(R.id.aii_invoice_type)
@@ -82,6 +85,10 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     TextView mInvoiceAmount;
     @BindView(R.id.aii_radio_group)
     RadioGroup mRadioGroup;
+    @BindView(R.id.aii_type_company)
+    RadioButton mCompany;
+    @BindView(R.id.aii_type_personal)
+    RadioButton mPersonal;
     @BindView(R.id.aii_invoice_title)
     EditText mInvoiceTitle;
     @BindView(R.id.aii_identifier)
@@ -102,6 +109,8 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     EditText mRemark;
     @BindView(R.id.aii_list_view)
     RecyclerView mListView;
+    @BindView(R.id.aii_scroll_view)
+    ScrollView mScrollView;
     @Autowired(name = "parcelable")
     InvoiceMakeReq mMakeReq;
     private SingleSelectionDialog mTypeDialog;
@@ -111,6 +120,7 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     //    private InvoiceHistoryResp mHistoryResp;
     private InvoiceMakeResp mMakeResp;
     private boolean mNeedAssociate = true;
+    private KeyboardWatcher mKeyboardWatcher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,11 +140,19 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
     private void initData() {
         mPresenter = InvoiceInputPresenter.newInstance();
         mPresenter.register(this);
-        mPresenter.reqInvoiceHistory(1);
         textObservable();
+        inflateData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mKeyboardWatcher.removeSoftKeyboardStateListener(this);
+        super.onDestroy();
     }
 
     private void initView() {
+        mKeyboardWatcher = new KeyboardWatcher(this);
+        mKeyboardWatcher.addSoftKeyboardStateListener(this);
         mInvoiceAmount.setText(CommonUtils.formatNumber(mMakeReq.getInvoicePrice()));
         mRecipient.setText(mMakeReq.getReceiver());
         mPhone.setText(mMakeReq.getTelephone());
@@ -144,10 +162,31 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         mAdapter.setOnItemClickListener(this);
     }
 
+    private void inflateData() {
+        mInvoiceType.setText(getInvoiceType(mMakeReq.getInvoiceType()));
+        if (mMakeReq.getTitleType() == 1) mCompany.setChecked(true);
+        else mPersonal.setChecked(true);
+        setInvoiceTile(mMakeReq.getInvoiceTitle());
+        mIdentifier.setText(mMakeReq.getTaxpayerNum());
+        mAccount.setText(mMakeReq.getAccount());
+        mBank.setText(mMakeReq.getOpenBank());
+        mAddress.setText(mMakeReq.getAddress());
+        mRemark.setText(mMakeReq.getNote());
+    }
+
+    private String getInvoiceType(int type) {
+        switch (type) {
+            case 1:
+                return "普通发票";
+            case 2:
+                return "专用发票";
+        }
+        return "";
+    }
+
     private void textObservable() {
         Observable.<String>create(emitter -> mEmitter = emitter)
-                .filter(s -> s.length() > 0)
-                .debounce(500, TimeUnit.MILLISECONDS)
+                // .debounce(500, TimeUnit.MILLISECONDS) // 本地匹配暂时不去抖
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(this))).subscribe(mPresenter::search);
     }
 
@@ -170,14 +209,14 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             List<NameValue> list = new ArrayList<>();
             list.add(new NameValue("普通发票", String.valueOf(1)));
             list.add(new NameValue("专用发票", String.valueOf(2)));
-            NameValue cur = list.get(0);
+            NameValue cur = list.get(mMakeReq.getInvoiceType() - 1);
             mTypeDialog = SingleSelectionDialog
                     .newBuilder(this, NameValue::getName)
                     .setTitleText("选择发票类型")
                     .refreshList(list)
                     .setOnSelectListener(nameValue -> {
                         mInvoiceType.setText(nameValue.getName());
-                        mMakeReq.setInvoiceType(Integer.valueOf(nameValue.getValue()));
+                        mMakeReq.setInvoiceType(Integer.parseInt(nameValue.getValue()));
                     })
                     .select(cur)
                     .create();
@@ -191,11 +230,11 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
             mMakeReq.setTitleType(1);
             mInvoiceTitle.setHint("请输入企业名称");
             mIdentifierGroup.setVisibility(View.VISIBLE);
-        } else {
+        } else if (checkedId == R.id.aii_type_personal) {
             mMakeReq.setTitleType(2);
             mInvoiceTitle.setHint("请输入抬头名称");
             mIdentifierGroup.setVisibility(View.GONE);
-        }
+        } else return;
         mPresenter.reqInvoiceHistory(mMakeReq.getTitleType());
         updateEnable();
     }
@@ -324,15 +363,36 @@ public class InvoiceInputActivity extends BaseLoadActivity implements RadioGroup
         if (item == null) return;
 //        mHistoryWindow.dismiss();
         mListView.setVisibility(View.GONE);
-        mNeedAssociate = false;
-        mInvoiceTitle.setText(item.getInvoiceTitle());
+        setInvoiceTile(item.getInvoiceTitle());
         mInvoiceTitle.setSelection(item.getInvoiceTitle().length());
-        mNeedAssociate = true;
         if (mIdentifierGroup.getVisibility() == View.VISIBLE) {
             mIdentifier.setText(item.getTaxpayerNum());
         } else mIdentifier.setText("");
         mAccount.setText(item.getAccount());
         mBank.setText(item.getOpenBank());
         mAddress.setText(item.getAddress());
+    }
+
+    private void setInvoiceTile(String title) {
+        mNeedAssociate = false;
+        mInvoiceTitle.setText(title);
+        mNeedAssociate = true;
+    }
+
+    @Override
+    public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+        View view = getCurrentFocus();
+        if (view != null && view.getId() == mInvoiceTitle.getId()) {
+            int[] location = new int[2];
+            mInvoiceTitle.getLocationOnScreen(location);
+            int y = location[1];
+            mScrollView.getLocationOnScreen(location);
+            mScrollView.scrollBy(0, y - location[1]);
+        }
+    }
+
+    @Override
+    public void onSoftKeyboardClosed() {
+
     }
 }

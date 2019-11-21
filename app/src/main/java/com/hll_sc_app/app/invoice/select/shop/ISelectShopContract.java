@@ -16,6 +16,8 @@ public interface ISelectShopContract {
         void setListData(List<PurchaserShopBean> beans, boolean isMore);
 
         String getSearchWords();
+
+        boolean isShop();
     }
 
     interface ISelectShopPresenter extends IPresenter<ISelectShopView> {

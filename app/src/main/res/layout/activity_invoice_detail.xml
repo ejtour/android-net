@@ -19,6 +19,7 @@
         android:id="@+id/aid_bottom_bg"
         android:layout_width="0dp"
         android:layout_height="@dimen/bottom_bar_height"
+        android:visibility="gone"
         android:background="@drawable/base_bg_shadow_bottom_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,6 +31,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:visibility="gone"
         android:text="确认信息无误，确认开票"
         app:layout_constraintBottom_toBottomOf="@id/aid_bottom_bg"
         app:layout_constraintEnd_toEndOf="@id/aid_bottom_bg"
@@ -40,17 +42,11 @@
         style="@style/BtnAfterSalesAction.PrimaryStroke"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:visibility="gone"
         android:text="信息有误，驳回"
         app:layout_constraintBottom_toBottomOf="@id/aid_bottom_bg"
         app:layout_constraintEnd_toStartOf="@id/aid_confirm"
         app:layout_constraintTop_toTopOf="@id/aid_bottom_bg" />
-
-    <android.support.constraint.Group
-        android:id="@+id/aid_bottom_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="aid_bottom_bg,aid_confirm,aid_reject" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="0dp"

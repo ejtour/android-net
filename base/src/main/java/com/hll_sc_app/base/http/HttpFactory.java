@@ -1,6 +1,7 @@
 package com.hll_sc_app.base.http;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.citymall.App;
@@ -16,6 +17,8 @@ import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -44,6 +47,7 @@ public class HttpFactory {
     private static final String SIGN_KEY = "813eae6fe94441fbb39d24f641440541";
     private static final String SOURCE = "shopmall-supplier";
     private static GsonConverterFactory factory = GsonConverterFactory.create();
+    private static final List<String> MESSAGE_LIST = Arrays.asList("108001", "108002", "108003", "108004", "108010");
 
     private static OkHttpClient create() {
         return new OkHttpClient.Builder()
@@ -138,6 +142,19 @@ public class HttpFactory {
             if (isPlaintext(buffer)) {
                 body = buffer.readString(charset);
             }
+            // 请求接口地址替换
+            String url = null;
+            if (!TextUtils.isEmpty(pv)) {
+                if (TextUtils.equals("99999", pv)) {
+                    // 小流量请求接口
+                    url = HttpConfig.getVipHost() + "/shopmall/urlRouter";
+                } else if (MESSAGE_LIST.contains(pv)) {
+                    // 消息部分的接口
+                    url = HttpConfig.getMessageHost() + HttpConfig.URL;
+                } else {
+                    url = chain.request().url().toString();
+                }
+            }
             // 拼接签名前字符串
             Request.Builder builder = chain.request().newBuilder()
                 .addHeader("accessToken", UserConfig.accessToken())
@@ -147,7 +164,7 @@ public class HttpFactory {
                 .addHeader("cv", SystemUtils.getVersionName(App.INSTANCE))
                 .addHeader("sign", Md5Utils.getMD5(SIGN_KEY + "_" + pv + "_" + body))
                 .addHeader("groupID", UserConfig.getGroupID());
-            return chain.proceed(builder.build());
+            return chain.proceed(TextUtils.isEmpty(url) ? builder.build() : builder.url(url).build());
         }
     }
 

@@ -863,6 +863,11 @@ public class RouterConfig {
     public static final String INVOICE_DETAIL_SHOP = "/activity/invoice/detail/shop";
 
     /**
+     * 发票管理-门店搜索
+     */
+    public static final String INVOICE_SEARCH = "/activity/invoice/search";
+
+    /**
      * 发票管理-选择开票门店
      */
     public static final String INVOICE_SELECT_SHOP = "/activity/invoice/select/shop";
@@ -1337,5 +1342,20 @@ public class RouterConfig {
      * 消息中心-通知
      */
     public static final String MESSAGE_NOTICE = "/activity/message/notice";
+
+    /**
+     * 消息中心-im
+     */
+    public static final String MESSAGE_CHAT = "/activity/message/chat";
+
+    /**
+     * 客户-意向客户-新增
+     */
+    public static final String CRM_CUSTOMER_INTENT_ADD = "/activity/customer/intent/add";
+
+    /**
+     * 客户-意向客户
+     */
+    public static final String CRM_CUSTOMER_INTENT = "/activity/customer/intent";
 }
 

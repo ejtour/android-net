@@ -115,4 +115,20 @@ public class Message {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+    /**
+     * 清除未读消息
+     *
+     * @param topic 主题
+     */
+    public static void clearUnreadMessage(String topic, SimpleObserver<Object> observer) {
+        MessageService.INSTANCE
+                .clearUnreadMessage(BaseMapReq.newBuilder()
+                        .put("topic", topic)
+                        .put("userID", GreenDaoUtils.getUser().getEmployeeID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }

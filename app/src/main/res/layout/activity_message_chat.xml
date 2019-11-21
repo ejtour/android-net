@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/amc_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height" />
+
+    <cn.jiguang.imui.messages.MessageList
+        android:id="@+id/amc_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/amc_input"
+        android:layout_below="@+id/amc_title_bar"
+        app:avatarHeight="48dp"
+        app:avatarRadius="5dp"
+        app:avatarWidth="48dp"
+        app:bubbleMaxWidth="0.7"
+        app:dateTextSize="14sp"
+        app:receiveBubblePaddingLeft="16dp"
+        app:receiveBubblePaddingRight="8dp"
+        app:receiveTextColor="@android:color/white"
+        app:receiveTextSize="@dimen/text_large_size"
+        app:sendBubblePaddingLeft="8dp"
+        app:sendBubblePaddingRight="16dp"
+        app:sendTextColor="#7587A8"
+        app:sendTextSize="@dimen/text_large_size"
+        app:showReceiverDisplayName="false"
+        app:showSenderDisplayName="false" />
+
+    <cn.jiguang.imui.chatinput.ChatInputView
+        android:id="@+id/amc_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:cameraQuality="0.6"
+        app:inputMarginLeft="3dp"
+        app:inputMarginRight="3dp"
+        app:showSelectAlbum="true" />
+</RelativeLayout>

@@ -38,6 +38,7 @@
         app:layout_constraintTop_toTopOf="@id/aii_bottom_bg" />
 
     <ScrollView
+        android:id="@+id/aii_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/aii_bottom_bg"
@@ -149,7 +150,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:button="@drawable/bg_selector_radio_button"
-                    android:checked="true"
                     android:padding="@dimen/dp_10"
                     android:text="企业"
                     android:textSize="@dimen/text_middle_size" />
@@ -193,11 +193,12 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/aii_list_view"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:background="@drawable/base_bg_white_radius_5_solid"
                 android:elevation="2dp"
                 android:focusable="false"
                 android:padding="@dimen/dp_10"
+                android:overScrollMode="never"
                 android:visibility="gone"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="@id/aii_invoice_title"

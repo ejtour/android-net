@@ -280,6 +280,13 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
             }
             handleStatusChanged();
         }
+        if (mShareDialog != null) mShareDialog.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mShareDialog.release();
+        super.onDestroy();
     }
 
     @Override

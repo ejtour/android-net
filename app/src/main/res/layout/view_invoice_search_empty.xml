@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@android:color/white"
+    tools:parentTag="android.support.constraint.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/ise_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="您可以按下列筛选条件来查找"
+        android:textColor="@color/color_aeaeae"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/ise_line"
+        android:layout_width="1dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ise_tip" />
+
+    <TextView
+        android:id="@+id/ise_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_tip_blue_solid"
+        android:gravity="center"
+        android:minWidth="70dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="1dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="1dp"
+        android:tag="请输入采购商集团名称"
+        android:text="采购商集团"
+        android:textAppearance="@style/TextAppearance.City22.Middle.White"
+        app:layout_constraintBottom_toBottomOf="@id/ise_line"
+        app:layout_constraintEnd_toStartOf="@id/ise_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ise_line" />
+
+    <TextView
+        android:id="@+id/ise_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minWidth="70dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="1dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="1dp"
+        android:tag="请输入采购商门店名称"
+        android:text="采购商门店"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+        app:layout_constraintBottom_toBottomOf="@id/ise_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ise_line"
+        app:layout_constraintTop_toTopOf="@id/ise_line" />
+</merge>
