@@ -2,6 +2,7 @@ package com.hll_sc_app.app.order;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -52,7 +53,8 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
         View view = helper.getView(R.id.iom_check_box);
         view.setEnabled(item.isCanSelect(mGroupID));
         view.setSelected(item.isSelected());
-        helper.setText(R.id.iom_name, item.getShopName())
+        String name = TextUtils.isEmpty(item.getStallName()) ? "" :(item.getStallName()+" - ") + item.getShopName();
+        helper.setText(R.id.iom_name, name)
                 .setText(R.id.iom_money, "¥" + CommonUtils.formatMoney(item.getTotalAmount()))
                 .setText(R.id.iom_purchase_name, "采购商：" + item.getPurchaserName())
                 .setText(R.id.iom_order_no, "订单号：" + item.getSubBillNo())

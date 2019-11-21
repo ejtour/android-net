@@ -144,6 +144,25 @@ public class OrderResp implements Parcelable {
     private String distributionStatus;
     private List<OrderDetailBean> billDetailList;
 
+    private String stallID;
+
+    public String getStallID() {
+        return stallID;
+    }
+
+    public void setStallID(String stallID) {
+        this.stallID = stallID;
+    }
+
+    public String getStallName() {
+        return stallName;
+    }
+
+    public void setStallName(String stallName) {
+        this.stallName = stallName;
+    }
+
+    private String stallName;
     public boolean isCanSelect(String groupID) {
         return !(isCheck == 2 && groupID.equals(this.groupID)
                 || isCheck == 1 && groupID.equals(this.agencyID));
@@ -1178,6 +1197,9 @@ public class OrderResp implements Parcelable {
         this.billDetailList = billDetailList;
     }
 
+    public OrderResp() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -1311,9 +1333,8 @@ public class OrderResp implements Parcelable {
         dest.writeInt(this.receiptRemaining);
         dest.writeString(this.distributionStatus);
         dest.writeTypedList(this.billDetailList);
-    }
-
-    public OrderResp() {
+        dest.writeString(this.stallID);
+        dest.writeString(this.stallName);
     }
 
     protected OrderResp(Parcel in) {
@@ -1444,9 +1465,11 @@ public class OrderResp implements Parcelable {
         this.receiptRemaining = in.readInt();
         this.distributionStatus = in.readString();
         this.billDetailList = in.createTypedArrayList(OrderDetailBean.CREATOR);
+        this.stallID = in.readString();
+        this.stallName = in.readString();
     }
 
-    public static final Parcelable.Creator<OrderResp> CREATOR = new Parcelable.Creator<OrderResp>() {
+    public static final Creator<OrderResp> CREATOR = new Creator<OrderResp>() {
         @Override
         public OrderResp createFromParcel(Parcel source) {
             return new OrderResp(source);
