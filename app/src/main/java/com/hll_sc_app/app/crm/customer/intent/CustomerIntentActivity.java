@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.crm.customer.intent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,12 @@ public class CustomerIntentActivity extends BaseCustomerActivity {
         initView();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) reload();
+    }
+
     private void initView() {
         mSearchView.setHint("搜索客户");
         mTitleBar.setRightBtnClick(v -> RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_INTENT_ADD));
@@ -47,11 +54,15 @@ public class CustomerIntentActivity extends BaseCustomerActivity {
 
             @Override
             public void toSearch(String searchContent) {
-                for (Fragment fragment : mFragments) {
-                    ((CustomerIntentFragment) fragment).reload();
-                }
+                reload();
             }
         });
+    }
+
+    private void reload() {
+        for (Fragment fragment : mFragments) {
+            ((CustomerIntentFragment) fragment).reload();
+        }
     }
 
     String getSearchWords() {

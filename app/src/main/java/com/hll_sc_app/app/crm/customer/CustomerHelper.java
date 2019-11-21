@@ -78,4 +78,20 @@ public class CustomerHelper {
                 return "";
         }
     }
+
+    public static String getVisitGoal(int goal) {
+        switch (goal) {
+            case 1:
+                return "客户保养";
+            case 2:
+                return "开发新客户";
+            case 3:
+                return "市场调查";
+            case 4:
+                return "了解竞争对手";
+            default:
+                return "";
+        }
+    }
+
 }
