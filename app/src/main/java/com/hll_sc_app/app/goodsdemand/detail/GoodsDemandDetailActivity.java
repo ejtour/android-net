@@ -86,6 +86,7 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
                 mReplySale.setVisibility(View.VISIBLE);
                 mReplyCustome.setVisibility(View.VISIBLE);
             }
+
             if (mBean.getStatus() == 1) {
                 mReplySale.setText("回复销售");
                 mReplyCustome.setText("回复客户");
@@ -93,6 +94,11 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
                 mReplySale.setText("再次回复销售");
                 mReplyCustome.setText("再次回复客户");
                 mNotice.setVisibility(View.VISIBLE);
+                mNotice.setText("通知客户已上架");
+            }else {
+                mBottomGroupBk.setVisibility(View.GONE);
+                mReplySale.setVisibility(View.GONE);
+                mReplyCustome.setVisibility(View.GONE);
             }
         }
     }

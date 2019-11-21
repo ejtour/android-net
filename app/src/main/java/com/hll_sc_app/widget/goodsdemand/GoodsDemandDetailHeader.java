@@ -93,12 +93,10 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
 
     public void setData(GoodsDemandBean bean) {
         boolean crm = UserConfig.crm();
+        showTitlGroup(crm, bean);
         if (crm) {
             if (bean.getStatus() == 1) {
                 mStatusIcon.setImageResource(R.drawable.ic_exclamation_circle_yellow);
-                mReplyTitleGroup.setVisibility(VISIBLE);
-                mReplySaleGroup.setVisibility(GONE);
-                mReplyCustomerGroup.setVisibility(GONE);
                 mTxtReplyTitle.setText("待回复：反馈已提交至合作供应商，请耐心等待回复");
                 mTxtReplyTitle.setTextColor(0xFFF6BB42);
             } else if (bean.getStatus() == 2) {
@@ -107,9 +105,7 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
                 mTxtReplyCustomer.setText("已回复客户");
                 mTxtReplySale.setText(bean.getProductReplySale());
                 mTxtReplyTitle.setTextColor(0xFF7ED321);
-                mReplyTitleGroup.setVisibility(VISIBLE);
-                mReplySaleGroup.setVisibility(TextUtils.isEmpty(bean.getProductReplySale()) ? GONE : VISIBLE);
-                mReplyCustomerGroup.setVisibility(TextUtils.isEmpty(bean.getProductReply()) ? GONE : VISIBLE);
+
             } else if (bean.getStatus() == 3) {
                 mStatusIcon.setImageResource(R.drawable.ic_blue_ok);
                 String title = "已上架：您需要的商品已上架 点击查看商品详情";
@@ -132,6 +128,7 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
                 mTxtReplyTitle.setTextColor(0xFF7ED321);
                 mTxtReplyCustomer.setText(bean.getProductReply());
                 mTxtReplySale.setText(bean.getProductReplySale());
+
             } else if (bean.getStatus() == 3) {
                 mTxtReplyTitle.setText("已通知采购商相关商品已上架");
                 mStatusIcon.setImageResource(R.drawable.ic_blue_ok);
@@ -160,5 +157,23 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
             mPic.setData(bean.getImgUrl().split(","));
         }
         requestLayout();
+    }
+
+
+    private void showTitlGroup(boolean isCrm, GoodsDemandBean bean) {
+        int status = bean.getStatus();
+        if (status == 1) {
+            mReplyTitleGroup.setVisibility(isCrm ? VISIBLE : GONE);
+            mReplySaleGroup.setVisibility(GONE);
+            mReplyCustomerGroup.setVisibility(GONE);
+        } else if (status == 2) {
+            mReplyTitleGroup.setVisibility(VISIBLE);
+            mReplySaleGroup.setVisibility(TextUtils.isEmpty(bean.getProductReplySale()) ? GONE : VISIBLE);
+            mReplyCustomerGroup.setVisibility(TextUtils.isEmpty(bean.getProductReply()) ? GONE : VISIBLE);
+        } else {
+            mReplyTitleGroup.setVisibility(VISIBLE);
+            mReplySaleGroup.setVisibility(GONE);
+            mReplyCustomerGroup.setVisibility(GONE);
+        }
     }
 }
