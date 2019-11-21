@@ -3,7 +3,6 @@ package com.hll_sc_app.widget.goodsdemand;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -34,8 +33,8 @@ import butterknife.ButterKnife;
 public class GoodsDemandDetailHeader extends ConstraintLayout {
     @BindView(R.id.ddh_status_icon)
     ImageView mStatusIcon;
-    @BindView(R.id.ddh_status_group)
-    Group mStatusGroup;
+    //    @BindView(R.id.ddh_status_group)
+//    Group mStatusGroup;
     @BindView(R.id.ddh_supplier)
     TextView mSupplier;
     @BindView(R.id.ddh_supplier_group)
@@ -94,49 +93,51 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
 
     public void setData(GoodsDemandBean bean) {
         boolean crm = UserConfig.crm();
-        if (bean.getStatus() == 1) {
-            if (crm) {
-                mStatusGroup.setVisibility(VISIBLE);
+        if (crm) {
+            if (bean.getStatus() == 1) {
+                mStatusIcon.setImageResource(R.drawable.ic_exclamation_circle_yellow);
                 mReplyTitleGroup.setVisibility(VISIBLE);
                 mReplySaleGroup.setVisibility(GONE);
                 mReplyCustomerGroup.setVisibility(GONE);
                 mTxtReplyTitle.setText("待回复：反馈已提交至合作供应商，请耐心等待回复");
-            } else {
-                LayoutParams layoutParams = (LayoutParams) mPurchaserLabel.getLayoutParams();
-                layoutParams.goneTopMargin = 0;
+                mTxtReplyTitle.setTextColor(0xFFF6BB42);
+            } else if (bean.getStatus() == 2) {
+                mStatusIcon.setImageResource(R.drawable.ic_yellow_ok);
+                mTxtReplyTitle.setText("已回复");
+                mTxtReplyCustomer.setText("已回复客户");
+                mTxtReplySale.setText(bean.getProductReplySale());
+                mTxtReplyTitle.setTextColor(0xFF7ED321);
+                mReplyTitleGroup.setVisibility(VISIBLE);
+                mReplySaleGroup.setVisibility(TextUtils.isEmpty(bean.getProductReplySale()) ? GONE : VISIBLE);
+                mReplyCustomerGroup.setVisibility(TextUtils.isEmpty(bean.getProductReply()) ? GONE : VISIBLE);
+            } else if (bean.getStatus() == 3) {
+                mStatusIcon.setImageResource(R.drawable.ic_blue_ok);
+                String title = "已上架：您需要的商品已上架 点击查看商品详情";
+                SpannableString content = new SpannableString(title);
+                content.setSpan(new UnderlineSpan(), title.length() - 8, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                mTxtReplyTitle.setText(content);
+                mTxtReplyTitle.setTextColor(0xFF5695D2);
+                mTxtReplyTitle.setOnClickListener(v -> {
+                    GoodsBean goodsBean = JSONObject.parseObject(bean.getProductReply(), GoodsBean.class);
+                    GoodsDetailActivity.start(goodsBean.getProductID(), false, false);
+                });
             }
         } else {
-            mStatusGroup.setVisibility(VISIBLE);
-            mReplyTitleGroup.setVisibility(VISIBLE);
-
-            if (bean.getStatus() == 3) {
-                mTxtReplyTitle.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-                if (crm) {
-                    String title = "已上架：您需要的商品已上架 点击查看商品详情";
-                    SpannableString content = new SpannableString(title);
-                    content.setSpan(new UnderlineSpan(), title.length() - 8, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    mTxtReplyTitle.setOnClickListener(v -> {
-                        GoodsBean goodsBean = JSONObject.parseObject(bean.getProductReply(), GoodsBean.class);
-                        GoodsDetailActivity.start(goodsBean.getProductID(), false, false);
-                    });
-                } else {
-                    mTxtReplyTitle.setText("已通知采购商相关商品已上架");
-                }
-            } else {
+            if (bean.getStatus() == 1) {
+                LayoutParams layoutParams = (LayoutParams) mPurchaserLabel.getLayoutParams();
+                layoutParams.goneTopMargin = 0;
+            } else if (bean.getStatus() == 2) {
                 mTxtReplyTitle.setText("已回复");
-                if (!TextUtils.isEmpty(bean.getProductReplySale())) {
-                    mReplySaleGroup.setVisibility(VISIBLE);
-                    mTxtReplySale.setText(bean.getProductReplySale());
-                }
-                if (!TextUtils.isEmpty(bean.getProductReply())) {
-                    mReplyCustomerGroup.setVisibility(VISIBLE);
-                    mTxtReplyCustomer.setText(bean.getProductReply());
-                }
+                mStatusIcon.setImageResource(R.drawable.ic_yellow_ok);
+                mTxtReplyTitle.setTextColor(0xFF7ED321);
+                mTxtReplyCustomer.setText(bean.getProductReply());
+                mTxtReplySale.setText(bean.getProductReplySale());
+            } else if (bean.getStatus() == 3) {
+                mTxtReplyTitle.setText("已通知采购商相关商品已上架");
+                mStatusIcon.setImageResource(R.drawable.ic_blue_ok);
+                mTxtReplyTitle.setTextColor(0xFF5695D2);
             }
-
-
         }
-
 
         mStatusIcon.setImageResource(GoodsDemandHelper.getIcon(bean.getStatus()));
         if (crm) {

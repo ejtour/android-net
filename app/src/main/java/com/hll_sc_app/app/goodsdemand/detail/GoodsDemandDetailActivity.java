@@ -44,8 +44,8 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
     TextView mReplySale;
     @BindView(R.id.gdd_notice)
     TextView mNotice;
-    @BindView(R.id.gdd_bottom_group)
-    Group mBottomGroup;
+    @BindView(R.id.gdd_bottom_bg)
+    View mBottomGroupBk;
     @BindView(R.id.gdd_list_view)
     RecyclerView mListView;
     @Autowired(name = "parcelable")
@@ -78,19 +78,26 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
         adapter.setHeaderView(header);
         adapter.setFooterView(footer);
         if (!UserConfig.crm()) {
+            if (mBean.getSource() == 0){//采购商提的
+                mBottomGroupBk.setVisibility(View.VISIBLE);
+                mReplyCustome.setVisibility(View.VISIBLE);
+            }else if(mBean.getSource() == 1){//crm端提的
+                mBottomGroupBk.setVisibility(View.VISIBLE);
+                mReplySale.setVisibility(View.VISIBLE);
+                mReplyCustome.setVisibility(View.VISIBLE);
+            }
             if (mBean.getStatus() == 1) {
-                mBottomGroup.setVisibility(View.VISIBLE);
                 mReplySale.setText("回复销售");
                 mReplyCustome.setText("回复客户");
             } else if (mBean.getStatus() == 2) {
-                mBottomGroup.setVisibility(View.VISIBLE);
                 mReplySale.setText("再次回复销售");
                 mReplyCustome.setText("再次回复客户");
                 mNotice.setVisibility(View.VISIBLE);
-                mNotice.setText("通知客户已上架");
             }
         }
     }
+
+
 
     private void initData() {
         mPresenter = GoodsDemandDetailPresenter.newInstance(mBean);

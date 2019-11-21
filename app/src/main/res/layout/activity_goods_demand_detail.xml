@@ -14,6 +14,7 @@
         app:tb_title="查看新品反馈" />
 
     <View
+        android:visibility="gone"
         android:id="@+id/gdd_bottom_bg"
         android:layout_width="0dp"
         android:layout_height="@dimen/bottom_bar_height"
@@ -23,6 +24,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/gdd_reply_sale"
         style="@style/BtnAfterSalesAction.PrimaryStroke"
         android:layout_width="wrap_content"
@@ -38,6 +40,7 @@
         app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/gdd_reply_custome"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_width="wrap_content"
@@ -66,13 +69,6 @@
         app:layout_constraintBottom_toBottomOf="@id/gdd_bottom_bg"
         app:layout_constraintEnd_toEndOf="@id/gdd_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
-
-    <android.support.constraint.Group
-        android:id="@+id/gdd_bottom_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="gdd_bottom_bg,gdd_reply_sale,gdd_reply_custome" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gdd_list_view"
