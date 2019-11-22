@@ -6,9 +6,9 @@ import android.support.v4.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
+import com.hll_sc_app.app.crm.customer.intent.add.AddCustomerActivity;
 import com.hll_sc_app.app.search.stratery.IntentCustomerSearch;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 
 import java.util.Arrays;
@@ -29,7 +29,7 @@ public class CustomerIntentActivity extends BaseCustomerActivity {
 
     private void initView() {
         mSearchView.setHint("搜索客户");
-        mTitleBar.setRightBtnClick(v -> RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_INTENT_ADD));
+        mTitleBar.setRightBtnClick(v -> AddCustomerActivity.start(this, null));
         mFragments = Arrays.asList(CustomerIntentFragment.newInstance(false), CustomerIntentFragment.newInstance(true));
         mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(),
                 mFragments));
