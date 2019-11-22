@@ -24,6 +24,7 @@ import com.hll_sc_app.app.cooperation.detail.details.BaseCooperationDetailsFragm
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
@@ -221,6 +222,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     }
 
     private void showAccountPeriodWindow() {
+        UIUtils.hideActivitySoftKeyboard(this);
         AccountPeriodSelectWindow window = new AccountPeriodSelectWindow(this);
         window.setSelectListener((payTermType, payTerm) -> {
             if (TextUtils.equals(payTermType, "周结")) {
