@@ -7,6 +7,8 @@ import android.widget.CompoundButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.bean.UserBean;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.bill.BillBean;
@@ -73,13 +75,40 @@ public class BillListAdapter extends BaseQuickAdapter<BillBean, BaseViewHolder> 
                 .setText(R.id.ibl_bill_date, builder)
                 .setText(R.id.ibl_bill_num, CommonUtils.formatNumber(item.getBillNum()))
                 .setText(R.id.ibl_bill_amount, String.format("¥%s", CommonUtils.formatMoney(item.getTotalAmount())))
-                .setGone(R.id.ibl_confirm, !mCrm && !mIsBatch && item.getSettlementStatus() != BillStatus.SETTLED)
+                .setGone(R.id.ibl_confirm, !mIsBatch && isShowConfirmButton(item))
                 .setGone(R.id.ibl_check_box, mIsBatch)
                 .setGone(R.id.ibl_view_detail, !mIsBatch)
                 .setChecked(R.id.ibl_check_box, item.isSelected())
                 .setGone(R.id.ibl_bill_type, !mIsBatch && item.getBillStatementFlag() != 0)
                 .setText(R.id.ibl_bill_type, String.format("收款方：%s", item.getPayee() == 0 ? "代仓代收" : "货主收款"))
                 .getView(R.id.ibl_icon)).setImageURL(item.getGroupLogoUrl());
+    }
+
+
+    /**
+     * 是否显示结算按钮
+     *
+     * @param billBean
+     * @return
+     */
+    public static boolean isShowConfirmButton(BillBean billBean) {
+        UserBean userBean = GreenDaoUtils.getUser();
+        if (userBean == null ||  UserConfig.crm()  || billBean.getSettlementStatus() == 2) {
+            return false;
+        }
+        if(billBean.getBillStatementFlag() == 0){//自营对账单 显示
+            return true;
+        }
+        boolean isSelf = UserConfig.isSelfOperated();
+        boolean isOpenWarehourse = userBean.getWareHourseStatus() == 1;
+        if (isSelf && isOpenWarehourse){//代仓角色
+            return (billBean.getBillStatementFlag() == 1 && billBean.getPayee() == 0) ||//采代，代收款
+                    (billBean.getBillStatementFlag() == 2 && billBean.getPayee() == 0);//供代,代收款
+        }else if (!isSelf){//货主角色
+            return (billBean.getBillStatementFlag() == 2 && billBean.getPayee() == 1);//供代,货收款
+        }else {//其他角色
+            return true;
+        }
     }
 
     private void preProcess(@Nullable List<BillBean> data) {

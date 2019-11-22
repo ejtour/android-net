@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.bill.list.BillListAdapter;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -114,7 +115,8 @@ public class BillDetailActivity extends BaseLoadActivity implements IBillDetailC
     private void updateData() {
         mHeader.setData(mCurBean);
         mAdapter.setNewData(mCurBean.getRecords());
-        mActionGroup.setVisibility(mCurBean.getSettlementStatus() == BillStatus.SETTLED || UserConfig.crm() ? View.GONE : View.VISIBLE);
+//        mActionGroup.setVisibility(mCurBean.getSettlementStatus() == BillStatus.SETTLED || UserConfig.crm() ? View.GONE : View.VISIBLE);
+        mActionGroup.setVisibility(BillListAdapter.isShowConfirmButton(mCurBean)?View.VISIBLE:View.GONE);
         ((ViewGroup) mActionGroup.getParent()).requestLayout();
     }
 }

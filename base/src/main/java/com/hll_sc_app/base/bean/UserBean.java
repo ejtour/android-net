@@ -84,12 +84,27 @@ public class UserBean {
      * 账号类型(0-主账号，1-子账号)
      */
     private String accountType;
-    @Generated(hash = 26276635)
+
+    /**
+     *  0：未开通代仓 1:已开通代仓
+     */
+    private int wareHourseStatus;
+
+    public int getWareHourseStatus() {
+        return wareHourseStatus;
+    }
+
+    public void setWareHourseStatus(int wareHourseStatus) {
+        this.wareHourseStatus = wareHourseStatus;
+    }
+
+    @Generated(hash = 1947047870)
     public UserBean(String authType, String curRole, String accessToken,
             String email, String employeeID, String employeeCode,
             String employeeName, String groupID, String groupLogoUrl,
             String groupName, List<String> roleCode, String roleNames, String roles,
-            String selfOperated, String loginPhone, String accountType) {
+            String selfOperated, String loginPhone, String accountType,
+            int wareHourseStatus) {
         this.authType = authType;
         this.curRole = curRole;
         this.accessToken = accessToken;
@@ -106,7 +121,9 @@ public class UserBean {
         this.selfOperated = selfOperated;
         this.loginPhone = loginPhone;
         this.accountType = accountType;
+        this.wareHourseStatus = wareHourseStatus;
     }
+
     @Generated(hash = 1203313951)
     public UserBean() {
     }
