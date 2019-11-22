@@ -140,4 +140,19 @@ public class Customer {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+    /**
+     * 删除拜访记录
+     *
+     * @param id 拜访记录id
+     */
+    public static void delVisitRecord(String id, SimpleObserver<Object> observer) {
+        CustomerService.INSTANCE
+                .delVisitRecord(BaseMapReq.newBuilder()
+                        .put("id", id)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }

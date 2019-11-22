@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.crm.customer.intent;
+package com.hll_sc_app.app.crm.customer.record;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,8 +14,10 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.bean.customer.CustomerBean;
+import com.hll_sc_app.base.widget.SwipeItemLayout;
+import com.hll_sc_app.bean.customer.VisitRecordBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -31,25 +33,27 @@ import butterknife.Unbinder;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
- * @since 2019/11/20
+ * @since 2019/11/21
  */
 
-public class CustomerIntentFragment extends BaseLazyFragment implements ICustomerIntentContract.ICustomerIntentView {
-    @Autowired(name = "object")
-    boolean mIsAll;
+public class VisitRecordFragment extends BaseLazyFragment implements IVisitRecordContract.IVisitRecordView {
+
     @BindView(R.id.srl_list_view)
     RecyclerView mListView;
     @BindView(R.id.srl_refresh_view)
     SmartRefreshLayout mRefreshView;
+    @Autowired(name = "object")
+    boolean mIsAll;
     Unbinder unbinder;
-    private ICustomerIntentContract.ICustomerIntentPresenter mPresenter;
-    private CustomerIntentAdapter mAdapter;
+    private VisitRecordAdapter mAdapter;
+    private IVisitRecordContract.IVisitRecordPresenter mPresenter;
     private EmptyView mEmptyView;
+    private int mCurPos;
 
-    public static CustomerIntentFragment newInstance(boolean isAll) {
+    public static VisitRecordFragment newInstance(boolean isAll) {
         Bundle args = new Bundle();
         args.putBoolean("object", isAll);
-        CustomerIntentFragment fragment = new CustomerIntentFragment();
+        VisitRecordFragment fragment = new VisitRecordFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +62,7 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
-        mPresenter = CustomerIntentPresenter.newInstance();
+        mPresenter = VisitRecordPresenter.newInstance();
         mPresenter.register(this);
     }
 
@@ -71,6 +75,14 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
     }
 
     private void initView() {
+        mAdapter = new VisitRecordAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mCurPos = position;
+            showTipDialog();
+        });
+        if (!mIsAll)
+            mListView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(requireContext()));
+        mListView.setAdapter(mAdapter);
         mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(), R.color.color_eeeeee), UIUtils.dip2px(1)));
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -83,8 +95,27 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
                 mPresenter.refresh();
             }
         });
-        mAdapter = new CustomerIntentAdapter();
-        mListView.setAdapter(mAdapter);
+    }
+
+    void reload(boolean includeCurrent) {
+        if (!includeCurrent && isFragmentVisible()) return;
+        setForceLoad(true);
+        lazyLoad();
+    }
+
+    private void showTipDialog() {
+        TipsDialog.newBuilder(requireActivity())
+                .setTitle("删除拜访记录")
+                .setMessage("您确定要删除该条拜访记录吗？")
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1) {
+                        VisitRecordBean bean = mAdapter.getItem(mCurPos);
+                        if (bean == null) return;
+                        mPresenter.delRecord(bean.getId());
+                    }
+                }, "取消", "确定")
+                .create().show();
     }
 
     @Override
@@ -92,15 +123,25 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
         mPresenter.start();
     }
 
-    void reload(){
-        setForceLoad(true);
-        lazyLoad();
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void setData(List<VisitRecordBean> list, boolean append) {
+        if (append) {
+            if (!CommonUtils.isEmpty(list)) mAdapter.addData(list);
+        } else {
+            if (CommonUtils.isEmpty(list)) {
+                initEmptyView();
+                mEmptyView.reset();
+                mEmptyView.setTips("您还没有拜访记录哦~");
+            }
+            mAdapter.setNewData(list);
+        }
+        mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
     }
 
     @Override
@@ -128,27 +169,23 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
     }
 
     @Override
-    public void setData(List<CustomerBean> list, boolean append) {
-        if (append) {
-            if (!CommonUtils.isEmpty(list)) mAdapter.addData(list);
-        } else {
-            if (CommonUtils.isEmpty(list)) {
-                initEmptyView();
-                mEmptyView.reset();
-                mEmptyView.setTips("您还没有意向客户哦~");
-            }
-            mAdapter.setNewData(list);
-        }
-        mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
-    }
-
-    @Override
     public boolean isAll() {
         return mIsAll;
     }
 
     @Override
     public String getSearchWords() {
-        return ((CustomerIntentActivity) requireActivity()).getSearchWords();
+        return ((VisitRecordActivity) requireActivity()).getSearchWords();
+    }
+
+    @Override
+    public void delSuccess() {
+        showToast("删除记录成功");
+        if (mAdapter.getData().size() > 1) {
+            mAdapter.remove(mCurPos);
+        } else {
+            setData(null, false);
+        }
+        ((VisitRecordActivity) requireActivity()).reload(false);
     }
 }

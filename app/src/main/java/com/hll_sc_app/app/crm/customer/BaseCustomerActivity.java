@@ -3,6 +3,7 @@ package com.hll_sc_app.app.crm.customer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -10,10 +11,13 @@ import android.text.TextUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +36,7 @@ public abstract class BaseCustomerActivity extends BaseLoadActivity {
     protected SlidingTabLayout mTabLayout;
     @BindView(R.id.acc_view_pager)
     protected ViewPager mViewPager;
+    protected List<Fragment> mFragments;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +46,17 @@ public abstract class BaseCustomerActivity extends BaseLoadActivity {
         ButterKnife.bind(this);
         mSearchView.setTextColorWhite();
         mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(BaseCustomerActivity.this, searchContent, getSearchKey());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                reload(true);
+            }
+        });
     }
 
     @Override
@@ -51,5 +67,14 @@ public abstract class BaseCustomerActivity extends BaseLoadActivity {
             if (!TextUtils.isEmpty(name))
                 mSearchView.showSearchContent(true, name);
         }
+        if (resultCode == RESULT_OK) reload(true);
     }
+
+    public String getSearchWords() {
+        return mSearchView.getSearchContent();
+    }
+
+    public abstract void reload(boolean includeCurrent);
+
+    protected abstract String getSearchKey();
 }

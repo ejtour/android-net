@@ -18,27 +18,16 @@ import com.hll_sc_app.utils.DateUtil;
  */
 
 public class VisitRecordAdapter extends BaseQuickAdapter<VisitRecordBean, BaseViewHolder> {
-    private boolean mEditable;
 
     public VisitRecordAdapter() {
-        this(false);
-    }
-
-    public VisitRecordAdapter(boolean editable) {
         super(R.layout.item_crm_visit_record);
-        mEditable = editable;
     }
 
     @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
-        BaseViewHolder holder = super.onCreateDefViewHolder(parent, viewType);
-        View del = holder.getView(R.id.cvr_del);
-        if (!mEditable) {
-            ViewGroup.LayoutParams params = del.getLayoutParams();
-            params.width = 0;
-            del.setLayoutParams(params);
-        }
-        return holder;
+        BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+        helper.addOnClickListener(R.id.cvr_del);
+        return helper;
     }
 
     @Override

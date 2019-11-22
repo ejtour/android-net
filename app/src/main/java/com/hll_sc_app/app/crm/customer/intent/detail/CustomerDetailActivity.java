@@ -122,6 +122,7 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
         });
         if (mBean.getEmployeeID().equals(GreenDaoUtils.getUser().getEmployeeID())) {
             ButterKnife.apply(mBottomButtons, (view, index) -> view.setVisibility(View.VISIBLE));
+            mTitleBar.setRightBtnVisible(true);
         }
         mAdapter = new VisitRecordAdapter();
         mListView.setAdapter(mAdapter);
