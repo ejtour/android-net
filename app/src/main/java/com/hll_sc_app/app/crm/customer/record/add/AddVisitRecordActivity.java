@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.crm.customer.record.add;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -313,7 +314,9 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
     @Override
     public void saveSuccess() {
         showToast("保存成功");
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        intent.putExtra(CustomerHelper.VISIT_KEY, mBean);
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

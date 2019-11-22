@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.crm.customer.record;
 
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -26,7 +25,8 @@ public class VisitRecordAdapter extends BaseQuickAdapter<VisitRecordBean, BaseVi
     @Override
     protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
-        helper.addOnClickListener(R.id.cvr_del);
+        helper.addOnClickListener(R.id.cvr_del)
+                .addOnClickListener(R.id.cvr_root);
         return helper;
     }
 
@@ -39,5 +39,16 @@ public class VisitRecordAdapter extends BaseQuickAdapter<VisitRecordBean, BaseVi
                 .getView(R.id.cvr_status);
         status.setText(item.getIsActive() == 1 ? "有效" : "无效");
         status.setCompoundDrawablesWithIntrinsicBounds(item.getIsActive() == 1 ? R.drawable.ic_valid : R.drawable.ic_invalid, 0, 0, 0);
+    }
+
+    private int getItemPosition(VisitRecordBean item) {
+        return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
+    }
+
+    public void replaceData(VisitRecordBean oldData, VisitRecordBean newData) {
+        if (oldData == null || newData == null) {
+            return;
+        }
+        setData(getItemPosition(oldData), newData);
     }
 }

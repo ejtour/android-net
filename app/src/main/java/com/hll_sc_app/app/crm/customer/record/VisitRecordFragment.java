@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.customer.record.detail.VisitRecordDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.dialog.TipsDialog;
@@ -78,7 +79,10 @@ public class VisitRecordFragment extends BaseLazyFragment implements IVisitRecor
         mAdapter = new VisitRecordAdapter();
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             mCurPos = position;
-            showTipDialog();
+            if (view.getId() == R.id.cvr_del)
+                showTipDialog();
+            else if (view.getId() == R.id.cvr_root)
+                VisitRecordDetailActivity.start(requireActivity(), mAdapter.getItem(position));
         });
         if (!mIsAll)
             mListView.addOnItemTouchListener(new SwipeItemLayout.OnSwipeItemTouchListener(requireContext()));

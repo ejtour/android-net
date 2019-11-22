@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/vrd_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_rightImage="@drawable/ic_edit"
+        app:tb_title="拜访记录详情" />
+
+    <View
+        android:id="@+id/vrd_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vrd_title_bar" />
+
+    <TextView
+        android:id="@+id/vrd_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:drawableLeft="@drawable/ic_invalid"
+        android:drawablePadding="3dp"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_name"
+        app:layout_constraintEnd_toEndOf="@id/vrd_bg"
+        app:layout_constraintTop_toTopOf="@id/vrd_name"
+        tools:text="无效" />
+
+    <TextView
+        android:id="@+id/vrd_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="@dimen/dp_10"
+        android:singleLine="true"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/text_large_size"
+        app:layout_constraintEnd_toStartOf="@id/vrd_status"
+        app:layout_constraintStart_toStartOf="@id/vrd_bg"
+        app:layout_constraintTop_toTopOf="@id/vrd_bg"
+        tools:text="风尚佳美商贸有限公司北京一部" />
+
+    <TextView
+        android:id="@+id/vrd_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:lineSpacingExtra="3dp"
+        android:paddingBottom="20dp"
+        android:textColor="@color/color_999999"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@id/vrd_status"
+        app:layout_constraintStart_toStartOf="@id/vrd_name"
+        app:layout_constraintTop_toBottomOf="@id/vrd_name"
+        tools:text="北京-北京市-海淀区 上地三街嘉华大厦D座" />
+
+    <TextView
+        android:id="@+id/vrd_time_label"
+        style="@style/InfoLabel"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        android:paddingLeft="14dp"
+        android:text="拜访时间"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vrd_bg" />
+
+    <TextView
+        android:id="@+id/vrd_time"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:textColor="@color/color_999999"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_time_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vrd_time_label"
+        app:layout_constraintTop_toTopOf="@id/vrd_time_label"
+        tools:text="2018.07.23" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="14dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_time_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/vrd_way_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:paddingLeft="14dp"
+        android:text="拜访方式"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vrd_time_label" />
+
+    <TextView
+        android:id="@+id/vrd_way"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:textColor="@color/color_999999"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_way_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vrd_way_label"
+        app:layout_constraintTop_toTopOf="@id/vrd_way_label"
+        tools:text="约访" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="14dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_way_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/vrd_goal_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:paddingLeft="14dp"
+        android:text="拜访目的"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vrd_way_label" />
+
+    <TextView
+        android:id="@+id/vrd_goal"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:textColor="@color/color_999999"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_goal_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vrd_goal_label"
+        app:layout_constraintTop_toTopOf="@id/vrd_goal_label"
+        tools:text="开发新客户" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="14dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_goal_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/vrd_result_label"
+        style="@style/InfoLabel"
+        android:layout_width="0dp"
+        android:background="@android:color/white"
+        android:text="拜访结果"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vrd_goal_label" />
+
+    <TextView
+        android:id="@+id/vrd_result"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:hint="无"
+        android:lineSpacingExtra="8dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="14dp"
+        android:textAppearance="@style/TextAppearance.City22.Middle.Color999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vrd_result_label" />
+
+    <TextView
+        android:id="@+id/vrd_next_time_label"
+        style="@style/InfoLabel"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        android:paddingLeft="14dp"
+        android:text="预约下次拜访时间"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vrd_result" />
+
+    <TextView
+        android:id="@+id/vrd_next_time"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:hint="---"
+        android:textColor="@color/color_999999"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_next_time_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vrd_next_time_label"
+        app:layout_constraintTop_toTopOf="@id/vrd_next_time_label" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="14dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_next_time_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/vrd_person_label"
+        style="@style/InfoLabel"
+        android:background="@android:color/white"
+        android:paddingLeft="14dp"
+        android:text="拜访人员"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vrd_next_time_label" />
+
+    <TextView
+        android:id="@+id/vrd_person"
+        style="@style/InfoEdit"
+        android:background="@android:color/white"
+        android:textColor="@color/color_999999"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_person_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vrd_person_label"
+        app:layout_constraintTop_toTopOf="@id/vrd_person_label"
+        tools:text="张经理" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="14dp"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/vrd_person_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
