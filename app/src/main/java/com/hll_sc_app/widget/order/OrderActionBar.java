@@ -35,7 +35,7 @@ public class OrderActionBar extends RelativeLayout {
     private static final int ACTION_RECEIVE = 1;
     private static final int ACTION_CANCEL = 2;
     private static final int ACTION_DELIVER = 3;
-    private static final int ACTION_INSPECTION = 4;
+    public static final int ACTION_INSPECTION = 4;
     private static final int ACTION_CONFIRM = 5;
     private static final int ACTION_SETTLE = 6;
     private static final int ACTION_REJECT = 7;

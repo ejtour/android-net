@@ -90,7 +90,7 @@ public class OrderDetailHeader extends ConstraintLayout {
 
     public void setData(OrderResp data) {
         mOrderResp = data;
-        handleOrderStatus(data.getSubBillStatus(), data.getCanceler(), data.getActionBy(), data.getCancelReason());
+        handleOrderStatus(data.getSubBillStatus(), data.getCanceler(), data.getActionBy(), data.getCancelReason(),data.getButtonList());
         //取消订单增加取消时间的显示
         mCancelTime.setVisibility(data.getSubBillStatus() == 7 ? VISIBLE : GONE);
         mCancelTime.setText(DateUtil.getReadableTime(data.getActionTime()));
@@ -129,7 +129,7 @@ public class OrderDetailHeader extends ConstraintLayout {
         mStatusLabel.setText(data.getStatus() == 1 ? OrderStatus.PENDING_TRANSFER.getLabel() : "下单失败");
         mStatusDesc.setText(data.getStatus() == 1
                 ? data.getHomologous() == 1
-                ? OrderStatus.PENDING_TRANSFER.getDesc(1, null, null)
+                ? OrderStatus.PENDING_TRANSFER.getDesc(1, null, null,null)
                 : "该订单含有未关联的第三方品项，请先关联后再进行商城下单操作"
                 : "订单存在商品问题或门店合作问题导致下单失败");
         mShopLogo.setImageURL("");
@@ -172,12 +172,12 @@ public class OrderDetailHeader extends ConstraintLayout {
         mTimeAddress.setText(ss);
     }
 
-    private void handleOrderStatus(int billStatus, int canceler, String actionBy, String cancelReason) {
+    private void handleOrderStatus(int billStatus, int canceler, String actionBy, String cancelReason,List<Integer> buttonList) {
         for (OrderStatus value : OrderStatus.values()) {
             if (value.getStatus() == billStatus) {
                 mStatusIcon.setImageResource(value.getIcon());
                 mStatusLabel.setText(value.getLabel());
-                mStatusDesc.setText(value.getDesc(canceler, actionBy, cancelReason));
+                mStatusDesc.setText(value.getDesc(canceler, actionBy, cancelReason,buttonList));
                 break;
             }
         }
