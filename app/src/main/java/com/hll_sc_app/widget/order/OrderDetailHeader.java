@@ -95,7 +95,7 @@ public class OrderDetailHeader extends ConstraintLayout {
         mCancelTime.setVisibility(data.getSubBillStatus() == 7 ? VISIBLE : GONE);
         mCancelTime.setText(DateUtil.getReadableTime(data.getActionTime()));
         mShopLogo.setImageURL(data.getImgUrl());
-        String name = TextUtils.isEmpty(data.getStallName()) ? "" : (data.getStallName() + " - ") + data.getShopName();
+        String name = (TextUtils.isEmpty(data.getStallName()) ? "" : (data.getStallName() + " - ")) + data.getShopName();
         mShopName.setText(name);
         mGroupName.setText(data.getPurchaserName());
         mOrderer.setText(String.format("订货人：%s", data.getSubBillCreateBy()));

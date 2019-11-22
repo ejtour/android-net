@@ -53,7 +53,7 @@ public class OrderManageAdapter extends BaseQuickAdapter<OrderResp, BaseViewHold
         View view = helper.getView(R.id.iom_check_box);
         view.setEnabled(item.isCanSelect(mGroupID));
         view.setSelected(item.isSelected());
-        String name = TextUtils.isEmpty(item.getStallName()) ? "" :(item.getStallName()+" - ") + item.getShopName();
+        String name =( TextUtils.isEmpty(item.getStallName()) ? "" :(item.getStallName()+" - ")) + item.getShopName();
         helper.setText(R.id.iom_name, name)
                 .setText(R.id.iom_money, "¥" + CommonUtils.formatMoney(item.getTotalAmount()))
                 .setText(R.id.iom_purchase_name, "采购商：" + item.getPurchaserName())
