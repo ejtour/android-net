@@ -128,15 +128,19 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
         }
         mRadioGroupModal.setOnCheckedChangeListener(this);
 
-
-        boolean isAddAgain = mPurchaserDetail != null && (mPurchaserDetail.getCooperationActive() == 1);
-        boolean isWaitAgree = mPurchaserDetail != null && (TextUtils.equals(mPurchaserDetail.getStatus(),"0"));
-        boolean isNewAdd = mPurchaserDetail != null && (TextUtils.equals(mPurchaserDetail.getStatus(), "3"));
-
-        mLlCheckModal.setVisibility((isAddAgain || isNewAdd || isWaitAgree) ? View.VISIBLE : View.GONE);
-        if (isAddAgain || isNewAdd || isWaitAgree) {//只有新增的时候才显示，默认提供一个值
-            mReq.setInspector("0");
+        //集团进入
+        if (mPurchaserDetail != null) {
+            boolean isAddAgain = mPurchaserDetail.getCooperationActive() == 1;
+            boolean isWaitAgree = TextUtils.equals(mPurchaserDetail.getStatus(), "0");
+            boolean isNewAdd = TextUtils.equals(mPurchaserDetail.getStatus(), "3");
+            mLlCheckModal.setVisibility((isAddAgain || isNewAdd || isWaitAgree) ? View.VISIBLE : View.GONE);
+            if (isAddAgain || isNewAdd || isWaitAgree) {//只有新增的时候才显示，默认提供一个值
+                mReq.setInspector("1");
+            }
+        } else if (mShopDetail != null) {//门店进入，则不显示验货模式
+            mLlCheckModal.setVisibility(View.GONE);
         }
+
     }
 
     /**
