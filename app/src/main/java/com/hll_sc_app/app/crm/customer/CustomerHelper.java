@@ -94,4 +94,29 @@ public class CustomerHelper {
         }
     }
 
+    public static String getVisitCustomerType(int type) {
+        switch (type) {
+            case 1:
+                return "意向客户";
+            case 2:
+                return "合作客户";
+            default:
+                return "";
+        }
+    }
+
+    public static String getCustomerMaintainLevel(int level) {
+        return level == 0 ? "门店级" : "集团级";
+    }
+
+    public static String getVisitWay(int way) {
+        switch (way) {
+            case 1:
+                return "约访";
+            case 2:
+                return "电话拜访";
+            default:
+                return "";
+        }
+    }
 }

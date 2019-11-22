@@ -1,12 +1,30 @@
 package com.hll_sc_app.bean.customer;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.Expose;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/11/21
  */
 
-public class VisitRecordBean {
+public class VisitRecordBean implements Parcelable {
 
+    public static final Creator<VisitRecordBean> CREATOR = new Creator<VisitRecordBean>() {
+        @Override
+        public VisitRecordBean createFromParcel(Parcel in) {
+            return new VisitRecordBean(in);
+        }
+
+        @Override
+        public VisitRecordBean[] newArray(int size) {
+            return new VisitRecordBean[size];
+        }
+    };
+    @Expose(deserialize = false)
+    private int actionType;
     private String customerAddress;
     private String visitResult;
     private String customerProvince;
@@ -28,6 +46,73 @@ public class VisitRecordBean {
     private int visitGoal;
     private String id;
     private String nextVisitTime;
+
+    public VisitRecordBean() {
+    }
+
+    protected VisitRecordBean(Parcel in) {
+        actionType = in.readInt();
+        customerAddress = in.readString();
+        visitResult = in.readString();
+        customerProvince = in.readString();
+        groupID = in.readString();
+        employeeID = in.readString();
+        customerCity = in.readString();
+        isOnSchedule = in.readInt();
+        isActive = in.readInt();
+        customerName = in.readString();
+        customerDistrict = in.readString();
+        customerType = in.readInt();
+        maintainLevel = in.readInt();
+        visitPersonnel = in.readString();
+        visitTime = in.readString();
+        purchaserID = in.readString();
+        visitWay = in.readInt();
+        customerID = in.readString();
+        planID = in.readString();
+        visitGoal = in.readInt();
+        id = in.readString();
+        nextVisitTime = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(actionType);
+        dest.writeString(customerAddress);
+        dest.writeString(visitResult);
+        dest.writeString(customerProvince);
+        dest.writeString(groupID);
+        dest.writeString(employeeID);
+        dest.writeString(customerCity);
+        dest.writeInt(isOnSchedule);
+        dest.writeInt(isActive);
+        dest.writeString(customerName);
+        dest.writeString(customerDistrict);
+        dest.writeInt(customerType);
+        dest.writeInt(maintainLevel);
+        dest.writeString(visitPersonnel);
+        dest.writeString(visitTime);
+        dest.writeString(purchaserID);
+        dest.writeInt(visitWay);
+        dest.writeString(customerID);
+        dest.writeString(planID);
+        dest.writeInt(visitGoal);
+        dest.writeString(id);
+        dest.writeString(nextVisitTime);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public int getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(int actionType) {
+        this.actionType = actionType;
+    }
 
     public String getCustomerAddress() {
         return customerAddress;

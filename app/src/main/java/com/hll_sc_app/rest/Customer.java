@@ -155,4 +155,15 @@ public class Customer {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+    /**
+     * 添加/修改拜访记录
+     */
+    public static void saveVisitRecord(VisitRecordBean req,SimpleObserver<Object> observer){
+        CustomerService.INSTANCE
+                .saveVisitRecord(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }
