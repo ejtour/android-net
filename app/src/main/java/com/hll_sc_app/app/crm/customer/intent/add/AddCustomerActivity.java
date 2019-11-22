@@ -126,7 +126,6 @@ public class AddCustomerActivity extends BaseLoadActivity implements IAddCustome
 
     private void updateNumState() {
         mNum.setEnabled(mBean.getCustomerType() != 1);
-        mNum.setTextColor(ContextCompat.getColor(this, mNum.isEnabled() ? R.color.color_222222 : R.color.color_999999));
     }
 
     @OnClick(R.id.cia_save)
