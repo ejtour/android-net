@@ -285,7 +285,8 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
 
     @Override
     protected void onDestroy() {
-        mShareDialog.release();
+        if (mShareDialog != null)
+            mShareDialog.release();
         super.onDestroy();
     }
 
