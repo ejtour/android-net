@@ -15,7 +15,6 @@ import java.util.List;
 
 public interface ICustomerDetailContract {
     interface ICustomerDetailView extends ILoadView {
-        void updateData(CustomerBean bean);
 
         void setData(List<VisitRecordBean> list, boolean append);
 
@@ -28,7 +27,5 @@ public interface ICustomerDetailContract {
         void refresh();
 
         void loadMore();
-
-        void reload();
     }
 }

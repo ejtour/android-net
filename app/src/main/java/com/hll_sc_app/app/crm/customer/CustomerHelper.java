@@ -10,6 +10,7 @@ import com.hll_sc_app.R;
 public class CustomerHelper {
     public static final String GOTO_KEY = "goto_key";
     public static final String VISIT_KEY = "visit_record";
+    public static final String INTENT_KEY = "intent_customer";
     public static final int GOTO_INTENT = 1;
     public static final int GOTO_PARTNER_REGISTERED = 2;
     public static final int GOTO_PARTNER_UNREGISTERED = 3;

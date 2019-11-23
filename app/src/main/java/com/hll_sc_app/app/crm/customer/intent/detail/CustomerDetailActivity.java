@@ -149,9 +149,12 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
                 VisitRecordBean bean = data.getParcelableExtra(CustomerHelper.VISIT_KEY);
                 mAdapter.replaceData(mCurBean, bean);
                 if (bean != null) return;
+                CustomerBean customer = data.getParcelableExtra(CustomerHelper.INTENT_KEY);
+                if (customer != null) {
+                    mHasChanged = true;
+                    updateData(customer);
+                }
             }
-            mHasChanged = true;
-            mPresenter.reload();
         }
     }
 
@@ -202,7 +205,6 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
     public void partner() {
     }
 
-    @Override
     public void updateData(CustomerBean bean) {
         mBean = bean;
         updateData();

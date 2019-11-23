@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.crm.customer.intent.add;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -269,8 +270,17 @@ public class AddCustomerActivity extends BaseLoadActivity implements IAddCustome
 
     @Override
     public void saveSuccess() {
+        CustomerAreaBean area = mBean.getCustomerArea();
+        mBean.setCustomerProvince(area.getCustomerProvince());
+        mBean.setCustomerProvinceCode(area.getCustomerProvinceCode());
+        mBean.setCustomerCity(area.getCustomerCity());
+        mBean.setCustomerCityCode(area.getCustomerCityCode());
+        mBean.setCustomerDistrict(area.getCustomerDistrict());
+        mBean.setCustomerDistrictCode(area.getCustomerDistrictCode());
+        Intent intent = new Intent();
+        intent.putExtra(CustomerHelper.INTENT_KEY, mBean);
         showToast("保存成功");
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

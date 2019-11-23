@@ -73,29 +73,14 @@ public class Customer {
      * @param searchWords 客户名称
      */
     public static void queryIntentCustomer(boolean all, int pageNum, String searchWords, SimpleObserver<SingleListResp<CustomerBean>> observer) {
-        queryIntentCustomer(all, pageNum, searchWords, "", observer);
-    }
-
-    /**
-     * 查询意向客户详情
-     *
-     * @param id 条目id
-     */
-    public static void queryIntentCustomerDetail(String id, SimpleObserver<SingleListResp<CustomerBean>> observer) {
-        queryIntentCustomer(true, 1, "", id, observer);
-    }
-
-    private static void queryIntentCustomer(boolean all, int pageNum, String searchWords, String id, SimpleObserver<SingleListResp<CustomerBean>> observer) {
-        boolean detail = !TextUtils.isEmpty(id);
         UserBean user = GreenDaoUtils.getUser();
         CustomerService.INSTANCE
                 .queryIntentCustomer(BaseMapReq.newBuilder()
                         .put("groupID", user.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
-                        .put("pageSize", detail ? "1" : "20")
+                        .put("pageSize", "20")
                         .put("customerName", searchWords)
                         .put("employeeID", all ? "" : user.getEmployeeID())
-                        .put("id", id)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
