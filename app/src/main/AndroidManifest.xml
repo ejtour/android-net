@@ -1261,6 +1261,10 @@
             android:name=".app.crm.customer.record.detail.VisitRecordDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.crm.customer.plan.VisitPlanActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
