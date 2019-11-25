@@ -161,6 +161,7 @@
         style="@style/InfoLabel"
         android:layout_width="0dp"
         android:background="@android:color/white"
+        android:paddingLeft="14dp"
         android:text="拜访结果"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -230,14 +231,5 @@
         app:layout_constraintStart_toEndOf="@id/vrd_person_label"
         app:layout_constraintTop_toTopOf="@id/vrd_person_label"
         tools:text="张经理" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:layout_marginLeft="14dp"
-        android:background="@color/color_eeeeee"
-        app:layout_constraintBottom_toBottomOf="@id/vrd_person_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
