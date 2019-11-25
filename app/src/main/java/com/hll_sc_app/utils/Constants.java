@@ -8,7 +8,7 @@ import com.hll_sc_app.BuildConfig;
  */
 
 public interface Constants {
-    String WX_APP_ID = "wx1c0b06dc21cfdb93";
+    String WX_APP_ID = BuildConfig.DEBUG ? "wx0d3409cd276287ad" : "wx1c0b06dc21cfdb93";
     String QQ_APP_ID = BuildConfig.DEBUG ? "101536988" : "1106551913";
 
     String UNSIGNED_HH_MM = "HHmm";
