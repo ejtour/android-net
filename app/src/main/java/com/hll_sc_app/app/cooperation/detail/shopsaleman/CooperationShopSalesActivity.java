@@ -101,11 +101,12 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
             if (employeeBean == null) {
                 return;
             }
-            employeeBean.setSelect(true);
+            boolean isSelected = TextUtils.equals(employeeBean.getEmployeeID(), mReq.getEmployeeID());
+            employeeBean.setSelect(!isSelected);
             adapter.notifyItemChanged(position);
-            mReq.setEmployeeID(employeeBean.getEmployeeID());
-            mReq.setEmployeeName(employeeBean.getEmployeeName());
-            mReq.setEmployeePhone(employeeBean.getLoginPhone());
+            mReq.setEmployeeID(isSelected ? "0" : employeeBean.getEmployeeID());
+            mReq.setEmployeeName(isSelected ? "" : employeeBean.getEmployeeName());
+            mReq.setEmployeePhone(isSelected ? "0" : employeeBean.getLoginPhone());
             mPresenter.editShopEmployee(mReq);
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -182,7 +183,9 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
 
     @Override
     public void editSuccess() {
-        showToast(isSales() ? "指派销售成功" : "指派司机成功");
+        String toast = String.format("%s%s成功", TextUtils.equals(mReq.getEmployeeID(), "0") ? "取消" : "指派", isSales() ? "销售" : "司机");
+//        showToast(isSales() ? "指派销售成功" : "指派司机成功");
+        showToast(toast);
         ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_DETAIL)
                 .setProvider(new LoginInterceptor())
                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
