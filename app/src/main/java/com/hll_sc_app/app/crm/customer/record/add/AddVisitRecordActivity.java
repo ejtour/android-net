@@ -184,6 +184,11 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
         );
     }
 
+    @OnTextChanged({R.id.vra_result})
+    public void onTextChanged(CharSequence s) {
+        mNum.setText(String.valueOf(200 - s.length()));
+    }
+
     @OnClick(R.id.vra_plan)
     public void selectPlan() {
         if (mBean.getCustomerType() == 0) {
