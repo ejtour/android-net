@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
+import com.hll_sc_app.app.crm.customer.plan.add.AddVisitPlanActivity;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
@@ -27,8 +28,7 @@ public class VisitPlanActivity extends BaseCustomerActivity {
     }
 
     private void initView() {
-        mTitleBar.setRightBtnClick(v -> {
-        });
+        mTitleBar.setRightBtnClick(v -> AddVisitPlanActivity.start(this, null));
         mFragments = Arrays.asList(VisitPlanFragment.newInstance(false), VisitPlanFragment.newInstance(true));
         mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(), mFragments));
         mTabLayout.setViewPager(mViewPager, new String[]{"我的拜访计划", "全部拜访计划"});

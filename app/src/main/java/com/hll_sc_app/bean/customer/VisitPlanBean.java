@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.customer;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
 /**
@@ -7,7 +10,18 @@ import com.google.gson.annotations.Expose;
  * @since 2019/11/23
  */
 
-public class VisitPlanBean {
+public class VisitPlanBean implements Parcelable {
+    public static final Creator<VisitPlanBean> CREATOR = new Creator<VisitPlanBean>() {
+        @Override
+        public VisitPlanBean createFromParcel(Parcel in) {
+            return new VisitPlanBean(in);
+        }
+
+        @Override
+        public VisitPlanBean[] newArray(int size) {
+            return new VisitPlanBean[size];
+        }
+    };
     @Expose(deserialize = false)
     private int actionType;
     private String attentions;
@@ -27,6 +41,57 @@ public class VisitPlanBean {
     private String visitPersonnel;
     private String visitTime;
     private int visitWay;
+
+    public VisitPlanBean() {
+    }
+
+    protected VisitPlanBean(Parcel in) {
+        actionType = in.readInt();
+        attentions = in.readString();
+        customerAddress = in.readString();
+        customerCity = in.readString();
+        customerDistrict = in.readString();
+        customerID = in.readString();
+        customerName = in.readString();
+        customerProvince = in.readString();
+        customerType = in.readInt();
+        employeeID = in.readString();
+        groupID = in.readString();
+        id = in.readString();
+        maintainLevel = in.readInt();
+        purchaserID = in.readString();
+        visitGoal = in.readInt();
+        visitPersonnel = in.readString();
+        visitTime = in.readString();
+        visitWay = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(actionType);
+        dest.writeString(attentions);
+        dest.writeString(customerAddress);
+        dest.writeString(customerCity);
+        dest.writeString(customerDistrict);
+        dest.writeString(customerID);
+        dest.writeString(customerName);
+        dest.writeString(customerProvince);
+        dest.writeInt(customerType);
+        dest.writeString(employeeID);
+        dest.writeString(groupID);
+        dest.writeString(id);
+        dest.writeInt(maintainLevel);
+        dest.writeString(purchaserID);
+        dest.writeInt(visitGoal);
+        dest.writeString(visitPersonnel);
+        dest.writeString(visitTime);
+        dest.writeInt(visitWay);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public int getActionType() {
         return actionType;

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/vpa_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="添加拜访计划" />
+
+    <View
+        android:id="@+id/vpa_bottom_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/vpa_save"
+        style="@style/BtnSubmit"
+        android:enabled="false"
+        android:text="保存"
+        app:layout_constraintBottom_toBottomOf="@id/vpa_bottom_bg"
+        app:layout_constraintEnd_toEndOf="@id/vpa_bottom_bg"
+        app:layout_constraintStart_toStartOf="@id/vpa_bottom_bg"
+        app:layout_constraintTop_toTopOf="@id/vpa_bottom_bg" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/dp_10"
+        app:layout_constraintBottom_toTopOf="@id/vpa_bottom_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vpa_title_bar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:paddingBottom="@dimen/dp_10">
+
+            <TextView
+                android:id="@+id/vpa_type_label"
+                style="@style/InfoLabel"
+                android:background="@android:color/white"
+                android:text="客户类型" />
+
+            <TextView
+                android:id="@+id/vpa_type"
+                style="@style/InfoEdit"
+                android:layout_alignTop="@id/vpa_type_label"
+                android:layout_alignBottom="@id/vpa_type_label"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/vpa_type_label"
+                android:background="@android:color/white"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:hint="请选择" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignBottom="@id/vpa_type_label"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee" />
+
+            <TextView
+                android:id="@+id/vpa_level_label"
+                style="@style/InfoLabel"
+                android:layout_below="@id/vpa_type_label"
+                android:background="@android:color/white"
+                android:text="客户级别" />
+
+            <TextView
+                android:id="@+id/vpa_level"
+                style="@style/InfoEdit"
+                android:layout_alignTop="@id/vpa_level_label"
+                android:layout_alignBottom="@id/vpa_level_label"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/vpa_level_label"
+                android:background="@android:color/white"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:hint="请选择" />
+
+            <TextView
+                android:id="@+id/vpa_base_info"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/vpa_level_label"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:text="基本信息"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+            <TextView
+                android:id="@+id/vpa_customer_label"
+                style="@style/InfoLabel"
+                android:layout_below="@id/vpa_base_info"
+                android:background="@android:color/white"
+                android:text="拜访客户" />
+
+            <TextView
+                android:id="@+id/vpa_customer"
+                style="@style/InfoEdit"
+                android:layout_alignTop="@id/vpa_customer_label"
+                android:layout_alignBottom="@id/vpa_customer_label"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/vpa_customer_label"
+                android:background="@android:color/white"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:hint="请选择要拜访的客户" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignBottom="@id/vpa_customer_label"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee" />
+
+            <TextView
+                android:id="@+id/vpa_time_label"
+                style="@style/InfoLabel"
+                android:layout_below="@id/vpa_customer_label"
+                android:background="@android:color/white"
+                android:text="预计拜访时间" />
+
+            <TextView
+                android:id="@+id/vpa_time"
+                style="@style/InfoEdit"
+                android:layout_alignTop="@id/vpa_time_label"
+                android:layout_alignBottom="@id/vpa_time_label"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/vpa_time_label"
+                android:background="@android:color/white"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:hint="请选择" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignBottom="@id/vpa_time_label"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee" />
+
+            <TextView
+                android:id="@+id/vpa_way_label"
+                style="@style/InfoLabel"
+                android:layout_below="@id/vpa_time_label"
+                android:background="@android:color/white"
+                android:text="拜访方式" />
+
+            <TextView
+                android:id="@+id/vpa_way"
+                style="@style/InfoEdit"
+                android:layout_alignTop="@id/vpa_way_label"
+                android:layout_alignBottom="@id/vpa_way_label"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/vpa_way_label"
+                android:background="@android:color/white"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:hint="请选择" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignBottom="@id/vpa_way_label"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee" />
+
+            <TextView
+                android:id="@+id/vpa_goal_label"
+                style="@style/InfoLabel"
+                android:layout_below="@id/vpa_way_label"
+                android:background="@android:color/white"
+                android:text="拜访目的" />
+
+            <TextView
+                android:id="@+id/vpa_goal"
+                style="@style/InfoEdit"
+                android:layout_alignTop="@id/vpa_goal_label"
+                android:layout_alignBottom="@id/vpa_goal_label"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/vpa_goal_label"
+                android:background="@android:color/white"
+                android:drawableRight="@drawable/ic_arrow_gray"
+                android:hint="请选择" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignBottom="@id/vpa_goal_label"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:background="@color/color_eeeeee" />
+
+            <TextView
+                android:id="@+id/vpa_attention_label"
+                style="@style/InfoLabel"
+                android:layout_width="match_parent"
+                android:layout_below="@id/vpa_goal_label"
+                android:background="@android:color/white"
+                android:text="注意事项" />
+
+            <EditText
+                android:id="@+id/vpa_attention"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vpa_attention_label"
+                android:background="@android:color/white"
+                android:gravity="top"
+                android:hint="请输入拜访注意事项"
+                android:lineSpacingExtra="4dp"
+                android:lines="4"
+                android:maxLength="200"
+                android:maxLines="4"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColorHint="@color/color_aeaeae"
+                android:textSize="@dimen/text_middle_size" />
+
+            <TextView
+                android:id="@+id/vpa_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/vpa_attention"
+                android:layout_alignBottom="@id/vpa_attention"
+                android:layout_margin="8dp"
+                android:text="200"
+                android:textColor="@color/color_aeaeae"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/vpa_attach_info"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/vpa_attention"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp_10"
+                android:text="附属信息"
+                android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+            <TextView
+                android:id="@+id/vpa_person_label"
+                style="@style/InfoLabel"
+                android:layout_below="@id/vpa_attach_info"
+                android:background="@android:color/white"
+                android:text="拜访人员" />
+
+            <TextView
+                android:id="@+id/vpa_person"
+                style="@style/InfoEdit"
+                android:layout_alignTop="@id/vpa_person_label"
+                android:layout_alignBottom="@id/vpa_person_label"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/vpa_person_label"
+                android:background="@android:color/white"
+                android:enabled="false"
+                tools:text="张经理" />
+        </RelativeLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
