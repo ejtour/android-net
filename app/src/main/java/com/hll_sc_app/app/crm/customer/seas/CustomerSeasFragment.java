@@ -1,22 +1,20 @@
-package com.hll_sc_app.app.crm.customer.intent;
+package com.hll_sc_app.app.crm.customer.seas;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alibaba.android.arouter.facade.annotation.Autowired;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
-import com.hll_sc_app.bean.customer.CustomerBean;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -32,37 +30,27 @@ import butterknife.Unbinder;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
- * @since 2019/11/20
+ * @since 2019/11/25
  */
 
-public class CustomerIntentFragment extends BaseLazyFragment implements ICustomerIntentContract.ICustomerIntentView {
-    @Autowired(name = "object")
-    int mType;
+public class CustomerSeasFragment extends BaseLazyFragment implements ICustomerSeasContract.ICustomerSeasView {
     @BindView(R.id.srl_list_view)
     RecyclerView mListView;
     @BindView(R.id.srl_refresh_view)
     SmartRefreshLayout mRefreshView;
     Unbinder unbinder;
-    private ICustomerIntentContract.ICustomerIntentPresenter mPresenter;
-    private CustomerIntentAdapter mAdapter;
+    private CustomerSeasAdapter mAdapter;
+    private ICustomerSeasContract.ICustomerSeasPresenter mPresenter;
     private EmptyView mEmptyView;
 
-    /**
-     * @param type 0-我的意向客户 1-全部意向客户 2-意向客户公海
-     */
-    public static CustomerIntentFragment newInstance(int type) {
-        Bundle args = new Bundle();
-        args.putInt("object", type);
-        CustomerIntentFragment fragment = new CustomerIntentFragment();
-        fragment.setArguments(args);
-        return fragment;
+    public static CustomerSeasFragment newInstance() {
+        return new CustomerSeasFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ARouter.getInstance().inject(this);
-        mPresenter = CustomerIntentPresenter.newInstance();
+        mPresenter = CustomerSeasPresenter.newInstance();
         mPresenter.register(this);
     }
 
@@ -75,7 +63,9 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
     }
 
     private void initView() {
-        mListView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(requireContext(), R.color.color_eeeeee), UIUtils.dip2px(1)));
+        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
+        mAdapter = new CustomerSeasAdapter();
+        mListView.setAdapter(mAdapter);
         mRefreshView.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -87,18 +77,16 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
                 mPresenter.refresh();
             }
         });
-        mAdapter = new CustomerIntentAdapter();
-        mListView.setAdapter(mAdapter);
+    }
+
+    void reload() {
+        setForceLoad(true);
+        lazyLoad();
     }
 
     @Override
     protected void initData() {
         mPresenter.start();
-    }
-
-    public void reload(){
-        setForceLoad(true);
-        lazyLoad();
     }
 
     @Override
@@ -114,12 +102,18 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
     }
 
     @Override
-    public void showError(UseCaseException e) {
-        super.showError(e);
-        if (e.getLevel() == UseCaseException.Level.NET) {
-            initEmptyView();
-            mEmptyView.setNetError();
+    public void setData(List<PurchaserShopBean> list, boolean append) {
+        if (append) {
+            if (!CommonUtils.isEmpty(list)) mAdapter.addData(list);
+        } else {
+            if (CommonUtils.isEmpty(list)) {
+                initEmptyView();
+                mEmptyView.reset();
+                mEmptyView.setTips("还没有数据哦~");
+            }
+            mAdapter.setNewData(list);
         }
+        mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
     }
 
     private void initEmptyView() {
@@ -132,23 +126,12 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
     }
 
     @Override
-    public void setData(List<CustomerBean> list, boolean append) {
-        if (append) {
-            if (!CommonUtils.isEmpty(list)) mAdapter.addData(list);
-        } else {
-            if (CommonUtils.isEmpty(list)) {
-                initEmptyView();
-                mEmptyView.reset();
-                mEmptyView.setTips("您还没有意向客户哦~");
-            }
-            mAdapter.setNewData(list);
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        if (e.getLevel() == UseCaseException.Level.NET) {
+            initEmptyView();
+            mEmptyView.setNetError();
         }
-        mRefreshView.setEnableLoadMore(list != null && list.size() == 20);
-    }
-
-    @Override
-    public int getType() {
-        return mType;
     }
 
     @Override

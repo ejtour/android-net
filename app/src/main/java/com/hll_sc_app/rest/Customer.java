@@ -9,6 +9,7 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.customer.CrmCustomerResp;
 import com.hll_sc_app.bean.customer.CrmShopResp;
@@ -213,6 +214,25 @@ public class Customer {
     public static void saveVisitPlan(VisitPlanBean req, SimpleObserver<Object> observer) {
         CustomerService.INSTANCE
                 .saveVisitPlan(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询意向客户公海
+     *
+     * @param pageNum     页码
+     * @param searchWords 搜索
+     */
+    public static void queryCustomerSeas(int pageNum, String searchWords, SimpleObserver<SingleListResp<CustomerBean>> observer) {
+        CustomerService.INSTANCE
+                .queryCustomerSeas(BaseMapReq.newBuilder()
+                        .put("customerName", searchWords)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("pageSize", "20")
+                        .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

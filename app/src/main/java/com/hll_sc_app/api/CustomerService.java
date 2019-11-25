@@ -64,4 +64,8 @@ public interface CustomerService {
     @POST(HttpConfig.URL)
     @Headers("pv:107003")
     Observable<BaseResp<Object>> saveVisitPlan(@Body BaseReq<VisitPlanBean> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107011")
+    Observable<BaseResp<SingleListResp<CustomerBean>>> queryCustomerSeas(@Body BaseMapReq req);
 }

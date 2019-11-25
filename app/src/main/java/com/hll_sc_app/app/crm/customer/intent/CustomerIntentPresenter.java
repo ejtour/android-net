@@ -1,7 +1,5 @@
 package com.hll_sc_app.app.crm.customer.intent;
 
-import android.os.Bundle;
-
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.customer.CustomerBean;
@@ -42,14 +40,19 @@ public class CustomerIntentPresenter implements ICustomerIntentContract.ICustome
     }
 
     private void load(boolean showLoading) {
-        Customer.queryIntentCustomer(mView.isAll(), mPageNum, mView.getSearchWords(), new SimpleObserver<SingleListResp<CustomerBean>>(mView, showLoading) {
+        SimpleObserver<SingleListResp<CustomerBean>> observer = new SimpleObserver<SingleListResp<CustomerBean>>(mView, showLoading) {
             @Override
             public void onSuccess(SingleListResp<CustomerBean> customerBeanSingleListResp) {
                 mView.setData(customerBeanSingleListResp.getRecords(), mPageNum > 1);
                 if (CommonUtils.isEmpty(customerBeanSingleListResp.getRecords())) return;
                 mPageNum++;
             }
-        });
+        };
+        if (mView.getType() == 2) {
+            Customer.queryCustomerSeas(mPageNum, mView.getSearchWords(), observer);
+        } else {
+            Customer.queryIntentCustomer(mView.getType() == 1, mPageNum, mView.getSearchWords(), observer);
+        }
     }
 
     @Override

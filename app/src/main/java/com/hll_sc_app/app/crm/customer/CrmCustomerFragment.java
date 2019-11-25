@@ -136,6 +136,7 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
 
     @OnClick(R.id.fcc_seas_btn)
     public void seas() {
+        RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_SEAS);
     }
 
     @OnClick(R.id.fcc_plan_btn)
