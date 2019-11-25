@@ -1387,5 +1387,10 @@ public class RouterConfig {
      * 客户-拜访计划-新增
      */
     public static final String CRM_CUSTOMER_PLAN_ADD = "/activity/customer/plan/add";
+
+    /**
+     * 客户-拜访计划-详情
+     */
+    public static final String CRM_CUSTOMER_PLAN_DETAIL = "/activity/customer/plan/detail";
 }
 

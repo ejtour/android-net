@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.customer.plan.detail.VisitPlanDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -80,7 +81,7 @@ public class VisitPlanFragment extends BaseLazyFragment implements IVisitPlanCon
             if (view.getId() == R.id.cvp_del)
                 showTipDialog();
             else if (view.getId() == R.id.cvp_root) {
-                showToast("计划详情待添加");
+                VisitPlanDetailActivity.start(requireActivity(), mAdapter.getItem(position));
             }
         });
         if (!mIsAll)
