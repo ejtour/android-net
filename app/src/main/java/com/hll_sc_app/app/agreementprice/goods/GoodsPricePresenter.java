@@ -152,7 +152,9 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
         ExportReq.ParamsBean paramsBean = new ExportReq.ParamsBean();
         ExportReq.ParamsBean.CommonQuotation commonQuotation = new ExportReq.ParamsBean.CommonQuotation();
         commonQuotation.setShopIDs(Arrays.asList(mView.getShopIds().split(",")));
-        commonQuotation.setCategoryIDs(Arrays.asList(mView.getCategoryId().split(",")));
+        if (!TextUtils.isEmpty(mView.getCategoryId())){
+            commonQuotation.setCategoryIDs(Arrays.asList(mView.getCategoryId().split(",")));
+        }
         commonQuotation.setPriceStartDate(mView.getPriceStartDate());
         commonQuotation.setPriceEndDate(mView.getPriceEndDate());
 
