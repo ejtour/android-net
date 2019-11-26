@@ -23,6 +23,11 @@ public class CustomerBean implements Parcelable {
         }
     };
     /**
+     * 是否为公海客户
+     */
+    @Expose(deserialize = false, serialize = false)
+    private boolean isSeas;
+    /**
      * 1:新增客户；2:修改客户
      */
     @Expose(deserialize = false)
@@ -73,6 +78,7 @@ public class CustomerBean implements Parcelable {
     }
 
     protected CustomerBean(Parcel in) {
+        isSeas = in.readByte() != 0;
         actionType = in.readInt();
         customerAddress = in.readString();
         customerDistrictCode = in.readString();
@@ -99,6 +105,7 @@ public class CustomerBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (isSeas ? 1 : 0));
         dest.writeInt(actionType);
         dest.writeString(customerAddress);
         dest.writeString(customerDistrictCode);
@@ -137,6 +144,14 @@ public class CustomerBean implements Parcelable {
         customerArea.setCustomerProvince(getCustomerProvince());
         customerArea.setCustomerProvinceCode(getCustomerProvinceCode());
         setCustomerArea(customerArea);
+    }
+
+    public boolean isSeas() {
+        return isSeas;
+    }
+
+    public void setSeas(boolean seas) {
+        isSeas = seas;
     }
 
     public int getActionType() {

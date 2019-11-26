@@ -221,7 +221,7 @@
         android:layout_height="@dimen/bottom_bar_height"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cid_allot"
         app:layout_constraintStart_toEndOf="@id/cid_seas">
 
         <TextView
@@ -234,12 +234,50 @@
             android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
     </FrameLayout>
 
+    <FrameLayout
+        android:id="@+id/cid_allot"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cid_receive"
+        app:layout_constraintStart_toEndOf="@id/cid_partner">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_customer_allot"
+            android:drawablePadding="6dp"
+            android:text="分配销售"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/cid_receive"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cid_allot">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_customer_receive"
+            android:drawablePadding="6dp"
+            android:text="领取客户"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+    </FrameLayout>
+
     <android.support.constraint.Barrier
         android:id="@+id/cid_barrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="top"
-        app:constraint_referenced_ids="cid_plan,cid_record,cid_seas,cid_partner" />
+        app:constraint_referenced_ids="cid_plan,cid_record,cid_seas,cid_partner,cid_allot,cid_receive" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/cid_view_pager"

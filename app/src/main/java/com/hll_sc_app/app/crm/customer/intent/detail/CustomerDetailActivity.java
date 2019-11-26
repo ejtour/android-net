@@ -77,6 +77,8 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
     SlidingTabLayout mTabLayout;
     @BindViews({R.id.cid_plan, R.id.cid_record, R.id.cid_seas, R.id.cid_partner})
     List<View> mBottomButtons;
+    @BindViews({R.id.cid_allot, R.id.cid_receive})
+    List<View> mButtons;
     @BindView(R.id.cid_view_pager)
     ViewPager mViewPager;
     @Autowired(name = "parcelable", required = true)
@@ -126,7 +128,10 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
                 mPresenter.refresh();
             }
         });
-        if (mBean.getEmployeeID().equals(GreenDaoUtils.getUser().getEmployeeID())) {
+        if (mBean.isSeas()) {
+            ButterKnife.apply(mButtons, (view, index) -> view.setVisibility(View.VISIBLE));
+            mTitleBar.setRightBtnVisible(true);
+        } else if (mBean.getEmployeeID().equals(GreenDaoUtils.getUser().getEmployeeID())) {
             ButterKnife.apply(mBottomButtons, (view, index) -> view.setVisibility(View.VISIBLE));
             mTitleBar.setRightBtnVisible(true);
         }
@@ -203,6 +208,16 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
 
     @OnClick(R.id.cid_partner)
     public void partner() {
+    }
+
+    @OnClick(R.id.cid_allot)
+    public void allot() {
+
+    }
+
+    @OnClick(R.id.cid_receive)
+    public void receive() {
+
     }
 
     public void updateData(CustomerBean bean) {
