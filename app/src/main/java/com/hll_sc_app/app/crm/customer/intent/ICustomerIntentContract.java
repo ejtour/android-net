@@ -15,7 +15,7 @@ public interface ICustomerIntentContract {
     interface ICustomerIntentView extends ILoadView {
         void setData(List<CustomerBean> list, boolean append);
 
-        boolean isAll();
+        int getType();
 
         String getSearchWords();
     }

@@ -9,6 +9,7 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.customer.CrmCustomerResp;
 import com.hll_sc_app.bean.customer.CrmShopResp;
 import com.hll_sc_app.bean.customer.CustomerBean;
+import com.hll_sc_app.bean.customer.VisitPlanBean;
 import com.hll_sc_app.bean.customer.VisitRecordBean;
 
 import io.reactivex.Observable;
@@ -47,4 +48,24 @@ public interface CustomerService {
     @POST(HttpConfig.URL)
     @Headers("pv:107008")
     Observable<BaseResp<Object>> delVisitRecord(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107004")
+    Observable<BaseResp<Object>> saveVisitRecord(@Body BaseReq<VisitRecordBean> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107005")
+    Observable<BaseResp<SingleListResp<VisitPlanBean>>> queryVisitPlan(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107006")
+    Observable<BaseResp<Object>> delVisitPlan(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107003")
+    Observable<BaseResp<Object>> saveVisitPlan(@Body BaseReq<VisitPlanBean> body);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107011")
+    Observable<BaseResp<SingleListResp<CustomerBean>>> queryCustomerSeas(@Body BaseMapReq req);
 }

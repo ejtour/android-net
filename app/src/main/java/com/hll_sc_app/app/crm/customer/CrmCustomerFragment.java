@@ -15,6 +15,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.add.CustomerAddActivity;
 import com.hll_sc_app.app.crm.customer.intent.add.AddCustomerActivity;
+import com.hll_sc_app.app.crm.customer.plan.add.AddVisitPlanActivity;
+import com.hll_sc_app.app.crm.customer.record.add.AddVisitRecordActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -79,10 +81,14 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
                     case CustomerHelper.GOTO_INTENT:
                         AddCustomerActivity.start(requireActivity(), null);
                         break;
+                    case CustomerHelper.GOTO_RECORD:
+                        AddVisitRecordActivity.start(requireActivity(), null);
+                        break;
+                    case CustomerHelper.GOTO_PLAN:
+                        AddVisitPlanActivity.start(requireActivity(), null);
+                        break;
                     case CustomerHelper.GOTO_PARTNER_REGISTERED:
                     case CustomerHelper.GOTO_PARTNER_UNREGISTERED:
-                    case CustomerHelper.GOTO_PLAN:
-                    case CustomerHelper.GOTO_RECORD:
                     default:
                         break;
                 }
@@ -130,10 +136,12 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
 
     @OnClick(R.id.fcc_seas_btn)
     public void seas() {
+        RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_SEAS);
     }
 
     @OnClick(R.id.fcc_plan_btn)
     public void plan() {
+        RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_PLAN);
     }
 
     @OnClick(R.id.fcc_record_btn)

@@ -21,6 +21,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.CustomerHelper;
 import com.hll_sc_app.app.crm.customer.intent.add.AddCustomerActivity;
 import com.hll_sc_app.app.crm.customer.record.VisitRecordAdapter;
+import com.hll_sc_app.app.crm.customer.record.detail.VisitRecordDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -30,9 +31,11 @@ import com.hll_sc_app.bean.customer.CustomerBean;
 import com.hll_sc_app.bean.customer.VisitRecordBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.adapter.ViewPagerAdapter;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.customer.CustomerIntentDetailView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -74,6 +77,8 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
     SlidingTabLayout mTabLayout;
     @BindViews({R.id.cid_plan, R.id.cid_record, R.id.cid_seas, R.id.cid_partner})
     List<View> mBottomButtons;
+    @BindViews({R.id.cid_allot, R.id.cid_receive})
+    List<View> mButtons;
     @BindView(R.id.cid_view_pager)
     ViewPager mViewPager;
     @Autowired(name = "parcelable", required = true)
@@ -85,6 +90,7 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
     private ICustomerDetailContract.ICustomerDetailPresenter mPresenter;
     private VisitRecordAdapter mAdapter;
     private EmptyView mEmptyView;
+    private VisitRecordBean mCurBean;
 
     public static void start(Activity activity, CustomerBean bean) {
         RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_INTENT_DETAIL, activity, REQ_CODE, bean);
@@ -106,6 +112,8 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
         mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mRefreshLayout = (SmartRefreshLayout) View.inflate(this, R.layout.layout_simple_refresh_list, null);
         mListView = mRefreshLayout.findViewById(R.id.srl_list_view);
+        mListView.addItemDecoration(
+                new SimpleDecoration(ContextCompat.getColor(this, R.color.colorPrimary), ViewUtils.dip2px(this, 0.5f)));
         mDetailView = new CustomerIntentDetailView(this);
         mViewPager.setAdapter(new ViewPagerAdapter(mDetailView, mRefreshLayout));
         mTabLayout.setViewPager(mViewPager, new String[]{"客户信息", "拜访记录"});
@@ -120,11 +128,21 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
                 mPresenter.refresh();
             }
         });
-        if (mBean.getEmployeeID().equals(GreenDaoUtils.getUser().getEmployeeID())) {
+        if (mBean.isSeas()) {
+            ButterKnife.apply(mButtons, (view, index) -> view.setVisibility(View.VISIBLE));
+            mTitleBar.setRightBtnVisible(true);
+        } else if (mBean.getEmployeeID().equals(GreenDaoUtils.getUser().getEmployeeID())) {
             ButterKnife.apply(mBottomButtons, (view, index) -> view.setVisibility(View.VISIBLE));
             mTitleBar.setRightBtnVisible(true);
         }
         mAdapter = new VisitRecordAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.cvr_root) {
+                mCurBean = mAdapter.getItem(position);
+                if (mCurBean == null) return;
+                VisitRecordDetailActivity.start(this, mCurBean);
+            }
+        });
         mListView.setAdapter(mAdapter);
     }
 
@@ -132,8 +150,16 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            mHasChanged = true;
-            mPresenter.reload();
+            if (data != null) {
+                VisitRecordBean bean = data.getParcelableExtra(CustomerHelper.VISIT_KEY);
+                mAdapter.replaceData(mCurBean, bean);
+                if (bean != null) return;
+                CustomerBean customer = data.getParcelableExtra(CustomerHelper.INTENT_KEY);
+                if (customer != null) {
+                    mHasChanged = true;
+                    updateData(customer);
+                }
+            }
         }
     }
 
@@ -184,7 +210,16 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
     public void partner() {
     }
 
-    @Override
+    @OnClick(R.id.cid_allot)
+    public void allot() {
+
+    }
+
+    @OnClick(R.id.cid_receive)
+    public void receive() {
+
+    }
+
     public void updateData(CustomerBean bean) {
         mBean = bean;
         updateData();

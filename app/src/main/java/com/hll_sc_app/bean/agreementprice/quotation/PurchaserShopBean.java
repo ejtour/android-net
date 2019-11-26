@@ -14,6 +14,17 @@ import java.util.List;
  * @date 2019-07-09
  */
 public class PurchaserShopBean implements Parcelable {
+    public static final Creator<PurchaserShopBean> CREATOR = new Creator<PurchaserShopBean>() {
+        @Override
+        public PurchaserShopBean createFromParcel(Parcel in) {
+            return new PurchaserShopBean(in);
+        }
+
+        @Override
+        public PurchaserShopBean[] newArray(int size) {
+            return new PurchaserShopBean[size];
+        }
+    };
     private String shopCode;
     private String shopArea;
     private String addressGaoDe;
@@ -31,7 +42,6 @@ public class PurchaserShopBean implements Parcelable {
     private String shopPhone;
     private String shopID;
     private String purchaserName;
-
     private String shopProvince;
     private String shopDistrict;
     private String shopCity;
@@ -39,7 +49,6 @@ public class PurchaserShopBean implements Parcelable {
     private List<TimeBean> time;
     private String status;
     private String settlementWay;
-
     private String accountPeriodType;
     private String accountPeriod;
     private String salesRepresentativeName;
@@ -53,6 +62,182 @@ public class PurchaserShopBean implements Parcelable {
     private String salesmanName;
     private String salesmanPhone;
     private int cooperationActive;
+    private int fallFlag;
+    private int newFlag;
+    private double actualSevenAvgBillNum;
+    private double currentAvgAmount;
+    private int currentMonthBillNum;
+    private int currentWeekBillNum;
+    private String lastBillTime;
+    private String lastVisitTime;
+    private double monthScale;
+    private int preMonthBillNum;
+    private int preWeekBillNum;
+    private int returnBillNum;
+    private double sevenAvgBillNum;
+    private double sevenBillAmount;
+    private int sevenBillNum;
+    private double sevenDayAvgAmount;
+    private double thirtyBillAmount;
+    private int thirtyBillNum;
+    private double thirtyDayAvgAmount;
+    private double thirtyDayAvgBillNum;
+    private double todayBillAmount;
+    private int todayBillNum;
+    private double unsettledBillAmount;
+    private int unsettledBillNum;
+    private double weekScale;
+    private String businessStartTime;
+    private String businessEndTime;
+    private String cooperationTime;
+    private List<CooperationSourceBean> cooperationSource;
+
+    public PurchaserShopBean() {
+    }
+
+    protected PurchaserShopBean(Parcel in) {
+        shopCode = in.readString();
+        shopArea = in.readString();
+        addressGaoDe = in.readString();
+        imagePath = in.readString();
+        mobile = in.readString();
+        shopName = in.readString();
+        source = in.readString();
+        isActive = in.readString();
+        shopAddress = in.readString();
+        linkman = in.readString();
+        purchaserID = in.readString();
+        latGaoDe = in.readString();
+        shopAdmin = in.readString();
+        lonGaoDe = in.readString();
+        shopPhone = in.readString();
+        shopID = in.readString();
+        purchaserName = in.readString();
+        shopProvince = in.readString();
+        shopDistrict = in.readString();
+        shopCity = in.readString();
+        select = in.readByte() != 0;
+        time = in.createTypedArrayList(TimeBean.CREATOR);
+        status = in.readString();
+        settlementWay = in.readString();
+        accountPeriodType = in.readString();
+        accountPeriod = in.readString();
+        salesRepresentativeName = in.readString();
+        settleDate = in.readString();
+        driverName = in.readString();
+        salesRepresentativeID = in.readString();
+        deliveryWay = in.readString();
+        agreeTime = in.readString();
+        deliveryPeriod = in.readString();
+        driverID = in.readString();
+        salesmanName = in.readString();
+        salesmanPhone = in.readString();
+        cooperationActive = in.readInt();
+        fallFlag = in.readInt();
+        newFlag = in.readInt();
+        actualSevenAvgBillNum = in.readDouble();
+        currentAvgAmount = in.readDouble();
+        currentMonthBillNum = in.readInt();
+        currentWeekBillNum = in.readInt();
+        lastBillTime = in.readString();
+        lastVisitTime = in.readString();
+        monthScale = in.readDouble();
+        preMonthBillNum = in.readInt();
+        preWeekBillNum = in.readInt();
+        returnBillNum = in.readInt();
+        sevenAvgBillNum = in.readDouble();
+        sevenBillAmount = in.readDouble();
+        sevenBillNum = in.readInt();
+        sevenDayAvgAmount = in.readDouble();
+        thirtyBillAmount = in.readDouble();
+        thirtyBillNum = in.readInt();
+        thirtyDayAvgAmount = in.readDouble();
+        thirtyDayAvgBillNum = in.readDouble();
+        todayBillAmount = in.readDouble();
+        todayBillNum = in.readInt();
+        unsettledBillAmount = in.readDouble();
+        unsettledBillNum = in.readInt();
+        weekScale = in.readDouble();
+        businessStartTime = in.readString();
+        businessEndTime = in.readString();
+        cooperationTime = in.readString();
+        cooperationSource = in.createTypedArrayList(CooperationSourceBean.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(shopCode);
+        dest.writeString(shopArea);
+        dest.writeString(addressGaoDe);
+        dest.writeString(imagePath);
+        dest.writeString(mobile);
+        dest.writeString(shopName);
+        dest.writeString(source);
+        dest.writeString(isActive);
+        dest.writeString(shopAddress);
+        dest.writeString(linkman);
+        dest.writeString(purchaserID);
+        dest.writeString(latGaoDe);
+        dest.writeString(shopAdmin);
+        dest.writeString(lonGaoDe);
+        dest.writeString(shopPhone);
+        dest.writeString(shopID);
+        dest.writeString(purchaserName);
+        dest.writeString(shopProvince);
+        dest.writeString(shopDistrict);
+        dest.writeString(shopCity);
+        dest.writeByte((byte) (select ? 1 : 0));
+        dest.writeTypedList(time);
+        dest.writeString(status);
+        dest.writeString(settlementWay);
+        dest.writeString(accountPeriodType);
+        dest.writeString(accountPeriod);
+        dest.writeString(salesRepresentativeName);
+        dest.writeString(settleDate);
+        dest.writeString(driverName);
+        dest.writeString(salesRepresentativeID);
+        dest.writeString(deliveryWay);
+        dest.writeString(agreeTime);
+        dest.writeString(deliveryPeriod);
+        dest.writeString(driverID);
+        dest.writeString(salesmanName);
+        dest.writeString(salesmanPhone);
+        dest.writeInt(cooperationActive);
+        dest.writeInt(fallFlag);
+        dest.writeInt(newFlag);
+        dest.writeDouble(actualSevenAvgBillNum);
+        dest.writeDouble(currentAvgAmount);
+        dest.writeInt(currentMonthBillNum);
+        dest.writeInt(currentWeekBillNum);
+        dest.writeString(lastBillTime);
+        dest.writeString(lastVisitTime);
+        dest.writeDouble(monthScale);
+        dest.writeInt(preMonthBillNum);
+        dest.writeInt(preWeekBillNum);
+        dest.writeInt(returnBillNum);
+        dest.writeDouble(sevenAvgBillNum);
+        dest.writeDouble(sevenBillAmount);
+        dest.writeInt(sevenBillNum);
+        dest.writeDouble(sevenDayAvgAmount);
+        dest.writeDouble(thirtyBillAmount);
+        dest.writeInt(thirtyBillNum);
+        dest.writeDouble(thirtyDayAvgAmount);
+        dest.writeDouble(thirtyDayAvgBillNum);
+        dest.writeDouble(todayBillAmount);
+        dest.writeInt(todayBillNum);
+        dest.writeDouble(unsettledBillAmount);
+        dest.writeInt(unsettledBillNum);
+        dest.writeDouble(weekScale);
+        dest.writeString(businessStartTime);
+        dest.writeString(businessEndTime);
+        dest.writeString(cooperationTime);
+        dest.writeTypedList(cooperationSource);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public int getCooperationActive() {
         return cooperationActive;
@@ -326,9 +511,6 @@ public class PurchaserShopBean implements Parcelable {
         this.shopID = shopID;
     }
 
-    public PurchaserShopBean() {
-    }
-
     public String getShopCity() {
         return shopCity;
     }
@@ -353,8 +535,6 @@ public class PurchaserShopBean implements Parcelable {
         this.salesRepresentativeID = salesRepresentativeID;
     }
 
-    private List<CooperationSourceBean> cooperationSource;
-
     public List<CooperationSourceBean> getCooperationSource() {
         return cooperationSource;
     }
@@ -363,103 +543,227 @@ public class PurchaserShopBean implements Parcelable {
         this.cooperationSource = cooperationSource;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public int getFallFlag() {
+        return fallFlag;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.shopCode);
-        dest.writeString(this.shopArea);
-        dest.writeString(this.addressGaoDe);
-        dest.writeString(this.imagePath);
-        dest.writeString(this.mobile);
-        dest.writeString(this.shopName);
-        dest.writeString(this.source);
-        dest.writeString(this.isActive);
-        dest.writeString(this.shopAddress);
-        dest.writeString(this.linkman);
-        dest.writeString(this.purchaserID);
-        dest.writeString(this.latGaoDe);
-        dest.writeString(this.shopAdmin);
-        dest.writeString(this.lonGaoDe);
-        dest.writeString(this.shopPhone);
-        dest.writeString(this.shopID);
-        dest.writeString(this.purchaserName);
-        dest.writeString(this.shopProvince);
-        dest.writeString(this.shopDistrict);
-        dest.writeString(this.shopCity);
-        dest.writeByte(this.select ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this.time);
-        dest.writeString(this.status);
-        dest.writeString(this.settlementWay);
-        dest.writeString(this.accountPeriodType);
-        dest.writeString(this.accountPeriod);
-        dest.writeString(this.salesRepresentativeName);
-        dest.writeString(this.settleDate);
-        dest.writeString(this.driverName);
-        dest.writeString(this.salesRepresentativeID);
-        dest.writeString(this.deliveryWay);
-        dest.writeString(this.agreeTime);
-        dest.writeString(this.deliveryPeriod);
-        dest.writeString(this.driverID);
-        dest.writeString(this.salesmanName);
-        dest.writeString(this.salesmanPhone);
-        dest.writeInt(this.cooperationActive);
-        dest.writeTypedList(this.cooperationSource);
+    public void setFallFlag(int fallFlag) {
+        this.fallFlag = fallFlag;
     }
 
-    protected PurchaserShopBean(Parcel in) {
-        this.shopCode = in.readString();
-        this.shopArea = in.readString();
-        this.addressGaoDe = in.readString();
-        this.imagePath = in.readString();
-        this.mobile = in.readString();
-        this.shopName = in.readString();
-        this.source = in.readString();
-        this.isActive = in.readString();
-        this.shopAddress = in.readString();
-        this.linkman = in.readString();
-        this.purchaserID = in.readString();
-        this.latGaoDe = in.readString();
-        this.shopAdmin = in.readString();
-        this.lonGaoDe = in.readString();
-        this.shopPhone = in.readString();
-        this.shopID = in.readString();
-        this.purchaserName = in.readString();
-        this.shopProvince = in.readString();
-        this.shopDistrict = in.readString();
-        this.shopCity = in.readString();
-        this.select = in.readByte() != 0;
-        this.time = in.createTypedArrayList(TimeBean.CREATOR);
-        this.status = in.readString();
-        this.settlementWay = in.readString();
-        this.accountPeriodType = in.readString();
-        this.accountPeriod = in.readString();
-        this.salesRepresentativeName = in.readString();
-        this.settleDate = in.readString();
-        this.driverName = in.readString();
-        this.salesRepresentativeID = in.readString();
-        this.deliveryWay = in.readString();
-        this.agreeTime = in.readString();
-        this.deliveryPeriod = in.readString();
-        this.driverID = in.readString();
-        this.salesmanName = in.readString();
-        this.salesmanPhone = in.readString();
-        this.cooperationActive = in.readInt();
-        this.cooperationSource = in.createTypedArrayList(CooperationSourceBean.CREATOR);
+    public int getNewFlag() {
+        return newFlag;
     }
 
-    public static final Creator<PurchaserShopBean> CREATOR = new Creator<PurchaserShopBean>() {
-        @Override
-        public PurchaserShopBean createFromParcel(Parcel source) {
-            return new PurchaserShopBean(source);
-        }
+    public void setNewFlag(int newFlag) {
+        this.newFlag = newFlag;
+    }
 
-        @Override
-        public PurchaserShopBean[] newArray(int size) {
-            return new PurchaserShopBean[size];
-        }
-    };
+    public double getActualSevenAvgBillNum() {
+        return actualSevenAvgBillNum;
+    }
+
+    public void setActualSevenAvgBillNum(double actualSevenAvgBillNum) {
+        this.actualSevenAvgBillNum = actualSevenAvgBillNum;
+    }
+
+    public double getCurrentAvgAmount() {
+        return currentAvgAmount;
+    }
+
+    public void setCurrentAvgAmount(double currentAvgAmount) {
+        this.currentAvgAmount = currentAvgAmount;
+    }
+
+    public int getCurrentMonthBillNum() {
+        return currentMonthBillNum;
+    }
+
+    public void setCurrentMonthBillNum(int currentMonthBillNum) {
+        this.currentMonthBillNum = currentMonthBillNum;
+    }
+
+    public int getCurrentWeekBillNum() {
+        return currentWeekBillNum;
+    }
+
+    public void setCurrentWeekBillNum(int currentWeekBillNum) {
+        this.currentWeekBillNum = currentWeekBillNum;
+    }
+
+    public String getLastBillTime() {
+        return lastBillTime;
+    }
+
+    public void setLastBillTime(String lastBillTime) {
+        this.lastBillTime = lastBillTime;
+    }
+
+    public String getLastVisitTime() {
+        return lastVisitTime;
+    }
+
+    public void setLastVisitTime(String lastVisitTime) {
+        this.lastVisitTime = lastVisitTime;
+    }
+
+    public double getMonthScale() {
+        return monthScale;
+    }
+
+    public void setMonthScale(double monthScale) {
+        this.monthScale = monthScale;
+    }
+
+    public int getPreMonthBillNum() {
+        return preMonthBillNum;
+    }
+
+    public void setPreMonthBillNum(int preMonthBillNum) {
+        this.preMonthBillNum = preMonthBillNum;
+    }
+
+    public int getPreWeekBillNum() {
+        return preWeekBillNum;
+    }
+
+    public void setPreWeekBillNum(int preWeekBillNum) {
+        this.preWeekBillNum = preWeekBillNum;
+    }
+
+    public int getReturnBillNum() {
+        return returnBillNum;
+    }
+
+    public void setReturnBillNum(int returnBillNum) {
+        this.returnBillNum = returnBillNum;
+    }
+
+    public double getSevenAvgBillNum() {
+        return sevenAvgBillNum;
+    }
+
+    public void setSevenAvgBillNum(double sevenAvgBillNum) {
+        this.sevenAvgBillNum = sevenAvgBillNum;
+    }
+
+    public double getSevenBillAmount() {
+        return sevenBillAmount;
+    }
+
+    public void setSevenBillAmount(double sevenBillAmount) {
+        this.sevenBillAmount = sevenBillAmount;
+    }
+
+    public int getSevenBillNum() {
+        return sevenBillNum;
+    }
+
+    public void setSevenBillNum(int sevenBillNum) {
+        this.sevenBillNum = sevenBillNum;
+    }
+
+    public double getSevenDayAvgAmount() {
+        return sevenDayAvgAmount;
+    }
+
+    public void setSevenDayAvgAmount(double sevenDayAvgAmount) {
+        this.sevenDayAvgAmount = sevenDayAvgAmount;
+    }
+
+    public double getThirtyBillAmount() {
+        return thirtyBillAmount;
+    }
+
+    public void setThirtyBillAmount(double thirtyBillAmount) {
+        this.thirtyBillAmount = thirtyBillAmount;
+    }
+
+    public int getThirtyBillNum() {
+        return thirtyBillNum;
+    }
+
+    public void setThirtyBillNum(int thirtyBillNum) {
+        this.thirtyBillNum = thirtyBillNum;
+    }
+
+    public double getThirtyDayAvgAmount() {
+        return thirtyDayAvgAmount;
+    }
+
+    public void setThirtyDayAvgAmount(double thirtyDayAvgAmount) {
+        this.thirtyDayAvgAmount = thirtyDayAvgAmount;
+    }
+
+    public double getThirtyDayAvgBillNum() {
+        return thirtyDayAvgBillNum;
+    }
+
+    public void setThirtyDayAvgBillNum(double thirtyDayAvgBillNum) {
+        this.thirtyDayAvgBillNum = thirtyDayAvgBillNum;
+    }
+
+    public double getTodayBillAmount() {
+        return todayBillAmount;
+    }
+
+    public void setTodayBillAmount(double todayBillAmount) {
+        this.todayBillAmount = todayBillAmount;
+    }
+
+    public int getTodayBillNum() {
+        return todayBillNum;
+    }
+
+    public void setTodayBillNum(int todayBillNum) {
+        this.todayBillNum = todayBillNum;
+    }
+
+    public double getUnsettledBillAmount() {
+        return unsettledBillAmount;
+    }
+
+    public void setUnsettledBillAmount(double unsettledBillAmount) {
+        this.unsettledBillAmount = unsettledBillAmount;
+    }
+
+    public int getUnsettledBillNum() {
+        return unsettledBillNum;
+    }
+
+    public void setUnsettledBillNum(int unsettledBillNum) {
+        this.unsettledBillNum = unsettledBillNum;
+    }
+
+    public double getWeekScale() {
+        return weekScale;
+    }
+
+    public void setWeekScale(double weekScale) {
+        this.weekScale = weekScale;
+    }
+
+    public String getBusinessStartTime() {
+        return businessStartTime;
+    }
+
+    public void setBusinessStartTime(String businessStartTime) {
+        this.businessStartTime = businessStartTime;
+    }
+
+    public String getBusinessEndTime() {
+        return businessEndTime;
+    }
+
+    public void setBusinessEndTime(String businessEndTime) {
+        this.businessEndTime = businessEndTime;
+    }
+
+    public String getCooperationTime() {
+        return cooperationTime;
+    }
+
+    public void setCooperationTime(String cooperationTime) {
+        this.cooperationTime = cooperationTime;
+    }
 }

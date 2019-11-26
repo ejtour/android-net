@@ -3,7 +3,6 @@ package com.hll_sc_app.app.crm.customer.intent.detail;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.SingleListResp;
-import com.hll_sc_app.bean.customer.CustomerBean;
 import com.hll_sc_app.bean.customer.VisitRecordBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Customer;
@@ -33,17 +32,6 @@ public class CustomerDetailPresenter implements ICustomerDetailContract.ICustome
     @Override
     public void loadMore() {
         load(false);
-    }
-
-    @Override
-    public void reload() {
-        Customer.queryIntentCustomerDetail(mView.getID(), new SimpleObserver<SingleListResp<CustomerBean>>(mView) {
-            @Override
-            public void onSuccess(SingleListResp<CustomerBean> customerBeanSingleListResp) {
-                if (!CommonUtils.isEmpty(customerBeanSingleListResp.getRecords()))
-                    mView.updateData(customerBeanSingleListResp.getRecords().get(0));
-            }
-        });
     }
 
     @Override

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="@dimen/dp_10"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/css_base_info"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="14dp"
+            android:text="基本信息"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+        <TextView
+            android:id="@+id/css_contact_label"
+            style="@style/InfoLabel"
+            android:layout_below="@id/css_base_info"
+            android:layout_alignLeft="@id/css_base_info"
+            android:layout_alignRight="@id/css_base_info"
+            android:background="@android:color/white"
+            android:paddingLeft="14dp"
+            android:text="联系人" />
+
+        <TextView
+            android:id="@+id/css_contact"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/css_contact_label"
+            android:layout_alignBottom="@id/css_contact_label"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/css_contact_label"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textColor="@color/color_999999"
+            tools:text="张经理" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignBottom="@id/css_contact_label"
+            android:background="@color/color_eeeeee" />
+
+        <TextView
+            android:id="@+id/css_phone_label"
+            style="@style/InfoLabel"
+            android:layout_below="@id/css_contact_label"
+            android:layout_alignLeft="@id/css_base_info"
+            android:layout_alignRight="@id/css_base_info"
+            android:background="@android:color/white"
+            android:paddingLeft="14dp"
+            android:text="联系电话" />
+
+        <TextView
+            android:id="@+id/css_phone"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/css_phone_label"
+            android:layout_alignBottom="@id/css_phone_label"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/css_phone_label"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textColor="@color/color_999999"
+            tools:text="15501158888" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignBottom="@id/css_phone_label"
+            android:background="@color/color_eeeeee" />
+
+        <TextView
+            android:id="@+id/css_time_label"
+            style="@style/InfoLabel"
+            android:layout_below="@id/css_phone_label"
+            android:layout_alignLeft="@id/css_base_info"
+            android:layout_alignRight="@id/css_base_info"
+            android:background="@android:color/white"
+            android:paddingLeft="14dp"
+            android:text="营业时间" />
+
+        <TextView
+            android:id="@+id/css_time"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/css_time_label"
+            android:layout_alignBottom="@id/css_time_label"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/css_time_label"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textColor="@color/color_999999"
+            tools:text="08:00-24:00" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignBottom="@id/css_time_label"
+            android:background="@color/color_eeeeee" />
+
+        <TextView
+            android:id="@+id/css_region_label"
+            style="@style/InfoLabel"
+            android:layout_below="@id/css_time_label"
+            android:layout_alignLeft="@id/css_base_info"
+            android:layout_alignRight="@id/css_base_info"
+            android:background="@android:color/white"
+            android:paddingLeft="14dp"
+            android:text="所在地区" />
+
+        <TextView
+            android:id="@+id/css_region"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/css_region_label"
+            android:layout_alignBottom="@id/css_region_label"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/css_region_label"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textColor="@color/color_999999"
+            tools:text="北京-北京市-西城区" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignBottom="@id/css_region_label"
+            android:background="@color/color_eeeeee" />
+
+        <TextView
+            android:id="@+id/css_address_label"
+            style="@style/InfoLabel"
+            android:layout_below="@id/css_region_label"
+            android:layout_alignLeft="@id/css_base_info"
+            android:layout_alignRight="@id/css_base_info"
+            android:background="@android:color/white"
+            android:paddingLeft="14dp"
+            android:text="详细地址" />
+
+        <TextView
+            android:id="@+id/css_address"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/css_address_label"
+            android:layout_alignBottom="@id/css_address_label"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/css_address_label"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textColor="@color/color_999999"
+            tools:text="西城区西广场T1-22层" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignBottom="@id/css_address_label"
+            android:background="@color/color_eeeeee" />
+
+        <TextView
+            android:id="@+id/css_group_label"
+            style="@style/InfoLabel"
+            android:layout_below="@id/css_address_label"
+            android:layout_alignLeft="@id/css_base_info"
+            android:layout_alignRight="@id/css_base_info"
+            android:background="@android:color/white"
+            android:paddingLeft="14dp"
+            android:text="所属集团" />
+
+        <TextView
+            android:id="@+id/css_group"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/css_group_label"
+            android:layout_alignBottom="@id/css_group_label"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/css_group_label"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textColor="@color/color_999999"
+            tools:text="风尚佳美商贸有限有限公司" />
+
+        <TextView
+            android:id="@+id/css_cooperation_info"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_below="@id/css_group_label"
+            android:gravity="center_vertical"
+            android:paddingLeft="14dp"
+            android:text="合作信息"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color999" />
+
+        <TextView
+            android:id="@+id/css_date_label"
+            style="@style/InfoLabel"
+            android:layout_below="@id/css_cooperation_info"
+            android:layout_alignLeft="@id/css_base_info"
+            android:layout_alignRight="@id/css_base_info"
+            android:background="@android:color/white"
+            android:paddingLeft="14dp"
+            android:text="合作日期" />
+
+        <TextView
+            android:id="@+id/css_date"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/css_date_label"
+            android:layout_alignBottom="@id/css_date_label"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/css_date_label"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textColor="@color/color_999999"
+            tools:text="2018.01.01" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignBottom="@id/css_date_label"
+            android:background="@color/color_eeeeee" />
+
+        <TextView
+            android:id="@+id/css_way_label"
+            style="@style/InfoLabel"
+            android:layout_below="@id/css_date_label"
+            android:layout_alignLeft="@id/css_base_info"
+            android:layout_alignRight="@id/css_base_info"
+            android:background="@android:color/white"
+            android:paddingLeft="14dp"
+            android:text="结算方式" />
+
+        <TextView
+            android:id="@+id/css_way"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/css_way_label"
+            android:layout_alignBottom="@id/css_way_label"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/css_way_label"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textColor="@color/color_999999"
+            tools:text="货到付款／账期支付" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignBottom="@id/css_way_label"
+            android:background="@color/color_eeeeee" />
+
+        <TextView
+            android:id="@+id/css_salesman_label"
+            style="@style/InfoLabel"
+            android:layout_below="@id/css_way_label"
+            android:layout_alignLeft="@id/css_base_info"
+            android:layout_alignRight="@id/css_base_info"
+            android:background="@android:color/white"
+            android:paddingLeft="14dp"
+            android:text="销售代表" />
+
+        <TextView
+            android:id="@+id/css_salesman"
+            style="@style/InfoEdit"
+            android:layout_alignTop="@id/css_salesman_label"
+            android:layout_alignBottom="@id/css_salesman_label"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/css_salesman_label"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:textColor="@color/color_999999"
+            tools:text="货到付款／账期支付" />
+    </RelativeLayout>
+</ScrollView>

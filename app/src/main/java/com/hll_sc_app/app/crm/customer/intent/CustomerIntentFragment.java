@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -36,7 +37,7 @@ import butterknife.Unbinder;
 
 public class CustomerIntentFragment extends BaseLazyFragment implements ICustomerIntentContract.ICustomerIntentView {
     @Autowired(name = "object")
-    boolean mIsAll;
+    int mType;
     @BindView(R.id.srl_list_view)
     RecyclerView mListView;
     @BindView(R.id.srl_refresh_view)
@@ -46,9 +47,12 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
     private CustomerIntentAdapter mAdapter;
     private EmptyView mEmptyView;
 
-    public static CustomerIntentFragment newInstance(boolean isAll) {
+    /**
+     * @param type 0-我的意向客户 1-全部意向客户 2-意向客户公海
+     */
+    public static CustomerIntentFragment newInstance(int type) {
         Bundle args = new Bundle();
-        args.putBoolean("object", isAll);
+        args.putInt("object", type);
         CustomerIntentFragment fragment = new CustomerIntentFragment();
         fragment.setArguments(args);
         return fragment;
@@ -92,7 +96,7 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
         mPresenter.start();
     }
 
-    void reload(){
+    public void reload(){
         setForceLoad(true);
         lazyLoad();
     }
@@ -143,12 +147,12 @@ public class CustomerIntentFragment extends BaseLazyFragment implements ICustome
     }
 
     @Override
-    public boolean isAll() {
-        return mIsAll;
+    public int getType() {
+        return mType;
     }
 
     @Override
     public String getSearchWords() {
-        return ((CustomerIntentActivity) requireActivity()).getSearchWords();
+        return ((BaseCustomerActivity) requireActivity()).getSearchWords();
     }
 }

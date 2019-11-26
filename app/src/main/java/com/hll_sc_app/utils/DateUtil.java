@@ -3,6 +3,7 @@ package com.hll_sc_app.utils;
 import android.text.TextUtils;
 
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ public class DateUtil {
      * String -> Date
      */
     public static Date parse(String dateString) {
+        if (CommonUtils.getLong(dateString) == 0) return null;
         String format = null;
         if (dateString.length() <= 4) format = Constants.UNSIGNED_HH_MM;
         else if (dateString.length() <= 6) format = Constants.UNSIGNED_YYYY_MM;
@@ -45,7 +47,7 @@ public class DateUtil {
      * String -> Date -> String
      */
     public static String getReadableTime(String dateString, String format) {
-        if (TextUtils.isEmpty(dateString)) return "";
+        if (CommonUtils.getLong(dateString) == 0) return "";
         String[] array = null;
         if (dateString.length() <= 4)
             array = new String[]{Constants.UNSIGNED_HH_MM, Constants.SIGNED_HH_MM};

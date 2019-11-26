@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hll_sc_app.base.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/cvp_root"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/cvp_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="17dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:singleLine="true"
+            android:textColor="@color/color_333333"
+            android:textSize="14sp"
+            tools:text="风尚佳美商贸有限公司北京一部" />
+
+        <TextView
+            android:id="@+id/cvp_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cvp_name"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:textColor="@color/color_999999"
+            android:textSize="11sp"
+            tools:text="计划日期：2018.07.23" />
+
+        <TextView
+            android:id="@+id/cvp_way"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/cvp_date"
+            android:layout_marginLeft="45dp"
+            android:layout_toRightOf="@id/cvp_date"
+            android:textColor="@color/color_999999"
+            android:textSize="11sp"
+            tools:text="约访" />
+
+        <TextView
+            android:id="@+id/cvp_goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/cvp_date"
+            android:layout_alignRight="@id/cvp_name"
+            android:textColor="@color/color_999999"
+            android:textSize="11sp"
+            tools:text="拜访目的：客户保养" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/cvp_del"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
+        android:background="@color/color_ff655d"
+        android:gravity="center"
+        android:text="删除"
+        android:textAppearance="@style/TextAppearance.City22.Small.White" />
+</com.hll_sc_app.base.widget.SwipeItemLayout>

@@ -1367,5 +1367,40 @@ public class RouterConfig {
      * 客户-拜访记录
      */
     public static final String CRM_CUSTOMER_RECORD = "/activity/customer/record";
+
+    /**
+     * 客户-拜访记录-新增
+     */
+    public static final String CRM_CUSTOMER_RECORD_ADD = "/activity/customer/record/add";
+
+    /**
+     * 客户-拜访记录-详情
+     */
+    public static final String CRM_CUSTOMER_RECORD_DETAIL = "/activity/customer/record/detail";
+
+    /**
+     * 客户-拜访计划
+     */
+    public static final String CRM_CUSTOMER_PLAN = "/activity/customer/plan";
+
+    /**
+     * 客户-拜访计划-新增
+     */
+    public static final String CRM_CUSTOMER_PLAN_ADD = "/activity/customer/plan/add";
+
+    /**
+     * 客户-拜访计划-详情
+     */
+    public static final String CRM_CUSTOMER_PLAN_DETAIL = "/activity/customer/plan/detail";
+
+    /**
+     * 客户-客户公海
+     */
+    public static final String CRM_CUSTOMER_SEAS = "/activity/customer/seas";
+
+    /**
+     * 客户-客户公海-客户详情
+     */
+    public static final String CRM_CUSTOMER_SEAS_DETAIL = "/activity/customer/seas/detail";
 }
 

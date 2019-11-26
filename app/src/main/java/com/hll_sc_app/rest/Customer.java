@@ -9,10 +9,12 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.customer.CrmCustomerResp;
 import com.hll_sc_app.bean.customer.CrmShopResp;
 import com.hll_sc_app.bean.customer.CustomerBean;
+import com.hll_sc_app.bean.customer.VisitPlanBean;
 import com.hll_sc_app.bean.customer.VisitRecordBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -73,29 +75,14 @@ public class Customer {
      * @param searchWords 客户名称
      */
     public static void queryIntentCustomer(boolean all, int pageNum, String searchWords, SimpleObserver<SingleListResp<CustomerBean>> observer) {
-        queryIntentCustomer(all, pageNum, searchWords, "", observer);
-    }
-
-    /**
-     * 查询意向客户详情
-     *
-     * @param id 条目id
-     */
-    public static void queryIntentCustomerDetail(String id, SimpleObserver<SingleListResp<CustomerBean>> observer) {
-        queryIntentCustomer(true, 1, "", id, observer);
-    }
-
-    private static void queryIntentCustomer(boolean all, int pageNum, String searchWords, String id, SimpleObserver<SingleListResp<CustomerBean>> observer) {
-        boolean detail = !TextUtils.isEmpty(id);
         UserBean user = GreenDaoUtils.getUser();
         CustomerService.INSTANCE
                 .queryIntentCustomer(BaseMapReq.newBuilder()
                         .put("groupID", user.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
-                        .put("pageSize", detail ? "1" : "20")
+                        .put("pageSize", "20")
                         .put("customerName", searchWords)
                         .put("employeeID", all ? "" : user.getEmployeeID())
-                        .put("id", id)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -150,6 +137,101 @@ public class Customer {
         CustomerService.INSTANCE
                 .delVisitRecord(BaseMapReq.newBuilder()
                         .put("id", id)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 添加/修改拜访记录
+     */
+    public static void saveVisitRecord(VisitRecordBean req, SimpleObserver<Object> observer) {
+        CustomerService.INSTANCE
+                .saveVisitRecord(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询特定客户的拜访计划
+     *
+     * @param pageNum      页码
+     * @param customerType 客户类型 1.意向客户 2.合作客户
+     * @param id           客户id
+     */
+    public static void queryVisitPlanDetail(int pageNum, int customerType, String id, SimpleObserver<SingleListResp<VisitPlanBean>> observer) {
+        queryVisitPlan(true, pageNum, "", customerType, id, observer);
+    }
+
+    /**
+     * 查询拜访计划
+     *
+     * @param all         是否全部拜访计划
+     * @param pageNum     页码
+     * @param searchWords 搜索词
+     */
+    public static void queryVisitPlan(boolean all, int pageNum, String searchWords, SimpleObserver<SingleListResp<VisitPlanBean>> observer) {
+        queryVisitPlan(all, pageNum, searchWords, 0, "", observer);
+    }
+
+    private static void queryVisitPlan(boolean all, int pageNum, String searchWords, int customerType, String id, SimpleObserver<SingleListResp<VisitPlanBean>> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        CustomerService.INSTANCE
+                .queryVisitPlan(BaseMapReq.newBuilder()
+                        .put("customerID", id)
+                        .put("customerName", searchWords)
+                        .put("customerType", String.valueOf(TextUtils.isEmpty(id) ? "" : customerType))
+                        .put("employeeID", all ? "" : user.getEmployeeID())
+                        .put("groupID", user.getGroupID())
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("pageSize", "20")
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 删除拜访记录
+     *
+     * @param id 拜访计划id
+     */
+    public static void delVisitPlan(String id, SimpleObserver<Object> observer) {
+        CustomerService.INSTANCE
+                .delVisitPlan(BaseMapReq.newBuilder()
+                        .put("id", id)
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 添加/修改拜访计划
+     */
+    public static void saveVisitPlan(VisitPlanBean req, SimpleObserver<Object> observer) {
+        CustomerService.INSTANCE
+                .saveVisitPlan(new BaseReq<>(req))
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询意向客户公海
+     *
+     * @param pageNum     页码
+     * @param searchWords 搜索
+     */
+    public static void queryCustomerSeas(int pageNum, String searchWords, SimpleObserver<SingleListResp<CustomerBean>> observer) {
+        CustomerService.INSTANCE
+                .queryCustomerSeas(BaseMapReq.newBuilder()
+                        .put("customerName", searchWords)
+                        .put("pageNum", String.valueOf(pageNum))
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("pageSize", "20")
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
