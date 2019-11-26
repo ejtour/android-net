@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.crm.customer.seas;
 
+import android.app.Activity;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,10 +10,10 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.customer.seas.detail.CustomerSeasDetailActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -26,6 +27,9 @@ public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, Bas
             if (view.getTag() != null)
                 UIUtils.callPhone(view.getContext(), view.getTag().toString());
         });
+        setOnItemClickListener(
+                (adapter, view, position) ->
+                        CustomerSeasDetailActivity.start(((Activity) view.getContext()), getItem(position)));
     }
 
     @Override
@@ -48,7 +52,7 @@ public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, Bas
                 .setText(R.id.ccs_month, item.getCurrentMonthBillNum() + "单")
                 .setText(R.id.ccs_return, item.getReturnBillNum() + "单")
                 .setText(R.id.ccs_seven, String.format("%s/%s单",
-                        CommonUtils.formatNumber(item.getActualSevenAvgBillNum()), item.getSevenBillNum()));
+                        item.getSevenBillNum(), CommonUtils.formatNumber(item.getSevenAvgBillNum())));
         TextView tag = helper.getView(R.id.ccs_tag);
         if (TextUtils.isEmpty(tag.getText())) {
             tag.setVisibility(View.GONE);

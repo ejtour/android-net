@@ -1276,6 +1276,7 @@
         <activity
             android:name=".app.crm.customer.seas.CustomerSeasActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".app.crm.customer.seas.detail.CustomerSeasDetailActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

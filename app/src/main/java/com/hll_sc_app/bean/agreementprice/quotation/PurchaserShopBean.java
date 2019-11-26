@@ -87,6 +87,9 @@ public class PurchaserShopBean implements Parcelable {
     private double unsettledBillAmount;
     private int unsettledBillNum;
     private double weekScale;
+    private String businessStartTime;
+    private String businessEndTime;
+    private String cooperationTime;
     private List<CooperationSourceBean> cooperationSource;
 
     public PurchaserShopBean() {
@@ -155,6 +158,9 @@ public class PurchaserShopBean implements Parcelable {
         unsettledBillAmount = in.readDouble();
         unsettledBillNum = in.readInt();
         weekScale = in.readDouble();
+        businessStartTime = in.readString();
+        businessEndTime = in.readString();
+        cooperationTime = in.readString();
         cooperationSource = in.createTypedArrayList(CooperationSourceBean.CREATOR);
     }
 
@@ -222,6 +228,9 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeDouble(unsettledBillAmount);
         dest.writeInt(unsettledBillNum);
         dest.writeDouble(weekScale);
+        dest.writeString(businessStartTime);
+        dest.writeString(businessEndTime);
+        dest.writeString(cooperationTime);
         dest.writeTypedList(cooperationSource);
     }
 
@@ -732,5 +741,29 @@ public class PurchaserShopBean implements Parcelable {
 
     public void setWeekScale(double weekScale) {
         this.weekScale = weekScale;
+    }
+
+    public String getBusinessStartTime() {
+        return businessStartTime;
+    }
+
+    public void setBusinessStartTime(String businessStartTime) {
+        this.businessStartTime = businessStartTime;
+    }
+
+    public String getBusinessEndTime() {
+        return businessEndTime;
+    }
+
+    public void setBusinessEndTime(String businessEndTime) {
+        this.businessEndTime = businessEndTime;
+    }
+
+    public String getCooperationTime() {
+        return cooperationTime;
+    }
+
+    public void setCooperationTime(String cooperationTime) {
+        this.cooperationTime = cooperationTime;
     }
 }

@@ -1397,5 +1397,10 @@ public class RouterConfig {
      * 客户-客户公海
      */
     public static final String CRM_CUSTOMER_SEAS = "/activity/customer/seas";
+
+    /**
+     * 客户-客户公海-客户详情
+     */
+    public static final String CRM_CUSTOMER_SEAS_DETAIL = "/activity/customer/seas/detail";
 }
 

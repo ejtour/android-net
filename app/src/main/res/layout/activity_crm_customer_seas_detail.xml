@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/csd_title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/title_bar_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_title="客户详情" />
+
+    <TextView
+        android:id="@+id/csd_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="12dp"
+        android:singleLine="true"
+        android:textColor="@color/color_333333"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/csd_title_bar"
+        tools:text="风尚佳美商贸城西直门店" />
+
+    <TextView
+        android:id="@+id/csd_today_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_crm_order_date"
+        android:drawablePadding="4dp"
+        android:text="今日订单"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/csd_name"
+        app:layout_constraintTop_toBottomOf="@id/csd_name" />
+
+    <TextView
+        android:id="@+id/csd_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:textColor="@color/color_999999"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/csd_today_label"
+        app:layout_constraintStart_toEndOf="@id/csd_today_label"
+        app:layout_constraintTop_toTopOf="@id/csd_today_label"
+        tools:text="8,200.00/2单  |  单均100元" />
+
+    <TextView
+        android:id="@+id/csd_week_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_crm_customer_seven"
+        android:drawablePadding="4dp"
+        android:text="7日订单"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/csd_name"
+        app:layout_constraintTop_toBottomOf="@id/csd_today_label" />
+
+    <TextView
+        android:id="@+id/csd_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_999999"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/csd_week_label"
+        app:layout_constraintStart_toStartOf="@id/csd_today"
+        app:layout_constraintTop_toTopOf="@id/csd_week_label"
+        tools:text="12,600.00/16单   |  日均3笔/单均100元" />
+
+    <TextView
+        android:id="@+id/csd_month_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_crm_order_month"
+        android:drawablePadding="4dp"
+        android:text="30日订单"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/csd_name"
+        app:layout_constraintTop_toBottomOf="@id/csd_week_label" />
+
+    <TextView
+        android:id="@+id/csd_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_999999"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/csd_month_label"
+        app:layout_constraintStart_toStartOf="@id/csd_today"
+        app:layout_constraintTop_toTopOf="@id/csd_month_label"
+        tools:text="12,600.00/16单   |  日均3笔/单均100元" />
+
+    <TextView
+        android:id="@+id/csd_no_settled_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:drawableLeft="@drawable/ic_customer_no_settled"
+        android:drawablePadding="4dp"
+        android:text="未结算"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/csd_name"
+        app:layout_constraintTop_toBottomOf="@id/csd_month_label" />
+
+    <TextView
+        android:id="@+id/csd_no_settled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_999999"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/csd_no_settled_label"
+        app:layout_constraintStart_toStartOf="@id/csd_today"
+        app:layout_constraintTop_toTopOf="@id/csd_no_settled_label"
+        tools:text="800.00/4单" />
+
+    <TextView
+        android:id="@+id/csd_return_num_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="退货笔数："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/csd_name"
+        app:layout_constraintTop_toBottomOf="@id/csd_no_settled_label" />
+
+    <TextView
+        android:id="@+id/csd_return_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0笔"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        app:layout_constraintBaseline_toBaselineOf="@id/csd_return_num_label"
+        app:layout_constraintStart_toEndOf="@id/csd_return_num_label" />
+
+    <TextView
+        android:id="@+id/csd_week_num_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="单量：本周 / 上周"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/csd_name"
+        app:layout_constraintTop_toBottomOf="@id/csd_return_num_label" />
+
+    <TextView
+        android:id="@+id/csd_week_ratio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100.00%"
+        android:textColor="@color/color_58c8fa"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintBaseline_toBaselineOf="@id/csd_week_num_label"
+        app:layout_constraintEnd_toEndOf="@id/csd_name"
+        tools:text="80.00%" />
+
+    <ProgressBar
+        android:id="@+id/csd_week_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="5dp"
+        android:max="100"
+        android:progress="100"
+        android:progressDrawable="@drawable/progress_bar_customer_week"
+        app:layout_constraintBottom_toBottomOf="@id/csd_week_num_label"
+        app:layout_constraintEnd_toStartOf="@id/csd_week_ratio"
+        app:layout_constraintStart_toEndOf="@id/csd_week_num_label"
+        app:layout_constraintTop_toTopOf="@id/csd_week_num_label"
+        tools:progress="80" />
+
+    <TextView
+        android:id="@+id/csd_week_progress_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/0"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintBottom_toBottomOf="@id/csd_week_progress"
+        app:layout_constraintEnd_toEndOf="@id/csd_week_progress"
+        app:layout_constraintStart_toStartOf="@id/csd_week_progress"
+        app:layout_constraintTop_toTopOf="@id/csd_week_progress"
+        tools:text="80/100" />
+
+    <TextView
+        android:id="@+id/csd_month_num_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="单量：本月 / 上月"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/csd_name"
+        app:layout_constraintTop_toBottomOf="@id/csd_week_num_label" />
+
+    <TextView
+        android:id="@+id/csd_month_ratio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100.00%"
+        android:textColor="@color/color_ffad71"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintBaseline_toBaselineOf="@id/csd_month_num_label"
+        app:layout_constraintEnd_toEndOf="@id/csd_name"
+        tools:text="53.80%" />
+
+    <ProgressBar
+        android:id="@+id/csd_month_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="5dp"
+        android:max="100"
+        android:progress="100"
+        android:progressDrawable="@drawable/progress_bar_customer_month"
+        app:layout_constraintBottom_toBottomOf="@id/csd_month_num_label"
+        app:layout_constraintEnd_toStartOf="@id/csd_month_ratio"
+        app:layout_constraintStart_toEndOf="@id/csd_month_num_label"
+        app:layout_constraintTop_toTopOf="@id/csd_month_num_label"
+        tools:max="180"
+        tools:progress="120" />
+
+    <TextView
+        android:id="@+id/csd_month_progress_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/0"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
+        app:layout_constraintBottom_toBottomOf="@id/csd_month_progress"
+        app:layout_constraintEnd_toEndOf="@id/csd_month_progress"
+        app:layout_constraintStart_toStartOf="@id/csd_month_progress"
+        app:layout_constraintTop_toTopOf="@id/csd_month_progress"
+        tools:text="120/180" />
+
+    <TextView
+        android:id="@+id/csd_order_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="最后一次下单时间："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/csd_name"
+        app:layout_constraintTop_toBottomOf="@id/csd_month_num_label" />
+
+    <TextView
+        android:id="@+id/csd_order_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="无最后下单时间"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:textColorHint="@color/color_999999"
+        app:layout_constraintBaseline_toBaselineOf="@id/csd_order_time_label"
+        app:layout_constraintStart_toEndOf="@id/csd_order_time_label"
+        tools:text="2018.09.12 12:00" />
+
+    <TextView
+        android:id="@+id/csd_visit_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="最后一次拜访时间："
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintStart_toStartOf="@id/csd_name"
+        app:layout_constraintTop_toBottomOf="@id/csd_order_time_label" />
+
+    <TextView
+        android:id="@+id/csd_visit_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="---"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+        android:textColorHint="@color/color_999999"
+        app:layout_constraintBaseline_toBaselineOf="@id/csd_visit_time_label"
+        app:layout_constraintStart_toEndOf="@id/csd_visit_time_label"
+        tools:text="2018.08.10 12:00" />
+
+    <View
+        android:id="@+id/csd_div"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/csd_visit_time_label" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/csd_tab_layout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_40"
+        android:background="@drawable/bg_divider_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/csd_div"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_indicator_corner_radius="2dp"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_width="57dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/color_666666"
+        app:tl_textsize="@dimen/text_middle_size" />
+
+    <FrameLayout
+        android:id="@+id/csd_allot"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/csd_receive"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_customer_allot"
+            android:drawablePadding="6dp"
+            android:text="分配销售"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/csd_receive"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/bottom_bar_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/csd_allot">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_customer_receive"
+            android:drawablePadding="6dp"
+            android:text="领取客户"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+    </FrameLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/csd_view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/base_activity_bg"
+        app:layout_constraintBottom_toTopOf="@id/csd_allot"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/csd_tab_layout" />
+</android.support.constraint.ConstraintLayout>
