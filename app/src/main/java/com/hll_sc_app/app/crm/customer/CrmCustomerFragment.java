@@ -132,6 +132,7 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
 
     @OnClick(R.id.fcc_partner_btn)
     public void partner() {
+        RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_PARTNER);
     }
 
     @OnClick(R.id.fcc_seas_btn)
