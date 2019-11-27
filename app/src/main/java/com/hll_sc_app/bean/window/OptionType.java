@@ -37,7 +37,8 @@ import java.lang.annotation.RetentionPolicy;
         OptionType.OPTION_STATISTIC_MONTH, OptionType.OPTION_COOPER_PURCHASER, OptionType.OPTION_STOP_COOPER_PURCHASER,
         OptionType.OPTION_WAREHOUSE_COMPANY, OptionType.OPTION_STOP_WAREHOUSE_COMPANY, OptionType.OPTION_WEEK, OptionType.OPTION_MONTH,
         OptionType.OPTION_REPORT_EXPORT_CUSTOMER_RECEIVE_LIST, OptionType.OPTION_REPORT_EXPORT_CUSTOMER_RECEIVE_DETAIL,
-        OptionType.OPTION_EXPORT_PURCHASE_TEMPLATE, OptionType.OPTION_EXPORT_ORDER_DETAIL})
+        OptionType.OPTION_EXPORT_PURCHASE_TEMPLATE, OptionType.OPTION_EXPORT_ORDER_DETAIL, OptionType.OPTION_CUSTOMER_REGISTERED,
+        OptionType.OPTION_CUSTOMER_UNREGISTERED})
 @Retention(RetentionPolicy.SOURCE)
 public @interface OptionType {
     String OPTION_EXPORT_ASSEMBLY = "导出配货单";
@@ -154,4 +155,7 @@ public @interface OptionType {
 
     String OPTION_EXPORT_PURCHASE_TEMPLATE = "导出采购模板";
     String OPTION_EXPORT_ORDER_DETAIL = "订单分享";
+
+    String OPTION_CUSTOMER_REGISTERED = "已注册二十二城客户";
+    String OPTION_CUSTOMER_UNREGISTERED = "未注册二十二城客户";
 }
