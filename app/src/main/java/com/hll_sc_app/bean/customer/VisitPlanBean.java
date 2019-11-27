@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -23,24 +25,55 @@ public class VisitPlanBean implements Parcelable {
         }
     };
     @Expose(deserialize = false)
-    private int actionType;
+    int actionType;
     private String attentions;
-    private String customerAddress;
-    private String customerCity;
-    private String customerDistrict;
-    private String customerID;
-    private String customerName;
-    private String customerProvince;
-    private int customerType;
-    private String employeeID;
-    private String groupID;
-    private String id;
-    private int maintainLevel;
-    private String purchaserID;
-    private int visitGoal;
-    private String visitPersonnel;
-    private String visitTime;
-    private int visitWay;
+    String customerAddress;
+    String customerCity;
+    String customerDistrict;
+    String customerID;
+    String customerName;
+    String customerProvince;
+    int customerType;
+    String employeeID;
+    String groupID;
+    String id;
+    int maintainLevel;
+    String purchaserID;
+    int visitGoal;
+    String visitPersonnel;
+    String visitTime;
+    int visitWay;
+
+    public void inflateData(Parcelable parcelable){
+        if (parcelable instanceof CustomerBean) {
+            CustomerBean customerBean = (CustomerBean) parcelable;
+            setCustomerID(customerBean.getId());
+            setPurchaserID(null);
+            setCustomerName(customerBean.getCustomerName());
+            setCustomerAddress(customerBean.getCustomerAddress());
+            setCustomerCity(customerBean.getCustomerCity());
+            setCustomerDistrict(customerBean.getCustomerDistrict());
+            setCustomerProvince(customerBean.getCustomerProvince());
+        } else if (parcelable instanceof PurchaserShopBean) {
+            PurchaserShopBean shopBean = (PurchaserShopBean) parcelable;
+            setCustomerID(shopBean.getShopID());
+            setPurchaserID(shopBean.getPurchaserID());
+            setCustomerName(shopBean.getShopName());
+            setCustomerAddress(shopBean.getShopAddress());
+            setCustomerCity(shopBean.getShopCity());
+            setCustomerDistrict(shopBean.getShopDistrict());
+            setCustomerProvince(shopBean.getShopProvince());
+        } else if (parcelable instanceof PurchaserBean) {
+            PurchaserBean purchaserBean = (PurchaserBean) parcelable;
+            setCustomerID("0");
+            setPurchaserID(purchaserBean.getPurchaserID());
+            setCustomerName(purchaserBean.getPurchaserName());
+            setCustomerAddress(purchaserBean.getGroupAddress());
+            setCustomerCity(purchaserBean.getGroupCity());
+            setCustomerDistrict(purchaserBean.getGroupDistrict());
+            setCustomerProvince(purchaserBean.getGroupProvince());
+        }
+    }
 
     public VisitPlanBean() {
     }

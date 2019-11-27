@@ -3,6 +3,7 @@ package com.hll_sc_app.app.crm.customer.record.add;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.CustomerHelper;
+import com.hll_sc_app.app.crm.customer.search.CustomerSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -163,6 +165,8 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
         mPlan.setText("");
         mCustomer.setText("");
         mBean.setCustomerName("");
+        mBean.setCustomerID("");
+        mBean.setPurchaserID("");
     }
 
     @OnClick(R.id.vra_save)
@@ -222,7 +226,11 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
     }
 
     @OnClick(R.id.vra_level)
-    public void selectLevelOrPlan() {
+    public void selectLevel() {
+        if (mBean.getIsOnSchedule() == 1) {
+            showToast("请选择拜访计划");
+            return;
+        }
         if (mLevelDialog == null) {
             List<NameValue> nameValues = new ArrayList<>();
             for (int i = 0; i < 2; i++) {
@@ -233,12 +241,28 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
                     .select(nameValues.get(0))
                     .refreshList(nameValues)
                     .setOnSelectListener(value -> {
-                        mBean.setMaintainLevel(Integer.parseInt(value.getValue()));
-                        mLevel.setText(value.getName());
+                        int level = Integer.parseInt(value.getValue());
+                        if (mBean.getMaintainLevel() != level) {
+                            clearCustomerName();
+                            mBean.setMaintainLevel(Integer.parseInt(value.getValue()));
+                            mLevel.setText(value.getName());
+                        }
                     })
                     .create();
         }
         mLevelDialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                Parcelable parcelable = data.getParcelableExtra("parcelable");
+                mBean.inflateData(parcelable);
+                mCustomer.setText(mBean.getCustomerName());
+            }
+        }
     }
 
     @OnClick(R.id.vra_customer)
@@ -251,7 +275,8 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
             showToast("请选择拜访计划");
             return;
         }
-        showToast("选择客户待添加");
+        CustomerSearchActivity.start(this, TextUtils.isEmpty(mBean.getCustomerID()) ? mBean.getPurchaserID() : mBean.getCustomerID(),
+                mBean.getCustomerType() == 1 ? 0 : mBean.getMaintainLevel() == 0 ? 1 : 2);
     }
 
     @OnClick(R.id.vra_time)

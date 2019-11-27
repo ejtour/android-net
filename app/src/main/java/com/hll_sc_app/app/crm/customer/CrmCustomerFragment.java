@@ -89,7 +89,9 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
                         break;
                     case CustomerHelper.GOTO_PARTNER_REGISTERED:
                     case CustomerHelper.GOTO_PARTNER_UNREGISTERED:
+                        break;
                     default:
+                        mPresenter.start();
                         break;
                 }
             } else mPresenter.start();

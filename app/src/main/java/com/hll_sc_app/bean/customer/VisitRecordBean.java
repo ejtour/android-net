@@ -10,7 +10,7 @@ import com.google.gson.annotations.Expose;
  * @since 2019/11/21
  */
 
-public class VisitRecordBean implements Parcelable {
+public class VisitRecordBean extends VisitPlanBean implements Parcelable {
 
     public static final Creator<VisitRecordBean> CREATOR = new Creator<VisitRecordBean>() {
         @Override
@@ -23,28 +23,10 @@ public class VisitRecordBean implements Parcelable {
             return new VisitRecordBean[size];
         }
     };
-    @Expose(deserialize = false)
-    private int actionType;
-    private String customerAddress;
     private String visitResult;
-    private String customerProvince;
-    private String groupID;
-    private String employeeID;
-    private String customerCity;
     private int isOnSchedule;
     private int isActive;
-    private String customerName;
-    private String customerDistrict;
-    private int customerType;
-    private int maintainLevel;
-    private String visitPersonnel;
-    private String visitTime;
-    private String purchaserID;
-    private int visitWay;
-    private String customerID;
     private String planID;
-    private int visitGoal;
-    private String id;
     private String nextVisitTime;
 
     public VisitRecordBean() {
