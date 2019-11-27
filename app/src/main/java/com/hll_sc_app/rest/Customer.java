@@ -2,6 +2,7 @@ package com.hll_sc_app.rest;
 
 import android.text.TextUtils;
 
+import com.hll_sc_app.api.CommonService;
 import com.hll_sc_app.api.CustomerService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -76,8 +77,8 @@ public class Customer {
      */
     public static void queryIntentCustomer(boolean all, int pageNum, String searchWords, SimpleObserver<SingleListResp<CustomerBean>> observer) {
         UserBean user = GreenDaoUtils.getUser();
-        CustomerService.INSTANCE
-                .queryIntentCustomer(BaseMapReq.newBuilder()
+        CommonService.INSTANCE
+                .searchIntentionCustomer(BaseMapReq.newBuilder()
                         .put("groupID", user.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
                         .put("pageSize", "20")

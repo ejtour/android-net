@@ -6,12 +6,12 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.common.IntentionCustomerBean;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
+import com.hll_sc_app.bean.customer.CustomerBean;
 import com.hll_sc_app.bean.event.ShopSearchEvent;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
@@ -109,7 +109,7 @@ public class Common {
      * @param pageNum     页码
      * @param searchWords 搜索词
      */
-    public static void searchIntentionCustomer(int pageNum, String searchWords, SimpleObserver<SingleListResp<IntentionCustomerBean>> observer) {
+    public static void searchIntentionCustomer(int pageNum, String searchWords, SimpleObserver<SingleListResp<CustomerBean>> observer) {
         CommonService.INSTANCE
                 .searchIntentionCustomer(BaseMapReq.newBuilder()
                         .put("customerName", searchWords)

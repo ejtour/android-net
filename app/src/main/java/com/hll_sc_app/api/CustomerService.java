@@ -38,10 +38,6 @@ public interface CustomerService {
     Observable<BaseResp<Object>> saveIntentCustomer(@Body BaseReq<CustomerBean> body);
 
     @POST(HttpConfig.URL)
-    @Headers("pv:107002")
-    Observable<BaseResp<SingleListResp<CustomerBean>>> queryIntentCustomer(@Body BaseMapReq req);
-
-    @POST(HttpConfig.URL)
     @Headers("pv:107007")
     Observable<BaseResp<SingleListResp<VisitRecordBean>>> queryVisitRecord(@Body BaseMapReq req);
 
