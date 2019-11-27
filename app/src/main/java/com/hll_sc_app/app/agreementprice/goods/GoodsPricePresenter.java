@@ -158,6 +158,7 @@ public class GoodsPricePresenter implements GoodsPriceContract.IGoodsPricePresen
         if (!TextUtils.isEmpty(mView.getCategoryId())){
             commonQuotation.setCategoryIDs(Arrays.asList(mView.getCategoryId().split(",")));
         }
+        commonQuotation.setGroupID(userBean.getGroupID());
         commonQuotation.setPriceStartDate(mView.getPriceStartDate());
         commonQuotation.setPriceEndDate(mView.getPriceEndDate());
 
