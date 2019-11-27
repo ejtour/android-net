@@ -163,6 +163,24 @@
         app:layout_constraintEnd_toEndOf="@id/csd_name"
         tools:text="80.00%" />
 
+    <TextView
+        android:id="@+id/csd_month_ratio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100.00%"
+        android:textColor="@color/color_ffad71"
+        android:textSize="@dimen/text_small_size"
+        app:layout_constraintBaseline_toBaselineOf="@id/csd_month_num_label"
+        app:layout_constraintEnd_toEndOf="@id/csd_name"
+        tools:text="53.80%" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/csd_percent_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="csd_week_ratio,csd_month_ratio" />
+
     <ProgressBar
         android:id="@+id/csd_week_progress"
         style="?android:attr/progressBarStyleHorizontal"
@@ -174,7 +192,7 @@
         android:progress="100"
         android:progressDrawable="@drawable/progress_bar_customer_week"
         app:layout_constraintBottom_toBottomOf="@id/csd_week_num_label"
-        app:layout_constraintEnd_toStartOf="@id/csd_week_ratio"
+        app:layout_constraintEnd_toStartOf="@id/csd_percent_barrier"
         app:layout_constraintStart_toEndOf="@id/csd_week_num_label"
         app:layout_constraintTop_toTopOf="@id/csd_week_num_label"
         tools:progress="80" />
@@ -201,17 +219,6 @@
         app:layout_constraintStart_toStartOf="@id/csd_name"
         app:layout_constraintTop_toBottomOf="@id/csd_week_num_label" />
 
-    <TextView
-        android:id="@+id/csd_month_ratio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="100.00%"
-        android:textColor="@color/color_ffad71"
-        android:textSize="@dimen/text_small_size"
-        app:layout_constraintBaseline_toBaselineOf="@id/csd_month_num_label"
-        app:layout_constraintEnd_toEndOf="@id/csd_name"
-        tools:text="53.80%" />
-
     <ProgressBar
         android:id="@+id/csd_month_progress"
         style="?android:attr/progressBarStyleHorizontal"
@@ -223,7 +230,7 @@
         android:progress="100"
         android:progressDrawable="@drawable/progress_bar_customer_month"
         app:layout_constraintBottom_toBottomOf="@id/csd_month_num_label"
-        app:layout_constraintEnd_toStartOf="@id/csd_month_ratio"
+        app:layout_constraintEnd_toStartOf="@id/csd_percent_barrier"
         app:layout_constraintStart_toEndOf="@id/csd_month_num_label"
         app:layout_constraintTop_toTopOf="@id/csd_month_num_label"
         tools:max="180"
@@ -314,6 +321,7 @@
         android:id="@+id/csd_allot"
         android:layout_width="0dp"
         android:layout_height="@dimen/bottom_bar_height"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/csd_receive"
         app:layout_constraintStart_toStartOf="parent">
@@ -332,6 +340,7 @@
         android:id="@+id/csd_receive"
         android:layout_width="0dp"
         android:layout_height="@dimen/bottom_bar_height"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/csd_allot">
@@ -346,12 +355,19 @@
             android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
     </FrameLayout>
 
+    <android.support.constraint.Barrier
+        android:id="@+id/csd_bottom_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="csd_allot,csd_receive" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/csd_view_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/base_activity_bg"
-        app:layout_constraintBottom_toTopOf="@id/csd_allot"
+        app:layout_constraintBottom_toTopOf="@id/csd_bottom_barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/csd_tab_layout" />

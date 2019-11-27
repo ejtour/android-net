@@ -1285,6 +1285,10 @@
             android:name=".app.crm.customer.partner.CustomerPartnerActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.crm.customer.partner.detail.CustomerPartnerDetailActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

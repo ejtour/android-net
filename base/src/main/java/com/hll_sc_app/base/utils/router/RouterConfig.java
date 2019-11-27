@@ -1407,5 +1407,10 @@ public class RouterConfig {
      * 客户-合作客户
      */
     public static final String CRM_CUSTOMER_PARTNER = "/activity/customer/partner";
+
+    /**
+     * 客户-合作客户-详情
+     */
+    public static final String CRM_CUSTOMER_PARTNER_DETAIL = "/activity/customer/partner/detail";
 }
 

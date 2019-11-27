@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.crm.customer.seas.detail;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,8 +25,8 @@ import com.hll_sc_app.app.crm.customer.seas.detail.order.CustomerSeasOrderFragme
 import com.hll_sc_app.app.crm.customer.seas.detail.shop.CustomerSeasShopFragment;
 import com.hll_sc_app.app.crm.customer.seas.detail.visit.CustomerSeasVisitFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -34,9 +35,11 @@ import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 
 import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -78,10 +81,14 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity {
     TextView mVisitTime;
     @BindView(R.id.csd_tab_layout)
     SlidingTabLayout mTabLayout;
+    @BindViews({R.id.csd_allot, R.id.csd_receive})
+    List<View> mButtons;
     @BindView(R.id.csd_view_pager)
     ViewPager mViewPager;
     @Autowired(name = "parcelable")
     PurchaserShopBean mBean;
+    @Autowired(name = "object")
+    boolean mOnlyShop;
     private List<Fragment> mFragments;
     private NumberFormat mPercentInstance;
 
@@ -91,8 +98,12 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity {
         mPercentInstance.setMinimumFractionDigits(2);
     }
 
-    public static void start(Activity context, PurchaserShopBean bean) {
-        RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_SEAS_DETAIL, context, REQ_CODE, bean);
+    public static void start(Activity context, PurchaserShopBean bean, boolean onlyShop) {
+        ARouter.getInstance().build(RouterConfig.CRM_CUSTOMER_SEAS_DETAIL)
+                .withParcelable("parcelable", bean)
+                .withBoolean("object", onlyShop)
+                .setProvider(new LoginInterceptor())
+                .navigation(context, REQ_CODE);
     }
 
     @Override
@@ -157,10 +168,19 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity {
     }
 
     private void initView() {
-        mFragments = Arrays.asList(CustomerSeasShopFragment.newInstance(mBean), CustomerSeasOrderFragment.newInstance(mBean.getShopID()),
-                CustomerSeasVisitFragment.newInstance(mBean.getShopID()), CustomerSeasAnalysisFragment.newInstance());
+        String[] titles;
+        if (mOnlyShop) {
+            mFragments = Collections.singletonList(CustomerSeasShopFragment.newInstance(mBean));
+            titles = new String[]{"门店信息"};
+            mTabLayout.setIndicatorColor(Color.TRANSPARENT);
+        } else {
+            ButterKnife.apply(mButtons, (view, index) -> view.setVisibility(View.VISIBLE));
+            mFragments = Arrays.asList(CustomerSeasShopFragment.newInstance(mBean), CustomerSeasOrderFragment.newInstance(mBean.getShopID()),
+                    CustomerSeasVisitFragment.newInstance(mBean.getShopID()), CustomerSeasAnalysisFragment.newInstance());
+            titles = new String[]{"门店信息", "订单记录", "拜访记录", "商户分析"};
+        }
         mViewPager.setAdapter(new SimplePagerAdapter(getSupportFragmentManager(), mFragments));
-        mTabLayout.setViewPager(mViewPager, new String[]{"门店信息", "订单记录", "拜访记录", "商户分析"});
+        mTabLayout.setViewPager(mViewPager, titles);
     }
 
     @OnClick({R.id.csd_allot, R.id.csd_receive})

@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
+import com.hll_sc_app.app.crm.customer.partner.detail.CustomerPartnerDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -82,6 +83,11 @@ public class CustomerPartnerFragment extends BaseLazyFragment implements ICustom
     private void initView() {
         updateNum(0, 0, 0);
         mAdapter = new CustomerPartnerAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            PurchaserBean item = mAdapter.getItem(position);
+            if (item != null)
+                CustomerPartnerDetailActivity.start(item.getPurchaserID(), mIsAll);
+        });
         mListView.setAdapter(mAdapter);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(requireContext(), R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(70), 0, 0, 0, Color.WHITE);
