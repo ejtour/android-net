@@ -82,7 +82,7 @@ public class Common {
      */
     public static void queryCooperationShop(BaseMapReq req, SimpleObserver<CooperationShopListResp> observer) {
         CommonService.INSTANCE
-                .listCooperationShop(req)
+                .queryCooperationShop(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

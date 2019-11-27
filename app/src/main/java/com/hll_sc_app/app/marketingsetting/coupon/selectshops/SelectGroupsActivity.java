@@ -22,8 +22,8 @@ import com.hll_sc_app.app.search.stratery.CustomerNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
-import com.hll_sc_app.bean.cooperation.CooperationShopsListResp;
 import com.hll_sc_app.bean.event.MarketingSelectShopEvent;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.marketingsetting.CouponSendReq;
@@ -153,17 +153,17 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
         mPresent.getGroups();
     }
 
-    private ArrayList<CooperationShopsListResp.ShopListBean> getSelectShops(PurchaserBean currentPurchaser) {
+    private ArrayList<PurchaserShopBean> getSelectShops(PurchaserBean currentPurchaser) {
         if (mSelectMap.get(currentPurchaser.getPurchaserID()) == null) {
             return null;
         } else {
-            ArrayList<CooperationShopsListResp.ShopListBean> shopListBeans = new ArrayList<>();
+            ArrayList<PurchaserShopBean> shopListBeans = new ArrayList<>();
             List<String> shopIds = mSelectMap.get(currentPurchaser.getPurchaserID()).getShopIDList();
             if (shopIds == null) {//说明是在集团页面直接全选，并没有获取到具体的shopid
                 return null;
             } else {
                 for (String shopID : mSelectMap.get(currentPurchaser.getPurchaserID()).getShopIDList()) {
-                    CooperationShopsListResp.ShopListBean shopListBean = new CooperationShopsListResp.ShopListBean();
+                    PurchaserShopBean shopListBean = new PurchaserShopBean();
                     shopListBean.setShopID(shopID);
                     shopListBeans.add(shopListBean);
                 }
@@ -228,7 +228,7 @@ public class SelectGroupsActivity extends BaseLoadActivity implements ISelectCon
         if (event.getSelecShops() != null && currentGroupIndex > -1) {
             PurchaserBean currentGroupBean = mGroupAdapter.getItem(currentGroupIndex);
             ArrayList<String> shopIds = new ArrayList<>();
-            for (CooperationShopsListResp.ShopListBean shopListBean : event.getSelecShops().getSelectShops()) {
+            for (PurchaserShopBean shopListBean : event.getSelecShops().getSelectShops()) {
                 shopIds.add(shopListBean.getShopID());
             }
             if (mSelectMap.get(currentGroupBean.getPurchaserID()) != null) {

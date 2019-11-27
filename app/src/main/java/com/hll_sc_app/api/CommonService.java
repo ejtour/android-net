@@ -44,7 +44,7 @@ public interface CommonService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:102046")
-    Observable<BaseResp<CooperationShopListResp>> listCooperationShop(@Body BaseMapReq req);
+    Observable<BaseResp<CooperationShopListResp>> queryCooperationShop(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103083")
