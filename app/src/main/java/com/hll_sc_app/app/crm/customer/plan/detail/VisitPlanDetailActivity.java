@@ -102,7 +102,7 @@ public class VisitPlanDetailActivity extends BaseLoadActivity {
         }
         mType.setText(CustomerHelper.getVisitCustomerType(mBean.getCustomerType()));
         mName.setText(mBean.getCustomerName());
-        mAddress.setText(String.format("%s-%s-%s", mBean.getCustomerProvince(), mBean.getCustomerCity(), mBean.getCustomerDistrict()));
+        mAddress.setText(String.format("%s-%s-%s %s", mBean.getCustomerProvince(), mBean.getCustomerCity(), mBean.getCustomerDistrict(), mBean.getCustomerAddress()));
         mTime.setText(DateUtil.getReadableTime(mBean.getVisitTime(), CalendarUtils.FORMAT_DATE_TIME));
         mWay.setText(CustomerHelper.getVisitWay(mBean.getVisitWay()));
         mGoal.setText(CustomerHelper.getVisitGoal(mBean.getVisitGoal()));
