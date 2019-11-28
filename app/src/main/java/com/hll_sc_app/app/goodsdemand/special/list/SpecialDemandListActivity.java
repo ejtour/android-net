@@ -15,7 +15,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goodsdemand.special.detail.SpecialDemandDetailActivity;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.SimpleSearch;
+import com.hll_sc_app.app.search.stratery.GoodsDemandSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -91,7 +91,7 @@ public class SpecialDemandListActivity extends BaseLoadActivity implements ISpec
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(SpecialDemandListActivity.this, searchContent, SimpleSearch.class.getSimpleName());
+                SearchActivity.start(SpecialDemandListActivity.this, searchContent, GoodsDemandSearch.class.getSimpleName());
             }
 
             @Override

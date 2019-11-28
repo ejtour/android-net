@@ -14,7 +14,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goodsdemand.special.list.SpecialDemandListActivity;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.SimpleSearch;
+import com.hll_sc_app.app.search.stratery.SpecialDemandSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -75,7 +75,7 @@ public class SpecialDemandEntryActivity extends BaseLoadActivity implements ISpe
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(SpecialDemandEntryActivity.this, searchContent, SimpleSearch.class.getSimpleName());
+                SearchActivity.start(SpecialDemandEntryActivity.this, searchContent, SpecialDemandSearch.class.getSimpleName());
             }
 
             @Override

@@ -9,7 +9,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
-import com.hll_sc_app.app.search.stratery.CommonSearch;
+import com.hll_sc_app.app.search.stratery.PartnerSearch;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.window.OptionType;
@@ -73,6 +73,6 @@ public class CustomerPartnerActivity extends BaseCustomerActivity {
 
     @Override
     protected String getSearchKey() {
-        return CommonSearch.class.getSimpleName();
+        return PartnerSearch.class.getSimpleName();
     }
 }

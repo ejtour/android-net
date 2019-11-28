@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
 import com.hll_sc_app.app.crm.customer.record.add.AddVisitRecordActivity;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
+import com.hll_sc_app.app.search.stratery.VisitRecordSearch;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 
@@ -36,7 +37,7 @@ public class VisitRecordActivity extends BaseCustomerActivity {
 
     @Override
     protected String getSearchKey() {
-        return CommonSearch.class.getSimpleName();
+        return VisitRecordSearch.class.getSimpleName();
     }
 
     @Override
