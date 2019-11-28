@@ -87,6 +87,7 @@ public class AddVisitPlanActivity extends BaseLoadActivity implements IAddVisitP
             mBean.setActionType(1);
             mBean.setGroupID(user.getGroupID());
             mBean.setEmployeeID(user.getEmployeeID());
+            mBean.setVisitPersonnel(user.getEmployeeName());
             mPerson.setText(user.getEmployeeName());
         } else {
             mTitleBar.setHeaderTitle("修改拜访计划");

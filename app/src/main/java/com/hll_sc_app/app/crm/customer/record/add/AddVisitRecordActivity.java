@@ -3,6 +3,7 @@ package com.hll_sc_app.app.crm.customer.record.add;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -20,12 +21,14 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.AddVisitHelper;
 import com.hll_sc_app.app.crm.customer.CustomerHelper;
+import com.hll_sc_app.app.crm.customer.search.plan.SearchPlanActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateWindow;
+import com.hll_sc_app.bean.customer.VisitPlanBean;
 import com.hll_sc_app.bean.customer.VisitRecordBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.utils.DateUtil;
@@ -109,31 +112,37 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
             mBean.setIsActive(2);
             mBean.setGroupID(user.getGroupID());
             mBean.setEmployeeID(user.getEmployeeID());
+            mBean.setVisitPersonnel(user.getEmployeeName());
             mPerson.setText(user.getEmployeeName());
+            mLevel.setText(CustomerHelper.getCustomerMaintainLevel(mBean.getMaintainLevel()));
         } else {
             mTitleBar.setHeaderTitle("修改拜访记录");
             mBean.setActionType(2);
             mType.setText(CustomerHelper.getVisitCustomerType(mBean.getCustomerType()));
             mIsPlan.setChecked(mBean.getIsOnSchedule() == 1);
-            mPlan.setText(mBean.getCustomerName());
-            mCustomer.setText(mBean.getCustomerName());
             disable(mType);
             mIsPlan.setEnabled(false);
             disable(mPlan);
             disable(mLevel);
             disable(mCustomer);
-            mTime.setText(DateUtil.getReadableTime(mBean.getVisitTime(), CalendarUtils.FORMAT_DATE_TIME));
-            mWay.setText(CustomerHelper.getVisitWay(mBean.getVisitWay()));
-            mGoal.setText(CustomerHelper.getVisitGoal(mBean.getVisitGoal()));
+            inflateData();
             mReach.setChecked(mBean.getIsActive() == 1);
             mResult.setText(mBean.getVisitResult());
             mNextTime.setText(DateUtil.getReadableTime(mBean.getNextVisitTime(), CalendarUtils.FORMAT_DATE_TIME));
             mPerson.setText(mBean.getVisitPersonnel());
         }
-        mLevel.setText(CustomerHelper.getCustomerMaintainLevel(mBean.getMaintainLevel()));
         mPresenter = AddVisitRecordPresenter.newInstance();
         mPresenter.register(this);
         mVisitHelper = new AddVisitHelper(mBean, this);
+    }
+
+    private void inflateData() {
+        mPlan.setText(mBean.getCustomerName());
+        mCustomer.setText(mBean.getCustomerName());
+        mTime.setText(DateUtil.getReadableTime(mBean.getVisitTime(), CalendarUtils.FORMAT_DATE_TIME));
+        mWay.setText(CustomerHelper.getVisitWay(mBean.getVisitWay()));
+        mGoal.setText(CustomerHelper.getVisitGoal(mBean.getVisitGoal()));
+        mLevel.setText(CustomerHelper.getCustomerMaintainLevel(mBean.getMaintainLevel()));
     }
 
     private void disable(TextView textView) {
@@ -192,7 +201,7 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
             showToast("请选择客户类型");
             return;
         }
-        showToast("选择拜访计划待添加");
+        SearchPlanActivity.start(this, mBean.getPlanID(), mBean.getCustomerType());
     }
 
     @OnClick(R.id.vra_type)
@@ -218,6 +227,26 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            Parcelable parcelable = data.getParcelableExtra("parcelable");
+            if (parcelable instanceof VisitPlanBean) {
+                VisitPlanBean plan = (VisitPlanBean) parcelable;
+                mBean.setPlanID(plan.getId());
+                mBean.setMaintainLevel(plan.getMaintainLevel());
+                mBean.setCustomerName(plan.getCustomerName());
+                mBean.setVisitTime(plan.getVisitTime());
+                mBean.setVisitWay(plan.getVisitWay());
+                mBean.setVisitGoal(plan.getVisitGoal());
+                mBean.setCustomerID(plan.getCustomerID());
+                mBean.setPurchaserID(plan.getPurchaserID());
+                mBean.setCustomerProvince(plan.getCustomerProvince());
+                mBean.setCustomerDistrict(plan.getCustomerDistrict());
+                mBean.setCustomerCity(plan.getCustomerCity());
+                mBean.setCustomerAddress(plan.getCustomerAddress());
+                inflateData();
+                return;
+            }
+        }
         mVisitHelper.onActivityResult(resultCode, data, mCustomer::setText);
     }
 

@@ -18,15 +18,11 @@ import com.hll_sc_app.bean.goods.PurchaserBean;
  */
 
 public class CustomerSearchAdapter extends BaseQuickAdapter<Parcelable, BaseViewHolder> {
-    private Parcelable mCur;
+    private final String mId;
 
-    CustomerSearchAdapter() {
+    CustomerSearchAdapter(String id) {
         super(R.layout.item_single_selection);
-    }
-
-    void select(Parcelable value) {
-        mCur = value;
-        notifyDataSetChanged();
+        mId = id;
     }
 
     @Override
@@ -40,15 +36,21 @@ public class CustomerSearchAdapter extends BaseQuickAdapter<Parcelable, BaseView
     @Override
     protected void convert(BaseViewHolder helper, Parcelable item) {
         String name = null;
+        boolean selected = false;
         if (item instanceof CustomerBean) {
             CustomerBean bean = (CustomerBean) item;
             name = bean.getCustomerName();
+            selected = bean.getId().equals(mId);
         } else if (item instanceof PurchaserShopBean) {
-            name = ((PurchaserShopBean) item).getShopName();
+            PurchaserShopBean shop = (PurchaserShopBean) item;
+            name = shop.getShopName();
+            selected = shop.getShopID().equals(mId);
         } else if (item instanceof PurchaserBean) {
-            name = ((PurchaserBean) item).getPurchaserName();
+            PurchaserBean purchaser = (PurchaserBean) item;
+            name = purchaser.getPurchaserName();
+            selected = purchaser.getPurchaserID().equals(mId);
         }
         helper.setText(R.id.iss_label, name)
-                .setGone(R.id.iss_check, mCur == item);
+                .setGone(R.id.iss_check, selected);
     }
 }

@@ -17,7 +17,10 @@ import com.hll_sc_app.bean.customer.CrmShopResp;
 import com.hll_sc_app.bean.customer.CustomerBean;
 import com.hll_sc_app.bean.customer.VisitPlanBean;
 import com.hll_sc_app.bean.customer.VisitRecordBean;
+import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.Date;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -156,17 +159,6 @@ public class Customer {
     }
 
     /**
-     * 查询特定客户的拜访计划
-     *
-     * @param pageNum      页码
-     * @param customerType 客户类型 1.意向客户 2.合作客户
-     * @param id           客户id
-     */
-    public static void queryVisitPlanDetail(int pageNum, int customerType, String id, SimpleObserver<SingleListResp<VisitPlanBean>> observer) {
-        queryVisitPlan(true, pageNum, "", customerType, id, observer);
-    }
-
-    /**
      * 查询拜访计划
      *
      * @param all         是否全部拜访计划
@@ -174,19 +166,32 @@ public class Customer {
      * @param searchWords 搜索词
      */
     public static void queryVisitPlan(boolean all, int pageNum, String searchWords, SimpleObserver<SingleListResp<VisitPlanBean>> observer) {
-        queryVisitPlan(all, pageNum, searchWords, 0, "", observer);
+        queryVisitPlan(all, pageNum, searchWords, 0, "", null, null, observer);
     }
 
-    private static void queryVisitPlan(boolean all, int pageNum, String searchWords, int customerType, String id, SimpleObserver<SingleListResp<VisitPlanBean>> observer) {
+    /**
+     * 查询拜访计划
+     *
+     * @param all          是否全部查询
+     * @param pageNum      页码
+     * @param searchWords  搜索词
+     * @param customerType 客户类型
+     * @param id           客户id
+     * @param startDate    起始日期
+     * @param endDate      结束日期
+     */
+    public static void queryVisitPlan(boolean all, int pageNum, String searchWords, int customerType, String id, Date startDate, Date endDate, SimpleObserver<SingleListResp<VisitPlanBean>> observer) {
         UserBean user = GreenDaoUtils.getUser();
         CustomerService.INSTANCE
                 .queryVisitPlan(BaseMapReq.newBuilder()
                         .put("customerID", id)
                         .put("customerName", searchWords)
-                        .put("customerType", String.valueOf(TextUtils.isEmpty(id) ? "" : customerType))
+                        .put("customerType", customerType == 0 ? "" : String.valueOf(customerType))
                         .put("employeeID", all ? "" : user.getEmployeeID())
                         .put("groupID", user.getGroupID())
                         .put("pageNum", String.valueOf(pageNum))
+                        .put("startTime", CalendarUtils.toLocalDate(startDate))
+                        .put("endTime", CalendarUtils.toLocalDate(endDate))
                         .put("pageSize", "20")
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
