@@ -135,37 +135,39 @@ public class CooperationPurchaserPresenter implements CooperationPurchaserContra
     }
 
     private void toQueryPurchaserList(boolean showLoading) {
+        UserBean user = GreenDaoUtils.getUser();
         BaseMapReq req = BaseMapReq.newBuilder()
-            .put("actionType", "formalCooperation")
-            .put("groupID", UserConfig.getGroupID())
-            .put("name", mView.getSearchParam())
-            .put("pageNo", String.valueOf(mTempPageNum))
-            .put("pageSize", "20")
-            .put("originator", "1")
-            .put("ignoreGroupActive", "1")
-            .put("cooperationActive", String.valueOf(mView.getCooperationActive()))
-            .create();
+                .put("actionType", "formalCooperation")
+                .put("groupID", user.getGroupID())
+                .put("name", mView.getSearchParam())
+                .put("pageNo", String.valueOf(mTempPageNum))
+                .put("pageSize", "20")
+                .put("originator", "1")
+                .put("ignoreGroupActive", "1")
+                .put("salesmanID", "1".equals(user.getCurRole()) ? user.getEmployeeID() : "")
+                .put("cooperationActive", String.valueOf(mView.getCooperationActive()))
+                .create();
         CooperationPurchaserService.INSTANCE.queryCooperationPurchaserList(req)
-            .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
-            .doOnSubscribe(disposable -> {
-                if (showLoading) {
-                    mView.showLoading();
-                }
-            })
-            .doFinally(() -> mView.hideLoading())
-            .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<CooperationPurchaserResp>() {
-                @Override
-                public void onSuccess(CooperationPurchaserResp resp) {
-                    mPageNum = mTempPageNum;
-                    mView.showPurchaserList(resp, mPageNum != 1);
-                }
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .doOnSubscribe(disposable -> {
+                    if (showLoading) {
+                        mView.showLoading();
+                    }
+                })
+                .doFinally(() -> mView.hideLoading())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
+                .subscribe(new BaseCallback<CooperationPurchaserResp>() {
+                    @Override
+                    public void onSuccess(CooperationPurchaserResp resp) {
+                        mPageNum = mTempPageNum;
+                        mView.showPurchaserList(resp, mPageNum != 1);
+                    }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
     }
 }

@@ -5,12 +5,17 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.base.http.Precondition;
+import com.hll_sc_app.base.http.SimpleObserver;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.user.InviteCodeResp;
 import com.hll_sc_app.bean.user.RegisterReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.io.File;
@@ -46,7 +51,14 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
 
     @Override
     public void start() {
-        // no-op
+        if (UserConfig.crm()) {
+            User.queryInviteCode(new SimpleObserver<InviteCodeResp>(mView) {
+                @Override
+                public void onSuccess(InviteCodeResp inviteCodeResp) {
+                    mView.setCode(inviteCodeResp.getRecommendCode());
+                }
+            });
+        }
     }
 
     @Override
@@ -67,8 +79,10 @@ public class RegisterPresenter implements RegisterContract.IFindPresenter {
         }
         BaseReq<RegisterReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
-        UserService.INSTANCE.register(baseReq)
-            .compose(ApiScheduler.getObservableScheduler())
+        Observable<BaseResp<Object>> observable;
+        if (UserConfig.crm()) observable = UserService.INSTANCE.registerByCrm(baseReq);
+        else observable = UserService.INSTANCE.register(baseReq);
+        observable.compose(ApiScheduler.getObservableScheduler())
             .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())

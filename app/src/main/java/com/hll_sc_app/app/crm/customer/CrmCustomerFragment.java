@@ -88,7 +88,10 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
                         AddVisitPlanActivity.start(requireActivity(), null);
                         break;
                     case CustomerHelper.GOTO_PARTNER_REGISTERED:
+                        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
+                        break;
                     case CustomerHelper.GOTO_PARTNER_UNREGISTERED:
+                        RouterUtil.goToActivity(RouterConfig.USER_REGISTER);
                         break;
                     default:
                         mPresenter.start();

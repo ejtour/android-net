@@ -114,6 +114,13 @@ public interface UserService {
     Observable<BaseResp<Object>> register(@Body BaseReq<RegisterReq> req);
 
     /**
+     * crm 代注册
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:101001")
+    Observable<BaseResp<Object>> registerByCrm(@Body BaseReq<RegisterReq> req);
+
+    /**
      * 获取分类列表
      *
      * @param req req
