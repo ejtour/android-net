@@ -14,8 +14,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity;
+import com.hll_sc_app.app.goodsdemand.detail.GoodsDemandDetailActivity;
 import com.hll_sc_app.app.message.MessageHelper;
 import com.hll_sc_app.app.message.notice.MessageNoticeActivity;
+import com.hll_sc_app.app.order.details.OrderDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -106,8 +109,32 @@ public class MessageDetailActivity extends BaseLoadActivity implements IMessageD
     }
 
     private void dealGoto() {
+        if (mCurBean.getJumpTarget() == 2 || mCurBean.getJumpTarget() == 3) return;
         if (TextUtils.isEmpty(mCurBean.getServiceType())) {
             MessageNoticeActivity.start(mCurBean.getMessageTitle(), mCurBean.getActionTime(), mCurBean.getMessageContent(), mCurBean.getImgUrl());
+        } else {
+            switch (mCurBean.getServiceType()) {
+                case "bill": // 订单详情
+                    OrderDetailActivity.start(mCurBean.getServiceID());
+                    break;
+                case "productfeedback": // 新品反馈
+                    GoodsDemandDetailActivity.start(mCurBean.getServiceID());
+                    break;
+                case "warehouse": // 代仓申请
+                    RouterUtil.goToActivity(RouterConfig.WAREHOUSE_DETAILS, mCurBean.getServiceID(), "signApplication");
+                    break;
+                case "cooperation": // 合作申请
+                    RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, mCurBean.getServiceID());
+                    break;
+                case "complaint": // 投诉消息
+                    ComplainMangeDetailActivity.start(mCurBean.getServiceID(), ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE);
+                    break;
+                case "platformcomplaint":
+                    ComplainMangeDetailActivity.start(mCurBean.getServiceID(), ComplainMangeDetailActivity.SOURCE.PLATFORM);
+                    break;
+                case "quotation": // 报价单提醒
+                    break;
+            }
         }
     }
 

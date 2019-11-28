@@ -1,5 +1,7 @@
 package com.hll_sc_app.rest;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.OtherService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -189,7 +191,7 @@ public class Other {
      * @param pageNum 页码
      * @param status  0:crm ,1:未处理，2：已处理
      */
-    public static void queryGoodsDemand(int pageNum, int status, SimpleObserver<SingleListResp<GoodsDemandBean>> observer) {
+    public static void queryGoodsDemand(int pageNum, int status, String id, SimpleObserver<SingleListResp<GoodsDemandBean>> observer) {
         UserBean user = GreenDaoUtils.getUser();
         OtherService.INSTANCE
                 .queryGoodsDemand(BaseMapReq.newBuilder()
@@ -197,7 +199,8 @@ public class Other {
                         .put("pageSize", "20")
                         .put("supplyID", user.getGroupID())
                         .put("status", status == 0 ? "" : String.valueOf(status))
-                        .put("salesmanID", UserConfig.crm() ? user.getEmployeeID() : "")
+                        .put("id", id)
+                        .put("salesmanID", !TextUtils.isEmpty(id) ? "" : UserConfig.crm() ? user.getEmployeeID() : "")
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
