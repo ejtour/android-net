@@ -6,9 +6,9 @@ import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.common.IntentionCustomerBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
+import com.hll_sc_app.bean.customer.CustomerBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -70,12 +70,12 @@ public class PurchaserSearchPresenter implements IPurchaserSearchContract.IPurch
                     .subscribe(observer);
         } else {
             Common.searchIntentionCustomer(mPageNum, mView.getSearchWords(),
-                    new SimpleObserver<SingleListResp<IntentionCustomerBean>>(mView, showLoading) {
+                    new SimpleObserver<SingleListResp<CustomerBean>>(mView, showLoading) {
                         @Override
-                        public void onSuccess(SingleListResp<IntentionCustomerBean> intentionCustomerBeanSingleListResp) {
+                        public void onSuccess(SingleListResp<CustomerBean> customerBeanSingleListResp) {
                             List<NameValue> list = new ArrayList<>();
-                            if (!CommonUtils.isEmpty(intentionCustomerBeanSingleListResp.getRecords())) {
-                                for (IntentionCustomerBean record : intentionCustomerBeanSingleListResp.getRecords()) {
+                            if (!CommonUtils.isEmpty(customerBeanSingleListResp.getRecords())) {
+                                for (CustomerBean record : customerBeanSingleListResp.getRecords()) {
                                     list.add(new NameValue(record.getCustomerName(), record.getId()));
                                 }
                             }

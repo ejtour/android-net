@@ -9,8 +9,9 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
-import com.hll_sc_app.app.search.stratery.CommonSearch;
+import com.hll_sc_app.app.search.stratery.PartnerSearch;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
@@ -48,7 +49,16 @@ public class CustomerPartnerActivity extends BaseCustomerActivity {
                     .refreshList(list)
                     .setListener((adapter, view1, position) -> {
                         mOptionsWindow.dismiss();
-                        showToast("待添加");
+                        OptionsBean item = (OptionsBean) adapter.getItem(position);
+                        if (item == null) return;
+                        switch (item.getLabel()) {
+                            case OptionType.OPTION_CUSTOMER_REGISTERED:
+                                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
+                                break;
+                            case OptionType.OPTION_CUSTOMER_UNREGISTERED:
+                                RouterUtil.goToActivity(RouterConfig.USER_REGISTER);
+                                break;
+                        }
                     });
         }
         mOptionsWindow.showAsDropDownFix(mTitleBar, Gravity.END);
@@ -63,6 +73,6 @@ public class CustomerPartnerActivity extends BaseCustomerActivity {
 
     @Override
     protected String getSearchKey() {
-        return CommonSearch.class.getSimpleName();
+        return PartnerSearch.class.getSimpleName();
     }
 }

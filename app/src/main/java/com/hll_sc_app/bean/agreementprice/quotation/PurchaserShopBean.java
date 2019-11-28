@@ -61,6 +61,7 @@ public class PurchaserShopBean implements Parcelable {
     private String driverID;
     private String salesmanName;
     private String salesmanPhone;
+    private String salesmanID;
     private int cooperationActive;
     private int fallFlag;
     private int newFlag;
@@ -132,6 +133,7 @@ public class PurchaserShopBean implements Parcelable {
         driverID = in.readString();
         salesmanName = in.readString();
         salesmanPhone = in.readString();
+        salesmanID = in.readString();
         cooperationActive = in.readInt();
         fallFlag = in.readInt();
         newFlag = in.readInt();
@@ -202,6 +204,7 @@ public class PurchaserShopBean implements Parcelable {
         dest.writeString(driverID);
         dest.writeString(salesmanName);
         dest.writeString(salesmanPhone);
+        dest.writeString(salesmanID);
         dest.writeInt(cooperationActive);
         dest.writeInt(fallFlag);
         dest.writeInt(newFlag);
@@ -261,6 +264,14 @@ public class PurchaserShopBean implements Parcelable {
 
     public void setSalesmanPhone(String salesmanPhone) {
         this.salesmanPhone = salesmanPhone;
+    }
+
+    public String getSalesmanID() {
+        return salesmanID;
+    }
+
+    public void setSalesmanID(String salesmanID) {
+        this.salesmanID = salesmanID;
     }
 
     public String getAccountPeriodType() {

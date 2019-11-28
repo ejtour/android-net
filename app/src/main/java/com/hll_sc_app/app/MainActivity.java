@@ -14,6 +14,8 @@ import android.widget.RadioGroup;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.submit.BackType;
+import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -42,7 +44,7 @@ import butterknife.ButterKnife;
  * @date 2019/5/31
  */
 @Route(path = RouterConfig.ROOT_HOME, extras = Constant.LOGIN_EXTRA)
-public class MainActivity extends BaseLoadActivity {
+public class MainActivity extends BaseLoadActivity implements IBackType {
     @BindView(R.id.group_type)
     RadioGroup mGroupType;
     private int mOldFragmentTag;
@@ -161,6 +163,11 @@ public class MainActivity extends BaseLoadActivity {
         }
         mOldFragmentTag = tag;
         transaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public BackType getBackType() {
+        return BackType.ORDER_LIST;
     }
 
     /**

@@ -106,7 +106,7 @@ public class VisitRecordDetailActivity extends BaseLoadActivity {
         mStatus.setCompoundDrawablesWithIntrinsicBounds(
                 mBean.getIsActive() == 1 ? R.drawable.ic_valid : R.drawable.ic_invalid, 0, 0, 0);
         mName.setText(mBean.getCustomerName());
-        mAddress.setText(String.format("%s-%s-%s", mBean.getCustomerProvince(), mBean.getCustomerCity(), mBean.getCustomerDistrict()));
+        mAddress.setText(String.format("%s-%s-%s %s", mBean.getCustomerProvince(), mBean.getCustomerCity(), mBean.getCustomerDistrict(), mBean.getCustomerAddress()));
         mTime.setText(DateUtil.getReadableTime(mBean.getVisitTime(), CalendarUtils.FORMAT_DATE_TIME));
         mWay.setText(CustomerHelper.getVisitWay(mBean.getVisitWay()));
         mGoal.setText(CustomerHelper.getVisitGoal(mBean.getVisitGoal()));

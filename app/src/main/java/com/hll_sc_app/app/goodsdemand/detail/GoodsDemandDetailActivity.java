@@ -3,7 +3,6 @@ package com.hll_sc_app.app.goodsdemand.detail;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -50,10 +49,16 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
     RecyclerView mListView;
     @Autowired(name = "parcelable")
     GoodsDemandBean mBean;
+    @Autowired(name = "object0")
+    String mId;
     private IGoodsDemandDetailContract.IGoodsDemandDetailPresenter mPresenter;
 
     public static void start(GoodsDemandBean bean) {
         RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_DETAIL, bean);
+    }
+
+    public static void start(String id) {
+        RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_DETAIL, id);
     }
 
     @Override
@@ -69,6 +74,11 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
 
     private void initView() {
         mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(5)));
+        inflateData();
+    }
+
+    private void inflateData() {
+        if (mBean == null) return;
         GoodsDemandDetailAdapter adapter = new GoodsDemandDetailAdapter(mBean.getDemandList());
         mListView.setAdapter(adapter);
         GoodsDemandDetailHeader header = new GoodsDemandDetailHeader(this);
@@ -103,13 +113,11 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
         }
     }
 
-
-
     private void initData() {
-        mPresenter = GoodsDemandDetailPresenter.newInstance(mBean);
+        mPresenter = GoodsDemandDetailPresenter.newInstance();
         mPresenter.register(this);
+        if (mBean == null) mPresenter.start();
     }
-
 
     @OnClick(R.id.gdd_notice)
     public void notice() {
@@ -151,7 +159,23 @@ public class GoodsDemandDetailActivity extends BaseLoadActivity implements IGood
     }
 
     @Override
+    public void setData(GoodsDemandBean bean) {
+        mBean = bean;
+        inflateData();
+    }
+
+    @Override
     public void replySuccess() {
         GoodsDemandActivity.start();
+    }
+
+    @Override
+    public GoodsDemandBean getBean() {
+        return mBean;
+    }
+
+    @Override
+    public String getID() {
+        return mId;
     }
 }

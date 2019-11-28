@@ -8,10 +8,12 @@ import com.hll_sc_app.app.search.stratery.CrmOrderShopSearch;
 import com.hll_sc_app.app.search.stratery.CustomerNameSearch;
 import com.hll_sc_app.app.search.stratery.DiscountSearch;
 import com.hll_sc_app.app.search.stratery.EmployeeSearch;
+import com.hll_sc_app.app.search.stratery.GoodsDemandSearch;
 import com.hll_sc_app.app.search.stratery.GoodsNameSearch;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.app.search.stratery.IntentCustomerSearch;
 import com.hll_sc_app.app.search.stratery.NameSearch;
+import com.hll_sc_app.app.search.stratery.PartnerSearch;
 import com.hll_sc_app.app.search.stratery.ProductNameSearch;
 import com.hll_sc_app.app.search.stratery.ProductSearch;
 import com.hll_sc_app.app.search.stratery.PurchaserNameSearch;
@@ -22,7 +24,10 @@ import com.hll_sc_app.app.search.stratery.ShopAssociationSearch;
 import com.hll_sc_app.app.search.stratery.ShopNameSearch;
 import com.hll_sc_app.app.search.stratery.ShopSearch;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
+import com.hll_sc_app.app.search.stratery.SpecialDemandSearch;
 import com.hll_sc_app.app.search.stratery.StaffDepartSearch;
+import com.hll_sc_app.app.search.stratery.VisitPlanSearch;
+import com.hll_sc_app.app.search.stratery.VisitRecordSearch;
 import com.hll_sc_app.app.search.stratery.WarehouseSearch;
 
 import java.util.HashMap;
@@ -38,15 +43,18 @@ class SearchFactory {
     static {
         ITEM_MAP.put(AfterSalesGoodsSearch.class.getSimpleName(), AfterSalesGoodsSearch.class);
         ITEM_MAP.put(BrandSearch.class.getSimpleName(), BrandSearch.class);
+        ITEM_MAP.put(CardManageListSearch.class.getSimpleName(), CardManageListSearch.class);
         ITEM_MAP.put(CrmOrderShopSearch.class.getSimpleName(), CrmOrderShopSearch.class);
         ITEM_MAP.put(CustomerNameSearch.class.getSimpleName(), CustomerNameSearch.class);
         ITEM_MAP.put(CommonSearch.class.getSimpleName(), CommonSearch.class);
         ITEM_MAP.put(DiscountSearch.class.getSimpleName(), DiscountSearch.class);
         ITEM_MAP.put(EmployeeSearch.class.getSimpleName(), EmployeeSearch.class);
+        ITEM_MAP.put(GoodsDemandSearch.class.getSimpleName(), GoodsDemandSearch.class);
         ITEM_MAP.put(GoodsNameSearch.class.getSimpleName(), GoodsNameSearch.class);
         ITEM_MAP.put(GoodsSearch.class.getSimpleName(), GoodsSearch.class);
         ITEM_MAP.put(IntentCustomerSearch.class.getSimpleName(), IntentCustomerSearch.class);
         ITEM_MAP.put(NameSearch.class.getSimpleName(), NameSearch.class);
+        ITEM_MAP.put(PartnerSearch.class.getSimpleName(), PartnerSearch.class);
         ITEM_MAP.put(ProductNameSearch.class.getSimpleName(), ProductNameSearch.class);
         ITEM_MAP.put(ProductSearch.class.getSimpleName(), ProductSearch.class);
         ITEM_MAP.put(PurchaserNameSearch.class.getSimpleName(), PurchaserNameSearch.class);
@@ -57,9 +65,11 @@ class SearchFactory {
         ITEM_MAP.put(ShopNameSearch.class.getSimpleName(), ShopNameSearch.class);
         ITEM_MAP.put(ShopSearch.class.getSimpleName(), ShopSearch.class);
         ITEM_MAP.put(SimpleSearch.class.getSimpleName(), SimpleSearch.class);
+        ITEM_MAP.put(SpecialDemandSearch.class.getSimpleName(), SpecialDemandSearch.class);
         ITEM_MAP.put(StaffDepartSearch.class.getSimpleName(), StaffDepartSearch.class);
+        ITEM_MAP.put(VisitPlanSearch.class.getSimpleName(), VisitPlanSearch.class);
+        ITEM_MAP.put(VisitRecordSearch.class.getSimpleName(), VisitRecordSearch.class);
         ITEM_MAP.put(WarehouseSearch.class.getSimpleName(), WarehouseSearch.class);
-        ITEM_MAP.put(CardManageListSearch.class.getSimpleName(), CardManageListSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {

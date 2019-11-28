@@ -67,6 +67,7 @@
                     android:paddingRight="15dp"/>
 
                 <View
+                    android:id="@+id/ar_code_div"
                     android:layout_width="match_parent"
                     android:layout_height="0.8dp"
                     android:layout_marginLeft="15dp"
@@ -74,6 +75,7 @@
                     android:background="@color/base_color_divider"/>
 
                 <RelativeLayout
+                    android:id="@+id/ar_code_group"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:orientation="horizontal">

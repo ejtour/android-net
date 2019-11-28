@@ -9,7 +9,6 @@ import com.hll_sc_app.bean.cooperation.ChangeGroupParamReq;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopReq;
-import com.hll_sc_app.bean.cooperation.CooperationShopsListResp;
 import com.hll_sc_app.bean.cooperation.QueryGroupListResp;
 import com.hll_sc_app.bean.cooperation.SettlementBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
@@ -227,16 +226,6 @@ public interface CooperationPurchaserService {
     @POST(HttpConfig.URL)
     @Headers("pv:103703")
     Observable<BaseResp<Object>> editThirdPartPurchaserDetail(@Body BaseMapReq req);
-
-    /**
-     * 请求合作关系店铺列表
-     *
-     * @param req
-     * @return
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:102046")
-    Observable<BaseResp<CooperationShopsListResp>> getCooperationShops(@Body BaseMapReq req);
 
     /**
      * 获取供应商店铺

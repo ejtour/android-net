@@ -8,6 +8,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.hll_sc_app.app.submit.BackType;
+import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.GlobalPreference;
 import com.hll_sc_app.base.greendao.DaoSessionManager;
 import com.hll_sc_app.citymall.util.LogUtil;
@@ -45,6 +47,8 @@ public class MyApplication extends Application {
         return instance;
     }
 
+    private ActivityLifecycleHandler mActivityLifecycleHandler;
+
     private IWXAPI mWxApi;
 
     public IWXAPI getWxApi() {
@@ -70,11 +74,20 @@ public class MyApplication extends Application {
         mWxApi = null;
     }
 
+    public BackType getLastBackType() {
+        IBackType backType = null;
+        if (mActivityLifecycleHandler != null)
+            backType = mActivityLifecycleHandler.getLastBackType();
+        if (backType != null) return backType.getBackType();
+        return BackType.ORDER_LIST;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         hideWarnDialog();
-        registerActivityLifecycleCallbacks(new ActivityLifecycleHandler(new ActivityFrontListener()));
+        mActivityLifecycleHandler = new ActivityLifecycleHandler(new ActivityFrontListener());
+        registerActivityLifecycleCallbacks(mActivityLifecycleHandler);
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }

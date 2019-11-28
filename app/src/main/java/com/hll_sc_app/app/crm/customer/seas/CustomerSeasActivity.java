@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
 import com.hll_sc_app.app.crm.customer.intent.CustomerIntentFragment;
-import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.IntentCustomerSearch;
+import com.hll_sc_app.app.search.stratery.PartnerSearch;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 
@@ -44,6 +44,6 @@ public class CustomerSeasActivity extends BaseCustomerActivity {
 
     @Override
     protected String getSearchKey() {
-        return mViewPager.getCurrentItem() == 0 ? IntentCustomerSearch.class.getSimpleName() : CommonSearch.class.getSimpleName();
+        return mViewPager.getCurrentItem() == 0 ? IntentCustomerSearch.class.getSimpleName() : PartnerSearch.class.getSimpleName();
     }
 }

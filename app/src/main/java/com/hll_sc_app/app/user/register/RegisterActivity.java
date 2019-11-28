@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.NoCopySpan;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -29,6 +30,7 @@ import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.AreaDtoBean;
 import com.hll_sc_app.base.bean.GetIdentifyCodeReq;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.AreaSelectWindow;
@@ -44,6 +46,7 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -88,6 +91,8 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     TextView mTxtAgreement;
     @BindView(R.id.scrollView)
     ScrollView mScrollView;
+    @BindViews({R.id.ar_code_div, R.id.ar_code_group, R.id.ll_licencePhotoUrl})
+    List<View> mNeedlessViews;
     private RegisterPresenter mPresenter;
 
     private AreaSelectWindow mAreaWindow;
@@ -106,8 +111,8 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     public void onBackPressed() {
         SuccessDialog.newBuilder(this)
             .setCancelable(false)
-            .setImageTitle(R.drawable.ic_dialog_success)
-            .setImageState(R.drawable.ic_dialog_state_success)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
             .setMessageTitle("确定要离开嘛")
             .setMessage("您已经填写了部分数据，离开会\n丢失当前已填写的数据")
             .setButton((dialog, item) -> {
@@ -225,19 +230,35 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
             }
         });
         mImgLicencePhotoUrl.setOnDeleteListener(v -> checkEnable());
+        if (UserConfig.crm()) {
+            mEdtCode.setText("x");
+            mEdtOperationGroupID.setEnabled(false);
+            ButterKnife.apply(mNeedlessViews, (view, index) -> view.setVisibility(View.GONE));
+        }
     }
 
     private void setAgreement() {
         String content = mTxtAgreement.getText().toString();
         SpannableString spannableString = new SpannableString(content);
-        spannableString.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                WebActivity.start("服务条款", "file:////android_asset/registerLegal.html");
-            }
-        }, content.length() - 10, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new CSpan(), content.length() - 10, content.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTxtAgreement.setText(spannableString);
         mTxtAgreement.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    @Override
+    public void registerSuccess() {
+        boolean crm = UserConfig.crm();
+        SuccessDialog.newBuilder(this)
+                .setCancelable(false)
+                .setImageTitle(R.drawable.ic_dialog_success)
+                .setImageState(R.drawable.ic_dialog_state_success)
+                .setMessageTitle("注册完成")
+                .setMessage(crm ? "需等待二十二城审核成功后即可登录" : "提交成功，审核结果会以短信形式发送到您的手机，请耐心等待~")
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    finish();
+                }, crm ? "返回上一页" : "去登录")
+                .create().show();
     }
 
     @Override
@@ -267,18 +288,8 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
     }
 
     @Override
-    public void registerSuccess() {
-        SuccessDialog.newBuilder(this)
-            .setCancelable(false)
-            .setImageTitle(R.drawable.ic_dialog_success)
-            .setImageState(R.drawable.ic_dialog_state_success)
-            .setMessageTitle("注册完成")
-            .setMessage("提交成功，审核结果会以短信形式发送到您的手机，请耐心等待~")
-            .setButton((dialog, item) -> {
-                dialog.dismiss();
-                finish();
-            }, "去登录")
-            .create().show();
+    public void setCode(String code) {
+        mEdtOperationGroupID.setText(code);
     }
 
     @Override
@@ -289,14 +300,21 @@ public class RegisterActivity extends BaseLoadActivity implements RegisterContra
 
     private void checkEnable() {
         mTxtConfirm.setEnabled(!TextUtils.isEmpty(mEdtPhone.getText().toString().trim())
-            && !TextUtils.isEmpty(mEdtCode.getText().toString().trim())
-            && !TextUtils.isEmpty(mEdtLoginPWD.getText().toString().trim())
-            && !TextUtils.isEmpty(mEdtCheckLoginPWD.getText().toString().trim())
-            && !TextUtils.isEmpty(mEdtGroupName.getText().toString().trim())
-            && !TextUtils.isEmpty(mEdtLinkMan.getText().toString().trim())
-            && !TextUtils.isEmpty(mTxtGroupDistrict.getText())
-            && !TextUtils.isEmpty(mEdtGroupAddress.getText().toString().trim())
-            && !TextUtils.isEmpty(mImgLicencePhotoUrl.getImgUrl()));
+                && !TextUtils.isEmpty(mEdtLoginPWD.getText().toString().trim())
+                && !TextUtils.isEmpty(mEdtCheckLoginPWD.getText().toString().trim())
+                && !TextUtils.isEmpty(mEdtGroupName.getText().toString().trim())
+                && !TextUtils.isEmpty(mEdtLinkMan.getText().toString().trim())
+                && !TextUtils.isEmpty(mTxtGroupDistrict.getText())
+                && !TextUtils.isEmpty(mEdtGroupAddress.getText().toString().trim())
+                && (UserConfig.crm() || !TextUtils.isEmpty(mImgLicencePhotoUrl.getImgUrl())
+                && !TextUtils.isEmpty(mEdtCode.getText().toString().trim())));
+    }
+
+    static class CSpan extends ClickableSpan implements NoCopySpan {
+        @Override
+        public void onClick(@NonNull View widget) {
+            WebActivity.start("服务条款", "file:////android_asset/registerLegal.html");
+        }
     }
 
     private class InputTextWatcher implements TextWatcher {

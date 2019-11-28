@@ -26,6 +26,12 @@ public interface RegisterContract {
          * @param url 图片地址
          */
         void uploadSuccess(String url);
+
+        /**
+         * 设置推荐码
+         * @param code
+         */
+        void setCode(String code);
     }
 
     interface IFindPresenter extends IPresenter<IFindView> {

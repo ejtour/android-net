@@ -11,7 +11,8 @@ public enum BackType {
     /**
      * 回退到订单列表
      */
-    ORDER_LIST("返回订单列表", RouterConfig.ROOT_HOME);
+    ORDER_LIST("返回订单列表", RouterConfig.ROOT_HOME),
+    PARTNER_DETAIL_LIST("返回列表", RouterConfig.CRM_CUSTOMER_PARTNER_DETAIL);
     String label;
     String path;
 

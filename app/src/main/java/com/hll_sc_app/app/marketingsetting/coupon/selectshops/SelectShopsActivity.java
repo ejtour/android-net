@@ -21,7 +21,8 @@ import com.hll_sc_app.app.search.stratery.SelectShopSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.cooperation.CooperationShopsListResp;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
+import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 import com.hll_sc_app.bean.event.MarketingSelectShopEvent;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
@@ -51,21 +52,21 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
     @BindView(R.id.check_all)
     CheckBox mCheckAll;
     @Autowired(name = "object0")
-    ArrayList<CooperationShopsListResp.ShopListBean> mSelectList;
+    ArrayList<PurchaserShopBean> mSelectList;
     @Autowired(name = "purchaserID")
     String purchaserID;
     @Autowired(name = "isDefaultAll")
     boolean isDefaultAll;
     private Unbinder unbinder;
 
-    private Map<String, CooperationShopsListResp.ShopListBean> mSelectMap = new HashMap<>();
+    private Map<String, PurchaserShopBean> mSelectMap = new HashMap<>();
 
     private ShopItemAdapter mShopAdapter;
 
     private SelectShopsPresent mPresent;
 
 
-    public static void start(String purchaserID, ArrayList<CooperationShopsListResp.ShopListBean> customerListBeans, boolean isDefaultAll) {
+    public static void start(String purchaserID, ArrayList<PurchaserShopBean> customerListBeans, boolean isDefaultAll) {
         ARouter.getInstance().build(RouterConfig.ACTIVITY_MARKETING_COUPON_SELECT_SHOPS)
                 .withParcelableArrayList("object0", customerListBeans)
                 .withString("purchaserID", purchaserID)
@@ -89,10 +90,10 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
         unbinder.unbind();
     }
 
-    private Map<String, CooperationShopsListResp.ShopListBean> transformSelect(List<CooperationShopsListResp.ShopListBean> customerListBeans) {
-        Map<String, CooperationShopsListResp.ShopListBean> map = new HashMap<>();
+    private Map<String, PurchaserShopBean> transformSelect(List<PurchaserShopBean> customerListBeans) {
+        Map<String, PurchaserShopBean> map = new HashMap<>();
         if (customerListBeans != null) {
-            for (CooperationShopsListResp.ShopListBean bean : customerListBeans) {
+            for (PurchaserShopBean bean : customerListBeans) {
                 map.put(bean.getShopID(), bean);
             }
         }
@@ -104,7 +105,7 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
         mShopAdapter = new ShopItemAdapter(null);
         mList.setAdapter(mShopAdapter);
         mShopAdapter.setOnItemClickListener((adapter, view, position) -> {
-            CooperationShopsListResp.ShopListBean shopListBean = mShopAdapter.getItem(position);
+            PurchaserShopBean shopListBean = mShopAdapter.getItem(position);
             if (mSelectMap.containsKey(shopListBean.getShopID())) {
                 mSelectMap.remove(shopListBean.getShopID());
             } else {
@@ -144,7 +145,7 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
             case R.id.rl_check_all:
             case R.id.check_all:
                 if (mSelectMap.size() != mShopAdapter.getItemCount()) {
-                    for (CooperationShopsListResp.ShopListBean shopListBean : mShopAdapter.getData()) {
+                    for (PurchaserShopBean shopListBean : mShopAdapter.getData()) {
                         mSelectMap.put(shopListBean.getShopID(), shopListBean);
                     }
                 } else {
@@ -180,13 +181,13 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
     }
 
     @Override
-    public void showShops(CooperationShopsListResp resp) {
+    public void showShops(CooperationShopListResp resp) {
         if (resp.getShopList().size() == 0) {
             mShopAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("当前没有可选择的门店").create());
             mShopAdapter.setNewData(null);
         } else {
             if (isDefaultAll) {
-                mSelectList = (ArrayList<CooperationShopsListResp.ShopListBean>) resp.getShopList();
+                mSelectList = (ArrayList<PurchaserShopBean>) resp.getShopList();
                 mSelectMap = transformSelect(mSelectList);
             }
             mShopAdapter.setNewData(resp.getShopList());
@@ -194,19 +195,17 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
         mCheckAll.setChecked(mSelectMap.size() == mShopAdapter.getItemCount());
     }
 
-    private class ShopItemAdapter extends BaseQuickAdapter<CooperationShopsListResp.ShopListBean, BaseViewHolder> {
-        public ShopItemAdapter(@Nullable List<CooperationShopsListResp.ShopListBean> data) {
+    private class ShopItemAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
+        public ShopItemAdapter(@Nullable List<PurchaserShopBean> data) {
             super(R.layout.list_item_marketing_select_shop, data);
-
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, CooperationShopsListResp.ShopListBean item) {
+        protected void convert(BaseViewHolder helper, PurchaserShopBean item) {
             boolean isSelect = mSelectMap.containsKey(item.getShopID());
             helper.setChecked(R.id.checkbox, isSelect)
                     .setText(R.id.txt_shop_name, item.getShopName())
                     .setTextColor(R.id.txt_shop_name, Color.parseColor(isSelect ? "#222222" : "#666666"));
-
         }
     }
 }

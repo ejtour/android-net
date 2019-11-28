@@ -11,6 +11,23 @@
     android:paddingBottom="15dp">
 
     <TextView
+        android:id="@+id/ccs_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_small_primary_stroke"
+        android:paddingLeft="13dp"
+        android:paddingTop="2dp"
+        android:paddingRight="13dp"
+        android:paddingBottom="2dp"
+        android:text="下单"
+        android:textColor="@color/colorPrimary"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ccs_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ccs_name" />
+
+    <TextView
         android:id="@+id/ccs_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

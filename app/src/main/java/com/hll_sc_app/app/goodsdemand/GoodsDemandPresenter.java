@@ -40,7 +40,7 @@ public class GoodsDemandPresenter implements IGoodsDemandContract.IGoodsDemandPr
     }
 
     private void load(boolean showLoading) {
-        Other.queryGoodsDemand(mPageNum, mStatus, new SimpleObserver<SingleListResp<GoodsDemandBean>>(mView, showLoading) {
+        Other.queryGoodsDemand(mPageNum, mStatus, null, new SimpleObserver<SingleListResp<GoodsDemandBean>>(mView, showLoading) {
             @Override
             public void onSuccess(SingleListResp<GoodsDemandBean> goodsDemandBeanSingleListResp) {
                 mView.handleData(goodsDemandBeanSingleListResp.getRecords(), mPageNum > 1);

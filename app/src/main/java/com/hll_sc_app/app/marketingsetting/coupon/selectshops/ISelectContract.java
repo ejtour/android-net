@@ -3,7 +3,7 @@ package com.hll_sc_app.app.marketingsetting.coupon.selectshops;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
-import com.hll_sc_app.bean.cooperation.CooperationShopsListResp;
+import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 
 public interface ISelectContract {
 
@@ -22,7 +22,7 @@ public interface ISelectContract {
     interface ISearchShopsView extends ILoadView {
         String getPurchaserID();
         String getSearchText();
-        void showShops(CooperationShopsListResp resp);
+        void showShops(CooperationShopListResp resp);
     }
 
     interface ISearchShopsPresent extends IPresenter<ISearchShopsView> {

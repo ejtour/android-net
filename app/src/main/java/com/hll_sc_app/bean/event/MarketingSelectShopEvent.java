@@ -1,6 +1,6 @@
 package com.hll_sc_app.bean.event;
 
-import com.hll_sc_app.bean.cooperation.CooperationShopsListResp;
+import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 
 import java.util.ArrayList;
 
@@ -38,13 +38,13 @@ public class MarketingSelectShopEvent {
     }*/
 
     public static class SelecShops {
-        public SelecShops(boolean isSelectAll, ArrayList<CooperationShopsListResp.ShopListBean> selectShops) {
+        public SelecShops(boolean isSelectAll, ArrayList<PurchaserShopBean> selectShops) {
             this.isSelectAll = isSelectAll;
             this.selectShops = selectShops;
         }
 
         private boolean isSelectAll;
-        private ArrayList<CooperationShopsListResp.ShopListBean> selectShops;
+        private ArrayList<PurchaserShopBean> selectShops;
 
         public boolean isSelectAll() {
             return isSelectAll;
@@ -54,11 +54,11 @@ public class MarketingSelectShopEvent {
             isSelectAll = selectAll;
         }
 
-        public ArrayList<CooperationShopsListResp.ShopListBean> getSelectShops() {
+        public ArrayList<PurchaserShopBean> getSelectShops() {
             return selectShops;
         }
 
-        public void setSelectShops(ArrayList<CooperationShopsListResp.ShopListBean> selectShops) {
+        public void setSelectShops(ArrayList<PurchaserShopBean> selectShops) {
             this.selectShops = selectShops;
         }
     }

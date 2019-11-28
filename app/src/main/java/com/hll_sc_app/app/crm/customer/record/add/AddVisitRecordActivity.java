@@ -3,6 +3,7 @@ package com.hll_sc_app.app.crm.customer.record.add;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -18,21 +19,21 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.customer.AddVisitHelper;
 import com.hll_sc_app.app.crm.customer.CustomerHelper;
+import com.hll_sc_app.app.crm.customer.search.plan.SearchPlanActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.DateWindow;
+import com.hll_sc_app.bean.customer.VisitPlanBean;
 import com.hll_sc_app.bean.customer.VisitRecordBean;
-import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.utils.DateUtil;
-import com.hll_sc_app.widget.SingleSelectionDialog;
 import com.hll_sc_app.widget.TitleBar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -84,12 +85,8 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
     TextView mPerson;
     @Autowired(name = "parcelable")
     VisitRecordBean mBean;
-    private SingleSelectionDialog mTypeDialog;
-    private SingleSelectionDialog mLevelDialog;
-    private DateWindow mTimeWindow;
     private DateWindow mNextTimeWindow;
-    private SingleSelectionDialog mWayDialog;
-    private SingleSelectionDialog mGoalDialog;
+    private AddVisitHelper mVisitHelper;
     private IAddVisitRecordContract.IAddVisitRecordPresenter mPresenter;
 
     public static void start(Activity context, VisitRecordBean bean) {
@@ -115,30 +112,37 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
             mBean.setIsActive(2);
             mBean.setGroupID(user.getGroupID());
             mBean.setEmployeeID(user.getEmployeeID());
+            mBean.setVisitPersonnel(user.getEmployeeName());
             mPerson.setText(user.getEmployeeName());
+            mLevel.setText(CustomerHelper.getCustomerMaintainLevel(mBean.getMaintainLevel()));
         } else {
             mTitleBar.setHeaderTitle("修改拜访记录");
             mBean.setActionType(2);
             mType.setText(CustomerHelper.getVisitCustomerType(mBean.getCustomerType()));
             mIsPlan.setChecked(mBean.getIsOnSchedule() == 1);
-            mPlan.setText(mBean.getCustomerName());
-            mCustomer.setText(mBean.getCustomerName());
             disable(mType);
             mIsPlan.setEnabled(false);
             disable(mPlan);
             disable(mLevel);
             disable(mCustomer);
-            mTime.setText(DateUtil.getReadableTime(mBean.getVisitTime(), CalendarUtils.FORMAT_DATE_TIME));
-            mWay.setText(CustomerHelper.getVisitWay(mBean.getVisitWay()));
-            mGoal.setText(CustomerHelper.getVisitGoal(mBean.getVisitGoal()));
+            inflateData();
             mReach.setChecked(mBean.getIsActive() == 1);
             mResult.setText(mBean.getVisitResult());
             mNextTime.setText(DateUtil.getReadableTime(mBean.getNextVisitTime(), CalendarUtils.FORMAT_DATE_TIME));
             mPerson.setText(mBean.getVisitPersonnel());
         }
-        mLevel.setText(CustomerHelper.getCustomerMaintainLevel(mBean.getMaintainLevel()));
         mPresenter = AddVisitRecordPresenter.newInstance();
         mPresenter.register(this);
+        mVisitHelper = new AddVisitHelper(mBean, this);
+    }
+
+    private void inflateData() {
+        mPlan.setText(mBean.getCustomerName());
+        mCustomer.setText(mBean.getCustomerName());
+        mTime.setText(DateUtil.getReadableTime(mBean.getVisitTime(), CalendarUtils.FORMAT_DATE_TIME));
+        mWay.setText(CustomerHelper.getVisitWay(mBean.getVisitWay()));
+        mGoal.setText(CustomerHelper.getVisitGoal(mBean.getVisitGoal()));
+        mLevel.setText(CustomerHelper.getCustomerMaintainLevel(mBean.getMaintainLevel()));
     }
 
     private void disable(TextView textView) {
@@ -163,6 +167,8 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
         mPlan.setText("");
         mCustomer.setText("");
         mBean.setCustomerName("");
+        mBean.setCustomerID("");
+        mBean.setPurchaserID("");
     }
 
     @OnClick(R.id.vra_save)
@@ -195,50 +201,53 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
             showToast("请选择客户类型");
             return;
         }
-        showToast("选择拜访计划待添加");
+        SearchPlanActivity.start(this, mBean.getPlanID(), mBean.getCustomerType());
     }
 
     @OnClick(R.id.vra_type)
     public void selectType() {
-        if (mTypeDialog == null) {
-            List<NameValue> nameValues = new ArrayList<>();
-            for (int i = 1; i <= 2; i++) {
-                nameValues.add(new NameValue(CustomerHelper.getVisitCustomerType(i), String.valueOf(i)));
-            }
-            mTypeDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
-                    .setTitleText("选择客户类型")
-                    .refreshList(nameValues)
-                    .setOnSelectListener(value -> {
-                        int type = Integer.parseInt(value.getValue());
-                        if (mBean.getCustomerType() != type) {
-                            clearCustomerName();
-                            mBean.setCustomerType(type);
-                            mType.setText(value.getName());
-                        }
-                    })
-                    .create();
-        }
-        mTypeDialog.show();
+        mVisitHelper.selectType(result -> {
+            clearCustomerName();
+            mType.setText(result);
+        });
     }
 
     @OnClick(R.id.vra_level)
-    public void selectLevelOrPlan() {
-        if (mLevelDialog == null) {
-            List<NameValue> nameValues = new ArrayList<>();
-            for (int i = 0; i < 2; i++) {
-                nameValues.add(new NameValue(CustomerHelper.getCustomerMaintainLevel(i), String.valueOf(i)));
-            }
-            mLevelDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
-                    .setTitleText("选择客户级别")
-                    .select(nameValues.get(0))
-                    .refreshList(nameValues)
-                    .setOnSelectListener(value -> {
-                        mBean.setMaintainLevel(Integer.parseInt(value.getValue()));
-                        mLevel.setText(value.getName());
-                    })
-                    .create();
+    public void selectLevel() {
+        if (mBean.getIsOnSchedule() == 1) {
+            showToast("请选择拜访计划");
+            return;
         }
-        mLevelDialog.show();
+        mVisitHelper.selectLevel(result -> {
+            clearCustomerName();
+            mLevel.setText(result);
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && data != null) {
+            Parcelable parcelable = data.getParcelableExtra("parcelable");
+            if (parcelable instanceof VisitPlanBean) {
+                VisitPlanBean plan = (VisitPlanBean) parcelable;
+                mBean.setPlanID(plan.getId());
+                mBean.setMaintainLevel(plan.getMaintainLevel());
+                mBean.setCustomerName(plan.getCustomerName());
+                mBean.setVisitTime(plan.getVisitTime());
+                mBean.setVisitWay(plan.getVisitWay());
+                mBean.setVisitGoal(plan.getVisitGoal());
+                mBean.setCustomerID(plan.getCustomerID());
+                mBean.setPurchaserID(plan.getPurchaserID());
+                mBean.setCustomerProvince(plan.getCustomerProvince());
+                mBean.setCustomerDistrict(plan.getCustomerDistrict());
+                mBean.setCustomerCity(plan.getCustomerCity());
+                mBean.setCustomerAddress(plan.getCustomerAddress());
+                inflateData();
+                return;
+            }
+        }
+        mVisitHelper.onActivityResult(resultCode, data, mCustomer::setText);
     }
 
     @OnClick(R.id.vra_customer)
@@ -251,57 +260,22 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
             showToast("请选择拜访计划");
             return;
         }
-        showToast("选择客户待添加");
+        mVisitHelper.selectCustomer();
     }
 
     @OnClick(R.id.vra_time)
     public void selectTime() {
-        if (mTimeWindow == null) {
-            mTimeWindow = new DateWindow(this);
-            mTimeWindow.setSelectListener(date -> {
-                mBean.setVisitTime(CalendarUtils.toLocalDate(date));
-                mTime.setText(CalendarUtils.format(date, CalendarUtils.FORMAT_DATE_TIME));
-            });
-        }
-        mTimeWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+        mVisitHelper.selectTime(mTime::setText);
     }
 
     @OnClick(R.id.vra_way)
     public void selectWay() {
-        if (mWayDialog == null) {
-            List<NameValue> nameValues = new ArrayList<>();
-            for (int i = 1; i <= 2; i++) {
-                nameValues.add(new NameValue(CustomerHelper.getVisitWay(i), String.valueOf(i)));
-            }
-            mWayDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
-                    .setTitleText("选择拜访方式")
-                    .refreshList(nameValues)
-                    .setOnSelectListener(value -> {
-                        mBean.setVisitWay(Integer.parseInt(value.getValue()));
-                        mWay.setText(value.getName());
-                    })
-                    .create();
-        }
-        mWayDialog.show();
+        mVisitHelper.selectWay(mWay::setText);
     }
 
     @OnClick(R.id.vra_goal)
     public void selectGoal() {
-        if (mGoalDialog == null) {
-            List<NameValue> nameValues = new ArrayList<>();
-            for (int i = 1; i <= 4; i++) {
-                nameValues.add(new NameValue(CustomerHelper.getVisitGoal(i), String.valueOf(i)));
-            }
-            mGoalDialog = SingleSelectionDialog.newBuilder(this, NameValue::getName)
-                    .setTitleText("选择拜访目的")
-                    .refreshList(nameValues)
-                    .setOnSelectListener(value -> {
-                        mBean.setVisitGoal(Integer.parseInt(value.getValue()));
-                        mGoal.setText(value.getName());
-                    })
-                    .create();
-        }
-        mGoalDialog.show();
+        mVisitHelper.selectGoal(mGoal::setText);
     }
 
     @OnClick(R.id.vra_next_time)
@@ -318,10 +292,6 @@ public class AddVisitRecordActivity extends BaseLoadActivity implements IAddVisi
 
     @Override
     public void saveSuccess() {
-        showToast("保存成功");
-        Intent intent = new Intent();
-        intent.putExtra(CustomerHelper.VISIT_KEY, mBean);
-        setResult(RESULT_OK, intent);
-        finish();
+        mVisitHelper.saveSuccess();
     }
 }
