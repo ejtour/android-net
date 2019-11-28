@@ -43,6 +43,7 @@ import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -65,7 +66,7 @@ import butterknife.Unbinder;
  * @date 2018/12/19
  */
 @Route(path = RouterConfig.ROOT_HOME_MINE)
-public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragmentContract.IHomeView {
+public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragmentContract.IHomeView, IMessageCount {
     @BindView(R.id.parallax)
     ImageView mParallax;
     @BindView(R.id.img_groupLogoUrl)
@@ -374,5 +375,10 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         Date date = DateUtil.parse(bean.getDate());
         mDate.setText(String.format("以上数据统计周期为：%s - %s", CalendarUtils.format(date, Constants.SLASH_YYYY_MM_DD),
                 CalendarUtils.format(CalendarUtils.getWeekDate(date, 0, 7), Constants.SLASH_YYYY_MM_DD)));
+    }
+
+    @Override
+    public void setMessageCount(String count) {
+        UIUtils.setTextWithVisibility(mTxtMessageCount, count);
     }
 }

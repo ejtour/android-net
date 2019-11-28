@@ -33,6 +33,7 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -58,7 +59,7 @@ import butterknife.Unbinder;
  * @since 2019/7/25
  */
 @Route(path = RouterConfig.ROOT_HOME_MAIN)
-public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContract.IMainHomeView, BaseQuickAdapter.OnItemClickListener, IReload {
+public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContract.IMainHomeView, BaseQuickAdapter.OnItemClickListener, IReload, IMessageCount {
 
     @BindView(R.id.fmh_top_bg)
     ImageView mTopBg;
@@ -105,6 +106,8 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     TextView mWarehouseIn;
     @BindView(R.id.fmh_finance)
     TextView mFinance;
+    @BindView(R.id.fmh_message_count)
+    TextView mMessageCount;
     @BindView(R.id.fmh_title_bar)
     View mTitleBar;
     @BindView(R.id.fmh_scroll_view)
@@ -362,5 +365,10 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     @Override
     public void reload() {
         mPresenter.start();
+    }
+
+    @Override
+    public void setMessageCount(String count) {
+        UIUtils.setTextWithVisibility(mMessageCount, count);
     }
 }

@@ -184,4 +184,19 @@
         <item name="android:textAppearance">@style/TextAppearance.City22.Middle.Color666</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
+    <style name="HomeTips">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">12dp</item>
+        <item name="android:background">@drawable/bg_message_num</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minWidth">12dp</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">8sp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>

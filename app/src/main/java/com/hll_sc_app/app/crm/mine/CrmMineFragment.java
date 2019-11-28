@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,12 @@ import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.impl.IMessageCount;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +39,7 @@ import butterknife.Unbinder;
  */
 
 @Route(path = RouterConfig.CRM_MINE)
-public class CrmMineFragment extends BaseFragment {
+public class CrmMineFragment extends BaseFragment implements IMessageCount {
     @BindView(R.id.fcm_message_icon)
     ImageView mMessageIcon;
     @BindView(R.id.fcm_avatar)
@@ -45,6 +48,8 @@ public class CrmMineFragment extends BaseFragment {
     TextView mGroupName;
     @BindView(R.id.fcm_salesman_info)
     TextView mSalesmanInfo;
+    @BindView(R.id.fcm_message_count)
+    TextView mMessageCount;
     Unbinder unbinder;
 
     @Nullable
@@ -124,5 +129,10 @@ public class CrmMineFragment extends BaseFragment {
                 InfoActivity.start(requireActivity());
                 break;
         }
+    }
+
+    @Override
+    public void setMessageCount(String count) {
+        UIUtils.setTextWithVisibility(mMessageCount, count);
     }
 }

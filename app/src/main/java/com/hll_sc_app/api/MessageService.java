@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.message.MessageBean;
 import com.hll_sc_app.bean.message.MessageDetailBean;
+import com.hll_sc_app.bean.message.UnreadResp;
 
 import java.util.List;
 
@@ -42,4 +43,8 @@ public interface MessageService {
     @POST(HttpConfig.URL)
     @Headers("pv:109007")
     Observable<BaseResp<Object>> clearUnreadMessage(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:108001")
+    Observable<BaseResp<UnreadResp>> queryUnreadNum(@Body BaseMapReq req);
 }
