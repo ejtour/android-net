@@ -35,6 +35,7 @@ import com.hll_sc_app.bean.marketingsetting.AreaListBean;
 import com.hll_sc_app.bean.marketingsetting.MarketingDetailCheckResp;
 import com.hll_sc_app.bean.marketingsetting.RuleListBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.widget.TitleBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -78,7 +79,7 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
     @Autowired(name = "object0")
     String discountId;
     @Autowired(name = "object1")
-    int discountType;
+    int discountType;//discountType == 1 ? "订单" : "商品";
     @BindView(R.id.txt_title)
     TextView mTitle;
     @BindView(R.id.txt_activity_time)
@@ -111,6 +112,8 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
     TextView mTxtEdit;
     @BindView(R.id.rl_product)
     RelativeLayout mRlProduct;
+    @BindView(R.id.title_bar)
+    TitleBar mTitleBar;
     private Unbinder unbinder;
     private IProductMarketingCheckContract.IPresenter mPresenter;
     private MarketingDetailCheckResp mDetail;
@@ -143,6 +146,11 @@ public class ProductMarketingCheckActivity extends BaseLoadActivity implements I
         mActivityProductList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         if (discountType == 1) {
             mRlProduct.setVisibility(View.GONE);
+        } else {
+            mTitleBar.setRightText("复制活动");
+            mTitleBar.setRightBtnClick(v -> {
+                ProductMarketingAddActivity.startByCopy(mDetail, discountType);
+            });
         }
     }
 

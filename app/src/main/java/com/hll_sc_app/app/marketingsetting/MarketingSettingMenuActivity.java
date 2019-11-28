@@ -17,6 +17,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.hll_sc_app.app.marketingsetting.product.ProductMarketingListActivity.TYPE_ORDER;
+import static com.hll_sc_app.app.marketingsetting.product.ProductMarketingListActivity.TYPE_PRODUCT;
+
 /**
  * 营销中心入口
  */
@@ -43,10 +46,10 @@ public class MarketingSettingMenuActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_product:
-                ProductMarketingListActivity.start(2);
+                ProductMarketingListActivity.start(TYPE_PRODUCT);
                 break;
             case R.id.ll_order:
-                ProductMarketingListActivity.start(1);
+                ProductMarketingListActivity.start(TYPE_ORDER);
                 break;
             case R.id.ll_coupon:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_COUPON_LIST);

@@ -41,6 +41,8 @@ public interface IProductMarketingContract {
         String getEndTime();
 
         String getDiscountType();
+
+        String getFilterType();
     }
 
 
@@ -66,5 +68,7 @@ public interface IProductMarketingContract {
         void refreshList();
 
         int getPageNum();
+
+        void export(String email);
     }
 }

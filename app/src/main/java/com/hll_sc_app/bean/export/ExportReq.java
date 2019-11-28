@@ -43,6 +43,7 @@ public class ExportReq {
      * 代仓预警值（stock_warn_num）
      * 售价管理 (sell_price)
      * 协议价（common_quotation）
+     * 活动列表（discount）
      */
     private String typeCode;
     /**
@@ -145,6 +146,15 @@ public class ExportReq {
          */
         private CommonExport supplierCommonExport;
 
+        private Discount discount;
+
+        public Discount getDiscount() {
+            return discount;
+        }
+
+        public void setDiscount(Discount discount) {
+            this.discount = discount;
+        }
 
         private String groupID;
         private String pageNum;
@@ -734,6 +744,55 @@ public class ExportReq {
 
             public void setShopIDs(List<String> shopIDs) {
                 this.shopIDs = shopIDs;
+            }
+        }
+
+
+        public static class Discount{
+            private String discountRuleType;
+            private String discountStatus;
+            private String endTime;
+            private String groupID;
+            private String startTime;
+
+            public String getDiscountRuleType() {
+                return discountRuleType;
+            }
+
+            public void setDiscountRuleType(String discountRuleType) {
+                this.discountRuleType = discountRuleType;
+            }
+
+            public String getDiscountStatus() {
+                return discountStatus;
+            }
+
+            public void setDiscountStatus(String discountStatus) {
+                this.discountStatus = discountStatus;
+            }
+
+            public String getEndTime() {
+                return endTime;
+            }
+
+            public void setEndTime(String endTime) {
+                this.endTime = endTime;
+            }
+
+            public String getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(String groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getStartTime() {
+                return startTime;
+            }
+
+            public void setStartTime(String startTime) {
+                this.startTime = startTime;
             }
         }
     }

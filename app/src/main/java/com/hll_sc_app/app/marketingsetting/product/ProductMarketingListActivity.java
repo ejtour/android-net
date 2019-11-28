@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,6 +29,7 @@ import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.event.MarketingEvent;
 import com.hll_sc_app.bean.marketingsetting.MarketingListResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingStatusBean;
+import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
@@ -40,6 +42,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -54,6 +57,8 @@ import butterknife.Unbinder;
 @Route(path = RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST, extras = Constant.LOGIN_EXTRA)
 public class ProductMarketingListActivity extends BaseLoadActivity implements IProductMarketingContract.IView {
     private final String FORMAT_DATE = "yyyyMMdd";
+    public static final int TYPE_ORDER = 1;
+    public static final int TYPE_PRODUCT = 2;
     @BindView(R.id.search_view)
     SearchView mSearchView;
     @BindView(R.id.ll_list)
@@ -76,14 +81,26 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     TextView mEmptyTitle;
     @Autowired(name = "object0")
     int mDiscountType;
+    @BindView(R.id.txt_title_right)
+    TextView mTxtTitleRight;
+    @BindView(R.id.ll_button_bottom)
+    LinearLayout mLlButtonBottom;
+    @BindView(R.id.view_divider_1)
+    View mViewDivider1;
+    @BindView(R.id.txt_filter_type)
+    TextView mTxtFilterType;
+
+
     private Unbinder unbinder;
     private IProductMarketingContract.IPresenter mPresent;
     private SingleSelectionWindow<MarketingStatusBean> mStatusWindow;
+    private SingleSelectionWindow<NameValue> mTypeWindow;
     private DateRangeWindow mDateRangeWindow;
     private MarketingStatusBean mStatusSelected;
     private MarketingListAdapter mListAdapter;
     private String mFilterStartTime;
     private String mFilterEndTime;
+    private String mFilterType = "";
 
     public static void start(int discountType) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST, discountType);
@@ -117,6 +134,23 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
         mListContainer.setVisibility(View.GONE);
         mEmptyContainer.setVisibility(View.GONE);
 
+        if (mDiscountType == TYPE_PRODUCT) {
+            mTxtTitleRight.setText("导出");
+            mLlButtonBottom.setVisibility(View.VISIBLE);
+            mTxtTitleRight.setOnClickListener(v -> {
+                mPresent.export("");
+            });
+        } else {
+            mTxtTitleRight.setText("新增");
+            mLlButtonBottom.setVisibility(View.GONE);
+            mTxtTitleRight.setOnClickListener(v -> {
+                ProductMarketingAddActivity.start(null, mDiscountType);
+            });
+            ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) mViewDivider1.getLayoutParams();
+            params.startToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+            mTxtFilterType.setText("");
+        }
+
     }
 
 
@@ -126,7 +160,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
      * @return
      */
     private String getType() {
-        return mDiscountType == 1 ? "订单" : "商品";
+        return mDiscountType == TYPE_ORDER ? "订单" : "商品";
     }
 
     /**
@@ -257,7 +291,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
         mRefreshLayout.closeHeaderOrFooter();
     }
 
-    @OnClick({R.id.txt_filter_status_true, R.id.txt_filter_date_true, R.id.img_close, R.id.txt_add, R.id.btn_add,})
+    @OnClick({R.id.txt_filter_status_true, R.id.txt_filter_date_true, R.id.img_close, R.id.txt_add, R.id.btn_add, R.id.txt_filter_type_true})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_filter_status_true:
@@ -296,6 +330,22 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
             case R.id.txt_add:
                 ProductMarketingAddActivity.start(null, mDiscountType);
                 break;
+            case R.id.txt_filter_type_true:
+                if (mTypeWindow == null) {
+                    mTypeWindow = new SingleSelectionWindow<>(this, NameValue::getName);
+                    List<NameValue> nameValues = new ArrayList<>();
+                    nameValues.add(new NameValue("全部", ""));
+                    nameValues.add(new NameValue("直降", "4"));
+                    nameValues.add(new NameValue("赠券", "1"));
+                    nameValues.add(new NameValue("满减", "2"));
+                    nameValues.add(new NameValue("打折", "3"));
+                    mTypeWindow.refreshList(nameValues);
+                    mTypeWindow.setSelectListener(nameValue -> {
+                        mFilterType = nameValue.getValue();
+                        mPresent.refreshList();
+                    });
+                }
+                break;
             default:
                 break;
         }
@@ -320,5 +370,10 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
             if (!TextUtils.isEmpty(name))
                 mSearchView.showSearchContent(true, name);
         }
+    }
+
+    @Override
+    public String getFilterType() {
+        return mFilterType;
     }
 }

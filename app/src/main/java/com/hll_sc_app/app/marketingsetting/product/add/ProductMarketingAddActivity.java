@@ -95,6 +95,8 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
     MarketingDetailCheckResp mDetail;
     @Autowired(name = "discountType")
     int mDiscountType;
+    @Autowired(name = "isCopy")
+    boolean mIsCopy;
     @BindView(R.id.title_bar)
     TitleBar mTitleBar;
     @BindView(R.id.edit_theme)
@@ -160,6 +162,14 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
         ARouter.getInstance().build(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST_ADD)
                 .withParcelable("parcelable", detailCheckResp)
                 .withInt("discountType", discountType)
+                .setProvider(new LoginInterceptor()).navigation();
+    }
+
+    public static void startByCopy(MarketingDetailCheckResp detailCheckResp, int discountType) {
+        ARouter.getInstance().build(RouterConfig.ACTIVITY_MARKETING_PRODUCT_LIST_ADD)
+                .withParcelable("parcelable", detailCheckResp)
+                .withInt("discountType", discountType)
+                .withBoolean("isCopy", true)
                 .setProvider(new LoginInterceptor()).navigation();
     }
 
@@ -300,7 +310,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             return;
         }
         //更改标题
-        mTitleBar.setHeaderTitle("编辑" + getMarketingTypeName() + "促销");
+        mTitleBar.setHeaderTitle((mIsCopy ? "新增" : "编辑") + getMarketingTypeName() + "促销");
         //促销主题
         mEditTheme.setText(mDetail.getDiscountName());
         //开始结束时间
@@ -371,7 +381,7 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
      */
     private void onSave() {
         if (checkInput()) {
-            if (mDetail == null) {
+            if (mDetail == null || mIsCopy) {
                 mPresenter.addMarketingProduct();
             } else {
                 mPresenter.modifyMarketingProduct();
