@@ -21,6 +21,8 @@ import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.app.crm.customer.seas.CustomerSeasAdapter;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
+import com.hll_sc_app.app.submit.BackType;
+import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -49,7 +51,7 @@ import butterknife.OnClick;
  */
 
 @Route(path = RouterConfig.CRM_CUSTOMER_PARTNER_DETAIL)
-public class CustomerPartnerDetailActivity extends BaseLoadActivity implements ICustomerPartnerDetailContract.ICustomerPartnerDetailView {
+public class CustomerPartnerDetailActivity extends BaseLoadActivity implements ICustomerPartnerDetailContract.ICustomerPartnerDetailView, IBackType {
     @BindView(R.id.acc_search_view)
     SearchView mSearchView;
     @BindView(R.id.acc_image)
@@ -87,6 +89,12 @@ public class CustomerPartnerDetailActivity extends BaseLoadActivity implements I
         ARouter.getInstance().inject(this);
         initView();
         initData();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresenter.start();
     }
 
     @Override
@@ -197,5 +205,10 @@ public class CustomerPartnerDetailActivity extends BaseLoadActivity implements I
     @Override
     public boolean isAll() {
         return mIsAll;
+    }
+
+    @Override
+    public BackType getBackType() {
+        return BackType.PARTNER_DETAIL_LIST;
     }
 }

@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseActivity;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -68,7 +69,7 @@ public class SubmitSuccessActivity extends BaseActivity {
     TextView assGotoList;
     @BindView(R.id.ass_view_detail)
     TextView assViewDetail;
-    private BackType mBackType = BackType.ORDER_LIST;
+    private BackType mBackType;
     private Unbinder unbinder;
 
     /**
@@ -88,6 +89,7 @@ public class SubmitSuccessActivity extends BaseActivity {
     }
 
     private void initView() {
+        mBackType = ((MyApplication) getApplication()).getLastBackType();
         assLabel.setText(entry.getTitle()); // 设置标题
         assDesc.setText(entry.getDesc()); // 设置内容
         // 通过类型参数对按钮按钮状态进行调整

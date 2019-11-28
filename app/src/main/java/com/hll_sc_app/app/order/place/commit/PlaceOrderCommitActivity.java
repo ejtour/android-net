@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.order.place.commit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -11,9 +12,12 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.MyApplication;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.order.list.CrmOrderListActivity;
+import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.place.OrderCommitBean;
@@ -35,6 +39,7 @@ public class PlaceOrderCommitActivity extends BaseLoadActivity implements IPlace
     RecyclerView mListView;
     @Autowired(name = "object0")
     String mID;
+    private BackType mBackType;
     private PlaceOrderCommitAdapter mAdapter;
 
     public static void start(String id) {
@@ -53,6 +58,7 @@ public class PlaceOrderCommitActivity extends BaseLoadActivity implements IPlace
     }
 
     private void initView() {
+        mBackType = ((MyApplication) getApplication()).getLastBackType();
         mAdapter = new PlaceOrderCommitAdapter();
         mListView.setAdapter(mAdapter);
     }
@@ -66,7 +72,11 @@ public class PlaceOrderCommitActivity extends BaseLoadActivity implements IPlace
     @Override
     @OnClick(R.id.opc_return_list)
     public void onBackPressed() {
-        RouterUtil.goToActivity(RouterConfig.ROOT_HOME, this);
+        ARouter.getInstance()
+                .build(mBackType.getPath())
+                .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                .setProvider(new LoginInterceptor())
+                .navigation(this);
     }
 
     @OnClick(R.id.opc_view_order)

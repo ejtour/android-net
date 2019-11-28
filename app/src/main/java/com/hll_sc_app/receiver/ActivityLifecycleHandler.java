@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.hll_sc_app.app.submit.IBackType;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 处理App所有Activity的生命周期回调
  *
@@ -17,18 +22,26 @@ public class ActivityLifecycleHandler implements Application.ActivityLifecycleCa
     private static boolean mRunBack;
     private Listener mListener;
     private int appCount;
-
+    private final List<IBackType> mBackTypes;
 
     public ActivityLifecycleHandler(Listener listener) {
         this.mListener = listener;
+        mBackTypes = new ArrayList<>();
     }
 
     public static boolean isApplicationInForeground() {
         return !mRunBack;
     }
 
+    public IBackType getLastBackType() {
+        return mBackTypes.size() > 0 ? mBackTypes.get(mBackTypes.size() - 1) : null;
+    }
+
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        if (activity instanceof IBackType) {
+            mBackTypes.add((IBackType) activity);
+        }
     }
 
     @Override
@@ -64,6 +77,9 @@ public class ActivityLifecycleHandler implements Application.ActivityLifecycleCa
 
     @Override
     public void onActivityDestroyed(Activity activity) {
+        if (activity instanceof IBackType) {
+            mBackTypes.remove(activity);
+        }
     }
 
     public interface Listener {
