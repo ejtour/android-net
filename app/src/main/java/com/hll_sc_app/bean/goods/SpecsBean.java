@@ -64,6 +64,18 @@ public class SpecsBean implements Parcelable {
      * 是否设置定向售卖(0-未设置，1-设置)
      */
     private int appointSellType;
+    /**
+     * 是否设置黑名单(0-未设置，1-设置)
+     */
+    private int blacklist;
+
+    public int getBlacklist() {
+        return blacklist;
+    }
+
+    public void setBlacklist(int blacklist) {
+        this.blacklist = blacklist;
+    }
 
     public int getAppointSellType() {
         return appointSellType;
@@ -407,6 +419,7 @@ public class SpecsBean implements Parcelable {
         dest.writeByte(this.isDepositProduct ? (byte) 1 : (byte) 0);
         dest.writeByte(this.select ? (byte) 1 : (byte) 0);
         dest.writeInt(this.appointSellType);
+        dest.writeInt(this.blacklist);
     }
 
     protected SpecsBean(Parcel in) {
@@ -446,6 +459,7 @@ public class SpecsBean implements Parcelable {
         this.isDepositProduct = in.readByte() != 0;
         this.select = in.readByte() != 0;
         this.appointSellType = in.readInt();
+        this.blacklist = in.readInt();
     }
 
     public static final Creator<SpecsBean> CREATOR = new Creator<SpecsBean>() {

@@ -17,21 +17,22 @@ public class OrientationProductSpecBean implements Parcelable {
     private String saleUnitName;
     private String specContent;
     private String specID;
+    private boolean isSelect;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
+
     /**
      * 是否设置定向售卖(0-未设置，1-设置)
      */
     private int appointSellType;
 
     public OrientationProductSpecBean() {
-    }
-
-    protected OrientationProductSpecBean(Parcel in) {
-        this.productPrice = (BigDecimal) in.readSerializable();
-        this.saleUnitID = in.readString();
-        this.saleUnitName = in.readString();
-        this.specContent = in.readString();
-        this.specID = in.readString();
-        this.appointSellType = in.readInt();
     }
 
     public String getSpecID() {
@@ -78,13 +79,14 @@ public class OrientationProductSpecBean implements Parcelable {
         return appointSellType;
     }
 
+    public void setAppointSellType(int appointSellType) {
+        this.appointSellType = appointSellType;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    public void setAppointSellType(int appointSellType) {
-        this.appointSellType = appointSellType;
     }
 
     @Override
@@ -94,7 +96,18 @@ public class OrientationProductSpecBean implements Parcelable {
         dest.writeString(this.saleUnitName);
         dest.writeString(this.specContent);
         dest.writeString(this.specID);
+        dest.writeByte(this.isSelect ? (byte) 1 : (byte) 0);
         dest.writeInt(this.appointSellType);
+    }
+
+    protected OrientationProductSpecBean(Parcel in) {
+        this.productPrice = (BigDecimal) in.readSerializable();
+        this.saleUnitID = in.readString();
+        this.saleUnitName = in.readString();
+        this.specContent = in.readString();
+        this.specID = in.readString();
+        this.isSelect = in.readByte() != 0;
+        this.appointSellType = in.readInt();
     }
 
     public static final Creator<OrientationProductSpecBean> CREATOR = new Creator<OrientationProductSpecBean>() {
@@ -108,6 +121,4 @@ public class OrientationProductSpecBean implements Parcelable {
             return new OrientationProductSpecBean[size];
         }
     };
-
-
 }

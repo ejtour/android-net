@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.orientationsale.detail;
+package com.hll_sc_app.app.blacklist.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.orientationsale.list.OrientationListActivity;
+import com.hll_sc_app.app.blacklist.list.BlackListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -40,8 +40,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@Route(path = RouterConfig.ORIENTATION_DETAIL, extras = Constant.LOGIN_EXTRA)
-public class OrientationDetailActivity extends BaseLoadActivity implements IOrientationDetailContract.IOrientationDetailView {
+@Route(path = RouterConfig.BLACK_DETAIL, extras = Constant.LOGIN_EXTRA)
+public class BlackDetailActivity extends BaseLoadActivity implements IBlackDetailContract.IDetailView {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -57,19 +57,19 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     TextView mShopNumView;
     @Autowired(name = "parcelable")
     OrientationListBean mOrientationListBean;
-    private IOrientationDetailContract.IOrientationDetailPresenter mPresenter;
-    private OrientationDetailAdapter mAdapter;
+    private IBlackDetailContract.IPresent mPresenter;
+    private BlackDetailAdapter mAdapter;
     private List<OrientationDetailBean> productList;
     private View mEmptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_orientation_detail);
+        setContentView(R.layout.activity_black_list_detail);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        mPresenter = OrientationDetailPresenter.newInstance();
+        mPresenter = BlackDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
         initView();
@@ -87,8 +87,8 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         mAddProductView.setVisibility(View.GONE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
-            , UIUtils.dip2px(1)));
-        mAdapter = new OrientationDetailAdapter();
+                , UIUtils.dip2px(1)));
+        mAdapter = new BlackDetailAdapter();
         mAdapter.setOnDelClickListener((productIndex, specIndex) -> {
             productList.get(productIndex).getSpecs().remove(specIndex);
             if (productList.get(productIndex).getSpecs().size() == 0) {//清掉所选的商品
@@ -101,13 +101,15 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         });
         mEmptyView = LayoutInflater.from(this).inflate(R.layout.view_orientation_detail_empty, mRecyclerView, false);
         mEmptyView.findViewById(R.id.txt_add_product).setOnClickListener(v -> addProduct());
+        ((TextView) mEmptyView.findViewById(R.id.txt_alert)).setText("点击下面按钮添加要加入黑名单的商品");
+        ((TextView) mEmptyView.findViewById(R.id.txt_add_product)).setText("选择品相黑名单商品");
         mAdapter.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(mAdapter);
         mCooperationNameView.setText(mOrientationListBean.getPurchaserName());
         mImageView.setImageURL(mOrientationListBean.getPurchaserImgUrl());
         mShopNumView.setText("已选择" + mOrientationListBean.getPurchaserShopIDs().split(",").length + "个门店");
-        if(OrientationListActivity.getOrientationDetailBeans() != null && OrientationListActivity.getOrientationDetailBeans().size() != 0) {
-            productList = OrientationListActivity.getOrientationDetailBeans();
+        if (BlackListActivity.getOrientationDetailBeans() != null && BlackListActivity.getOrientationDetailBeans().size() != 0) {
+            productList = BlackListActivity.getOrientationDetailBeans();
         }
     }
 
@@ -118,7 +120,7 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         if (mOrientationListBean.getPurchaserImgUrl() == null) {
             mPresenter.getGroupInfo(mOrientationListBean.getPurchaserID());
         }
-        if(productList != null && productList.size() != 0) {
+        if (productList != null && productList.size() != 0) {
             setView(productList);
         }
     }
@@ -147,7 +149,7 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
             list.add(bean);
         }*/
 
-        ARouter.getInstance().build(RouterConfig.ORIENTATION_PRODUCT)
+        ARouter.getInstance().build(RouterConfig.BLACK_PRODUCT)
                 .withParcelableArrayList("parcelable", (ArrayList<OrientationDetailBean>) mAdapter.getData())
                 .setProvider(new LoginInterceptor()).navigation();
 
@@ -156,11 +158,7 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
 
     @Override
     public void setView(List<OrientationDetailBean> list) {
-        for (OrientationDetailBean orientationDetailBean : list) {
-            for (OrientationProductSpecBean specBean : orientationDetailBean.getSpecs()) {
-                specBean.setSelect(true);
-            }
-        }
+        selectAll(list);
         mAdapter.setNewData(list);
         mAdapter.setEmptyView(mEmptyView);
         if (list == null || list.size() == 0) {
@@ -186,7 +184,7 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
     public void addSuccess() {
         showToast("设置成功");
         ARouter.getInstance()
-                .build(RouterConfig.ORIENTATION_LIST)
+                .build(RouterConfig.BLACK_LIST)
                 .withBoolean("reload", true)
                 .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 .setProvider(new LoginInterceptor())
@@ -194,25 +192,18 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
         finish();
     }
 
-    private void setCooperation() {
-        if (mOrientationListBean.getFrom() != null && mOrientationListBean.getFrom() == 0) {
-            //来源是新增
-            OrientationListActivity.setOrientationDetailBeans(productList);
-            finish();
-        } else {
-            mOrientationListBean.setFrom(1);
-            RouterUtil.goToActivity(RouterConfig.ORIENTATION_COOPERATION_PURCHASER, mOrientationListBean);
+    /**
+     * 将所选的商品下的部分规格置为选中状态
+     *
+     * @param list
+     */
+    private void selectAll(List<OrientationDetailBean> list) {
+        for (OrientationDetailBean orientationDetailBean : list) {
+            for (OrientationProductSpecBean specBean : orientationDetailBean.getSpecs()) {
+                specBean.setSelect(true);
+            }
         }
     }
-
-    private void setOrientation() {
-        if(productList == null || productList.size() == 0) {
-            showToast("商品不能为空");
-            return;
-        }
-        mPresenter.setOrientation(productList, mOrientationListBean);
-    }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -249,6 +240,25 @@ public class OrientationDetailActivity extends BaseLoadActivity implements IOrie
             default:
                 break;
         }
+    }
+
+    private void setCooperation() {
+        if (mOrientationListBean.getFrom() != null && mOrientationListBean.getFrom() == 0) {
+            //来源是新增
+            BlackListActivity.setOrientationDetailBeans(productList);
+            finish();
+        } else {
+            mOrientationListBean.setFrom(1);
+            RouterUtil.goToActivity(RouterConfig.BLACK_COOPERATION_PURCHASER, mOrientationListBean);
+        }
+    }
+
+    private void setOrientation() {
+        if (productList == null || productList.size() == 0) {
+            showToast("商品不能为空");
+            return;
+        }
+        mPresenter.setOrientation(productList, mOrientationListBean);
     }
 
     @Subscribe

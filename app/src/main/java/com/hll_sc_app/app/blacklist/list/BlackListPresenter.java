@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.orientationsale.list;
+package com.hll_sc_app.app.blacklist.list;
 
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.base.UseCaseException;
@@ -12,9 +12,9 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
-public class OrientationListPresenter implements IOrientationListContract.IOrientationListPresenter {
+public class BlackListPresenter implements IBlackListContract.IBlackListPresenter {
 
-    private IOrientationListContract.IOrientationListView mView;
+    private IBlackListContract.IBlackListView mView;
 
     private Integer pageNum = 1;
 
@@ -26,8 +26,8 @@ public class OrientationListPresenter implements IOrientationListContract.IOrien
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("pageNum", pageNum.toString())
                 .put("pageSize", "20")
+                .put("type", "2")
                 .put("supplierID", UserConfig.getGroupID())
-                .put("type", "1")
                 .create();
         GoodsService.INSTANCE.getOrientationList(req)
                 .compose(ApiScheduler.getObservableScheduler())
@@ -49,12 +49,12 @@ public class OrientationListPresenter implements IOrientationListContract.IOrien
     }
 
     @Override
-    public void register(IOrientationListContract.IOrientationListView view) {
+    public void register(IBlackListContract.IBlackListView view) {
         this.mView = view;
     }
 
-    static OrientationListPresenter newInstance() {
-        return new OrientationListPresenter();
+    static BlackListPresenter newInstance() {
+        return new BlackListPresenter();
     }
 
     @Override

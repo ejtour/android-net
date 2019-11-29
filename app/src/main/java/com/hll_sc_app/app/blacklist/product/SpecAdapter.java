@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.orientationsale.product;
+package com.hll_sc_app.app.blacklist.product;
 
 import android.support.annotation.IntDef;
 import android.widget.ImageView;
@@ -31,7 +31,7 @@ public class SpecAdapter extends BaseQuickAdapter<SpecsBean, BaseViewHolder> {
                 .setText(R.id.txt_spec_name, item.getSpecContent())
                 .setText(R.id.txt_price, "¥" + CommonUtils.formatMoney(Double.parseDouble(item.getProductPrice())));
         if (type == CHECK) {
-            helper.getView(R.id.img_select).setEnabled(item.getBlacklist() == 0);
+            helper.getView(R.id.img_select).setEnabled(item.getAppointSellType() == 0);
             helper.getView(R.id.img_select).setSelected(item.isSelect());
         } else if (type == DELETE) {
             ((ImageView) helper.getView(R.id.img_select)).setImageResource(R.drawable.ic_delete);

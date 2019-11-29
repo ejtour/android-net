@@ -1297,6 +1297,25 @@
             android:name=".app.crm.customer.search.plan.SearchPlanActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.blacklist.list.BlackListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.blacklist.detail.BlackDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.blacklist.product.ProductActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.blacklist.cooperation.CooperationActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.blacklist.cooperation.shop.CooperationShopActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

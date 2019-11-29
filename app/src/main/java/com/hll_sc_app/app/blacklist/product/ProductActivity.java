@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.orientationsale.product;
+package com.hll_sc_app.app.blacklist.product;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +36,6 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.tencent.mm.opensdk.utils.Log;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,7 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@Route(path = RouterConfig.ORIENTATION_PRODUCT, extras = Constant.LOGIN_EXTRA)
+@Route(path = RouterConfig.BLACK_PRODUCT, extras = Constant.LOGIN_EXTRA)
 public class ProductActivity extends BaseLoadActivity implements IProductContract.IProductView {
 
     @BindView(R.id.searchView)
@@ -61,6 +60,8 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_select)
     TextView mSelectView;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
     @Autowired(name = "parcelable")
     ArrayList<OrientationDetailBean> mProductList;
 
@@ -70,7 +71,6 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
     private EmptyView mProductEmptyView;
     private EmptyView mCategoryEmptyView;
     private String selectCategory;
-
 
 
     @Override
@@ -87,6 +87,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
     }
 
     private void initView() {
+        mTxtTitle.setText("选择黑名单商品");
         if (mProductList == null) {
             mProductList = new ArrayList<>();
         }
@@ -203,7 +204,7 @@ public class ProductActivity extends BaseLoadActivity implements IProductContrac
     @Override
     public void showList(List<GoodsBean> list, boolean append) {
         for (GoodsBean goodsBean : list) {
-          /*  for (SpecsBean specsBean : goodsBean.getSpecs()) {
+            /*for (SpecsBean specsBean : goodsBean.getSpecs()) {
                 specsBean.setAppointSellType(0);
             }*/
             for (int i = 0; i < mProductList.size(); i++) {

@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.orientationsale.product;
+package com.hll_sc_app.app.blacklist.product;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -25,7 +25,7 @@ public class ProductAdapter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> 
         SpecAdapter specAdapter = new SpecAdapter(SpecAdapter.FLAG.CHECK);
         specAdapter.setOnItemClickListener((adapter, view, position) -> {
             SpecsBean specsBean = specAdapter.getItem(position);
-            if (specsBean == null || specsBean.getBlacklist() == 1) {
+            if (specsBean == null ||specsBean.getAppointSellType() == 1) {
                 return;
             }
             specsBean.setSelect(!specsBean.isSelect());

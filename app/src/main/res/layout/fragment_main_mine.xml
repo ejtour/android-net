@@ -237,16 +237,16 @@
                             android:text="定向售卖" />
 
                         <TextView
+                            android:id="@+id/txt_black_list"
+                            style="@style/MineButton"
+                            android:drawableTop="@drawable/ic_mine_black_list"
+                            android:text="品相黑名单" />
+
+                        <TextView
                             android:id="@+id/txt_delivery_manage"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_distribution_manage"
                             android:text="配送管理" />
-
-                        <TextView
-                            android:id="@+id/txt_inventory_manage"
-                            style="@style/MineButton"
-                            android:drawableTop="@drawable/ic_mine_inventory_manage"
-                            android:text="库存管理" />
 
                     </LinearLayout>
 
@@ -320,10 +320,10 @@
                             android:text="卡管理" />
 
                         <TextView
-                            android:id="@+id/txt_report_center"
+                            android:id="@+id/txt_inventory_manage"
                             style="@style/MineButton"
-                            android:drawableTop="@drawable/ic_mine_report_center"
-                            android:text="报表中心" />
+                            android:drawableTop="@drawable/ic_mine_inventory_manage"
+                            android:text="库存管理" />
 
                     </LinearLayout>
 
@@ -390,9 +390,17 @@
                             android:text="市场价格" />
 
                         <TextView
+                            android:id="@+id/txt_report_center"
                             style="@style/MineButton"
-                            android:layout_weight="3"
-                            android:drawableTop="@drawable/ic_mine_product_special_demand"
+                            android:drawableTop="@drawable/ic_mine_report_center"
+                            android:text="报表中心" />
+
+                        <TextView
+                            style="@style/MineButton"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            style="@style/MineButton"
                             android:visibility="invisible" />
 
                     </LinearLayout>

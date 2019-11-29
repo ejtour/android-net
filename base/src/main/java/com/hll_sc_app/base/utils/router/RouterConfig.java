@@ -1422,5 +1422,27 @@ public class RouterConfig {
      * 客户-拜访记录-搜索计划
      */
     public static final String CRM_CUSTOMER_SEARCH_PLAN = "/activity/customer/search/plan";
+
+
+    /**
+     * 定向售卖列表
+     */
+    public static final String BLACK_LIST = "/activity/black/list";
+    /**
+     * 定向售卖详情
+     */
+    public static final String BLACK_DETAIL = "/activity/black/detail";
+    /**
+     * 定向售卖合作采购商
+     */
+    public static final String BLACK_COOPERATION_PURCHASER = "/activity/black/cooperation/purchaser";
+    /**
+     * 定向售卖合作门店
+     */
+    public static final String BLACK_COOPERATION_SHOP = "/activity/black/cooperation/shop";
+    /**
+     * 定向售卖商品
+     */
+    public static final String BLACK_PRODUCT = "/activity/black/product";
 }
 

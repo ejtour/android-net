@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.orientationsale.detail;
+package com.hll_sc_app.app.blacklist.detail;
 
 import com.hll_sc_app.api.GoodsService;
 import com.hll_sc_app.api.UserService;
@@ -24,9 +24,9 @@ import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
-public class OrientationDetailPresenter implements IOrientationDetailContract.IOrientationDetailPresenter {
+public class BlackDetailPresenter implements IBlackDetailContract.IPresent {
 
-    private IOrientationDetailContract.IOrientationDetailView mView;
+    private IBlackDetailContract.IDetailView mView;
 
     @Override
     public void setOrientation(List<OrientationDetailBean> list, OrientationListBean bean) {
@@ -57,7 +57,7 @@ public class OrientationDetailPresenter implements IOrientationDetailContract.IO
         req.setDetails(details);
         req.setPurchaserName(bean.getPurchaserName());
         req.setPurchaserShopIDs(Arrays.asList(bean.getPurchaserShopIDs().split(",")));
-        req.setType(1);
+        req.setType(2);
         baseReq.setData(req);
         GoodsService.INSTANCE.setOrientation(baseReq)
                 .compose(ApiScheduler.getObservableScheduler())
@@ -129,12 +129,12 @@ public class OrientationDetailPresenter implements IOrientationDetailContract.IO
 
 
     @Override
-    public void register(IOrientationDetailContract.IOrientationDetailView view) {
+    public void register(IBlackDetailContract.IDetailView view) {
         this.mView = view;
     }
 
-    static OrientationDetailPresenter newInstance() {
-        return new OrientationDetailPresenter();
+    static BlackDetailPresenter newInstance() {
+        return new BlackDetailPresenter();
     }
 
 }
