@@ -122,11 +122,17 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
         axisLeft.setDrawAxisLine(false);
         axisLeft.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
         axisLeft.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
-        axisLeft.enableGridDashedLine(1, 1, 1);
+        axisLeft.enableGridDashedLine(4, 4, 0);
         axisLeft.setTextSize(10);
         axisLeft.setAxisMinimum(0);
 
-        mLineChart.getAxisRight().setEnabled(false);
+        YAxis axisRight = mLineChart.getAxisRight();
+        axisRight.setDrawAxisLine(false);
+        axisRight.setAxisMinimum(0);
+        axisRight.enableGridDashedLine(4, 4, 0);
+        axisLeft.setTextSize(10);
+        axisRight.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
+        axisRight.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
     }
 
     private void initBarChart() {
@@ -160,7 +166,7 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
         YAxis axisLeft = mBarChart.getAxisLeft();
         axisLeft.setDrawAxisLine(false);
         axisLeft.setAxisMinimum(0);
-        axisLeft.enableGridDashedLine(1, 1, 1);
+        axisLeft.enableGridDashedLine(4, 4, 0);
         axisLeft.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
         axisLeft.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
         axisLeft.setTextSize(10);
@@ -287,6 +293,7 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
             for (IBarDataSet dataSet : data.getDataSets()) {
                 dataSet.setDrawValues(true);
             }
+            data.setDrawValues(false);
             mBarChart.setData(data);
         }
         mBarChart.invalidate();
@@ -308,13 +315,17 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
             shopTotalSet.setColor(Color.parseColor("#69C0FF"));
             shopActiveSet = new LineDataSet(shopActiveList, "活跃门店数");
             shopActiveSet.setColor(Color.parseColor("#FF7875"));
+            shopActiveSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
             shopAddSet = new LineDataSet(shopAddList, "新增门店数");
             shopAddSet.setColor(Color.parseColor("#95DE64"));
+            shopAddSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
             LineData data = new LineData(shopTotalSet, shopActiveSet, shopAddSet);
             for (ILineDataSet dataSet : data.getDataSets()) {
-                ((LineDataSet) dataSet).setDrawCircles(false);
-//                dataSet.setDrawValues(true);
+                LineDataSet line = (LineDataSet) dataSet;
+                line.setDrawCircles(false);
+                line.setLineWidth(2);
             }
+            data.setDrawValues(false);
             mLineChart.setData(data);
         }
         mLineChart.invalidate();

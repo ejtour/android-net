@@ -121,11 +121,14 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         YAxis axisLeft = mChart.getAxisLeft();
         axisLeft.setDrawAxisLine(false);
         axisLeft.setAxisMinimum(0);
+        axisLeft.enableGridDashedLine(4, 4, 0);
         axisLeft.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
         axisLeft.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
         axisLeft.setTextSize(10);
 
-        mChart.getAxisRight().setEnabled(false);
+        YAxis axisRight = mChart.getAxisRight();
+        axisRight.setAxisMinimum(0);
+        axisRight.setEnabled(false);
     }
 
     @Override
@@ -190,10 +193,12 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
             lineDataSet.setFormLineWidth(2);
             lineDataSet.setDrawCircles(false);
             lineDataSet.setLineWidth(2);
+            lineDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         }
         CombinedData data = new CombinedData();
         data.setData(bar);
         data.setData(line);
+        data.setDrawValues(false);
         mChart.setData(data);
         mChart.invalidate();
     }

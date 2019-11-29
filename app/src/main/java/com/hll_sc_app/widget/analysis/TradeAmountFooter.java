@@ -102,12 +102,14 @@ public class TradeAmountFooter extends ConstraintLayout {
         YAxis axisLeft = mChart.getAxisLeft();
         axisLeft.setDrawAxisLine(false);
         axisLeft.setAxisMinimum(0);
+        axisLeft.enableGridDashedLine(4, 4, 0);
         axisLeft.setGridColor(ContextCompat.getColor(getContext(), R.color.color_dddddd));
         axisLeft.setTextColor(ContextCompat.getColor(getContext(), R.color.color_222222));
         axisLeft.setTextSize(10);
 
         YAxis axisRight = mChart.getAxisRight();
         axisRight.setDrawAxisLine(false);
+        axisRight.enableGridDashedLine(4, 4, 0);
         axisRight.setGridColor(ContextCompat.getColor(getContext(), R.color.color_dddddd));
         axisRight.setTextColor(ContextCompat.getColor(getContext(), R.color.color_222222));
         axisRight.setTextSize(10);
@@ -167,7 +169,6 @@ public class TradeAmountFooter extends ConstraintLayout {
             amountSet.setAxisDependency(YAxis.AxisDependency.LEFT);
             amountSet.setForm(Legend.LegendForm.SQUARE);
             amountSet.setColor(Color.parseColor("#69c0ff"));
-            amountSet.setDrawValues(false);
             BarData bar = new BarData(amountSet);
             bar.setBarWidth(0.3f);
             data.setData(bar);
@@ -179,11 +180,11 @@ public class TradeAmountFooter extends ConstraintLayout {
             rateSet.setFormSize(15);
             rateSet.setColor(Color.parseColor("#ff7a45"));
             rateSet.setLineWidth(2);
-            rateSet.setDrawValues(false);
             rateSet.setMode(LineDataSet.Mode.LINEAR);
             rateSet.setDrawCircles(false);
             LineData line = new LineData(rateSet);
             data.setData(line);
+            data.setDrawValues(false);
             mChart.setData(data);
         }
         mChart.invalidate();
