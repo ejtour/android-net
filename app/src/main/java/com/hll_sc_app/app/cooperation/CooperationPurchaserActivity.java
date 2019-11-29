@@ -28,6 +28,7 @@ import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -233,7 +234,9 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
                 finish();
                 break;
             case R.id.txt_options:
-                showOptionsWindow(view);
+                if (UserConfig.crm()) {
+                    RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_ADD);
+                } else showOptionsWindow(view);
                 break;
             case R.id.txt_title:
                 if (mTitleOptionWindow == null) {

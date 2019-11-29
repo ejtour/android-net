@@ -12,6 +12,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.application.CooperationApplicationActivity;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.app.cooperation.invite.CooperationInviteActivity;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserDetail;
 import com.hll_sc_app.citymall.App;
 
@@ -82,7 +83,7 @@ public class CooperationButtonView extends LinearLayout {
         }
         //正式合作
         if (TextUtils.equals(actionType, TYPE_FORMAL_APPLICATION)) {
-            mTxtDel.setVisibility(VISIBLE);
+            if (!UserConfig.crm()) mTxtDel.setVisibility(VISIBLE);
         } else if (TextUtils.equals(actionType, TYPE_MY_APPLICATION)) {//我的申请
             if (TextUtils.equals(status, "0")) {
                 // 我申请 等待别人审批

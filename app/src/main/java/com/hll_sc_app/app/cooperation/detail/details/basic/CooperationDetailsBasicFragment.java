@@ -181,7 +181,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
         }
 
         //验货模式-已同意才显示
-        mLlCheckModal.setVisibility((TextUtils.equals("2", mDetail.getStatus()) && mDetail.getCooperationActive() != 1) ? View.VISIBLE : View.GONE);
+        mLlCheckModal.setVisibility((TextUtils.equals("2", mDetail.getStatus()) && mDetail.getCooperationActive() != 1 && !UserConfig.crm()) ? View.VISIBLE : View.GONE);
         mTxtCheckModal.setText(mDetail.getInspector() == 1 ? "采购商验货" : mDetail.getInspector() == 2 ? "供应商验货" : "");
     }
 
@@ -273,6 +273,7 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 findView(R.id.ll_verification).setVisibility(View.GONE);
                 findView(R.id.ll_reply).setVisibility(View.GONE);
                 findView(R.id.ll_shopsNum).setVisibility(View.GONE);
+                adjustCrm();
                 break;
             case "3":
                 // 从未添加过
@@ -288,6 +289,21 @@ public class CooperationDetailsBasicFragment extends BaseCooperationDetailsFragm
                 break;
             default:
                 break;
+        }
+    }
+
+    private void adjustCrm() {
+        if (UserConfig.crm()) {
+            findView(R.id.ll_defaultSettlementWay).setClickable(false);
+            mTxtDefaultSettlementWay.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            findView(R.id.ll_maintainLevel).setClickable(false);
+            mTxtMaintainLevel.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            findView(R.id.ll_defaultDeliveryWay).setClickable(false);
+            mTxtDefaultDeliveryWay.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            findView(R.id.ll_customerLevel).setClickable(false);
+            mTxtCustomerLevel.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            findView(R.id.ll_deliveryPeriod).setClickable(false);
+            mTxtDeliveryPeriod.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
     }
 
