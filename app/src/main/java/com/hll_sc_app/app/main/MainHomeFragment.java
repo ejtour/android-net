@@ -345,7 +345,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
                 ReportEntryActivity.start();
                 break;
             case R.id.fmh_entry_market_price:
-                showToast("市场价格待添加");
+                RouterUtil.goToActivity(RouterConfig.PRICE);
                 break;
         }
     }

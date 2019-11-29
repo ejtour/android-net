@@ -175,6 +175,8 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     public void handleOrderEvent(OrderEvent event) {
         if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
             mGroupType.check(PageType.SUPPLIER_ORDER);
+        } else if (event.getMessage().equals(OrderEvent.TO_CRM_ORDER)) {
+            mGroupType.check(PageType.CRM_ORDER);
         }
     }
 

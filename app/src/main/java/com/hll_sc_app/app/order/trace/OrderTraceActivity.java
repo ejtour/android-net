@@ -12,6 +12,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.complainmanage.add.ComplainMangeAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -23,6 +24,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.hll_sc_app.app.complainmanage.detail.ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -72,7 +75,7 @@ public class OrderTraceActivity extends BaseLoadActivity {
                 finish();
                 break;
             case R.id.aot_complaint:
-                showToast("投诉待添加");
+                ComplainMangeAddActivity.start(null, COMPLAIN_MANAGE);
                 break;
         }
     }

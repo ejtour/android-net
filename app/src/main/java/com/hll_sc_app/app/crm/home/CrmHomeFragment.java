@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +24,13 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.home.ManagementShopResp;
 import com.hll_sc_app.bean.home.StatisticResp;
 import com.hll_sc_app.bean.home.TrendBean;
@@ -42,6 +44,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -243,30 +247,32 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
 
     @OnClick({R.id.fch_pending_visit_btn, R.id.fch_remain_visit_btn, R.id.fch_visited_btn, R.id.fch_valid_visit_btn})
     public void visit(View view) {
-        showToast("拜访待添加");
         switch (view.getId()) {
             case R.id.fch_pending_visit_btn:
-                break;
             case R.id.fch_remain_visit_btn:
+                RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_PLAN);
                 break;
             case R.id.fch_visited_btn:
-                break;
             case R.id.fch_valid_visit_btn:
+                RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_RECORD);
                 break;
         }
     }
 
     @OnClick({R.id.fch_customer_service_btn, R.id.fch_driver_btn, R.id.fch_warehouse_btn, R.id.fch_finance_btn})
     public void afterSales(View view) {
-        showToast("售后待添加");
         switch (view.getId()) {
             case R.id.fch_customer_service_btn:
+                AuditActivity.start(1);
                 break;
             case R.id.fch_driver_btn:
+                AuditActivity.start(2);
                 break;
             case R.id.fch_warehouse_btn:
+                AuditActivity.start(3);
                 break;
             case R.id.fch_finance_btn:
+                AuditActivity.start(4);
                 break;
         }
     }
@@ -284,12 +290,12 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
 
     @OnClick(R.id.fch_management_btn)
     public void shopManagement() {
-        showToast("门店管理待添加");
+        RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_PARTNER);
     }
 
     @OnClick(R.id.fch_summary_bg)
     public void orderManagement() {
-        showToast("订单管理待添加");
+        EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.TO_CRM_ORDER));
     }
 
     @Override
