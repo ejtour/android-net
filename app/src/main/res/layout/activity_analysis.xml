@@ -5,44 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/base_bg_shadow_top_bar"
+        app:layout_constraintBottom_toBottomOf="@id/aa_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.hll_sc_app.widget.TitleBar
         android:id="@+id/aa_title_bar"
         android:layout_width="0dp"
         android:layout_height="@dimen/title_bar_height"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tb_title="运营分析报告" />
-
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/aa_tab_layout"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:background="@drawable/bg_divider_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aa_title_bar"
-        app:tl_indicator_color="@color/colorPrimary"
-        app:tl_indicator_corner_radius="2dp"
-        app:tl_indicator_height="2dp"
-        app:tl_indicator_width="65dp"
-        app:tl_tab_space_equal="true"
-        app:tl_textsize="@dimen/text_small_size"
-        app:tl_textSelectColor="@color/colorPrimary"
-        app:tl_textUnselectColor="@color/color_999999" />
 
     <TextView
         android:id="@+id/aa_filter"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:background="@android:color/white"
         android:gravity="center"
         android:paddingLeft="22dp"
         android:paddingRight="22dp"
         android:text="周"
-        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        android:textAppearance="@style/TextAppearance.City22.Small.White"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aa_tab_layout" />
+        app:layout_constraintTop_toBottomOf="@id/aa_title_bar" />
 
     <com.hll_sc_app.widget.TriangleView
         android:id="@+id/aa_filter_arrow"
@@ -58,10 +50,9 @@
         android:id="@+id/aa_date"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:background="@android:color/white"
         android:gravity="center_vertical|right"
         android:paddingRight="20dp"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+        android:textAppearance="@style/TextAppearance.City22.Little.White"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/aa_filter"
         app:layout_constraintTop_toTopOf="@id/aa_filter"
@@ -78,6 +69,23 @@
         app:trv_color="@color/color_dddddd"
         app:trv_direction="bottom" />
 
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/aa_tab_layout"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/bg_divider_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aa_filter"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_indicator_corner_radius="2dp"
+        app:tl_indicator_height="2dp"
+        app:tl_indicator_width="65dp"
+        app:tl_tab_space_equal="true"
+        app:tl_textsize="@dimen/text_small_size"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/color_999999" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/aa_view_pager"
         android:layout_width="0dp"
@@ -85,5 +93,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aa_filter" />
+        app:layout_constraintTop_toBottomOf="@id/aa_tab_layout" />
 </android.support.constraint.ConstraintLayout>

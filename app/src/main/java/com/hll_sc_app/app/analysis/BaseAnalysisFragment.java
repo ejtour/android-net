@@ -9,12 +9,9 @@ import android.view.ViewGroup;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.bean.event.AnalysisEvent;
-import com.hll_sc_app.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.text.NumberFormat;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -24,13 +21,6 @@ import java.text.NumberFormat;
 public abstract class BaseAnalysisFragment extends BaseLazyFragment {
     protected AnalysisEvent mAnalysisEvent;
     protected int mHighlightColor;
-    protected NumberFormat mPercentInstance;
-
-    {
-        mPercentInstance = NumberFormat.getPercentInstance();
-        mPercentInstance.setMaximumFractionDigits(2);
-        mPercentInstance.setMinimumFractionDigits(2);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +42,7 @@ public abstract class BaseAnalysisFragment extends BaseLazyFragment {
         lazyLoad();
     }
 
-    protected double getRate(double current, double last) {
-        return last == 0 ? current == 0 ? 0 : 1 : (current - last) / last;
+    protected String absRate(String rate) {
+        return rate.replace("-", "");
     }
 }

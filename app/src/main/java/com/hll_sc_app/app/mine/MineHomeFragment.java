@@ -51,7 +51,6 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
-import java.text.NumberFormat;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -355,14 +354,11 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         ss.setSpan(new RelativeSizeSpan(0.65f), amountSource.indexOf("."), amountSource.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mAmount.setText(ss);
 
-        NumberFormat percentInstance = NumberFormat.getPercentInstance();
-        percentInstance.setMaximumFractionDigits(2);
-        percentInstance.setMinimumFractionDigits(2);
         mOrder.setText(CommonUtils.formatNum(bean.getValidOrderNum()));
 
-        String rateSource = String.format("环比增长：%s", percentInstance.format(bean.getRelativeRatio()));
+        String rateSource = String.format("环比增长：%s", bean.getAmountRate());
         SpannableString rate = new SpannableString(rateSource);
-        if (bean.getRelativeRatio() < 0) {
+        if (bean.getAmountRate().startsWith("-")) {
             rate.setSpan(new ForegroundColorSpan(Color.parseColor("#48CFAD")), 5, rateSource.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         mRate.setText(rate);

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 public class TopTenCustomerBean {
     private double amount;
     private String name;
+    private double averageAmount;
     private int order;
 
     public double getAmount() {
@@ -34,5 +35,13 @@ public class TopTenCustomerBean {
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    public double getAverageAmount() {
+        return averageAmount;
+    }
+
+    public void setAverageAmount(double averageAmount) {
+        this.averageAmount = averageAmount;
     }
 }
