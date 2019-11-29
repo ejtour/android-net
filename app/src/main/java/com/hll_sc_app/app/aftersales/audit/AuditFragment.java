@@ -195,8 +195,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
         }
         mPresenter.doAction(mBillType,
                 TextUtils.join(",", ids),
-                mCurBean.getRefundBillStatus(),
-                mCurBean.getRefundBillType(),
                 null, null);
         mCurBean = null;
     }
@@ -352,7 +350,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 .setMaxLength(200)
                 .setButtons("容我再想想", "确认取消", (dialog, positive, content) -> {
                     dialog.dismiss();
-                    if (positive) rejectReq(content);
+                    if (positive) cancelReq(content);
                 })
                 .create()
                 .show();
@@ -370,8 +368,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                     .withLoadView(this)
                     .withRefundBillID(mCurBean.getId())
                     .setCallback((payType, remark) ->
-                            mPresenter.doAction(1, mCurBean.getId(),
-                                    mCurBean.getRefundBillStatus(), mCurBean.getRefundBillType(), payType,
+                            mPresenter.doAction(1, mCurBean.getId(), payType,
                                     remark))
                     .show();
         else RemarkDialog.newBuilder(getActivity())
@@ -380,8 +377,7 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
                 .setButtons("容我再想想", "确认通过", (dialog, positive, content) -> {
                     dialog.dismiss();
                     if (positive)
-                        mPresenter.doAction(1, mCurBean.getId(), mCurBean.getRefundBillStatus(),
-                                mCurBean.getRefundBillType(), null, content);
+                        mPresenter.doAction(1, mCurBean.getId(), null, content);
                 })
                 .create()
                 .show();
@@ -389,9 +385,13 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
 
     private void rejectReq(String reason) {
         mPresenter.doAction(5,
-                mCurBean.getId(),
-                mCurBean.getRefundBillStatus(),
-                mCurBean.getRefundBillType(), null,
+                mCurBean.getId(), null,
+                reason);
+    }
+
+    private void cancelReq(String reason) {
+        mPresenter.doAction(6,
+                mCurBean.getId(), null,
                 reason);
     }
 
@@ -399,8 +399,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     public void actionFinance() {
         mPresenter.doAction(4,
                 mCurBean.getId(),
-                mCurBean.getRefundBillStatus(),
-                mCurBean.getRefundBillType(),
                 null, null);
     }
 
@@ -426,8 +424,6 @@ public class AuditFragment extends BaseLazyFragment implements IAuditFragmentCon
     private void closeRefund(String reason){
         mPresenter.doAction(7,
                 mCurBean.getId(),
-                mCurBean.getRefundBillStatus(),
-                mCurBean.getRefundBillType(),
                 null, reason);
     }
 
