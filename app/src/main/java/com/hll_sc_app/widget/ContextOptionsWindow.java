@@ -5,7 +5,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.PopupWindowCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
@@ -95,27 +94,31 @@ public class ContextOptionsWindow extends BasePopupWindow {
         ConstraintLayout.LayoutParams arrowParams = (ConstraintLayout.LayoutParams) mArrow.getLayoutParams();
         ConstraintLayout.LayoutParams listParams = (ConstraintLayout.LayoutParams) mListView.getLayoutParams();
         boolean showTop = location[1] + anchor.getHeight() + windowHeight >= UIUtils.getScreenHeight(anchor.getContext());
-        if (showTop) arrowDown(anchor, arrowParams, listParams);
-        else arrowUp(anchor, arrowParams, listParams);
+        int x = 0;
         switch (hgrav) {
             case Gravity.RIGHT:
                 arrowParams.startToStart = -1;
                 arrowParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-                PopupWindowCompat.showAsDropDown(this, anchor, xOff, yOff, gravity);
+                x = location[0] + anchor.getWidth() - windowWidth + xOff;
                 break;
             case Gravity.LEFT:
                 arrowParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
                 arrowParams.endToEnd = -1;
-                PopupWindowCompat.showAsDropDown(this, anchor, xOff, yOff, gravity);
+                x = location[0] + xOff;
                 break;
             case Gravity.CENTER_HORIZONTAL:
                 arrowParams.startToStart = arrowParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
-                int x = location[0] + anchor.getWidth() / 2 - windowWidth / 2 + xOff;
-                if (showTop) showAtLocation(anchor, Gravity.NO_GRAVITY,
-                        x, location[1] - anchor.getHeight() + yOff);
-                else showAtLocation(anchor, Gravity.NO_GRAVITY,
-                        x, location[1] + anchor.getHeight() + yOff);
+                x = location[0] + anchor.getWidth() / 2 - windowWidth / 2 + xOff;
                 break;
+        }
+        if (showTop) {
+            arrowDown(anchor, arrowParams, listParams);
+            showAtLocation(anchor, Gravity.NO_GRAVITY,
+                    x, location[1] - windowHeight + yOff);
+        } else {
+            arrowUp(anchor, arrowParams, listParams);
+            showAtLocation(anchor, Gravity.NO_GRAVITY,
+                    x, location[1] + anchor.getHeight() + yOff);
         }
         mArrow.post(mAdapter::notifyDataSetChanged);
     }
