@@ -7,78 +7,18 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <View
-        android:id="@+id/cps_header_bg"
+    <com.hll_sc_app.widget.SearchTitleBar
+        android:id="@+id/cps_title_bar"
         android:layout_width="0dp"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="@drawable/base_bg_shadow_top_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/cps_close"
-        style="@style/BtnClose"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cps_header_bg"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintStart_toStartOf="@+id/cps_header_bg"
-        app:layout_constraintTop_toTopOf="@+id/cps_header_bg" />
-
-    <TextView
-        android:id="@+id/cps_search_button"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="搜索"
-        android:textAppearance="@style/TextAppearance.City22.Middle.White"
-        app:layout_constraintBottom_toBottomOf="@+id/cps_header_bg"
-        app:layout_constraintEnd_toEndOf="@+id/cps_header_bg"
-        app:layout_constraintTop_toTopOf="@+id/cps_header_bg" />
-
-    <EditText
-        android:id="@+id/cps_search_edit"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:background="@drawable/bg_search_edit"
-        android:gravity="center_vertical"
-        android:hint="请输入客户名称搜索"
-        android:imeOptions="actionSearch"
-        android:paddingLeft="35dp"
-        android:paddingRight="30dp"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Middle"
-        app:layout_constraintBottom_toBottomOf="@+id/cps_header_bg"
-        app:layout_constraintEnd_toStartOf="@+id/cps_search_button"
-        app:layout_constraintStart_toEndOf="@+id/cps_close"
-        app:layout_constraintTop_toTopOf="@+id/cps_header_bg" />
-
-    <ImageView
-        android:id="@+id/cps_search_icon"
-        android:layout_width="35dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_search"
-        android:tint="@color/color_999999"
-        app:layout_constraintBottom_toBottomOf="@+id/cps_search_edit"
-        app:layout_constraintStart_toStartOf="@+id/cps_search_edit"
-        app:layout_constraintTop_toTopOf="@+id/cps_search_edit" />
-
-    <ImageView
-        android:id="@+id/cps_search_clear"
-        android:layout_width="30dp"
-        android:layout_height="0dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_clear_search"
-        android:tint="@color/base_text999"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/cps_search_edit"
-        app:layout_constraintEnd_toEndOf="@+id/cps_search_edit"
-        app:layout_constraintTop_toTopOf="@+id/cps_search_edit" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="@dimen/title_bar_height"
+        app:stb_hint="请输入客户名称搜索" />
 
     <TextView
         android:id="@+id/cps_date"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@android:color/white"
         android:gravity="center_vertical"
@@ -86,7 +26,7 @@
         android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cps_header_bg"
+        app:layout_constraintTop_toBottomOf="@id/cps_title_bar"
         tools:text="2018/10／01 - 2018／10 /01" />
 
     <com.hll_sc_app.widget.TriangleView

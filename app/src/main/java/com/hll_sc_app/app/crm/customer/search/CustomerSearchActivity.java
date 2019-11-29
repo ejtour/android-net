@@ -10,9 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -26,6 +23,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchTitleBar;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -37,8 +35,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnEditorAction;
-import butterknife.OnTextChanged;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -48,10 +44,8 @@ import butterknife.OnTextChanged;
 @Route(path = RouterConfig.CRM_CUSTOMER_SEARCH)
 public class CustomerSearchActivity extends BaseLoadActivity implements ICustomerSearchContract.ICustomerSearchView {
     private static final int REQ_CODE = 0x323;
-    @BindView(R.id.ccs_search_edit)
-    EditText mSearchEdit;
-    @BindView(R.id.ccs_search_clear)
-    ImageView mSearchClear;
+    @BindView(R.id.ccs_title_bar)
+    SearchTitleBar mTitleBar;
     @BindView(R.id.ccs_list_view)
     RecyclerView mListView;
     @BindView(R.id.ccs_refresh_layout)
@@ -88,6 +82,7 @@ public class CustomerSearchActivity extends BaseLoadActivity implements ICustome
         mPresenter = CustomerSearchPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        mTitleBar.setOnSearchListener(mPresenter::start);
     }
 
     private void initView() {
@@ -116,36 +111,6 @@ public class CustomerSearchActivity extends BaseLoadActivity implements ICustome
                 mPresenter.refresh();
             }
         });
-    }
-
-    @OnEditorAction(R.id.ccs_search_edit)
-    public boolean editAction(int actionId) {
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            search();
-        }
-        return true;
-    }
-
-    @OnTextChanged(R.id.ccs_search_edit)
-    public void onTextChanged(CharSequence s) {
-        mSearchClear.setVisibility(s.toString().length() > 0 ? View.VISIBLE : View.GONE);
-    }
-
-    @OnClick(R.id.ccs_close)
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @OnClick(R.id.ccs_search_clear)
-    public void clear() {
-        mSearchEdit.setText("");
-        mPresenter.start();
-    }
-
-    @OnClick(R.id.ccs_search_button)
-    public void search() {
-        mPresenter.start();
     }
 
     @Override
@@ -189,7 +154,7 @@ public class CustomerSearchActivity extends BaseLoadActivity implements ICustome
 
     @Override
     public String getSearchWords() {
-        return mSearchEdit.getText().toString().trim();
+        return mTitleBar.getSearchContent();
     }
 
     @Override

@@ -47,4 +47,8 @@
             <enum name="right" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="SearchTitleBar">
+        <attr name="stb_hint" format="string" />
+    </declare-styleable>
 </resources>

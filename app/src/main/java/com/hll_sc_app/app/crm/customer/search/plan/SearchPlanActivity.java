@@ -8,9 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -29,6 +26,7 @@ import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchTitleBar;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.TriangleView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -42,8 +40,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnEditorAction;
-import butterknife.OnTextChanged;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -53,10 +49,8 @@ import butterknife.OnTextChanged;
 @Route(path = RouterConfig.CRM_CUSTOMER_SEARCH_PLAN)
 public class SearchPlanActivity extends BaseLoadActivity implements ISearchPlanContract.ISearchPlanView {
     private static final int REQ_CODE = 0x780;
-    @BindView(R.id.cps_search_edit)
-    EditText mSearchEdit;
-    @BindView(R.id.cps_search_clear)
-    ImageView mSearchClear;
+    @BindView(R.id.cps_title_bar)
+    SearchTitleBar mTitleBar;
     @BindView(R.id.cps_list_view)
     RecyclerView mListView;
     @BindView(R.id.cps_refresh_layout)
@@ -99,6 +93,7 @@ public class SearchPlanActivity extends BaseLoadActivity implements ISearchPlanC
         mPresenter = SearchPlanPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+        mTitleBar.setOnSearchListener(mPresenter::start);
     }
 
     private void initView() {
@@ -135,25 +130,6 @@ public class SearchPlanActivity extends BaseLoadActivity implements ISearchPlanC
                 CalendarUtils.format(mEndDate, Constants.SLASH_YYYY_MM_DD)));
     }
 
-    @OnEditorAction(R.id.cps_search_edit)
-    public boolean editAction(int actionId) {
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            search();
-        }
-        return true;
-    }
-
-    @OnTextChanged(R.id.cps_search_edit)
-    public void onTextChanged(CharSequence s) {
-        mSearchClear.setVisibility(s.toString().length() > 0 ? View.VISIBLE : View.GONE);
-    }
-
-    @OnClick(R.id.cps_close)
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
     @OnClick(R.id.cps_date)
     public void selectDate(View view) {
         mDateArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
@@ -186,17 +162,6 @@ public class SearchPlanActivity extends BaseLoadActivity implements ISearchPlanC
             });
         }
         mDateRangeWindow.showAsDropDownFix(view);
-    }
-
-    @OnClick(R.id.cps_search_clear)
-    public void clear() {
-        mSearchEdit.setText("");
-        mPresenter.start();
-    }
-
-    @OnClick(R.id.cps_search_button)
-    public void search() {
-        mPresenter.start();
     }
 
     @Override
@@ -240,7 +205,7 @@ public class SearchPlanActivity extends BaseLoadActivity implements ISearchPlanC
 
     @Override
     public String getSearchWords() {
-        return mSearchEdit.getText().toString().trim();
+        return mTitleBar.getSearchContent();
     }
 
     @Override
