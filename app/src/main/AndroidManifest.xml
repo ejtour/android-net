@@ -1275,6 +1275,7 @@
 
         <activity
             android:name=".app.crm.customer.seas.CustomerSeasActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
@@ -1316,6 +1317,11 @@
         <activity
             android:name=".app.blacklist.cooperation.shop.CooperationShopActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.crm.customer.seas.allot.SalesmanAllotActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

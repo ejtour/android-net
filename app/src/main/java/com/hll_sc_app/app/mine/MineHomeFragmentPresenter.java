@@ -38,11 +38,7 @@ public class MineHomeFragmentPresenter implements MineHomeFragmentContract.IHome
             public void onSuccess(AnalysisResp analysisResp) {
                 List<AnalysisBean> records = analysisResp.getRecords();
                 if (records != null && records.size() > 1) {
-                    AnalysisBean cur = records.get(records.size() - 1);
-                    AnalysisBean last = records.get(records.size() - 2);
-                    cur.setRelativeRatio(last.getValidTradeAmount() == 0 ? cur.getValidTradeAmount() == 0 ? 0 : 1 :
-                            (cur.getValidTradeAmount() - last.getValidTradeAmount()) / last.getValidTradeAmount());
-                    mView.setData(cur);
+                    mView.setData(records.get(records.size() - 1));
                 }
             }
         });

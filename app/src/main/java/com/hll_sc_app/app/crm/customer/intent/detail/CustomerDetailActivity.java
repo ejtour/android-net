@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,11 +20,16 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.CustomerHelper;
+import com.hll_sc_app.app.crm.customer.PartnerHelper;
 import com.hll_sc_app.app.crm.customer.intent.add.AddCustomerActivity;
+import com.hll_sc_app.app.crm.customer.plan.add.AddVisitPlanActivity;
 import com.hll_sc_app.app.crm.customer.record.VisitRecordAdapter;
+import com.hll_sc_app.app.crm.customer.record.add.AddVisitRecordActivity;
 import com.hll_sc_app.app.crm.customer.record.detail.VisitRecordDetailActivity;
+import com.hll_sc_app.app.crm.customer.seas.allot.SalesmanAllotActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
@@ -91,6 +97,7 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
     private VisitRecordAdapter mAdapter;
     private EmptyView mEmptyView;
     private VisitRecordBean mCurBean;
+    private PartnerHelper mHelper;
 
     public static void start(Activity activity, CustomerBean bean) {
         RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_INTENT_DETAIL, activity, REQ_CODE, bean);
@@ -196,28 +203,55 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
 
     @OnClick(R.id.cid_plan)
     public void plan() {
+        AddVisitPlanActivity.start(this, null);
     }
 
     @OnClick(R.id.cid_record)
     public void record() {
+        AddVisitRecordActivity.start(this, null);
     }
 
     @OnClick(R.id.cid_seas)
     public void seas() {
+        SuccessDialog.newBuilder(this)
+                .setMessageTitle("确认转到公海吗？")
+                .setMessage("客户转到公海后可由销售人员领取，确认是否转到公海")
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1)
+                        mPresenter.transfer();
+                }, "取消", "确认")
+                .create().show();
     }
 
     @OnClick(R.id.cid_partner)
-    public void partner() {
+    public void partner(View view) {
+        if (mHelper == null) {
+            mHelper = new PartnerHelper();
+        }
+        mHelper.showOption(this, view, Gravity.RIGHT);
     }
 
     @OnClick(R.id.cid_allot)
     public void allot() {
-
+        SalesmanAllotActivity.start(mBean.getId(), mBean.getCustomerName(), null);
     }
 
     @OnClick(R.id.cid_receive)
     public void receive() {
-
+        SuccessDialog.newBuilder(this)
+                .setMessageTitle("确认领取客户么")
+                .setMessage("确认将“" + mBean.getCustomerName() + "”领取为意向客户么")
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setButton((dialog, item) -> {
+                    dialog.dismiss();
+                    if (item == 1)
+                        mPresenter.receive();
+                }, "取消", "确认")
+                .create().show();
     }
 
     public void updateData(CustomerBean bean) {
@@ -260,5 +294,11 @@ public class CustomerDetailActivity extends BaseLoadActivity implements ICustome
     @Override
     public String getID() {
         return mBean.getId();
+    }
+
+    @Override
+    public void handleSuccess() {
+        mHasChanged = true;
+        onBackPressed();
     }
 }

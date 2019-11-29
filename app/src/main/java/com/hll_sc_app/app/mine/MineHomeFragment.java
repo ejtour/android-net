@@ -43,6 +43,7 @@ import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -50,7 +51,6 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
-import java.text.NumberFormat;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -65,7 +65,7 @@ import butterknife.Unbinder;
  * @date 2018/12/19
  */
 @Route(path = RouterConfig.ROOT_HOME_MINE)
-public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragmentContract.IHomeView {
+public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragmentContract.IHomeView, IMessageCount {
     @BindView(R.id.parallax)
     ImageView mParallax;
     @BindView(R.id.img_groupLogoUrl)
@@ -357,14 +357,11 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         ss.setSpan(new RelativeSizeSpan(0.65f), amountSource.indexOf("."), amountSource.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mAmount.setText(ss);
 
-        NumberFormat percentInstance = NumberFormat.getPercentInstance();
-        percentInstance.setMaximumFractionDigits(2);
-        percentInstance.setMinimumFractionDigits(2);
         mOrder.setText(CommonUtils.formatNum(bean.getValidOrderNum()));
 
-        String rateSource = String.format("环比增长：%s", percentInstance.format(bean.getRelativeRatio()));
+        String rateSource = String.format("环比增长：%s", bean.getAmountRate());
         SpannableString rate = new SpannableString(rateSource);
-        if (bean.getRelativeRatio() < 0) {
+        if (bean.getAmountRate().startsWith("-")) {
             rate.setSpan(new ForegroundColorSpan(Color.parseColor("#48CFAD")), 5, rateSource.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         mRate.setText(rate);
@@ -377,5 +374,10 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         Date date = DateUtil.parse(bean.getDate());
         mDate.setText(String.format("以上数据统计周期为：%s - %s", CalendarUtils.format(date, Constants.SLASH_YYYY_MM_DD),
                 CalendarUtils.format(CalendarUtils.getWeekDate(date, 0, 7), Constants.SLASH_YYYY_MM_DD)));
+    }
+
+    @Override
+    public void setMessageCount(String count) {
+        UIUtils.setTextWithVisibility(mTxtMessageCount, count);
     }
 }

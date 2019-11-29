@@ -138,24 +138,13 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
                 setChartData(records);
                 if (!CommonUtils.isEmpty(records) && analysisResp.getRecords().size() > 1) {
                     String label = mAnalysisEvent.getTimeType() == 2 ? "周" : "月";
-                    AnalysisBean cur = records.get(records.size() - 1);
-                    AnalysisBean last = records.get(records.size() - 2);
-
-                    mTip1.setText(handleTip1(label, cur.getShopNum(), cur.getShopNum() - last.getShopNum(),
-                            getRate(cur.getShopNum(), last.getShopNum())));
-
-                    mTip2.setText(handleTip2(label, cur.getAverageShopTradeAmount() - last.getAverageShopTradeAmount(),
-                            getRate(cur.getAverageShopTradeAmount(), last.getAverageShopTradeAmount())));
-
-                    mTip3.setText(handleTip3(label, cur.getValidOrderNum(),
-                            cur.getValidOrderNum() - last.getValidOrderNum(),
-                            getRate(cur.getValidOrderNum(), last.getValidOrderNum())));
-
-                    mTip4.setText(handleTip4(label, cur.getAverageTradeAmount() - last.getAverageTradeAmount(),
-                            getRate(cur.getAverageTradeAmount(), last.getAverageTradeAmount())));
-
+                    AnalysisBean bean = records.get(records.size() - 1);
                     AnalysisDataBean analysisData = analysisResp.getAnalysisData();
                     if (analysisData != null) {
+                        mTip1.setText(handleTip1(label, bean.getShopNum(), analysisData.getDiffShopNum(), analysisData.getDiffShopNumRate()));
+                        mTip2.setText(handleTip2(label, analysisData.getAverageShopTradeDiffAmount(), analysisData.getAverageShopTradeDiffAmountRate()));
+                        mTip3.setText(handleTip3(label, bean.getValidOrderNum(), analysisData.getDiffOrderNum(), analysisData.getOrderNumRate()));
+                        mTip4.setText(handleTip4(label, analysisData.getDailyDiffValidTradeAmount(), analysisData.getDailyDiffValidTradeAmountRate()));
                         mTip5.setText(handleTip5Or6(label, "高", analysisData.getMaxValidOrderNumTime(), analysisData.getMaxValidOrderNum()));
                         mTip6.setText(handleTip5Or6(label, "低", analysisData.getMinValidOrderNumTime(), analysisData.getMinValidOrderNum()));
                         mTip7.setText(handleTip7(label, analysisData.getDailyValidOrderNum()));
@@ -209,11 +198,11 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         mChart.invalidate();
     }
 
-    private CharSequence handleTip1(String timeLabel, int num, int diff, double rate) {
+    private CharSequence handleTip1(String timeLabel, int num, int diff, String rate) {
         boolean up = diff >= 0;
         String tip = String.format("本%s买家门店数%s家，比上%s%s%s家，%s幅度%s",
                 timeLabel, num, timeLabel, up ? "增加" : "降低",
-                Math.abs(diff), up ? "升高" : "降低", mPercentInstance.format(Math.abs(rate)));
+                Math.abs(diff), up ? "升高" : "降低", absRate(rate));
         SpannableString ss = new SpannableString(tip);
         int color = ContextCompat.getColor(requireContext(), up ? R.color.color_ed5655 : R.color.color_5cdad2);
         ss.setSpan(new ForegroundColorSpan(mHighlightColor), tip.indexOf("数") + 1, tip.indexOf("家，"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -222,11 +211,11 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         return ss;
     }
 
-    private CharSequence handleTip2(String timeLabel, double diff, double rate) {
+    private CharSequence handleTip2(String timeLabel, double diff, String rate) {
         boolean up = diff >= 0;
         String tip = String.format("本%s客单价呈%s趋势，比上%s%s%s元，%s幅度为%s", timeLabel,
                 up ? "升高" : "下降", timeLabel, up ? "增加" : "降低", CommonUtils.formatMoney(Math.abs(diff)),
-                up ? "升高" : "下降", mPercentInstance.format(Math.abs(rate)));
+                up ? "升高" : "下降", absRate(rate));
         int color = ContextCompat.getColor(requireContext(), up ? R.color.color_ed5655 : R.color.color_5cdad2);
         SpannableString ss = new SpannableString(tip);
         ss.setSpan(new ForegroundColorSpan(color), tip.indexOf("，") + 6, tip.indexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -234,11 +223,11 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         return ss;
     }
 
-    private CharSequence handleTip3(String timeLabel, int orderNum, int diff, double rate) {
+    private CharSequence handleTip3(String timeLabel, int orderNum, int diff, String rate) {
         boolean up = diff >= 0;
         String tip = String.format("本%s订单总量%s笔，比上%s%s%s笔，%s幅度%s", timeLabel,
                 CommonUtils.formatNum(orderNum), timeLabel, up ? "增加" : "降低",
-                CommonUtils.formatNum(Math.abs(diff)), up ? "升高" : "下降", mPercentInstance.format(Math.abs(rate)));
+                CommonUtils.formatNum(Math.abs(diff)), up ? "升高" : "下降", absRate(rate));
         int color = ContextCompat.getColor(requireContext(), up ? R.color.color_ed5655 : R.color.color_5cdad2);
         SpannableString ss = new SpannableString(tip);
         ss.setSpan(new ForegroundColorSpan(mHighlightColor), tip.indexOf("量") + 1, tip.indexOf("笔"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -247,11 +236,11 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         return ss;
     }
 
-    private CharSequence handleTip4(String timeLabel, double diff, double rate) {
+    private CharSequence handleTip4(String timeLabel, double diff, String rate) {
         boolean up = diff >= 0;
         String tip = String.format("本%s单均与上%s相比%s%s元，%s幅度为%s", timeLabel, timeLabel,
                 up ? "升高" : "下降", CommonUtils.formatMoney(Math.abs(diff)),
-                up ? "升高" : "下降", mPercentInstance.format(Math.abs(rate)));
+                up ? "升高" : "下降", absRate(rate));
         int color = ContextCompat.getColor(requireContext(), up ? R.color.color_ed5655 : R.color.color_5cdad2);
         SpannableString ss = new SpannableString(tip);
         ss.setSpan(new ForegroundColorSpan(color), tip.indexOf("比") + 3, tip.indexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

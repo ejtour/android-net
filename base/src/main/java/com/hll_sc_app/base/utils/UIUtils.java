@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -746,6 +747,16 @@ public class UIUtils {
                 list.remove(list.size() - 1);
             }
             return list;
+        }
+    }
+
+    public static void setTextWithVisibility(TextView textView, String text) {
+        if (textView == null) return;
+        if (TextUtils.isEmpty(text)) {
+            textView.setVisibility(View.GONE);
+        } else {
+            textView.setText(text);
+            textView.setVisibility(View.VISIBLE);
         }
     }
 }

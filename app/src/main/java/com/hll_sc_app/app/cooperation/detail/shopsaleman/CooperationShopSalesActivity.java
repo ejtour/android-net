@@ -194,7 +194,7 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
 
     public static class EmployeeListAdapter extends BaseQuickAdapter<EmployeeBean, BaseViewHolder> {
 
-        EmployeeListAdapter() {
+        public EmployeeListAdapter() {
             super(R.layout.item_cooperation_employee);
         }
 

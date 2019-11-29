@@ -243,4 +243,41 @@ public class Customer {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+    /**
+     * 将意向客户转到公海
+     *
+     * @param customerID 客户id
+     */
+    public static void transferToSeas(String customerID, SimpleObserver<Object> observer) {
+        UserBean user = GreenDaoUtils.getUser();
+        CustomerService.INSTANCE
+                .transferToSeas(BaseMapReq.newBuilder()
+                        .put("customerID", customerID)
+                        .put("employeeID", user.getEmployeeID())
+                        .put("groupID", user.getGroupID())
+                        .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 销售分发
+     *
+     * @param customerID   客户id
+     * @param employeeID   销售id
+     * @param employeeName 销售名
+     */
+    public static void distributeCustomer(String customerID, String employeeID, String employeeName, SimpleObserver<Object> observer) {
+        CustomerService.INSTANCE.distributeCustomer(BaseMapReq.newBuilder()
+                .put("customerID", customerID)
+                .put("employeeID", employeeID)
+                .put("employeeName", employeeName)
+                .put("groupID", UserConfig.getGroupID())
+                .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }

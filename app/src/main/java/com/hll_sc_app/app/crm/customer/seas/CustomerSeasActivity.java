@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.crm.customer.seas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -45,5 +46,11 @@ public class CustomerSeasActivity extends BaseCustomerActivity {
     @Override
     protected String getSearchKey() {
         return mViewPager.getCurrentItem() == 0 ? IntentCustomerSearch.class.getSimpleName() : PartnerSearch.class.getSimpleName();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        reload(true);
     }
 }

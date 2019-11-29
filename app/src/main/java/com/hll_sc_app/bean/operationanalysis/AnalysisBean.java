@@ -1,6 +1,7 @@
 package com.hll_sc_app.bean.operationanalysis;
 
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 
@@ -32,7 +33,7 @@ public class AnalysisBean {
     private int supplyNum;
     private int validOrderNum;
     private float validTradeAmount;
-    private float relativeRatio;
+    private String amountRate;
 
     public String getDateRange(int timeType) {
         Date date = DateUtil.parse(this.date);
@@ -43,11 +44,7 @@ public class AnalysisBean {
     }
 
     public float getRelativeRatio() {
-        return relativeRatio;
-    }
-
-    public void setRelativeRatio(float relativeRatio) {
-        this.relativeRatio = relativeRatio;
+        return CommonUtils.getFloat(amountRate.replace("%", ""));
     }
 
     public int getActivePurchaserNum() {
@@ -208,5 +205,13 @@ public class AnalysisBean {
 
     public void setValidTradeAmount(float validTradeAmount) {
         this.validTradeAmount = validTradeAmount;
+    }
+
+    public String getAmountRate() {
+        return amountRate;
+    }
+
+    public void setAmountRate(String amountRate) {
+        this.amountRate = amountRate;
     }
 }

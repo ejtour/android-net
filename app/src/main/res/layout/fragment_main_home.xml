@@ -1024,6 +1024,14 @@ fmh_warehouse_delivery_num_label,fmh_warehouse_amount,fmh_warehouse_amount_label
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/fmh_message_count"
+        style="@style/HomeTips"
+        app:layout_constraintEnd_toEndOf="@id/fmh_message_icon"
+        app:layout_constraintTop_toTopOf="@id/fmh_message_icon"
+        tools:text="9"
+        tools:visibility="visible" />
+
+    <TextView
         android:id="@+id/fmh_top_tag"
         android:layout_width="65dp"
         android:layout_height="20dp"

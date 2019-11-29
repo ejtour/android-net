@@ -971,4 +971,12 @@ fch_warehouse_amount_label,fch_statistic_div1" />
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fch_message_count"
+        style="@style/HomeTips"
+        app:layout_constraintEnd_toEndOf="@id/fch_message_icon"
+        app:layout_constraintTop_toTopOf="@id/fch_message_icon"
+        tools:text="9"
+        tools:visibility="visible" />
 </android.support.constraint.ConstraintLayout>

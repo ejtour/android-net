@@ -20,11 +20,13 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.customer.seas.allot.SalesmanAllotActivity;
 import com.hll_sc_app.app.crm.customer.seas.detail.analysis.CustomerSeasAnalysisFragment;
 import com.hll_sc_app.app.crm.customer.seas.detail.order.CustomerSeasOrderFragment;
 import com.hll_sc_app.app.crm.customer.seas.detail.shop.CustomerSeasShopFragment;
 import com.hll_sc_app.app.crm.customer.seas.detail.visit.CustomerSeasVisitFragment;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
@@ -49,7 +51,7 @@ import butterknife.OnClick;
  */
 
 @Route(path = RouterConfig.CRM_CUSTOMER_SEAS_DETAIL)
-public class CustomerSeasDetailActivity extends BaseLoadActivity {
+public class CustomerSeasDetailActivity extends BaseLoadActivity implements ICustomerSeasDetailContract.ICustomerSeasDetailView {
     private static final int REQ_CODE = 0x103;
     @BindView(R.id.csd_name)
     TextView mName;
@@ -91,6 +93,7 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity {
     boolean mOnlyShop;
     private List<Fragment> mFragments;
     private NumberFormat mPercentInstance;
+    private ICustomerSeasDetailContract.ICustomerSeasDetailPresenter mPresenter;
 
     {
         mPercentInstance = NumberFormat.getPercentInstance();
@@ -115,6 +118,12 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity {
         ARouter.getInstance().inject(this);
         updateData();
         initView();
+        initData();
+    }
+
+    private void initData() {
+        mPresenter = CustomerSeasDetailPresenter.newInstance();
+        mPresenter.register(this);
     }
 
     private void updateData() {
@@ -187,9 +196,31 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.csd_allot:
+                SalesmanAllotActivity.start(mBean.getShopID(), mBean.getShopName(), mBean.getPurchaserID());
                 break;
             case R.id.csd_receive:
+                SuccessDialog.newBuilder(this)
+                        .setMessageTitle("确认领取客户么")
+                        .setMessage(String.format("确认将“%s”领取为合作客户么", mBean.getShopName()))
+                        .setImageTitle(R.drawable.ic_dialog_failure)
+                        .setImageState(R.drawable.ic_dialog_state_failure)
+                        .setButton((dialog, item) -> {
+                            dialog.dismiss();
+                            if (item == 1)
+                                receive();
+                        }, "取消", "确认")
+                        .create().show();
                 break;
         }
+    }
+
+    private void receive() {
+        mPresenter.receive(mBean.getShopID(), mBean.getPurchaserID());
+    }
+
+    @Override
+    public void success() {
+        setResult(RESULT_OK);
+        onBackPressed();
     }
 }

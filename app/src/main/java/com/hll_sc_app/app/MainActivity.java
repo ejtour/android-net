@@ -13,10 +13,17 @@ import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
+import com.hll_sc_app.api.MessageService;
 import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -24,8 +31,12 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.TipRadioButton;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.message.UnreadResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.impl.IReload;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,9 +44,13 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * 首页
@@ -49,6 +64,8 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     RadioGroup mGroupType;
     private int mOldFragmentTag;
     private long mExitTime;
+    private String mEmployeeID;
+    private boolean mIsStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +75,58 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         initView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mIsStart = true;
+        // 查询消息
+        if (!BuildConfig.isDebug)
+            queryUnreadMessage();
+    }
+
+    @Override
+    protected void onStop() {
+        mIsStart = false;
+        super.onStop();
+    }
+
+    private void queryUnreadMessage() {
+        if (!mIsStart) return;
+        Observable.timer(mEmployeeID != null ? 3000 : 0, TimeUnit.MILLISECONDS)
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(aLong -> {
+                    SimpleObserver<UnreadResp> observer = new SimpleObserver<UnreadResp>(this, false) {
+                        @Override
+                        public void onSuccess(UnreadResp unreadResp) {
+                            String messageCount = "";
+                            if (CommonUtils.getInt(unreadResp.getUnreadNum()) > 99) {
+                                messageCount = "99+";
+                            }
+                            Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag));
+                            if (currentFragment instanceof IMessageCount) {
+                                ((IMessageCount) currentFragment).setMessageCount(messageCount);
+                            }
+                            queryUnreadMessage();
+                        }
+
+                        @Override
+                        public void onFailure(UseCaseException e) {
+                            super.onFailure(e);
+                            queryUnreadMessage();
+                        }
+                    };
+                    if (mEmployeeID == null) {
+                        mEmployeeID = GreenDaoUtils.getUser().getEmployeeID();
+                    }
+                    MessageService.INSTANCE.queryUnreadNum(BaseMapReq.newBuilder()
+                            .put("employeeID", mEmployeeID)
+                            .put("source", "supplier")
+                            .create())
+                            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                            .subscribe(observer);
+                });
     }
 
     private void initView() {

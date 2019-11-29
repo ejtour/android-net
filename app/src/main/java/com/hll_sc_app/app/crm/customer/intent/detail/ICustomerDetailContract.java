@@ -3,7 +3,6 @@ package com.hll_sc_app.app.crm.customer.intent.detail;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.bean.customer.CustomerBean;
 import com.hll_sc_app.bean.customer.VisitRecordBean;
 
 import java.util.List;
@@ -21,11 +20,17 @@ public interface ICustomerDetailContract {
         void loadError(UseCaseException e);
 
         String getID();
+
+        void handleSuccess();
     }
 
     interface ICustomerDetailPresenter extends IPresenter<ICustomerDetailView> {
         void refresh();
 
         void loadMore();
+
+        void transfer();
+
+        void receive();
     }
 }

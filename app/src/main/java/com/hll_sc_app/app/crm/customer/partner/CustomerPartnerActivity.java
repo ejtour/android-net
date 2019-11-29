@@ -7,19 +7,13 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.BaseCustomerActivity;
+import com.hll_sc_app.app.crm.customer.PartnerHelper;
 import com.hll_sc_app.app.search.stratery.PartnerSearch;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.window.OptionType;
-import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
-import com.hll_sc_app.widget.ContextOptionsWindow;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -28,7 +22,7 @@ import java.util.List;
 
 @Route(path = RouterConfig.CRM_CUSTOMER_PARTNER)
 public class CustomerPartnerActivity extends BaseCustomerActivity {
-    private ContextOptionsWindow mOptionsWindow;
+    private PartnerHelper mPartnerHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,27 +35,10 @@ public class CustomerPartnerActivity extends BaseCustomerActivity {
     }
 
     private void showWindow(View view) {
-        if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_registered_option, OptionType.OPTION_CUSTOMER_REGISTERED));
-            list.add(new OptionsBean(R.drawable.ic_unregistered_option, OptionType.OPTION_CUSTOMER_UNREGISTERED));
-            mOptionsWindow = new ContextOptionsWindow(this)
-                    .refreshList(list)
-                    .setListener((adapter, view1, position) -> {
-                        mOptionsWindow.dismiss();
-                        OptionsBean item = (OptionsBean) adapter.getItem(position);
-                        if (item == null) return;
-                        switch (item.getLabel()) {
-                            case OptionType.OPTION_CUSTOMER_REGISTERED:
-                                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_LIST);
-                                break;
-                            case OptionType.OPTION_CUSTOMER_UNREGISTERED:
-                                RouterUtil.goToActivity(RouterConfig.USER_REGISTER);
-                                break;
-                        }
-                    });
+        if (mPartnerHelper == null) {
+            mPartnerHelper = new PartnerHelper();
         }
-        mOptionsWindow.showAsDropDownFix(mTitleBar, Gravity.END);
+        mPartnerHelper.showOption(this, view,  Gravity.END);
     }
 
     @Override

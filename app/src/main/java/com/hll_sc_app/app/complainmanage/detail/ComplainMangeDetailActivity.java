@@ -537,7 +537,7 @@ public class ComplainMangeDetailActivity extends BaseLoadActivity implements ICo
                         }
                     });
                 }
-                mBottomMenuWindow.showAsDropDownFix(mBtnLink, 0, -240, Gravity.LEFT);
+                mBottomMenuWindow.showAsDropDownFix(mBtnLink, Gravity.LEFT);
                 break;
             default:
                 break;

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.home.ManagementShopResp;
 import com.hll_sc_app.bean.home.StatisticResp;
@@ -34,6 +36,7 @@ import com.hll_sc_app.bean.home.VisitResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
+import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.widget.home.TrendMarker;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -58,7 +61,7 @@ import butterknife.Unbinder;
  */
 
 @Route(path = RouterConfig.CRM_HOME)
-public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContract.ICrmHomeView {
+public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContract.ICrmHomeView, IMessageCount {
     private final SimpleDateFormat FORMAT = new SimpleDateFormat("MM.dd", Locale.getDefault());
     @BindView(R.id.fch_top_bg)
     ImageView mTopBg;
@@ -120,6 +123,8 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
     View mTitleBar;
     @BindView(R.id.fch_message_icon)
     ImageView mMessageIcon;
+    @BindView(R.id.fch_message_count)
+    TextView mMessageCount;
     @BindDimen(R.dimen.title_bar_height)
     int mTitleBarHeight;
     Unbinder unbinder;
@@ -376,5 +381,10 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
         mManagementShop.setText(String.valueOf(resp.getShopNum()));
         mAddedMonth.setText(String.valueOf(resp.getShopNumIncr()));
         mWillFall.setText(String.valueOf(resp.getShopNumLost()));
+    }
+
+    @Override
+    public void setMessageCount(String count) {
+        UIUtils.setTextWithVisibility(mMessageCount, count);
     }
 }

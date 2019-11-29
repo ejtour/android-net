@@ -26,7 +26,6 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,17 +112,9 @@ public class TradeAmountFooter extends ConstraintLayout {
         axisRight.setTextColor(ContextCompat.getColor(getContext(), R.color.color_222222));
         axisRight.setTextSize(10);
         axisRight.setValueFormatter(new ValueFormatter() {
-            private NumberFormat mPercentInstance;
-
-            {
-                mPercentInstance = NumberFormat.getPercentInstance();
-                mPercentInstance.setMinimumFractionDigits(2);
-                mPercentInstance.setMaximumFractionDigits(2);
-            }
-
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return mPercentInstance.format(value);
+                return String.format("%.2f", value) + "%";
             }
         });
     }

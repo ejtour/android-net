@@ -26,6 +26,14 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_marginTop="20dp" />
 
+    <TextView
+        android:id="@+id/fcm_message_count"
+        style="@style/HomeTips"
+        app:layout_constraintEnd_toEndOf="@id/fcm_message_icon"
+        app:layout_constraintTop_toTopOf="@id/fcm_message_icon"
+        tools:text="9"
+        tools:visibility="visible" />
+
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/fcm_avatar"
         android:layout_width="65dp"

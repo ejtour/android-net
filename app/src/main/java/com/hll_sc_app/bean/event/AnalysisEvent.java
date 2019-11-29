@@ -26,18 +26,9 @@ public class AnalysisEvent {
     public void setAnalysisResp(AnalysisResp analysisResp) {
         if (analysisResp != null) {
             List<AnalysisBean> records = analysisResp.getRecords();
-            if (records.size() > 1) {
-                for (int i = 1; i < records.size(); i++) {
-                    AnalysisBean cur = records.get(i);
-                    AnalysisBean last = records.get(i - 1);
-                    if (last.getValidTradeAmount() == 0) {
-                        if (cur.getValidTradeAmount() == 0) cur.setRelativeRatio(0);
-                        else cur.setRelativeRatio(1);
-                    } else
-                        cur.setRelativeRatio((cur.getValidTradeAmount() - last.getValidTradeAmount()) / last.getValidTradeAmount());
-                }
+            if (records.size() > 0) {
+                records.remove(0);
             }
-            records.remove(0);
         }
         mAnalysisResp = analysisResp;
     }

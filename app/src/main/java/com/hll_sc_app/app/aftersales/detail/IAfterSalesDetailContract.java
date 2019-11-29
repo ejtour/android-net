@@ -30,7 +30,7 @@ public interface IAfterSalesDetailContract {
         /**
          * 进行售后单操作
          */
-        void doAction(int actionType, String payType ,int status, int type, String msg);
+        void doAction(int actionType, String payType, String msg);
 
         /**
          * 修改价格
