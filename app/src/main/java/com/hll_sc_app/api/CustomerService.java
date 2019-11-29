@@ -64,4 +64,12 @@ public interface CustomerService {
     @POST(HttpConfig.URL)
     @Headers("pv:107011")
     Observable<BaseResp<SingleListResp<CustomerBean>>> queryCustomerSeas(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107014")
+    Observable<BaseResp<Object>> transferToSeas(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:107012")
+    Observable<BaseResp<Object>> distributeCustomer(@Body BaseMapReq req);
 }
