@@ -1,11 +1,17 @@
 package com.hll_sc_app.rest;
 
+import android.arch.lifecycle.LifecycleOwner;
+
 import com.hll_sc_app.api.UserService;
+import com.hll_sc_app.base.UseCaseException;
+import com.hll_sc_app.base.bean.AuthBean;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
+import com.hll_sc_app.base.http.BaseCallback;
+import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
@@ -16,6 +22,7 @@ import com.hll_sc_app.bean.user.RemindReq;
 import com.hll_sc_app.bean.user.RemindResp;
 import com.hll_sc_app.bean.user.SpecialTaxBean;
 import com.hll_sc_app.bean.user.SpecialTaxSaveReq;
+import com.hll_sc_app.citymall.util.LogUtil;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -157,5 +164,28 @@ public class User {
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
+    }
+
+    /**
+     * 查询权限列表
+     */
+    public static void queryAuthList(LifecycleOwner owner) {
+        UserService.INSTANCE.queryAuth(new BaseReq<>(new Object()))
+                .compose(ApiScheduler.getObservableScheduler())
+                .map(new Precondition<>())
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(owner)))
+                .subscribe(new BaseCallback<SingleListResp<AuthBean>>() {
+                    @Override
+                    public void onSuccess(SingleListResp<AuthBean> authBeanSingleListResp) {
+                        LogUtil.d("right", "权限获取成功");
+                        GreenDaoUtils.deleteAuthList();
+                        GreenDaoUtils.updateAuthList(authBeanSingleListResp.getRecords());
+                    }
+
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        LogUtil.e("right", "权限获取失败" + e.getMessage());
+                    }
+                });
     }
 }

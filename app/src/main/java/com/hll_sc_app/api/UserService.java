@@ -1,5 +1,6 @@
 package com.hll_sc_app.api;
 
+import com.hll_sc_app.base.bean.AuthBean;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
@@ -242,4 +243,8 @@ public interface UserService {
     @POST(HttpConfig.URL)
     @Headers("pv:101091")
     Observable<BaseResp<InviteCodeResp>> queryInviteCode(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:101070")
+    Observable<BaseResp<SingleListResp<AuthBean>>> queryAuth(@Body BaseReq<Object> body);
 }
