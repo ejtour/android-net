@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
     <string name="right_tips">您没有操作权限</string>
     <!-- 商品信息查看 -->
     <string name="right_productManagement_query">supplier.productManagement.query</string>

@@ -1,13 +1,16 @@
 package com.hll_sc_app.base.utils.router;
 
 import android.content.Context;
+import android.os.Looper;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Interceptor;
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback;
 import com.alibaba.android.arouter.facade.template.IInterceptor;
+import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 /**
  * 登录的拦截器
@@ -17,6 +20,7 @@ import com.hll_sc_app.base.utils.UserConfig;
  */
 @Interceptor(priority = 8, name = Constant.LOGIN_INTERCEPTOR)
 public class LoginInterceptor implements IInterceptor {
+    private Context mContext;
 
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
@@ -24,13 +28,31 @@ public class LoginInterceptor implements IInterceptor {
             if (!UserConfig.isLogin()) {
                 callback.onInterrupt(null);
                 RouterUtil.goToLogin(postcard.getPath(), postcard.getExtras());
+                return;
             }
-        } else {
+        }
+        checkRight(postcard, callback);
+    }
+
+    /**
+     * 正常跳转前判断权限
+     *
+     * @param postcard postcard
+     * @param callback callback
+     */
+    private void checkRight(Postcard postcard, InterceptorCallback callback) {
+        if (RightConfig.checkRight(RightConfig.getRightCode(mContext, postcard.getPath()))) {
             callback.onContinue(postcard);
+        } else {
+            callback.onContinue(null);
+            Looper.prepare();
+            ToastUtils.showShort(mContext, mContext.getString(R.string.right_tips));
+            Looper.loop();
         }
     }
 
     @Override
     public void init(Context context) {
+        this.mContext = context;
     }
 }
