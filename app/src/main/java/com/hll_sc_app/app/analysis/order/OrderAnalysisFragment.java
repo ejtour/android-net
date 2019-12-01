@@ -34,6 +34,7 @@ import com.hll_sc_app.bean.operationanalysis.AnalysisDataBean;
 import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.widget.analysis.OrderMarker;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,6 +95,8 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         mChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mChart.setPinchZoom(false);
         mChart.setExtraOffsets(10, 0, 10, 0);
+
+        mChart.setMarker(new OrderMarker(requireContext(), mChart));
 
         Legend legend = mChart.getLegend();
         legend.setTextSize(10);

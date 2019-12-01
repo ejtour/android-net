@@ -76,6 +76,8 @@ public class TradeAmountFooter extends ConstraintLayout {
         mChart.setScaleEnabled(false);
         mChart.setExtraOffsets(10, 0, 10, 0);
 
+        mChart.setMarker(new TradeAmountMarker(getContext(), mChart));
+
         Legend legend = mChart.getLegend();
         legend.setTextSize(10);
         legend.setXEntrySpace(20);

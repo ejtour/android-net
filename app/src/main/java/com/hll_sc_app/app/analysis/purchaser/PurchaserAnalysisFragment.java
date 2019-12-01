@@ -36,6 +36,8 @@ import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
 import com.hll_sc_app.bean.operationanalysis.TopTenCustomerBean;
 import com.hll_sc_app.bean.operationanalysis.TopTenResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.widget.analysis.GroupMarker;
+import com.hll_sc_app.widget.analysis.ShopMarker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +99,8 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
         mLineChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mLineChart.setPinchZoom(false);
 
+        mLineChart.setMarker(new ShopMarker(requireContext(), mLineChart));
+
         Legend legend = mLineChart.getLegend();
         legend.setTextSize(10);
         legend.setXEntrySpace(10);
@@ -142,6 +146,8 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
         mBarChart.setPinchZoom(false);
         mBarChart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mBarChart.setExtraOffsets(10, 0, 10, 8);
+
+        mBarChart.setMarker(new GroupMarker(requireContext(), mBarChart));
 
         Legend legend = mBarChart.getLegend();
         legend.setTextSize(10);
