@@ -236,6 +236,9 @@ public class OrderTransferFragment extends BaseLazyFragment implements IOrderTra
                 mAdapter.addData(beans);
             return;
         }
+        if (CommonUtils.isEmpty(beans)) {
+            updatePendingTransferNum(0);
+        }
         mAdapter.setNewData(beans);
         if (CommonUtils.isEmpty(beans))
             handleEmptyData();
