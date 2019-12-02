@@ -79,11 +79,6 @@
     <!-- 结算方式 -->
     <string name="right_settlementMethod_creat">supplier.settlementMethod.creat</string>
 
-    <!-- 合作采购商设置 -->
-    <string name="right_workingMealSetting">supplier.workingMealSetting</string>
-    <!-- 合作采购商设置编辑 -->
-    <string name="right_workingMealSetting_update">supplier.workingMealSetting.update</string>
-
     <!-- 导出对账单 -->
     <string name="right_statementBill_exportStatementBill">supplier.statementBill.exportStatementBill</string>
     <!-- 批量结算 -->
@@ -145,11 +140,18 @@
     <!-- 订单设置编辑 -->
     <string name="right_billSetting_update">supplier.billSetting.update</string>
 
+    <!-- 合作采购商设置 -->
+    <string name="right_workingMealSetting">supplier.workingMealSetting</string>
+    <!-- 合作采购商设置编辑 -->
+    <string name="right_workingMealSetting_update">supplier.workingMealSetting.update</string>
+
+    <!-- 采购商下单倍数提醒设置 -->
+    <string name="right_bussinesSetting_billMaxNumberAlert">supplier.bussinesSetting.billMaxNumberAlert</string>
+
     <!-- 供应商信息查看 -->
     <string name="right_supplierInfoManagement_query">supplier.supplierInfoManagement.query</string>
     <!-- 供应商信息编辑 -->
     <string name="right_supplierInfoManagement_update">supplier.supplierInfoManagement.update</string>
-
 
     <!-- 退货时效编辑 -->
     <string name="right_returnedPurchaseValidTime_edit">supplier.returnedPurchaseValidTime.edit</string>
@@ -201,9 +203,6 @@
     <string name="right_taxSetting_product_save">supplier.taxSetting.product.save</string>
     <!-- 删除商品税率 -->
     <string name="right_taxSetting_product_delete">supplier.taxSetting.product.delete</string>
-
-    <!-- 采购商下单倍数提醒设置 -->
-    <string name="right_bussinesSetting_billMaxNumberAlert">supplier.bussinesSetting.billMaxNumberAlert</string>
 
     <!-- 客服审核 -->
     <string name="right_returnedPurchaseCheck_examine">supplier.returnedPurchaseCheck.examine</string>

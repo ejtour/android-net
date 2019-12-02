@@ -11,6 +11,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.user.GroupParame;
 import com.kyleduo.switchbutton.SwitchButton;
@@ -124,6 +125,11 @@ public class CooperationSettingActivity extends BaseLoadActivity implements ICoo
 
     @Override
     public void showAlertDialog(boolean isChecked, Integer type) {
+        if (!RightConfig.checkRight(getString(R.string.right_workingMealSetting_update))) {
+            returnCheckStatus(!isChecked, type);
+            showToast(getString(R.string.right_tips));
+            return;
+        }
         SuccessDialog.newBuilder(this)
                 .setImageTitle(R.drawable.ic_dialog_failure)
                 .setImageState(R.drawable.ic_dialog_state_failure)
