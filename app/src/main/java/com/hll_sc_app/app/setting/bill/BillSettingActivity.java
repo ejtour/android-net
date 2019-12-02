@@ -88,6 +88,10 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
     @BindView(R.id.switch_21)
     SwitchButton mSwitch_21;
 
+//    25-导出配送单带价格
+    @BindView(R.id.switch_25)
+    SwitchButton mSwitch_25;
+
     private IBillSettingContract.IBillSettingPresenter mPresent;
     private Unbinder unbinder;
     private static Integer OPEN_VALUE = 2;
@@ -122,6 +126,7 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
         typeToSwitchMap.put(14, mSwitch_14);
         typeToSwitchMap.put(15, mSwitch_15);
         typeToSwitchMap.put(21, mSwitch_21);
+        typeToSwitchMap.put(25, mSwitch_25);
 
         mPresent = BillSettingPresenter.newInstance();
         mPresent.register(this);
@@ -251,5 +256,12 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
         messageMap.put("21_true", "开启后，销售CRM申请退货不判断退货时效");
         messageTitleMap.put("21_false", "确认关闭么？");
         messageMap.put("21_false", "关闭后，销售CRM申请退货需要根据退货时效判断");
+        //导出配送单带价格
+        messageTitleMap.put("25_true", "确认开启么？");
+        messageMap.put("25_true", "开启后，导出配送单带价格");
+        messageTitleMap.put("25_false", "确认关闭么？");
+        messageMap.put("25_false", "关闭后，导出配送单隐藏价格");
+
+
     }
 }
