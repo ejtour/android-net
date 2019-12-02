@@ -110,9 +110,6 @@
     <!-- 员工信息删除 -->
     <string name="right_staffManagement_delete">supplier.staffManagement.delete</string>
 
-    <!-- 支付管理编辑 -->
-    <string name="right_paymentManagement_update">supplier.paymentManagement.update</string>
-
     <!-- 代仓客户新增 -->
     <string name="right_corporateWarehouse_create">supplier.corporateWarehouse.create</string>
     <!-- 代仓客户解除 -->
@@ -148,28 +145,17 @@
     <!-- 采购商下单倍数提醒设置 -->
     <string name="right_bussinesSetting_billMaxNumberAlert">supplier.bussinesSetting.billMaxNumberAlert</string>
 
-    <!-- 供应商信息查看 -->
-    <string name="right_supplierInfoManagement_query">supplier.supplierInfoManagement.query</string>
     <!-- 供应商信息编辑 -->
     <string name="right_supplierInfoManagement_update">supplier.supplierInfoManagement.update</string>
 
     <!-- 退货时效编辑 -->
     <string name="right_returnedPurchaseValidTime_edit">supplier.returnedPurchaseValidTime.edit</string>
 
-    <!-- 消息中心查看 -->
-    <string name="right_msgCenter_query">supplier.msgCenter.query</string>
-    <!-- 消息中心查看详情 -->
-    <string name="right_msgCenter_detail">supplier.msgCenter.detail</string>
-
     <!-- 意见反馈新建 -->
     <string name="right_feedback_add">supplier.feedback.add</string>
     <!-- 意见反馈查看详情 -->
     <string name="right_feedback_detail">supplier.feedback.detail</string>
 
-    <!-- 钱包查看 -->
-    <string name="right_accountStatement_query">supplier.accountStatement.query</string>
-    <!-- 钱包编辑 -->
-    <string name="right_accountStatement_edit">supplier.accountStatement.edit</string>
     <!-- 充值 -->
     <string name="right_accountStatement_recharge">supplier.accountStatement.recharge</string>
     <!-- 提现 -->
@@ -180,9 +166,6 @@
     <string name="right_accountStatement_accountInfo">supplier.accountStatement.accountInfo</string>
     <!-- 钱包账号创建 -->
     <string name="right_accountStatement_apply">supplier.accountStatement.apply</string>
-    <!-- 钱包账号绑定 -->
-    <string name="right_accountStatement_bindAccount">supplier.accountStatement.bindAccount</string>
-
     <!-- 财务明细导出 -->
     <string name="right_rechargeList_exportDetail">supplier.rechargeList.exportDetail</string>
 
@@ -221,12 +204,8 @@
     <!-- 退款审核导出明细 -->
     <string name="right_returnedPurchaseCheck_export">supplier.returnedPurchaseCheck.export</string>
 
-    <!-- 代仓新增 -->
-    <string name="right_warehouseManage_add">supplier.warehouseManage.add</string>
     <!-- 代仓查看 -->
     <string name="right_warehouseManage_query">supplier.warehouseManage.query</string>
-    <!-- 代仓编辑 -->
-    <string name="right_warehouseManage_edit">supplier.warehouseManage.edit</string>
 
     <!-- 仓库管理 -->
     <string name="right_warehouseManagement_query">supplier.warehouseManagement.query</string>
@@ -235,11 +214,6 @@
     <string name="right_warehouse_creat">supplier.warehouse.creat</string>
     <!-- 修改仓库信息 -->
     <string name="right_warehouse_update">supplier.warehouse.update</string>
-
-    <!-- 库存校验设置新增 -->
-    <string name="right_inventoryCheckSetting_add">supplier.inventoryCheckSetting.add</string>
-    <!-- 库存交易设置移除 -->
-    <string name="right_inventoryCheckSetting_delete">supplier.inventoryCheckSetting.delete</string>
 
     <!-- 新品反馈编辑 -->
     <string name="right_productFeedback_edit">supplier.productFeedback.edit</string>
@@ -257,9 +231,6 @@
 
     <!-- 客户发货仓库管理 -->
     <string name="right_clientWarehouseManagement_query">supplier.clientWarehouseManagement.query</string>
-
-    <!-- crm首页 -->
-    <string name="right_crm">crm</string>
 
     <!-- 合作客户-全部合作客户 -->
     <string name="right_partner_list_all">crm.salemanPartnerList.all</string>
