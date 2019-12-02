@@ -85,7 +85,8 @@
         app:layout_constraintEnd_toEndOf="@id/sts_bottom_bg"
         app:layout_constraintTop_toTopOf="@id/sts_bottom_bg" />
 
-    <TextView
+    <com.hll_sc_app.widget.right.RightTextView
+        app:rightCode="@string/right_taxSetting_product_delete"
         android:id="@+id/sts_del"
         android:layout_width="wrap_content"
         android:layout_height="30dp"

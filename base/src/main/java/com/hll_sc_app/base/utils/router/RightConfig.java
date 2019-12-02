@@ -93,8 +93,10 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.WALLET_ACCOUNT_MY, R.string.right_accountStatement_accountInfo);
         // 开通钱包账号
         RIGHT_MAP.put(RouterConfig.WALLET_ACCOUNT_CREATE, R.string.right_accountStatement_apply);
-        // 税率设置
-        RIGHT_MAP.put(RouterConfig.SETTING_TAX, R.string.right_taxSetting_product);
+        // 商品特殊税率设置
+        RIGHT_MAP.put(RouterConfig.SETTING_TAX_SPECIAL, R.string.right_taxSetting_product);
+        // 新增特殊设置商品
+        RIGHT_MAP.put(RouterConfig.SETTING_TAX_SELECT_GOODS, R.string.right_taxSetting_product_add);
         // 提醒设置
         RIGHT_MAP.put(RouterConfig.SETTING_REMIND, R.string.right_bussinesSetting_billMaxNumberAlert);
         // 退货审核详情

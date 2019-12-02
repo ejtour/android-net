@@ -20,6 +20,7 @@ import com.hll_sc_app.app.setting.tax.goodsselect.GoodsSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.user.SpecialTaxBean;
 import com.hll_sc_app.bean.user.SpecialTaxSaveBean;
@@ -185,6 +186,10 @@ public class SpecialTaxSettingActivity extends BaseLoadActivity implements ISpec
     }
 
     private void save(View view) {
+        if (!RightConfig.checkRight(getString(R.string.right_taxSetting_product_save))) {
+            showToast(getString(R.string.right_tips));
+            return;
+        }
         SpecialTaxSaveReq req = new SpecialTaxSaveReq();
         List<SpecialTaxBean> data = mAdapter.getData(); // 编辑后列表
         String groupID = UserConfig.getGroupID();
