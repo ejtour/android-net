@@ -275,7 +275,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         mAdapter.setEmptyView(EmptyView.newBuilder(this).setTips("还没有合作门店数据").create());
         mRefreshLayout.setEnableLoadMore(shopBeans != null && shopBeans.size() == 20);
 
-        mImgOption.setVisibility(resp.getCooperationActive() == 1 ? View.GONE : View.VISIBLE);
+        mImgOption.setVisibility(resp.getCooperationActive() == 1 || UserConfig.crm() ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -410,11 +410,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         req.setChangeAllShops("0");
         req.setGroupID(UserConfig.getGroupID());
         req.setPurchaserID(mDetail.getPurchaserID());
-        ARouter.getInstance()
-                .build(RouterConfig.COOPERATION_PURCHASER_DETAIL_SELECT_SHOP)
-                .withParcelableArrayList("parcelable", new ArrayList<>(mAdapter.getData()))
-                .withParcelable("parcelable1", req)
-                .navigation();
+        CooperationSelectShopActivity.start(this, mAdapter.getData(), req);
     }
 
     @Override

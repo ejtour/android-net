@@ -17,6 +17,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.window.OptionType;
@@ -88,11 +89,15 @@ public class AgreementPriceActivity extends BaseLoadActivity {
             List<OptionsBean> list = new ArrayList<>();
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_AGREEMENT_PRICE_EXPORT));
             mOptionsWindow = new ContextOptionsWindow(this).setListener((adapter, view, position) -> {
+                mOptionsWindow.dismiss();
+                if (!RightConfig.checkRight(getString(R.string.right_agreementPrice_export))) {
+                    showToast(getString(R.string.right_tips));
+                    return;
+                }
                 BaseAgreementPriceFragment fragment = mAdapter.getItem(mViewPager.getCurrentItem());
                 if (fragment != null) {
                     fragment.toExport();
                 }
-                mOptionsWindow.dismiss();
             }).refreshList(list);
         }
         mOptionsWindow.showAsDropDownFix(mImgAdd, Gravity.END);

@@ -16,6 +16,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
+import com.hll_sc_app.app.cooperation.detail.shopsaleman.CooperationShopSalesActivity;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -134,7 +135,21 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
             mTxtDeliveryWay.setCompoundDrawables(null, null, null, null);
             mTxtCooperationSource.setCompoundDrawables(null, null, null, null);
             mTxtDeliveryPeriod.setCompoundDrawables(null, null, null, null);
+        } else if (UserConfig.crm()) {
+            adjustCrm();
         }
+    }
+
+    private void adjustCrm() {
+        mTxtDel.setVisibility(View.GONE);
+        mLlStatus0.setVisibility(View.GONE);
+        findViewById(R.id.ll_settlementWay).setVisibility(View.GONE);
+        findViewById(R.id.ll_salesRepresentativeName).setVisibility(View.GONE);
+        findViewById(R.id.ll_driverName).setVisibility(View.GONE);
+        findViewById(R.id.ll_deliveryWay).setVisibility(View.GONE);
+        findViewById(R.id.ll_cooperationSource).setVisibility(View.GONE);
+        mTxtDeliveryPeriod.setCompoundDrawables(null, null, null, null);
+        findViewById(R.id.ll_deliveryPeriod).setClickable(false);
     }
 
     @OnClick({R.id.img_close, R.id.ll_settlementWay, R.id.ll_salesRepresentativeName,
@@ -208,12 +223,12 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
             case CooperationSelectShopActivity.TYPE_SALESMAN:
                 req.setShopIDs(mShopBean.getShopID());
                 req.setEmployeeID(mShopBean.getSalesRepresentativeID());
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, req);
+                CooperationShopSalesActivity.start(this, req);
                 break;
             case CooperationSelectShopActivity.TYPE_DRIVER:
                 req.setShopIDs(mShopBean.getShopID());
                 req.setEmployeeID(mShopBean.getDriverID());
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, req);
+                CooperationShopSalesActivity.start(this, req);
                 break;
             case CooperationSelectShopActivity.TYPE_DELIVERY_PERIOD:
                 req.setShopIds(Collections.singletonList(mShopBean.getShopID()));

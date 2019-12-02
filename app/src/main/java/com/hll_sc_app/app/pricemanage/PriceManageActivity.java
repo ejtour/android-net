@@ -29,6 +29,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.CategoryRatioListBean;
@@ -136,6 +137,10 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
     }
 
     private void showInputDialog(SkuGoodsBean bean, boolean isProductPrice) {
+        if (!RightConfig.checkRight(getString(R.string.right_priceManagement_update))) {
+            showToast(getString(R.string.right_tips));
+            return;
+        }
         // 是否显示推荐价格 和 成本价格
         boolean isShow = false;
         // 推荐价格

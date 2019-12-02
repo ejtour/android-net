@@ -69,7 +69,8 @@
         android:layout_height="match_parent"
         android:background="@color/base_colorPrimary">
 
-        <TextView
+        <com.hll_sc_app.widget.right.RightTextView
+            app:rightCode="@string/right_distributionMonetaryLimitation_delete"
             android:id="@+id/txt_del"
             android:layout_width="60dp"
             android:layout_height="match_parent"

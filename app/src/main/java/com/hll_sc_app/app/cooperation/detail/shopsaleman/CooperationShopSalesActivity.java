@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.cooperation.detail.shopsaleman;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,11 +25,15 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -65,6 +70,18 @@ public class CooperationShopSalesActivity extends BaseLoadActivity implements Co
     private EmptyView mEmptyView;
     private EmployeeListAdapter mAdapter;
     private CooperationShopSalesPresenter mPresenter;
+
+    public static void start(Context context, ShopSettlementReq req) {
+        if (!UserConfig.crm()) {
+            String right = context.getString(TextUtils.equals(req.getActionType(), CooperationSelectShopActivity.TYPE_SALESMAN) ?
+                    R.string.right_assignSales_creat : R.string.right_assignDriver_creat);
+            if (!RightConfig.checkRight(right)) {
+                ToastUtils.showShort(context.getString(R.string.right_tips));
+                return;
+            }
+        }
+        RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, req);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

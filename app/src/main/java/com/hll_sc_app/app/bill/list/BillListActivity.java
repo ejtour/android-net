@@ -22,6 +22,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.bill.BillBean;
@@ -201,6 +202,10 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private boolean toggleBatch(int visibility) {
+        if (!UserConfig.crm() && !RightConfig.checkRight(getString(R.string.right_statementBill_batchSettlement))) {
+            showToast(getString(R.string.right_tips));
+            return false;
+        }
         if (mSelectAll.getVisibility() == visibility) return false;
         if (visibility == View.VISIBLE) {
             mTitleBar.setRightText("完成");
@@ -445,6 +450,10 @@ public class BillListActivity extends BaseLoadActivity implements IBillListContr
     }
 
     private void export(String email) {
+        if (!UserConfig.crm() && !RightConfig.checkRight(getString(R.string.right_statementBill_exportStatementBill))) {
+            showToast(getString(R.string.right_tips));
+            return;
+        }
         mPresenter.export(email, mIsDetailExport ? 2 : 1);
     }
 

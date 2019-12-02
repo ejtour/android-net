@@ -3,6 +3,7 @@ package com.hll_sc_app.rest;
 import android.text.TextUtils;
 
 import com.hll_sc_app.MyApplication;
+import com.hll_sc_app.R;
 import com.hll_sc_app.api.OrderService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -15,6 +16,7 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.bean.aftersales.AfterSalesBean;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
@@ -212,6 +214,18 @@ public class Order {
                                          String expressName,
                                          String expressNo,
                                          SimpleObserver<Object> observer) {
+        String right = null;
+        if (actionType == 1) {
+            right = MyApplication.getInstance().getString(R.string.right_orderManagement_receive);
+        } else if (actionType == 2) {
+            right = MyApplication.getInstance().getString(R.string.right_orderManagement_deliver);
+        } else if ((actionType == 3)) {
+            right = MyApplication.getInstance().getString(R.string.right_orderManagement_cancel);
+        }
+        if (right != null && !RightConfig.checkRight(right)) {
+            ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
+            return;
+        }
         OrderService.INSTANCE
                 .modifyOrderStatus(BaseMapReq.newBuilder()
                         .put("actionType", String.valueOf(actionType))
@@ -290,6 +304,10 @@ public class Order {
      * @param email      邮件地址
      */
     public static void exportDelivery(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
+        if (!RightConfig.checkRight(MyApplication.getInstance().getString(R.string.right_orderManagement_exportDelivery))) {
+            ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
+            return;
+        }
         OrderExportReq req = new OrderExportReq(subBillIds, UserConfig.getGroupID(), email);
         OrderService.INSTANCE
                 .exportDelivery(new BaseReq<>(req))
@@ -305,6 +323,10 @@ public class Order {
      * @param email      邮件地址
      */
     public static void exportAssembly(List<String> subBillIds, String email, SimpleObserver<ExportResp> observer) {
+        if (!RightConfig.checkRight(MyApplication.getInstance().getString(R.string.right_orderManagement_exportList))) {
+            ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
+            return;
+        }
         OrderExportReq req = new OrderExportReq(subBillIds, UserConfig.getGroupID(), email);
         OrderService.INSTANCE
                 .exportAssembly(new BaseReq<>(req))
@@ -322,6 +344,10 @@ public class Order {
      * @param email         邮件地址
      */
     public static void exportSpecial(OrderParam param, int subBillStatus, int type, String email, SimpleObserver<ExportResp> observer) {
+        if (!RightConfig.checkRight(MyApplication.getInstance().getString(R.string.right_orderManagement_exportDelivery))) {
+            ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
+            return;
+        }
         OrderService.INSTANCE
                 .exportSpecial(buildSpecialExportReq(param, subBillStatus, type, email)
                         .put("groupID", UserConfig.getGroupID()).create())
@@ -340,6 +366,11 @@ public class Order {
      * @param email         邮件地址
      */
     public static void exportNormal(OrderParam param, int subBillStatus, int type, String shopID, String email, SimpleObserver<ExportResp> observer) {
+        if (!RightConfig.checkRight(MyApplication.getInstance()
+                .getString(type == 0 ? R.string.right_orderManagement_exportOrder : R.string.right_orderManagement_exportOrderDetail))) {
+            ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
+            return;
+        }
         UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
                 .exportNormal(buildSpecialExportReq(param, subBillStatus, type, email)

@@ -88,6 +88,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:hint="暂未提供"
+                    android:textColorHint="@color/color_999999"
                     android:layout_marginLeft="12dp"
                     android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                     tools:text="北京市二十二城采购集团"/>
@@ -114,6 +116,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:hint="暂未提供"
+                    android:textColorHint="@color/color_999999"
                     android:layout_marginLeft="12dp"
                     android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                     tools:text="北京市二十二城采购集团"/>
@@ -141,6 +145,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:hint="暂未提供"
+                    android:textColorHint="@color/color_999999"
                     android:layout_marginLeft="12dp"
                     android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                     tools:text="北京市-西城区"/>
@@ -168,6 +174,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="12dp"
+                    android:hint="暂未提供"
+                    android:textColorHint="@color/color_999999"
                     android:textAppearance="@style/TextAppearance.City22.Small.Color666"
                     tools:text="小市口胡同3号院2号楼底商"/>
 
@@ -198,8 +206,7 @@
                     android:drawableRight="@drawable/ic_arrow_gray"
                     android:hint="请选择结算方式"
                     android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-                    android:textColorHint="@color/color_999999"
-                    />
+                    android:textColorHint="@color/color_999999" />
 
             </LinearLayout>
 

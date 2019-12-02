@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+    <string name="right_tips">您没有操作权限</string>
+    <!-- 商品信息查看 -->
+    <string name="right_productManagement_query">supplier.productManagement.query</string>
+    <!-- 商品搜索 -->
+    <string name="right_productManagement_search">supplier.productManagement.search</string>
+    <!-- 商品新增 -->
+    <string name="right_productManagement_create">supplier.productManagement.create</string>
+    <!-- 商品编辑 -->
+    <string name="right_productManagement_update">supplier.productManagement.update</string>
+    <!-- 导出商品列表 -->
+    <string name="right_productManagement_exportProductList">supplier.productManagement.exportProductList</string>
+    <!-- 商品置顶 -->
+    <string name="right_productManagement_productStick">supplier.productManagement.productStick</string>
+    <!-- 库存预警设置 -->
+    <string name="right_stock_warn_query">supplier.Alert settings.query</string>
+    <!-- 库存预警修改 -->
+    <string name="right_stock_warn_update">supplier.Alert settings.update</string>
+
+    <!-- 订单接单 -->
+    <string name="right_orderManagement_receive">supplier.orderManagement.receive</string>
+    <!-- 订单确认发货 -->
+    <string name="right_orderManagement_deliver">supplier.orderManagement.deliver</string>
+    <!-- 订单查看 -->
+    <string name="right_orderManagement_query">supplier.orderManagement.query</string>
+    <!-- 导出配货单 -->
+    <string name="right_orderManagement_exportList">supplier.orderManagement.exportList</string>
+    <!-- 导出出库单  -->
+    <string name="right_orderManagement_exportDelivery">supplier.orderManagement.exportDelivery</string>
+    <!-- 订单拒收 -->
+    <string name="right_orderManagement_rejection">supplier.orderManagement.rejection</string>
+    <!-- 导出订单 -->
+    <string name="right_orderManagement_exportOrder">supplier.orderManagement.exportOrder</string>
+    <!-- 导出订单详情 -->
+    <string name="right_orderManagement_exportOrderDetail">supplier.orderManagement.exportOrderDetail</string>
+    <!-- 订单验货 -->
+    <string name="right_orderManagement_examine">supplier.orderManagement.examine</string>
+    <!-- 订单立即收款 -->
+    <string name="right_orderManagement_gathering">supplier.orderManagement.gathering</string>
+    <!-- 订单修改发货数量 -->
+    <string name="right_orderManagement_editQuantity">supplier.orderManagement.editQuantity</string>
+    <!-- 取消\放弃订单 -->
+    <string name="right_orderManagement_cancel">supplier.orderManagement.cancel</string>
+
+    <!-- 价格修改 -->
+    <string name="right_priceManagement_update">supplier.priceManagement.update</string>
+
+    <!-- 协议价新增 -->
+    <string name="right_agreementPriceManagement_create">supplier.agreementPriceManagement.create</string>
+    <!-- 协议价查看 -->
+    <string name="right_agreementPriceManagement_query">supplier.agreementPriceManagement.query</string>
+    <!-- 协议价编辑 -->
+    <string name="right_agreementPriceManagement_update">supplier.agreementPriceManagement.update</string>
+    <!-- 导出协议价 -->
+    <string name="right_agreementPrice_export">supplier.agreementPrice.export</string>
+
+    <!-- 协议价比例设置新增 -->
+    <string name="right_negotiatepriceSetting_add">supplier.negotiatepriceSetting.add</string>
+    <!-- 协议价比例设置保存 -->
+    <string name="right_negotiatepriceSetting_save">supplier.negotiatepriceSetting.save</string>
+
+    <!-- 合作采购商门店信息查看 -->
+    <string name="right_workingMeal_queryShopInfo">supplier.workingMeal.queryShopInfo</string>
+    <!-- 合作采购商详细资料查看 -->
+    <string name="right_workingMeal_queryDetailInfo">supplier.workingMeal.queryDetailInfo</string>
+    <!-- 合作采购商新增 -->
+    <string name="right_workingMeal_create">supplier.workingMeal.create</string>
+    <!-- 接收及发出合作申请 -->
+    <string name="right_workingMeal_update">supplier.workingMeal.update</string>
+    <!-- 查看合作采购商列表 -->
+    <string name="right_workingMeal_query">supplier.workingMeal.query</string>
+    <!-- 删除合作采购商 -->
+    <string name="right_workingMeal_delete">supplier.workingMeal.delete</string>
+    <!-- 指派销售 -->
+    <string name="right_assignSales_creat">supplier.assignSales.creat</string>
+    <!-- 指派司机 -->
+    <string name="right_assignDriver_creat">supplier.assignDriver.creat</string>
+    <!-- 结算方式 -->
+    <string name="right_settlementMethod_creat">supplier.settlementMethod.creat</string>
+
+    <!-- 导出对账单 -->
+    <string name="right_statementBill_exportStatementBill">supplier.statementBill.exportStatementBill</string>
+    <!-- 批量结算 -->
+    <string name="right_statementBill_batchSettlement">supplier.statementBill.batchSettlement</string>
+
+    <!-- 配送范围编辑 -->
+    <string name="right_distributionArea_update">supplier.distributionArea.update</string>
+    <!-- 配送范围查看 -->
+    <string name="right_distributionArea_query">supplier.distributionArea.query</string>
+
+    <!-- 起送金额添加 -->
+    <string name="right_distributionMonetaryLimitation_create">supplier.distributionMonetaryLimitation.create</string>
+    <!-- 起送金额编辑 -->
+    <string name="right_distributionMonetaryLimitation_update">supplier.distributionMonetaryLimitation.update</string>
+    <!-- 起送金额删除 -->
+    <string name="right_distributionMonetaryLimitation_delete">supplier.distributionMonetaryLimitation.delete</string>
+    <!-- 起送金额查询 -->
+    <string name="right_distributionMonetaryLimitation_query">supplier.distributionMonetaryLimitation.query</string>
+
+    <!-- 店铺信息编辑 -->
+    <string name="right_storeManagement_update">supplier.storeManagement.update</string>
+
+    <!-- 员工信息新增 -->
+    <string name="right_staffManagement_create">supplier.staffManagement.create</string>
+    <!-- 员工信息查看 -->
+    <string name="right_staffManagement_query">supplier.staffManagement.query</string>
+    <!-- 员工信息编辑 -->
+    <string name="right_staffManagement_update">supplier.staffManagement.update</string>
+    <!-- 员工信息删除 -->
+    <string name="right_staffManagement_delete">supplier.staffManagement.delete</string>
+
+    <!-- 支付管理编辑 -->
+    <string name="right_paymentManagement_update">supplier.paymentManagement.update</string>
+
+    <!-- 代仓客户新增 -->
+    <string name="right_corporateWarehouse_create">supplier.corporateWarehouse.create</string>
+    <!-- 代仓客户解除 -->
+    <string name="right_corporateWarehouse_relieve">supplier.corporateWarehouse.relieve</string>
+    <!-- 代仓申请编辑 -->
+    <string name="right_corporateWarehouse_edit">supplier.corporateWarehouse.edit</string>
+    <!-- 代仓客户信息查看 -->
+    <string name="right_corporateWarehouse_queryInfo">supplier.corporateWarehouse.queryInfo</string>
+    <!-- 新客户申请查看 -->
+    <string name="right_corporateWarehouse_queryNewApply">supplier.corporateWarehouse.queryNewApply</string>
+    <!-- 我的申请 -->
+    <string name="right_corporateWarehouse_myApply">supplier.corporateWarehouse.myApply</string>
+
+    <!-- 账号管理 -->
+    <string name="right_accountManagement">supplier.accountManagement</string>
+    <!-- 更改集团绑定账号 -->
+    <string name="right_accountManagement_updateBindAccount">supplier.accountManagement.updateBindAccount</string>
+    <!-- 修改登录密码 -->
+    <string name="right_accountManagement_updateLoginPass">supplier.accountManagement.updateLoginPass</string>
+    <!-- 子账号解绑 -->
+    <string name="right_accountManagement_unbindChildAccount">supplier.accountManagement.unbindChildAccount</string>
+
+    <!-- 订单设置 -->
+    <string name="right_billSetting">supplier.billSetting</string>
+    <!-- 订单设置编辑 -->
+    <string name="right_billSetting_update">supplier.billSetting.update</string>
+
+    <!-- 合作采购商设置 -->
+    <string name="right_workingMealSetting">supplier.workingMealSetting</string>
+    <!-- 合作采购商设置编辑 -->
+    <string name="right_workingMealSetting_update">supplier.workingMealSetting.update</string>
+
+    <!-- 采购商下单倍数提醒设置 -->
+    <string name="right_bussinesSetting_billMaxNumberAlert">supplier.bussinesSetting.billMaxNumberAlert</string>
+
+    <!-- 供应商信息查看 -->
+    <string name="right_supplierInfoManagement_query">supplier.supplierInfoManagement.query</string>
+    <!-- 供应商信息编辑 -->
+    <string name="right_supplierInfoManagement_update">supplier.supplierInfoManagement.update</string>
+
+    <!-- 退货时效编辑 -->
+    <string name="right_returnedPurchaseValidTime_edit">supplier.returnedPurchaseValidTime.edit</string>
+
+    <!-- 消息中心查看 -->
+    <string name="right_msgCenter_query">supplier.msgCenter.query</string>
+    <!-- 消息中心查看详情 -->
+    <string name="right_msgCenter_detail">supplier.msgCenter.detail</string>
+
+    <!-- 意见反馈新建 -->
+    <string name="right_feedback_add">supplier.feedback.add</string>
+    <!-- 意见反馈查看详情 -->
+    <string name="right_feedback_detail">supplier.feedback.detail</string>
+
+    <!-- 钱包查看 -->
+    <string name="right_accountStatement_query">supplier.accountStatement.query</string>
+    <!-- 钱包编辑 -->
+    <string name="right_accountStatement_edit">supplier.accountStatement.edit</string>
+    <!-- 充值 -->
+    <string name="right_accountStatement_recharge">supplier.accountStatement.recharge</string>
+    <!-- 提现 -->
+    <string name="right_accountStatement_cash">supplier.accountStatement.cash</string>
+    <!-- 明细 -->
+    <string name="right_accountStatement_detail">supplier.accountStatement.detail</string>
+    <!-- 钱包账号 -->
+    <string name="right_accountStatement_accountInfo">supplier.accountStatement.accountInfo</string>
+    <!-- 钱包账号创建 -->
+    <string name="right_accountStatement_apply">supplier.accountStatement.apply</string>
+    <!-- 钱包账号绑定 -->
+    <string name="right_accountStatement_bindAccount">supplier.accountStatement.bindAccount</string>
+
+    <!-- 财务明细导出 -->
+    <string name="right_rechargeList_exportDetail">supplier.rechargeList.exportDetail</string>
+
+    <!-- 定向售卖新增 -->
+    <string name="right_targetedSale_add">supplier.targetedSale.add</string>
+    <!-- 定向售卖删除 -->
+    <string name="right_targetedSale_del">supplier.targetedSale.del</string>
+    <!-- 定向售卖编辑 -->
+    <string name="right_targetedSale_modify">supplier.targetedSale.modify</string>
+
+    <!-- 税率设置保存 -->
+    <string name="right_taxSetting_save">supplier.taxSetting.save</string>
+    <!-- 商品税率设置 -->
+    <string name="right_taxSetting_product">supplier.taxSetting.product</string>
+    <!-- 新建商品税率 -->
+    <string name="right_taxSetting_product_add">supplier.taxSetting.product.add</string>
+    <!-- 保存商品税率 -->
+    <string name="right_taxSetting_product_save">supplier.taxSetting.product.save</string>
+    <!-- 删除商品税率 -->
+    <string name="right_taxSetting_product_delete">supplier.taxSetting.product.delete</string>
+
+    <!-- 客服审核 -->
+    <string name="right_returnedPurchaseCheck_examine">supplier.returnedPurchaseCheck.examine</string>
+    <!-- 客服驳回 -->
+    <string name="right_returnedPurchaseCheck_reject">supplier.returnedPurchaseCheck.reject</string>
+    <!-- 司机收货 -->
+    <string name="right_returnedPurchaseCheck_dirverReceive">supplier.returnedPurchaseCheck.dirverReceive</string>
+    <!-- 仓库收货 -->
+    <string name="right_returnedPurchaseCheck_warehouseReceive">supplier.returnedPurchaseCheck.warehouseReceive</string>
+    <!-- 财务审核 -->
+    <string name="right_returnedPurchaseCheck_financeExamine">supplier.returnedPurchaseCheck.financeExamine</string>
+    <!-- 退货审核详情 -->
+    <string name="right_returnedPurchaseCheck_queryDetailInfo">supplier.returnedPurchaseCheck.queryDetailInfo</string>
+    <!-- 退货审核 -->
+    <string name="right_returnedPurchaseCheck_update">supplier.returnedPurchaseCheck.update</string>
+    <!-- 退款审核导出明细 -->
+    <string name="right_returnedPurchaseCheck_export">supplier.returnedPurchaseCheck.export</string>
+
+    <!-- 代仓新增 -->
+    <string name="right_warehouseManage_add">supplier.warehouseManage.add</string>
+    <!-- 代仓查看 -->
+    <string name="right_warehouseManage_query">supplier.warehouseManage.query</string>
+    <!-- 代仓编辑 -->
+    <string name="right_warehouseManage_edit">supplier.warehouseManage.edit</string>
+
+    <!-- 仓库管理 -->
+    <string name="right_warehouseManagement_query">supplier.warehouseManagement.query</string>
+
+    <!-- 新增仓库 -->
+    <string name="right_warehouse_creat">supplier.warehouse.creat</string>
+    <!-- 修改仓库信息 -->
+    <string name="right_warehouse_update">supplier.warehouse.update</string>
+
+    <!-- 库存校验设置新增 -->
+    <string name="right_inventoryCheckSetting_add">supplier.inventoryCheckSetting.add</string>
+    <!-- 库存交易设置移除 -->
+    <string name="right_inventoryCheckSetting_delete">supplier.inventoryCheckSetting.delete</string>
+
+    <!-- 新品反馈编辑 -->
+    <string name="right_productFeedback_edit">supplier.productFeedback.edit</string>
+
+    <!-- 库存查询 -->
+    <string name="right_inventoryInquiry_query">supplier.inventoryInquiry.query</string>
+    <!-- 商品库存交易设置 -->
+    <string name="right_setUpVerify_query">supplier.setUpVerify.query</string>
+    <!-- 新增库存校验商品 -->
+    <string name="right_verify_creat">supplier.verify.creat</string>
+    <!-- 编辑库存交易商品 -->
+    <string name="right_updateVerify_update">supplier.updateVerify.update</string>
+    <!-- 库存日志查询 -->
+    <string name="right_inventoryIog_query">supplier.inventoryIog.query</string>
+
+    <!-- 客户发货仓库管理 -->
+    <string name="right_clientWarehouseManagement_query">supplier.clientWarehouseManagement.query</string>
+
+    <!-- crm首页 -->
+    <string name="right_crm">crm</string>
+
+    <!-- 合作客户-全部合作客户 -->
+    <string name="right_partner_list_all">crm.salemanPartnerList.all</string>
+</resources>

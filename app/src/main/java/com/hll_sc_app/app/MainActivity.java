@@ -36,6 +36,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.impl.IReload;
+import com.hll_sc_app.rest.User;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
@@ -75,6 +76,7 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         initView();
+        User.queryAuthList(this);
     }
 
     @Override
@@ -175,6 +177,8 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     public void handleOrderEvent(OrderEvent event) {
         if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
             mGroupType.check(PageType.SUPPLIER_ORDER);
+        } else if (event.getMessage().equals(OrderEvent.TO_CRM_ORDER)) {
+            mGroupType.check(PageType.CRM_ORDER);
         }
     }
 

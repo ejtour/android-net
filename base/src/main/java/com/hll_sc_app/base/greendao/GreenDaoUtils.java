@@ -2,6 +2,8 @@ package com.hll_sc_app.base.greendao;
 
 import com.hll_sc_app.base.bean.AccountBean;
 import com.hll_sc_app.base.bean.AccountBeanDao;
+import com.hll_sc_app.base.bean.AuthBean;
+import com.hll_sc_app.base.bean.AuthBeanDao;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.bean.UserBeanDao;
 import com.hll_sc_app.base.bean.UserShop;
@@ -64,5 +66,21 @@ public class GreenDaoUtils {
         DaoSessionManager.getDaoSession().getAccountBeanDao().deleteAll();
     }
 
+    public static void updateAuthList(List<AuthBean> list) {
+        DaoSessionManager.getDaoSession().getAuthBeanDao().insertOrReplaceInTx(list);
+    }
 
+    public static boolean containsAuth(String rightCode) {
+        AuthBean resp = DaoSessionManager
+                .getDaoSession()
+                .getAuthBeanDao()
+                .queryBuilder()
+                .where(AuthBeanDao.Properties.AuthCode.eq(rightCode))
+                .unique();
+        return resp != null;
+    }
+
+    public static void deleteAuthList() {
+        DaoSessionManager.getDaoSession().getAuthBeanDao().deleteAll();
+    }
 }

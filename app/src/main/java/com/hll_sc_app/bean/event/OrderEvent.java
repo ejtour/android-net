@@ -17,6 +17,7 @@ public class OrderEvent extends BaseEvent {
     public static final String RELOAD_ITEM = "reload_item";
     public static final String UPDATE_TRANSFER_ITEM = "update_transfer_item";
     public static final String CHANGE_INDEX = "change_index";
+    public static final String TO_CRM_ORDER = "crm_order";
 
     public OrderEvent(String msg) {
         this(msg, null);
@@ -28,6 +29,7 @@ public class OrderEvent extends BaseEvent {
             case REMOVE_SELECTED:
             case REFRESH_LIST:
             case RELOAD_ITEM:
+            case TO_CRM_ORDER:
                 break;
             case CHANGE_INDEX:
                 if (b != null && "Integer".equals(b.getClass().getSimpleName())) break;

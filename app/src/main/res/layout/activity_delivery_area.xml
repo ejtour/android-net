@@ -27,7 +27,8 @@
             android:textSize="@dimen/base_text_18"
             tools:text="河北省"/>
 
-        <TextView
+        <com.hll_sc_app.widget.right.RightTextView
+            app:rightCode="@string/right_distributionArea_update"
             android:id="@+id/txt_save"
             android:layout_width="@dimen/title_bar_height"
             android:layout_height="match_parent"

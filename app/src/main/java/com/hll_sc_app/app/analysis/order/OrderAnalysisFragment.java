@@ -34,6 +34,7 @@ import com.hll_sc_app.bean.operationanalysis.AnalysisDataBean;
 import com.hll_sc_app.bean.operationanalysis.AnalysisResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.widget.analysis.OrderMarker;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,6 +96,8 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         mChart.setPinchZoom(false);
         mChart.setExtraOffsets(10, 0, 10, 0);
 
+        mChart.setMarker(new OrderMarker(requireContext(), mChart));
+
         Legend legend = mChart.getLegend();
         legend.setTextSize(10);
         legend.setXEntrySpace(10);
@@ -121,11 +124,14 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         YAxis axisLeft = mChart.getAxisLeft();
         axisLeft.setDrawAxisLine(false);
         axisLeft.setAxisMinimum(0);
+        axisLeft.enableGridDashedLine(4, 4, 0);
         axisLeft.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
         axisLeft.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
         axisLeft.setTextSize(10);
 
-        mChart.getAxisRight().setEnabled(false);
+        YAxis axisRight = mChart.getAxisRight();
+        axisRight.setAxisMinimum(0);
+        axisRight.setEnabled(false);
     }
 
     @Override
@@ -190,10 +196,12 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
             lineDataSet.setFormLineWidth(2);
             lineDataSet.setDrawCircles(false);
             lineDataSet.setLineWidth(2);
+            lineDataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         }
         CombinedData data = new CombinedData();
         data.setData(bar);
         data.setData(line);
+        data.setDrawValues(false);
         mChart.setData(data);
         mChart.invalidate();
     }

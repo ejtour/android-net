@@ -22,6 +22,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.add.GoodsAddActivity;
 import com.hll_sc_app.app.goods.list.SpecStatusWindow;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
@@ -258,7 +259,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
             return;
         }
         if (mGoodsBean != null) {
-            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD, this, mGoodsBean);
+            GoodsAddActivity.start(this, mGoodsBean);
         }
     }
 

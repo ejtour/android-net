@@ -1,7 +1,7 @@
 package com.hll_sc_app.bean.filter;
 
 /**
- * @author <a href="mailto:xzx8023@vip.qq.com">Vixb</a>
+ * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/7/8
  */
 

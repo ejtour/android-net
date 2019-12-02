@@ -10,7 +10,7 @@ import com.hll_sc_app.utils.Constants;
 import java.util.List;
 
 /**
- * @author <a href="mailto:xzx8023@vip.qq.com">Vixb</a>
+ * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/18
  */
 
