@@ -246,11 +246,11 @@
 
     <!-- 库存查询 -->
     <string name="right_inventoryInquiry_query">supplier.inventoryInquiry.query</string>
-    <!-- 商品库存交易设置 -->
+    <!-- 商品库存校验设置 -->
     <string name="right_setUpVerify_query">supplier.setUpVerify.query</string>
     <!-- 新增库存校验商品 -->
     <string name="right_verify_creat">supplier.verify.creat</string>
-    <!-- 编辑库存交易商品 -->
+    <!-- 编辑库存校验商品 -->
     <string name="right_updateVerify_update">supplier.updateVerify.update</string>
     <!-- 库存日志查询 -->
     <string name="right_inventoryIog_query">supplier.inventoryIog.query</string>

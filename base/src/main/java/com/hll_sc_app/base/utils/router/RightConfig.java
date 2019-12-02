@@ -97,14 +97,26 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.SETTING_TAX_SPECIAL, R.string.right_taxSetting_product);
         // 新增特殊设置商品
         RIGHT_MAP.put(RouterConfig.SETTING_TAX_SELECT_GOODS, R.string.right_taxSetting_product_add);
+        // 协议价比例设置新增
+        RIGHT_MAP.put(RouterConfig.SETTING_PRICE_RATIO_ADD, R.string.right_negotiatepriceSetting_add);
+        // 定向售卖编辑
+        RIGHT_MAP.put(RouterConfig.ORIENTATION_DETAIL, R.string.right_targetedSale_modify);
         // 提醒设置
         RIGHT_MAP.put(RouterConfig.SETTING_REMIND, R.string.right_bussinesSetting_billMaxNumberAlert);
         // 退货审核详情
         RIGHT_MAP.put(RouterConfig.AFTER_SALES_DETAIL, R.string.right_returnedPurchaseCheck_queryDetailInfo);
         // 仓库管理
         RIGHT_MAP.put(RouterConfig.ACTIVITY_STORE_HOUSE_MANAGE, R.string.right_warehouseManagement_query);
+        // 库存查询
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_QUERY_LIST, R.string.right_inventoryInquiry_query);
+        // 商品库存校验设置
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_CHECK_SETTING, R.string.right_setUpVerify_query);
+        // 新增库存校验商品
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_CHECK_SELECT_PRODUCT, R.string.right_verify_creat);
         // 库存日志查询
         RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_LOG_QUERY, R.string.right_inventoryIog_query);
+        // 客户发货仓库管理
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_CUSTOMER_SEND, R.string.right_clientWarehouseManagement_query);
     }
 
     /**

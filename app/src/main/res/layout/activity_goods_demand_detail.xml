@@ -23,7 +23,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <com.hll_sc_app.widget.right.RightTextView
+        app:rightCode="@string/right_productFeedback_edit"
         android:visibility="gone"
         android:id="@+id/gdd_reply_sale"
         style="@style/BtnAfterSalesAction.PrimaryStroke"
@@ -39,7 +40,8 @@
         app:layout_constraintEnd_toStartOf="@id/gdd_reply_custome"
         app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
 
-    <TextView
+    <com.hll_sc_app.widget.right.RightTextView
+        app:rightCode="@string/right_productFeedback_edit"
         android:visibility="gone"
         android:id="@+id/gdd_reply_custome"
         style="@style/BtnAfterSalesAction.PrimarySolid"
@@ -55,7 +57,8 @@
         app:layout_constraintEnd_toStartOf="@id/gdd_notice"
         app:layout_constraintTop_toTopOf="@id/gdd_bottom_bg" />
 
-    <TextView
+    <com.hll_sc_app.widget.right.RightTextView
+        app:rightCode="@string/right_productFeedback_edit"
         android:id="@+id/gdd_notice"
         style="@style/BtnAfterSalesAction.PrimarySolid"
         android:layout_width="wrap_content"

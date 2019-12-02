@@ -2,6 +2,7 @@
 <com.hll_sc_app.base.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="75dp">
 
 
@@ -53,7 +54,8 @@
         android:layout_height="match_parent"
         android:background="@color/color_ed5655">
 
-        <TextView
+        <com.hll_sc_app.widget.right.RightTextView
+            app:rightCode="@string/right_targetedSale_del"
             android:id="@+id/txt_del"
             android:layout_width="60dp"
             android:layout_height="70dp"
