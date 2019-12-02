@@ -14,9 +14,11 @@ import com.hll_sc_app.app.info.modify.InfoModifyActivity;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.groupInfo.GroupInfoResp;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,6 +84,10 @@ public class GroupInfoBaseView extends RelativeLayout {
 
     @OnClick(R.id.gib_avatar)
     public void changeAvatar() {
+        if (!RightConfig.checkRight(getContext().getString(R.string.right_supplierInfoManagement_update))) {
+            ToastUtils.showShort(getContext().getString(R.string.right_tips));
+            return;
+        }
         UIUtils.selectPhoto((Activity) getContext(), REQUEST_CODE_CHOOSE, null);
     }
 

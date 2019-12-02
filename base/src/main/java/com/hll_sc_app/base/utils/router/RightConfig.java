@@ -70,6 +70,13 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.ACTIVITY_UNBIND_GROUP, R.string.right_accountManagement_unbindChildAccount);
         // 订单设置
         RIGHT_MAP.put(RouterConfig.BILL_SETTING, R.string.right_billSetting);
+        // 供应商信息查看
+        RIGHT_MAP.put(RouterConfig.INFO, R.string.right_supplierInfoManagement_query);
+        // 供应商信息编辑
+        RIGHT_MAP.put(RouterConfig.INFO_MODIFY, R.string.right_supplierInfoManagement_update);
+        RIGHT_MAP.put(RouterConfig.INFO_DOORWAY, R.string.right_supplierInfoManagement_update);
+        RIGHT_MAP.put(RouterConfig.INFO_LICENSE, R.string.right_supplierInfoManagement_update);
+        RIGHT_MAP.put(RouterConfig.INFO_OTHER, R.string.right_supplierInfoManagement_update);
         // 消息中心
         RIGHT_MAP.put(RouterConfig.MESSAGE, R.string.right_msgCenter_query);
         // 消息详情

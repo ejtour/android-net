@@ -13,7 +13,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,7 +57,7 @@ public class GroupInfoCertifyView extends FrameLayout {
     @BindView(R.id.gic_ing)
     LinearLayout mIng;
     @BindView(R.id.gic_submit)
-    Button mSubmit;
+    TextView mSubmit;
     private CertifyReq mData;
     private OnClickListener mListener;
 
@@ -103,6 +102,7 @@ public class GroupInfoCertifyView extends FrameLayout {
                 spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#F5A623")),
                         source.indexOf("服"), source.indexOf("务") + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 mStatusDesc.setText(spannableString);
+                mSubmit.setText("提交审核");
                 mStatus.setImageResource(R.drawable.ic_certify_no);
                 break;
             case GroupInfoResp.PASS:
@@ -134,6 +134,7 @@ public class GroupInfoCertifyView extends FrameLayout {
                         source.indexOf("请"), source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 mStatusDesc.setText(spannableString);
                 mStatus.setImageResource(R.drawable.ic_certify_not_pass);
+                mSubmit.setText("重新审核");
                 break;
         }
 

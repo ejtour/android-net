@@ -21,6 +21,8 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.detail.AfterSalesDetailActivity;
 import com.hll_sc_app.app.aftersales.goodsoperation.GoodsOperationActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
@@ -159,6 +161,10 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
     }
 
     private void exportOrder() {
+        if (!UserConfig.crm() && !RightConfig.checkRight(getString(R.string.right_returnedPurchaseCheck_export))) {
+            showToast(getString(R.string.right_tips));
+            return;
+        }
         EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.EXPORT_ORDER));
     }
 

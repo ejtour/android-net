@@ -185,7 +185,8 @@
             app:layout_constraintEnd_toEndOf="@id/gic_other_label"
             app:layout_constraintTop_toTopOf="@id/gic_other_label" />
 
-        <Button
+        <com.hll_sc_app.widget.right.RightTextView
+            app:rightCode="@string/right_supplierInfoManagement_update"
             android:id="@+id/gic_submit"
             style="@style/BtnLogin"
             android:layout_marginTop="30dp"
