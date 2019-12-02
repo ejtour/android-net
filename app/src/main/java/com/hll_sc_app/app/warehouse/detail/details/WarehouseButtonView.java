@@ -9,7 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import java.util.List;
 
@@ -113,6 +115,10 @@ public class WarehouseButtonView extends LinearLayout {
         R.id.txt_repeat_my, R.id.txt_delete_my1})
     public void onViewClicked(View view) {
         if (mListener == null || mBean == null) {
+            return;
+        }
+        if (!RightConfig.checkRight(getContext().getString(R.string.right_corporateWarehouse_edit))) {
+            ToastUtils.showShort(getContext().getString(R.string.right_tips));
             return;
         }
         switch (view.getId()) {

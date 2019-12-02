@@ -117,6 +117,14 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_LOG_QUERY, R.string.right_inventoryIog_query);
         // 客户发货仓库管理
         RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_CUSTOMER_SEND, R.string.right_clientWarehouseManagement_query);
+        // 代仓客户新增
+        RIGHT_MAP.put(RouterConfig.WAREHOUSE_ADD, R.string.right_corporateWarehouse_create);
+        // 我收到的代仓申请
+        RIGHT_MAP.put(RouterConfig.WAREHOUSE_APPLICATION, R.string.right_corporateWarehouse_queryNewApply);
+        // 我发出的代仓申请
+        RIGHT_MAP.put(RouterConfig.WAREHOUSE_INVITE, R.string.right_corporateWarehouse_myApply);
+        // 查看代仓客户信息
+        RIGHT_MAP.put(RouterConfig.WAREHOUSE_DETAILS, R.string.right_corporateWarehouse_queryInfo);
     }
 
     /**
