@@ -1,11 +1,13 @@
 package com.hll_sc_app.app.order.details;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -85,6 +87,12 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
                 .setText(R.id.iod_remark, "备注：" + item.getDetailRemark()) // 商品备注
                 .setText(R.id.iod_amount, processPrice(mLabel + "：¥" + CommonUtils.formatMoney(isDetailList()
                         ? item.getInspectionAmount() : 0))); // 小计，拒收金额显示 0
+
+        //显示单价的旧价格
+        helper.setVisible(R.id.iod_sale_unit_spec_old, item.getDiscountType() == 2)
+                .setText(R.id.iod_sale_unit_spec_old, "¥" + CommonUtils.formatMoney(item.getOldProductPrice()) + "/" + item.getSaleUnitName());
+        TextView textView = helper.getView(R.id.iod_sale_unit_spec_old);
+        textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
     }
 
     private SpannableString processPrice(String source) {
