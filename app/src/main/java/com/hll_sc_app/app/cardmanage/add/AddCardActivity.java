@@ -73,7 +73,7 @@ public class AddCardActivity extends BaseLoadActivity implements RadioGroup.OnCh
         unbinder = ButterKnife.bind(this);
         mRadioGroup.setOnCheckedChangeListener(this);
         mTxtPurchaserName.setText(mPurchaserBean.getPurchaserName());
-
+        mRadioCash.toggle();
     }
 
     @Override
