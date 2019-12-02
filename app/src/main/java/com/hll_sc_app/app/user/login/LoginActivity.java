@@ -95,9 +95,6 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         mPresenter = LoginPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
-        if (UserConfig.isLogin()) {
-            toHomePage();
-        }
     }
 
     @Override

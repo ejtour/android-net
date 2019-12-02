@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.permission.RequestPermissionUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.yanzhenjie.permission.Permission;
@@ -28,7 +29,7 @@ public class SplashActivity extends BaseLoadActivity {
 
 
     private void isFirstTime() {
-        ARouter.getInstance().build(RouterConfig.USER_LOGIN)
+        ARouter.getInstance().build(UserConfig.isLogin() ? RouterConfig.ROOT_HOME : RouterConfig.USER_LOGIN)
             .withTransition(R.anim.base_splash_enter_anim, R.anim.base_splash_exit_anim)
             .navigation(this, new NavCallback() {
                 @Override
