@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.staffmanage.detail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,12 +20,14 @@ import com.hll_sc_app.app.staffmanage.detail.depart.DepartListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.StaffDepartListEvent;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.staff.RoleBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -67,6 +70,17 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
     @Autowired(name = "parcelable")
     EmployeeBean mEmployeeBean;
     private StaffManagerEditPresenter mPresenter;
+
+    public static void start(Context context, EmployeeBean bean) {
+        if (!UserConfig.crm()) {
+            if (!RightConfig.checkRight(context.getString(bean == null ? R.string.right_staffManagement_create :
+                    R.string.right_staffManagement_query))) {
+                ToastUtils.showShort(context.getString(R.string.right_tips));
+                return;
+            }
+        }
+        RouterUtil.goToActivity(RouterConfig.STAFF_EDIT, bean);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

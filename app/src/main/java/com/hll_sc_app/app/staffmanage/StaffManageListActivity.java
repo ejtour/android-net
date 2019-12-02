@@ -19,6 +19,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.EmployeeSearch;
+import com.hll_sc_app.app.staffmanage.detail.StaffManagerEditActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
@@ -138,7 +139,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
                 if (view.getId() == R.id.txt_del) {
                     showDelTipsDialog(bean);
                 } else if (view.getId() == R.id.content) {
-                    RouterUtil.goToActivity(RouterConfig.STAFF_EDIT, bean);
+                    StaffManagerEditActivity.start(this, bean);
                 }
             }
         });
@@ -147,7 +148,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     }
 
     private void toAdd() {
-        RouterUtil.goToActivity(RouterConfig.STAFF_EDIT);
+        StaffManagerEditActivity.start(this, null);
     }
 
     /**

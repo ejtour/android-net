@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.deliverymanage.minimum.detail;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.delivery.AreaListBean;
@@ -36,6 +38,7 @@ import com.hll_sc_app.bean.delivery.DeliveryPurchaserBean;
 import com.hll_sc_app.bean.delivery.ProvinceListBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.GridSimpleDecoration;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.hll_sc_app.widget.SingleSelectionDialog;
@@ -84,6 +87,15 @@ public class DeliveryMinimumDetailActivity extends BaseLoadActivity implements D
     private SingleSelectionDialog mDialog;
     private PurchaserListAdapter mPurchaserAdapter;
     private DeliveryMinimumDetailPresenter mPresenter;
+
+    public static void start(Context context, DeliveryMinimumBean bean) {
+        if (!RightConfig.checkRight(context.getString(bean == null ? R.string.right_distributionMonetaryLimitation_create :
+                R.string.right_distributionMonetaryLimitation_query))) {
+            ToastUtils.showShort(context.getString(R.string.right_tips));
+            return;
+        }
+        RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_DETAIL, bean);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

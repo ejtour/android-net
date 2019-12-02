@@ -106,8 +106,9 @@
         android:layout_height="match_parent"
         android:background="@color/base_colorPrimary">
 
-        <TextView
+        <com.hll_sc_app.widget.right.RightTextView
             android:id="@+id/txt_del"
+            app:rightCode="@string/right_staffManagement_delete"
             android:layout_width="60dp"
             android:layout_height="70dp"
             android:gravity="center"

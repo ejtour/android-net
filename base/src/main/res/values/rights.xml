@@ -114,8 +114,6 @@
     <string name="right_staffManagement_update">supplier.staffManagement.update</string>
     <!-- 员工信息删除 -->
     <string name="right_staffManagement_delete">supplier.staffManagement.delete</string>
-    <!-- 员工管理 转交客户 -->
-    <string name="right_staffManagement_transfer">supplier.transferred to Customers.update</string>
 
     <!-- 支付管理编辑 -->
     <string name="right_paymentManagement_update">supplier.paymentManagement.update</string>

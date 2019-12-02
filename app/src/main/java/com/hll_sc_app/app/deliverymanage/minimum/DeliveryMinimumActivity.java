@@ -15,12 +15,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.deliverymanage.minimum.detail.DeliveryMinimumDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.delivery.DeliveryMinimumBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -97,7 +97,7 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
                 finish();
                 break;
             case R.id.txt_add:
-                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_DETAIL);
+                DeliveryMinimumDetailActivity.start(this, null);
                 break;
             default:
                 break;
@@ -148,7 +148,7 @@ public class DeliveryMinimumActivity extends BaseLoadActivity implements Deliver
             if (id == R.id.txt_del) {
                 DeliveryMinimumActivity.this.showTipsDialog(bean);
             } else if (id == R.id.content) {
-                RouterUtil.goToActivity(RouterConfig.DELIVERY_MINIMUM_DETAIL, bean);
+                DeliveryMinimumDetailActivity.start(DeliveryMinimumActivity.this, bean);
             }
         }
     }

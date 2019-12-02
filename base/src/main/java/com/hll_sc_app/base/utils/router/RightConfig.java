@@ -58,10 +58,8 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.COOPERATION_SETTING, R.string.right_workingMealSetting);
         // 配送范围
         RIGHT_MAP.put(RouterConfig.DELIVERY_AREA, R.string.right_distributionArea_query);
-        // 起送金额
-        RIGHT_MAP.put(RouterConfig.DELIVERY_MINIMUM, R.string.right_distributionMonetaryLimitation_query);
-        // 员工信息查看
-        RIGHT_MAP.put(RouterConfig.STAFF_EDIT, R.string.right_staffManagement_query);
+        // 店铺信息编辑
+        RIGHT_MAP.put(RouterConfig.SUPPLIER_SHOP, R.string.right_storeManagement_update);
         // 账号管理
         RIGHT_MAP.put(RouterConfig.SETTING_ACCOUNT, R.string.right_accountManagement);
         // 更改集团绑定手机号
