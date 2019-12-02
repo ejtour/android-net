@@ -1,7 +1,6 @@
 package com.hll_sc_app.base.utils.router;
 
 import android.content.Context;
-import android.os.Looper;
 
 import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Interceptor;
@@ -10,7 +9,6 @@ import com.alibaba.android.arouter.facade.template.IInterceptor;
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.ToastUtils;
 
 /**
@@ -21,6 +19,7 @@ import com.hll_sc_app.citymall.util.ToastUtils;
  */
 @Interceptor(priority = 8, name = Constant.LOGIN_INTERCEPTOR)
 public class LoginInterceptor implements IInterceptor {
+    private Context mContext;
 
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
@@ -41,17 +40,16 @@ public class LoginInterceptor implements IInterceptor {
      * @param callback callback
      */
     private void checkRight(Postcard postcard, InterceptorCallback callback) {
-        if (RightConfig.checkRight(RightConfig.getRightCode(App.INSTANCE, postcard.getPath()))) {
+        if (RightConfig.checkRight(RightConfig.getRightCode(mContext, postcard.getPath()))) {
             callback.onContinue(postcard);
         } else {
-            callback.onContinue(null);
-            Looper.prepare();
-            ToastUtils.showShort(App.INSTANCE.getString(R.string.right_tips));
-            Looper.loop();
+            ToastUtils.showShort(mContext.getString(R.string.right_tips));
+            callback.onInterrupt(null);
         }
     }
 
     @Override
     public void init(Context context) {
+        mContext = context;
     }
 }

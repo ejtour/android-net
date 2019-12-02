@@ -36,6 +36,10 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.ORDER_SETTLEMENT, R.string.right_orderManagement_gathering);
         // 修改发货信息
         RIGHT_MAP.put(RouterConfig.ORDER_MODIFY_DELIVER, R.string.right_orderManagement_editQuantity);
+        // 协议价新增
+        RIGHT_MAP.put(RouterConfig.MINE_AGREEMENT_PRICE_QUOTATION_ADD, R.string.right_agreementPriceManagement_create);
+        // 协议价查看
+        RIGHT_MAP.put(RouterConfig.MINE_AGREEMENT_PRICE_DETAIL, R.string.right_agreementPriceManagement_query);
         // 合作采购商列表
         RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_LIST, R.string.right_workingMeal_query);
         // 合作采购商详情
