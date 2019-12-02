@@ -41,17 +41,23 @@ public class RightConfig {
         // 协议价查看
         RIGHT_MAP.put(RouterConfig.MINE_AGREEMENT_PRICE_DETAIL, R.string.right_agreementPriceManagement_query);
         // 合作采购商列表
-        RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_LIST, R.string.right_workingMeal_query);
+        RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_DETAIL, R.string.right_workingMeal_query);
         // 合作采购商详情
-        RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_DETAIL, R.string.right_workingMeal_queryDetailInfo);
+        RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_DETAIL_DETAILS, R.string.right_workingMeal_queryDetailInfo);
         // 合作采购商门店详情
         RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DETAIL, R.string.right_workingMeal_queryShopInfo);
+        // 我收到的合作申请
+        RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_APPLICATION, R.string.right_workingMeal_update);
+        // 我发出的合作申请
+        RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_MY_APPLICATION, R.string.right_workingMeal_update);
         // 新增合作采购商
         RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_ADD, R.string.right_workingMeal_create);
+        // 结算方式
+        RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SETTLEMENT, R.string.right_settlementMethod_creat);
         // 合作采购商设置
         RIGHT_MAP.put(RouterConfig.COOPERATION_SETTING, R.string.right_workingMealSetting);
         // 配送范围
-        RIGHT_MAP.put(RouterConfig.DELIVERY_RANGE, R.string.right_distributionArea_query);
+        RIGHT_MAP.put(RouterConfig.DELIVERY_AREA, R.string.right_distributionArea_query);
         // 起送金额
         RIGHT_MAP.put(RouterConfig.DELIVERY_MINIMUM, R.string.right_distributionMonetaryLimitation_query);
         // 员工信息查看

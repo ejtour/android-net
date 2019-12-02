@@ -72,7 +72,12 @@
     <string name="right_workingMeal_query">supplier.workingMeal.query</string>
     <!-- 删除合作采购商 -->
     <string name="right_workingMeal_delete">supplier.workingMeal.delete</string>
-
+    <!-- 指派销售 -->
+    <string name="right_assignSales_creat">supplier.assignSales.creat</string>
+    <!-- 指派司机 -->
+    <string name="right_assignDriver_creat">supplier.assignDriver.creat</string>
+    <!-- 结算方式 -->
+    <string name="right_settlementMethod_creat">supplier.settlementMethod.creat</string>
 
     <!-- 合作采购商设置 -->
     <string name="right_workingMealSetting">supplier.workingMealSetting</string>
@@ -80,13 +85,9 @@
     <string name="right_workingMealSetting_update">supplier.workingMealSetting.update</string>
 
     <!-- 导出对账单 -->
-    <string name="right_transactionRecord_exportBill">supplier.transactionRecord.exportBill</string>
-    <!-- 导出详细对账单 -->
-    <string name="right_transactionRecord_exportDetailBill">supplier.transactionRecord.exportDetailBill</string>
-    <!-- 确认结算 -->
-    <string name="right_transactionRecord_settleAccounts">supplier.transactionRecord.settleAccounts</string>
-    <!-- 查看交易记录 -->
-    <string name="right_transactionRecord_query">supplier.transactionRecord.query</string>
+    <string name="right_statementBill_exportStatementBill">supplier.statementBill.exportStatementBill</string>
+    <!-- 批量结算 -->
+    <string name="right_statementBill_batchSettlement">supplier.statementBill.batchSettlement</string>
 
     <!-- 配送范围编辑 -->
     <string name="right_distributionArea_update">supplier.distributionArea.update</string>
@@ -150,11 +151,6 @@
     <string name="right_supplierInfoManagement_query">supplier.supplierInfoManagement.query</string>
     <!-- 供应商信息编辑 -->
     <string name="right_supplierInfoManagement_update">supplier.supplierInfoManagement.update</string>
-
-    <!-- 导出对账单 -->
-    <string name="right_statementBill_exportStatementBill">supplier.statementBill.exportStatementBill</string>
-    <!-- 批量结算 -->
-    <string name="right_statementBill_batchSettlement">supplier.statementBill.batchSettlement</string>
 
 
     <!-- 退货时效编辑 -->
@@ -264,13 +260,6 @@
 
     <!-- 客户发货仓库管理 -->
     <string name="right_clientWarehouseManagement_query">supplier.clientWarehouseManagement.query</string>
-
-    <!-- 指派销售 -->
-    <string name="right_assignSales_creat">supplier.assignSales.creat</string>
-    <!-- 指派司机 -->
-    <string name="right_assignDriver_creat">supplier.assignDriver.creat</string>
-    <!-- 结算方式 -->
-    <string name="right_settlementMethod_creat">supplier.settlementMethod.creat</string>
 
     <!-- crm首页 -->
     <string name="right_crm">crm</string>

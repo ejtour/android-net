@@ -16,6 +16,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.app.cooperation.detail.shopadd.CooperationSelectShopActivity;
+import com.hll_sc_app.app.cooperation.detail.shopsaleman.CooperationShopSalesActivity;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
@@ -222,12 +223,12 @@ public class CooperationShopDetailActivity extends BaseLoadActivity implements C
             case CooperationSelectShopActivity.TYPE_SALESMAN:
                 req.setShopIDs(mShopBean.getShopID());
                 req.setEmployeeID(mShopBean.getSalesRepresentativeID());
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, req);
+                CooperationShopSalesActivity.start(this, req);
                 break;
             case CooperationSelectShopActivity.TYPE_DRIVER:
                 req.setShopIDs(mShopBean.getShopID());
                 req.setEmployeeID(mShopBean.getDriverID());
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, req);
+                CooperationShopSalesActivity.start(this, req);
                 break;
             case CooperationSelectShopActivity.TYPE_DELIVERY_PERIOD:
                 req.setShopIds(Collections.singletonList(mShopBean.getShopID()));

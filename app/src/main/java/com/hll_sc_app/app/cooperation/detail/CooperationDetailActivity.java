@@ -410,11 +410,7 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
         req.setChangeAllShops("0");
         req.setGroupID(UserConfig.getGroupID());
         req.setPurchaserID(mDetail.getPurchaserID());
-        ARouter.getInstance()
-                .build(RouterConfig.COOPERATION_PURCHASER_DETAIL_SELECT_SHOP)
-                .withParcelableArrayList("parcelable", new ArrayList<>(mAdapter.getData()))
-                .withParcelable("parcelable1", req)
-                .navigation();
+        CooperationSelectShopActivity.start(this, mAdapter.getData(), req);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.cooperation.detail.shopadd;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -15,16 +16,20 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
+import com.hll_sc_app.app.cooperation.detail.shopsaleman.CooperationShopSalesActivity;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.cooperation.ShopSettlementReq;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SimpleDecoration;
 
@@ -67,6 +72,32 @@ public class CooperationSelectShopActivity extends BaseLoadActivity {
     ArrayList<PurchaserShopBean> mData;
     private Map<String, PurchaserShopBean> mSelectMap;
     private CooperationDetailActivity.PurchaserShopListAdapter mAdapter;
+
+    public static void start(Context context, List<PurchaserShopBean> list, ShopSettlementReq req) {
+        if (!UserConfig.crm()) {
+            String right = null;
+            switch (req.getActionType()) {
+                case TYPE_SETTLEMENT:
+                    right = context.getString(R.string.right_settlementMethod_creat);
+                    break;
+                case TYPE_SALESMAN:
+                    right = context.getString(R.string.right_assignSales_creat);
+                    break;
+                case TYPE_DRIVER:
+                    right = context.getString(R.string.right_assignDriver_creat);
+                    break;
+            }
+            if (!RightConfig.checkRight(right)) {
+                ToastUtils.showShort(context.getString(R.string.right_tips));
+                return;
+            }
+        }
+        ARouter.getInstance()
+                .build(RouterConfig.COOPERATION_PURCHASER_DETAIL_SELECT_SHOP)
+                .withParcelableArrayList("parcelable", new ArrayList<>(list))
+                .withParcelable("parcelable1", req)
+                .navigation();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -195,12 +226,9 @@ public class CooperationSelectShopActivity extends BaseLoadActivity {
                 RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_DELIVERY, mReq);
                 break;
             case TYPE_SALESMAN:
-                mReq.setShopIDs(TextUtils.join(",", listShopIds));
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, mReq);
-                break;
             case TYPE_DRIVER:
                 mReq.setShopIDs(TextUtils.join(",", listShopIds));
-                RouterUtil.goToActivity(RouterConfig.COOPERATION_PURCHASER_DETAIL_SHOP_SALES, mReq);
+                CooperationShopSalesActivity.start(this, mReq);
                 break;
             default:
                 break;
