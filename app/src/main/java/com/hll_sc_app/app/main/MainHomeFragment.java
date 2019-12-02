@@ -20,6 +20,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
+import com.hll_sc_app.app.goods.add.GoodsAddActivity;
 import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.report.ReportEntryActivity;
@@ -324,7 +325,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     public void shortcut(View view) {
         switch (view.getId()) {
             case R.id.fmh_entry_add_product:
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD);
+                GoodsAddActivity.start(requireActivity(),null);
                 break;
             case R.id.fmh_entry_price_manage:
                 RouterUtil.goToActivity(RouterConfig.PRICE_MANAGE);

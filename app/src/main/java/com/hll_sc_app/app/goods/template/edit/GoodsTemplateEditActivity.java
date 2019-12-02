@@ -19,6 +19,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.goods.add.GoodsAddActivity;
 import com.hll_sc_app.app.goods.add.specs.GoodsSpecsAddActivity;
 import com.hll_sc_app.app.goods.add.specs.depositproducts.DepositProductsActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -29,7 +30,6 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.bean.goods.GoodsAddBatchReq;
 import com.hll_sc_app.bean.goods.GoodsAddBatchResp;
@@ -82,8 +82,7 @@ public class GoodsTemplateEditActivity extends BaseLoadActivity implements Goods
             GoodsBean bean = (GoodsBean) adapter.getItem(position);
             if (bean != null) {
                 bean.setEditFrom(GoodsBean.EDIT_FROM_TEMPLATE);
-                RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD, GoodsTemplateEditActivity.this,
-                    ImgUploadBlock.REQUEST_CODE_CHOOSE, bean);
+                GoodsAddActivity.start(this, bean);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

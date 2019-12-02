@@ -23,11 +23,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.MainActivity;
+import com.hll_sc_app.app.goods.add.GoodsAddActivity;
 import com.hll_sc_app.app.goods.list.GoodsListFragment;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.GoodsSearch;
 import com.hll_sc_app.app.warehouse.shipper.ShipperWarehouseGoodsActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.GoodsBean;
@@ -129,6 +131,10 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
+                if (!RightConfig.checkRight(getString(R.string.right_productManagement_search))) {
+                    showToast(getString(R.string.right_tips));
+                    return;
+                }
                 SearchActivity.start(requireActivity(),
                         searchContent, GoodsSearch.class.getSimpleName());
             }
@@ -205,7 +211,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             return;
         }
         if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_ADD)) {
-            RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD);
+            GoodsAddActivity.start(requireActivity(), null);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_IMPORT)) {
             RouterUtil.goToActivity(RouterConfig.GOODS_TEMPLATE_LIST);
         } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_GOODS_TOP)) {
@@ -226,6 +232,10 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
      * 导出商品列表
      */
     private void toExportGoodsList() {
+        if (!RightConfig.checkRight(getString(R.string.right_productManagement_exportProductList))) {
+            showToast(getString(R.string.right_tips));
+            return;
+        }
         int currentItem = mViewPager.getCurrentItem();
         String actionType = STR_ACTION_TYPE[currentItem];
         if (TextUtils.equals(actionType, "warehouse") || TextUtils.equals(actionType, "normalProduct")) {

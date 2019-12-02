@@ -13,6 +13,10 @@
     <string name="right_productManagement_exportProductList">supplier.productManagement.exportProductList</string>
     <!-- 商品置顶 -->
     <string name="right_productManagement_productStick">supplier.productManagement.productStick</string>
+    <!-- 库存预警设置 -->
+    <string name="right_stock_warn_query">supplier.Alert settings.query</string>
+    <!-- 库存预警修改 -->
+    <string name="right_stock_warn_update">supplier.Alert settings.update</string>
 
     <!-- 订单接单 -->
     <string name="right_orderManagement_receive">supplier.orderManagement.receive</string>
@@ -267,11 +271,6 @@
     <string name="right_assignDriver_creat">supplier.assignDriver.creat</string>
     <!-- 结算方式 -->
     <string name="right_settlementMethod_creat">supplier.settlementMethod.creat</string>
-
-    <!-- 库存预警设置 -->
-    <string name="right_stock_warn_query">supplier.Alert settings.query</string>
-    <!-- 库存预警修改 -->
-    <string name="right_stock_warn_update">supplier.Alert settings.update</string>
 
     <!-- crm首页 -->
     <string name="right_crm">crm</string>

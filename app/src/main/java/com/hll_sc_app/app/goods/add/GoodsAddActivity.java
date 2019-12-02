@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goods.add;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -39,6 +40,7 @@ import com.hll_sc_app.base.dialog.TipsDialog;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.AreaProductSelectWindow;
@@ -55,6 +57,7 @@ import com.hll_sc_app.bean.goods.SpecsBean;
 import com.hll_sc_app.bean.user.CategoryItem;
 import com.hll_sc_app.bean.user.CategoryResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.widget.SimpleDecoration;
 import com.zhihu.matisse.Matisse;
@@ -177,6 +180,17 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private FlowAdapter mFlowAdapter;
     private ProductAttrAdapter mProductAttrAdapter;
     private AreaProductSelectWindow mAreaProductSelectWindow;
+
+    /**
+     * @param bean 商品
+     */
+    public static void start(Activity context, GoodsBean bean) {
+        if (!RightConfig.checkRight(context.getString(bean == null ? R.string.right_productManagement_create : R.string.right_productManagement_update))) {
+            ToastUtils.showShort(context.getString(R.string.right_tips));
+            return;
+        }
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_ADD, context, ImgUploadBlock.REQUEST_CODE_CHOOSE, bean);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

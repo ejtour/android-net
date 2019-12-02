@@ -23,8 +23,19 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.ROOT_HOME_GOODS_DETAIL, R.string.right_productManagement_query);
         // 商品置顶
         RIGHT_MAP.put(RouterConfig.GOODS_STICK_MANAGE, R.string.right_productManagement_productStick);
+        // 代仓商品库存预警
+        RIGHT_MAP.put(RouterConfig.GOODS_INVENTORY_WARNING, R.string.right_stock_warn_query);
         // 订单详情
         RIGHT_MAP.put(RouterConfig.ORDER_DETAIL, R.string.right_orderManagement_query);
+        RIGHT_MAP.put(RouterConfig.ORDER_TRANSFER_DETAIL, R.string.right_orderManagement_query);
+        // 订单验货
+        RIGHT_MAP.put(RouterConfig.ORDER_INSPECTION, R.string.right_orderManagement_examine);
+        // 订单拒收 （订单拒收和销售代退为一个页面，目前只核验订单拒收，在权限判断方法中处理）
+        RIGHT_MAP.put(RouterConfig.AFTER_SALES_APPLY, R.string.right_orderManagement_rejection);
+        // 立即收款
+        RIGHT_MAP.put(RouterConfig.ORDER_SETTLEMENT, R.string.right_orderManagement_gathering);
+        // 修改发货信息
+        RIGHT_MAP.put(RouterConfig.ORDER_MODIFY_DELIVER, R.string.right_orderManagement_editQuantity);
         // 合作采购商列表
         RIGHT_MAP.put(RouterConfig.COOPERATION_PURCHASER_LIST, R.string.right_workingMeal_query);
         // 合作采购商详情
@@ -86,9 +97,8 @@ public class RightConfig {
      * @return 权限代码
      */
     static String getRightCode(Context context, String path) {
-        if (RIGHT_MAP.get(path) != null) {
+        if (!UserConfig.crm() && RIGHT_MAP.get(path) != null)
             return context.getString(RIGHT_MAP.get(path));
-        }
         return null;
     }
 
