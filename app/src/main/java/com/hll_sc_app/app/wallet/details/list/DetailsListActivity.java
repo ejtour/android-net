@@ -16,6 +16,7 @@ import com.hll_sc_app.app.wallet.details.show.DetailsShowActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.filter.WalletDetailsParam;
@@ -91,6 +92,10 @@ public class DetailsListActivity extends BaseLoadActivity implements IDetailsLis
 
     private void bindListener() {
         mTitleBar.setRightBtnClick(v -> {
+            if (!RightConfig.checkRight(getString(R.string.right_rechargeList_exportDetail))) {
+                showToast(getString(R.string.right_tips));
+                return;
+            }
             mPresenter.export(null);
         });
         mAdapter.setOnItemClickListener((adapter, view, position) -> {

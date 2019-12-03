@@ -12,6 +12,7 @@ import com.hll_sc_app.app.stockmanage.selectproduct.ProductSelectActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.CustomCategoryBean;
@@ -57,6 +58,10 @@ public class TaxSettingActivity extends BaseLoadActivity implements ITaxSettingC
 
     private void initView() {
         mTitleBar.setRightBtnClick(v -> {
+            if (!RightConfig.checkRight(getString(R.string.right_taxSetting_save))) {
+                showToast(getString(R.string.right_tips));
+                return;
+            }
             TaxSaveReq req = new TaxSaveReq();
             req.setGroupID(UserConfig.getGroupID());
             List<TaxSaveBean> list = new ArrayList<>();

@@ -11,6 +11,7 @@
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:visibility="gone"
         android:background="@drawable/bg_divider_bottom"
         android:drawableLeft="@drawable/ic_cooperation_title_shop"
         android:drawablePadding="3dp"

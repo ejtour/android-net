@@ -22,6 +22,7 @@ import com.hll_sc_app.app.crm.customer.partner.detail.CustomerPartnerDetailActiv
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -81,7 +82,6 @@ public class CustomerPartnerFragment extends BaseLazyFragment implements ICustom
     }
 
     private void initView() {
-        updateNum(0, 0, 0);
         mAdapter = new CustomerPartnerAdapter();
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PurchaserBean item = mAdapter.getItem(position);
@@ -115,6 +115,7 @@ public class CustomerPartnerFragment extends BaseLazyFragment implements ICustom
         ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_ed5655)),
                 source.indexOf("中") + 1, source.lastIndexOf("个"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTitle.setText(ss);
+        mTitle.setVisibility(View.VISIBLE);
     }
 
     void reload() {
@@ -124,6 +125,12 @@ public class CustomerPartnerFragment extends BaseLazyFragment implements ICustom
 
     @Override
     protected void initData() {
+        if (isAll() && !RightConfig.checkRight(getString(R.string.right_partner_list_all))) {
+            showToast(getString(R.string.right_tips));
+            mRefreshLayout.setEnablePureScrollMode(true);
+            mTitle.setVisibility(View.GONE);
+            return;
+        }
         mPresenter.start();
     }
 

@@ -11,9 +11,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.stockmanage.StorehouseListResp;
+import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.widget.TitleBar;
 
 import butterknife.BindView;
@@ -44,6 +46,10 @@ public class StoreHouseEditActivity extends BaseLoadActivity implements IStoreHo
     private IStoreHouseEditContract.IPresent mPresent;
 
     public static void start(Activity activity, int requestCode, StorehouseListResp.Storehouse storehouse) {
+        if (!RightConfig.checkRight(activity.getString(storehouse == null ? R.string.right_warehouse_creat : R.string.right_warehouseManage_query))) {
+            ToastUtils.showShort(activity.getString(R.string.right_tips));
+            return;
+        }
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_STORE_HOUSE_EDIT, activity, requestCode, storehouse);
     }
 
@@ -68,6 +74,10 @@ public class StoreHouseEditActivity extends BaseLoadActivity implements IStoreHo
             mEdtTel.setText(mStore.getLinkTel());
         }
         mTitle.setRightBtnClick(v -> {
+            if (!RightConfig.checkRight(getString(R.string.right_warehouse_update))) {
+                ToastUtils.showShort(getString(R.string.right_tips));
+                return;
+            }
             mPresent.saveStoreHouseInfo();
         });
     }

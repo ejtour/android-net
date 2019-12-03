@@ -70,12 +70,11 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.ACTIVITY_UNBIND_GROUP, R.string.right_accountManagement_unbindChildAccount);
         // 订单设置
         RIGHT_MAP.put(RouterConfig.BILL_SETTING, R.string.right_billSetting);
-        // 消息中心
-        RIGHT_MAP.put(RouterConfig.MESSAGE, R.string.right_msgCenter_query);
-        // 消息详情
-        RIGHT_MAP.put(RouterConfig.MESSAGE_DETAIL, R.string.right_msgCenter_detail);
-        // 我的钱包
-        RIGHT_MAP.put(RouterConfig.WALLET, R.string.right_accountStatement_query);
+        // 供应商信息编辑
+        RIGHT_MAP.put(RouterConfig.INFO_MODIFY, R.string.right_supplierInfoManagement_update);
+        RIGHT_MAP.put(RouterConfig.INFO_DOORWAY, R.string.right_supplierInfoManagement_update);
+        RIGHT_MAP.put(RouterConfig.INFO_LICENSE, R.string.right_supplierInfoManagement_update);
+        RIGHT_MAP.put(RouterConfig.INFO_OTHER, R.string.right_supplierInfoManagement_update);
         // 充值
         RIGHT_MAP.put(RouterConfig.WALLET_RECHARGE, R.string.right_accountStatement_recharge);
         // 提现
@@ -86,16 +85,38 @@ public class RightConfig {
         RIGHT_MAP.put(RouterConfig.WALLET_ACCOUNT_MY, R.string.right_accountStatement_accountInfo);
         // 开通钱包账号
         RIGHT_MAP.put(RouterConfig.WALLET_ACCOUNT_CREATE, R.string.right_accountStatement_apply);
-        // 税率设置
-        RIGHT_MAP.put(RouterConfig.SETTING_TAX, R.string.right_taxSetting_product);
+        // 商品特殊税率设置
+        RIGHT_MAP.put(RouterConfig.SETTING_TAX_SPECIAL, R.string.right_taxSetting_product);
+        // 新增特殊设置商品
+        RIGHT_MAP.put(RouterConfig.SETTING_TAX_SELECT_GOODS, R.string.right_taxSetting_product_add);
+        // 协议价比例设置新增
+        RIGHT_MAP.put(RouterConfig.SETTING_PRICE_RATIO_ADD, R.string.right_negotiatepriceSetting_add);
+        // 定向售卖编辑
+        RIGHT_MAP.put(RouterConfig.ORIENTATION_DETAIL, R.string.right_targetedSale_modify);
         // 提醒设置
         RIGHT_MAP.put(RouterConfig.SETTING_REMIND, R.string.right_bussinesSetting_billMaxNumberAlert);
         // 退货审核详情
         RIGHT_MAP.put(RouterConfig.AFTER_SALES_DETAIL, R.string.right_returnedPurchaseCheck_queryDetailInfo);
         // 仓库管理
         RIGHT_MAP.put(RouterConfig.ACTIVITY_STORE_HOUSE_MANAGE, R.string.right_warehouseManagement_query);
+        // 库存查询
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_QUERY_LIST, R.string.right_inventoryInquiry_query);
+        // 商品库存校验设置
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_CHECK_SETTING, R.string.right_setUpVerify_query);
+        // 新增库存校验商品
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_CHECK_SELECT_PRODUCT, R.string.right_verify_creat);
         // 库存日志查询
         RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_LOG_QUERY, R.string.right_inventoryIog_query);
+        // 客户发货仓库管理
+        RIGHT_MAP.put(RouterConfig.ACTIVITY_STOCK_CUSTOMER_SEND, R.string.right_clientWarehouseManagement_query);
+        // 代仓客户新增
+        RIGHT_MAP.put(RouterConfig.WAREHOUSE_ADD, R.string.right_corporateWarehouse_create);
+        // 我收到的代仓申请
+        RIGHT_MAP.put(RouterConfig.WAREHOUSE_APPLICATION, R.string.right_corporateWarehouse_queryNewApply);
+        // 我发出的代仓申请
+        RIGHT_MAP.put(RouterConfig.WAREHOUSE_INVITE, R.string.right_corporateWarehouse_myApply);
+        // 查看代仓客户信息
+        RIGHT_MAP.put(RouterConfig.WAREHOUSE_DETAILS, R.string.right_corporateWarehouse_queryInfo);
     }
 
     /**

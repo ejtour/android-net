@@ -7,13 +7,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.bean.common.ButtonAction;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ToastUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +29,7 @@ import static com.hll_sc_app.bean.common.ButtonAction.BUTTON_POSITIVE;
  * @since 2019/7/8
  */
 
-public class AfterSalesActionBar extends LinearLayout {
+public class AfterSalesActionBar extends LinearLayout implements View.OnClickListener {
     private static final int ACTION_CUSTOMER = 2;
     private static final int ACTION_REJECT = 3;
     private static final int ACTION_DRIVER = 4;
@@ -119,7 +122,34 @@ public class AfterSalesActionBar extends LinearLayout {
                 textView.setBackgroundResource(isItem ? R.drawable.bg_button_large_stroke_primary : R.drawable.bg_button_mid_stroke_primary);
                 break;
         }
-        textView.setOnClickListener(mListener);
+        textView.setOnClickListener(this);
         return textView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int right = 0;
+        switch (v.getId()) {
+            case R.id.asa_customer:
+                right = R.string.right_returnedPurchaseCheck_examine;
+                break;
+            case R.id.asa_driver:
+                right = R.string.right_returnedPurchaseCheck_dirverReceive;
+                break;
+            case R.id.asa_warehouse:
+                right = R.string.right_returnedPurchaseCheck_warehouseReceive;
+                break;
+            case R.id.asa_finance:
+                right = R.string.right_returnedPurchaseCheck_financeExamine;
+                break;
+            case R.id.asa_reject:
+                right = R.string.right_returnedPurchaseCheck_reject;
+                break;
+        }
+        if (right != 0 && !RightConfig.checkRight(v.getContext().getString(right))) {
+            ToastUtils.showShort(v.getContext().getString(R.string.right_tips));
+            return;
+        }
+        mListener.onClick(v);
     }
 }

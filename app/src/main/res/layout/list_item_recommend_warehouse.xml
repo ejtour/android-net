@@ -84,9 +84,10 @@
         android:layout_height="match_parent"
         android:background="@color/base_colorPrimary">
 
-        <TextView
+        <com.hll_sc_app.widget.right.RightTextView
             android:id="@+id/txt_del"
             android:layout_width="60dp"
+            app:rightCode="@string/right_corporateWarehouse_relieve"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="解除"
