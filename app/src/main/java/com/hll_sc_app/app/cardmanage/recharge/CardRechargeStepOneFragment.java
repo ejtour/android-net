@@ -88,7 +88,10 @@ public class CardRechargeStepOneFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0 && !CommonUtils.isMoney(s.toString())) {
+                if (s.toString().length() > 0 && (
+                        !CommonUtils.isMoney(s.toString()) ||
+                                Double.parseDouble(s.toString()) > 99999999.99
+                )) {
                     String content = s.toString();
                     content = content.substring(0, content.length() - 1);
                     mEdtRecharge.setText(content);
@@ -112,7 +115,10 @@ public class CardRechargeStepOneFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() > 0 && !CommonUtils.isMoney(s.toString())) {
+                if (s.toString().length() > 0 && (
+                        !CommonUtils.isMoney(s.toString()) ||
+                                Double.parseDouble(s.toString()) > 99999999.99
+                )) {
                     String content = s.toString();
                     content = content.substring(0, content.length() - 1);
                     mEdtGift.setText(content);
