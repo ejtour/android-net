@@ -84,7 +84,7 @@ public class CardRechargeStepTwoFragment extends Fragment {
         mTxtCardNo.setText(bean.getCardNo());
         mTxtRecharge.setText("¥" + CommonUtils.formatMoney(Double.parseDouble(bean.getCashBalanceText())));
         mTxtGift.setText("¥" + CommonUtils.formatMoney(Double.parseDouble(bean.getGiftBalanceText())));
-        BigDecimal total = CommonUtils.addDouble(Double.parseDouble(bean.getCashBalanceText()), Double.parseDouble(bean.getGiftBalanceText()));
+        BigDecimal total = CommonUtils.addDouble(bean.getBalance(),Double.parseDouble(bean.getCashBalanceText()), Double.parseDouble(bean.getGiftBalanceText()));
         mTxtTotal.setText("¥" + total.toString());
     }
 }

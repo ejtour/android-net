@@ -147,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="赠送卡纸"
+            android:text="赠送卡值"
             android:textColor="@color/text_999"
             android:textSize="@dimen/base_text_12"
             app:layout_constraintEnd_toEndOf="@id/txt_gift"
