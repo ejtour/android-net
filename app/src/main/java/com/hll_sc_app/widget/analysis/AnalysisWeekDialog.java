@@ -66,13 +66,28 @@ public class AnalysisWeekDialog extends BaseDialog {
 
     private void initData() {
         mMap = new HashMap<>();
-        Date first = CalendarUtils.getWeekDate(-1, 1);
         int year = Calendar.getInstance().get(Calendar.YEAR);
         for (int i = 0; i < 20; i++) {
             List<Date> dates = new ArrayList<>();
             mMap.put(year - i, dates);
-            for (int j = 0; j < 52; j++) {
-                dates.add(CalendarUtils.getDateBefore(first, 7 * (i * 52 + j)));
+            if (i == 0) {
+                Date cur = CalendarUtils.getWeekDate(0, 1);
+                Calendar instance = Calendar.getInstance();
+                instance.setTime(cur);
+                int week = instance.get(Calendar.WEEK_OF_YEAR) - 1;
+                for (int j = 0; j < week; j++) {
+                    instance.add(Calendar.WEEK_OF_YEAR, -1);
+                    dates.add(instance.getTime());
+                }
+            } else {
+                Calendar instance = Calendar.getInstance();
+                instance.set(Calendar.YEAR, year - i);
+                instance.set(Calendar.WEEK_OF_YEAR, 54);
+                instance.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                for (int j = 0; j < 53; j++) {
+                    instance.add(Calendar.WEEK_OF_YEAR, -1);
+                    dates.add(instance.getTime());
+                }
             }
         }
         mYearAdapter.setList(new ArrayList<>(mMap.keySet()));
@@ -155,7 +170,7 @@ public class AnalysisWeekDialog extends BaseDialog {
         @Override
         protected CharSequence getItemText(int index) {
             int year = mList.get(index);
-            return String.format("%s - %s", year - 1, year);
+            return String.valueOf(year);
         }
 
         @Override
