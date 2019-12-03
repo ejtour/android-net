@@ -63,7 +63,7 @@ public class CardManageRechargeActivity extends BaseLoadActivity implements ICar
         stepFragments.add(CardRechargeStepTwoFragment.newInstance());
         mViewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
         mViewPager.setScroll(false);
-        mTitbleBar.setRightBtnClick(v -> {
+        mTitbleBar.setLeftBtnClick(v -> {
             if (mViewPager.getCurrentItem() == 1) {
                 mViewPager.setCurrentItem(0, true);
             } else {
