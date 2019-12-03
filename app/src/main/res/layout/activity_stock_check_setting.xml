@@ -110,7 +110,7 @@
 
 
             <com.hll_sc_app.widget.right.RightTextView
-                app:rightCode="@string/right_updateVerify_update"
+                app:rightCode="@string/right_inventoryCheckSetting_delete"
                 android:id="@+id/txt_move"
                 style="@style/BtnOrderAction.PrimaryStroke"
                 android:layout_width="wrap_content"
