@@ -46,6 +46,7 @@ public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoods
     private IGoodsDemandContract.IGoodsDemandPresenter mPresenter;
     private GoodsDemandEntryAdapter mAdapter;
     private EmptyView mEmptyView;
+    private boolean mNewIntent;
 
     public static void start() {
         RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_ENTRY);
@@ -96,7 +97,7 @@ public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoods
         } else {
             mAdapter.setNewData(list);
             if (CommonUtils.isEmpty(list))
-                RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_ADD, this);
+                RouterUtil.goToActivity(RouterConfig.GOODS_DEMAND_ADD);
         }
         mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
     }
@@ -126,6 +127,17 @@ public class GoodsDemandEntryActivity extends BaseLoadActivity implements IGoods
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        mNewIntent = true;
         mPresenter.start();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (mNewIntent) {
+            mNewIntent = false;
+        } else if (mAdapter.getData().size() == 0) {
+            finish();
+        }
     }
 }
