@@ -44,7 +44,6 @@ public class CardManageListActivity extends BaseLoadActivity implements ICardMan
     @BindView(R.id.view_pager)
     ViewPager mViewpager;
     private Unbinder unbinder;
-    private ICardManageContract.IFragment mCurrentFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
