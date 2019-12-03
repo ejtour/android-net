@@ -127,7 +127,7 @@ public class AnalysisWeekDialog extends BaseDialog {
         protected CharSequence getItemText(int index) {
             Date date = mList.get(index);
             return String.format("%s - %s", CalendarUtils.format(date, Constants.SLASH_YYYY_MM_DD),
-                    CalendarUtils.format(CalendarUtils.getWeekDate(date, 0, 7), Constants.SLASH_YYYY_MM_DD));
+                    CalendarUtils.format(CalendarUtils.getDateAfter(date, 6), Constants.SLASH_YYYY_MM_DD));
         }
 
         @Override

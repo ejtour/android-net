@@ -100,7 +100,7 @@ public class AnalysisActivity extends BaseLoadActivity implements IAnalysisContr
 
     private void updateDate() {
         mDate.setText(String.format("统计周期：%s - %s", CalendarUtils.format(mParam.getDate(), Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(mParam.getTimeType() == 2 ? CalendarUtils.getWeekDate(mParam.getDate(), 0, 7)
+                CalendarUtils.format(mParam.getTimeType() == 2 ? CalendarUtils.getDateAfter(mParam.getDate(), 6)
                         : CalendarUtils.getLastDateInMonth(mParam.getDate()), Constants.SLASH_YYYY_MM_DD)));
     }
 
