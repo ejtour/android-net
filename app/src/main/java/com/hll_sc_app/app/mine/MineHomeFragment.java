@@ -373,7 +373,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
 
         Date date = DateUtil.parse(bean.getDate());
         mDate.setText(String.format("以上数据统计周期为：%s - %s", CalendarUtils.format(date, Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(CalendarUtils.getWeekDate(date, 0, 7), Constants.SLASH_YYYY_MM_DD)));
+                CalendarUtils.format(CalendarUtils.getDateAfter(date, 6), Constants.SLASH_YYYY_MM_DD)));
     }
 
     @Override

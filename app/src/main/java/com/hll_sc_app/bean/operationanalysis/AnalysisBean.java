@@ -39,7 +39,7 @@ public class AnalysisBean {
         Date date = DateUtil.parse(this.date);
         return String.format("%s - %s", CalendarUtils.format(date, Constants.SLASH_MM_DD),
                 CalendarUtils.format(
-                        timeType == 2 ? CalendarUtils.getWeekDate(date, 0, 7) : CalendarUtils.getLastDateInMonth(date)
+                        timeType == 2 ? CalendarUtils.getDateAfter(date, 6) : CalendarUtils.getLastDateInMonth(date)
                         , Constants.SLASH_MM_DD));
     }
 
