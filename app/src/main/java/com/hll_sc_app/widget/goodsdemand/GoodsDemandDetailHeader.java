@@ -108,15 +108,9 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
 
             } else if (bean.getStatus() == 3) {
                 mStatusIcon.setImageResource(R.drawable.ic_blue_ok);
-                String title = "已上架：您需要的商品已上架 点击查看商品详情";
-                SpannableString content = new SpannableString(title);
-                content.setSpan(new UnderlineSpan(), title.length() - 8, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                mTxtReplyTitle.setText(content);
+                String title = "已上架：您需要的商品已上架";
+                mTxtReplyTitle.setText(title);
                 mTxtReplyTitle.setTextColor(0xFF5695D2);
-                mTxtReplyTitle.setOnClickListener(v -> {
-                    GoodsBean goodsBean = JSONObject.parseObject(bean.getProductReply(), GoodsBean.class);
-                    GoodsDetailActivity.start(goodsBean.getProductID(), false, false);
-                });
             }
         } else {
             if (bean.getStatus() == 1) {
