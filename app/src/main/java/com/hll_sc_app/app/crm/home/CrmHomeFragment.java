@@ -295,7 +295,7 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
 
     @OnClick(R.id.fch_summary_bg)
     public void orderManagement() {
-        EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.TO_CRM_ORDER));
+        EventBus.getDefault().post(new OrderEvent(OrderEvent.CHANGE_INDEX, 0));
     }
 
     @Override
