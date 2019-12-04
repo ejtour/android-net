@@ -132,6 +132,7 @@ public class PurchaseTemplateActivity extends BaseLoadActivity implements IPurch
                         mGroup.setText(item.getName());
                         mShopID = null;
                         mShop.setText("采购商门店");
+                        mAdapter.setNewData(null);
                         mPresenter.searchShop();
                     }
                 })
