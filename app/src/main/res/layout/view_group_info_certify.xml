@@ -149,7 +149,7 @@
             style="@style/InfoEdit"
             android:layout_width="wrap_content"
             android:drawableRight="@drawable/ic_arrow_gray"
-            android:hint="点击上传"
+            android:hint="点击完善信息"
             app:layout_constraintBottom_toBottomOf="@id/gic_license_label"
             app:layout_constraintEnd_toEndOf="@id/gic_license_label"
             app:layout_constraintTop_toTopOf="@id/gic_license_label" />

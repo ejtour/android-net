@@ -140,7 +140,7 @@ public class GroupInfoCertifyView extends FrameLayout {
 
         if (notPass) {
             mDoorway.setText(TextUtils.isEmpty(mData.getFrontImg()) ? "" : "已上传");
-            mLicense.setText(TextUtils.isEmpty(mData.getLicencePhotoUrl()) ? "" : "已上传");
+            mLicense.setText(mData.licenseEnable() ? "已上传" : "");
             mOther.setText(CommonUtils.isEmpty(mData.getOtherLicenses()) ? "" : "已上传");
             mSubmit.setEnabled(mData.enable());
         }
