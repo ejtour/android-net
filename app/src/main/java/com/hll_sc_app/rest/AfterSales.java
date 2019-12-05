@@ -180,14 +180,18 @@ public class AfterSales {
     /**
      * 进行售后操作
      *
-     * @param action           1. 客服审核 2. 司机提货 3. 仓库收货  4. 财务审核  5. 客服驳回  6. 取消  7. 财务关闭
+     * @param action           1. 客服审核 2. 司机提货 3. 仓库收货  4. 财务审核  5. 客服驳回、司机取消 6. 采购商取消
      * @param refundBillIDs    退货单id，多个id 用逗号分隔
+     * @param refundBillStatus 订单状态 1-待处理 2-已处理待收货 3-退货发货确认 4-供应商已收货 5-已退款 6-驳回 7-关闭 8-退款受理
+     * @param refundBillType   订单类型 1 退款单 2 验货差异处理单 3 退货退款单
      * @param payType          自由退货客服审核必传的支付类型 1-货到付款 2- 账期支付
      * @param msg              客服审核或拒收消息
      * @param list             退货明细列表，司机收货和仓库收货时传入
      */
     public static void afterSalesAction(int action,
                                         String refundBillIDs,
+                                        int refundBillStatus,
+                                        int refundBillType,
                                         String payType,
                                         String msg,
                                         List<AfterSalesActionReq.ActionBean> list,
@@ -196,9 +200,12 @@ public class AfterSales {
         req.setOrderAction(action);
         if (refundBillIDs.contains(",")) req.setRefundBillIDs(refundBillIDs);
         else req.setRefundBillID(refundBillIDs);
+        req.setRefundBillStatus(refundBillStatus);
+        req.setRefundBillType(refundBillType);
         req.setPayType(payType);
         if (action == 1) req.setCustomAuditNote(msg);
-        else req.setReason(msg);
+        else if (action == 5) req.setRefuseReason(msg);
+        else if (action == 7) req.setCloseReason(msg);
         req.setRefundBillDetailList(list);
         AfterSalesService.INSTANCE
                 .afterSalesAction(new BaseReq<>(req))
