@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,7 +12,9 @@ import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.widget.RadioGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
@@ -32,11 +35,12 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.TipRadioButton;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.message.UnreadResp;
+import com.hll_sc_app.bean.notification.Page;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.impl.IReload;
+import com.hll_sc_app.receiver.NotificationMessageReceiver;
 import com.hll_sc_app.rest.User;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,6 +66,8 @@ import io.reactivex.disposables.Disposable;
 public class MainActivity extends BaseLoadActivity implements IBackType {
     @BindView(R.id.group_type)
     RadioGroup mGroupType;
+    @Autowired(name = "parcelable")
+    Page mPage;
     private int mOldFragmentTag;
     private long mExitTime;
     private String mEmployeeID;
@@ -79,6 +85,8 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         // 查询消息
         if (!BuildConfig.isDebug)
             queryUnreadMessage();
+        ARouter.getInstance().inject(this);
+        NotificationMessageReceiver.handleNotification(mPage);
     }
 
     private void queryUnreadMessage() {
@@ -251,6 +259,12 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Parcelable parcelable = intent.getParcelableExtra("parcelable");
+        if (parcelable instanceof Page) {
+            mPage = (Page) parcelable;
+            NotificationMessageReceiver.handleNotification(mPage);
+            return;
+        }
         Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag));
         if (currentFragment instanceof IReload){
             ((IReload) currentFragment).reload();

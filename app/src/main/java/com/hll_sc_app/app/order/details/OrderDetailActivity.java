@@ -26,6 +26,7 @@ import com.hll_sc_app.app.order.deliver.modify.ModifyDeliverInfoActivity;
 import com.hll_sc_app.app.order.inspection.OrderInspectionActivity;
 import com.hll_sc_app.app.order.settle.OrderSettlementActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -64,7 +65,7 @@ import butterknife.OnClick;
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/6/11
  */
-@Route(path = RouterConfig.ORDER_DETAIL)
+@Route(path = RouterConfig.ORDER_DETAIL, extras = Constant.LOGIN_EXTRA)
 public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetailContract.IOrderDetailView, BaseQuickAdapter.OnItemClickListener {
 
     private OrderResp mOrderResp;
