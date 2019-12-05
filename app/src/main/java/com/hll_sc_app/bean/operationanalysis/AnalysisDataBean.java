@@ -20,6 +20,7 @@ public class AnalysisDataBean {
     private String amountRate;
     private double diffAmount;
     private String compareRate;
+    private double compareAmount;
     private int diffShopNum;
     private String diffShopNumRate;
     private double averageShopTradeDiffAmount;
@@ -141,6 +142,14 @@ public class AnalysisDataBean {
 
     public void setCompareRate(String compareRate) {
         this.compareRate = compareRate;
+    }
+
+    public double getCompareAmount() {
+        return compareAmount;
+    }
+
+    public void setCompareAmount(double compareAmount) {
+        this.compareAmount = compareAmount;
     }
 
     public int getDiffShopNum() {

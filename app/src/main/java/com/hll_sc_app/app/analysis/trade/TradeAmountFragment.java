@@ -69,7 +69,7 @@ public class TradeAmountFragment extends BaseAnalysisFragment {
                     if (analysisData != null) {
                         mFooter.setData(
                                 handleTip1(label, analysisData.getDiffAmount(), analysisData.getAmountRate()),
-                                handleTip2(mAnalysisEvent.getTimeType(), analysisData.getCompareRate()),
+                                handleTip2(mAnalysisEvent.getTimeType(), analysisData.getCompareAmount(), analysisData.getCompareRate()),
                                 handleTip3Or4(label, "高", analysisData.getMaxValidTradeAmountTime(), analysisData.getMaxValidTradeAmount()),
                                 handleTip3Or4(label, "低", analysisData.getMinValidTradeAmountTime(), analysisData.getMinValidTradeAmount()),
                                 handleTip5(label, analysisData.getDailyValidTradeAmount())
@@ -93,13 +93,15 @@ public class TradeAmountFragment extends BaseAnalysisFragment {
         return ss;
     }
 
-    private CharSequence handleTip2(int timeType, String rate) {
-        boolean up = !rate.startsWith("-");
-        String tip = String.format("本%s与上%s同期相比%s%s", timeType == 2 ? "周" : "月", timeType == 2 ? "月" : "年",
-                up ? "升高" : "降低", absRate(rate));
+    private CharSequence handleTip2(int timeType, double diff, String rate) {
+        boolean up = diff >= 0;
+        String diffLabel = up ? "升高" : "降低";
+        String tip = String.format("本%s与上%s同期相比%s%s元，%s%s", timeType == 2 ? "周" : "月", timeType == 2 ? "月" : "年",
+                diffLabel, CommonUtils.formatMoney(Math.abs(diff)), diffLabel, absRate(rate));
         int color = ContextCompat.getColor(requireContext(), up ? R.color.color_ed5655 : R.color.color_5cdad2);
         SpannableString ss = new SpannableString(tip);
-        ss.setSpan(new ForegroundColorSpan(color), tip.lastIndexOf("比") + 3, tip.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(color), tip.indexOf("比") + 3, tip.lastIndexOf("元"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(color), tip.lastIndexOf("，") + 3, tip.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;
     }
 
