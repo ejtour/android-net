@@ -284,6 +284,8 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
             groupAddSet = (BarDataSet) barData.getDataSetByIndex(2);
             groupAddSet.setValues(groupAddList);
             groupAddSet.notifyDataSetChanged();
+            barData.setBarWidth(0.2f);
+            barData.groupBars(0, 0.25f, 0.05f);
             barData.notifyDataChanged();
             mBarChart.notifyDataSetChanged();
         } else {
@@ -316,6 +318,8 @@ public class PurchaserAnalysisFragment extends BaseAnalysisFragment {
             shopAddSet = (LineDataSet) lineData.getDataSetByIndex(2);
             shopAddSet.setValues(shopAddList);
             shopAddSet.notifyDataSetChanged();
+            lineData.notifyDataChanged();
+            mLineChart.notifyDataSetChanged();
         } else {
             shopTotalSet = new LineDataSet(shopTotalList, "门店总数");
             shopTotalSet.setColor(Color.parseColor("#69C0FF"));

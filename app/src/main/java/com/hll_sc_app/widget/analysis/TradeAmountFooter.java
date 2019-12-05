@@ -118,7 +118,7 @@ public class TradeAmountFooter extends ConstraintLayout {
         axisRight.setValueFormatter(new ValueFormatter() {
             @Override
             public String getAxisLabel(float value, AxisBase axis) {
-                return String.format("%.2f", value) + "%";
+                return String.format("%s%%", (int) value);
             }
         });
     }
@@ -167,7 +167,7 @@ public class TradeAmountFooter extends ConstraintLayout {
             mChart.notifyDataSetChanged();
         } else {
             CombinedData data = new CombinedData();
-            amountSet = new BarDataSet(amountList, "交易金额（万）");
+            amountSet = new BarDataSet(amountList, "交易金额");
             amountSet.setAxisDependency(YAxis.AxisDependency.LEFT);
             amountSet.setForm(Legend.LegendForm.SQUARE);
             amountSet.setColor(Color.parseColor("#69c0ff"));
