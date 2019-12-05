@@ -19,7 +19,6 @@ import com.hll_sc_app.utils.Constants;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.squareup.leakcanary.LeakCanary;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -88,11 +87,7 @@ public class MyApplication extends Application {
         hideWarnDialog();
         mActivityLifecycleHandler = new ActivityLifecycleHandler(new ActivityFrontListener());
         registerActivityLifecycleCallbacks(mActivityLifecycleHandler);
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
         ToastUtils.init(this);
-        LeakCanary.install(this);
         instance = this;
         // 初始化 ARouter
         initRouter(this);
