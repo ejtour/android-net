@@ -52,13 +52,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="65dp"
                     android:layout_marginBottom="35dp"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:orientation="horizontal">
 
                     <com.hll_sc_app.base.utils.glide.GlideImageView
                         android:id="@+id/img_groupLogoUrl"
                         android:layout_width="65dp"
+                        android:layout_marginLeft="@dimen/dp_10"
                         android:layout_height="65dp"
                         android:background="@drawable/bg_mine_logo"
                         android:padding="5dp"
@@ -66,7 +65,8 @@
                         app:base_placeholder="@drawable/ic_mine_head_default" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="65dp"
                         android:gravity="center_vertical"
                         android:orientation="vertical"
@@ -113,6 +113,28 @@
                             android:textColor="@color/base_white"
                             android:textSize="@dimen/sp_16" />
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_invite_coce"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/dp_10">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_qrcode"
+                            android:tint="@android:color/white" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="6dp"
+                            android:src="@drawable/ic_arrow_gray"
+                            android:tint="@android:color/white" />
                     </LinearLayout>
                 </LinearLayout>
 
