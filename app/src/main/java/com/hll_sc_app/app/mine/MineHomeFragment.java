@@ -38,6 +38,9 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.base.widget.TipRadioButton;
+import com.hll_sc_app.bean.event.MessageEvent;
+import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -48,6 +51,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
 
@@ -87,7 +94,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     @BindView(R.id.txt_warehouse_manage)
     TextView mTxtWarehouseManage;
     @BindView(R.id.txt_cooperation_purchaser)
-    TextView mTxtCooperationPurchaser;
+    TipRadioButton mTxtCooperationPurchaser;
+    @BindView(R.id.txt_new_product_demand)
+    TipRadioButton mTxtNewProductDemand;
     @BindView(R.id.rl_order)
     RelativeLayout mRlOrder;
     @BindView(R.id.scrollView)
@@ -121,6 +130,7 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
 
     @Override
     public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
         unbinder.unbind();
     }
@@ -130,9 +140,20 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_mine, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        EventBus.getDefault().register(this);
         initView();
         initData();
         return rootView;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void handleMessageEvent(MessageEvent event) {
+        if (event.getMessage().equals(MessageEvent.APPLY)) {
+            ApplyMessageResp resp = (ApplyMessageResp) event.getData();
+            mTxtCooperationPurchaser.setTipOn(resp.getTotalNum() > 0);
+        } else if (event.getMessage().equals(MessageEvent.DEMAND)) {
+            mTxtNewProductDemand.setTipOn((boolean) event.getData());
+        }
     }
 
     @Override

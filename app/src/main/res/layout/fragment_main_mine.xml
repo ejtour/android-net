@@ -188,9 +188,11 @@
                             android:drawableTop="@drawable/ic_mine_warehouse_manage"
                             android:text="代仓管理" />
 
-                        <TextView
+                        <com.hll_sc_app.base.widget.TipRadioButton
                             android:id="@+id/txt_cooperation_purchaser"
                             style="@style/MineButton"
+                            android:button="@null"
+                            android:textColor="@color/color_666666"
                             android:drawableTop="@drawable/ic_mine_cooperation_purchaser"
                             android:text="合作采购商" />
 
@@ -323,8 +325,10 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp">
 
-                        <TextView
+                        <com.hll_sc_app.base.widget.TipRadioButton
                             android:id="@+id/txt_new_product_demand"
+                            android:button="@null"
+                            android:textColor="@color/color_666666"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_new_product_demand"
                             android:text="新品需求" />

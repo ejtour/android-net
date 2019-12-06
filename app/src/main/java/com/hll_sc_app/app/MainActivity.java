@@ -34,6 +34,7 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.TipRadioButton;
 import com.hll_sc_app.bean.event.MessageEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.notification.Page;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
@@ -72,6 +73,8 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     private int mOldFragmentTag;
     private long mExitTime;
     private MessageUtil mMessageUtil;
+    private boolean mHasApply;
+    private boolean mHasDemand;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +151,17 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     public void handleMessageEvent(MessageEvent event) {
         if (event.getMessage().equals(MessageEvent.TOTAL) && mMessage.getVisibility() == View.VISIBLE) {
             UIUtils.setTextWithVisibility(mMessageCount, event.getData().toString());
+        } else if (event.getMessage().equals(MessageEvent.APPLY)) {
+            mHasApply = ((ApplyMessageResp) event.getData()).getTotalNum() > 0;
+            handleTip();
+        } else if (event.getMessage().equals(MessageEvent.DEMAND)) {
+            mHasDemand = (boolean) event.getData();
+            handleTip();
         }
+    }
+
+    private void handleTip() {
+        ((TipRadioButton) mGroupType.getChildAt(3)).setTipOn(mHasApply || mHasDemand);
     }
 
     /**
@@ -204,7 +217,6 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
             transaction.show(currentFragment);
         }
         if (tag == PageType.CRM_HOME || tag == PageType.SUPPLIER_HOME || tag == PageType.CRM_MINE || tag == PageType.SUPPLIER_MINE) {
-            mMessageCount.setVisibility(View.VISIBLE);
             mMessage.setVisibility(View.VISIBLE);
         } else {
             mMessage.setVisibility(View.GONE);
