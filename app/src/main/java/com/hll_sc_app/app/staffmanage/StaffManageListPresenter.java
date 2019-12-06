@@ -55,7 +55,7 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
         BaseMapReq req = BaseMapReq.newBuilder()
                 .put("flag", "2")
                 .put("groupID", userBean.getGroupID())
-                .put("roleType", userBean.getAuthType())
+                .put("roleType", userBean.getCurRole())
                 .create();
         StaffManageService.INSTANCE
             .queryStaffNum(req)
@@ -127,7 +127,7 @@ public class StaffManageListPresenter implements StaffManageListContract.IStaffL
                 .put("pageSize", "20")
                 .put("groupID", user.getGroupID())
                 .put("flag", crm ? "1" : "")
-                .put("roleType", user.getAuthType())
+                .put("roleType", user.getCurRole())
                 .put(crm ? "keyword" : "searchParam", mView.getSearchParam())
                 .create();
         Observable<BaseResp<List<EmployeeBean>>> observable;

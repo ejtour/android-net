@@ -55,4 +55,8 @@
     <declare-styleable name="RightTextView">
         <attr name="rightCode" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="ReportEmptyView">
+        <attr name="rev_tip" format="string" />
+    </declare-styleable>
 </resources>
