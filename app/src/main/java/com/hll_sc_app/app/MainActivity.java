@@ -35,6 +35,7 @@ import com.hll_sc_app.base.widget.TipRadioButton;
 import com.hll_sc_app.bean.event.MessageEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.message.ApplyMessageResp;
+import com.hll_sc_app.bean.message.UnreadResp;
 import com.hll_sc_app.bean.notification.Page;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
@@ -149,15 +150,19 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void handleMessageEvent(MessageEvent event) {
-        if (event.getMessage().equals(MessageEvent.TOTAL) && mMessage.getVisibility() == View.VISIBLE) {
-            UIUtils.setTextWithVisibility(mMessageCount, event.getData().toString());
-        } else if (event.getMessage().equals(MessageEvent.APPLY)) {
-            mHasApply = ((ApplyMessageResp) event.getData()).getTotalNum() > 0;
-            handleTip();
-        } else if (event.getMessage().equals(MessageEvent.DEMAND)) {
-            mHasDemand = (boolean) event.getData();
-            handleTip();
-        }
+        UIUtils.setTextWithVisibility(mMessageCount, event.getCount());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleApplyMessage(ApplyMessageResp resp) {
+        mHasApply = resp.getTotalNum() > 0;
+        handleTip();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleDemandMessage(UnreadResp resp) {
+        mHasDemand = resp.getUnreadNum() > 0;
+        handleTip();
     }
 
     private void handleTip() {

@@ -22,9 +22,14 @@ import com.hll_sc_app.app.search.stratery.PurchaserNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +63,29 @@ public class CooperationApplicationActivity extends BaseLoadActivity {
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void handleApplyMessage(ApplyMessageResp data) {
+        if (data.getShopmallNum() > 0) {
+            mTab.showDot(0);
+        } else {
+            mTab.hideMsg(0);
+        }
+        if (data.getThirdNum() > 0) {
+            mTab.showDot(1);
+        } else {
+            mTab.hideMsg(1);
+        }
+        mTab.setMsgMargin(0, 75, 0);
+        mTab.setMsgMargin(1, 70, 0);
     }
 
     private void initView() {

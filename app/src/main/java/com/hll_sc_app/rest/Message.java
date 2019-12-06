@@ -161,7 +161,7 @@ public class Message {
                     .flatMap((Function<UnreadResp, Observable<Object>>) unreadResp -> {
                         int unreadNum = unreadResp.getUnreadNum();
                         String num = unreadNum <= 0 ? "" : unreadNum < 100 ? String.valueOf(unreadNum) : "99+";
-                        EventBus.getDefault().postSticky(new MessageEvent(MessageEvent.TOTAL, num));
+                        EventBus.getDefault().post(new MessageEvent(num));
                         return Observable.just(0);
                     })
                     .subscribe(callback);
@@ -177,7 +177,7 @@ public class Message {
                         }
                         int unreadNum = unreadResp.getUnreadNum();
                         String num = unreadNum <= 0 ? "" : unreadNum < 100 ? String.valueOf(unreadNum) : "99+";
-                        EventBus.getDefault().postSticky(new MessageEvent(MessageEvent.TOTAL, num));
+                        EventBus.getDefault().post(new MessageEvent(num));
                         return MessageService.INSTANCE.queryApplyMessage(BaseMapReq.newBuilder()
                                 .put("groupID", groupID)
                                 .create())
@@ -187,7 +187,7 @@ public class Message {
                         if (!UserConfig.isLogin()) {
                             throw new IllegalStateException("登录失效");
                         }
-                        EventBus.getDefault().postSticky(new MessageEvent(MessageEvent.APPLY, applyMessageResp));
+                        EventBus.getDefault().postSticky(applyMessageResp);
                         return MessageService.INSTANCE.queryDemandMessage(BaseMapReq.newBuilder()
                                 .put("groupID", groupID)
                                 .put("source", "2")
@@ -195,7 +195,7 @@ public class Message {
                                 .map(new Precondition<>());
                     })
                     .flatMap((Function<UnreadResp, ObservableSource<?>>) unreadResp -> {
-                        EventBus.getDefault().postSticky(new MessageEvent(MessageEvent.DEMAND, unreadResp.getUnreadNum() > 0));
+                        EventBus.getDefault().postSticky(unreadResp);
                         return Observable.just(0);
                     }).subscribe(callback);
         }

@@ -39,8 +39,8 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.TipRadioButton;
-import com.hll_sc_app.bean.event.MessageEvent;
 import com.hll_sc_app.bean.message.ApplyMessageResp;
+import com.hll_sc_app.bean.message.UnreadResp;
 import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -147,13 +147,13 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void handleMessageEvent(MessageEvent event) {
-        if (event.getMessage().equals(MessageEvent.APPLY)) {
-            ApplyMessageResp resp = (ApplyMessageResp) event.getData();
-            mTxtCooperationPurchaser.setTipOn(resp.getTotalNum() > 0);
-        } else if (event.getMessage().equals(MessageEvent.DEMAND)) {
-            mTxtNewProductDemand.setTipOn((boolean) event.getData());
-        }
+    public void handleApplyMessage(ApplyMessageResp resp) {
+        mTxtCooperationPurchaser.setTipOn(resp.getTotalNum() > 0);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleDemandMessage(UnreadResp resp) {
+        mTxtNewProductDemand.setTipOn(resp.getUnreadNum() > 0);
     }
 
     @Override
