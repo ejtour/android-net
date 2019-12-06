@@ -24,6 +24,10 @@ import butterknife.ButterKnife;
 
 @Route(path = RouterConfig.WX_MALL)
 public class WxMallActivity extends BaseActivity {
+    @BindView(R.id.awm_step_1)
+    TextView mStep1;
+    @BindView(R.id.awm_step_2)
+    TextView mStep2;
     @BindView(R.id.awm_step_3)
     TextView mStep3;
     @BindView(R.id.awm_step_4)
@@ -35,11 +39,23 @@ public class WxMallActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wx_mall);
         ButterKnife.bind(this);
-        String source = mStep3.getText().toString();
-        SpannableString spannableString = new SpannableString(source);
+
+        String source = mStep1.getText().toString();
         int color = ContextCompat.getColor(this, R.color.color_222222);
+        SpannableString spannableString = new SpannableString(source);
+        spannableString.setSpan(new ForegroundColorSpan(color), source.lastIndexOf("台") + 1, source.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mStep1.setText(spannableString);
+
+        source = mStep2.getText().toString();
+        spannableString = new SpannableString(source);
+        spannableString.setSpan(new ForegroundColorSpan(color), source.lastIndexOf("为") + 1, source.length() - 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mStep2.setText(spannableString);
+
+        source = mStep3.getText().toString();
+        spannableString = new SpannableString(source);
         spannableString.setSpan(new ForegroundColorSpan(color), source.indexOf("“") + 1, source.indexOf("”"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mStep3.setText(spannableString);
+
         source = mStep4.getText().toString();
         spannableString = new SpannableString(source);
         spannableString.setSpan(new ForegroundColorSpan(color), source.indexOf("管"), source.indexOf("扫"), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
