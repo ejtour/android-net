@@ -36,10 +36,10 @@ public class CardManagePresent implements ICardManageContract.IPresent {
             return;
         }
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
-                .put("cardNo", mFragment.getCardManageActivity().getSearchText())
                 .put("cardStatus", String.valueOf(mFragment.getCardStatus()))
                 .put("flag", "2")
                 .put("groupID", userBean.getGroupID())
+                .put("purchaserID", mFragment.getCardManageActivity().getSearchText())
                 .put("pageNo", String.valueOf(pageTempNum))
                 .put("pageSize", String.valueOf(PAGE_SIZE))
                 .create();

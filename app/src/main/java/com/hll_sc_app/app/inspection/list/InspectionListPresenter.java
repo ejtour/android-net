@@ -55,7 +55,7 @@ public class InspectionListPresenter implements IInspectionListContract.IInspect
 
     @Override
     public void getPurchaserList() {
-        Common.queryPurchaserList("inspectionBill", "", new SimpleObserver<List<PurchaserBean>>(mView) {
+        Common.queryPurchaserList("inspectionBill","", new SimpleObserver<List<PurchaserBean>>(mView) {
             @Override
             public void onSuccess(List<PurchaserBean> purchaserBeans) {
                 List<com.hll_sc_app.bean.goods.PurchaserBean> beans = new ArrayList<>();

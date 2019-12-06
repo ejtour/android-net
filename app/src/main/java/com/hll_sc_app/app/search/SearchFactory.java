@@ -2,7 +2,6 @@ package com.hll_sc_app.app.search;
 
 import com.hll_sc_app.app.search.stratery.AfterSalesGoodsSearch;
 import com.hll_sc_app.app.search.stratery.BrandSearch;
-import com.hll_sc_app.app.search.stratery.CardManageListSearch;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.app.search.stratery.CrmOrderShopSearch;
 import com.hll_sc_app.app.search.stratery.CustomerNameSearch;
@@ -19,6 +18,7 @@ import com.hll_sc_app.app.search.stratery.ProductSearch;
 import com.hll_sc_app.app.search.stratery.PurchaserNameSearch;
 import com.hll_sc_app.app.search.stratery.PurchaserSearch;
 import com.hll_sc_app.app.search.stratery.PurchaserShopSearch;
+import com.hll_sc_app.app.search.stratery.QueryPurchaserSearch;
 import com.hll_sc_app.app.search.stratery.SelectShopSearch;
 import com.hll_sc_app.app.search.stratery.ShopAssociationSearch;
 import com.hll_sc_app.app.search.stratery.ShopNameSearch;
@@ -43,7 +43,6 @@ class SearchFactory {
     static {
         ITEM_MAP.put(AfterSalesGoodsSearch.class.getSimpleName(), AfterSalesGoodsSearch.class);
         ITEM_MAP.put(BrandSearch.class.getSimpleName(), BrandSearch.class);
-        ITEM_MAP.put(CardManageListSearch.class.getSimpleName(), CardManageListSearch.class);
         ITEM_MAP.put(CrmOrderShopSearch.class.getSimpleName(), CrmOrderShopSearch.class);
         ITEM_MAP.put(CustomerNameSearch.class.getSimpleName(), CustomerNameSearch.class);
         ITEM_MAP.put(CommonSearch.class.getSimpleName(), CommonSearch.class);
@@ -70,6 +69,7 @@ class SearchFactory {
         ITEM_MAP.put(VisitPlanSearch.class.getSimpleName(), VisitPlanSearch.class);
         ITEM_MAP.put(VisitRecordSearch.class.getSimpleName(), VisitRecordSearch.class);
         ITEM_MAP.put(WarehouseSearch.class.getSimpleName(), WarehouseSearch.class);
+        ITEM_MAP.put(QueryPurchaserSearch.class.getSimpleName(), QueryPurchaserSearch.class);
     }
 
     static ISearchContract.ISearchStrategy getSearchStrategy(String key) {

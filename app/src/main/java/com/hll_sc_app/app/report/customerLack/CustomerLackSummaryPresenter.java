@@ -41,7 +41,7 @@ public class CustomerLackSummaryPresenter implements ICustomerLackSummaryContrac
 
     @Override
     public void getPurchaserList(String searchWords) {
-        Common.queryPurchaserList("customerOrder", searchWords, new SimpleObserver<List<PurchaserBean>>(mView) {
+        Common.queryPurchaserList("customerOrder",searchWords, new SimpleObserver<List<PurchaserBean>>(mView) {
             @Override
             public void onSuccess(List<PurchaserBean> purchaserBeans) {
                 mView.refreshPurchaserList(purchaserBeans);

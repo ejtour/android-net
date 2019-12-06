@@ -16,10 +16,9 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cardmanage.add.SelectPurchaserListActivity;
 import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.CardManageListSearch;
+import com.hll_sc_app.app.search.stratery.QueryPurchaserSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
@@ -57,6 +56,7 @@ public class CardManageListActivity extends BaseLoadActivity implements ICardMan
     private void goToAdd() {
         SelectPurchaserListActivity.start(RouterConfig.ACTIVITY_CARD_MANAGE_LIST);
     }
+
     private void initView() {
         mTitle.setRightBtnClick(v -> {
             goToAdd();
@@ -65,11 +65,14 @@ public class CardManageListActivity extends BaseLoadActivity implements ICardMan
             @Override
             public void click(String searchContent) {
                 SearchActivity.start(CardManageListActivity.this,
-                        searchContent, CardManageListSearch.class.getSimpleName());
+                        searchContent, QueryPurchaserSearch.class.getSimpleName());
             }
 
             @Override
             public void toSearch(String searchContent) {
+                if (TextUtils.isEmpty(searchContent)) {
+                    mSearchView.setTag("");
+                }
                 mObservable.notify("refresh");
             }
         });
@@ -89,15 +92,20 @@ public class CardManageListActivity extends BaseLoadActivity implements ICardMan
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             String name = data.getStringExtra("name");
-            if (!TextUtils.isEmpty(name)) {
-                mSearchView.showSearchContent(true, name);
-            }
+            String value = data.getStringExtra("value");
+            mSearchView.setTag(value);
+            mSearchView.showSearchContent(true, name);
         }
     }
 
     @Override
     public String getSearchText() {
-        return mSearchView.getSearchContent();
+        Object o = mSearchView.getTag();
+        if (o == null) {
+            return "";
+        } else {
+            return o.toString();
+        }
     }
 
     private class CardMangeObservable extends Observable {
