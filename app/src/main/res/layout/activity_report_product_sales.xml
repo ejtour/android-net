@@ -294,6 +294,18 @@
                 app:layout_constraintStart_toStartOf="@id/rps_div3"
                 app:layout_constraintTop_toBottomOf="@id/rps_div3" />
 
+            <com.hll_sc_app.widget.report.ReportEmptyView
+                android:id="@+id/rps_pie_empty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@android:color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/rps_pie_chart"
+                app:layout_constraintEnd_toEndOf="@id/rps_pie_chart"
+                app:layout_constraintStart_toStartOf="@id/rps_pie_chart"
+                app:layout_constraintTop_toTopOf="@id/rps_pie_chart"
+                app:rev_tip="当前统计日期下没有分类指数噢" />
+
             <View
                 android:id="@+id/rps_excel_bg"
                 android:layout_width="0dp"
@@ -356,6 +368,17 @@
                 app:layout_constraintEnd_toEndOf="@id/rps_excel_bg"
                 app:layout_constraintStart_toStartOf="@id/rps_excel_bg"
                 app:layout_constraintTop_toBottomOf="@id/rps_div4" />
+
+            <com.hll_sc_app.widget.report.ReportEmptyView
+                android:id="@+id/rps_list_empty"
+                android:layout_width="0dp"
+                android:layout_height="193dp"
+                android:background="@android:color/white"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/rps_list_view"
+                app:layout_constraintStart_toStartOf="@id/rps_list_view"
+                app:layout_constraintTop_toTopOf="@id/rps_list_view"
+                app:rev_tip="当前统计日期下没有TOP10商品噢" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </RelativeLayout>
