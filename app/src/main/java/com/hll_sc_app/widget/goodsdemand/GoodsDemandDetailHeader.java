@@ -3,21 +3,15 @@ package com.hll_sc_app.widget.goodsdemand;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.style.UnderlineSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.goods.detail.GoodsDetailActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandHelper;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goodsdemand.GoodsDemandBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.ThumbnailView;
@@ -89,6 +83,7 @@ public class GoodsDemandDetailHeader extends ConstraintLayout {
         super(context, attrs, defStyle);
         View view = View.inflate(context, R.layout.view_goods_demand_detail_header, this);
         ButterKnife.bind(this, view);
+        mPic.enablePreview(true);
     }
 
     public void setData(GoodsDemandBean bean) {

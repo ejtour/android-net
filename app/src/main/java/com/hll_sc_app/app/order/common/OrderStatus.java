@@ -47,6 +47,9 @@ public enum OrderStatus {
                 builder.append(actionBy.equals("admin") ? "管理员" : actionBy).append("取消");
             }
             if (!TextUtils.isEmpty(cancelReason)){
+                if (cancelReason.length() > 50) {
+                    cancelReason = cancelReason.substring(0, 50) + "...";
+                }
                 builder.append("：").append(cancelReason);
             }
             return builder.toString();

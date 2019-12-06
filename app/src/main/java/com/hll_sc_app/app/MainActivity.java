@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,7 +12,9 @@ import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.widget.RadioGroup;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
@@ -32,12 +35,13 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.TipRadioButton;
 import com.hll_sc_app.bean.event.OrderEvent;
 import com.hll_sc_app.bean.message.UnreadResp;
+import com.hll_sc_app.bean.notification.Page;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.impl.IReload;
+import com.hll_sc_app.receiver.NotificationMessageReceiver;
 import com.hll_sc_app.rest.User;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,8 +54,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 首页
@@ -63,10 +66,12 @@ import static com.uber.autodispose.AutoDispose.autoDisposable;
 public class MainActivity extends BaseLoadActivity implements IBackType {
     @BindView(R.id.group_type)
     RadioGroup mGroupType;
+    @Autowired(name = "parcelable")
+    Page mPage;
     private int mOldFragmentTag;
     private long mExitTime;
     private String mEmployeeID;
-    private boolean mIsStart;
+    private Disposable mDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,35 +82,21 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         ButterKnife.bind(this);
         initView();
         User.queryAuthList(this);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mIsStart = true;
         // 查询消息
         if (!BuildConfig.isDebug)
             queryUnreadMessage();
-    }
-
-    @Override
-    protected void onStop() {
-        mIsStart = false;
-        super.onStop();
+        ARouter.getInstance().inject(this);
+        NotificationMessageReceiver.handleNotification(mPage);
     }
 
     private void queryUnreadMessage() {
-        if (!mIsStart) return;
-        Observable.timer(mEmployeeID != null ? 3000 : 0, TimeUnit.MILLISECONDS)
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+        dispose();
+        mDisposable = Observable.timer(mEmployeeID != null ? 3000 : 0, TimeUnit.MILLISECONDS)
                 .subscribe(aLong -> {
                     SimpleObserver<UnreadResp> observer = new SimpleObserver<UnreadResp>(this, false) {
                         @Override
                         public void onSuccess(UnreadResp unreadResp) {
-                            String messageCount = "";
-                            if (CommonUtils.getInt(unreadResp.getUnreadNum()) > 99) {
-                                messageCount = "99+";
-                            }
+                            String messageCount = CommonUtils.getInt(unreadResp.getUnreadNum()) > 99 ? "99+" : String.valueOf(unreadResp.getUnreadNum());
                             Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag));
                             if (currentFragment instanceof IMessageCount) {
                                 ((IMessageCount) currentFragment).setMessageCount(messageCount);
@@ -115,7 +106,6 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
 
                         @Override
                         public void onFailure(UseCaseException e) {
-                            super.onFailure(e);
                             queryUnreadMessage();
                         }
                     };
@@ -169,16 +159,21 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
 
     @Override
     protected void onDestroy() {
+        dispose();
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    private void dispose() {
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.isDisposed();
+        }
     }
 
     @Subscribe(priority = 2, threadMode = ThreadMode.MAIN)
     public void handleOrderEvent(OrderEvent event) {
         if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
-            mGroupType.check(PageType.SUPPLIER_ORDER);
-        } else if (event.getMessage().equals(OrderEvent.TO_CRM_ORDER)) {
-            mGroupType.check(PageType.CRM_ORDER);
+            mGroupType.check(UserConfig.crm() ? PageType.CRM_ORDER : PageType.SUPPLIER_ORDER);
         }
     }
 
@@ -264,6 +259,12 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Parcelable parcelable = intent.getParcelableExtra("parcelable");
+        if (parcelable instanceof Page) {
+            mPage = (Page) parcelable;
+            NotificationMessageReceiver.handleNotification(mPage);
+            return;
+        }
         Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag));
         if (currentFragment instanceof IReload){
             ((IReload) currentFragment).reload();

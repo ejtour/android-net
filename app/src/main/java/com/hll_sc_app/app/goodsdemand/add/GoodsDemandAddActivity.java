@@ -15,7 +15,7 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.goodsdemand.commit.GoodsDemandCommitActivity;
 import com.hll_sc_app.app.goodsdemand.search.PurchaserSearchActivity;
-import com.hll_sc_app.base.BaseActivity;
+import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -31,7 +31,7 @@ import butterknife.OnTextChanged;
  * @since 2019/10/18
  */
 @Route(path = RouterConfig.GOODS_DEMAND_ADD)
-public class GoodsDemandAddActivity extends BaseActivity {
+public class GoodsDemandAddActivity extends BaseLoadActivity implements IGoodsDemandAddContract.IGoodsDemandAddView {
     @BindView(R.id.gda_supplier)
     TextView mSupplier;
     @BindView(R.id.gda_purchaser)
@@ -56,6 +56,13 @@ public class GoodsDemandAddActivity extends BaseActivity {
         setContentView(R.layout.activity_goods_demand_add);
         ButterKnife.bind(this);
         initView();
+        initData();
+    }
+
+    private void initData() {
+        IGoodsDemandAddContract.IGoodsDemandAddPresenter presenter = GoodsDemandAddPresenter.newInstance();
+        presenter.register(this);
+        presenter.start();
     }
 
     private void initView() {
@@ -101,5 +108,11 @@ public class GoodsDemandAddActivity extends BaseActivity {
             mDefaultSearchIndex = data.getIntExtra("object", 0);
             mPurchaser.setText(mPurchaserInfo.getName());
         }
+    }
+
+    @Override
+    public void setData(NameValue value) {
+        mPurchaserInfo = value;
+        mPurchaser.setText(mPurchaserInfo.getName());
     }
 }

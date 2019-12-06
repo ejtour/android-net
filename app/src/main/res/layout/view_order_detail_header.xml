@@ -7,66 +7,67 @@
     tools:background="@android:color/white"
     tools:parentTag="android.support.constraint.ConstraintLayout">
 
-    <ImageView
-        android:id="@+id/odh_status_bg"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/bg_order_detail_status"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/odh_top_group"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_order_detail_status"
+        android:minHeight="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/odh_status_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="53dp"
-        android:layout_marginTop="13dp"
-        android:textAppearance="@style/TextAppearance.City22.Middle.White"
-        app:layout_constraintStart_toStartOf="@+id/odh_status_bg"
-        app:layout_constraintTop_toTopOf="@+id/odh_status_bg"
-        tools:text="待接单" />
+        <TextView
+            android:id="@+id/odh_status_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="53dp"
+            android:layout_marginTop="13dp"
+            android:textAppearance="@style/TextAppearance.City22.Middle.White"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="待接单" />
 
-    <TextView
-        android:id="@+id/odh_status_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginRight="20dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.City22.Little.White"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="@+id/odh_status_bg"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintTop_toTopOf="@+id/odh_status_label"
-        tools:text="2010/12/21" />
+        <TextView
+            android:id="@+id/odh_status_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="20dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.City22.Little.White"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintTop_toTopOf="@+id/odh_status_label"
+            tools:text="2010/12/21" />
 
-    <TextView
-        android:id="@+id/odh_status_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginRight="20dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:textAppearance="@style/TextAppearance.City22.Little.White"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="@+id/odh_status_bg"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="@+id/odh_status_label"
-        app:layout_constraintTop_toBottomOf="@+id/odh_status_label"
-        tools:text="您有新的订单，请注意查收" />
+        <TextView
+            android:id="@+id/odh_status_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="20dp"
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.City22.Little.White"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/odh_status_label"
+            app:layout_constraintTop_toBottomOf="@+id/odh_status_label"
+            tools:text="您有新的订单，请注意查收" />
 
-    <ImageView
-        android:id="@+id/odh_status_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/odh_status_label"
-        app:layout_constraintEnd_toStartOf="@+id/odh_status_label"
-        app:layout_constraintStart_toStartOf="@+id/odh_status_bg"
-        app:layout_constraintTop_toTopOf="@+id/odh_status_label"
-        tools:src="@drawable/ic_order_process" />
+        <ImageView
+            android:id="@+id/odh_status_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/odh_status_label"
+            app:layout_constraintEnd_toStartOf="@+id/odh_status_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/odh_status_label"
+            tools:src="@drawable/ic_order_process" />
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
         android:id="@+id/odh_trace_btn"
@@ -75,7 +76,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/bg_divider_bottom"
         android:paddingRight="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@id/odh_status_bg"
+        app:layout_constraintTop_toBottomOf="@id/odh_top_group"
         android:drawableRight="@drawable/ic_arrow_gray"
         android:gravity="center_vertical|right"
         app:layout_constraintBottom_toBottomOf="@id/odh_trace_desc"
@@ -85,8 +86,9 @@
         android:id="@+id/odh_trace_label"
         android:textAppearance="@style/TextAppearance.City22.Middle"
         tools:text="已发货"
-        app:layout_constraintStart_toStartOf="@id/odh_status_label"
-        app:layout_constraintTop_toBottomOf="@id/odh_status_bg"
+        android:layout_marginLeft="53dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/odh_trace_btn"
         android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

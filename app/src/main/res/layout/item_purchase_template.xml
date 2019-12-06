@@ -29,9 +29,10 @@
 
     <TextView
         android:id="@+id/ipt_agreement_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="协议价：- -"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintBottom_toBottomOf="@id/ipt_image"
         app:layout_constraintStart_toStartOf="@id/ipt_cost_price" />
@@ -62,19 +63,6 @@
         tools:text="规格：20kg／箱" />
 
     <TextView
-        android:id="@+id/ipt_code"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
-        app:layout_constraintBottom_toTopOf="@id/ipt_spec"
-        app:layout_constraintEnd_toEndOf="@id/ipt_price"
-        app:layout_constraintStart_toEndOf="@id/ipt_price"
-        app:layout_constraintStart_toStartOf="@id/ipt_price"
-        tools:text="编码：1234567890" />
-
-    <TextView
         android:id="@+id/ipt_cost_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -82,6 +70,7 @@
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.City22.Little.Color999"
         app:layout_constraintStart_toEndOf="@id/view_divider"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginLeft="@dimen/dp_10"
         app:layout_constraintTop_toTopOf="@id/ipt_spec"
         tools:text="成本价：¥50.00" />
@@ -95,5 +84,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/ipt_name"
         app:layout_constraintTop_toTopOf="@id/ipt_spec" />
+
+    <TextView
+        android:id="@+id/ipt_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color999"
+        app:layout_constraintBottom_toTopOf="@id/ipt_spec"
+        app:layout_constraintEnd_toEndOf="@id/ipt_cost_price"
+        app:layout_constraintStart_toStartOf="@id/ipt_price"
+        tools:text="编码：1234567890" />
 
 </android.support.constraint.ConstraintLayout>

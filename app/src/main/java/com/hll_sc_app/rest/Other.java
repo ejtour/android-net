@@ -192,11 +192,23 @@ public class Other {
      * @param status  0:crm ,1:未处理，2：已处理
      */
     public static void queryGoodsDemand(int pageNum, int status, String id, SimpleObserver<SingleListResp<GoodsDemandBean>> observer) {
+        queryGoodsDemand(pageNum, 20, status, id, observer);
+    }
+
+    /**
+     * 查询指定数量商品需求
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param status
+     * @param id
+     */
+    public static void queryGoodsDemand(int pageNum, int pageSize, int status, String id, SimpleObserver<SingleListResp<GoodsDemandBean>> observer) {
         UserBean user = GreenDaoUtils.getUser();
         OtherService.INSTANCE
                 .queryGoodsDemand(BaseMapReq.newBuilder()
                         .put("pageNum", String.valueOf(pageNum))
-                        .put("pageSize", "20")
+                        .put("pageSize", String.valueOf(pageSize))
                         .put("supplyID", user.getGroupID())
                         .put("status", status == 0 ? "" : String.valueOf(status))
                         .put("id", id)

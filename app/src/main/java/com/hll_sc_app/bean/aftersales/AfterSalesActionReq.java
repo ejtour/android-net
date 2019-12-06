@@ -18,16 +18,22 @@ public class AfterSalesActionReq {
      * 0 采购商审核 1 供应商审核
      */
     private int flag = 1;
+    private int refundBillType;
+    private int refundBillStatus;
     private String customAuditNote;
     /**
      * 自由退货客服审核必传的支付类型 1-货到付款 2- 账期支付
      */
     private String payType;
+    /**
+     * 驳回原因
+     */
+    private String refuseReason;
 
     /**
-     * 取消或关闭原因
+     * 财务关闭原因
      */
-    private String reason;
+    private String closeReason;
     /**
      * 退货明细列表，司机收货和仓库收货时传入
      */
@@ -65,6 +71,22 @@ public class AfterSalesActionReq {
         this.refundBillID = refundBillID;
     }
 
+    public int getRefundBillType() {
+        return refundBillType;
+    }
+
+    public void setRefundBillType(int refundBillType) {
+        this.refundBillType = refundBillType;
+    }
+
+    public int getRefundBillStatus() {
+        return refundBillStatus;
+    }
+
+    public void setRefundBillStatus(int refundBillStatus) {
+        this.refundBillStatus = refundBillStatus;
+    }
+
     public String getPayType() {
         return payType;
     }
@@ -73,12 +95,20 @@ public class AfterSalesActionReq {
         this.payType = payType;
     }
 
-    public String getReason() {
-        return reason;
+    public String getRefuseReason() {
+        return refuseReason;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setRefuseReason(String refuseReason) {
+        this.refuseReason = refuseReason;
+    }
+
+    public String getCloseReason() {
+        return closeReason;
+    }
+
+    public void setCloseReason(String closeReason) {
+        this.closeReason = closeReason;
     }
 
     public String getCustomAuditNote() {

@@ -28,10 +28,13 @@ public class CertifyReq {
 
     public boolean enable() {
         return !TextUtils.isEmpty(businessEntity) &&
-                !TextUtils.isEmpty(businessNo) &&
-                !TextUtils.isEmpty(endTime) &&
                 !TextUtils.isEmpty(entityIDNo) &&
-                !TextUtils.isEmpty(frontImg) &&
+                !TextUtils.isEmpty(frontImg) && licenseEnable();
+    }
+
+    public boolean licenseEnable() {
+        return !TextUtils.isEmpty(businessNo) &&
+                !TextUtils.isEmpty(endTime) &&
                 !TextUtils.isEmpty(licencePhotoUrl) &&
                 !TextUtils.isEmpty(licenseName) &&
                 !TextUtils.isEmpty(startTime);

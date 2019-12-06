@@ -135,6 +135,10 @@ public class PurchaseTemplatePresenter implements IPurchaseTemplateContract.IPur
     }
 
     private void load(boolean showLoading) {
+        if (TextUtils.isEmpty(mView.getPurchaserID()) || TextUtils.isEmpty(mView.getShopID())) {
+            mView.hideLoading();
+            return;
+        }
         User.queryPurchaseTemplate(mPageNum, mView.getPurchaserID(), mView.getShopID(), new SimpleObserver<SingleListResp<PurchaseTemplateBean>>(mView, showLoading) {
             @Override
             public void onSuccess(SingleListResp<PurchaseTemplateBean> purchaseTemplateBeanSingleListResp) {
