@@ -234,7 +234,7 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
             @Override
             public void toManage() {
                 UserBean user = GreenDaoUtils.getUser();
-                user.setCurRole("2");
+                user.setCurRole(user.getAuthType().contains("2") ? "2" : "3");
                 GreenDaoUtils.updateUser(user);
                 toHomePage();
             }
