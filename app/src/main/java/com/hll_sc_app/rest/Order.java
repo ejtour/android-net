@@ -374,7 +374,7 @@ public class Order {
         UserBean user = GreenDaoUtils.getUser();
         OrderService.INSTANCE
                 .exportNormal(buildSpecialExportReq(param, subBillStatus, type, email)
-                        .put("flag", "1".equals(user.getAuthType()) ? "2" : "0")
+                        .put("flag", "1".equals(user.getCurRole()) ? "2" : "0")
                         .put("shopID", shopID)
                         .put("groupIDs", user.getGroupID()).create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
