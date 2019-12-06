@@ -157,6 +157,7 @@ public class ProductMarketingPresenter implements IProductMarketingContract.IPre
         discount.setEndTime(mView.getEndTime());
         discount.setStartTime(mView.getStartTime());
         discount.setDiscountStatus(mView.getDiscountStatus());
+        discount.setDiscountType("2");
         paramsBean.setDiscount(discount);
         req.setParams(paramsBean);
         BaseReq<ExportReq> baseReq = new BaseReq<>();

@@ -754,6 +754,15 @@ public class ExportReq {
             private String endTime;
             private String groupID;
             private String startTime;
+            private String discountType;
+
+            public String getDiscountType() {
+                return discountType;
+            }
+
+            public void setDiscountType(String discountType) {
+                this.discountType = discountType;
+            }
 
             public String getDiscountRuleType() {
                 return discountRuleType;

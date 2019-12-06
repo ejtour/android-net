@@ -336,15 +336,17 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
                     List<NameValue> nameValues = new ArrayList<>();
                     nameValues.add(new NameValue("全部", ""));
                     nameValues.add(new NameValue("直降", "4"));
-                    nameValues.add(new NameValue("赠券", "1"));
-                    nameValues.add(new NameValue("满减", "2"));
-                    nameValues.add(new NameValue("打折", "3"));
+                    nameValues.add(new NameValue("赠券", "5"));
+                    nameValues.add(new NameValue("满减", "6"));
+                    nameValues.add(new NameValue("打折", "7"));
                     mTypeWindow.refreshList(nameValues);
                     mTypeWindow.setSelectListener(nameValue -> {
                         mFilterType = nameValue.getValue();
+                        mTxtFilterType.setText(TextUtils.isEmpty(nameValue.getValue()) ? "促销规则" : nameValue.getName());
                         mPresent.refreshList();
                     });
                 }
+                mTypeWindow.showAsDropDown(mFilterDivider);
                 break;
             default:
                 break;
