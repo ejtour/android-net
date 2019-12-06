@@ -694,28 +694,12 @@
             <ImageView
                 android:id="@+id/img_help"
                 android:layout_width="@dimen/title_bar_height"
+                android:layout_alignParentRight="true"
                 android:layout_height="@dimen/title_bar_height"
-                android:layout_toLeftOf="@+id/img_message"
+                android:layout_marginRight="@dimen/title_bar_height"
                 android:background="@drawable/bg_selector_close"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_mine_question" />
-
-            <ImageView
-                android:id="@+id/img_message"
-                android:layout_width="@dimen/title_bar_height"
-                android:layout_height="@dimen/title_bar_height"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/bg_selector_close"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_mine_title_message" />
-
-            <TextView
-                android:id="@+id/txt_messageCount"
-                android:layout_alignParentRight="true"
-                tools:text="9"
-                tools:visibility="visible"
-                style="@style/HomeTips" />
-
         </RelativeLayout>
 
     </LinearLayout>

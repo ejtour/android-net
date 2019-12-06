@@ -5,6 +5,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.message.MessageBean;
 import com.hll_sc_app.bean.message.MessageDetailBean;
 import com.hll_sc_app.bean.message.UnreadResp;
@@ -47,4 +48,12 @@ public interface MessageService {
     @POST(HttpConfig.URL)
     @Headers("pv:108001")
     Observable<BaseResp<UnreadResp>> queryUnreadNum(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:108011")
+    Observable<BaseResp<ApplyMessageResp>> queryApplyMessage(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:108012")
+    Observable<BaseResp<UnreadResp>> queryDemandMessage(@Body BaseMapReq req);
 }

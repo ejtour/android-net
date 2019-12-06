@@ -14,39 +14,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/fcm_message_icon"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="@drawable/base_bg_selector_close"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_mine_title_message"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_marginTop="20dp" />
-
-    <TextView
-        android:id="@+id/fcm_message_count"
-        style="@style/HomeTips"
-        app:layout_constraintEnd_toEndOf="@id/fcm_message_icon"
-        app:layout_constraintTop_toTopOf="@id/fcm_message_icon"
-        tools:text="9"
-        tools:visibility="visible" />
-
     <com.hll_sc_app.base.utils.glide.GlideImageView
         android:id="@+id/fcm_avatar"
         android:layout_width="65dp"
         android:layout_height="0dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/bg_mine_logo"
         android:padding="5dp"
         app:base_circle="true"
         app:base_placeholder="@drawable/ic_mine_head_default"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fcm_message_icon" />
+        tools:layout_marginTop="70dp" />
 
     <TextView
         android:id="@+id/fcm_group_name"

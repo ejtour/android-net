@@ -28,7 +28,6 @@ import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goodsdemand.GoodsDemandActivity;
 import com.hll_sc_app.app.helpcenter.HelpCenterJsParams;
 import com.hll_sc_app.app.info.InfoActivity;
-import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.web.WebActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.bean.UserBean;
@@ -43,7 +42,6 @@ import com.hll_sc_app.bean.operationanalysis.AnalysisBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
-import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -65,7 +63,7 @@ import butterknife.Unbinder;
  * @date 2018/12/19
  */
 @Route(path = RouterConfig.ROOT_HOME_MINE)
-public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragmentContract.IHomeView, IMessageCount {
+public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragmentContract.IHomeView {
     @BindView(R.id.parallax)
     ImageView mParallax;
     @BindView(R.id.img_groupLogoUrl)
@@ -98,14 +96,10 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.view_status_bar)
     View mViewStatusBar;
-    @BindView(R.id.img_message)
-    ImageView mImgMessage;
     @BindView(R.id.img_setting)
     ImageView mImgSetting;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
-    @BindView(R.id.txt_messageCount)
-    TextView mTxtMessageCount;
     @BindView(R.id.img_help)
     ImageView mImgHelp;
     @BindView(R.id.rl_header)
@@ -124,11 +118,6 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
     @BindView(R.id.fmm_analysis_root)
     ConstraintLayout mAnalysisRoot;
     private MineHomeFragmentPresenter mPresenter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onDestroyView() {
@@ -233,12 +222,9 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
             R.id.txt_marketing_settings, R.id.img_help, R.id.ll_help, R.id.txt_check_inspection, R.id.txt_inventory_manage,
             R.id.txt_complaint_manage, R.id.txt_main_feedback, R.id.fmm_analysis_btn, R.id.txt_new_product_demand,
             R.id.txt_market_price, R.id.txt_customer_purchase_template, R.id.txt_card_manage, R.id.ll_user_message,
-            R.id.txt_product_special_demand, R.id.txt_wechat_mall, R.id.img_message, R.id.txt_black_list, R.id.ll_invite_coce})
+            R.id.txt_product_special_demand, R.id.txt_wechat_mall, R.id.txt_black_list, R.id.ll_invite_coce})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_message:
-                MessageActivity.start();
-                break;
             case R.id.txt_wallet:
                 RouterUtil.goToActivity(RouterConfig.WALLET);
                 break;
@@ -377,10 +363,5 @@ public class MineHomeFragment extends BaseLoadFragment implements MineHomeFragme
         Date date = DateUtil.parse(bean.getDate());
         mDate.setText(String.format("以上数据统计周期为：%s - %s", CalendarUtils.format(date, Constants.SLASH_YYYY_MM_DD),
                 CalendarUtils.format(CalendarUtils.getDateAfter(date, 6), Constants.SLASH_YYYY_MM_DD)));
-    }
-
-    @Override
-    public void setMessageCount(String count) {
-        UIUtils.setTextWithVisibility(mTxtMessageCount, count);
     }
 }

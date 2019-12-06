@@ -21,7 +21,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goods.add.GoodsAddActivity;
-import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.order.common.OrderType;
 import com.hll_sc_app.app.report.ReportEntryActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
@@ -34,7 +33,6 @@ import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
-import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -60,7 +58,7 @@ import butterknife.Unbinder;
  * @since 2019/7/25
  */
 @Route(path = RouterConfig.ROOT_HOME_MAIN)
-public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContract.IMainHomeView, BaseQuickAdapter.OnItemClickListener, IReload, IMessageCount {
+public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContract.IMainHomeView, BaseQuickAdapter.OnItemClickListener, IReload {
 
     @BindView(R.id.fmh_top_bg)
     ImageView mTopBg;
@@ -72,8 +70,6 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     TextView mTopTag;
     @BindView(R.id.fmh_tag_flag)
     ImageView mTagFlag;
-    @BindView(R.id.fmh_message_icon)
-    ImageView mMessageIcon;
     Unbinder unbinder;
     @BindView(R.id.fmh_bill_num)
     TextView mBillNum;
@@ -107,8 +103,6 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     TextView mWarehouseIn;
     @BindView(R.id.fmh_finance)
     TextView mFinance;
-    @BindView(R.id.fmh_message_count)
-    TextView mMessageCount;
     @BindView(R.id.fmh_title_bar)
     View mTitleBar;
     @BindView(R.id.fmh_scroll_view)
@@ -119,11 +113,6 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
     private int mDateType = IMainHomeContract.DateType.TYPE_DAY;
     private IMainHomeContract.IMainHomePresenter mPresenter;
     private ContextOptionsWindow mOptionsWindow;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -176,7 +165,9 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     private void showStatusBar() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mMessageIcon.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(requireContext());
+            int statusBarHeight = ViewUtils.getStatusBarHeight(requireContext());
+            mTitleBar.getLayoutParams().height = mTitleBarHeight + statusBarHeight;
+            mTitleBar.setPadding(0, statusBarHeight, 0, 0);
         }
     }
 
@@ -351,25 +342,13 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
         }
     }
 
-    @OnClick({R.id.fmh_message_icon, R.id.fmh_top_tag})
+    @OnClick({R.id.fmh_top_tag})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.fmh_message_icon:
-                MessageActivity.start();
-                break;
-            case R.id.fmh_top_tag:
-                showOptionsWindow(view);
-                break;
-        }
+        showOptionsWindow(view);
     }
 
     @Override
     public void reload() {
         mPresenter.start();
-    }
-
-    @Override
-    public void setMessageCount(String count) {
-        UIUtils.setTextWithVisibility(mMessageCount, count);
     }
 }
