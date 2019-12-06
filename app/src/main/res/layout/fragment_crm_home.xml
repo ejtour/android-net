@@ -787,7 +787,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     android:id="@+id/fch_finance_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="仓库收货"
+                    android:text="财务审核"
                     android:textAppearance="@style/TextAppearance.City22.Small.Color999"
                     app:layout_constraintBaseline_toBaselineOf="@id/fch_customer_service_label"
                     app:layout_constraintEnd_toEndOf="@id/fch_finance"
