@@ -151,6 +151,7 @@ public class Message {
      * @param groupID    集团id
      */
     public static void queryMessage(String employeeID, String groupID, Observer<Object> callback) {
+        if (!UserConfig.isLogin()) return;
         if (UserConfig.crm()) {
             MessageService.INSTANCE.queryUnreadNum(BaseMapReq.newBuilder()
                     .put("employeeID", employeeID)
@@ -171,6 +172,9 @@ public class Message {
                     .create())
                     .map(new Precondition<>())
                     .flatMap((Function<UnreadResp, Observable<ApplyMessageResp>>) unreadResp -> {
+                        if (!UserConfig.isLogin()) {
+                            throw new IllegalStateException("登录失效");
+                        }
                         int unreadNum = unreadResp.getUnreadNum();
                         String num = unreadNum <= 0 ? "" : unreadNum < 100 ? String.valueOf(unreadNum) : "99+";
                         EventBus.getDefault().postSticky(new MessageEvent(MessageEvent.TOTAL, num));
@@ -180,6 +184,9 @@ public class Message {
                                 .map(new Precondition<>());
                     })
                     .flatMap((Function<ApplyMessageResp, Observable<UnreadResp>>) applyMessageResp -> {
+                        if (!UserConfig.isLogin()) {
+                            throw new IllegalStateException("登录失效");
+                        }
                         EventBus.getDefault().postSticky(new MessageEvent(MessageEvent.APPLY, applyMessageResp));
                         return MessageService.INSTANCE.queryDemandMessage(BaseMapReq.newBuilder()
                                 .put("groupID", groupID)

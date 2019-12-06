@@ -1,5 +1,6 @@
 package com.hll_sc_app.utils;
 
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.rest.Message;
@@ -29,8 +30,8 @@ public class MessageUtil {
 
     public void start() {
         // 查询消息
-//        if (!BuildConfig.isDebug)
-        queryUnreadMessage();
+        if (!BuildConfig.isDebug)
+            queryUnreadMessage();
     }
 
     private void queryUnreadMessage() {
