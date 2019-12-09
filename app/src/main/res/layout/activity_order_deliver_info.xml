@@ -11,6 +11,12 @@
         android:layout_height="@dimen/title_bar_height"
         app:tb_title="待发货商品总量" />
 
+    <com.hll_sc_app.widget.SearchView
+        android:id="@+id/odi_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/odi_list_view"
         android:layout_width="match_parent"

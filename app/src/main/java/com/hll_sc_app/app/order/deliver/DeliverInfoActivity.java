@@ -1,24 +1,33 @@
 package com.hll_sc_app.app.order.deliver;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.ProductSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.order.deliver.DeliverInfoResp;
 import com.hll_sc_app.bean.order.deliver.DeliverShopResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,15 +40,20 @@ import butterknife.ButterKnife;
 @Route(path = RouterConfig.ORDER_DELIVER)
 public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInfoContract.IDeliverInfoView {
 
+    @BindView(R.id.odi_search_view)
+    SearchView mSearchView;
+
     public static void start() {
         RouterUtil.goToActivity(RouterConfig.ORDER_DELIVER);
     }
 
     @BindView(R.id.odi_list_view)
     RecyclerView mListView;
+    private List<DeliverInfoResp> mList;
     private DeliverInfoAdapter mAdapter;
     private int mCurPos;
     private IDeliverInfoContract.IDeliverInfoPresenter mPresenter;
+    private EmptyView mEmptyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +92,27 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
         // 避免 notifyItemChanged 闪烁
         ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
         mListView.setAdapter(mAdapter);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(DeliverInfoActivity.this, searchContent, ProductSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                updateData();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
+        }
     }
 
     @Override
@@ -93,6 +128,44 @@ public class DeliverInfoActivity extends BaseLoadActivity implements IDeliverInf
 
     @Override
     public void updateInfoList(List<DeliverInfoResp> list) {
-        mAdapter.setNewData(list);
+        mList = list;
+        updateData();
+    }
+
+    @Override
+    public void showError(UseCaseException e) {
+        super.showError(e);
+        if (e.getLevel() == UseCaseException.Level.NET) {
+            initEmptyView();
+            mEmptyView.setNetError();
+        }
+    }
+
+    private void updateData() {
+        String searchContent = mSearchView.getSearchContent();
+        if (CommonUtils.isEmpty(mList) || TextUtils.isEmpty(searchContent)) {
+            mAdapter.setNewData(mList);
+        } else {
+            List<DeliverInfoResp> list = new ArrayList<>();
+            for (DeliverInfoResp resp : mList) {
+                if (resp.getProductName().contains(searchContent)) {
+                    list.add(resp);
+                }
+            }
+            mAdapter.setNewData(list);
+        }
+        if (CommonUtils.isEmpty(mAdapter.getData())) {
+            initEmptyView();
+            mEmptyView.reset();
+            mEmptyView.setTips("暂无数据");
+        }
+    }
+
+    private void initEmptyView() {
+        if (mEmptyView == null) {
+            mEmptyView = EmptyView.newBuilder(this).setOnClickListener(mPresenter::start)
+                    .create();
+            mAdapter.setEmptyView(mEmptyView);
+        }
     }
 }
