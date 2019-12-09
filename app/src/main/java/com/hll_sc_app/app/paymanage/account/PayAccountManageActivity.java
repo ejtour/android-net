@@ -19,12 +19,8 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.AccountPeriodSelectWindow;
 import com.hll_sc_app.app.cooperation.detail.shopsettlement.CooperationShopSettlementActivity;
-import com.hll_sc_app.app.paymanage.PayManagePresenter;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.dialog.InputDialog;
-import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -34,6 +30,7 @@ import com.kyleduo.switchbutton.SwitchButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -54,6 +51,8 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
     String mPayTerm;
     @Autowired(name = "object2")
     String mSettleDate;
+    @Autowired(name = "object3")
+    boolean mIsChecked;
     @BindView(R.id.switch_pay_type)
     SwitchButton mSwitchPayType;
     @BindView(R.id.rl_accountPeriod)
@@ -67,8 +66,14 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
 
     private PayAccountManagePresenter mPresenter;
 
-    public static void start(String payTermType, String payTerm, String settleDate) {
-        RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_ACCOUNT, payTermType, payTerm, settleDate);
+    /**
+     * @param payTermType 账期支付方式;0-未设置,1-按周,2-按月
+     * @param payTerm     账期支付具体日期
+     * @param settleDate  结算日
+     * @param checked     开启状态
+     */
+    public static void start(String payTermType, String payTerm, String settleDate, boolean checked) {
+        RouterUtil.goToActivity(RouterConfig.PAY_MANAGE_ACCOUNT, payTermType, payTerm, settleDate, checked);
     }
 
     @Override
@@ -83,31 +88,15 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
         showAccountView();
     }
 
+    @OnCheckedChanged(R.id.switch_pay_type)
+    public void toggle(boolean isChecked){
+        mPresenter.toggle(isChecked);
+    }
+
     public void showAccountView() {
         //账期日checkbox
-        mSwitchPayType.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            //打开
-            if (isChecked) {
-                showContent(true);
-                return;
-            }
-            //关闭
-            PayManagePresenter.editSettlement("2", "0", new SimpleObserver<MsgWrapper<Object>>(this) {
-                @Override
-                public void onSuccess(MsgWrapper<Object> objectMsgWrapper) {
-                    showToast(objectMsgWrapper.getMessage());
-                    showContent(false);
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mSwitchPayType.setCheckedNoEvent(true);
-                    showToast(e.getMessage());
-                }
-            });
-        });
-        mSwitchPayType.setCheckedNoEvent(!TextUtils.equals("0", mPayTermType));
-        showContent(!TextUtils.equals("0", mPayTermType));
+        mSwitchPayType.setCheckedNoEvent(mIsChecked);
+        showContent(mSwitchPayType.isChecked());
 
         // 账期日
         if (TextUtils.equals(mPayTermType, CooperationShopSettlementActivity.TERM_WEEK)) {
@@ -231,5 +220,15 @@ public class PayAccountManageActivity extends BaseLoadActivity implements PayAcc
     public void editSuccess() {
         showToast("修改支付方式成功");
         goBack();
+    }
+
+    @Override
+    public void toggleSuccess() {
+        showContent(mSwitchPayType.isChecked());
+    }
+
+    @Override
+    public void toggleFailure() {
+        mSwitchPayType.setCheckedNoEvent(!mSwitchPayType.isChecked());
     }
 }
