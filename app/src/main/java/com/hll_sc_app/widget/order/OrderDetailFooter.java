@@ -196,6 +196,7 @@ public class OrderDetailFooter extends ConstraintLayout {
         if (data.getIsExchange() == 1) sb.append("/换货订单");
         if (data.getNextDayDelivery() == 1) sb.append("/隔日配送订单");
         if (data.getDeliverType() == 2) sb.append("/自提订单");
+        if (data.getSubBillType() == 2) sb.append("/代客下单");
         if (!TextUtils.isEmpty(sb.toString())) {
             mOrderTypeGroup.setVisibility(View.VISIBLE);
             if (sb.toString().startsWith("/")) sb.deleteCharAt(0);
