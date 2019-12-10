@@ -33,7 +33,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -136,25 +135,15 @@ public class SearchPlanActivity extends BaseLoadActivity implements ISearchPlanC
         mDate.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
-            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                String beginTemp = CalendarUtils.toLocalDate(mStartDate);
-                String endTemp = CalendarUtils.toLocalDate(mEndDate);
+            mDateRangeWindow.setOnRangeChangedListener((start, end) -> {
                 if (start == null && end == null) {
                     mStartDate = mEndDate = new Date();
+                } else {
+                    mStartDate = start;
+                    mEndDate = end;
                 }
-                if (start != null && end != null) {
-                    Calendar calendarStart = Calendar.getInstance();
-                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    Calendar calendarEnd = Calendar.getInstance();
-                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    mStartDate = calendarStart.getTime();
-                    mEndDate = calendarEnd.getTime();
-                }
-                if (!CalendarUtils.toLocalDate(mStartDate).equals(beginTemp) ||
-                        !CalendarUtils.toLocalDate(mEndDate).equals(endTemp)) {
-                    updateDate();
-                    mPresenter.start();
-                }
+                updateDate();
+                mPresenter.start();
             });
             mDateRangeWindow.setOnDismissListener(() -> {
                 mDateArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));

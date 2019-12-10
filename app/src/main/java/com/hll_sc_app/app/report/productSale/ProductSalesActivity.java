@@ -43,7 +43,6 @@ import com.hll_sc_app.widget.report.ReportEmptyView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -206,31 +205,15 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
             Date endTime = new Date();
             updateSelectedDate(CalendarUtils.getDateBefore(endTime, 29), endTime);
             mDateRangeWindow = new DateRangeWindow(this);
-            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                String beginTemp = mParam.getFormatStartDate();
-                String endTemp = mParam.getFormatEndDate();
-                boolean reload = false;
-                if (start == null && end == null) {
-                    Date endDate = new Date();
-                    updateSelectedDate(CalendarUtils.getDateBefore(endDate, 29), endDate);
-                    reload = beginTemp != null || endTemp != null;
+            mDateRangeWindow.setOnRangeChangedListener((start, end) -> {
+                if (start == null || end == null) {
+                    end = new Date();
+                    start = CalendarUtils.getDateBefore(end, 29);
                 }
-                if (start != null && end != null) {
-                    Calendar calendarStart = Calendar.getInstance();
-                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    Calendar calendarEnd = Calendar.getInstance();
-                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    updateSelectedDate(calendarStart.getTime(), calendarEnd.getTime());
-                    reload = !mParam.getFormatStartDate().equals(beginTemp) ||
-                            !mParam.getFormatEndDate().equals(endTemp);
-                }
-                if (reload) mPresenter.start();
+                updateSelectedDate(start, end);
+                mPresenter.start();
             });
-            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-            start.setTime(mParam.getStartDate());
-            end.setTime(mParam.getEndDate());
-            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
-                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
+            mDateRangeWindow.setSelectCalendarRange(mParam.getStartDate(), mParam.getEndDate());
         }
         mDateRangeWindow.showAsDropDown(view, 0, UIUtils.dip2px(5));
         mDateRange.setVisibility(View.VISIBLE);
