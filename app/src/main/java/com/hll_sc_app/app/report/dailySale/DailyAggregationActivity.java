@@ -1,42 +1,50 @@
 package com.hll_sc_app.app.report.dailySale;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmount;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.ColorStr;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TitleBar;
+import com.hll_sc_app.widget.TriangleView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,26 +60,21 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.REPORT_DAILY_AGGREGATION)
 public class DailyAggregationActivity extends BaseLoadActivity implements DailyAggregationContract.IDailyAggregationView,BaseQuickAdapter.OnItemClickListener {
-    private static final String FORMAT_DATE = "yyyy/MM/dd";
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.txt_date_name)
-    TextView mTxtDateName;
-    @BindView(R.id.rl_select_date)
-    RelativeLayout mRlSelectDate;
-    @BindView(R.id.daily_totalAmount)
-    TextView dailyTotalAmount;
-    @BindView(R.id.daily_totalnum)
-    TextView dailyTotalnum;
-    @BindView(R.id.txt_options)
-    ImageView txtOptions;
-    @BindView(R.id.report_date_arrow)
-    ImageView dateArrow;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.rds_title_bar)
+    TitleBar mTitleBar;
+    @BindView(R.id.rds_date)
+    TextView mDate;
+    @BindView(R.id.rds_arrow)
+    TriangleView mArrow;
+    @BindView(R.id.rds_amount)
+    TextView mAmount;
+    @BindView(R.id.rds_num)
+    TextView mNum;
+    @BindView(R.id.rds_refresh_layout)
     SmartRefreshLayout mRefreshLayout;
-
-
-    private DailyAggregationListAdapter mAdapter;
+    @BindView(R.id.rds_list_view)
+    RecyclerView mListView;
+    private DailyAggregationAdapter mAdapter;
     private DateRangeWindow mDateRangeWindow;
     private ContextOptionsWindow mExportOptionsWindow;
     private DailyAggregationPresenter mPresenter;
@@ -79,98 +82,69 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_report_daily_sale);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        initDefaultTime();
+        initView();
         mPresenter = DailyAggregationPresenter.newInstance();
-        mAdapter = new DailyAggregationListAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryMoreDailyAggregationList();
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryDailyAggregationList(false);
-            }
-        });
         mPresenter.register(this);
         mPresenter.start();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    private void initView() {
+        initDefaultTime();
+        setData(0, 0);
+        mTitleBar.setRightBtnClick(this::showExportOptionsWindow);
+        mAdapter = new DailyAggregationAdapter();
+        mListView.setAdapter(mAdapter);
+        mListView.addItemDecoration(new SimpleDecoration(Color.TRANSPARENT, UIUtils.dip2px(10)));
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.loadMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.refresh();
+            }
+        });
     }
 
     private void initDefaultTime() {
         Date endDate = new Date();
-        Date startDate = CalendarUtils.getDateBeforeMonth(endDate, 1);
-        String startStr = CalendarUtils.format(startDate, FORMAT_DATE);
-        String endStr = CalendarUtils.format(endDate, FORMAT_DATE);
-        mTxtDateName.setText(String.format("%s-%s", startStr, endStr));
-        mTxtDateName.setTag(R.id.date_start, CalendarUtils.format(startDate, CalendarUtils.FORMAT_SERVER_DATE));
-        mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(endDate, CalendarUtils.FORMAT_SERVER_DATE));
+        Date startDate = CalendarUtils.getDateBefore(endDate, 29);
+        mDate.setTag(R.id.date_start, startDate);
+        mDate.setTag(R.id.date_end, endDate);
+        updateSelectedDate();
     }
 
-    @OnClick({R.id.img_back, R.id.txt_date_name,R.id.txt_options})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.txt_date_name:
-                showDateRangeWindow();
-                break;
-            case R.id.txt_options:
-                showExportOptionsWindow(txtOptions);
-                break;
-            default:
-                break;
-        }
+    private void updateSelectedDate() {
+        mDate.setText(String.format("%s - %s", CalendarUtils.format(((Date) mDate.getTag(R.id.date_start)), Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(((Date) mDate.getTag(R.id.date_end)), Constants.SLASH_YYYY_MM_DD)));
     }
 
-    private void showDateRangeWindow() {
+    @OnClick(R.id.rds_select_date)
+    public void showDateRangeWindow(View view) {
+        mArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
+        mDate.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
-            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                if (start == null && end == null) {
-                    mTxtDateName.setText(null);
-                    mTxtDateName.setTag(R.id.date_start, "");
-                    mTxtDateName.setTag(R.id.date_end, "");
-                    mPresenter.queryDailyAggregationList(true);
-                    return;
-                }
-                if (start != null && end != null) {
-                    Calendar calendarStart = Calendar.getInstance();
-                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    String startStr = CalendarUtils.format(calendarStart.getTime(), FORMAT_DATE);
-                    Calendar calendarEnd = Calendar.getInstance();
-                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    String endStr = CalendarUtils.format(calendarEnd.getTime(), FORMAT_DATE);
-                    mTxtDateName.setText(String.format("%s-%s", startStr, endStr));
-                    mTxtDateName.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
-                            CalendarUtils.FORMAT_SERVER_DATE));
-                    mTxtDateName.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
-                            CalendarUtils.FORMAT_SERVER_DATE));
-                    mPresenter.queryDailyAggregationList(true);
-                }
+            mDateRangeWindow.setOnRangeChangedListener((start, end) -> {
+                mDate.setTag(R.id.date_start, start);
+                mDate.setTag(R.id.date_end, end);
+                updateSelectedDate();
+                mPresenter.start();
             });
-            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-            start.setTime(CalendarUtils.parse(mTxtDateName.getTag(R.id.date_start).toString(),CalendarUtils.FORMAT_SERVER_DATE));
-            end.setTime(CalendarUtils.parse(mTxtDateName.getTag(R.id.date_end).toString(),CalendarUtils.FORMAT_SERVER_DATE));
-            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
-                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
+            mDateRangeWindow.setReset(false);
+            mDateRangeWindow.setSelectCalendarRange((Date) mDate.getTag(R.id.date_start), (Date) mDate.getTag(R.id.date_end));
         }
         mDateRangeWindow.setOnDismissListener(()->{
-            dateArrow.setRotation(0);
+            mArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
+            mDate.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
         });
-        dateArrow.setRotation(180);
-        mDateRangeWindow.showAsDropDownFix(mRlSelectDate);
+        mDateRangeWindow.showAsDropDownFix(view);
     }
 
     private void showExportOptionsWindow(View view) {
@@ -179,7 +153,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
             list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_REPORT_DETAIL));
             mExportOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
         }
-        mExportOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
+        mExportOptionsWindow.showAsDropDownFix(view, Gravity.RIGHT);
     }
 
     @Override
@@ -190,26 +164,29 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         } else {
             mAdapter.setNewData(dateSaleAmountResp.getRecords());
         }
-        dailyTotalAmount.setText("总交易金额:¥" + CommonUtils.formatMoney(dateSaleAmountResp.getTotalSubtotalAmount()));
-        dailyTotalnum.setText("总订单数:" + dateSaleAmountResp.getTotalOrderNum());
+        mRefreshLayout.setEnableLoadMore(dateSaleAmountResp.getRecords() != null && dateSaleAmountResp.getRecords().size() == 20);
+        setData(dateSaleAmountResp.getTotalSubtotalAmount(), dateSaleAmountResp.getTotalOrderNum());
+    }
+
+    private void setData(double amount, long num) {
+        String source = "总交易额：¥" + CommonUtils.formatMoney(amount);
+        SpannableString ss = new SpannableString(source);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_222222)), source.indexOf("：") + 1, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mAmount.setText(ss);
+        source = "总订单数：" + CommonUtils.formatNum(num);
+        ss = new SpannableString(source);
+        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_222222)), source.indexOf("：") + 1, source.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mNum.setText(ss);
     }
 
     @Override
     public String getStartDate() {
-        String startTime = null;
-        if (mTxtDateName.getTag(R.id.date_start) != null) {
-            startTime = (String) mTxtDateName.getTag(R.id.date_start);
-        }
-        return startTime;
+        return CalendarUtils.toLocalDate((Date) mDate.getTag(R.id.date_start));
     }
 
     @Override
     public String getEndDate() {
-        String endTime = null;
-        if (mTxtDateName.getTag(R.id.date_end) != null) {
-            endTime = (String) mTxtDateName.getTag(R.id.date_end);
-        }
-        return endTime;
+        return CalendarUtils.toLocalDate((Date) mDate.getTag(R.id.date_end));
     }
 
     @Override
@@ -224,7 +201,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
 
     @Override
     public void bindEmail() {
-        Utils.bindEmail(this, email -> mPresenter.exportDailyReport(email));
+        Utils.bindEmail(this, this::export);
     }
 
     @Override
@@ -240,6 +217,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        mExportOptionsWindow.dismiss();
         // 选项监听
         OptionsBean optionsBean = (OptionsBean) adapter.getItem(position);
         if (optionsBean == null) {
@@ -248,25 +226,39 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         if(TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_DETAIL)){
             export(null);
         }
-
     }
 
-    class DailyAggregationListAdapter extends BaseQuickAdapter<DateSaleAmount, BaseViewHolder> {
+    private static class DailyAggregationAdapter extends BaseQuickAdapter<DateSaleAmount, BaseViewHolder> {
+        private int mNumColor;
 
-        DailyAggregationListAdapter() {
-            super(R.layout.item_report_daily);
+        DailyAggregationAdapter() {
+            super(R.layout.item_report_purchase_summary);
+            mNumColor = Color.parseColor(ColorStr.COLOR_222222);
+        }
+
+        @Override
+        protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
+            BaseViewHolder helper = super.onCreateDefViewHolder(parent, viewType);
+            helper.setGone(R.id.rps_modify_group, false);
+            return helper;
         }
 
         @Override
         protected void convert(BaseViewHolder helper, DateSaleAmount bean) {
-            helper.setText(R.id.daily_amount, CommonUtils.formatMoney(bean.getSubtotalAmount()))
-                    .setText(R.id.daily_time, CalendarUtils.format(CalendarUtils.parseLocal(bean.getDate() + "", CalendarUtils.FORMAT_LOCAL_DATE), "yyyy/MM/dd"))
-                    .setText(R.id.daily_order_num, bean.getOrderNum() + "")
-                    .setText(R.id.daily_customer_price, CommonUtils.formatMoney(bean.getAverageShopAmount()))
-                    .setText(R.id.daily_avg_price, CommonUtils.formatMoney(bean.getAverageAmount()))
-                    .setText(R.id.daily_order_customers, bean.getOrderCustomerNum() + "/" + bean.getOrderCustomerShopNum());
+            helper.setText(R.id.rps_amount, processText(1.6f, "\n交易金额(元)", CommonUtils.formatMoney(bean.getSubtotalAmount())))
+                    .setText(R.id.rps_people_num, processText(1.3f, "\n有效订单(笔)", String.valueOf(bean.getOrderNum())))
+                    .setText(R.id.rps_people_effect, processText(1.3f, "\n客单价(元)", CommonUtils.formatMoney(bean.getAverageShopAmount())))
+                    .setText(R.id.rps_car_num, processText(1.3f, "\n单均(元)", CommonUtils.formatMoney(bean.getAverageAmount())))
+                    .setText(R.id.rps_logistics_fee, processText(1.3f, "\n下单客户/门店", bean.getOrderCustomerNum() + "/" + bean.getOrderCustomerShopNum()))
+                    .setText(R.id.rps_time, DateUtil.getReadableTime(String.valueOf(bean.getDate()), Constants.SLASH_YYYY_MM_DD));
+        }
+
+        private SpannableString processText(float proportion, String postfix, String num) {
+            String source = num + postfix;
+            SpannableString ss = new SpannableString(source);
+            ss.setSpan(new RelativeSizeSpan(proportion), 0, num.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new ForegroundColorSpan(mNumColor), 0, num.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            return ss;
         }
     }
-
-
 }
