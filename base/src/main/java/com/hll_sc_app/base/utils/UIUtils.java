@@ -315,6 +315,17 @@ public class UIUtils {
     }
 
     /**
+     * 隐藏软键盘
+     *
+     * @param view
+     */
+    public static void hideActivitySoftKeyboard(Activity activity, View view) {
+        ((InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(view.getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    /**
      * 显示软键盘
      *
      * @param activity

@@ -226,7 +226,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
     }
 
     private void showAccountPeriodWindow() {
-        UIUtils.hideActivitySoftKeyboard(this);
+        UIUtils.hideActivitySoftKeyboard(this, mLlAccountDetail);
         AccountPeriodSelectWindow window = new AccountPeriodSelectWindow(this);
         window.setSelectListener((payTermType, payTerm) -> {
             if (TextUtils.equals(payTermType, "周结")) {
