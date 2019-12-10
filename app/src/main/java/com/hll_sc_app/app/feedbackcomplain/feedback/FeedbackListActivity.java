@@ -1,16 +1,21 @@
 package com.hll_sc_app.app.feedbackcomplain.feedback;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.feedbackcomplain.feedback.detail.FeedbackDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.FeedbackListResp;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.TitleBar;
@@ -39,10 +44,13 @@ public class FeedbackListActivity extends BaseLoadActivity implements IFeedbackL
     private IFeedbackListContract.IPresent mPresent;
     private FeedbackAdapter mAdapter;
 
+    private final int GOTO_ADD_FROM_LIST = 100;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback_list);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         unbinder = ButterKnife.bind(this);
         mPresent = FeedbackListPresent.newInstance();
         mPresent.register(this);
@@ -57,12 +65,11 @@ public class FeedbackListActivity extends BaseLoadActivity implements IFeedbackL
 
     private void initView() {
         mTitle.setRightBtnClick(v -> {
-            //todo:新建
-
+            RouterUtil.goToActivity(RouterConfig.ACTIVITY_FEED_BACK_ADD, this, GOTO_ADD_FROM_LIST);
         });
         mAdapter = new FeedbackAdapter(null);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+            FeedbackDetailActivity.start(mAdapter.getItem(position).getFeedbackID());
         });
         mListView.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -76,6 +83,7 @@ public class FeedbackListActivity extends BaseLoadActivity implements IFeedbackL
                 mPresent.refresh();
             }
         });
+        mPresent.queryList(true);
     }
 
     @Override
@@ -90,6 +98,25 @@ public class FeedbackListActivity extends BaseLoadActivity implements IFeedbackL
 
     }
 
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        mRefreshLayout.closeHeaderOrFooter();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case GOTO_ADD_FROM_LIST:
+                if (resultCode == RESULT_OK) {
+                    mPresent.queryList(true);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     private class FeedbackAdapter extends BaseQuickAdapter<FeedbackListResp.FeedbackBean, BaseViewHolder> {
         public FeedbackAdapter(@Nullable List<FeedbackListResp.FeedbackBean> data) {
             super(R.layout.list_item_feedback, data);
@@ -97,7 +124,9 @@ public class FeedbackListActivity extends BaseLoadActivity implements IFeedbackL
 
         @Override
         protected void convert(BaseViewHolder helper, FeedbackListResp.FeedbackBean item) {
-
+            helper.setText(R.id.txt_title, item.getContent())
+                    .setText(R.id.txt_status, item.getIsAnswer() == 0 ? "待回复" : "已回复")
+                    .setBackgroundRes(R.id.view_status, item.getIsAnswer() == 0 ? R.drawable.bg_radius_orange_fff5a623 : R.drawable.bg_radius_green_7ed321);
         }
     }
 }

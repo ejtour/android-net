@@ -1449,5 +1449,17 @@ public class RouterConfig {
      * 定向售卖商品
      */
     public static final String BLACK_PRODUCT = "/activity/black/product";
+
+    /**
+     * 新建意见反馈
+     */
+    public static final String ACTIVITY_FEED_BACK_ADD = "/activity/feed/back/add";
+
+    /**
+     * 意见反馈详情
+     */
+    public static final String ACTIVITY_FEED_BACK_DETAIL = "/activity/feed/back/detail";
+
+
 }
 

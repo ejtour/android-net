@@ -39,7 +39,7 @@ public class FeedbackComplainActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_feedback:
-
+                RouterUtil.goToActivity(RouterConfig.ACTIVITY_FEED_BACK_LIST);
                 break;
             case R.id.txt_complain:
                 RouterUtil.goToActivity(RouterConfig.ACTIVITY_PLATFORM_COMPLAIN_LIST);

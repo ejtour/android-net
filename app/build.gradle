@@ -54,7 +54,7 @@ android {
         }
 
         debug {
-            applicationIdSuffix ".beta"
+            applicationIdSuffix ".beta2"
             buildConfigField "boolean", "isDebug", "true"
             manifestPlaceholders = [ALIBABA_APP_KEY   : "24764562",
                                     APPLICATION_ID    : defaultConfig.applicationId + ".beta",

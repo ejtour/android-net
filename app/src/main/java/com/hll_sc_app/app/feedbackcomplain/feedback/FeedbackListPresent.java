@@ -44,8 +44,8 @@ public class FeedbackListPresent implements IFeedbackListContract.IPresent {
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
                 .put("pageNum", String.valueOf(pageTempNum))
                 .put("pageSize", String.valueOf(pageSize))
-                .put("groupID", userBean.getGroupID())
-                .put("source", "2")
+//                .put("groupID", userBean.getGroupID())
+//                .put("source", "2")
                 .create();
         ComplainManageService.INSTANCE
                 .queryFeedbackList(baseMapReq)

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/base_bg_white_radius_5_solid"
+    android:layout_marginTop="@dimen/dp_10"
     android:padding="@dimen/dp_10">
 
     <TextView

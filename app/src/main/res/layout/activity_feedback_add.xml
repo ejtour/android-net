@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hll_sc_app.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:tb_title="新建意见反馈" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/base_white"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="300dp">
+
+            <EditText
+                android:id="@+id/edt_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_edit_border_gray_radius_3"
+                android:gravity="left"
+                android:hint="请尽可能详细的描述您遇到的问题，同时还可以上传附件说明，有助于我们更快处理您的反馈"
+                android:lineSpacingExtra="5dp"
+                android:maxLength="300"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/text_666"
+                android:textColorHint="@color/color_aeaeae"
+                android:textSize="@dimen/base_text_13" />
+
+            <TextView
+                android:id="@+id/txt_left_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="300"
+                android:textColor="@color/text_aeaeae"
+                android:textSize="@dimen/base_text_10" />
+
+        </RelativeLayout>
+
+        <HorizontalScrollView
+            android:id="@+id/scroll_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintEnd_toEndOf="@id/view_divider_0"
+            app:layout_constraintStart_toStartOf="@id/view_divider_0"
+            app:layout_constraintTop_toBottomOf="@id/edt_explain">
+
+            <LinearLayout
+                android:id="@+id/ll_scroll_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.hll_sc_app.base.widget.ImgUploadBlock
+                    android:id="@+id/upload_img"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:base_imgIcon="@drawable/ic_camera"
+                    app:base_subTitle="0/5"
+                    app:base_title="上传图片" />
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_submit"
+        style="@style/BtnAfterSalesAction.PrimarySolid"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:enabled="false"
+        android:text="提交反馈" />
+</LinearLayout>

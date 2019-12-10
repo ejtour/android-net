@@ -1322,6 +1322,12 @@
             android:name=".app.crm.customer.seas.allot.SalesmanAllotActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.feedbackcomplain.feedback.add.FeedbackAddActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.feedbackcomplain.feedback.detail.FeedbackDetailActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"
