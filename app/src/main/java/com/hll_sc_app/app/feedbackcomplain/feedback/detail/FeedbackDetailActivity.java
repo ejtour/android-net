@@ -22,6 +22,7 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.complain.FeedbackDetailResp;
+import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.widget.TriangleView;
 
 import java.util.List;
@@ -67,10 +68,17 @@ public class FeedbackDetailActivity extends BaseLoadActivity implements IFeedbac
 
     @Override
     public void showDetail(FeedbackDetailResp resp) {
-        FeedbackDetailResp.DetailBean tailBean = new FeedbackDetailResp.DetailBean();
-        tailBean.setTail(true);
-        tailBean.setType(1);
-        resp.getDetails().add(tailBean);
+        if (CommonUtils.isEmpty(resp.getDetails())) {
+            return;
+        }
+        //如果最后一个是用户反馈的话，则显示默认客服回复
+        int size = resp.getDetails().size();
+        if (resp.getDetails().get(size - 1).getType() == 0) {
+            FeedbackDetailResp.DetailBean tailBean = new FeedbackDetailResp.DetailBean();
+            tailBean.setTail(true);
+            tailBean.setType(1);
+            resp.getDetails().add(tailBean);
+        }
         mAdapter = new FeedbackDetailAdapter(resp.getDetails());
         mListView.setAdapter(mAdapter);
     }
