@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_activity_bg"
@@ -13,7 +12,7 @@
 
         <ImageView
             android:id="@+id/img_close"
-            style="@style/BtnClose"/>
+            style="@style/BtnClose" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,7 +20,7 @@
             android:layout_centerInParent="true"
             android:text="配送管理"
             android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_18"/>
+            android:textSize="@dimen/base_text_18" />
 
     </RelativeLayout>
 
@@ -39,7 +38,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="配送范围设置"
-        android:textAppearance="@style/TextAppearance.City22.Middle"/>
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
 
     <TextView
         android:id="@+id/txt_minimum"
@@ -54,7 +53,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="起送金额设置"
-        android:textAppearance="@style/TextAppearance.City22.Middle"/>
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
 
     <TextView
         android:id="@+id/txt_ageing"
@@ -69,7 +68,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="配送时效设置"
-        android:textAppearance="@style/TextAppearance.City22.Middle"/>
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
 
     <TextView
         android:id="@+id/txt_nextDayDelivery"
@@ -84,7 +83,8 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="隔日配送商品管理"
-        android:textAppearance="@style/TextAppearance.City22.Middle"/>
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/txt_DeliveryType"
@@ -99,6 +99,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:text="配送方式设置"
-        android:textAppearance="@style/TextAppearance.City22.Middle"/>
+        android:textAppearance="@style/TextAppearance.City22.Middle" />
 
 </LinearLayout>
