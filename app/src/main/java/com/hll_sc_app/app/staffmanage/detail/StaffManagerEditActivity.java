@@ -92,14 +92,18 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         ButterKnife.bind(this);
         mPresenter = StaffManagerEditPresenter.newInstance();
         mPresenter.register(this);
-        showView(mEmployeeBean);
         mTxtTitle.setText(isAdd() ? "新增员工" : "编辑员工");
+        showView(mEmployeeBean);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    private boolean isAdd() {
+        return mEmployeeBean == null;
     }
 
     public void showView(EmployeeBean bean) {
@@ -130,17 +134,14 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 mTxtRoles.setText(String.format(Locale.getDefault(), "已选择%d个岗位", rolesBeans.size()));
             }
         }
+        mTxtDepart.setTag(bean.getDeptIDs());
         mTxtDepart.setText("已选" + (!TextUtils.isEmpty(bean.getDeptIDs()) ? bean.getDeptIDs().split(",").length : 0) + "个部门");
-    }
-
-    private boolean isAdd() {
-        return mEmployeeBean == null;
     }
 
     @Subscribe(sticky = true)
     public void onEvent(StaffDepartListEvent event) {
-            mEmployeeBean.setDeptIDs(TextUtils.join(",", event.getDepartIds()));
-            mTxtDepart.setText("已选" + event.getDepartIds().size() + "个部门");
+        mTxtDepart.setTag(TextUtils.join(",", event.getDepartIds()));
+        mTxtDepart.setText("已选" + event.getDepartIds().size() + "个部门");
     }
 
     @Override
@@ -171,7 +172,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 RouterUtil.goToActivity(RouterConfig.STAFF_ROLE_SELECT, mTxtRoles.getTag());
                 break;
             case R.id.ll_depart:
-                DepartListActivity.start(mEmployeeBean.getDeptIDs());
+                DepartListActivity.start(getTagString(mTxtDepart));
                 break;
             default:
                 break;
@@ -217,20 +218,22 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
 //        }
         if (isAdd()) {
             EmployeeBean bean = new EmployeeBean();
-            bean.setEmail(mTxtEmail.getText().toString().trim());
-            bean.setEmployeeCode(mTxtEmployeeCode.getText().toString().trim());
+            bean.setEmail(getTagString(mTxtEmail));
+            bean.setEmployeeCode(getTagString(mTxtEmployeeCode));
             bean.setEmployeeName(mTxtEmployeeName.getText().toString().trim());
             bean.setGroupID(UserConfig.getGroupID());
             bean.setLoginPWD(mTxtLoginPassWord.getText().toString().trim());
             bean.setLoginPhone(mTxtLoginPhone.getText().toString().trim());
+            bean.setDeptIDs(getTagString(mTxtDepart));
             if (mTxtRoles.getTag() != null) {
                 bean.setRoleID((String) mTxtRoles.getTag());
             }
             mPresenter.addStaff(bean);
         } else {
-            mEmployeeBean.setEmail(mTxtEmail.getText().toString().trim());
+            mEmployeeBean.setEmail(getTagString(mTxtEmail));
             mEmployeeBean.setEmployeeName(mTxtEmployeeName.getText().toString().trim());
-            mEmployeeBean.setEmployeeCode(mTxtEmployeeCode.getText().toString().trim());
+            mEmployeeBean.setEmployeeCode(getTagString(mTxtEmployeeCode));
+            mEmployeeBean.setDeptIDs(getTagString(mTxtDepart));
             if (mTxtRoles.getTag() != null) {
                 mEmployeeBean.setRoleID((String) mTxtRoles.getTag());
             }
@@ -276,6 +279,15 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 roleId.delete(roleId.length() - 1, roleId.length());
             }
             mTxtRoles.setTag(roleId.toString());
+        }
+    }
+
+    private String getTagString(TextView target) {
+        Object o = target.getTag();
+        if (o == null) {
+            return "";
+        } else {
+            return o.toString().trim();
         }
     }
 }
