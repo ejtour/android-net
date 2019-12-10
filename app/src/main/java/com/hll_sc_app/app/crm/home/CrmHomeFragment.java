@@ -25,9 +25,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.aftersales.audit.AuditActivity;
-import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.base.BaseLoadFragment;
-import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.OrderEvent;
@@ -38,7 +36,6 @@ import com.hll_sc_app.bean.home.VisitResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ViewUtils;
-import com.hll_sc_app.impl.IMessageCount;
 import com.hll_sc_app.widget.home.TrendMarker;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -65,7 +62,7 @@ import butterknife.Unbinder;
  */
 
 @Route(path = RouterConfig.CRM_HOME)
-public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContract.ICrmHomeView, IMessageCount {
+public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContract.ICrmHomeView {
     private final SimpleDateFormat FORMAT = new SimpleDateFormat("MM.dd", Locale.getDefault());
     @BindView(R.id.fch_top_bg)
     ImageView mTopBg;
@@ -125,10 +122,6 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
     SmartRefreshLayout mRefreshView;
     @BindView(R.id.fch_title_bar)
     View mTitleBar;
-    @BindView(R.id.fch_message_icon)
-    ImageView mMessageIcon;
-    @BindView(R.id.fch_message_count)
-    TextView mMessageCount;
     @BindDimen(R.dimen.title_bar_height)
     int mTitleBarHeight;
     Unbinder unbinder;
@@ -235,7 +228,7 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
 
     private void showStatusBar() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mMessageIcon.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(requireContext());
+            mTitleBar.getLayoutParams().height = ViewUtils.getStatusBarHeight(requireContext()) + mTitleBarHeight;
         }
     }
 
@@ -275,11 +268,6 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
                 AuditActivity.start(4);
                 break;
         }
-    }
-
-    @OnClick(R.id.fch_message_icon)
-    public void message() {
-        MessageActivity.start();
     }
 
     @Override
@@ -387,10 +375,5 @@ public class CrmHomeFragment extends BaseLoadFragment implements ICrmHomeContrac
         mManagementShop.setText(String.valueOf(resp.getShopNum()));
         mAddedMonth.setText(String.valueOf(resp.getShopNumIncr()));
         mWillFall.setText(String.valueOf(resp.getShopNumLost()));
-    }
-
-    @Override
-    public void setMessageCount(String count) {
-        UIUtils.setTextWithVisibility(mMessageCount, count);
     }
 }

@@ -4,11 +4,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -17,7 +15,6 @@ import com.hll_sc_app.app.aftersales.audit.AuditActivity;
 import com.hll_sc_app.app.goods.template.GoodsTemplateListActivity;
 import com.hll_sc_app.app.goodsdemand.entry.GoodsDemandEntryActivity;
 import com.hll_sc_app.app.info.InfoActivity;
-import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.base.BaseFragment;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -26,7 +23,6 @@ import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.ViewUtils;
-import com.hll_sc_app.impl.IMessageCount;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,17 +35,13 @@ import butterknife.Unbinder;
  */
 
 @Route(path = RouterConfig.CRM_MINE)
-public class CrmMineFragment extends BaseFragment implements IMessageCount {
-    @BindView(R.id.fcm_message_icon)
-    ImageView mMessageIcon;
+public class CrmMineFragment extends BaseFragment {
     @BindView(R.id.fcm_avatar)
     GlideImageView mAvatar;
     @BindView(R.id.fcm_group_name)
     TextView mGroupName;
     @BindView(R.id.fcm_salesman_info)
     TextView mSalesmanInfo;
-    @BindView(R.id.fcm_message_count)
-    TextView mMessageCount;
     Unbinder unbinder;
 
     @Nullable
@@ -67,7 +59,7 @@ public class CrmMineFragment extends BaseFragment implements IMessageCount {
 
     private void showStatusBar() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ((ViewGroup.MarginLayoutParams) mMessageIcon.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(requireContext());
+            ((ViewGroup.MarginLayoutParams) mAvatar.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(requireContext()) + UIUtils.dip2px(50);
         }
     }
 
@@ -77,15 +69,12 @@ public class CrmMineFragment extends BaseFragment implements IMessageCount {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.fcm_message_icon, R.id.fcm_salesman_code, R.id.fcm_product_lib, R.id.fcm_staff_manage,
+    @OnClick({R.id.fcm_salesman_code, R.id.fcm_product_lib, R.id.fcm_staff_manage,
             R.id.fcm_new_product_feedback, R.id.fcm_complaint_manage, R.id.fcm_bill_list,
             R.id.fcm_refund, R.id.fcm_invoice_center, R.id.fcm_delivery_route, R.id.fcm_report_center,
             R.id.fcm_salesman_rank, R.id.fcm_product_special_demand, R.id.fcm_settings, R.id.fcm_info_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.fcm_message_icon:
-                MessageActivity.start();
-                break;
             case R.id.fcm_salesman_code:
                 RouterUtil.goToActivity(RouterConfig.INFO_INVITE_CODE);
                 break;
@@ -129,10 +118,5 @@ public class CrmMineFragment extends BaseFragment implements IMessageCount {
                 InfoActivity.start(requireActivity());
                 break;
         }
-    }
-
-    @Override
-    public void setMessageCount(String count) {
-        UIUtils.setTextWithVisibility(mMessageCount, count);
     }
 }

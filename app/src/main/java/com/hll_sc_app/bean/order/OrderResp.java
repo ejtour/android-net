@@ -30,7 +30,7 @@ public class OrderResp implements Parcelable {
     };
     private String couponDiscountRuleName;
     private String couponDiscountName;
-    private int userID;
+    private String userID;
     private int canceler;
     private String subBillCreateTime;
     private int payee;
@@ -41,9 +41,9 @@ public class OrderResp implements Parcelable {
     private int action;
     private String subBillCreateBy;
     private String subBillExecuteDate;
-    private int salesManID;
+    private String salesManID;
     private int subBillType;
-    private int shipperID;
+    private String shipperID;
     private String payOrderNo;
     private int masterBillID;
     private double adjustmentDiscountSubAmount;
@@ -51,7 +51,7 @@ public class OrderResp implements Parcelable {
     private String acceptTime;
     private String shipperName;
     private int paymentWay;
-    private int couponID;
+    private String couponID;
     private int nextDayDelivery;
     private String groupName;
     private String checkTime;
@@ -129,7 +129,7 @@ public class OrderResp implements Parcelable {
     private int subBillStatus;
     private double inspectionDiscountSubAmount;
     private String billUpdateTime;
-    private int orderDiscountID;
+    private String orderDiscountID;
     private int isPay;
     private String receiverName;
     private String refundBillNo;
@@ -161,7 +161,7 @@ public class OrderResp implements Parcelable {
     protected OrderResp(Parcel in) {
         this.couponDiscountRuleName = in.readString();
         this.couponDiscountName = in.readString();
-        this.userID = in.readInt();
+        this.userID = in.readString();
         this.canceler = in.readInt();
         this.subBillCreateTime = in.readString();
         this.payee = in.readInt();
@@ -172,9 +172,9 @@ public class OrderResp implements Parcelable {
         this.action = in.readInt();
         this.subBillCreateBy = in.readString();
         this.subBillExecuteDate = in.readString();
-        this.salesManID = in.readInt();
+        this.salesManID = in.readString();
         this.subBillType = in.readInt();
-        this.shipperID = in.readInt();
+        this.shipperID = in.readString();
         this.payOrderNo = in.readString();
         this.masterBillID = in.readInt();
         this.adjustmentDiscountSubAmount = in.readDouble();
@@ -182,7 +182,7 @@ public class OrderResp implements Parcelable {
         this.acceptTime = in.readString();
         this.shipperName = in.readString();
         this.paymentWay = in.readInt();
-        this.couponID = in.readInt();
+        this.couponID = in.readString();
         this.nextDayDelivery = in.readInt();
         this.groupName = in.readString();
         this.checkTime = in.readString();
@@ -260,7 +260,7 @@ public class OrderResp implements Parcelable {
         this.subBillStatus = in.readInt();
         this.inspectionDiscountSubAmount = in.readDouble();
         this.billUpdateTime = in.readString();
-        this.orderDiscountID = in.readInt();
+        this.orderDiscountID = in.readString();
         this.isPay = in.readInt();
         this.receiverName = in.readString();
         this.refundBillNo = in.readString();
@@ -368,11 +368,11 @@ public class OrderResp implements Parcelable {
         this.couponDiscountName = couponDiscountName;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -456,11 +456,11 @@ public class OrderResp implements Parcelable {
         this.subBillExecuteDate = subBillExecuteDate;
     }
 
-    public int getSalesManID() {
+    public String getSalesManID() {
         return salesManID;
     }
 
-    public void setSalesManID(int salesManID) {
+    public void setSalesManID(String salesManID) {
         this.salesManID = salesManID;
     }
 
@@ -472,11 +472,11 @@ public class OrderResp implements Parcelable {
         this.subBillType = subBillType;
     }
 
-    public int getShipperID() {
+    public String getShipperID() {
         return shipperID;
     }
 
-    public void setShipperID(int shipperID) {
+    public void setShipperID(String shipperID) {
         this.shipperID = shipperID;
     }
 
@@ -536,11 +536,11 @@ public class OrderResp implements Parcelable {
         this.paymentWay = paymentWay;
     }
 
-    public int getCouponID() {
+    public String getCouponID() {
         return couponID;
     }
 
-    public void setCouponID(int couponID) {
+    public void setCouponID(String couponID) {
         this.couponID = couponID;
     }
 
@@ -1160,11 +1160,11 @@ public class OrderResp implements Parcelable {
         this.billUpdateTime = billUpdateTime;
     }
 
-    public int getOrderDiscountID() {
+    public String getOrderDiscountID() {
         return orderDiscountID;
     }
 
-    public void setOrderDiscountID(int orderDiscountID) {
+    public void setOrderDiscountID(String orderDiscountID) {
         this.orderDiscountID = orderDiscountID;
     }
 
@@ -1361,7 +1361,7 @@ public class OrderResp implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.couponDiscountRuleName);
         dest.writeString(this.couponDiscountName);
-        dest.writeInt(this.userID);
+        dest.writeString(this.userID);
         dest.writeInt(this.canceler);
         dest.writeString(this.subBillCreateTime);
         dest.writeInt(this.payee);
@@ -1372,9 +1372,9 @@ public class OrderResp implements Parcelable {
         dest.writeInt(this.action);
         dest.writeString(this.subBillCreateBy);
         dest.writeString(this.subBillExecuteDate);
-        dest.writeInt(this.salesManID);
+        dest.writeString(this.salesManID);
         dest.writeInt(this.subBillType);
-        dest.writeInt(this.shipperID);
+        dest.writeString(this.shipperID);
         dest.writeString(this.payOrderNo);
         dest.writeInt(this.masterBillID);
         dest.writeDouble(this.adjustmentDiscountSubAmount);
@@ -1382,7 +1382,7 @@ public class OrderResp implements Parcelable {
         dest.writeString(this.acceptTime);
         dest.writeString(this.shipperName);
         dest.writeInt(this.paymentWay);
-        dest.writeInt(this.couponID);
+        dest.writeString(this.couponID);
         dest.writeInt(this.nextDayDelivery);
         dest.writeString(this.groupName);
         dest.writeString(this.checkTime);
@@ -1460,7 +1460,7 @@ public class OrderResp implements Parcelable {
         dest.writeInt(this.subBillStatus);
         dest.writeDouble(this.inspectionDiscountSubAmount);
         dest.writeString(this.billUpdateTime);
-        dest.writeInt(this.orderDiscountID);
+        dest.writeString(this.orderDiscountID);
         dest.writeInt(this.isPay);
         dest.writeString(this.receiverName);
         dest.writeString(this.refundBillNo);

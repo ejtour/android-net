@@ -16,6 +16,10 @@ public interface PayAccountManageContract {
          * 修改成功
          */
         void editSuccess();
+
+        void toggleSuccess();
+
+        void toggleFailure();
     }
 
     interface IAccountPresenter extends IPresenter<IAccountView> {
@@ -27,5 +31,7 @@ public interface PayAccountManageContract {
          * @param settleDate  结算日
          */
         void editAccount(String payTermType, String payTerm, String settleDate);
+
+        void toggle(boolean checked);
     }
 }

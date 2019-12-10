@@ -89,7 +89,7 @@ public class PayManageActivity extends BaseLoadActivity implements PayManageCont
             RouterUtil.goToActivity(RouterConfig.WALLET);
         } else if (id == R.id.rl_payterm) {
             // 账期支付
-            PayAccountManageActivity.start(mBean.getPayTermType(), mBean.getPayTerm(), mBean.getSettleDate());
+            PayAccountManageActivity.start(mBean.getPayTermType(), mBean.getPayTerm(), mBean.getSettleDate(), TextUtils.equals("1", mBean.getAccountPayment()));
         } else if (id == R.id.rl_cash) {
             // 货到付款
             PayMethodManageActivity.start(getCodPayList(), TextUtils.equals("1", mBean.getCashPayment()));

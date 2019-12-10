@@ -1,18 +1,21 @@
 package com.hll_sc_app.bean.message;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/11/28
  */
 
 public class UnreadResp {
-    private String unreadNum;
+    @SerializedName(value = "unreadNum", alternate = "feedbackUnreadNum")
+    private int unreadNum;
 
-    public String getUnreadNum() {
+    public int getUnreadNum() {
         return unreadNum;
     }
 
-    public void setUnreadNum(String unreadNum) {
+    public void setUnreadNum(int unreadNum) {
         this.unreadNum = unreadNum;
     }
 }

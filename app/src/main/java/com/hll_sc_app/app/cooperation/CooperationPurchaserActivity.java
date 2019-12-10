@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ import com.hll_sc_app.base.widget.SwipeItemLayout;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -48,6 +50,10 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +78,8 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
     SmartRefreshLayout mRefreshLayout;
     @BindView(R.id.txt_title)
     TextView mTxtTitle;
+    @BindView(R.id.red_dot)
+    View mRedDot;
     @BindView(R.id.rl_toolbar)
     RelativeLayout mRlToolbar;
     private EmptyView mEmptyView;
@@ -83,6 +91,8 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
     private TextView mTxtShopTotal;
     private ContextOptionsWindow mTitleOptionWindow;
     private SwipeItemLayout.OnSwipeItemTouchListener swipeItemTouchListener;
+    private View mWindowRedDot;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,12 +100,29 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
+        EventBus.getDefault().register(this);
         mPresenter = CooperationPurchaserPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
 
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void handleApplyMessage(ApplyMessageResp resp) {
+        boolean showDot = resp.getTotalNum() > 0;
+        mRedDot.setVisibility(showDot ? View.VISIBLE : View.GONE);
+        if (mWindowRedDot != null) {
+            mWindowRedDot.setVisibility(showDot ? View.VISIBLE : View.GONE);
+        }
+    }
+
     private void initView() {
+        initOptionWindow();
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
@@ -142,6 +169,25 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         });
         mRecyclerView.setAdapter(mAdapter);
         swipeItemTouchListener = new SwipeItemLayout.OnSwipeItemTouchListener(this);
+    }
+
+    private void initOptionWindow() {
+        List<OptionsBean> list = new ArrayList<>();
+        list.add(new OptionsBean(R.drawable.ic_cooperation_add, OptionType.OPTION_COOPERATION_ADD));
+        list.add(new OptionsBean(R.drawable.ic_cooperation_receive, OptionType.OPTION_COOPERATION_RECEIVE));
+        list.add(new OptionsBean(R.drawable.ic_cooperation_send, OptionType.OPTION_COOPERATION_SEND));
+        list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_COOPERATION_EXPORT));
+        mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
+        ConstraintLayout contentView = (ConstraintLayout) mOptionsWindow.getContentView();
+        mWindowRedDot = new View(this);
+        mWindowRedDot.setBackgroundResource(R.drawable.bg_red_dot);
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(UIUtils.dip2px(5), UIUtils.dip2px(5));
+        mWindowRedDot.setLayoutParams(layoutParams);
+        layoutParams.endToEnd = R.id.wco_list;
+        layoutParams.topToTop = R.id.wco_list;
+        layoutParams.topMargin = UIUtils.dip2px(55);
+        layoutParams.rightMargin = UIUtils.dip2px(10);
+        contentView.addView(mWindowRedDot);
     }
 
     /**
@@ -266,14 +312,6 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
     }
 
     private void showOptionsWindow(View view) {
-        if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_cooperation_add, OptionType.OPTION_COOPERATION_ADD));
-            list.add(new OptionsBean(R.drawable.ic_cooperation_receive, OptionType.OPTION_COOPERATION_RECEIVE));
-            list.add(new OptionsBean(R.drawable.ic_cooperation_send, OptionType.OPTION_COOPERATION_SEND));
-            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_COOPERATION_EXPORT));
-            mOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
-        }
         mOptionsWindow.showAsDropDownFix(view, Gravity.END);
     }
 

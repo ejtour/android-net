@@ -188,9 +188,11 @@
                             android:drawableTop="@drawable/ic_mine_warehouse_manage"
                             android:text="代仓管理" />
 
-                        <TextView
+                        <com.hll_sc_app.base.widget.TipRadioButton
                             android:id="@+id/txt_cooperation_purchaser"
                             style="@style/MineButton"
+                            android:button="@null"
+                            android:textColor="@color/color_666666"
                             android:drawableTop="@drawable/ic_mine_cooperation_purchaser"
                             android:text="合作采购商" />
 
@@ -323,8 +325,10 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp">
 
-                        <TextView
+                        <com.hll_sc_app.base.widget.TipRadioButton
                             android:id="@+id/txt_new_product_demand"
+                            android:button="@null"
+                            android:textColor="@color/color_666666"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_new_product_demand"
                             android:text="新品需求" />
@@ -694,28 +698,12 @@
             <ImageView
                 android:id="@+id/img_help"
                 android:layout_width="@dimen/title_bar_height"
+                android:layout_alignParentRight="true"
                 android:layout_height="@dimen/title_bar_height"
-                android:layout_toLeftOf="@+id/img_message"
+                android:layout_marginRight="@dimen/title_bar_height"
                 android:background="@drawable/bg_selector_close"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_mine_question" />
-
-            <ImageView
-                android:id="@+id/img_message"
-                android:layout_width="@dimen/title_bar_height"
-                android:layout_height="@dimen/title_bar_height"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/bg_selector_close"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_mine_title_message" />
-
-            <TextView
-                android:id="@+id/txt_messageCount"
-                android:layout_alignParentRight="true"
-                tools:text="9"
-                tools:visibility="visible"
-                style="@style/HomeTips" />
-
         </RelativeLayout>
 
     </LinearLayout>

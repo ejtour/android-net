@@ -87,7 +87,9 @@
 
     <EditText
         android:id="@+id/ars_times"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:gravity="right"
+        app:layout_constraintStart_toEndOf="@id/ars_label_setting"
         android:layout_height="45dp"
         android:background="@null"
         android:enabled="false"

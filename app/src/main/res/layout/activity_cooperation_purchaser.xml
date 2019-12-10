@@ -44,6 +44,16 @@
             android:scaleType="centerInside"
             android:src="@drawable/ic_options"/>
 
+        <View
+            android:id="@+id/red_dot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_alignTop="@id/txt_options"
+            android:layout_alignRight="@id/txt_options"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/bg_red_dot"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <com.hll_sc_app.widget.SearchView

@@ -24,24 +24,24 @@ public class OrderDetailBean implements Parcelable {
     private int bundlingGoodsType;
     private double standardNum;
     private String standardSpec;
-    private int productSpecID;
+    private String productSpecID;
     private double ruleDiscountValue;
     private String billDetailID;
-    private int discountID;
+    private String discountID;
     private double inspectionNum;
     private double refundedNum;
     private double auxiliaryNum;
-    private int supplyShopID;
-    private int subBillID;
-    private int groupID;
+    private String supplyShopID;
+    private String subBillID;
+    private String groupID;
     private String detailRemark;
     private String extGroupID;
-    private int productCategoryID;
+    private String productCategoryID;
     private double inspectionPrice;
     private int belongedToProductSpecID;
     private int isRefundAllNum;
-    private int shopID;
-    private int ruleID;
+    private String shopID;
+    private String ruleID;
     private double adjustmentAmount;
     private double productPrice;
     private double refundedAmount;
@@ -59,9 +59,9 @@ public class OrderDetailBean implements Parcelable {
     private String supplyShopName;
     private String discountName;
     private int isGiveProduct;
-    private int shopProductCategoryID;
+    private String shopProductCategoryID;
     private int subBillStatus;
-    private int standardSpecID;
+    private String standardSpecID;
     private double standardTaxRate;
     private double auxiliaryPrice;
     private int isAuxiliaryUnit;
@@ -193,11 +193,11 @@ public class OrderDetailBean implements Parcelable {
         this.standardSpec = standardSpec;
     }
 
-    public int getProductSpecID() {
+    public String getProductSpecID() {
         return productSpecID;
     }
 
-    public void setProductSpecID(int productSpecID) {
+    public void setProductSpecID(String productSpecID) {
         this.productSpecID = productSpecID;
     }
 
@@ -217,11 +217,11 @@ public class OrderDetailBean implements Parcelable {
         this.billDetailID = billDetailID;
     }
 
-    public int getDiscountID() {
+    public String getDiscountID() {
         return discountID;
     }
 
-    public void setDiscountID(int discountID) {
+    public void setDiscountID(String discountID) {
         this.discountID = discountID;
     }
 
@@ -249,27 +249,27 @@ public class OrderDetailBean implements Parcelable {
         this.auxiliaryNum = auxiliaryNum;
     }
 
-    public int getSupplyShopID() {
+    public String getSupplyShopID() {
         return supplyShopID;
     }
 
-    public void setSupplyShopID(int supplyShopID) {
+    public void setSupplyShopID(String supplyShopID) {
         this.supplyShopID = supplyShopID;
     }
 
-    public int getSubBillID() {
+    public String getSubBillID() {
         return subBillID;
     }
 
-    public void setSubBillID(int subBillID) {
+    public void setSubBillID(String subBillID) {
         this.subBillID = subBillID;
     }
 
-    public int getGroupID() {
+    public String getGroupID() {
         return groupID;
     }
 
-    public void setGroupID(int groupID) {
+    public void setGroupID(String groupID) {
         this.groupID = groupID;
     }
 
@@ -289,11 +289,11 @@ public class OrderDetailBean implements Parcelable {
         this.extGroupID = extGroupID;
     }
 
-    public int getProductCategoryID() {
+    public String getProductCategoryID() {
         return productCategoryID;
     }
 
-    public void setProductCategoryID(int productCategoryID) {
+    public void setProductCategoryID(String productCategoryID) {
         this.productCategoryID = productCategoryID;
     }
 
@@ -321,19 +321,19 @@ public class OrderDetailBean implements Parcelable {
         this.isRefundAllNum = isRefundAllNum;
     }
 
-    public int getShopID() {
+    public String getShopID() {
         return shopID;
     }
 
-    public void setShopID(int shopID) {
+    public void setShopID(String shopID) {
         this.shopID = shopID;
     }
 
-    public int getRuleID() {
+    public String getRuleID() {
         return ruleID;
     }
 
-    public void setRuleID(int ruleID) {
+    public void setRuleID(String ruleID) {
         this.ruleID = ruleID;
     }
 
@@ -473,11 +473,11 @@ public class OrderDetailBean implements Parcelable {
         this.isGiveProduct = isGiveProduct;
     }
 
-    public int getShopProductCategoryID() {
+    public String getShopProductCategoryID() {
         return shopProductCategoryID;
     }
 
-    public void setShopProductCategoryID(int shopProductCategoryID) {
+    public void setShopProductCategoryID(String shopProductCategoryID) {
         this.shopProductCategoryID = shopProductCategoryID;
     }
 
@@ -489,11 +489,11 @@ public class OrderDetailBean implements Parcelable {
         this.subBillStatus = subBillStatus;
     }
 
-    public int getStandardSpecID() {
+    public String getStandardSpecID() {
         return standardSpecID;
     }
 
-    public void setStandardSpecID(int standardSpecID) {
+    public void setStandardSpecID(String standardSpecID) {
         this.standardSpecID = standardSpecID;
     }
 
@@ -723,24 +723,24 @@ public class OrderDetailBean implements Parcelable {
         dest.writeInt(this.bundlingGoodsType);
         dest.writeDouble(this.standardNum);
         dest.writeString(this.standardSpec);
-        dest.writeInt(this.productSpecID);
+        dest.writeString(this.productSpecID);
         dest.writeDouble(this.ruleDiscountValue);
         dest.writeString(this.billDetailID);
-        dest.writeInt(this.discountID);
+        dest.writeString(this.discountID);
         dest.writeDouble(this.inspectionNum);
         dest.writeDouble(this.refundedNum);
         dest.writeDouble(this.auxiliaryNum);
-        dest.writeInt(this.supplyShopID);
-        dest.writeInt(this.subBillID);
-        dest.writeInt(this.groupID);
+        dest.writeString(this.supplyShopID);
+        dest.writeString(this.subBillID);
+        dest.writeString(this.groupID);
         dest.writeString(this.detailRemark);
         dest.writeString(this.extGroupID);
-        dest.writeInt(this.productCategoryID);
+        dest.writeString(this.productCategoryID);
         dest.writeDouble(this.inspectionPrice);
         dest.writeInt(this.belongedToProductSpecID);
         dest.writeInt(this.isRefundAllNum);
-        dest.writeInt(this.shopID);
-        dest.writeInt(this.ruleID);
+        dest.writeString(this.shopID);
+        dest.writeString(this.ruleID);
         dest.writeDouble(this.adjustmentAmount);
         dest.writeDouble(this.productPrice);
         dest.writeDouble(this.refundedAmount);
@@ -758,9 +758,9 @@ public class OrderDetailBean implements Parcelable {
         dest.writeString(this.supplyShopName);
         dest.writeString(this.discountName);
         dest.writeInt(this.isGiveProduct);
-        dest.writeInt(this.shopProductCategoryID);
+        dest.writeString(this.shopProductCategoryID);
         dest.writeInt(this.subBillStatus);
-        dest.writeInt(this.standardSpecID);
+        dest.writeString(this.standardSpecID);
         dest.writeDouble(this.standardTaxRate);
         dest.writeDouble(this.auxiliaryPrice);
         dest.writeInt(this.isAuxiliaryUnit);
@@ -799,24 +799,24 @@ public class OrderDetailBean implements Parcelable {
         this.bundlingGoodsType = in.readInt();
         this.standardNum = in.readDouble();
         this.standardSpec = in.readString();
-        this.productSpecID = in.readInt();
+        this.productSpecID = in.readString();
         this.ruleDiscountValue = in.readDouble();
         this.billDetailID = in.readString();
-        this.discountID = in.readInt();
+        this.discountID = in.readString();
         this.inspectionNum = in.readDouble();
         this.refundedNum = in.readDouble();
         this.auxiliaryNum = in.readDouble();
-        this.supplyShopID = in.readInt();
-        this.subBillID = in.readInt();
-        this.groupID = in.readInt();
+        this.supplyShopID = in.readString();
+        this.subBillID = in.readString();
+        this.groupID = in.readString();
         this.detailRemark = in.readString();
         this.extGroupID = in.readString();
-        this.productCategoryID = in.readInt();
+        this.productCategoryID = in.readString();
         this.inspectionPrice = in.readDouble();
         this.belongedToProductSpecID = in.readInt();
         this.isRefundAllNum = in.readInt();
-        this.shopID = in.readInt();
-        this.ruleID = in.readInt();
+        this.shopID = in.readString();
+        this.ruleID = in.readString();
         this.adjustmentAmount = in.readDouble();
         this.productPrice = in.readDouble();
         this.refundedAmount = in.readDouble();
@@ -834,9 +834,9 @@ public class OrderDetailBean implements Parcelable {
         this.supplyShopName = in.readString();
         this.discountName = in.readString();
         this.isGiveProduct = in.readInt();
-        this.shopProductCategoryID = in.readInt();
+        this.shopProductCategoryID = in.readString();
         this.subBillStatus = in.readInt();
-        this.standardSpecID = in.readInt();
+        this.standardSpecID = in.readString();
         this.standardTaxRate = in.readDouble();
         this.auxiliaryPrice = in.readDouble();
         this.isAuxiliaryUnit = in.readInt();

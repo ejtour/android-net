@@ -3,6 +3,7 @@ package com.hll_sc_app.app;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.IntDef;
@@ -10,38 +11,38 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
-import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
-import com.hll_sc_app.api.MessageService;
+import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.UseCaseException;
-import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
-import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.TipRadioButton;
+import com.hll_sc_app.bean.event.MessageEvent;
 import com.hll_sc_app.bean.event.OrderEvent;
+import com.hll_sc_app.bean.message.ApplyMessageResp;
 import com.hll_sc_app.bean.message.UnreadResp;
 import com.hll_sc_app.bean.notification.Page;
-import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
-import com.hll_sc_app.impl.IMessageCount;
+import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.impl.IReload;
 import com.hll_sc_app.receiver.NotificationMessageReceiver;
 import com.hll_sc_app.rest.User;
+import com.hll_sc_app.utils.MessageUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -49,12 +50,10 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
+import butterknife.OnClick;
 
 /**
  * 首页
@@ -66,12 +65,17 @@ import io.reactivex.disposables.Disposable;
 public class MainActivity extends BaseLoadActivity implements IBackType {
     @BindView(R.id.group_type)
     RadioGroup mGroupType;
+    @BindView(R.id.txt_messageCount)
+    TextView mMessageCount;
+    @BindView(R.id.img_message)
+    ImageView mMessage;
     @Autowired(name = "parcelable")
     Page mPage;
     private int mOldFragmentTag;
     private long mExitTime;
-    private String mEmployeeID;
-    private Disposable mDisposable;
+    private MessageUtil mMessageUtil;
+    private boolean mHasApply;
+    private boolean mHasDemand;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,46 +86,19 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         ButterKnife.bind(this);
         initView();
         User.queryAuthList(this);
-        // 查询消息
-        if (!BuildConfig.isDebug)
-            queryUnreadMessage();
         ARouter.getInstance().inject(this);
         NotificationMessageReceiver.handleNotification(mPage);
+        mMessageUtil = new MessageUtil();
     }
 
-    private void queryUnreadMessage() {
-        dispose();
-        mDisposable = Observable.timer(mEmployeeID != null ? 3000 : 0, TimeUnit.MILLISECONDS)
-                .subscribe(aLong -> {
-                    SimpleObserver<UnreadResp> observer = new SimpleObserver<UnreadResp>(this, false) {
-                        @Override
-                        public void onSuccess(UnreadResp unreadResp) {
-                            String messageCount = CommonUtils.getInt(unreadResp.getUnreadNum()) > 99 ? "99+" : String.valueOf(unreadResp.getUnreadNum());
-                            Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag));
-                            if (currentFragment instanceof IMessageCount) {
-                                ((IMessageCount) currentFragment).setMessageCount(messageCount);
-                            }
-                            queryUnreadMessage();
-                        }
-
-                        @Override
-                        public void onFailure(UseCaseException e) {
-                            queryUnreadMessage();
-                        }
-                    };
-                    if (mEmployeeID == null) {
-                        mEmployeeID = GreenDaoUtils.getUser().getEmployeeID();
-                    }
-                    MessageService.INSTANCE.queryUnreadNum(BaseMapReq.newBuilder()
-                            .put("employeeID", mEmployeeID)
-                            .put("source", "supplier")
-                            .create())
-                            .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                            .subscribe(observer);
-                });
+    private void showStatusBar() {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            ((ViewGroup.MarginLayoutParams) mMessage.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
+        }
     }
 
     private void initView() {
+        showStatusBar();
         mGroupType.setOnCheckedChangeListener((group, checkedId) -> setCurrentTab(checkedId));
         if (!UserConfig.crm()) {
             addRatioButton(PageType.SUPPLIER_HOME, "首页", getResources().getDrawable(R.drawable.bg_main_button_home));
@@ -159,15 +136,9 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
 
     @Override
     protected void onDestroy() {
-        dispose();
+        mMessageUtil.dispose();
         EventBus.getDefault().unregister(this);
         super.onDestroy();
-    }
-
-    private void dispose() {
-        if (mDisposable != null && !mDisposable.isDisposed()) {
-            mDisposable.isDisposed();
-        }
     }
 
     @Subscribe(priority = 2, threadMode = ThreadMode.MAIN)
@@ -175,6 +146,27 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
             mGroupType.check(UserConfig.crm() ? PageType.CRM_ORDER : PageType.SUPPLIER_ORDER);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleMessageEvent(MessageEvent event) {
+        UIUtils.setTextWithVisibility(mMessageCount, event.getCount());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleApplyMessage(ApplyMessageResp resp) {
+        mHasApply = resp.getTotalNum() > 0;
+        handleTip();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleDemandMessage(UnreadResp resp) {
+        mHasDemand = resp.getUnreadNum() > 0;
+        handleTip();
+    }
+
+    private void handleTip() {
+        ((TipRadioButton) mGroupType.getChildAt(3)).setTipOn(mHasApply || mHasDemand);
     }
 
     /**
@@ -229,6 +221,12 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         } else {
             transaction.show(currentFragment);
         }
+        if (tag == PageType.CRM_HOME || tag == PageType.SUPPLIER_HOME || tag == PageType.CRM_MINE || tag == PageType.SUPPLIER_MINE) {
+            mMessage.setVisibility(View.VISIBLE);
+        } else {
+            mMessage.setVisibility(View.GONE);
+            mMessageCount.setVisibility(View.GONE);
+        }
         mOldFragmentTag = tag;
         transaction.commitAllowingStateLoss();
     }
@@ -236,6 +234,11 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     @Override
     public BackType getBackType() {
         return BackType.ORDER_LIST;
+    }
+
+    @OnClick(R.id.img_message)
+    public void message() {
+        MessageActivity.start();
     }
 
     /**
@@ -266,7 +269,7 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
             return;
         }
         Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(String.valueOf(mOldFragmentTag));
-        if (currentFragment instanceof IReload){
+        if (currentFragment instanceof IReload) {
             ((IReload) currentFragment).reload();
         }
     }

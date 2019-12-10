@@ -14,6 +14,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.dialog.SuccessDialog;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.user.RemindResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -110,6 +111,14 @@ public class RemindSettingActivity extends BaseLoadActivity implements IRemindSe
     @OnClick(R.id.ars_save)
     public void save() {
         mLabel.requestFocus();
+        UIUtils.hideActivitySoftKeyboard(this);
+        if (CommonUtils.getInt(mTimes.getText().toString()) == 0) {
+            showToast("倍数必须大于零");
+            if (!mSwitch.isChecked()) {
+                changeCheckedWithoutNotify(true);
+            }
+            return;
+        }
         mPresenter.update(mSwitch.isChecked(), mTimes.getText().toString());
     }
 

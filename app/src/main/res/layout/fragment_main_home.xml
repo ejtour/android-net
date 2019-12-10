@@ -1002,71 +1002,52 @@ fmh_warehouse_delivery_num_label,fmh_warehouse_amount,fmh_warehouse_amount_label
         </android.support.v4.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <View
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/fmh_title_bar"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@id/fmh_message_icon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/fmh_message_icon"
-        android:layout_width="0dp"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@drawable/base_bg_selector_close"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_mine_title_message"
-        app:layout_constraintDimensionRatio="1"
+        android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/fmh_message_count"
-        style="@style/HomeTips"
-        app:layout_constraintEnd_toEndOf="@id/fmh_message_icon"
-        app:layout_constraintTop_toTopOf="@id/fmh_message_icon"
-        tools:text="9"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/fmh_top_tag"
-        android:layout_width="65dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:background="@drawable/bg_white_border_radius_5"
-        android:gravity="center"
-        android:text="今日"
-        android:textAppearance="@style/TextAppearance.City22.Little.White"
-        app:layout_constraintBottom_toBottomOf="@id/fmh_message_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/fmh_message_icon" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/fmh_tag_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:rotation="90"
-        android:src="@drawable/ic_little_right_arrow"
-        android:tint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@id/fmh_top_tag"
-        app:layout_constraintEnd_toEndOf="@id/fmh_top_tag"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="@id/fmh_top_tag"
-        app:layout_constraintTop_toTopOf="@id/fmh_top_tag" />
+        <TextView
+            android:id="@+id/fmh_top_tag"
+            android:layout_width="65dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:background="@drawable/bg_white_border_radius_5"
+            android:gravity="center"
+            android:text="今日"
+            android:textAppearance="@style/TextAppearance.City22.Little.White"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/fmh_tag_flag"
-        android:layout_width="@dimen/dp_10"
-        android:layout_height="0dp"
-        android:src="@drawable/ic_day_option"
-        app:layout_constraintBottom_toBottomOf="@id/fmh_top_tag"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="@id/fmh_top_tag"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toStartOf="@id/fmh_top_tag"
-        app:layout_constraintTop_toTopOf="@id/fmh_top_tag" />
+        <ImageView
+            android:id="@+id/fmh_tag_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rotation="90"
+            android:src="@drawable/ic_little_right_arrow"
+            android:tint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@id/fmh_top_tag"
+            app:layout_constraintEnd_toEndOf="@id/fmh_top_tag"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toStartOf="@id/fmh_top_tag"
+            app:layout_constraintTop_toTopOf="@id/fmh_top_tag" />
+
+        <ImageView
+            android:id="@+id/fmh_tag_flag"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_day_option"
+            app:layout_constraintBottom_toBottomOf="@id/fmh_top_tag"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toEndOf="@id/fmh_top_tag"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="@id/fmh_top_tag"
+            app:layout_constraintTop_toTopOf="@id/fmh_top_tag" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -787,7 +787,7 @@ fch_warehouse_amount_label,fch_statistic_div1" />
                     android:id="@+id/fch_finance_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="仓库收货"
+                    android:text="财务审核"
                     android:textAppearance="@style/TextAppearance.City22.Small.Color999"
                     app:layout_constraintBaseline_toBaselineOf="@id/fch_customer_service_label"
                     app:layout_constraintEnd_toEndOf="@id/fch_finance"
@@ -954,29 +954,10 @@ fch_warehouse_amount_label,fch_statistic_div1" />
     <View
         android:id="@+id/fch_title_bar"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/title_bar_height"
         android:background="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@id/fch_message_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/fch_message_icon"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/title_bar_height"
-        android:background="@drawable/base_bg_selector_close"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_mine_title_message"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/fch_message_count"
-        style="@style/HomeTips"
-        app:layout_constraintEnd_toEndOf="@id/fch_message_icon"
-        app:layout_constraintTop_toTopOf="@id/fch_message_icon"
-        tools:text="9"
-        tools:visibility="visible" />
 </android.support.constraint.ConstraintLayout>
