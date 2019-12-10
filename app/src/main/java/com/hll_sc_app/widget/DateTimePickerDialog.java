@@ -95,6 +95,7 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
     private Calendar mBeginTime, mEndTime;
     private DatePickerDialog.WheelAdapter mYearAdapter, mMonthAdapter, mDayAdapter, mHourAdapter, mMinuteAdapter;
     private SelectCallback mCallback;
+    private SelectPreCallback mPreCallback;
 
     public DateTimePickerDialog(@NonNull Activity context) {
         super(context, R.style.date_picker_dialog);
@@ -303,6 +304,9 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
         mCallback = callback;
     }
 
+    private void setPreCallback(SelectPreCallback preCallback) {
+        mPreCallback = preCallback;
+    }
     @Override
     public void onChanged(WheelView wheel, int oldValue, int newValue) {
         Calendar calendar = getSelectedTime();
@@ -364,8 +368,13 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.wdf_ok:
+                Calendar time = (Calendar) mTitle.getTag();
+                if (mPreCallback != null) {
+                    if (!mPreCallback.select(time.getTime())) {
+                        return;
+                    }
+                }
                 if (mCallback != null) {
-                    Calendar time = (Calendar) mTitle.getTag();
                     mCallback.select(time.getTime());
                 }
             case R.id.wdf_close:
@@ -428,6 +437,12 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
 
     }
 
+    public interface SelectPreCallback {
+        default boolean select(Date time) {
+            return true;
+        }
+    }
+
     static class Params {
         private Activity context;
         /**
@@ -479,6 +494,8 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
          */
         private SelectCallback callback;
 
+        private SelectPreCallback preCallback;
+
         Params() {
             selectTime = System.currentTimeMillis();
         }
@@ -493,6 +510,7 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
             dialog.setTimeRange(beginTime, endTime);
             dialog.setSelectedTime(selectTime);
             dialog.setTitleText(title);
+            dialog.setPreCallback(preCallback);
         }
     }
 
@@ -560,10 +578,16 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
             return this;
         }
 
+        public Builder setPreCallback(SelectPreCallback preCallback) {
+            mParams.preCallback = preCallback;
+            return this;
+        }
+
         public DateTimePickerDialog create() {
             DateTimePickerDialog dialog = new DateTimePickerDialog(mParams.context);
             mParams.apply(dialog);
             dialog.setCallback(mParams.callback);
+            dialog.setPreCallback(mParams.preCallback);
             return dialog;
         }
     }

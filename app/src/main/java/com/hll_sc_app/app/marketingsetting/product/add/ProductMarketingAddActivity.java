@@ -663,11 +663,23 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             case R.id.txt_time_start_select:
                 initDateTimeBuilder();
                 mDateTimeDialogBuilder = mDateTimeDialogBuilder
+                        .setPreCallback(new DateTimePickerDialog.SelectPreCallback() {
+                            @Override
+                            public boolean select(Date time) {
+                                Date endTimeTag = (Date) mTxtEndTime.getTag();
+                                if (endTimeTag != null && endTimeTag.before(time)) {
+                                    showToast("起始时间需小于结束时间");
+                                    return false;
+                                }
+                                return true;
+                            }
+                        })
                         .setCallback(new DateTimePickerDialog.SelectCallback() {
                             @Override
                             public void select(Date time) {
                                 mTxtStartTime.setTag(time);
                                 mTxtStartTime.setText(CalendarUtils.format(time, TIME_FORMATE_SHOW));
+
                             }
                         })
                         .setTitle("活动开始时间");
@@ -682,6 +694,17 @@ public class ProductMarketingAddActivity extends BaseLoadActivity implements IPr
             case R.id.txt_time_end_select:
                 initDateTimeBuilder();
                 mDateTimeDialogBuilder = mDateTimeDialogBuilder
+                        .setPreCallback(new DateTimePickerDialog.SelectPreCallback() {
+                            @Override
+                            public boolean select(Date time) {
+                                Date startTimeTag = (Date) mTxtStartTime.getTag();
+                                if (startTimeTag != null && startTimeTag.after(time)) {
+                                    showToast("结束时间需大于起始时间");
+                                    return false;
+                                }
+                                return true;
+                            }
+                        })
                         .setCallback(new DateTimePickerDialog.SelectCallback() {
                             @Override
                             public void select(Date time) {
