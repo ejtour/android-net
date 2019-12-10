@@ -166,7 +166,7 @@ public class CardLogActivity extends BaseLoadActivity implements ICardLogContrac
         if (o == null) {
             return "";
         } else {
-            return o.toString() + "0000";
+            return o.toString() + "000000";
         }
     }
 
@@ -176,7 +176,7 @@ public class CardLogActivity extends BaseLoadActivity implements ICardLogContrac
         if (o == null) {
             return "";
         } else {
-            return o.toString() + "2359";
+            return o.toString() + "235959";
         }
     }
 
