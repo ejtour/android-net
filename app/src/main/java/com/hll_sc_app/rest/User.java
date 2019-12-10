@@ -130,7 +130,7 @@ public class User {
         UserService.INSTANCE
                 .updateGroupInfo(BaseMapReq.newBuilder()
                         .put("groupID", UserConfig.getGroupID())
-                        .put(key, value)
+                        .put(key, value, true)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
