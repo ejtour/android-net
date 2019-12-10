@@ -122,6 +122,7 @@ public class CustomReceiveQueryPresent implements ICustomReceiveQueryContract.IP
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
                 .put("actionType", "customer_receiving_query")
                 .put("requestOriginator", "1")
+                .put("resourceType", "1")
                 .put("pageSize", String.valueOf(pageSize_custom))
                 .put("pageNum", String.valueOf(pageTempNum_custom))
                 .put("groupID", userBean.getGroupID())
