@@ -6,6 +6,7 @@ import com.hll_sc_app.bean.pricemanage.PriceLogBean;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmount;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public interface DailyAggregationContract {
 
-    interface IDailyAggregationView extends ILoadView {
+    interface IDailyAggregationView extends IExportView {
         /**
          * 展示客户销售汇总的数据
          * @param dateSaleAmountResp
@@ -40,42 +41,14 @@ public interface DailyAggregationContract {
         String getEndDate();
 
         /**
-         * 导出成功
-         *
-         * @param email 邮箱地址
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param tip 失败提示
-         */
-        void exportFailure(String tip);
-
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
-
-        /**
          * 导出邮箱
          */
         void export(String email);
     }
 
     interface IDailyAggregationManagePresenter extends IPresenter<IDailyAggregationView> {
-        /**
-         * 加载日销售汇总列表
-         *
-         * @param showLoading true-显示对话框
-         */
-        void queryDailyAggregationList(boolean showLoading);
-
-        /**
-         * 加载更多日汇总列表
-         */
-        void queryMoreDailyAggregationList();
+        void refresh();
+        void loadMore();
 
         /**
          * 导出日汇总报表
