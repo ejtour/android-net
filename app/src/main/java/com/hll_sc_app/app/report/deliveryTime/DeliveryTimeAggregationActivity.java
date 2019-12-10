@@ -3,11 +3,13 @@ package com.hll_sc_app.app.report.deliveryTime;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -229,6 +231,10 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
             }else {
                 LinearLayout linearLayout = layoutMap.get(key);
                 pieChart.setVisibility(View.GONE);
+                LinearLayout parentLayout = (LinearLayout) emptyView.getParent();
+                if(null !=parentLayout){
+                   parentLayout.removeAllViews();
+                }
                 linearLayout.addView(emptyView);
             }
         }
