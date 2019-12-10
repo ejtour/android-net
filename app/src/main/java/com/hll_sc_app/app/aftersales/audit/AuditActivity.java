@@ -42,7 +42,6 @@ import com.hll_sc_app.widget.aftersales.PurchaserShopSelectWindow;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -267,28 +266,10 @@ public class AuditActivity extends BaseLoadActivity implements IAuditActivityCon
     private void initDateWindow() {
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
-            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                String beginTemp = mParam.getFormatStartDate();
-                String endTemp = mParam.getFormatEndDate();
-                boolean reload = false;
-                if (start == null && end == null) {
-                    mParam.setStartDate(null);
-                    mParam.setEndDate(null);
-                    reload = beginTemp != null || endTemp != null;
-                }
-                if (start != null && end != null) {
-                    Calendar calendarStart = Calendar.getInstance();
-                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    Calendar calendarEnd = Calendar.getInstance();
-                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    mParam.setStartDate(calendarStart.getTime());
-                    mParam.setEndDate(calendarEnd.getTime());
-                    reload = !mParam.getFormatStartDate().equals(beginTemp) ||
-                            !mParam.getFormatEndDate().equals(endTemp);
-                }
-                if (reload) {
-                    EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REFRESH_LIST));
-                }
+            mDateRangeWindow.setOnRangeChangedListener((start, end) -> {
+                mParam.setStartDate(start);
+                mParam.setEndDate(end);
+                EventBus.getDefault().post(new AfterSalesEvent(AfterSalesEvent.REFRESH_LIST));
             });
             mDateRangeWindow.setOnDismissListener(() -> {
                 mDateArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));

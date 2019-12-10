@@ -207,33 +207,18 @@ public class OrderGoodsActivity extends BaseLoadActivity implements IOrderGoodsC
         mDate.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (mDateRangeWindow == null) {
             mDateRangeWindow = new DateRangeWindow(this);
-            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                if (start == null || end == null) return;
-                String oldStart = mParam.getFormatStartDate();
-                String oldEnd = mParam.getFormatEndDate();
-
-                Calendar calendarStart = Calendar.getInstance();
-                calendarStart.setTimeInMillis(start.getTimeInMillis());
-                Calendar calendarEnd = Calendar.getInstance();
-                calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                mParam.setStartDate(calendarStart.getTime());
-                mParam.setEndDate(calendarEnd.getTime());
-
-                if (!mParam.getFormatStartDate().equals(oldStart) || !mParam.getFormatEndDate().equals(oldEnd)) {
-                    updateSelectedDate();
-                    mPresenter.reload();
-                }
+            mDateRangeWindow.setOnRangeChangedListener((start, end) -> {
+                mParam.setStartDate(start);
+                mParam.setEndDate(end);
+                updateSelectedDate();
+                mPresenter.reload();
             });
             mDateRangeWindow.setOnDismissListener(() -> {
                 mDateArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_dddddd));
                 mDate.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
             });
             mDateRangeWindow.setReset(false);
-            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-            start.setTime(mParam.getStartDate());
-            end.setTime(mParam.getEndDate());
-            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
-                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
+            mDateRangeWindow.setSelectCalendarRange(mParam.getStartDate(), mParam.getEndDate());
         }
         mDateRangeWindow.showAsDropDownFix(view);
     }
