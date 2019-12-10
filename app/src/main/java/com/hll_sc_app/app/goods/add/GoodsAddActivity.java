@@ -48,6 +48,7 @@ import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.event.BrandBackEvent;
+import com.hll_sc_app.bean.event.GoodsListRefreshEvent;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
@@ -181,6 +182,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     private ProductAttrAdapter mProductAttrAdapter;
     private AreaProductSelectWindow mAreaProductSelectWindow;
 
+    private boolean edit = false;//新增编辑模式
     /**
      * @param bean 商品
      */
@@ -320,6 +322,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (mGoodsBean == null) {
             return;
         }
+        edit = true;
         if (TextUtils.equals(mGoodsBean.getEditFrom(), GoodsBean.EDIT_FROM_TEMPLATE)) {
             mFlBottom.setVisibility(View.GONE);
             mTxtTitleSave.setVisibility(View.VISIBLE);
@@ -779,9 +782,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
      * @param buttonType 按钮类型 1-仅保存，2-申请上架
      */
     private void toSave(String buttonType) {
-        boolean edit = true;
+//        boolean edit = true;
         if (mGoodsBean == null) {
-            edit = false;
+//            edit = false;
             mGoodsBean = new GoodsBean();
         }
         // 是否组合商品(0-不是，1-是)
@@ -1005,6 +1008,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     @Override
     public void addSuccess(boolean edit) {
         showToast(edit ? "修改成功" : "保存成功");
+        EventBus.getDefault().post(new GoodsListRefreshEvent(true));
         finish();
     }
 
