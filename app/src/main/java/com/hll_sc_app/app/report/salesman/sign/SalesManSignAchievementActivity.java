@@ -487,10 +487,10 @@ public class SalesManSignAchievementActivity extends BaseLoadActivity implements
             });
             reportDateArrow.setRotation(180);
         }else {
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_DATE));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_WEEK));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_MONTH));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_YEAR));
+            list.add(new OptionsBean(R.drawable.ic_date_statistic, OptionType.OPTION_STATISTIC_DATE));
+            list.add(new OptionsBean(R.drawable.ic_date_statistic, OptionType.OPTION_STATISTIC_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_date_statistic, OptionType.OPTION_STATISTIC_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_date_statistic, OptionType.OPTION_STATISTIC_YEAR));
             mOptionsWindow.setOnDismissListener(()->{
                 reportCustomerDateArrow.setRotation(0);
             });

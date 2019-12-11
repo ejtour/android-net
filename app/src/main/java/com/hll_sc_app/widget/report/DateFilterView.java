@@ -101,7 +101,7 @@ public class DateFilterView extends LinearLayout implements BaseQuickAdapter.OnI
             mDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_date_filter, 0, 0, 0);
             ImageViewCompat.setImageTintList(mDateArrow, ContextCompat.getColorStateList(context, R.color.color_666666));
             mGather.setTextColor(color);
-            mGather.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_report_date_white, 0, 0, 0);
+            mGather.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_date_statistic_666, 0, 0, 0);
             ImageViewCompat.setImageTintList(mGatherArrow, ContextCompat.getColorStateList(context, R.color.color_666666));
             mTime.setTextColor(color);
             mTime.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_date, 0, 0, 0);
@@ -134,10 +134,10 @@ public class DateFilterView extends LinearLayout implements BaseQuickAdapter.OnI
             });
             mDateArrow.setRotation(180);
         } else {
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_DATE));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_WEEK));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_MONTH));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_YEAR));
+            list.add(new OptionsBean(R.drawable.ic_date_statistic, OptionType.OPTION_STATISTIC_DATE));
+            list.add(new OptionsBean(R.drawable.ic_date_statistic, OptionType.OPTION_STATISTIC_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_date_statistic, OptionType.OPTION_STATISTIC_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_date_statistic, OptionType.OPTION_STATISTIC_YEAR));
             mOptionsWindow.setOnDismissListener(() -> {
                 mGatherArrow.setRotation(0);
             });

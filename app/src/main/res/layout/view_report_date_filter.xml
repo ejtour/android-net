@@ -21,7 +21,7 @@
             android:id="@+id/rdf_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_report_drawable_date_type_white"
+            android:drawableLeft="@drawable/ic_date_filter_white"
             android:drawablePadding="5dp"
             android:text="今日"
             android:textAppearance="@style/TextAppearance.City22.Small.White" />
@@ -50,7 +50,7 @@
             android:id="@+id/rdf_gather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_report_drawable_date_customer_white"
+            android:drawableLeft="@drawable/ic_date_statistic"
             android:drawablePadding="5dp"
             android:text="日统计"
             android:textAppearance="@style/TextAppearance.City22.Small.White" />
