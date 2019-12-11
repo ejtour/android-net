@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -22,14 +21,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
-import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.UserBean;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
-import com.hll_sc_app.base.http.ApiScheduler;
-import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.enums.TimeFlagEnum;
@@ -50,7 +42,6 @@ import com.hll_sc_app.widget.SyncHorizontalScrollView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -213,11 +204,11 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         }
         List<OptionsBean> list = new ArrayList<>();
         if(view.getId()==R.id.txt_date_name_title){
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_DATE));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_CURRENT_DATE));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_YES_DATE));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_CURRENT_WEEK));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_WEEK));
-            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CURRENT_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_CURRENT_MONTH));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_PRE_MONTH));
             list.add(new OptionsBean(R.drawable.ic_filter_option, OptionType.OPTION_REPORT_CUSTOMER_DEFINE));
             mOptionsWindow.setOnDismissListener(()->{
@@ -225,10 +216,10 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             });
             reportDateArrow.setRotation(180);
         }else {
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_DATE_AGGREGATION));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_WEEK_AGGREGATION));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_MONTH_AGGREGATION));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_YEAR_AGGREGATION));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_DATE));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_YEAR));
             mOptionsWindow.setOnDismissListener(()->{
                 reportCustomerDateArrow.setRotation(0);
             });
@@ -241,7 +232,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
     private void showExportOptionsWindow(View view) {
         if (mExportOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_REPORT_DETAIL));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_DETAIL_INFO));
             mExportOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
         }
         mExportOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
@@ -332,8 +323,8 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
         }
         boolean isExport = false;
         String dateText = TimeFlagEnum.TODAY.getDesc();
-        String dateCustomerText=OptionType.OPTION_REPORT_DATE_AGGREGATION;
-        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_DATE)) {
+        String dateCustomerText=OptionType.OPTION_STATISTIC_DATE;
+        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_CURRENT_DATE)) {
             serverDate = DateUtil.currentTimeHllDT8() + "";
             localDate = CalendarUtils.format(new Date(), FORMAT_DATE);
             isClickCustomer = false;
@@ -343,7 +334,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             timeFlag = TimeFlagEnum.YESTERDAY.getCode();
             dateText = TimeFlagEnum.YESTERDAY.getDesc();
             isClickCustomer = false;
-        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_WEEK)) {
+        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_CURRENT_WEEK)) {
             serverDate = DateUtil.getWeekFirstDay(0) + "";
             String endDate = DateUtil.getWeekLastDay(0) + "";
             localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
@@ -361,7 +352,7 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             timeFlag = TimeFlagEnum.LASTWEEK.getCode();
             dateText = TimeFlagEnum.LASTWEEK.getDesc();
             isClickCustomer = false;
-        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_CURRENT_MONTH)) {
+        } else if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_CURRENT_MONTH)) {
             serverDate = DateUtil.getMonthFirstDay(0) + "";
             String endDate = DateUtil.getMonthLastDay(0) + "";
             localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
@@ -387,24 +378,24 @@ public class CustomerShopDetailActivity extends BaseLoadActivity implements Cust
             serverDate = DateUtil.currentTimeHllDT8() + "";
             localDate = CalendarUtils.format(new Date(), FORMAT_DATE);
             dateText = TimeFlagEnum.CUSTOMDEFINE.getDesc();
-            dateCustomerText = OptionType.OPTION_REPORT_DATE_AGGREGATION;
-            if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_WEEK_AGGREGATION)){
+            dateCustomerText = OptionType.OPTION_STATISTIC_DATE;
+            if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_STATISTIC_WEEK)){
                 serverDate = DateUtil.getWeekFirstDay(0) + "";
                 String endDate = DateUtil.getWeekLastDay(0) + "";
                 localDate = CalendarUtils.getDateFormatString(serverDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE)
                         + " - " + CalendarUtils.getDateFormatString(endDate, CalendarUtils.FORMAT_LOCAL_DATE, FORMAT_DATE);
                 timeType = TimeTypeEnum.WEEK.getCode();
-                dateCustomerText = OptionType.OPTION_REPORT_WEEK_AGGREGATION;
-            }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_MONTH_AGGREGATION)){
+                dateCustomerText = OptionType.OPTION_STATISTIC_WEEK;
+            }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_STATISTIC_MONTH)){
                 serverDate = DateUtil.getMonthFirstDay(0) + "";
                 localDate = serverDate.substring(0,4)+"年"+"-"+serverDate.substring(4,6)+"月";
                 timeType = TimeTypeEnum.MONTH.getCode();
-                dateCustomerText = OptionType.OPTION_REPORT_MONTH_AGGREGATION;
-            }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_REPORT_YEAR_AGGREGATION)){
+                dateCustomerText = OptionType.OPTION_STATISTIC_MONTH;
+            }else if(TextUtils.equals(optionsBean.getLabel(),OptionType.OPTION_STATISTIC_YEAR)){
                 serverDate = (DateUtil.currentTimeHllDT8()+"").substring(0,4)+"0101";
                 localDate = serverDate.substring(0,4)+"年";
                 timeType = TimeTypeEnum.YEAR.getCode();
-                dateCustomerText = OptionType.OPTION_REPORT_MONTH_AGGREGATION;
+                dateCustomerText = OptionType.OPTION_STATISTIC_MONTH;
             }
         } else {
             //导出

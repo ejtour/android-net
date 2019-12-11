@@ -186,7 +186,7 @@ public class SalesReportActivity extends BaseLoadActivity implements SalesReport
     private void showExportOptionsWindow(View view) {
         if (mExportOptionsWindow == null) {
             List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_REPORT_DETAIL));
+            list.add(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_DETAIL_INFO));
             mExportOptionsWindow = new ContextOptionsWindow(this).setListener(this).refreshList(list);
         }
         mExportOptionsWindow.showAsDropDownFix(view, Gravity.LEFT);
@@ -242,7 +242,7 @@ public class SalesReportActivity extends BaseLoadActivity implements SalesReport
         if (optionsBean == null) {
             return;
         }
-        if(TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_DETAIL)){
+        if(TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_EXPORT_DETAIL_INFO)){
             export(null);
         }
 

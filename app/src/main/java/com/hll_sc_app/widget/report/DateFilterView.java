@@ -134,10 +134,10 @@ public class DateFilterView extends LinearLayout implements BaseQuickAdapter.OnI
             });
             mDateArrow.setRotation(180);
         } else {
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_DATE_AGGREGATION));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_WEEK_AGGREGATION));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_MONTH_AGGREGATION));
-            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_REPORT_YEAR_AGGREGATION));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_DATE));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_WEEK));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_MONTH));
+            list.add(new OptionsBean(R.drawable.ic_report_date_customer, OptionType.OPTION_STATISTIC_YEAR));
             mOptionsWindow.setOnDismissListener(() -> {
                 mGatherArrow.setRotation(0);
             });
@@ -252,7 +252,7 @@ public class DateFilterView extends LinearLayout implements BaseQuickAdapter.OnI
                 date = CalendarUtils.getDateBeforeMonth(date, 1);
                 type = MONTH;
                 break;
-            case OptionType.OPTION_REPORT_YEAR_AGGREGATION:
+            case OptionType.OPTION_STATISTIC_YEAR:
                 type = YEAR;
                 break;
         }
@@ -267,7 +267,7 @@ public class DateFilterView extends LinearLayout implements BaseQuickAdapter.OnI
             mDateMap.put(optionType, getDefaultDateByType(optionType));
         }
         Tuple<Integer, Date> tuple = mDateMap.get(optionType);
-        mCallback.onDateChanged(TextUtils.equals(optionType, OptionType.OPTION_REPORT_YEAR_AGGREGATION) ?
+        mCallback.onDateChanged(TextUtils.equals(optionType, OptionType.OPTION_STATISTIC_YEAR) ?
                 String.valueOf(CalendarUtils.getYear(tuple.getKey2())) :
                 CalendarUtils.toLocalDate(tuple.getKey2()));
         updateTimeString(tuple.getKey1(), tuple.getKey2());

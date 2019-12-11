@@ -160,7 +160,7 @@ public class DeliveryLackGatherActivity extends BaseLoadActivity implements Deli
         if (optionsBean == null) {
             return;
         }
-        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_REPORT_DETAIL)) {
+        if (TextUtils.equals(optionsBean.getLabel(), OptionType.OPTION_EXPORT_DETAIL_INFO)) {
             export(null);
         }
 
