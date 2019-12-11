@@ -38,9 +38,4 @@ public enum TimeTypeEnum {
         this.code = code;
         this.desc = desc;
     }
-
-    public static List<Integer> getAllTimeTypeCode(){
-        List<TimeTypeEnum> timeTypeEnums = Arrays.asList(TimeTypeEnum.values());
-        return timeTypeEnums.stream().map(p->p.getCode()).collect(Collectors.toList());
-    }
 }

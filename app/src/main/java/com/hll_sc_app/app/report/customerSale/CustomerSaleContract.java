@@ -19,17 +19,10 @@ public interface CustomerSaleContract {
          *
          * @return 参数
          */
-        CustomerSaleReq getParams();
+        CustomerSaleReq getReq();
 
     }
 
     interface ICustomerSaleManagePresenter extends IPresenter<CustomerSaleContract.ICustomerSaleView> {
-        /**
-         * 加载日销售汇总列表
-         *
-         * @param showLoading true-显示对话框
-         */
-        void queryCustomerSaleGather(boolean showLoading);
-
     }
 }

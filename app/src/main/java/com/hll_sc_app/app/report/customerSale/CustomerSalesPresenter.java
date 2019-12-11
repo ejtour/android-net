@@ -10,8 +10,6 @@ import com.hll_sc_app.rest.Report;
 public class CustomerSalesPresenter implements  CustomerSaleContract.ICustomerSaleManagePresenter{
 
     private  CustomerSaleContract.ICustomerSaleView mView;
-    private int mPageNum;
-    private int mTempPageNum;
 
     private CustomerSalesPresenter(){}
 
@@ -20,32 +18,20 @@ public class CustomerSalesPresenter implements  CustomerSaleContract.ICustomerSa
     }
     @Override
     public void start() {
-        queryCustomerSaleGather(true);
+        CustomerSaleReq req = mView.getReq();
+        req.setGroupID(UserConfig.getGroupID());
+        req.setPageNum(1);
+        req.setPageSize(10);
+        Report.queryCustomerSales(req, new SimpleObserver<CustomerSalesResp>(mView) {
+            @Override
+            public void onSuccess(CustomerSalesResp customerSalesResp) {
+                mView.showCustomerSaleGather(customerSalesResp);
+            }
+        });
     }
 
     @Override
     public void register(CustomerSaleContract.ICustomerSaleView view) {
-       mView = CommonUtils.requireNonNull(view);
-    }
-
-    @Override
-    public void queryCustomerSaleGather(boolean showLoading) {
-        mPageNum = 1;
-        mTempPageNum = mPageNum;
-        toCustomerSaleList(showLoading);
-    }
-
-    private void toCustomerSaleList(boolean showLoading){
-        CustomerSaleReq params = mView.getParams();
-        params.setGroupID(UserConfig.getGroupID());
-        params.setPageNum(mTempPageNum);
-        params.setPageSize(20);
-        Report.queryCustomerSales(params, new SimpleObserver<CustomerSalesResp>(mView,showLoading) {
-            @Override
-            public void onSuccess(CustomerSalesResp customerSalesResp) {
-                mPageNum = mTempPageNum;
-                mView.showCustomerSaleGather(customerSalesResp);
-            }
-        });
+        mView = CommonUtils.requireNonNull(view);
     }
 }

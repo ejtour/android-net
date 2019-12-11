@@ -81,17 +81,17 @@ public @interface OptionType {
 
     String OPTION_EXPORT_DETAIL_INFO = "导出详细信息";
 
-    String OPTION_REPORT_CURRENT_DATE = "今日  ";
-    String OPTION_REPORT_YES_DATE = "昨日  ";
-    String OPTION_REPORT_CURRENT_WEEK = "本周  ";
-    String OPTION_REPORT_PRE_WEEK = "上周  ";
-    String OPTION_REPORT_CURRENT_MONTH = "本月  ";
-    String OPTION_REPORT_PRE_MONTH = "上月  ";
-    String OPTION_REPORT_CUSTOMER_DEFINE = "自定义  ";
-    String OPTION_REPORT_DATE_AGGREGATION = "日汇总  ";
-    String OPTION_REPORT_WEEK_AGGREGATION = "周汇总  ";
-    String OPTION_REPORT_MONTH_AGGREGATION = "月汇总  ";
-    String OPTION_REPORT_YEAR_AGGREGATION = "年汇总  ";
+    String OPTION_REPORT_CURRENT_DATE = "今日";
+    String OPTION_REPORT_YES_DATE = "昨日";
+    String OPTION_REPORT_CURRENT_WEEK = "本周";
+    String OPTION_REPORT_PRE_WEEK = "上周";
+    String OPTION_REPORT_CURRENT_MONTH = "本月";
+    String OPTION_REPORT_PRE_MONTH = "上月";
+    String OPTION_REPORT_CUSTOMER_DEFINE = "自定义";
+    String OPTION_REPORT_DATE_AGGREGATION = "日统计";
+    String OPTION_REPORT_WEEK_AGGREGATION = "周统计";
+    String OPTION_REPORT_MONTH_AGGREGATION = "月统计";
+    String OPTION_REPORT_YEAR_AGGREGATION = "年统计";
     String OPTION_REPORT_DETAIL = "导出详细信息";
 
     String OPTION_CURRENT_DATE = "今日";
