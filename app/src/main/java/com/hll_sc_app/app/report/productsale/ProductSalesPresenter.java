@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.productSale;
+package com.hll_sc_app.app.report.productsale;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.filter.ProductSalesParam;

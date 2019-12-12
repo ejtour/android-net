@@ -568,7 +568,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.productSale.ProductSalesActivity"
+            android:name=".app.report.productsale.ProductSalesActivity"
             android:screenOrientation="portrait" />
 
         <activity

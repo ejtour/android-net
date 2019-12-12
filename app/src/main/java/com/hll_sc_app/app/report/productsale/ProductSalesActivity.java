@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.productSale;
+package com.hll_sc_app.app.report.productsale;
 
 import android.graphics.Color;
 import android.os.Build;

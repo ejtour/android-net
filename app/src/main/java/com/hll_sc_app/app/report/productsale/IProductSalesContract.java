@@ -1,11 +1,10 @@
-package com.hll_sc_app.app.report.productSale;
+package com.hll_sc_app.app.report.productsale;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Bean;
 
-import java.util.Date;
 import java.util.List;
 
 /**

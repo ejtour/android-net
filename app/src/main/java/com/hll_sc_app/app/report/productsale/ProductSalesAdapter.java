@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.productSale;
+package com.hll_sc_app.app.report.productsale;
 
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
