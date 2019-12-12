@@ -1,7 +1,5 @@
 package com.hll_sc_app.bean.report.inspectLack.detail;
 
-import com.hll_sc_app.bean.report.inspectLack.InspectLackItem;
-
 import java.util.ArrayList;
 import java.util.List;
 

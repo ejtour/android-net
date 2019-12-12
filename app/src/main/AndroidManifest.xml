@@ -765,7 +765,7 @@
 
         <!--收货差异汇总-->
         <activity
-            android:name=".app.report.inspectLack.InspectLackActivity"
+            android:name=".app.report.receive.diff.ReceiveDiffActivity"
             android:screenOrientation="portrait" />
 
         <!--收货差异明细-->

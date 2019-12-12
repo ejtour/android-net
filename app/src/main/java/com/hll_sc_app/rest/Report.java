@@ -18,7 +18,7 @@ import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
-import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
@@ -42,7 +42,6 @@ import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
-import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
@@ -215,12 +214,11 @@ public class Report {
     /**
      * 收货差异汇总
      *
-     * @param params
      * @param observer
      */
-    public static void queryInspectLack(BaseReportReqParam params, SimpleObserver<InspectLackResp> observer) {
+    public static void queryReceiveDiff(BaseMapReq req, SimpleObserver<ReceiveDiffResp> observer) {
         ReportService.INSTANCE
-                .queryInspectLack(new BaseReq<>(params))
+                .queryReceiveDiff(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
