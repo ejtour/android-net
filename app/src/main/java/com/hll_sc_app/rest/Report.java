@@ -15,7 +15,7 @@ import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
-import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
+import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
@@ -610,11 +610,10 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryDeliveryLackGather(BaseReportReqParam req,
-                                               SimpleObserver<DeliveryLackGatherResp> observer) {
+    public static void queryLackDiff(BaseMapReq req,
+                                     SimpleObserver<LackDiffResp> observer) {
         ReportService.INSTANCE
-                .queryDeliveryLackGather(
-                        new BaseReq<>(req))
+                .queryLackDiff(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

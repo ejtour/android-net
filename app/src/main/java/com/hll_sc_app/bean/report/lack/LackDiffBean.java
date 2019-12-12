@@ -1,26 +1,48 @@
-package com.hll_sc_app.bean.report.deliveryLack;
+package com.hll_sc_app.bean.report.lack;
+
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 缺货汇总
  */
-public class DeliveryLackGather {
-
-    private long date;
+public class LackDiffBean implements IStringArrayGenerator {
+    private String date;
     private double deliveryLackAmount;
     private int deliveryLackKindNum;
     private int deliveryLackNum;
-    private String deliveryLackRate;
+    private double deliveryLackRate;
     private int deliveryLackShopNum;
     private int deliveryOrderNum;
     private double deliveryTradeAmount;
     private double oriReserveTotalAmount;
 
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(DateUtil.getReadableTime(date, Constants.SLASH_YYYY_MM_DD)); // 日期
+        list.add(CommonUtils.formatNumber(deliveryOrderNum)); // 发货量
+        list.add(CommonUtils.formatMoney(deliveryTradeAmount)); // 发货金额
+        list.add(CommonUtils.formatMoney(oriReserveTotalAmount)); // 原订货金额
+        list.add(CommonUtils.formatNumber(deliveryLackKindNum)); // 缺货商品数
+        list.add(CommonUtils.formatNumber(deliveryLackNum)); // 缺货数量
+        list.add(CommonUtils.formatMoney(deliveryLackAmount)); // 缺货金额
+        list.add(-2 == deliveryLackRate ? "- -" : Utils.numToPercent(deliveryLackRate)); // 缺货率
+        list.add(String.valueOf(deliveryLackShopNum)); // 影响门店
+        return list;
+    }
 
-    public long getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -48,11 +70,11 @@ public class DeliveryLackGather {
         this.deliveryLackNum = deliveryLackNum;
     }
 
-    public String getDeliveryLackRate() {
+    public double getDeliveryLackRate() {
         return deliveryLackRate;
     }
 
-    public void setDeliveryLackRate(String deliveryLackRate) {
+    public void setDeliveryLackRate(double deliveryLackRate) {
         this.deliveryLackRate = deliveryLackRate;
     }
 

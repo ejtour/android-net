@@ -747,9 +747,9 @@ public class RouterConfig {
     public static final String REPORT_SALESMAN_SALES = "/activity/report/salesman/sales";
 
     /**
-     * 缺货汇总
+     * 缺货差异汇总
      */
-    public static final String REPORT_DELIVERY_LACK_GATHER = "/activity/report/delivery/lack/gather";
+    public static final String REPORT_LACK_DIFF = "/activity/report/lack/diff";
     /*
      * 我的钱包-银行列表
      */

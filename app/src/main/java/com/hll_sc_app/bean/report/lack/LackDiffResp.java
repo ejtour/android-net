@@ -1,22 +1,39 @@
-package com.hll_sc_app.bean.report.deliveryLack;
+package com.hll_sc_app.bean.report.lack;
 
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 缺货汇总响应列表
  */
-public class DeliveryLackGatherResp {
-
-    List<DeliveryLackGather> records;
+public class LackDiffResp {
+    private List<LackDiffBean> records;
     private double totalDeliveryLackAmount;
     private int totalDeliveryLackNum;
-    private String totalDeliveryLackRate;
+    private double totalDeliveryLackRate;
     private int totalDeliveryLackShopNum;
     private int totalDeliveryOrderNum;
     private double totalDeliveryTradeAmount;
     private int totalDeliveryLackKindNum;
     private double totalOriReserveTotalAmount;
     private int totalSize;
+
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add("合计");
+        list.add(String.valueOf(totalDeliveryOrderNum)); // 发货量
+        list.add(CommonUtils.formatMoney(totalDeliveryTradeAmount)); // 发货金额
+        list.add(CommonUtils.formatMoney(totalOriReserveTotalAmount)); // 原订货金额
+        list.add("- -"); // 缺货商品数
+        list.add(String.valueOf(totalDeliveryLackNum)); // 缺货数量
+        list.add(CommonUtils.formatMoney(totalDeliveryLackAmount)); // 缺货金额
+        list.add(-2 == totalDeliveryLackRate ? "- -" : Utils.numToPercent(totalDeliveryLackRate)); // 缺货率
+        list.add(String.valueOf(totalDeliveryLackShopNum)); // 影响门店
+        return list;
+    }
 
     public double getTotalDeliveryLackAmount() {
         return totalDeliveryLackAmount;
@@ -34,11 +51,11 @@ public class DeliveryLackGatherResp {
         this.totalDeliveryLackNum = totalDeliveryLackNum;
     }
 
-    public String getTotalDeliveryLackRate() {
+    public double getTotalDeliveryLackRate() {
         return totalDeliveryLackRate;
     }
 
-    public void setTotalDeliveryLackRate(String totalDeliveryLackRate) {
+    public void setTotalDeliveryLackRate(double totalDeliveryLackRate) {
         this.totalDeliveryLackRate = totalDeliveryLackRate;
     }
 
@@ -82,11 +99,11 @@ public class DeliveryLackGatherResp {
         this.totalSize = totalSize;
     }
 
-    public List<DeliveryLackGather> getRecords() {
+    public List<LackDiffBean> getRecords() {
         return records;
     }
 
-    public void setRecords(List<DeliveryLackGather> records) {
+    public void setRecords(List<LackDiffBean> records) {
         this.records = records;
     }
 

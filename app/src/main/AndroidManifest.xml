@@ -627,9 +627,9 @@
             android:name=".app.report.salesman.sales.SalesManSalesActivity"
             android:screenOrientation="portrait" />
 
-        <!--缺货汇总-->
+        <!--缺货差异汇总-->
         <activity
-            android:name=".app.report.deliveryLack.DeliveryLackGatherActivity"
+            android:name=".app.report.lack.diff.LackDiffActivity"
             android:screenOrientation="portrait" />
 
         <activity

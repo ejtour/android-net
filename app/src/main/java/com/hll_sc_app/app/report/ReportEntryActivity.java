@@ -64,7 +64,7 @@ public class ReportEntryActivity extends BaseLoadActivity {
             list.add(new ReportItem(R.drawable.ic_salesman_sign, "业务员签约绩效", RouterConfig.REPORT_SALESMAN_SIGN));
             list.add(new ReportItem(R.drawable.ic_report_sales_performance, "业务员销售额绩效", RouterConfig.REPORT_SALESMAN_SALES, true));
 
-            list.add(new ReportItem(R.drawable.ic_report_stockout_difference, "缺货差异汇总", RouterConfig.REPORT_DELIVERY_LACK_GATHER));
+            list.add(new ReportItem(R.drawable.ic_report_stockout_difference, "缺货差异汇总", RouterConfig.REPORT_LACK_DIFF));
             list.add(new ReportItem(R.drawable.ic_report_receive_difference, "收货差异汇总", RouterConfig.REPORT_INSPECT_LACK_LIST));
             list.add(new ReportItem(R.drawable.ic_report_products_details, "收货差异商品明细表", RouterConfig.REPORT_INSPECT_LACK_DETAIL));
             list.add(new ReportItem(R.drawable.ic_report_stockout_statistics, "客户缺货统计表", RouterConfig.REPORT_CUSTOMER_LACK_SUMMARY, true));
