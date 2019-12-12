@@ -610,31 +610,6 @@ public class Report {
     }
 
     /**
-     * 客户明细，门店汇总搜索
-     * @param groupType
-     * @param searchParam
-     * @param pageNo
-     * @param pageSize
-     * @param observer
-     */
-    public static void queryPurchaser(String groupType,String searchParam,Integer pageNo,Integer pageSize, SimpleObserver<List<PurchaserGroupBean>> observer){
-        UserBean user = GreenDaoUtils.getUser();
-        if(null == user){
-            return;
-        }
-        ReportService.INSTANCE.queryPurchaser(
-                BaseMapReq.newBuilder()
-                        .put("groupType",groupType)
-                        .put("searchParam", StringUtil.isEmpty(searchParam)?"":searchParam)
-                        .put("pageNo",pageNo==null?"1":pageNo+"")
-                        .put("pageSize",pageSize==null?"50":pageSize+"")
-                        .create())
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    /**
      * 查询客户签约绩效
      *
      * @param req

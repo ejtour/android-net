@@ -138,10 +138,6 @@ public interface ReportService {
     Observable<BaseResp<RefundReasonStaticsResp>> queryRefundReasonStatics(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
-    @Headers("pv:101024")
-    Observable<BaseResp<List<PurchaserGroupBean>>> queryPurchaser(@Body BaseMapReq body);
-
-    @POST(HttpConfig.URL)
     @Headers("pv:111009")
     Observable<BaseResp<SalesManSignResp>> querySalesManSignAchievement(@Body BaseReq<SalesManAchievementReq> body);
 
