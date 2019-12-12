@@ -2,7 +2,6 @@ package com.hll_sc_app.rest;
 
 import android.text.TextUtils;
 
-import com.alibaba.sdk.android.ams.common.util.StringUtil;
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
@@ -44,13 +43,9 @@ import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
-import com.hll_sc_app.bean.report.req.CustomerSaleReq;
-import com.hll_sc_app.bean.report.req.ProductDetailReq;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
-import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
-import com.hll_sc_app.bean.report.resp.product.OrderDetailTotalResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
@@ -551,25 +546,6 @@ public class Report {
                 .subscribe(observer);
     }
 
-    /**
-     * 商品统计（明细）
-     *
-     * @param req
-     * @return
-     */
-    public static void queryProductDetailList(ProductDetailReq req, SimpleObserver<OrderDetailTotalResp> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (null == user) {
-            return;
-        }
-        ReportService.INSTANCE
-                .queryProductDetailList(
-                        new BaseReq<>(req))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
 
     /**
      * 日销售额查询
@@ -577,14 +553,9 @@ public class Report {
      * @param req
      * @return
      */
-    public static void queryDateSaleAmount(BaseReportReqParam req, SimpleObserver<DateSaleAmountResp> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (null == user) {
-            return;
-        }
+    public static void queryDateSaleAmount(BaseMapReq req, SimpleObserver<DateSaleAmountResp> observer) {
         ReportService.INSTANCE
-                .queryDateSaleAmount(
-                        new BaseReq<>(req))
+                .queryDateSaleAmount(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -596,14 +567,9 @@ public class Report {
      * @param req
      * @return
      */
-    public static void queryCustomerSales(CustomerSaleReq req, SimpleObserver<CustomerSalesResp> observer) {
-        UserBean user = GreenDaoUtils.getUser();
-        if (null == user) {
-            return;
-        }
+    public static void queryCustomerSales(BaseMapReq req, SimpleObserver<CustomerSalesResp> observer) {
         ReportService.INSTANCE
-                .queryCustomerSales(
-                        new BaseReq<>(req))
+                .queryCustomerSales(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -615,11 +581,10 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void querySalesmanSignAchievement(SalesManAchievementReq req,
+    public static void querySalesmanSignAchievement(BaseMapReq req,
                                                     SimpleObserver<SalesManSignResp> observer) {
         ReportService.INSTANCE
-                .querySalesManSignAchievement(
-                        new BaseReq<>(req))
+                .querySalesManSignAchievement(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

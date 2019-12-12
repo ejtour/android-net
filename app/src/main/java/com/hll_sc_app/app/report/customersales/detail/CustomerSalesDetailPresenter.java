@@ -3,7 +3,6 @@ package com.hll_sc_app.app.report.customersales.detail;
 import android.text.TextUtils;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
@@ -44,10 +43,10 @@ public class CustomerSalesDetailPresenter implements ICustomerSalesDetailContrac
     }
 
     private void load(boolean showLoading) {
-        CustomerSaleReq req = mView.getReq();
-        req.setPageNum(mPageNum);
-        req.setPageSize(20);
-        Report.queryCustomerSales(req, new SimpleObserver<CustomerSalesResp>(mView, showLoading) {
+        Report.queryCustomerSales(mView.getReq()
+                .put("pageNum", String.valueOf(mPageNum))
+                .put("pageSize", "20")
+                .create(), new SimpleObserver<CustomerSalesResp>(mView, showLoading) {
             @Override
             public void onSuccess(CustomerSalesResp customerSalesResp) {
                 mView.setData(customerSalesResp, mPageNum > 1);
@@ -63,7 +62,10 @@ public class CustomerSalesDetailPresenter implements ICustomerSalesDetailContrac
             bindEmail(email);
             return;
         }
-        Report.exportReport(mView.getReq(), "111004", email, Utils.getExportObserver(mView));
+        Report.exportReport(mView.getReq()
+                .put("pageNum", "")
+                .put("pageSize", "")
+                .create().getData(), "111004", email, Utils.getExportObserver(mView));
     }
 
     private void bindEmail(String email) {

@@ -40,13 +40,9 @@ import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
-import com.hll_sc_app.bean.report.req.CustomerSaleReq;
-import com.hll_sc_app.bean.report.req.ProductDetailReq;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
-import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
-import com.hll_sc_app.bean.report.resp.product.OrderDetailTotalResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
@@ -80,16 +76,6 @@ public interface ReportService {
     ReportService INSTANCE = HttpFactory.create(ReportService.class);
 
     /**
-     * 商品统计（明细）
-     *
-     * @param req
-     * @return
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:111040")
-    Observable<BaseResp<OrderDetailTotalResp>> queryProductDetailList(@Body BaseReq<ProductDetailReq> req);
-
-    /**
      * 日销售额查询
      *
      * @param req
@@ -97,7 +83,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111005")
-    Observable<BaseResp<DateSaleAmountResp>> queryDateSaleAmount(@Body BaseReq<BaseReportReqParam> req);
+    Observable<BaseResp<DateSaleAmountResp>> queryDateSaleAmount(@Body BaseMapReq req);
 
     /**
      * 客户销售/门店汇总查询
@@ -107,7 +93,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111004")
-    Observable<BaseResp<CustomerSalesResp>> queryCustomerSales(@Body BaseReq<CustomerSaleReq> req);
+    Observable<BaseResp<CustomerSalesResp>> queryCustomerSales(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103098")
@@ -139,7 +125,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:111009")
-    Observable<BaseResp<SalesManSignResp>> querySalesManSignAchievement(@Body BaseReq<SalesManAchievementReq> body);
+    Observable<BaseResp<SalesManSignResp>> querySalesManSignAchievement(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111003")

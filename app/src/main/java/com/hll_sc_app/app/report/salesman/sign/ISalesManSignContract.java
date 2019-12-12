@@ -1,7 +1,7 @@
 package com.hll_sc_app.app.report.salesman.sign;
 
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.impl.IExportView;
 
@@ -14,7 +14,7 @@ public interface ISalesManSignContract {
     interface ISalesManSignView extends IExportView {
         void setData(SalesManSignResp resp, boolean append);
 
-        SalesManAchievementReq getReq();
+        BaseMapReq.Builder getReq();
     }
 
     interface ISalesManSignPresenter extends IPresenter<ISalesManSignView> {

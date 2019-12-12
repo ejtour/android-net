@@ -3,8 +3,6 @@ package com.hll_sc_app.app.report.dailysale;
 import android.text.TextUtils;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
@@ -53,23 +51,17 @@ public class DailyAggregationPresenter implements DailyAggregationContract.IDail
             bindEmail(email);
             return;
         }
-        BaseReportReqParam dailyReq = new BaseReportReqParam();
-        dailyReq.setTimeType(1);
-        dailyReq.setStartDate(mView.getStartDate());
-        dailyReq.setEndDate(mView.getEndDate());
-        dailyReq.setGroupID(UserConfig.getGroupID());
-        Report.exportReport(dailyReq, "111005", email, Utils.getExportObserver(mView));
+        Report.exportReport(mView.getReqBuilder()
+                .put("pageNum", "")
+                .put("pageSize", "")
+                .create().getData(), "111005", email, Utils.getExportObserver(mView));
     }
 
     private void load(boolean showLoading) {
-        BaseReportReqParam dailyReq = new BaseReportReqParam();
-        dailyReq.setTimeType(1);
-        dailyReq.setStartDate(mView.getStartDate());
-        dailyReq.setEndDate(mView.getEndDate());
-        dailyReq.setGroupID(UserConfig.getGroupID());
-        dailyReq.setPageNum(mPageNum);
-        dailyReq.setPageSize(20);
-        Report.queryDateSaleAmount(dailyReq, new SimpleObserver<DateSaleAmountResp>(mView,showLoading) {
+        Report.queryDateSaleAmount(mView.getReqBuilder()
+                .put("pageNum", String.valueOf(mPageNum))
+                .put("pageSize", "20")
+                .create(), new SimpleObserver<DateSaleAmountResp>(mView, showLoading) {
             @Override
             public void onSuccess(DateSaleAmountResp dateSaleAmountResp) {
                 mView.showDailyAggregationList(dateSaleAmountResp, mPageNum > 1);

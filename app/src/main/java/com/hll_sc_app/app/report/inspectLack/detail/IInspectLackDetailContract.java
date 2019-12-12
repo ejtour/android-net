@@ -2,10 +2,8 @@ package com.hll_sc_app.app.report.inspectLack.detail;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
-import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 
 /**
  * @author chukun

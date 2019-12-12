@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,16 +20,12 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
-import com.hll_sc_app.bean.report.req.CustomerSaleReq;
-import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
 import com.hll_sc_app.bean.report.search.SearchResultItem;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
-import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
@@ -56,7 +51,7 @@ import butterknife.OnClick;
 public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implements WaitRefundCustomerDetailContract.IWaitRefundCustomerDetailView {
     private static final int WAIT_REFUND_CUSTOMERT_CODE = 11001;
     private static final int COLUMN_NUM = 9;
-    private static final int[] WIDTH_ARRAY = {150,120,80, 80, 60, 60,60,60,60};
+    private static final int[] WIDTH_ARRAY = {150, 120, 80, 80, 60, 60, 60, 60, 60};
     @BindView(R.id.ogd_excel)
     ExcelLayout mExcel;
     @BindView(R.id.rog_title_bar)
@@ -68,7 +63,6 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
     @BindView(R.id.img_clear)
     ImageView imgClear;
     private ContextOptionsWindow mExportOptionsWindow;
-
 
 
     @Override
@@ -109,7 +103,7 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
         super.hideLoading();
     }
 
-    @OnClick({R.id.rog_title_bar,R.id.img_clear,R.id.edt_search})
+    @OnClick({R.id.rog_title_bar, R.id.img_clear, R.id.edt_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_clear:
@@ -121,7 +115,7 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
                 imgClear.setVisibility(View.GONE);
                 break;
             case R.id.rog_title_bar:
-               showExportOptionsWindow(mTitleBar);
+                showExportOptionsWindow(mTitleBar);
                 break;
             case R.id.edt_search:
                 RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_SEARCH, this, WAIT_REFUND_CUSTOMERT_CODE);
@@ -157,7 +151,7 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
 
 
     @Override
-    public WaitRefundReq getRequestParams(){
+    public WaitRefundReq getRequestParams() {
         return mParam;
     }
 
@@ -175,16 +169,16 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
     }
 
     private View generateHeader(boolean isDisPlay) {
-        View view = View.inflate(this,R.layout.item_report_refund_customer_detail_header,null);
-        if(isDisPlay) {
+        View view = View.inflate(this, R.layout.item_report_refund_customer_detail_header, null);
+        if (isDisPlay) {
             mExcel.setHeaderView(view);
         }
         return view;
     }
 
-    private View generatorFooter(WaitRefundCustomerResp refundCustomerResp, boolean isDisplay){
+    private View generatorFooter(WaitRefundCustomerResp refundCustomerResp, boolean isDisplay) {
         ExcelRow row = new ExcelRow(this);
-        if(isDisplay) {
+        if (isDisplay) {
             row.updateChildView(COLUMN_NUM);
             ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
             array[0] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[0]));
@@ -197,7 +191,7 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
             array[7] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[7]));
             array[8] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[8]));
             row.updateItemData(array);
-            row.updateRowDate("合计", "----", refundCustomerResp.getTotalRefundBillNum()+"", refundCustomerResp.getTotalRefundProductNum()+"",
+            row.updateRowDate("合计", "----", refundCustomerResp.getTotalRefundBillNum() + "", refundCustomerResp.getTotalRefundProductNum() + "",
                     CommonUtils.formatMoney(Double.parseDouble(refundCustomerResp.getTotalCashAmount())),
                     CommonUtils.formatMoney(Double.parseDouble(refundCustomerResp.getTotalBankCardAmount())),
                     CommonUtils.formatMoney(Double.parseDouble(refundCustomerResp.getTotalOnLineAmount())),
@@ -250,9 +244,9 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
             edtSearch.setText(bean.getName());
             imgClear.setVisibility(View.VISIBLE);
             WaitRefundReq requestParams = getRequestParams();
-            if(bean.getType()==0) {
+            if (bean.getType() == 0) {
                 requestParams.setPurchaserID(bean.getShopMallId());
-            }else{
+            } else {
                 requestParams.setShopID(bean.getShopMallId());
             }
             mPresenter.queryRefundCustomerDetail(true);

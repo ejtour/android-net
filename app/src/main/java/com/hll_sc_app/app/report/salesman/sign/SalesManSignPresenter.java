@@ -3,7 +3,6 @@ package com.hll_sc_app.app.report.salesman.sign;
 import android.text.TextUtils;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
@@ -48,7 +47,10 @@ public class SalesManSignPresenter implements ISalesManSignContract.ISalesManSig
             });
             return;
         }
-        Report.exportReport(mView.getReq(), "111009", email, Utils.getExportObserver(mView));
+        Report.exportReport(mView.getReq()
+                .put("pageNum", "")
+                .put("pageSize", "")
+                .create().getData(), "111009", email, Utils.getExportObserver(mView));
     }
 
     @Override
@@ -58,10 +60,10 @@ public class SalesManSignPresenter implements ISalesManSignContract.ISalesManSig
     }
 
     private void load(boolean showLoading) {
-        SalesManAchievementReq req = mView.getReq();
-        req.setPageNum(mPageNum);
-        req.setPageSize(20);
-        Report.querySalesmanSignAchievement(req, new SimpleObserver<SalesManSignResp>(mView, showLoading) {
+        Report.querySalesmanSignAchievement(mView.getReq()
+                .put("pageNum", String.valueOf(mPageNum))
+                .put("pageSize", "20")
+                .create(), new SimpleObserver<SalesManSignResp>(mView, showLoading) {
             @Override
             public void onSuccess(SalesManSignResp salesManSignResp) {
                 mView.setData(salesManSignResp, mPageNum > 1);

@@ -23,7 +23,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmount;
@@ -78,6 +80,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     private DateRangeWindow mDateRangeWindow;
     private ContextOptionsWindow mExportOptionsWindow;
     private DailyAggregationPresenter mPresenter;
+    private BaseMapReq.Builder mReqBuilder = BaseMapReq.newBuilder();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,13 +90,19 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
+        initData();
+    }
+
+    private void initData() {
+        initDefaultTime();
+        mReqBuilder.put("groupID", UserConfig.getGroupID());
+        mReqBuilder.put("timeType", "1");
         mPresenter = DailyAggregationPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
 
     private void initView() {
-        initDefaultTime();
         setData(0, 0);
         mTitleBar.setRightBtnClick(this::showExportOptionsWindow);
         mAdapter = new DailyAggregationAdapter();
@@ -121,8 +130,12 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     }
 
     private void updateSelectedDate() {
-        mDate.setText(String.format("%s - %s", CalendarUtils.format(((Date) mDate.getTag(R.id.date_start)), Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(((Date) mDate.getTag(R.id.date_end)), Constants.SLASH_YYYY_MM_DD)));
+        Date startDate = (Date) mDate.getTag(R.id.date_start);
+        Date endDate = (Date) mDate.getTag(R.id.date_end);
+        mDate.setText(String.format("%s - %s", CalendarUtils.format(startDate, Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(endDate, Constants.SLASH_YYYY_MM_DD)));
+        mReqBuilder.put("startDate", CalendarUtils.toLocalDate(startDate));
+        mReqBuilder.put("endDate", CalendarUtils.toLocalDate(endDate));
     }
 
     @OnClick(R.id.rds_select_date)
@@ -180,16 +193,6 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     }
 
     @Override
-    public String getStartDate() {
-        return CalendarUtils.toLocalDate((Date) mDate.getTag(R.id.date_start));
-    }
-
-    @Override
-    public String getEndDate() {
-        return CalendarUtils.toLocalDate((Date) mDate.getTag(R.id.date_end));
-    }
-
-    @Override
     public void exportSuccess(String email) {
         Utils.exportSuccess(this, email);
     }
@@ -207,6 +210,11 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     @Override
     public void export(String email) {
         mPresenter.exportDailyReport(email);
+    }
+
+    @Override
+    public BaseMapReq.Builder getReqBuilder() {
+        return mReqBuilder;
     }
 
     @Override

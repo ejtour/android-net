@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.report.dailysale;
 
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.impl.IExportView;
 
@@ -20,25 +21,12 @@ public interface DailyAggregationContract {
          */
         void showDailyAggregationList(DateSaleAmountResp dateSaleAmountResp, boolean append);
 
-
-        /**
-         * 获取开始时间
-         *
-         * @return 开始时间
-         */
-        String getStartDate();
-
-        /**
-         * 获取结束时间
-         *
-         * @return 结束时间
-         */
-        String getEndDate();
-
         /**
          * 导出邮箱
          */
         void export(String email);
+
+        BaseMapReq.Builder getReqBuilder();
     }
 
     interface IDailyAggregationManagePresenter extends IPresenter<IDailyAggregationView> {

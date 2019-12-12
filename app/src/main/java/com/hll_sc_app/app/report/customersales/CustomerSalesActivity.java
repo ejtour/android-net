@@ -17,9 +17,10 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.search.CustomerSearchActivity;
 import com.hll_sc_app.app.report.customersales.detail.CustomerSalesDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -60,7 +61,7 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
     @BindView(R.id.rcs_total_amount)
     TextView mTotalAmount;
     private CustomerSalesPresenter mPresenter;
-    private CustomerSaleReq mReq = new CustomerSaleReq();
+    private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +75,10 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
     }
 
     private void initData() {
-        mReq.setDate(CalendarUtils.toLocalDate(new Date()));
+        mReq.put("actionType", "0");
+        mReq.put("date", CalendarUtils.toLocalDate(new Date()));
+        mReq.put("groupID", UserConfig.getGroupID());
+        mReq.put("timeFlag", "0");
         mPresenter = CustomerSalesPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
@@ -94,7 +98,7 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
             @Override
             public void toSearch(String searchContent) {
                 if (TextUtils.isEmpty(searchContent)) {
-                    mReq.setPurchaserID(null);
+                    mReq.put("purchaserID", "");
                 }
                 mPresenter.start();
             }
@@ -109,7 +113,7 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
     }
 
     @Override
-    public void showCustomerSaleGather(CustomerSalesResp customerSalesResp) {
+    public void setData(CustomerSalesResp customerSalesResp) {
         mActiveOrder.setText(CommonUtils.formatNum(customerSalesResp.getTotalValidBillNum()));
         mReturnOrder.setText(CommonUtils.formatNum(customerSalesResp.getTotalRefundBillNum()));
         mOrderCustomer.setText(String.format("%s/%s", CommonUtils.formatNum(customerSalesResp.getTotalOrderCustomerNum()),
@@ -122,7 +126,7 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
     }
 
     @Override
-    public CustomerSaleReq getReq() {
+    public BaseMapReq.Builder getReq() {
         return mReq;
     }
 
@@ -131,7 +135,7 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
         if (resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 PurchaserBean bean = data.getParcelableExtra("parcelable");
-                mReq.setPurchaserID(bean.getPurchaserID());
+                mReq.put("purchaserID", bean.getPurchaserID());
                 mSearchView.showSearchContent(true, bean.getPurchaserName());
             }
         }
@@ -155,17 +159,17 @@ public class CustomerSalesActivity extends BaseLoadActivity implements CustomerS
 
     @Override
     public void onTimeTypeChanged(int type) {
-        mReq.setTimeType(type);
+        mReq.put("timeType", type == 0 ? "" : String.valueOf(type));
     }
 
     @Override
     public void onTimeFlagChanged(int flag) {
-        mReq.setTimeFlag(flag);
+        mReq.put("timeFlag", String.valueOf(flag));
     }
 
     @Override
     public void onDateChanged(String date) {
-        mReq.setDate(date);
+        mReq.put("date", date);
         mPresenter.start();
     }
 }

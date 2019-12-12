@@ -15,10 +15,10 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.SimpleSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSignAchievement;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.window.OptionType;
@@ -62,7 +62,7 @@ public class SalesManSignActivity extends BaseLoadActivity implements DateFilter
     ExcelLayout mExcel;
     private ContextOptionsWindow mOptionsWindow;
     private ExcelFooter mFooter;
-    private SalesManAchievementReq mReq = new SalesManAchievementReq();
+    private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
     private ISalesManSignContract.ISalesManSignPresenter mPresenter;
 
     @Override
@@ -97,7 +97,7 @@ public class SalesManSignActivity extends BaseLoadActivity implements DateFilter
 
             @Override
             public void toSearch(String searchContent) {
-                mReq.setKeyWords(searchContent);
+                mReq.put("keyWords", searchContent);
                 mPresenter.start();
             }
         });
@@ -141,8 +141,9 @@ public class SalesManSignActivity extends BaseLoadActivity implements DateFilter
     }
 
     private void initData() {
-        mReq.setDate(CalendarUtils.toLocalDate(new Date()));
-        mReq.setGroupID(UserConfig.getGroupID());
+        mReq.put("timeFlag", "0");
+        mReq.put("date", CalendarUtils.toLocalDate(new Date()));
+        mReq.put("groupID", UserConfig.getGroupID());
         mPresenter = SalesManSignPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
@@ -182,17 +183,17 @@ public class SalesManSignActivity extends BaseLoadActivity implements DateFilter
 
     @Override
     public void onTimeTypeChanged(int type) {
-        mReq.setTimeType(type);
+        mReq.put("timeType", type == 0 ? "" : String.valueOf(type));
     }
 
     @Override
     public void onTimeFlagChanged(int flag) {
-        mReq.setTimeFlag(flag);
+        mReq.put("timeFlag", String.valueOf(flag));
     }
 
     @Override
     public void onDateChanged(String date) {
-        mReq.setDate(date);
+        mReq.put("date", date);
         mPresenter.start();
     }
 
@@ -206,7 +207,7 @@ public class SalesManSignActivity extends BaseLoadActivity implements DateFilter
     }
 
     @Override
-    public SalesManAchievementReq getReq() {
+    public BaseMapReq.Builder getReq() {
         return mReq;
     }
 

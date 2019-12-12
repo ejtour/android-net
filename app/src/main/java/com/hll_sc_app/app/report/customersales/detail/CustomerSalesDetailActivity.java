@@ -17,12 +17,12 @@ import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.search.CustomerSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesBean;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.window.OptionType;
@@ -68,7 +68,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
     private ContextOptionsWindow mOptionsWindow;
     private ExcelFooter mFooter;
     private ICustomerSalesDetailContract.ICustomerSalesDetailPresenter mPresenter;
-    private CustomerSaleReq mReq = new CustomerSaleReq();
+    private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
 
     /**
      * @param actionType 0-客户销售 1-客户销售门店
@@ -93,18 +93,19 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
         if (resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 PurchaserBean bean = data.getParcelableExtra("parcelable");
-                mReq.setPurchaserID(bean.getPurchaserID());
+                mReq.put("purchaserID", bean.getPurchaserID());
                 mSearchView.showSearchContent(true, bean.getPurchaserName());
             }
         }
     }
 
     private void initData() {
-        mReq.setDate(CalendarUtils.toLocalDate(new Date()));
-        mReq.setActionType(mActionType);
-        mReq.setOrder(1);
-        mReq.setSortBy(1);
-        mReq.setGroupID(UserConfig.getGroupID());
+        mReq.put("actionType", String.valueOf(mActionType));
+        mReq.put("date", CalendarUtils.toLocalDate(new Date()));
+        mReq.put("groupID", UserConfig.getGroupID());
+        mReq.put("timeFlag", "0");
+        mReq.put("order", "1");
+        mReq.put("sortBy", "1");
         mPresenter = CustomerSalesDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
@@ -123,7 +124,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
             @Override
             public void toSearch(String searchContent) {
                 if (TextUtils.isEmpty(searchContent)) {
-                    mReq.setPurchaserID(null);
+                    mReq.put("purchaserID", "");
                 }
                 mPresenter.start();
             }
@@ -204,17 +205,17 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
 
     @Override
     public void onTimeTypeChanged(int type) {
-        mReq.setTimeType(type);
+        mReq.put("timeType", type == 0 ? "" : String.valueOf(type));
     }
 
     @Override
     public void onTimeFlagChanged(int flag) {
-        mReq.setTimeFlag(flag);
+        mReq.put("timeFlag", String.valueOf(flag));
     }
 
     @Override
     public void onDateChanged(String date) {
-        mReq.setDate(date);
+        mReq.put("date", date);
         mPresenter.start();
     }
 
@@ -234,7 +235,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
     }
 
     @Override
-    public CustomerSaleReq getReq() {
+    public BaseMapReq.Builder getReq() {
         return mReq;
     }
 
