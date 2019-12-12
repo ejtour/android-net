@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.report.resp.bill;
 
+import com.hll_sc_app.citymall.util.CommonUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,22 +9,34 @@ import java.util.List;
  * 客户销售/门店汇总查询响应列表
  */
 public class CustomerSalesResp {
-
     private double totalAmount;
     private double totalAverageAmount;
-    private int    totalCooperationShopNum;
-    private int    totalOrderCustomerNum;
-    private int    totalOrderCustomerShopNum;
-    private long   totalOrderNum;
+    private int totalCooperationShopNum; // 后台说合作门店总数算不出来，后来用 - - 代替
+    private int totalOrderCustomerNum;
+    private int totalOrderCustomerShopNum;
+    private long totalOrderNum;
     private double totalRefundAmount;
-    private long   totalRefundBillNum;
-    private long   totalRefundCustomerNum;
-    private int    totalRefundCustomerShopNum;
+    private long totalRefundBillNum;
+    private long totalRefundCustomerNum;
+    private int totalRefundCustomerShopNum;
     private double totalSalesAmount;
-    private int    totalSize;
-    private long   totalValidBillNum;
+    private int totalSize;
+    private long totalValidBillNum;
+    private List<CustomerSalesBean> records = new ArrayList<>();
 
-    private List<CustomerSalesRecords> records = new ArrayList<>();
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add("合计");
+        list.add("- -");
+        list.add(String.valueOf(totalOrderNum)); // 订单数
+        list.add(String.valueOf(totalValidBillNum)); // 有效订单数
+        list.add(CommonUtils.formatMoney(totalSalesAmount)); // 交易金额
+        list.add(CommonUtils.formatMoney(totalAverageAmount)); // 单均
+        list.add(String.valueOf(totalRefundBillNum)); // 退单数
+        list.add(CommonUtils.formatMoney(totalRefundAmount)); // 退货金额
+        list.add(CommonUtils.formatMoney(totalAmount)); // 小计金额
+        return list;
+    }
 
     public double getTotalAmount() {
         return totalAmount;
@@ -128,11 +142,11 @@ public class CustomerSalesResp {
         this.totalValidBillNum = totalValidBillNum;
     }
 
-    public List<CustomerSalesRecords> getRecords() {
+    public List<CustomerSalesBean> getRecords() {
         return records;
     }
 
-    public void setRecords(List<CustomerSalesRecords> records) {
+    public void setRecords(List<CustomerSalesBean> records) {
         this.records = records;
     }
 }

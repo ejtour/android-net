@@ -1,9 +1,15 @@
 package com.hll_sc_app.bean.report.resp.bill;
 
-public class CustomerSalesRecords {
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CustomerSalesBean implements IStringArrayGenerator {
 
     private double averageAmount;
-    private int cooperationShopNum;
+    private String cooperationShopNum;
     private long orderNum;
     private long purchaserID;
     private String purchaserName;
@@ -12,8 +18,26 @@ public class CustomerSalesRecords {
     private String shopName;
     private double subtotalAmount;
     private double tradeAmount;
-    private long   validOrderNum;
+    private long validOrderNum;
 
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(purchaserName); // 采购商名称
+        if (cooperationShopNum != null) { // 门店销售汇总
+            list.add(CommonUtils.formatNumber(cooperationShopNum)); // 合作门店数
+        } else {
+            list.add(shopName); // 门店名称
+        }
+        list.add(CommonUtils.formatNumber(orderNum)); // 订单数
+        list.add(CommonUtils.formatNumber(validOrderNum)); // 有效订单数
+        list.add(CommonUtils.formatMoney(tradeAmount)); // 交易金额
+        list.add(CommonUtils.formatMoney(averageAmount)); // 单均
+        list.add(CommonUtils.formatNumber(refundBillNum)); // 退单数
+        list.add(CommonUtils.formatMoney(refundAmount)); // 退货金额
+        list.add(CommonUtils.formatMoney(subtotalAmount)); // 小计金额
+        return list;
+    }
 
     public double getAverageAmount() {
         return averageAmount;
@@ -23,11 +47,11 @@ public class CustomerSalesRecords {
         this.averageAmount = averageAmount;
     }
 
-    public int getCooperationShopNum() {
+    public String getCooperationShopNum() {
         return cooperationShopNum;
     }
 
-    public void setCooperationShopNum(int cooperationShopNum) {
+    public void setCooperationShopNum(String cooperationShopNum) {
         this.cooperationShopNum = cooperationShopNum;
     }
 

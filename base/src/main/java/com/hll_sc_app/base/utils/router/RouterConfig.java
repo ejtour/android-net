@@ -632,14 +632,9 @@ public class RouterConfig {
     public static final String CUSTOMER_SALE_AGGREGATION = "/activity/customer/aggregation";
 
     /**
-     * 客户销售汇总明细
+     * 客户销售汇总详情
      */
-    public static final String CUSTOMER_SALE_DETAILS = "/activity/customer/sale/detail";
-
-    /**
-     * 客户销售汇总门店明细
-     */
-    public static final String CUSTOMER_SALE_SHOP_DETAILS = "/activity/customer/sale/shop/detail";
+    public static final String CUSTOMER_SALE_AGGREGATION_DETAIL = "/activity/customer/aggregation/detail";
 
     /**
      * 退货原因统计
@@ -685,11 +680,6 @@ public class RouterConfig {
      * 生产汇总统计-录入人效
      */
     public static final String REPORT_PRODUCE_INPUT_PEOPLE = "/activity/produce/input/people";
-
-    /**
-     * 客户销售汇总搜索
-     */
-    public static final String CUSTOMER_SALE_SEARCH = "/activity/customer/sale/search";
 
     /**
      * 我的钱包

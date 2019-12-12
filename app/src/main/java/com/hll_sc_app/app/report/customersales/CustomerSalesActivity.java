@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.customerSale;
+package com.hll_sc_app.app.report.customersales;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.customer.search.CustomerSearchActivity;
+import com.hll_sc_app.app.report.customersales.detail.CustomerSalesDetailActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.report.req.CustomerSaleReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
@@ -38,27 +38,26 @@ import butterknife.OnClick;
  * @date 20190720
  */
 @Route(path = RouterConfig.CUSTOMER_SALE_AGGREGATION)
-public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSaleContract.ICustomerSaleView, DateFilterView.DateFilterCallback {
-    private static final int CUSTOMER_SALE_CODE = 10001;
-    @BindView(R.id.csg_back)
+public class CustomerSalesActivity extends BaseLoadActivity implements CustomerSalesContract.ICustomerSaleView, DateFilterView.DateFilterCallback {
+    @BindView(R.id.rcs_back)
     ImageView mBack;
-    @BindView(R.id.csg_search_view)
+    @BindView(R.id.rcs_search_view)
     SearchView mSearchView;
-    @BindView(R.id.csg_date_filter)
+    @BindView(R.id.rcs_date_filter)
     DateFilterView mDateFilter;
-    @BindView(R.id.csg_active_order)
+    @BindView(R.id.rcs_active_order)
     TextView mActiveOrder;
-    @BindView(R.id.csg_return_order)
+    @BindView(R.id.rcs_return_order)
     TextView mReturnOrder;
-    @BindView(R.id.csg_order_customer)
+    @BindView(R.id.rcs_order_customer)
     TextView mOrderCustomer;
-    @BindView(R.id.csg_return_customer)
+    @BindView(R.id.rcs_return_customer)
     TextView mReturnCustomer;
-    @BindView(R.id.csg_sales_amount)
+    @BindView(R.id.rcs_sales_amount)
     TextView mSalesAmount;
-    @BindView(R.id.csg_refund_amount)
+    @BindView(R.id.rcs_refund_amount)
     TextView mRefundAmount;
-    @BindView(R.id.csg_total_amount)
+    @BindView(R.id.rcs_total_amount)
     TextView mTotalAmount;
     private CustomerSalesPresenter mPresenter;
     private CustomerSaleReq mReq = new CustomerSaleReq();
@@ -67,7 +66,7 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompat.setTranslucent(getWindow(), true);
-        setContentView(R.layout.activity_customer_sales_gather);
+        setContentView(R.layout.activity_report_customer_sales);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initView();
@@ -89,7 +88,7 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                CustomerSearchActivity.start(CustomerSaleActivity.this, searchContent);
+                CustomerSearchActivity.start(CustomerSalesActivity.this, searchContent);
             }
 
             @Override
@@ -138,20 +137,20 @@ public class CustomerSaleActivity extends BaseLoadActivity implements CustomerSa
         }
     }
 
-    @OnClick(R.id.csg_back)
+    @OnClick(R.id.rcs_back)
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
-    @OnClick(R.id.csg_customer_sales_btn)
+    @OnClick(R.id.rcs_customer_sales_btn)
     public void customerSales() {
-        RouterUtil.goToActivity(RouterConfig.CUSTOMER_SALE_DETAILS);
+        CustomerSalesDetailActivity.start(0);
     }
 
-    @OnClick(R.id.csg_shop_sales_btn)
+    @OnClick(R.id.rcs_shop_sales_btn)
     public void shopSales() {
-        RouterUtil.goToActivity(RouterConfig.CUSTOMER_SALE_SHOP_DETAILS);
+        CustomerSalesDetailActivity.start(1);
     }
 
     @Override

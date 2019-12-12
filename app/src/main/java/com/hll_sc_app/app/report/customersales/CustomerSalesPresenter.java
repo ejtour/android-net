@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.customerSale;
+package com.hll_sc_app.app.report.customersales;
 
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -7,9 +7,9 @@ import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 
-public class CustomerSalesPresenter implements  CustomerSaleContract.ICustomerSaleManagePresenter{
+public class CustomerSalesPresenter implements  CustomerSalesContract.ICustomerSaleManagePresenter{
 
-    private  CustomerSaleContract.ICustomerSaleView mView;
+    private  CustomerSalesContract.ICustomerSaleView mView;
 
     private CustomerSalesPresenter(){}
 
@@ -31,7 +31,7 @@ public class CustomerSalesPresenter implements  CustomerSaleContract.ICustomerSa
     }
 
     @Override
-    public void register(CustomerSaleContract.ICustomerSaleView view) {
+    public void register(CustomerSalesContract.ICustomerSaleView view) {
         mView = CommonUtils.requireNonNull(view);
     }
 }

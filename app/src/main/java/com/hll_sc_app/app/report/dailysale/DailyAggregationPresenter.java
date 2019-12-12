@@ -1,22 +1,15 @@
-package com.hll_sc_app.app.report.dailySale;
+package com.hll_sc_app.app.report.dailysale;
 
 import android.text.TextUtils;
 
-import com.hll_sc_app.api.UserService;
-import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.base.bean.UserBean;
-import com.hll_sc_app.base.greendao.GreenDaoUtils;
-import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.report.req.BaseReportReqParam;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
+import com.hll_sc_app.rest.User;
 import com.hll_sc_app.utils.Utils;
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
-
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  *
@@ -79,7 +72,7 @@ public class DailyAggregationPresenter implements DailyAggregationContract.IDail
         Report.queryDateSaleAmount(dailyReq, new SimpleObserver<DateSaleAmountResp>(mView,showLoading) {
             @Override
             public void onSuccess(DateSaleAmountResp dateSaleAmountResp) {
-                mView.showDailyAggregationList(dateSaleAmountResp,mPageNum!=1,(int)dateSaleAmountResp.getTotalSize());
+                mView.showDailyAggregationList(dateSaleAmountResp, mPageNum > 1);
                 if (CommonUtils.isEmpty(dateSaleAmountResp.getRecords())) return;
                 mPageNum++;
             }
@@ -87,20 +80,11 @@ public class DailyAggregationPresenter implements DailyAggregationContract.IDail
     }
 
     private void bindEmail(String email) {
-        BaseMapReq req = BaseMapReq.newBuilder()
-                .put("email", email)
-                .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
-                .create();
-        SimpleObserver<Object> observer = new SimpleObserver<Object>(mView) {
+        User.bindEmail(email, new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
                 exportDailyReport(null);
             }
-        };
-        UserService.INSTANCE.bindEmail(req)
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(observer);
+        });
     }
-
 }

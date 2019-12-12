@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.dailySale;
+package com.hll_sc_app.app.report.dailysale;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -157,7 +157,7 @@ public class DailyAggregationActivity extends BaseLoadActivity implements DailyA
     }
 
     @Override
-    public void showDailyAggregationList(DateSaleAmountResp dateSaleAmountResp, boolean append, int total) {
+    public void showDailyAggregationList(DateSaleAmountResp dateSaleAmountResp, boolean append) {
         if (append) {
             if (!CommonUtils.isEmpty(dateSaleAmountResp.getRecords()))
                 mAdapter.addData(dateSaleAmountResp.getRecords());
