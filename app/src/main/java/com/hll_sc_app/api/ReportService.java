@@ -47,7 +47,6 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
 import com.hll_sc_app.bean.report.salesReport.SalesReportResp;
-import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
@@ -129,7 +128,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:111003")
-    Observable<BaseResp<SalesManSalesResp>> querySalesManSalesAchievement(@Body BaseReq<SalesManAchievementReq> body);
+    Observable<BaseResp<SalesManSalesResp>> querySalesManSalesAchievement(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111006")

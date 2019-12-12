@@ -1,7 +1,5 @@
 package com.hll_sc_app.bean.report.salesman;
 
-import com.hll_sc_app.citymall.util.CommonUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 

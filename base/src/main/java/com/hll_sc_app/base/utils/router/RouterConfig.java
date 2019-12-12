@@ -744,7 +744,7 @@ public class RouterConfig {
     /**
      * 业务员销售额绩效
      */
-    public static final String REPORT_SALESMAN_SALES_ACHIEVEMENT = "/activity/report/salesman/sales/achievement";
+    public static final String REPORT_SALESMAN_SALES = "/activity/report/salesman/sales";
 
     /**
      * 缺货汇总

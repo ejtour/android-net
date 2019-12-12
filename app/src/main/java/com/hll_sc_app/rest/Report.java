@@ -50,7 +50,6 @@ import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
 import com.hll_sc_app.bean.report.salesReport.SalesReportResp;
-import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
@@ -596,11 +595,10 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void querySalesmanSalesAchievement(SalesManAchievementReq req,
+    public static void querySalesmanSalesAchievement(BaseMapReq req,
                                                      SimpleObserver<SalesManSalesResp> observer) {
         ReportService.INSTANCE
-                .querySalesManSalesAchievement(
-                        new BaseReq<>(req))
+                .querySalesManSalesAchievement(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

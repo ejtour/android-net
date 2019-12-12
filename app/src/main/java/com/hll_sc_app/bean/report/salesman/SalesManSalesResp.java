@@ -1,5 +1,8 @@
 package com.hll_sc_app.bean.report.salesman;
 
+import com.hll_sc_app.citymall.util.CommonUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +16,18 @@ public class SalesManSalesResp {
     private int totalSettleBillNum;
     private int totalValidBillNum;
     private int totalSize;
+
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add("合计");
+        list.add(String.valueOf(totalSize)); // 数量
+        list.add(String.valueOf(totalValidBillNum)); // 有效订单数
+        list.add(CommonUtils.formatMoney(totalSalesAmount)); // 销售金额
+        list.add(String.valueOf(totalSettleBillNum)); // 结算订单数
+        list.add(CommonUtils.formatMoney(totalSettleAmount)); // 结算金额
+        list.add(CommonUtils.formatMoney(totalRefundAmount)); // 退款金额
+        return list;
+    }
 
     private List<SalesManSalesAchievement> records;
 
