@@ -86,7 +86,7 @@ public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, Bas
                 .setText(R.id.ccs_month, item.getCurrentMonthBillNum() + "单")
                 .setText(R.id.ccs_return, item.getReturnBillNum() + "单")
                 .setText(R.id.ccs_seven, String.format("%s/%s单",
-                        item.getSevenBillNum(), CommonUtils.formatNumber(item.getSevenAvgBillNum())));
+                        CommonUtils.formatNumber(item.getSevenAvgBillNum()), item.getSevenBillNum()));
         TextView tag = helper.getView(R.id.ccs_tag);
         if (TextUtils.isEmpty(tag.getText())) {
             tag.setVisibility(View.GONE);
