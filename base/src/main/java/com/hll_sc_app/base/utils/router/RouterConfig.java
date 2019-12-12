@@ -739,7 +739,7 @@ public class RouterConfig {
     /**
      * 业务员签约绩效
      */
-    public static final String REPORT_SALESMAN_SIGN_ACHIEVEMENT = "/activity/report/salesman/sign/achievement";
+    public static final String REPORT_SALESMAN_SIGN = "/activity/report/salesman/sign";
 
     /**
      * 业务员销售额绩效

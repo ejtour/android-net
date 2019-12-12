@@ -618,10 +618,10 @@
             android:screenOrientation="portrait" />
 
         <!--业务员签约绩效-->
+
         <activity
-            android:name=".app.report.salesman.sign.SalesManSignAchievementActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:name=".app.report.salesman.sign.SalesManSignActivity"
+            android:screenOrientation="portrait" />
 
         <!--业务员销售额绩效-->
         <activity

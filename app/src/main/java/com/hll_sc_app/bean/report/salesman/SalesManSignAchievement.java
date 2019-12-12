@@ -1,9 +1,15 @@
 package com.hll_sc_app.bean.report.salesman;
 
+import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.impl.IStringArrayGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 业务员签约绩效
  */
-public class SalesManSignAchievement {
+public class SalesManSignAchievement implements IStringArrayGenerator {
 
     private String salesmanCode;
     private String salesmanName;
@@ -15,6 +21,19 @@ public class SalesManSignAchievement {
     private int signCustomerNum;
     private int signShopNum;
 
+    @Override
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add(salesmanCode); // 编码
+        list.add(salesmanName); // 姓名
+        list.add(CommonUtils.formatNumber(intentCustomerNum)); // 意向客户
+        list.add(CommonUtils.formatNumber(signCustomerNum)); // 签约客户
+        list.add(CommonUtils.formatNumber(signShopNum)); // 签约门店
+        list.add(CommonUtils.formatNumber(addIntentCustomerNum)); // 新增意向客户
+        list.add(CommonUtils.formatNumber(addSignCustomerNum)); // 新增签约客户
+        list.add(CommonUtils.formatNumber(addSignShopNum)); // 新增签约门店
+        return list;
+    }
 
     public String getSalesmanCode() {
         return salesmanCode;
