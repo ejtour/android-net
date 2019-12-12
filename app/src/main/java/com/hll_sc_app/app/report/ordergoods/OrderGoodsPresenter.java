@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.orderGoods;
+package com.hll_sc_app.app.report.ordergoods;
 
 import android.text.TextUtils;
 
@@ -10,9 +10,9 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.PurchaserBean;
 import com.hll_sc_app.bean.common.PurchaserShopBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.filter.DateStringParam;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Report;

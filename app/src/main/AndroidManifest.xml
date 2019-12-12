@@ -551,7 +551,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.orderGoods.OrderGoodsActivity"
+            android:name=".app.report.ordergoods.OrderGoodsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <!--客户销售汇总-->
@@ -564,7 +564,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
+            android:name=".app.report.ordergoods.detail.OrderGoodsDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity

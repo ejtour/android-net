@@ -1,4 +1,4 @@
-package com.hll_sc_app.bean.report.orderGoods;
+package com.hll_sc_app.bean.report.ordergoods;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.orderGoods.detail;
+package com.hll_sc_app.app.report.ordergoods.detail;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,9 +17,9 @@ import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailParam;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailParam;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.report.ExcelLayout;

@@ -1,7 +1,7 @@
-package com.hll_sc_app.app.report.orderGoods;
+package com.hll_sc_app.app.report.ordergoods;
 
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.impl.IPurchaserContract;
 

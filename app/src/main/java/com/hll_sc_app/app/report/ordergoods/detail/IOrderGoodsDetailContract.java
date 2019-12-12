@@ -1,9 +1,8 @@
-package com.hll_sc_app.app.report.orderGoods.detail;
+package com.hll_sc_app.app.report.ordergoods.detail;
 
-import com.hll_sc_app.app.order.details.IOrderDetailContract;
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
-package com.hll_sc_app.app.report.orderGoods.detail;
+package com.hll_sc_app.app.report.ordergoods.detail;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailParam;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailParam;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 

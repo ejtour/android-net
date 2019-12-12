@@ -5,7 +5,6 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.common.SalesVolumeResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
@@ -21,9 +20,9 @@ import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
 import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
@@ -66,7 +65,6 @@ import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 
 import java.util.List;
-import java.util.Observer;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
