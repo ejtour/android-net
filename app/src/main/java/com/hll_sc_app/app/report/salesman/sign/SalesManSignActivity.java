@@ -50,7 +50,6 @@ import butterknife.ButterKnife;
  */
 @Route(path = RouterConfig.REPORT_SALESMAN_SIGN)
 public class SalesManSignActivity extends BaseLoadActivity implements DateFilterView.DateFilterCallback, ISalesManSignContract.ISalesManSignView {
-    private static final int COLUMN_NUM = 8;
     private static final int[] WIDTH_ARRAY = {120, 80, 80, 80, 80, 80, 80, 80};
     @BindView(R.id.csd_search_view)
     SearchView mSearchView;
@@ -109,7 +108,7 @@ public class SalesManSignActivity extends BaseLoadActivity implements DateFilter
     private void initExcel() {
         mExcel.setData(null, false);
         mFooter = new ExcelFooter(this);
-        mFooter.updateChildView(COLUMN_NUM);
+        mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();
         mFooter.updateItemData(dataArray);
         mExcel.setColumnDataList(dataArray);
@@ -151,16 +150,11 @@ public class SalesManSignActivity extends BaseLoadActivity implements DateFilter
 
     private View generateHeader() {
         ExcelRow row = new ExcelRow(this);
-        row.updateChildView(COLUMN_NUM);
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
-        array[0] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[0]));
-        array[1] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[1]));
-        array[2] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[2]));
-        array[3] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[3]));
-        array[4] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[4]));
-        array[5] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[5]));
-        array[6] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[6]));
-        array[7] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[7]));
+        row.updateChildView(WIDTH_ARRAY.length);
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        for (int i = 0; i < WIDTH_ARRAY.length; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
+        }
         row.updateItemData(array);
         row.updateRowDate("编码", "姓名", "意向客户", "签约客户", "签约门店", "新增意向客户", "新增签约客户", "新增签约门店");
         row.setBackgroundResource(R.drawable.bg_excel_header);
@@ -169,7 +163,7 @@ public class SalesManSignActivity extends BaseLoadActivity implements DateFilter
 
 
     private ExcelRow.ColumnData[] generateColumnData() {
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
         array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
         array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
         array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);

@@ -38,7 +38,6 @@ import butterknife.ButterKnife;
 
 @Route(path = RouterConfig.REPORT_PRODUCE_DETAILS)
 public class ProduceDetailsActivity extends BaseLoadActivity implements IProduceDetailsContract.IProduceDetailsView {
-    private static final int COLUMN_NUM = 9;
     private static final int[] WIDTH_ARRAY = {60, 60, 60, 60, 60, 60, 60, 60, 100};
     public static final int REQ_CODE = 0x762;
 
@@ -111,7 +110,7 @@ public class ProduceDetailsActivity extends BaseLoadActivity implements IProduce
     }
 
     private ExcelRow.ColumnData[] generateColumnData() {
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
         array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]));
         array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]));
         array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);

@@ -40,7 +40,6 @@ import butterknife.ButterKnife;
 
 @Route(path = RouterConfig.REPORT_ORDER_GOODS_DETAIL)
 public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrderGoodsDetailContract.IOrderGoodsDetailView {
-    private static final int COLUMN_NUM = 7;
     private static final int[] WIDTH_ARRAY = {100, 120, 80, 90, 90, 90, 90};
     @BindView(R.id.ogd_shop_name)
     TextView mShopName;
@@ -125,15 +124,11 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrder
 
     private View generateHeader() {
         ExcelRow row = new ExcelRow(this);
-        row.updateChildView(COLUMN_NUM);
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
-        array[0] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[0]));
-        array[1] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[1]));
-        array[2] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[2]));
-        array[3] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[3]));
-        array[4] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[4]));
-        array[5] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[5]));
-        array[6] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[6]));
+        row.updateChildView(WIDTH_ARRAY.length);
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        for (int i = 0; i < WIDTH_ARRAY.length; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
+        }
         row.updateItemData(array);
         row.updateRowDate("商品编码", "商品名称", "规格", "订货数量/单位", "订货金额(元)", "验货数量/单位", "验货金额(元)");
         row.setBackgroundResource(R.drawable.bg_excel_header);
@@ -141,7 +136,7 @@ public class OrderGoodsDetailActivity extends BaseLoadActivity implements IOrder
     }
 
     private ExcelRow.ColumnData[] generateColumnData() {
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
         array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]), Gravity.CENTER_VERTICAL);
         array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]), Gravity.CENTER_VERTICAL);
         array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL);

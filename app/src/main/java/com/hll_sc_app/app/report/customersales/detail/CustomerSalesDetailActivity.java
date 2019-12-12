@@ -53,7 +53,6 @@ import butterknife.ButterKnife;
  */
 @Route(path = RouterConfig.CUSTOMER_SALE_AGGREGATION_DETAIL)
 public class CustomerSalesDetailActivity extends BaseLoadActivity implements DateFilterView.DateFilterCallback, ICustomerSalesDetailContract.ICustomerSalesDetailView {
-    private static final int COLUMN_NUM = 9;
     private static final int[] WIDTH_ARRAY = {120, 80, 80, 80, 100, 100, 80, 100, 100};
     @BindView(R.id.csd_search_view)
     SearchView mSearchView;
@@ -138,7 +137,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
         WIDTH_ARRAY[1] = mActionType == 0 ? 80 : 120;
         mExcel.setData(null, false);
         mFooter = new ExcelFooter(this);
-        mFooter.updateChildView(COLUMN_NUM);
+        mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();
         mFooter.updateItemData(dataArray);
         mExcel.setColumnDataList(dataArray);
@@ -171,17 +170,11 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
 
     private View generateHeader() {
         ExcelRow row = new ExcelRow(this);
-        row.updateChildView(COLUMN_NUM);
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
-        array[0] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[0]));
-        array[1] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[1]));
-        array[2] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[2]));
-        array[3] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[3]));
-        array[4] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[4]));
-        array[5] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[5]));
-        array[6] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[6]));
-        array[7] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[7]));
-        array[8] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[8]));
+        row.updateChildView(WIDTH_ARRAY.length);
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        for (int i = 0; i < WIDTH_ARRAY.length; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
+        }
         row.updateItemData(array);
         row.updateRowDate("采购商名称", mActionType == 0 ? "合作门店数" : "门店名称", "订单数", "有效订单数", "交易金额(元)", "单均(元)", "退单数", "退货金额(元)", "小计金额(元)");
         row.setBackgroundResource(R.drawable.bg_excel_header);
@@ -190,7 +183,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
 
 
     private ExcelRow.ColumnData[] generateColumnData() {
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
         array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
         array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]), Gravity.CENTER_VERTICAL | (mActionType == 0 ? Gravity.RIGHT : Gravity.LEFT));
         array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
