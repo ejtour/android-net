@@ -130,8 +130,12 @@ public class OrderAnalysisFragment extends BaseAnalysisFragment {
         axisLeft.setTextSize(10);
 
         YAxis axisRight = mChart.getAxisRight();
+        axisRight.setDrawAxisLine(false);
         axisRight.setAxisMinimum(0);
-        axisRight.setEnabled(false);
+        axisRight.enableGridDashedLine(4, 4, 0);
+        axisRight.setGridColor(ContextCompat.getColor(requireContext(), R.color.color_dddddd));
+        axisRight.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_222222));
+        axisRight.setTextSize(10);
     }
 
     @Override

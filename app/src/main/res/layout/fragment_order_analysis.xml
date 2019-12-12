@@ -119,6 +119,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/foa_chart_title" />
 
+        <TextView
+            android:id="@+id/foa_chart_right_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="数额"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foa_chart_title" />
+
         <com.github.mikephil.charting.charts.CombinedChart
             android:id="@+id/foa_chart"
             android:layout_width="0dp"
