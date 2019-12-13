@@ -28,8 +28,7 @@ import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
-import com.hll_sc_app.bean.report.refund.RefundedProductReq;
-import com.hll_sc_app.bean.report.refund.RefundedProductResp;
+import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
 import com.hll_sc_app.bean.report.refund.RefundedResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
@@ -222,7 +221,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111022")
-    Observable<BaseResp<RefundedProductResp>> queryRefundProductDetail(@Body BaseReq<RefundedProductReq> body);
+    Observable<BaseResp<RefundProductResp>> queryRefundProductDetail(@Body BaseMapReq body);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111031")

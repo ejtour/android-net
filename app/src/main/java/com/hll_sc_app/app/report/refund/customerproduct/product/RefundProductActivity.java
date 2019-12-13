@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.refund.customerproduct.customer;
+package com.hll_sc_app.app.report.refund.customerproduct.product;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,16 +13,16 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.ProductNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.refund.RefundCustomerBean;
-import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
-import com.hll_sc_app.bean.report.search.SearchResultItem;
+import com.hll_sc_app.bean.report.refund.RefundProductBean;
+import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -52,10 +52,10 @@ import butterknife.OnClick;
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
  * @since 2019/12/13
  */
-@Route(path = RouterConfig.REPORT_REFUNDED_CUSTOMER_DETAIL)
-public class RefundCustomerActivity extends BaseLoadActivity implements IRefundCustomerContract.IRefundCustomerView {
+@Route(path = RouterConfig.REPORT_REFUNDED_PRODUCT_DETAIL)
+public class RefundProductActivity extends BaseLoadActivity implements IRefundProductContract.IRefundProductView {
     private static final int REFUND_CUSTOMER_CODE = 11002;
-    private static final int[] WIDTH_ARRAY = {150, 120, 80, 80, 60, 60, 60, 60, 60};
+    private static final int[] WIDTH_ARRAY = {120, 140, 100, 80, 80, 80};
     @BindView(R.id.rrc_search_view)
     SearchView mSearchView;
     @BindView(R.id.rrc_title_bar)
@@ -74,7 +74,7 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
     private ContextOptionsWindow mOptionsWindow;
     private ContextOptionsWindow mExportOptionsWindow;
     private ExcelFooter mFooter;
-    private IRefundCustomerContract.IRefundCustomerPresenter mPresenter;
+    private IRefundProductContract.IRefundProductPresenter mPresenter;
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
 
     @Override
@@ -94,7 +94,7 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
         mReq.put("groupID", UserConfig.getGroupID());
         mReq.put("sign", "1");
         updateSelectDate();
-        mPresenter = RefundCustomerPresenter.newInstance();
+        mPresenter = RefundProductPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -117,15 +117,13 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_SEARCH, RefundCustomerActivity.this, REFUND_CUSTOMER_CODE);
+                SearchActivity.start(RefundProductActivity.this,
+                        "", ProductNameSearch.class.getSimpleName());
             }
 
             @Override
             public void toSearch(String searchContent) {
-                if (TextUtils.isEmpty(searchContent)) {
-                    mReq.put("purchaserID", "");
-                    mReq.put("shopID", "");
-                }
+                mReq.put("productName", searchContent);
                 mPresenter.start();
             }
         });
@@ -133,16 +131,10 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REFUND_CUSTOMER_CODE && resultCode == RESULT_OK) {
-            SearchResultItem bean = data.getParcelableExtra("result");
-            if (bean.getType() == 0) {
-                mReq.put("purchaserID", bean.getShopMallId());
-                mReq.put("shopID", "");
-            } else {
-                mReq.put("purchaserID", "");
-                mReq.put("shopID", bean.getShopMallId());
-            }
-            mSearchView.showSearchContent(true, bean.getName());
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 
@@ -152,7 +144,7 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
         ExcelRow.ColumnData[] dataArray = generateColumnData();
         mExcel.setColumnDataList(dataArray);
         mFooter.updateItemData(dataArray);
-        mExcel.setHeaderView(View.inflate(this, R.layout.view_report_refund_customer_header, null));
+        mExcel.setHeaderView(generateHeader());
         mExcel.setFooterView(mFooter);
         mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -167,11 +159,26 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
         });
     }
 
+    private View generateHeader() {
+        ExcelRow row = new ExcelRow(this);
+        row.updateChildView(WIDTH_ARRAY.length);
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        for (int i = 0; i < WIDTH_ARRAY.length; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
+        }
+        row.updateItemData(array);
+        row.updateRowDate("商品编码", "商品名称", "商品规格", "单位", "数量", "退货金额");
+        row.setBackgroundResource(R.drawable.bg_excel_header);
+        return row;
+    }
+
     private ExcelRow.ColumnData[] generateColumnData() {
         ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
-        array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        for (int i = 2; i < WIDTH_ARRAY.length; i++) {
+        for (int i = 0; i < 3; i++) {
+            array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[i]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        }
+        array[3] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[3]));
+        for (int i = 4; i < WIDTH_ARRAY.length; i++) {
             array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[i]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         }
         return array;
@@ -188,6 +195,12 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
                     });
         }
         mExportOptionsWindow.showAsDropDownFix(v, Gravity.END);
+    }
+
+    @Override
+    public void hideLoading() {
+        mExcel.closeHeaderOrFooter();
+        super.hideLoading();
     }
 
     @OnClick(R.id.rrc_type_btn)
@@ -239,18 +252,12 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
     }
 
     @Override
-    public void setData(RefundCustomerResp resp, boolean append) {
+    public void setData(RefundProductResp resp, boolean append) {
         CharSequence[] array = {};
         mFooter.updateRowDate(resp.convertToRowData().toArray(array));
-        List<RefundCustomerBean> records = resp.getGroupVoList();
+        List<RefundProductBean> records = resp.getRecords();
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(records) && records.size() == 20);
         mExcel.setData(records, append);
-    }
-
-    @Override
-    public void hideLoading() {
-        mExcel.closeHeaderOrFooter();
-        super.hideLoading();
     }
 
     @Override

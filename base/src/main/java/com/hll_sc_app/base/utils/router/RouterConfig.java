@@ -980,12 +980,12 @@ public class RouterConfig {
     /**
      * 退货客户明细
      */
-    public static final String REPORT_REFUNDED_CUSTOMER_DETAIL = "/activity/report/refund/customerProduct/customer/detail";
+    public static final String REPORT_REFUNDED_CUSTOMER_DETAIL = "/activity/report/refund/customerproduct/customer";
 
     /**
      * 退货商品明细
      */
-    public static final String REPORT_REFUNDED_PRODUCT_DETAIL = "/activity/report/refund/customerProduct/product/detail";
+    public static final String REPORT_REFUNDED_PRODUCT_DETAIL = "/activity/report/refund/customerproduct/product";
     /**
      * 查看验货单-列表
      */

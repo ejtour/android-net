@@ -1,13 +1,14 @@
 package com.hll_sc_app.bean.report.refund;
 
-import com.alibaba.sdk.android.ams.common.util.StringUtil;
+import android.text.TextUtils;
+
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.impl.IStringArrayGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RefundedProductItem implements IStringArrayGenerator {
+public class RefundProductBean implements IStringArrayGenerator {
 
     /**
      * 商品编码
@@ -24,11 +25,11 @@ public class RefundedProductItem implements IStringArrayGenerator {
     /**
      * 退款
      */
-    private String refundAmount;
+    private double refundAmount;
     /**
      * 数量
      */
-    private String refundProductNum;
+    private int refundProductNum;
     /**
      * 单位
      */
@@ -37,12 +38,12 @@ public class RefundedProductItem implements IStringArrayGenerator {
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
-        list.add(getProductCode());// 商品编号
-        list.add(getProductName()); // 商品名称
-        list.add(StringUtil.isBlank(getProductSpec())?"--":getProductSpec()); // 规格
-        list.add(StringUtil.isBlank(getRefundUnit())?"--":getRefundUnit()); //单位
-        list.add(getRefundProductNum()); // 数量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getRefundAmount()))); //退款金额
+        list.add(productCode);// 商品编号
+        list.add(productName); // 商品名称
+        list.add(TextUtils.isEmpty(productSpec) ? "- -" : productSpec); // 规格
+        list.add(TextUtils.isEmpty(refundUnit) ? "- -" : refundUnit); //单位
+        list.add(CommonUtils.formatNumber(refundProductNum)); // 数量
+        list.add(CommonUtils.formatMoney(refundAmount)); //退款金额
         return list;
     }
 
@@ -70,19 +71,19 @@ public class RefundedProductItem implements IStringArrayGenerator {
         this.productSpec = productSpec;
     }
 
-    public String getRefundAmount() {
+    public double getRefundAmount() {
         return refundAmount;
     }
 
-    public void setRefundAmount(String refundAmount) {
+    public void setRefundAmount(double refundAmount) {
         this.refundAmount = refundAmount;
     }
 
-    public String getRefundProductNum() {
+    public int getRefundProductNum() {
         return refundProductNum;
     }
 
-    public void setRefundProductNum(String refundProductNum) {
+    public void setRefundProductNum(int refundProductNum) {
         this.refundProductNum = refundProductNum;
     }
 

@@ -822,7 +822,7 @@
             android:screenOrientation="portrait" />
         <!--退款商品明细-->
         <activity
-            android:name=".app.report.refund.customerproduct.product.RefundedProductDetailActivity"
+            android:name=".app.report.refund.customerproduct.product.RefundProductActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
