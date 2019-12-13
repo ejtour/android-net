@@ -93,18 +93,20 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
                     case CustomerHelper.GOTO_PARTNER_UNREGISTERED:
                         RouterUtil.goToActivity(RouterConfig.USER_REGISTER);
                         break;
-                    default:
-                        mPresenter.start();
-                        break;
                 }
-            } else mPresenter.start();
+            }
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPresenter.start();
     }
 
     private void initData() {
         mPresenter = new CrmCustomerPresenter();
         mPresenter.register(this);
-        mPresenter.start();
     }
 
     private void initView() {
