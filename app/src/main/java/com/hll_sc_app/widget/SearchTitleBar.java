@@ -88,4 +88,8 @@ public class SearchTitleBar extends RelativeLayout {
     public String getSearchContent() {
         return mSearchEdit.getText().toString().trim();
     }
+
+    public void updateSearchWords(String s) {
+        mSearchEdit.setText(s);
+    }
 }

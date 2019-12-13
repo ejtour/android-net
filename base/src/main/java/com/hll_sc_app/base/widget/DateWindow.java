@@ -72,6 +72,13 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
 
     private void initStartPicker() {
         startMonthPicker.setViewAdapter(new MonthWheelAdapter(mActivity));
+        startMonthPicker.setCurrentItem(month - 1);
+
+        startDayPicker.setViewAdapter(new DayWheelAdapter(mActivity));
+        startDayPicker.setCurrentItem(day - 1);
+
+        startYearPicker.setViewAdapter(new YearWheelAdapter(mActivity));
+        startYearPicker.setCurrentItem(year - startYear);
         startMonthPicker.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
@@ -88,7 +95,6 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
                 }
             }
         });
-        startMonthPicker.setCurrentItem(month - 1);
         startMonthPicker.addScrollingListener(new OnWheelScrollListener() {
             @Override
             public void onScrollingStarted(WheelView wheel) {
@@ -101,8 +107,6 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
                 startDayPicker.setCurrentItem(day - 1);
             }
         });
-
-        startDayPicker.setViewAdapter(new DayWheelAdapter(mActivity));
         startDayPicker.addScrollingListener(new OnWheelScrollListener() {
             @Override
             public void onScrollingStarted(WheelView wheel) {
@@ -114,10 +118,6 @@ public class DateWindow extends BaseShadowPopupWindow implements View.OnClickLis
                 day = startDayPicker.getCurrentItem() + 1;
             }
         });
-        startDayPicker.setCurrentItem(day - 1);
-
-        startYearPicker.setViewAdapter(new YearWheelAdapter(mActivity));
-        startYearPicker.setCurrentItem(year - startYear);
         startYearPicker.addScrollingListener(new OnWheelScrollListener() {
             @Override
             public void onScrollingStarted(WheelView wheel) {

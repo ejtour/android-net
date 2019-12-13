@@ -1,6 +1,7 @@
 package com.hll_sc_app.app.crm.customer.search;
 
 import com.hll_sc_app.api.CooperationPurchaserService;
+import com.hll_sc_app.api.WarehouseService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -10,10 +11,13 @@ import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
 import com.hll_sc_app.bean.cooperation.CooperationShopListResp;
 import com.hll_sc_app.bean.customer.CustomerBean;
+import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Customer;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
+import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -97,6 +101,24 @@ public class CustomerSearchPresenter implements ICustomerSearchContract.ICustome
                             .put("pageSize", "20")
                             .put("name", mView.getSearchWords())
                             .create())
+                    .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                    .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                    .subscribe(observer);
+        } else if (mView.getType() == 3) {
+            SimpleObserver<List<PurchaserBean>> observer = new SimpleObserver<List<PurchaserBean>>(mView, showLoading) {
+                @Override
+                public void onSuccess(List<PurchaserBean> list) {
+                    mView.setData(list, mPageNum > 1);
+                    if (CommonUtils.isEmpty(list)) return;
+                    mPageNum++;
+                }
+            };
+            WarehouseService.INSTANCE.queryPurchaserList(BaseMapReq.newBuilder()
+                    .put("groupType","0")
+                    .put("searchParam",mView.getSearchWords())
+                    .put("pageNo",String.valueOf(mPageNum))
+                    .put("pageSize","50")
+                    .create())
                     .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                     .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                     .subscribe(observer);

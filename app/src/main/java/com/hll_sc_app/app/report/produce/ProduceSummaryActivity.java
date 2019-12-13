@@ -51,7 +51,6 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.REPORT_PRODUCE_STATISTIC)
 public class ProduceSummaryActivity extends BaseLoadActivity implements IProduceSummaryContract.IProduceSummaryView {
-    private static final int COLUMN_NUM = 12;
     private static final int[] WIDTH_ARRAY = {80, 100, 60, 60, 60, 60, 60, 60, 100, 70, 70, 70};
     @BindView(R.id.rps_title_bar)
     TitleBar mTitleBar;
@@ -81,7 +80,7 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
     private void initView() {
         mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mFooter = new ExcelFooter(this);
-        mFooter.updateChildView(COLUMN_NUM);
+        mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();
         mFooter.updateItemData(dataArray);
         mExcelLayout.setHeaderView(View.inflate(this, R.layout.view_report_produce_summary_header, null));
@@ -165,7 +164,7 @@ public class ProduceSummaryActivity extends BaseLoadActivity implements IProduce
     }
 
     private ExcelRow.ColumnData[] generateColumnData() {
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
         array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]));
         array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]));
         array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);

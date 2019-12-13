@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +25,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductItem;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
@@ -238,30 +237,6 @@ public class WareHouseProductDetailActivity extends BaseLoadActivity implements 
             array[10] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[10]));
             row.updateItemData(array);
             row.updateRowDate("序号", "商品编号", "商品名称", "规格/单位", "货主", "订货量", "订货金额", "发货量","缺货量","缺货金额","缺货率");
-            row.setBackgroundResource(R.drawable.bg_excel_header);
-        }
-        return row;
-    }
-
-    private View generatorFooter(InspectLackDetailResp inspectLackDetailResp, boolean isDisplay) {
-        ExcelRow row = new ExcelRow(this);
-        if (isDisplay) {
-            row.updateChildView(COLUMN_NUM);
-            ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
-            array[0] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[0]));
-            array[1] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[1]));
-            array[2] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[2]));
-            array[3] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[3]));
-            array[4] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[4]));
-            array[5] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[5]));
-            array[6] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[6]));
-            array[7] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[7]));
-            array[8] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[8]));
-            array[9] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[9]));
-            array[10] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[10]));
-            row.updateItemData(array);
-            row.updateRowDate("合计", "--", "--", "--", "--", "--",
-                    CommonUtils.formatMoney(Double.parseDouble(inspectLackDetailResp.getTotalInspectionLackAmount())), CommonUtils.formatNumber(new BigDecimal(inspectLackDetailResp.getTotalInspectionLackRate()).multiply(BigDecimal.valueOf(100)).toPlainString()) + "%");
             row.setBackgroundResource(R.drawable.bg_excel_header);
         }
         return row;

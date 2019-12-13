@@ -3,8 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/ic_login_bg"
     android:importantForAutofill="noExcludeDescendants">
+
+    <TextView
+        android:id="@+id/al_env"
+        tools:text="测试环境"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Middle.White" />
 
     <RelativeLayout
         android:id="@+id/ll_content"

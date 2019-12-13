@@ -547,36 +547,28 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.dailySale.DailyAggregationActivity"
+            android:name=".app.report.dailysale.DailyAggregationActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.orderGoods.OrderGoodsActivity"
+            android:name=".app.report.ordergoods.OrderGoodsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <!--客户销售汇总-->
         <activity
-            android:name=".app.report.customerSale.CustomerSaleActivity"
+            android:name=".app.report.customersales.CustomerSalesActivity"
             android:screenOrientation="portrait" />
         <!--客户销售汇总明细-->
         <activity
-            android:name=".app.report.customerSale.saleDetail.CustomerSalesDetailActivity"
-            android:screenOrientation="portrait" />
-        <!--客户销售汇总门店明细-->
-        <activity
-            android:name=".app.report.customerSale.shopDetail.CustomerShopDetailActivity"
+            android:name=".app.report.customersales.detail.CustomerSalesDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.orderGoods.detail.OrderGoodsDetailActivity"
+            android:name=".app.report.ordergoods.detail.OrderGoodsDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".app.report.productSale.ProductSalesActivity"
-            android:screenOrientation="portrait" />
-        <!--客户销售汇总搜索-->
-        <activity
-            android:name=".app.report.search.ReportSearchActivity"
+            android:name=".app.report.productsale.ProductSalesActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -627,19 +619,17 @@
 
         <!--业务员签约绩效-->
         <activity
-            android:name=".app.report.salesman.sign.SalesManSignAchievementActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:name=".app.report.salesman.sign.SalesManSignActivity"
+            android:screenOrientation="portrait" />
 
         <!--业务员销售额绩效-->
         <activity
-            android:name=".app.report.salesman.sales.SalesManSalesAchievementActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:name=".app.report.salesman.sales.SalesManSalesActivity"
+            android:screenOrientation="portrait" />
 
-        <!--缺货汇总-->
+        <!--缺货差异汇总-->
         <activity
-            android:name=".app.report.deliveryLack.DeliveryLackGatherActivity"
+            android:name=".app.report.lack.diff.LackDiffActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -775,12 +765,12 @@
 
         <!--收货差异汇总-->
         <activity
-            android:name=".app.report.inspectLack.InspectLackActivity"
+            android:name=".app.report.receive.diff.ReceiveDiffActivity"
             android:screenOrientation="portrait" />
 
         <!--收货差异明细-->
         <activity
-            android:name=".app.report.inspectLack.detail.InspectLackDetailActivity"
+            android:name=".app.report.receive.details.ReceiveDiffDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--代仓缺货商品明细-->
@@ -791,11 +781,11 @@
 
         <!--配送及时率汇总-->
         <activity
-            android:name=".app.report.deliveryTime.DeliveryTimeAggregationActivity"
+            android:name=".app.report.deliverytime.DeliveryTimeActivity"
             android:screenOrientation="portrait" />
         <!--配送及时率明细-->
         <activity
-            android:name=".app.report.deliveryTime.detail.DeliveryTimeDetailActivity"
+            android:name=".app.report.deliverytime.detail.DeliveryTimeDetailActivity"
             android:screenOrientation="portrait" />
 
         <!--待退统计-->

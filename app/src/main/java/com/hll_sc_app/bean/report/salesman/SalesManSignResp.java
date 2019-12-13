@@ -1,5 +1,6 @@
 package com.hll_sc_app.bean.report.salesman;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalesManSignResp {
@@ -11,6 +12,20 @@ public class SalesManSignResp {
     private int totalSignCustomerNum;
     private int totalSignShopNum;
     private int totalSize;
+
+
+    public List<CharSequence> convertToRowData() {
+        List<CharSequence> list = new ArrayList<>();
+        list.add("合计");
+        list.add(String.valueOf(totalSize)); // 数量
+        list.add(String.valueOf(totalIntentCustomerNum)); // 意向客户
+        list.add(String.valueOf(totalSignCustomerNum)); // 签约客户
+        list.add(String.valueOf(totalSignShopNum)); // 签约门店
+        list.add(String.valueOf(totalAddIntentCustomerNum)); // 新增意向客户
+        list.add(String.valueOf(totalAddSignCustomerNum)); // 新增签约客户
+        list.add(String.valueOf(totalAddSignShopNum)); // 新增签约门店
+        return list;
+    }
 
     private List<SalesManSignAchievement> records;
 

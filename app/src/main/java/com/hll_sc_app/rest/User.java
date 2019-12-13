@@ -188,4 +188,19 @@ public class User {
                     }
                 });
     }
+
+    /**
+     * 绑定邮箱
+     *
+     * @param email 邮箱
+     */
+    public static void bindEmail(String email, SimpleObserver<Object> observer) {
+        UserService.INSTANCE.bindEmail(BaseMapReq.newBuilder()
+                .put("email", email)
+                .put("employeeID", GreenDaoUtils.getUser().getEmployeeID())
+                .create())
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
 }

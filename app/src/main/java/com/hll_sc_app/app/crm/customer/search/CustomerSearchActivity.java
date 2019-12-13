@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -34,7 +33,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -54,16 +52,23 @@ public class CustomerSearchActivity extends BaseLoadActivity implements ICustome
     String mID;
     @Autowired(name = "object1")
     int mType;
+    @Autowired(name = "object2")
+    String mSearchWords;
     private CustomerSearchAdapter mAdapter;
     private ICustomerSearchContract.ICustomerSearchPresenter mPresenter;
     private EmptyView mEmptyView;
 
     /**
      * @param id   已选id
-     * @param type 0-意向客户 1-合作门店 2-合作集团
+     * @param type 0-意向客户 1-合作门店 2-合作集团 3-采购商集团
      */
     public static void start(Activity context, String id, int type) {
         Object[] args = {id, type};
+        RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_SEARCH, context, REQ_CODE, args);
+    }
+
+    public static void start(Activity context, String searchWords) {
+        Object[] args = {null, 3, searchWords};
         RouterUtil.goToActivity(RouterConfig.CRM_CUSTOMER_SEARCH, context, REQ_CODE, args);
     }
 
@@ -86,6 +91,7 @@ public class CustomerSearchActivity extends BaseLoadActivity implements ICustome
     }
 
     private void initView() {
+        mTitleBar.updateSearchWords(mSearchWords);
         mAdapter = new CustomerSearchAdapter(mID);
         SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(10), 0, 0, 0, Color.WHITE);
@@ -125,7 +131,7 @@ public class CustomerSearchActivity extends BaseLoadActivity implements ICustome
             }
             mAdapter.setNewData(new ArrayList<>(list));
         }
-        mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == (mType == 3 ? 50 : 20));
     }
 
     @Override

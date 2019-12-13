@@ -29,6 +29,7 @@ import java.util.List;
 public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
     private boolean mFromPartner;
     private String mEmployeeID;
+    private int mType;
 
     public CustomerSeasAdapter() {
         super(R.layout.item_crm_customer_seas);
@@ -44,13 +45,17 @@ public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, Bas
         });
         setOnItemClickListener(
                 (adapter, view, position) ->
-                        CustomerSeasDetailActivity.start(((Activity) view.getContext()), getItem(position), mFromPartner));
+                        CustomerSeasDetailActivity.start(((Activity) view.getContext()), getItem(position), mType));
         mEmployeeID = GreenDaoUtils.getUser().getEmployeeID();
     }
 
     public void setNewData(@Nullable List<PurchaserShopBean> data, boolean fromPartner) {
         super.setNewData(data);
         mFromPartner = fromPartner;
+    }
+
+    public void setType(int type) {
+        mType = type;
     }
 
     @Override
@@ -86,7 +91,7 @@ public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, Bas
                 .setText(R.id.ccs_month, item.getCurrentMonthBillNum() + "单")
                 .setText(R.id.ccs_return, item.getReturnBillNum() + "单")
                 .setText(R.id.ccs_seven, String.format("%s/%s单",
-                        item.getSevenBillNum(), CommonUtils.formatNumber(item.getSevenAvgBillNum())));
+                        CommonUtils.formatNumber(item.getSevenAvgBillNum()), item.getSevenBillNum()));
         TextView tag = helper.getView(R.id.ccs_tag);
         if (TextUtils.isEmpty(tag.getText())) {
             tag.setVisibility(View.GONE);

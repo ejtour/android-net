@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
-            android:drawableLeft="@drawable/ic_report_drawable_date_type_white"
+            android:drawableLeft="@drawable/ic_date_filter"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="全部"

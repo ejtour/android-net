@@ -632,14 +632,9 @@ public class RouterConfig {
     public static final String CUSTOMER_SALE_AGGREGATION = "/activity/customer/aggregation";
 
     /**
-     * 客户销售汇总明细
+     * 客户销售汇总详情
      */
-    public static final String CUSTOMER_SALE_DETAILS = "/activity/customer/sale/detail";
-
-    /**
-     * 客户销售汇总门店明细
-     */
-    public static final String CUSTOMER_SALE_SHOP_DETAILS = "/activity/customer/sale/shop/detail";
+    public static final String CUSTOMER_SALE_AGGREGATION_DETAIL = "/activity/customer/aggregation/detail";
 
     /**
      * 退货原因统计
@@ -685,11 +680,6 @@ public class RouterConfig {
      * 生产汇总统计-录入人效
      */
     public static final String REPORT_PRODUCE_INPUT_PEOPLE = "/activity/produce/input/people";
-
-    /**
-     * 客户销售汇总搜索
-     */
-    public static final String CUSTOMER_SALE_SEARCH = "/activity/customer/sale/search";
 
     /**
      * 我的钱包
@@ -749,17 +739,17 @@ public class RouterConfig {
     /**
      * 业务员签约绩效
      */
-    public static final String REPORT_SALESMAN_SIGN_ACHIEVEMENT = "/activity/report/salesman/sign/achievement";
+    public static final String REPORT_SALESMAN_SIGN = "/activity/report/salesman/sign";
 
     /**
      * 业务员销售额绩效
      */
-    public static final String REPORT_SALESMAN_SALES_ACHIEVEMENT = "/activity/report/salesman/sales/achievement";
+    public static final String REPORT_SALESMAN_SALES = "/activity/report/salesman/sales";
 
     /**
-     * 缺货汇总
+     * 缺货差异汇总
      */
-    public static final String REPORT_DELIVERY_LACK_GATHER = "/activity/report/delivery/lack/gather";
+    public static final String REPORT_LACK_DIFF = "/activity/report/lack/diff";
     /*
      * 我的钱包-银行列表
      */
@@ -900,12 +890,12 @@ public class RouterConfig {
     /**
      * 收货差异汇总
      */
-    public static final String REPORT_INSPECT_LACK_LIST = "/activity/inspect/lack/list";
+    public static final String REPORT_RECEIVE_DIFF = "/activity/report/receive/diff";
 
     /**
      * 收货差异明细
      */
-    public static final String REPORT_INSPECT_LACK_DETAIL = "/activity/inspect/lack/detail";
+    public static final String REPORT_RECEIVE_DIFF_DETAILS = "/activity/report/receive/diff/details";
 
     /**
      * 代仓商品明细
@@ -915,12 +905,12 @@ public class RouterConfig {
     /**
      * 配送及时率汇总数据
      */
-    public static final String REPORT_DELIVERY_TIME_AGGREGATION = "/activity/delivery/time/aggregation";
+    public static final String REPORT_DELIVERY_TIME = "/activity/report/delivery/time";
 
     /**
      * 配送及时率详情
      */
-    public static final String REPORT_DELIVERY_TIME_DETAIL = "/activity/delivery/time/detail";
+    public static final String REPORT_DELIVERY_TIME_DETAIL = "/activity/report/delivery/time/detail";
 
     /**
      * CRM-首页

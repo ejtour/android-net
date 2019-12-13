@@ -3,7 +3,6 @@ package com.hll_sc_app.app.report.customerLack;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackSummary;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
 import com.hll_sc_app.impl.IExportView;
 import com.hll_sc_app.impl.IPurchaserContract;
 

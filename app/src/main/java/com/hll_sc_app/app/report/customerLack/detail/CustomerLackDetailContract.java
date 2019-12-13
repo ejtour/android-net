@@ -1,10 +1,8 @@
 package com.hll_sc_app.app.report.customerLack.detail;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackItem;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
 import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;

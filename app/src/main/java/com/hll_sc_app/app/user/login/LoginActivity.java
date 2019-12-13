@@ -4,12 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -26,6 +32,7 @@ import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.GlobalPreference;
@@ -34,6 +41,7 @@ import com.hll_sc_app.base.bean.AccountBean;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
@@ -83,6 +91,8 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
     LinearLayout mLlEdtPhone;
     @BindView(R.id.ll_operation)
     LinearLayout mLlOperation;
+    @BindView(R.id.al_env)
+    TextView mEnv;
     private LoginPresenter mPresenter;
     private KeyboardWatcher mKeyboardWatcher;
 
@@ -104,10 +114,19 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
     }
 
     private void initView() {
+        if (!BuildConfig.DEBUG) {
+            mEnv.setVisibility(View.GONE);
+        } else {
+            mEnv.setVisibility(View.VISIBLE);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                ((ViewGroup.MarginLayoutParams) mEnv.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
+            }
+            mEnv.setText(GlobalPreference.getParam(HttpConfig.KEY, HttpConfig.Env.TEST));
+        }
         mKeyboardWatcher = new KeyboardWatcher(this);
         mKeyboardWatcher.addSoftKeyboardStateListener(this);
         mLlContent.post(() -> ObjectAnimator.ofFloat(mLlContent, "translationY", mLlContent.getHeight(),
-            UIUtils.dip2px(127)).setDuration(800).start());
+                UIUtils.dip2px(127)).setDuration(800).start());
         InputTextWatcher textWatcher = new InputTextWatcher();
         mEdtPhone.addTextChangedListener(textWatcher);
         mEdtPWD.addTextChangedListener(textWatcher);
@@ -143,7 +162,6 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
             });
         }
     }
-
     /**
      * 账号历史列表显示和隐藏
      *
@@ -387,5 +405,31 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
         protected void convert(BaseViewHolder helper, AccountBean item) {
             helper.setText(R.id.txt_phone, item.getAccount());
         }
+    }
+
+    @OnClick(R.id.al_env)
+    public void showEnvWindow(View view) {
+        PopupMenu popup = new PopupMenu(this, view, Gravity.END);
+        popup.getMenuInflater().inflate(R.menu.menu_login_env, popup.getMenu());
+        popup.setOnMenuItemClickListener(item -> {
+            String env = HttpConfig.Env.TEST;
+            if (item.getItemId() == R.id.menu_item_online) {
+                env = HttpConfig.Env.ONLINE;
+            } else if (item.getItemId() == R.id.menu_item_vip) {
+                env = HttpConfig.Env.VIP;
+            }
+            mEnv.setText(env);
+            HttpConfig.updateHost(env);
+            restartApp(this);
+            return true;
+        });
+        popup.show();
+    }
+
+    public static void restartApp(Context context) {
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+        Process.killProcess(Process.myPid());
     }
 }

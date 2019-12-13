@@ -33,6 +33,7 @@ import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.DateUtil;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.utils.adapter.SimplePagerAdapter;
 
 import java.text.NumberFormat;
@@ -90,21 +91,17 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity implements ICus
     @Autowired(name = "parcelable")
     PurchaserShopBean mBean;
     @Autowired(name = "object")
-    boolean mOnlyShop;
+    int mType;
     private List<Fragment> mFragments;
-    private NumberFormat mPercentInstance;
     private ICustomerSeasDetailContract.ICustomerSeasDetailPresenter mPresenter;
 
-    {
-        mPercentInstance = NumberFormat.getPercentInstance();
-        mPercentInstance.setMaximumFractionDigits(2);
-        mPercentInstance.setMinimumFractionDigits(2);
-    }
-
-    public static void start(Activity context, PurchaserShopBean bean, boolean onlyShop) {
+    /**
+     * @param type 0-tab与底部按钮全部显示， 1-tab全部显示 2 tab只显示一个
+     */
+    public static void start(Activity context, PurchaserShopBean bean, int type) {
         ARouter.getInstance().build(RouterConfig.CRM_CUSTOMER_SEAS_DETAIL)
                 .withParcelable("parcelable", bean)
-                .withBoolean("object", onlyShop)
+                .withInt("object", type)
                 .setProvider(new LoginInterceptor())
                 .navigation(context, REQ_CODE);
     }
@@ -151,7 +148,7 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity implements ICus
         mNoSettled.setText(spannableString);
         mReturnNum.setText(String.format("%s笔", mBean.getReturnBillNum()));
         mWeekProgressLabel.setText(String.format("%s/%s", mBean.getCurrentWeekBillNum(), mBean.getPreWeekBillNum()));
-        mMonthRatio.setText(mPercentInstance.format(getRate(mBean.getCurrentWeekBillNum(), mBean.getPreWeekBillNum())));
+        mMonthRatio.setText(Utils.numToPercent(getRate(mBean.getCurrentWeekBillNum(), mBean.getPreWeekBillNum())));
         if (mBean.getPreWeekBillNum() == 0) {
             mWeekProgress.setMax(1);
             mWeekProgress.setProgress(1);
@@ -160,7 +157,7 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity implements ICus
             mWeekProgress.setProgress(mBean.getCurrentWeekBillNum());
         }
         mMonthProgressLabel.setText(String.format("%s/%s", mBean.getCurrentMonthBillNum(), mBean.getPreMonthBillNum()));
-        mMonthRatio.setText(mPercentInstance.format(getRate(mBean.getCurrentMonthBillNum(), mBean.getPreMonthBillNum())));
+        mMonthRatio.setText(Utils.numToPercent(getRate(mBean.getCurrentMonthBillNum(), mBean.getPreMonthBillNum())));
         if (mBean.getPreMonthBillNum() == 0) {
             mMonthProgress.setMax(1);
             mMonthProgress.setProgress(1);
@@ -178,12 +175,14 @@ public class CustomerSeasDetailActivity extends BaseLoadActivity implements ICus
 
     private void initView() {
         String[] titles;
-        if (mOnlyShop) {
+        if (mType == 2) {
             mFragments = Collections.singletonList(CustomerSeasShopFragment.newInstance(mBean));
             titles = new String[]{"门店信息"};
             mTabLayout.setIndicatorColor(Color.TRANSPARENT);
         } else {
-            ButterKnife.apply(mButtons, (view, index) -> view.setVisibility(View.VISIBLE));
+            if (mType == 0) {
+                ButterKnife.apply(mButtons, (view, index) -> view.setVisibility(View.VISIBLE));
+            }
             mFragments = Arrays.asList(CustomerSeasShopFragment.newInstance(mBean), CustomerSeasOrderFragment.newInstance(mBean.getShopID()),
                     CustomerSeasVisitFragment.newInstance(mBean.getShopID()), CustomerSeasAnalysisFragment.newInstance());
             titles = new String[]{"门店信息", "订单记录", "拜访记录", "商户分析"};

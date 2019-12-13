@@ -45,9 +45,4 @@ public enum TimeFlagEnum {
         this.code = code;
         this.desc = desc;
     }
-
-    public static List<Integer> getAllTimeFlagCode(){
-        List<TimeFlagEnum> timeFlagEnums = Arrays.asList(TimeFlagEnum.values());
-        return timeFlagEnums.stream().map(p->p.getCode()).collect(Collectors.toList());
-    }
 }

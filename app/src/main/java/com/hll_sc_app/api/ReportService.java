@@ -5,7 +5,6 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.common.SalesVolumeResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
@@ -13,17 +12,15 @@ import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
-import com.hll_sc_app.bean.report.deliveryLack.DeliveryLackGatherResp;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
-import com.hll_sc_app.bean.report.inspectLack.InspectLackResp;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
+import com.hll_sc_app.bean.report.lack.LackDiffResp;
+import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsDetailBean;
-import com.hll_sc_app.bean.report.orderGoods.OrderGoodsResp;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
+import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
@@ -40,19 +37,13 @@ import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
-import com.hll_sc_app.bean.report.req.BaseReportReqParam;
-import com.hll_sc_app.bean.report.req.CustomerSaleReq;
-import com.hll_sc_app.bean.report.req.ProductDetailReq;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
-import com.hll_sc_app.bean.report.resp.group.PurchaserGroupBean;
-import com.hll_sc_app.bean.report.resp.product.OrderDetailTotalResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
 import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
 import com.hll_sc_app.bean.report.salesReport.SalesReportResp;
-import com.hll_sc_app.bean.report.salesman.SalesManAchievementReq;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
@@ -66,7 +57,6 @@ import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 
 import java.util.List;
-import java.util.Observer;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -82,16 +72,6 @@ public interface ReportService {
     ReportService INSTANCE = HttpFactory.create(ReportService.class);
 
     /**
-     * 商品统计（明细）
-     *
-     * @param req
-     * @return
-     */
-    @POST(HttpConfig.URL)
-    @Headers("pv:111040")
-    Observable<BaseResp<OrderDetailTotalResp>> queryProductDetailList(@Body BaseReq<ProductDetailReq> req);
-
-    /**
      * 日销售额查询
      *
      * @param req
@@ -99,7 +79,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111005")
-    Observable<BaseResp<DateSaleAmountResp>> queryDateSaleAmount(@Body BaseReq<BaseReportReqParam> req);
+    Observable<BaseResp<DateSaleAmountResp>> queryDateSaleAmount(@Body BaseMapReq req);
 
     /**
      * 客户销售/门店汇总查询
@@ -109,7 +89,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111004")
-    Observable<BaseResp<CustomerSalesResp>> queryCustomerSales(@Body BaseReq<CustomerSaleReq> req);
+    Observable<BaseResp<CustomerSalesResp>> queryCustomerSales(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:103098")
@@ -140,20 +120,16 @@ public interface ReportService {
     Observable<BaseResp<RefundReasonStaticsResp>> queryRefundReasonStatics(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
-    @Headers("pv:101024")
-    Observable<BaseResp<List<PurchaserGroupBean>>> queryPurchaser(@Body BaseMapReq body);
-
-    @POST(HttpConfig.URL)
     @Headers("pv:111009")
-    Observable<BaseResp<SalesManSignResp>> querySalesManSignAchievement(@Body BaseReq<SalesManAchievementReq> body);
+    Observable<BaseResp<SalesManSignResp>> querySalesManSignAchievement(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111003")
-    Observable<BaseResp<SalesManSalesResp>> querySalesManSalesAchievement(@Body BaseReq<SalesManAchievementReq> body);
+    Observable<BaseResp<SalesManSalesResp>> querySalesManSalesAchievement(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111006")
-    Observable<BaseResp<DeliveryLackGatherResp>> queryDeliveryLackGather(@Body BaseReq<BaseReportReqParam> body);
+    Observable<BaseResp<LackDiffResp>> queryLackDiff(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111053")
@@ -161,11 +137,11 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:111007")
-    Observable<BaseResp<InspectLackResp>> queryInspectLack(@Body BaseReq<BaseReportReqParam> body);
+    Observable<BaseResp<ReceiveDiffResp>> queryReceiveDiff(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111013")
-    Observable<BaseResp<InspectLackDetailResp>> queryInspectLackDetail(@Body BaseReq<InspectLackDetailReq> body);
+    Observable<BaseResp<ReceiveDiffDetailsResp>> queryReceiveDiffDetails(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111012")
@@ -177,7 +153,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:111008")
-    Observable<BaseResp<DeliveryTimeResp>> queryDeliveryTimeContent(@Body BaseReq<DeliveryTimeReq> body);
+    Observable<BaseResp<DeliveryTimeResp>> queryDeliveryTime(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111038")

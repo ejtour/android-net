@@ -30,7 +30,11 @@ public class BaseMapReq {
         if (nullable) {
             if (value == null) value = "";
             data.put(key, value);
-        } else if (!TextUtils.isEmpty(value)) data.put(key, value);
+        } else if (!TextUtils.isEmpty(value)) {
+            data.put(key, value);
+        } else {
+            data.remove(key);
+        }
     }
 
     private String get(String key) {

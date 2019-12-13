@@ -20,6 +20,7 @@ import com.hll_sc_app.widget.ExportDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +30,18 @@ import java.util.regex.Pattern;
  */
 
 public class Utils {
+    private static NumberFormat PERCENT;
+
+    static {
+        PERCENT = NumberFormat.getPercentInstance();
+        PERCENT.setMaximumFractionDigits(2);
+        PERCENT.setMinimumFractionDigits(2);
+    }
+
+    public static String numToPercent(double num) {
+        return PERCENT.format(num);
+    }
+
     /**
      * 邮箱是否符合规范
      *
