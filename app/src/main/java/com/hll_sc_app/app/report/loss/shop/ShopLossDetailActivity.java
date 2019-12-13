@@ -18,7 +18,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
+import com.hll_sc_app.base.widget.DateWindow;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossItem;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
@@ -27,7 +27,6 @@ import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
-import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.TitleBar;
@@ -39,7 +38,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -74,14 +72,9 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
     private ShopLossDetailContract.IShopLossDetailPresenter mPresenter;
     CustomerAndShopLossReq mParam = new CustomerAndShopLossReq();
     private ContextOptionsWindow mExportOptionsWindow;
-    private DateRangeWindow mDateRangeWindow;
+    private DateWindow mDateWindow;
     private ContextOptionsWindow mOptionsWindow;
-    private String startDate = "";
-    private String endDate = "";
-
     AtomicInteger sequence;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,20 +88,12 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
 
     private void initData() {
         mPresenter = ShopLossDetailPresenter.newInstance();
-        Date date = new Date();
-        String currentDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
-        startDate = CalendarUtils.format(CalendarUtils.getWantDay(date, -7),CalendarUtils.FORMAT_LOCAL_DATE);
-        endDate = currentDate;
-        dateTextView.setText(
-                String.format("%s - %s",
-                        CalendarUtils.getDateFormatString(startDate,CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD),
-                        CalendarUtils.getDateFormatString(currentDate,CalendarUtils.FORMAT_LOCAL_DATE,Constants.SLASH_YYYY_MM_DD)));
+        Date date = CalendarUtils.getDateBefore(new Date(), 1);
+        updateSelectedDate(date);
         //流失类型 0-近七天流失 1-近30天流失
         mParam.setDataType(0);
         //0-客户流失率 1-门店明细
         mParam.setFlag(1);
-        mParam.setStartDate(startDate);
-        mParam.setEndDate(endDate);
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -153,47 +138,24 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
         }
     }
 
+    private void updateSelectedDate(Date date) {
+        dateTextView.setText(CalendarUtils.format(date, Constants.SLASH_YYYY_MM_DD));
+        mParam.setStartDate(CalendarUtils.toLocalDate(date));
+    }
+
     /**
      * 显示时间组件
      */
     private void showDateRangeWindow() {
-        if (mDateRangeWindow == null) {
-            mDateRangeWindow = new DateRangeWindow(this);
-            mDateRangeWindow.setOnRangeSelectListener((start, end) -> {
-                if (start == null && end == null) {
-                    dateTextView.setText(null);
-                    dateTextView.setTag(R.id.date_start, "");
-                    dateTextView.setTag(R.id.date_end, "");
-                    return;
-                }
-                if (start != null && end != null) {
-                    Calendar calendarStart = Calendar.getInstance();
-                    calendarStart.setTimeInMillis(start.getTimeInMillis());
-                    String startStr = CalendarUtils.format(calendarStart.getTime(), Constants.SLASH_YYYY_MM_DD);
-                    Calendar calendarEnd = Calendar.getInstance();
-                    calendarEnd.setTimeInMillis(end.getTimeInMillis());
-                    String endStr = CalendarUtils.format(calendarEnd.getTime(), Constants.SLASH_YYYY_MM_DD);
-                    dateTextView.setText(String.format("%s-%s", startStr, endStr));
-                    dateTextView.setTag(R.id.date_start, CalendarUtils.format(calendarStart.getTime(),
-                            CalendarUtils.FORMAT_SERVER_DATE));
-                    dateTextView.setTag(R.id.date_end, CalendarUtils.format(calendarEnd.getTime(),
-                            CalendarUtils.FORMAT_SERVER_DATE));
-                    startDate = CalendarUtils.getDateFormatString(startStr,Constants.SLASH_YYYY_MM_DD,CalendarUtils.FORMAT_SERVER_DATE);
-                    endDate = CalendarUtils.getDateFormatString(endStr,Constants.SLASH_YYYY_MM_DD,CalendarUtils.FORMAT_SERVER_DATE);
-                    mPresenter.queryShopLossDetail(true);
-                }
+        if (mDateWindow == null) {
+            mDateWindow = new DateWindow(this);
+            mDateWindow.setCalendar(CalendarUtils.getDateBefore(new Date(), 1));
+            mDateWindow.setSelectListener(date -> {
+                updateSelectedDate(date);
+                mPresenter.start();
             });
-            Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-            start.setTime(CalendarUtils.parse(startDate,CalendarUtils.FORMAT_SERVER_DATE));
-            end.setTime(CalendarUtils.parse(endDate,CalendarUtils.FORMAT_SERVER_DATE));
-            mDateRangeWindow.setSelectCalendarRange(start.get(Calendar.YEAR), start.get(Calendar.MONTH) + 1, start.get(Calendar.DATE),
-                    end.get(Calendar.YEAR), end.get(Calendar.MONTH) + 1, end.get(Calendar.DATE));
         }
-        mDateRangeWindow.setOnDismissListener(()->{
-            dateArrow.setRotation(0);
-        });
-        dateArrow.setRotation(180);
-        mDateRangeWindow.showAsDropDownFix(dateTextView);
+        mDateWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     @Override
@@ -229,14 +191,6 @@ public class ShopLossDetailActivity extends BaseLoadActivity implements ShopLoss
 
     @Override
     public CustomerAndShopLossReq getRequestParams(){
-        if (dateTextView.getTag(R.id.date_start) != null) {
-            startDate = (String) dateTextView.getTag(R.id.date_start);
-            mParam.setStartDate(startDate);
-        }
-        if(dateTextView.getTag(R.id.date_end) != null){
-            endDate = (String) dateTextView.getTag(R.id.date_end);
-            mParam.setEndDate(endDate);
-        }
         return mParam;
     }
 
