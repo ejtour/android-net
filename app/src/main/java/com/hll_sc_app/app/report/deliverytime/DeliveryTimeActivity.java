@@ -1,26 +1,15 @@
-package com.hll_sc_app.app.report.deliveryTime;
+package com.hll_sc_app.app.report.deliverytime;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewParent;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -32,27 +21,13 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeBean;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeNearlyItem;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
-import com.hll_sc_app.bean.report.resp.bill.DateSaleAmount;
-import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
-import com.hll_sc_app.bean.window.OptionType;
-import com.hll_sc_app.bean.window.OptionsBean;
-import com.hll_sc_app.citymall.util.CalendarUtils;
-import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeBean;
+import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeNearlyBean;
+import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.utils.ColorStr;
-import com.hll_sc_app.utils.Utils;
-import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -60,8 +35,6 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,8 +50,8 @@ import butterknife.OnTouch;
  * @author 初坤
  * @date 20190720
  */
-@Route(path = RouterConfig.REPORT_DELIVERY_TIME_AGGREGATION)
-public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements DeliveryTimeAggregationContract.IDeliveryTimeAggregationView {
+@Route(path = RouterConfig.REPORT_DELIVERY_TIME)
+public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTimeContract.IDeliveryTimeView {
 
     @BindView(R.id.nearly_seven_pie)
     PieChart nearLySevenPieChartView;
@@ -99,7 +72,7 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
 
     private  Map<String,PieChart> pieChartMap = new HashMap<>(3);
     private  Map<String,LinearLayout> layoutMap = new HashMap<>(3);
-    private DeliveryTimeAggregationPresenter mPresenter;
+    private DeliveryTimePresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,7 +80,7 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
         setContentView(R.layout.activity_report_delivery_time_pie);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        mPresenter = DeliveryTimeAggregationPresenter.newInstance();
+        mPresenter = DeliveryTimePresenter.newInstance();
         initView();
         mPresenter.register(this);
         mPresenter.start();
@@ -192,25 +165,25 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
         for (Map.Entry<String, PieChart> pieChartEntry : pieChartMap.entrySet()) {
             String key = pieChartEntry.getKey();
             PieChart pieChart = pieChartEntry.getValue();
-            DeliveryTimeNearlyItem deliveryTimeNearlyItem = null;
+            DeliveryTimeNearlyBean deliveryTimeNearlyBean = null;
             switch (key){
                 case "0":
-                    deliveryTimeNearlyItem = deliveryTimeResp.getNearly7Days();
+                    deliveryTimeNearlyBean = deliveryTimeResp.getNearly7Days();
                     break;
                 case "1":
-                    deliveryTimeNearlyItem = deliveryTimeResp.getNearly30Days();
+                    deliveryTimeNearlyBean = deliveryTimeResp.getNearly30Days();
                     break;
                 case "2":
-                    deliveryTimeNearlyItem = deliveryTimeResp.getNearly90Days();
+                    deliveryTimeNearlyBean = deliveryTimeResp.getNearly90Days();
                     break;
                 default:
                     break;
             }
-            if (!isEmptyDeliveryTime(deliveryTimeNearlyItem)) {
+            if (!isEmptyDeliveryTime(deliveryTimeNearlyBean)) {
                 pieChart.setVisibility(View.VISIBLE);
                 //饼状图
                 ArrayList<PieEntry> entries = new ArrayList<>();
-                DeliveryTimeBean deliveryTimeBean = handler(deliveryTimeNearlyItem);
+                DeliveryTimeBean deliveryTimeBean = handler(deliveryTimeNearlyBean);
                 entries.add(new PieEntry(deliveryTimeBean.getOnTimeInspectionNumRatio(), deliveryTimeBean.getOnTimeInspectionNumDesc()));
                 entries.add(new PieEntry(deliveryTimeBean.getWithin15MinInspectionNumRatio(), deliveryTimeBean.getWithin15MinInspectionNumDesc()));
                 entries.add(new PieEntry(deliveryTimeBean.getWithin30MinInspectionNumRatio(), deliveryTimeBean.getWithin30MinInspectionNumDesc()));
@@ -250,7 +223,7 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
      * @param item
      * @return
      */
-    private DeliveryTimeBean handler(DeliveryTimeNearlyItem item){
+    private DeliveryTimeBean handler(DeliveryTimeNearlyBean item){
         DeliveryTimeBean deliveryTimeBean = new DeliveryTimeBean();
         long totalOrderNum = item.getOnTimeInspectionNum()+item.getBeyond30MinInspectionNum()
                   +item.getWithin15MinInspectionNum()+item.getWithin30MinInspectionNum();
@@ -274,12 +247,12 @@ public class DeliveryTimeAggregationActivity extends BaseLoadActivity implements
 
     /**
      * 判断是否有配送及时率的数据
-     * @param deliveryTimeNearlyItem
+     * @param deliveryTimeNearlyBean
      * @return
      */
-    private boolean isEmptyDeliveryTime(DeliveryTimeNearlyItem deliveryTimeNearlyItem){
+    private boolean isEmptyDeliveryTime(DeliveryTimeNearlyBean deliveryTimeNearlyBean){
 
-        return  (deliveryTimeNearlyItem.getOnTimeInspectionNum()+deliveryTimeNearlyItem.getBeyond30MinInspectionNum()
-                +deliveryTimeNearlyItem.getWithin15MinInspectionNum()+deliveryTimeNearlyItem.getWithin30MinInspectionNum())==0;
+        return  (deliveryTimeNearlyBean.getOnTimeInspectionNum()+ deliveryTimeNearlyBean.getBeyond30MinInspectionNum()
+                + deliveryTimeNearlyBean.getWithin15MinInspectionNum()+ deliveryTimeNearlyBean.getWithin30MinInspectionNum())==0;
     }
 }

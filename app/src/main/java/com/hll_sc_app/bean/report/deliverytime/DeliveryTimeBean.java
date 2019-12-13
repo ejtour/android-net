@@ -1,4 +1,4 @@
-package com.hll_sc_app.bean.report.deliveryTime;
+package com.hll_sc_app.bean.report.deliverytime;
 
 public class DeliveryTimeBean {
 

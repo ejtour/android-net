@@ -16,8 +16,7 @@ import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
+import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
@@ -273,11 +272,10 @@ public class Report {
     /**
      * 配送及时率查询
      *
-     * @param deliveryTimeReq
      * @param observer
      */
-    public static void queryDeliveryTimeContent(DeliveryTimeReq deliveryTimeReq, SimpleObserver<DeliveryTimeResp> observer) {
-        ReportService.INSTANCE.queryDeliveryTimeContent(new BaseReq<>(deliveryTimeReq))
+    public static void queryDeliveryTimeContent(BaseMapReq req, SimpleObserver<DeliveryTimeResp> observer) {
+        ReportService.INSTANCE.queryDeliveryTime(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

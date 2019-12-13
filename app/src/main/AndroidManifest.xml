@@ -781,11 +781,11 @@
 
         <!--配送及时率汇总-->
         <activity
-            android:name=".app.report.deliveryTime.DeliveryTimeAggregationActivity"
+            android:name=".app.report.deliverytime.DeliveryTimeActivity"
             android:screenOrientation="portrait" />
         <!--配送及时率明细-->
         <activity
-            android:name=".app.report.deliveryTime.detail.DeliveryTimeDetailActivity"
+            android:name=".app.report.deliverytime.detail.DeliveryTimeDetailActivity"
             android:screenOrientation="portrait" />
 
         <!--待退统计-->

@@ -905,12 +905,12 @@ public class RouterConfig {
     /**
      * 配送及时率汇总数据
      */
-    public static final String REPORT_DELIVERY_TIME_AGGREGATION = "/activity/delivery/time/aggregation";
+    public static final String REPORT_DELIVERY_TIME = "/activity/report/delivery/time";
 
     /**
      * 配送及时率详情
      */
-    public static final String REPORT_DELIVERY_TIME_DETAIL = "/activity/delivery/time/detail";
+    public static final String REPORT_DELIVERY_TIME_DETAIL = "/activity/report/delivery/time/detail";
 
     /**
      * CRM-首页

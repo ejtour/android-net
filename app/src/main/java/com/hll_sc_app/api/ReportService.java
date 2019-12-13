@@ -13,8 +13,7 @@ import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
+import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
@@ -154,7 +153,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:111008")
-    Observable<BaseResp<DeliveryTimeResp>> queryDeliveryTimeContent(@Body BaseReq<DeliveryTimeReq> body);
+    Observable<BaseResp<DeliveryTimeResp>> queryDeliveryTime(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111038")
