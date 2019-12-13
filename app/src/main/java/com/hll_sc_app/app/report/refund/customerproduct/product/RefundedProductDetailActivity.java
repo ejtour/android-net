@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.refund.customerProduct.customer;
+package com.hll_sc_app.app.report.refund.customerproduct.product;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,15 +16,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.ProductNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundReq;
-import com.hll_sc_app.bean.report.search.SearchResultItem;
+import com.hll_sc_app.bean.report.refund.RefundedProductReq;
+import com.hll_sc_app.bean.report.refund.RefundedProductResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -39,8 +37,6 @@ import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,17 +54,17 @@ import butterknife.OnClick;
  * @author 初坤
  * @date 20190720
  */
-@Route(path = RouterConfig.REPORT_REFUNDED_CUSTOMER_DETAIL)
-public class RefundedCustomerDetailActivity extends BaseLoadActivity implements RefundedCustomerDetailContract.IRefundedCustomerDetailView, BaseQuickAdapter.OnItemClickListener {
-    private static final int REFUND_CUSTOMERT_CODE = 11002;
-    private static final int COLUMN_NUM = 9;
-    private static final int[] WIDTH_ARRAY = {150,120,80, 80, 60, 60,60,60,60};
+@Route(path = RouterConfig.REPORT_REFUNDED_PRODUCT_DETAIL)
+public class RefundedProductDetailActivity extends BaseLoadActivity implements RefundedProductDetailContract.IRefundedProductDetailView, BaseQuickAdapter.OnItemClickListener {
+
+    private static final int COLUMN_NUM = 6;
+    private static final int[] WIDTH_ARRAY = {115,140,100, 80, 80, 80};
     @BindView(R.id.ogd_excel)
     ExcelLayout mExcel;
     @BindView(R.id.rog_title_bar)
     TitleBar mTitleBar;
-    private RefundedCustomerDetailContract.IRefundedCustomerDetailPresenter mPresenter;
-    RefundedCustomerReq mParam = new RefundedCustomerReq();
+    private RefundedProductDetailContract.IRefundedProductDetailPresenter mPresenter;
+    RefundedProductReq mParam = new RefundedProductReq();
     @BindView(R.id.edt_search)
     TextView edtSearch;
     @BindView(R.id.img_clear)
@@ -92,7 +88,7 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_refunded_customer_detail);
+        setContentView(R.layout.activity_report_refunded_product_detail);
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         initView();
@@ -100,7 +96,7 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
     }
 
     private void initData() {
-        mPresenter = RefundedCustomerDetailPresenter.newInstance();
+        mPresenter = RefundedProductDetailPresenter.newInstance();
         Date date = new Date();
         String currentDate = CalendarUtils.format(date, CalendarUtils.FORMAT_LOCAL_DATE);
         startDate = String.valueOf(DateUtil.getMonthFirstDay(0, Long.valueOf(currentDate)));
@@ -123,12 +119,12 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
         mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.loadMoreRefundedCustomerDetail();
+                mPresenter.loadMoreRefundedProductDetail();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryRefundedCustomerDetail(true);
+                mPresenter.queryRefundedProductDetail(true);
             }
         });
     }
@@ -163,7 +159,7 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
         switch (view.getId()) {
             case R.id.img_clear:
                 edtSearch.setText("");
-                mPresenter.queryRefundedCustomerDetail(true);
+                mPresenter.queryRefundedProductDetail(true);
                 imgClear.setVisibility(View.GONE);
                 break;
             case R.id.rog_title_bar:
@@ -176,7 +172,9 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
                 showDateRangeWindow();
                 break;
             case R.id.edt_search:
-                RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_SEARCH, this, REFUND_CUSTOMERT_CODE);
+                SearchActivity.start(this,
+                        "", ProductNameSearch.class.getSimpleName());
+                break;
             default:
                 break;
         }
@@ -209,7 +207,8 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
                             CalendarUtils.FORMAT_SERVER_DATE));
                     startDate = CalendarUtils.getDateFormatString(startStr,Constants.SLASH_YYYY_MM_DD,CalendarUtils.FORMAT_SERVER_DATE);
                     endDate = CalendarUtils.getDateFormatString(endStr,Constants.SLASH_YYYY_MM_DD,CalendarUtils.FORMAT_SERVER_DATE);
-                    mPresenter.queryRefundedCustomerDetail(true);
+
+                    mPresenter.queryRefundedProductDetail(true);
                 }
             });
             Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
@@ -240,19 +239,19 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
     public void bindEmail() {
         Gson gson = new Gson();
         String reqParams = gson.toJson(getRequestParams());
-        Utils.bindEmail(this, (email) -> mPresenter.exportRefundedCustomerDetail(email, reqParams));
+        Utils.bindEmail(this, (email) -> mPresenter.exportRefundedProductDetail(email, reqParams));
     }
 
     @Override
     public void export(String email) {
         Gson gson = new Gson();
         String reqParams = gson.toJson(getRequestParams());
-        mPresenter.exportRefundedCustomerDetail(email, reqParams);
+        mPresenter.exportRefundedProductDetail(email, reqParams);
     }
 
 
     @Override
-    public RefundedCustomerReq getRequestParams(){
+    public RefundedProductReq getRequestParams(){
         if (dateTextView.getTag(R.id.date_start) != null) {
             startDate = (String) dateTextView.getTag(R.id.date_start);
             mParam.setStartDate(startDate);
@@ -278,14 +277,24 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
     }
 
     private View generateHeader(boolean isDisPlay) {
-        View view = View.inflate(this,R.layout.item_report_refunded_customer_detail_header,null);
+        ExcelRow row = new ExcelRow(this);
         if(isDisPlay) {
-            mExcel.setHeaderView(view);
+            row.updateChildView(COLUMN_NUM);
+            ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
+            array[0] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[0]));
+            array[1] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[1]));
+            array[2] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[2]));
+            array[3] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[3]));
+            array[4] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[4]));
+            array[5] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[5]));
+            row.updateItemData(array);
+            row.updateRowDate( "商品编号", "商品名称", "商品规格", "单位", "数量", "退款金额(元)");
+            row.setBackgroundResource(R.drawable.bg_excel_header);
         }
-        return view;
+        return row;
     }
 
-    private View generatorFooter(RefundedCustomerResp refundCustomerResp, boolean isDisplay){
+    private View generatorFooter(RefundedProductResp refundedProductResp, boolean isDisplay){
         ExcelRow row = new ExcelRow(this);
         if(isDisplay) {
             row.updateChildView(COLUMN_NUM);
@@ -296,17 +305,10 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
             array[3] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[3]));
             array[4] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[4]));
             array[5] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[5]));
-            array[6] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[6]));
-            array[7] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[7]));
-            array[8] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[8]));
             row.updateItemData(array);
-            row.updateRowDate("合计", "----", refundCustomerResp.getTotalRefundBillNum()+"",
-                    refundCustomerResp.getTotalRefundProductNum()+"",
-                    CommonUtils.formatMoney(Double.parseDouble(refundCustomerResp.getTotalCashAmount())),
-                    CommonUtils.formatMoney(Double.parseDouble(refundCustomerResp.getTotalBankCardAmount())),
-                    CommonUtils.formatMoney(Double.parseDouble(refundCustomerResp.getTotalOnLineAmount())),
-                    CommonUtils.formatMoney(Double.parseDouble(refundCustomerResp.getTotalAccountAmount())),
-                    CommonUtils.formatMoney(Double.parseDouble(refundCustomerResp.getTotalRefundAmount())));
+            row.updateRowDate("合计", "----", "----","----",
+                    refundedProductResp.getTotalRefundProductNum(),
+                    CommonUtils.formatMoney(Double.parseDouble(refundedProductResp.getTotalRefundAmount())));
             row.setBackgroundResource(R.drawable.bg_excel_header);
         }
         return row;
@@ -314,30 +316,27 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
 
     private ExcelRow.ColumnData[] generateColumnData() {
         ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
-        array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]), Gravity.CENTER_VERTICAL);
         array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[3] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[3]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        array[3] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[3]), Gravity.CENTER_VERTICAL);
         array[4] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[4]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         array[5] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[5]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[6] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[6]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[7] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[7]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[8] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[8]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         return array;
     }
 
 
     @Override
-    public void showRefundedCustomerDetail(RefundedCustomerResp refundCustomerResp, boolean append) {
-        mExcel.setEnableLoadMore(!CommonUtils.isEmpty(refundCustomerResp.getGroupVoList()) && refundCustomerResp.getGroupVoList().size() == 20);
-        if (!CommonUtils.isEmpty(refundCustomerResp.getGroupVoList())) {
-            mExcel.setData(refundCustomerResp.getGroupVoList(), append);
+    public void showRefundedProductDetail(RefundedProductResp refundedProductResp, boolean append) {
+        mExcel.setEnableLoadMore(!CommonUtils.isEmpty(refundedProductResp.getRecords()) && refundedProductResp.getRecords().size() == 20);
+        if (!CommonUtils.isEmpty(refundedProductResp.getRecords())) {
+            mExcel.setData(refundedProductResp.getRecords(), append);
             mExcel.setHeaderView(generateHeader(true));
-            mExcel.setFooterView(generatorFooter(refundCustomerResp, true));
+            mExcel.setFooterView(generatorFooter(refundedProductResp, true));
         } else {
             mExcel.setData(new ArrayList<>(), append);
             generateHeader(append);
-            mExcel.setFooterView(generatorFooter(refundCustomerResp, append));
+            mExcel.setFooterView(generatorFooter(refundedProductResp, append));
         }
     }
 
@@ -362,29 +361,23 @@ public class RefundedCustomerDetailActivity extends BaseLoadActivity implements 
             text = OptionType.OPTION_NOT_DEPOSIT;
         }
         depositTextView.setText(text);
-        mPresenter.queryRefundedCustomerDetail(true);
+        mPresenter.queryRefundedProductDetail(true);
         mOptionsWindow.dismiss();
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REFUND_CUSTOMERT_CODE && resultCode == RESULT_OK) {
-            SearchResultItem bean = data.getParcelableExtra("result");
-            edtSearch.setText(bean.getName());
-            imgClear.setVisibility(View.VISIBLE);
-            RefundedCustomerReq requestParams = getRequestParams();
-            if(bean.getType()==0) {
-                requestParams.setPurchaserID(bean.getShopMallId());
-            }else{
-                requestParams.setShopID(bean.getShopMallId());
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name)) {
+                edtSearch.setText(name);
+                mParam.setProductName(name);
+                imgClear.setVisibility(View.VISIBLE);
+            } else {
+                mParam.setProductName("");
             }
-            mPresenter.queryRefundedCustomerDetail(true);
+            mPresenter.queryRefundedProductDetail(true);
         }
     }
 }

@@ -1,9 +1,7 @@
-package com.hll_sc_app.app.report.refund.customerProduct.product;
+package com.hll_sc_app.app.report.refund.customerproduct.product;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundedProductReq;
 import com.hll_sc_app.bean.report.refund.RefundedProductResp;
 

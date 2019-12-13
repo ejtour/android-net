@@ -6,24 +6,24 @@ import com.hll_sc_app.impl.IStringArrayGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RefundedCustomerItem implements IStringArrayGenerator {
+public class RefundCustomerBean implements IStringArrayGenerator {
 
     /**
      * 账期金额
      */
-    private String accountAmount;
+    private double accountAmount;
     /**
      * 银行卡金额
      */
-    private String bankCardAmount;
+    private double bankCardAmount;
     /**
      * 现金金额
      */
-    private String    cashAmount;
+    private double cashAmount;
     /**
      * 在线支付金额
      */
-    private String    onLineAmount;
+    private double onLineAmount;
     /**
      * 采购商集团名称
      */
@@ -35,11 +35,11 @@ public class RefundedCustomerItem implements IStringArrayGenerator {
     /**
      * 退货退款单数
      */
-    private String refundBillNum;
+    private int refundBillNum;
     /**
      * 已退商品数
      */
-    private long    refundProductNum;
+    private int refundProductNum;
     /**
      * 门店ID
      */
@@ -52,52 +52,52 @@ public class RefundedCustomerItem implements IStringArrayGenerator {
     /**
      * 小计金额
      */
-    private String subRefundAmount;
+    private double subRefundAmount;
 
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
-        list.add(getPurchaserName());// 采购商集团
-        list.add(getShopName()); // 采购商门店
-        list.add(getRefundBillNum()); // 退单数
-        list.add(getRefundProductNum() + ""); //退货商品数
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getCashAmount()))); // 现金
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getBankCardAmount()))); //银行卡
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getOnLineAmount()))); //线上
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getAccountAmount()))); //账期
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getSubRefundAmount()))); //小计
+        list.add(purchaserName);// 采购商集团
+        list.add(shopName); // 采购商门店
+        list.add(CommonUtils.formatNumber(refundBillNum)); // 退单数
+        list.add(CommonUtils.formatNumber(refundProductNum)); //退货商品数
+        list.add(CommonUtils.formatMoney(cashAmount)); // 现金
+        list.add(CommonUtils.formatMoney(bankCardAmount)); //银行卡
+        list.add(CommonUtils.formatMoney(onLineAmount)); //线上
+        list.add(CommonUtils.formatMoney(accountAmount)); //账期
+        list.add(CommonUtils.formatMoney(subRefundAmount)); //小计
         return list;
     }
 
-    public String getAccountAmount() {
+    public double getAccountAmount() {
         return accountAmount;
     }
 
-    public void setAccountAmount(String accountAmount) {
+    public void setAccountAmount(double accountAmount) {
         this.accountAmount = accountAmount;
     }
 
-    public String getBankCardAmount() {
+    public double getBankCardAmount() {
         return bankCardAmount;
     }
 
-    public void setBankCardAmount(String bankCardAmount) {
+    public void setBankCardAmount(double bankCardAmount) {
         this.bankCardAmount = bankCardAmount;
     }
 
-    public String getCashAmount() {
+    public double getCashAmount() {
         return cashAmount;
     }
 
-    public void setCashAmount(String cashAmount) {
+    public void setCashAmount(double cashAmount) {
         this.cashAmount = cashAmount;
     }
 
-    public String getOnLineAmount() {
+    public double getOnLineAmount() {
         return onLineAmount;
     }
 
-    public void setOnLineAmount(String onLineAmount) {
+    public void setOnLineAmount(double onLineAmount) {
         this.onLineAmount = onLineAmount;
     }
 
@@ -117,19 +117,19 @@ public class RefundedCustomerItem implements IStringArrayGenerator {
         this.purchaserID = purchaserID;
     }
 
-    public String getRefundBillNum() {
+    public int getRefundBillNum() {
         return refundBillNum;
     }
 
-    public void setRefundBillNum(String refundBillNum) {
+    public void setRefundBillNum(int refundBillNum) {
         this.refundBillNum = refundBillNum;
     }
 
-    public long getRefundProductNum() {
+    public int getRefundProductNum() {
         return refundProductNum;
     }
 
-    public void setRefundProductNum(long refundProductNum) {
+    public void setRefundProductNum(int refundProductNum) {
         this.refundProductNum = refundProductNum;
     }
 
@@ -149,11 +149,11 @@ public class RefundedCustomerItem implements IStringArrayGenerator {
         this.shopName = shopName;
     }
 
-    public String getSubRefundAmount() {
+    public double getSubRefundAmount() {
         return subRefundAmount;
     }
 
-    public void setSubRefundAmount(String subRefundAmount) {
+    public void setSubRefundAmount(double subRefundAmount) {
         this.subRefundAmount = subRefundAmount;
     }
 }

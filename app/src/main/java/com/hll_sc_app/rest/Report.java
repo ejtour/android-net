@@ -30,8 +30,7 @@ import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
+import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundedProductReq;
 import com.hll_sc_app.bean.report.refund.RefundedProductResp;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
@@ -393,8 +392,8 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryRefundedCustomerList(RefundedCustomerReq req, SimpleObserver<RefundedCustomerResp> observer) {
-        ReportService.INSTANCE.queryRefundedCustomerDetail(new BaseReq<>(req))
+    public static void queryRefundedCustomerList(BaseMapReq req, SimpleObserver<RefundCustomerResp> observer) {
+        ReportService.INSTANCE.queryRefundedCustomerDetail(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

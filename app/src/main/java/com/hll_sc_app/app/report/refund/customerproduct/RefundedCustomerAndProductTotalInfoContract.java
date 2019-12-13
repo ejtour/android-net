@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.refund.customerProduct;
+package com.hll_sc_app.app.report.refund.customerproduct;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;

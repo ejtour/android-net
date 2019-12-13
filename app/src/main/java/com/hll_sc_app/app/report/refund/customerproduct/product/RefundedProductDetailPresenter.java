@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.refund.customerProduct.product;
+package com.hll_sc_app.app.report.refund.customerproduct.product;
 
 import android.text.TextUtils;
 
@@ -12,8 +12,6 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerReq;
-import com.hll_sc_app.bean.report.refund.RefundedCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundedProductReq;
 import com.hll_sc_app.bean.report.refund.RefundedProductResp;
 import com.hll_sc_app.citymall.util.CommonUtils;

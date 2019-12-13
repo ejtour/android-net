@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.refund.customerProduct;
+package com.hll_sc_app.app.report.refund.customerproduct;
 
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;

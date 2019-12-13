@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.refund.customerProduct;
+package com.hll_sc_app.app.report.refund.customerproduct;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
