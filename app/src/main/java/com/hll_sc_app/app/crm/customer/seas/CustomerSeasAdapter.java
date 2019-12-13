@@ -29,6 +29,7 @@ import java.util.List;
 public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, BaseViewHolder> {
     private boolean mFromPartner;
     private String mEmployeeID;
+    private int mType;
 
     public CustomerSeasAdapter() {
         super(R.layout.item_crm_customer_seas);
@@ -44,13 +45,17 @@ public class CustomerSeasAdapter extends BaseQuickAdapter<PurchaserShopBean, Bas
         });
         setOnItemClickListener(
                 (adapter, view, position) ->
-                        CustomerSeasDetailActivity.start(((Activity) view.getContext()), getItem(position), mFromPartner));
+                        CustomerSeasDetailActivity.start(((Activity) view.getContext()), getItem(position), mType));
         mEmployeeID = GreenDaoUtils.getUser().getEmployeeID();
     }
 
     public void setNewData(@Nullable List<PurchaserShopBean> data, boolean fromPartner) {
         super.setNewData(data);
         mFromPartner = fromPartner;
+    }
+
+    public void setType(int type) {
+        mType = type;
     }
 
     @Override
