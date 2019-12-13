@@ -19,8 +19,7 @@ import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
@@ -227,12 +226,11 @@ public class Report {
     /**
      * 收货差异明细
      *
-     * @param params
      * @param observer
      */
-    public static void queryInspectLackDetail(InspectLackDetailReq params, SimpleObserver<InspectLackDetailResp> observer) {
+    public static void queryReceiveDiffDetails(BaseMapReq req, SimpleObserver<ReceiveDiffDetailsResp> observer) {
         ReportService.INSTANCE
-                .queryInspectLackDetail(new BaseReq<>(params))
+                .queryReceiveDiffDetails(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

@@ -895,7 +895,7 @@ public class RouterConfig {
     /**
      * 收货差异明细
      */
-    public static final String REPORT_INSPECT_LACK_DETAIL = "/activity/inspect/lack/detail";
+    public static final String REPORT_RECEIVE_DIFF_DETAILS = "/activity/report/receive/diff/details";
 
     /**
      * 代仓商品明细

@@ -770,7 +770,7 @@
 
         <!--收货差异明细-->
         <activity
-            android:name=".app.report.inspectLack.detail.InspectLackDetailActivity"
+            android:name=".app.report.receive.details.ReceiveDiffDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--代仓缺货商品明细-->

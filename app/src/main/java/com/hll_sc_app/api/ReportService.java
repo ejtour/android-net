@@ -16,8 +16,7 @@ import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
@@ -143,7 +142,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:111013")
-    Observable<BaseResp<InspectLackDetailResp>> queryInspectLackDetail(@Body BaseReq<InspectLackDetailReq> body);
+    Observable<BaseResp<ReceiveDiffDetailsResp>> queryReceiveDiffDetails(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111012")

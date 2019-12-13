@@ -2,11 +2,8 @@ package com.hll_sc_app.app.report.deliveryTime.detail;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeItem;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeReq;
 import com.hll_sc_app.bean.report.deliveryTime.DeliveryTimeResp;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailReq;
-import com.hll_sc_app.bean.report.inspectLack.detail.InspectLackDetailResp;
 
 /**
  * @author chukun
