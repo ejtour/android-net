@@ -185,6 +185,7 @@ public class StockQueryActivity extends BaseLoadActivity implements IStockQueryC
                     .setText(R.id.txt_used, CommonUtils.formatNumber(item.getOccupiedStock()))
                     .setText(R.id.txt_stock, CommonUtils.formatNumber(item.getTotalStock()))
                     .setText(R.id.txt_unit, item.getStandardUnitName())
+                    .setText(R.id.txt_owner, item.getCargoOwnerName())
                     .setText(R.id.txt_spec, item.getSaleSpecNum() + "种");
 
             GlideImageView imageView = helper.getView(R.id.img_good);
