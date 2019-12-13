@@ -181,6 +181,12 @@ public class SalesManSignActivity extends BaseLoadActivity implements DateFilter
     }
 
     @Override
+    public void hideLoading() {
+        mExcel.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
+    @Override
     public void onTimeFlagChanged(int flag) {
         mReq.put("timeFlag", String.valueOf(flag));
     }

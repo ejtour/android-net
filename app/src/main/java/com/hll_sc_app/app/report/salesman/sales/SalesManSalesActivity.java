@@ -84,6 +84,12 @@ public class SalesManSalesActivity extends BaseLoadActivity implements DateFilte
         }
     }
 
+    @Override
+    public void hideLoading() {
+        mExcel.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
     private void initView() {
         mSearchView.setTextColorWhite();
         mSearchView.setSearchTextLeft();
