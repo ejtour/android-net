@@ -159,6 +159,7 @@ public class PurchaserShopSelectWindow extends BasePopupWindow {
                 if (bean.getPurchaserID().equals(temp.getPurchaserID())) {
                     bean.setSelected(true);
                     mShopAdapter.setNewData(temp.getShopList());
+                    bean.setShopList(temp.getShopList());
                     mCurBean = bean;
                 } else bean.setSelected(false);
             }
