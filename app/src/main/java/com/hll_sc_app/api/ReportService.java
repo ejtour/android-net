@@ -46,8 +46,7 @@ import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryBean;
 import com.hll_sc_app.bean.report.warehouse.WareHouseFeeBean;
 
 import java.util.List;
@@ -250,12 +249,11 @@ public interface ReportService {
 
     /**
      * 代仓发货统计
-     * @param body
      * @return
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111067")
-    Observable<BaseResp<WareHouseDeliveryResp>> queryWareHouseDeliveryInfo(@Body BaseReq<WareHouseDeliveryReq> body);
+    Observable<BaseResp<SingleListResp<WareHouseDeliveryBean>>> queryWareHouseDelivery(@Body BaseMapReq req);
 
     /**
      * 代仓服务费统计

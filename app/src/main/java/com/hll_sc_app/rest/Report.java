@@ -50,8 +50,7 @@ import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryBean;
 import com.hll_sc_app.bean.report.warehouse.WareHouseFeeBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
@@ -457,8 +456,8 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryWareHouseDeliveryInfo(WareHouseDeliveryReq req, SimpleObserver<WareHouseDeliveryResp> observer){
-        ReportService.INSTANCE.queryWareHouseDeliveryInfo(new BaseReq<>(req))
+    public static void queryWareHouseDelivery(BaseMapReq req, SimpleObserver<SingleListResp<WareHouseDeliveryBean>> observer){
+        ReportService.INSTANCE.queryWareHouseDelivery(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

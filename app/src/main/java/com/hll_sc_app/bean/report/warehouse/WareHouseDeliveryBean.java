@@ -5,27 +5,26 @@ import com.hll_sc_app.impl.IStringArrayGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class WareHouseDeliveryItem implements IStringArrayGenerator {
+public class WareHouseDeliveryBean implements IStringArrayGenerator {
 
     private int sequenceNo;
     /**
      * 发货金额
      */
-    private String deliveryAmount;
+    private double deliveryAmount;
     /**
      * 发货单数
      */
-    private String deliveryBillNum;
+    private int deliveryBillNum;
     /**
      * 发货商品量
      */
-    private String deliveryGoodsNum;
+    private int deliveryGoodsNum;
     /**
      * 发货商品数
      */
-    private String deliveryGoodsSpecNum;
+    private int deliveryGoodsSpecNum;
     /**
      * 货主集团
      */
@@ -37,38 +36,45 @@ public class WareHouseDeliveryItem implements IStringArrayGenerator {
     /**
      * 代仓货值
      */
-    private String wareHouseDeliveryGoodsAmount;
+    private double wareHouseDeliveryGoodsAmount;
 
+    public int getSequenceNo() {
+        return sequenceNo;
+    }
 
-    public String getDeliveryAmount() {
+    public void setSequenceNo(int sequenceNo) {
+        this.sequenceNo = sequenceNo;
+    }
+
+    public double getDeliveryAmount() {
         return deliveryAmount;
     }
 
-    public void setDeliveryAmount(String deliveryAmount) {
+    public void setDeliveryAmount(double deliveryAmount) {
         this.deliveryAmount = deliveryAmount;
     }
 
-    public String getDeliveryBillNum() {
+    public int getDeliveryBillNum() {
         return deliveryBillNum;
     }
 
-    public void setDeliveryBillNum(String deliveryBillNum) {
+    public void setDeliveryBillNum(int deliveryBillNum) {
         this.deliveryBillNum = deliveryBillNum;
     }
 
-    public String getDeliveryGoodsNum() {
+    public int getDeliveryGoodsNum() {
         return deliveryGoodsNum;
     }
 
-    public void setDeliveryGoodsNum(String deliveryGoodsNum) {
+    public void setDeliveryGoodsNum(int deliveryGoodsNum) {
         this.deliveryGoodsNum = deliveryGoodsNum;
     }
 
-    public String getDeliveryGoodsSpecNum() {
+    public int getDeliveryGoodsSpecNum() {
         return deliveryGoodsSpecNum;
     }
 
-    public void setDeliveryGoodsSpecNum(String deliveryGoodsSpecNum) {
+    public void setDeliveryGoodsSpecNum(int deliveryGoodsSpecNum) {
         this.deliveryGoodsSpecNum = deliveryGoodsSpecNum;
     }
 
@@ -88,33 +94,25 @@ public class WareHouseDeliveryItem implements IStringArrayGenerator {
         this.shipperShop = shipperShop;
     }
 
-    public String getWareHouseDeliveryGoodsAmount() {
+    public double getWareHouseDeliveryGoodsAmount() {
         return wareHouseDeliveryGoodsAmount;
     }
 
-    public void setWareHouseDeliveryGoodsAmount(String wareHouseDeliveryGoodsAmount) {
+    public void setWareHouseDeliveryGoodsAmount(double wareHouseDeliveryGoodsAmount) {
         this.wareHouseDeliveryGoodsAmount = wareHouseDeliveryGoodsAmount;
-    }
-
-    public int getSequenceNo() {
-        return sequenceNo;
-    }
-
-    public void setSequenceNo(int sequenceNo) {
-        this.sequenceNo = sequenceNo;
     }
 
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
-        list.add(getSequenceNo()+"");
-        list.add(getShipperGroup()); // 货主集团
-        list.add(getShipperShop()); // 货主门店
-        list.add(getDeliveryBillNum()); // 发货单数
-        list.add(getDeliveryGoodsSpecNum()); // 发货种数
-        list.add(getDeliveryGoodsNum()); //发货件数
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getDeliveryAmount()))); // 发货金额
-        list.add(CommonUtils.formatNumber(getWareHouseDeliveryGoodsAmount())); // 发货货值
+        list.add(String.valueOf(sequenceNo));
+        list.add(shipperGroup); // 货主集团
+        list.add(shipperShop); // 货主门店
+        list.add(CommonUtils.formatNumber(deliveryBillNum)); // 发货单数
+        list.add(CommonUtils.formatNumber(deliveryGoodsSpecNum)); // 发货种数
+        list.add(CommonUtils.formatNumber(deliveryGoodsNum)); //发货件数
+        list.add(CommonUtils.formatMoney(deliveryAmount)); // 发货金额
+        list.add(CommonUtils.formatMoney(wareHouseDeliveryGoodsAmount)); // 发货货值
         return list;
     }
 }
