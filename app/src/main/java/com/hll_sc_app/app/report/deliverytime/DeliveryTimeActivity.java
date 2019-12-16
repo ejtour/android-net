@@ -3,11 +3,8 @@ package com.hll_sc_app.app.report.deliverytime;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -15,15 +12,11 @@ import com.githang.statusbar.StatusBarCompat;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
-import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeBean;
@@ -31,11 +24,9 @@ import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeNearlyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.utils.ColorStr;
 import com.hll_sc_app.widget.EmptyView;
-
-import org.greenrobot.eventbus.EventBus;
+import com.hll_sc_app.widget.report.PieMarker;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,7 +36,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnTouch;
 
 /**
  * 日销售汇总
@@ -68,8 +58,6 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
     LinearLayout nearlyThirtyLayout;
     @BindView(R.id.nearly_ninety_layout)
     LinearLayout nearlyNinetyLayout;
-    private int mX;
-    private int mY;
 
     private EmptyView emptyView;
 
@@ -117,37 +105,8 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
             l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
             l.setWordWrapEnabled(true);
             l.setEnabled(true);
-
-            //给每个饼图添加事件
-            pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-                @Override
-                public void onValueSelected(Entry e, Highlight h) {
-                    PieEntry pData = (PieEntry) e;
-                    String toast = pData.getLabel() + ":" + new DecimalFormat("#.##").format(pData.getY() * 100) + "%";
-                    Toast mToast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
-                    mToast.setText(toast);
-                    mToast.setGravity(Gravity.CENTER, 0, 0);
-                    mToast.show();
-                }
-
-                @Override
-                public void onNothingSelected() {
-                }
-            });
+            pieChart.setMarker(new PieMarker(this, pieChart));
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @OnTouch({R.id.nearly_seven_pie, R.id.nearly_thirty_pie, R.id.nearly_ninety_pie})
-    public boolean onTouch(MotionEvent event) {
-        mX = (int) event.getRawX();
-        mY = (int) event.getRawY();
-        return false;
     }
 
     @OnClick({R.id.img_back, R.id.delivery_time_detail_btn})
@@ -163,7 +122,6 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
                 break;
         }
     }
-
 
     @Override
     public void showDeliveryTimePieCharts(DeliveryTimeResp deliveryTimeResp) {
@@ -184,7 +142,7 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
                 default:
                     break;
             }
-            if (!isEmptyDeliveryTime(deliveryTimeNearlyBean)) {
+            if (deliveryTimeNearlyBean != null && !isEmptyDeliveryTime(deliveryTimeNearlyBean)) {
                 pieChart.setVisibility(View.VISIBLE);
                 //饼状图
                 ArrayList<PieEntry> entries = new ArrayList<>();
