@@ -901,7 +901,7 @@
 
         <!--销售crm日报-->
         <activity
-            android:name=".app.report.salesReport.SalesReportActivity"
+            android:name=".app.report.daily.SalesDailyActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".app.order.trace.OrderTraceActivity"

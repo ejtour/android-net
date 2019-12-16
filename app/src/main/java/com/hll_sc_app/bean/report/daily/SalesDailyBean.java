@@ -1,16 +1,16 @@
-package com.hll_sc_app.bean.report.salesReport;
+package com.hll_sc_app.bean.report.daily;
 
 import java.util.List;
 
 /**
  * 销售日报记录
  */
-public class SalesReportRecord {
+public class SalesDailyBean {
 
     /**
      * 日报个数
      */
-    private int    reportNum;
+    private int reportNum;
     /**
      * 销售名称
      */
@@ -18,7 +18,7 @@ public class SalesReportRecord {
     /**
      * 日报详情
      */
-    private List<SalesReportDetail> reportDetail;
+    private List<SalesDailyDetailBean> reportDetail;
 
     public int getReportNum() {
         return reportNum;
@@ -36,11 +36,11 @@ public class SalesReportRecord {
         this.salesmanName = salesmanName;
     }
 
-    public List<SalesReportDetail> getReportDetail() {
+    public List<SalesDailyDetailBean> getReportDetail() {
         return reportDetail;
     }
 
-    public void setReportDetail(List<SalesReportDetail> reportDetail) {
+    public void setReportDetail(List<SalesDailyDetailBean> reportDetail) {
         this.reportDetail = reportDetail;
     }
 }
