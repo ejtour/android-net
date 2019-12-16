@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.daily.list.CrmDailyListActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
@@ -32,6 +33,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -55,10 +57,8 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
     private static final int COLUMN_NUM = 8;
     private static final int[] WIDTH_ARRAY = {150, 120, 80, 100, 80, 80, 90,100};
 
-    @BindView(R.id.edt_search)
-    EditText edtSearch;
-    @BindView(R.id.img_clear)
-    ImageView imgClear;
+    @BindView(R.id.search_view)
+    SearchView mSearchView;
     @BindView(R.id.txt_options)
     ImageView exportView;
     @BindView(R.id.ogd_excel)
@@ -119,6 +119,23 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
                 mPresenter.refresh();
             }
         });
+
+        mSearchView.setTextColorWhite();
+        mSearchView.setSearchTextLeft();
+        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(CustomerLackDetailActivity.this,
+                        "", CommonSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                customerLackParams.setProductKeyword(searchContent);
+                mPresenter.refresh();
+            }
+        });
     }
 
     @Override
@@ -127,7 +144,7 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
         super.hideLoading();
     }
 
-    @OnClick({R.id.img_back, R.id.txt_options, R.id.edt_search, R.id.img_clear})
+    @OnClick({R.id.img_back, R.id.txt_options,})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -135,16 +152,6 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
                 break;
             case R.id.txt_options:
                 showOptionsWindow(exportView);
-                break;
-            case R.id.edt_search:
-                SearchActivity.start(CustomerLackDetailActivity.this,
-                        "", CommonSearch.class.getSimpleName());
-                break;
-            case R.id.img_clear:
-                customerLackParams.setProductKeyword("");
-                edtSearch.setText("");
-                mPresenter.refresh();
-                imgClear.setVisibility(View.GONE);
                 break;
             default:
                 break;
@@ -168,14 +175,7 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             String name = data.getStringExtra("name");
-            if (!TextUtils.isEmpty(name)) {
-                edtSearch.setText(name);
-                customerLackParams.setProductKeyword(name);
-                imgClear.setVisibility(View.VISIBLE);
-            } else {
-                customerLackParams.setProductKeyword("");
-            }
-            mPresenter.refresh();
+            mSearchView.showSearchContent(!TextUtils.isEmpty(name),name);
         }
     }
 
