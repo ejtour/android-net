@@ -1,93 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_activity_bg">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_title"
+    <com.hll_sc_app.widget.SearchTitleBar
+        android:id="@+id/rrs_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:background="@color/base_colorPrimary">
-
-        <ImageView
-            android:id="@+id/img_back"
-            style="@style/BtnClose"/>
-
-        <RelativeLayout
-            android:id="@+id/search_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/txt_search"
-            android:layout_toRightOf="@+id/img_back"
-            android:background="@drawable/bg_search_edit"
-            android:paddingLeft="10dp">
-
-            <EditText
-                android:id="@+id/edt_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_toLeftOf="@+id/img_clear"
-                android:background="@null"
-                android:drawableLeft="@drawable/ic_search_aeaeae"
-                android:drawablePadding="10dp"
-                android:gravity="center_vertical"
-                android:hint="搜索"
-                android:imeOptions="actionSearch"
-                android:singleLine="true"
-                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-                android:textColorHint="@color/color_999999"/>
-
-            <ImageView
-                android:id="@+id/img_clear"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_clear_search"
-                android:tint="@color/base_text999"
-                android:visibility="gone"
-                tools:visibility="visible"/>
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/txt_search"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="搜索"
-            android:textAppearance="@style/TextAppearance.City22.Middle.White"/>
-    </RelativeLayout>
+        app:stb_hint="搜索" />
 
     <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/tl_title"
+        android:id="@+id/rrs_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_below="@+id/rl_title"
-        android:background="@color/base_white"
+        android:background="@drawable/bg_divider_bottom"
         app:tl_indicator_color="@color/base_colorPrimary"
         app:tl_indicator_height="2dp"
         app:tl_indicator_width_equal_title="true"
         app:tl_tab_space_equal="true"
         app:tl_textSelectColor="@color/base_colorPrimary"
         app:tl_textUnselectColor="@color/base_text666"
-        app:tl_textsize="@dimen/base_text_13"/>
+        app:tl_textsize="@dimen/base_text_13" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+        android:id="@+id/rrs_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tl_title"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="1dp"
-        android:background="@color/base_white"/>
-
-</RelativeLayout>
+        android:layout_height="match_parent" />
+</LinearLayout>
