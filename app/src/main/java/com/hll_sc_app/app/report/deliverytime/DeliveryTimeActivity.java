@@ -2,6 +2,7 @@ package com.hll_sc_app.app.report.deliverytime;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.githang.statusbar.StatusBarCompat;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -21,6 +23,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeBean;
@@ -70,14 +73,15 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
 
     private EmptyView emptyView;
 
-    private  Map<String,PieChart> pieChartMap = new HashMap<>(3);
-    private  Map<String,LinearLayout> layoutMap = new HashMap<>(3);
+    private Map<String, PieChart> pieChartMap = new HashMap<>(3);
+    private Map<String, LinearLayout> layoutMap = new HashMap<>(3);
     private DeliveryTimePresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_delivery_time_pie);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         mPresenter = DeliveryTimePresenter.newInstance();
@@ -86,15 +90,15 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
         mPresenter.start();
     }
 
-    private void initView(){
-        pieChartMap.put("0",nearLySevenPieChartView);
-        layoutMap.put("0",nearlySevenLayout);
-        pieChartMap.put("1",nearLyThirtyPieChartView);
-        layoutMap.put("1",nearlyThirtyLayout);
-        pieChartMap.put("2",nearLyNinetyPieChartView);
-        layoutMap.put("2",nearlyNinetyLayout);
+    private void initView() {
+        pieChartMap.put("0", nearLySevenPieChartView);
+        layoutMap.put("0", nearlySevenLayout);
+        pieChartMap.put("1", nearLyThirtyPieChartView);
+        layoutMap.put("1", nearlyThirtyLayout);
+        pieChartMap.put("2", nearLyNinetyPieChartView);
+        layoutMap.put("2", nearlyNinetyLayout);
         emptyView = EmptyView.newBuilder(this).setImage(R.drawable.ic_char_empty).setTips("您还没有配送及时率的统计数据").create();
-        for(PieChart pieChart:pieChartMap.values()){
+        for (PieChart pieChart : pieChartMap.values()) {
             //设置饼状图
             //画统计图
             pieChart.setUsePercentValues(true);
@@ -122,21 +126,15 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
                     String toast = pData.getLabel() + ":" + new DecimalFormat("#.##").format(pData.getY() * 100) + "%";
                     Toast mToast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
                     mToast.setText(toast);
-//                    mToast.setGravity(Gravity.TOP, 0, UIUtils.dip2px(200));
-                    mToast.setGravity(Gravity.TOP | Gravity.LEFT, mX , mY);
+                    mToast.setGravity(Gravity.CENTER, 0, 0);
                     mToast.show();
                 }
+
                 @Override
-                public void onNothingSelected() {}
+                public void onNothingSelected() {
+                }
             });
         }
-    }
-
-    @OnTouch({R.id.nearly_seven_pie,R.id.nearly_thirty_pie,R.id.nearly_ninety_pie})
-    public boolean onTouch(MotionEvent event) {
-        mX = (int) event.getRawX();
-        mY = (int) event.getRawY();
-        return false;
     }
 
     @Override
@@ -145,7 +143,14 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.img_back,R.id.delivery_time_detail_btn})
+    @OnTouch({R.id.nearly_seven_pie, R.id.nearly_thirty_pie, R.id.nearly_ninety_pie})
+    public boolean onTouch(MotionEvent event) {
+        mX = (int) event.getRawX();
+        mY = (int) event.getRawY();
+        return false;
+    }
+
+    @OnClick({R.id.img_back, R.id.delivery_time_detail_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -166,7 +171,7 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
             String key = pieChartEntry.getKey();
             PieChart pieChart = pieChartEntry.getValue();
             DeliveryTimeNearlyBean deliveryTimeNearlyBean = null;
-            switch (key){
+            switch (key) {
                 case "0":
                     deliveryTimeNearlyBean = deliveryTimeResp.getNearly7Days();
                     break;
@@ -201,38 +206,46 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
                     pieChart.setData(data);
                     pieChart.invalidate();
                 }
-            }else {
+            } else {
                 LinearLayout linearLayout = layoutMap.get(key);
                 pieChart.setVisibility(View.GONE);
                 LinearLayout parentLayout = (LinearLayout) emptyView.getParent();
-                if(null !=parentLayout){
-                   parentLayout.removeAllViews();
+                if (null != parentLayout) {
+                    parentLayout.removeAllViews();
                 }
                 linearLayout.addView(emptyView);
             }
         }
     }
 
-    @Override
-    public void hideLoading() {
-        super.hideLoading();
+    /**
+     * 判断是否有配送及时率的数据
+     *
+     * @param deliveryTimeNearlyBean
+     * @return
+     */
+    private boolean isEmptyDeliveryTime(DeliveryTimeNearlyBean deliveryTimeNearlyBean) {
+
+        return (deliveryTimeNearlyBean.getOnTimeInspectionNum() + deliveryTimeNearlyBean.getBeyond30MinInspectionNum()
+                + deliveryTimeNearlyBean.getWithin15MinInspectionNum() + deliveryTimeNearlyBean.getWithin30MinInspectionNum()) == 0;
     }
 
     /**
      * 处理配送及时率
+     *
      * @param item
      * @return
      */
-    private DeliveryTimeBean handler(DeliveryTimeNearlyBean item){
+    private DeliveryTimeBean handler(DeliveryTimeNearlyBean item) {
         DeliveryTimeBean deliveryTimeBean = new DeliveryTimeBean();
-        long totalOrderNum = item.getOnTimeInspectionNum()+item.getBeyond30MinInspectionNum()
-                  +item.getWithin15MinInspectionNum()+item.getWithin30MinInspectionNum();
-        if(totalOrderNum==0){
+        long totalOrderNum = item.getOnTimeInspectionNum() + item.getBeyond30MinInspectionNum()
+                + item.getWithin15MinInspectionNum() + item.getWithin30MinInspectionNum();
+        if (totalOrderNum == 0) {
             deliveryTimeBean.setBeyond30MinInspectionNumRatio(0.00f);
             deliveryTimeBean.setOnTimeInspectionNumRatio(0.00f);
             deliveryTimeBean.setWithin15MinInspectionNumRatio(0.00f);
             deliveryTimeBean.setWithin30MinInspectionNumRatio(0.00f);
-        }else {
+        } else {
             deliveryTimeBean.setBeyond30MinInspectionNumRatio(new BigDecimal(item.getBeyond30MinInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
             deliveryTimeBean.setOnTimeInspectionNumRatio(new BigDecimal(item.getOnTimeInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
             deliveryTimeBean.setWithin15MinInspectionNumRatio(new BigDecimal(item.getWithin15MinInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
@@ -245,14 +258,9 @@ public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTi
         return deliveryTimeBean;
     }
 
-    /**
-     * 判断是否有配送及时率的数据
-     * @param deliveryTimeNearlyBean
-     * @return
-     */
-    private boolean isEmptyDeliveryTime(DeliveryTimeNearlyBean deliveryTimeNearlyBean){
-
-        return  (deliveryTimeNearlyBean.getOnTimeInspectionNum()+ deliveryTimeNearlyBean.getBeyond30MinInspectionNum()
-                + deliveryTimeNearlyBean.getWithin15MinInspectionNum()+ deliveryTimeNearlyBean.getWithin30MinInspectionNum())==0;
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
     }
+
 }
