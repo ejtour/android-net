@@ -1,18 +1,23 @@
 package com.hll_sc_app.app.report.refund.customerproduct;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -44,6 +49,8 @@ public class RefundedCustomerAndProductTotalInfoActivity extends BaseLoadActivit
     TextView txtBankCardAmount;
     @BindView(R.id.txt_account_amount)
     TextView txtAccountAmount;
+    @BindView(R.id.txt_main_title_block)
+    RelativeLayout mRlMainTitleBlock;
     private RefundedCustomerAndProductTotalInfoPresenter mPresenter;
 
     @Override
@@ -52,9 +59,17 @@ public class RefundedCustomerAndProductTotalInfoActivity extends BaseLoadActivit
         setContentView(R.layout.activity_report_refunded_customer_product_total);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
+        initStatusBar();
         mPresenter = RefundedCustomerAndProductTotalInfoPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
+    }
+
+    private void initStatusBar() {
+        StatusBarCompat.setTranslucent(getWindow(), true);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            ((ViewGroup.MarginLayoutParams) mRlMainTitleBlock.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
+        }
     }
 
 
