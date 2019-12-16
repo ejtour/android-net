@@ -13,9 +13,9 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.report.refund.RefundReasonBean;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
+import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
@@ -34,6 +34,7 @@ import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundProductResp;
+import com.hll_sc_app.bean.report.refund.RefundReasonBean;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
 import com.hll_sc_app.bean.report.refund.RefundedResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
@@ -45,15 +46,13 @@ import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
-import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseFeeBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -470,8 +469,8 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryWareHouseServiceFee(WareHouseServiceFeeReq req, SimpleObserver<WareHouseServiceFeeResp> observer){
-        ReportService.INSTANCE.queryWareHouseServiceFee(new BaseReq<>(req))
+    public static void queryWareHouseFee(BaseMapReq req, SimpleObserver<SingleListResp<WareHouseFeeBean>> observer){
+        ReportService.INSTANCE.queryWareHouseFee(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

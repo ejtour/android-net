@@ -1020,7 +1020,7 @@ public class RouterConfig {
     /**
      * 代仓服务费
      */
-    public static final String REPORT_WAREHOUSE_SERVICE_FEE = "/activity/report/warehouse/serviceFee";
+    public static final String REPORT_WAREHOUSE_FEE = "/activity/report/warehouse/serviceFee";
 
     /**
      * 报表退货搜索

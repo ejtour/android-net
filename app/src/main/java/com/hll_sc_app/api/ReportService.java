@@ -7,16 +7,14 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.report.refund.RefundReasonBean;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
+import com.hll_sc_app.bean.report.daily.SalesDailyBean;
+import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
-import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
-import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
-import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
@@ -28,8 +26,11 @@ import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundProductResp;
+import com.hll_sc_app.bean.report.refund.RefundReasonBean;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
 import com.hll_sc_app.bean.report.refund.RefundedResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
@@ -41,15 +42,13 @@ import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
-import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseFeeBean;
 
 import java.util.List;
 
@@ -260,12 +259,11 @@ public interface ReportService {
 
     /**
      * 代仓服务费统计
-     * @param body
      * @return
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111093")
-    Observable<BaseResp<WareHouseServiceFeeResp>> queryWareHouseServiceFee(@Body BaseReq<WareHouseServiceFeeReq> body);
+    Observable<BaseResp<SingleListResp<WareHouseFeeBean>>> queryWareHouseFee(@Body BaseMapReq req);
 
     /**
      * 搜索
