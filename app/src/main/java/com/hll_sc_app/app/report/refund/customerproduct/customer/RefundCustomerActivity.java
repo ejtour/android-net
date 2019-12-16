@@ -142,7 +142,7 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
                 mReq.put("purchaserID", "");
                 mReq.put("shopID", bean.getShopMallId());
             }
-            mSearchView.showSearchContent(true, bean.getName());
+            mSearchView.showSearchContent(!TextUtils.isEmpty(bean.getName()), bean.getName());
         }
     }
 
