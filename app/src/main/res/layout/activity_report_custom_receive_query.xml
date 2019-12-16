@@ -8,7 +8,7 @@
     <com.hll_sc_app.widget.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/title_bar_height"
         app:tb_rightVisibility="false"
         app:tb_title="客户收货查询" />
 
