@@ -5,8 +5,6 @@ import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
 
 import java.util.List;
 

@@ -83,6 +83,7 @@ public class CustomerSalesDetailActivity extends BaseLoadActivity implements Dat
         setContentView(R.layout.activity_report_customer_sales_detail);
         ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
+        if (UserConfig.crm()) mActionType = 1;
         initView();
         initData();
     }

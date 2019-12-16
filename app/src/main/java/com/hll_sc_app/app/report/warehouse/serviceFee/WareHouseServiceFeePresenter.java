@@ -15,16 +15,14 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.rest.Report;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -52,12 +50,12 @@ public class WareHouseServiceFeePresenter implements IWareHouseServiceFeeContrac
 
 
     private void queryShipperList(String searchWord){
-        Report.queryWareHouseShipperList(UserConfig.getGroupID(), 1, searchWord, new SimpleObserver<List<WareHouseShipperBean>>(mView, false) {
+        Common.searchShipperList(1, searchWord, "", new SimpleObserver<List<WareHouseShipperBean>>(mView) {
             @Override
-            public void onSuccess(List<WareHouseShipperBean>  shipperBeans) {
+            public void onSuccess(List<WareHouseShipperBean> wareHouseShipperBeans) {
                 List<PurchaserBean> purchaserBeans = new ArrayList<>();
-                if(shipperBeans!=null && shipperBeans.size()>0){
-                    for(WareHouseShipperBean shipperBean:shipperBeans) {
+                if (!CommonUtils.isEmpty(wareHouseShipperBeans)) {
+                    for (WareHouseShipperBean shipperBean : wareHouseShipperBeans) {
                         PurchaserBean purchaserBean = new PurchaserBean();
                         purchaserBean.setPurchaserID(shipperBean.getPurchaserID()+"");
                         purchaserBean.setPurchaserName(shipperBean.getPurchaserName());

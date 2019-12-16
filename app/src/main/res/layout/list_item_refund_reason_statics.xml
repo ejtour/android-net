@@ -13,7 +13,8 @@
 
     <TextView
         android:id="@+id/txt_number"
-        android:layout_width="@dimen/dp_40"
+        android:layout_width="0dp"
+        android:layout_weight="36"
         android:layout_height="match_parent"
         android:gravity="center"
         android:textColor="@color/base_text222"
@@ -27,7 +28,8 @@
 
     <TextView
         android:id="@+id/txt_reason"
-        android:layout_width="150dp"
+        android:layout_width="0dp"
+        android:layout_weight="159"
         android:layout_height="match_parent"
         android:gravity="center|left"
         android:paddingLeft="10dp"
@@ -42,7 +44,8 @@
 
     <TextView
         android:id="@+id/txt_money"
-        android:layout_width="120dp"
+        android:layout_width="0dp"
+        android:layout_weight="100"
         android:layout_height="match_parent"
         android:gravity="center|right"
         android:paddingRight="10dp"
@@ -57,7 +60,8 @@
 
     <TextView
         android:id="@+id/txt_proportion"
-        android:layout_width="60dp"
+        android:layout_width="0dp"
+        android:layout_weight="60"
         android:layout_height="match_parent"
         android:gravity="center"
         android:textColor="@color/base_text222"
@@ -68,5 +72,4 @@
         android:layout_width="0.5dp"
         android:layout_height="match_parent"
         android:background="@color/color_dddddd" />
-
 </LinearLayout>

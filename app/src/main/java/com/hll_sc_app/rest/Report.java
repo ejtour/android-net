@@ -11,14 +11,14 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.common.WareHouseShipperBean;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.refund.RefundReasonBean;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
-import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
-import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
-import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
+import com.hll_sc_app.bean.report.lack.LackDetailsResp;
+import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
@@ -30,6 +30,8 @@ import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
@@ -51,11 +53,8 @@ import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -228,40 +227,6 @@ public class Report {
     public static void queryReceiveDiffDetails(BaseMapReq req, SimpleObserver<ReceiveDiffDetailsResp> observer) {
         ReportService.INSTANCE
                 .queryReceiveDiffDetails(req)
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    /**
-     * 收货差异明细
-     *
-     * @param params
-     * @param observer
-     */
-    public static void queryWareHouseProductLackDetail(WareHouseLackProductReq params, SimpleObserver<WareHouseLackProductResp> observer) {
-        ReportService.INSTANCE
-                .queryWareHouseProductLackDetail(new BaseReq<>(params))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    /**
-     * 代仓货主列表
-     *
-     * @param groupID
-     * @param actionType
-     * @param searchWord
-     * @param observer
-     */
-    public static void queryWareHouseShipperList(String groupID, int actionType, String searchWord, SimpleObserver<List<WareHouseShipperBean>> observer) {
-        WareHouseShipperReq params = new WareHouseShipperReq();
-        params.setGroupID(groupID);
-        params.setActionType(actionType);
-        params.setName(searchWord);
-        ReportService.INSTANCE
-                .queryWareHouseShipperList(new BaseReq<>(params))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -606,6 +571,33 @@ public class Report {
                                      SimpleObserver<LackDiffResp> observer) {
         ReportService.INSTANCE
                 .queryLackDiff(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询缺货商品明细表
+     *
+     * @param req
+     * @param observer
+     */
+    public static void queryLackDetails(BaseMapReq req, SimpleObserver<LackDetailsResp> observer) {
+        ReportService.INSTANCE
+                .queryLackDetails(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询退货原因统计
+     * @param req
+     * @param observer
+     */
+    public static void queryRefundReasonStatistic(BaseMapReq req, SimpleObserver<SingleListResp<RefundReasonBean>> observer){
+        ReportService.INSTANCE
+                .queryRefundReasonStatics(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
