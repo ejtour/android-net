@@ -796,16 +796,16 @@
         <activity
             android:name=".app.report.refund.wait.WaitRefundTotalInfoActivity"
             android:screenOrientation="portrait" />
+
         <!--待退商品统计明细-->
         <activity
-            android:name=".app.report.refund.wait.product.WaitRefundProductDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:name=".app.report.refund.wait.product.WaitRefundProductActivity"
+            android:screenOrientation="portrait" />
+
         <!--待退客户明细统计-->
         <activity
             android:name=".app.report.refund.wait.customer.WaitRefundCustomerActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:screenOrientation="portrait" />
 
         <!--退货统计-->
         <activity
