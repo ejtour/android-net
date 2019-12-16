@@ -20,7 +20,6 @@
         android:background="@android:color/transparent"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/title_bar_height"
-        android:layout_marginTop="5dp"
         android:layout_marginRight="@dimen/title_bar_height"
         app:layout_constraintBottom_toBottomOf="@id/rog_title_bar"
         app:layout_constraintEnd_toEndOf="@id/rog_title_bar"
