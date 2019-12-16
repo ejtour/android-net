@@ -780,7 +780,7 @@
 
         <!--代仓缺货商品明细-->
         <activity
-            android:name=".app.report.warehouse.product.WareHouseProductDetailActivity"
+            android:name=".app.report.warehouse.lack.WareHouseLackActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 

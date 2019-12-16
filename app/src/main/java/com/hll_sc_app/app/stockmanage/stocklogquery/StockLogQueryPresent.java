@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.GoodsService;
-import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.api.StockManageService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -14,14 +13,14 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportReq;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.HouseBean;
-import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 import com.hll_sc_app.bean.stockmanage.BusinessTypeBean;
 import com.hll_sc_app.bean.stockmanage.StockLogResp;
+import com.hll_sc_app.rest.Common;
 import com.hll_sc_app.utils.Utils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -214,28 +213,12 @@ public class StockLogQueryPresent implements IStockLogQueryContract.IPresent {
 
     @Override
     public void queryOwners() {
-        WareHouseShipperReq params = new WareHouseShipperReq();
-        params.setGroupID(UserConfig.getGroupID());
-        params.setActionType(1);
-        params.setStatus(2);
-        params.setName("");
-        params.setIsSizeLimit(1);
-        ReportService.INSTANCE
-                .queryWareHouseShipperList(new BaseReq<>(params))
-                .compose(ApiScheduler.getObservableScheduler())
-                .map(new Precondition<>())
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<List<WareHouseShipperBean>>() {
-                    @Override
-                    public void onSuccess(List<WareHouseShipperBean> wareHouseShipperBeans) {
-                        mView.queryOwnersSuccess(wareHouseShipperBeans);
-                    }
-
-                    @Override
-                    public void onFailure(UseCaseException e) {
-                        mView.showError(e);
-                    }
-                });
+        Common.searchShipperList(1, "", "2", new SimpleObserver<List<WareHouseShipperBean>>(mView) {
+            @Override
+            public void onSuccess(List<WareHouseShipperBean> wareHouseShipperBeans) {
+                mView.queryOwnersSuccess(wareHouseShipperBeans);
+            }
+        });
 
     }
     @Override

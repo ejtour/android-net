@@ -11,7 +11,6 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
@@ -52,11 +51,8 @@ import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
@@ -229,40 +225,6 @@ public class Report {
     public static void queryReceiveDiffDetails(BaseMapReq req, SimpleObserver<ReceiveDiffDetailsResp> observer) {
         ReportService.INSTANCE
                 .queryReceiveDiffDetails(req)
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    /**
-     * 收货差异明细
-     *
-     * @param params
-     * @param observer
-     */
-    public static void queryWareHouseProductLackDetail(WareHouseLackProductReq params, SimpleObserver<WareHouseLackProductResp> observer) {
-        ReportService.INSTANCE
-                .queryWareHouseProductLackDetail(new BaseReq<>(params))
-                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
-                .subscribe(observer);
-    }
-
-    /**
-     * 代仓货主列表
-     *
-     * @param groupID
-     * @param actionType
-     * @param searchWord
-     * @param observer
-     */
-    public static void queryWareHouseShipperList(String groupID, int actionType, String searchWord, SimpleObserver<List<WareHouseShipperBean>> observer) {
-        WareHouseShipperReq params = new WareHouseShipperReq();
-        params.setGroupID(groupID);
-        params.setActionType(actionType);
-        params.setName(searchWord);
-        ReportService.INSTANCE
-                .queryWareHouseShipperList(new BaseReq<>(params))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

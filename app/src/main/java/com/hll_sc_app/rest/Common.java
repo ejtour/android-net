@@ -126,14 +126,17 @@ public class Common {
      * 搜索货主列表
      *
      * @param actionType 0-代仓公司名称,1-货主名称,2-根据货主名称查询代仓公司
+     * @param status 0，查待同意，1查未同意，2查已同意，3查所有 不传默认查所有
      * @param searchWord 搜索词
      */
-    public static void searchShipperList(int actionType, String searchWord, SimpleObserver<List<WareHouseShipperBean>> observer) {
+    public static void searchShipperList(int actionType, String searchWord, String status, SimpleObserver<List<WareHouseShipperBean>> observer) {
         CommonService.INSTANCE
                 .searchShipperList(BaseMapReq.newBuilder()
                         .put("groupID", UserConfig.getGroupID())
                         .put("actionType", String.valueOf(actionType))
                         .put("name", searchWord)
+                        .put("isSizeLimit", "1")
+                        .put("status", status)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .subscribe(observer);

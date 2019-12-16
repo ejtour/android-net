@@ -5,7 +5,6 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
-import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.RefundReasonStaticsResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
@@ -49,11 +48,8 @@ import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseDeliveryResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductReq;
-import com.hll_sc_app.bean.report.warehouse.WareHouseLackProductResp;
 import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeReq;
 import com.hll_sc_app.bean.report.warehouse.WareHouseServiceFeeResp;
-import com.hll_sc_app.bean.report.warehouse.WareHouseShipperReq;
 
 import java.util.List;
 
@@ -145,14 +141,6 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111013")
     Observable<BaseResp<ReceiveDiffDetailsResp>> queryReceiveDiffDetails(@Body BaseMapReq req);
-
-    @POST(HttpConfig.URL)
-    @Headers("pv:111012")
-    Observable<BaseResp<WareHouseLackProductResp>> queryWareHouseProductLackDetail(@Body BaseReq<WareHouseLackProductReq> body);
-
-    @POST(HttpConfig.URL)
-    @Headers("pv:101049")
-    Observable<BaseResp<List<WareHouseShipperBean>>> queryWareHouseShipperList(@Body BaseReq<WareHouseShipperReq> body);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111008")

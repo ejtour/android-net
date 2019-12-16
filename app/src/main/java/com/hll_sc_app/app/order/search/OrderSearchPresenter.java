@@ -34,7 +34,7 @@ public class OrderSearchPresenter implements IOrderSearchContract.IOrderSearchPr
                 }
             });
         else if (mView.getIndex() == 1)
-            Common.searchShipperList(1, searchWords, new SimpleObserver<List<WareHouseShipperBean>>(mView, false) {
+            Common.searchShipperList(1, searchWords, "2", new SimpleObserver<List<WareHouseShipperBean>>(mView, false) {
                 @Override
                 public void onSuccess(List<WareHouseShipperBean> wareHouseShipperBeans) {
                     List<NameValue> list = new ArrayList<>();

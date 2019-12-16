@@ -1,5 +1,7 @@
 package com.hll_sc_app.bean.report.lack;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.impl.IStringArrayGenerator;
 
@@ -12,6 +14,7 @@ import java.util.List;
  */
 
 public class LackDetailsBean implements IStringArrayGenerator {
+    private String no;
     private String specID;
     private int oriReserveNum;
     private int shopNum;
@@ -29,8 +32,16 @@ public class LackDetailsBean implements IStringArrayGenerator {
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
-        list.add(productName); // 商品名称
-        list.add(specUnit); // 规格/单位
+        if (TextUtils.isEmpty(no)){
+            list.add(productName); // 商品名称
+            list.add(specUnit); // 规格/单位
+        }else {
+            list.add(no); // 序号
+            list.add(productCode); // 商品编号
+            list.add(productName); // 商品名称
+            list.add(specUnit); // 规格/单位
+            list.add(shipperName); // 货主
+        }
         list.add(CommonUtils.formatNumber(oriReserveNum)); // 订货量
         list.add(CommonUtils.formatMoney(oriReserveAmount)); // 订货金额
         list.add(CommonUtils.formatNumber(deliveryNum)); // 发货量
@@ -38,6 +49,14 @@ public class LackDetailsBean implements IStringArrayGenerator {
         list.add(CommonUtils.formatMoney(deliveryLackAmount)); // 缺货金额
         list.add(deliveryLackRate); // 缺货率
         return list;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
     }
 
     public String getSpecID() {
