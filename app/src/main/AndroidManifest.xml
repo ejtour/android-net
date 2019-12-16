@@ -577,9 +577,8 @@
             android:windowSoftInputMode="adjustPan|stateVisible" />
 
         <activity
-            android:name=".app.report.refundReason.RefundReasonActivity"
+            android:name=".app.report.refund.reason.RefundReasonActivity"
             android:screenOrientation="portrait" />
-
 
         <activity
             android:name=".app.wallet.details.list.DetailsListActivity"

@@ -11,7 +11,9 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.refund.RefundReasonBean;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
@@ -583,6 +585,19 @@ public class Report {
     public static void queryLackDetails(BaseMapReq req, SimpleObserver<LackDetailsResp> observer) {
         ReportService.INSTANCE
                 .queryLackDetails(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询退货原因统计
+     * @param req
+     * @param observer
+     */
+    public static void queryRefundReasonStatistic(BaseMapReq req, SimpleObserver<SingleListResp<RefundReasonBean>> observer){
+        ReportService.INSTANCE
+                .queryRefundReasonStatics(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
