@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,6 +15,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.crm.daily.list.CrmDailyListActivity;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -26,6 +30,7 @@ import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
@@ -58,10 +63,8 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
     TitleBar mTitleBar;
     private WaitRefundCustomerDetailContract.IWaitRefundCustomerDetailPresenter mPresenter;
     WaitRefundReq mParam = new WaitRefundReq();
-    @BindView(R.id.edt_search)
-    TextView edtSearch;
-    @BindView(R.id.img_clear)
-    ImageView imgClear;
+    @BindView(R.id.search_view)
+    SearchView mSearchView;
     private ContextOptionsWindow mExportOptionsWindow;
 
 
@@ -95,6 +98,26 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
                 mPresenter.queryRefundCustomerDetail(true);
             }
         });
+
+        mSearchView.setTextColorWhite();
+        mSearchView.setSearchTextLeft();
+        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_SEARCH, WaitRefundCustomertDetailActivity.this,WAIT_REFUND_CUSTOMERT_CODE);
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                if(TextUtils.isEmpty(searchContent)){
+                    mParam.setProductName("");
+                    mParam.setPurchaserID("");
+                    mParam.setShopID("");
+                }
+                mPresenter.queryRefundCustomerDetail(true);
+            }
+        });
     }
 
     @Override
@@ -103,22 +126,12 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
         super.hideLoading();
     }
 
-    @OnClick({R.id.rog_title_bar, R.id.img_clear, R.id.edt_search})
+    @OnClick({R.id.rog_title_bar})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_clear:
-                mParam.setProductName("");
-                mParam.setPurchaserID("");
-                mParam.setShopID("");
-                edtSearch.setText("");
-                mPresenter.queryRefundCustomerDetail(true);
-                imgClear.setVisibility(View.GONE);
-                break;
             case R.id.rog_title_bar:
                 showExportOptionsWindow(mTitleBar);
                 break;
-            case R.id.edt_search:
-                RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_SEARCH, this, WAIT_REFUND_CUSTOMERT_CODE);
             default:
                 break;
         }
@@ -241,15 +254,13 @@ public class WaitRefundCustomertDetailActivity extends BaseLoadActivity implemen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == WAIT_REFUND_CUSTOMERT_CODE && resultCode == RESULT_OK) {
             SearchResultItem bean = data.getParcelableExtra("result");
-            edtSearch.setText(bean.getName());
-            imgClear.setVisibility(View.VISIBLE);
             WaitRefundReq requestParams = getRequestParams();
             if (bean.getType() == 0) {
                 requestParams.setPurchaserID(bean.getShopMallId());
             } else {
                 requestParams.setShopID(bean.getShopMallId());
             }
-            mPresenter.queryRefundCustomerDetail(true);
+            mSearchView.showSearchContent(!TextUtils.isEmpty(bean.getName()),bean.getName());
         }
     }
 
