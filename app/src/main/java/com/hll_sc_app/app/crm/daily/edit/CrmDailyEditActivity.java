@@ -144,9 +144,13 @@ public class CrmDailyEditActivity extends BaseLoadActivity implements ICrmDailyE
                     return employeeBean.getEmployeeID();
                 }
             };
+            List<String> list = new ArrayList<>();
+            if (mReq.getReceiver() != null) {
+                list = Arrays.asList(mReq.getReceiver().split(","));
+            }
             mDialog = MultiSelectionDialog.newBuilder(this, wrapperName)
                     .refreshList(mList)
-                    .selectByKey(Arrays.asList(mReq.getReceiver().split(",")))
+                    .selectByKey(list)
                     .setTitleText("选择接收人")
                     .setOnSelectListener(list1 -> {
                         List<String> ids = new ArrayList<>();
