@@ -68,6 +68,13 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
 
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="0dp"
+            android:background="@color/base_color_divider"
+            app:layout_constraintBottom_toBottomOf="@+id/refunded_num_label"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/refunded_num" />
 
         <TextView
             android:id="@+id/refunded_num"
@@ -82,6 +89,7 @@
             tools:text="24" />
 
         <TextView
+            android:id="@+id/refunded_num_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/refunded_num"
