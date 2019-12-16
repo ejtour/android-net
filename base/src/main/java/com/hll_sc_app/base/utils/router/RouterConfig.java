@@ -1032,7 +1032,7 @@ public class RouterConfig {
     /**
      * 销售日报
      */
-    public static final String REPORT_SALES_DAY_REPORT = "/activity/report/sales/report";
+    public static final String REPORT_SALES_DAILY = "/activity/report/sales/daily";
 
     /**
      * 采购单查询

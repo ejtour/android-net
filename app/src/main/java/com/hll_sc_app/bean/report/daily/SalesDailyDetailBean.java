@@ -1,24 +1,24 @@
-package com.hll_sc_app.bean.report.salesReport;
+package com.hll_sc_app.bean.report.daily;
 
 /**
  * 销售日报明细
  */
-public class SalesReportDetail {
+public class SalesDailyDetailBean {
 
     /**
      * 日报日期
      */
-    private long reportDate;
+    private String reportDate;
     /**
      * 日报个数
      */
-    private int  reportNum;
+    private int reportNum;
 
-    public long getReportDate() {
+    public String getReportDate() {
         return reportDate;
     }
 
-    public void setReportDate(long reportDate) {
+    public void setReportDate(String reportDate) {
         this.reportDate = reportDate;
     }
 

@@ -41,8 +41,7 @@ import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
-import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
-import com.hll_sc_app.bean.report.salesReport.SalesReportResp;
+import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
@@ -279,12 +278,11 @@ public interface ReportService {
 
     /**
      * 销售日报
-     * @param body
      * @return
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111045")
-    Observable<BaseResp<SalesReportResp>> querySalesReportList(@Body BaseReq<SalesReportReq> body);
+    Observable<BaseResp<SingleListResp<SalesDailyBean>>> querySalesDaily(@Body BaseMapReq req);
 
 
     @POST(HttpConfig.URL)

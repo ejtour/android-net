@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/base_bg_white_radius_5_solid">
+
+    <TextView
+        android:id="@+id/rsd_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="赵明" />
+
+    <TextView
+        android:id="@+id/rsd_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="共 10 条" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/color_eeeeee"
+        app:layout_constraintBottom_toBottomOf="@id/rsd_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/rsd_sun"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/rsd_mon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rsd_name"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/rsd_mon"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/rsd_tue"
+        app:layout_constraintStart_toEndOf="@id/rsd_sun"
+        app:layout_constraintTop_toTopOf="@id/rsd_sun"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/rsd_tue"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/rsd_wed"
+        app:layout_constraintStart_toEndOf="@id/rsd_mon"
+        app:layout_constraintTop_toTopOf="@id/rsd_sun"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/rsd_wed"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/rsd_thu"
+        app:layout_constraintStart_toEndOf="@id/rsd_tue"
+        app:layout_constraintTop_toTopOf="@id/rsd_sun"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/rsd_thu"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/rsd_fri"
+        app:layout_constraintStart_toEndOf="@id/rsd_wed"
+        app:layout_constraintTop_toTopOf="@id/rsd_sun"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/rsd_fri"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toStartOf="@id/rsd_sat"
+        app:layout_constraintStart_toEndOf="@id/rsd_thu"
+        app:layout_constraintTop_toTopOf="@id/rsd_sun"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/rsd_sat"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/rsd_fri"
+        app:layout_constraintTop_toTopOf="@id/rsd_sun"
+        tools:text="10" />
+
+</android.support.constraint.ConstraintLayout>

@@ -45,8 +45,7 @@ import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleResp;
 import com.hll_sc_app.bean.report.resp.product.ProductSaleTop10Resp;
-import com.hll_sc_app.bean.report.salesReport.SalesReportReq;
-import com.hll_sc_app.bean.report.salesReport.SalesReportResp;
+import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.salesman.SalesManSalesResp;
 import com.hll_sc_app.bean.report.salesman.SalesManSignResp;
 import com.hll_sc_app.bean.report.search.SearchReq;
@@ -495,8 +494,8 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void querySalesReportList(SalesReportReq req, SimpleObserver<SalesReportResp> observer){
-        ReportService.INSTANCE.querySalesReportList(new BaseReq<>(req))
+    public static void querySalesDaily(BaseMapReq req, SimpleObserver<SingleListResp<SalesDailyBean>> observer){
+        ReportService.INSTANCE.querySalesDaily(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

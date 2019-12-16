@@ -118,7 +118,7 @@ public class CrmDailyListActivity extends BaseLoadActivity implements ICrmDailyL
         if (!mSend) {
             mTitleBar.setHeaderTitle("");
             mTitleBar.setRightText("统计");
-            mTitleBar.setRightBtnClick(v -> RouterUtil.goToActivity(RouterConfig.REPORT_SALES_DAY_REPORT));
+            mTitleBar.setRightBtnClick(v -> RouterUtil.goToActivity(RouterConfig.REPORT_SALES_DAILY));
             mSearchView.setVisibility(View.VISIBLE);
             mSearchView.setTextColorWhite();
             mSearchView.setSearchTextLeft();
