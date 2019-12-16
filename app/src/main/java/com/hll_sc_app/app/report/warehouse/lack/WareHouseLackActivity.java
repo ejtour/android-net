@@ -41,10 +41,10 @@ import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,7 +73,7 @@ public class WareHouseLackActivity extends BaseLoadActivity implements IWareHous
     private ContextOptionsWindow mExportOptionsWindow;
     private PurchaserSelectWindow mPurchaserWindow;
     private List<PurchaserBean> mShipperList;
-    private List<LackDetailsBean> mCacheList = new ArrayList<>();
+    private AtomicInteger mIndex = new AtomicInteger();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -255,14 +255,14 @@ public class WareHouseLackActivity extends BaseLoadActivity implements IWareHous
     public void setData(LackDetailsResp resp, boolean append) {
         List<LackDetailsBean> records = resp.getRecords();
         if (!append) {
-            mCacheList.clear();
+            mIndex.set(0);
         }
-        mCacheList.addAll(records);
-        for (int i = 0; i < mCacheList.size(); i++) {
-            mCacheList.get(i).setNo(String.valueOf(i + 1));
+        if (!CommonUtils.isEmpty(records))
+            for (LackDetailsBean bean : records) {
+                bean.setNo(String.valueOf(mIndex.incrementAndGet()));
         }
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(records) && records.size() == 20);
-        mExcel.setData(mCacheList, false);
+        mExcel.setData(records, append);
     }
 
     @OnClick(R.id.rwl_shipper_btn)
