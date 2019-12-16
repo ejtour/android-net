@@ -4,8 +4,6 @@ import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
 import com.hll_sc_app.bean.report.refund.RefundedResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 
 /**
  * 退货明细

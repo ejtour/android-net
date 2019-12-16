@@ -84,7 +84,7 @@ public class WaitRefundTotalInfoActivity extends BaseLoadActivity implements Wai
                 finish();
                 break;
             case R.id.txt_wait_customer_btn:
-                RouterUtil.goToActivity(RouterConfig.REPORT_WAIT_REFUND_CUSTOMER_DETAIL);
+                RouterUtil.goToActivity(RouterConfig.REPORT_WAIT_REFUND_CUSTOMER);
                 break;
             case R.id.txt_wait_product_btn:
                 RouterUtil.goToActivity(RouterConfig.REPORT_WAIT_REFUND_PRODUCT_DETAIL);

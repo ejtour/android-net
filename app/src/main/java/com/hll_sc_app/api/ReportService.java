@@ -33,7 +33,6 @@ import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundReasonBean;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
 import com.hll_sc_app.bean.report.refund.RefundedResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
@@ -170,7 +169,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111014")
-    Observable<BaseResp<WaitRefundCustomerResp>> queryRefundCustomerList(@Body BaseReq<WaitRefundReq> body);
+    Observable<BaseResp<RefundCustomerResp>> queryRefundCustomerList(@Body BaseMapReq body);
 
 
     /**

@@ -961,7 +961,7 @@ public class RouterConfig {
     /**
      * 待退客户明细
      */
-    public static final String REPORT_WAIT_REFUND_CUSTOMER_DETAIL = "/activity/report/refund/wait/customer/detail";
+    public static final String REPORT_WAIT_REFUND_CUSTOMER = "/activity/report/refund/wait/customer";
 
     /**
      * 待退商品明细

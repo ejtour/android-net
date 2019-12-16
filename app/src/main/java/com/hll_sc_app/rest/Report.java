@@ -37,7 +37,6 @@ import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundReasonBean;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
 import com.hll_sc_app.bean.report.refund.RefundedResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
@@ -298,11 +297,10 @@ public class Report {
     /**
      * 待退货退款 集团列表查询
      *
-     * @param waitRefundReq
      * @param observer
      */
-    public static void queryWaitRefundCustomerList(WaitRefundReq waitRefundReq, SimpleObserver<WaitRefundCustomerResp> observer) {
-        ReportService.INSTANCE.queryRefundCustomerList(new BaseReq<>(waitRefundReq))
+    public static void queryWaitRefundCustomerList(BaseMapReq req, SimpleObserver<RefundCustomerResp> observer) {
+        ReportService.INSTANCE.queryRefundCustomerList(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
