@@ -750,6 +750,12 @@ public class RouterConfig {
      * 缺货差异汇总
      */
     public static final String REPORT_LACK_DIFF = "/activity/report/lack/diff";
+
+    /**
+     * 缺货商品明细表
+     */
+    public static final String REPORT_LACK_DETAILS = "/activity/report/lack/details";
+
     /*
      * 我的钱包-银行列表
      */

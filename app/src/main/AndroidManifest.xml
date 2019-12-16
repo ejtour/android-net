@@ -632,6 +632,11 @@
             android:name=".app.report.lack.diff.LackDiffActivity"
             android:screenOrientation="portrait" />
 
+        <!--缺货商品明细表-->
+        <activity
+            android:name=".app.report.lack.details.LackDetailsActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".app.web.WebActivity"
             android:screenOrientation="portrait" />

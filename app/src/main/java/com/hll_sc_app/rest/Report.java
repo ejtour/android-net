@@ -15,10 +15,9 @@ import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
 import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
-import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
-import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
-import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
+import com.hll_sc_app.bean.report.lack.LackDetailsResp;
+import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
 import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
@@ -30,6 +29,8 @@ import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
+import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundedReq;
@@ -606,6 +607,20 @@ public class Report {
                                      SimpleObserver<LackDiffResp> observer) {
         ReportService.INSTANCE
                 .queryLackDiff(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询缺货商品明细表
+     *
+     * @param req
+     * @param observer
+     */
+    public static void queryLackDetails(BaseMapReq req, SimpleObserver<LackDetailsResp> observer) {
+        ReportService.INSTANCE
+                .queryLackDetails(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
