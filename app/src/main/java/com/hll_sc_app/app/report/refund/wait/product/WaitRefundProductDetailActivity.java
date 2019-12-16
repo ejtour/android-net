@@ -15,11 +15,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.Gson;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.refund.wait.customer.WaitRefundCustomertDetailActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.ProductNameSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundReq;
 import com.hll_sc_app.bean.window.OptionType;
@@ -28,6 +30,7 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
+import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
@@ -58,10 +61,8 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
     TitleBar mTitleBar;
     private WaitRefundProductDetailContract.IWaitRefundProductDetailPresenter mPresenter;
     WaitRefundReq mParam = new WaitRefundReq();
-    @BindView(R.id.edt_search)
-    TextView edtSearch;
-    @BindView(R.id.img_clear)
-    ImageView imgClear;
+    @BindView(R.id.search_view)
+    SearchView mSearchView;
     private ContextOptionsWindow mExportOptionsWindow;
 
     @Override
@@ -94,6 +95,23 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
                 mPresenter.queryRefundProductDetail(true);
             }
         });
+
+        mSearchView.setTextColorWhite();
+        mSearchView.setSearchTextLeft();
+        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(WaitRefundProductDetailActivity.this,
+                        "", ProductNameSearch.class.getSimpleName());
+            }
+
+            @Override
+            public void toSearch(String searchContent) {
+                mParam.setProductName(searchContent);
+                mPresenter.queryRefundProductDetail(true);
+            }
+        });
     }
 
     @Override
@@ -102,23 +120,11 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
         super.hideLoading();
     }
 
-    @OnClick({R.id.rog_title_bar,R.id.img_clear,R.id.edt_search})
+    @OnClick({R.id.rog_title_bar})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_clear:
-                mParam.setProductName("");
-                edtSearch.setText("");
-                mParam.setPurchaserID("");
-                mParam.setShopID("");
-                mPresenter.queryRefundProductDetail(true);
-                imgClear.setVisibility(View.GONE);
-                break;
             case R.id.rog_title_bar:
                showExportOptionsWindow(mTitleBar);
-                break;
-            case R.id.edt_search:
-                SearchActivity.start(WaitRefundProductDetailActivity.this,
-                        "", ProductNameSearch.class.getSimpleName());
                 break;
             default:
                 break;
@@ -237,14 +243,7 @@ public class WaitRefundProductDetailActivity extends BaseLoadActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             String name = data.getStringExtra("name");
-            if (!TextUtils.isEmpty(name)) {
-                edtSearch.setText(name);
-                mParam.setProductName(name);
-                imgClear.setVisibility(View.VISIBLE);
-            } else {
-                mParam.setProductName("");
-            }
-            mPresenter.queryRefundProductDetail(true);
+            mSearchView.showSearchContent(!TextUtils.isEmpty(name),name);
         }
     }
 }

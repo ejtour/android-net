@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,59 +14,38 @@
         app:tb_rightVisibility="true"
         app:tb_title="" />
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+    <com.hll_sc_app.widget.SearchView
+        android:id="@+id/search_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/title_bar_height"
-        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
         android:layout_marginRight="@dimen/title_bar_height"
         app:layout_constraintBottom_toBottomOf="@id/rog_title_bar"
         app:layout_constraintEnd_toEndOf="@id/rog_title_bar"
         app:layout_constraintStart_toStartOf="@id/rog_title_bar"
-        app:layout_constraintTop_toTopOf="@id/rog_title_bar">
+        app:layout_constraintTop_toTopOf="@id/rog_title_bar" />
 
-        <TextView
-            android:id="@+id/edt_search"
-            android:layout_width="287dp"
-            android:layout_height="25dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/bg_search_text"
-            android:drawableLeft="@drawable/ic_search_aeaeae"
-            android:drawablePadding="10dp"
-            android:hint="搜索"
-            android:imeOptions="actionSearch"
-            android:paddingLeft="10dp"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
-            android:textColor="@color/base_white"
-            android:textColorHint="#FFFFFF" />
 
-        <ImageView
-            android:id="@+id/img_clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/edt_search"
-            android:paddingRight="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_clear_search"
-            android:visibility="gone"
-            tools:visibility="visible" />
-    </RelativeLayout>
-
-    <com.hll_sc_app.widget.report.ExcelLayout
-        android:id="@+id/ogd_excel"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/rog_title_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="5dp"
+        android:background="@color/base_white"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rog_title_bar">
+
+        <com.hll_sc_app.widget.report.ExcelLayout
+            android:id="@+id/ogd_excel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>
