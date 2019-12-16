@@ -850,9 +850,8 @@
             android:windowSoftInputMode="adjustPan" />
         <!--代仓服务费-->
         <activity
-            android:name=".app.report.warehouse.serviceFee.WareHouseServiceFeeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:name=".app.report.warehouse.fee.WareHouseFeeActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".app.inspection.detail.InspectionDetailActivity"

@@ -1,6 +1,5 @@
-package com.hll_sc_app.app.report.warehouse.lack;
+package com.hll_sc_app.app.report.warehouse.fee;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,8 +14,6 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.agreementprice.quotation.PurchaserSelectWindow;
-import com.hll_sc_app.app.search.SearchActivity;
-import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
@@ -24,8 +21,7 @@ import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.goods.PurchaserBean;
-import com.hll_sc_app.bean.report.lack.LackDetailsBean;
-import com.hll_sc_app.bean.report.lack.LackDetailsResp;
+import com.hll_sc_app.bean.report.warehouse.WareHouseFeeBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -33,7 +29,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
-import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 import com.hll_sc_app.widget.report.ExcelLayout;
@@ -50,35 +45,33 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@Route(path = RouterConfig.REPORT_WAREHOUSE_PRODUCT_DETAIL)
-public class WareHouseLackActivity extends BaseLoadActivity implements IWareHouseLackContract.IWareHouseLackView {
-    private static final int[] WIDTH_ARRAY = {40, 110, 150, 120, 190, 80, 100, 80, 80, 90, 100};
-    @BindView(R.id.rwl_title_bar)
+@Route(path = RouterConfig.REPORT_WAREHOUSE_FEE)
+public class WareHouseFeeActivity extends BaseLoadActivity implements IWareHouseFeeContract.IWareHouseFeeView {
+    private static final int[] WIDTH_ARRAY = {40, 170, 160, 120, 120, 120, 120};
+    @BindView(R.id.trl_title_bar)
     TitleBar mTitleBar;
-    @BindView(R.id.rwl_search_view)
-    SearchView mSearchView;
-    @BindView(R.id.rwl_date)
-    TextView mDate;
-    @BindView(R.id.rwl_date_arrow)
-    TriangleView mDateArrow;
-    @BindView(R.id.rwl_excel)
-    ExcelLayout mExcel;
-    @BindView(R.id.rwl_shipper_arrow)
-    TriangleView mShipperArrow;
-    @BindView(R.id.rwl_shipper)
+    @BindView(R.id.trl_tab_one)
     TextView mShipper;
-    private IWareHouseLackContract.IWareHouseLackPresenter mPresenter;
+    @BindView(R.id.trl_tab_one_arrow)
+    TriangleView mShipperArrow;
+    @BindView(R.id.trl_tab_two)
+    TextView mDate;
+    @BindView(R.id.trl_tab_two_arrow)
+    TriangleView mDateArrow;
+    @BindView(R.id.tte_excel)
+    ExcelLayout mExcel;
+    private IWareHouseFeeContract.IWareHouseFeePresenter mPresenter;
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
     private DateRangeWindow mDateRangeWindow;
     private ContextOptionsWindow mExportOptionsWindow;
     private PurchaserSelectWindow mPurchaserWindow;
-    private List<PurchaserBean> mShipperList;
     private AtomicInteger mIndex = new AtomicInteger();
+    private List<PurchaserBean> mShipperList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_warehouse_lack);
+        setContentView(R.layout.activity_tab_two_excel);
         ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
@@ -87,39 +80,29 @@ public class WareHouseLackActivity extends BaseLoadActivity implements IWareHous
     }
 
     private void initData() {
-        mReq.put("billCategory", "2");
         mReq.put("groupID", UserConfig.getGroupID());
         Date date = new Date();
-        mDate.setTag(R.id.date_start, date);
+        mDate.setTag(R.id.date_start, CalendarUtils.getFirstDateInMonth(date));
         mDate.setTag(R.id.date_end, date);
         updateSelectedDate();
-        mPresenter = WareHouseLackPresenter.newInstance();
+        mPresenter = WareHouseFeePresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
 
-    private void initView() {
-        initExcel();
-        mSearchView.setSearchTextLeft();
-        mSearchView.setTextColorWhite();
-        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
-        mTitleBar.setRightBtnClick(this::showExportOptionsWindow);
-        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
-            @Override
-            public void click(String searchContent) {
-                SearchActivity.start(WareHouseLackActivity.this,
-                        searchContent, CommonSearch.class.getSimpleName());
-            }
-
-            @Override
-            public void toSearch(String searchContent) {
-                mReq.put("productName", searchContent);
-                mPresenter.loadList();
-            }
-        });
+    private void updateSelectedDate() {
+        Date startDate = (Date) mDate.getTag(R.id.date_start);
+        Date endDate = (Date) mDate.getTag(R.id.date_end);
+        mDate.setText(String.format("%s - %s", CalendarUtils.format(startDate, Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(endDate, Constants.SLASH_YYYY_MM_DD)));
+        mReq.put("startDate", CalendarUtils.toLocalDate(startDate));
+        mReq.put("endDate", CalendarUtils.toLocalDate(endDate));
     }
 
-    private void initExcel() {
+    private void initView() {
+        mTitleBar.setHeaderTitle("代仓服务费统计");
+        mTitleBar.setRightBtnClick(this::showExportOptionsWindow);
+        mShipper.setText("货主");
         mExcel.setColumnDataList(generateColumnData());
         mExcel.setHeaderView(generateHeader());
         mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -139,16 +122,6 @@ public class WareHouseLackActivity extends BaseLoadActivity implements IWareHous
     public void hideLoading() {
         mExcel.closeHeaderOrFooter();
         super.hideLoading();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
-            String name = data.getStringExtra("name");
-            if (!TextUtils.isEmpty(name))
-                mSearchView.showSearchContent(true, name);
-        }
     }
 
     @Override
@@ -202,7 +175,7 @@ public class WareHouseLackActivity extends BaseLoadActivity implements IWareHous
             array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
         }
         row.updateItemData(array);
-        row.updateRowDate("序号", "商品编号", "商品名称", "规格/单位", "货主", "订货量", "订货金额", "发货量", "缺货量", "缺货金额", "缺货率");
+        row.updateRowDate("序号", "货主集团", "合作时长", "收费模式", "应收服务费", "已收服务费", "未收服务费");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }
@@ -210,25 +183,16 @@ public class WareHouseLackActivity extends BaseLoadActivity implements IWareHous
     private ExcelRow.ColumnData[] generateColumnData() {
         ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
         array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]));
-        for (int i = 1; i < 5; i++) {
-            array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[i]), Gravity.CENTER_VERTICAL);
-        }
-        for (int i = 5; i < WIDTH_ARRAY.length; i++) {
+        array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]), Gravity.CENTER_VERTICAL);
+        array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]));
+        array[3] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[3]));
+        for (int i = 4; i < WIDTH_ARRAY.length; i++) {
             array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[i]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         }
         return array;
     }
 
-    private void updateSelectedDate() {
-        Date startDate = (Date) mDate.getTag(R.id.date_start);
-        Date endDate = (Date) mDate.getTag(R.id.date_end);
-        mDate.setText(String.format("%s - %s", CalendarUtils.format(startDate, Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(endDate, Constants.SLASH_YYYY_MM_DD)));
-        mReq.put("date", CalendarUtils.toLocalDate(startDate));
-        mReq.put("endDate", CalendarUtils.toLocalDate(endDate));
-    }
-
-    @OnClick(R.id.rwl_date_btn)
+    @OnClick({R.id.trl_tab_two_btn})
     public void showDateRangeWindow(View view) {
         mDateArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
         mDate.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -252,20 +216,19 @@ public class WareHouseLackActivity extends BaseLoadActivity implements IWareHous
 
 
     @Override
-    public void setData(LackDetailsResp resp, boolean append) {
-        List<LackDetailsBean> records = resp.getRecords();
+    public void setData(List<WareHouseFeeBean> list, boolean append) {
         if (!append) {
             mIndex.set(0);
         }
-        if (!CommonUtils.isEmpty(records))
-            for (LackDetailsBean bean : records) {
-                bean.setNo(String.valueOf(mIndex.incrementAndGet()));
-        }
-        mExcel.setEnableLoadMore(!CommonUtils.isEmpty(records) && records.size() == 20);
-        mExcel.setData(records, append);
+        if (!CommonUtils.isEmpty(list))
+            for (WareHouseFeeBean bean : list) {
+                bean.setSequenceNo(mIndex.incrementAndGet());
+            }
+        mExcel.setEnableLoadMore(!CommonUtils.isEmpty(list) && list.size() == 20);
+        mExcel.setData(list, append);
     }
 
-    @OnClick(R.id.rwl_shipper_btn)
+    @OnClick(R.id.trl_tab_one_btn)
     public void showPurchaserWindow(View view) {
         if (mShipperList == null) {
             mPresenter.getShipperList();

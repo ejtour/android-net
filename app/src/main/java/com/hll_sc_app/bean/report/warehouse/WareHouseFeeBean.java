@@ -1,18 +1,14 @@
 package com.hll_sc_app.bean.report.warehouse;
 
-import com.alibaba.sdk.android.ams.common.util.StringUtil;
-import com.google.zxing.common.StringUtils;
-import com.hll_sc_app.bean.enums.ReportWareHouseServiceFeePayModelEnum;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.impl.IStringArrayGenerator;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class WareHouseServiceFeeItem implements IStringArrayGenerator {
+public class WareHouseFeeBean implements IStringArrayGenerator {
 
     private int sequenceNo;
     /**
@@ -22,11 +18,11 @@ public class WareHouseServiceFeeItem implements IStringArrayGenerator {
     /**
      * 已收服务费
      */
-    private String paymentAmount;
+    private double paymentAmount;
     /**
      * 货主ID
      */
-    private long   shipperID;
+    private String shipperID;
     /**
      * 货主名称
      */
@@ -42,11 +38,11 @@ public class WareHouseServiceFeeItem implements IStringArrayGenerator {
     /**
      * 应收服务费
      */
-    private String totalPrice;
+    private double totalPrice;
     /**
      * 未收服务费
      */
-    private String unPaymentAmount;
+    private double unPaymentAmount;
 
     public String getEndDate() {
         return endDate;
@@ -56,19 +52,19 @@ public class WareHouseServiceFeeItem implements IStringArrayGenerator {
         this.endDate = endDate;
     }
 
-    public String getPaymentAmount() {
+    public double getPaymentAmount() {
         return paymentAmount;
     }
 
-    public void setPaymentAmount(String paymentAmount) {
+    public void setPaymentAmount(double paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 
-    public long getShipperID() {
+    public String getShipperID() {
         return shipperID;
     }
 
-    public void setShipperID(long shipperID) {
+    public void setShipperID(String shipperID) {
         this.shipperID = shipperID;
     }
 
@@ -96,19 +92,19 @@ public class WareHouseServiceFeeItem implements IStringArrayGenerator {
         this.termType = termType;
     }
 
-    public String getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(String totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public String getUnPaymentAmount() {
+    public double getUnPaymentAmount() {
         return unPaymentAmount;
     }
 
-    public void setUnPaymentAmount(String unPaymentAmount) {
+    public void setUnPaymentAmount(double unPaymentAmount) {
         this.unPaymentAmount = unPaymentAmount;
     }
 
@@ -123,18 +119,29 @@ public class WareHouseServiceFeeItem implements IStringArrayGenerator {
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
-        list.add(getSequenceNo()+"");
-        list.add(getShipperName()); // 货主集团
-        list.add(
-                String.format("%s - %s",
-                        StringUtil.isEmpty(getStartDate())?"":
-                        CalendarUtils.getDateFormatString(getStartDate()+"",CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD),
-                        StringUtil.isEmpty(getEndDate())?"":
-                        CalendarUtils.getDateFormatString(getEndDate()+"",CalendarUtils.FORMAT_LOCAL_DATE,Constants.SLASH_YYYY_MM_DD)));// 合作时长
-        list.add(ReportWareHouseServiceFeePayModelEnum.getServiceFeePayModeDescByCode(getTermType())); // 收费模式
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getTotalPrice()))); // 应收服务费
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getPaymentAmount()))); //已收服务费
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getUnPaymentAmount()))); // 未收服务费
+        list.add(String.valueOf(sequenceNo));
+        list.add(shipperName); // 货主集团
+        list.add(String.format("%s - %s", DateUtil.getReadableTime(startDate, Constants.SLASH_YYYY_MM_DD),
+                DateUtil.getReadableTime(endDate, Constants.SLASH_YYYY_MM_DD)));// 合作时长
+        list.add(getMode(termType)); // 收费模式
+        list.add(CommonUtils.formatMoney(totalPrice)); // 应收服务费
+        list.add(CommonUtils.formatMoney(paymentAmount)); //已收服务费
+        list.add(CommonUtils.formatMoney(unPaymentAmount)); // 未收服务费
         return list;
+    }
+
+    private static String getMode(int type) {
+        switch (type) {
+            case 0:
+                return "手工录入服务费";
+            case 3:
+                return "按照货值的百分比";
+            case 4:
+                return "按照配送数量收费";
+            case 5:
+                return "按货位收费";
+            default:
+                return "";
+        }
     }
 }
