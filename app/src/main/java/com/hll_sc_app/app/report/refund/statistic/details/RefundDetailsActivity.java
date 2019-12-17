@@ -87,9 +87,8 @@ public class RefundDetailsActivity extends BaseLoadActivity implements IRefundDe
         mReq.put("sign", "1");
         Date currentDate = new Date();
         Date firstDate = CalendarUtils.getFirstDateInMonth(currentDate);
-        Date lastDate = CalendarUtils.getLastDateInMonth(currentDate);
         mDate.setTag(R.id.date_start, firstDate);
-        mDate.setTag(R.id.date_end, lastDate);
+        mDate.setTag(R.id.date_end, currentDate);
         updateSelectDate();
         mPresenter = RefundDetailsPresenter.newInstance();
         mPresenter.register(this);
