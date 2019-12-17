@@ -794,7 +794,7 @@
 
         <!--待退统计-->
         <activity
-            android:name=".app.report.refund.wait.WaitRefundTotalInfoActivity"
+            android:name=".app.report.refund.wait.WaitRefundActivity"
             android:screenOrientation="portrait" />
 
         <!--待退商品统计明细-->
@@ -818,7 +818,7 @@
 
         <!--退货客户商品汇总-->
         <activity
-            android:name=".app.report.refund.customerproduct.RefundedCustomerAndProductTotalInfoActivity"
+            android:name=".app.report.refund.customerproduct.RefundCustomerProductActivity"
             android:screenOrientation="portrait" />
         <!--退货客户明细-->
         <activity

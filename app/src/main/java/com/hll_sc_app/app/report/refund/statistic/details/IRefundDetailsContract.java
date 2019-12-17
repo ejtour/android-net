@@ -2,7 +2,7 @@ package com.hll_sc_app.app.report.refund.statistic.details;
 
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.base.bean.BaseMapReq;
-import com.hll_sc_app.bean.report.refund.RefundResp;
+import com.hll_sc_app.bean.report.refund.RefundDetailsResp;
 import com.hll_sc_app.impl.IExportView;
 
 /**
@@ -13,7 +13,7 @@ import com.hll_sc_app.impl.IExportView;
 public interface IRefundDetailsContract {
 
     interface IRefundDetailsView extends IExportView {
-        void setData(RefundResp refundResp, boolean append);
+        void setData(RefundDetailsResp refundDetailsResp, boolean append);
 
         BaseMapReq.Builder getReq();
     }

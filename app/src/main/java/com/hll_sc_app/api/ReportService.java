@@ -30,8 +30,8 @@ import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundReasonBean;
+import com.hll_sc_app.bean.report.refund.RefundDetailsResp;
 import com.hll_sc_app.bean.report.refund.RefundResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
@@ -155,7 +155,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111010")
-    Observable<BaseResp<WaitRefundTotalResp>> queryRefundTotal(@Body BaseMapReq body);
+    Observable<BaseResp<RefundResp>> queryRefundInfo(@Body BaseMapReq body);
 
     /**
      * 待退货退款 集团列表查询
@@ -185,7 +185,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111021")
-    Observable<BaseResp<RefundResp>> queryRefundedDetail(@Body BaseMapReq req);
+    Observable<BaseResp<RefundDetailsResp>> queryRefundedDetail(@Body BaseMapReq req);
 
     /**
      * 已退商品客户列表统计

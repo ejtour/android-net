@@ -8,7 +8,7 @@ import com.hll_sc_app.utils.DateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RefundBean implements IStringArrayGenerator {
+public class RefundDetailsBean implements IStringArrayGenerator {
 
     /**
      * 账期金额

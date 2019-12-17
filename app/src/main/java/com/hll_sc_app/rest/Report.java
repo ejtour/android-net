@@ -32,10 +32,10 @@ import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
+import com.hll_sc_app.bean.report.refund.RefundDetailsResp;
 import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundReasonBean;
 import com.hll_sc_app.bean.report.refund.RefundResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
 import com.hll_sc_app.bean.report.resp.bill.DateSaleAmountResp;
@@ -280,11 +280,14 @@ public class Report {
     /**
      * 退款合计
      *
-     * @param flag
+     * @param flag 1、待退统计 2、退货统计 3、退货客户统计 4、退货商品统计
      * @param observer
      */
-    public static void queryRefundTotal(int flag, SimpleObserver<WaitRefundTotalResp> observer) {
-        ReportService.INSTANCE.queryRefundTotal(BaseMapReq.newBuilder().put("flag", flag + "").put("groupID", UserConfig.getGroupID()).create())
+    public static void queryRefundInfo(int flag, SimpleObserver<RefundResp> observer) {
+        ReportService.INSTANCE.queryRefundInfo(BaseMapReq.newBuilder()
+                .put("flag", String.valueOf(flag))
+                .put("groupID", UserConfig.getGroupID())
+                .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -320,7 +323,7 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryRefundedDetail(BaseMapReq req, SimpleObserver<RefundResp> observer) {
+    public static void queryRefundedDetail(BaseMapReq req, SimpleObserver<RefundDetailsResp> observer) {
         ReportService.INSTANCE.queryRefundedDetail(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -434,10 +437,11 @@ public class Report {
 
     /**
      * 客户，门店流失率明细
+     *
      * @param req
      * @param observer
      */
-    public static void queryLossInfo(BaseMapReq req, SimpleObserver<SingleListResp<LossBean>> observer){
+    public static void queryLossInfo(BaseMapReq req, SimpleObserver<SingleListResp<LossBean>> observer) {
         ReportService.INSTANCE.queryLossInfo(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -446,10 +450,11 @@ public class Report {
 
     /**
      * 代仓发货统计
+     *
      * @param req
      * @param observer
      */
-    public static void queryWareHouseDelivery(BaseMapReq req, SimpleObserver<SingleListResp<WareHouseDeliveryBean>> observer){
+    public static void queryWareHouseDelivery(BaseMapReq req, SimpleObserver<SingleListResp<WareHouseDeliveryBean>> observer) {
         ReportService.INSTANCE.queryWareHouseDelivery(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -458,10 +463,11 @@ public class Report {
 
     /**
      * 代仓服务费统计
+     *
      * @param req
      * @param observer
      */
-    public static void queryWareHouseFee(BaseMapReq req, SimpleObserver<SingleListResp<WareHouseFeeBean>> observer){
+    public static void queryWareHouseFee(BaseMapReq req, SimpleObserver<SingleListResp<WareHouseFeeBean>> observer) {
         ReportService.INSTANCE.queryWareHouseFee(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -470,10 +476,11 @@ public class Report {
 
     /**
      * 搜索查询
+     *
      * @param req
      * @param observer
      */
-    public static void querySearchList(SearchReq req, SimpleObserver<SearchResultResp> observer){
+    public static void querySearchList(SearchReq req, SimpleObserver<SearchResultResp> observer) {
         ReportService.INSTANCE.querySearchList(new BaseReq<>(req))
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -482,10 +489,11 @@ public class Report {
 
     /**
      * 销售日报
+     *
      * @param req
      * @param observer
      */
-    public static void querySalesDaily(BaseMapReq req, SimpleObserver<SingleListResp<SalesDailyBean>> observer){
+    public static void querySalesDaily(BaseMapReq req, SimpleObserver<SingleListResp<SalesDailyBean>> observer) {
         ReportService.INSTANCE.querySalesDaily(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -582,10 +590,11 @@ public class Report {
 
     /**
      * 查询退货原因统计
+     *
      * @param req
      * @param observer
      */
-    public static void queryRefundReasonStatistic(BaseMapReq req, SimpleObserver<SingleListResp<RefundReasonBean>> observer){
+    public static void queryRefundReasonStatistic(BaseMapReq req, SimpleObserver<SingleListResp<RefundReasonBean>> observer) {
         ReportService.INSTANCE
                 .queryRefundReasonStatics(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
