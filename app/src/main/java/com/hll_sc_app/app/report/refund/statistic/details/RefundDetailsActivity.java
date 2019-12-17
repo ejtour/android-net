@@ -18,8 +18,8 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.refund.RefundBean;
-import com.hll_sc_app.bean.report.refund.RefundResp;
+import com.hll_sc_app.bean.report.refund.RefundDetailsBean;
+import com.hll_sc_app.bean.report.refund.RefundDetailsResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -224,10 +224,10 @@ public class RefundDetailsActivity extends BaseLoadActivity implements IRefundDe
     }
 
     @Override
-    public void setData(RefundResp resp, boolean append) {
+    public void setData(RefundDetailsResp resp, boolean append) {
         CharSequence[] array = {};
         mFooter.updateRowDate(resp.convertToRowData().toArray(array));
-        List<RefundBean> records = resp.getGroupVoList();
+        List<RefundDetailsBean> records = resp.getGroupVoList();
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(records) && records.size() == 20);
         mExcel.setData(records, append);
     }

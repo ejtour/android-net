@@ -3,7 +3,7 @@ package com.hll_sc_app.app.report.refund.statistic.details;
 import android.text.TextUtils;
 
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.bean.report.refund.RefundResp;
+import com.hll_sc_app.bean.report.refund.RefundDetailsResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Report;
 import com.hll_sc_app.rest.User;
@@ -50,11 +50,11 @@ public class RefundDetailsPresenter implements IRefundDetailsContract.IRefundDet
         Report.queryRefundedDetail(mView.getReq()
                 .put("pageNum", String.valueOf(mPageNum))
                 .put("pageSize", "20")
-                .create(), new SimpleObserver<RefundResp>(mView, showLoading) {
+                .create(), new SimpleObserver<RefundDetailsResp>(mView, showLoading) {
             @Override
-            public void onSuccess(RefundResp refundResp) {
-                mView.setData(refundResp, mPageNum > 1);
-                if (CommonUtils.isEmpty(refundResp.getGroupVoList())) return;
+            public void onSuccess(RefundDetailsResp refundDetailsResp) {
+                mView.setData(refundDetailsResp, mPageNum > 1);
+                if (CommonUtils.isEmpty(refundDetailsResp.getGroupVoList())) return;
                 mPageNum++;
             }
         });
