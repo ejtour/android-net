@@ -114,6 +114,10 @@ public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInf
     @Override
     public void setData(GroupInfoResp resp) {
         if (isMaster()) {
+            UserBean user = GreenDaoUtils.getUser();
+            user.setEmail(resp.getGroupMail());
+            user.setEmployeeName(resp.getLinkman());
+            GreenDaoUtils.updateUser(user);
             mBaseView.setData(resp);
             mReq.inflate(resp);
             mCertifyView.refreshData();
@@ -145,9 +149,10 @@ public class InfoActivity extends BaseLoadActivity implements IInfoContract.IInf
                 return;
             }
             if (isMaster()) {
-                if (data == null)
+                if (data == null) {
+                    mHasChanged = true;
                     mPresenter.start();
-                else {
+                } else {
                     int type = data.getIntExtra("type", 0);
                     String content = data.getStringExtra("content");
                     if (type == ModifyType.NAME) {
