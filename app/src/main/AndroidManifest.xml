@@ -1329,6 +1329,10 @@
             android:name=".app.report.profit.shop.ShopProfitActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.report.profit.category.CategoryProfitActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

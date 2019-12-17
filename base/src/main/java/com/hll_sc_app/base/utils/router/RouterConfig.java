@@ -1465,5 +1465,10 @@ public class RouterConfig {
      * 门店毛利统计表
      */
     public static final String REPORT_PROFIT_SHOP = "/activity/report/profit/shop";
+
+    /**
+     * 品类毛利统计表
+     */
+    public static final String REPORT_PROFIT_CATEGORY = "/activity/report/profit/category";
 }
 

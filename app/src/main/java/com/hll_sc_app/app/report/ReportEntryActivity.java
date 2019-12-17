@@ -79,7 +79,8 @@ public class ReportEntryActivity extends BaseLoadActivity {
             list.add(new ReportItem(R.drawable.ic_report_refunded_customer_product, "退货客户与商品统计表", RouterConfig.REPORT_REFUND_CUSTOMER_PRODUCT, true));
 
             list.add(new ReportItem(R.drawable.ic_report_customer_profit, "客户毛利统计表", RouterConfig.REPORT_PROFIT_CUSTOMER));
-            list.add(new ReportItem(R.drawable.ic_report_shop_sales, "门店毛利统计表", RouterConfig.REPORT_PROFIT_SHOP, true));
+            list.add(new ReportItem(R.drawable.ic_report_shop_sales, "门店毛利统计表", RouterConfig.REPORT_PROFIT_SHOP));
+            list.add(new ReportItem(R.drawable.ic_report_category_profit, "品类毛利统计表", RouterConfig.REPORT_PROFIT_CATEGORY, true));
 
             list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS));
             list.add(new ReportItem(R.drawable.ic_report_shop_loss, "流失门店明细表", RouterConfig.REPORT_SHOP_LOSS, true));
