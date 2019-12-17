@@ -134,12 +134,20 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
 
     @OnClick(R.id.as_search_button)
     public void search() {
-        String trim = mSearchEdit.getText().toString().trim();
-        Intent intent = new Intent();
-        intent.putExtra("name", trim);
-        beforeFinish(intent);
-        setResult(Constants.SEARCH_RESULT_CODE, intent);
-        close();
+        if (mStrategy.getSearchPresenter() != null && mStrategy.isSearchByResult()) {
+            if (mAdapter.getData().size() == 0) {
+                showToast("没有符合的搜索结果，请更换搜索词");
+                return;
+            }
+            searchByResult(mAdapter, 0);
+        } else {
+            String trim = mSearchEdit.getText().toString().trim();
+            Intent intent = new Intent();
+            intent.putExtra("name", trim);
+            beforeFinish(intent);
+            setResult(Constants.SEARCH_RESULT_CODE, intent);
+            close();
+        }
     }
 
     protected void beforeFinish(Intent intent) {
@@ -181,8 +189,7 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
         mAdapter.setNewData(list, mSearchEdit.getText().toString().trim());
     }
 
-    @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+    private void searchByResult(BaseQuickAdapter adapter, int position) {
         NameValue item = (NameValue) adapter.getItem(position);
         if (item != null) {
             Intent intent = new Intent();
@@ -192,5 +199,10 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
             setResult(Constants.SEARCH_RESULT_CODE, intent);
             close();
         }
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        searchByResult(adapter, position);
     }
 }

@@ -45,5 +45,15 @@ public class ISearchContract {
         default int getEmptyImage() {
             return R.drawable.ic_empty_shop_view;
         }
+
+        /**
+         * 触发搜索方式：如果为true，点击搜索按钮，取搜索结果列表的第一个
+         * 默认为false，则直接取输入词。
+         * 场景：比如搜索供应商，传的是id不是name，这时直接点击搜索按钮，而不是点击列表，搜索请求只能获取name，而没有id。
+         * @return
+         */
+        default boolean isSearchByResult() {
+            return false;
+        }
     }
 }
