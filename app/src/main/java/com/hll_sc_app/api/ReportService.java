@@ -15,8 +15,7 @@ import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
-import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
-import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
+import com.hll_sc_app.bean.report.loss.LossBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
@@ -31,11 +30,7 @@ import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundReasonBean;
-import com.hll_sc_app.bean.report.refund.RefundedReq;
-import com.hll_sc_app.bean.report.refund.RefundedResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundReq;
+import com.hll_sc_app.bean.report.refund.RefundResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
@@ -170,28 +165,27 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111014")
-    Observable<BaseResp<WaitRefundCustomerResp>> queryRefundCustomerList(@Body BaseReq<WaitRefundReq> body);
+    Observable<BaseResp<RefundCustomerResp>> queryRefundCustomerList(@Body BaseMapReq body);
 
 
     /**
      * 待退货 商品列表查询
      *
-     * @param body
      * @return
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111015")
-    Observable<BaseResp<WaitRefundProductResp>> queryRefundProductList(@Body BaseReq<WaitRefundReq> body);
+    Observable<BaseResp<RefundProductResp>> queryRefundProductList(@Body BaseMapReq req);
 
     /**
      * 退货明细
      *
-     * @param body
+     * @param req
      * @return
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111021")
-    Observable<BaseResp<RefundedResp>> queryRefundedDetail(@Body BaseReq<RefundedReq> body);
+    Observable<BaseResp<RefundResp>> queryRefundedDetail(@Body BaseMapReq req);
 
     /**
      * 已退商品客户列表统计
@@ -245,7 +239,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111032")
-    Observable<BaseResp<CustomerAndShopLossResp>> queryCustomerOrShopLossDetail(@Body BaseReq<CustomerAndShopLossReq> body);
+    Observable<BaseResp<SingleListResp<LossBean>>> queryLossInfo(@Body BaseMapReq body);
 
     /**
      * 代仓发货统计

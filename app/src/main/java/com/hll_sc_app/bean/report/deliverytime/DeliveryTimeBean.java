@@ -2,76 +2,45 @@ package com.hll_sc_app.bean.report.deliverytime;
 
 public class DeliveryTimeBean {
 
-    private float  beyond30MinInspectionNumRatio;
-    private String beyond30MinInspectionNumDesc;
-    private float  onTimeInspectionNumRatio;
-    private String onTimeInspectionNumDesc;
-    private float  within15MinInspectionNumRatio;
-    private String within15MinInspectionNumDesc;
-    private float  within30MinInspectionNumRatio;
-    private String within30MinInspectionNumDesc;
+    private long beyond30MinInspectionNum;
+    private long onTimeInspectionNum;
+    private long within15MinInspectionNum;
+    private long within30MinInspectionNum;
 
-    public float getBeyond30MinInspectionNumRatio() {
-        return beyond30MinInspectionNumRatio;
+
+    public long getBeyond30MinInspectionNum() {
+        return beyond30MinInspectionNum;
     }
 
-    public void setBeyond30MinInspectionNumRatio(float beyond30MinInspectionNumRatio) {
-        this.beyond30MinInspectionNumRatio = beyond30MinInspectionNumRatio;
+    public void setBeyond30MinInspectionNum(long beyond30MinInspectionNum) {
+        this.beyond30MinInspectionNum = beyond30MinInspectionNum;
     }
 
-    public String getBeyond30MinInspectionNumDesc() {
-        return beyond30MinInspectionNumDesc;
+    public long getOnTimeInspectionNum() {
+        return onTimeInspectionNum;
     }
 
-    public void setBeyond30MinInspectionNumDesc(String beyond30MinInspectionNumDesc) {
-        this.beyond30MinInspectionNumDesc = beyond30MinInspectionNumDesc;
+    public void setOnTimeInspectionNum(long onTimeInspectionNum) {
+        this.onTimeInspectionNum = onTimeInspectionNum;
     }
 
-    public float getOnTimeInspectionNumRatio() {
-        return onTimeInspectionNumRatio;
+    public long getWithin15MinInspectionNum() {
+        return within15MinInspectionNum;
     }
 
-    public void setOnTimeInspectionNumRatio(float onTimeInspectionNumRatio) {
-        this.onTimeInspectionNumRatio = onTimeInspectionNumRatio;
+    public void setWithin15MinInspectionNum(long within15MinInspectionNum) {
+        this.within15MinInspectionNum = within15MinInspectionNum;
     }
 
-    public String getOnTimeInspectionNumDesc() {
-        return onTimeInspectionNumDesc;
+    public long getWithin30MinInspectionNum() {
+        return within30MinInspectionNum;
     }
 
-    public void setOnTimeInspectionNumDesc(String onTimeInspectionNumDesc) {
-        this.onTimeInspectionNumDesc = onTimeInspectionNumDesc;
+    public void setWithin30MinInspectionNum(long within30MinInspectionNum) {
+        this.within30MinInspectionNum = within30MinInspectionNum;
     }
 
-    public float getWithin15MinInspectionNumRatio() {
-        return within15MinInspectionNumRatio;
-    }
-
-    public void setWithin15MinInspectionNumRatio(float within15MinInspectionNumRatio) {
-        this.within15MinInspectionNumRatio = within15MinInspectionNumRatio;
-    }
-
-    public String getWithin15MinInspectionNumDesc() {
-        return within15MinInspectionNumDesc;
-    }
-
-    public void setWithin15MinInspectionNumDesc(String within15MinInspectionNumDesc) {
-        this.within15MinInspectionNumDesc = within15MinInspectionNumDesc;
-    }
-
-    public float getWithin30MinInspectionNumRatio() {
-        return within30MinInspectionNumRatio;
-    }
-
-    public void setWithin30MinInspectionNumRatio(float within30MinInspectionNumRatio) {
-        this.within30MinInspectionNumRatio = within30MinInspectionNumRatio;
-    }
-
-    public String getWithin30MinInspectionNumDesc() {
-        return within30MinInspectionNumDesc;
-    }
-
-    public void setWithin30MinInspectionNumDesc(String within30MinInspectionNumDesc) {
-        this.within30MinInspectionNumDesc = within30MinInspectionNumDesc;
+    public boolean hasValue() {
+        return beyond30MinInspectionNum + onTimeInspectionNum + within15MinInspectionNum + within30MinInspectionNum > 0;
     }
 }

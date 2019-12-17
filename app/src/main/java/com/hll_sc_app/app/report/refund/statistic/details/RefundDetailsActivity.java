@@ -1,6 +1,5 @@
-package com.hll_sc_app.app.report.refund.customerproduct.customer;
+package com.hll_sc_app.app.report.refund.statistic.details;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,11 +17,9 @@ import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.refund.RefundCustomerBean;
-import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
-import com.hll_sc_app.bean.report.search.SearchResultItem;
+import com.hll_sc_app.bean.report.refund.RefundBean;
+import com.hll_sc_app.bean.report.refund.RefundResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
@@ -30,7 +27,6 @@ import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
-import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.TriangleView;
 import com.hll_sc_app.widget.report.ExcelFooter;
@@ -49,52 +45,52 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
- * @since 2019/12/13
+ * 退货明细统计
+ *
+ * @author 初坤
+ * @date 20190720
  */
-@Route(path = RouterConfig.REPORT_REFUNDED_CUSTOMER_DETAIL)
-public class RefundCustomerActivity extends BaseLoadActivity implements IRefundCustomerContract.IRefundCustomerView {
-    private static final int REFUND_CUSTOMER_CODE = 11002;
-    private static final int[] WIDTH_ARRAY = {150, 120, 80, 80, 60, 60, 60, 60, 60};
-    @BindView(R.id.rrc_search_view)
-    SearchView mSearchView;
-    @BindView(R.id.rrc_title_bar)
-    TitleBar mTitleBar;
-    @BindView(R.id.rrc_type)
-    TextView mType;
-    @BindView(R.id.rrc_type_arrow)
-    TriangleView mTypeArrow;
-    @BindView(R.id.rrc_date)
-    TextView mDate;
-    @BindView(R.id.rrc_date_arrow)
-    TriangleView mDateArrow;
-    @BindView(R.id.rrc_excel)
+@Route(path = RouterConfig.REPORT_REFUND_STATISTIC_DETAILS)
+public class RefundDetailsActivity extends BaseLoadActivity implements IRefundDetailsContract.IRefundDetailsView {
+    private static final int[] WIDTH_ARRAY = {90, 100, 100, 100, 60, 60, 60, 60, 60, 100, 100};
+    @BindView(R.id.rsd_excel)
     ExcelLayout mExcel;
+    @BindView(R.id.rsd_type)
+    TextView mType;
+    @BindView(R.id.rsd_date)
+    TextView mDate;
+    @BindView(R.id.rsd_type_arrow)
+    TriangleView mTypeArrow;
+    @BindView(R.id.rsd_date_arrow)
+    TriangleView mDateArrow;
+    @BindView(R.id.rsd_title_bar)
+    TitleBar mTitleBar;
+    private IRefundDetailsContract.IRefundDetailsPresenter mPresenter;
+    private ContextOptionsWindow mExportOptionsWindow;
     private DateRangeWindow mDateRangeWindow;
     private ContextOptionsWindow mOptionsWindow;
-    private ContextOptionsWindow mExportOptionsWindow;
     private ExcelFooter mFooter;
-    private IRefundCustomerContract.IRefundCustomerPresenter mPresenter;
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
-        setContentView(R.layout.activity_report_refund_customer);
+        setContentView(R.layout.activity_report_refund_statistic_details);
         ButterKnife.bind(this);
         initView();
         initData();
     }
 
     private void initData() {
-        Date end = new Date();
-        mDate.setTag(R.id.date_start, CalendarUtils.getFirstDateInMonth(end));
-        mDate.setTag(R.id.date_end, end);
         mReq.put("groupID", UserConfig.getGroupID());
         mReq.put("sign", "1");
+        Date currentDate = new Date();
+        Date firstDate = CalendarUtils.getFirstDateInMonth(currentDate);
+        mDate.setTag(R.id.date_start, firstDate);
+        mDate.setTag(R.id.date_end, currentDate);
         updateSelectDate();
-        mPresenter = RefundCustomerPresenter.newInstance();
+        mPresenter = RefundDetailsPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -102,58 +98,21 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
     private void updateSelectDate() {
         Date startDate = (Date) mDate.getTag(R.id.date_start);
         Date endDate = (Date) mDate.getTag(R.id.date_end);
-        mDate.setText(String.format("%s - %s", CalendarUtils.format(startDate, Constants.SLASH_YYYY_MM_DD),
-                CalendarUtils.format(endDate, Constants.SLASH_YYYY_MM_DD)));
         mReq.put("startDate", CalendarUtils.toLocalDate(startDate));
         mReq.put("endDate", CalendarUtils.toLocalDate(endDate));
+        mDate.setText(String.format("%s - %s", CalendarUtils.format(startDate, Constants.SLASH_YYYY_MM_DD),
+                CalendarUtils.format(endDate, Constants.SLASH_YYYY_MM_DD)));
     }
 
     private void initView() {
-        initExcel();
         mTitleBar.setRightBtnClick(this::showExportOptionsWindow);
-        mSearchView.setSearchTextLeft();
-        mSearchView.setTextColorWhite();
-        mSearchView.setSearchBackgroundColor(R.drawable.bg_search_text);
-        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
-            @Override
-            public void click(String searchContent) {
-                RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_SEARCH, RefundCustomerActivity.this, REFUND_CUSTOMER_CODE);
-            }
-
-            @Override
-            public void toSearch(String searchContent) {
-                if (TextUtils.isEmpty(searchContent)) {
-                    mReq.put("purchaserID", "");
-                    mReq.put("shopID", "");
-                }
-                mPresenter.start();
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REFUND_CUSTOMER_CODE && resultCode == RESULT_OK) {
-            SearchResultItem bean = data.getParcelableExtra("result");
-            if (bean.getType() == 0) {
-                mReq.put("purchaserID", bean.getShopMallId());
-                mReq.put("shopID", "");
-            } else {
-                mReq.put("purchaserID", "");
-                mReq.put("shopID", bean.getShopMallId());
-            }
-            mSearchView.showSearchContent(!TextUtils.isEmpty(bean.getName()), bean.getName());
-        }
-    }
-
-    private void initExcel() {
         mFooter = new ExcelFooter(this);
         mFooter.updateChildView(WIDTH_ARRAY.length);
         ExcelRow.ColumnData[] dataArray = generateColumnData();
-        mExcel.setColumnDataList(dataArray);
         mFooter.updateItemData(dataArray);
-        mExcel.setHeaderView(View.inflate(this, R.layout.view_report_refund_customer_header, null));
+        mExcel.setColumnDataList(dataArray);
         mExcel.setFooterView(mFooter);
+        mExcel.setHeaderView(View.inflate(this, R.layout.view_report_refund_detail_header, null));
         mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -167,14 +126,31 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
         });
     }
 
-    private ExcelRow.ColumnData[] generateColumnData() {
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
-        array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]), Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        for (int i = 2; i < WIDTH_ARRAY.length; i++) {
-            array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[i]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        }
-        return array;
+    @Override
+    public void hideLoading() {
+        mExcel.closeHeaderOrFooter();
+        super.hideLoading();
+    }
+
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String tip) {
+        Utils.exportFailure(this, tip);
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresenter::export);
+    }
+
+    @Override
+    public BaseMapReq.Builder getReq() {
+        return mReq;
     }
 
     private void showExportOptionsWindow(View v) {
@@ -190,24 +166,24 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
         mExportOptionsWindow.showAsDropDownFix(v, Gravity.END);
     }
 
-    @OnClick(R.id.rrc_type_btn)
+    @OnClick(R.id.rsd_type_btn)
     public void selectType(View view) {
         mTypeArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
         mType.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
         if (mOptionsWindow == null) {
-            List<OptionsBean> list = new ArrayList<>();
-            list.add(new OptionsBean(R.drawable.ic_menu_all, OptionType.OPTION_ALL));
-            list.add(new OptionsBean(R.drawable.ic_menu_deposit, OptionType.OPTION_NOT_DEPOSIT));
-            mOptionsWindow = new ContextOptionsWindow(this)
-                    .refreshList(list)
-                    .setListener((adapter, view1, position) -> {
-                        OptionsBean item = (OptionsBean) adapter.getItem(position);
-                        if (item == null) return;
-                        mOptionsWindow.dismiss();
-                        mType.setText(item.getLabel());
-                        mReq.put("sign", TextUtils.equals(item.getLabel(), OptionType.OPTION_ALL) ? "1" : "2");
-                        mPresenter.start();
-                    });
+            mOptionsWindow = new ContextOptionsWindow(this);
+            List<OptionsBean> optionsBeans = new ArrayList<>();
+            optionsBeans.add(new OptionsBean(R.drawable.ic_menu_all, OptionType.OPTION_ALL));
+            optionsBeans.add(new OptionsBean(R.drawable.ic_menu_deposit, OptionType.OPTION_NOT_CONTAIN_DEPOSIT));
+            mOptionsWindow.refreshList(optionsBeans);
+            mOptionsWindow.setListener((adapter, view1, position) -> {
+                OptionsBean item = (OptionsBean) adapter.getItem(position);
+                if (item == null) return;
+                mOptionsWindow.dismiss();
+                mReq.put("sign", TextUtils.equals(item.getLabel(), OptionType.OPTION_ALL) ? "1" : "2");
+                mPresenter.start();
+                mType.setText(item.getLabel());
+            });
             mOptionsWindow.setOnDismissListener(() -> {
                 mTypeArrow.update(TriangleView.BOTTOM, ContextCompat.getColor(this, R.color.color_666666));
                 mType.setTextColor(ContextCompat.getColor(this, R.color.color_666666));
@@ -216,7 +192,7 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
         mOptionsWindow.showAsDropDownFix(view, Gravity.START);
     }
 
-    @OnClick(R.id.rrc_date_btn)
+    @OnClick(R.id.rsd_date_btn)
     public void selectDate(View view) {
         mDateArrow.update(TriangleView.TOP, ContextCompat.getColor(this, R.color.colorPrimary));
         mDate.setTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -238,38 +214,21 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
         mDateRangeWindow.showAsDropDownFix(view);
     }
 
+    private ExcelRow.ColumnData[] generateColumnData() {
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]));
+        for (int i = 1; i < WIDTH_ARRAY.length; i++) {
+            array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[i]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        }
+        return array;
+    }
+
     @Override
-    public void setData(RefundCustomerResp resp, boolean append) {
+    public void setData(RefundResp resp, boolean append) {
         CharSequence[] array = {};
         mFooter.updateRowDate(resp.convertToRowData().toArray(array));
-        List<RefundCustomerBean> records = resp.getGroupVoList();
+        List<RefundBean> records = resp.getGroupVoList();
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(records) && records.size() == 20);
         mExcel.setData(records, append);
-    }
-
-    @Override
-    public void hideLoading() {
-        mExcel.closeHeaderOrFooter();
-        super.hideLoading();
-    }
-
-    @Override
-    public BaseMapReq.Builder getReq() {
-        return mReq;
-    }
-
-    @Override
-    public void bindEmail() {
-        Utils.bindEmail(this, mPresenter::export);
-    }
-
-    @Override
-    public void exportSuccess(String email) {
-        Utils.exportSuccess(this, email);
-    }
-
-    @Override
-    public void exportFailure(String msg) {
-        Utils.exportFailure(this, msg);
     }
 }

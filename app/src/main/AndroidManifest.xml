@@ -796,24 +796,24 @@
         <activity
             android:name=".app.report.refund.wait.WaitRefundTotalInfoActivity"
             android:screenOrientation="portrait" />
+
         <!--待退商品统计明细-->
         <activity
-            android:name=".app.report.refund.wait.product.WaitRefundProductDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:name=".app.report.refund.wait.product.WaitRefundProductActivity"
+            android:screenOrientation="portrait" />
+
         <!--待退客户明细统计-->
         <activity
-            android:name=".app.report.refund.wait.customer.WaitRefundCustomertDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:name=".app.report.refund.wait.customer.WaitRefundCustomerActivity"
+            android:screenOrientation="portrait" />
 
         <!--退货统计-->
         <activity
-            android:name=".app.report.refund.refundcollect.RefundCollectTotalInfoActivity"
+            android:name=".app.report.refund.statistic.RefundStatisticActivity"
             android:screenOrientation="portrait" />
         <!--退货明细-->
         <activity
-            android:name=".app.report.refund.refundcollect.detail.RefundedDetailActivity"
+            android:name=".app.report.refund.statistic.details.RefundDetailsActivity"
             android:screenOrientation="portrait" />
 
         <!--退货客户商品汇总-->
@@ -836,12 +836,12 @@
             android:windowSoftInputMode="adjustPan" />
         <!--流失客户明细-->
         <activity
-            android:name=".app.report.loss.customer.CustomerLossDetailActivity"
+            android:name=".app.report.loss.customer.CustomerLossActivity"
             android:screenOrientation="portrait" />
 
         <!--流失门店明细-->
         <activity
-            android:name=".app.report.loss.shop.ShopLossDetailActivity"
+            android:name=".app.report.loss.shop.ShopLossActivity"
             android:screenOrientation="portrait" />
 
         <activity

@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.report.refund.search;
 
-import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -18,6 +17,6 @@ public class RefundSearchAdapter extends BaseQuickAdapter<SearchResultItem, Base
 
     @Override
     protected void convert(BaseViewHolder helper, SearchResultItem item) {
-       helper.setText(R.id.txt_search_name,item.getName());
+        ((TextView) helper.itemView).setText(item.getName());
     }
 }

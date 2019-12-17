@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.refund.wait;
+package com.hll_sc_app.app.report.refund.statistic;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -26,20 +26,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 待退统计
+ * 退货统计
+ *
  * @author 初坤
  * @date 20190720
  */
-@Route(path = RouterConfig.REPORT_WAIT_REFUND_TOTAL)
-public class WaitRefundTotalInfoActivity extends BaseLoadActivity implements WaitRefundTotalInfoContract.IRefundTotalInfoView {
-
-
-    @BindView(R.id.wait_refund_num)
-    TextView waitRefundNum;
-    @BindView(R.id.wait_refund_customer)
-    TextView waitRefundCustomer;
-    @BindView(R.id.wait_refund_amount)
-    TextView waitRefundAmount;
+@Route(path = RouterConfig.REPORT_REFUND_STATISTIC)
+public class RefundStatisticActivity extends BaseLoadActivity implements IRefundStatisticContract.IRefundStatisticView {
+    @BindView(R.id.refunded_num)
+    TextView refundedNum;
+    @BindView(R.id.refunded_customer)
+    TextView refundedCustomer;
+    @BindView(R.id.refunded_amount)
+    TextView refundedAmount;
     @BindView(R.id.txt_cash_amount)
     TextView txtCashAmount;
     @BindView(R.id.txt_online_amount)
@@ -50,22 +49,22 @@ public class WaitRefundTotalInfoActivity extends BaseLoadActivity implements Wai
     TextView txtAccountAmount;
     @BindView(R.id.txt_main_title_block)
     RelativeLayout mRlTitleBlock;
-    private WaitRefundTotalInfoPresenter mPresenter;
+    private RefundStatisticPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_wait_refund_total);
-        StatusBarCompat.setTranslucent(getWindow(), true);
+        setContentView(R.layout.activity_report_refund_statistic);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        showStatusBar();
-        mPresenter = WaitRefundTotalInfoPresenter.newInstance();
+        initStatusBar();
+        mPresenter = RefundStatisticPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
 
-    private void showStatusBar() {
+    private void initStatusBar() {
+        StatusBarCompat.setTranslucent(getWindow(), true);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
             ((ViewGroup.MarginLayoutParams) mRlTitleBlock.getLayoutParams()).topMargin = ViewUtils.getStatusBarHeight(this);
         }
@@ -77,17 +76,14 @@ public class WaitRefundTotalInfoActivity extends BaseLoadActivity implements Wai
         EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.img_back, R.id.txt_wait_customer_btn, R.id.txt_wait_product_btn})
+    @OnClick({R.id.img_back, R.id.txt_refunded_detail_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
                 finish();
                 break;
-            case R.id.txt_wait_customer_btn:
-                RouterUtil.goToActivity(RouterConfig.REPORT_WAIT_REFUND_CUSTOMER);
-                break;
-            case R.id.txt_wait_product_btn:
-                RouterUtil.goToActivity(RouterConfig.REPORT_WAIT_REFUND_PRODUCT_DETAIL);
+            case R.id.txt_refunded_detail_btn:
+                RouterUtil.goToActivity(RouterConfig.REPORT_REFUND_STATISTIC_DETAILS);
                 break;
             default:
                 break;
@@ -95,14 +91,14 @@ public class WaitRefundTotalInfoActivity extends BaseLoadActivity implements Wai
     }
 
     /**
-     * 显示待退明细数据
+     * 显示退货金额数据
      * @param refundTotalResp
      */
     @Override
-    public void showWaitRefundTotalInfo(WaitRefundTotalResp refundTotalResp) {
-        waitRefundNum.setText(refundTotalResp.getRefundBillNum()+"");
-        waitRefundCustomer.setText(refundTotalResp.getRefundGroupCustomerNum()+"/"+refundTotalResp.getRefundShopCustomerNum());
-        waitRefundAmount.setText(CommonUtils.formatMoney(Double.parseDouble(refundTotalResp.getTotalRefundAmount())));
+    public void showRefundedTotalInfo(WaitRefundTotalResp refundTotalResp) {
+        refundedNum.setText(refundTotalResp.getRefundBillNum() + "");
+        refundedCustomer.setText(refundTotalResp.getRefundGroupCustomerNum() + "/" + refundTotalResp.getRefundShopCustomerNum());
+        refundedAmount.setText(CommonUtils.formatMoney(Double.parseDouble(refundTotalResp.getTotalRefundAmount())));
         txtCashAmount.setText(CommonUtils.formatMoney(Double.parseDouble(refundTotalResp.getCashAmount())));
         txtOnlineAmount.setText(CommonUtils.formatMoney(Double.parseDouble(refundTotalResp.getOnLineAmount())));
         txtBankCardAmount.setText(CommonUtils.formatMoney(Double.parseDouble(refundTotalResp.getBankCardAmount())));

@@ -19,8 +19,7 @@ import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
-import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
-import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
+import com.hll_sc_app.bean.report.loss.LossBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
@@ -35,11 +34,7 @@ import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
 import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundReasonBean;
-import com.hll_sc_app.bean.report.refund.RefundedReq;
-import com.hll_sc_app.bean.report.refund.RefundedResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundCustomerResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundProductResp;
-import com.hll_sc_app.bean.report.refund.WaitRefundReq;
+import com.hll_sc_app.bean.report.refund.RefundResp;
 import com.hll_sc_app.bean.report.refund.WaitRefundTotalResp;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
@@ -298,11 +293,10 @@ public class Report {
     /**
      * 待退货退款 集团列表查询
      *
-     * @param waitRefundReq
      * @param observer
      */
-    public static void queryWaitRefundCustomerList(WaitRefundReq waitRefundReq, SimpleObserver<WaitRefundCustomerResp> observer) {
-        ReportService.INSTANCE.queryRefundCustomerList(new BaseReq<>(waitRefundReq))
+    public static void queryWaitRefundCustomerList(BaseMapReq req, SimpleObserver<RefundCustomerResp> observer) {
+        ReportService.INSTANCE.queryRefundCustomerList(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -311,11 +305,10 @@ public class Report {
     /**
      * 待退货 商品列表查询
      *
-     * @param waitRefundReq
      * @param observer
      */
-    public static void queryWaitRefundProductList(WaitRefundReq waitRefundReq, SimpleObserver<WaitRefundProductResp> observer) {
-        ReportService.INSTANCE.queryRefundProductList(new BaseReq<>(waitRefundReq))
+    public static void queryWaitRefundProductList(BaseMapReq req, SimpleObserver<RefundProductResp> observer) {
+        ReportService.INSTANCE.queryRefundProductList(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -327,8 +320,8 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryRefundedDetail(RefundedReq req, SimpleObserver<RefundedResp> observer) {
-        ReportService.INSTANCE.queryRefundedDetail(new BaseReq<>(req))
+    public static void queryRefundedDetail(BaseMapReq req, SimpleObserver<RefundResp> observer) {
+        ReportService.INSTANCE.queryRefundedDetail(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -444,8 +437,8 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryCustomerOrShopLossDetail(CustomerAndShopLossReq req, SimpleObserver<CustomerAndShopLossResp> observer){
-        ReportService.INSTANCE.queryCustomerOrShopLossDetail(new BaseReq<>(req))
+    public static void queryLossInfo(BaseMapReq req, SimpleObserver<SingleListResp<LossBean>> observer){
+        ReportService.INSTANCE.queryLossInfo(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
