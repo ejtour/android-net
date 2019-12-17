@@ -21,6 +21,7 @@ import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
+import com.hll_sc_app.bean.report.profit.ProfitResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
@@ -283,5 +284,7 @@ public interface ReportService {
     @Headers("pv:103171")
     Observable<BaseResp<List<CustomReceiveDetailBean>>> queryCustomReceiveDetail(@Body BaseMapReq req);
 
-
+    @POST(HttpConfig.URL)
+    @Headers("pv:111026")
+    Observable<BaseResp<ProfitResp>> queryProfit(@Body BaseMapReq req);
 }

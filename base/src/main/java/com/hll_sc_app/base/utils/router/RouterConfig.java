@@ -1456,6 +1456,14 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_FEED_BACK_DETAIL = "/activity/feed/back/detail";
 
+    /**
+     * 客户毛利统计表
+     */
+    public static final String REPORT_PROFIT_CUSTOMER = "/activity/report/profit/customer";
 
+    /**
+     * 门店毛利统计表
+     */
+    public static final String REPORT_PROFIT_SHOP = "/activity/report/profit/shop";
 }
 
