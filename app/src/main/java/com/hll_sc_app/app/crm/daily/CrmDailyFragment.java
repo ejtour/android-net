@@ -124,6 +124,7 @@ public class CrmDailyFragment extends BaseLoadFragment implements ICrmDailyContr
                 mHeader.refreshDate();
                 mAdapter.setHeaderView(mHeader);
             } else {
+                mAdapter.removeAllHeaderView();
                 mNote.setVisibility(View.VISIBLE);
             }
             mAdapter.setNewData(list);
