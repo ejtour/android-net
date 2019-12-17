@@ -1,36 +1,35 @@
 package com.hll_sc_app.bean.report.loss;
 
-import com.alibaba.sdk.android.ams.common.util.StringUtil;
-import com.hll_sc_app.citymall.util.CalendarUtils;
+import android.text.TextUtils;
+
+import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.impl.IStringArrayGenerator;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class CustomerAndShopLossItem implements IStringArrayGenerator {
+public class LossBean implements IStringArrayGenerator {
 
-    private int type;
-
-    private int sequenceNo;
+    private String sequenceNo;
     /**
      * 新增流失门店数
      */
-    private long   addCustomerLoseNum;
+    private int addCustomerLoseNum;
     /**
      * 单均
      */
-    private String averageAmount;
+    private double averageAmount;
     /**
      * 下单门店数
      */
-    private long   billShopNums;
+    private int billShopNums;
     /**
      * 流失门店数
      */
-    private long   customerLoseNum;
+    private int customerLoseNum;
     /**
      * 客户流失率
      */
@@ -38,11 +37,11 @@ public class CustomerAndShopLossItem implements IStringArrayGenerator {
     /**
      * 日期
      */
-    private String   date;
+    private String date;
     /**
      * 最后下单时间
      */
-    private long   lastBillTime;
+    private String lastBillTime;
     /**
      * 联系人
      */
@@ -58,7 +57,7 @@ public class CustomerAndShopLossItem implements IStringArrayGenerator {
     /**
      * 销售金额
      */
-    private String salesAmount;
+    private double salesAmount;
     /**
      * 销售代表
      */
@@ -66,41 +65,49 @@ public class CustomerAndShopLossItem implements IStringArrayGenerator {
     /**
      * 门店下单数
      */
-    private long   shopBillNums;
+    private int shopBillNums;
     /**
      * 门店名称
      */
     private String shopName;
 
-    public long getAddCustomerLoseNum() {
+    public String getSequenceNo() {
+        return sequenceNo;
+    }
+
+    public void setSequenceNo(String sequenceNo) {
+        this.sequenceNo = sequenceNo;
+    }
+
+    public int getAddCustomerLoseNum() {
         return addCustomerLoseNum;
     }
 
-    public void setAddCustomerLoseNum(long addCustomerLoseNum) {
+    public void setAddCustomerLoseNum(int addCustomerLoseNum) {
         this.addCustomerLoseNum = addCustomerLoseNum;
     }
 
-    public String getAverageAmount() {
+    public double getAverageAmount() {
         return averageAmount;
     }
 
-    public void setAverageAmount(String averageAmount) {
+    public void setAverageAmount(double averageAmount) {
         this.averageAmount = averageAmount;
     }
 
-    public long getBillShopNums() {
+    public int getBillShopNums() {
         return billShopNums;
     }
 
-    public void setBillShopNums(long billShopNums) {
+    public void setBillShopNums(int billShopNums) {
         this.billShopNums = billShopNums;
     }
 
-    public long getCustomerLoseNum() {
+    public int getCustomerLoseNum() {
         return customerLoseNum;
     }
 
-    public void setCustomerLoseNum(long customerLoseNum) {
+    public void setCustomerLoseNum(int customerLoseNum) {
         this.customerLoseNum = customerLoseNum;
     }
 
@@ -120,11 +127,11 @@ public class CustomerAndShopLossItem implements IStringArrayGenerator {
         this.date = date;
     }
 
-    public long getLastBillTime() {
+    public String getLastBillTime() {
         return lastBillTime;
     }
 
-    public void setLastBillTime(long lastBillTime) {
+    public void setLastBillTime(String lastBillTime) {
         this.lastBillTime = lastBillTime;
     }
 
@@ -152,11 +159,11 @@ public class CustomerAndShopLossItem implements IStringArrayGenerator {
         this.purchaserName = purchaserName;
     }
 
-    public String getSalesAmount() {
+    public double getSalesAmount() {
         return salesAmount;
     }
 
-    public void setSalesAmount(String salesAmount) {
+    public void setSalesAmount(double salesAmount) {
         this.salesAmount = salesAmount;
     }
 
@@ -168,11 +175,11 @@ public class CustomerAndShopLossItem implements IStringArrayGenerator {
         this.salesManName = salesManName;
     }
 
-    public long getShopBillNums() {
+    public int getShopBillNums() {
         return shopBillNums;
     }
 
-    public void setShopBillNums(long shopBillNums) {
+    public void setShopBillNums(int shopBillNums) {
         this.shopBillNums = shopBillNums;
     }
 
@@ -184,47 +191,27 @@ public class CustomerAndShopLossItem implements IStringArrayGenerator {
         this.shopName = shopName;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getSequenceNo() {
-        return sequenceNo;
-    }
-
-    public void setSequenceNo(int sequenceNo) {
-        this.sequenceNo = sequenceNo;
-    }
-
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
-        if(getType()==0) {
-            if (StringUtil.isEmpty(getDate())) {
-                list.add("");
-            } else {
-                list.add(CalendarUtils.getDateFormatString(
-                        getDate(), CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD));// 日期
-            }
-            list.add(getBillShopNums() + ""); // 下单门店数
-            list.add(getCustomerLoseNum() + ""); // 流失门店数
-            list.add(getAddCustomerLoseNum() + ""); //新增流失门店数
-            list.add(getCustomerLoseRate()); // 流失率
-        }else{
-            list.add(getSequenceNo()+"");//序号
-            list.add(getPurchaserName());// 采购商集团
-            list.add(getShopName()); // 采购商门店
-            list.add(getLinkMan()); // 联系人
-            list.add(getLinkPhone()); //联系方式
-            list.add(getSalesManName()); // 销售代表
-            list.add(CalendarUtils.getDateFormatString(getLastBillTime()+"","yyyyMMddHHmmss",Constants.SLASH_YYYY_MM_DD)); // 最后下单日期
-            list.add(getShopBillNums()+"");//门店下单量
-            list.add(CommonUtils.formatMoney(Double.parseDouble(getSalesAmount())));//销售总额
-            list.add(CommonUtils.formatMoney(Double.parseDouble(getAverageAmount())));//单均
+        if (TextUtils.isEmpty(sequenceNo)) {
+            list.add(DateUtil.getReadableTime(date, Constants.SLASH_YYYY_MM_DD));
+            list.add(CommonUtils.formatNumber(billShopNums)); // 下单门店数
+            list.add(CommonUtils.formatNumber(customerLoseNum)); // 流失门店数
+            list.add(CommonUtils.formatNumber(addCustomerLoseNum)); //新增流失门店数
+            list.add(customerLoseRate); // 流失率
+        } else {
+            list.add(sequenceNo);//序号
+            list.add(purchaserName);// 采购商集团
+            list.add(shopName); // 采购商门店
+            list.add(TextUtils.isEmpty(linkMan) ? "- -" : linkMan); // 联系人
+            String phone = PhoneUtil.formatPhoneNum(linkPhone);
+            list.add(TextUtils.isEmpty(phone) ? "- -" : phone); // 联系方式
+            list.add(TextUtils.isEmpty(salesManName) ? "- -" : salesManName); // 销售代表
+            list.add(DateUtil.getReadableTime(lastBillTime, Constants.SLASH_YYYY_MM_DD)); // 最后下单日期
+            list.add(CommonUtils.formatNumber(shopBillNums)); // 门店下单量
+            list.add(CommonUtils.formatMoney(salesAmount)); // 销售总额
+            list.add(CommonUtils.formatMoney(averageAmount)); // 单均
         }
         return list;
     }

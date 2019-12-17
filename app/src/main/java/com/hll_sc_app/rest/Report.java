@@ -19,8 +19,7 @@ import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
-import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
-import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
+import com.hll_sc_app.bean.report.loss.LossBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
@@ -438,8 +437,8 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryCustomerOrShopLossDetail(CustomerAndShopLossReq req, SimpleObserver<CustomerAndShopLossResp> observer){
-        ReportService.INSTANCE.queryCustomerOrShopLossDetail(new BaseReq<>(req))
+    public static void queryLossInfo(BaseMapReq req, SimpleObserver<SingleListResp<LossBean>> observer){
+        ReportService.INSTANCE.queryLossInfo(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

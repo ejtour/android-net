@@ -15,8 +15,7 @@ import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
-import com.hll_sc_app.bean.report.loss.CustomerAndShopLossReq;
-import com.hll_sc_app.bean.report.loss.CustomerAndShopLossResp;
+import com.hll_sc_app.bean.report.loss.LossBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsDetailBean;
 import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
@@ -240,7 +239,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111032")
-    Observable<BaseResp<CustomerAndShopLossResp>> queryCustomerOrShopLossDetail(@Body BaseReq<CustomerAndShopLossReq> body);
+    Observable<BaseResp<SingleListResp<LossBean>>> queryLossInfo(@Body BaseMapReq body);
 
     /**
      * 代仓发货统计

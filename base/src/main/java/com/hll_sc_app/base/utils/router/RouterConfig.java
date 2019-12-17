@@ -1005,12 +1005,12 @@ public class RouterConfig {
     /**
      * 客户流失率明细
      */
-    public static final String REPORT_CUSTOMER_LOSS_DETAIL = "/activity/report/loss/customer/loss";
+    public static final String REPORT_CUSTOMER_LOSS = "/activity/report/loss/customer/loss";
 
     /**
      * 门店流失率明细
      */
-    public static final String REPORT_SHOP_LOSS_DETAIL = "/activity/report/loss/shop/loss";
+    public static final String REPORT_SHOP_LOSS = "/activity/report/loss/shop/loss";
 
     /**
      * 代仓发货统计

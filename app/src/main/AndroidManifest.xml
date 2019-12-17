@@ -836,12 +836,12 @@
             android:windowSoftInputMode="adjustPan" />
         <!--流失客户明细-->
         <activity
-            android:name=".app.report.loss.customer.CustomerLossDetailActivity"
+            android:name=".app.report.loss.customer.CustomerLossActivity"
             android:screenOrientation="portrait" />
 
         <!--流失门店明细-->
         <activity
-            android:name=".app.report.loss.shop.ShopLossDetailActivity"
+            android:name=".app.report.loss.shop.ShopLossActivity"
             android:screenOrientation="portrait" />
 
         <activity

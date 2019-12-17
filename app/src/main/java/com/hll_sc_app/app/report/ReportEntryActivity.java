@@ -50,8 +50,8 @@ public class ReportEntryActivity extends BaseLoadActivity {
             list.add(new ReportItem(R.drawable.ic_salesman_sign, "业务员签约绩效", RouterConfig.REPORT_SALESMAN_SIGN));
             list.add(new ReportItem(R.drawable.ic_report_sales_performance, "业务员销售额绩效", RouterConfig.REPORT_SALESMAN_SALES, true));
 
-            list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS_DETAIL));
-            list.add(new ReportItem(R.drawable.ic_report_shop_loss, "流失门店明细表", RouterConfig.REPORT_SHOP_LOSS_DETAIL, true));
+            list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS));
+            list.add(new ReportItem(R.drawable.ic_report_shop_loss, "流失门店明细表", RouterConfig.REPORT_SHOP_LOSS, true));
 
             list.add(new ReportItem(R.drawable.ic_report_group_loss, "日报统计", RouterConfig.REPORT_SALES_DAILY, true));
 
@@ -78,8 +78,8 @@ public class ReportEntryActivity extends BaseLoadActivity {
             list.add(new ReportItem(R.drawable.ic_report_refunded, "退货统计表", RouterConfig.REPORT_REFUND_STATISTIC));
             list.add(new ReportItem(R.drawable.ic_report_refunded_customer_product, "退货客户与商品统计表", RouterConfig.REPORT_REFUNDED_CUSTOMER_PRODUCT_TOTAL, true));
 
-            list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS_DETAIL));
-            list.add(new ReportItem(R.drawable.ic_report_shop_loss, "流失门店明细表", RouterConfig.REPORT_SHOP_LOSS_DETAIL, true));
+            list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS));
+            list.add(new ReportItem(R.drawable.ic_report_shop_loss, "流失门店明细表", RouterConfig.REPORT_SHOP_LOSS, true));
 
             list.add(new ReportItem(R.drawable.ic_report_purchase_statistic, "采购汇总统计", RouterConfig.REPORT_PURCHASE_STATISTIC));
             list.add(new ReportItem(R.drawable.ic_report_produce_statistic, "生产汇总统计", RouterConfig.REPORT_PRODUCE_STATISTIC, true));
