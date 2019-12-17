@@ -971,12 +971,12 @@ public class RouterConfig {
     /**
      * 退货统计
      */
-    public static final String REPORT_REFUNDED_COLLECT = "/activity/report/refund/refundcollect";
+    public static final String REPORT_REFUND_STATISTIC = "/activity/report/refund/statistic";
 
     /**
      * 退货统计明细
      */
-    public static final String REPORT_REFUNDED_COLLECT_DETAIL = "/activity/report/refund/refundcollect/detail";
+    public static final String REPORT_REFUND_STATISTIC_DETAILS = "/activity/report/refund/statistic/details";
 
     /**
      * 退货客户，商品汇总

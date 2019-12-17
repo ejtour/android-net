@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.refund.refundcollect;
+package com.hll_sc_app.app.report.refund.statistic;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -31,10 +31,8 @@ import butterknife.OnClick;
  * @author 初坤
  * @date 20190720
  */
-@Route(path = RouterConfig.REPORT_REFUNDED_COLLECT)
-public class RefundCollectTotalInfoActivity extends BaseLoadActivity implements RefundCollectTotalInfoContract.IRefundTotalInfoView {
-
-
+@Route(path = RouterConfig.REPORT_REFUND_STATISTIC)
+public class RefundStatisticActivity extends BaseLoadActivity implements IRefundStatisticContract.IRefundStatisticView {
     @BindView(R.id.refunded_num)
     TextView refundedNum;
     @BindView(R.id.refunded_customer)
@@ -51,16 +49,16 @@ public class RefundCollectTotalInfoActivity extends BaseLoadActivity implements 
     TextView txtAccountAmount;
     @BindView(R.id.txt_main_title_block)
     RelativeLayout mRlTitleBlock;
-    private RefundCollectTotalInfoPresenter mPresenter;
+    private RefundStatisticPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_refunded_aggregation);
+        setContentView(R.layout.activity_report_refund_statistic);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
         initStatusBar();
-        mPresenter = RefundCollectTotalInfoPresenter.newInstance();
+        mPresenter = RefundStatisticPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
@@ -85,7 +83,7 @@ public class RefundCollectTotalInfoActivity extends BaseLoadActivity implements 
                 finish();
                 break;
             case R.id.txt_refunded_detail_btn:
-                RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_COLLECT_DETAIL);
+                RouterUtil.goToActivity(RouterConfig.REPORT_REFUND_STATISTIC_DETAILS);
                 break;
             default:
                 break;

@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.refund.refundcollect;
+package com.hll_sc_app.app.report.refund.statistic;
 
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;
@@ -13,11 +13,11 @@ import com.hll_sc_app.rest.Report;
  * @author 初坤
  * @date 2019/7/20
  */
-public class RefundCollectTotalInfoPresenter implements RefundCollectTotalInfoContract.IRefundTotalInfoPresenter {
-    private RefundCollectTotalInfoContract.IRefundTotalInfoView mView;
+public class RefundStatisticPresenter implements IRefundStatisticContract.IRefundStatisticPresenter {
+    private IRefundStatisticContract.IRefundStatisticView mView;
 
-    static RefundCollectTotalInfoPresenter newInstance() {
-        return new RefundCollectTotalInfoPresenter();
+    static RefundStatisticPresenter newInstance() {
+        return new RefundStatisticPresenter();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class RefundCollectTotalInfoPresenter implements RefundCollectTotalInfoCo
     }
 
     @Override
-    public void register(RefundCollectTotalInfoContract.IRefundTotalInfoView view) {
+    public void register(IRefundStatisticContract.IRefundStatisticView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 

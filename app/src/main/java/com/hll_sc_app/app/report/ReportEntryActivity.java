@@ -75,7 +75,7 @@ public class ReportEntryActivity extends BaseLoadActivity {
             list.add(new ReportItem(R.drawable.ic_report_receive_difference_details, "配送及时率统计", RouterConfig.REPORT_DELIVERY_TIME, true));
 
             list.add(new ReportItem(R.drawable.ic_wait_refund, "待退货统计表", RouterConfig.REPORT_WAIT_REFUND_TOTAL));
-            list.add(new ReportItem(R.drawable.ic_report_refunded, "退货统计表", RouterConfig.REPORT_REFUNDED_COLLECT));
+            list.add(new ReportItem(R.drawable.ic_report_refunded, "退货统计表", RouterConfig.REPORT_REFUND_STATISTIC));
             list.add(new ReportItem(R.drawable.ic_report_refunded_customer_product, "退货客户与商品统计表", RouterConfig.REPORT_REFUNDED_CUSTOMER_PRODUCT_TOTAL, true));
 
             list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS_DETAIL));
