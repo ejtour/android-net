@@ -108,16 +108,18 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mAdapter = new ProductAdpter(null);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            boolean isSelect = ((CheckBox) (view.findViewById(R.id.checkbox))).isChecked();
-            if (isSelect) {
-                mProductIds.remove(mAdapter.getItem(position).getProductID());
-                mCheckAll.setChecked(false);
-            } else {
-                mProductIds.add(mAdapter.getItem(position).getProductID());
-                mCheckAll.setChecked(mProductIds.size() == mAdapter.getData().size());
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.checkbox:
+                    onSelect((CheckBox) view, position);
+                    break;
+                default:
+                    break;
             }
-            mAdapter.notifyDataSetChanged();
+
+        });
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            onSelect(view.findViewById(R.id.checkbox), position);
         });
         mRecyclerView.setAdapter(mAdapter);
 
@@ -253,6 +255,18 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
         }
     }
 
+    private void onSelect(CheckBox checkBox, int position) {
+        boolean isSelect = checkBox.isChecked();
+        if (isSelect) {
+            mProductIds.remove(mAdapter.getItem(position).getProductID());
+            mCheckAll.setChecked(false);
+        } else {
+            mProductIds.add(mAdapter.getItem(position).getProductID());
+            mCheckAll.setChecked(mProductIds.size() == mAdapter.getData().size());
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
     private class ProductAdpter extends BaseQuickAdapter<GoodsBean, BaseViewHolder> {
         public ProductAdpter(@Nullable List<GoodsBean> data) {
             super(R.layout.list_item_stock_check_setting, data);
@@ -265,6 +279,7 @@ public class StockCheckSettingActivity extends BaseLoadActivity implements IStoc
                     .setText(R.id.txt_spec, "规格：" + item.getSaleSpecNum() + "种");
             ((GlideImageView) helper.getView(R.id.glide_img)).setImageURL(item.getImgUrl());
             ((CheckBox) helper.getView(R.id.checkbox)).setChecked(mProductIds.contains(item.getProductID()));
+            helper.addOnClickListener(R.id.checkbox);
         }
     }
 }
