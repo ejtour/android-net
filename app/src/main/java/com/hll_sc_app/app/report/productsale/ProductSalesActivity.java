@@ -95,11 +95,6 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
     private IProductSalesContract.IProductSalesPresenter mPresenter;
     private final ProductSalesParam mParam = new ProductSalesParam();
     private TextView mSaleType;
-    private Toast mToast;
-    private int mX;
-    private int mY;
-    private int mStatusBarHeight = -1;
-    private TextView mToastView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,13 +155,6 @@ public class ProductSalesActivity extends BaseLoadActivity implements IProductSa
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
-    }
-
-    @OnTouch(R.id.rps_pie_chart)
-    public boolean onTouch(MotionEvent event) {
-        mX = (int) event.getRawX();
-        mY = (int) event.getRawY();
-        return false;
     }
 
     private void showStatusBar() {
