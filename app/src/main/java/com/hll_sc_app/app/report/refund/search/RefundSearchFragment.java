@@ -18,6 +18,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.report.search.SearchReq;
 import com.hll_sc_app.bean.report.search.SearchResultItem;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SimpleDecoration;
 
 import java.util.List;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 @Route(path = RouterConfig.REPORT_REFUND_SEARCH_FRAGMENT)
-public class RefundedSearchFragment extends BaseLazyFragment implements RefundSearchFragmentContract.IRefundSearchView {
+public class RefundSearchFragment extends BaseLazyFragment implements RefundSearchFragmentContract.IRefundSearchView {
 
     private final static  String SEARCH_TYPE = "search_type";
     private RefundSearchFragmentContract.IRefundSearchPresenter mPresenter;
@@ -38,10 +39,10 @@ public class RefundedSearchFragment extends BaseLazyFragment implements RefundSe
     SearchReq searchReq = new SearchReq();
     String searchType;
     Unbinder unbinder;
-    public static RefundedSearchFragment newInstance(String actionType) {
+    public static RefundSearchFragment newInstance(String actionType) {
         Bundle args = new Bundle();
         args.putString(SEARCH_TYPE, actionType);
-        RefundedSearchFragment fragment = new RefundedSearchFragment();
+        RefundSearchFragment fragment = new RefundSearchFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -102,11 +103,12 @@ public class RefundedSearchFragment extends BaseLazyFragment implements RefundSe
         recyclerView.addItemDecoration(decor);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             SearchResultItem item = (SearchResultItem) adapter.getItem(position);
+            if (item == null) return;
             Intent intent = new Intent();
-            item.setType(Integer.valueOf(searchType));
+            item.setType(Integer.parseInt(searchType));
             intent.putExtra("result",item);
-            getActivity().setResult(getActivity().RESULT_OK,intent);
-            getActivity().finish();
+            requireActivity().setResult(Constants.SEARCH_RESULT_CODE, intent);
+            requireActivity().finish();
         });
     }
 
@@ -117,7 +119,7 @@ public class RefundedSearchFragment extends BaseLazyFragment implements RefundSe
 
     public void toSearch() {
         searchReq.setSearchWords(getSearchParam());
-        searchReq.setType(Integer.valueOf(searchType));
+        searchReq.setType(Integer.parseInt(searchType));
         mPresenter.querySearchList(true);
     }
 }

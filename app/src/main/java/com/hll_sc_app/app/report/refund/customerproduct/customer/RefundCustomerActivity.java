@@ -13,12 +13,12 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.report.refund.search.RefundSearchActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.report.refund.RefundCustomerBean;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
@@ -117,7 +117,7 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                RouterUtil.goToActivity(RouterConfig.REPORT_REFUNDED_SEARCH, RefundCustomerActivity.this, REFUND_CUSTOMER_CODE);
+                RefundSearchActivity.start(RefundCustomerActivity.this);
             }
 
             @Override
@@ -133,15 +133,10 @@ public class RefundCustomerActivity extends BaseLoadActivity implements IRefundC
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REFUND_CUSTOMER_CODE && resultCode == RESULT_OK) {
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             SearchResultItem bean = data.getParcelableExtra("result");
-            if (bean.getType() == 0) {
-                mReq.put("purchaserID", bean.getShopMallId());
-                mReq.put("shopID", "");
-            } else {
-                mReq.put("purchaserID", "");
-                mReq.put("shopID", bean.getShopMallId());
-            }
+            mReq.put(bean.getType() == 0 ? "purchaserID" : "shopID", bean.getShopMallId());
+            mReq.put(bean.getType() == 0 ? "shopID" : "purchaserID", "");
             mSearchView.showSearchContent(!TextUtils.isEmpty(bean.getName()), bean.getName());
         }
     }
