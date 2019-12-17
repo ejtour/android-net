@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -17,23 +18,20 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeBean;
-import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeNearlyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.utils.ColorStr;
-import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.report.PieMarker;
+import com.hll_sc_app.widget.report.ReportEmptyView;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -44,181 +42,92 @@ import butterknife.OnClick;
  * @date 20190720
  */
 @Route(path = RouterConfig.REPORT_DELIVERY_TIME)
-public class DeliveryTimeActivity extends BaseLoadActivity implements DeliveryTimeContract.IDeliveryTimeView {
+public class DeliveryTimeActivity extends BaseLoadActivity implements IDeliveryTimeContract.IDeliveryTimeView {
 
-    @BindView(R.id.nearly_seven_pie)
-    PieChart nearLySevenPieChartView;
-    @BindView(R.id.nearly_thirty_pie)
-    PieChart nearLyThirtyPieChartView;
-    @BindView(R.id.nearly_ninety_pie)
-    PieChart nearLyNinetyPieChartView;
-    @BindView(R.id.nearly_seven_layout)
-    LinearLayout nearlySevenLayout;
-    @BindView(R.id.nearly_thirty_layout)
-    LinearLayout nearlyThirtyLayout;
-    @BindView(R.id.nearly_ninety_layout)
-    LinearLayout nearlyNinetyLayout;
-
-    private EmptyView emptyView;
-
-    private Map<String, PieChart> pieChartMap = new HashMap<>(3);
-    private Map<String, LinearLayout> layoutMap = new HashMap<>(3);
-    private DeliveryTimePresenter mPresenter;
+    @BindViews({R.id.rdt_seven_chart, R.id.rdt_thirty_chart, R.id.rdt_ninety_chart})
+    List<PieChart> mCharts;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_delivery_time_pie);
+        setContentView(R.layout.activity_report_delivery_time);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        mPresenter = DeliveryTimePresenter.newInstance();
         initView();
-        mPresenter.register(this);
-        mPresenter.start();
+        DeliveryTimePresenter presenter = DeliveryTimePresenter.newInstance();
+        presenter.register(this);
+        presenter.start();
     }
 
     private void initView() {
-        pieChartMap.put("0", nearLySevenPieChartView);
-        layoutMap.put("0", nearlySevenLayout);
-        pieChartMap.put("1", nearLyThirtyPieChartView);
-        layoutMap.put("1", nearlyThirtyLayout);
-        pieChartMap.put("2", nearLyNinetyPieChartView);
-        layoutMap.put("2", nearlyNinetyLayout);
-        emptyView = EmptyView.newBuilder(this).setImage(R.drawable.ic_char_empty).setTips("您还没有配送及时率的统计数据").create();
-        for (PieChart pieChart : pieChartMap.values()) {
-            //设置饼状图
-            //画统计图
-            pieChart.setUsePercentValues(true);
-            pieChart.getDescription().setEnabled(false);
-            pieChart.setExtraOffsets(5, 5, 5, 5);
-            pieChart.setDragDecelerationFrictionCoef(0.5f);
-            pieChart.setRotationEnabled(true);
-            pieChart.animateY(1400, Easing.EaseInOutQuad);
+        ButterKnife.apply(mCharts, (chart, index) -> {
+            chart.setUsePercentValues(true);
+            chart.getDescription().setEnabled(false);
+            chart.setExtraOffsets(5, 5, 5, 5);
+            chart.setDragDecelerationFrictionCoef(0.5f);
+            chart.setRotationEnabled(true);
+            chart.animateY(1400, Easing.EaseInOutQuad);
             //设置饼状图里的文字大小
-            pieChart.setEntryLabelTextSize(0f);
+            chart.setEntryLabelTextSize(0f);
             //不绘画中间
-            pieChart.setDrawHoleEnabled(false);
+            chart.setDrawHoleEnabled(false);
             //设置统计维度显示
-            Legend l = pieChart.getLegend();
+            Legend l = chart.getLegend();
             l.setDrawInside(false);
             l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
             l.setWordWrapEnabled(true);
             l.setEnabled(true);
-            pieChart.setMarker(new PieMarker(this, pieChart));
-        }
+            chart.setMarker(new PieMarker(this, chart));
+        });
     }
 
-    @OnClick({R.id.img_back, R.id.delivery_time_detail_btn})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.delivery_time_detail_btn:
-                RouterUtil.goToActivity(RouterConfig.REPORT_DELIVERY_TIME_DETAIL);
-                break;
-            default:
-                break;
-        }
+    @OnClick(R.id.rdt_detail)
+    public void viewDetail() {
+        RouterUtil.goToActivity(RouterConfig.REPORT_DELIVERY_TIME_DETAIL);
     }
 
     @Override
-    public void showDeliveryTimePieCharts(DeliveryTimeResp deliveryTimeResp) {
-        for (Map.Entry<String, PieChart> pieChartEntry : pieChartMap.entrySet()) {
-            String key = pieChartEntry.getKey();
-            PieChart pieChart = pieChartEntry.getValue();
-            DeliveryTimeNearlyBean deliveryTimeNearlyBean = null;
-            switch (key) {
-                case "0":
-                    deliveryTimeNearlyBean = deliveryTimeResp.getNearly7Days();
+    public void setData(DeliveryTimeResp deliveryTimeResp) {
+        for (int i = 0; i < mCharts.size(); i++) {
+            PieChart chart = mCharts.get(i);
+            DeliveryTimeBean bean = null;
+            switch (i) {
+                case 0:
+                    bean = deliveryTimeResp.getNearly7Days();
                     break;
-                case "1":
-                    deliveryTimeNearlyBean = deliveryTimeResp.getNearly30Days();
+                case 1:
+                    bean = deliveryTimeResp.getNearly30Days();
                     break;
-                case "2":
-                    deliveryTimeNearlyBean = deliveryTimeResp.getNearly90Days();
-                    break;
-                default:
+                case 2:
+                    bean = deliveryTimeResp.getNearly90Days();
                     break;
             }
-            if (deliveryTimeNearlyBean != null && !isEmptyDeliveryTime(deliveryTimeNearlyBean)) {
-                pieChart.setVisibility(View.VISIBLE);
-                //饼状图
-                ArrayList<PieEntry> entries = new ArrayList<>();
-                DeliveryTimeBean deliveryTimeBean = handler(deliveryTimeNearlyBean);
-                entries.add(new PieEntry(deliveryTimeBean.getOnTimeInspectionNumRatio(), deliveryTimeBean.getOnTimeInspectionNumDesc()));
-                entries.add(new PieEntry(deliveryTimeBean.getWithin15MinInspectionNumRatio(), deliveryTimeBean.getWithin15MinInspectionNumDesc()));
-                entries.add(new PieEntry(deliveryTimeBean.getWithin30MinInspectionNumRatio(), deliveryTimeBean.getWithin30MinInspectionNumDesc()));
-                entries.add(new PieEntry(deliveryTimeBean.getBeyond30MinInspectionNumRatio(), deliveryTimeBean.getBeyond30MinInspectionNumDesc()));
-
-                if (entries.size() > 0) {
-                    PieDataSet dataSet = new PieDataSet(entries, "");
-                    //颜色
-                    List<Integer> colors = Arrays.asList(ColorStr.CHART_COLOR_ARRAY);
-                    //设置
-                    dataSet.setColors(colors);
-                    //横线
-                    dataSet.setValueTextSize(0f);
-                    PieData data = new PieData(dataSet);
-                    pieChart.setData(data);
-                    pieChart.invalidate();
-                }
+            assert bean != null;
+            if (bean.hasValue()) {
+                chart.setVisibility(View.VISIBLE);
+                List<PieEntry> entries = new ArrayList<>();
+                entries.add(new PieEntry(bean.getOnTimeInspectionNum(), "要求时间内"));
+                entries.add(new PieEntry(bean.getWithin15MinInspectionNum(), "差异15分钟内"));
+                entries.add(new PieEntry(bean.getWithin30MinInspectionNum(), "差异30分钟内"));
+                entries.add(new PieEntry(bean.getBeyond30MinInspectionNum(), "差异30分钟以上"));
+                PieDataSet dataSet = new PieDataSet(entries, "");
+                //颜色
+                List<Integer> colors = Arrays.asList(ColorStr.CHART_COLOR_ARRAY);
+                //设置
+                dataSet.setColors(colors);
+                //横线
+                dataSet.setValueTextSize(0f);
+                PieData data = new PieData(dataSet);
+                chart.setData(data);
+                chart.invalidate();
             } else {
-                LinearLayout linearLayout = layoutMap.get(key);
-                pieChart.setVisibility(View.GONE);
-                LinearLayout parentLayout = (LinearLayout) emptyView.getParent();
-                if (null != parentLayout) {
-                    parentLayout.removeAllViews();
-                }
-                linearLayout.addView(emptyView);
+                chart.setVisibility(View.GONE);
+                ReportEmptyView emptyView = new ReportEmptyView(this);
+                emptyView.setTip("您还没有配送及时率的统计数据");
+                emptyView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(200)));
+                ((LinearLayout) chart.getParent()).addView(emptyView);
             }
         }
     }
-
-    /**
-     * 判断是否有配送及时率的数据
-     *
-     * @param deliveryTimeNearlyBean
-     * @return
-     */
-    private boolean isEmptyDeliveryTime(DeliveryTimeNearlyBean deliveryTimeNearlyBean) {
-
-        return (deliveryTimeNearlyBean.getOnTimeInspectionNum() + deliveryTimeNearlyBean.getBeyond30MinInspectionNum()
-                + deliveryTimeNearlyBean.getWithin15MinInspectionNum() + deliveryTimeNearlyBean.getWithin30MinInspectionNum()) == 0;
-    }
-
-    /**
-     * 处理配送及时率
-     *
-     * @param item
-     * @return
-     */
-    private DeliveryTimeBean handler(DeliveryTimeNearlyBean item) {
-        DeliveryTimeBean deliveryTimeBean = new DeliveryTimeBean();
-        long totalOrderNum = item.getOnTimeInspectionNum() + item.getBeyond30MinInspectionNum()
-                + item.getWithin15MinInspectionNum() + item.getWithin30MinInspectionNum();
-        if (totalOrderNum == 0) {
-            deliveryTimeBean.setBeyond30MinInspectionNumRatio(0.00f);
-            deliveryTimeBean.setOnTimeInspectionNumRatio(0.00f);
-            deliveryTimeBean.setWithin15MinInspectionNumRatio(0.00f);
-            deliveryTimeBean.setWithin30MinInspectionNumRatio(0.00f);
-        } else {
-            deliveryTimeBean.setBeyond30MinInspectionNumRatio(new BigDecimal(item.getBeyond30MinInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
-            deliveryTimeBean.setOnTimeInspectionNumRatio(new BigDecimal(item.getOnTimeInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
-            deliveryTimeBean.setWithin15MinInspectionNumRatio(new BigDecimal(item.getWithin15MinInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
-            deliveryTimeBean.setWithin30MinInspectionNumRatio(new BigDecimal(item.getWithin30MinInspectionNum()).divide(new BigDecimal(totalOrderNum), 2, BigDecimal.ROUND_HALF_UP).floatValue());
-        }
-        deliveryTimeBean.setBeyond30MinInspectionNumDesc("差异30分钟以上");
-        deliveryTimeBean.setOnTimeInspectionNumDesc("要求时间内");
-        deliveryTimeBean.setWithin15MinInspectionNumDesc("差异15分钟内");
-        deliveryTimeBean.setWithin30MinInspectionNumDesc("差异30分钟内");
-        return deliveryTimeBean;
-    }
-
-    @Override
-    public void hideLoading() {
-        super.hideLoading();
-    }
-
 }

@@ -40,4 +40,8 @@ public class ReportEmptyView extends LinearLayout {
         mTip.setText(array.getString(R.styleable.ReportEmptyView_rev_tip));
         array.recycle();
     }
+
+    public void setTip(CharSequence s){
+        mTip.setText(s);
+    }
 }

@@ -9,7 +9,7 @@ import com.hll_sc_app.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeliveryTimeItem implements IStringArrayGenerator {
+public class DeliveryTimeDetailBean implements IStringArrayGenerator {
 
     private String date;
     private int beyond30MinInspectionNum;

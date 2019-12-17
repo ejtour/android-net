@@ -10,22 +10,12 @@ import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
  * @author chukun
  * @date 2019/08/16
  */
-public interface DeliveryTimeContract {
+public interface IDeliveryTimeContract {
 
     interface IDeliveryTimeView extends ILoadView {
-        /**
-         * 展示配送及时率的饼图数据
-         * @param deliveryTimeResp
-         */
-        void showDeliveryTimePieCharts(DeliveryTimeResp deliveryTimeResp);
-
+        void setData(DeliveryTimeResp resp);
     }
 
     interface IDeliveryTimePresenter extends IPresenter<IDeliveryTimeView> {
-        /**
-         * 查询配送及时率饼图数据
-         * @param showLoading true-显示对话框
-         */
-        void queryDeliveryTimePieCharts(boolean showLoading);
     }
 }

@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeliveryTimeResp {
-    private DeliveryTimeNearlyBean nearly7Days;
-    private DeliveryTimeNearlyBean nearly30Days;
-    private DeliveryTimeNearlyBean nearly90Days;
-    private List<DeliveryTimeItem> records;
+    private DeliveryTimeBean nearly7Days;
+    private DeliveryTimeBean nearly30Days;
+    private DeliveryTimeBean nearly90Days;
+    private List<DeliveryTimeDetailBean> records;
     private int totalBeyond30MinInspectionNum;
     private double totalBeyond30MinInspectionRate;
     private int totalDeliveryOrderNum;
@@ -42,35 +42,35 @@ public class DeliveryTimeResp {
     }
 
 
-    public DeliveryTimeNearlyBean getNearly7Days() {
+    public DeliveryTimeBean getNearly7Days() {
         return nearly7Days;
     }
 
-    public void setNearly7Days(DeliveryTimeNearlyBean nearly7Days) {
+    public void setNearly7Days(DeliveryTimeBean nearly7Days) {
         this.nearly7Days = nearly7Days;
     }
 
-    public DeliveryTimeNearlyBean getNearly30Days() {
+    public DeliveryTimeBean getNearly30Days() {
         return nearly30Days;
     }
 
-    public void setNearly30Days(DeliveryTimeNearlyBean nearly30Days) {
+    public void setNearly30Days(DeliveryTimeBean nearly30Days) {
         this.nearly30Days = nearly30Days;
     }
 
-    public DeliveryTimeNearlyBean getNearly90Days() {
+    public DeliveryTimeBean getNearly90Days() {
         return nearly90Days;
     }
 
-    public void setNearly90Days(DeliveryTimeNearlyBean nearly90Days) {
+    public void setNearly90Days(DeliveryTimeBean nearly90Days) {
         this.nearly90Days = nearly90Days;
     }
 
-    public List<DeliveryTimeItem> getRecords() {
+    public List<DeliveryTimeDetailBean> getRecords() {
         return records;
     }
 
-    public void setRecords(List<DeliveryTimeItem> records) {
+    public void setRecords(List<DeliveryTimeDetailBean> records) {
         this.records = records;
     }
 

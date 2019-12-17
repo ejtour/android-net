@@ -20,7 +20,7 @@ import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
-import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeItem;
+import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeDetailBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -207,7 +207,7 @@ public class DeliveryTimeDetailActivity extends BaseLoadActivity implements IDel
     public void setData(DeliveryTimeResp resp, boolean append) {
         CharSequence[] array = {};
         mFooter.updateRowDate(resp.convertToRowData().toArray(array));
-        List<DeliveryTimeItem> records = resp.getRecords();
+        List<DeliveryTimeDetailBean> records = resp.getRecords();
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(records) && records.size() == 20);
         mExcel.setData(records, append);
     }
