@@ -1,4 +1,4 @@
-package com.hll_sc_app.bean.report.customerLack;
+package com.hll_sc_app.bean.report.lack;
 
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.impl.IStringArrayGenerator;
@@ -6,53 +6,53 @@ import com.hll_sc_app.impl.IStringArrayGenerator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerLackItem implements IStringArrayGenerator {
+public class CustomerLackDetailsBean implements IStringArrayGenerator {
 
-    private String deliveryAmount;
-    private String deliveryLackAmount;
-    private String deliveryLackNum;
+    private double deliveryAmount;
+    private double deliveryLackAmount;
+    private int deliveryLackNum;
     private String deliveryLackRate;
-    private String deliveryNum;
-    private String oriReserveAmount;
-    private String oriReserveNum;
+    private int deliveryNum;
+    private double oriReserveAmount;
+    private int oriReserveNum;
     private String productName;
     private String specUnit;
 
     @Override
     public List<CharSequence> convertToRowData() {
         List<CharSequence> list = new ArrayList<>();
-        list.add(getProductName()); // 商品名称
-        list.add(getSpecUnit()); // 商品规格
-        list.add(getOriReserveNum()); // 订货量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getOriReserveAmount()))); // 订货金额
-        list.add(getDeliveryNum()); //发货量
-        list.add(getDeliveryNum()); // 缺货量
-        list.add(CommonUtils.formatMoney(Double.parseDouble(getDeliveryLackAmount()))); // 缺货金额
-        list.add(getDeliveryLackRate());
+        list.add(productName); // 商品名称
+        list.add(specUnit); // 商品规格
+        list.add(CommonUtils.formatNumber(oriReserveNum)); // 订货量
+        list.add(CommonUtils.formatMoney(oriReserveAmount)); // 订货金额
+        list.add(CommonUtils.formatNumber(deliveryNum)); //发货量
+        list.add(CommonUtils.formatNumber(deliveryLackNum)); // 缺货量
+        list.add(CommonUtils.formatMoney(deliveryLackAmount)); // 缺货金额
+        list.add(deliveryLackRate);
         return list;
     }
 
-    public String getDeliveryAmount() {
+    public double getDeliveryAmount() {
         return deliveryAmount;
     }
 
-    public void setDeliveryAmount(String deliveryAmount) {
+    public void setDeliveryAmount(double deliveryAmount) {
         this.deliveryAmount = deliveryAmount;
     }
 
-    public String getDeliveryLackAmount() {
+    public double getDeliveryLackAmount() {
         return deliveryLackAmount;
     }
 
-    public void setDeliveryLackAmount(String deliveryLackAmount) {
+    public void setDeliveryLackAmount(double deliveryLackAmount) {
         this.deliveryLackAmount = deliveryLackAmount;
     }
 
-    public String getDeliveryLackNum() {
+    public int getDeliveryLackNum() {
         return deliveryLackNum;
     }
 
-    public void setDeliveryLackNum(String deliveryLackNum) {
+    public void setDeliveryLackNum(int deliveryLackNum) {
         this.deliveryLackNum = deliveryLackNum;
     }
 
@@ -64,27 +64,27 @@ public class CustomerLackItem implements IStringArrayGenerator {
         this.deliveryLackRate = deliveryLackRate;
     }
 
-    public String getDeliveryNum() {
+    public int getDeliveryNum() {
         return deliveryNum;
     }
 
-    public void setDeliveryNum(String deliveryNum) {
+    public void setDeliveryNum(int deliveryNum) {
         this.deliveryNum = deliveryNum;
     }
 
-    public String getOriReserveAmount() {
+    public double getOriReserveAmount() {
         return oriReserveAmount;
     }
 
-    public void setOriReserveAmount(String oriReserveAmount) {
+    public void setOriReserveAmount(double oriReserveAmount) {
         this.oriReserveAmount = oriReserveAmount;
     }
 
-    public String getOriReserveNum() {
+    public int getOriReserveNum() {
         return oriReserveNum;
     }
 
-    public void setOriReserveNum(String oriReserveNum) {
+    public void setOriReserveNum(int oriReserveNum) {
         this.oriReserveNum = oriReserveNum;
     }
 

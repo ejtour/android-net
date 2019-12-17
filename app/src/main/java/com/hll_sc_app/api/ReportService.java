@@ -7,8 +7,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
+import com.hll_sc_app.bean.report.lack.CustomerLackResp;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
@@ -125,7 +124,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:111053")
-    Observable<BaseResp<CustomerLackResp>> queryCustomerLack(@Body BaseReq<CustomerLackReq> body);
+    Observable<BaseResp<CustomerLackResp>> queryCustomerLack(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111007")

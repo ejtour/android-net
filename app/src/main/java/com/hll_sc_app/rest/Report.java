@@ -13,8 +13,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
+import com.hll_sc_app.bean.report.lack.CustomerLackResp;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
@@ -188,11 +187,11 @@ public class Report {
     /**
      * 客户缺货统计表
      *
-     * @param requestParams 查询参数
+     * @param req 查询参数
      */
-    public static void queryCustomerLack(CustomerLackReq requestParams, SimpleObserver<CustomerLackResp> observer) {
+    public static void queryCustomerLack(BaseMapReq req, SimpleObserver<CustomerLackResp> observer) {
         ReportService.INSTANCE
-                .queryCustomerLack(new BaseReq<>(requestParams))
+                .queryCustomerLack(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

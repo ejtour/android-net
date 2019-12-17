@@ -886,7 +886,7 @@ public class RouterConfig {
     /**
      * 客户缺货汇总
      */
-    public static final String REPORT_CUSTOMER_LACK_SUMMARY = "/activity/customer/lack/summary";
+    public static final String REPORT_CUSTOMER_LACK = "/activity/customer/lack/summary";
 
     /**
      * 客户缺货明细

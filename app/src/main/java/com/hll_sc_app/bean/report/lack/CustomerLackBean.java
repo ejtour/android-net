@@ -1,36 +1,36 @@
-package com.hll_sc_app.bean.report.customerLack;
+package com.hll_sc_app.bean.report.lack;
 
-public class CustomerLackSummary {
+public class CustomerLackBean {
 
-    private String deliveryLackKindNum;
-    private String deliveryLackAmount;
-    private String deliveryLackNum;
+    private int deliveryLackKindNum;
+    private double deliveryLackAmount;
+    private int deliveryLackNum;
     private String purchaserID;
     private String purchaserName;
     private String shopID;
     private String shopName;
 
-    public String getDeliveryLackKindNum() {
+    public int getDeliveryLackKindNum() {
         return deliveryLackKindNum;
     }
 
-    public void setDeliveryLackKindNum(String deliveryLackKindNum) {
+    public void setDeliveryLackKindNum(int deliveryLackKindNum) {
         this.deliveryLackKindNum = deliveryLackKindNum;
     }
 
-    public String getDeliveryLackAmount() {
+    public double getDeliveryLackAmount() {
         return deliveryLackAmount;
     }
 
-    public void setDeliveryLackAmount(String deliveryLackAmount) {
+    public void setDeliveryLackAmount(double deliveryLackAmount) {
         this.deliveryLackAmount = deliveryLackAmount;
     }
 
-    public String getDeliveryLackNum() {
+    public int getDeliveryLackNum() {
         return deliveryLackNum;
     }
 
-    public void setDeliveryLackNum(String deliveryLackNum) {
+    public void setDeliveryLackNum(int deliveryLackNum) {
         this.deliveryLackNum = deliveryLackNum;
     }
 

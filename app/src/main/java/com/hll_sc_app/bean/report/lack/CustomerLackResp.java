@@ -1,29 +1,29 @@
-package com.hll_sc_app.bean.report.customerLack;
+package com.hll_sc_app.bean.report.lack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerLackResp {
 
-    private List<CustomerLackItem> detail = new ArrayList<>();
+    private List<CustomerLackDetailsBean> detail = new ArrayList<>();
 
-    private List<CustomerLackSummary> summary = new ArrayList<>();
+    private List<CustomerLackBean> summary = new ArrayList<>();
 
     private int totalSize;
 
-    public List<CustomerLackItem> getDetail() {
+    public List<CustomerLackDetailsBean> getDetail() {
         return detail;
     }
 
-    public void setDetail(List<CustomerLackItem> detail) {
+    public void setDetail(List<CustomerLackDetailsBean> detail) {
         this.detail = detail;
     }
 
-    public List<CustomerLackSummary> getSummary() {
+    public List<CustomerLackBean> getSummary() {
         return summary;
     }
 
-    public void setSummary(List<CustomerLackSummary> summary) {
+    public void setSummary(List<CustomerLackBean> summary) {
         this.summary = summary;
     }
 
