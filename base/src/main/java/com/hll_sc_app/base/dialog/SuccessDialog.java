@@ -246,7 +246,9 @@ public class SuccessDialog extends BaseDialog {
         String[] items;
 
         void apply(SuccessDialog dialog) {
-            dialog.setButton(mOnClickListener, items);
+            if (mOnClickListener != null) {
+                dialog.setButton(mOnClickListener, items);
+            }
             dialog.setImageTitle(mImgTitle);
             dialog.setImageState(mImgState);
             dialog.setMessage(mMessage);

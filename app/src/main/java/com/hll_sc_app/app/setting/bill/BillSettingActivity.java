@@ -3,6 +3,10 @@ package com.hll_sc_app.app.setting.bill;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -11,6 +15,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.dialog.SuccessDialog;
 import com.hll_sc_app.base.utils.Constant;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.bean.user.GroupParame;
@@ -163,7 +168,11 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
 
     @Override
     public void toggleBillSettingStatus(boolean isChecked, Integer type) {
-        showAlertDialog(isChecked, type);
+        if (type == 7 && !isChecked) {
+            showForbidCloseOnlyReceive();
+        } else {
+            showAlertDialog(isChecked, type);
+        }
     }
 
     @Override
@@ -195,6 +204,26 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
                     }
                     dialog.dismiss();
                 }), "取消", "确定")
+                .create()
+                .show();
+    }
+
+    /**
+     * 仅接单不能关闭
+     */
+    private void showForbidCloseOnlyReceive() {
+        SpannableString msg = new SpannableString("如需关闭请联系商城管理员进行操作，电话010-5624-7970");
+        msg.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimary)),
+                msg.length() - 13, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        msg.setSpan(new UnderlineSpan(), msg.length() - 13, msg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SuccessDialog.newBuilder(this)
+                .setImageTitle(R.drawable.ic_dialog_failure)
+                .setImageState(R.drawable.ic_dialog_state_failure)
+                .setMessageTitle("禁止关闭仅接单")
+                .setMessage(msg, v -> {
+                    UIUtils.callPhone(this, "010-5624-7970");
+                })
+                .setCancelable(true)
                 .create()
                 .show();
     }
