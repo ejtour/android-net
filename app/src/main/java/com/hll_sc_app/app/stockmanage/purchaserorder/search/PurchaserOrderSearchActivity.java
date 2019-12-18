@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.stockmanage.purchaserorder.search;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchRecord;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -43,7 +45,7 @@ import io.reactivex.disposables.Disposable;
  */
 @Route(path = RouterConfig.STOCK_PURCHASER_ORDER_SEARCH)
 public class PurchaserOrderSearchActivity extends BaseLoadActivity implements PurchaserOrderSearchContract.IPurchaserOrderSearchView {
-
+    private static final int REQ_CODE = 0x144;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.edt_search)
@@ -53,10 +55,14 @@ public class PurchaserOrderSearchActivity extends BaseLoadActivity implements Pu
 
     private Disposable mDisposable;
 
-   List<String> selectiveSuppliers = new ArrayList<>();
+    private List<String> selectiveSuppliers = new ArrayList<>();
 
     private PurchaserOrderSearchAdapter mAdapter;
     private PurchaserOrderSearchPresenter mPresenter;
+
+    public static void start(Activity context) {
+        RouterUtil.goToActivity(RouterConfig.STOCK_PURCHASER_ORDER_SEARCH, context, REQ_CODE);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

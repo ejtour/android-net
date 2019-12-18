@@ -8,23 +8,23 @@ import java.util.List;
  */
 public class PurchaserOrderDetailResp {
 
-    private PurchaserOrderRecord record;
+    private PurchaserOrderBean record;
 
-    private List<PurchaserOrderDetailRecord> records;
+    private List<PurchaserOrderDetailBean> records;
 
-    public PurchaserOrderRecord getRecord() {
+    public PurchaserOrderBean getRecord() {
         return record;
     }
 
-    public void setRecord(PurchaserOrderRecord record) {
+    public void setRecord(PurchaserOrderBean record) {
         this.record = record;
     }
 
-    public List<PurchaserOrderDetailRecord> getRecords() {
+    public List<PurchaserOrderDetailBean> getRecords() {
         return records;
     }
 
-    public void setRecords(List<PurchaserOrderDetailRecord> records) {
+    public void setRecords(List<PurchaserOrderDetailBean> records) {
         this.records = records;
     }
 }

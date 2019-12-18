@@ -1,10 +1,8 @@
 package com.hll_sc_app.app.stockmanage.purchaserorder;
 
-import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderReq;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderResp;
+import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Stock;
 
@@ -14,10 +12,9 @@ import com.hll_sc_app.rest.Stock;
  * @author 初坤
  * @date 2019/7/20
  */
-public class PurchaserOrderPresenter implements PurchaserOrderContract.IPurchaserOrderPresenter {
-    private PurchaserOrderContract.IPurchaserOrderView mView;
+public class PurchaserOrderPresenter implements IPurchaserOrderContract.IPurchaserOrderPresenter {
+    private IPurchaserOrderContract.IPurchaserOrderView mView;
     private int mPageNum;
-    private int mTempPageNum;
 
     static PurchaserOrderPresenter newInstance() {
         return new PurchaserOrderPresenter();
@@ -25,42 +22,36 @@ public class PurchaserOrderPresenter implements PurchaserOrderContract.IPurchase
 
     @Override
     public void start() {
-        queryPurchaserOrderList(true);
+        mPageNum = 1;
+        load(true);
     }
 
     @Override
-    public void register(PurchaserOrderContract.IPurchaserOrderView view) {
+    public void register(IPurchaserOrderContract.IPurchaserOrderView view) {
         this.mView = CommonUtils.checkNotNull(view);
     }
 
     @Override
-    public void queryPurchaserOrderList(boolean showLoading) {
+    public void refresh() {
         mPageNum = 1;
-        mTempPageNum = mPageNum;
-        toPurchaserOrderList(showLoading);
+        load(false);
     }
 
     @Override
-    public void queryMorePurchaserOrderList() {
-        mTempPageNum = mPageNum;
-        mTempPageNum++;
-        toPurchaserOrderList(false);
+    public void loadMore() {
+        load(false);
     }
 
-    private void toPurchaserOrderList(boolean showLoading) {
-        PurchaserOrderReq requestParams = mView.getRequestParams();
-        requestParams.setGroupID(UserConfig.getGroupID());
-        requestParams.setPageNo(mTempPageNum);
-        requestParams.setPageSize(20);
-        Stock.querySupplyChainPurchaserOrderList(requestParams, new SimpleObserver<PurchaserOrderResp>(mView,showLoading) {
+    private void load(boolean showLoading) {
+        Stock.queryPurchaserOrderList(mView.getReq()
+                .put("pageNo", String.valueOf(mPageNum))
+                .put("pageSize", "20")
+                .create(), new SimpleObserver<SingleListResp<PurchaserOrderBean>>(mView, showLoading) {
             @Override
-            public void onSuccess(PurchaserOrderResp purchaserOrderResp) {
-                mPageNum = mTempPageNum;
-                mView.showPurchaserOrderList(purchaserOrderResp,mPageNum!=1,(int)purchaserOrderResp.getPageInfo().getTotal());
-            }
-            @Override
-            public void onFailure(UseCaseException e) {
-                mView.showError(e);
+            public void onSuccess(SingleListResp<PurchaserOrderBean> purchaserOrderRecordSingleListResp) {
+                mView.setData(purchaserOrderRecordSingleListResp.getRecords(), mPageNum > 1);
+                if (CommonUtils.isEmpty(purchaserOrderRecordSingleListResp.getRecords())) return;
+                mPageNum++;
             }
         });
     }

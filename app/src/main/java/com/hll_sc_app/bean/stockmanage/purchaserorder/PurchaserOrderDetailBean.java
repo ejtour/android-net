@@ -1,11 +1,11 @@
 package com.hll_sc_app.bean.stockmanage.purchaserorder;
 
-public class PurchaserOrderDetailRecord {
+public class PurchaserOrderDetailBean {
 
     /**
      * 辅助数量
      */
-    private String auxiliaryNum;
+    private int auxiliaryNum;
     /**
      * 辅助单位
      */
@@ -53,18 +53,17 @@ public class PurchaserOrderDetailRecord {
     /**
      * 采购单位数量
      */
-    private String goodsNum;
+    private int goodsNum;
     /**
      * 采购单位
      */
     private String purchaseUnit;
 
-
-    public String getAuxiliaryNum() {
+    public int getAuxiliaryNum() {
         return auxiliaryNum;
     }
 
-    public void setAuxiliaryNum(String auxiliaryNum) {
+    public void setAuxiliaryNum(int auxiliaryNum) {
         this.auxiliaryNum = auxiliaryNum;
     }
 
@@ -156,11 +155,11 @@ public class PurchaserOrderDetailRecord {
         this.goodsName = goodsName;
     }
 
-    public String getGoodsNum() {
+    public int getGoodsNum() {
         return goodsNum;
     }
 
-    public void setGoodsNum(String goodsNum) {
+    public void setGoodsNum(int goodsNum) {
         this.goodsNum = goodsNum;
     }
 

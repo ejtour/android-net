@@ -1,215 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/base_activity_bg"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/txt_purchaser_order_title"
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/pod_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@color/base_colorPrimary">
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_rightImage="@drawable/ic_shareded"
+        app:tb_rightVisibility="true"
+        app:tb_title="采购单详情" />
 
-        <ImageView
-            android:id="@+id/img_back"
-            style="@style/BtnClose"
-            android:layout_marginTop="15dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="采购单详情"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_18"
-            />
-        <ImageView
-            android:id="@+id/shared_purchaser_order_detail_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_shareded"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_marginTop="@dimen/dp_10"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/pod_info_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:paddingBottom="@dimen/dp_10">
-        <TextView
-            android:id="@+id/purchaser_order_comp_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            tools:text="哗啦啦"
-            android:textColor="#222222"
-            android:textSize="@dimen/base_text_13" />
-        <TextView
-            android:id="@+id/purchaser_order_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            tools:text="未审核"
-            android:textColor="#7ED321"
-            android:textSize="@dimen/base_text_12" />
-        <TextView
-            android:layout_below="@+id/purchaser_order_comp_name"
-            android:id="@+id/purchaser_order_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            tools:text="采购单号 : CG123456789"
-            android:textColor="#999999"
-            android:textSize="@dimen/base_text_10"/>
-        <TextView
-            android:id="@+id/purchaser_order_create_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/purchaser_order_status"
-            tools:text="采购日期 : 2019/08/08"
-            android:textColor="#999999"
-            android:textSize="@dimen/base_text_10"
-            android:layout_marginTop="20dp" />
-        <TextView
-            android:layout_below="@+id/purchaser_order_no"
-            android:id="@+id/purchaser_order_orig"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            tools:text="采购组织 : 北京一键食达"
-            android:textColor="#999999"
-            android:textSize="@dimen/base_text_10" />
-        <TextView
-            android:id="@+id/purchaser_order_arrival_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/purchaser_order_create_time"
-            tools:text="到货日期 : 2019/08/08"
-            android:textColor="#999999"
-            android:textSize="@dimen/base_text_10"/>
-        <TextView
-            android:id="@+id/purchaser_order_mark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/purchaser_order_orig"
-            tools:text="备注信息 : 无"
-            android:textColor="#999999"
-            android:textSize="@dimen/base_text_10"/>
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_below="@id/pod_title_bar"
         android:layout_marginTop="5dp"
-        android:background="#FFFFFF"
-        android:layout_height="63dp">
-        <RelativeLayout
+        android:background="@android:color/white"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingTop="15dp"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="15dp">
+
+        <TextView
+            android:id="@+id/pod_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+            app:layout_constraintBottom_toBottomOf="@id/pod_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/pod_name"
+            tools:text="未审核" />
+
+        <TextView
+            android:id="@+id/pod_name"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/purchaser_order_category_num"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="100"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:textSize="@dimen/base_text_13"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/purchaser_order_category_num"
-                android:layout_marginTop="5dp"
-                android:text="采购品项"
-                android:gravity="center"
-                android:textSize="@dimen/base_text_13"/>
-        </RelativeLayout>
-        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:textAppearance="@style/TextAppearance.City22.Large"
+            app:layout_constraintEnd_toStartOf="@id/pod_status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="北京绿野宏祥商贸有限公司" />
+
+        <TextView
+            android:id="@+id/pod_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="采购单号："
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pod_name"
+            tools:text="采购单号：CG123456789" />
+
+        <TextView
+            android:id="@+id/pod_purchase_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintBaseline_toBaselineOf="@id/pod_no"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="采购日期：2019/08/08" />
+
+        <TextView
+            android:id="@+id/pod_arrive_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="到货日期："
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintEnd_toEndOf="@id/pod_purchase_date"
+            app:layout_constraintTop_toBottomOf="@id/pod_purchase_date"
+            tools:text="到货日期：2019/08/08" />
+
+        <TextView
+            android:id="@+id/pod_org"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/purchaser_order_num"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="100"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:textSize="@dimen/base_text_13"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/purchaser_order_num"
-                android:layout_marginTop="5dp"
-                android:text="采购数量"
-                android:gravity="center"
-                android:textSize="@dimen/base_text_13"/>
-        </RelativeLayout>
-        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:singleLine="true"
+            android:text="采购组织："
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintBaseline_toBaselineOf="@id/pod_arrive_date"
+            app:layout_constraintEnd_toStartOf="@id/pod_arrive_date"
+            app:layout_constraintStart_toStartOf="@id/pod_no"
+            tools:text="采购组织：北京一键食达" />
+
+        <TextView
+            android:id="@+id/pod_remark"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/purchaser_order_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="100"
-                android:layout_marginTop="15dp"
-                android:gravity="center"
-                android:textSize="@dimen/base_text_13"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/purchaser_order_amount"
-                android:layout_marginTop="5dp"
-                android:text="合计金额"
-                android:gravity="center"
-                android:textSize="@dimen/base_text_13"/>
-        </RelativeLayout>
-    </LinearLayout>
-    <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="3dp"
+            android:text="备注信息："
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/pod_org"
+            app:layout_constraintTop_toBottomOf="@id/pod_org"
+            tools:text="备注信息：无" />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/pod_amount_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:layout_marginTop="5dp">
+        android:layout_below="@id/pod_info_group"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
+            android:id="@+id/pod_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
-            android:text="商品明细"
-            android:textSize="@dimen/base_text_10"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:background="#F3F3F3"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
-    </RelativeLayout>
-</LinearLayout>
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="0"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintEnd_toStartOf="@id/pod_num"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/pod_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="0"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintEnd_toStartOf="@id/pod_amount"
+            app:layout_constraintStart_toEndOf="@id/pod_category"
+            app:layout_constraintTop_toTopOf="@id/pod_category" />
+
+        <TextView
+            android:id="@+id/pod_amount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="0"
+            android:textAppearance="@style/TextAppearance.City22.Middle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/pod_num"
+            app:layout_constraintTop_toTopOf="@id/pod_category" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="采购品项"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintEnd_toEndOf="@id/pod_category"
+            app:layout_constraintStart_toStartOf="@id/pod_category"
+            app:layout_constraintTop_toBottomOf="@id/pod_category" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="采购数量"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintEnd_toEndOf="@id/pod_num"
+            app:layout_constraintStart_toStartOf="@id/pod_num"
+            app:layout_constraintTop_toBottomOf="@id/pod_num" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="合计金额"
+            android:textAppearance="@style/TextAppearance.City22.Little.Color666"
+            app:layout_constraintEnd_toEndOf="@id/pod_amount"
+            app:layout_constraintStart_toStartOf="@id/pod_amount"
+            app:layout_constraintTop_toBottomOf="@id/pod_amount" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/pod_details_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@id/pod_amount_group"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_10"
+        android:text="商品明细"
+        android:textAppearance="@style/TextAppearance.City22.Little.Color666" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignBottom="@id/pod_details_title"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@color/color_eeeeee" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/pod_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pod_details_title"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+</RelativeLayout>

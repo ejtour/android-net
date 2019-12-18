@@ -4,12 +4,12 @@ package com.hll_sc_app.bean.stockmanage.purchaserorder;
  * @author chukun
  * 采购商记录
  */
-public class PurchaserOrderRecord {
+public class PurchaserOrderBean {
 
-    private String[] billStatusDescArray = new String[]{ "",
-            "未审核",          "已审核",      "已提交",   "配送中心审核", "部分已接单",  "审核中",      "已接单",      "已发货",
-            "被拒绝",          "未结算",      "已结算",   "已驳回",      "已提交至wms", "已提交至商城", "未推送至wms", "未推送至商城",
-            "商城驳回订货单",   "18已推送tms", "未推送tms", "已退货",     "待收货",      "已取消",      "已处理",      "已入库"
+    private String[] billStatusDescArray = new String[]{"",
+            "未审核", "已审核", "已提交", "配送中心审核", "部分已接单", "审核中", "已接单", "已发货",
+            "被拒绝", "未结算", "已结算", "已驳回", "已提交至wms", "已提交至商城", "未推送至wms", "未推送至商城",
+            "商城驳回订货单", "18已推送tms", "未推送tms", "已退货", "待收货", "已取消", "已处理", "已入库"
     };
 
     /**
@@ -45,7 +45,7 @@ public class PurchaserOrderRecord {
      * 9-被拒绝，10-未结算，11-已结算 ,12-已驳回 ，13-已提交至wms， 14-已提交至商城 ,15-未推送至wms 16-未推送至商城
      * 17:商城驳回订货单 18已推送tms 19未推送tms 20:已退货 21:待收货 22:已取消 23:已处理 24:已入库
      */
-    private int    billStatus;
+    private int billStatus;
     /**
      * 配送中心ID
      */
@@ -69,7 +69,7 @@ public class PurchaserOrderRecord {
     /**
      * 调整前总金额
      */
-    private String totalPrice;
+    private double totalPrice;
 
 
     public String getBillCreateBy() {
@@ -176,21 +176,22 @@ public class PurchaserOrderRecord {
         this.supplierName = supplierName;
     }
 
-    public String getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(String totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
     /**
      * 订单状态,1-未审核,2-已审核,3-已提交,4-配送中心审核，5-部分已接单，6-审核中，7-已接单，8-已发货，
-     *      9-被拒绝，10-未结算，11-已结算 ,12-已驳回 ，13-已提交至wms， 14-已提交至商城 ,15-未推送至wms 16-未推送至商城
-     *      17:商城驳回订货单 18已推送tms 19未推送tms 20:已退货 21:待收货 22:已取消 23:已处理 24:已入库
+     * 9-被拒绝，10-未结算，11-已结算 ,12-已驳回 ，13-已提交至wms， 14-已提交至商城 ,15-未推送至wms 16-未推送至商城
+     * 17:商城驳回订货单 18已推送tms 19未推送tms 20:已退货 21:待收货 22:已取消 23:已处理 24:已入库
+     *
      * @return
      */
-    public String getStatusDesc(){
-       return billStatusDescArray[this.billStatus];
+    public String getStatusDesc() {
+        return billStatusDescArray[this.billStatus];
     }
 }

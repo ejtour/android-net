@@ -1,111 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_activity_bg"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/txt_purchaser_order_title"
+    <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/spo_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="@color/base_colorPrimary">
+        android:layout_height="@dimen/title_bar_height"
+        app:tb_title="采购单查询" />
 
-        <ImageView
-            android:id="@+id/img_back"
-            style="@style/BtnClose"
-            android:layout_marginTop="15dp"/>
+    <com.hll_sc_app.widget.SearchView
+        android:id="@+id/spo_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="采购单查询"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/base_white"
-            android:textSize="@dimen/base_text_18"
-            />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:background="@color/color_ffffff"
-        android:layout_height="25dp">
-        <com.hll_sc_app.widget.SearchView
-            android:id="@+id/search_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/base_white">
-        <ImageView
-            android:id="@+id/purchaser_order_filter"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:id="@+id/spo_type_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/ic_filler"
-            android:layout_centerVertical="true"/>
-        <TextView
-            android:layout_toRightOf="@+id/purchaser_order_filter"
-            android:id="@+id/purchaser_order_filter_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="采购日期"
-            android:textSize="12dp"
-            android:layout_marginLeft="5dp"
-            android:layout_centerVertical="true"/>
-        <ImageView
-            android:layout_toRightOf="@+id/purchaser_order_filter_text"
-            android:id="@+id/purchaser_filter_drop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/ic_arrow_drop"
-            android:layout_centerVertical="true"/>
-        <TextView
-            android:id="@+id/purchaser_order_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2018/09/09 - 2018/09/16"
-            android:textSize="@dimen/base_text_12"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:drawableRight="@drawable/ic_arrow_drop"
-            android:drawablePadding="5dp"
-            android:layout_marginRight="23dp"
-            />
-        <ImageView
-            android:id="@+id/purchaser_order_date_icon"
-            android:layout_toLeftOf="@id/purchaser_order_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_date"
-            android:layout_centerVertical="true"/>
-    </RelativeLayout>
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:id="@+id/spo_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_date_filter"
+                android:drawablePadding="5dp"
+                android:text="采购日期"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666" />
+
+            <com.hll_sc_app.widget.TriangleView
+                android:id="@+id/spo_type_arrow"
+                android:layout_width="6dp"
+                android:layout_height="3dp"
+                android:layout_marginLeft="5dp"
+                app:trv_color="@color/color_666666"
+                app:trv_direction="bottom" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/spo_date_btn"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp">
+
+            <TextView
+                android:id="@+id/spo_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_date"
+                android:drawablePadding="5dp"
+                android:textAppearance="@style/TextAppearance.City22.Small.Color666"
+                tools:text="2018/09/09 - 2018/09/16" />
+
+
+            <com.hll_sc_app.widget.TriangleView
+                android:id="@+id/spo_date_arrow"
+                android:layout_width="6dp"
+                android:layout_height="3dp"
+                android:layout_marginLeft="5dp"
+                app:trv_color="@color/color_dddddd"
+                app:trv_direction="bottom" />
+        </LinearLayout>
+    </LinearLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+        android:id="@+id/spo_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:background="@color/base_white">
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:background="#F3F3F3"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
-        </RelativeLayout>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/spo_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="5dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     
 </LinearLayout>
