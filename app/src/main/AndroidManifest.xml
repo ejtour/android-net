@@ -1321,10 +1321,9 @@
             android:name=".app.feedbackcomplain.feedback.detail.FeedbackDetailActivity"
             android:screenOrientation="portrait" />
 
-<<<<<<< HEAD
         <activity android:name=".app.setting.pricetransformratio.PriceTransformRatioActivity"
             android:screenOrientation="portrait"/>
-=======
+
         <activity
             android:name=".app.report.profit.customer.CustomerProfitActivity"
             android:screenOrientation="portrait" />
@@ -1349,7 +1348,6 @@
             android:name=".app.report.credit.details.daily.DailyCreditDetailsActivity"
             android:screenOrientation="portrait" />
 
->>>>>>> origin/dev
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

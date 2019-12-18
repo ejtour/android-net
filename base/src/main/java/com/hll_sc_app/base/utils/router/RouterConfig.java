@@ -1457,12 +1457,11 @@ public class RouterConfig {
     public static final String ACTIVITY_FEED_BACK_DETAIL = "/activity/feed/back/detail";
 
     /**
-<<<<<<< HEAD
      * 价格根据转换率变价设置
      */
     public static final String SETTING_PRICE_TRANSFORM_RADIO = "/activity/setting/price/transform/radio";
-=======
-     * 客户毛利统计表
+
+    /**     * 客户毛利统计表
      */
     public static final String REPORT_PROFIT_CUSTOMER = "/activity/report/profit/customer";
 
@@ -1475,7 +1474,6 @@ public class RouterConfig {
      * 品类毛利统计表
      */
     public static final String REPORT_PROFIT_CATEGORY = "/activity/report/profit/category";
->>>>>>> origin/dev
 
     /**
      * 客户应收账款
