@@ -25,12 +25,13 @@ public class CardManageRechargePresent implements ICardManageRechargeContract.IP
 
 
     @Override
-    public void recharge(String cashBalance, String giftBalance, String remark) {
+    public void recharge(String cashBalance, String giftBalance, String remark,String payType) {
         CardManageService.INSTANCE
                 .recharge(BaseMapReq.newBuilder()
                         .put("cashBalance", cashBalance)
                         .put("giftBalance", giftBalance)
                         .put("remark", remark)
+                        .put("payType", payType)
                         .put("id", mView.getCardId())
                         .create()
                 )

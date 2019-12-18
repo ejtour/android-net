@@ -87,7 +87,7 @@ public class CardManageRechargeActivity extends BaseLoadActivity implements ICar
 
     @Override
     public void recharge() {
-        mPresent.recharge(mCardManageBean.getCashBalanceText(), mCardManageBean.getGiftBalanceText(), mCardManageBean.getRemark());
+        mPresent.recharge(mCardManageBean.getCashBalanceText(), mCardManageBean.getGiftBalanceText(), mCardManageBean.getRemark(),mCardManageBean.getPayType());
     }
 
     @Override

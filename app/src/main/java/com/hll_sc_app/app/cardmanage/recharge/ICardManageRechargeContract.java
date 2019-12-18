@@ -19,6 +19,6 @@ public interface ICardManageRechargeContract {
 
 
     interface IPresent extends IPresenter<IView> {
-        void recharge(String cashBalance, String giftBalance, String remark);
+        void recharge(String cashBalance, String giftBalance, String remark,String payType);
     }
 }
