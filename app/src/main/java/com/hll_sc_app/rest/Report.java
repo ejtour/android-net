@@ -14,6 +14,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.credit.CreditBean;
 import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
@@ -619,6 +620,21 @@ public class Report {
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
+
+    /**
+     * 查询客户应收账款
+     *
+     * @param req
+     * @param observer
+     */
+    public static void queryCustomerCredit(BaseMapReq req, SimpleObserver<SingleListResp<CreditBean>> observer) {
+        ReportService.INSTANCE
+                .queryCustomerCredit(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
 
     /**
      * 查询应收账款明细表

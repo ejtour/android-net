@@ -1472,6 +1472,11 @@ public class RouterConfig {
     public static final String REPORT_PROFIT_CATEGORY = "/activity/report/profit/category";
 
     /**
+     * 客户应收账款
+     */
+    public static final String REPORT_CREDIT = "/activity/report/credit";
+
+    /**
      * 客户应收账款明细表
      */
     public static final String REPORT_CREDIT_DETAILS_CUSTOMER = "/activity/report/credit/details/customer";

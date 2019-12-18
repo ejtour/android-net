@@ -1334,6 +1334,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".app.report.credit.CustomerCreditActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".app.report.credit.details.customer.CustomerCreditDetailsActivity"
             android:screenOrientation="portrait" />
 

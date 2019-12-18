@@ -7,6 +7,7 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.credit.CreditBean;
 import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
@@ -288,6 +289,10 @@ public interface ReportService {
     @POST(HttpConfig.URL)
     @Headers("pv:111026")
     Observable<BaseResp<ProfitResp>> queryProfit(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111016")
+    Observable<BaseResp<SingleListResp<CreditBean>>> queryCustomerCredit(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111017")
