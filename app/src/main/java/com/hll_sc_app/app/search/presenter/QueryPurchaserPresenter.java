@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.search.presenter;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.api.CommonService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
@@ -19,6 +21,10 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -31,6 +37,12 @@ public class QueryPurchaserPresenter extends BaseSearchPresenter {
 
     @Override
     public void requestSearch(String searchWords) {
+
+        if (TextUtils.isEmpty(searchWords)){
+            Observable.timer(0, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .subscribe(aLong -> mView.refreshSearchData(new ArrayList<>()));
+            return;
+        }
         CommonService.INSTANCE
                 .queryPurchaserList(BaseMapReq.newBuilder()
                         .put("ignoreGroupActive", "0")

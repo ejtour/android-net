@@ -1,5 +1,7 @@
 package com.hll_sc_app.app.order.search;
 
+import android.text.TextUtils;
+
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
@@ -10,6 +12,10 @@ import com.hll_sc_app.rest.Common;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -21,6 +27,11 @@ public class OrderSearchPresenter implements IOrderSearchContract.IOrderSearchPr
 
     @Override
     public void requestSearch(String searchWords) {
+        if (TextUtils.isEmpty(searchWords)) {
+            Observable.timer(0, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .subscribe(aLong -> mView.refreshSearchData(new ArrayList<>()));
+            return;
+        }
         if (mView.getIndex() == 0)
             Common.searchShopList(searchWords, new SimpleObserver<SingleListResp<ShopSearchEvent>>(mView, false) {
                 @Override
