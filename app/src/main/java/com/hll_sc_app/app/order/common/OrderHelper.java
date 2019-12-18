@@ -27,27 +27,50 @@ import java.util.Date;
 
 public class OrderHelper {
 
-    private static final String[] PAY_TYPES = {"货到付款", "账期支付", "在线支付"};
-    private static final String[] PAYMENT_WAYS = {"微信支付", "支付宝支付", "银联支付", "现金支付", "支票支付", "快捷支付", "余额支付", "微信扫码", "支付宝扫码","","","储值卡支付"};
-
     /**
      * 获取订单支付类型
      */
     public static String getPayType(int payType) {
-        if (payType - 1 < 0 || payType - 1 >= PAY_TYPES.length) {
-            return "";
+        switch (payType) {
+            case 1:
+                return "货到付款";
+            case 2:
+                return "账期支付";
+            case 3:
+                return "在线支付";
+            default:
+                return "";
         }
-        return PAY_TYPES[payType - 1];
     }
 
     /**
      * 获取支付方式
      */
     public static String getPaymentWay(int way) {
-        if (way - 1 < 0 || way - 1 >= PAYMENT_WAYS.length) {
-            return "";
+        switch (way) {
+            case 1:
+                return "微信支付";
+            case 2:
+                return "支付宝支付";
+            case 3:
+                return "银联支付";
+            case 4:
+                return "现金支付";
+            case 5:
+                return "支票支付";
+            case 6:
+                return "快捷支付";
+            case 7:
+                return "余额支付";
+            case 8:
+                return "微信扫码";
+            case 9:
+                return "支付宝扫码";
+            case 12:
+                return "储值卡支付";
+            default:
+                return "";
         }
-        return PAYMENT_WAYS[way - 1];
     }
 
     public static CharSequence handleExtraInfo(OrderResp resp) {
@@ -86,7 +109,7 @@ public class OrderHelper {
         return source;
     }
 
-    public static String getCancelRole(int canceler) {
+    private static String getCancelRole(int canceler) {
         switch (canceler) {
             case 0:
                 return "系统自动";
