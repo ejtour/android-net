@@ -134,7 +134,7 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
 
     @OnClick(R.id.as_search_button)
     public void search() {
-        if (mStrategy.getSearchPresenter() != null && mStrategy.isSearchByResult()) {
+        if (mStrategy != null && mStrategy.getSearchPresenter() != null && mStrategy.isSearchByResult()) {
             if (mAdapter.getData().size() == 0) {
                 showToast("没有符合的搜索结果，请更换搜索词");
                 return;
