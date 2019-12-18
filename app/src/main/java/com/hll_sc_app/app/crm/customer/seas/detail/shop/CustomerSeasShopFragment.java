@@ -11,12 +11,11 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.order.common.OrderHelper;
+import com.hll_sc_app.app.cooperation.detail.CooperationDetailActivity;
 import com.hll_sc_app.base.BaseLazyFragment;
 import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
-import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.DateUtil;
 
 import butterknife.BindView;
@@ -85,7 +84,7 @@ public class CustomerSeasShopFragment extends BaseLazyFragment {
         mAddress.setText(mBean.getShopAddress());
         mGroup.setText(mBean.getPurchaserName());
         mDate.setText(DateUtil.getReadableTime(mBean.getCooperationTime(), CalendarUtils.FORMAT_DATE_TIME));
-        mWay.setText(OrderHelper.getPayType(CommonUtils.getInt(mBean.getSettlementWay())));
+        mWay.setText(CooperationDetailActivity.getSettlementWay(mBean.getSettlementWay()));
         mSalesman.setText(mBean.getSalesmanName());
     }
 

@@ -23,6 +23,12 @@ public class OptionsBean {
         this.label = label;
     }
 
+
+    public OptionsBean(String label, @DrawableRes int iconRes) {
+        this.iconRes = iconRes;
+        this.label = label;
+    }
+
     @DrawableRes
     public int getIconRes() {
         return iconRes;

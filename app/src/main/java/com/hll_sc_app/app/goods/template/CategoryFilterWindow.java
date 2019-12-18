@@ -60,7 +60,7 @@ public class CategoryFilterWindow extends BasePopupWindow {
 
     private Set<CategoryItem> mSelectList;
 
-    CategoryFilterWindow(Activity context, CategoryResp resp) {
+    public CategoryFilterWindow(Activity context, CategoryResp resp) {
         super(context);
         View view = View.inflate(context, R.layout.window_template_category_filter, null);
         view.setOnClickListener(v -> dismiss());
@@ -277,7 +277,7 @@ public class CategoryFilterWindow extends BasePopupWindow {
         return selectAll;
     }
 
-    void setListener(ConfirmListener listener) {
+    public void setListener(ConfirmListener listener) {
         this.mListener = listener;
     }
 
@@ -302,7 +302,7 @@ public class CategoryFilterWindow extends BasePopupWindow {
         }
     }
 
-    Tuple<List<String>, List<String>> getCategoryThreeIds() {
+    public Tuple<List<String>, List<String>> getCategoryThreeIds() {
         Tuple<List<String>, List<String>> tuple = new Tuple<>();
         List<String> listId = new ArrayList<>();
         List<String> listName = new ArrayList<>();
@@ -317,7 +317,7 @@ public class CategoryFilterWindow extends BasePopupWindow {
         return tuple;
     }
 
-    interface ConfirmListener {
+    public interface ConfirmListener {
         /**
          * 确定
          *

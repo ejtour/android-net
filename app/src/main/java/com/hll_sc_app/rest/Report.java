@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -13,10 +14,11 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
+import com.hll_sc_app.bean.report.credit.CreditBean;
+import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
+import com.hll_sc_app.bean.report.lack.CustomerLackResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.LossBean;
@@ -26,6 +28,7 @@ import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
+import com.hll_sc_app.bean.report.profit.ProfitResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
@@ -52,6 +55,8 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.Date;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -188,11 +193,11 @@ public class Report {
     /**
      * 客户缺货统计表
      *
-     * @param requestParams 查询参数
+     * @param req 查询参数
      */
-    public static void queryCustomerLack(CustomerLackReq requestParams, SimpleObserver<CustomerLackResp> observer) {
+    public static void queryCustomerLack(BaseMapReq req, SimpleObserver<CustomerLackResp> observer) {
         ReportService.INSTANCE
-                .queryCustomerLack(new BaseReq<>(requestParams))
+                .queryCustomerLack(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -597,6 +602,54 @@ public class Report {
     public static void queryRefundReasonStatistic(BaseMapReq req, SimpleObserver<SingleListResp<RefundReasonBean>> observer) {
         ReportService.INSTANCE
                 .queryRefundReasonStatics(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询毛利
+     *
+     * @param req
+     * @param observer
+     */
+    public static void queryProfit(BaseMapReq req, SimpleObserver<ProfitResp> observer) {
+        ReportService.INSTANCE
+                .queryProfit(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询客户应收账款
+     *
+     * @param req
+     * @param observer
+     */
+    public static void queryCustomerCredit(BaseMapReq req, SimpleObserver<SingleListResp<CreditBean>> observer) {
+        ReportService.INSTANCE
+                .queryCustomerCredit(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+
+    /**
+     * 查询应收账款明细表
+     *
+     * @param daily    是否为日应收账款
+     * @param observer
+     */
+    public static void queryCreditDetails(boolean daily, BaseMapReq req, SimpleObserver<CreditDetailsResp> observer) {
+        Observable<BaseResp<CreditDetailsResp>> observable;
+        if (daily) {
+            observable = ReportService.INSTANCE.queryDailyCreditDetails(req);
+        } else {
+            observable = ReportService.INSTANCE.queryCustomerCreditDetails(req);
+        }
+        observable
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

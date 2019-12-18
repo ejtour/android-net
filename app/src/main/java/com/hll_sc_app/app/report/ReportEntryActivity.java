@@ -70,13 +70,21 @@ public class ReportEntryActivity extends BaseLoadActivity {
             list.add(new ReportItem(R.drawable.ic_report_receive_difference, "收货差异汇总", RouterConfig.REPORT_RECEIVE_DIFF));
             list.add(new ReportItem(R.drawable.ic_report_products_details, "缺货商品明细表", RouterConfig.REPORT_LACK_DETAILS));
             list.add(new ReportItem(R.drawable.ic_report_products_details, "收货差异商品明细表", RouterConfig.REPORT_RECEIVE_DIFF_DETAILS));
-            list.add(new ReportItem(R.drawable.ic_report_stockout_statistics, "客户缺货统计表", RouterConfig.REPORT_CUSTOMER_LACK_SUMMARY, true));
+            list.add(new ReportItem(R.drawable.ic_report_stockout_statistics, "客户缺货统计表", RouterConfig.REPORT_CUSTOMER_LACK, true));
 
             list.add(new ReportItem(R.drawable.ic_report_receive_difference_details, "配送及时率统计", RouterConfig.REPORT_DELIVERY_TIME, true));
 
             list.add(new ReportItem(R.drawable.ic_wait_refund, "待退货统计表", RouterConfig.REPORT_WAIT_REFUND));
             list.add(new ReportItem(R.drawable.ic_report_refunded, "退货统计表", RouterConfig.REPORT_REFUND_STATISTIC));
             list.add(new ReportItem(R.drawable.ic_report_refunded_customer_product, "退货客户与商品统计表", RouterConfig.REPORT_REFUND_CUSTOMER_PRODUCT, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_customer_profit, "客户毛利统计表", RouterConfig.REPORT_PROFIT_CUSTOMER));
+            list.add(new ReportItem(R.drawable.ic_report_shop_sales, "门店毛利统计表", RouterConfig.REPORT_PROFIT_SHOP));
+            list.add(new ReportItem(R.drawable.ic_report_category_profit, "品类毛利统计表", RouterConfig.REPORT_PROFIT_CATEGORY, true));
+
+            list.add(new ReportItem(R.drawable.ic_report_credit_customer, "客户应收账款", RouterConfig.REPORT_CREDIT));
+            list.add(new ReportItem(R.drawable.ic_report_credit_details, "客户应收账款明细表", RouterConfig.REPORT_CREDIT_DETAILS_CUSTOMER));
+            list.add(new ReportItem(R.drawable.ic_report_credit_daily, "日应收账款汇总表", RouterConfig.REPORT_CREDIT_DETAILS_DAILY, true));
 
             list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS));
             list.add(new ReportItem(R.drawable.ic_report_shop_loss, "流失门店明细表", RouterConfig.REPORT_SHOP_LOSS, true));

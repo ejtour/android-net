@@ -187,6 +187,7 @@ public class CooperationPurchaserActivity extends BaseLoadActivity implements Co
         layoutParams.topToTop = R.id.wco_list;
         layoutParams.topMargin = UIUtils.dip2px(55);
         layoutParams.rightMargin = UIUtils.dip2px(10);
+        mWindowRedDot.setVisibility(View.GONE);
         contentView.addView(mWindowRedDot);
     }
 

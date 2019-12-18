@@ -372,6 +372,7 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
 
         @Override
         protected void convert(BaseViewHolder helper, SkuGoodsBean bean) {
+            boolean updatable = TextUtils.equals(bean.getCostPriceModifyFlag(), "0");
             helper.setText(R.id.txt_productName, bean.getProductName())
                     .setText(R.id.txt_specContent, bean.getSpecContent())
                     .setText(R.id.txt_costPrice, getPrice(getMoney(bean.getCostPrice()),
@@ -379,12 +380,10 @@ public class PriceManageActivity extends BaseLoadActivity implements PriceManage
                     .setText(R.id.txt_productPrice, getPrice(getMoney(bean.getProductPrice()),
                             bean.getSaleUnitName()))
                     .setText(R.id.txt_group_info, bean.getCargoOwnerName())
-                    .setGone(R.id.ll_cost_price, TextUtils.equals(bean.getCostPriceModifyFlag(), "0"))
+                    .setText(R.id.txt_edt_costPrice, updatable ? "点击修改成本价" : "成本价")
                     .setGone(R.id.txt_divider, !TextUtils.isEmpty(bean.getCargoOwnerName()) && !TextUtils.isEmpty(bean.getSpecContent()));
-
             ((GlideImageView) helper.getView(R.id.img_imgUrl)).setImageURL(bean.getImgUrl());
-
-
+            helper.getView(R.id.ll_cost_price).setClickable(updatable);
         }
 
         private SpannableString getPrice(String price, String unit) {

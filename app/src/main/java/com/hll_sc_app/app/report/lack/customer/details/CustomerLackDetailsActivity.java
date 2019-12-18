@@ -1,4 +1,4 @@
-package com.hll_sc_app.app.report.customerLack.detail;
+package com.hll_sc_app.app.report.lack.customer.details;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,25 +8,21 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
-import com.google.gson.Gson;
 import com.hll_sc_app.R;
-import com.hll_sc_app.app.crm.daily.list.CrmDailyListActivity;
 import com.hll_sc_app.app.search.SearchActivity;
 import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.utils.UIUtils;
+import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackItem;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackSummary;
+import com.hll_sc_app.bean.report.lack.CustomerLackDetailsBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -34,6 +30,7 @@ import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
+import com.hll_sc_app.widget.TitleBar;
 import com.hll_sc_app.widget.report.ExcelLayout;
 import com.hll_sc_app.widget.report.ExcelRow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -44,7 +41,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 /**
@@ -53,59 +49,55 @@ import butterknife.OnClick;
  */
 
 @Route(path = RouterConfig.REPORT_CUSTOMER_LACK_DETAIL)
-public class CustomerLackDetailActivity extends BaseLoadActivity implements CustomerLackDetailContract.ICustomerLackDetailView {
-    private static final int COLUMN_NUM = 8;
-    private static final int[] WIDTH_ARRAY = {150, 120, 80, 100, 80, 80, 90,100};
-
-    @BindView(R.id.search_view)
+public class CustomerLackDetailsActivity extends BaseLoadActivity implements ICustomerLackDetailsContract.ICustomerLackDetailsView {
+    private static final int[] WIDTH_ARRAY = {150, 120, 80, 100, 80, 80, 90, 100};
+    @BindView(R.id.cld_title_bar)
+    TitleBar mTitleBar;
+    @BindView(R.id.cld_search_view)
     SearchView mSearchView;
-    @BindView(R.id.txt_options)
-    ImageView exportView;
-    @BindView(R.id.ogd_excel)
+    @BindView(R.id.cld_excel)
     ExcelLayout mExcel;
-    private CustomerLackDetailContract.ICustomerLackDetailPresenter mPresenter;
-    @Autowired(name = "parcelable")
-    CustomerLackReq customerLackParams = new CustomerLackReq();
+    @Autowired(name = "object0")
+    String mPurchaserID;
+    @Autowired(name = "object1")
+    String mShopID;
+    @Autowired(name = "object2")
+    String mStartDate;
+    @Autowired(name = "object3")
+    String mEndDate;
+    private ICustomerLackDetailsContract.ICustomerLackDetailPresenter mPresenter;
     private ContextOptionsWindow mOptionsWindow;
+    private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();
 
-    private static String purchaserID;
-    private static String shopID;
-    private static String mStartDate;
-    private static String mEndDate;
-
-
-    public static void start(CustomerLackSummary item, String startDate, String endDate){
-        CustomerLackReq params = new CustomerLackReq();
-        params.setType(1);
-        params.setShopID(item.getShopID());
-        params.setPurchaserID(item.getPurchaserID());
-        params.setStartDate(startDate);
-        params.setEndDate(endDate);
-        purchaserID = item.getPurchaserID();
-        shopID = item.getShopID();
-        mStartDate  = startDate;
-        mEndDate = endDate;
-        RouterUtil.goToActivity(RouterConfig.REPORT_CUSTOMER_LACK_DETAIL, params);
+    public static void start(String purchaserID, String shopID, String startDate, String endDate) {
+        RouterUtil.goToActivity(RouterConfig.REPORT_CUSTOMER_LACK_DETAIL, purchaserID, shopID, startDate, endDate);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report_customer_lack_detail);
-        ButterKnife.bind(this);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        setContentView(R.layout.activity_report_customer_lack_details);
+        ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
         initView();
         initData();
     }
 
     private void initData() {
+        mReq.put("type", "2");
+        mReq.put("startDate", mStartDate);
+        mReq.put("endDate", mEndDate);
+        mReq.put("purchaserID", mPurchaserID);
+        mReq.put("shopID", mShopID);
+        mReq.put("groupID", UserConfig.getGroupID());
         mPresenter = CustomerLackDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
 
     private void initView() {
+        mTitleBar.setRightBtnClick(this::showOptionsWindow);
         mExcel.setHeaderView(generateHeader());
         mExcel.setColumnDataList(generateColumnData());
         mExcel.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -126,14 +118,14 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
         mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
             @Override
             public void click(String searchContent) {
-                SearchActivity.start(CustomerLackDetailActivity.this,
-                        "", CommonSearch.class.getSimpleName());
+                SearchActivity.start(CustomerLackDetailsActivity.this,
+                        searchContent, CommonSearch.class.getSimpleName());
             }
 
             @Override
             public void toSearch(String searchContent) {
-                customerLackParams.setProductKeyword(searchContent);
-                mPresenter.refresh();
+                mReq.put("productKeyword", searchContent);
+                mPresenter.start();
             }
         });
     }
@@ -144,27 +136,13 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
         super.hideLoading();
     }
 
-    @OnClick({R.id.img_back, R.id.txt_options,})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.txt_options:
-                showOptionsWindow(exportView);
-                break;
-            default:
-                break;
-        }
-    }
-
     private void showOptionsWindow(View v) {
         if (mOptionsWindow == null) {
             mOptionsWindow = new ContextOptionsWindow(this)
                     .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_DETAIL_INFO)))
                     .setListener((adapter, view, position) -> {
                         mOptionsWindow.dismiss();
-                        export(null);
+                        mPresenter.export(null);
                     });
         }
         mOptionsWindow.showAsDropDownFix(v, Gravity.END);
@@ -175,36 +153,27 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
             String name = data.getStringExtra("name");
-            mSearchView.showSearchContent(!TextUtils.isEmpty(name),name);
+            if (!TextUtils.isEmpty(name))
+                mSearchView.showSearchContent(true, name);
         }
     }
 
     private View generateHeader() {
         ExcelRow row = new ExcelRow(this);
-        row.updateChildView(COLUMN_NUM);
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
-        array[0] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[0]));
-        array[1] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[1]));
-        array[2] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[2]));
-        array[3] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[3]));
-        array[4] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[4]));
-        array[5] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[5]));
-        array[6] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[6]));
-        array[7] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[7]));
+        row.updateChildView(WIDTH_ARRAY.length);
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
+        for (int i = 0; i < WIDTH_ARRAY.length; i++) {
+            array[i] = ExcelRow.ColumnData.createDefaultHeader(UIUtils.dip2px(WIDTH_ARRAY[i]));
+        }
         row.updateItemData(array);
-        row.updateRowDate("商品名称", "规格/单位", "订货量", "订货金额", "发货量", "缺货量", "验货金额","缺货率");
+        row.updateRowDate("商品名称", "规格/单位", "订货量", "订货金额", "发货量", "缺货量", "验货金额", "缺货率");
         row.setBackgroundResource(R.drawable.bg_excel_header);
         return row;
     }
 
     @Override
-    public CustomerLackReq getRequestParams(){
-        customerLackParams.setStartDate(mStartDate);
-        customerLackParams.setEndDate(mEndDate);
-        customerLackParams.setPurchaserID(purchaserID);
-        customerLackParams.setShopID(shopID);
-        customerLackParams.setType(2);
-        return customerLackParams;
+    public BaseMapReq.Builder getReq() {
+        return mReq;
     }
 
     @Override
@@ -219,31 +188,21 @@ public class CustomerLackDetailActivity extends BaseLoadActivity implements Cust
 
     @Override
     public void bindEmail() {
-        Utils.bindEmail(this, this::export);
-    }
-
-    @Override
-    public void export(String email) {
-        Gson gson = new Gson();
-        String json = gson.toJson(customerLackParams);
-        mPresenter.export(json,email);
+        Utils.bindEmail(this, mPresenter::export);
     }
 
     private ExcelRow.ColumnData[] generateColumnData() {
-        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[COLUMN_NUM];
+        ExcelRow.ColumnData[] array = new ExcelRow.ColumnData[WIDTH_ARRAY.length];
         array[0] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[0]), Gravity.CENTER_VERTICAL);
         array[1] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[1]), Gravity.CENTER_VERTICAL);
-        array[2] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[2]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[3] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[3]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[4] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[4]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[5] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[5]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[6] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[6]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        array[7] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[7]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        for (int i = 2; i < WIDTH_ARRAY.length; i++) {
+            array[i] = new ExcelRow.ColumnData(UIUtils.dip2px(WIDTH_ARRAY[i]), Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+        }
         return array;
     }
 
     @Override
-    public void setList(List<CustomerLackItem> beans, boolean append) {
+    public void setList(List<CustomerLackDetailsBean> beans, boolean append) {
         mExcel.setEnableLoadMore(!CommonUtils.isEmpty(beans) && beans.size() == 20);
         mExcel.setData(beans, append);
     }

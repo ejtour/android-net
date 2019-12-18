@@ -7,12 +7,13 @@ import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackReq;
-import com.hll_sc_app.bean.report.customerLack.CustomerLackResp;
+import com.hll_sc_app.bean.report.credit.CreditBean;
+import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveDetailBean;
 import com.hll_sc_app.bean.report.customreceivequery.CustomReceiveListResp;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
+import com.hll_sc_app.bean.report.lack.CustomerLackResp;
 import com.hll_sc_app.bean.report.lack.LackDetailsResp;
 import com.hll_sc_app.bean.report.lack.LackDiffResp;
 import com.hll_sc_app.bean.report.loss.LossBean;
@@ -22,15 +23,16 @@ import com.hll_sc_app.bean.report.ordergoods.OrderGoodsResp;
 import com.hll_sc_app.bean.report.produce.ProduceDetailBean;
 import com.hll_sc_app.bean.report.produce.ProduceInputReq;
 import com.hll_sc_app.bean.report.produce.ProduceSummaryResp;
+import com.hll_sc_app.bean.report.profit.ProfitResp;
 import com.hll_sc_app.bean.report.purchase.ManHourBean;
 import com.hll_sc_app.bean.report.purchase.ManHourReq;
 import com.hll_sc_app.bean.report.purchase.PurchaseSummaryResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffDetailsResp;
 import com.hll_sc_app.bean.report.receive.ReceiveDiffResp;
 import com.hll_sc_app.bean.report.refund.RefundCustomerResp;
+import com.hll_sc_app.bean.report.refund.RefundDetailsResp;
 import com.hll_sc_app.bean.report.refund.RefundProductResp;
 import com.hll_sc_app.bean.report.refund.RefundReasonBean;
-import com.hll_sc_app.bean.report.refund.RefundDetailsResp;
 import com.hll_sc_app.bean.report.refund.RefundResp;
 import com.hll_sc_app.bean.report.req.ReportExportReq;
 import com.hll_sc_app.bean.report.resp.bill.CustomerSalesResp;
@@ -125,7 +127,7 @@ public interface ReportService {
 
     @POST(HttpConfig.URL)
     @Headers("pv:111053")
-    Observable<BaseResp<CustomerLackResp>> queryCustomerLack(@Body BaseReq<CustomerLackReq> body);
+    Observable<BaseResp<CustomerLackResp>> queryCustomerLack(@Body BaseMapReq req);
 
     @POST(HttpConfig.URL)
     @Headers("pv:111007")
@@ -284,5 +286,19 @@ public interface ReportService {
     @Headers("pv:103171")
     Observable<BaseResp<List<CustomReceiveDetailBean>>> queryCustomReceiveDetail(@Body BaseMapReq req);
 
+    @POST(HttpConfig.URL)
+    @Headers("pv:111026")
+    Observable<BaseResp<ProfitResp>> queryProfit(@Body BaseMapReq req);
 
+    @POST(HttpConfig.URL)
+    @Headers("pv:111016")
+    Observable<BaseResp<SingleListResp<CreditBean>>> queryCustomerCredit(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111017")
+    Observable<BaseResp<CreditDetailsResp>> queryCustomerCreditDetails(@Body BaseMapReq req);
+
+    @POST(HttpConfig.URL)
+    @Headers("pv:111018")
+    Observable<BaseResp<CreditDetailsResp>> queryDailyCreditDetails(@Body BaseMapReq req);
 }

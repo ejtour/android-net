@@ -886,7 +886,7 @@ public class RouterConfig {
     /**
      * 客户缺货汇总
      */
-    public static final String REPORT_CUSTOMER_LACK_SUMMARY = "/activity/customer/lack/summary";
+    public static final String REPORT_CUSTOMER_LACK = "/activity/customer/lack/summary";
 
     /**
      * 客户缺货明细
@@ -1457,9 +1457,39 @@ public class RouterConfig {
     public static final String ACTIVITY_FEED_BACK_DETAIL = "/activity/feed/back/detail";
 
     /**
+<<<<<<< HEAD
      * 价格根据转换率变价设置
      */
     public static final String SETTING_PRICE_TRANSFORM_RADIO = "/activity/setting/price/transform/radio";
+=======
+     * 客户毛利统计表
+     */
+    public static final String REPORT_PROFIT_CUSTOMER = "/activity/report/profit/customer";
 
+    /**
+     * 门店毛利统计表
+     */
+    public static final String REPORT_PROFIT_SHOP = "/activity/report/profit/shop";
+
+    /**
+     * 品类毛利统计表
+     */
+    public static final String REPORT_PROFIT_CATEGORY = "/activity/report/profit/category";
+>>>>>>> origin/dev
+
+    /**
+     * 客户应收账款
+     */
+    public static final String REPORT_CREDIT = "/activity/report/credit";
+
+    /**
+     * 客户应收账款明细表
+     */
+    public static final String REPORT_CREDIT_DETAILS_CUSTOMER = "/activity/report/credit/details/customer";
+
+    /**
+     * 日应收账款汇总表
+     */
+    public static final String REPORT_CREDIT_DETAILS_DAILY = "/activity/report/credit/details/daily";
 }
 
