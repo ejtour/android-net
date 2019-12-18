@@ -52,7 +52,6 @@ import butterknife.OnClick;
  */
 
 public abstract class BaseProfitActivity extends BaseLoadActivity implements IProfitContract.IProfitView {
-    private static final int REQ_CODE = 0x58;
     @BindView(R.id.rdd_date)
     TextView mDate;
     @BindView(R.id.rdd_arrow)

@@ -37,9 +37,9 @@ public class ProfitPresenter implements IProfitContract.IProfitPresenter {
                 .put("pageSize", "20")
                 .create(), new SimpleObserver<ProfitResp>(mView, showLoading) {
                     @Override
-                    public void onSuccess(ProfitResp receiveDiffDetailsResp) {
-                        mView.setData(receiveDiffDetailsResp, mPageNum > 1);
-                        if (!CommonUtils.isEmpty(receiveDiffDetailsResp.getRecords())) {
+                    public void onSuccess(ProfitResp resp) {
+                        mView.setData(resp, mPageNum > 1);
+                        if (!CommonUtils.isEmpty(resp.getRecords())) {
                             mPageNum++;
                         }
                     }
