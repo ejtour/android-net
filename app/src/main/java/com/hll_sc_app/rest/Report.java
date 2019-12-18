@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.hll_sc_app.api.ReportService;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.MsgWrapper;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
@@ -13,6 +14,7 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.export.ExportResp;
+import com.hll_sc_app.bean.report.credit.CreditDetailsResp;
 import com.hll_sc_app.bean.report.daily.SalesDailyBean;
 import com.hll_sc_app.bean.report.deliverytime.DeliveryTimeResp;
 import com.hll_sc_app.bean.report.lack.CustomerLackResp;
@@ -52,6 +54,8 @@ import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import java.util.Date;
 import java.util.List;
+
+import io.reactivex.Observable;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
 
@@ -611,6 +615,25 @@ public class Report {
     public static void queryProfit(BaseMapReq req, SimpleObserver<ProfitResp> observer) {
         ReportService.INSTANCE
                 .queryProfit(req)
+                .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
+                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
+                .subscribe(observer);
+    }
+
+    /**
+     * 查询应收账款明细表
+     *
+     * @param daily    是否为日应收账款
+     * @param observer
+     */
+    public static void queryCreditDetails(boolean daily, BaseMapReq req, SimpleObserver<CreditDetailsResp> observer) {
+        Observable<BaseResp<CreditDetailsResp>> observable;
+        if (daily) {
+            observable = ReportService.INSTANCE.queryDailyCreditDetails(req);
+        } else {
+            observable = ReportService.INSTANCE.queryCustomerCreditDetails(req);
+        }
+        observable
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

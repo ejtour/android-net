@@ -1333,6 +1333,14 @@
             android:name=".app.report.profit.category.CategoryProfitActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".app.report.credit.details.customer.CustomerCreditDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.report.credit.details.daily.DailyCreditDetailsActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

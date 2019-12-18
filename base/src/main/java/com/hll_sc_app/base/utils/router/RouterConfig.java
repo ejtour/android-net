@@ -1470,5 +1470,15 @@ public class RouterConfig {
      * 品类毛利统计表
      */
     public static final String REPORT_PROFIT_CATEGORY = "/activity/report/profit/category";
+
+    /**
+     * 客户应收账款明细表
+     */
+    public static final String REPORT_CREDIT_DETAILS_CUSTOMER = "/activity/report/credit/details/customer";
+
+    /**
+     * 日应收账款汇总表
+     */
+    public static final String REPORT_CREDIT_DETAILS_DAILY = "/activity/report/credit/details/daily";
 }
 

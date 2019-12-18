@@ -82,6 +82,9 @@ public class ReportEntryActivity extends BaseLoadActivity {
             list.add(new ReportItem(R.drawable.ic_report_shop_sales, "门店毛利统计表", RouterConfig.REPORT_PROFIT_SHOP));
             list.add(new ReportItem(R.drawable.ic_report_category_profit, "品类毛利统计表", RouterConfig.REPORT_PROFIT_CATEGORY, true));
 
+            list.add(new ReportItem(R.drawable.ic_report_credit_details, "客户应收账款明细表", RouterConfig.REPORT_CREDIT_DETAILS_CUSTOMER));
+            list.add(new ReportItem(R.drawable.ic_report_credit_daily, "日应收账款汇总表", RouterConfig.REPORT_CREDIT_DETAILS_DAILY, true));
+
             list.add(new ReportItem(R.drawable.ic_report_group_loss, "客户流失率统计", RouterConfig.REPORT_CUSTOMER_LOSS));
             list.add(new ReportItem(R.drawable.ic_report_shop_loss, "流失门店明细表", RouterConfig.REPORT_SHOP_LOSS, true));
 
