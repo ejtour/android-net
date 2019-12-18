@@ -6,9 +6,9 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.SingleListResp;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderBean;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchBean;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -47,22 +47,19 @@ public class Stock {
 
     /**
      * 供应链供应商列表查询
-     * @param groupID
      * @param pageNo
-     * @param pageSize
      * @param searchKey
      * @param observer
      */
-    public static void querySupplyChainGroupList(String groupID, int pageNo, int pageSize, String searchKey, SimpleObserver<PurchaserOrderSearchResp> observer){
+    public static void querySupplyChainGroupList(int pageNo, String searchKey, SimpleObserver<SingleListResp<PurchaserOrderSearchBean>> observer) {
         StockManageService.INSTANCE
                 .querySupplyChainGroupList(BaseMapReq.newBuilder()
-                        .put("groupID", groupID)
-                        .put("pageNo", pageNo+"")
-                        .put("pageSize", pageSize+"")
+                        .put("groupID", UserConfig.getGroupID())
+                        .put("pageNo", String.valueOf(pageNo))
+                        .put("pageSize", "20")
                         .put("searchKey", searchKey)
                         .create())
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
-                .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
     }
 }

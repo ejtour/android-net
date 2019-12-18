@@ -178,10 +178,11 @@ public class PurchaserOrderActivity extends BaseLoadActivity implements IPurchas
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Constants.SEARCH_RESULT_CODE) {
-            String supplyiers = data.getStringExtra("result");
-            mReq.put("supplierIDs", supplyiers);
-            mPresenter.start();
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String ids = data.getStringExtra("ids");
+            mReq.put("supplierIDs", ids);
+            String names = data.getStringExtra("names");
+            mSearchView.showSearchContent(!TextUtils.isEmpty(names), names);
         }
     }
 

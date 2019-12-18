@@ -1,14 +1,18 @@
 package com.hll_sc_app.app.stockmanage.purchaserorder.search;
 
-import com.hll_sc_app.base.UseCaseException;
+import android.text.TextUtils;
+
 import com.hll_sc_app.base.http.SimpleObserver;
-import com.hll_sc_app.base.utils.UserConfig;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchResp;
+import com.hll_sc_app.bean.common.SingleListResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.rest.Stock;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  *
@@ -19,17 +23,19 @@ import java.util.List;
 public class PurchaserOrderSearchPresenter implements PurchaserOrderSearchContract.IPurchaserOrderSearchPresenter {
     private PurchaserOrderSearchContract.IPurchaserOrderSearchView mView;
 
-    private int pageNum = 1;
-    private int pageNumTemp = 1;
-    private int pageSize = 30;
+    private int mPageNum;
 
     static PurchaserOrderSearchPresenter newInstance() {
         return new PurchaserOrderSearchPresenter();
     }
 
+    private PurchaserOrderSearchPresenter() {
+    }
+
     @Override
     public void start() {
-        queryPurchaserOrderSearchList(true);
+        mPageNum = 1;
+        loadMore();
     }
 
     @Override
@@ -38,30 +44,20 @@ public class PurchaserOrderSearchPresenter implements PurchaserOrderSearchContra
     }
 
     @Override
-    public void queryPurchaserOrderSearchList(boolean showLoading) {
-        toPurchaserOrderList(showLoading);
-    }
-
-    @Override
-    public void queryMorePurchaserOrderSearchList(boolean showLoading) {
-        pageNumTemp++;
-        toPurchaserOrderList(showLoading);
-    }
-
-    private void toPurchaserOrderList(boolean showLoading) {
+    public void loadMore() {
         String searchKey = mView.getSearchKey();
-        Stock.querySupplyChainGroupList(UserConfig.getGroupID(),pageNumTemp,pageSize,searchKey, new SimpleObserver<PurchaserOrderSearchResp>(mView,showLoading) {
+        if (TextUtils.isEmpty(searchKey)) {
+            Observable.timer(0, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread()).subscribe(aLong -> mView.setData(new ArrayList<>(), false));
+            return;
+        }
+        Stock.querySupplyChainGroupList(mPageNum, searchKey, new SimpleObserver<SingleListResp<PurchaserOrderSearchBean>>(mView, false) {
             @Override
-            public void onSuccess(PurchaserOrderSearchResp purchaserOrderSearchResp) {
-                mView.showPurchaserOrderSearchList(purchaserOrderSearchResp,pageNumTemp>1);
-                pageNum = pageNumTemp;
-            }
-            @Override
-            public void onFailure(UseCaseException e) {
-                mView.showError(e);
-                pageNumTemp = pageNum;
+            public void onSuccess(SingleListResp<PurchaserOrderSearchBean> purchaserOrderSearchBeanSingleListResp) {
+                mView.setData(purchaserOrderSearchBeanSingleListResp.getRecords(), mPageNum > 1);
+                if (CommonUtils.isEmpty(purchaserOrderSearchBeanSingleListResp.getRecords()))
+                    return;
+                mPageNum++;
             }
         });
     }
-
 }

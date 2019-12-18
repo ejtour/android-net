@@ -951,6 +951,7 @@
         <!--采购单搜索-->
         <activity
             android:name=".app.stockmanage.purchaserorder.search.PurchaserOrderSearchActivity"
+            android:windowSoftInputMode="adjustPan|stateVisible"
             android:screenOrientation="portrait" />
 
         <!--投诉管理列表首页-->

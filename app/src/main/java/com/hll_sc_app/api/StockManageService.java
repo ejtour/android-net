@@ -13,7 +13,7 @@ import com.hll_sc_app.bean.stockmanage.StockLogResp;
 import com.hll_sc_app.bean.stockmanage.StorehouseListResp;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderBean;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchBean;
 
 import java.util.List;
 
@@ -116,6 +116,6 @@ public interface StockManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:101112")
-    Observable<BaseResp<PurchaserOrderSearchResp>> querySupplyChainGroupList(@Body BaseMapReq req);
+    Observable<BaseResp<SingleListResp<PurchaserOrderSearchBean>>> querySupplyChainGroupList(@Body BaseMapReq req);
 
 }

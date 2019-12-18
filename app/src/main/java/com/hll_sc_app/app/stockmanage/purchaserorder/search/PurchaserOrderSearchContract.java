@@ -2,8 +2,7 @@ package com.hll_sc_app.app.stockmanage.purchaserorder.search;
 
 import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchBean;
 
 import java.util.List;
 
@@ -15,24 +14,12 @@ import java.util.List;
 public interface PurchaserOrderSearchContract {
 
     interface IPurchaserOrderSearchView extends ILoadView {
-        /**
-         * 展示采购单搜索列表
-         * @param purchaserOrderSearchResp
-         */
-        void showPurchaserOrderSearchList(PurchaserOrderSearchResp purchaserOrderSearchResp,boolean append);
-
-        List<String> getSelectiveSuppliers();
+        void setData(List<PurchaserOrderSearchBean> list, boolean append);
 
         String getSearchKey();
     }
 
     interface IPurchaserOrderSearchPresenter extends IPresenter<IPurchaserOrderSearchView> {
-        /**
-         * 加载采购单搜索列表
-         * @param showLoading true-显示对话框
-         */
-        void queryPurchaserOrderSearchList(boolean showLoading);
-
-        void queryMorePurchaserOrderSearchList(boolean showLoading);
+        void loadMore();
     }
 }
