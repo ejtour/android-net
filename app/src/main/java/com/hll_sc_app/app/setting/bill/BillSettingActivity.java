@@ -169,6 +169,7 @@ public class BillSettingActivity extends BaseLoadActivity implements IBillSettin
     @Override
     public void toggleBillSettingStatus(boolean isChecked, Integer type) {
         if (type == 7 && !isChecked) {
+            mSwitch_7.setCheckedNoEvent(true);
             showForbidCloseOnlyReceive();
         } else {
             showAlertDialog(isChecked, type);
