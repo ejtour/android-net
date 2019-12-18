@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -166,6 +167,13 @@ public class PurchaseTemplateActivity extends BaseLoadActivity implements IPurch
                     .refreshList(Collections.singletonList(new OptionsBean(R.drawable.ic_export_option, OptionType.OPTION_EXPORT_PURCHASE_TEMPLATE)))
                     .setListener((adapter, view1, position) -> {
                         mOptionsWindow.dismiss();
+                        if(TextUtils.isEmpty(getPurchaserID())){
+                            showToast("请选择集团");
+                            return;
+                        }else if(TextUtils.isEmpty(getShopID())){
+                            showToast("请选择门店");
+                            return;
+                        }
                         if (CommonUtils.isEmpty(mAdapter.getData()))
                             showToast("当前没有可导出的合作客户");
                         else mPresenter.export("");
