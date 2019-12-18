@@ -14,8 +14,8 @@ import com.hll_sc_app.utils.Utils;
  * @since 2019/12/18
  */
 
-public class CreditDetailsPresenter implements ICreditDetailsContract.ICreditPresenter {
-    private ICreditDetailsContract.ICreditView mView;
+public class CreditDetailsPresenter implements ICreditDetailsContract.ICreditDetailsPresenter {
+    private ICreditDetailsContract.ICreditDetailsView mView;
     private int mPageNum;
 
     public static CreditDetailsPresenter newInstance() {
@@ -75,7 +75,7 @@ public class CreditDetailsPresenter implements ICreditDetailsContract.ICreditPre
     }
 
     @Override
-    public void register(ICreditDetailsContract.ICreditView view) {
+    public void register(ICreditDetailsContract.ICreditDetailsView view) {
         mView = CommonUtils.requireNonNull(view);
     }
 }

@@ -51,7 +51,7 @@ import butterknife.OnClick;
  * @since 2019/12/18
  */
 
-public abstract class BaseCreditDetailsActivity extends BaseLoadActivity implements ICreditDetailsContract.ICreditView {
+public abstract class BaseCreditDetailsActivity extends BaseLoadActivity implements ICreditDetailsContract.ICreditDetailsView {
     @BindView(R.id.rdd_date)
     TextView mDate;
     @BindView(R.id.rdd_arrow)
@@ -63,7 +63,7 @@ public abstract class BaseCreditDetailsActivity extends BaseLoadActivity impleme
     @BindView(R.id.rdd_search_view)
     SearchView mSearchView;
     private DateRangeWindow mDateRangeWindow;
-    private ICreditDetailsContract.ICreditPresenter mPresenter;
+    private ICreditDetailsContract.ICreditDetailsPresenter mPresenter;
     private ExcelFooter mFooter;
     private ContextOptionsWindow mOptionsWindow;
     private BaseMapReq.Builder mReq = BaseMapReq.newBuilder();

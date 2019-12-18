@@ -11,7 +11,7 @@ import com.hll_sc_app.impl.IExportView;
  */
 
 public interface ICreditDetailsContract {
-    interface ICreditView extends IExportView {
+    interface ICreditDetailsView extends IExportView {
         void setData(CreditDetailsResp resp, boolean append);
 
         BaseMapReq.Builder getReq();
@@ -19,7 +19,7 @@ public interface ICreditDetailsContract {
         boolean isDaily();
     }
 
-    interface ICreditPresenter extends IPresenter<ICreditView> {
+    interface ICreditDetailsPresenter extends IPresenter<ICreditDetailsView> {
         void refresh();
 
         void loadMore();
