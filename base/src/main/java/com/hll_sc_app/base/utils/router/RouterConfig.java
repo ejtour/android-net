@@ -1456,6 +1456,10 @@ public class RouterConfig {
      */
     public static final String ACTIVITY_FEED_BACK_DETAIL = "/activity/feed/back/detail";
 
+    /**
+     * 价格根据转换率变价设置
+     */
+    public static final String SETTING_PRICE_TRANSFORM_RADIO = "/activity/setting/price/transform/radio";
 
 }
 

@@ -38,7 +38,7 @@ public class PriceRatioTemplateActivity extends BaseLoadActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.img_close, R.id.txt_agreement_price, R.id.txt_price_manage})
+    @OnClick({R.id.img_close, R.id.txt_agreement_price, R.id.txt_price_manage,R.id.txt_price_conversion_rate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -51,6 +51,9 @@ public class PriceRatioTemplateActivity extends BaseLoadActivity {
             case R.id.txt_price_manage:
                 // 售价比例模版设置
                 RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_RATIO_LIST, TYPE_PRICE_MANAGE);
+                break;
+            case R.id.txt_price_conversion_rate:
+                RouterUtil.goToActivity(RouterConfig.SETTING_PRICE_TRANSFORM_RADIO);
                 break;
             default:
                 break;
