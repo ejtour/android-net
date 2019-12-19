@@ -10,7 +10,6 @@ import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 import com.hll_sc_app.base.R;
 import com.hll_sc_app.base.widget.BasePopupWindow;
-import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 
 import java.util.Date;
@@ -180,8 +179,6 @@ public class DateRangeWindow extends BasePopupWindow implements View.OnClickList
                 if (mSelectedEnd != null) {
                     endDate = new Date(mSelectedEnd.getTimeInMillis());
                 }
-                LogUtil.d("vixb-ddd", "start = " + (startDate == null ? null : startDate.toLocaleString()) +
-                        " end = " + (endDate == null ? null : endDate.toLocaleString()));
                 mListener.onRangeChanged(startDate, endDate);
             }
         }
