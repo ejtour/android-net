@@ -101,7 +101,7 @@ public class CrmCustomerFragment extends BaseLoadFragment implements ICrmCustome
     @Override
     public void onStart() {
         super.onStart();
-        mPresenter.start();
+        if (!isHidden()) mPresenter.start();
     }
 
     private void initData() {
