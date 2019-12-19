@@ -10,6 +10,7 @@ import com.hll_sc_app.R;
 import com.hll_sc_app.app.crm.daily.detail.CrmDailyDetailActivity;
 import com.hll_sc_app.bean.daily.DailyBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.utils.DateUtil;
 
 import java.util.Date;
@@ -43,7 +44,7 @@ public class CrmDailyAdapter extends BaseQuickAdapter<DailyBean, BaseViewHolder>
         Date date = DateUtil.parse(item.getCreateTime());
         helper.setText(R.id.icd_date_first, CalendarUtils.format(date, "yyyy/MM\nEEEE"))
                 .setText(R.id.icd_date_last, CalendarUtils.format(date, "dd"))
-                .setText(R.id.icd_time, CalendarUtils.format(date, "HH:mm"))
+                .setText(R.id.icd_time, CalendarUtils.format(date, !mSend ? Constants.SLASH_YYYY_MM_DD_HH_MM : "HH:mm"))
                 .setText(R.id.icd_name, item.getEmployeeName())
                 .setText(R.id.icd_content, item.getTodayWork());
         TextView read = helper.getView(R.id.icd_read_status);
