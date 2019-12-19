@@ -1,7 +1,5 @@
 package com.hll_sc_app.app.crm.daily.detail;
 
-import android.os.Bundle;
-
 import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.daily.DailyBean;
@@ -15,21 +13,20 @@ import com.hll_sc_app.rest.Daily;
  */
 
 public class CrmDailyDetailPresenter implements ICrmDailyDetailContract.ICrmDailyDetailPresenter {
-    private String mReportID;
     private int mPageNum;
     private ICrmDailyDetailContract.ICrmDailyDetailView mView;
 
-    public static CrmDailyDetailPresenter newInstance(String reportID) {
-        return new CrmDailyDetailPresenter(reportID);
+    private CrmDailyDetailPresenter() {
+
     }
 
-    private CrmDailyDetailPresenter(String reportID) {
-        mReportID = reportID;
+    public static CrmDailyDetailPresenter newInstance() {
+        return new CrmDailyDetailPresenter();
     }
 
     @Override
     public void send(String msg) {
-        Daily.replyDaily(msg, mReportID, new SimpleObserver<Object>(mView) {
+        Daily.replyDaily(msg, mView.getReplyID(), new SimpleObserver<Object>(mView) {
             @Override
             public void onSuccess(Object o) {
                 mView.success();
@@ -39,14 +36,18 @@ public class CrmDailyDetailPresenter implements ICrmDailyDetailContract.ICrmDail
 
     @Override
     public void refresh() {
-        Daily.queryDailyDetail(mView.isSend(), mReportID, new SimpleObserver<DailyBean>(mView, false) {
+        loadDetail();
+        mPageNum = 1;
+        load(false);
+    }
+
+    private void loadDetail() {
+        Daily.queryDailyDetail(mView.isSend(), mView.getID(), new SimpleObserver<DailyBean>(mView, false) {
             @Override
             public void onSuccess(DailyBean dailyBean) {
                 mView.setData(dailyBean);
             }
         });
-        mPageNum = 1;
-        load(false);
     }
 
     @Override
@@ -56,12 +57,13 @@ public class CrmDailyDetailPresenter implements ICrmDailyDetailContract.ICrmDail
 
     @Override
     public void start() {
+        loadDetail();
         mPageNum = 1;
         load(true);
     }
 
     private void load(boolean showLoading) {
-        Daily.queryDailyReply(mPageNum, mReportID, new SimpleObserver<SingleListResp<DailyReplyBean>>(mView, showLoading) {
+        Daily.queryDailyReply(mPageNum, mView.getReplyID(), new SimpleObserver<SingleListResp<DailyReplyBean>>(mView, showLoading) {
             @Override
             public void onSuccess(SingleListResp<DailyReplyBean> dailyReplyBeanSingleListResp) {
                 mView.setData(dailyReplyBeanSingleListResp.getRecords(), mPageNum > 1);

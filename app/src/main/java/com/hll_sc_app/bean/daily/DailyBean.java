@@ -2,6 +2,7 @@ package com.hll_sc_app.bean.daily;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -40,6 +41,7 @@ public class DailyBean implements Parcelable {
     private int replyStatus;
     private String id;
     private String todayWork;
+    private String reportID;
 
     protected DailyBean(Parcel in) {
         readStatus = in.readInt();
@@ -61,6 +63,16 @@ public class DailyBean implements Parcelable {
         replyStatus = in.readInt();
         id = in.readString();
         todayWork = in.readString();
+        reportID = in.readString();
+    }
+
+    public String getReplyID() {
+        return TextUtils.isEmpty(reportID) ? id : reportID;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -84,11 +96,7 @@ public class DailyBean implements Parcelable {
         dest.writeInt(replyStatus);
         dest.writeString(id);
         dest.writeString(todayWork);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
+        dest.writeString(reportID);
     }
 
     public int getReadStatus() {
@@ -241,5 +249,13 @@ public class DailyBean implements Parcelable {
 
     public void setTodayWork(String todayWork) {
         this.todayWork = todayWork;
+    }
+
+    public String getReportID() {
+        return reportID;
+    }
+
+    public void setReportID(String reportID) {
+        this.reportID = reportID;
     }
 }

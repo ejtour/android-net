@@ -21,6 +21,10 @@ public interface ICrmDailyDetailContract {
         void success();
 
         boolean isSend();
+
+        String getReplyID();
+
+        String getID();
     }
 
     interface ICrmDailyDetailPresenter extends IPresenter<ICrmDailyDetailView> {
