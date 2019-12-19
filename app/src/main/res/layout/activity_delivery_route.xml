@@ -66,7 +66,7 @@
         android:layout_marginRight="5dp"
         android:drawableLeft="@drawable/ic_date"
         android:drawablePadding="5dp"
-        android:textAppearance="@style/TextAppearance.City22.Small"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color666"
         app:layout_constraintBottom_toBottomOf="@id/adr_filter_btn"
         app:layout_constraintEnd_toStartOf="@id/adr_arrow"
         app:layout_constraintTop_toTopOf="@id/adr_filter_btn"
