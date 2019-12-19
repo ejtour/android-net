@@ -72,6 +72,9 @@ public class CooperationThirdPartFragment extends BaseCooperationApplicationFrag
         } else if (TextUtils.equals(resourceType, "0")) {
             // 二十二城
             content = "二十二城";
+        } else if (TextUtils.equals(resourceType, "3")) {
+            // 平台合作转三方
+            content = "平台合作转三方";
         }
         return content;
     }
