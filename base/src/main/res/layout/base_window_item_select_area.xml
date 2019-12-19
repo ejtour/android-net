@@ -51,7 +51,7 @@
             android:paddingRight="10dp"
             android:singleLine="true"
             android:text="请选择"
-            android:textColor="@drawable/base_color_area_tab_text"
+            android:textColor="@drawable/base_color_state_on_pri_off_333"
             android:textSize="13sp"/>
 
         <TextView
@@ -65,7 +65,7 @@
             android:paddingRight="10dp"
             android:singleLine="true"
             android:text="请选择"
-            android:textColor="@drawable/base_color_area_tab_text"
+            android:textColor="@drawable/base_color_state_on_pri_off_333"
             android:textSize="13sp"/>
 
         <TextView
@@ -79,7 +79,7 @@
             android:paddingRight="10dp"
             android:singleLine="true"
             android:text="请选择"
-            android:textColor="@drawable/base_color_area_tab_text"
+            android:textColor="@drawable/base_color_state_on_pri_off_333"
             android:textSize="13sp"/>
 
     </LinearLayout>

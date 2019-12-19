@@ -128,7 +128,7 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         radioButton.setText(name);
         radioButton.setId(page);
         radioButton.setTextSize(10);
-        radioButton.setTextColor(ContextCompat.getColorStateList(this, R.drawable.bg_main_button_text));
+        radioButton.setTextColor(ContextCompat.getColorStateList(this, R.drawable.base_color_state_on_pri_off_666));
         res.setBounds(0, 0, res.getIntrinsicWidth(), res.getIntrinsicHeight());
         radioButton.setCompoundDrawables(null, res, null, null);
         mGroupType.addView(radioButton, layoutParams);

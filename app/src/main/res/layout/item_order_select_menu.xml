@@ -6,6 +6,6 @@
     android:gravity="center"
     android:paddingTop="15dp"
     android:paddingBottom="15dp"
-    android:textColor="@drawable/color_purchase_select_text"
+    android:textColor="@drawable/color_state_on_pri_off_999"
     android:textSize="@dimen/text_middle_size"
     tools:text="子分类名" />

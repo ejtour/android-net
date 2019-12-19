@@ -30,7 +30,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="采购商"
-                android:textColor="@drawable/base_text_color_window_check"
+                android:textColor="@drawable/base_color_state_on_pri_off_666"
                 android:textSize="@dimen/text_small_size"/>
 
             <ImageView
@@ -68,7 +68,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="分类"
-                android:textColor="@drawable/base_text_color_window_check"
+                android:textColor="@drawable/base_color_state_on_pri_off_666"
                 android:textSize="@dimen/text_small_size"/>
 
             <ImageView
@@ -105,7 +105,7 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:text="生效期限"
-                android:textColor="@drawable/base_text_color_window_check"
+                android:textColor="@drawable/base_color_state_on_pri_off_666"
                 android:textSize="@dimen/text_small_size"/>
 
             <ImageView

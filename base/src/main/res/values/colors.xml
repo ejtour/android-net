@@ -38,12 +38,5 @@
     <color name="base_press_bg">#0A000000</color>
     <color name="base_colorF4F5F9">#F4F5F9</color>
 
-
-    <color name="base_color_bg_btn_normal">#03a9f4</color>
-    <color name="base_color_bg_btn_pressed">#0288d1</color>
-    <color name="base_color_bg_btn_enable_false">#bdbdbd</color>
-
     <drawable name="base_color_tab_bg_select">#E0F2FF</drawable>
-
-    <color name="base_view_bg">#FAFAFA</color>
 </resources>

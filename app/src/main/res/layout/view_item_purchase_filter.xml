@@ -13,6 +13,6 @@
     android:paddingTop="10dp"
     android:paddingRight="30dp"
     android:paddingBottom="10dp"
-    android:textColor="@drawable/bg_register_category_text"
+    android:textColor="@drawable/base_color_state_on_pri_off_666"
     android:textSize="@dimen/base_text_13"
     tools:text="酒类"/>

@@ -9,6 +9,6 @@
     android:gravity="center_vertical"
     android:paddingRight="@dimen/dp_10"
     android:paddingLeft="@dimen/dp_10"
-    android:textColor="@drawable/base_color_tab_text"
+    android:textColor="@drawable/base_color_state_on_pri_enable_on_222_off_999"
     android:textSize="@dimen/text_middle_size"
     tools:text="销售业务测试" />

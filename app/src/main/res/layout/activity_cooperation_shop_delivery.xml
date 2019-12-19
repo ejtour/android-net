@@ -60,7 +60,7 @@
             android:button="@drawable/bg_selector_check_box"
             android:padding="5dp"
             android:text="自有物流配送"
-            android:textColor="@drawable/base_text_color_window_check"
+            android:textColor="@drawable/base_color_state_on_pri_off_666"
             android:textSize="@dimen/text_middle_size"
             android:visibility="gone"
             tools:visibility="visible"/>
@@ -73,7 +73,7 @@
             android:button="@drawable/bg_selector_check_box"
             android:padding="5dp"
             android:text="上门自提"
-            android:textColor="@drawable/base_text_color_window_check"
+            android:textColor="@drawable/base_color_state_on_pri_off_666"
             android:textSize="@dimen/text_middle_size"
             android:visibility="gone"
             tools:visibility="visible"/>
@@ -86,7 +86,7 @@
             android:button="@drawable/bg_selector_check_box"
             android:padding="5dp"
             android:text="三方物流配送"
-            android:textColor="@drawable/base_text_color_window_check"
+            android:textColor="@drawable/base_color_state_on_pri_off_666"
             android:textSize="@dimen/text_middle_size"
             android:visibility="gone"
             tools:visibility="visible"/>

@@ -99,7 +99,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:text="未读"
-        android:textColor="@drawable/text_color_daily_status"
+        android:textColor="@drawable/color_state_on_pri_off_999"
         android:textSize="@dimen/text_little_size"
         app:layout_constraintStart_toStartOf="@id/icd_content"
         app:layout_constraintTop_toBottomOf="@id/icd_content" />
@@ -114,7 +114,7 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:text="暂无点评"
-        android:textColor="@drawable/text_color_daily_status"
+        android:textColor="@drawable/color_state_on_pri_off_999"
         android:textSize="@dimen/text_little_size"
         app:layout_constraintStart_toEndOf="@id/icd_read_status"
         app:layout_constraintTop_toBottomOf="@id/icd_content" />
