@@ -1,41 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/base_white"
-    android:paddingLeft="@dimen/dp_10">
-
-
-    <TextView
-        android:id="@+id/txt_shop_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:textColor="@color/base_text222"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="示例合作采购商门店名称选中状态" />
-
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginRight="@dimen/dp_10"
-        android:button="@drawable/bg_selector_check_box_circular"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0.5dp"
-        android:background="@color/base_color_divider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/txt_group_name" />
-</android.support.constraint.ConstraintLayout>
+    android:background="@android:color/white"
+    android:drawableRight="@drawable/bg_selector_check_box_circular"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
+    android:textColor="@drawable/color_state_on_222_off_666"
+    android:textSize="@dimen/text_middle_size"
+    tools:text="item" />
