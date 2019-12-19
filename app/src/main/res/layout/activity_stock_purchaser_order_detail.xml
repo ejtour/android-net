@@ -9,7 +9,7 @@
         android:id="@+id/pod_title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        app:tb_rightImage="@drawable/ic_shareded"
+        app:tb_rightImage="@drawable/ic_share"
         app:tb_rightVisibility="true"
         app:tb_title="采购单详情" />
 
