@@ -19,35 +19,35 @@ public class PurchaserOrderDetailBean {
      */
     private String detailRemark;
     /**
-     * 品相分类编码
+     * 品项分类编码
      */
     private String goodsCategoryCode;
     /**
-     * 品相分类ID
+     * 品项分类ID
      */
     private String goodsCategoryID;
     /**
-     * 品相分类名称
+     * 品项分类名称
      */
     private String goodsCategoryName;
     /**
-     * 品相编码
+     * 品项编码
      */
     private String goodsCode;
     /**
-     * 品相规格
+     * 品项规格
      */
     private String goodsDesc;
     /**
-     * 品相ID
+     * 品项ID
      */
     private String goodsID;
     /**
-     * 品相图片
+     * 品项图片
      */
     private String goodsImgPath;
     /**
-     * 品相名称
+     * 品项名称
      */
     private String goodsName;
     /**

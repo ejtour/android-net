@@ -102,7 +102,7 @@ public class BlackDetailActivity extends BaseLoadActivity implements IBlackDetai
         mEmptyView = LayoutInflater.from(this).inflate(R.layout.view_orientation_detail_empty, mRecyclerView, false);
         mEmptyView.findViewById(R.id.txt_add_product).setOnClickListener(v -> addProduct());
         ((TextView) mEmptyView.findViewById(R.id.txt_alert)).setText("点击下面按钮添加要加入黑名单的商品");
-        ((TextView) mEmptyView.findViewById(R.id.txt_add_product)).setText("选择品相黑名单商品");
+        ((TextView) mEmptyView.findViewById(R.id.txt_add_product)).setText("选择品项黑名单商品");
         mAdapter.setEmptyView(mEmptyView);
         mRecyclerView.setAdapter(mAdapter);
         mCooperationNameView.setText(mOrientationListBean.getPurchaserName());

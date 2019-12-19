@@ -264,7 +264,7 @@
                             android:id="@+id/txt_black_list"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_black_list"
-                            android:text="品相黑名单" />
+                            android:text="品项黑名单" />
 
                         <TextView
                             android:id="@+id/txt_delivery_manage"
