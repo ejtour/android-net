@@ -8,6 +8,7 @@ import com.hll_sc_app.BuildConfig;
  */
 
 public interface Constants {
+    String BUGLY_ID = BuildConfig.DEBUG ? "0f1f59cd31" : "5eed4aeac9";
     String WX_APP_ID = BuildConfig.DEBUG ? "wx0d3409cd276287ad" : "wx1c0b06dc21cfdb93";
     String QQ_APP_ID = BuildConfig.DEBUG ? "101536988" : "1106551913";
 
