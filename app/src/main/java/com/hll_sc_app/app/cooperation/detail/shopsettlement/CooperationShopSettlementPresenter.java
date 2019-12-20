@@ -7,6 +7,7 @@ import com.hll_sc_app.api.UserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
@@ -155,26 +156,27 @@ public class CooperationShopSettlementPresenter implements CooperationShopSettle
         CooperationPurchaserService.INSTANCE
             .addCooperationPurchaser(builder.create())
             .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<Object>() {
-                @Override
-                public void onSuccess(Object resp) {
-                    if (TextUtils.equals(req.getActionType(), "normal")) {
-                        mView.showToast("添加合作成功");
-                    } else if (TextUtils.equals(req.getActionType(), "revalidation")) {
-                        mView.showToast("重新验证成功");
+                .subscribe(new BaseCallback<BaseResp<Object>>() {
+                    @Override
+                    public void onSuccess(BaseResp<Object> objectBaseResp) {
+                        mView.showToast(objectBaseResp.getMessage());
+                       /* if (TextUtils.equals(req.getActionType(), "normal")) {
+                            mView.showToast("添加合作成功");
+                        } else if (TextUtils.equals(req.getActionType(), "revalidation")) {
+                            mView.showToast("重新验证成功");
+                        }*/
+                        mView.editSuccess();
                     }
-                    mView.editSuccess();
-                }
 
-                @Override
-                public void onFailure(UseCaseException e) {
-                    mView.showError(e);
-                }
-            });
+                    @Override
+                    public void onFailure(UseCaseException e) {
+                        mView.showError(e);
+                    }
+                });
+
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
 import com.hll_sc_app.bean.staff.DepartmentListResp;
+import com.hll_sc_app.bean.staff.DropStaffEmployeeReq;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.staff.RolePermissionResp;
 import com.hll_sc_app.bean.staff.RoleResp;
@@ -133,4 +134,14 @@ public interface StaffManageService {
     @POST(HttpConfig.URL)
     @Headers("pv:101115")
     Observable<BaseResp<Object>> mdfDepartment(@Body BaseMapReq req);
+
+    /**
+     * 掉落公海
+     * @param req
+     * @return
+     */
+    @POST(HttpConfig.URL)
+    @Headers("pv:102059")
+    Observable<BaseResp<Object>> dropStaffEmployee(@Body DropStaffEmployeeReq req);
+
 }

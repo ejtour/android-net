@@ -1489,5 +1489,14 @@ public class RouterConfig {
      * 日应收账款汇总表
      */
     public static final String REPORT_CREDIT_DETAILS_DAILY = "/activity/report/credit/details/daily";
+
+    /**
+     * 员工列表-关联门店
+     */
+    public static final String STAFF_LIST_LINK_SHOP = "/activity/staff/list/link/shop";
+    /**
+     * 员工列表-关联门店_选择接收人
+     */
+    public static final String STAFF_LIST_LINK_SHOP_SALE_LIST = "/activity/staff/list/link/shop/sale/list";
 }
 

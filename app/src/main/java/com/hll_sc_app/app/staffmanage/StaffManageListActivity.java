@@ -27,8 +27,8 @@ import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
+import com.hll_sc_app.bean.event.StaffEvent;
 import com.hll_sc_app.bean.goods.GoodsListReq;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -39,6 +39,9 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -76,6 +79,7 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ButterKnife.bind(this);
         initView();
+        EventBus.getDefault().register(this);
         mPresenter = StaffManageListPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
@@ -274,6 +278,19 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
                 view.setText(String.format("拥有职务%s个", CommonUtils.isEmpty(item.getRoles()) ? "0" :
                         item.getRoles().size()));
             }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(sticky = true)
+    public void onSubScribe(StaffEvent staffEvent) {
+        if (staffEvent.isRefreshList()) {
+            mPresenter.queryMoreStaffList();
         }
     }
 }

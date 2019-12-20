@@ -88,13 +88,6 @@ public class TitleBar extends ConstraintLayout {
         mLeftImage.setOnClickListener(this::close);
     }
 
-    private void close(View v) {
-        if (getContext() instanceof Activity) {
-            ((Activity) getContext()).finish();
-        }
-    }
-
-
     public void setHeaderTitle(String title) {
         mTitle.setText(title);
     }
@@ -109,11 +102,10 @@ public class TitleBar extends ConstraintLayout {
      * 设置显示右侧文字
      */
     public void setRightText(String text) {
-        if (!TextUtils.isEmpty(text)) {
-            mRightImage.setVisibility(View.GONE);
-            mRightText.setVisibility(View.VISIBLE);
-            mRightText.setText(text);
-        }
+        rightButtonText = text;
+        mRightText.setText(text);
+        mRightImage.setVisibility(View.GONE);
+        mRightText.setVisibility(View.VISIBLE);
     }
 
     /***
@@ -126,6 +118,12 @@ public class TitleBar extends ConstraintLayout {
         } else {
             mRightImage.setVisibility(GONE);
             mRightText.setVisibility(GONE);
+        }
+    }
+
+    private void close(View v) {
+        if (getContext() instanceof Activity) {
+            ((Activity) getContext()).finish();
         }
     }
 

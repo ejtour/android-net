@@ -4,7 +4,6 @@ import java.util.List;
 
 public class StaffDepartListEvent {
     private List<String> departIds;
-
     public StaffDepartListEvent(List<String> departIds) {
         this.departIds = departIds;
     }

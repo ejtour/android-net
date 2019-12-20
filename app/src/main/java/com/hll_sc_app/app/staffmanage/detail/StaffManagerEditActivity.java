@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.staffmanage.detail.depart.DepartListActivity;
+import com.hll_sc_app.app.staffmanage.linkshop.StaffLinkShopListActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UserConfig;
@@ -24,6 +26,7 @@ import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.event.StaffDepartListEvent;
+import com.hll_sc_app.bean.event.StaffEvent;
 import com.hll_sc_app.bean.staff.EmployeeBean;
 import com.hll_sc_app.bean.staff.RoleBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -69,6 +72,11 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
     TextView mTxtDepart;
     @Autowired(name = "parcelable")
     EmployeeBean mEmployeeBean;
+    @BindView(R.id.ll_shop)
+    LinearLayout mLlShop;
+    @BindView(R.id.txt_shop)
+    TextView mTxtShop;
+
     private StaffManagerEditPresenter mPresenter;
 
     public static void start(Context context, EmployeeBean bean) {
@@ -106,6 +114,22 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         return mEmployeeBean == null;
     }
 
+    @Subscribe(sticky = true)
+    public void onEvent(StaffDepartListEvent event) {
+        mTxtDepart.setTag(TextUtils.join(",", event.getDepartIds()));
+        mTxtDepart.setText("已选 " + event.getDepartIds().size() + "个部门");
+    }
+
+    @Subscribe(sticky = true)
+    public void onEvent(StaffEvent event) {
+        if (event.getEmployeeBean() != null) {
+            mEmployeeBean = event.getEmployeeBean();
+        } else if (event.getLinkShopNum() != -1) {
+            mEmployeeBean.setShopNum(event.getLinkShopNum());
+        }
+        showView(mEmployeeBean);
+    }
+
     public void showView(EmployeeBean bean) {
         if (bean == null) {
             return;
@@ -123,6 +147,10 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             StringBuilder roleId = new StringBuilder();
             for (RoleBean rolesBean : rolesBeans) {
                 roleId.append(rolesBean.getRoleID()).append(",");
+                if (TextUtils.equals("60", rolesBean.getRoleID())) {//销售代表
+                    mLlShop.setVisibility(View.VISIBLE);
+                    mTxtShop.setText(String.format("已关联 %s个门店", mEmployeeBean.getShopNum()));
+                }
             }
             if (!TextUtils.isEmpty(roleId)) {
                 roleId.delete(roleId.length() - 1, roleId.length());
@@ -131,18 +159,15 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             if (rolesBeans.size() == 1) {
                 mTxtRoles.setText(rolesBeans.get(0).getRoleName());
             } else {
-                mTxtRoles.setText(String.format(Locale.getDefault(), "已选择%d个岗位", rolesBeans.size()));
+                mTxtRoles.setText(String.format(Locale.getDefault(), "已选择 %d个岗位", rolesBeans.size()));
             }
         }
         mTxtDepart.setTag(bean.getDeptIDs());
-        mTxtDepart.setText("已选" + (!TextUtils.isEmpty(bean.getDeptIDs()) ? bean.getDeptIDs().split(",").length : 0) + "个部门");
+        mTxtDepart.setText("已选 " + (!TextUtils.isEmpty(bean.getDeptIDs()) ? bean.getDeptIDs().split(",").length : 0) + "个部门");
+
+
     }
 
-    @Subscribe(sticky = true)
-    public void onEvent(StaffDepartListEvent event) {
-        mTxtDepart.setTag(TextUtils.join(",", event.getDepartIds()));
-        mTxtDepart.setText("已选" + event.getDepartIds().size() + "个部门");
-    }
 
     @Override
     public void editSuccess() {
@@ -159,7 +184,7 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
     @OnClick({R.id.img_back,
             R.id.txt_save,
             R.id.ll_roles,
-            R.id.ll_depart})
+            R.id.ll_depart, R.id.ll_shop})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -173,6 +198,9 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 break;
             case R.id.ll_depart:
                 DepartListActivity.start(getTagString(mTxtDepart));
+                break;
+            case R.id.ll_shop:
+                StaffLinkShopListActivity.start(mEmployeeBean.getEmployeeID());
                 break;
             default:
                 break;
@@ -241,6 +269,15 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
         }
     }
 
+    private String getTagString(TextView target) {
+        Object o = target.getTag();
+        if (o == null) {
+            return "";
+        } else {
+            return o.toString().trim();
+        }
+    }
+
     /**
      * 员工编号是否符合规范
      *
@@ -279,15 +316,6 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
                 roleId.delete(roleId.length() - 1, roleId.length());
             }
             mTxtRoles.setTag(roleId.toString());
-        }
-    }
-
-    private String getTagString(TextView target) {
-        Object o = target.getTag();
-        if (o == null) {
-            return "";
-        } else {
-            return o.toString().trim();
         }
     }
 }

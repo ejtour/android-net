@@ -321,7 +321,7 @@ public class DatePickerDialog extends BaseDialog implements OnWheelChangedListen
                         mDay.getCurrentItem() == mDayAdapter.getItemsCount() - 1) { // 如果是最后一天
                     mHourAdapter.setRange(0, mEndTime.get(Calendar.HOUR_OF_DAY));
                 } else {
-                    mHourAdapter.setRange(0, 23);
+                    mHourAdapter.setRange(0, 24);
                 }
             } else {
                 mHourAdapter.setRange(mBeginTime.get(Calendar.DATE), mEndTime.get(Calendar.DATE));
