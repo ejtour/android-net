@@ -2,6 +2,7 @@ package com.hll_sc_app.app.staffmanage.linkshop;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +40,8 @@ import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.TitleBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -161,13 +164,18 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
                 if (mRlButton.getVisibility() == View.VISIBLE) {//取消
                     clearSelect();
                 } else {//批量转交
+                    mTitlebar.setRightText("取消");
                     mAdapter.toggleModal(true);
                     mRlButton.setVisibility(View.VISIBLE);
+                    mAdapter.toggleModal(true);
                 }
             });
         }
 
         mCheckAll.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (selectShopIds == null) {
+                selectShopIds = new HashSet<>();
+            }
             if (isChecked) {
                 List<PurchaserShopBean> shopBeans = mAdapter.getData();
                 for (PurchaserShopBean shopBean : shopBeans) {
@@ -177,6 +185,18 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
                 selectShopIds.clear();
             }
             mAdapter.notifyDataSetChanged();
+        });
+
+        mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.getMore();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.refresh();
+            }
         });
     }
 
@@ -189,8 +209,12 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
         }
         if (selectShopIds.contains(shopBean.getShopID())) {
             selectShopIds.remove(shopBean.getShopID());
+            mCheckAll.setChecked(false);
         } else {
             selectShopIds.add(shopBean.getShopID());
+            if (selectShopIds.size() == mAdapter.getData().size()) {
+                mCheckAll.setChecked(true);
+            }
         }
         mAdapter.notifyDataSetChanged();
     }
@@ -236,24 +260,18 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_confirm:
+                if (selectShopIds == null || selectShopIds.size() == 0) {
+                    showToast("请选择需要转移的门店");
+                    return;
+                }
                 if (isCrm) {
                     if (mTxtPerson.getVisibility() == View.VISIBLE) {
-                        EmployeeBean employeeBean = (EmployeeBean) mTxtPerson.getTag();
-                        if (employeeBean == null) {
-                            showToast("请选择接收人");
-                        } else {
-                            ShopSettlementReq req = new ShopSettlementReq();
-                            req.setEmployeeID(employeeBean.getEmployeeID());
-                            req.setEmployeeName(employeeBean.getEmployeeName());
-                            req.setEmployeePhone(employeeBean.getLoginPhone());
-                            req.setShopIDs(TextUtils.join(",", selectShopIds));
-                            mPresenter.editShopEmployee(req);
-                        }
+                        transformToOther();
                     } else {
                         mPresenter.dropStaffEmployee();
                     }
                 } else {
-
+                    transformToOther();
                 }
                 break;
             case R.id.txt_person:
@@ -301,11 +319,21 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
         }
     }
 
-    @Override
-    public void dropSuccess() {
-        EventBus.getDefault().post(new StaffEvent(shopTotalNumber - selectShopIds.size(), true));
-        clearSelect();
-        mPresenter.refresh();
+    /**
+     * 转移其他人
+     */
+    private void transformToOther() {
+        EmployeeBean employeeBean = (EmployeeBean) mTxtPerson.getTag();
+        if (employeeBean == null) {
+            showToast("请选择接收人");
+        } else {
+            ShopSettlementReq req = new ShopSettlementReq();
+            req.setEmployeeID(employeeBean.getEmployeeID());
+            req.setEmployeeName(employeeBean.getEmployeeName());
+            req.setEmployeePhone(employeeBean.getLoginPhone());
+            req.setShopIDs(TextUtils.join(",", selectShopIds));
+            mPresenter.editShopEmployee(req);
+        }
     }
 
     @Override
@@ -336,9 +364,25 @@ public class StaffLinkShopListActivity extends BaseLoadActivity implements Staff
     }
 
     @Override
-    public void editSuccess() {
-        dropSuccess();
+    public void dropSuccess() {
+        syncStatus();
+        EventBus.getDefault().post(new StaffEvent(
+                shopTotalNumber - selectShopIds.size(), true));
     }
 
+    @Override
+    public void editSuccess() {
+        EmployeeBean employeeBean = (EmployeeBean) mTxtPerson.getTag();
+        if (employeeBean != null && !TextUtils.equals(employeeBean.getEmployeeID(), mSalesmanID)) {
+            //选择转移的人和当前的用户一样，则不用改变数值
+            EventBus.getDefault().post(new StaffEvent(shopTotalNumber - selectShopIds.size(), true));
+        }
+        syncStatus();
+    }
 
+    private void syncStatus() {
+        mPresenter.refresh();
+        showToast("转移成功");
+        clearSelect();
+    }
 }

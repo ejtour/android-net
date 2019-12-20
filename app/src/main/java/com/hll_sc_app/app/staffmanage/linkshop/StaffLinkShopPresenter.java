@@ -105,12 +105,14 @@ public class StaffLinkShopPresenter implements StaffLinkShopListContract.IPresen
         if (userBean == null) {
             return;
         }
+        BaseReq<DropStaffEmployeeReq> baseReq = new BaseReq<>();
         DropStaffEmployeeReq req = new DropStaffEmployeeReq();
         req.setGroupID(userBean.getGroupID());
         req.setSalesmanID(mView.getSalesmanID());
         req.setShopIDs(mView.getShopIds());
+        baseReq.setData(req);
         StaffManageService.INSTANCE
-                .dropStaffEmployee(req)
+                .dropStaffEmployee(baseReq)
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())
                 .doOnSubscribe(disposable -> {

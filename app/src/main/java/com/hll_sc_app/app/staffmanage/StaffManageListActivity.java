@@ -39,15 +39,21 @@ import com.hll_sc_app.widget.SimpleDecoration;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * 员工列表
@@ -288,9 +294,11 @@ public class StaffManageListActivity extends BaseLoadActivity implements StaffMa
     }
 
     @Subscribe(sticky = true)
-    public void onSubScribe(StaffEvent staffEvent) {
+    public void onEvent(StaffEvent staffEvent) {
         if (staffEvent.isRefreshList()) {
-            mPresenter.queryMoreStaffList();
+            Observable.timer(900, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                    .as(autoDisposable(AndroidLifecycleScopeProvider.from(getOwner())))
+                    .subscribe(aLong -> mPresenter.start());
         }
     }
 }

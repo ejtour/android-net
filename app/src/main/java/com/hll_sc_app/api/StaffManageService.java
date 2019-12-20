@@ -142,6 +142,6 @@ public interface StaffManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:102059")
-    Observable<BaseResp<Object>> dropStaffEmployee(@Body DropStaffEmployeeReq req);
+    Observable<BaseResp<Object>> dropStaffEmployee(@Body BaseReq<DropStaffEmployeeReq> req);
 
 }
