@@ -1,7 +1,6 @@
 package com.hll_sc_app.app.marketingsetting.coupon.selectshops;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -203,9 +203,9 @@ public class SelectShopsActivity extends BaseLoadActivity implements ISelectCont
         @Override
         protected void convert(BaseViewHolder helper, PurchaserShopBean item) {
             boolean isSelect = mSelectMap.containsKey(item.getShopID());
-            helper.setChecked(R.id.checkbox, isSelect)
-                    .setText(R.id.txt_shop_name, item.getShopName())
-                    .setTextColor(R.id.txt_shop_name, Color.parseColor(isSelect ? "#222222" : "#666666"));
+            TextView textView = (TextView) helper.itemView;
+            textView.setText(item.getShopName());
+            textView.setSelected(isSelect);
         }
     }
 }

@@ -61,7 +61,6 @@ public class CrmDailyDetailActivity extends BaseLoadActivity implements ICrmDail
     @Autowired(name = "parcelable")
     DailyBean mBean;
     private CrmDailyDetailHeader mHeader;
-    private boolean mSend;
     private ICrmDailyDetailContract.ICrmDailyDetailPresenter mPresenter;
     private CrmDailyDetailAdapter mAdapter;
     private boolean mHasChanged;
@@ -85,15 +84,14 @@ public class CrmDailyDetailActivity extends BaseLoadActivity implements ICrmDail
     }
 
     private void initData() {
-        mPresenter = CrmDailyDetailPresenter.newInstance(mBean.getId());
+        mPresenter = CrmDailyDetailPresenter.newInstance();
         mPresenter.register(this);
         mPresenter.start();
     }
 
     private void initView() {
         UserBean user = GreenDaoUtils.getUser();
-        mSend = user.getEmployeeID().equals(mBean.getEmployeeID());
-        if (!mSend) {
+        if (!user.getEmployeeID().equals(mBean.getEmployeeID())) { // 如果不是日报作者
             mTitleBar.setHeaderTitle(mBean.getEmployeeName());
             mBottomGroup.setVisibility(View.VISIBLE);
         }
@@ -134,6 +132,9 @@ public class CrmDailyDetailActivity extends BaseLoadActivity implements ICrmDail
 
     @Override
     public void setData(DailyBean data) {
+        if (mBean.getReadStatus() != data.getReadStatus()) {
+            mHasChanged = true;
+        }
         mBean = data;
         mHeader.setData(mBean);
     }
@@ -171,6 +172,16 @@ public class CrmDailyDetailActivity extends BaseLoadActivity implements ICrmDail
 
     @Override
     public boolean isSend() {
-        return mSend;
+        return TextUtils.isEmpty(mBean.getReportID());
+    }
+
+    @Override
+    public String getReplyID() {
+        return mBean.getReplyID();
+    }
+
+    @Override
+    public String getID() {
+        return mBean.getId();
     }
 }

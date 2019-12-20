@@ -72,7 +72,7 @@
                     android:button="@drawable/bg_selector_check_box"
                     android:padding="5dp"
                     android:text="在线支付"
-                    android:textColor="@drawable/base_text_color_window_check"
+                    android:textColor="@drawable/base_color_state_on_pri_off_666"
                     android:textSize="@dimen/text_middle_size"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -85,7 +85,7 @@
                     android:button="@drawable/bg_selector_check_box"
                     android:padding="5dp"
                     android:text="货到付款"
-                    android:textColor="@drawable/base_text_color_window_check"
+                    android:textColor="@drawable/base_color_state_on_pri_off_666"
                     android:textSize="@dimen/text_middle_size"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -98,7 +98,7 @@
                     android:button="@drawable/bg_selector_check_box"
                     android:padding="5dp"
                     android:text="账期支付"
-                    android:textColor="@drawable/base_text_color_window_check"
+                    android:textColor="@drawable/base_color_state_on_pri_off_666"
                     android:textSize="@dimen/text_middle_size"
                     android:visibility="gone"
                     tools:visibility="visible" />

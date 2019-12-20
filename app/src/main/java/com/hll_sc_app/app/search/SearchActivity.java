@@ -8,9 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -25,18 +22,13 @@ import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchTitleBar;
 import com.hll_sc_app.widget.SimpleDecoration;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnTextChanged;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.disposables.Disposable;
 
 /**
  * @author <a href="mailto:xuezhixin@hualala.com">Vixb</a>
@@ -45,19 +37,15 @@ import io.reactivex.disposables.Disposable;
 @Route(path = RouterConfig.SEARCH)
 public class SearchActivity extends BaseLoadActivity implements ISearchContract.ISearchView, BaseQuickAdapter.OnItemClickListener {
     protected static final int REQ_CODE = 0x844;
-    @BindView(R.id.as_search_edit)
-    protected EditText mSearchEdit;
-    @BindView(R.id.as_search_clear)
-    ImageView mSearchClear;
+    @BindView(R.id.as_title_bar)
+    protected SearchTitleBar mTitleBar;
     @BindView(R.id.as_list)
     RecyclerView mListView;
     @Autowired(name = "object0")
     protected String mSearchWords;
     @Autowired(name = "object1")
     protected String mKey;
-    protected Disposable mDisposable;
     private ISearchContract.ISearchStrategy mStrategy;
-    private ObservableEmitter<String> mEmitter;
     private SearchAdapter mAdapter;
     /**
      * @param searchWords 搜索词
@@ -77,39 +65,32 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
         ButterKnife.bind(this);
         beforeInitView();
         initView();
+        afterInitView();
     }
 
+    /**
+     * 初始化视图前调用此方法，用来获取页面传参，创建列表适配器需要的空布局
+     */
     protected void beforeInitView() {
         mStrategy = SearchFactory.getSearchStrategy(mKey);
         if (mStrategy == null) return;
-        mSearchEdit.setHint(mStrategy.getEditHint());
+        mTitleBar.setHint(mStrategy.getEditHint());
+    }
+
+    /**
+     * 初始化视图后调用此方法，用来进行接口初始化，搜索去抖
+     */
+    protected void afterInitView() {
+        if (mStrategy == null) return;
         ISearchContract.ISearchPresenter presenter = mStrategy.getSearchPresenter();
         if (presenter != null) {
             presenter.register(this);
-            mDisposable = getTextObservable().subscribe(presenter::requestSearch);
+            mTitleBar.subscribe(presenter::requestSearch);
             presenter.start();
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        if (mDisposable != null)
-            mDisposable.dispose();
-        super.onDestroy();
-    }
-
-    protected Observable<String> getTextObservable() {
-        Observable<String> observable = Observable.create(emitter -> mEmitter = emitter);
-        return observable.filter(s -> s.length() > 0).debounce(500, TimeUnit.MILLISECONDS);
-    }
-
     private void initView() {
-        mSearchEdit.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                search();
-            }
-            return true;
-        });
         mAdapter = new SearchAdapter(getLayoutRes());
         mAdapter.setEmptyView(getEmptyView());
         mAdapter.setOnItemClickListener(this);
@@ -118,7 +99,8 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
                 UIUtils.dip2px(1));
         decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0, Color.WHITE);
         mListView.addItemDecoration(decor);
-        updateSearchEdit(mSearchWords);
+        mTitleBar.updateSearchWords(mSearchWords);
+        mTitleBar.setOnSearchListener(this::search);
     }
 
     protected View getEmptyView() {
@@ -128,12 +110,14 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
                 .create();
     }
 
+    /**
+     * @return 列表条目布局
+     */
     protected int getLayoutRes() {
         return mStrategy.getLayoutRes();
     }
 
-    @OnClick(R.id.as_search_button)
-    public void search() {
+    private void search() {
         if (mStrategy != null && mStrategy.getSearchPresenter() != null && mStrategy.isSearchByResult()) {
             if (mAdapter.getData().size() == 0) {
                 showToast("没有符合的搜索结果，请更换搜索词");
@@ -141,52 +125,24 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
             }
             searchByResult(mAdapter, 0);
         } else {
-            String trim = mSearchEdit.getText().toString().trim();
             Intent intent = new Intent();
-            intent.putExtra("name", trim);
+            intent.putExtra("name", mTitleBar.getSearchContent());
             beforeFinish(intent);
             setResult(Constants.SEARCH_RESULT_CODE, intent);
-            close();
+            onBackPressed();
         }
     }
 
+    /**
+     * 关闭页面之前调用此方法，用来回传参数
+     */
     protected void beforeFinish(Intent intent) {
         // no-op
     }
 
-    private void updateSearchEdit(String content) {
-        mSearchEdit.setText(content);
-        if (content != null) {
-            mSearchEdit.setSelection(content.length());
-        }
-    }
-
-    @OnClick(R.id.as_close)
-    public void close() {
-        finish();
-    }
-
-    @OnClick(R.id.as_search_clear)
-    public void clear() {
-        mSearchEdit.setText("");
-    }
-
-    @OnTextChanged(R.id.as_search_edit)
-    public void onTextChanged(CharSequence s) {
-        if (s.toString().length() > 0) {
-            mSearchClear.setVisibility(View.VISIBLE);
-        } else {
-            mSearchClear.setVisibility(View.GONE);
-            if (mAdapter != null)
-                mAdapter.setNewData(null);
-        }
-        if (mEmitter != null)
-            mEmitter.onNext(s.toString().trim());
-    }
-
     @Override
-    public void refreshSearchData(List<NameValue> list) {
-        mAdapter.setNewData(list, mSearchEdit.getText().toString().trim());
+    public final void refreshSearchData(List<NameValue> list) {
+        mAdapter.setNewData(list, mTitleBar.getSearchContent());
     }
 
     private void searchByResult(BaseQuickAdapter adapter, int position) {
@@ -197,12 +153,12 @@ public class SearchActivity extends BaseLoadActivity implements ISearchContract.
             intent.putExtra("value", item.getValue());
             beforeFinish(intent);
             setResult(Constants.SEARCH_RESULT_CODE, intent);
-            close();
+            onBackPressed();
         }
     }
 
     @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+    public final void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         searchByResult(adapter, position);
     }
 }

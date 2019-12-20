@@ -40,7 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 品相黑名单——照搬 定向售卖
+ * 品项黑名单——照搬 定向售卖
  */
 @Route(path = RouterConfig.BLACK_LIST, extras = Constant.LOGIN_EXTRA)
 public class BlackListActivity extends BaseLoadActivity implements IBlackListContract.IBlackListView {
@@ -117,7 +117,7 @@ public class BlackListActivity extends BaseLoadActivity implements IBlackListCon
             if (!CommonUtils.isEmpty(list))
                 mAdapter.addData(list);
         } else {
-            mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("您还没有品相黑名单哦").setTips("点击右上角新增添加").create());
+            mAdapter.setEmptyView(EmptyView.newBuilder(this).setTipsTitle("您还没有品项黑名单哦").setTips("点击右上角新增添加").create());
             mAdapter.setNewData(list);
         }
     }

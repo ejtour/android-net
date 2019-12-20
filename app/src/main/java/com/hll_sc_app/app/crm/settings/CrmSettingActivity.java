@@ -20,6 +20,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.FileManager;
 import com.hll_sc_app.citymall.util.SystemUtils;
+import com.tencent.bugly.beta.Beta;
 
 import java.io.File;
 import java.util.Locale;
@@ -72,6 +73,7 @@ public class CrmSettingActivity extends BaseLoadActivity implements SettingContr
                 mPresenter.cleanCache();
                 break;
             case R.id.acs_version_info:
+                Beta.checkUpgrade(true, false);
                 break;
             case R.id.acs_logout:
                 if (BuildConfig.isDebug) logoutSuccess();

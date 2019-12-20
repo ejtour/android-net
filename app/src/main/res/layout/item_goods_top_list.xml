@@ -65,7 +65,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text="置顶"
-        android:textColor="@drawable/base_text_selector_dialog_cancel"
+        android:textColor="@drawable/base_color_state_on_white_off_pri"
         android:textSize="9sp"
         app:layout_constraintBottom_toBottomOf="@+id/txt_productCode"
         app:layout_constraintRight_toRightOf="parent"

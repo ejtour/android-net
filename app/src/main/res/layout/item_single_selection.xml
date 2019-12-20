@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:textColor="@drawable/base_color_tab_text"
+        android:textColor="@drawable/base_color_state_on_pri_enable_on_222_off_999"
         android:textSize="@dimen/text_middle_size"
         tools:text="条目" />
 

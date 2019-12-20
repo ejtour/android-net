@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="33dp"
         android:gravity="center_vertical"
-        android:textColor="@drawable/base_color_tab_text"
+        android:textColor="@drawable/base_color_state_on_pri_enable_on_222_off_999"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

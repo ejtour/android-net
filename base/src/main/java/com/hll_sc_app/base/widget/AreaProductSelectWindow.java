@@ -240,7 +240,7 @@ public class AreaProductSelectWindow extends BaseShadowPopupWindow implements Vi
     private class ProvinceAdapter extends BaseQuickAdapter<AreaBean, BaseViewHolder> {
 
         ProvinceAdapter() {
-            super(R.layout.item_select_area, null);
+            super(R.layout.base_item_select_area, null);
         }
 
         @Override
@@ -261,7 +261,7 @@ public class AreaProductSelectWindow extends BaseShadowPopupWindow implements Vi
     private class CityAdapter extends BaseQuickAdapter<AreaBean.ChildBeanX, BaseViewHolder> {
 
         CityAdapter() {
-            super(R.layout.item_select_area, null);
+            super(R.layout.base_item_select_area, null);
         }
 
         @Override
@@ -281,7 +281,7 @@ public class AreaProductSelectWindow extends BaseShadowPopupWindow implements Vi
     private class CityWrapperAdapter extends BaseSectionQuickAdapter<WrapperChildBeanX, BaseViewHolder> {
 
         CityWrapperAdapter() {
-            super(R.layout.item_select_area, R.layout.base_item_area_title, null);
+            super(R.layout.base_item_select_area, R.layout.base_item_area_title, null);
         }
 
         @Override

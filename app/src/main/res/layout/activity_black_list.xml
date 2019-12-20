@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="品相黑名单"
+            android:text="品项黑名单"
             android:textColor="@color/base_white"
             android:textSize="@dimen/base_title_center_size" />
 

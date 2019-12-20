@@ -6,6 +6,6 @@
     android:gravity="center_vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:textColor="@drawable/color_purchase_select_text"
+    android:textColor="@drawable/color_state_on_pri_off_999"
     android:textSize="@dimen/text_middle_size"
     tools:text="示例采购商集团名称" />

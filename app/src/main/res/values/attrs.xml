@@ -50,6 +50,7 @@
 
     <declare-styleable name="SearchTitleBar">
         <attr name="stb_hint" format="string" />
+        <attr name="stb_clear_search" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="RightTextView">

@@ -328,8 +328,8 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryRefundedDetail(BaseMapReq req, SimpleObserver<RefundDetailsResp> observer) {
-        ReportService.INSTANCE.queryRefundedDetail(req)
+    public static void queryRefundDetail(BaseMapReq req, SimpleObserver<RefundDetailsResp> observer) {
+        ReportService.INSTANCE.queryRefundDetail(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);
@@ -341,7 +341,7 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryRefundedProductList(BaseMapReq req, SimpleObserver<RefundProductResp> observer) {
+    public static void queryRefundProductList(BaseMapReq req, SimpleObserver<RefundProductResp> observer) {
         ReportService.INSTANCE.queryRefundProductDetail(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
@@ -354,8 +354,8 @@ public class Report {
      * @param req
      * @param observer
      */
-    public static void queryRefundedCustomerList(BaseMapReq req, SimpleObserver<RefundCustomerResp> observer) {
-        ReportService.INSTANCE.queryRefundedCustomerDetail(req)
+    public static void queryRefundCustomerList(BaseMapReq req, SimpleObserver<RefundCustomerResp> observer) {
+        ReportService.INSTANCE.queryRefundCustomerDetail(req)
                 .compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))
                 .subscribe(observer);

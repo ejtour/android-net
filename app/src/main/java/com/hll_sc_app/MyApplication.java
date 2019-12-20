@@ -11,7 +11,10 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.hll_sc_app.app.submit.BackType;
 import com.hll_sc_app.app.submit.IBackType;
 import com.hll_sc_app.base.GlobalPreference;
+import com.hll_sc_app.base.bean.UserBean;
 import com.hll_sc_app.base.greendao.DaoSessionManager;
+import com.hll_sc_app.base.greendao.GreenDaoUtils;
+import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.receiver.ActivityLifecycleHandler;
@@ -19,11 +22,16 @@ import com.hll_sc_app.utils.Constants;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
@@ -63,6 +71,7 @@ public class MyApplication extends Application {
 
     @Override
     public void onTerminate() {
+        Beta.unInit();
         unRegFromWx();
         super.onTerminate();
     }
@@ -96,6 +105,47 @@ public class MyApplication extends Application {
         LogUtil.isLog = BuildConfig.isDebug;
         initCloudChannel(this);
         DaoSessionManager.init(this);
+        initBugly();
+    }
+
+    private void initBugly() {
+        Beta.initDelay = 3000;
+        Beta.enableNotification = true;
+        Beta.upgradeDialogLayoutId = R.layout.dialog_upgrade;
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(App.INSTANCE);
+        strategy.setCrashHandleCallback(new CrashReport.CrashHandleCallback() {
+            @Override
+            public Map<String, String> onCrashHandleStart(int crashType, String errorType, String errorMessage, String errorStack) {
+                LinkedHashMap<String, String> map = new LinkedHashMap<>();
+                UserBean bean = GreenDaoUtils.getUser();
+                if (bean != null) {
+                    try {
+                        map.put("employeeName", bean.getEmployeeName());
+                        map.put("groupID", bean.getGroupID());
+                        map.put("groupName", bean.getGroupName());
+                        map.put("authType", bean.getAuthType());
+                        map.put("accountType", bean.getAccountType());
+                        map.put("curRole", bean.getCurRole());
+                        map.put("loginPhone", bean.getLoginPhone());
+                    } catch (Exception e) {
+                        map.put("strategy", e.getClass().getSimpleName() + ":" + e.getMessage());
+                    }
+                }
+                return map;
+            }
+
+            @Override
+            public byte[] onCrashHandleStart2GetExtraDatas(int crashType, String errorType, String errorMessage, String errorStack) {
+                try {
+                    return "Extra data.".getBytes("UTF-8");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+        });
+        Bugly.init(this, Constants.BUGLY_ID, BuildConfig.isDebug, strategy);
     }
 
     /**

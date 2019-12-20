@@ -419,7 +419,7 @@ public class AreaSelectDialog extends BaseDialog {
 
     class AreaListAdapter extends BaseQuickAdapter<AreaInfo, BaseViewHolder> {
         AreaListAdapter(@Nullable List<AreaInfo> data) {
-            super(R.layout.item_select_area, data);
+            super(R.layout.base_item_select_area, data);
         }
 
         @Override

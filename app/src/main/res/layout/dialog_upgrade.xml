@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color0_4_000000">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="50dp"
+        android:background="@drawable/base_bg_white_radius_5_solid"
+        android:elevation="3dp"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/du_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tag="beta_title"
+            android:textColor="@color/color_222222"
+            android:textSize="@dimen/text_large_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="更新标题" />
+
+        <View
+            android:id="@+id/du_div1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/color_eeeeee"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/du_title" />
+
+        <TextView
+            android:id="@+id/du_upgrade_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="3dp"
+            android:tag="beta_upgrade_info"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color999"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/du_div1"
+            tools:text="版本：1.0.2\n包大小：25.4M\n更新时间：2016-06-03 17:55" />
+
+        <TextView
+            android:id="@+id/du_upgrade_feature"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:lineSpacingExtra="4dp"
+            android:tag="beta_upgrade_feature"
+            android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/du_upgrade_info"
+            tools:text="功能说明：\n添加自定义feature" />
+
+        <View
+            android:id="@+id/du_div2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_eeeeee"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/du_upgrade_feature" />
+
+        <TextView
+            android:id="@+id/du_cancel_button"
+            style="@style/BtnOrderAction.PrimaryStroke"
+            android:layout_marginTop="@dimen/dp_10"
+            android:tag="beta_cancel_button"
+            android:text="下次再说"
+            app:layout_constraintEnd_toStartOf="@id/du_confirm_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/du_div2" />
+
+        <TextView
+            android:id="@+id/du_confirm_button"
+            style="@style/BtnOrderAction.PrimarySolid"
+            android:tag="beta_confirm_button"
+            android:text="安装"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/du_cancel_button"
+            app:layout_constraintTop_toTopOf="@id/du_cancel_button" />
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

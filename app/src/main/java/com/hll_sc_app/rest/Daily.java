@@ -46,7 +46,7 @@ public class Daily {
         BaseMapReq.Builder builder = BaseMapReq.newBuilder();
         builder.put("pageNum", String.valueOf(pageNum))
                 .put("pageSize", String.valueOf(pageSize))
-                .put(send || isManager ? "employeeID" : "receiver", user.getEmployeeID())
+                .put(send ? "employeeID" : "receiver", user.getEmployeeID())
                 .put("employeeName", searchWords)
                 .put("startDate", TextUtils.isEmpty(startDate) ? startDate : startDate + "000000")
                 .put("groupID", user.getGroupID())
@@ -70,7 +70,7 @@ public class Daily {
             }
         }
         Observable<BaseResp<SingleListResp<DailyBean>>> observable;
-        if (send || isManager) observable = DailyService.INSTANCE.querySendDaily(builder.create());
+        if (send) observable = DailyService.INSTANCE.querySendDaily(builder.create());
         else observable = DailyService.INSTANCE.queryReceiveDaily(builder.create());
         observable.compose(ApiScheduler.getDefaultObservableWithLoadingScheduler(observer))
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(observer.getOwner())))

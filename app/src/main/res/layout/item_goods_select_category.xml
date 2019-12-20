@@ -6,6 +6,6 @@
     android:background="@drawable/bg_goods_select_category"
     android:gravity="center"
     android:singleLine="true"
-    android:textColor="@drawable/base_text_color_window_check"
+    android:textColor="@drawable/base_color_state_on_pri_off_666"
     android:textSize="@dimen/text_middle_size"
     tools:text="一级分类" />

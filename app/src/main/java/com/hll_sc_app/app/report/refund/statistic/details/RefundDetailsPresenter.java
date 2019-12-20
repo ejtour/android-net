@@ -47,7 +47,7 @@ public class RefundDetailsPresenter implements IRefundDetailsContract.IRefundDet
     }
 
     private void load(boolean showLoading) {
-        Report.queryRefundedDetail(mView.getReq()
+        Report.queryRefundDetail(mView.getReq()
                 .put("pageNum", String.valueOf(mPageNum))
                 .put("pageSize", "20")
                 .create(), new SimpleObserver<RefundDetailsResp>(mView, showLoading) {

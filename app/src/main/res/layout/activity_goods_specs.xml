@@ -66,7 +66,7 @@
                     android:layout_centerVertical="true"
                     android:text="规格内容"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-                    android:textColor="@drawable/text_color_spec_add"/>
+                    android:textColor="@drawable/color_enable_on_666_off_3ae"/>
 
                 <EditText
                     android:id="@+id/edt_specContent"
@@ -80,7 +80,7 @@
                     android:selectAllOnFocus="true"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColor="@drawable/text_color_spec_add"
+                    android:textColor="@drawable/color_enable_on_666_off_3ae"
                     android:textColorHint="@color/color_aeaeae"/>
 
             </RelativeLayout>
@@ -101,7 +101,7 @@
                     android:layout_centerVertical="true"
                     android:text="售卖单位"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-                    android:textColor="@drawable/text_color_spec_add"/>
+                    android:textColor="@drawable/color_enable_on_666_off_3ae"/>
 
                 <TextView
                     android:id="@+id/txt_saleUnitName"
@@ -115,7 +115,7 @@
                     android:hint="请选择售卖单位"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColor="@drawable/text_color_spec_add"
+                    android:textColor="@drawable/color_enable_on_666_off_3ae"
                     android:textColorHint="@color/color_aeaeae"/>
 
             </RelativeLayout>
@@ -203,7 +203,7 @@
                     android:layout_centerVertical="true"
                     android:text="SKU条码"
                     android:textAppearance="@style/TextAppearance.City22.Middle.Color666"
-                    android:textColor="@drawable/text_color_spec_add"/>
+                    android:textColor="@drawable/color_enable_on_666_off_3ae"/>
 
                 <EditText
                     android:id="@+id/edt_skuCode"
@@ -218,7 +218,7 @@
                     android:selectAllOnFocus="true"
                     android:singleLine="true"
                     android:textAppearance="@style/TextAppearance.City22.Middle"
-                    android:textColor="@drawable/text_color_spec_add"
+                    android:textColor="@drawable/color_enable_on_666_off_3ae"
                     android:textColorHint="@color/color_aeaeae"/>
 
             </RelativeLayout>

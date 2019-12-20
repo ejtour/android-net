@@ -48,7 +48,7 @@
                 android:paddingBottom="5dp"
                 android:text="上架商品"
                 android:textAppearance="@style/TextAppearance.City22.Large.White"
-                android:textColor="@drawable/bg_goods_title_text"/>
+                android:textColor="@drawable/color_state_on_white_off_cwhite"/>
 
             <RadioButton
                 android:id="@+id/rb_productStatus5"
@@ -61,7 +61,7 @@
                 android:paddingBottom="5dp"
                 android:text="下架商品"
                 android:textAppearance="@style/TextAppearance.City22.Large.White"
-                android:textColor="@drawable/bg_goods_title_text"/>
+                android:textColor="@drawable/color_state_on_white_off_cwhite"/>
         </RadioGroup>
 
         <ImageView

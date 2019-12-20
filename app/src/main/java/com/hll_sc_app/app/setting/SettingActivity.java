@@ -19,6 +19,7 @@ import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.citymall.util.FileManager;
 import com.hll_sc_app.citymall.util.SystemUtils;
+import com.tencent.bugly.beta.Beta;
 
 import java.io.File;
 import java.util.Locale;
@@ -61,7 +62,7 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
 
 
     @OnClick({R.id.img_close, R.id.txt_price_ratio, R.id.txt_logout, R.id.txt_account_manage, R.id.txt_bill_setting,
-            R.id.txt_cooperation_setting, R.id.rl_custom_phone, R.id.txt_categoryName, R.id.txt_tax, R.id.txt_remind})
+            R.id.txt_cooperation_setting, R.id.rl_custom_phone, R.id.txt_categoryName, R.id.txt_tax, R.id.txt_remind, R.id.txt_version})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_close:
@@ -94,6 +95,9 @@ public class SettingActivity extends BaseLoadActivity implements SettingContract
                 break;
             case R.id.txt_remind:
                 RouterUtil.goToActivity(RouterConfig.SETTING_REMIND);
+                break;
+            case R.id.txt_version:
+                Beta.checkUpgrade(true, false);
                 break;
         }
     }

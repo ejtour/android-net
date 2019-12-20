@@ -145,7 +145,7 @@ public class OrderDetailActivity extends BaseLoadActivity implements IOrderDetai
             mTitleBar.setRightBtnClick(this::showOptionsWindow);
         } else {
             mTitleBar.setRightBtnVisible(true);
-            mTitleBar.setRightButtonImg(R.drawable.ic_export_option);
+            mTitleBar.setRightButtonImg(R.drawable.ic_share);
             mTitleBar.setRightBtnClick(v -> exportDetail());
         }
         if (CommonUtils.isEmpty(resp.getButtonList())) {

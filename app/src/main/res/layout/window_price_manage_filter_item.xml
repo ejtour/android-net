@@ -14,6 +14,6 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:singleLine="true"
-    android:textColor="@drawable/bg_register_category_text"
+    android:textColor="@drawable/base_color_state_on_pri_off_666"
     android:textSize="@dimen/base_text_12"
     tools:text="火锅料"/>

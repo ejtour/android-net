@@ -45,7 +45,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/rds_arrow"
-            android:textAppearance="@style/TextAppearance.City22.Small"
+            android:textAppearance="@style/TextAppearance.City22.Small.Color666"
             tools:text="2018/09/09 - 2018/09/16" />
 
     </RelativeLayout>

@@ -32,19 +32,22 @@ public class OrderSearchActivity extends SearchActivity implements IOrderSearchC
         mKey = getIntent().getStringExtra("object1");
         mEmptyView = new OrderSearchEmptyView(this);
         mEmptyView.setStringListener(result -> {
-            mSearchEdit.setHint(result);
+            mTitleBar.setHint(result);
             if (getIndex() == 2) {
-                String string = mSearchEdit.getText().toString();
+                String string = mTitleBar.getSearchContent();
                 String text = string.replaceAll("\\D+", "");
-                mSearchEdit.setText(text);
-                mSearchEdit.setSelection(text.length());
-                mSearchEdit.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-            } else mSearchEdit.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+                mTitleBar.updateSearchWords(text);
+                mTitleBar.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+            } else mTitleBar.setInputType(EditorInfo.TYPE_CLASS_TEXT);
         });
         mEmptyView.setCurIndex(Integer.parseInt(mKey));
+    }
+
+    @Override
+    protected void afterInitView() {
         IOrderSearchContract.IOrderSearchPresenter presenter = new OrderSearchPresenter();
         presenter.register(this);
-        mDisposable = getTextObservable().subscribe(presenter::requestSearch);
+        mTitleBar.subscribe(presenter::requestSearch);
     }
 
     @Override

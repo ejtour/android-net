@@ -1,39 +1,39 @@
 package com.hll_sc_app.app.stockmanage.purchaserorder.search;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchRecord;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchResp;
+import com.hll_sc_app.base.utils.router.RouterUtil;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchBean;
 import com.hll_sc_app.citymall.util.CommonUtils;
-
-import org.greenrobot.eventbus.EventBus;
+import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.EmptyView;
+import com.hll_sc_app.widget.SearchTitleBar;
+import com.hll_sc_app.widget.SimpleDecoration;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 
 /**
  * 采购单详情查询
@@ -43,167 +43,106 @@ import io.reactivex.disposables.Disposable;
  */
 @Route(path = RouterConfig.STOCK_PURCHASER_ORDER_SEARCH)
 public class PurchaserOrderSearchActivity extends BaseLoadActivity implements PurchaserOrderSearchContract.IPurchaserOrderSearchView {
-
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.edt_search)
-    EditText edtSearch;
-    @BindView(R.id.img_clear)
-    ImageView imageClearView;
-
-    private Disposable mDisposable;
-
-   List<String> selectiveSuppliers = new ArrayList<>();
-
+    private static final int REQ_CODE = 0x144;
+    @BindView(R.id.pos_title_bar)
+    SearchTitleBar mTitleBar;
+    @BindView(R.id.pos_list_view)
+    RecyclerView mListView;
+    @BindView(R.id.pos_refresh_layout)
+    SmartRefreshLayout mRefreshLayout;
     private PurchaserOrderSearchAdapter mAdapter;
     private PurchaserOrderSearchPresenter mPresenter;
+    private List<PurchaserOrderSearchBean> mSelectedList = new ArrayList<>();
+
+    public static void start(Activity context) {
+        RouterUtil.goToActivity(RouterConfig.STOCK_PURCHASER_ORDER_SEARCH, context, REQ_CODE);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_stock_purchaser_order_search);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
+        initView();
         mPresenter = PurchaserOrderSearchPresenter.newInstance();
-        mAdapter = new PurchaserOrderSearchAdapter();
-        mAdapter.setOnItemClickListener((adapter,view,position)->{
-            PurchaserOrderSearchRecord item  = (PurchaserOrderSearchRecord) adapter.getItem(position);
-            String supplierID = item.getSupplierID();
-            if(!selectiveSuppliers.contains(supplierID)){
-                selectiveSuppliers.add(supplierID);
-            }else{
-                selectiveSuppliers.remove(supplierID);
-            }
-            //再次渲染adapter的convert方法
-            mAdapter.notifyDataSetChanged();
-        });
-        mRecyclerView.setAdapter(mAdapter);
         mPresenter.register(this);
-        mDisposable = textChangeObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(this::querySupplyChainGroup);
+        mTitleBar.subscribe(s -> mPresenter.start());
     }
 
-    private void querySupplyChainGroup(String word){
-        imageClearView.setVisibility(View.VISIBLE);
-        mPresenter.start();
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mDisposable.dispose();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @OnClick({R.id.img_back,R.id.edt_search,R.id.img_clear,R.id.txt_search})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.img_clear:
-                edtSearch.setText("");
-                break;
-            case R.id.txt_search:
+    private void initView() {
+        // 避免 notifyItemChanged 闪烁
+        ((SimpleItemAnimator) mListView.getItemAnimator()).setSupportsChangeAnimations(false);
+        mAdapter = new PurchaserOrderSearchAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            PurchaserOrderSearchBean item = (PurchaserOrderSearchBean) adapter.getItem(position);
+            if (item == null) return;
+            if (mSelectedList.contains(item)) {
+                mSelectedList.remove(item);
+            } else {
+                mSelectedList.add(item);
+            }
+            mAdapter.notifyItemChanged(position);
+        });
+        mAdapter.setEmptyView(EmptyView.newBuilder(this).setImage(R.drawable.ic_empty_group_view).setTips("请输入供应商的名称").create());
+        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), UIUtils.dip2px(1));
+        decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0, Color.WHITE);
+        mListView.addItemDecoration(decor);
+        mListView.setAdapter(mAdapter);
+        mTitleBar.setOnSearchListener(() -> {
+            List<String> ids = new ArrayList<>();
+            List<String> names = new ArrayList<>();
+            for (PurchaserOrderSearchBean bean : mSelectedList) {
+                ids.add(bean.getSupplierID());
+                names.add(bean.getSupplierName());
+            }
+            if (!CommonUtils.isEmpty(ids)) {
                 Intent intent = new Intent();
-                String suppliers = "";
-                if(selectiveSuppliers!=null && selectiveSuppliers.size()>0){
-                    for(int i=0;i<selectiveSuppliers.size();i++){
-                        if(i!=selectiveSuppliers.size()-1){
-                            suppliers+=selectiveSuppliers.get(i)+",";
-                        }else{
-                            suppliers+=selectiveSuppliers.get(i);
-                        }
-                    }
-                }
-                intent.putExtra("result",suppliers);
-                setResult(RESULT_OK,intent);
-                finish();
-                break;
-            default:
-                break;
-        }
+                intent.putExtra("ids", TextUtils.join(",", ids));
+                intent.putExtra("names", TextUtils.join(",", names));
+                setResult(Constants.SEARCH_RESULT_CODE, intent);
+            }
+            onBackPressed();
+        });
+
+        mRefreshLayout.setOnLoadMoreListener(refreshLayout -> mPresenter.loadMore());
     }
 
     @Override
-    public void showPurchaserOrderSearchList(PurchaserOrderSearchResp purchaserOrderSearchResp,boolean append) {
+    public void setData(List<PurchaserOrderSearchBean> list, boolean append) {
         if (append) {
-            if (!CommonUtils.isEmpty(purchaserOrderSearchResp.getRecords())) {
-                mAdapter.addData(purchaserOrderSearchResp.getRecords());
+            if (!CommonUtils.isEmpty(list)) {
+                mAdapter.addData(list);
             }
         } else {
-            mAdapter.setNewData(purchaserOrderSearchResp.getRecords());
+            mAdapter.setNewData(list);
         }
+        mRefreshLayout.setEnableLoadMore(list != null && list.size() == 20);
     }
-
-    /**
-     * 500 毫秒去抖
-     */
-    private Observable<String> textChangeObservable() {
-        Observable<String> observable = Observable.create(emitter -> {
-            TextWatcher textWatcher = new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (s.toString().length() > 0) {
-                        imageClearView.setVisibility(View.VISIBLE);
-                    } else {
-                        imageClearView.setVisibility(View.GONE);
-                    }
-                    emitter.onNext(s.toString().trim());
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (0 == s.toString().length()) {
-                        imageClearView.setVisibility(View.GONE);
-                        edtSearch.setText("");
-                    }
-                }
-            };
-            edtSearch.addTextChangedListener(textWatcher);
-
-        });
-        return observable.filter(q -> q.length() > 0).debounce(500, TimeUnit.MILLISECONDS);
-    }
-
 
     @Override
     public void hideLoading() {
+        mRefreshLayout.closeHeaderOrFooter();
         super.hideLoading();
     }
 
     @Override
-    public List<String> getSelectiveSuppliers() {
-        return selectiveSuppliers;
-    }
-
-    @Override
     public String getSearchKey() {
-        return edtSearch.getText().toString().trim();
+        return mTitleBar.getSearchContent();
     }
 
-    class PurchaserOrderSearchAdapter extends BaseQuickAdapter<PurchaserOrderSearchRecord, BaseViewHolder> {
+    class PurchaserOrderSearchAdapter extends BaseQuickAdapter<PurchaserOrderSearchBean, BaseViewHolder> {
 
         PurchaserOrderSearchAdapter() {
             super(R.layout.item_stock_purchaser_order_search);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, PurchaserOrderSearchRecord bean) {
-            helper.setText(R.id.txt_purchaser_order_search, bean.getSupplierName());
-            CheckBox checkBox = helper.getView(R.id.purchaser_order_search_checkbox);
-            checkBox.setClickable(false);
-            if(selectiveSuppliers.contains(bean.getSupplierID())) {
-                checkBox.setChecked(true);
-            }else{
-                checkBox.setChecked(false);
-            }
+        protected void convert(BaseViewHolder helper, PurchaserOrderSearchBean bean) {
+            TextView view = (TextView) helper.itemView;
+            view.setText(bean.getSupplierName());
+            view.setSelected(mSelectedList.contains(bean));
         }
     }
-
 }

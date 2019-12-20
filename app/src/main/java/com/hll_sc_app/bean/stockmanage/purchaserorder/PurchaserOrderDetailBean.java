@@ -1,11 +1,11 @@
 package com.hll_sc_app.bean.stockmanage.purchaserorder;
 
-public class PurchaserOrderDetailRecord {
+public class PurchaserOrderDetailBean {
 
     /**
      * 辅助数量
      */
-    private String auxiliaryNum;
+    private int auxiliaryNum;
     /**
      * 辅助单位
      */
@@ -19,52 +19,51 @@ public class PurchaserOrderDetailRecord {
      */
     private String detailRemark;
     /**
-     * 品相分类编码
+     * 品项分类编码
      */
     private String goodsCategoryCode;
     /**
-     * 品相分类ID
+     * 品项分类ID
      */
     private String goodsCategoryID;
     /**
-     * 品相分类名称
+     * 品项分类名称
      */
     private String goodsCategoryName;
     /**
-     * 品相编码
+     * 品项编码
      */
     private String goodsCode;
     /**
-     * 品相规格
+     * 品项规格
      */
     private String goodsDesc;
     /**
-     * 品相ID
+     * 品项ID
      */
     private String goodsID;
     /**
-     * 品相图片
+     * 品项图片
      */
     private String goodsImgPath;
     /**
-     * 品相名称
+     * 品项名称
      */
     private String goodsName;
     /**
      * 采购单位数量
      */
-    private String goodsNum;
+    private int goodsNum;
     /**
      * 采购单位
      */
     private String purchaseUnit;
 
-
-    public String getAuxiliaryNum() {
+    public int getAuxiliaryNum() {
         return auxiliaryNum;
     }
 
-    public void setAuxiliaryNum(String auxiliaryNum) {
+    public void setAuxiliaryNum(int auxiliaryNum) {
         this.auxiliaryNum = auxiliaryNum;
     }
 
@@ -156,11 +155,11 @@ public class PurchaserOrderDetailRecord {
         this.goodsName = goodsName;
     }
 
-    public String getGoodsNum() {
+    public int getGoodsNum() {
         return goodsNum;
     }
 
-    public void setGoodsNum(String goodsNum) {
+    public void setGoodsNum(int goodsNum) {
         this.goodsNum = goodsNum;
     }
 

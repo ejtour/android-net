@@ -1,9 +1,12 @@
 package com.hll_sc_app.app.stockmanage.purchaserorder.detail;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.widget.TextView;
@@ -11,33 +14,35 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.alibaba.sdk.android.ams.common.util.StringUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.http.HttpConfig;
+import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailRecord;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderBean;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailBean;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderRecord;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.citymall.util.ViewUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.DateUtil;
 import com.hll_sc_app.widget.ShareDialog;
+import com.hll_sc_app.widget.SimpleDecoration;
+import com.hll_sc_app.widget.TitleBar;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 采购单详情查询
@@ -46,50 +51,56 @@ import butterknife.OnClick;
  * @date 20190720
  */
 @Route(path = RouterConfig.STOCK_PURCHASER_ORDER_DETAIL)
-public class PurchaserOrderDetailActivity extends BaseLoadActivity implements PurchaserOrderDetailContract.IPurchaserOrderDetailView {
-
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+public class PurchaserOrderDetailActivity extends BaseLoadActivity implements IPurchaserOrderDetailContract.IPurchaserOrderDetailView {
     @Autowired(name = "object0")
-    String mPurchaserBillID = null;
-    @BindView(R.id.purchaser_order_comp_name)
-    TextView purchaserOrderCompName;
-    @BindView(R.id.purchaser_order_status)
-    TextView purchaserOrderStatus;
-    @BindView(R.id.purchaser_order_no)
-    TextView purchaserOrderNo;
-    @BindView(R.id.purchaser_order_create_time)
-    TextView purchaserOrderCreateTime;
-    @BindView(R.id.purchaser_order_orig)
-    TextView purchaserOrderOrig;
-    @BindView(R.id.purchaser_order_arrival_date)
-    TextView purchaserOrderArrivalDate;
-    @BindView(R.id.purchaser_order_mark)
-    TextView purchaserOrderMark;
-    @BindView(R.id.purchaser_order_category_num)
-    TextView purchaserOrderCategoryNum;
-    @BindView(R.id.purchaser_order_num)
-    TextView purchaserOrderNum;
-    @BindView(R.id.purchaser_order_amount)
-    TextView purchaserOrderAmount;
+    String mPurchaserBillID;
+    @BindView(R.id.pod_title_bar)
+    TitleBar mTitleBar;
+    @BindView(R.id.pod_status)
+    TextView mStatus;
+    @BindView(R.id.pod_name)
+    TextView mName;
+    @BindView(R.id.pod_no)
+    TextView mNo;
+    @BindView(R.id.pod_purchase_date)
+    TextView mPurchaseDate;
+    @BindView(R.id.pod_arrive_date)
+    TextView mArriveDate;
+    @BindView(R.id.pod_org)
+    TextView mOrg;
+    @BindView(R.id.pod_remark)
+    TextView mRemark;
+    @BindView(R.id.pod_category)
+    TextView mCategory;
+    @BindView(R.id.pod_num)
+    TextView mNum;
+    @BindView(R.id.pod_amount)
+    TextView mAmount;
+    @BindView(R.id.pod_list_view)
+    RecyclerView mListView;
     private ShareDialog mShareDialog;
-
-    private String supplyerName;
-
-    private PurchaserOrderDetailListAdapter mAdapter;
-    private PurchaserOrderDetailPresenter mPresenter;
+    private PurchaserOrderDetailAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_stock_purchaser_order_detail);
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
-        mPresenter = PurchaserOrderDetailPresenter.newInstance();
-        mAdapter = new PurchaserOrderDetailListAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-        mPresenter.register(this);
-        mPresenter.start();
+        initView();
+        IPurchaserOrderDetailContract.IPurchaserOrderDetailPresenter presenter = PurchaserOrderDetailPresenter.newInstance();
+        presenter.register(this);
+        presenter.start();
+    }
+
+    private void initView() {
+        mTitleBar.setRightBtnClick(this::showShareDialog);
+        mAdapter = new PurchaserOrderDetailAdapter();
+        mListView.setAdapter(mAdapter);
+        SimpleDecoration decor = new SimpleDecoration(ContextCompat.getColor(this, R.color.color_eeeeee), ViewUtils.dip2px(this, 0.5f));
+        decor.setLineMargin(UIUtils.dip2px(10), 0, UIUtils.dip2px(10), 0, Color.WHITE);
+        mListView.addItemDecoration(decor);
     }
 
     public static void start(String purchaserBillID) {
@@ -100,44 +111,33 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements Pu
     protected void onDestroy() {
         if (mShareDialog != null) mShareDialog.release();
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
-    @OnClick({R.id.img_back,R.id.shared_purchaser_order_detail_btn})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
-                finish();
-                break;
-            case R.id.shared_purchaser_order_detail_btn:
-                if (mShareDialog == null) {
-                    mShareDialog = new ShareDialog(this);
-                    JSONObject json = new JSONObject();
-                    try {
-                        json.put("url", HttpConfig.getHost() + HttpConfig.URL);
-                        JSONObject obj = new JSONObject();
-                        obj.put("purchaserBillID", mPurchaserBillID);
-                        obj.put("groupID", UserConfig.getGroupID());
-                        json.put("body", obj);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    String url = (BuildConfig.isDebug ? "http://172.16.32.222:3001" : "http://weixin.22city.cn")
-                            + "/client/sharePurchase?shareData="
-                            + Base64.encodeToString(json.toString().getBytes(), Base64.NO_WRAP);
-                    mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
-                            "采购单分享",
-                            "http://res.hualala.com/group3/M02/11/E4/wKgVbV3FKiGutZpqAABNhltbYDI135.png",
-                            "二十二城采购单分享",
-                            "二十二城的生鲜食材很棒棒呦，快来看看吧~",
-                            url
-                    ).setShareTimeLine(false).setShareQzone(false));
-                }
-                mShareDialog.show();
-                break;
-            default:
-                break;
+    private void showShareDialog(View view) {
+        if (mShareDialog == null) {
+            mShareDialog = new ShareDialog(this);
+            JSONObject json = new JSONObject();
+            try {
+                json.put("url", HttpConfig.getHost() + HttpConfig.URL);
+                JSONObject obj = new JSONObject();
+                obj.put("purchaserBillID", mPurchaserBillID);
+                obj.put("groupID", UserConfig.getGroupID());
+                json.put("body", obj);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String url = (BuildConfig.isDebug ? "http://172.16.32.222:3001" : "http://weixin.22city.cn")
+                    + "/client/sharePurchase?shareData="
+                    + Base64.encodeToString(json.toString().getBytes(), Base64.NO_WRAP);
+            mShareDialog.setData(ShareDialog.ShareParam.createWebShareParam(
+                    "采购单分享",
+                    "http://res.hualala.com/group3/M02/11/E4/wKgVbV3FKiGutZpqAABNhltbYDI135.png",
+                    "二十二城采购单分享",
+                    "二十二城的生鲜食材很棒棒呦，快来看看吧~",
+                    url
+            ).setShareTimeLine(false).setShareQzone(false));
         }
+        mShareDialog.show();
     }
 
     @Override
@@ -147,27 +147,27 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements Pu
     }
 
     @Override
-    public void showPurchaserOrderDetail(PurchaserOrderDetailResp purchaserOrderDetailResp) {
-        if (!CommonUtils.isEmpty(purchaserOrderDetailResp.getRecords())) {
-            PurchaserOrderRecord record = purchaserOrderDetailResp.getRecord();
-            supplyerName = record.getSupplierName();
-            purchaserOrderCompName.setText(supplyerName);
-            purchaserOrderStatus.setText(record.getStatusDesc());
-            purchaserOrderNo.setText(String.format("%s : %s", "采购单号", record.getBillNo()));
-            purchaserOrderCreateTime.setText(String.format("%s : %s", "采购日期",
-                    CalendarUtils.getDateFormatString(record.getBillDate(), CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD)));
-            purchaserOrderOrig.setText(String.format("%s : %s", "采购组织", record.getSupplierName()));
-            purchaserOrderArrivalDate.setText(String.format("%s : %s", "到货日期",
-                    CalendarUtils.getDateFormatString(record.getBillExecuteDate(), CalendarUtils.FORMAT_LOCAL_DATE, Constants.SLASH_YYYY_MM_DD)));
-            purchaserOrderMark.setText(String.format("%s : %s", "备注信息", StringUtil.isEmpty(record.getBillRemark()) ? "无" : record.getBillRemark()));
-            purchaserOrderCategoryNum.setText(purchaserOrderDetailResp.getRecords().size() + "");
-            BigDecimal totalNum = BigDecimal.ZERO;
-            for (PurchaserOrderDetailRecord r : purchaserOrderDetailResp.getRecords()) {
-                totalNum = totalNum.add(new BigDecimal(r.getGoodsNum()));
+    public void setData(PurchaserOrderDetailResp resp) {
+        PurchaserOrderBean record = resp.getRecord();
+        mName.setText(record.getSupplierName());
+        mStatus.setText(record.getStatusDesc());
+        mNo.setText(String.format("采购单号：%s", record.getBillNo()));
+        mPurchaseDate.setText(String.format("采购日期：%s", DateUtil.getReadableTime(record.getBillDate(), Constants.SLASH_YYYY_MM_DD)));
+        mArriveDate.setText(String.format("到货日期：%s", DateUtil.getReadableTime(record.getBillExecuteDate(), Constants.SLASH_YYYY_MM_DD)));
+        mOrg.setText(String.format("采购组织：%s/%s", record.getDemandName(), record.getBillCreateBy()));
+        mRemark.setText(String.format("备注信息：%s", TextUtils.isEmpty(record.getBillRemark()) ? "无" : record.getBillRemark()));
+        mNum.setText(String.valueOf(0));
+        mCategory.setText(String.valueOf(0));
+        mAmount.setText(String.format("¥%s", CommonUtils.formatMoney(record.getTotalPrice())));
+        List<PurchaserOrderDetailBean> records = resp.getRecords();
+        if (!CommonUtils.isEmpty(records)) {
+            double totalNum = 0;
+            for (PurchaserOrderDetailBean bean : records) {
+                totalNum = CommonUtils.addDouble(totalNum, bean.getGoodsNum(), 0).doubleValue();
             }
-            purchaserOrderNum.setText(totalNum.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString());
-            purchaserOrderAmount.setText(String.format("%s %s", "¥", CommonUtils.formatMoney(new BigDecimal(record.getTotalPrice()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue())));
-            mAdapter.addData(purchaserOrderDetailResp.getRecords());
+            mNum.setText(CommonUtils.formatNum(totalNum));
+            mCategory.setText(CommonUtils.formatNum(records.size()));
+            mAdapter.setNewData(records);
         }
     }
 
@@ -176,23 +176,17 @@ public class PurchaserOrderDetailActivity extends BaseLoadActivity implements Pu
         return mPurchaserBillID;
     }
 
-    @Override
-    public void hideLoading() {
-        super.hideLoading();
-    }
+    static class PurchaserOrderDetailAdapter extends BaseQuickAdapter<PurchaserOrderDetailBean, BaseViewHolder> {
 
-    class PurchaserOrderDetailListAdapter extends BaseQuickAdapter<PurchaserOrderDetailRecord, BaseViewHolder> {
-
-        PurchaserOrderDetailListAdapter() {
+        PurchaserOrderDetailAdapter() {
             super(R.layout.item_stock_purchaser_order_detail);
         }
 
         @Override
-        protected void convert(BaseViewHolder helper, PurchaserOrderDetailRecord bean) {
-            helper.setText(R.id.txt_purchaser_order_goods_name, bean.getGoodsName())
-                    .setText(R.id.txt_purchaser_order_goods_desc, String.format("%s/%s", bean.getGoodsDesc(), bean.getPurchaseUnit()))
-                    .setText(R.id.txt_purchaser_order_goods_num, String.format("%s/%s", new BigDecimal(bean.getGoodsNum()).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString(), bean.getPurchaseUnit()));
+        protected void convert(BaseViewHolder helper, PurchaserOrderDetailBean bean) {
+            helper.setText(R.id.pod_name, bean.getGoodsName())
+                    .setText(R.id.pod_spec, String.format("%s/%s", bean.getGoodsDesc(), bean.getPurchaseUnit()))
+                    .setText(R.id.pod_num, String.format("%s%s", CommonUtils.formatNum(bean.getGoodsNum()), bean.getPurchaseUnit()));
         }
     }
-
 }

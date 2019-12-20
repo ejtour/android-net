@@ -284,7 +284,7 @@ public class AreaSelectWindow extends BaseShadowPopupWindow implements View.OnCl
 
     private class ProvinceAdapter extends BaseQuickAdapter<AreaBean, BaseViewHolder> {
         ProvinceAdapter() {
-            super(R.layout.item_select_area);
+            super(R.layout.base_item_select_area);
         }
 
         @Override
@@ -298,7 +298,7 @@ public class AreaSelectWindow extends BaseShadowPopupWindow implements View.OnCl
 
     private class CityAdapter extends BaseQuickAdapter<AreaBean.ChildBeanX, BaseViewHolder> {
         CityAdapter() {
-            super(R.layout.item_select_area);
+            super(R.layout.base_item_select_area);
         }
 
         @Override
@@ -313,7 +313,7 @@ public class AreaSelectWindow extends BaseShadowPopupWindow implements View.OnCl
     private class DistrictAdapter extends BaseQuickAdapter<AreaBean.ChildBeanX.ChildBean, BaseViewHolder> {
 
         DistrictAdapter() {
-            super(R.layout.item_select_area);
+            super(R.layout.base_item_select_area);
         }
 
         @Override

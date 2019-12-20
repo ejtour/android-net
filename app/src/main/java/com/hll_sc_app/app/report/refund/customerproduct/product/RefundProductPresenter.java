@@ -59,7 +59,7 @@ public class RefundProductPresenter implements IRefundProductContract.IRefundPro
     }
 
     private void load(boolean showLoading) {
-        Report.queryRefundedProductList(mView.getReq()
+        Report.queryRefundProductList(mView.getReq()
                 .put("pageNum", String.valueOf(mPageNum))
                 .put("pageSize", "20")
                 .create(), new SimpleObserver<RefundProductResp>(mView, showLoading) {

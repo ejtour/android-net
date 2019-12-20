@@ -7,6 +7,10 @@
         <item name="android:textSize">@dimen/text_large_size</item>
     </style>
 
+    <style name="TextAppearance.City22.Large.Color666">
+        <item name="android:textColor">@color/color_666666</item>
+    </style>
+
     <style name="TextAppearance.City22.Large.White">
         <item name="android:textColor">@android:color/white</item>
     </style>

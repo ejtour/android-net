@@ -187,7 +187,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111021")
-    Observable<BaseResp<RefundDetailsResp>> queryRefundedDetail(@Body BaseMapReq req);
+    Observable<BaseResp<RefundDetailsResp>> queryRefundDetail(@Body BaseMapReq req);
 
     /**
      * 已退商品客户列表统计
@@ -197,7 +197,7 @@ public interface ReportService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:111020")
-    Observable<BaseResp<RefundCustomerResp>> queryRefundedCustomerDetail(@Body BaseMapReq body);
+    Observable<BaseResp<RefundCustomerResp>> queryRefundCustomerDetail(@Body BaseMapReq body);
 
 
     /**

@@ -69,8 +69,8 @@ public class CrmDailyFragment extends BaseLoadFragment implements ICrmDailyContr
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CrmDailyEditActivity.REQ_CODE && resultCode == Activity.RESULT_OK) {
-            if (data != null)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == CrmDailyEditActivity.REQ_CODE && data != null)
                 mReq = data.getParcelableExtra("parcelable");
             else mPresenter.start();
         }

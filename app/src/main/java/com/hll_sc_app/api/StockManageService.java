@@ -5,15 +5,15 @@ import com.hll_sc_app.base.bean.BaseReq;
 import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.HttpConfig;
 import com.hll_sc_app.base.http.HttpFactory;
+import com.hll_sc_app.bean.common.SingleListResp;
 import com.hll_sc_app.bean.stockmanage.BusinessTypeBean;
 import com.hll_sc_app.bean.stockmanage.CustomerSendManageListResp;
 import com.hll_sc_app.bean.stockmanage.RemoveStockCheckSettingReq;
 import com.hll_sc_app.bean.stockmanage.StockLogResp;
 import com.hll_sc_app.bean.stockmanage.StorehouseListResp;
 import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderDetailResp;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderReq;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderResp;
-import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchResp;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderBean;
+import com.hll_sc_app.bean.stockmanage.purchaserorder.PurchaserOrderSearchBean;
 
 import java.util.List;
 
@@ -97,7 +97,7 @@ public interface StockManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:103151")
-    Observable<BaseResp<PurchaserOrderResp>> querySupplyChainPurchaserOrderList(@Body BaseReq<PurchaserOrderReq> req);
+    Observable<BaseResp<SingleListResp<PurchaserOrderBean>>> queryPurchaserOrderList(@Body BaseMapReq req);
 
     /**
      * 供应链采购单明细查询
@@ -116,6 +116,6 @@ public interface StockManageService {
      */
     @POST(HttpConfig.URL)
     @Headers("pv:101112")
-    Observable<BaseResp<PurchaserOrderSearchResp>> querySupplyChainGroupList(@Body BaseMapReq req);
+    Observable<BaseResp<SingleListResp<PurchaserOrderSearchBean>>> querySupplyChainGroupList(@Body BaseMapReq req);
 
 }

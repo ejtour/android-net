@@ -56,7 +56,7 @@
             android:gravity="center"
             android:checked="true"
             tools:text="箱"
-            android:textColor="@drawable/base_color_tab_text"
+            android:textColor="@drawable/base_color_state_on_pri_enable_on_222_off_999"
             android:textSize="@dimen/text_middle_size" />
 
         <View
@@ -71,7 +71,7 @@
             android:button="@null"
             android:gravity="center"
             tools:text="斤"
-            android:textColor="@drawable/base_color_tab_text"
+            android:textColor="@drawable/base_color_state_on_pri_enable_on_222_off_999"
             android:textSize="@dimen/text_middle_size" />
     </RadioGroup>
 </android.support.constraint.ConstraintLayout>

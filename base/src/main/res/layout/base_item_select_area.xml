@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="7dp"
             android:gravity="center_vertical"
-            android:textColor="@drawable/base_color_area_tab_text"
+            android:textColor="@drawable/base_color_state_on_pri_off_333"
             android:textSize="13sp"
             tools:text="朝阳区"/>
 

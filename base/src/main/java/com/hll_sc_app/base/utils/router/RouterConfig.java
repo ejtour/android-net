@@ -1461,7 +1461,8 @@ public class RouterConfig {
      */
     public static final String SETTING_PRICE_TRANSFORM_RADIO = "/activity/setting/price/transform/radio";
 
-    /**     * 客户毛利统计表
+    /**
+     * 客户毛利统计表
      */
     public static final String REPORT_PROFIT_CUSTOMER = "/activity/report/profit/customer";
 
