@@ -14,9 +14,9 @@ import android.widget.TextView;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
 import com.hll_sc_app.bean.order.transfer.TransferBean;
-import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.citymall.util.ToastUtils;
+import com.hll_sc_app.utils.DateUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +65,7 @@ public class TransferDetailFooter extends ConstraintLayout {
         mAmount.setText(handleAmount(data.getTotalPrice(), 10f / 16));
         mOrderNo.setText(data.getPurchaseBillNo());
         mCopyOrderNo.setTag(data.getPurchaseBillNo());
-        mOrderTime.setText(CalendarUtils.getFormatYyyyMmDdHhMm(data.getCreateTime()));
+        mOrderTime.setText(DateUtil.getReadableTime(data.getBillCreateTime()));
         mPayMethod.setText(OrderHelper.getPayType(data.getPayType()));
         mOrderSource.setText(data.getBillSource() == 1 ? "哗啦啦供应链" : "天财供应链");
     }

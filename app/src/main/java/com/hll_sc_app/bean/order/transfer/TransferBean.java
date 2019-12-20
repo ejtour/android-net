@@ -21,7 +21,7 @@ public class TransferBean implements Parcelable {
     private String allotID;
     private String shopmallBillNo;
     private String allotName;
-    private long billCreateTime;
+    private String billCreateTime;
     private int shipperType;
     private int payType;
     private int purchaserID;
@@ -122,11 +122,11 @@ public class TransferBean implements Parcelable {
         this.allotName = allotName;
     }
 
-    public long getBillCreateTime() {
+    public String getBillCreateTime() {
         return billCreateTime;
     }
 
-    public void setBillCreateTime(long billCreateTime) {
+    public void setBillCreateTime(String billCreateTime) {
         this.billCreateTime = billCreateTime;
     }
 
@@ -447,7 +447,7 @@ public class TransferBean implements Parcelable {
         dest.writeString(this.allotID);
         dest.writeString(this.shopmallBillNo);
         dest.writeString(this.allotName);
-        dest.writeLong(this.billCreateTime);
+        dest.writeString(this.billCreateTime);
         dest.writeInt(this.shipperType);
         dest.writeInt(this.payType);
         dest.writeInt(this.purchaserID);
@@ -498,7 +498,7 @@ public class TransferBean implements Parcelable {
         this.allotID = in.readString();
         this.shopmallBillNo = in.readString();
         this.allotName = in.readString();
-        this.billCreateTime = in.readLong();
+        this.billCreateTime = in.readString();
         this.shipperType = in.readInt();
         this.payType = in.readInt();
         this.purchaserID = in.readInt();
