@@ -63,6 +63,12 @@ public class FeedbackListActivity extends BaseLoadActivity implements IFeedbackL
         unbinder.unbind();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mPresent.queryList(true);
+    }
+
     private void initView() {
         mTitle.setRightBtnClick(v -> {
             RouterUtil.goToActivity(RouterConfig.ACTIVITY_FEED_BACK_ADD, this, GOTO_ADD_FROM_LIST);

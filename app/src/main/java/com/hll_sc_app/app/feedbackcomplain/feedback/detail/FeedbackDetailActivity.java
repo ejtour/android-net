@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.feedbackcomplain.feedback.add.FeedbackAddActivity;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
@@ -29,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -40,10 +43,13 @@ public class FeedbackDetailActivity extends BaseLoadActivity implements IFeedbac
     RecyclerView mListView;
     @Autowired(name = "object0")
     String mId;
+    @BindView(R.id.ll_button_bottom)
+    LinearLayout mLlButton;
     private Unbinder unbinder;
     private IFeedbackDetailContract.IPresent mPresent;
     private FeedbackDetailAdapter mAdapter;
 
+    private FeedbackDetailResp mDetail;
     public static void start(String id) {
         RouterUtil.goToActivity(RouterConfig.ACTIVITY_FEED_BACK_DETAIL, id);
     }
@@ -66,11 +72,23 @@ public class FeedbackDetailActivity extends BaseLoadActivity implements IFeedbac
         unbinder.unbind();
     }
 
+    @OnClick({R.id.txt_confirm})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.txt_confirm:
+                FeedbackAddActivity.start(mDetail);
+                break;
+            default:
+                break;
+        }
+    }
     @Override
     public void showDetail(FeedbackDetailResp resp) {
+        mDetail = resp;
         if (CommonUtils.isEmpty(resp.getDetails())) {
             return;
         }
+        mLlButton.setVisibility(resp.getIsAnswer() == 1 ? View.VISIBLE : View.GONE);
         //如果最后一个是用户反馈的话，则显示默认客服回复
         int size = resp.getDetails().size();
         if (resp.getDetails().get(size - 1).getType() == 0) {

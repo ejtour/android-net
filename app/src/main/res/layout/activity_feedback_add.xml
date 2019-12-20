@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <com.hll_sc_app.widget.TitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         app:tb_title="新建意见反馈" />

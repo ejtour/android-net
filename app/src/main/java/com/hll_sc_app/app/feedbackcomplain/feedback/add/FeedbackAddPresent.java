@@ -32,6 +32,8 @@ public class FeedbackAddPresent implements IFeedbackAddContract.IPresent {
     public void addFeedback(String content, List<String> imgs) {
         BaseMapReq baseMapReq = BaseMapReq.newBuilder()
                 .put("content", content)
+                .put("feedbackID", mView.getFeedbackID())
+                .put("parentID", mView.getParentID())
                 .put("contentImg", TextUtils.join(",", imgs))
                 .create();
 
