@@ -323,7 +323,7 @@ public interface GoodsService {
      * @return resp
      */
     @POST(HttpConfig.URL)
-    @Headers("pv:102062")
+    @Headers("pv:103709")
     Observable<BaseResp<RelevancePurchaserResp>> queryGoodsRelevancePurchaserList(@Body BaseMapReq req);
 
     /**

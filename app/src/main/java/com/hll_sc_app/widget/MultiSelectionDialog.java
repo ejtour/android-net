@@ -71,7 +71,6 @@ public class MultiSelectionDialog<T> extends BaseDialog {
 
     private void refreshList(List<T> list) {
         mAdapter.setNewData(list);
-        Log.d("asdf","sadfasf");
     }
 
     private void setTitleText(CharSequence text) {
