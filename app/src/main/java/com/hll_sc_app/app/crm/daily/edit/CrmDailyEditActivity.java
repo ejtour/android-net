@@ -32,7 +32,10 @@ import com.hll_sc_app.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -202,8 +205,10 @@ public class CrmDailyEditActivity extends BaseLoadActivity implements ICrmDailyE
     public void updateLastCommit(List<DailyBean> list) {
         if (!CommonUtils.isEmpty(list)) {
             DailyBean bean = list.get(0);
+            Set<String> ids = new HashSet<>();
+            Collections.addAll(ids, bean.getReceiver().split(",")); // id 去重
             mLastTime.setText(String.format("上次提交：%s", DateUtil.getReadableTime(bean.getCreateTime(), Constants.SLASH_YYYY_MM_DD_HH_MM)));
-            mReq.setReceiver(bean.getReceiver());
+            mReq.setReceiver(TextUtils.join(",", ids));
             updateReceiver();
         }
     }
