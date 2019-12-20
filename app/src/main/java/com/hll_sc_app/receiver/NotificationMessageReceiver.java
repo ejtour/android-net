@@ -1,11 +1,17 @@
 package com.hll_sc_app.receiver;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.sdk.android.push.MessageReceiver;
+import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.JsonUtil;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
@@ -30,6 +36,19 @@ public class NotificationMessageReceiver extends MessageReceiver {
     public static final String PAGE_BILL_ID = "subBillID";
     public static final String PAGE_CODE_ORDER = "orderList";
     public static final String PAGE_CODE_ORDER_DETAIL = "orderDetail";
+
+    public static void createChannel(Context ctx) {
+        NotificationManager manager = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (manager == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return;
+        }
+        NotificationChannel channel = new NotificationChannel("default", ctx.getString(R.string.app_name), NotificationManager.IMPORTANCE_LOW);
+        channel.enableLights(true);
+        channel.setLightColor(Color.BLUE);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        channel.enableVibration(true);
+        manager.createNotificationChannel(channel);
+    }
 
     /**
      * 点击通知消息
