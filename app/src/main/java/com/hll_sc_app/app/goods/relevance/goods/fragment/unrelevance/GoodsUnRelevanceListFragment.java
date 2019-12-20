@@ -230,7 +230,7 @@ public class GoodsUnRelevanceListFragment extends BaseGoodsRelevanceFragment imp
         protected void convert(BaseViewHolder helper, TransferDetailBean item) {
             helper.setText(R.id.txt_goodsName, item.getGoodsName())
                 .setText(R.id.txt_goodsCode, "商品编码：" + getString(item.getGoodsCode()))
-                .setText(R.id.txt_saleUnitName, "单位：" + getString(item.getSaleUnitName()))
+                .setText(R.id.txt_saleUnitName, "单位：" + getString(item.getPurchaseUnit()))
                 .setGone(R.id.txt_not_relevance, item.getIsRelated() != null && item.getIsRelated() == 1)
                 .setGone(R.id.txt_relevance, item.getIsRelated() == null || item.getIsRelated() == 1)
                 .setGone(R.id.txt_no_relevance, item.getIsRelated() != null && item.getIsRelated() == 0);

@@ -97,8 +97,10 @@ public class OrderHomeFragment extends BaseLoadFragment implements BaseQuickAdap
 
     @Subscribe(priority = 1, threadMode = ThreadMode.MAIN, sticky = true)
     public void handleOrderEvent(OrderEvent event) {
-        if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
-            if (mPager != null) mPager.setCurrentItem(((Integer) event.getData()));
+        if (event.getMessage().equals(OrderEvent.SELECT_STATUS)) {
+            if (mPager != null) {
+                mPager.setCurrentItem(OrderType.getPosition((int)event.getData()));
+            }
         }
     }
 

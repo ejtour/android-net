@@ -29,23 +29,32 @@ public enum OrderType {
     RECEIVED("已签收", 6) {
         @Override
         public boolean contain(int billStatus) {
-            return billStatus == getType() || billStatus == 8; // 8 为已拒收
+            return billStatus == getStatus() || billStatus == 8; // 8 为已拒收
         }
     },
     CANCELED("已取消", 7);
     private String label;
-    private int type;
+    private int status;
 
-    public int getType() {
-        return type;
+    OrderType(String label, int status) {
+        this.label = label;
+        this.status = status;
     }
 
     public String getLabel() {
         return label;
     }
 
-    public boolean contain(int billStatus) {
-        return type == billStatus;
+    public static int getPosition(int status) {
+        int position = 0;
+        OrderType[] values = OrderType.values();
+        for (int i = 0; i < values.length; i++) {
+            if (values[i].contain(status)) {
+                position = i;
+                break;
+            }
+        }
+        return position;
     }
 
     public String getButtonText(){
@@ -61,8 +70,11 @@ public enum OrderType {
         return titles;
     }
 
-    OrderType(String label, int type) {
-        this.label = label;
-        this.type = type;
+    public int getStatus() {
+        return status;
+    }
+
+    public boolean contain(int billStatus) {
+        return status == billStatus;
     }
 }

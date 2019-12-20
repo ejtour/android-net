@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.order.common.OrderHelper;
-import com.hll_sc_app.app.order.common.OrderType;
+import com.hll_sc_app.app.order.common.OrderStatus;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
 import com.hll_sc_app.bean.order.OrderResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
@@ -28,7 +28,7 @@ public class CrmOrderListAdapter extends BaseQuickAdapter<OrderResp, BaseViewHol
     protected void convert(BaseViewHolder helper, OrderResp item) {
         String name = (TextUtils.isEmpty(item.getStallName()) ? "" : (item.getStallName() + " - ")) + item.getPurchaserName();
         GlideImageView imageView = helper.setText(R.id.col_name, name)
-                .setText(R.id.col_status, getStatus(item.getSubBillStatus()))
+                .setText(R.id.col_status, OrderStatus.getOrderStatus(item.getSubBillStatus()))
                 .setText(R.id.col_money, processMoney(item.getTotalAmount()))
                 .setText(R.id.col_settlement_status, item.getSettlementStatus() == 2 ? "（已结算）" : "（未结算）")
                 .setText(R.id.col_order_no, "订单号：" + item.getSubBillNo())
@@ -45,15 +45,5 @@ public class CrmOrderListAdapter extends BaseQuickAdapter<OrderResp, BaseViewHol
         SpannableString ss = new SpannableString(source);
         ss.setSpan(new RelativeSizeSpan(1.3f), 1, source.indexOf("."), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ss;
-    }
-
-    private String getStatus(int status) {
-        for (OrderType value : OrderType.values()) {
-            if (value.getType() == status) {
-                return value.getLabel();
-            }
-        }
-        if (status == 8) return "已拒收";
-        return "";
     }
 }

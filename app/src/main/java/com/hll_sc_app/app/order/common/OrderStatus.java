@@ -61,6 +61,15 @@ public enum OrderStatus {
     private String desc;
     private int status;
 
+    public static String getOrderStatus(int status) {
+        for (OrderStatus value : OrderStatus.values()) {
+            if (value.getStatus() == status) {
+                return value.getLabel();
+            }
+        }
+        return "";
+    }
+
     public int getStatus() {
         return status;
     }

@@ -16,7 +16,7 @@ public class OrderEvent extends BaseEvent {
     public static final String REMOVE_SELECTED = "remove_selected";
     public static final String RELOAD_ITEM = "reload_item";
     public static final String UPDATE_TRANSFER_ITEM = "update_transfer_item";
-    public static final String CHANGE_INDEX = "change_index";
+    public static final String SELECT_STATUS = "select_status";
 
     public OrderEvent(String msg) {
         this(msg, null);
@@ -29,7 +29,7 @@ public class OrderEvent extends BaseEvent {
             case REFRESH_LIST:
             case RELOAD_ITEM:
                 break;
-            case CHANGE_INDEX:
+            case SELECT_STATUS:
                 if (b != null && "Integer".equals(b.getClass().getSimpleName())) break;
                 LogUtil.e(TAG, "Wrong type");
                 break;

@@ -18,6 +18,7 @@ import com.hll_sc_app.citymall.App;
 import com.hll_sc_app.citymall.util.LogUtil;
 import com.hll_sc_app.citymall.util.ToastUtils;
 import com.hll_sc_app.receiver.ActivityLifecycleHandler;
+import com.hll_sc_app.receiver.NotificationMessageReceiver;
 import com.hll_sc_app.utils.Constants;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -105,6 +106,7 @@ public class MyApplication extends Application {
         LogUtil.isLog = BuildConfig.isDebug;
         initCloudChannel(this);
         DaoSessionManager.init(this);
+        NotificationMessageReceiver.createChannel(this);
         initBugly();
     }
 
