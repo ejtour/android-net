@@ -105,7 +105,7 @@ public class NotificationMessageReceiver extends MessageReceiver {
         try {
             JSONObject object = new JSONObject(page.getPageData());
             int status = object.getInt(PAGE_BILL_STATUS);
-            EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.CHANGE_INDEX, status));
+            EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.SELECT_STATUS, status));
         } catch (JSONException e) {
             e.printStackTrace();
         }

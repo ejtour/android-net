@@ -143,7 +143,7 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
 
     @Subscribe(priority = 2, threadMode = ThreadMode.MAIN)
     public void handleOrderEvent(OrderEvent event) {
-        if (event.getMessage().equals(OrderEvent.CHANGE_INDEX)) {
+        if (event.getMessage().equals(OrderEvent.SELECT_STATUS)) {
             mGroupType.check(UserConfig.crm() ? PageType.CRM_ORDER : PageType.SUPPLIER_ORDER);
         }
     }

@@ -269,7 +269,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
 
     @OnClick({R.id.fmh_pending_receive_btn, R.id.fmh_pending_delivery_btn, R.id.fmh_delivered_btn, R.id.fmh_pending_settle_btn})
     public void gotoOrderManager(View view) {
-        OrderType type = OrderType.PENDING_TRANSFER;
+        OrderType type;
         switch (view.getId()) {
             case R.id.fmh_pending_receive_btn:
                 type = OrderType.PENDING_RECEIVE;
@@ -286,7 +286,7 @@ public class MainHomeFragment extends BaseLoadFragment implements IMainHomeContr
             default:
                 return;
         }
-        EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.CHANGE_INDEX, type.getType()));
+        EventBus.getDefault().postSticky(new OrderEvent(OrderEvent.SELECT_STATUS, type.getStatus()));
     }
 
     @OnClick({R.id.fmh_customer_service_btn, R.id.fmh_driver_btn, R.id.fmh_warehouse_in_btn, R.id.fmh_finance_btn})

@@ -56,7 +56,7 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
     private void getOrderList(boolean showLoading) {
         OrderParam param = mView.getOrderParam();
         Order.getOrderList(mPageNum,
-                mView.getOrderStatus().getType(),
+                mView.getOrderStatus().getStatus(),
                 param.getSearchWords(),
                 param.getSearchShopID(),
                 param.getSearchType(),
@@ -145,12 +145,12 @@ public class OrderManagePresenter implements IOrderManageContract.IOrderManagePr
 
     @Override
     public void exportSpecialOrder(int type, String email) {
-        Order.exportSpecial(mView.getOrderParam(), mView.getOrderStatus().getType(), type, email, Utils.getExportObserver(mView));
+        Order.exportSpecial(mView.getOrderParam(), mView.getOrderStatus().getStatus(), type, email, Utils.getExportObserver(mView));
     }
 
     @Override
     public void exportNormalOrder(int type, String email) {
-        Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getType(), type, null, email, Utils.getExportObserver(mView));
+        Order.exportNormal(mView.getOrderParam(), mView.getOrderStatus().getStatus(), type, null, email, Utils.getExportObserver(mView));
     }
 
     @Override
