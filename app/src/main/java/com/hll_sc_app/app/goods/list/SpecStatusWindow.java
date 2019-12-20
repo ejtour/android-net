@@ -155,10 +155,10 @@ public class SpecStatusWindow extends BaseShadowPopupWindow {
             if (!TextUtils.isEmpty(item.getSpecContent())) {
                 stringBuilder.append("规格：").append(item.getSpecContent()).append(" | ");
             }
-            // 押金商品不展示库存
+           /* // 押金商品不展示库存
             if (!TextUtils.isEmpty(item.getProductStock())) {
                 stringBuilder.append("库存：").append(item.getProductStock()).append(" | ");
-            }
+            }*/
             if (!TextUtils.isEmpty(item.getBuyMinNum())) {
                 stringBuilder.append("起购：").append(item.getBuyMinNum()).append(item.getSaleUnitName()).append("起");
             }
