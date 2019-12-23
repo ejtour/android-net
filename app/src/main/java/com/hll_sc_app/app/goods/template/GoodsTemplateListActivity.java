@@ -366,7 +366,10 @@ public class GoodsTemplateListActivity extends BaseLoadActivity implements Goods
         mImgFilter.setRotation(-180F);
         if (mTemplateFilterWindow == null) {
             mTemplateFilterWindow = new TemplateFilterWindow(this);
-            mTemplateFilterWindow.setConfirmListener(() -> mPresenter.queryGoodsTemplateList(true));
+            mTemplateFilterWindow.setConfirmListener(label -> {
+                mTxtFilter.setText(label);
+                mPresenter.queryGoodsTemplateList(true);
+            });
             mTemplateFilterWindow.setOnDismissListener(() -> {
                 mTxtFilter.setSelected(false);
                 mImgFilter.setSelected(false);
