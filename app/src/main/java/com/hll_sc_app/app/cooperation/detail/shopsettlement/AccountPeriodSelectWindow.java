@@ -58,7 +58,7 @@ public class AccountPeriodSelectWindow extends BaseShadowPopupWindow implements 
         }
         mMap.put("周结", listWeek);
         List<Integer> listMonth = new ArrayList<>();
-        for (int i = 1; i <= 30; i++) {
+        for (int i = 1; i <= 28; i++) {
             listMonth.add(i);
         }
         mMap.put("月结", listMonth);
