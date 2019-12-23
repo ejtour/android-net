@@ -21,6 +21,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.githang.statusbar.StatusBarCompat;
+import com.hll_sc_app.BuildConfig;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.message.MessageActivity;
 import com.hll_sc_app.app.submit.BackType;
@@ -54,6 +55,7 @@ import java.lang.annotation.RetentionPolicy;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 /**
  * 首页
@@ -88,7 +90,9 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
         User.queryAuthList(this);
         ARouter.getInstance().inject(this);
         NotificationMessageReceiver.handleNotification(mPage);
-        mMessageUtil = new MessageUtil();
+        if (!BuildConfig.isDebug) {
+            mMessageUtil = new MessageUtil();
+        }
     }
 
     private void showStatusBar() {
@@ -136,7 +140,9 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
 
     @Override
     protected void onDestroy() {
-        mMessageUtil.dispose();
+        if (mMessageUtil != null) {
+            mMessageUtil.dispose();
+        }
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
@@ -239,6 +245,21 @@ public class MainActivity extends BaseLoadActivity implements IBackType {
     @OnClick(R.id.img_message)
     public void message() {
         MessageActivity.start();
+    }
+
+    @OnLongClick(R.id.img_message)
+    public boolean enableMessage() {
+        if (BuildConfig.isDebug) {
+            if (mMessageUtil == null) {
+                mMessageUtil = new MessageUtil();
+                showToast("启用消息查询");
+            } else {
+                mMessageUtil.dispose();
+                mMessageUtil = null;
+                showToast("禁用消息查询");
+            }
+        }
+        return true;
     }
 
     /**
