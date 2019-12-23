@@ -32,6 +32,7 @@ import com.hll_sc_app.base.utils.PhoneUtil;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.base.utils.glide.GlideImageView;
+import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.SwipeItemLayout;
@@ -344,6 +345,18 @@ public class CooperationDetailActivity extends BaseLoadActivity implements Coope
     @Override
     public String getSearchWords() {
         return mSearchView.getSearchContent();
+    }
+
+    @Override
+    public void delSuccess() {
+        if (mAdapter.getData().size() <= 1) {
+            ARouter.getInstance().build(RouterConfig.COOPERATION_PURCHASER_LIST)
+                    .setProvider(new LoginInterceptor())
+                    .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    .navigation(this);
+        } else {
+            mPresenter.queryPurchaserDetail(true);
+        }
     }
 
     @OnClick({R.id.img_close, R.id.txt_options, R.id.cons_details})

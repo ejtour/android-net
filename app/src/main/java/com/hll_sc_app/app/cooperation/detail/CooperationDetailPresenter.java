@@ -4,6 +4,7 @@ import com.hll_sc_app.api.CooperationPurchaserService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.BaseReq;
+import com.hll_sc_app.base.bean.BaseResp;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
@@ -63,14 +64,14 @@ public class CooperationDetailPresenter implements CooperationDetailContract.ICo
         baseReq.setData(req);
         CooperationPurchaserService.INSTANCE.addCooperationShop(baseReq)
             .compose(ApiScheduler.getObservableScheduler())
-            .map(new Precondition<>())
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<Object>() {
+                .subscribe(new BaseCallback<BaseResp<Object>>() {
                 @Override
-                public void onSuccess(Object resp) {
-                    queryPurchaserDetail(true);
+                public void onSuccess(BaseResp<Object> resp) {
+                    mView.showToast(resp.getMessage());
+                    mView.delSuccess();
                 }
 
                 @Override
