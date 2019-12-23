@@ -362,7 +362,7 @@ public class CooperationShopSettlementActivity extends BaseLoadActivity implemen
             }
 //            mTxtSettleDate.setText(String.format("对账单产生后%s日", mReq.getSettleDate()));
 //            mTxtSettleDate.setTag(mReq.getSettleDate());
-            mEdtSettleDate.setText(bean.getSettleDate());
+            mEdtSettleDate.setText(mReq.getSettleDate());
         }
     }
 
