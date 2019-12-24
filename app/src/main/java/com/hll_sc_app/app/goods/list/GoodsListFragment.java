@@ -119,7 +119,7 @@ public class GoodsListFragment extends BaseLazyFragment implements GoodsListFrag
                 if (view.getId() == R.id.content) {
                     // 禁用的商品不跳转到详情页面
                     if (!TextUtils.equals(bean.getProductStatus(), GoodsBean.PRODUCT_STATUS_DISABLE)) {
-                        GoodsDetailActivity.start(bean.getProductID(), false, true);
+                        GoodsDetailActivity.start(requireActivity(), bean.getProductID(), false, true);
                     }
                 } else {
                     showSpecWindow(bean);

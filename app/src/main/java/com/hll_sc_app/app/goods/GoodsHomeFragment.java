@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.goods;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,7 +33,6 @@ import com.hll_sc_app.base.BaseLoadFragment;
 import com.hll_sc_app.base.utils.router.RightConfig;
 import com.hll_sc_app.base.utils.router.RouterConfig;
 import com.hll_sc_app.base.utils.router.RouterUtil;
-import com.hll_sc_app.bean.event.GoodsListRefreshEvent;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.window.OptionType;
 import com.hll_sc_app.bean.window.OptionsBean;
@@ -43,7 +43,6 @@ import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.SearchView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,14 +92,12 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
         super.onCreate(savedInstanceState);
         mPresenter = GoodsHomePresenter.newInstance();
         mPresenter.register(this);
-        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -111,11 +108,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             if (!TextUtils.isEmpty(name))
                 mSearchView.showSearchContent(true, name);
         }
-    }
-
-    @Subscribe(sticky = true)
-    public void onEvent(GoodsListRefreshEvent event) {
-        if (event.isRefresh()) {
+        if (resultCode == Activity.RESULT_OK && !isHidden()) {
             updateFragment();
         }
     }

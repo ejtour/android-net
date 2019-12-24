@@ -48,7 +48,6 @@ import com.hll_sc_app.base.widget.ImgShowDelBlock;
 import com.hll_sc_app.base.widget.ImgUploadBlock;
 import com.hll_sc_app.base.widget.StartTextView;
 import com.hll_sc_app.bean.event.BrandBackEvent;
-import com.hll_sc_app.bean.event.GoodsListRefreshEvent;
 import com.hll_sc_app.bean.goods.CopyCategoryBean;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.LabelBean;
@@ -786,9 +785,9 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
         if (mGoodsBean == null) {
 //            edit = false;
             mGoodsBean = new GoodsBean();
+            // 是否组合商品(0-不是，1-是)
+            mGoodsBean.setBundlingGoodsType("0");
         }
-        // 是否组合商品(0-不是，1-是)
-        mGoodsBean.setBundlingGoodsType("0");
         // 一级类目ID
         if (mTxtCategoryName.getTag(R.id.base_tag_1) != null) {
             CategoryItem categoryItem1 = (CategoryItem) mTxtCategoryName.getTag(R.id.base_tag_1);
@@ -1008,7 +1007,7 @@ public class GoodsAddActivity extends BaseLoadActivity implements GoodsAddContra
     @Override
     public void addSuccess(boolean edit) {
         showToast(edit ? "修改成功" : "保存成功");
-        EventBus.getDefault().post(new GoodsListRefreshEvent(true));
+        setResult(RESULT_OK);
         finish();
     }
 

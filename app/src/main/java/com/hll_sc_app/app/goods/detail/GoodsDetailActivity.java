@@ -1,6 +1,8 @@
 package com.hll_sc_app.app.goods.detail;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -63,6 +65,7 @@ import butterknife.OnClick;
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS_DETAIL, extras = Constant.LOGIN_EXTRA)
 public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetailContract.IGoodsDetailView {
+    private static final int REQ_CODE = 0x482;
     public static final String PRODUCE_AREA = "produceArea";
     @BindView(R.id.banner)
     Banner mBanner;
@@ -118,6 +121,7 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     private GoodsDetailPresenter mPresenter;
     private SpecStatusWindow.SpecAdapter mAdapterSpec;
     private GoodsBean mGoodsBean;
+    private boolean mHasChanged;
 
     /**
      * start activity
@@ -127,6 +131,11 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
      */
     public static void start(String productId, boolean isBundlingDetail, boolean edit) {
         RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_DETAIL, productId, isBundlingDetail, edit);
+    }
+
+    public static void start(Activity context, String productId, boolean isBundlingDetail, boolean edit) {
+        Object[] args = {productId, isBundlingDetail, edit};
+        RouterUtil.goToActivity(RouterConfig.ROOT_HOME_GOODS_DETAIL, context, REQ_CODE, args);
     }
 
     @Override
@@ -142,7 +151,16 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
         mPresenter.start();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            statusChanged();
+        }
+    }
+
     private void initView() {
+        mTitleBar.setLeftBtnClick(v -> onBackPressed());
         mBanner.setIndicatorGravity(BannerConfig.RIGHT);
         mBanner.setBannerAnimation(Transformer.Default);
         mRecyclerViewSpec.setLayoutManager(new LinearLayoutManager(this));
@@ -180,6 +198,12 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
             }
         });
         mRecyclerViewBundlingGoods.setAdapter(mAdapterBundlingGoods);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mHasChanged) setResult(RESULT_OK);
+        super.onBackPressed();
     }
 
     @Override
@@ -380,6 +404,12 @@ public class GoodsDetailActivity extends BaseLoadActivity implements GoodsDetail
     @Override
     public String getProductId() {
         return mProductId;
+    }
+
+    @Override
+    public void statusChanged() {
+        mHasChanged = true;
+        mPresenter.start();
     }
 
     private static class FlowAdapter extends TagAdapter<NicknamesBean> {

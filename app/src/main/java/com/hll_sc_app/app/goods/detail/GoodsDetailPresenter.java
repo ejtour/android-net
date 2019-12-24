@@ -79,7 +79,7 @@ public class GoodsDetailPresenter implements GoodsDetailContract.IGoodsDetailPre
                 @Override
                 public void onSuccess(Object resp) {
                     mView.showToast("修改成功");
-                    queryGoodsDetail();
+                    mView.statusChanged();
                 }
 
                 @Override
