@@ -46,6 +46,8 @@
         android:layout_height="0dp"
         android:background="@drawable/bg_selector_close"
         android:gravity="center"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
         android:minWidth="@dimen/title_bar_height"
         android:textAppearance="@style/TextAppearance.City22.Middle.White"
         android:visibility="gone"
