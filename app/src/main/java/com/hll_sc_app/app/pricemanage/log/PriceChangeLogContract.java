@@ -1,8 +1,8 @@
 package com.hll_sc_app.app.pricemanage.log;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.pricemanage.PriceLogBean;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface PriceChangeLogContract {
 
-    interface IPriceManageView extends ILoadView {
+    interface IPriceManageView extends IExportView {
         /**
          * 展示售价变更日志列表
          *
@@ -44,25 +44,6 @@ public interface PriceChangeLogContract {
          * @return 结束时间
          */
         String getEndTime();
-
-        /**
-         * 导出成功
-         *
-         * @param email 邮箱地址
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param tip 失败提示
-         */
-        void exportFailure(String tip);
-
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
     }
 
     interface IPriceManagePresenter extends IPresenter<IPriceManageView> {

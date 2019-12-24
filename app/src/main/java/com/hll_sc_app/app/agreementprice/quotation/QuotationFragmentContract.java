@@ -1,9 +1,9 @@
 package com.hll_sc_app.app.agreementprice.quotation;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationResp;
 import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  */
 interface QuotationFragmentContract {
 
-    interface IHomeView extends ILoadView {
+    interface IHomeView extends IExportView {
         /**
          * 展示列表
          *
@@ -75,25 +75,6 @@ interface QuotationFragmentContract {
          * @return 生效结束日期
          */
         String getPriceEndDate();
-
-        /**
-         * 导出成功
-         *
-         * @param email 邮箱地址
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param tip 失败提示
-         */
-        void exportFailure(String tip);
-
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
 
         /**
          * 当前Fragment位置搜索页面中

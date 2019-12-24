@@ -1,9 +1,9 @@
 package com.hll_sc_app.app.goods.invwarn;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.goods.GoodsBean;
 import com.hll_sc_app.bean.goods.HouseBean;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface GoodsInvWarnContract {
 
-    interface IGoodsInvWarnView extends ILoadView {
+    interface IGoodsInvWarnView extends IExportView {
         /**
          * 保存成功
          */
@@ -57,26 +57,6 @@ public interface GoodsInvWarnContract {
          * @param total  indexList
          */
         void showGoodsInvList(List<GoodsBean> list, boolean append, int total);
-        /**
-         * 导出成功
-         *
-         * @param email 邮箱地址
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param tip 失败提示
-         */
-        void exportFailure(String tip);
-
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
-
-
     }
 
     interface IGoodsInvWarnPresenter extends IPresenter<IGoodsInvWarnView> {

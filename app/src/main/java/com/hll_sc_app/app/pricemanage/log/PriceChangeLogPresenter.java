@@ -14,9 +14,9 @@ import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.export.ExportReq;
-import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.pricemanage.PriceLogResp;
 import com.hll_sc_app.citymall.util.CommonUtils;
+import com.hll_sc_app.utils.Utils;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -88,27 +88,7 @@ public class PriceChangeLogPresenter implements PriceChangeLogContract.IPriceMan
             .doOnSubscribe(disposable -> mView.showLoading())
             .doFinally(() -> mView.hideLoading())
             .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-            .subscribe(new BaseCallback<ExportResp>() {
-                @Override
-                public void onSuccess(ExportResp resp) {
-                    if (!TextUtils.isEmpty(resp.getEmail())) {
-                        mView.exportSuccess(resp.getEmail());
-                    } else {
-                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                    }
-                }
-
-                @Override
-                public void onFailure(UseCaseException e) {
-                    if (TextUtils.equals("00120112037", e.getCode())) {
-                        mView.bindEmail();
-                    } else if (TextUtils.equals("00120112038", e.getCode())) {
-                        mView.exportFailure("当前没有可导出的数据");
-                    } else {
-                        mView.exportFailure("噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                    }
-                }
-            });
+            .subscribe(Utils.getExportObserver(mView));
     }
 
     private void toQueryPriceChangeLogList(boolean showLoading) {

@@ -1,14 +1,14 @@
 package com.hll_sc_app.app.marketingsetting.product;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.bean.marketingsetting.MarketingListResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingStatusBean;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
 public interface IProductMarketingContract {
 
-    interface IView extends ILoadView {
+    interface IView extends IExportView {
 
         /**
          * 获取促销状态成功

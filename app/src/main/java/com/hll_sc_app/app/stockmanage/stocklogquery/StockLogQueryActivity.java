@@ -32,6 +32,7 @@ import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.citymall.util.CommonUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
@@ -305,6 +306,21 @@ public class StockLogQueryActivity extends BaseLoadActivity implements IStockLog
     public void hideLoading() {
         super.hideLoading();
         mRefreshLayout.closeHeaderOrFooter();
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresent::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 
     private class LogAdpater extends BaseQuickAdapter<StockLogResp.StockLog, BaseViewHolder> {

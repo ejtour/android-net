@@ -1,11 +1,11 @@
 package com.hll_sc_app.app.pricemanage;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.priceratio.RatioTemplateBean;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface PriceManageContract {
 
-    interface IPriceManageView extends ILoadView {
+    interface IPriceManageView extends IExportView {
         /**
          * 展示售价设置列表
          *

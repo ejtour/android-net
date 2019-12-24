@@ -1,8 +1,8 @@
 package com.hll_sc_app.app.cooperation;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
+import com.hll_sc_app.impl.IExportView;
 
 /**
  * 合作采购商列表
@@ -12,7 +12,7 @@ import com.hll_sc_app.bean.cooperation.CooperationPurchaserResp;
  */
 public interface CooperationPurchaserContract {
 
-    interface IGoodsRelevancePurchaserView extends ILoadView {
+    interface IGoodsRelevancePurchaserView extends IExportView {
         /**
          * 采购商集团名称检索字段
          *
@@ -27,26 +27,6 @@ public interface CooperationPurchaserContract {
          * @param append true-追加
          */
         void showPurchaserList(CooperationPurchaserResp resp, boolean append);
-
-        /**
-         * 导出成功
-         *
-         * @param email 邮箱地址
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param tip 失败提示
-         */
-        void exportFailure(String tip);
-
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
-
 
         /**
          * 查询 未解除 解除的合作采购商

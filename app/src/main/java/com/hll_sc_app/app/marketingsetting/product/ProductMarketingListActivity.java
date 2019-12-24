@@ -32,6 +32,7 @@ import com.hll_sc_app.bean.marketingsetting.MarketingStatusBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SingleSelectionWindow;
@@ -377,5 +378,20 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     @Override
     public String getFilterType() {
         return mFilterType;
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresent::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 }

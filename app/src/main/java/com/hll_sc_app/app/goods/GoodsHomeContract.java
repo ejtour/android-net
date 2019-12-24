@@ -1,9 +1,9 @@
 package com.hll_sc_app.app.goods;
 
-import android.support.annotation.StringDef;
+import android.support.annotation.IntDef;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
+import com.hll_sc_app.impl.IExportView;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -15,7 +15,7 @@ import java.lang.annotation.RetentionPolicy;
  * @date 2019/7/3
  */
 interface GoodsHomeContract {
-    @StringDef({
+    @IntDef({
         ExportType.EXPORT_GOODS, ExportType.EXPORT_RECORDS
     })
     @Retention(RetentionPolicy.SOURCE)
@@ -23,41 +23,15 @@ interface GoodsHomeContract {
         /**
          * 导出商品列表
          */
-        String EXPORT_GOODS = "1";
+        int EXPORT_GOODS = 1;
         /**
          * 上下架记录导出
          */
-        String EXPORT_RECORDS = "2";
+        int EXPORT_RECORDS = 2;
     }
 
-    interface IGoodsHomeView extends ILoadView {
-        /**
-         * 导出成功
-         *
-         * @param email 邮箱地址
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param tip 失败提示
-         */
-        void exportFailure(String tip);
-
-        /**
-         * 绑定邮箱
-         *
-         * @param type 类型
-         */
-        void bindEmail(@GoodsHomeContract.ExportType String type);
-
-        /**
-         * 邮箱绑定成功
-         *
-         * @param type 1-商品导出 2-上下架记录
-         */
-        void bindSuccess(@ExportType String type);
+    interface IGoodsHomeView extends IExportView {
+        void bindSuccess();
     }
 
     interface IGoodsHomePresenter extends IPresenter<IGoodsHomeView> {
@@ -73,9 +47,8 @@ interface GoodsHomeContract {
          * 绑定员工邮箱
          *
          * @param email 员工邮箱
-         * @param type  导出类型
          */
-        void toBindEmail(String email, @GoodsHomeContract.ExportType String type);
+        void toBindEmail(String email);
 
         /**
          * 上下架记录导出
