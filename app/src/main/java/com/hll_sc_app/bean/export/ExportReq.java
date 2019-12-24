@@ -164,6 +164,15 @@ public class ExportReq {
         private String searchKey;
         private String createTimeStart;
         private String createTimeEnd;
+        private String purchaserID;
+
+        public String getPurchaserID() {
+            return purchaserID;
+        }
+
+        public void setPurchaserID(String purchaserID) {
+            this.purchaserID = purchaserID;
+        }
 
         public CommonQuotation getCommonQuotation() {
             return commonQuotation;

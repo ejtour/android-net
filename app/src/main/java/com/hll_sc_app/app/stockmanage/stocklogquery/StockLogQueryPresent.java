@@ -173,6 +173,7 @@ public class StockLogQueryPresent implements IStockLogQueryContract.IPresent {
         paramsBean.setGroupID(userBean.getGroupID());
         paramsBean.setHouseID(mView.getHouseID());
         paramsBean.setSearchKey(mView.getSearchKey());
+        paramsBean.setPurchaserID(mView.getPurchaserID());
         req.setParams(paramsBean);
         BaseReq<ExportReq> baseReq = new BaseReq<>();
         baseReq.setData(req);
