@@ -112,7 +112,7 @@ public class RemindSettingActivity extends BaseLoadActivity implements IRemindSe
     public void save() {
         mLabel.requestFocus();
         UIUtils.hideActivitySoftKeyboard(this);
-        if (CommonUtils.getInt(mTimes.getText().toString()) == 0) {
+        if (CommonUtils.getDouble(mTimes.getText().toString()) == 0) {
             showToast("倍数必须大于零");
             if (!mSwitch.isChecked()) {
                 changeCheckedWithoutNotify(true);

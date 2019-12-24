@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.marketingsetting.product;
 
-import android.app.Activity;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.GoodsService;
@@ -14,7 +13,6 @@ import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
 import com.hll_sc_app.bean.export.ExportReq;
-import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingListResp;
 import com.hll_sc_app.bean.marketingsetting.MarketingStatusBean;
 import com.hll_sc_app.utils.Utils;
@@ -169,25 +167,7 @@ public class ProductMarketingPresenter implements IProductMarketingContract.IPre
                 .doOnSubscribe(disposable -> mView.showLoading())
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<ExportResp>() {
-                    @Override
-                    public void onSuccess(ExportResp resp) {
-                        Utils.exportSuccess((Activity) mView, resp.getEmail());
-                    }
-
-                    @Override
-                    public void onFailure(UseCaseException e) {
-                        if (TextUtils.equals("00120112037", e.getCode())) {
-                            Utils.bindEmail((Activity) mView, email -> {
-                                export(email);
-                            });
-                        } else if (TextUtils.equals("00120112038", e.getCode())) {
-                            Utils.exportFailure((Activity) mView, "当前没有可导出的数据");
-                        } else {
-                            Utils.exportFailure((Activity) mView, "噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                        }
-                    }
-                });
+                .subscribe(Utils.getExportObserver(mView));
 
     }
 }

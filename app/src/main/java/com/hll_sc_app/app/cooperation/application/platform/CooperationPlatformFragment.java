@@ -200,7 +200,7 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
             String content = null;
             if (CommonUtils.getDouble(item.getShopCount()) != 0) {
                 content = "合作" + CommonUtils.formatNumber(item.getShopCount()) + "个门店";
-            } else {
+            } /*else {
                 if (TextUtils.equals(item.getResourceType(), "1")) {
                     // 哗啦啦供应链
                     content = "哗啦啦供应链";
@@ -211,7 +211,7 @@ public class CooperationPlatformFragment extends BaseCooperationApplicationFragm
                     // 二十二城
                     content = "二十二城";
                 }
-            }
+            }*/
             return content;
         }
 

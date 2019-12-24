@@ -3,6 +3,7 @@ package com.hll_sc_app.app.goods.template;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.support.constraint.ConstraintLayout;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 import com.hll_sc_app.R;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.widget.BaseShadowPopupWindow;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +69,16 @@ public class TemplateFilterWindow extends BaseShadowPopupWindow {
                 mEdtProductPlace.setText(null);
                 break;
             case R.id.txt_confirm:
-                mListener.confirm();
+                List<String> list = new ArrayList<>();
+                String brandName = getBrandName();
+                if (!TextUtils.isEmpty(brandName)) {
+                    list.add(brandName);
+                }
+                String productPlace = getProductPlace();
+                if (!TextUtils.isEmpty(productPlace)) {
+                    list.add(productPlace);
+                }
+                mListener.confirm(TextUtils.join(",", list));
                 dismiss();
                 break;
             default:
@@ -86,6 +99,6 @@ public class TemplateFilterWindow extends BaseShadowPopupWindow {
         /**
          * 确定
          */
-        void confirm();
+        void confirm(String label);
     }
 }

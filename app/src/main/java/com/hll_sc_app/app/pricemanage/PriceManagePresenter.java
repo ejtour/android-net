@@ -1,6 +1,5 @@
 package com.hll_sc_app.app.pricemanage;
 
-import android.app.Activity;
 import android.text.TextUtils;
 
 import com.hll_sc_app.api.GoodsService;
@@ -18,7 +17,6 @@ import com.hll_sc_app.base.http.SimpleObserver;
 import com.hll_sc_app.base.utils.UserConfig;
 import com.hll_sc_app.bean.common.WareHouseShipperBean;
 import com.hll_sc_app.bean.export.ExportReq;
-import com.hll_sc_app.bean.export.ExportResp;
 import com.hll_sc_app.bean.goods.CustomCategoryResp;
 import com.hll_sc_app.bean.goods.SkuGoodsBean;
 import com.hll_sc_app.bean.goods.SkuProductsResp;
@@ -221,29 +219,7 @@ public class PriceManagePresenter implements PriceManageContract.IPriceManagePre
                 .doOnSubscribe(disposable -> mView.showLoading())
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<ExportResp>() {
-                    @Override
-                    public void onSuccess(ExportResp resp) {
-                        if (!TextUtils.isEmpty(resp.getEmail())) {
-                            Utils.exportSuccess((Activity) mView, resp.getEmail());
-                        } else {
-                            Utils.exportFailure((Activity) mView, "噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(UseCaseException e) {
-                        if (TextUtils.equals("00120112037", e.getCode())) {
-                            Utils.bindEmail((Activity) mView, email -> {
-                                export(email);
-                            });
-                        } else if (TextUtils.equals("00120112038", e.getCode())) {
-                            Utils.exportFailure((Activity) mView, "当前没有可导出的数据");
-                        } else {
-                            Utils.exportFailure((Activity) mView, "噢，服务器暂时开了小差\n攻城狮正在全力抢修");
-                        }
-                    }
-                });
+                .subscribe(Utils.getExportObserver(mView));
     }
 
     @Override

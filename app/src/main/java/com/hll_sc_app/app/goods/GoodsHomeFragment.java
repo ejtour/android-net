@@ -53,6 +53,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.hll_sc_app.app.goods.GoodsHomeContract.ExportType.EXPORT_GOODS;
+import static com.hll_sc_app.app.goods.GoodsHomeContract.ExportType.EXPORT_RECORDS;
+
 /**
  * 商品管理Fragment
  *
@@ -60,8 +63,7 @@ import butterknife.Unbinder;
  * @date 2018/12/19
  */
 @Route(path = RouterConfig.ROOT_HOME_GOODS)
-public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener,
-    GoodsHomeContract.IGoodsHomeView {
+public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdapter.OnItemClickListener, GoodsHomeContract.IGoodsHomeView {
     static final String[] STR_TITLE = {"普通商品", "组合商品", "押金商品", "代仓商品"};
     static final String[] STR_ACTION_TYPE = {"normalProduct", "bundlingGoods", "depositProduct", "warehouse"};
     @BindView(R.id.space)
@@ -84,6 +86,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     private GoodsListFragmentPager mFragmentAdapter;
     private ContextOptionsWindow mOptionsWindow;
     private GoodsHomePresenter mPresenter;
+    private int mExportType;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -249,6 +252,7 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
             showToast(getString(R.string.right_tips));
             return;
         }
+        mExportType = EXPORT_GOODS;
         int currentItem = mViewPager.getCurrentItem();
         String actionType = STR_ACTION_TYPE[currentItem];
         if (TextUtils.equals(actionType, "warehouse") || TextUtils.equals(actionType, "normalProduct")) {
@@ -264,7 +268,19 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
      * @param email 邮箱地址
      */
     private void toExportRecord(String email) {
+        mExportType = EXPORT_RECORDS;
         mPresenter.exportRecord(email);
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(requireActivity(), email -> {
+            if (mExportType == EXPORT_GOODS) {
+                mPresenter.toBindEmail(email);
+            } else {
+                toExportRecord(email);
+            }
+        });
     }
 
     @Override
@@ -278,21 +294,8 @@ public class GoodsHomeFragment extends BaseLoadFragment implements BaseQuickAdap
     }
 
     @Override
-    public void bindEmail(@GoodsHomeContract.ExportType String type) {
-        Utils.bindEmail(requireActivity(), email -> {
-            if (TextUtils.equals(type, GoodsHomeContract.ExportType.EXPORT_GOODS)) {
-                mPresenter.toBindEmail(email, type);
-            } else {
-                toExportRecord(email);
-            }
-        });
-    }
-
-    @Override
-    public void bindSuccess(@GoodsHomeContract.ExportType String type) {
-        if (TextUtils.equals(type, GoodsHomeContract.ExportType.EXPORT_GOODS)) {
-            toExportGoodsList();
-        }
+    public void bindSuccess() {
+        toExportGoodsList();
     }
 
     class GoodsListFragmentPager extends FragmentPagerAdapter {

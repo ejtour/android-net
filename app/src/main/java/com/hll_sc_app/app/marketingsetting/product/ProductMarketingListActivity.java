@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.githang.statusbar.StatusBarCompat;
 import com.hll_sc_app.R;
 import com.hll_sc_app.app.marketingsetting.adapter.MarketingListAdapter;
 import com.hll_sc_app.app.marketingsetting.product.add.ProductMarketingAddActivity;
@@ -32,6 +34,7 @@ import com.hll_sc_app.bean.marketingsetting.MarketingStatusBean;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.utils.Utils;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SingleSelectionWindow;
@@ -109,6 +112,7 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.activity_marketing_product_list);
         unbinder = ButterKnife.bind(this);
         ARouter.getInstance().inject(this);
@@ -377,5 +381,20 @@ public class ProductMarketingListActivity extends BaseLoadActivity implements IP
     @Override
     public String getFilterType() {
         return mFilterType;
+    }
+
+    @Override
+    public void bindEmail() {
+        Utils.bindEmail(this, mPresent::export);
+    }
+
+    @Override
+    public void exportSuccess(String email) {
+        Utils.exportSuccess(this, email);
+    }
+
+    @Override
+    public void exportFailure(String msg) {
+        Utils.exportFailure(this, msg);
     }
 }

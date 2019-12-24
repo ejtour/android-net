@@ -30,6 +30,8 @@ public interface CooperationDetailContract {
         String getPurchaserId();
 
         String getSearchWords();
+
+        void delSuccess();
     }
 
     interface ICooperationDetailPresenter extends IPresenter<ICooperationDetailView> {

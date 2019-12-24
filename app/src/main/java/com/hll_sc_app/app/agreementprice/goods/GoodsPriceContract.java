@@ -1,11 +1,11 @@
 package com.hll_sc_app.app.agreementprice.goods;
 
-import com.hll_sc_app.base.ILoadView;
 import com.hll_sc_app.base.IPresenter;
 import com.hll_sc_app.bean.agreementprice.quotation.PurchaserShopBean;
 import com.hll_sc_app.bean.agreementprice.quotation.QuotationDetailBean;
 import com.hll_sc_app.bean.goods.PurchaserBean;
 import com.hll_sc_app.bean.user.CategoryResp;
+import com.hll_sc_app.impl.IExportView;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  */
 interface GoodsPriceContract {
 
-    interface IGoodsPriceView extends ILoadView {
+    interface IGoodsPriceView extends IExportView {
         /**
          * 展示列表
          *
@@ -71,25 +71,6 @@ interface GoodsPriceContract {
          * @return 店铺ID
          */
         String getShopIds();
-
-        /**
-         * 导出成功
-         *
-         * @param email 邮箱地址
-         */
-        void exportSuccess(String email);
-
-        /**
-         * 导出失败
-         *
-         * @param tip 失败提示
-         */
-        void exportFailure(String tip);
-
-        /**
-         * 绑定邮箱
-         */
-        void bindEmail();
 
         /**
          * 当前Fragment位置搜索页面中
