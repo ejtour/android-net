@@ -246,8 +246,8 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
 //        }
         if (isAdd()) {
             EmployeeBean bean = new EmployeeBean();
-            bean.setEmail(getTagString(mTxtEmail));
-            bean.setEmployeeCode(getTagString(mTxtEmployeeCode));
+            bean.setEmail(mTxtEmail.getText().toString().trim());
+            bean.setEmployeeCode(mTxtEmployeeCode.getText().toString().trim());
             bean.setEmployeeName(mTxtEmployeeName.getText().toString().trim());
             bean.setGroupID(UserConfig.getGroupID());
             bean.setLoginPWD(mTxtLoginPassWord.getText().toString().trim());
@@ -258,9 +258,9 @@ public class StaffManagerEditActivity extends BaseLoadActivity implements StaffM
             }
             mPresenter.addStaff(bean);
         } else {
-            mEmployeeBean.setEmail(getTagString(mTxtEmail));
+            mEmployeeBean.setEmail(mTxtEmail.getText().toString().trim());
+            mEmployeeBean.setEmployeeCode(mTxtEmployeeCode.getText().toString().trim());
             mEmployeeBean.setEmployeeName(mTxtEmployeeName.getText().toString().trim());
-            mEmployeeBean.setEmployeeCode(getTagString(mTxtEmployeeCode));
             mEmployeeBean.setDeptIDs(getTagString(mTxtDepart));
             if (mTxtRoles.getTag() != null) {
                 mEmployeeBean.setRoleID((String) mTxtRoles.getTag());
