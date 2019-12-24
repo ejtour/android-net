@@ -77,7 +77,8 @@ public class ComplainManageActivity extends BaseLoadActivity {
         } else {
             initMenuWindow();
             mTitle.setRightBtnClick(v -> {
-                mMenuWindow.showAsDropDownFix(mTitle, Gravity.RIGHT);
+//                mMenuWindow.showAsDropDownFix(mTitle, Gravity.RIGHT);
+                ComplainMangeAddActivity.start(null, ComplainMangeDetailActivity.SOURCE.COMPLAIN_MANAGE);
             });
             list.add(ComplainListFragment.newInstance("1"));
             list.add(ComplainListFragment.newInstance("5"));
