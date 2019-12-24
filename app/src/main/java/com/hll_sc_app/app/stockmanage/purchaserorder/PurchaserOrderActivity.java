@@ -132,7 +132,7 @@ public class PurchaserOrderActivity extends BaseLoadActivity implements IPurchas
         mReq.put("groupID", UserConfig.getGroupID());
         mReq.put("flag", "1");
         Date date = new Date();
-        mDate.setTag(R.id.date_start, CalendarUtils.getDateBefore(date, 29));
+        mDate.setTag(R.id.date_start, date);
         mDate.setTag(R.id.date_end, date);
         updateSelectDate();
         mPresenter = PurchaserOrderPresenter.newInstance();
