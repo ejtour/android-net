@@ -222,7 +222,7 @@ public class Order {
         } else if ((actionType == 3)) {
             right = MyApplication.getInstance().getString(R.string.right_orderManagement_cancel);
         }
-        if (right != null && !RightConfig.checkRight(right)) {
+        if (!UserConfig.crm() && right != null && !RightConfig.checkRight(right)) {
             ToastUtils.showShort(MyApplication.getInstance().getString(R.string.right_tips));
             return;
         }
