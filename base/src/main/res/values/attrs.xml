@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <declare-styleable name="BaseCircleView">
-        <attr name="base_circle_view_paint_width" format="dimension"/>
-        <attr name="base_circle_view_paint_external_width" format="dimension"/>
-        <attr name="base_circle_view_text_plain" format="string"/>
-        <attr name="base_circle_view_text_size_center" format="dimension"/>
-        <attr name="base_circle_view_text_color_center" format="color"/>
-        <attr name="base_circle_view_text_size_bottom" format="dimension"/>
-        <attr name="base_circle_view_text_color_bottom" format="color"/>
-        <attr name="base_circle_view_internal_color" format="color"/>
-        <attr name="base_circle_view_external_color" format="color"/>
-    </declare-styleable>
-
-    <declare-styleable name="BaseGlideImageView">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+    <declare-styleable name="GlideImageView">
         <attr name="base_placeholder" format="reference"/>
         <attr name="base_error" format="reference"/>
         <attr name="base_RoundingRadius" format="integer"/>
@@ -21,10 +8,9 @@
         <attr name="base_preview" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="BaseUploadImgBlock">
+    <declare-styleable name="UploadImgBlock">
         <attr name="base_title" format="string"/>
         <attr name="base_subTitle" format="string"/>
         <attr name="base_imgIcon" format="reference"/>
     </declare-styleable>
-
 </resources>

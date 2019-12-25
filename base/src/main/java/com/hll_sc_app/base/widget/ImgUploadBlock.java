@@ -83,10 +83,10 @@ public class ImgUploadBlock extends RelativeLayout {
     }
 
     private void initAttrs(Context context, AttributeSet attrs) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BaseUploadImgBlock);
-        setTitle(array.getString(R.styleable.BaseUploadImgBlock_base_title));
-        setSubTitle(array.getString(R.styleable.BaseUploadImgBlock_base_subTitle));
-        setIconResId(array.getResourceId(R.styleable.BaseUploadImgBlock_base_imgIcon, R.drawable.base_ic_img_add));
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.UploadImgBlock);
+        setTitle(array.getString(R.styleable.UploadImgBlock_base_title));
+        setSubTitle(array.getString(R.styleable.UploadImgBlock_base_subTitle));
+        setIconResId(array.getResourceId(R.styleable.UploadImgBlock_base_imgIcon, R.drawable.base_ic_img_add));
         array.recycle();
     }
 

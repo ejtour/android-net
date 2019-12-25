@@ -76,18 +76,18 @@ public class GlideImageView extends android.support.v7.widget.AppCompatImageView
     public GlideImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BaseGlideImageView);
-        mPlaceholder = array.getDrawable(R.styleable.BaseGlideImageView_base_placeholder);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.GlideImageView);
+        mPlaceholder = array.getDrawable(R.styleable.GlideImageView_base_placeholder);
         if (mPlaceholder == null) {
             mPlaceholder = ContextCompat.getDrawable(context, R.drawable.ic_placeholder);
         }
-        mError = array.getDrawable(R.styleable.BaseGlideImageView_base_error);
+        mError = array.getDrawable(R.styleable.GlideImageView_base_error);
         if (mError == null) {
             mError = mPlaceholder;
         }
-        mRoundingRadius = array.getInt(R.styleable.BaseGlideImageView_base_RoundingRadius, 0);
-        mCircle = array.getBoolean(R.styleable.BaseGlideImageView_base_circle, false);
-        mPreview = array.getBoolean(R.styleable.BaseGlideImageView_base_preview, false);
+        mRoundingRadius = array.getInt(R.styleable.GlideImageView_base_RoundingRadius, 0);
+        mCircle = array.getBoolean(R.styleable.GlideImageView_base_circle, false);
+        mPreview = array.getBoolean(R.styleable.GlideImageView_base_preview, false);
         array.recycle();
         onClickEventListener();
     }
