@@ -53,6 +53,7 @@
         android:textAppearance="@style/TextAppearance.City22.Middle"/>
 
     <TextView
+        android:visibility="invisible"
         android:id="@+id/txt_price_conversion_rate"
         android:layout_width="match_parent"
         android:layout_height="45dp"
