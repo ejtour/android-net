@@ -64,7 +64,7 @@
         android:gravity="center"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-        android:text="销售号码"
+        android:text="销售编码"
         android:textAppearance="@style/TextAppearance.City22.Small.Color999"
         app:layout_constraintBottom_toBottomOf="@id/fsr_rank"
         app:layout_constraintEnd_toStartOf="@id/fsr_name"
