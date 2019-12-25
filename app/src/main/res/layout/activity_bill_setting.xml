@@ -413,7 +413,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:lineSpacingExtra="5dp"
-                    android:text="*启用该功能后，所有的采购商必须有协议报价时，才能查看商品价格和下单。当协议价到期后，如果没有心得协议价，将不能查看商品价格以及下单购买。"
+                    android:text="*启用该功能后，所有的采购商必须有协议报价时，才能查看商品价格和下单。当协议价到期后，如果没有新的协议价，将不能查看商品价格以及下单购买。"
                     android:textColor="@color/color_aeaeae"
                     android:textSize="10sp" />
             </LinearLayout>
