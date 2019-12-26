@@ -261,6 +261,7 @@
                             android:text="定向售卖" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/txt_black_list"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_black_list"
@@ -271,6 +272,10 @@
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_distribution_manage"
                             android:text="配送管理" />
+
+                        <TextView
+                            style="@style/MineButton"
+                            android:text="" />
 
                     </LinearLayout>
 
