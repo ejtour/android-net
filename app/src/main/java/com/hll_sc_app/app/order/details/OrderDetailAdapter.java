@@ -88,8 +88,8 @@ public class OrderDetailAdapter extends BaseQuickAdapter<OrderDetailBean, BaseVi
                 .setText(R.id.iod_amount, processPrice(mLabel + "：¥" + CommonUtils.formatMoney(isDetailList()
                         ? item.getInspectionAmount() : 0))); // 小计，拒收金额显示 0
 
-        //显示单价的旧价格
-       /* helper.setVisible(R.id.iod_sale_unit_spec_old, item.getDiscountType() == 2)
+      /*  //显示单价的旧价格
+        helper.setVisible(R.id.iod_sale_unit_spec_old, item.getDiscountType() == 2)
                 .setText(R.id.iod_sale_unit_spec_old, "¥" + CommonUtils.formatMoney(item.getOldProductPrice()) + "/" + item.getSaleUnitName());
         TextView textView = helper.getView(R.id.iod_sale_unit_spec_old);
         textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线*/

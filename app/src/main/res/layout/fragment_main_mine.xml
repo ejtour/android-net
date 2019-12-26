@@ -260,11 +260,12 @@
                             android:drawableTop="@drawable/ic_mine_directional_selling"
                             android:text="定向售卖" />
 
-                       <!-- <TextView
+                        <TextView
+                            android:visibility="gone"
                             android:id="@+id/txt_black_list"
                             style="@style/MineButton"
                             android:drawableTop="@drawable/ic_mine_black_list"
-                            android:text="品项黑名单" />-->
+                            android:text="品项黑名单" />
 
                         <TextView
                             android:id="@+id/txt_delivery_manage"
@@ -273,7 +274,6 @@
                             android:text="配送管理" />
 
                         <TextView
-                            android:id="@+id/txt_black_list"
                             style="@style/MineButton"
                             android:text="" />
 
