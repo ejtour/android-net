@@ -261,7 +261,7 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
                     mHourAdapter.setRange(0, 23);
                 }
             } else {
-                mHourAdapter.setRange(mBeginTime.get(Calendar.DATE), mEndTime.get(Calendar.DATE));
+                mHourAdapter.setRange(mBeginTime.get(Calendar.HOUR_OF_DAY), mEndTime.get(Calendar.HOUR_OF_DAY));
             }
             Calendar select = getSelectedTime();
             if (select != null) {
@@ -283,12 +283,12 @@ public class DateTimePickerDialog extends BaseDialog implements OnWheelChangedLi
                         (mMonth.getVisibility() == View.GONE || mMonth.getCurrentItem() == mMonthAdapter.getItemsCount() - 1) &&// 如果最后一月
                         (mDay.getVisibility() == View.GONE || mDay.getCurrentItem() == mDayAdapter.getItemsCount() - 1) && // 如果是最后一天
                         mHour.getCurrentItem() == mHourAdapter.getItemsCount() - 1) {// 如果是最后一小时
-                    mMinuteAdapter.setRange(0, mEndTime.get(Calendar.HOUR_OF_DAY));
+                    mMinuteAdapter.setRange(0, mEndTime.get(Calendar.MINUTE));
                 } else {
                     mMinuteAdapter.setRange(0, 59);
                 }
             } else {
-                mMinuteAdapter.setRange(mBeginTime.get(Calendar.DATE), mEndTime.get(Calendar.DATE));
+                mMinuteAdapter.setRange(mBeginTime.get(Calendar.MINUTE), mEndTime.get(Calendar.MINUTE));
             }
             Calendar select = getSelectedTime();
             if (select != null) {
