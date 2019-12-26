@@ -1356,6 +1356,10 @@
         <activity
             android:name=".app.staffmanage.salerole.StaffSaleListActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.contractmanage.ContractManageActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

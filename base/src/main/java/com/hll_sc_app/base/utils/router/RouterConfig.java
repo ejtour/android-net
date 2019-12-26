@@ -1499,5 +1499,10 @@ public class RouterConfig {
      * 员工列表-关联门店_选择接收人
      */
     public static final String STAFF_LIST_LINK_SHOP_SALE_LIST = "/activity/staff/list/link/shop/sale/list";
+
+    /**
+     * 合同管理列表
+     */
+    public static final String ACTIVITY_CONTRACT_MANAGE_LIST = "/activity/contract/manage/list";
 }
 
