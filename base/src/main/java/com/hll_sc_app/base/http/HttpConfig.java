@@ -74,6 +74,8 @@ public class HttpConfig {
         switch (mEnv) {
             case Env.TEST:
                 return "http://test.22city.cn";
+            case Env.DEV:
+                return "http://172.16.32.108:8991";
             case Env.ONLINE:
                 return "http://mobile.22city.cn";
             case Env.VIP:
@@ -92,6 +94,8 @@ public class HttpConfig {
         }
         switch (mEnv) {
             case Env.TEST:
+                return "http://172.16.32.108:8991";
+            case Env.DEV:
                 return "http://test.22city.cn";
             case Env.ONLINE:
             case Env.VIP:
@@ -110,6 +114,7 @@ public class HttpConfig {
         }
         switch (mEnv) {
             case Env.TEST:
+            case Env.DEV:
                 return "http://172.16.32.222:3002/help_mobile";
             case Env.ONLINE:
             case Env.VIP:
@@ -128,6 +133,7 @@ public class HttpConfig {
         }
         switch (mEnv) {
             case Env.TEST:
+            case Env.DEV:
                 return "172.20.5.169";
             case Env.ONLINE:
             case Env.VIP:
@@ -146,6 +152,8 @@ public class HttpConfig {
         }
         switch (mEnv) {
             case Env.TEST:
+                return "http://172.16.32.108:8991";
+            case Env.DEV:
                 return "http://test.22city.cn";
             case Env.ONLINE:
             case Env.VIP:
@@ -159,5 +167,6 @@ public class HttpConfig {
         String TEST = "测试环境";
         String ONLINE = "正式环境";
         String VIP = "小流量";
+        String DEV = "开发环境";
     }
 }

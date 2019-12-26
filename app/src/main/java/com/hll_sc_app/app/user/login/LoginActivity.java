@@ -417,6 +417,8 @@ public class LoginActivity extends BaseLoadActivity implements LoginContract.ILo
                 env = HttpConfig.Env.ONLINE;
             } else if (item.getItemId() == R.id.menu_item_vip) {
                 env = HttpConfig.Env.VIP;
+            } else if (item.getItemId() == R.id.menu_item_dev) {
+                env = HttpConfig.Env.DEV;
             }
             mEnv.setText(env);
             HttpConfig.updateHost(env);
