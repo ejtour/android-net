@@ -94,9 +94,9 @@ public class HttpConfig {
         }
         switch (mEnv) {
             case Env.TEST:
-                return "http://172.16.32.108:8991";
-            case Env.DEV:
                 return "http://test.22city.cn";
+            case Env.DEV:
+                return "http://172.16.32.108:8991";
             case Env.ONLINE:
             case Env.VIP:
                 return "http://mobile.22city.cn";
@@ -152,9 +152,9 @@ public class HttpConfig {
         }
         switch (mEnv) {
             case Env.TEST:
-                return "http://172.16.32.108:8991";
-            case Env.DEV:
                 return "http://test.22city.cn";
+            case Env.DEV:
+                return "http://172.16.32.108:8991";
             case Env.ONLINE:
             case Env.VIP:
                 return "http://message.22city.cn";
