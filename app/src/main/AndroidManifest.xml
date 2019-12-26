@@ -1360,6 +1360,17 @@
         <activity
             android:name=".app.contractmanage.ContractManageActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".app.contractmanage.add.ContractManageAddActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.contractmanage.selectpurchaser.SelectPurchaserListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".app.contractmanage.detail.ContractManageDetailActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${APPLICATION_ID}.fileprovider"

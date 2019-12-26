@@ -1,5 +1,6 @@
 package com.hll_sc_app.app.contractmanage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -11,11 +12,15 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.hll_sc_app.R;
+import com.hll_sc_app.app.search.SearchActivity;
+import com.hll_sc_app.app.search.stratery.CommonSearch;
 import com.hll_sc_app.base.BaseLoadActivity;
 import com.hll_sc_app.base.utils.router.RouterConfig;
+import com.hll_sc_app.base.utils.router.RouterUtil;
 import com.hll_sc_app.base.widget.daterange.DateRangeWindow;
 import com.hll_sc_app.bean.window.NameValue;
 import com.hll_sc_app.citymall.util.CalendarUtils;
+import com.hll_sc_app.utils.Constants;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SingleSelectionWindow;
 import com.hll_sc_app.widget.TitleBar;
@@ -72,6 +77,7 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
         unbinder = ButterKnife.bind(this);
         mPresent = ContractManagePresent.newInstance();
         mPresent.register(this);
+        initView();
     }
 
     @Override
@@ -81,7 +87,33 @@ public class ContractManageActivity extends BaseLoadActivity implements IContrac
     }
 
     private void initView() {
+        mTitleBar.setRightBtnClick(v -> {
+            RouterUtil.goToActivity(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD);
+        });
+        mSearchView.setContentClickListener(new SearchView.ContentClickListener() {
+            @Override
+            public void click(String searchContent) {
+                SearchActivity.start(ContractManageActivity.this,
+                        searchContent, CommonSearch.class.getSimpleName());
+            }
 
+            @Override
+            public void toSearch(String searchContent) {
+
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constants.SEARCH_RESULT_CODE && data != null) {
+            String name = data.getStringExtra("name");
+            if (!TextUtils.isEmpty(name)) {
+                mSearchView.showSearchContent(true, name);
+            }
+        }
     }
 
     @OnClick({R.id.ll_time, R.id.ll_status, R.id.ll_days})

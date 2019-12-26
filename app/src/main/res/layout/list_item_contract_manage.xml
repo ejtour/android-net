@@ -84,8 +84,30 @@
 
     <View
         android:id="@+id/view_divider"
+        android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintTop_toBottomOf="@+id/txt_contract_person"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/border_eee" />
+
+    <TextView
+        android:id="@+id/txt_title_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="临期天数"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_divider" />
+
+    <TextView
+        android:id="@+id/txt_days"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_999"
+        android:textSize="@dimen/base_text_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_title_days"
+        tools:text="200" />
 </android.support.constraint.ConstraintLayout>

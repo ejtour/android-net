@@ -1504,5 +1504,17 @@ public class RouterConfig {
      * 合同管理列表
      */
     public static final String ACTIVITY_CONTRACT_MANAGE_LIST = "/activity/contract/manage/list";
+
+    /**
+     * 合同管理新增
+     */
+    public static final String ACTIVITY_CONTRACT_MANAGE_ADD = "/activity/contract/manage/add";
+
+
+    public static final String ACTIVITY_CONTRACT_MANAGE_ADD_SELECT_PURCHASER = "/activity/contract/manage/add/select/purchase";
+
+    public static final String ACTIVITY_CONTRACT_MANAGE_DETAIL =  "/activity/contract/manage/detail";
+
+
 }
 
