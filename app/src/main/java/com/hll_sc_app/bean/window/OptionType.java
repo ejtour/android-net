@@ -149,4 +149,6 @@ public @interface OptionType {
 
     String OPTION_CUSTOMER_REGISTERED = "已注册二十二城客户";
     String OPTION_CUSTOMER_UNREGISTERED = "未注册二十二城客户";
+
+
 }

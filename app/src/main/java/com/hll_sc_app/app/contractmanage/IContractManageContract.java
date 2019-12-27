@@ -9,8 +9,9 @@ public interface IContractManageContract {
 
         void querySuccess(ContractListResp resp, boolean isMore);
 
-        String getSpanTimeStart();
-        String getSpanTimeEnd();
+        String getSignTimeStart();
+
+        String getSignTimeEnd();
 
         String getStatus();
 
@@ -30,6 +31,8 @@ public interface IContractManageContract {
         void queryMore();
 
         void refresh();
+
+        int getPageSize();
 
     }
 }

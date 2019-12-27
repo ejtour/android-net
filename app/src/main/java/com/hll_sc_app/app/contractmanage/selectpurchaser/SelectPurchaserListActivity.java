@@ -9,6 +9,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -24,8 +26,11 @@ import com.hll_sc_app.base.utils.Constant;
 import com.hll_sc_app.base.utils.UIUtils;
 import com.hll_sc_app.base.utils.router.LoginInterceptor;
 import com.hll_sc_app.base.utils.router.RouterConfig;
-import com.hll_sc_app.bean.common.PurchaserBean;
+import com.hll_sc_app.bean.goods.PurchaserBean;
+import com.hll_sc_app.bean.window.OptionType;
+import com.hll_sc_app.bean.window.OptionsBean;
 import com.hll_sc_app.utils.Constants;
+import com.hll_sc_app.widget.ContextOptionsWindow;
 import com.hll_sc_app.widget.EmptyView;
 import com.hll_sc_app.widget.SearchView;
 import com.hll_sc_app.widget.SimpleDecoration;
@@ -33,6 +38,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,11 +55,14 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     SearchView mSearchView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout mRefreshLayout;
+    @BindView(R.id.txt_title)
+    TextView mTxtTitle;
     @Autowired(name = "id")
     String mId;
     private PurchaserListAdapter mAdapter;
     private ISelectPurchaserContract.IPresent mPresenter;
     private PurchaserBean mSelectPurchaser;
+    private ContextOptionsWindow mTitleOptionWindow;
 
     public static void start(Activity activity, int requestCode, String id) {
         ARouter.getInstance().build(RouterConfig.ACTIVITY_CONTRACT_MANAGE_ADD_SELECT_PURCHASER)
@@ -65,7 +74,7 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_card_manage_select_purchaser);
+        setContentView(R.layout.activity_contract_manage_select_purchaser);
         StatusBarCompat.setStatusBarColor(this, ContextCompat.getColor(this, R.color.base_colorPrimary));
         ARouter.getInstance().inject(this);
         ButterKnife.bind(this);
@@ -76,6 +85,28 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
     }
 
     private void initView() {
+        mTxtTitle.setOnClickListener(v -> {
+            if (mTitleOptionWindow == null) {
+                mTitleOptionWindow = new ContextOptionsWindow(this);
+                List<OptionsBean> optionsBeans = new ArrayList<>();
+                optionsBeans.add(new OptionsBean(OptionType.OPTION_COOPER_PURCHASER));
+                optionsBeans.add(new OptionsBean(OptionType.OPTION_STOP_COOPER_PURCHASER));
+                int padh = UIUtils.dip2px(10);
+                mTitleOptionWindow.setListPadding(padh,0,padh,0);
+                mTitleOptionWindow
+                        .refreshList(optionsBeans)
+                        .setItemGravity(Gravity.CENTER)
+                        .setListener((adapter, view1, position) -> {
+                            mTitleOptionWindow.dismiss();
+                            mTxtTitle.setTag(position);
+                            OptionsBean item = (OptionsBean) adapter.getItem(position);
+                            if (item == null) return;
+                            mTxtTitle.setText(item.getLabel());
+                            mPresenter.queryPurchaserList(true);
+                        });
+            }
+            mTitleOptionWindow.showAsDropDownFix(mRlToolbar, Gravity.CENTER_HORIZONTAL);
+        });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new SimpleDecoration(ContextCompat.getColor(this, R.color.base_color_divider)
                 , UIUtils.dip2px(1)));
@@ -107,12 +138,13 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
         mRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                //no-op
+                mPresenter.quereMore();
+
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.queryList(false);
+                mPresenter.refresh();
             }
         });
         mRefreshLayout.setEnableLoadMore(false);
@@ -144,6 +176,8 @@ public class SelectPurchaserListActivity extends BaseLoadActivity implements ISe
                 .create());
         mAdapter.setNewData(purchaseBeanList);
     }
+
+
 
     @Override
     public String getSearchText() {

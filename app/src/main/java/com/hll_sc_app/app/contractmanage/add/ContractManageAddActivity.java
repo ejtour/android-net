@@ -162,5 +162,84 @@ public class ContractManageAddActivity extends BaseLoadActivity implements ICont
         }
     }
 
+    @Override
+    public void addSuccess() {
 
+    }
+
+    @Override
+    public String getAttachment() {
+        return null;
+    }
+
+    @Override
+    public String getContractCode() {
+        return mEdtNo.getText().toString();
+    }
+
+    @Override
+    public String getContractName() {
+        return mEdtName.getText().toString();
+    }
+
+    @Override
+    public String getEndDate() {
+        Object o = mTxtTimeSpan.getTag(R.id.base_tag_2);
+        if (o == null) {
+            return "";
+        }
+        return o.toString();
+    }
+
+    @Override
+    public String getStartDate() {
+        Object o = mTxtTimeSpan.getTag(R.id.base_tag_1);
+        if (o == null) {
+            return "";
+        }
+        return o.toString();
+    }
+
+    @Override
+    public String getSignDate() {
+        Object o = mTxtContractTime.getTag();
+        if (o == null) {
+            return "";
+        }
+        return o.toString();
+
+    }
+
+    @Override
+    public String getPurchaserID() {
+        Object o = mTxtGroupName.getTag();
+        if (o == null) {
+            return "";
+        }
+        return ((PurchaserBean) o).getPurchaserID();
+    }
+
+    @Override
+    public String getPurchaserName() {
+        Object o = mTxtGroupName.getTag();
+        if (o == null) {
+            return "";
+        }
+        return ((PurchaserBean) o).getPurchaserName();
+    }
+
+    @Override
+    public String getSignEmployeeName() {
+        return mEdtPerson.getText().toString();
+    }
+
+    @Override
+    public String getPurchaserType() {
+        return null;
+    }
+
+    @Override
+    public String getRemarks() {
+        return mEdtBk.getText().toString();
+    }
 }

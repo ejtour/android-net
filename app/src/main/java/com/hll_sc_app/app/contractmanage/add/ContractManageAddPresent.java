@@ -11,4 +11,10 @@ public class ContractManageAddPresent implements IContractManageAddContract.IPre
     public void register(IContractManageAddContract.IView view) {
         mView = view;
     }
+
+
+    @Override
+    public void addContract() {
+
+    }
 }

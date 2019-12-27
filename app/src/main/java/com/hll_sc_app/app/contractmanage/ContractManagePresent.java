@@ -1,6 +1,6 @@
 package com.hll_sc_app.app.contractmanage;
 
-import com.hll_sc_app.api.CooperationPurchaserService;
+import com.hll_sc_app.api.ContractService;
 import com.hll_sc_app.base.UseCaseException;
 import com.hll_sc_app.base.bean.BaseMapReq;
 import com.hll_sc_app.base.bean.UserBean;
@@ -8,7 +8,7 @@ import com.hll_sc_app.base.greendao.GreenDaoUtils;
 import com.hll_sc_app.base.http.ApiScheduler;
 import com.hll_sc_app.base.http.BaseCallback;
 import com.hll_sc_app.base.http.Precondition;
-import com.hll_sc_app.base.utils.UserConfig;
+import com.hll_sc_app.bean.contract.ContractListResp;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 
 import static com.uber.autodispose.AutoDispose.autoDisposable;
@@ -41,28 +41,28 @@ public class ContractManagePresent implements IContractManageContract.IPresent {
                 .put("purchaserName", mView.getPurchaserName())
                 .put("groupID",userBean.getGroupID())
                 .put("isCloseToExpiration",mView.getDays())
+                .put("signEndDate", mView.getSignTimeEnd())
+                .put("signStartDate", mView.getSignTimeStart())
+                .put("status", mView.getStatus())
                 .put("pageNum", String.valueOf(pageTempNum))
                 .put("pageSize", String.valueOf(PAGE_SIZE))
-
-                .put("originator", "1")
-                .put("originator", "1")
-
                 .create();
-        CooperationPurchaserService.INSTANCE.delCooperationPurchaser(req)
+        ContractService.INSTANCE.queryContractList(req)
                 .compose(ApiScheduler.getObservableScheduler())
                 .map(new Precondition<>())
                 .doOnSubscribe(disposable -> mView.showLoading())
                 .doFinally(() -> mView.hideLoading())
                 .as(autoDisposable(AndroidLifecycleScopeProvider.from(mView.getOwner())))
-                .subscribe(new BaseCallback<Object>() {
+                .subscribe(new BaseCallback<ContractListResp>() {
                     @Override
-                    public void onSuccess(Object resp) {
-                        mView.showToast("解除关系成功");
-                        queryPurchaserList(true);
+                    public void onSuccess(ContractListResp resp) {
+                        mView.querySuccess(resp, pageTempNum > 1);
+                        pageNum = pageTempNum;
                     }
 
                     @Override
                     public void onFailure(UseCaseException e) {
+                        pageTempNum = pageNum;
                         mView.showError(e);
                     }
                 });
@@ -70,11 +70,19 @@ public class ContractManagePresent implements IContractManageContract.IPresent {
 
     @Override
     public void queryMore() {
-
+        pageTempNum++;
+        queryList(false);
     }
 
     @Override
     public void refresh() {
+        pageTempNum = 1;
+        queryList(false);
 
+    }
+
+    @Override
+    public int getPageSize() {
+        return PAGE_SIZE;
     }
 }

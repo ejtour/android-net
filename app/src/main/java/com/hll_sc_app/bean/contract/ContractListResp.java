@@ -47,6 +47,23 @@ public class ContractListResp {
          */
         private int status;
 
+        public String getTransformStatus() {
+            switch (status) {
+                case 0:
+                    return "待审核";
+                case 1:
+                    return "已审核";
+                case 2:
+                    return "执行中";
+                case 3:
+                    return "已终止";
+                case 4:
+                    return "已到期";
+                default:
+                    return "";
+            }
+        }
+
         public String getAttachment() {
             return attachment;
         }
