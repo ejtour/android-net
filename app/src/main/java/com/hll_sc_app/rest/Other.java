@@ -97,7 +97,7 @@ public class Other {
      */
     private static BaseMapReq buildRankReq(int pageNum, int dateType, String date) {
         return BaseMapReq.newBuilder()
-                .put("pageNum", String.valueOf(pageNum))
+                .put("pageNo", String.valueOf(pageNum))
                 .put("pageSize", "20")
                 .put("dateType", String.valueOf(dateType))
                 .put("startDate", date)
