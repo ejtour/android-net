@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#fafafa"
-    android:layout_height="45dp"
-    android:gravity="center_vertical"
-    android:drawablePadding="@dimen/dp_10"
-    android:drawableLeft="@drawable/ic_time_filter"
+    android:layout_height="wrap_content"
+    android:background="@color/color_fafafa"
     android:paddingLeft="@dimen/dp_10"
-    android:textAppearance="@style/TextAppearance.City22.Middle"
-    tools:text="8月份" />
+    android:orientation="vertical"
+    android:paddingRight="@dimen/dp_10">
+
+    <TextView
+        android:id="@+id/wdh_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/ic_time_filter"
+        android:drawablePadding="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.City22.Middle"
+        tools:text="8月份" />
+
+    <TextView
+        android:id="@+id/wdh_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:text="交易金额：¥— —         交易费用：¥— —"
+        android:textAppearance="@style/TextAppearance.City22.Small.Color999" />
+</LinearLayout>
