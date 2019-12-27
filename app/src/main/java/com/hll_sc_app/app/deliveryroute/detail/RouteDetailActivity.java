@@ -56,6 +56,8 @@ public class RouteDetailActivity extends BaseLoadActivity implements IRouteDetai
     SmartRefreshLayout mRefreshLayout;
     @Autowired(name = "object0")
     String mDeliveryNo;
+    @Autowired(name = "object1")
+    String mDate;
     private RouteDetailAdapter mAdapter;
     private String mShopID;
     private IRouteDetailContract.IRouteDetailPresenter mPresenter;
@@ -63,8 +65,8 @@ public class RouteDetailActivity extends BaseLoadActivity implements IRouteDetai
     /**
      * @param deliveryNo 运输单号
      */
-    public static void start(String deliveryNo) {
-        RouterUtil.goToActivity(RouterConfig.DELIVERY_ROUTE_DETAIL, deliveryNo);
+    public static void start(String deliveryNo, String date) {
+        RouterUtil.goToActivity(RouterConfig.DELIVERY_ROUTE_DETAIL, deliveryNo, date);
     }
 
     @Override
@@ -174,5 +176,10 @@ public class RouteDetailActivity extends BaseLoadActivity implements IRouteDetai
     @Override
     public String getShopID() {
         return mShopID;
+    }
+
+    @Override
+    public String getDate() {
+        return mDate;
     }
 }
